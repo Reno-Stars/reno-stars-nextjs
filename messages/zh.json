@@ -1,0 +1,351 @@
+{
+  "lang": {
+    "toggle": "EN"
+  },
+  "nav": {
+    "home": "首页",
+    "services": "服务项目",
+    "gallery": "作品展示",
+    "projects": "工程案例",
+    "testimonials": "客户评价",
+    "contact": "联系我们",
+    "contactUs": "联系我们",
+    "reviews": "客户评价",
+    "back": "返回",
+    "backToHome": "返回首页",
+    "blog": "博客",
+    "areas": "服务区域",
+    "design": "设计",
+    "benefits": "优势"
+  },
+  "cta": {
+    "getQuote": "获取报价",
+    "getFreeQuote": "免费报价",
+    "getYourFreeQuote": "获取免费报价",
+    "freeQuoteProject": "为您的项目获取免费报价！",
+    "freeQuote": "获取免费报价",
+    "startProject": "开始您的项目",
+    "startProjectToday": "立即开始您的项目",
+    "getStarted": "立即开始",
+    "viewProjects": "查看案例",
+    "viewOurWork": "查看我们的作品",
+    "ourServices": "我们的服务",
+    "learnMore": "了解更多",
+    "sendMessage": "发送信息",
+    "submitInquiry": "提交咨询",
+    "bookAppointment": "预约参观",
+    "callNow": "立即致电",
+    "requestConsultation": "预约免费咨询",
+    "viewAllProjects": "查看所有项目",
+    "viewAllServices": "查看所有服务",
+    "scheduleConsultation": "预约咨询"
+  },
+  "hero": {
+    "whereRenovationStarts": "装修\n从这里\n开始",
+    "yearsOfExcellence": "年卓越经验",
+    "transformYourSpace": "焕新您的空间",
+    "renovationRemodeling": "装修与改造",
+    "thoughtfulSpaces": "用心打造，精心设计",
+    "premiumRenovations": "高端装修",
+    "elevateYourSpace": "提升您的空间",
+    "toLuxury": "臻于奢华",
+    "buildingBetterSpaces": "打造更美好的空间",
+    "professionalExcellence": "专业卓越的装修服务",
+    "professionalExcellenceDesc": "凭借超过{experience}年的经验和{coverage}责任保险，我们为温哥华及低陆平原地区提供卓越的装修服务。"
+  },
+  "section": {
+    "serviceAreas": "服务区域",
+    "services": "服务项目",
+    "ourServices": "我们的服务",
+    "ourProfessionalServices": "我们的专业服务",
+    "aboutUs": "关于我们",
+    "gallery": "作品展示",
+    "ourWork": "我们的作品",
+    "ourPortfolio": "项目作品集",
+    "portfolio": "作品集",
+    "testimonials": "客户评价",
+    "whatOurClientsSay": "客户的声音",
+    "clientTestimonials": "客户证言",
+    "clientReviews": "客户评价",
+    "awardsRecognition": "荣誉与认可",
+    "blog": "博客",
+    "blogTips": "博客与建议",
+    "visitShowroom": "参观我们的展厅",
+    "contact": "联系方式",
+    "getInTouch": "联系我们",
+    "ourProjects": "我们的工程",
+    "whoWeAre": "关于我们",
+    "whatWeDo": "服务内容",
+    "resources": "相关资源",
+    "whyUs": "为何选择我们",
+    "servicesSubtitle": "为您的家居提供专业装修解决方案",
+    "servicesSubtitle2": "为您量身定制的全面装修解决方案",
+    "servicesSubtitle3": "为每个房间提供专业装修方案",
+    "servicesSubtitle4": "在家居装修的各个方面展现卓越工艺",
+    "aboutSubtitle": "我们的故事与对卓越品质的承诺",
+    "aboutSubtitle2": "我们的故事、价值观和对卓越品质的承诺",
+    "aboutSubtitle3": "我们的故事与对您家居的承诺",
+    "gallerySubtitle": "近期装修工程",
+    "gallerySubtitle2": "我们引以为豪的近期项目",
+    "gallerySubtitle3": "欣赏我们创造的精彩蜕变",
+    "gallerySubtitle4": "展示我们最精致的豪华装修项目",
+    "gallerySubtitle5": "每个项目都追求卓越",
+    "testimonialsSubtitle": "来自满意客户的真实反馈",
+    "testimonialsSubtitle2": "听听我们满意的客户怎么说",
+    "testimonialsSubtitle3": "客户对我们的评价",
+    "testimonialsSubtitle4": "深受低陆平原地区房主和企业的信赖",
+    "blogSubtitle": "温哥华装修技巧与博客文章",
+    "contactSubtitle": "准备好开始您的装修项目了吗？",
+    "contactSubtitle2": "准备好焕新您的空间了吗？",
+    "contactSubtitle3": "让我们来讨论您的装修项目",
+    "sendUsMessage": "给我们留言",
+    "contactInfo": "联系信息",
+    "quickLinks": "快速链接",
+    "servingAreas": "以卓越和专注服务于{areas}",
+    "designInspirations": "设计灵感",
+    "designSubtitle": "探索美丽的家居装修创意",
+    "benefitsTitle": "为什么选择Reno Stars",
+    "benefitsSubtitle": "与我们专业团队合作的优势"
+  },
+  "about": {
+    "ourJourney": "我们的历程",
+    "whatWeOffer": "我们的服务",
+    "ourValues": "我们的价值观",
+    "whyChooseUs": "为什么选择我们？",
+    "letsBuildTogether": "携手共建",
+    "ourPromise": "我们的承诺"
+  },
+  "stats": {
+    "yearsExperience": "年经验",
+    "teamMembers": "团队成员",
+    "expertTeamMembers": "专业团队成员",
+    "expertTeam": "专业团队",
+    "expertCraftsmen": "资深工匠",
+    "liabilityCoverage": "责任保险",
+    "warranty": "质保期",
+    "projectsCompleted": "已完成项目",
+    "projectsDone": "已完成项目",
+    "happyClients": "满意客户",
+    "satisfaction": "满意度",
+    "satisfactionRate": "满意率",
+    "clientSatisfaction": "客户满意度",
+    "support": "全程支持",
+    "quality": "品质保证",
+    "projects": "项目",
+    "years": "年",
+    "averageRating": "平均评分",
+    "areasServed": "服务区域",
+    "rating": "评分"
+  },
+  "form": {
+    "name": "姓名",
+    "fullName": "全名",
+    "email": "邮箱",
+    "emailAddress": "邮箱地址",
+    "phone": "电话",
+    "phoneNumber": "电话号码",
+    "message": "留言",
+    "projectDetails": "项目详情",
+    "service": "服务类型",
+    "serviceInterestedIn": "感兴趣的服务",
+    "selectService": "选择服务类型",
+    "namePlaceholder": "您的姓名",
+    "namePlaceholder2": "张三",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "您的电话号码",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "请告诉我们您的项目需求...",
+    "messagePlaceholder2": "请告诉我们您的装修项目需求...",
+    "sending": "发送中...",
+    "success": "感谢您！您的信息已成功发送。",
+    "error": "出了点问题，请重试。"
+  },
+  "footer": {
+    "allRightsReserved": "版权所有",
+    "allRights": "版权所有。",
+    "licensedInsured": "持证经营，保险齐全",
+    "freeEstimates": "免费估价",
+    "mapLocation": "地图位置"
+  },
+  "label": {
+    "phone": "电话",
+    "email": "邮箱",
+    "address": "地址",
+    "location": "位置",
+    "contact": "联系方式",
+    "quality": "品质保证",
+    "whyChooseUs": "为什么选择我们",
+    "verifiedCustomer": "认证客户",
+    "new": "新",
+    "new2": "新",
+    "businessHours": "营业时间",
+    "businessHoursDetail": "周一至周五：上午8:00 - 下午6:00\n周六：上午9:00 - 下午4:00\n周日：休息",
+    "featured": "精选"
+  },
+  "projects": {
+    "ourProjects": "我们的\n工程",
+    "subtitle": "探索我们在低陆平原地区的优秀装修工程。",
+    "subtitle2": "发现我们将空间变为梦想家园的精彩装修作品。",
+    "subtitle3": "体验我们装修作品中的工艺与匠心。",
+    "subtitle4": "发现我们在低陆平原地区的多样化装修项目。",
+    "subtitle5": "大胆装修。震撼效果。绝不妥协。",
+    "readyToStart": "准备好开始\n您的项目了吗？",
+    "readyToStart2": "准备好开始您的项目了吗？",
+    "readyToTransform": "准备好焕新您的空间了吗？",
+    "readyToTransformHome": "准备好焕新您的家了吗？",
+    "letsBuildAmazing": "让我们一起打造精彩",
+    "ctaSubtitle": "让我们的专业团队将您的装修愿景变为现实。",
+    "ctaSubtitle2": "让我们一起创造美好。立即开始您的装修之旅。",
+    "ctaSubtitle3": "让我们经验丰富的团队以精湛工艺将您的装修愿景变为现实。",
+    "ctaSubtitle4": "准备好焕新您的空间了吗？我们的专业团队将帮助您实现愿景。",
+    "ctaSubtitle5": "别再空想了。开始建造吧。",
+    "ctaSubtitle6": "凭借{years}年经验和卓越的业绩记录，让我们将您的愿景变为现实。",
+    "ctaSubtitle7": "凭借{years}年经验，让我们将您的愿景变为现实。",
+    "viewProject": "查看项目",
+    "projectDetails": "项目详情",
+    "allProjects": "所有项目",
+    "noProjectsFound": "未找到符合条件的项目。"
+  },
+  "modal": {
+    "location": "地点",
+    "category": "类别",
+    "budget": "预算范围",
+    "spaceType": "空间类型",
+    "serviceScope": "服务范围",
+    "duration": "工期",
+    "challenge": "项目挑战",
+    "solution": "我们的方案",
+    "close": "关闭"
+  },
+  "filter": {
+    "allCategories": "所有类别",
+    "location": "地点",
+    "allLocations": "所有地点",
+    "spaceType": "空间类型",
+    "allSpaceTypes": "所有空间类型",
+    "budget": "预算",
+    "allBudgets": "所有预算",
+    "showing": "显示",
+    "projects": "个项目",
+    "clearAll": "清除筛选",
+    "browseByCategory": "按类别浏览",
+    "noProjectsMatch": "没有符合筛选条件的项目。"
+  },
+  "services": {
+    "kitchen": {
+      "title": "厨房装修",
+      "description": "全面的厨房改造，融合现代设计、定制橱柜和高端台面。",
+      "longDescription": "将您的厨房打造成家的核心空间。从定制橱柜和高端台面到先进家电和创新储物解决方案，我们创造既美观又实用的厨房。"
+    },
+    "bathroom": {
+      "title": "卫浴装修",
+      "description": "将您的浴室打造成水疗般的休憩空间，配备豪华洁具和精美饰面。",
+      "longDescription": "通过我们的浴室装修专业知识，创造您的私人休憩空间。我们专注于豪华水疗风格设计、现代洁具、定制瓷砖工艺和创新储物解决方案。"
+    },
+    "wholeHouse": {
+      "title": "全屋装修",
+      "description": "从概念到完工的全方位家居改造。",
+      "longDescription": "通过我们的全屋装修服务体验完整的家居改造。我们管理项目的每个方面，从初始设计概念到最终完成，确保无缝的装修体验。"
+    },
+    "basement": {
+      "title": "地下室改造",
+      "description": "将地下室改造为功能性生活空间。温哥华最佳排名第三。",
+      "longDescription": "通过我们屡获殊荣的地下室改造服务，释放您家的全部潜力。无论您想要家庭影院、健身房、客房套间还是家庭办公室，我们都能将闲置的地下室改造成美丽实用的生活空间。"
+    },
+    "cabinet": {
+      "title": "橱柜翻新",
+      "description": "通过专业的橱柜翻新服务焕新您的厨房面貌。",
+      "longDescription": "无需全面装修的成本，即可让您的厨房焕然一新。我们的橱柜翻新服务包括新门板、抽屉面板和五金件，在保留现有橱柜箱体的同时改变厨房的外观。"
+    },
+    "commercial": {
+      "title": "商业装修",
+      "description": "专业的商业空间装修，包括办公室、零售店和餐厅。",
+      "longDescription": "通过我们的商业装修专业知识提升您的商业空间。我们处理办公室建设、零售店装修、餐厅重新设计等，提供专业成果，提升您的品牌和客户体验。"
+    },
+    "hubTitle": "我们的服务",
+    "hubSubtitle": "为每个空间提供专业的装修解决方案",
+    "getQuoteForService": "获取{service}报价"
+  },
+  "areas": {
+    "title": "服务区域",
+    "subtitle": "我们自豪地服务于低陆平原各社区",
+    "servingIn": "{city}装修服务",
+    "cityDescription": "{city}提供专业装修服务。联系我们获取免费咨询。",
+    "viewProjects": "查看{city}项目",
+    "requestQuote": "获取报价"
+  },
+  "blog": {
+    "title": "装修博客",
+    "subtitle": "装修项目的技巧、趋势和见解",
+    "readMore": "阅读更多",
+    "publishedOn": "发布于",
+    "backToBlog": "返回博客"
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "准备开始您的装修之旅？",
+    "thankYouTitle": "感谢您！",
+    "thankYouMessage": "您的信息已成功发送。我们将在24小时内与您联系。",
+    "returnHome": "返回首页"
+  },
+  "benefits": {
+    "title": "为什么选择Reno Stars",
+    "subtitle": "与我们专业装修团队合作的优势",
+    "experience": {
+      "title": "27年以上经验",
+      "description": "数十年的综合经验，在低陆平原地区提供优质装修服务。"
+    },
+    "warranty": {
+      "title": "3年质保",
+      "description": "我们以全面的质保为所有装修工程提供保障。"
+    },
+    "coverage": {
+      "title": "500万美元责任保险",
+      "description": "每个项目都有完整的保险覆盖，让您安心无忧。"
+    },
+    "rating": {
+      "title": "HomeStars 10/10评分",
+      "description": "在HomeStars上持续获得满意客户的最高评价。"
+    },
+    "team": {
+      "title": "专业团队",
+      "description": "17位技术精湛的专业人员致力于将您的愿景变为现实。"
+    },
+    "service": {
+      "title": "全方位服务",
+      "description": "从设计到完工，我们处理装修的每个方面。"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "Reno Stars - 温哥华装修承包商 | 厨房和卫浴改造",
+      "description": "温哥华及低陆平原地区首选装修承包商。厨房、卫浴和全屋装修，拥有27年以上经验、500万美元保险、HomeStars 10/10评分。"
+    },
+    "services": {
+      "title": "装修服务 | 厨房、卫浴和全屋 | Reno Stars 温哥华",
+      "description": "专业装修服务，包括温哥华的厨房改造、卫浴装修、全屋装修、地下室改造和商业装修。"
+    },
+    "projects": {
+      "title": "我们的装修项目 | 作品集 | Reno Stars 温哥华",
+      "description": "探索我们在温哥华及低陆平原地区的精彩装修项目作品集。厨房、卫浴和全屋改造。"
+    },
+    "contact": {
+      "title": "联系我们 | 获取免费报价 | Reno Stars 温哥华",
+      "description": "联系Reno Stars咨询您的装修项目。获取温哥华及低陆平原地区厨房、卫浴或全屋装修的免费报价。"
+    },
+    "blog": {
+      "title": "装修博客 | 技巧与创意 | Reno Stars 温哥华",
+      "description": "专业的装修技巧、趋势和家居改善项目创意。Reno Stars温哥华装修博客。"
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "notFound": "页面未找到",
+    "backToHome": "返回首页"
+  }
+}

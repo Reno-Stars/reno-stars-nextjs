@@ -1,0 +1,351 @@
+{
+  "lang": {
+    "toggle": "中文"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "gallery": "Gallery",
+    "projects": "Projects",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "reviews": "Reviews",
+    "back": "Back",
+    "backToHome": "Back to Home",
+    "blog": "Blog",
+    "areas": "Areas",
+    "design": "Design",
+    "benefits": "Benefits"
+  },
+  "cta": {
+    "getQuote": "Get Quote",
+    "getFreeQuote": "Get Free Quote",
+    "getYourFreeQuote": "Get Your Free Quote",
+    "freeQuoteProject": "Get a Free Quote for Your Project!",
+    "freeQuote": "Get a Free Quote",
+    "startProject": "Start Your Project",
+    "startProjectToday": "Start Your Project Today",
+    "getStarted": "Get Started",
+    "viewProjects": "View Projects",
+    "viewOurWork": "View Our Work",
+    "ourServices": "Our Services",
+    "learnMore": "Learn More",
+    "sendMessage": "Send Message",
+    "submitInquiry": "Submit Inquiry",
+    "bookAppointment": "Book an Appointment",
+    "callNow": "Call Now",
+    "requestConsultation": "Request Free Consultation",
+    "viewAllProjects": "View All Projects",
+    "viewAllServices": "View All Services",
+    "scheduleConsultation": "Schedule Consultation"
+  },
+  "hero": {
+    "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
+    "yearsOfExcellence": "Years of Excellence",
+    "transformYourSpace": "Transform Your Space",
+    "renovationRemodeling": "Renovation & Remodeling",
+    "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
+    "premiumRenovations": "Premium Renovations",
+    "elevateYourSpace": "Elevate Your Space",
+    "toLuxury": "To Luxury",
+    "buildingBetterSpaces": "Building Better Spaces",
+    "professionalExcellence": "Professional Renovation Excellence",
+    "professionalExcellenceDesc": "With over {experience} years of experience and {coverage} liability coverage, we deliver exceptional renovation services across Vancouver and the Lower Mainland."
+  },
+  "section": {
+    "serviceAreas": "Service Areas",
+    "services": "Services",
+    "ourServices": "Our Services",
+    "ourProfessionalServices": "Our Professional Services",
+    "aboutUs": "About Us",
+    "gallery": "Gallery",
+    "ourWork": "Our Work",
+    "ourPortfolio": "Our Portfolio",
+    "portfolio": "Portfolio",
+    "testimonials": "Testimonials",
+    "whatOurClientsSay": "What Our Clients Say",
+    "clientTestimonials": "Client Testimonials",
+    "clientReviews": "Client Reviews",
+    "awardsRecognition": "Awards & Recognition",
+    "blog": "Blog",
+    "blogTips": "Blog & Tips",
+    "visitShowroom": "Visit Our Showroom",
+    "contact": "Contact",
+    "getInTouch": "Get In Touch",
+    "ourProjects": "Our Projects",
+    "whoWeAre": "Who We Are",
+    "whatWeDo": "What We Do",
+    "resources": "Resources",
+    "whyUs": "Why Us",
+    "servicesSubtitle": "Professional renovation solutions for your home",
+    "servicesSubtitle2": "Comprehensive renovation solutions tailored to your needs",
+    "servicesSubtitle3": "Expert renovation solutions for every room",
+    "servicesSubtitle4": "Exceptional craftsmanship across all aspects of home renovation",
+    "aboutSubtitle": "Our story and commitment to excellence",
+    "aboutSubtitle2": "Our story, values, and commitment to excellence",
+    "aboutSubtitle3": "Our story and commitment to your home",
+    "gallerySubtitle": "Recent renovation projects",
+    "gallerySubtitle2": "Recent projects we're proud of",
+    "gallerySubtitle3": "See the transformations we've created",
+    "gallerySubtitle4": "A showcase of our finest luxury renovation projects",
+    "gallerySubtitle5": "Showcasing excellence in every project",
+    "testimonialsSubtitle": "Real feedback from satisfied customers",
+    "testimonialsSubtitle2": "Hear from our satisfied clients",
+    "testimonialsSubtitle3": "What our customers say about us",
+    "testimonialsSubtitle4": "Trusted by homeowners and businesses across the Lower Mainland",
+    "blogSubtitle": "Vancouver Renovation Tips & Blog Articles",
+    "contactSubtitle": "Ready to start your renovation project?",
+    "contactSubtitle2": "Ready to transform your space?",
+    "contactSubtitle3": "Let's discuss your renovation project",
+    "sendUsMessage": "Send Us a Message",
+    "contactInfo": "Contact Information",
+    "quickLinks": "Quick Links",
+    "servingAreas": "Serving {areas} with excellence and dedication",
+    "designInspirations": "Design Inspirations",
+    "designSubtitle": "Explore beautiful renovation ideas for your home",
+    "benefitsTitle": "Why Choose Reno Stars",
+    "benefitsSubtitle": "The advantages of working with our professional team"
+  },
+  "about": {
+    "ourJourney": "Our Journey",
+    "whatWeOffer": "What We Offer",
+    "ourValues": "Our Values",
+    "whyChooseUs": "Why Choose Us?",
+    "letsBuildTogether": "Let's Build Together",
+    "ourPromise": "Our Promise"
+  },
+  "stats": {
+    "yearsExperience": "Years Experience",
+    "teamMembers": "Team Members",
+    "expertTeamMembers": "Expert Team Members",
+    "expertTeam": "Expert Team",
+    "expertCraftsmen": "Expert Craftsmen",
+    "liabilityCoverage": "Liability Coverage",
+    "warranty": "Warranty",
+    "projectsCompleted": "Projects Completed",
+    "projectsDone": "Projects Done",
+    "happyClients": "Happy Clients",
+    "satisfaction": "Satisfaction",
+    "satisfactionRate": "Satisfaction Rate",
+    "clientSatisfaction": "Client Satisfaction",
+    "support": "Support",
+    "quality": "Quality",
+    "projects": "Projects",
+    "years": "Years",
+    "averageRating": "Average Rating",
+    "areasServed": "Areas Served",
+    "rating": "Rating"
+  },
+  "form": {
+    "name": "Name",
+    "fullName": "Full Name",
+    "email": "Email",
+    "emailAddress": "Email Address",
+    "phone": "Phone",
+    "phoneNumber": "Phone Number",
+    "message": "Message",
+    "projectDetails": "Project Details",
+    "service": "Service",
+    "serviceInterestedIn": "Service Interested In",
+    "selectService": "Select a service",
+    "namePlaceholder": "Your name",
+    "namePlaceholder2": "John Smith",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "Your phone number",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "Tell us about your project...",
+    "messagePlaceholder2": "Tell us about your renovation project...",
+    "sending": "Sending...",
+    "success": "Thank you! Your message has been sent successfully.",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "allRightsReserved": "All Rights Reserved",
+    "allRights": "All rights reserved.",
+    "licensedInsured": "Licensed & Insured",
+    "freeEstimates": "Free Estimates",
+    "mapLocation": "Map Location"
+  },
+  "label": {
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "location": "Location",
+    "contact": "Contact",
+    "quality": "Quality",
+    "whyChooseUs": "Why Choose Us",
+    "verifiedCustomer": "Verified Customer",
+    "new": "NEW",
+    "new2": "New",
+    "businessHours": "Business Hours",
+    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
+    "featured": "Featured"
+  },
+  "projects": {
+    "ourProjects": "OUR\nPROJECTS",
+    "subtitle": "Explore our portfolio of exceptional renovation projects across the Lower Mainland.",
+    "subtitle2": "Discover our stunning portfolio of renovation projects that transform spaces into dream homes.",
+    "subtitle3": "Experience the craftsmanship and attention to detail in our renovation portfolio.",
+    "subtitle4": "Discover our diverse portfolio of renovation projects across the Lower Mainland.",
+    "subtitle5": "BOLD RENOVATIONS. DRAMATIC RESULTS. NO COMPROMISES.",
+    "readyToStart": "READY TO START\nYOUR PROJECT?",
+    "readyToStart2": "Ready to Start Your Project?",
+    "readyToTransform": "Ready to Transform Your Space?",
+    "readyToTransformHome": "Ready to Transform Your Home?",
+    "letsBuildAmazing": "Let's Build Something Amazing",
+    "ctaSubtitle": "Let's bring your renovation vision to life with our expert team.",
+    "ctaSubtitle2": "Let's create something beautiful together. Start your renovation journey today.",
+    "ctaSubtitle3": "Let our experienced team bring your renovation vision to life with quality craftsmanship.",
+    "ctaSubtitle4": "Ready to transform your space? Our expert team is here to turn your vision into reality.",
+    "ctaSubtitle5": "STOP DREAMING. START BUILDING.",
+    "ctaSubtitle6": "Let us transform your vision into reality with {years} years of experience and a proven track record of excellence.",
+    "ctaSubtitle7": "Let us transform your vision into reality with {years} years of experience.",
+    "viewProject": "View Project",
+    "projectDetails": "Project Details",
+    "allProjects": "All Projects",
+    "noProjectsFound": "No projects found matching your criteria."
+  },
+  "modal": {
+    "location": "Location",
+    "category": "Category",
+    "budget": "Budget Range",
+    "spaceType": "Space Type",
+    "serviceScope": "Service Scope",
+    "duration": "Duration",
+    "challenge": "The Challenge",
+    "solution": "Our Solution",
+    "close": "Close"
+  },
+  "filter": {
+    "allCategories": "All Categories",
+    "location": "Location",
+    "allLocations": "All Locations",
+    "spaceType": "Space Type",
+    "allSpaceTypes": "All Space Types",
+    "budget": "Budget",
+    "allBudgets": "All Budgets",
+    "showing": "Showing",
+    "projects": "projects",
+    "clearAll": "Clear Filters",
+    "browseByCategory": "Browse by Category",
+    "noProjectsMatch": "No projects match your filters."
+  },
+  "services": {
+    "kitchen": {
+      "title": "Kitchen Renovation",
+      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
+      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+    },
+    "bathroom": {
+      "title": "Bathroom Renovation",
+      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
+      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+    },
+    "wholeHouse": {
+      "title": "Whole House Renovation",
+      "description": "Full-scale home transformations from concept to completion.",
+      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+    },
+    "basement": {
+      "title": "Basement Remodeling",
+      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
+      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+    },
+    "cabinet": {
+      "title": "Cabinet Refacing",
+      "description": "Refresh your kitchen look with professional cabinet refacing services.",
+      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+    },
+    "commercial": {
+      "title": "Commercial Renovation",
+      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
+      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+    },
+    "hubTitle": "Our Services",
+    "hubSubtitle": "Professional renovation solutions for every space",
+    "getQuoteForService": "Get a Quote for {service}"
+  },
+  "areas": {
+    "title": "Service Areas",
+    "subtitle": "We proudly serve communities across the Lower Mainland",
+    "servingIn": "Renovation Services in {city}",
+    "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
+    "viewProjects": "View {city} Projects",
+    "requestQuote": "Request Quote"
+  },
+  "blog": {
+    "title": "Renovation Blog",
+    "subtitle": "Tips, trends, and insights for your renovation project",
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "backToBlog": "Back to Blog"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Ready to start your renovation journey?",
+    "thankYouTitle": "Thank You!",
+    "thankYouMessage": "Your message has been sent successfully. We'll get back to you within 24 hours.",
+    "returnHome": "Return to Home"
+  },
+  "benefits": {
+    "title": "Why Choose Reno Stars",
+    "subtitle": "The benefits of working with our professional renovation team",
+    "experience": {
+      "title": "27+ Years Experience",
+      "description": "Decades of combined experience delivering quality renovations across the Lower Mainland."
+    },
+    "warranty": {
+      "title": "3-Year Warranty",
+      "description": "We stand behind our work with a comprehensive warranty on all renovations."
+    },
+    "coverage": {
+      "title": "$5M Liability Coverage",
+      "description": "Full insurance coverage for your peace of mind during every project."
+    },
+    "rating": {
+      "title": "10/10 HomeStars Rating",
+      "description": "Consistently top-rated by our satisfied customers on HomeStars."
+    },
+    "team": {
+      "title": "Expert Team",
+      "description": "17 skilled professionals dedicated to bringing your vision to life."
+    },
+    "service": {
+      "title": "Full-Service Solutions",
+      "description": "From design to completion, we handle every aspect of your renovation."
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "Reno Stars - Vancouver Renovation Contractor | Kitchen & Bathroom Remodeling",
+      "description": "Premier renovation contractor in Vancouver and Lower Mainland. Kitchen, bathroom, and whole house renovations with 27+ years experience, $5M coverage, 10/10 HomeStars rating."
+    },
+    "services": {
+      "title": "Renovation Services | Kitchen, Bathroom & Whole House | Reno Stars Vancouver",
+      "description": "Professional renovation services including kitchen remodeling, bathroom renovation, whole house renovation, basement remodeling, and commercial renovations in Vancouver."
+    },
+    "projects": {
+      "title": "Our Renovation Projects | Portfolio | Reno Stars Vancouver",
+      "description": "Explore our portfolio of stunning renovation projects across Vancouver and the Lower Mainland. Kitchen, bathroom, and whole house transformations."
+    },
+    "contact": {
+      "title": "Contact Us | Get a Free Quote | Reno Stars Vancouver",
+      "description": "Contact Reno Stars for your renovation project. Get a free quote for kitchen, bathroom, or whole house renovations in Vancouver and the Lower Mainland."
+    },
+    "blog": {
+      "title": "Renovation Blog | Tips & Ideas | Reno Stars Vancouver",
+      "description": "Expert renovation tips, trends, and ideas for your home improvement project. Vancouver renovation blog by Reno Stars."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Page not found",
+    "backToHome": "Back to Home"
+  }
+}
