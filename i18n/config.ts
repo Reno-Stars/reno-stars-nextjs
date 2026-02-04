@@ -1,3 +1,5 @@
+import { defineRouting } from 'next-intl/routing';
+
 export const locales = ['en', 'zh'] as const;
 export type Locale = (typeof locales)[number];
 
@@ -14,3 +16,9 @@ export const ogLocaleMap: Record<Locale, string> = {
   en: 'en_US',
   zh: 'zh_CN',
 };
+
+export const routing = defineRouting({
+  locales,
+  defaultLocale,
+  localePrefix,
+});

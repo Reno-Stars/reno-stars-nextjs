@@ -1,0 +1,279 @@
+'use client';
+
+import { useState, useMemo, useEffect } from 'react';
+import { CARD, NAVY, TEXT_MID, TEXT_MUTED, GOLD, SURFACE, neu, neuIn } from '@/lib/theme';
+import type { ReactNode } from 'react';
+
+export interface Column<T> {
+  key: string;
+  header: string;
+  render?: (row: T) => ReactNode;
+  sortable?: boolean;
+  width?: string;
+}
+
+interface DataTableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  getRowKey: (row: T) => string;
+  searchable?: boolean;
+  searchKeys?: string[];
+  pageSize?: number;
+  actions?: (row: T) => ReactNode;
+}
+
+const EMPTY_SEARCH_KEYS: string[] = [];
+
+export default function DataTable<T extends Record<string, unknown>>({
+  columns,
+  data,
+  getRowKey,
+  searchable = true,
+  searchKeys = EMPTY_SEARCH_KEYS,
+  pageSize = 15,
+  actions,
+}: DataTableProps<T>) {
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
+  const [sortKey, setSortKey] = useState<string | null>(null);
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+
+  useEffect(() => {
+    setPage(0);
+  }, [data.length]);
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return data;
+    const q = search.toLowerCase();
+    return data.filter((row) =>
+      searchKeys.some((key) => {
+        const val = row[key];
+        return typeof val === 'string' && val.toLowerCase().includes(q);
+      })
+    );
+  }, [data, search, searchKeys]);
+
+  const sorted = useMemo(() => {
+    if (!sortKey) return filtered;
+    return [...filtered].sort((a, b) => {
+      const aVal = a[sortKey];
+      const bVal = b[sortKey];
+      if (aVal == null) return 1;
+      if (bVal == null) return -1;
+      const cmp = String(aVal).localeCompare(String(bVal));
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+  }, [filtered, sortKey, sortDir]);
+
+  const totalPages = Math.ceil(sorted.length / pageSize);
+  const paged = sorted.slice(page * pageSize, (page + 1) * pageSize);
+
+  function handleSort(key: string) {
+    if (sortKey === key) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  }
+
+  return (
+    <div>
+      {searchable && (
+        <div style={{ marginBottom: '1rem' }}>
+          <input
+            type="text"
+            placeholder="Search..."
+            aria-label="Search records"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(0);
+            }}
+            style={{
+              padding: '0.5rem 0.75rem',
+              borderRadius: '6px',
+              border: 'none',
+              boxShadow: neuIn(3),
+              backgroundColor: CARD,
+              color: NAVY,
+              fontSize: '0.875rem',
+              outline: 'none',
+              width: '280px',
+              maxWidth: '100%',
+            }}
+          />
+        </div>
+      )}
+      <div
+        style={{
+          backgroundColor: CARD,
+          borderRadius: '12px',
+          boxShadow: neu(6),
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ overflowX: 'auto' }}>
+          <table
+            aria-label="Data table"
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '0.8125rem',
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: `1px solid ${SURFACE}` }}>
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    tabIndex={col.sortable ? 0 : undefined}
+                    role={col.sortable ? 'button' : undefined}
+                    aria-sort={sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined}
+                    onKeyDown={col.sortable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort(col.key); } } : undefined}
+                    style={{
+                      padding: '0.75rem 1rem',
+                      textAlign: 'left',
+                      color: TEXT_MUTED,
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      cursor: col.sortable ? 'pointer' : 'default',
+                      userSelect: 'none',
+                      whiteSpace: 'nowrap',
+                      width: col.width,
+                    }}
+                    onClick={() => col.sortable && handleSort(col.key)}
+                  >
+                    {col.header}
+                    {col.sortable && sortKey === col.key && (
+                      <span style={{ marginLeft: '0.25rem' }}>
+                        {sortDir === 'asc' ? '\u2191' : '\u2193'}
+                      </span>
+                    )}
+                  </th>
+                ))}
+                {actions && (
+                  <th
+                    style={{
+                      padding: '0.75rem 1rem',
+                      textAlign: 'right',
+                      color: TEXT_MUTED,
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      width: '120px',
+                    }}
+                  >
+                    Actions
+                  </th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {paged.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={columns.length + (actions ? 1 : 0)}
+                    style={{
+                      padding: '2rem',
+                      textAlign: 'center',
+                      color: TEXT_MUTED,
+                    }}
+                  >
+                    No records found.
+                  </td>
+                </tr>
+              ) : (
+                paged.map((row) => (
+                  <tr
+                    key={getRowKey(row)}
+                    style={{ borderBottom: `1px solid ${SURFACE}` }}
+                  >
+                    {columns.map((col) => (
+                      <td
+                        key={col.key}
+                        style={{
+                          padding: '0.625rem 1rem',
+                          color: NAVY,
+                        }}
+                      >
+                        {col.render
+                          ? col.render(row)
+                          : (row[col.key] as ReactNode) ?? '—'}
+                      </td>
+                    ))}
+                    {actions && (
+                      <td
+                        style={{
+                          padding: '0.625rem 1rem',
+                          textAlign: 'right',
+                        }}
+                      >
+                        {actions(row)}
+                      </td>
+                    )}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {totalPages > 1 && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: '1rem',
+            fontSize: '0.8125rem',
+            color: TEXT_MID,
+          }}
+        >
+          <span>
+            {sorted.length} record{sorted.length !== 1 ? 's' : ''}
+          </span>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              type="button"
+              disabled={page === 0}
+              onClick={() => setPage((p) => p - 1)}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '6px',
+                border: 'none',
+                backgroundColor: CARD,
+                color: page === 0 ? TEXT_MUTED : NAVY,
+                cursor: page === 0 ? 'default' : 'pointer',
+                boxShadow: neu(3),
+              }}
+            >
+              Prev
+            </button>
+            <span aria-live="polite" style={{ padding: '0.375rem 0.5rem' }}>
+              {page + 1} / {totalPages}
+            </span>
+            <button
+              type="button"
+              disabled={page >= totalPages - 1}
+              onClick={() => setPage((p) => p + 1)}
+              style={{
+                padding: '0.375rem 0.75rem',
+                borderRadius: '6px',
+                border: 'none',
+                backgroundColor: CARD,
+                color: page >= totalPages - 1 ? TEXT_MUTED : NAVY,
+                cursor: page >= totalPages - 1 ? 'default' : 'pointer',
+                boxShadow: neu(3),
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

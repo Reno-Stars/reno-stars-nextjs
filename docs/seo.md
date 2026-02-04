@@ -2,7 +2,7 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` using static data (service slugs from `serviceTypeToCategory`, areas, projects, blog posts). Does not require a database connection. Includes:
+Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design)
 - All service detail pages
@@ -107,7 +107,23 @@ Next.js `<Image>` component configured for two remote patterns:
 
 ## Canonical URLs
 
-`NEXT_PUBLIC_BASE_URL` defines the canonical origin. Used by:
+`NEXT_PUBLIC_BASE_URL` defines the canonical origin. `getBaseUrl()` in `lib/utils.ts` strips any trailing slashes to prevent double-slash URLs (e.g., `reno-stars.com//en/`). Used by:
 - `sitemap.ts` for absolute URLs
 - `buildAlternates()` for hreflang links
 - Metadata generation in page components
+
+## Favicon
+
+Uses Next.js App Router file convention:
+- `app/icon.png` — 32×32 favicon (auto-served as `/favicon.ico`)
+- `app/apple-icon.png` — 180×180 Apple touch icon
+
+## Security Headers
+
+Added via `proxy.ts` on all responses:
+- `Content-Security-Policy` (environment-aware: allows unsafe-eval in dev)
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: SAMEORIGIN`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy` (restricts camera, microphone, geolocation, payment, usb)
+- `X-Powered-By` disabled via `next.config.ts` (`poweredByHeader: false`)

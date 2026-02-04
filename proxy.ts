@@ -1,14 +1,11 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { locales, defaultLocale, localePrefix } from './i18n/config';
+import { routing } from './i18n/config';
+import { isSessionCookieFresh } from './lib/admin/auth';
 import { ASSET_ORIGIN } from './lib/storage';
 
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix,
-});
+const intlMiddleware = createMiddleware(routing);
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -44,16 +41,32 @@ const securityHeaders: Record<string, string> = {
   ].join('; '),
 };
 
-export default function proxy(request: NextRequest): NextResponse {
-  // Run the intl middleware first
-  const response = intlMiddleware(request);
-
-  // Add security headers to the response
+function addSecurityHeaders(response: NextResponse): NextResponse {
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
-
   return response;
+}
+
+export default function proxy(request: NextRequest): NextResponse {
+  const { pathname } = request.nextUrl;
+
+  // Admin routes — handle auth check (skip login page)
+  if (pathname.startsWith('/admin')) {
+    if (pathname === '/admin/login' || pathname === '/admin/login/') {
+      return addSecurityHeaders(NextResponse.next());
+    }
+
+    const sessionCookie = request.cookies.get('admin_session')?.value;
+    if (!isSessionCookieFresh(sessionCookie)) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+
+    return addSecurityHeaders(NextResponse.next());
+  }
+
+  // All other routes — next-intl locale middleware + security headers
+  return addSecurityHeaders(intlMiddleware(request));
 }
 
 export const config = {

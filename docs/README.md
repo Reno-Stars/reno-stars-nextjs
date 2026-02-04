@@ -35,8 +35,9 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 
 - **276 statically generated pages** across 13 route patterns
 - **Bilingual:** Full English/Chinese support with `next-intl`, locale-prefixed URLs
-- **Database-driven:** Company info, services, social links, testimonials, and about sections fetched from PostgreSQL via cached query layer (`lib/db/queries.ts`)
-- **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (6 schema types), 50+ WordPress redirects
+- **Database-driven:** Company info, services, social links, testimonials, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info fetched from PostgreSQL via cached query layer (`lib/db/queries.ts`)
+- **Admin dashboard:** Auth-protected CRUD for projects, blog, testimonials, contacts, company info, and services at `/admin/`
+- **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (6 schema types), 50+ WordPress redirects, security headers via proxy
 - **Neumorphic design:** Custom warm-beige design system with shadow utilities
 - **Social integration:** Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp with custom SVG icons
 - **Local-first dev:** Docker Compose with Postgres + MinIO, one-command setup

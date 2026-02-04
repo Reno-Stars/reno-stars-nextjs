@@ -32,13 +32,15 @@ pnpm db:migrate           # Run migrations
 pnpm db:push              # Push schema directly (dev)
 pnpm db:studio            # Open Drizzle Studio
 pnpm db:seed              # Seed database
+pnpm db:seed:projects     # Import static projects into DB
+pnpm db:seed:blog         # Crawl WordPress site for blog content (22 articles, EN + ZH)
 
 # Docker (local services)
 pnpm docker:up            # Start Postgres + MinIO
 pnpm docker:down          # Stop services
 pnpm docker:reset         # Destroy volumes and restart
 pnpm storage:seed         # Seed MinIO with 21 assets from production
-pnpm dev:services         # docker:up + db:push + db:seed + storage:seed
+pnpm dev:services         # docker:up + db:push + db:seed + seed:projects + seed:blog + storage:seed
 
 # Testing
 pnpm test                 # Vitest watch mode
@@ -112,6 +114,7 @@ messages/
 scripts/
   seed-storage.ts         # Downloads 21 assets → MinIO
   seed-projects.ts        # Import static projects into DB
+  seed-blog.ts            # WordPress blog crawler (EN via REST API, ZH via HTML crawling)
 
 tests/
   unit/                   # Vitest unit tests
@@ -184,4 +187,4 @@ Hero → Service Areas → Testimonials → Gallery → Services → Stats → A
 ## Known Issues
 
 - `DATABASE_URL` is required at build time because `layout.tsx` fetches shared data from DB during pre-rendering. Use `pnpm dev:services` or set `DATABASE_URL` before building.
-- `app/sitemap.ts` is now async and requires DB connection to fetch project slugs.
+- `app/sitemap.ts` is now async and requires DB connection to fetch project slugs, blog post slugs, and service areas.

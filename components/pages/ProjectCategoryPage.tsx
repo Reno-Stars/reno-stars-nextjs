@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import type { Locale } from '@/i18n/config';
-import type { Company, LocalizedProject } from '@/lib/types';
-import { getAllProjectsLocalized, getCategoriesLocalized } from '@/lib/data';
+import type { Company, Project, LocalizedProject } from '@/lib/types';
+import { getLocalizedProject, getCategoriesLocalized } from '@/lib/data/projects';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -19,11 +19,12 @@ interface ProjectCategoryPageProps {
   locale: Locale;
   categorySlug: string;
   company: Company;
+  projects: Project[];
 }
 
-export default function ProjectCategoryPage({ locale, categorySlug, company }: ProjectCategoryPageProps) {
+export default function ProjectCategoryPage({ locale, categorySlug, company, projects }: ProjectCategoryPageProps) {
   const t = useTranslations();
-  const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
+  const allProjects = useMemo(() => projects.map((p) => getLocalizedProject(p, locale)), [projects, locale]);
   const categories = useMemo(() => getCategoriesLocalized(), []);
 
   // Find the category from slug

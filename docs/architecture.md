@@ -19,7 +19,8 @@
 ```
 app/                      # Next.js App Router
   [locale]/               # Dynamic locale segment (en | zh)
-    layout.tsx            # NextIntlClientProvider wrapper
+    layout.tsx            # Locale layout (NextIntlClientProvider, Navbar, Footer)
+    not-found.tsx         # Locale-aware 404 (uses translations)
     page.tsx              # Homepage
     projects/             # Portfolio routes
     services/             # Service routes
@@ -28,15 +29,21 @@ app/                      # Next.js App Router
     contact/              # Contact form
     benefits/             # Benefits page
     design/               # Design showcase
-  layout.tsx              # Root layout (fonts, metadata)
-  not-found.tsx           # 404
-  sitemap.ts              # Dynamic sitemap
+  admin/                  # Admin dashboard (auth-protected)
+    (auth)/               # Login page
+    (dashboard)/          # CRUD pages (projects, blog, testimonials, etc.)
+    layout.tsx            # Admin shell with sidebar
+  layout.tsx              # Root layout (<html>/<body>, locale detection, fonts, metadata)
+  not-found.tsx           # Root 404 (fallback, no <html>/<body>)
+  sitemap.ts              # Dynamic async sitemap (DB + static data)
   robots.ts               # robots.txt
   actions/                # Server Actions
     contact.ts            # Contact form submission
+    admin/                # Admin CRUD actions (projects, blog, etc.)
 
 components/
   pages/                  # One component per page route
+  admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
   structured-data/        # JSON-LD schema components
   Navbar.tsx              # Global navigation (unified, no variants)
   Footer.tsx              # Global footer (5-column + service areas bar)
@@ -48,20 +55,24 @@ lib/
   db/                     # Database layer
     schema.ts             # Drizzle table definitions
     index.ts              # Lazy-init DB client
-    queries.ts            # Cached async query functions (company, services, social, testimonials, about)
+    queries.ts            # Cached query functions (company, services, projects, etc.)
     seed.ts               # Seed script
-  data/                   # Static data layer
-    index.ts              # Images, video, gallery, blog posts, showroom, trust badges
-    projects.ts           # 15 portfolio projects
+  data/                   # Static assets & localization helpers
+    index.ts              # Images, video constants, type re-exports, localization helpers
+    projects.ts           # Project localization helpers, category slugs
     services.ts           # Service type mappings and localization helpers
-    areas.ts              # 14 service areas
+    areas.ts              # Area localization helper (getLocalizedArea)
+  admin/                  # Admin utilities
+    auth.ts               # Session cookie auth (24h TTL)
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)
   types.ts                # Shared TypeScript types
   theme.ts                # Neumorphic design tokens
   utils.ts                # Utility functions
 
+proxy.ts                  # Request proxy (i18n routing + admin auth + security headers)
+
 i18n/                     # Internationalization
-  config.ts               # Locale definitions
+  config.ts               # Locale definitions, routing config
   request.ts              # Server request handler
 
 messages/                 # Translation JSON files
@@ -70,6 +81,8 @@ messages/                 # Translation JSON files
 
 scripts/
   seed-storage.ts         # MinIO asset seeder
+  seed-projects.ts        # Import static projects into DB
+  seed-blog.ts            # WordPress blog crawler (EN via REST API, ZH via HTML crawling)
 
 tests/
   unit/                   # Vitest tests
@@ -79,9 +92,10 @@ tests/
 ## Request Flow
 
 ```
-Browser → Next.js Middleware (locale detection)
+Browser → proxy.ts (admin auth check OR next-intl locale routing + security headers)
        → App Router ([locale] segment)
-       → layout.tsx (fetches company, socialLinks, services from DB; renders Navbar/Footer)
+       → Root layout (detects locale via getLocale(), renders <html>/<body>)
+       → Locale layout (fetches company, socialLinks, services from DB; renders Navbar/Footer)
        → Server page.tsx (fetches page-specific data from DB or static data)
        → Client page component hydrates (receives data as props)
 ```
@@ -90,13 +104,13 @@ Browser → Next.js Middleware (locale detection)
 
 The app uses a **hybrid static/database** model:
 
-- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, testimonials, and about sections are fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
-- **Static data** (`lib/data/`): Projects, areas, blog posts, gallery items, showroom info, and trust badges remain as hardcoded TypeScript arrays. The DB schema exists for these entities but is not yet used at runtime.
+- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, testimonials, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
+- **Static data** (`lib/data/`): Only `video` and `images` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers and category slug constants.
 - **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 
 ### Query Layer (`lib/db/queries.ts`)
 
-Five cached async functions fetch data from the database and return the same TypeScript types as the former static exports:
+Cached async functions fetch data from the database and return the same TypeScript types as the former static exports:
 
 | Function | Returns | Notes |
 |----------|---------|-------|
@@ -105,16 +119,40 @@ Five cached async functions fetch data from the database and return the same Typ
 | `getServicesFromDb()` | `Service[]` | Orders by `displayOrder`, applies `getAssetUrl()` |
 | `getTestimonialsFromDb()` | `Testimonial[]` | Filters `isFeatured` |
 | `getAboutSectionsFromDb()` | `AboutSections` | Replaces `{yearsExperience}` placeholder |
+| `getProjectsFromDb()` | `Project[]` | Published projects with images and scopes |
+| `getProjectBySlugFromDb(slug)` | `Project \| null` | Single project lookup by slug |
+| `getProjectSlugsFromDb()` | `string[]` | Published slugs for sitemap |
+| `getServiceAreasFromDb()` | `ServiceArea[]` | Active areas, ordered by `displayOrder` |
+| `getBlogPostsFromDb()` | `BlogPost[]` | Published posts, ordered by `publishedAt desc` |
+| `getBlogPostBySlugFromDb(slug)` | `BlogPost \| null` | Single post lookup |
+| `getBlogPostSlugsFromDb()` | `string[]` | Published slugs for sitemap (uncached) |
+| `getGalleryItemsFromDb()` | `GalleryItem[]` | Published items, `getAssetUrl()` applied to images |
+| `getTrustBadgesFromDb()` | `{ en: string; zh: string }[]` | Active badges, ordered by `displayOrder` |
+| `getShowroomFromDb()` | `Showroom` | Singleton row |
+
+Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllTestimonialsAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`.
 
 ### Layout Data Flow
 
-`app/[locale]/layout.tsx` is a Server Component that:
-1. Fetches `company`, `socialLinks`, `services` from DB (via `Promise.all`)
-2. Loads `areas` from static data (not yet migrated)
-3. Renders `<Navbar>` and `<Footer>` with this data as props
-4. Renders `<LocalBusinessSchema>` for JSON-LD structured data
+**Root layout** (`app/layout.tsx`):
+- Detects locale via `getLocale()` from next-intl/server
+- Renders the single `<html lang={locale}>` and `<body>` wrapper for the entire app
+- Prevents hydration mismatches by ensuring only one `<html>` element exists
+
+**Locale layout** (`app/[locale]/layout.tsx`) is a Server Component that:
+1. Fetches `company`, `socialLinks`, `services`, `areas` from DB (via `Promise.all`)
+2. Renders `<Navbar>` and `<Footer>` with this data as props
+3. Renders `<LocalBusinessSchema>` for JSON-LD structured data (receives `areas` prop)
+4. Does **not** render `<html>/<body>` (root layout handles that)
 
 Page components (`components/pages/`) do **not** render Navbar or Footer — they only render page content and receive data as props from their server page files.
+
+### Proxy (`proxy.ts`)
+
+Replaces the deprecated `middleware.ts` (Next.js 16). Handles:
+1. **Admin auth** — Session cookie check for `/admin/*` routes, redirects to `/admin/login` if invalid
+2. **i18n routing** — Delegates to `next-intl/middleware` for locale detection and prefix enforcement
+3. **Security headers** — Adds CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, etc. to all responses
 
 ### Type System
 
@@ -148,9 +186,10 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
 - **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop.
-- **Navbar**: Unified navigation with 6 links + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu.
+- **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout.
+- **Admin components** (`components/admin/`): DataTable, ProjectForm, BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider.
 
 ## Database Connection
 

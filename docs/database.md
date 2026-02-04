@@ -35,7 +35,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `showroom_info` | Singleton showroom data | `id` |
 | `about_sections` | Singleton about-page content | `id` |
 | `testimonials` | Customer reviews | `id` |
-| `gallery_items` | Gallery images | `id` |
+| `gallery_items` | Gallery images | `id`, `image_url` (unique index) |
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
 
@@ -60,11 +60,13 @@ titleZh: varchar('title_zh', { length: 256 }),
 ## Commands
 
 ```bash
-pnpm db:generate   # Generate migration SQL from schema changes
-pnpm db:migrate    # Apply pending migrations
-pnpm db:push       # Push schema directly (dev only — no migration files)
-pnpm db:studio     # Open Drizzle Studio GUI
-pnpm db:seed       # Seed database with initial data
+pnpm db:generate        # Generate migration SQL from schema changes
+pnpm db:migrate         # Apply pending migrations
+pnpm db:push            # Push schema directly (dev only — no migration files)
+pnpm db:studio          # Open Drizzle Studio GUI
+pnpm db:seed            # Seed database with initial data
+pnpm db:seed:projects   # Import static projects into DB
+pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN + ZH)
 ```
 
 ## Seeding
@@ -77,25 +79,65 @@ pnpm db:seed       # Seed database with initial data
 - 5 social links (Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp)
 - About sections (bilingual, with `{yearsExperience}` placeholder in `ourJourney`)
 - 3 featured testimonials
+- 6 gallery items (uses `onConflictDoNothing` on `imageUrl` unique index)
 
 All seed operations use `onConflictDoNothing` for idempotency.
+
+### Blog Crawler (`scripts/seed-blog.ts`)
+
+Crawls the old WordPress site for real blog content:
+- **English**: Fetched via WP REST API (`/wp-json/wp/v2/renovation_article`) — structured JSON
+- **Chinese**: Crawled from `/zh/renovation_article/{slug}/` HTML pages (WPML doesn't expose ZH via REST API)
+- **Title extraction**: Tries `og:title`, `<title>`, `<h1>` tags; prefers whichever contains Chinese characters
+- **Content cleaning**: Strips scripts, styles, shortcodes, inline styles, data attributes
+- **Idempotent**: Uses `onConflictDoUpdate` to refresh content on re-run
+- **Result**: 22 articles, 14/22 with distinct Chinese titles
+- **Command**: `pnpm db:seed:blog`
 
 ## Query Layer
 
 `lib/db/queries.ts` provides cached async functions for runtime data access:
 
 ```typescript
-import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb } from '@/lib/db/queries';
+import {
+  getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb,
+  getTestimonialsFromDb, getAboutSectionsFromDb,
+  getProjectsFromDb, getProjectBySlugFromDb, getProjectSlugsFromDb,
+  getServiceAreasFromDb, getBlogPostsFromDb, getBlogPostBySlugFromDb,
+  getBlogPostSlugsFromDb, getGalleryItemsFromDb, getTrustBadgesFromDb,
+  getShowroomFromDb,
+} from '@/lib/db/queries';
 
 // All functions use React cache() for request-level deduplication
-const company = await getCompanyFromDb();      // Company
-const links = await getSocialLinksFromDb();     // SocialLink[]
-const services = await getServicesFromDb();     // Service[]
-const testimonials = await getTestimonialsFromDb();  // Testimonial[]
-const about = await getAboutSectionsFromDb();   // AboutSections
+const company = await getCompanyFromDb();              // Company
+const links = await getSocialLinksFromDb();             // SocialLink[]
+const services = await getServicesFromDb();             // Service[]
+const testimonials = await getTestimonialsFromDb();     // Testimonial[]
+const about = await getAboutSectionsFromDb();           // AboutSections
+const projects = await getProjectsFromDb();             // Project[]
+const project = await getProjectBySlugFromDb('slug');   // Project | null
+const slugs = await getProjectSlugsFromDb();            // string[]
+const areas = await getServiceAreasFromDb();            // ServiceArea[]
+const posts = await getBlogPostsFromDb();               // BlogPost[]
+const post = await getBlogPostBySlugFromDb('slug');     // BlogPost | null
+const postSlugs = await getBlogPostSlugsFromDb();       // string[]
+const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
+const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
+const showroom = await getShowroomFromDb();             // Showroom
 ```
 
-These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components.
+These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are capitalized in the query layer (`'whole-house'` → `'Whole House'`).
+
+### Admin Queries
+
+Uncached query functions for the admin dashboard (return raw DB rows):
+
+```typescript
+import {
+  getAllProjectsAdmin, getAllServicesAdmin,
+  getAllTestimonialsAdmin, getAllBlogPostsAdmin, getAllContactsAdmin,
+} from '@/lib/db/queries';
+```
 
 ## Configuration
 
