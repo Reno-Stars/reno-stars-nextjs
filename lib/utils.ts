@@ -245,33 +245,6 @@ export function getRelativeTime(
 }
 
 // ============================================================================
-// HTML UTILITIES
-// ============================================================================
-
-import DOMPurify from 'isomorphic-dompurify';
-
-/**
- * Sanitizes HTML using DOMPurify with a safe allowlist.
- * Handles all known XSS bypass techniques including nested tags,
- * encoding tricks, and mutation XSS.
- * @param html - Raw HTML string
- * @returns Sanitized HTML with only safe tags and attributes
- */
-export function sanitizeHtml(html: string): string {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [
-      'p', 'br', 'b', 'i', 'em', 'strong', 'u', 'ul', 'ol', 'li',
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'blockquote', 'code',
-      'pre', 'span', 'div', 'img', 'figure', 'figcaption', 'table',
-      'thead', 'tbody', 'tr', 'th', 'td',
-    ],
-    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel'],
-    ADD_ATTR: ['rel'],
-    ALLOW_DATA_ATTR: false,
-  });
-}
-
-// ============================================================================
 // METADATA UTILITIES
 // ============================================================================
 
