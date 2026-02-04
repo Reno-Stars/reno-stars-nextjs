@@ -16,7 +16,11 @@
     "blog": "博客",
     "areas": "服务区域",
     "design": "设计",
-    "benefits": "优势"
+    "benefits": "优势",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "switchLanguage": "Switch to English",
+    "blogAndNews": "博客与资讯"
   },
   "cta": {
     "getQuote": "获取报价",
@@ -31,6 +35,7 @@
     "viewOurWork": "查看我们的作品",
     "ourServices": "我们的服务",
     "learnMore": "了解更多",
+    "exploreService": "探索{service}",
     "sendMessage": "发送信息",
     "submitInquiry": "提交咨询",
     "bookAppointment": "预约参观",
@@ -169,7 +174,9 @@
     "allRights": "版权所有。",
     "licensedInsured": "持证经营，保险齐全",
     "freeEstimates": "免费估价",
-    "mapLocation": "地图位置"
+    "mapLocation": "地图位置",
+    "wechatId": "微信号: {id}",
+    "quickLinks": "快捷链接"
   },
   "label": {
     "phone": "电话",
@@ -208,7 +215,16 @@
     "viewProject": "查看项目",
     "projectDetails": "项目详情",
     "allProjects": "所有项目",
-    "noProjectsFound": "未找到符合条件的项目。"
+    "noProjectsFound": "未找到符合条件的项目。",
+    "relatedProjects": "相关项目",
+    "featuredProjects": "精选项目",
+    "categoryTitle": "{category}装修项目",
+    "categorySubtitle": "探索我们的{category}装修作品集，查看我们如何将空间改造成梦想家园。",
+    "openLightbox": "点击放大图片",
+    "viewImage": "查看图片",
+    "imageGallery": "图片展示",
+    "previousImage": "上一张图片",
+    "nextImage": "下一张图片"
   },
   "modal": {
     "location": "地点",
@@ -219,7 +235,8 @@
     "duration": "工期",
     "challenge": "项目挑战",
     "solution": "我们的方案",
-    "close": "关闭"
+    "close": "关闭",
+    "viewDetails": "查看完整详情"
   },
   "filter": {
     "allCategories": "所有类别",
@@ -276,14 +293,22 @@
     "servingIn": "{city}装修服务",
     "cityDescription": "{city}提供专业装修服务。联系我们获取免费咨询。",
     "viewProjects": "查看{city}项目",
-    "requestQuote": "获取报价"
+    "requestQuote": "获取报价",
+    "whyChooseArea": "为什么选择我们的{area}服务",
+    "areaProjects": "{area}项目",
+    "readyToStartIn": "准备在{area}开始您的{service}项目？",
+    "serviceInArea": "{area}{service}",
+    "servicesInArea": "我们在{area}的服务",
+    "readyToStartRenovation": "准备开始您的{area}装修项目？"
   },
   "blog": {
     "title": "装修博客",
     "subtitle": "装修项目的技巧、趋势和见解",
     "readMore": "阅读更多",
     "publishedOn": "发布于",
-    "backToBlog": "返回博客"
+    "backToBlog": "返回博客",
+    "comingSoon": "完整文章内容即将上线。如有任何装修问题，请随时联系我们。",
+    "noPosts": "暂无博客文章。请稍后查看装修技巧和见解。"
   },
   "contact": {
     "title": "联系我们",
@@ -320,6 +345,30 @@
       "description": "从设计到完工，我们处理装修的每个方面。"
     }
   },
+  "serviceBenefits": {
+    "freeConsultation": "免费咨询和报价",
+    "licensedInsured": "持证和保险专业人员",
+    "warranty": "{warranty}工艺保修",
+    "coverage": "{coverage}责任保险",
+    "experience": "{years}年以上经验",
+    "rating": "{source} {rating}评分"
+  },
+  "locationBenefits": {
+    "localExpertise": "本地专业服务",
+    "freeOnsite": "免费现场咨询",
+    "competitivePricing": "有竞争力的本地价格",
+    "quickResponse": "快速响应",
+    "experience": "服务低陆平原{years}年以上",
+    "licensedInsured": "持证且全额保险"
+  },
+  "areaBenefits": {
+    "localTeam": "熟悉当地的本地团队",
+    "quickResponse": "快速响应时间",
+    "buildingCodes": "了解当地建筑规范",
+    "supplierRelationships": "稳定的供应商关系",
+    "freeOnsite": "免费现场咨询",
+    "competitivePricing": "有竞争力的本地价格"
+  },
   "metadata": {
     "home": {
       "title": "Reno Stars - 温哥华装修承包商 | 厨房和卫浴改造",
@@ -340,6 +389,30 @@
     "blog": {
       "title": "装修博客 | 技巧与创意 | Reno Stars 温哥华",
       "description": "专业的装修技巧、趋势和家居改善项目创意。Reno Stars温哥华装修博客。"
+    },
+    "benefits": {
+      "title": "为什么选择Reno Stars | 温哥华装修承包商",
+      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。27年以上经验、500万美元保险、3年质保、HomeStars 10/10评分。"
+    },
+    "design": {
+      "title": "装修设计灵感 | Reno Stars 温哥华",
+      "description": "探索美丽的厨房、浴室和全屋装修设计创意。从温哥华专业装修团队获取灵感。"
+    },
+    "projectCategory": {
+      "title": "{category}装修项目 | Reno Stars 温哥华",
+      "description": "探索我们在温哥华及低陆平原地区的{category}装修项目。"
+    },
+    "serviceLocation": {
+      "title": "{area}{service} | Reno Stars",
+      "description": "{area}专业{service}服务。联系Reno Stars获取免费报价。"
+    },
+    "area": {
+      "title": "{area}装修服务 | Reno Stars",
+      "description": "{area}专业装修服务。厨房、浴室、全屋装修。联系我们获取免费报价。"
+    },
+    "thankYou": {
+      "title": "感谢您 | Reno Stars",
+      "description": "您的消息已收到，我们会尽快回复您。"
     }
   },
   "common": {

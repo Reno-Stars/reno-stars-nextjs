@@ -16,7 +16,11 @@
     "blog": "Blog",
     "areas": "Areas",
     "design": "Design",
-    "benefits": "Benefits"
+    "benefits": "Benefits",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "Switch to Chinese",
+    "blogAndNews": "Blog & News"
   },
   "cta": {
     "getQuote": "Get Quote",
@@ -31,6 +35,7 @@
     "viewOurWork": "View Our Work",
     "ourServices": "Our Services",
     "learnMore": "Learn More",
+    "exploreService": "Explore {service}",
     "sendMessage": "Send Message",
     "submitInquiry": "Submit Inquiry",
     "bookAppointment": "Book an Appointment",
@@ -169,7 +174,9 @@
     "allRights": "All rights reserved.",
     "licensedInsured": "Licensed & Insured",
     "freeEstimates": "Free Estimates",
-    "mapLocation": "Map Location"
+    "mapLocation": "Map Location",
+    "wechatId": "WeChat ID: {id}",
+    "quickLinks": "Quick Links"
   },
   "label": {
     "phone": "Phone",
@@ -208,7 +215,16 @@
     "viewProject": "View Project",
     "projectDetails": "Project Details",
     "allProjects": "All Projects",
-    "noProjectsFound": "No projects found matching your criteria."
+    "noProjectsFound": "No projects found matching your criteria.",
+    "relatedProjects": "Related Projects",
+    "featuredProjects": "Featured Projects",
+    "categoryTitle": "{category} Renovation Projects",
+    "categorySubtitle": "Explore our {category} renovation portfolio and see how we transform spaces into dream homes.",
+    "openLightbox": "Click to enlarge image",
+    "viewImage": "View image",
+    "imageGallery": "Image gallery",
+    "previousImage": "Previous image",
+    "nextImage": "Next image"
   },
   "modal": {
     "location": "Location",
@@ -219,7 +235,8 @@
     "duration": "Duration",
     "challenge": "The Challenge",
     "solution": "Our Solution",
-    "close": "Close"
+    "close": "Close",
+    "viewDetails": "View Full Details"
   },
   "filter": {
     "allCategories": "All Categories",
@@ -276,14 +293,22 @@
     "servingIn": "Renovation Services in {city}",
     "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
     "viewProjects": "View {city} Projects",
-    "requestQuote": "Request Quote"
+    "requestQuote": "Request Quote",
+    "whyChooseArea": "Why Choose Our {area} Service",
+    "areaProjects": "{area} Projects",
+    "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
+    "serviceInArea": "{service} in {area}",
+    "servicesInArea": "Our Services in {area}",
+    "readyToStartRenovation": "Ready to Start Your {area} Renovation?"
   },
   "blog": {
     "title": "Renovation Blog",
     "subtitle": "Tips, trends, and insights for your renovation project",
     "readMore": "Read More",
     "publishedOn": "Published on",
-    "backToBlog": "Back to Blog"
+    "backToBlog": "Back to Blog",
+    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
+    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights."
   },
   "contact": {
     "title": "Contact Us",
@@ -320,6 +345,30 @@
       "description": "From design to completion, we handle every aspect of your renovation."
     }
   },
+  "serviceBenefits": {
+    "freeConsultation": "Free consultation and quote",
+    "licensedInsured": "Licensed and insured professionals",
+    "warranty": "{warranty} warranty on workmanship",
+    "coverage": "{coverage} liability coverage",
+    "experience": "{years}+ years of experience",
+    "rating": "{rating} {source} rating"
+  },
+  "locationBenefits": {
+    "localExpertise": "Local expertise in your area",
+    "freeOnsite": "Free on-site consultation",
+    "competitivePricing": "Competitive local pricing",
+    "quickResponse": "Quick response times",
+    "experience": "{years}+ years serving the Lower Mainland",
+    "licensedInsured": "Licensed and fully insured"
+  },
+  "areaBenefits": {
+    "localTeam": "Local team familiar with the area",
+    "quickResponse": "Quick response times",
+    "buildingCodes": "Knowledge of local building codes",
+    "supplierRelationships": "Established supplier relationships",
+    "freeOnsite": "Free on-site consultations",
+    "competitivePricing": "Competitive local pricing"
+  },
   "metadata": {
     "home": {
       "title": "Reno Stars - Vancouver Renovation Contractor | Kitchen & Bathroom Remodeling",
@@ -340,6 +389,30 @@
     "blog": {
       "title": "Renovation Blog | Tips & Ideas | Reno Stars Vancouver",
       "description": "Expert renovation tips, trends, and ideas for your home improvement project. Vancouver renovation blog by Reno Stars."
+    },
+    "benefits": {
+      "title": "Why Choose Reno Stars | Vancouver Renovation Contractor",
+      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. 27+ years experience, $5M coverage, 3-year warranty, 10/10 HomeStars rating."
+    },
+    "design": {
+      "title": "Renovation Design Inspiration | Reno Stars Vancouver",
+      "description": "Explore beautiful kitchen, bathroom, and whole house renovation design ideas. Get inspired by Vancouver's professional renovation team."
+    },
+    "projectCategory": {
+      "title": "{category} Renovation Projects | Reno Stars Vancouver",
+      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland."
+    },
+    "serviceLocation": {
+      "title": "{service} in {area} | Reno Stars",
+      "description": "Professional {service} services in {area}. Contact Reno Stars for a free quote."
+    },
+    "area": {
+      "title": "Renovation Services in {area} | Reno Stars",
+      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+    },
+    "thankYou": {
+      "title": "Thank You | Reno Stars",
+      "description": "Your message has been received. We will get back to you shortly."
     }
   },
   "common": {

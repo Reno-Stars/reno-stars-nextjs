@@ -1,89 +1,85 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import Link from 'next/link';
+import { useMemo } from 'react';
 import Image from 'next/image';
-import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2, Phone, Mail, MapPin, Star, Award, ChevronRight, Shield, Loader2 } from 'lucide-react';
-import { getLocalizedData } from '@/lib/data';
-import { useLanguage } from '@/i18n/LanguageContext';
-import TetrisGallery from '@/components/TetrisGallery';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { submitContactForm } from '@/app/actions/contact';
+import { useTranslations } from 'next-intl';
+import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2, Phone, Mail, MapPin, Star, Award, ChevronRight, Shield } from 'lucide-react';
+import { Link } from '@/navigation';
+import type { Locale } from '@/i18n/config';
+import type { Company, Service, Testimonial, AboutSections } from '@/lib/types';
 import {
-  NAVY, NAVY_MID, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
-  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
+  video,
+  images,
+  getAllGalleryItemsLocalized,
+  getTrustBadges,
+  getAllBlogPostsLocalized,
+  getShowroomLocalized,
+  getAllAreasLocalized,
+} from '@/lib/data';
+import TetrisGallery from '@/components/TetrisGallery';
+import ContactForm from '@/components/ContactForm';
+import {
+  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
-export default function LandingPage() {
-  const { lang, t } = useLanguage();
-  const { company, services, gallery, testimonials, areas, blogPosts, trustBadges, showroom, aboutSections, video } = getLocalizedData(lang);
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
-  const [formStatus, setFormStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({ type: 'idle', message: '' });
-  const [isPending, startTransition] = useTransition();
+const serviceIcons = [Hammer, Bath, Home, ArrowDown, Paintbrush, Building2];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setFormData({ ...formData, [e.target.name]: e.target.value });
+interface HomePageProps {
+  locale: Locale;
+  company: Company;
+  services: Service[];
+  testimonials: Testimonial[];
+  aboutSections: AboutSections;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus({ type: 'idle', message: '' });
-
-    startTransition(async () => {
-      const result = await submitContactForm(formData);
-      if (result.success) {
-        setFormStatus({ type: 'success', message: result.message });
-        setFormData({ name: '', email: '', phone: '', message: '' });
-      } else {
-        setFormStatus({ type: 'error', message: result.message });
-      }
-    });
-  };
-
-  const icons = [Hammer, Bath, Home, ArrowDown, Paintbrush, Building2];
+export default function HomePage({ locale, company, services, testimonials, aboutSections }: HomePageProps) {
+  const t = useTranslations();
+  const gallery = useMemo(() => getAllGalleryItemsLocalized(locale), [locale]);
+  const trustBadges = useMemo(() => getTrustBadges(locale), [locale]);
+  const blogPosts = useMemo(() => getAllBlogPostsLocalized(locale), [locale]);
+  const showroom = useMemo(() => getShowroomLocalized(locale), [locale]);
+  const areas = useMemo(() => getAllAreasLocalized(locale), [locale]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
-      <Navbar variant="landing" />
 
       {/* HERO */}
       <section className="relative overflow-hidden min-h-[70vh] flex items-center">
-        {/* Video Background with poster fallback */}
         <video
           autoPlay
           muted
           loop
           playsInline
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
-          poster="https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg"
+          poster={images.hero}
         >
           <source src={video.hero} type="video/mp4" />
-          {/* Fallback for browsers that don't support video */}
         </video>
-        {/* Static image fallback for reduced motion preference */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center hidden motion-reduce:block"
-          style={{ backgroundImage: 'url(https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg)' }}
+          style={{ backgroundImage: `url(${images.hero})` }}
           aria-hidden="true"
         />
-        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="max-w-2xl space-y-5">
-            <img src={company.logo} alt={company.name} className="h-10 w-auto object-contain rounded-md bg-white/95 px-3 py-1" />
+            <Image src={company.logo} alt={company.name} width={180} height={40} className="h-10 w-auto object-contain rounded-md bg-white/95 px-3 py-1" />
             <h1 className="text-3xl md:text-5xl font-bold leading-tight text-white">
               {t('hero.transformYourSpace')}
             </h1>
             <p className="text-base leading-relaxed text-white/70">
-              {t('hero.professionalExcellenceDesc').replace('{experience}', company.yearsExperience).replace('{coverage}', company.liabilityCoverage)}
+              {t('hero.professionalExcellenceDesc', { experience: company.yearsExperience, coverage: company.liabilityCoverage })}
             </p>
             <div className="flex flex-wrap gap-3 pt-1">
-              <a href="#contact"
+              <Link href="/contact"
                 className="px-7 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 text-white hover:brightness-110"
                 style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}55` }}
               >
                 {t('cta.getFreeQuote')}
-              </a>
+              </Link>
               <a href={`tel:${company.phone}`}
                 className="px-7 py-3 rounded-xl text-sm font-semibold cursor-pointer border border-white/30 text-white/90 hover:text-white hover:border-white/50 transition-all duration-200 backdrop-blur-sm"
               >
@@ -95,8 +91,8 @@ export default function LandingPage() {
                 `${company.yearsExperience}+ ${t('stats.yearsExperience')}`,
                 `${company.liabilityCoverage} ${t('stats.liabilityCoverage')}`,
                 `${company.rating} ${t('stats.rating')}`,
-              ].map((txt, i) => (
-                <span key={i} className="text-xs font-medium text-white/50 flex items-center gap-1.5">
+              ].map((txt) => (
+                <span key={txt} className="text-xs font-medium text-white/50 flex items-center gap-1.5">
                   <Shield className="w-3 h-3" style={{ color: GOLD }} /> {txt}
                 </span>
               ))}
@@ -112,8 +108,11 @@ export default function LandingPage() {
           <span className="text-xs font-bold uppercase tracking-wider" style={{ color: GOLD }}>{t('section.serviceAreas')}</span>
           <span className="mx-1" style={{ color: TEXT_MUTED }}>|</span>
           {areas.map((area, i) => (
-            <span key={i} className="text-xs font-medium" style={{ color: TEXT_MID }}>
-              {area}{i < areas.length - 1 ? <span className="mx-1.5" style={{ color: `${TEXT}20` }}>&bull;</span> : ''}
+            <span key={area.slug} className="text-xs font-medium" style={{ color: TEXT_MID }}>
+              <Link href={`/areas/${area.slug}` as '/'} className="hover:underline" style={{ color: TEXT_MID }}>
+                {area.name}
+              </Link>
+              {i < areas.length - 1 ? <span className="mx-1.5" style={{ color: `${TEXT}20` }}>&bull;</span> : ''}
             </span>
           ))}
         </div>
@@ -128,10 +127,10 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((service, index) => {
-              const Icon = icons[index] || Hammer;
+              const Icon = serviceIcons[index] || Hammer;
               return (
-                <div key={index}
-                  className="rounded-2xl p-5 cursor-pointer transition-all duration-200 group"
+                <Link key={service.slug} href={`/services/${service.slug}`}
+                  className="rounded-2xl p-5 cursor-pointer transition-all duration-200 group block"
                   style={{ boxShadow: neu(5), backgroundColor: CARD }}
                 >
                   <div className="flex items-start gap-4">
@@ -141,11 +140,11 @@ export default function LandingPage() {
                       <Icon className="w-5 h-5" style={{ color: GOLD }} />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base font-bold mb-1 group-hover:text-[#C8922A] transition-colors" style={{ color: TEXT }}>{service.title}</h3>
-                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{service.description}</p>
+                      <h3 className="text-base font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>{service.title[locale]}</h3>
+                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{service.description[locale]}</p>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -160,8 +159,8 @@ export default function LandingPage() {
             { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
             { value: '100%', label: t('stats.satisfaction') },
             { value: '24/7', label: t('stats.support') },
-          ].map((s, i) => (
-            <div key={i} className="text-center py-2">
+          ].map((s) => (
+            <div key={s.value} className="text-center py-2">
               <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
               <div className="text-xs font-medium text-white/50 mt-0.5">{s.label}</div>
             </div>
@@ -178,13 +177,13 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { title: t('about.ourJourney'), text: aboutSections.ourJourney },
-              { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer },
-              { title: t('about.ourValues'), text: aboutSections.ourValues },
-              { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs },
-              { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether },
-            ].map((item, i) => (
-              <div key={i} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
+              { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
+              { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
+              { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
+              { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
+              { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
                 <div className="w-8 h-0.5 rounded-full mb-3" style={{ backgroundColor: GOLD }} />
                 <h3 className="text-base font-bold mb-1.5" style={{ color: TEXT }}>{item.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{item.text}</p>
@@ -225,23 +224,23 @@ export default function LandingPage() {
             <p className="text-sm" style={{ color: TEXT_MID }}>{t('section.testimonialsSubtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {testimonials.map((t2, i) => (
-              <div key={i} className="rounded-2xl p-5 relative" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className="rounded-2xl p-5 relative" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
                 <div className="absolute left-0 top-5 bottom-5 w-0.5 rounded-r-full" style={{ backgroundColor: GOLD }} />
                 <div className="pl-4">
-                  <div className="flex gap-0.5 mb-3">
-                    {[...Array(t2.rating)].map((_, j) => (
-                      <Star key={j} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
+                  <div className="flex gap-0.5 mb-3" role="img" aria-label={`${testimonial.rating}/5`}>
+                    {[...Array(testimonial.rating)].map((_, j) => (
+                      <Star key={`star-${j}`} className="w-3.5 h-3.5" aria-hidden="true" style={{ fill: GOLD, color: GOLD }} />
                     ))}
                   </div>
-                  <p className="text-sm leading-relaxed italic mb-4" style={{ color: TEXT_MID }}>&ldquo;{t2.text}&rdquo;</p>
+                  <p className="text-sm leading-relaxed italic mb-4" style={{ color: TEXT_MID }}>&ldquo;{testimonial.text[locale]}&rdquo;</p>
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: NAVY }}>
-                      {t2.name.charAt(0)}
+                      {testimonial.name.charAt(0)}
                     </div>
                     <div>
-                      <div className="text-sm font-bold" style={{ color: TEXT }}>{t2.name}</div>
-                      <div className="text-xs" style={{ color: TEXT_MUTED }}>{t2.location}</div>
+                      <div className="text-sm font-bold" style={{ color: TEXT }}>{testimonial.name}</div>
+                      <div className="text-xs" style={{ color: TEXT_MUTED }}>{testimonial.location}</div>
                     </div>
                   </div>
                 </div>
@@ -254,8 +253,8 @@ export default function LandingPage() {
       {/* TRUST BADGES */}
       <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-          {trustBadges.map((badge, i) => (
-            <div key={i} className="rounded-xl p-4 flex items-center gap-3" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+          {trustBadges.map((badge) => (
+            <div key={badge} className="rounded-xl p-4 flex items-center gap-3" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
               <Award className="w-6 h-6 shrink-0" style={{ color: GOLD }} />
               <span className="text-sm font-bold" style={{ color: TEXT }}>{badge}</span>
             </div>
@@ -271,14 +270,14 @@ export default function LandingPage() {
             <p className="text-sm" style={{ color: TEXT_MID }}>{t('section.blogSubtitle')}</p>
           </div>
           <div className="space-y-3">
-            {blogPosts.map((post, i) => (
-              <a key={i} href={post.url}
+            {blogPosts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`}
                 className="rounded-xl p-4 flex items-center justify-between transition-all duration-200 cursor-pointer block hover:translate-x-1"
                 style={{ boxShadow: neu(4), backgroundColor: CARD }}
               >
                 <span className="text-sm font-semibold" style={{ color: TEXT }}>{post.title}</span>
                 <ChevronRight className="w-4 h-4 shrink-0 ml-3" style={{ color: GOLD }} />
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -287,16 +286,16 @@ export default function LandingPage() {
       {/* SHOWROOM CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-4xl mx-auto text-center">
-          <img src={company.logo} alt={company.name} className="h-10 w-auto object-contain mx-auto mb-5 rounded-md bg-white/95 px-3 py-1" loading="lazy" />
+          <Image src={company.logo} alt={company.name} width={180} height={40} className="h-10 w-auto object-contain mx-auto mb-5 rounded-md bg-white/95 px-3 py-1" />
           <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">{t('section.visitShowroom')}</h2>
           <p className="text-sm mb-2 text-white/60">{showroom.appointmentText}</p>
           <p className="text-xs text-white/40 mb-6">{showroom.address} &middot; {showroom.phone}</p>
-          <a href={company.quoteUrl} target="_blank" rel="noopener noreferrer"
+          <Link href="/contact"
             className="inline-block px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
             style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
           >
             {t('cta.bookAppointment')}
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -312,9 +311,9 @@ export default function LandingPage() {
               {[
                 { icon: Phone, title: t('label.phone'), value: company.phone, href: `tel:${company.phone}` },
                 { icon: Mail, title: t('label.email'), value: company.email, href: `mailto:${company.email}` },
-                { icon: MapPin, title: t('section.serviceAreas'), value: areas.slice(0, 8).join(', ') + '…' },
-              ].map((c, i) => (
-                <div key={i} className="rounded-xl p-4 flex items-start gap-3" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                { icon: MapPin, title: t('section.serviceAreas'), value: areas.slice(0, 8).map((a) => a.name).join(', ') + '\u2026' },
+              ].map((c) => (
+                <div key={c.title} className="rounded-xl p-4 flex items-start gap-3" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: GOLD_PALE }}>
                     <c.icon className="w-4 h-4" style={{ color: GOLD }} />
                   </div>
@@ -331,57 +330,12 @@ export default function LandingPage() {
             </div>
 
             <div className="rounded-2xl p-6" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {formStatus.type !== 'idle' && (
-                  <div
-                    className="p-3 rounded-lg text-sm font-medium"
-                    style={{
-                      backgroundColor: formStatus.type === 'success' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                      color: formStatus.type === 'success' ? '#16a34a' : '#dc2626',
-                    }}
-                    role="alert"
-                  >
-                    {formStatus.message}
-                  </div>
-                )}
-                {[
-                  { id: 'name', type: 'text', label: t('form.name'), ph: t('form.namePlaceholder') },
-                  { id: 'email', type: 'email', label: t('form.email'), ph: t('form.emailPlaceholder') },
-                  { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2') },
-                ].map((f) => (
-                  <div key={f.id}>
-                    <label htmlFor={f.id} className="block text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>{f.label}</label>
-                    <input type={f.type} id={f.id} name={f.id} value={formData[f.id as keyof typeof formData]} onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 rounded-lg border-none outline-none text-sm transition-all duration-200"
-                      style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT }}
-                      placeholder={f.ph} required disabled={isPending}
-                    />
-                  </div>
-                ))}
-                <div>
-                  <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>{t('form.message')}</label>
-                  <textarea id="message" name="message" value={formData.message} onChange={handleInputChange} rows={3}
-                    className="w-full px-4 py-2.5 rounded-lg border-none outline-none text-sm resize-none transition-all duration-200"
-                    style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT }}
-                    placeholder={t('form.messagePlaceholder')} required disabled={isPending}
-                  />
-                </div>
-                <button type="submit"
-                  className="w-full py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  style={{ backgroundColor: GOLD, boxShadow: `0 4px 16px ${GOLD}44` }}
-                  disabled={isPending}
-                  aria-busy={isPending}
-                >
-                  {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
-                  {isPending ? t('form.sending') : t('cta.sendMessage')}
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

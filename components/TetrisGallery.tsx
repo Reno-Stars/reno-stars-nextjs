@@ -1,7 +1,7 @@
 'use client';
 
-import { GalleryItem } from '@/lib/data';
 import { CSSProperties, KeyboardEvent } from 'react';
+import Image from 'next/image';
 
 const layouts = [
   { col: 'col-span-2', aspect: 'aspect-[2/1]' },
@@ -18,17 +18,23 @@ const layouts = [
   { col: '', aspect: 'aspect-square' },
 ];
 
+interface LocalizedGalleryItem {
+  image: string;
+  title: string;
+  category: string;
+}
+
 interface TetrisGalleryProps {
-  items: GalleryItem[];
+  items: LocalizedGalleryItem[];
   cardClassName?: string;
   cardStyle?: CSSProperties;
   imageClassName?: string;
   overlayClassName?: string;
-  onItemClick?: (item: GalleryItem, index: number) => void;
+  onItemClick?: (item: LocalizedGalleryItem, index: number) => void;
 }
 
 export default function TetrisGallery({ items, cardClassName = '', cardStyle = {}, imageClassName = '', overlayClassName = '', onItemClick }: TetrisGalleryProps) {
-  const handleKeyDown = (e: KeyboardEvent, item: GalleryItem, index: number) => {
+  const handleKeyDown = (e: KeyboardEvent, item: LocalizedGalleryItem, index: number) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onItemClick?.(item, index);
@@ -43,8 +49,8 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
 
         return (
           <div
-            key={index}
-            className={`${layout.col} ${layout.aspect} overflow-hidden cursor-pointer relative group ${cardClassName} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8922A]`}
+            key={`${item.image}-${item.title}`}
+            className={`${layout.col} ${layout.aspect} overflow-hidden cursor-pointer relative group ${cardClassName} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold`}
             style={cardStyle}
             role="listitem"
             tabIndex={0}
@@ -52,11 +58,12 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
             onKeyDown={(e) => handleKeyDown(e, item, index)}
             aria-label={altText}
           >
-            <img
+            <Image
               src={item.image}
               alt={altText}
-              className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${imageClassName}`}
-              loading="lazy"
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className={`object-cover transition-transform duration-500 group-hover:scale-110 ${imageClassName}`}
             />
             {(item.title || item.category) && (
               <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex items-end ${overlayClassName}`} aria-hidden="true">

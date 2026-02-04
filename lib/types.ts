@@ -1,102 +1,259 @@
+/**
+ * Type definitions for the Reno Stars application.
+ * @module lib/types
+ */
+
+/** Supported locales for internationalization */
 export type Locale = 'en' | 'zh';
+
+/** Helper type for bilingual content */
 export type Localized<T> = Record<Locale, T>;
 
-export type ServiceType = 'kitchen' | 'bathroom' | 'whole-house' | 'basement' | 'cabinet' | 'commercial';
+/** Available service types for renovation projects */
+export type ServiceType =
+  | 'kitchen'
+  | 'bathroom'
+  | 'whole-house'
+  | 'basement'
+  | 'cabinet'
+  | 'commercial';
 
+/**
+ * A renovation project in the portfolio.
+ * Contains bilingual content and project details.
+ */
 export interface Project {
+  /** URL-friendly identifier */
   slug: string;
+  /** Project title in both languages */
   title: Localized<string>;
+  /** Short description */
   description: Localized<string>;
+  /** Extended project narrative */
   project_story?: Localized<string>;
+  /** Brief summary for listings */
   excerpt?: Localized<string>;
+  /** Type of renovation service */
   service_type: ServiceType;
+  /** Display category name */
   category: Localized<string>;
+  /** City where project is located */
   location_city: string;
+  /** Budget range (e.g., "$15,000 - $25,000") */
   budget_range?: string;
+  /** Project timeline */
   duration?: Localized<string>;
+  /** Type of space (Residential, Commercial, etc.) */
   space_type?: Localized<string>;
+  /** Project images with before/after indicators */
   images: { src: string; alt: Localized<string>; is_before?: boolean }[];
+  /** Primary display image URL */
   hero_image: string;
+  /** List of work scope items */
   service_scope?: Localized<string[]>;
+  /** Problem statement */
   challenge?: Localized<string>;
+  /** How the challenge was addressed */
   solution?: Localized<string>;
+  /** Publication date */
   published_at?: Date;
+  /** Whether to feature on homepage */
   featured?: boolean;
+  /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
 }
 
+/**
+ * A renovation service offering.
+ */
 export interface Service {
+  /** Service type identifier */
   slug: ServiceType;
+  /** Service name */
   title: Localized<string>;
+  /** Short service description */
   description: Localized<string>;
+  /** Detailed service explanation */
   long_description?: Localized<string>;
+  /** Lucide icon name */
+  icon?: string;
+  /** Service showcase image URL */
+  image?: string;
+}
+
+/**
+ * A geographic service area.
+ */
+export interface ServiceArea {
+  /** URL-friendly area identifier */
+  slug: string;
+  /** Area name */
+  name: Localized<string>;
+  /** Area description */
+  description?: Localized<string>;
+}
+
+/**
+ * A customer testimonial/review.
+ */
+export interface Testimonial {
+  /** Unique identifier */
+  id: string;
+  /** Customer name */
+  name: string;
+  /** Review text */
+  text: Localized<string>;
+  /** Rating from 1-5 */
+  rating: number;
+  /** Customer location */
+  location: string;
+}
+
+/**
+ * A blog post entry.
+ */
+export interface BlogPost {
+  /** URL-friendly identifier */
+  slug: string;
+  /** Post title */
+  title: Localized<string>;
+  /** Preview text */
+  excerpt?: Localized<string>;
+  /** Full post content (HTML/Markdown) */
+  content?: Localized<string>;
+  /** Publication date */
+  published_at?: Date;
+  /** External URL (if linking elsewhere) */
+  url?: string;
+}
+
+/**
+ * A gallery image item.
+ */
+export interface GalleryItem {
+  /** Image URL */
+  image: string;
+  /** Image title */
+  title: Localized<string>;
+  /** Gallery category (Kitchen, Bathroom, etc.) */
+  category: string;
+}
+
+/**
+ * Company information and metadata.
+ */
+export interface Company {
+  /** Company name */
+  name: string;
+  /** Company tagline */
+  tagline: string;
+  /** Contact phone number */
+  phone: string;
+  /** Contact email */
+  email: string;
+  /** Physical address */
+  address: string;
+  /** Logo image URL */
+  logo: string;
+  /** Quote request form URL */
+  quoteUrl: string;
+  /** Years of experience */
+  yearsExperience: string;
+  /** Year company was founded */
+  foundingYear: number;
+  /** Number of team members */
+  teamSize: number;
+  /** Warranty period */
+  warranty: string;
+  /** Liability insurance coverage */
+  liabilityCoverage: string;
+  /** Customer rating */
+  rating: string;
+  /** Number of customer reviews */
+  reviewCount: number;
+  /** Rating platform source */
+  ratingSource: string;
+  /** Geographic coordinates for structured data */
+  geo: { latitude: number; longitude: number };
+}
+
+/**
+ * Showroom location and scheduling info.
+ */
+export interface Showroom {
+  /** Showroom address */
+  address: string;
+  /** Appointment booking text */
+  appointmentText: Localized<string>;
+  /** Showroom phone */
+  phone: string;
+  /** Showroom email */
+  email: string;
+}
+
+/**
+ * About page content sections.
+ */
+export interface AboutSections {
+  /** Company history/journey */
+  ourJourney: Localized<string>;
+  /** Services overview */
+  whatWeOffer: Localized<string>;
+  /** Company values */
+  ourValues: Localized<string>;
+  /** Differentiators */
+  whyChooseUs: Localized<string>;
+  /** Call to action */
+  letsBuildTogether: Localized<string>;
+}
+
+// Localized (single-locale) return types for data accessor functions
+
+/** A project with content resolved to a single locale */
+export interface LocalizedProject {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  service_type: ServiceType;
+  location_city: string;
+  budget_range?: string;
+  duration?: string;
+  space_type?: string;
+  hero_image: string;
+  images: { src: string; alt: string; is_before?: boolean }[];
+  service_scope?: string[];
+  challenge?: string;
+  solution?: string;
+  featured?: boolean;
+  badge?: string;
+}
+
+/** A service with content resolved to a single locale */
+export interface LocalizedService {
+  slug: string;
+  title: string;
+  description: string;
+  long_description?: string;
   icon?: string;
   image?: string;
 }
 
-export interface ServiceArea {
+/** A service area with content resolved to a single locale */
+export interface LocalizedArea {
   slug: string;
-  name: Localized<string>;
-  description?: Localized<string>;
-}
-
-export interface Testimonial {
-  id: string;
   name: string;
-  text: Localized<string>;
-  rating: number;
-  location: string;
+  description?: string;
 }
 
-export interface BlogPost {
-  slug: string;
-  title: Localized<string>;
-  excerpt?: Localized<string>;
-  content?: Localized<string>;
-  published_at?: Date;
-  url?: string;
-}
-
-export interface GalleryItem {
-  image: string;
-  title: Localized<string>;
-  category: string;
-}
-
-export interface Company {
-  name: string;
-  tagline: string;
-  phone: string;
-  email: string;
-  address: string;
-  logo: string;
-  quoteUrl: string;
-  experience: string;
-  yearsExperience: string;
-  teamSize: number;
-  warranty: string;
-  liabilityCoverage: string;
-  rating: string;
-  ratingSource: string;
-}
-
-export interface Showroom {
-  address: string;
-  appointmentText: Localized<string>;
-  phone: string;
-  email: string;
-}
-
-export interface AboutSections {
-  ourJourney: Localized<string>;
-  whatWeOffer: Localized<string>;
-  ourValues: Localized<string>;
-  whyChooseUs: Localized<string>;
-  letsBuildTogether: Localized<string>;
-}
-
+/**
+ * A social media profile link.
+ */
 export interface SocialLink {
-  platform: 'facebook' | 'instagram' | 'youtube';
+  /** Social platform name */
+  platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter' | 'xiaohongshu' | 'wechat' | 'whatsapp';
+  /** Profile URL */
   url: string;
+  /** Display label */
   label: string;
 }

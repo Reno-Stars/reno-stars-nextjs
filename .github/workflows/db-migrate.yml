@@ -1,0 +1,58 @@
+name: Database Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Migration action'
+        required: true
+        default: 'push'
+        type: choice
+        options:
+          - push
+          - generate
+          - migrate
+
+jobs:
+  migrate:
+    name: Run Database Migration
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate migrations
+        if: ${{ github.event.inputs.action == 'generate' }}
+        run: npm run db:generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Push schema changes
+        if: ${{ github.event.inputs.action == 'push' }}
+        run: npm run db:push
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run migrations
+        if: ${{ github.event.inputs.action == 'migrate' }}
+        run: npm run db:migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Upload migration files
+        if: ${{ github.event.inputs.action == 'generate' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: migrations
+          path: drizzle/
+          retention-days: 30

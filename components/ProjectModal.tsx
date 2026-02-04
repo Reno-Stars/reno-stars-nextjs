@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock } from 'lucide-react';
-import { useLanguage } from '@/i18n/LanguageContext';
-import { Project } from '@/lib/projectsData';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
+import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/navigation';
+import type { LocalizedProject } from '@/lib/types';
 
 interface ProjectModalProps {
-  project: Project | null;
+  project: LocalizedProject | null;
   onClose: () => void;
   theme?: {
     overlay?: string;
@@ -23,9 +25,10 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose, theme = {} }: ProjectModalProps) {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const [activeImage, setActiveImage] = useState(0);
   const [visible, setVisible] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const {
     overlay = 'bg-black/60 backdrop-blur-sm',
@@ -40,13 +43,31 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
     thumbInactive = 'ring-1 ring-gray-300 opacity-70 hover:opacity-100',
   } = theme;
 
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+
   const handleClose = useCallback(() => {
     setVisible(false);
-    setTimeout(() => onClose(), 200);
+    closeTimerRef.current = setTimeout(() => onClose(), 200);
   }, [onClose]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') handleClose();
+    // Focus trap: cycle through focusable elements within the modal
+    if (e.key === 'Tab' && modalRef.current) {
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   }, [handleClose]);
 
   useEffect(() => {
@@ -54,9 +75,13 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
     document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => setVisible(true));
+    // Focus the close button when modal opens
+    const closeButton = modalRef.current?.querySelector<HTMLElement>('button');
+    closeButton?.focus();
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     };
   }, [project, handleKeyDown]);
 
@@ -66,13 +91,15 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
 
   if (!project) return null;
 
-  const gallery = project.gallery || [project.image];
+  const gallery = project.images.length > 0
+    ? project.images.map(img => img.src)
+    : [project.hero_image];
 
   const sidebarItems = [
-    { icon: MapPin, label: t('modal.location'), value: project.location },
+    { icon: MapPin, label: t('modal.location'), value: project.location_city },
     { icon: Tag, label: t('modal.category'), value: project.category },
-    { icon: DollarSign, label: t('modal.budget'), value: project.budget },
-    { icon: Home, label: t('modal.spaceType'), value: project.spaceType },
+    { icon: DollarSign, label: t('modal.budget'), value: project.budget_range },
+    { icon: Home, label: t('modal.spaceType'), value: project.space_type },
     { icon: Clock, label: t('modal.duration'), value: project.duration },
   ];
 
@@ -81,9 +108,9 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-opacity duration-200 ${overlay}`}
       style={{ opacity: visible ? 1 : 0 }}
       onClick={handleClose}
-      role="presentation"
     >
       <div
+        ref={modalRef}
         className={`relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl transition-all duration-200 ${modal} ${text}`}
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'scale(1)' : 'scale(0.97)' }}
         onClick={(e) => e.stopPropagation()}
@@ -96,7 +123,7 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
           <button
             onClick={handleClose}
             className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer ${closeBtn}`}
-            aria-label="Close modal"
+            aria-label={t('modal.close')}
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -105,10 +132,12 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 p-6">
             <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-4 bg-black/5">
-              <img
+              <Image
                 src={gallery[activeImage]}
                 alt={`${project.title} - Image ${activeImage + 1} of ${gallery.length}`}
-                className="w-full h-full object-contain"
+                fill
+                sizes="(max-width: 1024px) 100vw, 60vw"
+                className="object-contain"
               />
             </div>
 
@@ -116,15 +145,15 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
               <div className="flex gap-3 mb-8" role="group" aria-label="Image gallery thumbnails">
                 {gallery.map((img, i) => (
                   <button
-                    key={i}
+                    key={img}
                     onClick={() => setActiveImage(i)}
-                    className={`w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer ${
+                    className={`relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer ${
                       i === activeImage ? thumbActive : thumbInactive
                     }`}
                     aria-label={`View image ${i + 1} of ${gallery.length}`}
                     aria-pressed={i === activeImage}
                   >
-                    <img src={img} alt={`${project.title} - image ${i + 1}`} className="w-full h-full object-cover" />
+                    <Image src={img} alt={`${project.title} - image ${i + 1}`} fill sizes="80px" className="object-cover" />
                   </button>
                 ))}
               </div>
@@ -162,14 +191,14 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
                 ) : null
               )}
 
-              {project.serviceScope && project.serviceScope.length > 0 && (
+              {project.service_scope && project.service_scope.length > 0 && (
                 <div>
                   <div className={`flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2 ${textSecondary}`}>
                     <Wrench className="w-4 h-4" />
                     {t('modal.serviceScope')}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.serviceScope.map((s) => (
+                    {project.service_scope.map((s) => (
                       <span key={s} className={`px-3 py-1 rounded-full text-xs font-medium ${accent}`}>
                         {s}
                       </span>
@@ -177,6 +206,15 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
                   </div>
                 </div>
               )}
+
+              <Link
+                href={`/projects/${project.slug}`}
+                className={`mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${accent}`}
+                onClick={handleClose}
+              >
+                {t('modal.viewDetails')}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>

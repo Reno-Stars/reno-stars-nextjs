@@ -32,6 +32,9 @@ next-env.d.ts
 
 # Testing
 coverage
+playwright-report/
+playwright/.cache/
+test-results/
 
 # IDE
 .idea
@@ -47,3 +50,6 @@ Thumbs.db
 # Claude Code
 .claude/
 .agents/
+
+# Drizzle
+drizzle/

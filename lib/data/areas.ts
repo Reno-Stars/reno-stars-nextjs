@@ -1,4 +1,4 @@
-import type { ServiceArea, Locale } from '../types';
+import type { ServiceArea, Locale, LocalizedArea } from '../types';
 
 export const serviceAreas: ServiceArea[] = [
   {
@@ -66,19 +66,19 @@ export const serviceAreas: ServiceArea[] = [
     },
   },
   {
+    slug: 'new-westminster',
+    name: { en: 'New Westminster', zh: '新西敏' },
+    description: {
+      en: 'Renovation services in New Westminster. Heritage and modern home specialists.',
+      zh: '新西敏装修服务。传统和现代住宅专家。',
+    },
+  },
+  {
     slug: 'delta',
     name: { en: 'Delta', zh: '三角洲' },
     description: {
       en: 'Trusted renovation contractor in Delta. Serving Ladner, Tsawwassen, and North Delta.',
       zh: '三角洲值得信赖的装修承包商。服务Ladner、Tsawwassen和北三角洲。',
-    },
-  },
-  {
-    slug: 'tsawwassen',
-    name: { en: 'Tsawwassen', zh: 'Tsawwassen' },
-    description: {
-      en: 'Quality renovations in Tsawwassen. Coastal home specialists.',
-      zh: 'Tsawwassen优质装修。海滨住宅专家。',
     },
   },
   {
@@ -123,7 +123,7 @@ export function getServiceAreaBySlug(slug: string): ServiceArea | undefined {
   return serviceAreas.find((a) => a.slug === slug);
 }
 
-export function getLocalizedArea(area: ServiceArea, locale: Locale) {
+export function getLocalizedArea(area: ServiceArea, locale: Locale): LocalizedArea {
   return {
     slug: area.slug,
     name: area.name[locale],
@@ -131,7 +131,7 @@ export function getLocalizedArea(area: ServiceArea, locale: Locale) {
   };
 }
 
-export function getAllAreasLocalized(locale: Locale) {
+export function getAllAreasLocalized(locale: Locale): LocalizedArea[] {
   return serviceAreas.map((a) => getLocalizedArea(a, locale));
 }
 

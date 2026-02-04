@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_NAME } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: "Reno Stars - Where Renovation Starts",
+  title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
 };
 

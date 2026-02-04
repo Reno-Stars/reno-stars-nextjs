@@ -2,6 +2,11 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
+import { LocalBusinessSchema } from '@/components/structured-data';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb } from '@/lib/db/queries';
+import { getServiceAreas } from '@/lib/data';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -24,18 +29,25 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const messages = await getMessages();
+  const [messages, company, socialLinks, services] = await Promise.all([
+    getMessages(),
+    getCompanyFromDb(),
+    getSocialLinksFromDb(),
+    getServicesFromDb(),
+  ]);
+
+  const areas = getServiceAreas();
 
   return (
     <html lang={locale}>
       <head>
-        <link rel="alternate" hrefLang="en" href="https://reno-stars.com/en" />
-        <link rel="alternate" hrefLang="zh" href="https://reno-stars.com/zh" />
-        <link rel="alternate" hrefLang="x-default" href="https://reno-stars.com/en" />
+        <LocalBusinessSchema company={company} socialLinks={socialLinks} />
       </head>
-      <body className="antialiased" suppressHydrationWarning>
+      <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
+          <Navbar company={company} areas={areas} />
           {children}
+          <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} />
         </NextIntlClientProvider>
       </body>
     </html>

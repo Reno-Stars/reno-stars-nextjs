@@ -1,0 +1,113 @@
+import { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
+import { getServiceAreas, getServiceAreaBySlug, getLocalizedArea } from '@/lib/data/areas';
+import type { ServiceType } from '@/lib/types';
+import { getCompanyFromDb, getServicesFromDb } from '@/lib/db/queries';
+import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
+import { BreadcrumbSchema, ServiceSchema } from '@/components/structured-data';
+import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { images as siteImages } from '@/lib/data';
+
+interface PageProps {
+  params: Promise<{ locale: string; 'service-slug': string; city: string }>;
+}
+
+const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
+
+export function generateStaticParams() {
+  const areas = getServiceAreas();
+  const params: { locale: string; 'service-slug': string; city: string }[] = [];
+
+  for (const locale of locales) {
+    for (const slug of SERVICE_SLUGS) {
+      for (const area of areas) {
+        params.push({ locale, 'service-slug': slug, city: area.slug });
+      }
+    }
+  }
+
+  return params;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale, 'service-slug': serviceSlug, city } = await params;
+  const services = await getServicesFromDb();
+  const service = services.find((s) => s.slug === serviceSlug);
+  const area = getServiceAreaBySlug(city);
+
+  if (!service || !area) {
+    return { title: 'Page Not Found', robots: { index: false, follow: false } };
+  }
+
+  const localizedService = getLocalizedService(service, locale as Locale);
+  const localizedArea = getLocalizedArea(area, locale as Locale);
+  const baseUrl = getBaseUrl();
+
+  const t = await getTranslations({ locale, namespace: 'metadata.serviceLocation' });
+  const title = t('title', { service: localizedService.title, area: localizedArea.name });
+  const description = t('description', { service: localizedService.title, area: localizedArea.name });
+
+  return {
+    title,
+    description,
+    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale),
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/${locale}/services/${serviceSlug}/${city}/`,
+      siteName: SITE_NAME,
+      locale: ogLocaleMap[locale as Locale],
+      type: 'website',
+      images: [{ url: siteImages.hero }],
+    },
+  };
+}
+
+export default async function Page({ params }: PageProps) {
+  const { locale, 'service-slug': serviceSlug, city } = await params;
+  setRequestLocale(locale);
+
+  const [company, services] = await Promise.all([getCompanyFromDb(), getServicesFromDb()]);
+  const service = services.find((s) => s.slug === serviceSlug);
+  const area = getServiceAreaBySlug(city);
+
+  if (!service || !area) {
+    notFound();
+  }
+  const localizedService = getLocalizedService(service, locale as Locale);
+  const localizedArea = getLocalizedArea(area, locale as Locale);
+
+  const t = await getTranslations({ locale, namespace: 'nav' });
+  const breadcrumbs = [
+    { name: t('home'), url: `/${locale}/` },
+    { name: t('services'), url: `/${locale}/services/` },
+    { name: localizedService.title, url: `/${locale}/services/${serviceSlug}/` },
+    { name: localizedArea.name, url: `/${locale}/services/${serviceSlug}/${city}/` },
+  ];
+
+  const tAreas = await getTranslations({ locale, namespace: 'areas' });
+  const serviceTitle = tAreas('serviceInArea', { service: localizedService.title, area: localizedArea.name });
+
+  return (
+    <>
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ServiceSchema
+        company={company}
+        serviceName={serviceTitle}
+        serviceDescription={localizedService.long_description || localizedService.description}
+        location={localizedArea.name}
+        url={`/${locale}/services/${serviceSlug}/${city}/`}
+      />
+      <ServiceLocationPage
+        locale={locale as Locale}
+        serviceSlug={serviceSlug as ServiceType}
+        citySlug={city}
+        company={company}
+        service={service}
+      />
+    </>
+  );
+}

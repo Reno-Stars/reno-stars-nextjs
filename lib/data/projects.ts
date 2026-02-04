@@ -1,5 +1,6 @@
-import type { Project, ServiceType, Locale } from '../types';
-import { categoryToServiceType } from './services';
+import type { Project, ServiceType, Locale, LocalizedProject } from '../types';
+import { getAssetUrl } from '../storage';
+import { serviceTypeToCategory } from './services';
 
 export const projects: Project[] = [
   {
@@ -18,11 +19,11 @@ export const projects: Project[] = [
     budget_range: '$15,000 - $25,000',
     duration: { en: '3 weeks', zh: '3周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg', alt: { en: 'White shaker kitchen cabinets', zh: '白色摇门厨房橱柜' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png', alt: { en: 'Kitchen renovation detail', zh: '厨房装修细节' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png', alt: { en: 'Kitchen countertops', zh: '厨房台面' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg'), alt: { en: 'White shaker kitchen cabinets', zh: '白色摇门厨房橱柜' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'), alt: { en: 'Kitchen renovation detail', zh: '厨房装修细节' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'), alt: { en: 'Kitchen countertops', zh: '厨房台面' } },
     ],
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Backsplash'],
@@ -55,11 +56,11 @@ export const projects: Project[] = [
     budget_range: '$30,000 - $45,000',
     duration: { en: '5 weeks', zh: '5周' },
     space_type: { en: 'Condo', zh: '公寓' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png', alt: { en: 'Richmond kitchen remodel', zh: '列治文厨房改造' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/75-1.png', alt: { en: 'Modern kitchen design', zh: '现代厨房设计' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', alt: { en: 'Kitchen and bathroom renovation', zh: '厨房和浴室装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'), alt: { en: 'Richmond kitchen remodel', zh: '列治文厨房改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/75-1.png'), alt: { en: 'Modern kitchen design', zh: '现代厨房设计' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'), alt: { en: 'Kitchen and bathroom renovation', zh: '厨房和浴室装修' } },
     ],
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Flooring', 'Plumbing', 'Tile Work'],
@@ -90,11 +91,11 @@ export const projects: Project[] = [
     budget_range: '$40,000 - $60,000',
     duration: { en: '6 weeks', zh: '6周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/15.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png', alt: { en: 'Surrey home renovation', zh: '素里住宅装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', alt: { en: 'Living space renovation', zh: '起居空间装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', alt: { en: 'Home transformation', zh: '住宅改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/15.png'), alt: { en: 'Surrey home renovation', zh: '素里住宅装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'), alt: { en: 'Living space renovation', zh: '起居空间装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/53.png'), alt: { en: 'Home transformation', zh: '住宅改造' } },
     ],
     service_scope: {
       en: ['Kitchen Design', 'Cabinetry', 'Countertops', 'Flooring', 'Painting'],
@@ -125,11 +126,11 @@ export const projects: Project[] = [
     budget_range: '$20,000 - $35,000',
     duration: { en: '4 weeks', zh: '4周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png', alt: { en: 'White kitchen Surrey', zh: '素里白色厨房' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg', alt: { en: 'Kitchen details', zh: '厨房细节' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png', alt: { en: 'Modern kitchen', zh: '现代厨房' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'), alt: { en: 'White kitchen Surrey', zh: '素里白色厨房' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228155837.jpg'), alt: { en: 'Kitchen details', zh: '厨房细节' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/15.png'), alt: { en: 'Modern kitchen', zh: '现代厨房' } },
     ],
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Appliance Installation', 'Lighting'],
@@ -160,11 +161,11 @@ export const projects: Project[] = [
     budget_range: '$25,000 - $40,000',
     duration: { en: '4 weeks', zh: '4周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/73.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/73.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/73.png', alt: { en: 'Delta kitchen renovation', zh: '三角洲厨房装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/75-1.png', alt: { en: 'Kitchen countertops', zh: '厨房台面' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png', alt: { en: 'Custom cabinetry', zh: '定制橱柜' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/73.png'), alt: { en: 'Delta kitchen renovation', zh: '三角洲厨房装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/75-1.png'), alt: { en: 'Kitchen countertops', zh: '厨房台面' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'), alt: { en: 'Custom cabinetry', zh: '定制橱柜' } },
     ],
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Backsplash', 'Plumbing'],
@@ -195,11 +196,11 @@ export const projects: Project[] = [
     budget_range: '$35,000 - $50,000',
     duration: { en: '5 weeks', zh: '5周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/75-1.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/75-1.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/75-1.png', alt: { en: 'Richmond modern kitchen', zh: '列治文现代厨房' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png', alt: { en: 'Kitchen island', zh: '厨房岛台' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/73.png', alt: { en: 'Premium fixtures', zh: '高端设备' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/75-1.png'), alt: { en: 'Richmond modern kitchen', zh: '列治文现代厨房' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'), alt: { en: 'Kitchen island', zh: '厨房岛台' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/73.png'), alt: { en: 'Premium fixtures', zh: '高端设备' } },
     ],
     service_scope: {
       en: ['Kitchen Design', 'Cabinetry', 'Countertops', 'Island', 'Fixtures'],
@@ -230,11 +231,11 @@ export const projects: Project[] = [
     budget_range: '$12,000 - $20,000',
     duration: { en: '2 weeks', zh: '2周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/71.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/71.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/71.png', alt: { en: 'Delta bathroom renovation', zh: '三角洲浴室装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/16.png', alt: { en: 'Modern vanity', zh: '现代洗手台' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', alt: { en: 'Tile work', zh: '瓷砖工艺' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/71.png'), alt: { en: 'Delta bathroom renovation', zh: '三角洲浴室装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/16.png'), alt: { en: 'Modern vanity', zh: '现代洗手台' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg'), alt: { en: 'Tile work', zh: '瓷砖工艺' } },
     ],
     service_scope: {
       en: ['Tile Work', 'Vanity', 'Plumbing', 'Lighting'],
@@ -265,11 +266,11 @@ export const projects: Project[] = [
     budget_range: '$18,000 - $28,000',
     duration: { en: '3 weeks', zh: '3周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', alt: { en: 'Richmond bathroom remodel', zh: '列治文浴室改造' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/71.png', alt: { en: 'Freestanding tub', zh: '独立浴缸' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/16.png', alt: { en: 'Walk-in shower', zh: '步入式淋浴' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg'), alt: { en: 'Richmond bathroom remodel', zh: '列治文浴室改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/71.png'), alt: { en: 'Freestanding tub', zh: '独立浴缸' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/16.png'), alt: { en: 'Walk-in shower', zh: '步入式淋浴' } },
     ],
     service_scope: {
       en: ['Tile Work', 'Plumbing', 'Freestanding Tub', 'Walk-in Shower', 'Vanity'],
@@ -300,11 +301,11 @@ export const projects: Project[] = [
     budget_range: '$10,000 - $18,000',
     duration: { en: '2 weeks', zh: '2周' },
     space_type: { en: 'Luxury Residential', zh: '豪华住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/16.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/16.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/16.png', alt: { en: 'West Vancouver bathroom vanity', zh: '西温浴室洗手台' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', alt: { en: 'Custom vanity', zh: '定制洗手台' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/71.png', alt: { en: 'Premium fixtures', zh: '高端洁具' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/16.png'), alt: { en: 'West Vancouver bathroom vanity', zh: '西温浴室洗手台' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg'), alt: { en: 'Custom vanity', zh: '定制洗手台' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/71.png'), alt: { en: 'Premium fixtures', zh: '高端洁具' } },
     ],
     service_scope: {
       en: ['Custom Vanity', 'Fixtures', 'Mirror', 'Lighting'],
@@ -335,11 +336,11 @@ export const projects: Project[] = [
     budget_range: '$80,000 - $120,000',
     duration: { en: '10 weeks', zh: '10周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', alt: { en: 'Langley home renovation', zh: '兰里住宅装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', alt: { en: 'Living space transformation', zh: '起居空间改造' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', alt: { en: 'Kitchen and bathroom', zh: '厨房和浴室' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'), alt: { en: 'Langley home renovation', zh: '兰里住宅装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/53.png'), alt: { en: 'Living space transformation', zh: '起居空间改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'), alt: { en: 'Kitchen and bathroom', zh: '厨房和浴室' } },
     ],
     service_scope: {
       en: ['Kitchen', 'Bathrooms', 'Flooring', 'Painting', 'Lighting', 'Living Spaces'],
@@ -371,11 +372,11 @@ export const projects: Project[] = [
     budget_range: '$60,000 - $90,000',
     duration: { en: '8 weeks', zh: '8周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/53.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', alt: { en: 'Surrey home before and after', zh: '素里住宅前后对比' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', alt: { en: 'Home transformation', zh: '住宅改造' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png', alt: { en: 'Renovation results', zh: '装修成果' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/53.png'), alt: { en: 'Surrey home before and after', zh: '素里住宅前后对比' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'), alt: { en: 'Home transformation', zh: '住宅改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/15.png'), alt: { en: 'Renovation results', zh: '装修成果' } },
     ],
     service_scope: {
       en: ['Kitchen', 'Bathrooms', 'Flooring', 'Painting', 'Electrical'],
@@ -406,11 +407,11 @@ export const projects: Project[] = [
     budget_range: '$50,000 - $75,000',
     duration: { en: '6 weeks', zh: '6周' },
     space_type: { en: 'Commercial', zh: '商业' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/84.jpg',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/84.jpg'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/84.jpg', alt: { en: 'Skin Lab Granville commercial renovation', zh: 'Skin Lab Granville商业装修' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', alt: { en: 'Commercial interior', zh: '商业内部' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', alt: { en: 'Clinic design', zh: '诊所设计' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/84.jpg'), alt: { en: 'Skin Lab Granville commercial renovation', zh: 'Skin Lab Granville商业装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'), alt: { en: 'Commercial interior', zh: '商业内部' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'), alt: { en: 'Clinic design', zh: '诊所设计' } },
     ],
     service_scope: {
       en: ['Interior Build-out', 'Plumbing', 'Electrical', 'Custom Millwork', 'Painting'],
@@ -442,11 +443,11 @@ export const projects: Project[] = [
     budget_range: '$35,000 - $55,000',
     duration: { en: '6 weeks', zh: '6周' },
     space_type: { en: 'Residential', zh: '住宅' },
-    hero_image: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png',
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'),
     images: [
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', alt: { en: 'Richmond kitchen and bath', zh: '列治文厨房和浴室' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png', alt: { en: 'Kitchen remodel', zh: '厨房改造' } },
-      { src: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', alt: { en: 'Bathroom renovation', zh: '浴室装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'), alt: { en: 'Richmond kitchen and bath', zh: '列治文厨房和浴室' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'), alt: { en: 'Kitchen remodel', zh: '厨房改造' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg'), alt: { en: 'Bathroom renovation', zh: '浴室装修' } },
     ],
     service_scope: {
       en: ['Kitchen Remodel', 'Bathroom Renovation', 'Flooring', 'Countertops'],
@@ -483,7 +484,7 @@ export function getFeaturedProjects(): Project[] {
   return projects.filter((p) => p.featured);
 }
 
-export function getLocalizedProject(project: Project, locale: Locale) {
+export function getLocalizedProject(project: Project, locale: Locale): LocalizedProject {
   return {
     slug: project.slug,
     title: project.title[locale],
@@ -508,7 +509,7 @@ export function getLocalizedProject(project: Project, locale: Locale) {
   };
 }
 
-export function getAllProjectsLocalized(locale: Locale) {
+export function getAllProjectsLocalized(locale: Locale): LocalizedProject[] {
   return projects.map((p) => getLocalizedProject(p, locale));
 }
 
@@ -525,12 +526,14 @@ export function getCategories(locale: Locale): string[] {
 export function getCategoriesLocalized(): { en: string; zh: string }[] {
   return [
     { en: 'All', zh: '全部' },
-    { en: 'Kitchen', zh: '厨房' },
-    { en: 'Bathroom', zh: '卫浴' },
-    { en: 'Whole House', zh: '全屋' },
-    { en: 'Commercial', zh: '商业' },
+    ...Object.values(serviceTypeToCategory),
   ];
 }
+
+// Category slugs for routing (excludes 'All')
+export const CATEGORY_SLUGS = getCategoriesLocalized()
+  .filter((c) => c.en !== 'All')
+  .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
 
 // Get unique locations for filtering
 export function getProjectLocations(): string[] {
