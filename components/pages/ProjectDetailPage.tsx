@@ -4,11 +4,10 @@ import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { ChevronRight, ChevronLeft, MapPin, Calendar, DollarSign, Layers, X } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, LocalizedProject } from '@/lib/types';
-import { getProjectBySlug, getLocalizedProject, getAllProjectsLocalized } from '@/lib/data';
+import type { Company, Project, LocalizedProject } from '@/lib/types';
+import { getLocalizedProject } from '@/lib/data/projects';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
@@ -19,14 +18,17 @@ import {
 
 interface ProjectDetailPageProps {
   locale: Locale;
-  projectSlug: string;
+  project: Project;
+  allProjects: Project[];
   company: Company;
 }
 
-export default function ProjectDetailPage({ locale, projectSlug, company }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({ locale, project, allProjects, company }: ProjectDetailPageProps) {
   const t = useTranslations();
-  const project = getProjectBySlug(projectSlug);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [project.slug]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
 
@@ -34,15 +36,13 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
     setSelectedProject(p);
   }, []);
 
-  if (!project) notFound();
-
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
   const relatedProjects = useMemo(() => {
-    const allProjects = getAllProjectsLocalized(locale);
     return allProjects
-      .filter((p) => p.slug !== projectSlug && p.service_type === project.service_type)
+      .filter((p) => p.slug !== project.slug && p.service_type === project.service_type)
+      .map((p) => getLocalizedProject(p, locale))
       .slice(0, 3);
-  }, [locale, projectSlug, project.service_type]);
+  }, [allProjects, project.slug, project.service_type, locale]);
 
   const nextImage = useCallback(() => {
     setActiveImageIndex((prev) => (prev + 1) % localizedProject.images.length);
@@ -97,7 +97,7 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                     <button
                       key={img.src}
                       onClick={() => setActiveImageIndex(i)}
-                      className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0"
+                      className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0"
                       aria-label={`${t('projects.viewImage')} ${i + 1} / ${localizedProject.images.length}`}
                       aria-pressed={i === activeImageIndex}
                       style={{
@@ -132,11 +132,11 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                 <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="flex items-center gap-2 mb-1">
                     <MapPin className="w-4 h-4" style={{ color: GOLD }} />
-                    <span className="text-xs uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                    <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
                       {t('modal.location')}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold" style={{ color: TEXT }}>
+                  <span className="text-base font-semibold" style={{ color: TEXT }}>
                     {localizedProject.location_city}
                   </span>
                 </div>
@@ -144,11 +144,11 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Calendar className="w-4 h-4" style={{ color: GOLD }} />
-                      <span className="text-xs uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
                         {t('modal.duration')}
                       </span>
                     </div>
-                    <span className="text-sm font-semibold" style={{ color: TEXT }}>
+                    <span className="text-base font-semibold" style={{ color: TEXT }}>
                       {localizedProject.duration}
                     </span>
                   </div>
@@ -157,11 +157,11 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
-                      <span className="text-xs uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
                         {t('modal.budget')}
                       </span>
                     </div>
-                    <span className="text-sm font-semibold" style={{ color: TEXT }}>
+                    <span className="text-base font-semibold" style={{ color: TEXT }}>
                       {localizedProject.budget_range}
                     </span>
                   </div>
@@ -170,11 +170,11 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Layers className="w-4 h-4" style={{ color: GOLD }} />
-                      <span className="text-xs uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
                         {t('modal.spaceType')}
                       </span>
                     </div>
-                    <span className="text-sm font-semibold" style={{ color: TEXT }}>
+                    <span className="text-base font-semibold" style={{ color: TEXT }}>
                       {localizedProject.space_type}
                     </span>
                   </div>
@@ -184,9 +184,9 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
               {/* Service Scope */}
               {localizedProject.service_scope && localizedProject.service_scope.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
+                  <h2 className="text-base font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
                     {t('modal.serviceScope')}
-                  </h3>
+                  </h2>
                   <div className="flex flex-wrap gap-2">
                     {localizedProject.service_scope.map((scope) => (
                       <span
@@ -204,20 +204,20 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
               {/* Challenge & Solution */}
               {localizedProject.challenge && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
                     {t('modal.challenge')}
-                  </h3>
-                  <p className="text-sm" style={{ color: TEXT_MID }}>
+                  </h2>
+                  <p className="text-base" style={{ color: TEXT_MID }}>
                     {localizedProject.challenge}
                   </p>
                 </div>
               )}
               {localizedProject.solution && (
                 <div className="mb-6">
-                  <h3 className="text-sm font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
                     {t('modal.solution')}
-                  </h3>
-                  <p className="text-sm" style={{ color: TEXT_MID }}>
+                  </h2>
+                  <p className="text-base" style={{ color: TEXT_MID }}>
                     {localizedProject.solution}
                   </p>
                 </div>
@@ -227,14 +227,14 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
+                  className="px-6 py-3 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
                   style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
                 >
                   {t('cta.getFreeQuote')}
                 </Link>
                 <a
                   href={`tel:${company.phone}`}
-                  className="px-6 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
+                  className="px-6 py-3 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200"
                   style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
                 >
                   {t('cta.callNow')}

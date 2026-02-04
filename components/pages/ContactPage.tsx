@@ -61,7 +61,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t('contact.title')}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
             {t('contact.subtitle')}
           </p>
           {/* Trust Badges */}
@@ -72,8 +72,8 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                 className="flex items-center gap-2 px-4 py-2 rounded-full"
                 style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
               >
-                <Shield className="w-4 h-4" style={{ color: GOLD }} />
-                <span className="text-sm font-medium text-white/90">{badge.label}</span>
+                <Shield className="w-5 h-5" style={{ color: GOLD }} />
+                <span className="text-base font-medium text-white/90">{badge.label}</span>
               </div>
             ))}
           </div>
@@ -84,16 +84,16 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
       <section className="py-4 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 md:gap-10">
           <a href={`tel:${company.phone}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Phone className="w-4 h-4" style={{ color: GOLD }} />
-            <span className="text-sm font-medium" style={{ color: TEXT }}>{company.phone}</span>
+            <Phone className="w-5 h-5" style={{ color: GOLD }} />
+            <span className="text-base font-medium" style={{ color: TEXT }}>{company.phone}</span>
           </a>
           <a href={`mailto:${company.email}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Mail className="w-4 h-4" style={{ color: GOLD }} />
-            <span className="text-sm font-medium" style={{ color: TEXT }}>{company.email}</span>
+            <Mail className="w-5 h-5" style={{ color: GOLD }} />
+            <span className="text-base font-medium" style={{ color: TEXT }}>{company.email}</span>
           </a>
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4" style={{ color: GOLD }} />
-            <span className="text-sm font-medium" style={{ color: TEXT_MID }}>
+            <Clock className="w-5 h-5" style={{ color: GOLD }} />
+            <span className="text-base font-medium" style={{ color: TEXT_MID }}>
               {t('label.businessHours')}
             </span>
           </div>
@@ -109,7 +109,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
               <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>
                 {t('section.sendUsMessage')}
               </h2>
-              <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
+              <p className="text-base mb-6" style={{ color: TEXT_MID }}>
                 {t('section.contactSubtitle3')}
               </p>
               <ContactForm
@@ -132,7 +132,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                 <h2 className="text-lg font-bold mb-1" style={{ color: TEXT }}>
                   {t('cta.requestConsultation')}
                 </h2>
-                <p className="text-sm" style={{ color: TEXT_MID }}>
+                <p className="text-base" style={{ color: TEXT_MID }}>
                   {t('serviceBenefits.freeConsultation')}
                 </p>
               </div>
@@ -185,7 +185,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                   {areas.map((area) => (
                     <span
                       key={area}
-                      className="px-3 py-1.5 rounded-full text-sm"
+                      className="px-3 py-1.5 rounded-full text-base"
                       style={{ backgroundColor: SURFACE_ALT, color: TEXT_MID }}
                     >
                       {area}
@@ -202,8 +202,8 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                 <ul className="space-y-2">
                   {whyContactUs.map((item) => (
                     <li key={item} className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
-                      <span className="text-sm" style={{ color: TEXT_MID }}>{item}</span>
+                      <CheckCircle className="w-5 h-5 shrink-0" style={{ color: GOLD }} />
+                      <span className="text-base" style={{ color: TEXT_MID }}>{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -219,7 +219,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
           {stats.map((s) => (
             <div key={s.value} className="text-center py-2">
               <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
-              <div className="text-xs font-medium text-white/50 mt-0.5">{s.label}</div>
+              <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
             </div>
           ))}
         </div>

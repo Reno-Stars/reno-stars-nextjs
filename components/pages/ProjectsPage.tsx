@@ -5,15 +5,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, LocalizedProject } from '@/lib/types';
-import {
-  getAllProjectsLocalized,
-  getCategoriesLocalized,
-  getProjectLocations,
-  getProjectSpaceTypes,
-  getProjectBudgetRanges,
-  projects as rawProjects,
-} from '@/lib/data';
+import type { Company, Project, LocalizedProject } from '@/lib/types';
+import { getLocalizedProject } from '@/lib/data/projects';
+import { getCategoriesLocalized } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
@@ -26,20 +20,35 @@ import {
 interface ProjectsPageProps {
   locale: Locale;
   company: Company;
+  projects: Project[];
 }
 
-export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects }: ProjectsPageProps) {
   const t = useTranslations();
-  const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
+  const allProjects = useMemo(() => rawProjects.map((p) => getLocalizedProject(p, locale)), [rawProjects, locale]);
   const categories = useMemo(() => getCategoriesLocalized(), []);
-  const locations = useMemo(() => getProjectLocations(), []);
-  const spaceTypes = useMemo(() => getProjectSpaceTypes(), []);
-  const budgetRanges = useMemo(() => getProjectBudgetRanges(), []);
+  const locations = useMemo(() => {
+    const locs = new Set(rawProjects.map((p) => p.location_city));
+    return Array.from(locs).sort();
+  }, [rawProjects]);
+  const spaceTypes = useMemo(() => {
+    const types = new Set(rawProjects.map((p) => p.space_type?.en).filter((t): t is string => !!t));
+    return Array.from(types).sort();
+  }, [rawProjects]);
+  const budgetRanges = useMemo(() => {
+    const ranges = new Set(rawProjects.map((p) => p.budget_range).filter((r): r is string => !!r));
+    return Array.from(ranges).sort((a, b) => {
+      const numA = parseInt(a.replace(/[^0-9]/g, ''), 10);
+      const numB = parseInt(b.replace(/[^0-9]/g, ''), 10);
+      return numA - numB;
+    });
+  }, [rawProjects]);
 
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
+  const neuShadow4 = useMemo(() => neu(4), []);
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
 
   const handleCardClick = useCallback((project: LocalizedProject) => {
@@ -67,7 +76,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
       const label = match?.space_type?.[locale] ?? st;
       return { value: st, label };
     }),
-  ], [spaceTypes, locale, t]);
+  ], [spaceTypes, rawProjects, locale, t]);
 
   const budgetOptions = useMemo(() => [
     { value: 'All', label: t('filter.allBudgets') },
@@ -78,7 +87,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
     if (spaceTypeFilter === 'All') return null;
     const match = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
     return match?.space_type?.[locale] ?? null;
-  }, [spaceTypeFilter, locale]);
+  }, [spaceTypeFilter, locale, rawProjects]);
 
   const filteredProjects = useMemo(() => allProjects.filter((project) => {
     const categoryMatch = activeCategory === 'All' || project.category === (
@@ -107,7 +116,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t('section.ourProjects')}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
             {t('projects.subtitle')}
           </p>
         </div>
@@ -134,7 +143,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
                   className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat"
                   style={{
                     width: '220px',
-                    boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neu(4),
+                    boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neuShadow4,
                   }}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
@@ -155,7 +164,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
                       <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
                         {category[locale]}
                       </span>
-                      <span className="text-xs text-white/80 block">
+                      <span className="text-sm text-white/90 block">
                         {categoryProjects.length} {t('filter.projects')}
                       </span>
                       {isActive && (

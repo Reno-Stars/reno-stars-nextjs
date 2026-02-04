@@ -59,7 +59,7 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t('benefits.title')}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
             {t('benefits.subtitle')}
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
                   <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>
                     {t(benefit.titleKey)}
                   </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>
+                  <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
                     {t(benefit.descKey)}
                   </p>
                 </div>
@@ -109,7 +109,7 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
               <div className="text-3xl md:text-4xl font-bold mb-1" style={{ color: GOLD }}>
                 {stat.value}
               </div>
-              <div className="text-sm text-white/60">{stat.label}</div>
+              <div className="text-base text-white/80">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -127,14 +127,14 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
+              className="px-8 py-3.5 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
               style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
             >
               {t('cta.getFreeQuote')}
             </Link>
             <Link
               href="/projects"
-              className="px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
+              className="px-8 py-3.5 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
             >
               {t('cta.viewProjects')}

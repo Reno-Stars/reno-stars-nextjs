@@ -81,7 +81,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
     { href: '/blog', label: t('nav.blogAndNews') },
   ], [t]);
 
-  const linkClass = 'px-3 py-2 text-sm font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
+  const linkClass = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-sm" aria-label="Main navigation" style={{ backgroundColor: `${SURFACE}ee`, boxShadow: `0 1px 0 ${SH_DARK}40` }}>
@@ -109,7 +109,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
                 aria-haspopup="true"
               >
                 {t('nav.areas')}
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
               </button>
               {isAreasOpen && (
                 <div
@@ -123,7 +123,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
                       role="menuitem"
                       href={`/areas/${area.slug}` as '/'}
                       onClick={() => setIsAreasOpen(false)}
-                      className="block px-4 py-2 text-sm transition-colors duration-150 hover:bg-black/5"
+                      className="block px-4 py-2.5 text-base transition-colors duration-150 hover:bg-black/5"
                       style={{ color: TEXT }}
                     >
                       {area.name[locale]}
@@ -136,7 +136,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
             <div className="w-px h-5 mx-2" style={{ backgroundColor: `${TEXT}20` }} />
             <button
               onClick={switchLocale}
-              className="px-3 py-1.5 text-xs font-semibold rounded-lg cursor-pointer transition-all duration-200"
+              className="px-3 py-2 text-sm font-semibold rounded-lg cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(3), color: TEXT }}
               aria-label={t('nav.switchLanguage')}
             >
@@ -165,7 +165,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
           <div ref={menuRef} id="mobile-menu" className="lg:hidden pb-3 space-y-1 border-t" style={{ borderColor: `${TEXT}10` }}>
             {navLinks.map((item) => (
               <Link key={item.href} href={item.href as '/'} onClick={closeMenu}
-                className="block py-2 px-3 text-sm font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}>
+                className="block py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}>
                 {item.label}
               </Link>
             ))}
@@ -173,7 +173,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
             {/* Areas expandable */}
             <button
               onClick={() => setIsAreasOpen(!isAreasOpen)}
-              className="w-full text-left py-2 px-3 text-sm font-medium cursor-pointer rounded-lg flex items-center justify-between"
+              className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center justify-between"
               style={{ color: TEXT }}
               aria-expanded={isAreasOpen}
               aria-controls="mobile-areas"
@@ -188,7 +188,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
                     key={area.slug}
                     href={`/areas/${area.slug}` as '/'}
                     onClick={closeMenu}
-                    className="block py-1.5 px-3 text-sm cursor-pointer rounded-lg hover:bg-black/5"
+                    className="block py-2.5 px-3 text-base cursor-pointer rounded-lg hover:bg-black/5"
                     style={{ color: TEXT }}
                   >
                     {area.name[locale]}
@@ -198,7 +198,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
             )}
 
             <button onClick={() => { switchLocale(); closeMenu(); }}
-              className="w-full text-left py-2 px-3 text-sm font-medium cursor-pointer rounded-lg flex items-center gap-2" style={{ color: TEXT }}>
+              className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center gap-2" style={{ color: TEXT }}>
               <Globe className="w-4 h-4" /> {locale === 'en' ? '中文' : 'English'}
             </button>
           </div>

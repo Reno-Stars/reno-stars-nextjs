@@ -82,7 +82,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
               height={36}
               className="h-9 w-auto object-contain rounded bg-white/95 px-2 py-1 mb-3"
             />
-            <p className="text-sm text-white/60 mb-4">{company.tagline}</p>
+            <p className="text-sm text-white/80 mb-4">{company.tagline}</p>
             <div className="flex flex-wrap gap-3">
               {socialLinks.map((social) => {
                 const Icon = socialIcons[social.platform];
@@ -91,12 +91,12 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                   return (
                     <span
                       key={social.label}
-                      className="w-9 h-9 rounded-lg flex items-center justify-center cursor-default group"
+                      className="w-10 h-10 rounded-lg flex items-center justify-center cursor-default group"
                       style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
                       title={t('footer.wechatId', { id: wechatId })}
                       aria-label={social.label}
                     >
-                      <Icon className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" aria-hidden="true" />
+                      <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
                     </span>
                   );
                 }
@@ -106,16 +106,16 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group"
+                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group"
                     style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
                     aria-label={social.label}
                   >
-                    <Icon className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" aria-hidden="true" />
+                    <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
                   </a>
                 );
               })}
             </div>
-            <p className="text-xs text-white/40 mt-2">{t('footer.wechatId', { id: wechatId })}</p>
+            <p className="text-sm text-white/60 mt-2">{t('footer.wechatId', { id: wechatId })}</p>
           </div>
 
           {/* Quick Links */}
@@ -124,7 +124,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href as '/'} className="text-sm text-white/70 hover:text-white transition-colors">
+                  <Link href={link.href as '/'} className="text-sm text-white/80 hover:text-white transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -138,7 +138,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
             <ul className="space-y-2">
               {localizedServices.map((service) => (
                 <li key={service.slug}>
-                  <Link href={`/services/${service.slug}` as '/'} className="text-sm text-white/70 hover:text-white transition-colors">
+                  <Link href={`/services/${service.slug}` as '/'} className="text-sm text-white/80 hover:text-white transition-colors">
                     {service.title}
                   </Link>
                 </li>
@@ -152,19 +152,19 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
             <div className="space-y-3">
               <a
                 href={`tel:${company.phone}`}
-                className="flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
+                className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
                 {company.phone}
               </a>
               <a
                 href={`mailto:${company.email}`}
-                className="flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
+                className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
                 {company.email}
               </a>
-              <p className="flex items-start gap-2 text-sm text-white/70">
+              <p className="flex items-start gap-2 text-sm text-white/80">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: GOLD }} />
                 <span>{company.address}</span>
               </p>
@@ -182,7 +182,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
               ].map((stat) => (
                 <div key={stat.key} className="flex items-center gap-2">
                   <span className="text-sm font-bold" style={{ color: GOLD }}>{stat.val}</span>
-                  <span className="text-xs text-white/60">{stat.lbl}</span>
+                  <span className="text-sm text-white/70">{stat.lbl}</span>
                 </div>
               ))}
             </div>
@@ -191,15 +191,15 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
 
         {/* Service Areas */}
         <div className="py-6 mb-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-          <h4 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>
+          <h4 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>
             {t('section.serviceAreas')}
           </h4>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          <div className="flex flex-wrap gap-x-4 gap-y-2.5">
             {areas.map((area) => (
               <Link
                 key={area.slug}
                 href={`/areas/${area.slug}` as '/'}
-                className="text-sm text-white/60 hover:text-white transition-colors"
+                className="text-sm text-white/80 hover:text-white transition-colors"
               >
                 {area.name[locale]}
               </Link>
@@ -208,7 +208,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
           <p>&copy; {new Date().getFullYear()} {company.name}. {t('footer.allRights')}</p>
           <p>{t('footer.licensedInsured')}</p>
         </div>

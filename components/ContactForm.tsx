@@ -11,9 +11,11 @@ interface ContactFormProps {
   onSuccess?: () => void;
   /** Override the submit button label */
   submitLabel?: string;
+  /** Larger text and inputs for better readability */
+  large?: boolean;
 }
 
-export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps) {
+export default function ContactForm({ onSuccess, submitLabel, large }: ContactFormProps) {
   const t = useTranslations();
 
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
@@ -41,10 +43,10 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className={large ? 'space-y-6' : 'space-y-5'}>
       {formStatus.type !== 'idle' && (
         <div
-          className="p-4 rounded-xl text-sm font-medium"
+          className={`p-4 rounded-xl font-medium ${large ? 'text-base' : 'text-sm'}`}
           style={{
             backgroundColor: formStatus.type === 'success' ? SUCCESS_BG : ERROR_BG,
             color: formStatus.type === 'success' ? SUCCESS : ERROR,
@@ -60,7 +62,7 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
         { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2'), required: false },
       ].map((f) => (
         <div key={f.id}>
-          <label htmlFor={f.id} className="block text-sm font-semibold uppercase tracking-wider mb-1.5" style={{ color: TEXT_MUTED }}>
+          <label htmlFor={f.id} className={`block font-semibold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT_MUTED }}>
             {f.label}{f.required ? ' *' : ''}
           </label>
           <input
@@ -69,8 +71,8 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
             name={f.id}
             value={formData[f.id as keyof typeof formData]}
             onChange={handleInputChange}
-            className="w-full px-4 py-3 rounded-xl border-none outline-none text-base transition-all duration-200 focus:ring-2 focus:ring-offset-1"
-            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, '--tw-ring-color': GOLD } as React.CSSProperties}
+            className={`w-full rounded-xl border-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
+            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
             placeholder={f.ph}
             required={f.required}
             disabled={isPending}
@@ -78,7 +80,7 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
         </div>
       ))}
       <div>
-        <label htmlFor="message" className="block text-sm font-semibold uppercase tracking-wider mb-1.5" style={{ color: TEXT_MUTED }}>
+        <label htmlFor="message" className={`block font-semibold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT_MUTED }}>
           {t('form.message')} *
         </label>
         <textarea
@@ -87,8 +89,8 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
           value={formData.message}
           onChange={handleInputChange}
           rows={5}
-          className="w-full px-4 py-3 rounded-xl border-none outline-none text-base resize-none transition-all duration-200 focus:ring-2 focus:ring-offset-1"
-          style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, '--tw-ring-color': GOLD } as React.CSSProperties}
+          className={`w-full rounded-xl border-none resize-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
+          style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
           placeholder={t('form.messagePlaceholder')}
           required
           disabled={isPending}
@@ -96,12 +98,12 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
       </div>
       <button
         type="submit"
-        className="w-full py-3.5 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className={`w-full rounded-xl font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${large ? 'py-4 text-lg' : 'py-3.5 text-base'}`}
         style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
         disabled={isPending}
         aria-busy={isPending}
       >
-        {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+        {isPending && <Loader2 className={large ? 'w-5 h-5 animate-spin' : 'w-4 h-4 animate-spin'} />}
         {isPending ? t('form.sending') : (submitLabel || t('cta.sendMessage'))}
       </button>
     </form>
