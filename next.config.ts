@@ -25,6 +25,7 @@ if (storageUrl) {
 }
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   trailingSlash: true,
   images: {
     dangerouslyAllowLocalIP: allowLocalIP,
