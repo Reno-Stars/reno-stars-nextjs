@@ -68,7 +68,7 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
             <div>
               <div
                 className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer"
-                style={{ boxShadow: neu(6) }}
+                style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
                 role="button"
                 tabIndex={0}
                 aria-label={t('projects.openLightbox')}
@@ -80,7 +80,7 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                   alt={localizedProject.images[activeImageIndex]?.alt || localizedProject.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-contain"
                 />
                 {localizedProject.badge && (
                   <span
@@ -92,7 +92,7 @@ export default function ProjectDetailPage({ locale, projectSlug, company }: Proj
                 )}
               </div>
               {localizedProject.images.length > 1 && (
-                <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                <div className="flex gap-3 mt-4 overflow-x-auto p-1">
                   {localizedProject.images.map((img, i) => (
                     <button
                       key={img.src}

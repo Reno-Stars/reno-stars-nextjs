@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
 import {
-  NAVY, GOLD, GOLD_HOVER, GOLD_PALE, SURFACE, SURFACE_ALT,
+  GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, SH_DARK,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
 } from '@/lib/theme';
 
@@ -110,7 +110,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           className="sticky top-0 z-10 flex items-center justify-between px-6 py-4"
           style={{
             backgroundColor: SURFACE,
-            borderBottom: `1px solid ${TEXT_MUTED}`,
+            boxShadow: `0 1px 3px ${SH_DARK}`,
           }}
         >
           <h2 id="modal-title" className="text-xl md:text-2xl font-bold truncate pr-4" style={{ color: TEXT }}>
@@ -191,7 +191,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="w-full lg:w-72 flex-shrink-0 p-6"
             style={{
               backgroundColor: SURFACE_ALT,
-              borderLeft: `1px solid ${TEXT_MUTED}`,
+              boxShadow: `inset 2px 0 4px -2px ${SH_DARK}`,
             }}
           >
             <div className="space-y-5">

@@ -14,7 +14,6 @@ import {
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
-
 interface BlogPostPageProps {
   locale: Locale;
   postSlug: string;

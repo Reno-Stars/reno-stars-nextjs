@@ -19,7 +19,7 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  NAVY, GOLD, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -46,6 +46,10 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
     setSelectedProject(project);
   }, []);
 
+  const handleModalClose = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
+
   const categoryOptions = useMemo(() => categories.map((c) => ({
     value: c.en,
     label: c[locale],
@@ -70,18 +74,21 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
     ...budgetRanges.map((br) => ({ value: br, label: br })),
   ], [budgetRanges, t]);
 
+  const localizedSpaceType = useMemo(() => {
+    if (spaceTypeFilter === 'All') return null;
+    const match = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
+    return match?.space_type?.[locale] ?? null;
+  }, [spaceTypeFilter, locale]);
+
   const filteredProjects = useMemo(() => allProjects.filter((project) => {
     const categoryMatch = activeCategory === 'All' || project.category === (
       categories.find((c) => c.en === activeCategory)?.[locale] ?? activeCategory
     );
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
-    const spaceTypeMatch = spaceTypeFilter === 'All' || (() => {
-      const match = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
-      return project.space_type === match?.space_type?.[locale];
-    })();
+    const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
     const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch;
-  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, budgetFilter, locale]);
+  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, locale]);
 
   const clearFilters = () => {
     setActiveCategory('All');
@@ -239,7 +246,7 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
 
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleModalClose}
       />
     </div>
   );

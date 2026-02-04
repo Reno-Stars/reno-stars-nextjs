@@ -14,6 +14,7 @@ import {
   isValidPostalCode,
   formatDate,
   getRelativeTime,
+  buildAlternates,
   buildUrl,
   cleanObject,
   deepClone,
@@ -284,6 +285,43 @@ describe('Date Utilities', () => {
       const result = getRelativeTime(yesterday);
       expect(result).toBeTruthy();
       expect(result).not.toBe('Invalid Date');
+    });
+  });
+});
+
+describe('Metadata Utilities', () => {
+  describe('buildAlternates', () => {
+    const originalEnv = process.env.NEXT_PUBLIC_BASE_URL;
+
+    beforeEach(() => {
+      process.env.NEXT_PUBLIC_BASE_URL = 'https://reno-stars.com';
+    });
+
+    afterEach(() => {
+      if (originalEnv !== undefined) {
+        process.env.NEXT_PUBLIC_BASE_URL = originalEnv;
+      } else {
+        delete process.env.NEXT_PUBLIC_BASE_URL;
+      }
+    });
+
+    it('should build canonical and hreflang alternates', () => {
+      const result = buildAlternates('/projects/', 'en');
+      expect(result.canonical).toBe('https://reno-stars.com/en/projects/');
+      expect(result.languages.en).toBe('https://reno-stars.com/en/projects/');
+      expect(result.languages.zh).toBe('https://reno-stars.com/zh/projects/');
+      expect(result.languages['x-default']).toBe('https://reno-stars.com/en/projects/');
+    });
+
+    it('should use current locale for canonical', () => {
+      const result = buildAlternates('/contact/', 'zh');
+      expect(result.canonical).toBe('https://reno-stars.com/zh/contact/');
+    });
+
+    it('should handle root path', () => {
+      const result = buildAlternates('/', 'en');
+      expect(result.canonical).toBe('https://reno-stars.com/en/');
+      expect(result.languages.zh).toBe('https://reno-stars.com/zh/');
     });
   });
 });

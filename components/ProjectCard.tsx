@@ -21,7 +21,7 @@ export default function ProjectCard({ project, showDescription, showChevron, onC
       className="rounded-2xl overflow-hidden group text-left cursor-pointer w-full"
       style={{ boxShadow: neu(5), backgroundColor: CARD }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-800">
         <Image
           src={project.hero_image}
           alt={project.title}
