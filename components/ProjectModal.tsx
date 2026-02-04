@@ -6,42 +6,21 @@ import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight } from 'luc
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
+import {
+  NAVY, GOLD, GOLD_HOVER, GOLD_PALE, SURFACE, SURFACE_ALT,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
+} from '@/lib/theme';
 
 interface ProjectModalProps {
   project: LocalizedProject | null;
   onClose: () => void;
-  theme?: {
-    overlay?: string;
-    modal?: string;
-    text?: string;
-    textSecondary?: string;
-    accent?: string;
-    border?: string;
-    sidebarBg?: string;
-    closeBtn?: string;
-    thumbActive?: string;
-    thumbInactive?: string;
-  };
 }
 
-export default function ProjectModal({ project, onClose, theme = {} }: ProjectModalProps) {
+export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const t = useTranslations();
   const [activeImage, setActiveImage] = useState(0);
   const [visible, setVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  const {
-    overlay = 'bg-black/60 backdrop-blur-sm',
-    modal = 'bg-white',
-    text = 'text-gray-900',
-    textSecondary = 'text-gray-600',
-    accent = 'bg-gray-900 text-white',
-    border = 'border-gray-200',
-    sidebarBg = 'bg-gray-50',
-    closeBtn = 'bg-gray-100 hover:bg-gray-200 text-gray-700',
-    thumbActive = 'ring-2 ring-gray-900',
-    thumbInactive = 'ring-1 ring-gray-300 opacity-70 hover:opacity-100',
-  } = theme;
 
   const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
@@ -52,7 +31,6 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') handleClose();
-    // Focus trap: cycle through focusable elements within the modal
     if (e.key === 'Tab' && modalRef.current) {
       const focusable = modalRef.current.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -75,7 +53,6 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
     document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => setVisible(true));
-    // Focus the close button when modal opens
     const closeButton = modalRef.current?.querySelector<HTMLElement>('button');
     closeButton?.focus();
     return () => {
@@ -105,24 +82,48 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-opacity duration-200 ${overlay}`}
-      style={{ opacity: visible ? 1 : 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-opacity duration-200"
+      style={{
+        opacity: visible ? 1 : 0,
+        backgroundColor: 'rgba(27,54,93,0.45)',
+        backdropFilter: 'blur(6px)',
+      }}
       onClick={handleClose}
     >
       <div
         ref={modalRef}
-        className={`relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl transition-all duration-200 ${modal} ${text}`}
-        style={{ opacity: visible ? 1 : 0, transform: visible ? 'scale(1)' : 'scale(0.97)' }}
+        className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl transition-all duration-200"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'scale(1)' : 'scale(0.97)',
+          backgroundColor: SURFACE,
+          boxShadow: `0 25px 60px rgba(27,54,93,0.3), ${neu(8)}`,
+          color: TEXT,
+        }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
-        <div className={`sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b ${border} ${modal}`}>
-          <h2 id="modal-title" className="text-xl md:text-2xl font-bold truncate pr-4">{project.title}</h2>
+        {/* Header */}
+        <div
+          className="sticky top-0 z-10 flex items-center justify-between px-6 py-4"
+          style={{
+            backgroundColor: SURFACE,
+            borderBottom: `1px solid ${TEXT_MUTED}`,
+          }}
+        >
+          <h2 id="modal-title" className="text-xl md:text-2xl font-bold truncate pr-4" style={{ color: TEXT }}>
+            {project.title}
+          </h2>
           <button
             onClick={handleClose}
-            className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer ${closeBtn}`}
+            className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-colors cursor-pointer"
+            style={{
+              boxShadow: neu(3),
+              backgroundColor: CARD,
+              color: TEXT_MID,
+            }}
             aria-label={t('modal.close')}
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -130,8 +131,12 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
         </div>
 
         <div className="flex flex-col lg:flex-row">
+          {/* Gallery + description */}
           <div className="flex-1 p-6">
-            <div className="relative overflow-hidden rounded-xl aspect-[16/10] mb-4 bg-black/5">
+            <div
+              className="relative overflow-hidden rounded-xl aspect-[16/10] mb-4"
+              style={{ boxShadow: neuIn(4), backgroundColor: SURFACE_ALT }}
+            >
               <Image
                 src={gallery[activeImage]}
                 alt={`${project.title} - Image ${activeImage + 1} of ${gallery.length}`}
@@ -147,9 +152,11 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
                   <button
                     key={img}
                     onClick={() => setActiveImage(i)}
-                    className={`relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer ${
-                      i === activeImage ? thumbActive : thumbInactive
-                    }`}
+                    className="relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer"
+                    style={{
+                      boxShadow: i === activeImage ? `0 0 0 2px ${GOLD}` : neu(2),
+                      opacity: i === activeImage ? 1 : 0.7,
+                    }}
                     aria-label={`View image ${i + 1} of ${gallery.length}`}
                     aria-pressed={i === activeImage}
                   >
@@ -159,47 +166,60 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
               </div>
             )}
 
-            <p className={`text-base leading-relaxed mb-8 ${textSecondary}`}>{project.description}</p>
+            <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>
+              {project.description}
+            </p>
 
             {project.challenge && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold mb-2">{t('modal.challenge')}</h3>
-                  <p className={`leading-relaxed ${textSecondary}`}>{project.challenge}</p>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: TEXT }}>{t('modal.challenge')}</h3>
+                  <p className="leading-relaxed" style={{ color: TEXT_MID }}>{project.challenge}</p>
                 </div>
                 {project.solution && (
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">{t('modal.solution')}</h3>
-                    <p className={`leading-relaxed ${textSecondary}`}>{project.solution}</p>
+                    <h3 className="text-lg font-semibold mb-2" style={{ color: TEXT }}>{t('modal.solution')}</h3>
+                    <p className="leading-relaxed" style={{ color: TEXT_MID }}>{project.solution}</p>
                   </div>
                 )}
               </div>
             )}
           </div>
 
-          <div className={`w-full lg:w-72 flex-shrink-0 p-6 lg:border-l ${border} ${sidebarBg}`}>
+          {/* Sidebar */}
+          <div
+            className="w-full lg:w-72 flex-shrink-0 p-6"
+            style={{
+              backgroundColor: SURFACE_ALT,
+              borderLeft: `1px solid ${TEXT_MUTED}`,
+            }}
+          >
             <div className="space-y-5">
               {sidebarItems.map(({ icon: Icon, label, value }) =>
                 value ? (
                   <div key={label}>
-                    <div className={`flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-1 ${textSecondary}`}>
-                      <Icon className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-1" style={{ color: TEXT_MUTED }}>
+                      <Icon className="w-4 h-4" style={{ color: GOLD }} />
                       {label}
                     </div>
-                    <div className="font-medium">{value}</div>
+                    <div className="font-medium" style={{ color: TEXT }}>{value}</div>
                   </div>
                 ) : null
               )}
 
               {project.service_scope && project.service_scope.length > 0 && (
                 <div>
-                  <div className={`flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2 ${textSecondary}`}>
-                    <Wrench className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2" style={{ color: TEXT_MUTED }}>
+                    <Wrench className="w-4 h-4" style={{ color: GOLD }} />
                     {t('modal.serviceScope')}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {project.service_scope.map((s) => (
-                      <span key={s} className={`px-3 py-1 rounded-full text-xs font-medium ${accent}`}>
+                      <span
+                        key={s}
+                        className="px-3 py-1 rounded-full text-xs font-medium"
+                        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                      >
                         {s}
                       </span>
                     ))}
@@ -209,7 +229,11 @@ export default function ProjectModal({ project, onClose, theme = {} }: ProjectMo
 
               <Link
                 href={`/projects/${project.slug}`}
-                className={`mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${accent}`}
+                className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:brightness-110"
+                style={{
+                  backgroundColor: GOLD,
+                  boxShadow: `0 4px 20px ${GOLD}44`,
+                }}
                 onClick={handleClose}
               >
                 {t('modal.viewDetails')}
