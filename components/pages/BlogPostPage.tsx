@@ -13,7 +13,7 @@ import {
   GOLD, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
-import { sanitizeHtml } from '@/lib/utils';
+
 
 interface BlogPostPageProps {
   locale: Locale;
@@ -53,8 +53,7 @@ export default function BlogPostPage({ locale, postSlug, company }: BlogPostPage
 
             <div className="prose prose-lg max-w-none" style={{ color: TEXT_MID }}>
               {localizedPost.content ? (
-                /* Content is sanitized via DOMPurify with a strict allowlist (see lib/utils.ts) */
-                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedPost.content) }} />
+                <div dangerouslySetInnerHTML={{ __html: localizedPost.content }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}
