@@ -16,7 +16,8 @@ export const SITE_NAME = 'Reno Stars';
  * @returns The base URL string
  */
 export function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL || 'https://reno-stars.com';
+  const url = process.env.NEXT_PUBLIC_BASE_URL || 'https://reno-stars.com';
+  return url.replace(/\/+$/, '');
 }
 
 // ============================================================================
