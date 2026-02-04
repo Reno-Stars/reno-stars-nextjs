@@ -2,13 +2,13 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getProjectBySlug, getProjects, getLocalizedProject, getCategoriesLocalized, CATEGORY_SLUGS } from '@/lib/data/projects';
+import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getProjectBySlugFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -16,29 +16,6 @@ interface PageProps {
 
 function isCategory(slug: string): boolean {
   return CATEGORY_SLUGS.includes(slug);
-}
-
-export function generateStaticParams() {
-  const projects = getProjects();
-  const categories = getCategoriesLocalized();
-  const params: { locale: string; slug: string }[] = [];
-
-  for (const locale of locales) {
-    // Add category slugs
-    for (const cat of categories) {
-      if (cat.en !== 'All') {
-        const slug = cat.en.toLowerCase().replace(/\s+/g, '-');
-        params.push({ locale, slug });
-      }
-    }
-
-    // Add project slugs
-    for (const project of projects) {
-      params.push({ locale, slug: project.slug });
-    }
-  }
-
-  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -79,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // It's a project detail page
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlugFromDb(slug);
 
   if (!project) {
     return { title: 'Project Not Found', robots: { index: false, follow: false } };
@@ -107,9 +84,10 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const [t, company] = await Promise.all([
+  const [t, company, allProjects] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
+    getProjectsFromDb(),
   ]);
 
   // Check if it's a category page
@@ -129,13 +107,13 @@ export default async function Page({ params }: PageProps) {
     return (
       <>
         <BreadcrumbSchema items={breadcrumbs} />
-        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} />
+        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} />
       </>
     );
   }
 
   // It's a project detail page
-  const project = getProjectBySlug(slug);
+  const project = allProjects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
@@ -152,7 +130,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ProjectDetailPage locale={locale as Locale} projectSlug={slug} company={company} />
+      <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
     </>
   );
 }
