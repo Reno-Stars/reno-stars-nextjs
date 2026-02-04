@@ -8,6 +8,7 @@ import {
   socialLinks,
   aboutSections,
   testimonials,
+  galleryItems,
 } from './schema';
 
 async function seed() {
@@ -387,6 +388,59 @@ async function seed() {
   } else {
     console.log('Testimonials already exist, skipping');
   }
+
+  // Blog posts are seeded separately via `pnpm db:seed:blog` (crawls WP REST API)
+  console.log('Blog posts: run `pnpm db:seed:blog` to seed from WordPress');
+
+  // Seed Gallery Items (idempotent via unique constraint on image_url)
+  await db
+    .insert(galleryItems)
+    .values([
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg',
+        titleEn: 'Modern Kitchen',
+        titleZh: '现代厨房',
+        category: 'kitchen',
+        displayOrder: 1,
+      },
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg',
+        titleEn: 'Luxury Bathroom',
+        titleZh: '豪华浴室',
+        category: 'bathroom',
+        displayOrder: 2,
+      },
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-open-concept-living-and-dining-room.jpg',
+        titleEn: 'Open Concept Living',
+        titleZh: '开放式客厅',
+        category: 'whole-house',
+        displayOrder: 3,
+      },
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/bright-and-cozy-dining-living-room.jpg',
+        titleEn: 'Cozy Dining Room',
+        titleZh: '温馨餐厅',
+        category: 'whole-house',
+        displayOrder: 4,
+      },
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/from-1-skin-lab-granville-commercial-renovation.jpg',
+        titleEn: 'Commercial Space',
+        titleZh: '商业空间',
+        category: 'commercial',
+        displayOrder: 5,
+      },
+      {
+        imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/brightened-whole-house-renovation-living-room.jpg',
+        titleEn: 'Bright Living Room',
+        titleZh: '明亮客厅',
+        category: 'whole-house',
+        displayOrder: 6,
+      },
+    ])
+    .onConflictDoNothing({ target: galleryItems.imageUrl });
+  console.log('Gallery items seeded');
 
   console.log('Database seeded successfully!');
 }

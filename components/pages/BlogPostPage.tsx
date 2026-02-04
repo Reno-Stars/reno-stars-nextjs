@@ -3,11 +3,11 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company } from '@/lib/types';
-import { getBlogPostBySlug, getLocalizedBlogPost } from '@/lib/data';
+import sanitizeHtml from 'sanitize-html';
+import type { Company, BlogPost } from '@/lib/types';
+import { getLocalizedBlogPost } from '@/lib/data';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT,
@@ -16,16 +16,12 @@ import {
 
 interface BlogPostPageProps {
   locale: Locale;
-  postSlug: string;
+  post: BlogPost;
   company: Company;
 }
 
-export default function BlogPostPage({ locale, postSlug, company }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company }: BlogPostPageProps) {
   const t = useTranslations();
-  const post = getBlogPostBySlug(postSlug);
-
-  if (!post) notFound();
-
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
 
   return (
@@ -52,7 +48,7 @@ export default function BlogPostPage({ locale, postSlug, company }: BlogPostPage
 
             <div className="prose prose-lg max-w-none" style={{ color: TEXT_MID }}>
               {localizedPost.content ? (
-                <div dangerouslySetInnerHTML={{ __html: localizedPost.content }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedPost.content) }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}

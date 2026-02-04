@@ -10,6 +10,11 @@ import {
   getServicesFromDb,
   getTestimonialsFromDb,
   getAboutSectionsFromDb,
+  getGalleryItemsFromDb,
+  getTrustBadgesFromDb,
+  getBlogPostsFromDb,
+  getShowroomFromDb,
+  getServiceAreasFromDb,
 } from '@/lib/db/queries';
 
 interface PageProps {
@@ -46,12 +51,17 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, company, services, testimonials, aboutSections] = await Promise.all([
+  const [t, company, services, testimonials, aboutSections, gallery, trustBadges, blogPosts, showroom, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getServicesFromDb(),
     getTestimonialsFromDb(),
     getAboutSectionsFromDb(),
+    getGalleryItemsFromDb(),
+    getTrustBadgesFromDb(),
+    getBlogPostsFromDb(),
+    getShowroomFromDb(),
+    getServiceAreasFromDb(),
   ]);
 
   const breadcrumbs = [
@@ -67,6 +77,11 @@ export default async function Page({ params }: PageProps) {
         services={services}
         testimonials={testimonials}
         aboutSections={aboutSections}
+        gallery={gallery}
+        trustBadges={trustBadges}
+        blogPosts={blogPosts.slice(0, 5)}
+        showroom={showroom}
+        areas={areas}
       />
     </>
   );

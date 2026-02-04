@@ -328,7 +328,10 @@ export const galleryItems = pgTable(
     isPublished: boolean('is_published').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
-  (table) => [index('gallery_items_category_idx').on(table.category)]
+  (table) => [
+    index('gallery_items_category_idx').on(table.category),
+    uniqueIndex('gallery_items_image_url_idx').on(table.imageUrl),
+  ]
 );
 
 export const galleryItemsRelations = relations(galleryItems, ({ one }) => ({

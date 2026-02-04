@@ -1,17 +1,21 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { serviceTypeToCategory } from '@/lib/data/services';
-import { serviceAreas } from '@/lib/data/areas';
-import { projects, CATEGORY_SLUGS } from '@/lib/data/projects';
-import { blogPosts } from '@/lib/data';
+import { CATEGORY_SLUGS } from '@/lib/data/projects';
 import { getBaseUrl } from '@/lib/utils';
+import { getProjectSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import type { ServiceType } from '@/lib/types';
 
 const BASE_URL = getBaseUrl();
 const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
+  const [projectSlugs, blogPostSlugs, serviceAreas] = await Promise.all([
+    getProjectSlugsFromDb(),
+    getBlogPostSlugsFromDb(),
+    getServiceAreasFromDb(),
+  ]);
 
   const entries: MetadataRoute.Sitemap = [];
 
@@ -105,18 +109,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Individual project pages
-  for (const project of projects) {
+  const categorySet = new Set(CATEGORY_SLUGS);
+  for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
     for (const locale of locales) {
       entries.push({
-        url: `${BASE_URL}/${locale}/projects/${project.slug}/`,
-        lastModified: project.published_at?.toISOString() || now,
+        url: `${BASE_URL}/${locale}/projects/${slug}/`,
+        lastModified: now,
         changeFrequency: 'monthly',
         priority: 0.6,
         alternates: {
           languages: {
-            en: `${BASE_URL}/en/projects/${project.slug}/`,
-            zh: `${BASE_URL}/zh/projects/${project.slug}/`,
-            'x-default': `${BASE_URL}/en/projects/${project.slug}/`,
+            en: `${BASE_URL}/en/projects/${slug}/`,
+            zh: `${BASE_URL}/zh/projects/${slug}/`,
+            'x-default': `${BASE_URL}/en/projects/${slug}/`,
           },
         },
       });
@@ -124,18 +129,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Blog posts
-  for (const post of blogPosts) {
+  for (const slug of blogPostSlugs) {
     for (const locale of locales) {
       entries.push({
-        url: `${BASE_URL}/${locale}/blog/${post.slug}/`,
-        lastModified: post.published_at?.toISOString() || now,
+        url: `${BASE_URL}/${locale}/blog/${slug}/`,
+        lastModified: now,
         changeFrequency: 'monthly',
         priority: 0.6,
         alternates: {
           languages: {
-            en: `${BASE_URL}/en/blog/${post.slug}/`,
-            zh: `${BASE_URL}/zh/blog/${post.slug}/`,
-            'x-default': `${BASE_URL}/en/blog/${post.slug}/`,
+            en: `${BASE_URL}/en/blog/${slug}/`,
+            zh: `${BASE_URL}/zh/blog/${slug}/`,
+            'x-default': `${BASE_URL}/en/blog/${slug}/`,
           },
         },
       });

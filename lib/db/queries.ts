@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc } from 'drizzle-orm';
+import { eq, asc, desc, and, inArray } from 'drizzle-orm';
 import { db } from './index';
 import {
   companyInfo,
@@ -7,9 +7,18 @@ import {
   services as servicesTable,
   testimonials as testimonialsTable,
   aboutSections as aboutSectionsTable,
+  projects as projectsTable,
+  projectImages as projectImagesTable,
+  projectScopes as projectScopesTable,
+  blogPosts as blogPostsTable,
+  contactSubmissions as contactSubmissionsTable,
+  serviceAreas as serviceAreasTable,
+  galleryItems as galleryItemsTable,
+  trustBadges as trustBadgesTable,
+  showroomInfo as showroomInfoTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType } from '../types';
+import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -113,10 +122,9 @@ export const getAboutSectionsFromDb = cache(async (): Promise<AboutSections> => 
   const row = rows[0];
   if (!row) throw new Error('About sections not found in database');
 
-  // Compute years for placeholder replacement
-  const companyRows = await db.select().from(companyInfo).limit(1);
-  const foundingYear = companyRows[0]?.foundingYear ?? 1997;
-  const yearsExperience = String(new Date().getFullYear() - foundingYear);
+  // Compute years for placeholder replacement — reuse cached getCompanyFromDb
+  const company = await getCompanyFromDb();
+  const yearsExperience = company.yearsExperience;
 
   const replaceYears = (text: string | null) =>
     (text ?? '').replace(/\{yearsExperience\}/g, yearsExperience);
@@ -144,3 +152,321 @@ export const getAboutSectionsFromDb = cache(async (): Promise<AboutSections> => 
     },
   };
 });
+
+// ============================================================================
+// PROJECT QUERIES
+// ============================================================================
+
+type DbProjectRow = typeof projectsTable.$inferSelect;
+type DbImageRow = typeof projectImagesTable.$inferSelect;
+type DbScopeRow = typeof projectScopesTable.$inferSelect;
+
+function mapDbProjectToProject(
+  row: DbProjectRow,
+  images: DbImageRow[],
+  scopes: DbScopeRow[]
+): Project {
+  return {
+    slug: row.slug,
+    title: { en: row.titleEn, zh: row.titleZh },
+    description: { en: row.descriptionEn, zh: row.descriptionZh },
+    project_story:
+      row.projectStoryEn && row.projectStoryZh
+        ? { en: row.projectStoryEn, zh: row.projectStoryZh }
+        : undefined,
+    excerpt:
+      row.excerptEn && row.excerptZh
+        ? { en: row.excerptEn, zh: row.excerptZh }
+        : undefined,
+    service_type: row.serviceType as ServiceType,
+    category: {
+      en: row.categoryEn ?? '',
+      zh: row.categoryZh ?? '',
+    },
+    location_city: row.locationCity ?? '',
+    budget_range: row.budgetRange ?? undefined,
+    duration:
+      row.durationEn && row.durationZh
+        ? { en: row.durationEn, zh: row.durationZh }
+        : undefined,
+    space_type:
+      row.spaceTypeEn && row.spaceTypeZh
+        ? { en: row.spaceTypeEn, zh: row.spaceTypeZh }
+        : undefined,
+    hero_image: getAssetUrl(row.heroImageUrl ?? ''),
+    images: images
+      .sort((a, b) => a.displayOrder - b.displayOrder)
+      .map((img) => ({
+        src: getAssetUrl(img.imageUrl),
+        alt: {
+          en: img.altTextEn ?? '',
+          zh: img.altTextZh ?? '',
+        },
+        is_before: img.isBefore,
+      })),
+    service_scope:
+      scopes.length > 0
+        ? {
+            en: scopes.sort((a, b) => a.displayOrder - b.displayOrder).map((s) => s.scopeEn),
+            zh: scopes.sort((a, b) => a.displayOrder - b.displayOrder).map((s) => s.scopeZh),
+          }
+        : undefined,
+    challenge:
+      row.challengeEn && row.challengeZh
+        ? { en: row.challengeEn, zh: row.challengeZh }
+        : undefined,
+    solution:
+      row.solutionEn && row.solutionZh
+        ? { en: row.solutionEn, zh: row.solutionZh }
+        : undefined,
+    published_at: row.publishedAt ?? undefined,
+    featured: row.featured,
+    badge:
+      row.badgeEn && row.badgeZh
+        ? { en: row.badgeEn, zh: row.badgeZh }
+        : undefined,
+  };
+}
+
+async function fetchProjectRelations(projectIds: string[]): Promise<{
+  images: DbImageRow[];
+  scopes: DbScopeRow[];
+}> {
+  if (projectIds.length === 0) return { images: [], scopes: [] };
+  const [images, scopes] = await Promise.all([
+    db.select().from(projectImagesTable).where(inArray(projectImagesTable.projectId, projectIds)) as Promise<DbImageRow[]>,
+    db.select().from(projectScopesTable).where(inArray(projectScopesTable.projectId, projectIds)) as Promise<DbScopeRow[]>,
+  ]);
+  return { images, scopes };
+}
+
+/** Fetch all published projects from DB, mapped to `Project[]`. */
+export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
+  const rows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .where(eq(projectsTable.isPublished, true))
+    .orderBy(desc(projectsTable.createdAt));
+
+  const ids = rows.map((r: DbProjectRow) => r.id);
+  const { images, scopes } = await fetchProjectRelations(ids);
+
+  return rows.map((row: DbProjectRow) =>
+    mapDbProjectToProject(
+      row,
+      images.filter((i: DbImageRow) => i.projectId === row.id),
+      scopes.filter((s: DbScopeRow) => s.projectId === row.id)
+    )
+  );
+});
+
+/** Fetch a single published project by slug from DB. */
+export const getProjectBySlugFromDb = cache(
+  async (slug: string): Promise<Project | null> => {
+    const rows = await db
+      .select()
+      .from(projectsTable)
+      .where(and(eq(projectsTable.slug, slug), eq(projectsTable.isPublished, true)))
+      .limit(1);
+
+    const row = rows[0];
+    if (!row) return null;
+
+    const { images, scopes } = await fetchProjectRelations([row.id]);
+    return mapDbProjectToProject(row, images, scopes);
+  }
+);
+
+/** Fetch all projects including unpublished (for admin). */
+export async function getAllProjectsAdmin() {
+  const rows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .orderBy(desc(projectsTable.createdAt));
+
+  const ids = rows.map((r: DbProjectRow) => r.id);
+  const { images, scopes } = await fetchProjectRelations(ids);
+
+  return rows.map((row: DbProjectRow) => ({
+    ...row,
+    images: images.filter((i: DbImageRow) => i.projectId === row.id).sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
+    scopes: scopes.filter((s: DbScopeRow) => s.projectId === row.id).sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
+  }));
+}
+
+/** Fetch all published project slugs (for sitemap). */
+export async function getProjectSlugsFromDb(): Promise<string[]> {
+  const rows: { slug: string }[] = await db
+    .select({ slug: projectsTable.slug })
+    .from(projectsTable)
+    .where(eq(projectsTable.isPublished, true));
+  return rows.map((r: { slug: string }) => r.slug);
+}
+
+// ============================================================================
+// SERVICE AREA QUERIES
+// ============================================================================
+
+/** Fetch active service areas ordered by display_order. */
+export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
+  const rows = await db
+    .select()
+    .from(serviceAreasTable)
+    .where(eq(serviceAreasTable.isActive, true))
+    .orderBy(asc(serviceAreasTable.displayOrder));
+
+  return rows.map((row: typeof serviceAreasTable.$inferSelect) => ({
+    slug: row.slug,
+    name: { en: row.nameEn, zh: row.nameZh },
+    description:
+      row.descriptionEn && row.descriptionZh
+        ? { en: row.descriptionEn, zh: row.descriptionZh }
+        : undefined,
+  }));
+});
+
+// ============================================================================
+// BLOG POST QUERIES
+// ============================================================================
+
+/** Fetch all published blog posts ordered by publishedAt desc. */
+export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
+  const rows = await db
+    .select()
+    .from(blogPostsTable)
+    .where(eq(blogPostsTable.isPublished, true))
+    .orderBy(desc(blogPostsTable.publishedAt));
+
+  return rows.map((row: typeof blogPostsTable.$inferSelect) => ({
+    slug: row.slug,
+    title: { en: row.titleEn, zh: row.titleZh },
+    excerpt:
+      row.excerptEn && row.excerptZh
+        ? { en: row.excerptEn, zh: row.excerptZh }
+        : undefined,
+    content:
+      row.contentEn && row.contentZh
+        ? { en: row.contentEn, zh: row.contentZh }
+        : undefined,
+    published_at: row.publishedAt ?? undefined,
+  }));
+});
+
+/** Fetch a single published blog post by slug. */
+export const getBlogPostBySlugFromDb = cache(
+  async (slug: string): Promise<BlogPost | null> => {
+    const rows = await db
+      .select()
+      .from(blogPostsTable)
+      .where(and(eq(blogPostsTable.slug, slug), eq(blogPostsTable.isPublished, true)))
+      .limit(1);
+
+    const row = rows[0];
+    if (!row) return null;
+
+    return {
+      slug: row.slug,
+      title: { en: row.titleEn, zh: row.titleZh },
+      excerpt:
+        row.excerptEn && row.excerptZh
+          ? { en: row.excerptEn, zh: row.excerptZh }
+          : undefined,
+      content:
+        row.contentEn && row.contentZh
+          ? { en: row.contentEn, zh: row.contentZh }
+          : undefined,
+      published_at: row.publishedAt ?? undefined,
+    };
+  }
+);
+
+/** Fetch all published blog post slugs (for sitemap). */
+export async function getBlogPostSlugsFromDb(): Promise<string[]> {
+  const rows: { slug: string }[] = await db
+    .select({ slug: blogPostsTable.slug })
+    .from(blogPostsTable)
+    .where(eq(blogPostsTable.isPublished, true));
+  return rows.map((r: { slug: string }) => r.slug);
+}
+
+// ============================================================================
+// GALLERY QUERIES
+// ============================================================================
+
+/** Fetch published gallery items ordered by display_order. */
+export const getGalleryItemsFromDb = cache(async (): Promise<GalleryItem[]> => {
+  const rows = await db
+    .select()
+    .from(galleryItemsTable)
+    .where(eq(galleryItemsTable.isPublished, true))
+    .orderBy(asc(galleryItemsTable.displayOrder));
+
+  return rows.map((row: typeof galleryItemsTable.$inferSelect) => ({
+    image: getAssetUrl(row.imageUrl),
+    title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
+    category: row.category.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+  }));
+});
+
+// ============================================================================
+// TRUST BADGE QUERIES
+// ============================================================================
+
+/** Fetch active trust badges ordered by display_order. */
+export const getTrustBadgesFromDb = cache(async (): Promise<{ en: string; zh: string }[]> => {
+  const rows = await db
+    .select()
+    .from(trustBadgesTable)
+    .where(eq(trustBadgesTable.isActive, true))
+    .orderBy(asc(trustBadgesTable.displayOrder));
+
+  return rows.map((row: typeof trustBadgesTable.$inferSelect) => ({
+    en: row.badgeEn,
+    zh: row.badgeZh,
+  }));
+});
+
+// ============================================================================
+// SHOWROOM QUERIES
+// ============================================================================
+
+/** Fetch showroom info (singleton row). */
+export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
+  const rows = await db.select().from(showroomInfoTable).limit(1);
+  const row = rows[0];
+  if (!row) throw new Error('Showroom info not found in database');
+
+  return {
+    address: row.address ?? '',
+    appointmentText: {
+      en: row.appointmentTextEn ?? '',
+      zh: row.appointmentTextZh ?? '',
+    },
+    phone: row.phone ?? '',
+    email: row.email ?? '',
+  };
+});
+
+// ============================================================================
+// ADMIN-ONLY QUERIES
+// ============================================================================
+
+/** Fetch all services (admin — includes all fields). */
+export async function getAllServicesAdmin() {
+  return db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
+}
+
+/** Fetch all testimonials (admin — includes non-featured). */
+export async function getAllTestimonialsAdmin() {
+  return db.select().from(testimonialsTable).orderBy(desc(testimonialsTable.createdAt));
+}
+
+/** Fetch all blog posts (admin — includes unpublished). */
+export async function getAllBlogPostsAdmin() {
+  return db.select().from(blogPostsTable).orderBy(desc(blogPostsTable.createdAt));
+}
+
+/** Fetch all contact submissions (admin). */
+export async function getAllContactsAdmin() {
+  return db.select().from(contactSubmissionsTable).orderBy(desc(contactSubmissionsTable.createdAt));
+}

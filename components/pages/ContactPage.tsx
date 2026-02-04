@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { Phone, Mail, MapPin, Clock, Shield, CheckCircle } from 'lucide-react';
 import { useRouter } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import { getAreaNames } from '@/lib/data';
 import type { Company } from '@/lib/types';
 import ContactForm from '@/components/ContactForm';
 import {
@@ -16,12 +15,12 @@ import {
 interface ContactPageProps {
   locale: Locale;
   company: Company;
+  areaNames: string[];
 }
 
-export default function ContactPage({ locale, company }: ContactPageProps) {
+export default function ContactPage({ locale, company, areaNames }: ContactPageProps) {
   const t = useTranslations();
   const router = useRouter();
-  const areas = getAreaNames(locale);
 
   const handleFormSuccess = useCallback(() => {
     router.push('/contact/thank-you');
@@ -182,7 +181,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                   {t('section.serviceAreas')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {areas.map((area) => (
+                  {areaNames.map((area) => (
                     <span
                       key={area}
                       className="px-3 py-1.5 rounded-full text-base"

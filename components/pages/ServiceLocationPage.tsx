@@ -4,12 +4,10 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceType } from '@/lib/types';
+import type { Company, Service, ServiceType, ServiceArea } from '@/lib/types';
 import {
   getLocalizedService,
-  getServiceAreaBySlug,
   getLocalizedArea,
   getAllProjectsLocalized,
 } from '@/lib/data';
@@ -27,13 +25,11 @@ interface ServiceLocationPageProps {
   citySlug: string;
   company: Company;
   service: Service;
+  area: ServiceArea;
 }
 
-export default function ServiceLocationPage({ locale, serviceSlug, citySlug, company, service }: ServiceLocationPageProps) {
+export default function ServiceLocationPage({ locale, serviceSlug, citySlug, company, service, area }: ServiceLocationPageProps) {
   const t = useTranslations();
-  const area = getServiceAreaBySlug(citySlug);
-
-  if (!area) notFound();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);

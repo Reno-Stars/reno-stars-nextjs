@@ -3,8 +3,8 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/config';
-import { getAllGalleryItemsLocalized, getAllProjectsLocalized } from '@/lib/data';
-import type { Company } from '@/lib/types';
+import { getAllProjectsLocalized } from '@/lib/data';
+import type { Company, GalleryItem } from '@/lib/types';
 import TetrisGallery from '@/components/TetrisGallery';
 import CTASection from '@/components/CTASection';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
@@ -15,11 +15,12 @@ import {
 interface DesignPageProps {
   locale: Locale;
   company: Company;
+  gallery: GalleryItem[];
 }
 
-export default function DesignPage({ locale, company }: DesignPageProps) {
+export default function DesignPage({ locale, company, gallery }: DesignPageProps) {
   const t = useTranslations();
-  const gallery = useMemo(() => getAllGalleryItemsLocalized(locale), [locale]);
+  const localizedGallery = useMemo(() => gallery.map((g) => ({ image: g.image, title: g.title[locale], category: g.category })), [gallery, locale]);
   const projects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
   const featuredProjects = useMemo(() => projects.filter((p) => p.featured).slice(0, 6), [projects]);
 
@@ -44,7 +45,7 @@ export default function DesignPage({ locale, company }: DesignPageProps) {
             {t('section.gallery')}
           </h2>
           <TetrisGallery
-            items={gallery}
+            items={localizedGallery}
             cardClassName="rounded-xl"
             cardStyle={{ boxShadow: neu(5) }}
           />

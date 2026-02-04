@@ -5,7 +5,7 @@ import BlogPage from '@/components/pages/BlogPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getBlogPostsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -41,9 +41,10 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, company] = await Promise.all([
+  const [t, company, blogPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
+    getBlogPostsFromDb(),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -53,7 +54,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <BlogPage locale={locale as Locale} company={company} />
+      <BlogPage locale={locale as Locale} company={company} blogPosts={blogPosts} />
     </>
   );
 }

@@ -3,15 +3,13 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { ChevronRight, MapPin } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import {
-  getServiceAreaBySlug,
   getLocalizedArea,
   getAllProjectsLocalized,
 } from '@/lib/data';
-import type { Company, LocalizedService } from '@/lib/types';
+import type { Company, LocalizedService, ServiceArea } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
@@ -23,16 +21,14 @@ import {
 
 interface AreaPageProps {
   locale: Locale;
-  citySlug: string;
+  area: ServiceArea;
   company: Company;
   services: LocalizedService[];
 }
 
-export default function AreaPage({ locale, citySlug, company, services }: AreaPageProps) {
+export default function AreaPage({ locale, area, company, services }: AreaPageProps) {
   const t = useTranslations();
-  const area = getServiceAreaBySlug(citySlug);
-
-  if (!area) notFound();
+  const citySlug = area.slug;
 
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
   const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);

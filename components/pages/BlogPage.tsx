@@ -5,8 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company } from '@/lib/types';
-import { getAllBlogPostsLocalized } from '@/lib/data';
+import type { Company, BlogPost } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE,
@@ -16,11 +15,12 @@ import {
 interface BlogPageProps {
   locale: Locale;
   company: Company;
+  blogPosts: BlogPost[];
 }
 
-export default function BlogPage({ locale, company }: BlogPageProps) {
+export default function BlogPage({ locale, company, blogPosts }: BlogPageProps) {
   const t = useTranslations();
-  const blogPosts = useMemo(() => getAllBlogPostsLocalized(locale), [locale]);
+  const localizedPosts = useMemo(() => blogPosts.map((p) => ({ slug: p.slug, title: p.title[locale], excerpt: p.excerpt?.[locale] })), [blogPosts, locale]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -40,13 +40,13 @@ export default function BlogPage({ locale, company }: BlogPageProps) {
       {/* Blog Posts */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
-          {blogPosts.length === 0 ? (
+          {localizedPosts.length === 0 ? (
             <p className="text-center text-lg py-12" style={{ color: TEXT_MID }}>
               {t('blog.noPosts')}
             </p>
           ) : (
             <div className="space-y-4">
-              {blogPosts.map((post) => (
+              {localizedPosts.map((post) => (
                 <article key={post.slug}>
                   <Link
                     href={`/blog/${post.slug}`}

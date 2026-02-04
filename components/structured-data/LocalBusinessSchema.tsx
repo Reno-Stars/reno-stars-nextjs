@@ -1,5 +1,4 @@
-import { getServiceAreas } from '@/lib/data';
-import type { Company, SocialLink } from '@/lib/types';
+import type { Company, SocialLink, ServiceArea } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
 
 const BASE_URL = getBaseUrl();
@@ -29,9 +28,10 @@ function parseRating(rating: string): { value: number; best: number } {
 interface LocalBusinessSchemaProps {
   company: Company;
   socialLinks: SocialLink[];
+  areas: ServiceArea[];
 }
 
-export default function LocalBusinessSchema({ company, socialLinks }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
   const ratingParts = parseRating(company.rating);
 
@@ -56,7 +56,7 @@ export default function LocalBusinessSchema({ company, socialLinks }: LocalBusin
       latitude: company.geo.latitude,
       longitude: company.geo.longitude,
     },
-    areaServed: getServiceAreas().map((area) => ({
+    areaServed: areas.map((area) => ({
       '@type': 'City',
       name: area.name.en,
     })),

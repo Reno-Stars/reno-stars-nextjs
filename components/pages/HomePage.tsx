@@ -6,16 +6,8 @@ import { useTranslations } from 'next-intl';
 import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2, Phone, Mail, MapPin, Star, Award, ChevronRight, Shield } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, Testimonial, AboutSections } from '@/lib/types';
-import {
-  video,
-  images,
-  getAllGalleryItemsLocalized,
-  getTrustBadges,
-  getAllBlogPostsLocalized,
-  getShowroomLocalized,
-  getAllAreasLocalized,
-} from '@/lib/data';
+import type { Company, Service, Testimonial, AboutSections, GalleryItem, BlogPost, Showroom, ServiceArea } from '@/lib/types';
+import { video, images } from '@/lib/data';
 import TetrisGallery from '@/components/TetrisGallery';
 import ContactForm from '@/components/ContactForm';
 import {
@@ -31,15 +23,20 @@ interface HomePageProps {
   services: Service[];
   testimonials: Testimonial[];
   aboutSections: AboutSections;
+  gallery: GalleryItem[];
+  trustBadges: { en: string; zh: string }[];
+  blogPosts: BlogPost[];
+  showroom: Showroom;
+  areas: ServiceArea[];
 }
 
-export default function HomePage({ locale, company, services, testimonials, aboutSections }: HomePageProps) {
+export default function HomePage({ locale, company, services, testimonials, aboutSections, gallery, trustBadges, blogPosts, showroom, areas }: HomePageProps) {
   const t = useTranslations();
-  const gallery = useMemo(() => getAllGalleryItemsLocalized(locale), [locale]);
-  const trustBadges = useMemo(() => getTrustBadges(locale), [locale]);
-  const blogPosts = useMemo(() => getAllBlogPostsLocalized(locale), [locale]);
-  const showroom = useMemo(() => getShowroomLocalized(locale), [locale]);
-  const areas = useMemo(() => getAllAreasLocalized(locale), [locale]);
+  const localizedGallery = useMemo(() => gallery.map((g) => ({ image: g.image, title: g.title[locale], category: g.category })), [gallery, locale]);
+  const localizedBadges = useMemo(() => trustBadges.map((b) => b[locale]), [trustBadges, locale]);
+  const localizedBlogPosts = useMemo(() => blogPosts.map((p) => ({ slug: p.slug, title: p.title[locale], excerpt: p.excerpt?.[locale] })), [blogPosts, locale]);
+  const localizedShowroom = useMemo(() => ({ address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone, email: showroom.email }), [showroom, locale]);
+  const localizedAreas = useMemo(() => areas.map((a) => ({ slug: a.slug, name: a.name[locale] })), [areas, locale]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -107,12 +104,12 @@ export default function HomePage({ locale, company, services, testimonials, abou
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-2">
           <span className="text-sm font-bold uppercase tracking-wider" style={{ color: GOLD }}>{t('section.serviceAreas')}</span>
           <span className="mx-1" style={{ color: TEXT_MUTED }}>|</span>
-          {areas.map((area, i) => (
+          {localizedAreas.map((area, i) => (
             <span key={area.slug} className="text-sm font-medium" style={{ color: TEXT_MID }}>
               <Link href={`/areas/${area.slug}` as '/'} className="hover:underline" style={{ color: TEXT_MID }}>
                 {area.name}
               </Link>
-              {i < areas.length - 1 ? <span className="mx-1.5" style={{ color: `${TEXT}20` }}>&bull;</span> : ''}
+              {i < localizedAreas.length - 1 ? <span className="mx-1.5" style={{ color: `${TEXT}20` }}>&bull;</span> : ''}
             </span>
           ))}
         </div>
@@ -168,7 +165,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
             </Link>
           </div>
           <TetrisGallery
-            items={gallery}
+            items={localizedGallery}
             cardClassName="rounded-xl"
             cardStyle={{ boxShadow: neu(5) }}
           />
@@ -253,7 +250,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
       {/* TRUST BADGES */}
       <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-          {trustBadges.map((badge) => (
+          {localizedBadges.map((badge) => (
             <div key={badge} className="rounded-xl p-4 flex items-center gap-3" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
               <Award className="w-6 h-6 shrink-0" style={{ color: GOLD }} />
               <span className="text-base font-bold" style={{ color: TEXT }}>{badge}</span>
@@ -270,7 +267,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
             <p className="text-base" style={{ color: TEXT_MID }}>{t('section.blogSubtitle')}</p>
           </div>
           <div className="space-y-3">
-            {blogPosts.map((post) => (
+            {localizedBlogPosts.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`}
                 className="rounded-xl p-4 flex items-center justify-between transition-all duration-200 cursor-pointer block hover:translate-x-1"
                 style={{ boxShadow: neu(4), backgroundColor: CARD }}
@@ -288,8 +285,8 @@ export default function HomePage({ locale, company, services, testimonials, abou
         <div className="max-w-4xl mx-auto text-center">
           <Image src={company.logo} alt={company.name} width={180} height={40} className="h-10 w-auto object-contain mx-auto mb-5 rounded-md bg-white/95 px-3 py-1" />
           <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">{t('section.visitShowroom')}</h2>
-          <p className="text-base mb-2 text-white/80">{showroom.appointmentText}</p>
-          <p className="text-sm text-white/70 mb-6">{showroom.address} &middot; {showroom.phone}</p>
+          <p className="text-base mb-2 text-white/80">{localizedShowroom.appointmentText}</p>
+          <p className="text-sm text-white/70 mb-6">{localizedShowroom.address} &middot; {localizedShowroom.phone}</p>
           <Link href="/contact"
             className="inline-block px-8 py-3.5 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
             style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
@@ -311,7 +308,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
               {[
                 { icon: Phone, title: t('label.phone'), value: company.phone, href: `tel:${company.phone}` },
                 { icon: Mail, title: t('label.email'), value: company.email, href: `mailto:${company.email}` },
-                { icon: MapPin, title: t('section.serviceAreas'), value: areas.slice(0, 8).map((a) => a.name).join(', ') + '\u2026' },
+                { icon: MapPin, title: t('section.serviceAreas'), value: localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '\u2026' },
               ].map((c) => (
                 <div key={c.title} className="rounded-xl p-5 flex items-start gap-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: GOLD_PALE }}>

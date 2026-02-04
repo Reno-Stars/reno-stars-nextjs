@@ -2,23 +2,24 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getBlogPostBySlug, blogPosts, getLocalizedBlogPost } from '@/lib/data';
+import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const slugs = await getBlogPostSlugsFromDb();
   const params: { locale: string; slug: string }[] = [];
 
   for (const locale of locales) {
-    for (const post of blogPosts) {
-      params.push({ locale, slug: post.slug });
+    for (const slug of slugs) {
+      params.push({ locale, slug });
     }
   }
 
@@ -27,7 +28,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlugFromDb(slug);
 
   if (!post) {
     return { title: 'Blog Post Not Found', robots: { index: false, follow: false } };
@@ -56,7 +57,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const post = getBlogPostBySlug(slug);
+  const post = await getBlogPostBySlugFromDb(slug);
 
   if (!post) {
     notFound();
@@ -84,7 +85,7 @@ export default async function Page({ params }: PageProps) {
         datePublished={post.published_at?.toISOString()}
         url={`/${locale}/blog/${slug}/`}
       />
-      <BlogPostPage locale={locale as Locale} postSlug={slug} company={company} />
+      <BlogPostPage locale={locale as Locale} post={post} company={company} />
     </>
   );
 }

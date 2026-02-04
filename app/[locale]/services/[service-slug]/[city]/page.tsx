@@ -3,9 +3,9 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
-import { getServiceAreas, getServiceAreaBySlug, getLocalizedArea } from '@/lib/data/areas';
+import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
 import { BreadcrumbSchema, ServiceSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
@@ -17,8 +17,8 @@ interface PageProps {
 
 const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
 
-export function generateStaticParams() {
-  const areas = getServiceAreas();
+export async function generateStaticParams() {
+  const areas = await getServiceAreasFromDb();
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
 
   for (const locale of locales) {
@@ -34,9 +34,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug, city } = await params;
-  const services = await getServicesFromDb();
+  const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const service = services.find((s) => s.slug === serviceSlug);
-  const area = getServiceAreaBySlug(city);
+  const area = areas.find((a) => a.slug === city);
 
   if (!service || !area) {
     return { title: 'Page Not Found', robots: { index: false, follow: false } };
@@ -70,9 +70,13 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
   setRequestLocale(locale);
 
-  const [company, services] = await Promise.all([getCompanyFromDb(), getServicesFromDb()]);
+  const [company, services, areas] = await Promise.all([
+    getCompanyFromDb(),
+    getServicesFromDb(),
+    getServiceAreasFromDb(),
+  ]);
   const service = services.find((s) => s.slug === serviceSlug);
-  const area = getServiceAreaBySlug(city);
+  const area = areas.find((a) => a.slug === city);
 
   if (!service || !area) {
     notFound();
@@ -107,6 +111,7 @@ export default async function Page({ params }: PageProps) {
         citySlug={city}
         company={company}
         service={service}
+        area={area}
       />
     </>
   );
