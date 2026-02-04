@@ -151,48 +151,6 @@ export default function HomePage({ locale, company, services, testimonials, abou
         </div>
       </section>
 
-      {/* STATS BAND */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { value: '500+', label: t('stats.projectsDone') },
-            { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-            { value: '100%', label: t('stats.satisfaction') },
-            { value: '24/7', label: t('stats.support') },
-          ].map((s) => (
-            <div key={s.value} className="text-center py-2">
-              <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
-              <div className="text-xs font-medium text-white/50 mt-0.5">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t('section.aboutUs')}</h2>
-            <p className="text-sm" style={{ color: TEXT_MID }}>{t('section.aboutSubtitle')}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
-              { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
-              { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
-              { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
-              { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
-            ].map((item) => (
-              <div key={item.title} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
-                <div className="w-8 h-0.5 rounded-full mb-3" style={{ backgroundColor: GOLD }} />
-                <h3 className="text-base font-bold mb-1.5" style={{ color: TEXT }}>{item.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* GALLERY */}
       <section id="gallery" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto">
@@ -244,6 +202,48 @@ export default function HomePage({ locale, company, services, testimonials, abou
                     </div>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STATS BAND */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { value: '500+', label: t('stats.projectsDone') },
+            { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+            { value: '100%', label: t('stats.satisfaction') },
+            { value: '24/7', label: t('stats.support') },
+          ].map((s) => (
+            <div key={s.value} className="text-center py-2">
+              <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
+              <div className="text-xs font-medium text-white/50 mt-0.5">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t('section.aboutUs')}</h2>
+            <p className="text-sm" style={{ color: TEXT_MID }}>{t('section.aboutSubtitle')}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
+              { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
+              { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
+              { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
+              { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
+                <div className="w-8 h-0.5 rounded-full mb-3" style={{ backgroundColor: GOLD }} />
+                <h3 className="text-base font-bold mb-1.5" style={{ color: TEXT }}>{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{item.text}</p>
               </div>
             ))}
           </div>

@@ -131,13 +131,10 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
                 <button
                   key={category.en}
                   onClick={() => setActiveCategory(category.en)}
-                  className="relative rounded-xl overflow-hidden text-left transition-all duration-200 shrink-0 snap-start"
+                  className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat"
                   style={{
                     width: '220px',
-                    boxShadow: neu(4),
-                    ...(isActive
-                      ? { outline: `2px solid ${GOLD}`, outlineOffset: '2px' }
-                      : {}),
+                    boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neu(4),
                   }}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
@@ -147,17 +144,23 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
                         alt={category[locale]}
                         fill
                         sizes="220px"
-                        className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover:scale-105'}`}
+                        className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <span className="text-base font-bold text-white block">
+                    <div
+                      className="absolute inset-0 transition-colors duration-200"
+                      style={{ backgroundColor: isActive ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0.45)' }}
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                      <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
                         {category[locale]}
                       </span>
-                      <span className="text-xs text-white/70 mt-0.5 block">
+                      <span className="text-xs text-white/80 block">
                         {categoryProjects.length} {t('filter.projects')}
                       </span>
+                      {isActive && (
+                        <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD }} />
+                      )}
                     </div>
                   </div>
                 </button>

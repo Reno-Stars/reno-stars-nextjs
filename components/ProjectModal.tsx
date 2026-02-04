@@ -97,7 +97,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           opacity: visible ? 1 : 0,
           transform: visible ? 'scale(1)' : 'scale(0.97)',
           backgroundColor: SURFACE,
-          boxShadow: `0 25px 60px rgba(27,54,93,0.3), ${neu(8)}`,
+          boxShadow: `0 25px 50px rgba(27,54,93,0.25)`,
           color: TEXT,
         }}
         onClick={(e) => e.stopPropagation()}

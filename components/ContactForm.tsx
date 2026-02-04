@@ -41,10 +41,10 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {formStatus.type !== 'idle' && (
         <div
-          className="p-3 rounded-lg text-sm font-medium"
+          className="p-4 rounded-xl text-sm font-medium"
           style={{
             backgroundColor: formStatus.type === 'success' ? SUCCESS_BG : ERROR_BG,
             color: formStatus.type === 'success' ? SUCCESS : ERROR,
@@ -60,7 +60,7 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
         { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2'), required: false },
       ].map((f) => (
         <div key={f.id}>
-          <label htmlFor={f.id} className="block text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>
+          <label htmlFor={f.id} className="block text-sm font-semibold uppercase tracking-wider mb-1.5" style={{ color: TEXT_MUTED }}>
             {f.label}{f.required ? ' *' : ''}
           </label>
           <input
@@ -69,8 +69,8 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
             name={f.id}
             value={formData[f.id as keyof typeof formData]}
             onChange={handleInputChange}
-            className="w-full px-4 py-2.5 rounded-lg border-none outline-none text-sm transition-all duration-200"
-            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT }}
+            className="w-full px-4 py-3 rounded-xl border-none outline-none text-base transition-all duration-200 focus:ring-2 focus:ring-offset-1"
+            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, '--tw-ring-color': GOLD } as React.CSSProperties}
             placeholder={f.ph}
             required={f.required}
             disabled={isPending}
@@ -78,7 +78,7 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
         </div>
       ))}
       <div>
-        <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>
+        <label htmlFor="message" className="block text-sm font-semibold uppercase tracking-wider mb-1.5" style={{ color: TEXT_MUTED }}>
           {t('form.message')} *
         </label>
         <textarea
@@ -86,9 +86,9 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
           name="message"
           value={formData.message}
           onChange={handleInputChange}
-          rows={4}
-          className="w-full px-4 py-2.5 rounded-lg border-none outline-none text-sm resize-none transition-all duration-200"
-          style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT }}
+          rows={5}
+          className="w-full px-4 py-3 rounded-xl border-none outline-none text-base resize-none transition-all duration-200 focus:ring-2 focus:ring-offset-1"
+          style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, '--tw-ring-color': GOLD } as React.CSSProperties}
           placeholder={t('form.messagePlaceholder')}
           required
           disabled={isPending}
@@ -96,8 +96,8 @@ export default function ContactForm({ onSuccess, submitLabel }: ContactFormProps
       </div>
       <button
         type="submit"
-        className="w-full py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        style={{ backgroundColor: GOLD, boxShadow: `0 4px 16px ${GOLD}44` }}
+        className="w-full py-3.5 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
         disabled={isPending}
         aria-busy={isPending}
       >

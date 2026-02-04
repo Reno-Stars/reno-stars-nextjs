@@ -45,10 +45,21 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
 
       {/* Contact Section */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10">
+            {/* Contact Form — shown first on mobile */}
+            <div className="order-1 lg:order-2 rounded-2xl p-6 lg:p-8" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
+              <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+                {t('section.sendUsMessage')}
+              </h2>
+              <ContactForm
+                submitLabel={t('cta.submitInquiry')}
+                onSuccess={() => router.push('/contact/thank-you')}
+              />
+            </div>
+
             {/* Contact Info */}
-            <div>
+            <div className="order-2 lg:order-1">
               <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
                 {t('section.contactInfo')}
               </h2>
@@ -56,7 +67,7 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                 {contactInfo.map((item) => (
                   <div
                     key={item.title}
-                    className="rounded-xl p-4 flex items-start gap-4"
+                    className="rounded-xl p-5 flex items-start gap-4"
                     style={{ boxShadow: neu(4), backgroundColor: CARD }}
                   >
                     <div
@@ -66,19 +77,19 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                       <item.icon className="w-5 h-5" style={{ color: GOLD }} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold mb-1" style={{ color: TEXT }}>
+                      <h3 className="text-base font-bold mb-1" style={{ color: TEXT }}>
                         {item.title}
                       </h3>
                       {item.href ? (
                         <a
                           href={item.href}
-                          className="text-sm hover:underline"
+                          className="text-base hover:underline"
                           style={{ color: TEXT_MID }}
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-sm whitespace-pre-line" style={{ color: TEXT_MID }}>
+                        <p className="text-base whitespace-pre-line" style={{ color: TEXT_MID }}>
                           {item.value}
                         </p>
                       )}
@@ -89,14 +100,14 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
 
               {/* Service Areas */}
               <div className="rounded-xl p-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
-                <h3 className="text-sm font-bold mb-3" style={{ color: TEXT }}>
+                <h3 className="text-base font-bold mb-3" style={{ color: TEXT }}>
                   {t('section.serviceAreas')}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {areas.map((area) => (
                     <span
                       key={area}
-                      className="px-3 py-1 rounded-full text-xs"
+                      className="px-3 py-1.5 rounded-full text-sm"
                       style={{ backgroundColor: SURFACE_ALT, color: TEXT_MID }}
                     >
                       {area}
@@ -104,17 +115,6 @@ export default function ContactPage({ locale, company }: ContactPageProps) {
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="rounded-2xl p-6 lg:p-8" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
-              <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
-                {t('section.sendUsMessage')}
-              </h2>
-              <ContactForm
-                submitLabel={t('cta.submitInquiry')}
-                onSuccess={() => router.push('/contact/thank-you')}
-              />
             </div>
           </div>
         </div>
