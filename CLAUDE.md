@@ -81,7 +81,7 @@ lib/
     seed.ts               # Database seed script
   data/
     index.ts              # Static data: images, video, gallery, blog posts, showroom, trust badges
-    projects.ts           # 13 project entries with bilingual content
+    projects.ts           # 15 project entries with bilingual content
     services.ts           # Service type mappings and localization helpers
     areas.ts              # 14 service area definitions
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO

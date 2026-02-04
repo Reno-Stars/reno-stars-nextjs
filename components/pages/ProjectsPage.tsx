@@ -10,6 +10,9 @@ import {
   getAllProjectsLocalized,
   getCategoriesLocalized,
   getProjectLocations,
+  getProjectSpaceTypes,
+  getProjectBudgetRanges,
+  projects as rawProjects,
 } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
 import ProjectCard from '@/components/ProjectCard';
@@ -30,9 +33,13 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
   const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
   const categories = useMemo(() => getCategoriesLocalized(), []);
   const locations = useMemo(() => getProjectLocations(), []);
+  const spaceTypes = useMemo(() => getProjectSpaceTypes(), []);
+  const budgetRanges = useMemo(() => getProjectBudgetRanges(), []);
 
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
+  const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
+  const [budgetFilter, setBudgetFilter] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
 
   const handleCardClick = useCallback((project: LocalizedProject) => {
@@ -49,20 +56,41 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
     ...locations.map((loc) => ({ value: loc, label: loc })),
   ], [locations, t]);
 
+  const spaceTypeOptions = useMemo(() => [
+    { value: 'All', label: t('filter.allSpaceTypes') },
+    ...spaceTypes.map((st) => {
+      const match = rawProjects.find((p) => p.space_type?.en === st);
+      const label = match?.space_type?.[locale] ?? st;
+      return { value: st, label };
+    }),
+  ], [spaceTypes, locale, t]);
+
+  const budgetOptions = useMemo(() => [
+    { value: 'All', label: t('filter.allBudgets') },
+    ...budgetRanges.map((br) => ({ value: br, label: br })),
+  ], [budgetRanges, t]);
+
   const filteredProjects = useMemo(() => allProjects.filter((project) => {
     const categoryMatch = activeCategory === 'All' || project.category === (
       categories.find((c) => c.en === activeCategory)?.[locale] ?? activeCategory
     );
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
-    return categoryMatch && locationMatch;
-  }), [allProjects, categories, activeCategory, locationFilter, locale]);
+    const spaceTypeMatch = spaceTypeFilter === 'All' || (() => {
+      const match = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
+      return project.space_type === match?.space_type?.[locale];
+    })();
+    const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
+    return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch;
+  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, budgetFilter, locale]);
 
   const clearFilters = () => {
     setActiveCategory('All');
     setLocationFilter('All');
+    setSpaceTypeFilter('All');
+    setBudgetFilter('All');
   };
 
-  const hasActiveFilters = activeCategory !== 'All' || locationFilter !== 'All';
+  const hasActiveFilters = activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All';
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -146,6 +174,18 @@ export default function ProjectsPage({ locale, company }: ProjectsPageProps) {
             onChange={setLocationFilter}
             options={locationOptions}
             ariaLabel={t('filter.location')}
+          />
+          <SelectDropdown
+            value={spaceTypeFilter}
+            onChange={setSpaceTypeFilter}
+            options={spaceTypeOptions}
+            ariaLabel={t('filter.spaceType')}
+          />
+          <SelectDropdown
+            value={budgetFilter}
+            onChange={setBudgetFilter}
+            options={budgetOptions}
+            ariaLabel={t('filter.budget')}
           />
 
           {hasActiveFilters && (

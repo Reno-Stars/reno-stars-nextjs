@@ -53,6 +53,7 @@ export {
   projects, getProjects, getProjectBySlug, getLocalizedProject, getAllProjectsLocalized,
   getProjectsByServiceType, getProjectsByLocation, getFeaturedProjects, getProjectSlugs,
   getCategories, getCategoriesLocalized, CATEGORY_SLUGS, getProjectLocations,
+  getProjectSpaceTypes, getProjectBudgetRanges,
 } from './projects';
 export { serviceAreas, getServiceAreas, getServiceAreaBySlug, getLocalizedArea, getAllAreasLocalized, getAreaNames, getAreaSlugs } from './areas';
 

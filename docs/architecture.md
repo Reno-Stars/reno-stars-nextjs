@@ -52,7 +52,7 @@ lib/
     seed.ts               # Seed script
   data/                   # Static data layer
     index.ts              # Images, video, gallery, blog posts, showroom, trust badges
-    projects.ts           # 13 portfolio projects
+    projects.ts           # 15 portfolio projects
     services.ts           # Service type mappings and localization helpers
     areas.ts              # 14 service areas
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)

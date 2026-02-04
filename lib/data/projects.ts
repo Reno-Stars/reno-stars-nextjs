@@ -428,6 +428,76 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: 'basement-renovation-vancouver',
+    title: {
+      en: 'Basement Renovation in Vancouver',
+      zh: '温哥华地下室装修',
+    },
+    description: {
+      en: 'Full basement conversion into a modern living space with home theater and guest suite.',
+      zh: '地下室全面改造为现代生活空间，配备家庭影院和客房。',
+    },
+    service_type: 'basement',
+    category: { en: 'Basement', zh: '地下室' },
+    location_city: 'Vancouver',
+    budget_range: '$40,000 - $60,000',
+    duration: { en: '8 weeks', zh: '8周' },
+    space_type: { en: 'Residential', zh: '住宅' },
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'),
+    images: [
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/49.png'), alt: { en: 'Vancouver basement renovation', zh: '温哥华地下室装修' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/53.png'), alt: { en: 'Basement living area', zh: '地下室生活区' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/52.png'), alt: { en: 'Basement guest suite', zh: '地下室客房' } },
+    ],
+    service_scope: {
+      en: ['Framing', 'Drywall', 'Flooring', 'Electrical', 'Plumbing', 'Home Theater'],
+      zh: ['框架', '石膏板', '地板', '电气', '水管', '家庭影院'],
+    },
+    challenge: {
+      en: 'An unfinished concrete basement with low ceilings, moisture issues, and no natural light — needing a complete transformation into usable living space.',
+      zh: '一个未完工的混凝土地下室，层高低、有潮湿问题且没有自然光——需要完全改造为可用的生活空间。',
+    },
+    solution: {
+      en: 'We waterproofed the foundation, installed recessed lighting to maximize headroom, added engineered hardwood flooring, and created a cozy home theater and guest suite with a full bathroom.',
+      zh: '我们对基础进行了防水处理，安装嵌入式照明以最大化净高，铺设工程硬木地板，并打造了舒适的家庭影院和配备独立卫浴的客房。',
+    },
+  },
+  {
+    slug: 'cabinet-refacing-richmond',
+    title: {
+      en: 'Cabinet Refacing in Richmond',
+      zh: '列治文橱柜翻新',
+    },
+    description: {
+      en: 'Professional cabinet refacing with new shaker-style doors, soft-close hardware, and modern pulls.',
+      zh: '专业橱柜翻新，配备新摇门式柜门、缓冲五金件和现代拉手。',
+    },
+    service_type: 'cabinet',
+    category: { en: 'Cabinet', zh: '橱柜' },
+    location_city: 'Richmond',
+    budget_range: '$8,000 - $15,000',
+    duration: { en: '1 week', zh: '1周' },
+    space_type: { en: 'Residential', zh: '住宅' },
+    hero_image: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'),
+    images: [
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/340.png'), alt: { en: 'Richmond cabinet refacing', zh: '列治文橱柜翻新' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/35.png'), alt: { en: 'New cabinet doors', zh: '新柜门' } },
+      { src: getAssetUrl('https://reno-stars.com/wp-content/uploads/2025/04/75-1.png'), alt: { en: 'Cabinet hardware upgrade', zh: '橱柜五金升级' } },
+    ],
+    service_scope: {
+      en: ['Cabinet Doors', 'Drawer Fronts', 'Hardware', 'Hinges'],
+      zh: ['柜门', '抽屉面板', '五金件', '铰链'],
+    },
+    challenge: {
+      en: 'The existing kitchen cabinets were structurally sound but the dated oak finish and worn hardware made the kitchen feel old and uninviting.',
+      zh: '现有厨房橱柜结构完好，但过时的橡木饰面和磨损的五金件让厨房显得陈旧缺乏吸引力。',
+    },
+    solution: {
+      en: 'We replaced all door and drawer fronts with modern white shaker-style panels, upgraded to soft-close hinges and sleek brushed-nickel pulls, giving the kitchen a brand-new look at a fraction of full renovation cost.',
+      zh: '我们将所有柜门和抽屉面板更换为现代白色摇门式面板，升级为缓冲铰链和时尚的拉丝镍拉手，以远低于全面翻新的成本为厨房焕然一新。',
+    },
+  },
+  {
     slug: 'richmond-kitchen-remodel-bath',
     title: {
       en: 'Richmond Kitchen Remodel & Bath',
@@ -539,4 +609,24 @@ export const CATEGORY_SLUGS = getCategoriesLocalized()
 export function getProjectLocations(): string[] {
   const locations = new Set(projects.map((p) => p.location_city));
   return Array.from(locations).sort();
+}
+
+// Get unique EN space types for filtering
+export function getProjectSpaceTypes(): string[] {
+  const types = new Set(
+    projects.map((p) => p.space_type?.en).filter((t): t is string => !!t)
+  );
+  return Array.from(types).sort();
+}
+
+// Get unique budget ranges for filtering, sorted by lower bound
+export function getProjectBudgetRanges(): string[] {
+  const ranges = new Set(
+    projects.map((p) => p.budget_range).filter((r): r is string => !!r)
+  );
+  return Array.from(ranges).sort((a, b) => {
+    const numA = parseInt(a.replace(/[^0-9]/g, ''), 10);
+    const numB = parseInt(b.replace(/[^0-9]/g, ''), 10);
+    return numA - numB;
+  });
 }
