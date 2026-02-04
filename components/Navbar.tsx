@@ -73,6 +73,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
 
   const navLinks = useMemo(() => [
     { href: '/', label: t('nav.home') },
+    { href: '/services', label: t('nav.services') },
     { href: '/projects', label: t('nav.projects') },
     { href: '/design', label: t('nav.design') },
     { href: '/benefits', label: t('nav.benefits') },

@@ -60,6 +60,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
 
   const quickLinks = useMemo(() => [
     { href: '/', label: t('nav.home') },
+    { href: '/services', label: t('nav.services') },
     { href: '/projects', label: t('nav.projects') },
     { href: '/design', label: t('nav.design') },
     { href: '/benefits', label: t('nav.benefits') },
