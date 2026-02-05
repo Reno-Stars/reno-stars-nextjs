@@ -121,6 +121,8 @@ export interface BlogPost {
   excerpt?: Localized<string>;
   /** Full post content (HTML/Markdown) */
   content?: Localized<string>;
+  /** Featured image URL for OG/social sharing */
+  featured_image?: string;
   /** Publication date */
   published_at?: Date;
   /** External URL (if linking elsewhere) */

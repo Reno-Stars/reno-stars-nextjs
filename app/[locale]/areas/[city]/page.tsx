@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, LocalBusinessAreaSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
@@ -84,10 +84,17 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const localizedServices = services.map((s) => getLocalizedService(s, locale as Locale));
+  const serviceNames = localizedServices.map((s) => s.title);
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <LocalBusinessAreaSchema
+        company={company}
+        areaName={localizedArea.name}
+        areaSlug={city}
+        services={serviceNames}
+      />
       <AreaPage locale={locale as Locale} area={area} company={company} services={localizedServices} />
     </>
   );

@@ -353,6 +353,56 @@
     "experience": "{years}+ years of experience",
     "rating": "{rating} {source} rating"
   },
+  "faq": {
+    "kitchen": {
+      "q1": "How long does a kitchen renovation typically take?",
+      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
+      "q2": "What is the average cost of a kitchen renovation in Vancouver?",
+      "a2": "Kitchen renovations in Vancouver typically range from $25,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
+      "q3": "Do I need permits for my kitchen renovation?",
+      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets Vancouver building codes."
+    },
+    "bathroom": {
+      "q1": "How long does a bathroom renovation take?",
+      "a1": "Most bathroom renovations take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
+      "q2": "Can I use my bathroom during renovation?",
+      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
+      "q3": "What waterproofing do you use for bathrooms?",
+      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+    },
+    "whole-house": {
+      "q1": "Can I live in my home during a whole house renovation?",
+      "a1": "It depends on the scope. For major renovations, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
+      "q2": "How do you manage a whole house renovation project?",
+      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
+      "q3": "What is included in whole house renovation?",
+      "a3": "Our whole house renovations can include everything from structural changes, electrical and plumbing updates, to finishing work like flooring, painting, and fixtures."
+    },
+    "basement": {
+      "q1": "Do I need a permit to finish my basement?",
+      "a1": "Yes, basement finishing requires building permits in most municipalities. We handle all permit applications and inspections as part of our service.",
+      "q2": "How do you handle basement moisture issues?",
+      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
+      "q3": "Can I add a bathroom to my basement?",
+      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets local building codes."
+    },
+    "cabinet": {
+      "q1": "What is the difference between refacing and replacing cabinets?",
+      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
+      "q2": "How long does cabinet refacing take?",
+      "a2": "Cabinet refacing typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
+      "q3": "Can all cabinets be refaced?",
+      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during the free consultation."
+    },
+    "commercial": {
+      "q1": "Do you work during business hours?",
+      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
+      "q2": "Are you experienced with commercial building codes?",
+      "a2": "Yes, our team is experienced with commercial building codes, ADA requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
+      "q3": "Can you handle tenant improvements?",
+      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants. We work with landlords and property managers on approval processes."
+    }
+  },
   "locationBenefits": {
     "localExpertise": "Local expertise in your area",
     "freeOnsite": "Free on-site consultation",

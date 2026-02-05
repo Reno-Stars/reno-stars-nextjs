@@ -348,6 +348,7 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
       row.contentEn && row.contentZh
         ? { en: row.contentEn, zh: row.contentZh }
         : undefined,
+    featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
     published_at: row.publishedAt ?? undefined,
   }));
 });
@@ -375,6 +376,7 @@ export const getBlogPostBySlugFromDb = cache(
         row.contentEn && row.contentZh
           ? { en: row.contentEn, zh: row.contentZh }
           : undefined,
+      featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
       published_at: row.publishedAt ?? undefined,
     };
   }

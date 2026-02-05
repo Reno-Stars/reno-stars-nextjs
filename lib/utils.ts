@@ -74,6 +74,27 @@ export function truncate(text: string, length: number): string {
 }
 
 /**
+ * Truncates text for meta descriptions at word boundaries.
+ * Optimized for SEO with a default max length of 155 characters.
+ * @param text - The text to truncate
+ * @param maxLength - Maximum length (default: 155)
+ * @returns Truncated text ending at a word boundary with ellipsis if needed
+ * @example truncateMetaDescription('This is a very long description text') // Full text or truncated at word boundary
+ */
+export function truncateMetaDescription(text: string, maxLength: number = 155): string {
+  if (!text || text.length <= maxLength) return text;
+
+  // Find the last space before maxLength
+  const truncated = text.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+
+  // If no space found, just cut at maxLength
+  if (lastSpace === -1) return truncated + '...';
+
+  return truncated.slice(0, lastSpace) + '...';
+}
+
+/**
  * Capitalizes the first letter of a string.
  * @param text - The text to capitalize
  * @returns Text with first letter capitalized

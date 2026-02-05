@@ -5,8 +5,9 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
+import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
+import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb } from '@/lib/db/queries';
 
@@ -77,14 +78,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const localizedProject = getLocalizedProject(project, locale as Locale);
+  const description = truncateMetaDescription(localizedProject.description);
 
   return {
     title: `${localizedProject.title} | ${SITE_NAME}`,
-    description: localizedProject.description,
+    description,
     alternates: buildAlternates(`/projects/${slug}/`, locale),
     openGraph: {
       title: `${localizedProject.title} | ${SITE_NAME}`,
-      description: localizedProject.description,
+      description,
       url: `${baseUrl}/${locale}/projects/${slug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
@@ -131,6 +133,9 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
+  const localizedProject = getLocalizedProject(project, locale as Locale);
+  const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
+
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('projects'), url: `/${locale}/projects/` },
@@ -140,6 +145,16 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <ProjectSchema
+        company={company}
+        name={localizedProject.title}
+        description={localizedProject.description}
+        image={project.hero_image}
+        images={project.images?.map((img) => img.src)}
+        location={project.location_city}
+        serviceType={serviceTypeName}
+        url={`/${locale}/projects/${slug}/`}
+      />
       <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
     </>
   );

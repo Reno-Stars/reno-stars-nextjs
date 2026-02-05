@@ -6,8 +6,8 @@ import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services'
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb } from '@/lib/db/queries';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
-import { BreadcrumbSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
+import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 
 interface PageProps {
@@ -39,14 +39,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const localizedService = getLocalizedService(service, locale as Locale);
   const baseUrl = getBaseUrl();
+  const description = truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   return {
     title: `${localizedService.title} | ${SITE_NAME}`,
-    description: localizedService.long_description || localizedService.description,
+    description,
     alternates: buildAlternates(`/services/${serviceSlug}/`, locale),
     openGraph: {
       title: `${localizedService.title} | ${SITE_NAME}`,
-      description: localizedService.description,
+      description,
       url: `${baseUrl}/${locale}/services/${serviceSlug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
@@ -68,11 +69,22 @@ export default async function Page({ params }: PageProps) {
   }
   const localizedService = getLocalizedService(service, locale as Locale);
 
-  const t = await getTranslations({ locale, namespace: 'nav' });
+  const [t, faqT] = await Promise.all([
+    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'faq' }),
+  ]);
+
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('services'), url: `/${locale}/services/` },
     { name: localizedService.title, url: `/${locale}/services/${serviceSlug}/` },
+  ];
+
+  // Build FAQs for this service type
+  const faqs = [
+    { question: faqT(`${serviceSlug}.q1`), answer: faqT(`${serviceSlug}.a1`) },
+    { question: faqT(`${serviceSlug}.q2`), answer: faqT(`${serviceSlug}.a2`) },
+    { question: faqT(`${serviceSlug}.q3`), answer: faqT(`${serviceSlug}.a3`) },
   ];
 
   return (
@@ -84,6 +96,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={localizedService.long_description || localizedService.description}
         url={`/${locale}/services/${serviceSlug}/`}
       />
+      <FAQSchema faqs={faqs} />
       <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} />
     </>
   );

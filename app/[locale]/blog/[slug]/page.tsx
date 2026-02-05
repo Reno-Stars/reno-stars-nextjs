@@ -5,7 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb } from '@/lib/db/queries';
 
@@ -36,19 +36,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
   const baseUrl = getBaseUrl();
+  const ogImage = post.featured_image || siteImages.hero;
+  const description = truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
 
   return {
     title: `${localizedPost.title} | ${SITE_NAME}`,
-    description: localizedPost.excerpt || localizedPost.title,
+    description,
     alternates: buildAlternates(`/blog/${slug}/`, locale),
     openGraph: {
       title: `${localizedPost.title} | ${SITE_NAME}`,
-      description: localizedPost.excerpt || localizedPost.title,
+      description,
       url: `${baseUrl}/${locale}/blog/${slug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'article',
-      images: [{ url: siteImages.hero }],
+      images: [{ url: ogImage }],
     },
   };
 }

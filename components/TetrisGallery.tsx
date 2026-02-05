@@ -46,23 +46,31 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
       {items.map((item, index) => {
         const layout = layouts[index % layouts.length];
         const altText = item.title || item.category || `Gallery image ${index + 1}`;
+        // col-span-2 items are twice as wide, need larger images
+        const isWide = layout.col === 'col-span-2';
+        const sizes = isWide
+          ? '(max-width: 768px) 100vw, 50vw'
+          : '(max-width: 768px) 50vw, 25vw';
+
+        const isInteractive = !!onItemClick;
 
         return (
           <div
             key={`${item.image}-${item.title}`}
-            className={`${layout.col} ${layout.aspect} overflow-hidden cursor-pointer relative group ${cardClassName} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold`}
+            className={`${layout.col} ${layout.aspect} overflow-hidden relative group ${cardClassName} ${isInteractive ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`}
             style={cardStyle}
             role="listitem"
-            tabIndex={0}
-            onClick={() => onItemClick?.(item, index)}
-            onKeyDown={(e) => handleKeyDown(e, item, index)}
+            tabIndex={isInteractive ? 0 : undefined}
+            onClick={isInteractive ? () => onItemClick(item, index) : undefined}
+            onKeyDown={isInteractive ? (e) => handleKeyDown(e, item, index) : undefined}
             aria-label={altText}
           >
             <Image
               src={item.image}
               alt={altText}
               fill
-              sizes="(max-width: 768px) 50vw, 25vw"
+              sizes={sizes}
+              loading="lazy"
               className={`object-cover transition-transform duration-500 group-hover:scale-110 ${imageClassName}`}
             />
             {(item.title || item.category) && (

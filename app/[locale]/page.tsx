@@ -51,6 +51,7 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  // Fetch all data in parallel - page waits for complete render (good for SEO)
   const [t, company, services, testimonials, aboutSections, gallery, trustBadges, blogPosts, showroom, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
