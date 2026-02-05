@@ -487,6 +487,7 @@
     "combinedGallery": "项目图库",
     "filterByArea": "按区域筛选",
     "allAreas": "全部区域",
-    "childProjectsCount": "{count}个装修区域"
+    "childProjectsCount": "{count}个装修区域",
+    "noImagesForArea": "该区域暂无图片"
   }
 }

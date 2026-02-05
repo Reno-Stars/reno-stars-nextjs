@@ -337,22 +337,34 @@ export const getChildrenOfProject = cache(async (parentId: string): Promise<Proj
 
 /**
  * Parse a budget range string like "$15,000 - $25,000" and extract min/max values.
+ * Returns null for non-parseable budget strings (e.g., "TBD", "Call for quote").
  */
-function parseBudgetRange(budget: string): { min: number; max: number } {
+function parseBudgetRange(budget: string): { min: number; max: number } | null {
+  // Skip common non-numeric budget indicators
+  const lowerBudget = budget.toLowerCase();
+  if (lowerBudget.includes('tbd') || lowerBudget.includes('call') || lowerBudget.includes('quote')) {
+    return null;
+  }
   const numbers = budget.match(/[\d,]+/g);
-  if (!numbers || numbers.length === 0) return { min: 0, max: 0 };
-  const values = numbers.map((n) => parseInt(n.replace(/,/g, ''), 10));
+  if (!numbers || numbers.length === 0) return null;
+  const values = numbers.map((n) => parseInt(n.replace(/,/g, ''), 10)).filter((v) => v > 0);
+  if (values.length === 0) return null;
   return { min: Math.min(...values), max: Math.max(...values) };
 }
 
 /**
  * Calculate combined budget range from multiple projects.
+ * Only includes projects with valid numeric budgets.
  */
 function calculateCombinedBudget(projects: Project[]): string | undefined {
-  const budgets = projects.filter((p) => p.budget_range).map((p) => parseBudgetRange(p.budget_range!));
+  const budgets = projects
+    .filter((p) => p.budget_range)
+    .map((p) => parseBudgetRange(p.budget_range!))
+    .filter((b): b is { min: number; max: number } => b !== null);
   if (budgets.length === 0) return undefined;
   const totalMin = budgets.reduce((sum, b) => sum + b.min, 0);
   const totalMax = budgets.reduce((sum, b) => sum + b.max, 0);
+  if (totalMin === 0 && totalMax === 0) return undefined;
   const formatNumber = (n: number) => new Intl.NumberFormat('en-US').format(n);
   if (totalMin === totalMax) return `$${formatNumber(totalMin)}`;
   return `$${formatNumber(totalMin)} - $${formatNumber(totalMax)}`;

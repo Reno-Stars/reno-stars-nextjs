@@ -51,7 +51,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
     return project.aggregated.allImages.filter((img) => img.childSlug === areaFilter);
   }, [project.aggregated.allImages, areaFilter]);
 
-  // Area options for filter
+  // Area options for filter - memoize based on specific fields used
   const areaOptions = useMemo(() => {
     const areas = new Map<string, string>();
     // Add parent
@@ -61,7 +61,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
       areas.set(child.slug, child.title);
     });
     return Array.from(areas.entries()).map(([slug, title]) => ({ slug, title }));
-  }, [project]);
+  }, [project.slug, project.title, project.children]);
 
   const nextImage = useCallback(() => {
     setActiveImageIndex((prev) => (prev + 1) % filteredImages.length);
@@ -93,15 +93,17 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
             {/* Gallery with area filtering */}
             <div>
               <div
-                className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer"
+                className={`relative aspect-[4/3] rounded-2xl overflow-hidden${currentImage ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
-                role="button"
-                tabIndex={0}
-                aria-label={t('projects.openLightbox')}
-                onClick={handleLightboxOpen}
-                onKeyDown={handleLightboxKeyDown}
+                {...(currentImage ? {
+                  role: 'button',
+                  tabIndex: 0,
+                  'aria-label': t('projects.openLightbox'),
+                  onClick: handleLightboxOpen,
+                  onKeyDown: handleLightboxKeyDown,
+                } : {})}
               >
-                {currentImage && (
+                {currentImage ? (
                   <Image
                     src={currentImage.src}
                     alt={currentImage.alt}
@@ -109,6 +111,12 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-contain"
                   />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="text-sm" style={{ color: TEXT_MUTED }}>
+                      {t('wholeHouse.noImagesForArea')}
+                    </p>
+                  </div>
                 )}
                 {project.badge && (
                   <span
@@ -129,8 +137,10 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
               </div>
 
               {/* Area filter */}
-              <div className="flex gap-2 mt-4 flex-wrap">
+              <div className="flex gap-2 mt-4 flex-wrap" role="tablist" aria-label={t('wholeHouse.filterByArea')}>
                 <button
+                  role="tab"
+                  aria-selected={areaFilter === 'all'}
                   onClick={() => setAreaFilter('all')}
                   className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                   style={{
@@ -143,6 +153,8 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                 {areaOptions.map((area) => (
                   <button
                     key={area.slug}
+                    role="tab"
+                    aria-selected={areaFilter === area.slug}
                     onClick={() => setAreaFilter(area.slug)}
                     className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                     style={{

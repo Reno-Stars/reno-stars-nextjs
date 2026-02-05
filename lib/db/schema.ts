@@ -10,6 +10,7 @@ import {
   index,
   uniqueIndex,
   check,
+  foreignKey,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -184,6 +185,12 @@ export const projects = pgTable(
     index('projects_featured_idx').on(table.featured),
     index('projects_parent_id_idx').on(table.parentProjectId),
     index('projects_is_whole_house_idx').on(table.isWholeHouse),
+    // Self-referential FK: children link to parent container project
+    foreignKey({
+      columns: [table.parentProjectId],
+      foreignColumns: [table.id],
+      name: 'projects_parent_project_id_fk',
+    }).onDelete('set null'),
   ]
 );
 

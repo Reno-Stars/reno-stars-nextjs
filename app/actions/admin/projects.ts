@@ -17,6 +17,26 @@ const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
 const VALID_SERVICE_TYPES = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
 
+/**
+ * Recursively get all descendant IDs of a project to detect circular references.
+ * Prevents cycles like A → B → C → A when setting parents.
+ */
+async function getAllDescendantIds(projectId: string, visited = new Set<string>()): Promise<Set<string>> {
+  if (visited.has(projectId)) return visited;
+  visited.add(projectId);
+
+  const children = await db
+    .select({ id: projects.id })
+    .from(projects)
+    .where(eq(projects.parentProjectId, projectId));
+
+  for (const child of children) {
+    await getAllDescendantIds(child.id, visited);
+  }
+
+  return visited;
+}
+
 function parseImages(formData: FormData) {
   const images: {
     imageUrl: string;
@@ -222,18 +242,15 @@ export async function updateProject(
       return { error: 'A Whole House container cannot have a parent project.' };
     }
 
-    // Circular reference check: parent cannot be self or a descendant
+    // Circular reference check: parent cannot be self or any descendant
     if (data.parentProjectId) {
       if (data.parentProjectId === id) {
         return { error: 'A project cannot be its own parent.' };
       }
-      // Check if the proposed parent is a child of this project (circular)
-      const childrenRows = await db
-        .select({ id: projects.id })
-        .from(projects)
-        .where(eq(projects.parentProjectId, id));
-      if (childrenRows.some((c: { id: string }) => c.id === data.parentProjectId)) {
-        return { error: 'Cannot set a child project as the parent (circular reference).' };
+      // Deep check: get all descendants of this project and ensure proposed parent is not among them
+      const descendants = await getAllDescendantIds(id);
+      if (descendants.has(data.parentProjectId)) {
+        return { error: 'Cannot set a descendant project as the parent (circular reference).' };
       }
     }
 

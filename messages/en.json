@@ -487,6 +487,7 @@
     "combinedGallery": "Project Gallery",
     "filterByArea": "Filter by Area",
     "allAreas": "All Areas",
-    "childProjectsCount": "{count} renovation areas"
+    "childProjectsCount": "{count} renovation areas",
+    "noImagesForArea": "No images available for this area"
   }
 }
