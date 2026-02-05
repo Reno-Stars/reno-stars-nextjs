@@ -7,6 +7,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
+// Revalidate layout data every hour (ISR)
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }

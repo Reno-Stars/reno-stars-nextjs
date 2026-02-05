@@ -17,6 +17,9 @@ import {
   getServiceAreasFromDb,
 } from '@/lib/db/queries';
 
+// Revalidate homepage every hour (ISR) - serves cached HTML instantly
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
