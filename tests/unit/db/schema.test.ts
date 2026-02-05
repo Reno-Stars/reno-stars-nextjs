@@ -49,7 +49,10 @@ describe('Database Schema', () => {
       expect(enumValues).toContain('youtube');
       expect(enumValues).toContain('linkedin');
       expect(enumValues).toContain('twitter');
-      expect(enumValues).toHaveLength(5);
+      expect(enumValues).toContain('xiaohongshu');
+      expect(enumValues).toContain('wechat');
+      expect(enumValues).toContain('whatsapp');
+      expect(enumValues).toHaveLength(8);
     });
 
     it('should have correct gallery categories', () => {
