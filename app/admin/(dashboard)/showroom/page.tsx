@@ -1,15 +1,14 @@
 import { getShowroomInfoAdmin } from '@/lib/db/queries';
 import ShowroomForm from './ShowroomForm';
 import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 export default async function ShowroomAdminPage() {
   const showroom = await getShowroomInfoAdmin();
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Showroom Info
-      </h1>
+      <AdminPageHeader titleKey="showroom.title" />
       {showroom ? (
         <ShowroomForm showroom={showroom} />
       ) : (

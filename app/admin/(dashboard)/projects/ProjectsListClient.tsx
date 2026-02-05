@@ -6,8 +6,9 @@ import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
-import { deleteProject, toggleProjectFeatured, toggleProjectPublished, toggleWholeHouse } from '@/app/actions/admin/projects';
-import { GOLD, TEXT_MID, SUCCESS, ERROR, NAVY } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
+import { deleteProject, toggleProjectFeatured, toggleProjectPublished } from '@/app/actions/admin/projects';
+import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
 
 interface ProjectRow {
   id: string;
@@ -18,8 +19,7 @@ interface ProjectRow {
   locationCity: string | null;
   featured: boolean;
   isPublished: boolean;
-  isWholeHouse: boolean;
-  parentProjectId: string | null;
+  houseId: string | null;
 }
 
 interface Props {
@@ -31,62 +31,26 @@ export default function ProjectsListClient({ projects }: Props) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
-
-  // Build a map of parent IDs to their titles for quick lookup
-  const parentMap = useMemo(() => {
-    const map = new Map<string, { titleEn: string; titleZh: string }>();
-    projects.forEach((p) => {
-      if (p.isWholeHouse) {
-        map.set(p.id, { titleEn: p.titleEn, titleZh: p.titleZh });
-      }
-    });
-    return map;
-  }, [projects]);
+  const t = useAdminTranslations();
 
   const columns: Column<ProjectRow>[] = useMemo(() => {
     const getT = (row: ProjectRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
-      { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
-      { key: 'serviceType', header: 'Type', sortable: true },
-      { key: 'locationCity', header: 'City', sortable: true },
+      { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.projects.titleZh : t.projects.titleEn, sortable: true },
+      { key: 'serviceType', header: t.projects.type, sortable: true },
+      { key: 'locationCity', header: t.projects.city, sortable: true },
       {
-        key: 'isWholeHouse',
-        header: 'Container',
+        key: 'houseId',
+        header: 'House',
         render: (row: ProjectRow) => (
-          <button
-            type="button"
-            onClick={() => startTransition(async () => {
-              const result = await toggleWholeHouse(row.id, row.isWholeHouse);
-              if (result.error) toast(result.error, 'error');
-            })}
-            aria-label={`Toggle whole house for ${getT(row)}`}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isWholeHouse ? NAVY : TEXT_MID, fontSize: '0.8125rem', fontWeight: row.isWholeHouse ? 600 : 400 }}
-          >
-            {row.isWholeHouse ? '🏠 Yes' : 'No'}
-          </button>
+          <span style={{ color: row.houseId ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}>
+            {row.houseId ? t.common.yes : '—'}
+          </span>
         ),
       },
       {
-        key: 'parentProjectId',
-        header: 'Parent',
-        render: (row: ProjectRow) => {
-          if (!row.parentProjectId) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>—</span>;
-          const parent = parentMap.get(row.parentProjectId);
-          if (!parent) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>—</span>;
-          const parentTitle = locale === 'zh' ? parent.titleZh : parent.titleEn;
-          return (
-            <Link
-              href={`/admin/projects/${row.parentProjectId}`}
-              style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
-            >
-              {parentTitle.length > 20 ? parentTitle.slice(0, 20) + '…' : parentTitle}
-            </Link>
-          );
-        },
-      },
-      {
         key: 'featured',
-        header: 'Featured',
+        header: t.projects.featured,
         render: (row: ProjectRow) => (
           <button
             type="button"
@@ -97,13 +61,13 @@ export default function ProjectsListClient({ projects }: Props) {
             aria-label={`Toggle featured for ${getT(row)}`}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.featured ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
           >
-            {row.featured ? 'Yes' : 'No'}
+            {row.featured ? t.common.yes : t.common.no}
           </button>
         ),
       },
       {
         key: 'isPublished',
-        header: 'Published',
+        header: t.projects.published,
         render: (row: ProjectRow) => (
           <button
             type="button"
@@ -114,19 +78,19 @@ export default function ProjectsListClient({ projects }: Props) {
             aria-label={`Toggle published for ${getT(row)}`}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
           >
-            {row.isPublished ? 'Yes' : 'No'}
+            {row.isPublished ? t.common.yes : t.common.no}
           </button>
         ),
       },
     ];
-  }, [locale, toast, parentMap]);
+  }, [locale, toast, t]);
 
   const handleDelete = () => {
     if (!deleteId) return;
     startTransition(async () => {
       const result = await deleteProject(deleteId);
       if (result.error) toast(result.error, 'error');
-      else toast('Project deleted.');
+      else toast(t.projects.deleted);
       setDeleteId(null);
     });
   };
@@ -141,22 +105,22 @@ export default function ProjectsListClient({ projects }: Props) {
         actions={(row) => (
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
             <Link href={`/admin/projects/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
-              Edit
+              {t.common.edit}
             </Link>
             <button
               type="button"
               onClick={() => setDeleteId(row.id)}
               style={{ background: 'none', border: 'none', color: ERROR, cursor: 'pointer', fontSize: '0.8125rem' }}
             >
-              Delete
+              {t.common.delete}
             </button>
           </div>
         )}
       />
       <ConfirmDialog
         open={!!deleteId}
-        title="Delete Project"
-        message="This will permanently delete the project and all its images and scopes."
+        title={t.projects.deleteProject}
+        message={t.projects.deleteMessage}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
         loading={isPending}

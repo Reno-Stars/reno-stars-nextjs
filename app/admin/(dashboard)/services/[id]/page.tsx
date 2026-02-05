@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { services } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import ServiceEditForm from './ServiceEditForm';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -17,9 +17,7 @@ export default async function EditServicePage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Service: {service.slug}
-      </h1>
+      <AdminPageHeader titleKey="services.editService" />
       <ServiceEditForm service={service} />
     </div>
   );

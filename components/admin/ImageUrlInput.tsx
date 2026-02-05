@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { uploadImage } from '@/app/actions/admin/upload';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ImageUrlInputProps {
   name: string;
@@ -18,6 +19,7 @@ export default function ImageUrlInput({
   defaultValue = '',
   required = false,
 }: ImageUrlInputProps) {
+  const t = useAdminTranslations();
   const [url, setUrl] = useState(defaultValue);
   const [imageError, setImageError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -95,7 +97,7 @@ export default function ImageUrlInput({
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         required={required}
-        placeholder="https://... or upload below"
+        placeholder={t.upload.placeholder}
         style={{
           width: '100%',
           padding: '0.5rem 0.75rem',
@@ -127,7 +129,7 @@ export default function ImageUrlInput({
           opacity: uploading ? 0.6 : 1,
         }}
         onClick={() => !uploading && fileInputRef.current?.click()}
-        aria-label={`Upload image for ${label}`}
+        aria-label={`${t.upload.uploadImageFor} ${label}`}
         disabled={uploading}
       >
         <input
@@ -139,10 +141,10 @@ export default function ImageUrlInput({
           aria-hidden="true"
         />
         <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
-          {uploading ? 'Uploading...' : 'Click or drag & drop to upload image'}
+          {uploading ? t.upload.uploading : t.upload.clickOrDrag}
         </div>
         <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
-          JPEG, PNG, WebP, SVG, GIF — max 5 MB
+          {t.upload.formatHint}
         </div>
       </button>
 
@@ -166,7 +168,7 @@ export default function ImageUrlInput({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={previewSrc}
-            alt="Preview"
+            alt={t.common.preview}
             style={{ width: '100%', height: 'auto', display: 'block' }}
             onError={() => {
               setImageError(true);

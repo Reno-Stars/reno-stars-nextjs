@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
 import ServiceAreaForm from '../ServiceAreaForm';
 import { updateServiceArea } from '@/app/actions/admin/service-areas';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,9 +22,7 @@ export default async function EditServiceAreaPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Service Area
-      </h1>
+      <AdminPageHeader titleKey="serviceAreas.editServiceArea" />
       <ServiceAreaForm
         action={boundAction}
         initialData={{

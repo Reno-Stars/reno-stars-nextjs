@@ -9,6 +9,7 @@ import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface TrustBadgeFormProps {
   action: (
@@ -24,9 +25,10 @@ interface TrustBadgeFormProps {
 }
 
 export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, 'Trust badge saved.');
+  useFormToast(state, t.trustBadges.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -46,16 +48,16 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Badge (EN)" htmlFor="badgeEn">
+            <FormField label={t.trustBadges.badgeEn} htmlFor="badgeEn">
               <input id="badgeEn" name="badgeEn" defaultValue={initialData.badgeEn} required style={fieldStyle} />
             </FormField>
-            <FormField label="Badge (ZH)" htmlFor="badgeZh">
+            <FormField label={t.trustBadges.badgeZh} htmlFor="badgeZh">
               <input id="badgeZh" name="badgeZh" defaultValue={initialData.badgeZh} required style={fieldStyle} />
             </FormField>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Display Order" htmlFor="displayOrder">
+            <FormField label={t.trustBadges.displayOrder} htmlFor="displayOrder">
               <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
@@ -63,12 +65,12 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
               <input type="checkbox" name="isActive" defaultChecked={initialData.isActive} />
-              Active
+              {t.trustBadges.isActive}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label="Update Trust Badge" />
+            <SubmitButton isPending={isPending} label={t.common.update} />
           )}
         </fieldset>
       </div>

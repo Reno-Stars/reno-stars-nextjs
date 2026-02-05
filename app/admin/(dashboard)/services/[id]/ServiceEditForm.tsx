@@ -12,6 +12,7 @@ import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import { CARD, GOLD, GOLD_HOVER, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { DbService } from '@/lib/db/schema';
 
 interface Props {
@@ -19,10 +20,11 @@ interface Props {
 }
 
 export default function ServiceEditForm({ service }: Props) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const boundAction = updateService.bind(null, service.id);
   const [state, formAction, isPending] = useActionState(boundAction, {});
-  useFormToast(state, 'Service updated.');
+  useFormToast(state, t.services.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -41,15 +43,15 @@ export default function ServiceEditForm({ service }: Props) {
         <FormAlerts state={state} successMessage="Updated successfully." />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <BilingualInput nameEn="titleEn" nameZh="titleZh" label="Title" defaultValueEn={service.titleEn} defaultValueZh={service.titleZh} required />
-          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label="Description" defaultValueEn={service.descriptionEn} defaultValueZh={service.descriptionZh} required rows={3} />
-          <BilingualTextarea nameEn="longDescriptionEn" nameZh="longDescriptionZh" label="Long Description" defaultValueEn={service.longDescriptionEn ?? ''} defaultValueZh={service.longDescriptionZh ?? ''} rows={5} />
+          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.services.nameLabel} defaultValueEn={service.titleEn} defaultValueZh={service.titleZh} required />
+          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.services.shortDescription} defaultValueEn={service.descriptionEn} defaultValueZh={service.descriptionZh} required rows={3} />
+          <BilingualTextarea nameEn="longDescriptionEn" nameZh="longDescriptionZh" label={t.services.longDescription} defaultValueEn={service.longDescriptionEn ?? ''} defaultValueZh={service.longDescriptionZh ?? ''} rows={5} />
 
-          <FormField label="Icon Name" htmlFor="iconName">
+          <FormField label={t.services.iconName} htmlFor="iconName">
             <input id="iconName" name="iconName" defaultValue={service.iconName ?? ''} style={fieldStyle} placeholder="e.g. Hammer" />
           </FormField>
 
-          <ImageUrlInput name="imageUrl" label="Image URL" defaultValue={service.imageUrl ?? ''} />
+          <ImageUrlInput name="imageUrl" label={t.services.heroImage} defaultValue={service.imageUrl ?? ''} />
 
           {editing && (
             <button
@@ -68,7 +70,7 @@ export default function ServiceEditForm({ service }: Props) {
                 opacity: isPending ? 0.7 : 1,
               }}
             >
-              {isPending ? 'Saving...' : 'Save Changes'}
+              {isPending ? t.common.saving : t.common.save}
             </button>
           )}
         </fieldset>

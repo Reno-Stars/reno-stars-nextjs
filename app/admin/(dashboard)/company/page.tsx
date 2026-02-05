@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { companyInfo } from '@/lib/db/schema';
 import CompanyForm from './CompanyForm';
 import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 export default async function CompanyPage() {
   const rows = await db.select().from(companyInfo).limit(1);
@@ -9,9 +10,7 @@ export default async function CompanyPage() {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Company Info
-      </h1>
+      <AdminPageHeader titleKey="company.title" />
       {company ? (
         <CompanyForm company={company} />
       ) : (

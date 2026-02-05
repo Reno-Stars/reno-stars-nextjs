@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
 import SocialLinkForm from '../SocialLinkForm';
 import { updateSocialLink } from '@/app/actions/admin/social-links';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,9 +22,7 @@ export default async function EditSocialLinkPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Social Link
-      </h1>
+      <AdminPageHeader titleKey="socialLinks.editSocialLink" />
       <SocialLinkForm
         action={boundAction}
         initialData={{

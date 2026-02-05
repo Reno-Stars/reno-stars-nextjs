@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
 import TrustBadgeForm from '../TrustBadgeForm';
 import { updateTrustBadge } from '@/app/actions/admin/trust-badges';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,9 +22,7 @@ export default async function EditTrustBadgePage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Trust Badge
-      </h1>
+      <AdminPageHeader titleKey="trustBadges.editTrustBadge" />
       <TrustBadgeForm
         action={boundAction}
         initialData={{

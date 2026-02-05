@@ -1,13 +1,14 @@
 'use client';
 
 import { SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, INFO, INFO_BG, GOLD } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { ContactStatus } from '@/lib/admin/form-utils';
 
-const statusConfig: Record<ContactStatus, { bg: string; color: string; label: string }> = {
-  new: { bg: INFO_BG, color: INFO, label: 'New' },
-  contacted: { bg: 'rgba(200, 146, 42, 0.12)', color: GOLD, label: 'Contacted' },
-  converted: { bg: SUCCESS_BG, color: SUCCESS, label: 'Converted' },
-  rejected: { bg: ERROR_BG, color: ERROR, label: 'Rejected' },
+const statusStyle: Record<ContactStatus, { bg: string; color: string }> = {
+  new: { bg: INFO_BG, color: INFO },
+  contacted: { bg: 'rgba(200, 146, 42, 0.12)', color: GOLD },
+  converted: { bg: SUCCESS_BG, color: SUCCESS },
+  rejected: { bg: ERROR_BG, color: ERROR },
 };
 
 interface StatusBadgeProps {
@@ -15,7 +16,9 @@ interface StatusBadgeProps {
 }
 
 export default function StatusBadge({ status }: StatusBadgeProps) {
-  const config = statusConfig[status];
+  const t = useAdminTranslations();
+  const style = statusStyle[status];
+  const label = t.status[status];
 
   return (
     <span
@@ -25,11 +28,11 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
         borderRadius: '9999px',
         fontSize: '0.75rem',
         fontWeight: 600,
-        backgroundColor: config.bg,
-        color: config.color,
+        backgroundColor: style.bg,
+        color: style.color,
       }}
     >
-      {config.label}
+      {label}
     </span>
   );
 }

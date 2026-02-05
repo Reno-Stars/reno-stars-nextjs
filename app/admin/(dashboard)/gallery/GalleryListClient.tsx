@@ -5,6 +5,7 @@ import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleGalleryItemPublished } from '@/app/actions/admin/gallery';
 import { GOLD } from '@/lib/theme';
@@ -28,13 +29,14 @@ export default function GalleryListClient({ items }: Props) {
   const [, startTransition] = useTransition();
   const { toast } = useToast();
   const { locale } = useAdminLocale();
+  const t = useAdminTranslations();
 
   const columns: Column<GalleryRow>[] = useMemo(() => {
     const getT = (row: GalleryRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
       {
         key: 'imageUrl',
-        header: 'Image',
+        header: t.gallery.image,
         render: (row: GalleryRow) => (
           <span title={row.imageUrl} style={{ fontSize: '0.8125rem' }}>
             {row.imageUrl.length > 35 ? '…' + row.imageUrl.slice(-35) : row.imageUrl}
@@ -43,14 +45,14 @@ export default function GalleryListClient({ items }: Props) {
       },
       {
         key: locale === 'zh' ? 'titleZh' : 'titleEn',
-        header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)',
+        header: locale === 'zh' ? t.gallery.titleZh : t.gallery.titleEn,
         sortable: true,
       },
-      { key: 'category', header: 'Category', sortable: true },
-      { key: 'displayOrder', header: 'Order', sortable: true },
+      { key: 'category', header: t.gallery.categoryLabel, sortable: true },
+      { key: 'displayOrder', header: t.gallery.displayOrder, sortable: true },
       {
         key: 'isPublished',
-        header: 'Published',
+        header: t.gallery.published,
         render: (row: GalleryRow) => (
           <ToggleButton
             isActive={row.isPublished}
@@ -68,7 +70,7 @@ export default function GalleryListClient({ items }: Props) {
         ),
       },
     ];
-  }, [locale, pendingId, toast]);
+  }, [locale, pendingId, toast, t]);
 
   return (
     <DataTable
@@ -81,7 +83,7 @@ export default function GalleryListClient({ items }: Props) {
           href={`/admin/gallery/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
-          Edit
+          {t.common.edit}
         </Link>
       )}
     />

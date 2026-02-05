@@ -11,6 +11,7 @@ import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
 import { GALLERY_CATEGORY_OPTIONS } from '@/lib/admin/gallery-categories';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface GalleryItemFormProps {
   action: (
@@ -28,9 +29,10 @@ interface GalleryItemFormProps {
 }
 
 export default function GalleryItemForm({ action, initialData }: GalleryItemFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, 'Gallery item saved.');
+  useFormToast(state, t.gallery.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -49,19 +51,19 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <ImageUrlInput name="imageUrl" label="Image URL" defaultValue={initialData.imageUrl} required />
+          <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={initialData.imageUrl} required />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Title (EN)" htmlFor="titleEn">
+            <FormField label={t.gallery.titleEn} htmlFor="titleEn">
               <input id="titleEn" name="titleEn" defaultValue={initialData.titleEn} style={fieldStyle} />
             </FormField>
-            <FormField label="Title (ZH)" htmlFor="titleZh">
+            <FormField label={t.gallery.titleZh} htmlFor="titleZh">
               <input id="titleZh" name="titleZh" defaultValue={initialData.titleZh} style={fieldStyle} />
             </FormField>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Category" htmlFor="category">
+            <FormField label={t.gallery.categoryLabel} htmlFor="category">
               <select id="category" name="category" defaultValue={initialData.category} required style={fieldStyle}>
                 {GALLERY_CATEGORY_OPTIONS.map((cat) => (
                   <option key={cat.value} value={cat.value}>
@@ -70,7 +72,7 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
                 ))}
               </select>
             </FormField>
-            <FormField label="Display Order" htmlFor="displayOrder">
+            <FormField label={t.gallery.displayOrder} htmlFor="displayOrder">
               <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
@@ -78,12 +80,12 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
               <input type="checkbox" name="isPublished" defaultChecked={initialData.isPublished} />
-              Published
+              {t.gallery.published}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label="Update Gallery Item" />
+            <SubmitButton isPending={isPending} label={t.common.update} />
           )}
         </fieldset>
       </div>

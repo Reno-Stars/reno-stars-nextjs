@@ -11,6 +11,7 @@ import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { DbShowroomInfo } from '@/lib/db/schema';
 
 interface ShowroomFormProps {
@@ -18,9 +19,10 @@ interface ShowroomFormProps {
 }
 
 export default function ShowroomForm({ showroom }: ShowroomFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(updateShowroomInfo, {});
-  useFormToast(state, 'Showroom info updated.');
+  useFormToast(state, t.showroom.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -36,24 +38,24 @@ export default function ShowroomForm({ showroom }: ShowroomFormProps) {
         }}
       >
         <EditModeToggle editing={editing} setEditing={setEditing} />
-        <FormAlerts state={state} successMessage="Updated successfully." />
+        <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <FormField label="Address" htmlFor="address">
+          <FormField label={t.company.address} htmlFor="address">
             <input id="address" name="address" defaultValue={showroom.address ?? ''} style={fieldStyle} />
           </FormField>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Phone" htmlFor="phone">
+            <FormField label={t.showroom.phone} htmlFor="phone">
               <input id="phone" name="phone" defaultValue={showroom.phone ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Email" htmlFor="email">
+            <FormField label={t.showroom.email} htmlFor="email">
               <input id="email" name="email" type="email" defaultValue={showroom.email ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Hours Open" htmlFor="hoursOpen">
+            <FormField label={t.showroom.hoursOpen} htmlFor="hoursOpen">
               <input id="hoursOpen" name="hoursOpen" defaultValue={showroom.hoursOpen ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Hours Close" htmlFor="hoursClose">
+            <FormField label={t.showroom.hoursClose} htmlFor="hoursClose">
               <input id="hoursClose" name="hoursClose" defaultValue={showroom.hoursClose ?? ''} style={fieldStyle} />
             </FormField>
           </div>
@@ -61,7 +63,7 @@ export default function ShowroomForm({ showroom }: ShowroomFormProps) {
           <BilingualTextarea
             nameEn="appointmentTextEn"
             nameZh="appointmentTextZh"
-            label="Appointment Text"
+            label={t.showroom.appointmentText}
             defaultValueEn={showroom.appointmentTextEn ?? ''}
             defaultValueZh={showroom.appointmentTextZh ?? ''}
             rows={3}
@@ -69,7 +71,7 @@ export default function ShowroomForm({ showroom }: ShowroomFormProps) {
 
           {editing && (
             <div style={{ marginTop: '1rem' }}>
-              <SubmitButton isPending={isPending} label="Save Changes" />
+              <SubmitButton isPending={isPending} />
             </div>
           )}
         </fieldset>

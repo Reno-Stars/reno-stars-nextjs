@@ -2,29 +2,35 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedWholeHouseProject } from '@/lib/data/projects';
+import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedHouseWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
-import WholeHouseDetailPage from '@/components/pages/WholeHouseDetailPage';
+import HouseDetailPage from '@/components/pages/HouseDetailPage';
 import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
 import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getWholeHouseProjectBySlugFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getHouseBySlugFromDb, getHousesAsProjectsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const projects = await getProjectsFromDb();
+  const [projects, houses] = await Promise.all([
+    getProjectsFromDb(),
+    getHousesAsProjectsFromDb(),
+  ]);
   const projectParams = projects.flatMap((p) =>
     locales.map((locale) => ({ locale, slug: p.slug }))
+  );
+  const houseParams = houses.flatMap((h) =>
+    locales.map((locale) => ({ locale, slug: h.slug }))
   );
   const categoryParams = CATEGORY_SLUGS.flatMap((slug) =>
     locales.map((locale) => ({ locale, slug }))
   );
-  return [...categoryParams, ...projectParams];
+  return [...categoryParams, ...projectParams, ...houseParams];
 }
 
 function isCategory(slug: string): boolean {
@@ -76,37 +82,66 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  // It's a project detail page — uses getProjectsFromDb (deduped via React cache with Page)
+  // Check if it's a project
   const allProjects = await getProjectsFromDb();
   const project = allProjects.find((p) => p.slug === slug);
 
-  if (!project) {
-    return { title: 'Project Not Found', robots: { index: false, follow: false } };
+  if (project) {
+    const localizedProject = getLocalizedProject(project, locale as Locale);
+    const description = truncateMetaDescription(localizedProject.description);
+
+    return {
+      title: `${localizedProject.title} | ${SITE_NAME}`,
+      description,
+      alternates: buildAlternates(`/projects/${slug}/`, locale),
+      openGraph: {
+        title: `${localizedProject.title} | ${SITE_NAME}`,
+        description,
+        url: `${baseUrl}/${locale}/projects/${slug}/`,
+        siteName: SITE_NAME,
+        locale: ogLocaleMap[locale as Locale],
+        type: 'article',
+        images: [{ url: project.hero_image }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${localizedProject.title} | ${SITE_NAME}`,
+        description,
+        images: [project.hero_image],
+      },
+    };
   }
 
-  const localizedProject = getLocalizedProject(project, locale as Locale);
-  const description = truncateMetaDescription(localizedProject.description);
+  // Check if it's a house
+  const houseData = await getHouseBySlugFromDb(slug);
 
-  return {
-    title: `${localizedProject.title} | ${SITE_NAME}`,
-    description,
-    alternates: buildAlternates(`/projects/${slug}/`, locale),
-    openGraph: {
-      title: `${localizedProject.title} | ${SITE_NAME}`,
+  if (houseData) {
+    const title = houseData.title[locale as Locale];
+    const description = truncateMetaDescription(houseData.description[locale as Locale]);
+
+    return {
+      title: `${title} | ${SITE_NAME}`,
       description,
-      url: `${baseUrl}/${locale}/projects/${slug}/`,
-      siteName: SITE_NAME,
-      locale: ogLocaleMap[locale as Locale],
-      type: 'article',
-      images: [{ url: project.hero_image }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${localizedProject.title} | ${SITE_NAME}`,
-      description,
-      images: [project.hero_image],
-    },
-  };
+      alternates: buildAlternates(`/projects/${slug}/`, locale),
+      openGraph: {
+        title: `${title} | ${SITE_NAME}`,
+        description,
+        url: `${baseUrl}/${locale}/projects/${slug}/`,
+        siteName: SITE_NAME,
+        locale: ogLocaleMap[locale as Locale],
+        type: 'article',
+        images: houseData.hero_image ? [{ url: houseData.hero_image }] : [{ url: siteImages.hero }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${title} | ${SITE_NAME}`,
+        description,
+        images: houseData.hero_image ? [houseData.hero_image] : [siteImages.hero],
+      },
+    };
+  }
+
+  return { title: 'Not Found', robots: { index: false, follow: false } };
 }
 
 export default async function Page({ params }: PageProps) {
@@ -139,68 +174,67 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  // It's a project detail page
+  // Check if it's a project
   const project = allProjects.find((p) => p.slug === slug);
 
-  if (!project) {
-    notFound();
+  if (project) {
+    const localizedProject = getLocalizedProject(project, locale as Locale);
+    const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
+
+    const breadcrumbs = [
+      { name: t('home'), url: `/${locale}/` },
+      { name: t('projects'), url: `/${locale}/projects/` },
+      { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+    ];
+
+    return (
+      <>
+        <BreadcrumbSchema items={breadcrumbs} />
+        <ProjectSchema
+          company={company}
+          name={localizedProject.title}
+          description={localizedProject.description}
+          image={project.hero_image}
+          images={project.images?.map((img) => img.src)}
+          location={project.location_city}
+          serviceType={serviceTypeName}
+          url={`/${locale}/projects/${slug}/`}
+        />
+        <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
+      </>
+    );
   }
 
-  // Check if this is a Whole House container project
-  if (project.is_whole_house) {
-    const wholeHouseData = await getWholeHouseProjectBySlugFromDb(slug);
-    if (wholeHouseData) {
-      const localizedWholeHouse = getLocalizedWholeHouseProject(wholeHouseData, locale as Locale);
-      const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
+  // Check if it's a house
+  const houseData = await getHouseBySlugFromDb(slug);
 
-      const breadcrumbs = [
-        { name: t('home'), url: `/${locale}/` },
-        { name: t('projects'), url: `/${locale}/projects/` },
-        { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
-      ];
+  if (houseData) {
+    const localizedHouse = getLocalizedHouseWithProjects(houseData, locale as Locale);
 
-      return (
-        <>
-          <BreadcrumbSchema items={breadcrumbs} />
-          <ProjectSchema
-            company={company}
-            name={localizedWholeHouse.title}
-            description={localizedWholeHouse.description}
-            image={project.hero_image}
-            images={wholeHouseData.aggregated.allImages.map((img) => img.src)}
-            location={project.location_city}
-            serviceType={serviceTypeName}
-            url={`/${locale}/projects/${slug}/`}
-          />
-          <WholeHouseDetailPage locale={locale as Locale} project={localizedWholeHouse} company={company} />
-        </>
-      );
-    }
+    const breadcrumbs = [
+      { name: t('home'), url: `/${locale}/` },
+      { name: t('projects'), url: `/${locale}/projects/` },
+      { name: houseData.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+    ];
+
+    return (
+      <>
+        <BreadcrumbSchema items={breadcrumbs} />
+        <ProjectSchema
+          company={company}
+          name={localizedHouse.title}
+          description={localizedHouse.description}
+          image={houseData.hero_image ?? ''}
+          images={houseData.aggregated.allImages.map((img) => img.src)}
+          location={houseData.location_city ?? ''}
+          serviceType="Whole House"
+          url={`/${locale}/projects/${slug}/`}
+        />
+        <HouseDetailPage locale={locale as Locale} house={localizedHouse} company={company} />
+      </>
+    );
   }
 
-  const localizedProject = getLocalizedProject(project, locale as Locale);
-  const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
-
-  const breadcrumbs = [
-    { name: t('home'), url: `/${locale}/` },
-    { name: t('projects'), url: `/${locale}/projects/` },
-    { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
-  ];
-
-  return (
-    <>
-      <BreadcrumbSchema items={breadcrumbs} />
-      <ProjectSchema
-        company={company}
-        name={localizedProject.title}
-        description={localizedProject.description}
-        image={project.hero_image}
-        images={project.images?.map((img) => img.src)}
-        location={project.location_city}
-        serviceType={serviceTypeName}
-        url={`/${locale}/projects/${slug}/`}
-      />
-      <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
-    </>
-  );
+  // Not found
+  notFound();
 }

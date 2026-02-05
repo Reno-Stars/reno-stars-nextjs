@@ -1,26 +1,23 @@
 import ProjectForm from '@/components/admin/ProjectForm';
 import { createProject } from '@/app/actions/admin/projects';
 import { db } from '@/lib/db';
-import { projects } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
-import { NAVY } from '@/lib/theme';
+import { houses } from '@/lib/db/schema';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 export default async function NewProjectPage() {
-  // Fetch whole house projects for parent selection
-  const wholeHouseRows = await db.select({
-    id: projects.id,
-    titleEn: projects.titleEn,
-    titleZh: projects.titleZh,
-  }).from(projects).where(eq(projects.isWholeHouse, true));
+  // Fetch houses for house selection
+  const houseRows = await db.select({
+    id: houses.id,
+    titleEn: houses.titleEn,
+    titleZh: houses.titleZh,
+  }).from(houses);
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        New Project
-      </h1>
+      <AdminPageHeader titleKey="projects.newProject" />
       <ProjectForm
         action={createProject}
-        wholeHouseProjects={wholeHouseRows}
+        houses={houseRows}
         submitLabel="Create Project"
       />
     </div>

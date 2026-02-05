@@ -112,6 +112,58 @@ export const serviceAreas = pgTable(
 );
 
 // ============================================================================
+// HOUSES
+// ============================================================================
+
+/**
+ * House entity - groups multiple renovation projects under one property.
+ * A house can contain kitchen, bathroom, basement projects etc.
+ * When `showAsProject` is true, the house appears in project listings.
+ */
+export const houses = pgTable(
+  'houses',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    slug: varchar('slug', { length: 100 }).notNull().unique(),
+
+    // Localized titles and descriptions
+    titleEn: varchar('title_en', { length: 200 }).notNull(),
+    titleZh: varchar('title_zh', { length: 200 }).notNull(),
+    descriptionEn: text('description_en').notNull(),
+    descriptionZh: text('description_zh').notNull(),
+
+    // Location
+    locationCity: varchar('location_city', { length: 100 }),
+
+    // Media
+    heroImageUrl: varchar('hero_image_url', { length: 500 }),
+
+    // Badge (e.g., "New", "Featured")
+    badgeEn: varchar('badge_en', { length: 50 }),
+    badgeZh: varchar('badge_zh', { length: 50 }),
+
+    // Display settings
+    showAsProject: boolean('show_as_project').default(true).notNull(),
+    featured: boolean('featured').default(false).notNull(),
+    isPublished: boolean('is_published').default(true).notNull(),
+
+    // Timestamps
+    publishedAt: timestamp('published_at'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex('houses_slug_idx').on(table.slug),
+    index('houses_show_as_project_idx').on(table.showAsProject),
+    index('houses_featured_idx').on(table.featured),
+  ]
+);
+
+export const housesRelations = relations(houses, ({ many }) => ({
+  projects: many(projects),
+}));
+
+// ============================================================================
 // PROJECTS
 // ============================================================================
 
@@ -165,13 +217,12 @@ export const projects = pgTable(
     featured: boolean('featured').default(false).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
 
-    // Parent-child relationship for Whole House projects
-    // Self-referential: children link to their parent container project
-    parentProjectId: uuid('parent_project_id'),
-    // Flag to mark project as a Whole House container
-    isWholeHouse: boolean('is_whole_house').default(false).notNull(),
-    // Display order for child projects within a parent
-    childDisplayOrder: integer('child_display_order').default(0).notNull(),
+    // House relationship - project can optionally belong to a house
+    houseId: uuid('house_id').references(() => houses.id, {
+      onDelete: 'set null',
+    }),
+    // Display order within a house
+    displayOrderInHouse: integer('display_order_in_house').default(0).notNull(),
 
     // Timestamps
     publishedAt: timestamp('published_at'),
@@ -183,14 +234,7 @@ export const projects = pgTable(
     index('projects_service_type_idx').on(table.serviceType),
     index('projects_location_city_idx').on(table.locationCity),
     index('projects_featured_idx').on(table.featured),
-    index('projects_parent_id_idx').on(table.parentProjectId),
-    index('projects_is_whole_house_idx').on(table.isWholeHouse),
-    // Self-referential FK: children link to parent container project
-    foreignKey({
-      columns: [table.parentProjectId],
-      foreignColumns: [table.id],
-      name: 'projects_parent_project_id_fk',
-    }).onDelete('set null'),
+    index('projects_house_id_idx').on(table.houseId),
   ]
 );
 
@@ -201,14 +245,10 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   images: many(projectImages),
   scopes: many(projectScopes),
-  // Self-referential: parent project (for child projects)
-  parent: one(projects, {
-    fields: [projects.parentProjectId],
-    references: [projects.id],
-    relationName: 'parentChild',
+  house: one(houses, {
+    fields: [projects.houseId],
+    references: [houses.id],
   }),
-  // Self-referential: child projects (for whole house containers)
-  children: many(projects, { relationName: 'parentChild' }),
 }));
 
 // ============================================================================
@@ -376,8 +416,8 @@ export const contactSubmissions = pgTable(
   {
     id: uuid('id').defaultRandom().primaryKey(),
     name: varchar('name', { length: 100 }).notNull(),
-    email: varchar('email', { length: 255 }).notNull(),
-    phone: varchar('phone', { length: 30 }),
+    email: varchar('email', { length: 255 }),
+    phone: varchar('phone', { length: 30 }).notNull(),
     message: text('message').notNull(),
     preferredServiceId: uuid('preferred_service_id').references(
       () => services.id
@@ -540,6 +580,9 @@ export type NewDbService = typeof services.$inferInsert;
 
 export type DbServiceArea = typeof serviceAreas.$inferSelect;
 export type NewDbServiceArea = typeof serviceAreas.$inferInsert;
+
+export type DbHouse = typeof houses.$inferSelect;
+export type NewDbHouse = typeof houses.$inferInsert;
 
 export type DbProject = typeof projects.$inferSelect;
 export type NewDbProject = typeof projects.$inferInsert;

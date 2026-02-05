@@ -19,6 +19,68 @@ export type ServiceType =
   | 'commercial';
 
 /**
+ * A house entity that groups multiple renovation projects.
+ * Represents a single property with various renovated areas.
+ */
+export interface House {
+  /** Unique identifier (UUID) */
+  id: string;
+  /** URL-friendly identifier */
+  slug: string;
+  /** House title in both languages */
+  title: Localized<string>;
+  /** House description */
+  description: Localized<string>;
+  /** City where house is located */
+  location_city?: string;
+  /** Primary display image URL */
+  hero_image?: string;
+  /** Optional badge text (e.g., "New", "Featured") */
+  badge?: Localized<string>;
+  /** Whether to show this house as a project in listings */
+  show_as_project: boolean;
+  /** Whether to feature on homepage */
+  featured: boolean;
+  /** Publication date */
+  published_at?: Date;
+}
+
+/**
+ * A house with all its associated projects and aggregated data.
+ */
+export interface HouseWithProjects extends House {
+  /** Projects belonging to this house */
+  projects: Project[];
+  /** Aggregated data from all projects */
+  aggregated: HouseAggregated;
+}
+
+/**
+ * Aggregated data for a house combining all its projects.
+ */
+export interface HouseAggregated {
+  /** Combined budget from all projects */
+  totalBudget?: string;
+  /** Combined timeline from all projects */
+  totalDuration?: Localized<string>;
+  /** Merged unique service scopes from all projects */
+  allServiceScopes: Localized<string[]>;
+  /** All images from all projects with project attribution */
+  allImages: HouseImage[];
+}
+
+/**
+ * Image with attribution to project (for house aggregation)
+ */
+export interface HouseImage {
+  src: string;
+  alt: Localized<string>;
+  is_before?: boolean;
+  projectSlug: string;
+  projectTitle: Localized<string>;
+}
+
+/**
  * A renovation project in the portfolio.
  * Contains bilingual content and project details.
  */
@@ -63,47 +125,10 @@ export interface Project {
   featured?: boolean;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
-  /** Parent project ID (for child projects linked to a Whole House container) */
-  parent_project_id?: string;
-  /** Whether this project is a Whole House container (defaults to false) */
-  is_whole_house?: boolean;
-  /** Display order within a parent project */
-  child_display_order?: number;
-}
-
-/**
- * Image with attribution to child project slug (for whole house aggregation)
- */
-export interface WholeHouseImage {
-  src: string;
-  alt: Localized<string>;
-  is_before?: boolean;
-  childSlug: string;
-  childTitle: Localized<string>;
-}
-
-/**
- * Aggregated data for a Whole House project combining all child projects
- */
-export interface WholeHouseAggregated {
-  /** Combined budget from all children */
-  totalBudget?: string;
-  /** Combined timeline from all children */
-  totalDuration?: Localized<string>;
-  /** Merged unique service scopes from all children */
-  allServiceScopes: Localized<string[]>;
-  /** All images from parent + children with child attribution */
-  allImages: WholeHouseImage[];
-}
-
-/**
- * A Whole House project with its child projects and aggregated data
- */
-export interface WholeHouseProject extends Project {
-  /** Child projects linked to this container */
-  children: Project[];
-  /** Aggregated data from all children */
-  aggregated: WholeHouseAggregated;
+  /** House ID if this project belongs to a house */
+  house_id?: string;
+  /** Display order within a house */
+  display_order_in_house?: number;
 }
 
 /**
@@ -273,32 +298,44 @@ export interface LocalizedProject {
   solution?: string;
   featured?: boolean;
   badge?: string;
-  parent_project_id?: string;
-  is_whole_house?: boolean;
-  child_display_order?: number;
+  house_id?: string;
+  display_order_in_house?: number;
 }
 
-/** A localized image with child project attribution (for whole house views) */
-export interface LocalizedWholeHouseImage {
+/** A house with content resolved to a single locale */
+export interface LocalizedHouse {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  location_city?: string;
+  hero_image?: string;
+  badge?: string;
+  show_as_project: boolean;
+  featured: boolean;
+}
+
+/** A localized image with project attribution (for house views) */
+export interface LocalizedHouseImage {
   src: string;
   alt: string;
   is_before?: boolean;
-  childSlug: string;
-  childTitle: string;
+  projectSlug: string;
+  projectTitle: string;
 }
 
-/** Localized aggregated data for a Whole House project */
-export interface LocalizedWholeHouseAggregated {
+/** Localized aggregated data for a house */
+export interface LocalizedHouseAggregated {
   totalBudget?: string;
   totalDuration?: string;
   allServiceScopes: string[];
-  allImages: LocalizedWholeHouseImage[];
+  allImages: LocalizedHouseImage[];
 }
 
-/** A localized Whole House project with children and aggregated data */
-export interface LocalizedWholeHouseProject extends LocalizedProject {
-  children: LocalizedProject[];
-  aggregated: LocalizedWholeHouseAggregated;
+/** A localized house with projects and aggregated data */
+export interface LocalizedHouseWithProjects extends LocalizedHouse {
+  projects: LocalizedProject[];
+  aggregated: LocalizedHouseAggregated;
 }
 
 /** A service with content resolved to a single locale */

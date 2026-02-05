@@ -6,6 +6,7 @@ import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleFaqActive, deleteFaq } from '@/app/actions/admin/faqs';
 import { GOLD, TEXT_MID } from '@/lib/theme';
@@ -30,13 +31,14 @@ export default function FaqsListClient({ faqs }: Props) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
+  const t = useAdminTranslations();
 
   const handleDelete = () => {
     if (!deleteId) return;
     startTransition(async () => {
       const result = await deleteFaq(deleteId);
       if (result.error) toast(result.error, 'error');
-      else toast('FAQ deleted.', 'success');
+      else toast(t.faqs.deleted, 'success');
       setDeleteId(null);
     });
   };
@@ -46,7 +48,7 @@ export default function FaqsListClient({ faqs }: Props) {
     return [
       {
         key: locale === 'zh' ? 'questionZh' : 'questionEn',
-        header: locale === 'zh' ? 'Question (ZH)' : 'Question (EN)',
+        header: locale === 'zh' ? t.faqs.questionZh : t.faqs.questionEn,
         sortable: true,
         render: (row: FaqRow) => (
           <span style={{ maxWidth: '300px', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -54,10 +56,10 @@ export default function FaqsListClient({ faqs }: Props) {
           </span>
         ),
       },
-      { key: 'displayOrder', header: 'Order', sortable: true },
+      { key: 'displayOrder', header: t.faqs.displayOrder, sortable: true },
       {
         key: 'isActive',
-        header: 'Active',
+        header: t.faqs.active,
         render: (row: FaqRow) => (
           <ToggleButton
             isActive={row.isActive}
@@ -75,7 +77,7 @@ export default function FaqsListClient({ faqs }: Props) {
         ),
       },
     ];
-  }, [locale, pendingId, toast]);
+  }, [locale, pendingId, toast, t]);
 
   return (
     <>
@@ -90,7 +92,7 @@ export default function FaqsListClient({ faqs }: Props) {
               href={`/admin/faqs/${row.id}`}
               style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
             >
-              Edit
+              {t.common.edit}
             </Link>
             <button
               type="button"
@@ -104,15 +106,15 @@ export default function FaqsListClient({ faqs }: Props) {
                 padding: 0,
               }}
             >
-              Delete
+              {t.common.delete}
             </button>
           </div>
         )}
       />
       <ConfirmDialog
         open={!!deleteId}
-        title="Delete FAQ"
-        message="This will permanently delete the FAQ."
+        title={t.faqs.deleteFaq}
+        message={t.faqs.deleteMessage}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
         loading={isPending}

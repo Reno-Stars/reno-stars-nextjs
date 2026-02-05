@@ -9,6 +9,7 @@ import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface SocialLinkFormProps {
   action: (
@@ -25,9 +26,10 @@ interface SocialLinkFormProps {
 }
 
 export default function SocialLinkForm({ action, initialData }: SocialLinkFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, 'Social link saved.');
+  useFormToast(state, t.socialLinks.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -46,7 +48,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <FormField label="Platform" htmlFor="platform">
+          <FormField label={t.socialLinks.platform} htmlFor="platform">
             <input
               id="platform"
               value={initialData.platform}
@@ -55,7 +57,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
             />
           </FormField>
 
-          <FormField label="URL" htmlFor="url">
+          <FormField label={t.socialLinks.url} htmlFor="url">
             <input
               id="url"
               name="url"
@@ -66,7 +68,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
             />
           </FormField>
 
-          <FormField label="Label" htmlFor="label">
+          <FormField label={t.socialLinks.label} htmlFor="label">
             <input
               id="label"
               name="label"
@@ -76,7 +78,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
           </FormField>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Display Order" htmlFor="displayOrder">
+            <FormField label={t.socialLinks.displayOrder} htmlFor="displayOrder">
               <input
                 id="displayOrder"
                 name="displayOrder"
@@ -104,12 +106,12 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
                 name="isActive"
                 defaultChecked={initialData.isActive}
               />
-              Active
+              {t.socialLinks.isActive}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label="Update Social Link" />
+            <SubmitButton isPending={isPending} label={t.common.update} />
           )}
         </fieldset>
       </div>

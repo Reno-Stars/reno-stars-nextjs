@@ -4,6 +4,7 @@ import { useState, useTransition, useEffect } from 'react';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import StatusBadge from '@/components/admin/StatusBadge';
 import { useToast } from '@/components/admin/ToastProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import { updateContactStatus, updateContactNotes } from '@/app/actions/admin/contacts';
 import { CARD, NAVY, TEXT_MID, GOLD, neuIn, neu } from '@/lib/theme';
 import { truncate } from '@/lib/utils';
@@ -29,18 +30,19 @@ export default function ContactsListClient({ contacts }: Props) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const { toast } = useToast();
+  const t = useAdminTranslations();
 
   const filtered = statusFilter === 'all'
     ? contacts
     : contacts.filter((c) => c.status === statusFilter);
 
   const columns: Column<ContactRow>[] = [
-    { key: 'name', header: 'Name', sortable: true },
-    { key: 'email', header: 'Email', sortable: true },
-    { key: 'phone', header: 'Phone' },
+    { key: 'name', header: t.contacts.name, sortable: true },
+    { key: 'email', header: t.contacts.email, sortable: true },
+    { key: 'phone', header: t.contacts.phone },
     {
       key: 'message',
-      header: 'Message',
+      header: t.contacts.message,
       render: (row) => (
         <button
           type="button"
@@ -54,7 +56,7 @@ export default function ContactsListClient({ contacts }: Props) {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: t.contacts.statusLabel,
       render: (row) => (
         <select
           value={row.status}
@@ -63,7 +65,7 @@ export default function ContactsListClient({ contacts }: Props) {
             startTransition(async () => {
               const result = await updateContactStatus(row.id, newStatus);
               if (result.error) toast(result.error, 'error');
-              else toast('Status updated.');
+              else toast(t.contacts.statusUpdated);
             });
           }}
           style={{
@@ -85,7 +87,7 @@ export default function ContactsListClient({ contacts }: Props) {
     },
     {
       key: 'createdAt',
-      header: 'Date',
+      header: t.contacts.date,
       sortable: true,
       render: (row) => (
         <span style={{ fontSize: '0.8125rem', color: TEXT_MID }}>
@@ -125,7 +127,7 @@ export default function ContactsListClient({ contacts }: Props) {
               boxShadow: neu(3),
             }}
           >
-            {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
+            {s === 'all' ? t.contacts.all : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
         ))}
       </div>
@@ -141,7 +143,7 @@ export default function ContactsListClient({ contacts }: Props) {
             onClick={() => setExpandedId(expandedId === row.id ? null : row.id)}
             style={{ background: 'none', border: 'none', color: GOLD, cursor: 'pointer', fontSize: '0.8125rem' }}
           >
-            {expandedId === row.id ? 'Close' : 'View'}
+            {expandedId === row.id ? t.contacts.close : t.contacts.view}
           </button>
         )}
       />
@@ -161,6 +163,7 @@ function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () 
   const [notes, setNotes] = useState(contact.notes ?? '');
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const t = useAdminTranslations();
 
   return (
     <div
@@ -176,26 +179,26 @@ function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ color: NAVY, fontSize: '1rem', fontWeight: 700 }}>{contact.name}</h3>
         <button onClick={onClose} style={{ background: 'none', border: 'none', color: TEXT_MID, cursor: 'pointer' }}>
-          Close
+          {t.contacts.close}
         </button>
       </div>
       <div style={{ fontSize: '0.8125rem', color: NAVY, marginBottom: '0.5rem' }}>
-        <strong>Email:</strong> {contact.email}
+        <strong>{t.contacts.email}:</strong> {contact.email}
       </div>
       {contact.phone && (
         <div style={{ fontSize: '0.8125rem', color: NAVY, marginBottom: '0.5rem' }}>
-          <strong>Phone:</strong> {contact.phone}
+          <strong>{t.contacts.phone}:</strong> {contact.phone}
         </div>
       )}
       <div style={{ fontSize: '0.8125rem', color: NAVY, marginBottom: '0.5rem' }}>
-        <strong>Status:</strong> <StatusBadge status={contact.status} />
+        <strong>{t.contacts.statusLabel}:</strong> <StatusBadge status={contact.status} />
       </div>
       <div style={{ fontSize: '0.8125rem', color: NAVY, marginBottom: '1rem' }}>
-        <strong>Message:</strong>
+        <strong>{t.contacts.message}:</strong>
         <p style={{ color: TEXT_MID, marginTop: '0.25rem', whiteSpace: 'pre-wrap' }}>{contact.message}</p>
       </div>
       <div style={{ marginBottom: '0.5rem', fontSize: '0.8125rem', color: NAVY, fontWeight: 600 }}>
-        Internal Notes
+        {t.contacts.internalNotes}
       </div>
       <textarea
         value={notes}
@@ -222,7 +225,7 @@ function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () 
           startTransition(async () => {
             const result = await updateContactNotes(contact.id, notes);
             if (result.error) toast(result.error, 'error');
-            else toast('Notes saved.');
+            else toast(t.contacts.notesSaved);
           });
         }}
         style={{
@@ -238,7 +241,7 @@ function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () 
           opacity: isPending ? 0.7 : 1,
         }}
       >
-        {isPending ? 'Saving...' : 'Save Notes'}
+        {isPending ? t.contacts.savingNotes : t.contacts.saveNotes}
       </button>
     </div>
   );

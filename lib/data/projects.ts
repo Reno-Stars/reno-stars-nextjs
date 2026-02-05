@@ -1,4 +1,4 @@
-import type { Project, ServiceType, Locale, LocalizedProject, WholeHouseProject, LocalizedWholeHouseProject, LocalizedWholeHouseAggregated, LocalizedWholeHouseImage } from '../types';
+import type { Project, ServiceType, Locale, LocalizedProject, HouseWithProjects, LocalizedHouseWithProjects, LocalizedHouseAggregated, LocalizedHouseImage, House, LocalizedHouse } from '../types';
 import { getAssetUrl } from '../storage';
 import { serviceTypeToCategory } from './services';
 
@@ -577,40 +577,56 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     solution: project.solution?.[locale],
     featured: project.featured,
     badge: project.badge?.[locale],
-    parent_project_id: project.parent_project_id,
-    is_whole_house: project.is_whole_house,
-    child_display_order: project.child_display_order,
+    house_id: project.house_id,
+    display_order_in_house: project.display_order_in_house,
   };
 }
 
 /**
- * Localize a WholeHouseProject including its children and aggregated data.
+ * Localize a House entity to a single locale.
  */
-export function getLocalizedWholeHouseProject(
-  project: WholeHouseProject,
-  locale: Locale
-): LocalizedWholeHouseProject {
-  const base = getLocalizedProject(project, locale);
-  const children = project.children.map((child) => getLocalizedProject(child, locale));
+export function getLocalizedHouse(house: House, locale: Locale): LocalizedHouse {
+  return {
+    id: house.id,
+    slug: house.slug,
+    title: house.title[locale],
+    description: house.description[locale],
+    location_city: house.location_city,
+    hero_image: house.hero_image,
+    badge: house.badge?.[locale],
+    show_as_project: house.show_as_project,
+    featured: house.featured,
+  };
+}
 
-  const allImages: LocalizedWholeHouseImage[] = project.aggregated.allImages.map((img) => ({
+/**
+ * Localize a HouseWithProjects including its projects and aggregated data.
+ */
+export function getLocalizedHouseWithProjects(
+  house: HouseWithProjects,
+  locale: Locale
+): LocalizedHouseWithProjects {
+  const base = getLocalizedHouse(house, locale);
+  const projects = house.projects.map((project) => getLocalizedProject(project, locale));
+
+  const allImages: LocalizedHouseImage[] = house.aggregated.allImages.map((img) => ({
     src: img.src,
     alt: img.alt[locale],
     is_before: img.is_before,
-    childSlug: img.childSlug,
-    childTitle: img.childTitle[locale],
+    projectSlug: img.projectSlug,
+    projectTitle: img.projectTitle[locale],
   }));
 
-  const aggregated: LocalizedWholeHouseAggregated = {
-    totalBudget: project.aggregated.totalBudget,
-    totalDuration: project.aggregated.totalDuration?.[locale],
-    allServiceScopes: project.aggregated.allServiceScopes[locale],
+  const aggregated: LocalizedHouseAggregated = {
+    totalBudget: house.aggregated.totalBudget,
+    totalDuration: house.aggregated.totalDuration?.[locale],
+    allServiceScopes: house.aggregated.allServiceScopes[locale],
     allImages,
   };
 
   return {
     ...base,
-    children,
+    projects,
     aggregated,
   };
 }

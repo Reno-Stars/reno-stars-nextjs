@@ -9,15 +9,9 @@ import ImageUrlInput from './ImageUrlInput';
 import { useFormToast } from './useFormToast';
 import { inputStyle } from './shared-styles';
 import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
-const SERVICE_TYPES = [
-  { value: 'kitchen', label: 'Kitchen' },
-  { value: 'bathroom', label: 'Bathroom' },
-  { value: 'whole-house', label: 'Whole House' },
-  { value: 'basement', label: 'Basement' },
-  { value: 'cabinet', label: 'Cabinet' },
-  { value: 'commercial', label: 'Commercial' },
-];
+const SERVICE_TYPE_KEYS = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
 
 interface ImageEntry {
   id: string;
@@ -33,18 +27,10 @@ interface ScopeEntry {
   zh: string;
 }
 
-interface ParentOption {
+interface HouseOption {
   id: string;
   titleEn: string;
   titleZh: string;
-}
-
-interface ChildProject {
-  id: string;
-  slug: string;
-  titleEn: string;
-  titleZh: string;
-  childDisplayOrder: number;
 }
 
 interface ProjectFormProps {
@@ -77,16 +63,13 @@ interface ProjectFormProps {
     badgeZh: string;
     featured: boolean;
     isPublished: boolean;
-    isWholeHouse: boolean;
-    parentProjectId: string | null;
-    childDisplayOrder: number;
+    houseId: string | null;
+    displayOrderInHouse: number;
     images: Omit<ImageEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
   };
-  /** Available whole house projects to link as parent (excludes current project) */
-  wholeHouseProjects?: ParentOption[];
-  /** Child projects linked to this project (only if this is a whole house container) */
-  childProjects?: ChildProject[];
+  /** Available houses to link this project to */
+  houses?: HouseOption[];
   submitLabel?: string;
 }
 
@@ -99,14 +82,14 @@ const readOnlyStyle: React.CSSProperties = {
 export default function ProjectForm({
   action,
   initialData,
-  wholeHouseProjects = [],
-  childProjects = [],
-  submitLabel = 'Save',
+  houses = [],
+  submitLabel,
 }: ProjectFormProps) {
+  const t = useAdminTranslations();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, 'Project saved.');
+  useFormToast(state, t.projects.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -146,7 +129,7 @@ export default function ProjectForm({
                   cursor: 'pointer',
                 }}
               >
-                Edit
+                {t.common.edit}
               </button>
             ) : (
               <button
@@ -163,7 +146,7 @@ export default function ProjectForm({
                   cursor: 'pointer',
                 }}
               >
-                Cancel
+                {t.common.cancel}
               </button>
             )}
           </div>
@@ -176,75 +159,75 @@ export default function ProjectForm({
         )}
         {state.success && (
           <div role="alert" style={{ backgroundColor: SUCCESS_BG, color: SUCCESS, padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.875rem' }}>
-            Saved successfully.
+            {t.common.savedSuccessfully}
           </div>
         )}
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <FormField label="Slug" htmlFor="slug">
-            <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder="my-project-slug" />
+          <FormField label={t.projects.slug} htmlFor="slug">
+            <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder={t.projects.slugPlaceholder} />
           </FormField>
 
-          <BilingualInput nameEn="titleEn" nameZh="titleZh" label="Title" defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required />
-          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label="Description" defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} />
+          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required />
+          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Service Type" htmlFor="serviceType">
+            <FormField label={t.projects.serviceType} htmlFor="serviceType">
               <select id="serviceType" name="serviceType" defaultValue={initialData?.serviceType ?? 'kitchen'} style={fieldStyle}>
-                {SERVICE_TYPES.map((s) => (
-                  <option key={s.value} value={s.value}>{s.label}</option>
+                {SERVICE_TYPE_KEYS.map((key) => (
+                  <option key={key} value={key}>{t.projects.serviceTypes[key]}</option>
                 ))}
               </select>
             </FormField>
-            <FormField label="Location City" htmlFor="locationCity">
+            <FormField label={t.projects.locationCity} htmlFor="locationCity">
               <input id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle} />
             </FormField>
           </div>
 
-          <BilingualInput nameEn="categoryEn" nameZh="categoryZh" label="Category" defaultValueEn={initialData?.categoryEn} defaultValueZh={initialData?.categoryZh} />
+          <BilingualInput nameEn="categoryEn" nameZh="categoryZh" label={t.projects.category} defaultValueEn={initialData?.categoryEn} defaultValueZh={initialData?.categoryZh} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Budget Range" htmlFor="budgetRange">
-              <input id="budgetRange" name="budgetRange" defaultValue={initialData?.budgetRange ?? ''} style={fieldStyle} placeholder="$15,000 - $25,000" />
+            <FormField label={t.projects.budgetRange} htmlFor="budgetRange">
+              <input id="budgetRange" name="budgetRange" defaultValue={initialData?.budgetRange ?? ''} style={fieldStyle} placeholder={t.projects.budgetPlaceholder} />
             </FormField>
           </div>
 
-          <BilingualInput nameEn="durationEn" nameZh="durationZh" label="Duration" defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} />
-          <BilingualInput nameEn="spaceTypeEn" nameZh="spaceTypeZh" label="Space Type" defaultValueEn={initialData?.spaceTypeEn} defaultValueZh={initialData?.spaceTypeZh} />
+          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} />
+          <BilingualInput nameEn="spaceTypeEn" nameZh="spaceTypeZh" label={t.projects.spaceType} defaultValueEn={initialData?.spaceTypeEn} defaultValueZh={initialData?.spaceTypeZh} />
 
-          <ImageUrlInput name="heroImageUrl" label="Hero Image URL" defaultValue={initialData?.heroImageUrl ?? ''} />
+          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} />
 
-          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label="Challenge" defaultValueEn={initialData?.challengeEn} defaultValueZh={initialData?.challengeZh} rows={3} />
-          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label="Solution" defaultValueEn={initialData?.solutionEn} defaultValueZh={initialData?.solutionZh} rows={3} />
-          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label="Badge" defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} />
+          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={initialData?.challengeEn} defaultValueZh={initialData?.challengeZh} rows={3} />
+          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={initialData?.solutionEn} defaultValueZh={initialData?.solutionZh} rows={3} />
+          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} />
 
           {/* Images */}
           <div style={{ marginBottom: '1rem' }}>
             <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              Images
+              {t.projects.images}
             </div>
             {images.map((img, idx) => (
               <div key={img.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.5rem' }}>
-                <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder="Image URL" aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '0.375rem' }}>
-                  <input name={`images[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altEn: e.target.value }; setImages(n); }} placeholder="Alt EN" aria-label={`Image ${idx + 1} alt text (English)`} style={fieldStyle} />
-                  <input name={`images[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altZh: e.target.value }; setImages(n); }} placeholder="Alt ZH" aria-label={`Image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
+                  <input name={`images[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altEn: e.target.value }; setImages(n); }} placeholder={t.projects.altEn} aria-label={`Image ${idx + 1} alt text (English)`} style={fieldStyle} />
+                  <input name={`images[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altZh: e.target.value }; setImages(n); }} placeholder={t.projects.altZh} aria-label={`Image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: NAVY }}>
                     <input type="checkbox" checked={img.isBefore} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], isBefore: e.target.checked }; setImages(n); }} />
                     <input type="hidden" name={`images[${idx}].isBefore`} value={String(img.isBefore)} />
-                    Before
+                    {t.projects.before}
                   </label>
                 </div>
                 {editing && images.length > 1 && (
                   <button type="button" onClick={() => setImages(images.filter((_, i) => i !== idx))} aria-label={`Remove image ${idx + 1}`} style={{ marginTop: '0.25rem', color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
-                    Remove
+                    {t.common.remove}
                   </button>
                 )}
               </div>
             ))}
             {editing && (
               <button type="button" onClick={() => setImages([...images, { id: crypto.randomUUID(), url: '', altEn: '', altZh: '', isBefore: false }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
-                + Add Image
+                {t.projects.addImage}
               </button>
             )}
           </div>
@@ -252,12 +235,12 @@ export default function ProjectForm({
           {/* Scopes */}
           <div style={{ marginBottom: '1rem' }}>
             <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              Service Scope
+              {t.projects.serviceScope}
             </div>
             {scopes.map((scope, idx) => (
               <div key={scope.id} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.375rem', alignItems: 'center' }}>
-                <input name={`scopes[${idx}].en`} value={scope.en} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], en: e.target.value }; setScopes(n); }} placeholder="Scope EN" aria-label={`Scope ${idx + 1} (English)`} style={{ ...fieldStyle, flex: 1 }} />
-                <input name={`scopes[${idx}].zh`} value={scope.zh} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], zh: e.target.value }; setScopes(n); }} placeholder="Scope ZH" aria-label={`Scope ${idx + 1} (Chinese)`} style={{ ...fieldStyle, flex: 1 }} />
+                <input name={`scopes[${idx}].en`} value={scope.en} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], en: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeEn} aria-label={`Scope ${idx + 1} (English)`} style={{ ...fieldStyle, flex: 1 }} />
+                <input name={`scopes[${idx}].zh`} value={scope.zh} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], zh: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeZh} aria-label={`Scope ${idx + 1} (Chinese)`} style={{ ...fieldStyle, flex: 1 }} />
                 {editing && scopes.length > 1 && (
                   <button type="button" onClick={() => setScopes(scopes.filter((_, i) => i !== idx))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
                     x
@@ -267,115 +250,60 @@ export default function ProjectForm({
             ))}
             {editing && (
               <button type="button" onClick={() => setScopes([...scopes, { id: crypto.randomUUID(), en: '', zh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
-                + Add Scope
+                {t.projects.addScope}
               </button>
             )}
           </div>
 
-          {/* Whole House Settings */}
-          <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
-            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              Parent-Child Relationship
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
-                <input
-                  type="checkbox"
-                  name="isWholeHouse"
-                  defaultChecked={initialData?.isWholeHouse ?? false}
-                  disabled={!!initialData?.parentProjectId}
-                />
-                Whole House Container
-                <span style={{ color: TEXT_MID, fontSize: '0.75rem', marginLeft: '0.5rem' }}>
-                  (Makes this project a container for child projects)
-                </span>
-              </label>
-
-              {/* Parent Selection - hidden if this is a whole house container */}
-              {!initialData?.isWholeHouse && wholeHouseProjects.length > 0 && (
-                <FormField label="Parent Project" htmlFor="parentProjectId">
+          {/* House Settings */}
+          {houses.length > 0 && (
+            <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+              <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
+                {t.projects.houseSettings}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <FormField label={t.projects.linkedHouse} htmlFor="houseId">
                   <select
-                    id="parentProjectId"
-                    name="parentProjectId"
-                    defaultValue={initialData?.parentProjectId ?? ''}
+                    id="houseId"
+                    name="houseId"
+                    defaultValue={initialData?.houseId ?? ''}
                     style={fieldStyle}
                   >
-                    <option value="">None (standalone project)</option>
-                    {wholeHouseProjects.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.titleEn} / {p.titleZh}
+                    <option value="">{t.projects.noneStandalone}</option>
+                    {houses.map((h) => (
+                      <option key={h.id} value={h.id}>
+                        {h.titleEn} / {h.titleZh}
                       </option>
                     ))}
                   </select>
                 </FormField>
-              )}
 
-              {/* Child Display Order - shown if has parent */}
-              {initialData?.parentProjectId && (
-                <FormField label="Display Order in Parent" htmlFor="childDisplayOrder">
-                  <input
-                    id="childDisplayOrder"
-                    name="childDisplayOrder"
-                    type="number"
-                    min="0"
-                    defaultValue={initialData?.childDisplayOrder ?? 0}
-                    style={{ ...fieldStyle, width: '100px' }}
-                  />
-                </FormField>
-              )}
-
-              {/* Linked Children - shown if this is a whole house container */}
-              {initialData?.isWholeHouse && childProjects.length > 0 && (
-                <div>
-                  <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.75rem', marginBottom: '0.375rem' }}>
-                    Linked Child Projects ({childProjects.length})
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                    {childProjects.sort((a, b) => a.childDisplayOrder - b.childDisplayOrder).map((child) => (
-                      <div
-                        key={child.id}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '0.5rem',
-                          backgroundColor: CARD,
-                          borderRadius: '6px',
-                          fontSize: '0.8125rem',
-                        }}
-                      >
-                        <span style={{ color: TEXT_MID }}>
-                          #{child.childDisplayOrder} - {child.titleEn}
-                        </span>
-                        <a
-                          href={`/admin/projects/${child.id}`}
-                          style={{ color: GOLD, textDecoration: 'none', fontSize: '0.75rem' }}
-                        >
-                          Edit
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {initialData?.isWholeHouse && childProjects.length === 0 && (
-                <p style={{ color: TEXT_MID, fontSize: '0.75rem', fontStyle: 'italic' }}>
-                  No child projects linked yet. Edit other projects to link them to this container.
-                </p>
-              )}
+                {/* Display Order in House - shown if house is selected */}
+                {initialData?.houseId && (
+                  <FormField label={t.projects.displayOrderInHouse} htmlFor="displayOrderInHouse">
+                    <input
+                      id="displayOrderInHouse"
+                      name="displayOrderInHouse"
+                      type="number"
+                      min="0"
+                      defaultValue={initialData?.displayOrderInHouse ?? 0}
+                      style={{ ...fieldStyle, width: '100px' }}
+                    />
+                  </FormField>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Checkboxes */}
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
               <input type="checkbox" name="featured" defaultChecked={initialData?.featured ?? false} />
-              Featured
+              {t.projects.featured}
             </label>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
               <input type="checkbox" name="isPublished" defaultChecked={initialData?.isPublished ?? true} />
-              Published
+              {t.projects.published}
             </label>
           </div>
 
@@ -395,7 +323,7 @@ export default function ProjectForm({
                 opacity: isPending ? 0.7 : 1,
               }}
             >
-              {isPending ? 'Saving...' : submitLabel}
+              {isPending ? t.common.saving : (submitLabel ?? t.common.save)}
             </button>
           )}
         </fieldset>

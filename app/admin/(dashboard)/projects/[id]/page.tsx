@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projects, projectImages, projectScopes, type DbProject, type DbProjectImage, type DbProjectScope } from '@/lib/db/schema';
-import { eq, and, ne } from 'drizzle-orm';
+import { projects, projectImages, projectScopes, houses, type DbProject, type DbProjectImage, type DbProjectScope } from '@/lib/db/schema';
+import { eq } from 'drizzle-orm';
 import EditProjectClient from './EditProjectClient';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -16,25 +16,15 @@ export default async function EditProjectPage({ params }: PageProps) {
   const project = rows[0];
   if (!project) notFound();
 
-  const [images, scopes, wholeHouseRows, childRows] = await Promise.all([
+  const [images, scopes, houseRows] = await Promise.all([
     db.select().from(projectImages).where(eq(projectImages.projectId, id)).orderBy(projectImages.displayOrder) as Promise<DbProjectImage[]>,
     db.select().from(projectScopes).where(eq(projectScopes.projectId, id)).orderBy(projectScopes.displayOrder) as Promise<DbProjectScope[]>,
-    // Fetch whole house projects (excluding current project) for parent selection
+    // Fetch houses for house selection
     db.select({
-      id: projects.id,
-      titleEn: projects.titleEn,
-      titleZh: projects.titleZh,
-    }).from(projects).where(and(eq(projects.isWholeHouse, true), ne(projects.id, id))),
-    // Fetch child projects if this is a whole house container
-    project.isWholeHouse
-      ? db.select({
-          id: projects.id,
-          slug: projects.slug,
-          titleEn: projects.titleEn,
-          titleZh: projects.titleZh,
-          childDisplayOrder: projects.childDisplayOrder,
-        }).from(projects).where(eq(projects.parentProjectId, id))
-      : Promise.resolve([]),
+      id: houses.id,
+      titleEn: houses.titleEn,
+      titleZh: houses.titleZh,
+    }).from(houses),
   ]);
 
   const initialData = {
@@ -62,9 +52,8 @@ export default async function EditProjectPage({ params }: PageProps) {
     badgeZh: project.badgeZh ?? '',
     featured: project.featured,
     isPublished: project.isPublished,
-    isWholeHouse: project.isWholeHouse,
-    parentProjectId: project.parentProjectId,
-    childDisplayOrder: project.childDisplayOrder,
+    houseId: project.houseId,
+    displayOrderInHouse: project.displayOrderInHouse,
     images: images.map((img: DbProjectImage) => ({
       url: img.imageUrl,
       altEn: img.altTextEn ?? '',
@@ -79,14 +68,11 @@ export default async function EditProjectPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Project
-      </h1>
+      <AdminPageHeader titleKey="projects.editProject" />
       <EditProjectClient
         id={id}
         initialData={initialData}
-        wholeHouseProjects={wholeHouseRows}
-        childProjects={childRows}
+        houses={houseRows}
       />
     </div>
   );

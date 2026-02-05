@@ -10,6 +10,7 @@ import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ServiceAreaFormProps {
   action: (
@@ -28,9 +29,10 @@ interface ServiceAreaFormProps {
 }
 
 export default function ServiceAreaForm({ action, initialData }: ServiceAreaFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, 'Service area saved.');
+  useFormToast(state, t.serviceAreas.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -50,15 +52,15 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           {/* Slug is display-only (no name attribute) - slugs are immutable after creation */}
-          <FormField label="Slug" htmlFor="slug">
+          <FormField label={t.serviceAreas.slug} htmlFor="slug">
             <input id="slug" value={initialData.slug} readOnly style={readOnlyStyle} />
           </FormField>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Name (EN)" htmlFor="nameEn">
+            <FormField label={t.serviceAreas.nameEn} htmlFor="nameEn">
               <input id="nameEn" name="nameEn" defaultValue={initialData.nameEn} required style={fieldStyle} />
             </FormField>
-            <FormField label="Name (ZH)" htmlFor="nameZh">
+            <FormField label={t.serviceAreas.nameZh} htmlFor="nameZh">
               <input id="nameZh" name="nameZh" defaultValue={initialData.nameZh} required style={fieldStyle} />
             </FormField>
           </div>
@@ -66,14 +68,14 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
           <BilingualTextarea
             nameEn="descriptionEn"
             nameZh="descriptionZh"
-            label="Description"
+            label={t.serviceAreas.descriptionLabel}
             defaultValueEn={initialData.descriptionEn}
             defaultValueZh={initialData.descriptionZh}
             rows={4}
           />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Display Order" htmlFor="displayOrder">
+            <FormField label={t.serviceAreas.displayOrder} htmlFor="displayOrder">
               <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
@@ -81,12 +83,12 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
               <input type="checkbox" name="isActive" defaultChecked={initialData.isActive} />
-              Active
+              {t.serviceAreas.isActive}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label="Update Service Area" />
+            <SubmitButton isPending={isPending} label={t.common.update} />
           )}
         </fieldset>
       </div>

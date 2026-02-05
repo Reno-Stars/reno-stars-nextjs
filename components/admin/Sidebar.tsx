@@ -3,26 +3,28 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { NAVY, NAVY_LIGHT, GOLD, SURFACE } from '@/lib/theme';
-
-const links = [
-  { href: '/admin', label: 'Dashboard', exact: true },
-  { href: '/admin/company', label: 'Company' },
-  { href: '/admin/projects', label: 'Projects' },
-  { href: '/admin/services', label: 'Services' },
-  { href: '/admin/testimonials', label: 'Testimonials' },
-  { href: '/admin/blog', label: 'Blog' },
-  { href: '/admin/contacts', label: 'Contacts' },
-  { href: '/admin/social-links', label: 'Social Links' },
-  { href: '/admin/service-areas', label: 'Service Areas' },
-  { href: '/admin/gallery', label: 'Gallery' },
-  { href: '/admin/trust-badges', label: 'Trust Badges' },
-  { href: '/admin/faqs', label: 'FAQs' },
-  { href: '/admin/showroom', label: 'Showroom' },
-  { href: '/admin/about', label: 'About' },
-];
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const t = useAdminTranslations();
+
+  const links = [
+    { href: '/admin', label: t.nav.dashboard, exact: true },
+    { href: '/admin/company', label: t.nav.company },
+    { href: '/admin/projects', label: t.nav.projects },
+    { href: '/admin/services', label: t.nav.services },
+    { href: '/admin/testimonials', label: t.nav.testimonials },
+    { href: '/admin/blog', label: t.nav.blog },
+    { href: '/admin/contacts', label: t.nav.contacts },
+    { href: '/admin/social-links', label: t.nav.socialLinks },
+    { href: '/admin/service-areas', label: t.nav.serviceAreas },
+    { href: '/admin/gallery', label: t.nav.gallery },
+    { href: '/admin/trust-badges', label: t.nav.trustBadges },
+    { href: '/admin/faqs', label: t.nav.faqs },
+    { href: '/admin/showroom', label: t.nav.showroom },
+    { href: '/admin/about', label: t.nav.about },
+  ];
 
   function isActive(href: string, exact?: boolean) {
     if (exact) return pathname === href || pathname === href + '/';
@@ -31,7 +33,7 @@ export default function Sidebar() {
 
   return (
     <nav
-      aria-label="Admin navigation"
+      aria-label={t.nav.adminNavigation}
       style={{
         width: '220px',
         backgroundColor: NAVY,
@@ -51,7 +53,7 @@ export default function Sidebar() {
           color: GOLD,
         }}
       >
-        Reno Stars
+        {t.nav.renoStars}
       </div>
       {links.map((link) => {
         const active = isActive(link.href, link.exact);

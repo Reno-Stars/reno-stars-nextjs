@@ -5,6 +5,7 @@ import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleServiceAreaActive } from '@/app/actions/admin/service-areas';
 import { GOLD } from '@/lib/theme';
@@ -27,16 +28,17 @@ export default function ServiceAreasListClient({ areas }: Props) {
   const [, startTransition] = useTransition();
   const { toast } = useToast();
   const { locale } = useAdminLocale();
+  const t = useAdminTranslations();
 
   const columns: Column<ServiceAreaRow>[] = useMemo(() => {
     const getN = (row: ServiceAreaRow) => locale === 'zh' ? row.nameZh : row.nameEn;
     return [
-      { key: 'slug', header: 'Slug', sortable: true },
-      { key: locale === 'zh' ? 'nameZh' : 'nameEn', header: locale === 'zh' ? 'Name (ZH)' : 'Name (EN)', sortable: true },
-      { key: 'displayOrder', header: 'Order', sortable: true },
+      { key: 'slug', header: t.serviceAreas.slug, sortable: true },
+      { key: locale === 'zh' ? 'nameZh' : 'nameEn', header: locale === 'zh' ? t.serviceAreas.nameZh : t.serviceAreas.nameEn, sortable: true },
+      { key: 'displayOrder', header: t.serviceAreas.displayOrder, sortable: true },
       {
         key: 'isActive',
-        header: 'Active',
+        header: t.serviceAreas.isActive,
         render: (row: ServiceAreaRow) => (
           <ToggleButton
             isActive={row.isActive}
@@ -54,7 +56,7 @@ export default function ServiceAreasListClient({ areas }: Props) {
         ),
       },
     ];
-  }, [locale, pendingId, toast]);
+  }, [locale, pendingId, toast, t]);
 
   return (
     <DataTable
@@ -67,7 +69,7 @@ export default function ServiceAreasListClient({ areas }: Props) {
           href={`/admin/service-areas/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
-          Edit
+          {t.common.edit}
         </Link>
       )}
     />

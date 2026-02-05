@@ -1,6 +1,7 @@
 'use client';
 
 import { GOLD, GOLD_HOVER } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface SubmitButtonProps {
   isPending: boolean;
@@ -10,9 +11,12 @@ interface SubmitButtonProps {
 
 export default function SubmitButton({
   isPending,
-  label = 'Save',
-  pendingLabel = 'Saving...',
+  label,
+  pendingLabel,
 }: SubmitButtonProps) {
+  const t = useAdminTranslations();
+  const displayLabel = label ?? t.common.save;
+  const displayPending = pendingLabel ?? t.common.saving;
   return (
     <button
       type="submit"
@@ -29,7 +33,7 @@ export default function SubmitButton({
         opacity: isPending ? 0.7 : 1,
       }}
     >
-      {isPending ? pendingLabel : label}
+      {isPending ? displayPending : displayLabel}
     </button>
   );
 }

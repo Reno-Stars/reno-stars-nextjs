@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback, useRef, useId } from 'react';
 import { CARD, NAVY, TEXT_MID, ERROR, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -19,9 +20,10 @@ export default function ConfirmDialog({
   message,
   onConfirm,
   onCancel,
-  confirmLabel = 'Delete',
+  confirmLabel,
   loading = false,
 }: ConfirmDialogProps) {
+  const t = useAdminTranslations();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
@@ -95,7 +97,7 @@ export default function ConfirmDialog({
               fontSize: '0.875rem',
             }}
           >
-            Cancel
+            {t.common.cancel}
           </button>
           <button
             type="button"
@@ -113,7 +115,7 @@ export default function ConfirmDialog({
               opacity: loading ? 0.7 : 1,
             }}
           >
-            {loading ? 'Processing...' : confirmLabel}
+            {loading ? t.common.processing : (confirmLabel ?? t.common.delete)}
           </button>
         </div>
       </div>

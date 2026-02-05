@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { CARD, NAVY, TEXT_MID, TEXT_MUTED, GOLD, SURFACE, neu, neuIn } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { ReactNode } from 'react';
 
 export interface Column<T> {
@@ -37,6 +38,7 @@ export default function DataTable<T extends object>({
   pageSize = 15,
   actions,
 }: DataTableProps<T>) {
+  const t = useAdminTranslations();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -87,8 +89,8 @@ export default function DataTable<T extends object>({
         <div style={{ marginBottom: '1rem' }}>
           <input
             type="text"
-            placeholder="Search..."
-            aria-label="Search records"
+            placeholder={t.common.search}
+            aria-label={t.common.searchRecords}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -119,7 +121,7 @@ export default function DataTable<T extends object>({
       >
         <div style={{ overflowX: 'auto' }}>
           <table
-            aria-label="Data table"
+            aria-label={t.common.dataTable}
             style={{
               width: '100%',
               borderCollapse: 'collapse',
@@ -173,7 +175,7 @@ export default function DataTable<T extends object>({
                       width: '120px',
                     }}
                   >
-                    Actions
+                    {t.common.actions}
                   </th>
                 )}
               </tr>
@@ -189,7 +191,7 @@ export default function DataTable<T extends object>({
                       color: TEXT_MUTED,
                     }}
                   >
-                    No records found.
+                    {t.common.noRecords}
                   </td>
                 </tr>
               ) : (
@@ -240,7 +242,7 @@ export default function DataTable<T extends object>({
           }}
         >
           <span>
-            {sorted.length} record{sorted.length !== 1 ? 's' : ''}
+            {sorted.length} {sorted.length !== 1 ? t.common.records : t.common.record}
           </span>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button
@@ -257,7 +259,7 @@ export default function DataTable<T extends object>({
                 boxShadow: neu(3),
               }}
             >
-              Prev
+              {t.common.prev}
             </button>
             <span aria-live="polite" style={{ padding: '0.375rem 0.5rem' }}>
               {page + 1} / {totalPages}
@@ -276,7 +278,7 @@ export default function DataTable<T extends object>({
                 boxShadow: neu(3),
               }}
             >
-              Next
+              {t.common.next}
             </button>
           </div>
         </div>

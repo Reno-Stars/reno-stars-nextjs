@@ -10,6 +10,7 @@ import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import { CARD, GOLD, GOLD_HOVER, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { DbCompanyInfo } from '@/lib/db/schema';
 
 interface CompanyFormProps {
@@ -17,9 +18,10 @@ interface CompanyFormProps {
 }
 
 export default function CompanyForm({ company }: CompanyFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(updateCompanyInfo, {});
-  useFormToast(state, 'Company info updated.');
+  useFormToast(state, t.company.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -35,58 +37,58 @@ export default function CompanyForm({ company }: CompanyFormProps) {
         }}
       >
         <EditModeToggle editing={editing} setEditing={setEditing} />
-        <FormAlerts state={state} successMessage="Updated successfully." />
+        <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Company Name" htmlFor="name">
+            <FormField label={t.company.nameLabel} htmlFor="name">
               <input id="name" name="name" defaultValue={company.name} required style={fieldStyle} />
             </FormField>
-            <FormField label="Tagline" htmlFor="tagline">
+            <FormField label={t.company.tagline} htmlFor="tagline">
               <input id="tagline" name="tagline" defaultValue={company.tagline ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Phone" htmlFor="phone">
+            <FormField label={t.company.phone} htmlFor="phone">
               <input id="phone" name="phone" defaultValue={company.phone ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Email" htmlFor="email">
+            <FormField label={t.company.email} htmlFor="email">
               <input id="email" name="email" type="email" defaultValue={company.email ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Address" htmlFor="address">
+            <FormField label={t.company.address} htmlFor="address">
               <input id="address" name="address" defaultValue={company.address ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Quote URL" htmlFor="quoteUrl">
+            <FormField label={t.company.quoteUrl} htmlFor="quoteUrl">
               <input id="quoteUrl" name="quoteUrl" defaultValue={company.quoteUrl ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Founding Year" htmlFor="foundingYear">
+            <FormField label={t.company.foundingYear} htmlFor="foundingYear">
               <input id="foundingYear" name="foundingYear" type="number" defaultValue={company.foundingYear ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Team Size" htmlFor="teamSize">
+            <FormField label={t.company.teamSize} htmlFor="teamSize">
               <input id="teamSize" name="teamSize" type="number" defaultValue={company.teamSize ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Warranty" htmlFor="warranty">
+            <FormField label={t.company.warranty} htmlFor="warranty">
               <input id="warranty" name="warranty" defaultValue={company.warranty ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Liability Coverage" htmlFor="liabilityCoverage">
+            <FormField label={t.company.liabilityCoverage} htmlFor="liabilityCoverage">
               <input id="liabilityCoverage" name="liabilityCoverage" defaultValue={company.liabilityCoverage ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Rating" htmlFor="rating">
+            <FormField label={t.company.rating} htmlFor="rating">
               <input id="rating" name="rating" defaultValue={company.rating ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Review Count" htmlFor="reviewCount">
+            <FormField label={t.company.reviewCount} htmlFor="reviewCount">
               <input id="reviewCount" name="reviewCount" type="number" defaultValue={company.reviewCount ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Rating Source" htmlFor="ratingSource">
+            <FormField label={t.company.ratingSource} htmlFor="ratingSource">
               <input id="ratingSource" name="ratingSource" defaultValue={company.ratingSource ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Geo Latitude" htmlFor="geoLatitude">
+            <FormField label={t.company.geoLatitude} htmlFor="geoLatitude">
               <input id="geoLatitude" name="geoLatitude" defaultValue={company.geoLatitude ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label="Geo Longitude" htmlFor="geoLongitude">
+            <FormField label={t.company.geoLongitude} htmlFor="geoLongitude">
               <input id="geoLongitude" name="geoLongitude" defaultValue={company.geoLongitude ?? ''} style={fieldStyle} />
             </FormField>
           </div>
 
-          <ImageUrlInput name="logoUrl" label="Logo URL" defaultValue={company.logoUrl ?? ''} />
+          <ImageUrlInput name="logoUrl" label={t.company.logoUrl} defaultValue={company.logoUrl ?? ''} />
 
           {editing && (
             <button
@@ -105,7 +107,7 @@ export default function CompanyForm({ company }: CompanyFormProps) {
                 opacity: isPending ? 0.7 : 1,
               }}
             >
-              {isPending ? 'Saving...' : 'Save Changes'}
+              {isPending ? t.common.saving : t.common.save}
             </button>
           )}
         </fieldset>

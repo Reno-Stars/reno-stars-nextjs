@@ -6,20 +6,20 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, LocalizedWholeHouseProject, LocalizedProject } from '@/lib/types';
+import type { Company, LocalizedHouseWithProjects, LocalizedProject } from '@/lib/types';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
-interface WholeHouseDetailPageProps {
+interface HouseDetailPageProps {
   locale: Locale;
-  project: LocalizedWholeHouseProject;
+  house: LocalizedHouseWithProjects;
   company: Company;
 }
 
-export default function WholeHouseDetailPage({ locale: _locale, project, company }: WholeHouseDetailPageProps) {
+export default function HouseDetailPage({ locale: _locale, house, company }: HouseDetailPageProps) {
   const t = useTranslations();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
   useEffect(() => {
     setActiveImageIndex(0);
     setAreaFilter('all');
-  }, [project.slug]);
+  }, [house.slug]);
 
   const handleLightboxClose = useCallback(() => {
     setLightboxOpen(false);
@@ -45,29 +45,28 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
     }
   }, []);
 
-  // Filter images by selected area
+  // Filter images by selected project
   const filteredImages = useMemo(() => {
-    if (areaFilter === 'all') return project.aggregated.allImages;
-    return project.aggregated.allImages.filter((img) => img.childSlug === areaFilter);
-  }, [project.aggregated.allImages, areaFilter]);
+    if (areaFilter === 'all') return house.aggregated.allImages;
+    return house.aggregated.allImages.filter((img) => img.projectSlug === areaFilter);
+  }, [house.aggregated.allImages, areaFilter]);
 
-  // Area options for filter - memoize based on specific fields used
+  // Area options for filter - memoize based on projects
   const areaOptions = useMemo(() => {
     const areas = new Map<string, string>();
-    // Add parent
-    areas.set(project.slug, project.title);
-    // Add children
-    project.children.forEach((child) => {
-      areas.set(child.slug, child.title);
+    house.projects.forEach((project) => {
+      areas.set(project.slug, project.title);
     });
     return Array.from(areas.entries()).map(([slug, title]) => ({ slug, title }));
-  }, [project.slug, project.title, project.children]);
+  }, [house.projects]);
 
   const nextImage = useCallback(() => {
+    if (filteredImages.length === 0) return;
     setActiveImageIndex((prev) => (prev + 1) % filteredImages.length);
   }, [filteredImages.length]);
 
   const prevImage = useCallback(() => {
+    if (filteredImages.length === 0) return;
     setActiveImageIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
   }, [filteredImages.length]);
 
@@ -83,7 +82,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
       <VisualBreadcrumb variant="light" items={[
         { href: '/', label: t('nav.home') },
         { href: '/projects', label: t('nav.projects') },
-        { label: project.title },
+        { label: house.title },
       ]} />
 
       {/* Hero Section */}
@@ -118,12 +117,12 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                     </p>
                   </div>
                 )}
-                {project.badge && (
+                {house.badge && (
                   <span
                     className="absolute top-4 left-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
                     style={{ backgroundColor: GOLD }}
                   >
-                    {project.badge}
+                    {house.badge}
                   </span>
                 )}
                 {currentImage && (
@@ -131,7 +130,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                     className="absolute bottom-4 left-4 px-3 py-1 rounded-lg text-xs font-medium"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}
                   >
-                    {currentImage.childTitle}
+                    {currentImage.projectTitle}
                   </span>
                 )}
               </div>
@@ -172,7 +171,7 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                 <div className="flex gap-3 mt-4 overflow-x-auto p-1">
                   {filteredImages.map((img, i) => (
                     <button
-                      key={`${img.childSlug}-${img.src}`}
+                      key={`${img.projectSlug}-${img.src}`}
                       onClick={() => setActiveImageIndex(i)}
                       className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0"
                       aria-label={`${t('projects.viewImage')} ${i + 1}`}
@@ -204,26 +203,28 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                 </span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
-                {project.title}
+                {house.title}
               </h1>
               <p className="text-base mb-6" style={{ color: TEXT_MID }}>
-                {project.description}
+                {house.description}
               </p>
 
               {/* Aggregated Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <MapPin className="w-4 h-4" style={{ color: GOLD }} />
-                    <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
-                      {t('modal.location')}
+                {house.location_city && (
+                  <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <MapPin className="w-4 h-4" style={{ color: GOLD }} />
+                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                        {t('modal.location')}
+                      </span>
+                    </div>
+                    <span className="text-base font-semibold" style={{ color: TEXT }}>
+                      {house.location_city}
                     </span>
                   </div>
-                  <span className="text-base font-semibold" style={{ color: TEXT }}>
-                    {project.location_city}
-                  </span>
-                </div>
-                {project.aggregated.totalDuration && (
+                )}
+                {house.aggregated.totalDuration && (
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Calendar className="w-4 h-4" style={{ color: GOLD }} />
@@ -232,11 +233,11 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {project.aggregated.totalDuration}
+                      {house.aggregated.totalDuration}
                     </span>
                   </div>
                 )}
-                {project.aggregated.totalBudget && (
+                {house.aggregated.totalBudget && (
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
@@ -245,33 +246,31 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {project.aggregated.totalBudget}
+                      {house.aggregated.totalBudget}
                     </span>
                   </div>
                 )}
-                {project.space_type && (
-                  <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <Layers className="w-4 h-4" style={{ color: GOLD }} />
-                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
-                        {t('modal.spaceType')}
-                      </span>
-                    </div>
-                    <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {project.space_type}
+                <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Layers className="w-4 h-4" style={{ color: GOLD }} />
+                    <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                      {t('wholeHouse.includedAreas')}
                     </span>
                   </div>
-                )}
+                  <span className="text-base font-semibold" style={{ color: TEXT }}>
+                    {house.projects.length} {t('wholeHouse.areas')}
+                  </span>
+                </div>
               </div>
 
               {/* Aggregated Service Scope */}
-              {project.aggregated.allServiceScopes.length > 0 && (
+              {house.aggregated.allServiceScopes.length > 0 && (
                 <div className="mb-6">
                   <h2 className="text-base font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
                     {t('wholeHouse.allServiceScopes')}
                   </h2>
                   <div className="flex flex-wrap gap-2">
-                    {project.aggregated.allServiceScopes.map((scope) => (
+                    {house.aggregated.allServiceScopes.map((scope) => (
                       <span
                         key={scope}
                         className="px-3 py-1 rounded-full text-sm"
@@ -281,28 +280,6 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
                       </span>
                     ))}
                   </div>
-                </div>
-              )}
-
-              {/* Challenge & Solution */}
-              {project.challenge && (
-                <div className="mb-4">
-                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('modal.challenge')}
-                  </h2>
-                  <p className="text-base" style={{ color: TEXT_MID }}>
-                    {project.challenge}
-                  </p>
-                </div>
-              )}
-              {project.solution && (
-                <div className="mb-6">
-                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('modal.solution')}
-                  </h2>
-                  <p className="text-base" style={{ color: TEXT_MID }}>
-                    {project.solution}
-                  </p>
                 </div>
               )}
 
@@ -328,19 +305,19 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
         </div>
       </section>
 
-      {/* Included Areas Section */}
-      {project.children.length > 0 && (
+      {/* Included Projects Section */}
+      {house.projects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>
               {t('wholeHouse.includedAreas')}
             </h2>
             <p className="text-sm mb-8" style={{ color: TEXT_MID }}>
-              {t('wholeHouse.childProjectsCount', { count: project.children.length })}
+              {t('wholeHouse.childProjectsCount', { count: house.projects.length })}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {project.children.map((child) => (
-                <ChildProjectCard key={child.slug} child={child} t={t} />
+              {house.projects.map((project) => (
+                <ProjectCard key={project.slug} project={project} t={t} />
               ))}
             </div>
           </div>
@@ -362,24 +339,24 @@ export default function WholeHouseDetailPage({ locale: _locale, project, company
   );
 }
 
-/** Card for a child project within the whole house view */
-function ChildProjectCard({
-  child,
+/** Card for a project within the house view */
+function ProjectCard({
+  project,
   t,
 }: {
-  child: LocalizedProject;
+  project: LocalizedProject;
   t: ReturnType<typeof useTranslations>;
 }) {
   return (
     <Link
-      href={`/projects/${child.slug}`}
+      href={`/projects/${project.slug}`}
       className="block rounded-xl overflow-hidden transition-all duration-200 hover:translate-y-[-4px]"
       style={{ boxShadow: neu(4), backgroundColor: CARD }}
     >
       <div className="relative aspect-[4/3]">
         <Image
-          src={child.hero_image}
-          alt={child.title}
+          src={project.hero_image}
+          alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover"
@@ -388,29 +365,29 @@ function ChildProjectCard({
           className="absolute bottom-0 left-0 right-0 px-4 py-3"
           style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}
         >
-          <span className="text-white text-lg font-semibold">{child.title}</span>
+          <span className="text-white text-lg font-semibold">{project.title}</span>
         </div>
       </div>
       <div className="p-4">
         <div className="flex items-center gap-4 text-sm" style={{ color: TEXT_MID }}>
-          {child.duration && (
+          {project.duration && (
             <span className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              {child.duration}
+              {project.duration}
             </span>
           )}
-          {child.budget_range && (
+          {project.budget_range && (
             <span className="flex items-center gap-1">
               <DollarSign className="w-4 h-4" />
-              {child.budget_range}
+              {project.budget_range}
             </span>
           )}
         </div>
         <p className="text-sm mt-2 line-clamp-2" style={{ color: TEXT_MID }}>
-          {child.description}
+          {project.description}
         </p>
         <span className="inline-block mt-3 text-sm font-semibold" style={{ color: GOLD }}>
-          {t('wholeHouse.viewAreaProject', { area: child.category })} &rarr;
+          {t('wholeHouse.viewAreaProject', { area: project.category })} &rarr;
         </span>
       </div>
     </Link>
@@ -426,7 +403,7 @@ function LightboxDialog({
   onNext,
   t,
 }: {
-  images: { src: string; alt: string; childTitle: string }[];
+  images: { src: string; alt: string; projectTitle: string }[];
   activeIndex: number;
   onClose: () => void;
   onPrev: () => void;
@@ -505,7 +482,7 @@ function LightboxDialog({
         </span>
         {currentImage && (
           <span className="text-xs text-white/50">
-            {currentImage.childTitle}
+            {currentImage.projectTitle}
           </span>
         )}
       </div>

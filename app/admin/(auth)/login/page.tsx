@@ -3,10 +3,12 @@
 import { useActionState } from 'react';
 import { loginAction, type AuthResult } from '@/app/actions/admin-auth';
 import { CARD, NAVY, GOLD, GOLD_HOVER, ERROR, ERROR_BG, neu, neuIn } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 const initialState: AuthResult = {};
 
 export default function LoginPage() {
+  const t = useAdminTranslations();
   const [state, formAction, isPending] = useActionState(loginAction, initialState);
 
   return (
@@ -44,7 +46,7 @@ export default function LoginPage() {
             fontSize: '0.875rem',
           }}
         >
-          Password
+          {t.login.password}
         </label>
         <input
           id="password"
@@ -83,7 +85,7 @@ export default function LoginPage() {
             opacity: isPending ? 0.7 : 1,
           }}
         >
-          {isPending ? 'Signing in...' : 'Sign In'}
+          {isPending ? t.login.signingIn : t.login.signIn}
         </button>
       </div>
     </form>

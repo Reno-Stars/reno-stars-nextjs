@@ -112,15 +112,15 @@ export async function submitContactForm(
   data: ContactFormData
 ): Promise<ContactFormResult> {
   // Validate required fields first (before rate limiting to avoid 'anonymous' key bypass)
-  if (!data.name?.trim() || !data.email?.trim() || !data.message?.trim()) {
+  if (!data.name?.trim() || !data.phone?.trim() || !data.message?.trim()) {
     return {
       success: false,
       message: 'Please fill in all required fields.',
     };
   }
 
-  // Rate limit by email to prevent spam
-  const rateLimitKey = data.email.toLowerCase().trim();
+  // Rate limit by phone to prevent spam
+  const rateLimitKey = data.phone.trim();
   if (isRateLimited(rateLimitKey)) {
     return {
       success: false,
@@ -143,8 +143,8 @@ export async function submitContactForm(
     };
   }
 
-  // Validate email format
-  if (!isValidEmail(data.email)) {
+  // Validate email format if provided
+  if (data.email?.trim() && !isValidEmail(data.email)) {
     return {
       success: false,
       message: 'Please enter a valid email address.',
@@ -154,10 +154,10 @@ export async function submitContactForm(
   try {
     // Sanitize all inputs
     const sanitizedName = sanitizeField(data.name, MAX_LENGTHS.name);
-    const sanitizedEmail = data.email.trim().toLowerCase().slice(0, MAX_LENGTHS.email);
-    const sanitizedPhone = data.phone?.trim()
-      ? sanitizeField(data.phone, MAX_LENGTHS.phone)
+    const sanitizedEmail = data.email?.trim()
+      ? data.email.trim().toLowerCase().slice(0, MAX_LENGTHS.email)
       : null;
+    const sanitizedPhone = sanitizeField(data.phone, MAX_LENGTHS.phone);
     const sanitizedMessage = sanitizeField(data.message, MAX_LENGTHS.message);
 
     // Save to database

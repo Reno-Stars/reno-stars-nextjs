@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { AdminLocaleProvider } from '@/components/admin/AdminLocaleProvider';
 
 export const metadata: Metadata = {
   title: 'Admin | Reno Stars',
@@ -10,5 +11,5 @@ export default function AdminRootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <AdminLocaleProvider>{children}</AdminLocaleProvider>;
 }

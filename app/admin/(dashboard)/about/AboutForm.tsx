@@ -9,6 +9,7 @@ import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import type { DbAboutSections } from '@/lib/db/schema';
 
 interface AboutFormProps {
@@ -16,9 +17,10 @@ interface AboutFormProps {
 }
 
 export default function AboutForm({ about }: AboutFormProps) {
+  const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
   const [state, formAction, isPending] = useActionState(updateAboutSections, {});
-  useFormToast(state, 'About sections updated.');
+  useFormToast(state, t.about.saved);
 
   return (
     <form action={formAction}>
@@ -32,13 +34,13 @@ export default function AboutForm({ about }: AboutFormProps) {
         }}
       >
         <EditModeToggle editing={editing} setEditing={setEditing} />
-        <FormAlerts state={state} successMessage="Updated successfully." />
+        <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <BilingualTextarea
             nameEn="ourJourneyEn"
             nameZh="ourJourneyZh"
-            label="Our Journey"
+            label={t.about.ourJourney}
             defaultValueEn={about.ourJourneyEn ?? ''}
             defaultValueZh={about.ourJourneyZh ?? ''}
             rows={4}
@@ -47,7 +49,7 @@ export default function AboutForm({ about }: AboutFormProps) {
           <BilingualTextarea
             nameEn="whatWeOfferEn"
             nameZh="whatWeOfferZh"
-            label="What We Offer"
+            label={t.about.whatWeOffer}
             defaultValueEn={about.whatWeOfferEn ?? ''}
             defaultValueZh={about.whatWeOfferZh ?? ''}
             rows={4}
@@ -56,7 +58,7 @@ export default function AboutForm({ about }: AboutFormProps) {
           <BilingualTextarea
             nameEn="ourValuesEn"
             nameZh="ourValuesZh"
-            label="Our Values"
+            label={t.about.ourValues}
             defaultValueEn={about.ourValuesEn ?? ''}
             defaultValueZh={about.ourValuesZh ?? ''}
             rows={4}
@@ -65,7 +67,7 @@ export default function AboutForm({ about }: AboutFormProps) {
           <BilingualTextarea
             nameEn="whyChooseUsEn"
             nameZh="whyChooseUsZh"
-            label="Why Choose Us"
+            label={t.about.whyChooseUs}
             defaultValueEn={about.whyChooseUsEn ?? ''}
             defaultValueZh={about.whyChooseUsZh ?? ''}
             rows={4}
@@ -74,7 +76,7 @@ export default function AboutForm({ about }: AboutFormProps) {
           <BilingualTextarea
             nameEn="letsBuildTogetherEn"
             nameZh="letsBuildTogetherZh"
-            label="Let's Build Together"
+            label={t.about.letsBuildTogether}
             defaultValueEn={about.letsBuildTogetherEn ?? ''}
             defaultValueZh={about.letsBuildTogetherZh ?? ''}
             rows={4}
@@ -82,7 +84,7 @@ export default function AboutForm({ about }: AboutFormProps) {
 
           {editing && (
             <div style={{ marginTop: '1rem' }}>
-              <SubmitButton isPending={isPending} label="Save Changes" />
+              <SubmitButton isPending={isPending} />
             </div>
           )}
         </fieldset>

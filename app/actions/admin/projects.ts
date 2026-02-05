@@ -7,6 +7,7 @@ import {
   projectImages,
   projectScopes,
   services as servicesTable,
+  houses as housesTable,
 } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
@@ -16,26 +17,6 @@ import { ensureUniqueSlug } from '@/lib/utils';
 const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
 const VALID_SERVICE_TYPES = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
-
-/**
- * Recursively get all descendant IDs of a project to detect circular references.
- * Prevents cycles like A → B → C → A when setting parents.
- */
-async function getAllDescendantIds(projectId: string, visited = new Set<string>()): Promise<Set<string>> {
-  if (visited.has(projectId)) return visited;
-  visited.add(projectId);
-
-  const children = await db
-    .select({ id: projects.id })
-    .from(projects)
-    .where(eq(projects.parentProjectId, projectId));
-
-  for (const child of children) {
-    await getAllDescendantIds(child.id, visited);
-  }
-
-  return visited;
-}
 
 function parseImages(formData: FormData) {
   const images: {
@@ -77,8 +58,8 @@ function parseScopes(formData: FormData) {
 
 function getProjectData(formData: FormData) {
   const serviceType = getString(formData, 'serviceType');
-  const parentProjectId = getString(formData, 'parentProjectId').trim();
-  const childDisplayOrderStr = getString(formData, 'childDisplayOrder').trim();
+  const houseId = getString(formData, 'houseId').trim();
+  const displayOrderInHouseStr = getString(formData, 'displayOrderInHouse').trim();
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -103,9 +84,8 @@ function getProjectData(formData: FormData) {
     badgeZh: getString(formData, 'badgeZh') || null,
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',
-    isWholeHouse: formData.get('isWholeHouse') === 'on',
-    parentProjectId: parentProjectId && isValidUUID(parentProjectId) ? parentProjectId : null,
-    childDisplayOrder: childDisplayOrderStr ? parseInt(childDisplayOrderStr, 10) || 0 : 0,
+    houseId: houseId && isValidUUID(houseId) ? houseId : null,
+    displayOrderInHouse: displayOrderInHouseStr ? parseInt(displayOrderInHouseStr, 10) || 0 : 0,
     updatedAt: new Date(),
   };
 }
@@ -137,11 +117,6 @@ export async function createProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
-    // Whole House validation: cannot have a parent
-    if (data.isWholeHouse && data.parentProjectId) {
-      return { error: 'A Whole House container cannot have a parent project.' };
-    }
-
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
@@ -158,18 +133,15 @@ export async function createProject(
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
 
-    // Validate parent project exists if specified
-    if (data.parentProjectId) {
-      const parentRows = await db
-        .select({ id: projects.id, isWholeHouse: projects.isWholeHouse })
-        .from(projects)
-        .where(eq(projects.id, data.parentProjectId))
+    // Validate house exists if specified
+    if (data.houseId) {
+      const houseRows = await db
+        .select({ id: housesTable.id })
+        .from(housesTable)
+        .where(eq(housesTable.id, data.houseId))
         .limit(1);
-      if (!parentRows[0]) {
-        return { error: 'Parent project not found.' };
-      }
-      if (!parentRows[0].isWholeHouse) {
-        return { error: 'Parent project must be a Whole House container.' };
+      if (!houseRows[0]) {
+        return { error: 'House not found.' };
       }
     }
 
@@ -237,23 +209,6 @@ export async function updateProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
-    // Whole House validation: cannot have a parent
-    if (data.isWholeHouse && data.parentProjectId) {
-      return { error: 'A Whole House container cannot have a parent project.' };
-    }
-
-    // Circular reference check: parent cannot be self or any descendant
-    if (data.parentProjectId) {
-      if (data.parentProjectId === id) {
-        return { error: 'A project cannot be its own parent.' };
-      }
-      // Deep check: get all descendants of this project and ensure proposed parent is not among them
-      const descendants = await getAllDescendantIds(id);
-      if (descendants.has(data.parentProjectId)) {
-        return { error: 'Cannot set a descendant project as the parent (circular reference).' };
-      }
-    }
-
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
@@ -269,18 +224,15 @@ export async function updateProject(
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
 
-    // Validate parent project exists if specified
-    if (data.parentProjectId) {
-      const parentRows = await db
-        .select({ id: projects.id, isWholeHouse: projects.isWholeHouse })
-        .from(projects)
-        .where(eq(projects.id, data.parentProjectId))
+    // Validate house exists if specified
+    if (data.houseId) {
+      const houseRows = await db
+        .select({ id: housesTable.id })
+        .from(housesTable)
+        .where(eq(housesTable.id, data.houseId))
         .limit(1);
-      if (!parentRows[0]) {
-        return { error: 'Parent project not found.' };
-      }
-      if (!parentRows[0].isWholeHouse) {
-        return { error: 'Parent project must be a Whole House container.' };
+      if (!houseRows[0]) {
+        return { error: 'House not found.' };
       }
     }
 
@@ -292,36 +244,38 @@ export async function updateProject(
 
     const scopeData = parseScopes(formData);
 
-    // Wrap in transaction to avoid data loss if insert fails after delete
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await db.transaction(async (tx: any) => {
-      await tx
-        .update(projects)
-        .set({ ...data, serviceId: svcRows[0].id })
-        .where(eq(projects.id, id));
+    // Update project and related data
+    // Note: Not using transaction as Neon HTTP driver has limited transaction support.
+    // For admin operations, sequential updates are acceptable.
+    await db
+      .update(projects)
+      .set({ ...data, serviceId: svcRows[0].id })
+      .where(eq(projects.id, id));
 
-      await tx.delete(projectImages).where(eq(projectImages.projectId, id));
-      await tx.delete(projectScopes).where(eq(projectScopes.projectId, id));
+    // Delete and re-insert images
+    await db.delete(projectImages).where(eq(projectImages.projectId, id));
+    if (imgData.length > 0) {
+      await db.insert(projectImages).values(
+        imgData.map((img) => ({ ...img, projectId: id }))
+      );
+    }
 
-      if (imgData.length > 0) {
-        await tx.insert(projectImages).values(
-          imgData.map((img) => ({ ...img, projectId: id }))
-        );
-      }
-
-      if (scopeData.length > 0) {
-        await tx.insert(projectScopes).values(
-          scopeData.map((s) => ({ ...s, projectId: id }))
-        );
-      }
-    });
+    // Delete and re-insert scopes
+    await db.delete(projectScopes).where(eq(projectScopes.projectId, id));
+    if (scopeData.length > 0) {
+      await db.insert(projectScopes).values(
+        scopeData.map((s) => ({ ...s, projectId: id }))
+      );
+    }
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Failed to update project:', error);
-    return { error: 'Failed to update project.' };
+    // Return more specific error message in development
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return { error: process.env.NODE_ENV === 'development' ? `Failed to update project: ${errorMessage}` : 'Failed to update project.' };
   }
 }
 
@@ -381,114 +335,3 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
   }
 }
 
-export async function toggleWholeHouse(id: string, current: boolean): Promise<{ error?: string }> {
-  await requireAuth();
-  if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
-  try {
-    // If turning ON whole house, check project doesn't have a parent
-    if (!current) {
-      const projectRows = await db
-        .select({ parentProjectId: projects.parentProjectId })
-        .from(projects)
-        .where(eq(projects.id, id))
-        .limit(1);
-      if (projectRows[0]?.parentProjectId) {
-        return { error: 'Cannot make a child project into a Whole House container. Unlink it first.' };
-      }
-    }
-    // If turning OFF whole house, unlink all children
-    if (current) {
-      await db
-        .update(projects)
-        .set({ parentProjectId: null, updatedAt: new Date() })
-        .where(eq(projects.parentProjectId, id));
-    }
-    const updated = await db
-      .update(projects)
-      .set({ isWholeHouse: !current, updatedAt: new Date() })
-      .where(eq(projects.id, id))
-      .returning({ id: projects.id });
-    if (updated.length === 0) {
-      return { error: 'Project not found.' };
-    }
-    revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
-    return {};
-  } catch (error) {
-    console.error('Failed to toggle whole house:', error);
-    return { error: 'Failed to toggle whole house.' };
-  }
-}
-
-export async function linkChildToParent(
-  childId: string,
-  parentId: string,
-  displayOrder: number = 0
-): Promise<{ error?: string }> {
-  await requireAuth();
-  if (!isValidUUID(childId)) return { error: 'Invalid child project ID.' };
-  if (!isValidUUID(parentId)) return { error: 'Invalid parent project ID.' };
-  if (childId === parentId) return { error: 'A project cannot be its own child.' };
-
-  try {
-    // Verify parent is a whole house container
-    const parentRows = await db
-      .select({ isWholeHouse: projects.isWholeHouse })
-      .from(projects)
-      .where(eq(projects.id, parentId))
-      .limit(1);
-    if (!parentRows[0]) {
-      return { error: 'Parent project not found.' };
-    }
-    if (!parentRows[0].isWholeHouse) {
-      return { error: 'Parent project must be a Whole House container.' };
-    }
-
-    // Verify child is not a whole house container
-    const childRows = await db
-      .select({ isWholeHouse: projects.isWholeHouse })
-      .from(projects)
-      .where(eq(projects.id, childId))
-      .limit(1);
-    if (!childRows[0]) {
-      return { error: 'Child project not found.' };
-    }
-    if (childRows[0].isWholeHouse) {
-      return { error: 'A Whole House container cannot be a child project.' };
-    }
-
-    await db
-      .update(projects)
-      .set({ parentProjectId: parentId, childDisplayOrder: displayOrder, updatedAt: new Date() })
-      .where(eq(projects.id, childId));
-
-    revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
-    return {};
-  } catch (error) {
-    console.error('Failed to link child to parent:', error);
-    return { error: 'Failed to link projects.' };
-  }
-}
-
-export async function unlinkChildFromParent(childId: string): Promise<{ error?: string }> {
-  await requireAuth();
-  if (!isValidUUID(childId)) return { error: 'Invalid project ID.' };
-
-  try {
-    const updated = await db
-      .update(projects)
-      .set({ parentProjectId: null, childDisplayOrder: 0, updatedAt: new Date() })
-      .where(eq(projects.id, childId))
-      .returning({ id: projects.id });
-    if (updated.length === 0) {
-      return { error: 'Project not found.' };
-    }
-    revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
-    return {};
-  } catch (error) {
-    console.error('Failed to unlink child from parent:', error);
-    return { error: 'Failed to unlink project.' };
-  }
-}

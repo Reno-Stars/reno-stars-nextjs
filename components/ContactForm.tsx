@@ -66,11 +66,11 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
       )}
       {[
         { id: 'name', type: 'text', label: t('form.name'), ph: t('form.namePlaceholder'), required: true },
-        { id: 'email', type: 'email', label: t('form.email'), ph: t('form.emailPlaceholder'), required: true },
-        { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2'), required: false },
+        { id: 'email', type: 'email', label: t('form.email'), ph: t('form.emailPlaceholder'), required: false },
+        { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2'), required: true },
       ].map((f) => (
         <div key={f.id}>
-          <label htmlFor={f.id} className={`block font-semibold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT_MUTED }}>
+          <label htmlFor={f.id} className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
             {f.label}{f.required ? ' *' : ''}
           </label>
           <input
@@ -88,7 +88,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
         </div>
       ))}
       <div>
-        <label htmlFor="message" className={`block font-semibold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT_MUTED }}>
+        <label htmlFor="message" className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
           {t('form.message')} *
         </label>
         <textarea

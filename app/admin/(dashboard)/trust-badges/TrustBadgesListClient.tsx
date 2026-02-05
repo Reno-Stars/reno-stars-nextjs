@@ -5,6 +5,7 @@ import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleTrustBadgeActive } from '@/app/actions/admin/trust-badges';
 import { GOLD } from '@/lib/theme';
@@ -26,15 +27,16 @@ export default function TrustBadgesListClient({ badges }: Props) {
   const [, startTransition] = useTransition();
   const { toast } = useToast();
   const { locale } = useAdminLocale();
+  const t = useAdminTranslations();
 
   const columns: Column<TrustBadgeRow>[] = useMemo(() => {
     const getB = (row: TrustBadgeRow) => locale === 'zh' ? row.badgeZh : row.badgeEn;
     return [
-      { key: locale === 'zh' ? 'badgeZh' : 'badgeEn', header: locale === 'zh' ? 'Badge (ZH)' : 'Badge (EN)', sortable: true },
-      { key: 'displayOrder', header: 'Order', sortable: true },
+      { key: locale === 'zh' ? 'badgeZh' : 'badgeEn', header: locale === 'zh' ? t.trustBadges.badgeZh : t.trustBadges.badgeEn, sortable: true },
+      { key: 'displayOrder', header: t.trustBadges.displayOrder, sortable: true },
       {
         key: 'isActive',
-        header: 'Active',
+        header: t.trustBadges.isActive,
         render: (row: TrustBadgeRow) => (
           <ToggleButton
             isActive={row.isActive}
@@ -52,7 +54,7 @@ export default function TrustBadgesListClient({ badges }: Props) {
         ),
       },
     ];
-  }, [locale, pendingId, toast]);
+  }, [locale, pendingId, toast, t]);
 
   return (
     <DataTable
@@ -65,7 +67,7 @@ export default function TrustBadgesListClient({ badges }: Props) {
           href={`/admin/trust-badges/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
-          Edit
+          {t.common.edit}
         </Link>
       )}
     />

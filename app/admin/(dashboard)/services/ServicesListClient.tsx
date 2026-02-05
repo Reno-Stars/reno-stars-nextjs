@@ -1,7 +1,9 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import { GOLD } from '@/lib/theme';
 
 interface ServiceRow {
@@ -16,14 +18,16 @@ interface Props {
   services: ServiceRow[];
 }
 
-const columns: Column<ServiceRow>[] = [
-  { key: 'slug', header: 'Slug', sortable: true },
-  { key: 'titleEn', header: 'Title (EN)', sortable: true },
-  { key: 'titleZh', header: 'Title (ZH)' },
-  { key: 'displayOrder', header: 'Order', sortable: true },
-];
-
 export default function ServicesListClient({ services }: Props) {
+  const t = useAdminTranslations();
+
+  const columns: Column<ServiceRow>[] = useMemo(() => [
+    { key: 'slug', header: t.services.slug, sortable: true },
+    { key: 'titleEn', header: t.services.titleEn, sortable: true },
+    { key: 'titleZh', header: t.services.titleZh },
+    { key: 'displayOrder', header: t.services.displayOrder, sortable: true },
+  ], [t]);
+
   return (
     <DataTable
       columns={columns}
@@ -32,7 +36,7 @@ export default function ServicesListClient({ services }: Props) {
       searchKeys={['slug', 'titleEn']}
       actions={(row) => (
         <Link href={`/admin/services/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
-          Edit
+          {t.common.edit}
         </Link>
       )}
     />

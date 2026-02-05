@@ -2,6 +2,7 @@
 
 import { useCallback } from 'react';
 import { GOLD, TEXT_MID } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface EditModeToggleProps {
   editing: boolean;
@@ -9,6 +10,7 @@ interface EditModeToggleProps {
 }
 
 export default function EditModeToggle({ editing, setEditing }: EditModeToggleProps) {
+  const t = useAdminTranslations();
   const handleEdit = useCallback(() => setEditing(true), [setEditing]);
   const handleCancel = useCallback(() => setEditing(false), [setEditing]);
 
@@ -29,7 +31,7 @@ export default function EditModeToggle({ editing, setEditing }: EditModeTogglePr
             cursor: 'pointer',
           }}
         >
-          Edit
+          {t.common.edit}
         </button>
       ) : (
         <button
@@ -46,7 +48,7 @@ export default function EditModeToggle({ editing, setEditing }: EditModeTogglePr
             cursor: 'pointer',
           }}
         >
-          Cancel
+          {t.common.cancel}
         </button>
       )}
     </div>

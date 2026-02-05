@@ -4,7 +4,7 @@ import { testimonials } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import TestimonialForm from '../TestimonialForm';
 import { updateTestimonial } from '@/app/actions/admin/testimonials';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -20,9 +20,7 @@ export default async function EditTestimonialPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        Edit Testimonial
-      </h1>
+      <AdminPageHeader titleKey="testimonials.editTestimonial" />
       <TestimonialForm
         action={boundAction}
         submitLabel="Update Testimonial"

@@ -1,4 +1,5 @@
-import { SURFACE, NAVY } from '@/lib/theme';
+import { SURFACE } from '@/lib/theme';
+import AuthTitle from '@/components/admin/AuthTitle';
 
 export default function AuthLayout({
   children,
@@ -17,17 +18,7 @@ export default function AuthLayout({
       }}
     >
       <div style={{ width: '100%', maxWidth: '400px' }}>
-        <h1
-          style={{
-            color: NAVY,
-            fontSize: '1.5rem',
-            fontWeight: 700,
-            textAlign: 'center',
-            marginBottom: '1.5rem',
-          }}
-        >
-          Reno Stars Admin
-        </h1>
+        <AuthTitle />
         {children}
       </div>
     </div>

@@ -3,10 +3,12 @@
 import { logoutAction } from '@/app/actions/admin-auth';
 import { CARD, NAVY, TEXT_MID, GOLD, neu } from '@/lib/theme';
 import { useAdminLocale } from './AdminLocaleProvider';
+import { useAdminTranslations } from '@/lib/admin/translations';
 import { localeNames, type Locale } from '@/i18n/config';
 
 export default function TopBar() {
   const { locale, setLocale } = useAdminLocale();
+  const t = useAdminTranslations();
 
   return (
     <header
@@ -20,7 +22,7 @@ export default function TopBar() {
       }}
     >
       <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.875rem' }}>
-        Reno Stars Admin
+        {t.topBar.title}
       </span>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <div style={{ display: 'flex', gap: '0.25rem' }}>
@@ -58,7 +60,7 @@ export default function TopBar() {
               borderRadius: '6px',
             }}
           >
-            Logout
+            {t.topBar.logout}
           </button>
         </form>
       </div>

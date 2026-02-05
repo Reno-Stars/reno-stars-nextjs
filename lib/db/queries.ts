@@ -7,6 +7,7 @@ import {
   services as servicesTable,
   testimonials as testimonialsTable,
   aboutSections as aboutSectionsTable,
+  houses as housesTable,
   projects as projectsTable,
   projectImages as projectImagesTable,
   projectScopes as projectScopesTable,
@@ -19,7 +20,8 @@ import {
   faqs as faqsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, WholeHouseProject, Localized } from '../types';
+import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages } from './helpers';
+import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, House, HouseWithProjects } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -227,10 +229,9 @@ function mapDbProjectToProject(
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }
         : undefined,
-    // Parent-child relationship fields
-    parent_project_id: row.parentProjectId ?? undefined,
-    is_whole_house: row.isWholeHouse,
-    child_display_order: row.childDisplayOrder,
+    // House relationship
+    house_id: row.houseId ?? undefined,
+    display_order_in_house: row.displayOrderInHouse,
   };
 }
 
@@ -310,16 +311,47 @@ export async function getProjectSlugsFromDb(): Promise<string[]> {
 }
 
 // ============================================================================
-// WHOLE HOUSE PROJECT QUERIES
+// HOUSE QUERIES
 // ============================================================================
 
-/** Fetch child projects for a given parent project ID. */
-export const getChildrenOfProject = cache(async (parentId: string): Promise<Project[]> => {
+type DbHouseRow = typeof housesTable.$inferSelect;
+
+function mapDbHouseToHouse(row: DbHouseRow): House {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: { en: row.titleEn, zh: row.titleZh },
+    description: { en: row.descriptionEn, zh: row.descriptionZh },
+    location_city: row.locationCity ?? undefined,
+    hero_image: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : undefined,
+    badge:
+      row.badgeEn && row.badgeZh
+        ? { en: row.badgeEn, zh: row.badgeZh }
+        : undefined,
+    show_as_project: row.showAsProject,
+    featured: row.featured,
+    published_at: row.publishedAt ?? undefined,
+  };
+}
+
+/** Fetch all published houses. */
+export const getHousesFromDb = cache(async (): Promise<House[]> => {
+  const rows = await db
+    .select()
+    .from(housesTable)
+    .where(eq(housesTable.isPublished, true))
+    .orderBy(desc(housesTable.createdAt));
+
+  return rows.map(mapDbHouseToHouse);
+});
+
+/** Fetch projects for a given house ID. */
+export const getProjectsOfHouse = cache(async (houseId: string): Promise<Project[]> => {
   const rows: DbProjectRow[] = await db
     .select()
     .from(projectsTable)
-    .where(and(eq(projectsTable.parentProjectId, parentId), eq(projectsTable.isPublished, true)))
-    .orderBy(asc(projectsTable.childDisplayOrder));
+    .where(and(eq(projectsTable.houseId, houseId), eq(projectsTable.isPublished, true)))
+    .orderBy(asc(projectsTable.displayOrderInHouse));
 
   if (rows.length === 0) return [];
 
@@ -335,184 +367,48 @@ export const getChildrenOfProject = cache(async (parentId: string): Promise<Proj
   );
 });
 
-/**
- * Parse a budget range string like "$15,000 - $25,000" and extract min/max values.
- * Returns null for non-parseable budget strings (e.g., "TBD", "Call for quote").
- */
-function parseBudgetRange(budget: string): { min: number; max: number } | null {
-  // Skip common non-numeric budget indicators
-  const lowerBudget = budget.toLowerCase();
-  if (lowerBudget.includes('tbd') || lowerBudget.includes('call') || lowerBudget.includes('quote')) {
-    return null;
-  }
-  const numbers = budget.match(/[\d,]+/g);
-  if (!numbers || numbers.length === 0) return null;
-  const values = numbers.map((n) => parseInt(n.replace(/,/g, ''), 10)).filter((v) => v > 0);
-  if (values.length === 0) return null;
-  return { min: Math.min(...values), max: Math.max(...values) };
-}
-
-/**
- * Calculate combined budget range from multiple projects.
- * Only includes projects with valid numeric budgets.
- */
-function calculateCombinedBudget(projects: Project[]): string | undefined {
-  const budgets = projects
-    .filter((p) => p.budget_range)
-    .map((p) => parseBudgetRange(p.budget_range!))
-    .filter((b): b is { min: number; max: number } => b !== null);
-  if (budgets.length === 0) return undefined;
-  const totalMin = budgets.reduce((sum, b) => sum + b.min, 0);
-  const totalMax = budgets.reduce((sum, b) => sum + b.max, 0);
-  if (totalMin === 0 && totalMax === 0) return undefined;
-  const formatNumber = (n: number) => new Intl.NumberFormat('en-US').format(n);
-  if (totalMin === totalMax) return `$${formatNumber(totalMin)}`;
-  return `$${formatNumber(totalMin)} - $${formatNumber(totalMax)}`;
-}
-
-/**
- * Aggregate durations from multiple projects.
- * Returns a summary like "12 weeks total" or combines different formats.
- */
-function aggregateDurations(projects: Project[]): Localized<string> | undefined {
-  const durations = projects.filter((p) => p.duration);
-  if (durations.length === 0) return undefined;
-  // Sum weeks if all have week-based durations, otherwise concatenate
-  const weekPattern = /(\d+)\s*(?:weeks?|wks?)/i;
-  let totalWeeksEn = 0;
-  let totalWeeksZh = 0;
-  let canAggregate = true;
-  for (const p of durations) {
-    const matchEn = p.duration!.en.match(weekPattern);
-    const matchZh = p.duration!.zh.match(weekPattern);
-    if (matchEn && matchZh) {
-      totalWeeksEn += parseInt(matchEn[1], 10);
-      totalWeeksZh += parseInt(matchZh[1], 10);
-    } else {
-      canAggregate = false;
-      break;
-    }
-  }
-  if (canAggregate && totalWeeksEn > 0) {
-    return {
-      en: `${totalWeeksEn} weeks total`,
-      zh: `共${totalWeeksZh}周`,
-    };
-  }
-  // Fallback: list durations
-  return {
-    en: durations.map((p) => p.duration!.en).join(', '),
-    zh: durations.map((p) => p.duration!.zh).join('，'),
-  };
-}
-
-/**
- * Merge unique service scopes from multiple projects.
- */
-function mergeServiceScopes(projects: Project[]): Localized<string[]> {
-  const scopesEn = new Set<string>();
-  const scopesZh = new Set<string>();
-  for (const p of projects) {
-    if (p.service_scope) {
-      p.service_scope.en.forEach((s) => scopesEn.add(s));
-      p.service_scope.zh.forEach((s) => scopesZh.add(s));
-    }
-  }
-  return {
-    en: Array.from(scopesEn),
-    zh: Array.from(scopesZh),
-  };
-}
-
-/**
- * Collect all images from parent + children with child attribution.
- */
-function collectAllImages(parent: Project, children: Project[]): WholeHouseProject['aggregated']['allImages'] {
-  const images: WholeHouseProject['aggregated']['allImages'] = [];
-  // Add parent images first
-  for (const img of parent.images) {
-    images.push({
-      src: img.src,
-      alt: img.alt,
-      is_before: img.is_before,
-      childSlug: parent.slug,
-      childTitle: parent.title,
-    });
-  }
-  // Add child images
-  for (const child of children) {
-    for (const img of child.images) {
-      images.push({
-        src: img.src,
-        alt: img.alt,
-        is_before: img.is_before,
-        childSlug: child.slug,
-        childTitle: child.title,
-      });
-    }
-  }
-  return images;
-}
-
-/** Fetch a Whole House project by slug with its children and aggregated data. */
-export const getWholeHouseProjectBySlugFromDb = cache(
-  async (slug: string): Promise<WholeHouseProject | null> => {
-    // Fetch the parent project first
+/** Fetch a house by slug with its projects and aggregated data. */
+export const getHouseBySlugFromDb = cache(
+  async (slug: string): Promise<HouseWithProjects | null> => {
     const rows = await db
       .select()
-      .from(projectsTable)
-      .where(and(eq(projectsTable.slug, slug), eq(projectsTable.isPublished, true), eq(projectsTable.isWholeHouse, true)))
+      .from(housesTable)
+      .where(and(eq(housesTable.slug, slug), eq(housesTable.isPublished, true)))
       .limit(1);
 
     const row = rows[0];
     if (!row) return null;
 
-    // Fetch parent's images and scopes
-    const { images: parentImages, scopes: parentScopes } = await fetchProjectRelations([row.id]);
-    const parent = mapDbProjectToProject(row, parentImages, parentScopes);
+    const house = mapDbHouseToHouse(row);
 
-    // Fetch children
-    const children = await getChildrenOfProject(row.id);
-
-    // All projects including parent for aggregation
-    const allProjects = [parent, ...children];
+    // Fetch projects belonging to this house
+    const projects = await getProjectsOfHouse(row.id);
 
     // Build aggregated data
-    const aggregated: WholeHouseProject['aggregated'] = {
-      totalBudget: calculateCombinedBudget(allProjects),
-      totalDuration: aggregateDurations(allProjects),
-      allServiceScopes: mergeServiceScopes(allProjects),
-      allImages: collectAllImages(parent, children),
+    const aggregated: HouseWithProjects['aggregated'] = {
+      totalBudget: calculateCombinedBudget(projects),
+      totalDuration: aggregateDurations(projects),
+      allServiceScopes: mergeServiceScopes(projects),
+      allImages: collectAllImages(projects),
     };
 
     return {
-      ...parent,
-      children,
+      ...house,
+      projects,
       aggregated,
     };
   }
 );
 
-/** Fetch all published Whole House container projects. */
-export const getWholeHouseProjectsFromDb = cache(async (): Promise<Project[]> => {
-  const rows: DbProjectRow[] = await db
+/** Fetch all published houses that should show as projects. */
+export const getHousesAsProjectsFromDb = cache(async (): Promise<House[]> => {
+  const rows = await db
     .select()
-    .from(projectsTable)
-    .where(and(eq(projectsTable.isPublished, true), eq(projectsTable.isWholeHouse, true)))
-    .orderBy(desc(projectsTable.createdAt));
+    .from(housesTable)
+    .where(and(eq(housesTable.isPublished, true), eq(housesTable.showAsProject, true)))
+    .orderBy(desc(housesTable.createdAt));
 
-  if (rows.length === 0) return [];
-
-  const ids = rows.map((r: DbProjectRow) => r.id);
-  const { images, scopes } = await fetchProjectRelations(ids);
-
-  return rows.map((row: DbProjectRow) =>
-    mapDbProjectToProject(
-      row,
-      images.filter((i: DbImageRow) => i.projectId === row.id),
-      scopes.filter((s: DbScopeRow) => s.projectId === row.id)
-    )
-  );
+  return rows.map(mapDbHouseToHouse);
 });
 
 // ============================================================================
@@ -749,4 +645,9 @@ export async function getShowroomInfoAdmin(): Promise<(typeof showroomInfoTable.
 /** Fetch all FAQs (admin — includes inactive). */
 export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)[]> {
   return db.select().from(faqsTable).orderBy(asc(faqsTable.displayOrder));
+}
+
+/** Fetch all houses (admin — includes unpublished). */
+export async function getAllHousesAdmin(): Promise<(typeof housesTable.$inferSelect)[]> {
+  return db.select().from(housesTable).orderBy(desc(housesTable.createdAt));
 }

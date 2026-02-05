@@ -1,13 +1,11 @@
 import TestimonialForm from '../TestimonialForm';
 import { createTestimonial } from '@/app/actions/admin/testimonials';
-import { NAVY } from '@/lib/theme';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 export default function NewTestimonialPage() {
   return (
     <div>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-        New Testimonial
-      </h1>
+      <AdminPageHeader titleKey="testimonials.newTestimonial" />
       <TestimonialForm action={createTestimonial} submitLabel="Create Testimonial" />
     </div>
   );
