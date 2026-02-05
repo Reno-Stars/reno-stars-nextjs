@@ -16,10 +16,10 @@ interface TestimonialsSectionProps {
 
 export default function TestimonialsSection({ testimonials, locale, translations: t }: TestimonialsSectionProps) {
   return (
-    <section id="testimonials" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+    <section id="testimonials" aria-labelledby="testimonials-title" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
+          <h2 id="testimonials-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
           <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

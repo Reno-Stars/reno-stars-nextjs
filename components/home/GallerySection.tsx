@@ -16,11 +16,11 @@ interface GallerySectionProps {
 
 export default function GallerySection({ gallery, translations: t }: GallerySectionProps) {
   return (
-    <section id="gallery" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+    <section id="gallery" aria-labelledby="gallery-title" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
       <div className="max-w-7xl mx-auto">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
+            <h2 id="gallery-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
             <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
           </div>
           <Link href="/projects"

@@ -6,6 +6,7 @@ import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import { video, images } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
+import LazyVideo from '@/components/LazyVideo';
 
 interface HeroSectionProps {
   company: Company;
@@ -29,22 +30,21 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden min-h-[70vh] flex items-center">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="none"
+      {/* Poster image shown immediately for fast LCP */}
+      <Image
+        src={images.hero}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
+      />
+      {/* Video loads lazily on desktop only, fades in over the image */}
+      <LazyVideo
+        src={video.hero}
         poster={images.hero}
-      >
-        <source src={video.hero} type="video/mp4" />
-      </video>
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center hidden motion-reduce:block"
-        style={{ backgroundImage: `url(${images.hero})` }}
-        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
 

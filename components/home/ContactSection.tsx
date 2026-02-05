@@ -26,10 +26,10 @@ export default function ContactSection({ company, areasText, translations: t }: 
   ], [company.phone, company.email, t.phone, t.email, t.serviceAreas, areasText]);
 
   return (
-    <section id="contact" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+    <section id="contact" aria-labelledby="contact-title" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
       <div className="max-w-5xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-3xl font-bold mb-2" style={{ color: TEXT }}>{t.title}</h2>
+          <h2 id="contact-title" className="text-3xl font-bold mb-2" style={{ color: TEXT }}>{t.title}</h2>
           <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">

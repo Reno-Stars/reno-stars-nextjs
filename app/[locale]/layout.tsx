@@ -40,7 +40,9 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <LocalBusinessSchema company={company} socialLinks={socialLinks} areas={areas} />
       <Navbar company={company} areas={areas} />
-      {children}
+      <main id="main-content">
+        {children}
+      </main>
       <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} />
     </NextIntlClientProvider>
   );
