@@ -7,8 +7,7 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { updateContactStatus, updateContactNotes } from '@/app/actions/admin/contacts';
 import { CARD, NAVY, TEXT_MID, GOLD, neuIn, neu } from '@/lib/theme';
 import { truncate } from '@/lib/utils';
-
-const STATUSES = ['new', 'contacted', 'converted', 'rejected'] as const;
+import { CONTACT_STATUSES, type ContactStatus } from '@/lib/admin/form-utils';
 
 interface ContactRow {
   id: string;
@@ -16,10 +15,9 @@ interface ContactRow {
   email: string;
   phone: string | null;
   message: string;
-  status: string;
+  status: ContactStatus;
   notes: string | null;
   createdAt: string | Date;
-  [key: string]: unknown;
 }
 
 interface Props {
@@ -61,7 +59,7 @@ export default function ContactsListClient({ contacts }: Props) {
         <select
           value={row.status}
           onChange={(e) => {
-            const newStatus = e.target.value as typeof STATUSES[number];
+            const newStatus = e.target.value as ContactStatus;
             startTransition(async () => {
               const result = await updateContactStatus(row.id, newStatus);
               if (result.error) toast(result.error, 'error');
@@ -79,7 +77,7 @@ export default function ContactsListClient({ contacts }: Props) {
             outline: 'none',
           }}
         >
-          {STATUSES.map((s) => (
+          {CONTACT_STATUSES.map((s) => (
             <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
           ))}
         </select>
@@ -109,7 +107,7 @@ export default function ContactsListClient({ contacts }: Props) {
   return (
     <div>
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem' }}>
-        {['all', ...STATUSES].map((s) => (
+        {['all', ...CONTACT_STATUSES].map((s) => (
           <button
             key={s}
             type="button"

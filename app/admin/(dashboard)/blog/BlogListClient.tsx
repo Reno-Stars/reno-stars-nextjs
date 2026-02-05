@@ -15,7 +15,6 @@ interface BlogRow {
   author: string | null;
   isPublished: boolean;
   publishedAt: string | Date | null;
-  [key: string]: unknown;
 }
 
 interface Props {

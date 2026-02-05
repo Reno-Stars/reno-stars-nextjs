@@ -43,7 +43,7 @@ function signToken(timestamp: number): string {
 }
 
 /** Verify HMAC signature + expiry. Returns true if valid. */
-function verifyToken(token: string): boolean {
+export function verifyToken(token: string): boolean {
   const parts = token.split('.');
   if (parts.length !== 2) return false;
 
@@ -95,17 +95,6 @@ export async function requireAuth(): Promise<void> {
   if (!valid) {
     redirect('/admin/login');
   }
-}
-
-/** Quick check if cookie exists and timestamp is not expired (for middleware, no HMAC) */
-export function isSessionCookieFresh(cookieValue: string | undefined): boolean {
-  if (!cookieValue) return false;
-  const parts = cookieValue.split('.');
-  if (parts.length !== 2) return false;
-  const timestamp = parseInt(parts[0], 10);
-  if (isNaN(timestamp)) return false;
-  const now = Math.floor(Date.now() / 1000);
-  return now - timestamp <= SESSION_MAX_AGE;
 }
 
 /** Validate that a string is a valid UUID v4 format */

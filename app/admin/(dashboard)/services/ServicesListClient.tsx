@@ -10,7 +10,6 @@ interface ServiceRow {
   titleEn: string;
   titleZh: string;
   displayOrder: number;
-  [key: string]: unknown;
 }
 
 interface Props {

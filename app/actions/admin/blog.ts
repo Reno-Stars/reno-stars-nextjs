@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -44,6 +44,17 @@ export async function createBlogPost(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
+    if (data.featuredImageUrl && !isValidUrl(data.featuredImageUrl)) {
+      return { error: 'Featured image URL is not a valid URL.' };
+    }
+    const shortTextError = validateTextLengths(
+      { titleEn: data.titleEn, titleZh: data.titleZh, excerptEn: data.excerptEn, excerptZh: data.excerptZh, author: data.author }, MAX_SHORT_TEXT_LENGTH
+    );
+    if (shortTextError) return { error: shortTextError };
+    const textError = validateTextLengths(
+      { contentEn: data.contentEn, contentZh: data.contentZh }, MAX_TEXT_LENGTH
+    );
+    if (textError) return { error: textError };
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
     revalidatePath('/', 'layout');
@@ -69,7 +80,21 @@ export async function updateBlogPost(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
-    await db.update(blogPosts).set(data).where(eq(blogPosts.id, id));
+    if (data.featuredImageUrl && !isValidUrl(data.featuredImageUrl)) {
+      return { error: 'Featured image URL is not a valid URL.' };
+    }
+    const shortTextError = validateTextLengths(
+      { titleEn: data.titleEn, titleZh: data.titleZh, excerptEn: data.excerptEn, excerptZh: data.excerptZh, author: data.author }, MAX_SHORT_TEXT_LENGTH
+    );
+    if (shortTextError) return { error: shortTextError };
+    const textError = validateTextLengths(
+      { contentEn: data.contentEn, contentZh: data.contentZh }, MAX_TEXT_LENGTH
+    );
+    if (textError) return { error: textError };
+    const updated = await db.update(blogPosts).set(data).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
+    if (updated.length === 0) {
+      return { error: 'Blog post not found.' };
+    }
     revalidatePath('/admin/blog');
     revalidatePath('/', 'layout');
     return { success: true };
@@ -97,14 +122,18 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid blog post ID.' };
   try {
-    await db
+    const updated = await db
       .update(blogPosts)
       .set({
         isPublished: !current,
         publishedAt: !current ? new Date() : null,
         updatedAt: new Date(),
       })
-      .where(eq(blogPosts.id, id));
+      .where(eq(blogPosts.id, id))
+      .returning({ id: blogPosts.id });
+    if (updated.length === 0) {
+      return { error: 'Blog post not found.' };
+    }
     revalidatePath('/admin/blog');
     revalidatePath('/', 'layout');
     return {};

@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 import { services } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString } from '@/lib/admin/form-utils';
+import { getString, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 
 export async function updateService(
   id: string,
@@ -31,8 +31,23 @@ export async function updateService(
     if (!data.titleEn || !data.titleZh) {
       return { error: 'Titles are required.' };
     }
+    const titleError = validateTextLengths(
+      { titleEn: data.titleEn, titleZh: data.titleZh }, MAX_SHORT_TEXT_LENGTH
+    );
+    if (titleError) return { error: titleError };
+    if (data.imageUrl && !isValidUrl(data.imageUrl)) {
+      return { error: 'Image URL is not a valid URL.' };
+    }
+    const textError = validateTextLengths({
+      descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh,
+      longDescriptionEn: data.longDescriptionEn, longDescriptionZh: data.longDescriptionZh,
+    }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
 
-    await db.update(services).set(data).where(eq(services.id, id));
+    const updated = await db.update(services).set(data).where(eq(services.id, id)).returning({ id: services.id });
+    if (updated.length === 0) {
+      return { error: 'Service not found.' };
+    }
 
     revalidatePath('/admin/services');
     revalidatePath('/', 'layout');

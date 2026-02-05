@@ -16,7 +16,6 @@ interface TestimonialRow {
   location: string | null;
   isFeatured: boolean;
   verified: boolean;
-  [key: string]: unknown;
 }
 
 interface Props {

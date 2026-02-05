@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import { NAVY, GOLD, SURFACE, TEXT_MID } from '@/lib/theme';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Detects the preferred locale from request headers.
  * Falls back to 'en' if Chinese is not preferred.

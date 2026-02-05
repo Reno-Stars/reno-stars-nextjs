@@ -5,20 +5,16 @@ import { useActionState } from 'react';
 import { updateCompanyInfo } from '@/app/actions/admin/company';
 import FormField from '@/components/admin/FormField';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
+import EditModeToggle from '@/components/admin/EditModeToggle';
+import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
-import { inputStyle } from '@/components/admin/shared-styles';
-import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
+import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
+import { CARD, GOLD, GOLD_HOVER, neu } from '@/lib/theme';
 import type { DbCompanyInfo } from '@/lib/db/schema';
 
 interface CompanyFormProps {
   company: DbCompanyInfo;
 }
-
-const readOnlyStyle: React.CSSProperties = {
-  ...inputStyle,
-  opacity: 0.7,
-  cursor: 'default',
-};
 
 export default function CompanyForm({ company }: CompanyFormProps) {
   const [editing, setEditing] = useState(false);
@@ -38,55 +34,8 @@ export default function CompanyForm({ company }: CompanyFormProps) {
           maxWidth: '800px',
         }}
       >
-        {/* Header with Edit / Cancel button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-          {!editing ? (
-            <button
-              type="button"
-              onClick={() => setEditing(true)}
-              style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: GOLD,
-                color: '#fff',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-              }}
-            >
-              Edit
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setEditing(false)}
-              style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: '8px',
-                border: `1px solid ${TEXT_MID}`,
-                backgroundColor: 'transparent',
-                color: TEXT_MID,
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-              }}
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-
-        {state.error && (
-          <div role="alert" style={{ backgroundColor: ERROR_BG, color: ERROR, padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.875rem' }}>
-            {state.error}
-          </div>
-        )}
-        {state.success && (
-          <div role="alert" style={{ backgroundColor: SUCCESS_BG, color: SUCCESS, padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.875rem' }}>
-            Updated successfully.
-          </div>
-        )}
+        <EditModeToggle editing={editing} setEditing={setEditing} />
+        <FormAlerts state={state} successMessage="Updated successfully." />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>

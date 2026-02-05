@@ -10,7 +10,7 @@ import {
 } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 
 const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
@@ -101,6 +101,21 @@ export async function createProject(
     if (!(VALID_SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
       return { error: 'Invalid service type.' };
     }
+    if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
+      return { error: 'Hero image URL is not a valid URL.' };
+    }
+    const textError = validateTextLengths({
+      descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh,
+      challengeEn: data.challengeEn, challengeZh: data.challengeZh,
+      solutionEn: data.solutionEn, solutionZh: data.solutionZh,
+    }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
+
+    const imgData = parseImages(formData);
+    const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
+    if (invalidImgUrl) {
+      return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
+    }
 
     // Look up serviceId
     const svcRows = await db
@@ -108,17 +123,19 @@ export async function createProject(
       .from(servicesTable)
       .where(eq(servicesTable.slug, data.serviceType as string))
       .limit(1);
+    if (!svcRows[0]) {
+      return { error: `Service type "${data.serviceType}" not found in database.` };
+    }
 
     const [inserted] = await db
       .insert(projects)
       .values({
         ...data,
-        serviceId: svcRows[0]?.id ?? null,
+        serviceId: svcRows[0].id,
         publishedAt: data.isPublished ? new Date() : null,
       })
       .returning({ id: projects.id });
 
-    const imgData = parseImages(formData);
     if (imgData.length > 0) {
       await db.insert(projectImages).values(
         imgData.map((img) => ({ ...img, projectId: inserted.id }))
@@ -160,14 +177,31 @@ export async function updateProject(
     if (!(VALID_SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
       return { error: 'Invalid service type.' };
     }
+    if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
+      return { error: 'Hero image URL is not a valid URL.' };
+    }
+    const textError = validateTextLengths({
+      descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh,
+      challengeEn: data.challengeEn, challengeZh: data.challengeZh,
+      solutionEn: data.solutionEn, solutionZh: data.solutionZh,
+    }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
+
+    const imgData = parseImages(formData);
+    const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
+    if (invalidImgUrl) {
+      return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
+    }
 
     const svcRows = await db
       .select({ id: servicesTable.id })
       .from(servicesTable)
       .where(eq(servicesTable.slug, data.serviceType as string))
       .limit(1);
+    if (!svcRows[0]) {
+      return { error: `Service type "${data.serviceType}" not found in database.` };
+    }
 
-    const imgData = parseImages(formData);
     const scopeData = parseScopes(formData);
 
     // Wrap in transaction to avoid data loss if insert fails after delete
@@ -175,7 +209,7 @@ export async function updateProject(
     await db.transaction(async (tx: any) => {
       await tx
         .update(projects)
-        .set({ ...data, serviceId: svcRows[0]?.id ?? null })
+        .set({ ...data, serviceId: svcRows[0].id })
         .where(eq(projects.id, id));
 
       await tx.delete(projectImages).where(eq(projectImages.projectId, id));
@@ -221,7 +255,10 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
   try {
-    await db.update(projects).set({ featured: !current, updatedAt: new Date() }).where(eq(projects.id, id));
+    const updated = await db.update(projects).set({ featured: !current, updatedAt: new Date() }).where(eq(projects.id, id)).returning({ id: projects.id });
+    if (updated.length === 0) {
+      return { error: 'Project not found.' };
+    }
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
     return {};
@@ -235,14 +272,18 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
   try {
-    await db
+    const updated = await db
       .update(projects)
       .set({
         isPublished: !current,
         publishedAt: !current ? new Date() : null,
         updatedAt: new Date(),
       })
-      .where(eq(projects.id, id));
+      .where(eq(projects.id, id))
+      .returning({ id: projects.id });
+    if (updated.length === 0) {
+      return { error: 'Project not found.' };
+    }
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
     return {};

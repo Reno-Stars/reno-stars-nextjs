@@ -5,16 +5,15 @@ import { db } from '@/lib/db';
 import { testimonials } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString } from '@/lib/admin/form-utils';
+import { getString, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 
 function getTestimonialData(formData: FormData) {
   const rawRating = parseInt(getString(formData, 'rating'), 10);
-  const rating = Number.isFinite(rawRating) && rawRating >= 1 && rawRating <= 5 ? rawRating : 5;
   return {
     name: getString(formData, 'name').trim(),
     textEn: getString(formData, 'textEn').trim(),
     textZh: getString(formData, 'textZh').trim(),
-    rating,
+    rating: rawRating,
     location: getString(formData, 'location') || null,
     isFeatured: formData.get('isFeatured') === 'on',
     verified: formData.get('verified') === 'on',
@@ -31,6 +30,11 @@ export async function createTestimonial(
     if (!data.name || !data.textEn || !data.textZh) {
       return { error: 'Name and text are required.' };
     }
+    if (!Number.isFinite(data.rating) || data.rating < 1 || data.rating > 5) {
+      return { error: 'Rating must be between 1 and 5.' };
+    }
+    const textError = validateTextLengths({ textEn: data.textEn, textZh: data.textZh }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
     await db.insert(testimonials).values(data);
     revalidatePath('/admin/testimonials');
     revalidatePath('/', 'layout');
@@ -53,7 +57,15 @@ export async function updateTestimonial(
     if (!data.name || !data.textEn || !data.textZh) {
       return { error: 'Name and text are required.' };
     }
-    await db.update(testimonials).set(data).where(eq(testimonials.id, id));
+    if (!Number.isFinite(data.rating) || data.rating < 1 || data.rating > 5) {
+      return { error: 'Rating must be between 1 and 5.' };
+    }
+    const textError = validateTextLengths({ textEn: data.textEn, textZh: data.textZh }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
+    const updated = await db.update(testimonials).set(data).where(eq(testimonials.id, id)).returning({ id: testimonials.id });
+    if (updated.length === 0) {
+      return { error: 'Testimonial not found.' };
+    }
     revalidatePath('/admin/testimonials');
     revalidatePath('/', 'layout');
     return { success: true };
@@ -81,7 +93,10 @@ export async function toggleTestimonialFeatured(id: string, current: boolean): P
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid testimonial ID.' };
   try {
-    await db.update(testimonials).set({ isFeatured: !current }).where(eq(testimonials.id, id));
+    const updated = await db.update(testimonials).set({ isFeatured: !current }).where(eq(testimonials.id, id)).returning({ id: testimonials.id });
+    if (updated.length === 0) {
+      return { error: 'Testimonial not found.' };
+    }
     revalidatePath('/admin/testimonials');
     revalidatePath('/', 'layout');
     return {};

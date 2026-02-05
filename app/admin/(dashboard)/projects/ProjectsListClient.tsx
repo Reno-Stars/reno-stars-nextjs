@@ -16,7 +16,6 @@ interface ProjectRow {
   locationCity: string | null;
   featured: boolean;
   isPublished: boolean;
-  [key: string]: unknown;
 }
 
 interface Props {

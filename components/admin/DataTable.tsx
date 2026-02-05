@@ -24,7 +24,11 @@ interface DataTableProps<T> {
 
 const EMPTY_SEARCH_KEYS: string[] = [];
 
-export default function DataTable<T extends Record<string, unknown>>({
+function getField(obj: object, key: string): unknown {
+  return (obj as Record<string, unknown>)[key];
+}
+
+export default function DataTable<T extends object>({
   columns,
   data,
   getRowKey,
@@ -47,7 +51,7 @@ export default function DataTable<T extends Record<string, unknown>>({
     const q = search.toLowerCase();
     return data.filter((row) =>
       searchKeys.some((key) => {
-        const val = row[key];
+        const val = getField(row, key);
         return typeof val === 'string' && val.toLowerCase().includes(q);
       })
     );
@@ -56,8 +60,8 @@ export default function DataTable<T extends Record<string, unknown>>({
   const sorted = useMemo(() => {
     if (!sortKey) return filtered;
     return [...filtered].sort((a, b) => {
-      const aVal = a[sortKey];
-      const bVal = b[sortKey];
+      const aVal = getField(a, sortKey);
+      const bVal = getField(b, sortKey);
       if (aVal == null) return 1;
       if (bVal == null) return -1;
       const cmp = String(aVal).localeCompare(String(bVal));
@@ -141,14 +145,17 @@ export default function DataTable<T extends Record<string, unknown>>({
                       letterSpacing: '0.05em',
                       cursor: col.sortable ? 'pointer' : 'default',
                       userSelect: 'none',
+                      outline: 'none',
                       whiteSpace: 'nowrap',
                       width: col.width,
                     }}
+                    onFocus={(e) => { if (col.sortable) e.currentTarget.style.outline = `2px solid ${GOLD}`; }}
+                    onBlur={(e) => { e.currentTarget.style.outline = 'none'; }}
                     onClick={() => col.sortable && handleSort(col.key)}
                   >
                     {col.header}
                     {col.sortable && sortKey === col.key && (
-                      <span style={{ marginLeft: '0.25rem' }}>
+                      <span aria-hidden="true" style={{ marginLeft: '0.25rem' }}>
                         {sortDir === 'asc' ? '\u2191' : '\u2193'}
                       </span>
                     )}
@@ -201,7 +208,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                       >
                         {col.render
                           ? col.render(row)
-                          : (row[col.key] as ReactNode) ?? '—'}
+                          : (getField(row, col.key) as ReactNode) ?? '—'}
                       </td>
                     ))}
                     {actions && (

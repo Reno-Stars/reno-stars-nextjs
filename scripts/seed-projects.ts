@@ -423,88 +423,99 @@ async function main() {
   const serviceRows: { slug: string; id: string }[] = await db.select({ slug: servicesTable.slug, id: servicesTable.id }).from(servicesTable);
   const serviceMap = new Map(serviceRows.map((s: { slug: string; id: string }) => [s.slug, s.id]));
 
+  let seeded = 0;
+  let skipped = 0;
+  let failed = 0;
+
   for (const p of PROJECTS_RAW) {
-    // Insert project (skip if slug exists)
-    const existing = await db
-      .select({ id: projectsTable.id })
-      .from(projectsTable)
-      .where(eq(projectsTable.slug, p.slug))
-      .limit(1);
+    try {
+      // Insert project (skip if slug exists)
+      const existing = await db
+        .select({ id: projectsTable.id })
+        .from(projectsTable)
+        .where(eq(projectsTable.slug, p.slug))
+        .limit(1);
 
-    if (existing.length > 0) {
-      console.log(`  Skipping "${p.slug}" (already exists)`);
-      continue;
+      if (existing.length > 0) {
+        console.log(`  Skipping "${p.slug}" (already exists)`);
+        skipped++;
+        continue;
+      }
+
+      const serviceId = serviceMap.get(p.serviceType) ?? null;
+      if (!serviceId) {
+        console.warn(`  Warning: No service found for type "${p.serviceType}"`);
+      }
+
+      const [inserted] = await db
+        .insert(projectsTable)
+        .values({
+          slug: p.slug,
+          titleEn: p.titleEn,
+          titleZh: p.titleZh,
+          descriptionEn: p.descriptionEn,
+          descriptionZh: p.descriptionZh,
+          serviceType: p.serviceType,
+          serviceId,
+          categoryEn: p.categoryEn,
+          categoryZh: p.categoryZh,
+          locationCity: p.locationCity,
+          budgetRange: p.budgetRange,
+          durationEn: p.durationEn,
+          durationZh: p.durationZh,
+          spaceTypeEn: p.spaceTypeEn,
+          spaceTypeZh: p.spaceTypeZh,
+          heroImageUrl: p.heroImageUrl,
+          challengeEn: p.challengeEn,
+          challengeZh: p.challengeZh,
+          solutionEn: p.solutionEn,
+          solutionZh: p.solutionZh,
+          featured: p.featured,
+          badgeEn: p.badgeEn ?? null,
+          badgeZh: p.badgeZh ?? null,
+          isPublished: true,
+          publishedAt: new Date(),
+        })
+        .returning({ id: projectsTable.id });
+
+      const projectId = inserted.id;
+
+      // Batch insert images
+      if (p.images.length > 0) {
+        await db.insert(projectImages).values(
+          p.images.map((img, i) => ({
+            projectId,
+            imageUrl: img.url,
+            altTextEn: img.altEn,
+            altTextZh: img.altZh,
+            isBefore: false,
+            displayOrder: i,
+          }))
+        );
+      }
+
+      // Batch insert scopes
+      if (p.scopes.length > 0) {
+        await db.insert(projectScopes).values(
+          p.scopes.map((scope, i) => ({
+            projectId,
+            scopeEn: scope.en,
+            scopeZh: scope.zh,
+            displayOrder: i,
+          }))
+        );
+      }
+
+      console.log(`  Seeded "${p.slug}"`);
+      seeded++;
+    } catch (err) {
+      console.error(`  Failed to seed "${p.slug}":`, err);
+      failed++;
     }
-
-    const serviceId = serviceMap.get(p.serviceType) ?? null;
-    if (!serviceId) {
-      console.warn(`  Warning: No service found for type "${p.serviceType}"`);
-    }
-
-    const [inserted] = await db
-      .insert(projectsTable)
-      .values({
-        slug: p.slug,
-        titleEn: p.titleEn,
-        titleZh: p.titleZh,
-        descriptionEn: p.descriptionEn,
-        descriptionZh: p.descriptionZh,
-        serviceType: p.serviceType,
-        serviceId,
-        categoryEn: p.categoryEn,
-        categoryZh: p.categoryZh,
-        locationCity: p.locationCity,
-        budgetRange: p.budgetRange,
-        durationEn: p.durationEn,
-        durationZh: p.durationZh,
-        spaceTypeEn: p.spaceTypeEn,
-        spaceTypeZh: p.spaceTypeZh,
-        heroImageUrl: p.heroImageUrl,
-        challengeEn: p.challengeEn,
-        challengeZh: p.challengeZh,
-        solutionEn: p.solutionEn,
-        solutionZh: p.solutionZh,
-        featured: p.featured,
-        badgeEn: p.badgeEn ?? null,
-        badgeZh: p.badgeZh ?? null,
-        isPublished: true,
-        publishedAt: new Date(),
-      })
-      .returning({ id: projectsTable.id });
-
-    const projectId = inserted.id;
-
-    // Insert images
-    if (p.images.length > 0) {
-      await db.insert(projectImages).values(
-        p.images.map((img, i) => ({
-          projectId,
-          imageUrl: img.url,
-          altTextEn: img.altEn,
-          altTextZh: img.altZh,
-          isBefore: false,
-          displayOrder: i,
-        }))
-      );
-    }
-
-    // Insert scopes
-    if (p.scopes.length > 0) {
-      await db.insert(projectScopes).values(
-        p.scopes.map((scope, i) => ({
-          projectId,
-          scopeEn: scope.en,
-          scopeZh: scope.zh,
-          displayOrder: i,
-        }))
-      );
-    }
-
-    console.log(`  Seeded "${p.slug}"`);
   }
 
-  console.log('Done seeding projects.');
-  process.exit(0);
+  console.log(`\nDone. Seeded: ${seeded}, Skipped: ${skipped}, Failed: ${failed}`);
+  process.exit(failed > 0 ? 1 : 0);
 }
 
 main().catch((err) => {

@@ -1,6 +1,6 @@
 import { CARD, NAVY, neuIn } from '@/lib/theme';
 
-export const inputStyle = {
+export const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '0.5rem 0.75rem',
   borderRadius: '6px',
@@ -11,4 +11,10 @@ export const inputStyle = {
   fontSize: '0.875rem',
   outline: 'none',
   boxSizing: 'border-box' as const,
+};
+
+export const readOnlyStyle: React.CSSProperties = {
+  ...inputStyle,
+  opacity: 0.7,
+  cursor: 'default',
 };

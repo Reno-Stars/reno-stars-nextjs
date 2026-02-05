@@ -19,6 +19,8 @@ export const SUCCESS = '#16a34a';
 export const SUCCESS_BG = 'rgba(34, 197, 94, 0.1)';
 export const ERROR = '#dc2626';
 export const ERROR_BG = 'rgba(239, 68, 68, 0.1)';
+export const INFO = '#3b82f6';
+export const INFO_BG = 'rgba(59, 130, 246, 0.1)';
 
 export const neu = (s = 6): string => `${s}px ${s}px ${s*2}px ${SH_DARK}, -${s}px -${s}px ${s*2}px ${SH_LIGHT}`;
 export const neuIn = (s = 6): string => `inset ${s}px ${s}px ${s*2}px ${SH_DARK}, inset -${s}px -${s}px ${s*2}px ${SH_LIGHT}`;

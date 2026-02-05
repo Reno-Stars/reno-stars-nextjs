@@ -2,7 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { routing } from './i18n/config';
-import { isSessionCookieFresh } from './lib/admin/auth';
+import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN } from './lib/storage';
 
 const intlMiddleware = createMiddleware(routing);
@@ -58,7 +58,7 @@ export default function proxy(request: NextRequest): NextResponse {
     }
 
     const sessionCookie = request.cookies.get('admin_session')?.value;
-    if (!isSessionCookieFresh(sessionCookie)) {
+    if (!sessionCookie || !verifyToken(sessionCookie)) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
 

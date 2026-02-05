@@ -111,10 +111,12 @@ export default function ImageUrlInput({
       />
 
       {/* Upload area */}
-      <div
+      <button
+        type="button"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         style={{
+          width: '100%',
           marginTop: '0.5rem',
           padding: '0.75rem',
           borderRadius: '8px',
@@ -125,15 +127,8 @@ export default function ImageUrlInput({
           opacity: uploading ? 0.6 : 1,
         }}
         onClick={() => !uploading && fileInputRef.current?.click()}
-        role="button"
-        tabIndex={0}
         aria-label={`Upload image for ${label}`}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (!uploading) fileInputRef.current?.click();
-          }
-        }}
+        disabled={uploading}
       >
         <input
           ref={fileInputRef}
@@ -149,7 +144,7 @@ export default function ImageUrlInput({
         <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
           JPEG, PNG, WebP, SVG, GIF — max 5 MB
         </div>
-      </div>
+      </button>
 
       {uploadError && (
         <div role="alert" style={{ color: ERROR, fontSize: '0.75rem', marginTop: '0.25rem' }}>
