@@ -41,6 +41,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const description = truncateMetaDescription(localizedService.long_description || localizedService.description);
 
+  const ogImage = service.image || siteImages.hero;
+
   return {
     title: `${localizedService.title} | ${SITE_NAME}`,
     description,
@@ -52,7 +54,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'website',
-      images: [{ url: service.image || siteImages.hero }],
+      images: [{ url: ogImage }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${localizedService.title} | ${SITE_NAME}`,
+      description,
+      images: [ogImage],
     },
   };
 }

@@ -52,6 +52,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       images: [{ url: ogImage }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${localizedPost.title} | ${SITE_NAME}`,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

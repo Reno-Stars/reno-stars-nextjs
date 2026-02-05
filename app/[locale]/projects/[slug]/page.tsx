@@ -66,6 +66,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         type: 'website',
         images: [{ url: siteImages.hero }],
       },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [siteImages.hero],
+      },
     };
   }
 
@@ -92,6 +98,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: ogLocaleMap[locale as Locale],
       type: 'article',
       images: [{ url: project.hero_image }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${localizedProject.title} | ${SITE_NAME}`,
+      description,
+      images: [project.hero_image],
     },
   };
 }
