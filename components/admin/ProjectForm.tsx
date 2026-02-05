@@ -33,12 +33,27 @@ interface ScopeEntry {
   zh: string;
 }
 
+interface ParentOption {
+  id: string;
+  titleEn: string;
+  titleZh: string;
+}
+
+interface ChildProject {
+  id: string;
+  slug: string;
+  titleEn: string;
+  titleZh: string;
+  childDisplayOrder: number;
+}
+
 interface ProjectFormProps {
   action: (
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
   initialData?: {
+    id?: string;
     slug: string;
     titleEn: string;
     titleZh: string;
@@ -62,9 +77,16 @@ interface ProjectFormProps {
     badgeZh: string;
     featured: boolean;
     isPublished: boolean;
+    isWholeHouse: boolean;
+    parentProjectId: string | null;
+    childDisplayOrder: number;
     images: Omit<ImageEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
   };
+  /** Available whole house projects to link as parent (excludes current project) */
+  wholeHouseProjects?: ParentOption[];
+  /** Child projects linked to this project (only if this is a whole house container) */
+  childProjects?: ChildProject[];
   submitLabel?: string;
 }
 
@@ -77,6 +99,8 @@ const readOnlyStyle: React.CSSProperties = {
 export default function ProjectForm({
   action,
   initialData,
+  wholeHouseProjects = [],
+  childProjects = [],
   submitLabel = 'Save',
 }: ProjectFormProps) {
   const isEdit = !!initialData;
@@ -246,6 +270,101 @@ export default function ProjectForm({
                 + Add Scope
               </button>
             )}
+          </div>
+
+          {/* Whole House Settings */}
+          <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
+              Parent-Child Relationship
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
+                <input
+                  type="checkbox"
+                  name="isWholeHouse"
+                  defaultChecked={initialData?.isWholeHouse ?? false}
+                  disabled={!!initialData?.parentProjectId}
+                />
+                Whole House Container
+                <span style={{ color: TEXT_MID, fontSize: '0.75rem', marginLeft: '0.5rem' }}>
+                  (Makes this project a container for child projects)
+                </span>
+              </label>
+
+              {/* Parent Selection - hidden if this is a whole house container */}
+              {!initialData?.isWholeHouse && wholeHouseProjects.length > 0 && (
+                <FormField label="Parent Project" htmlFor="parentProjectId">
+                  <select
+                    id="parentProjectId"
+                    name="parentProjectId"
+                    defaultValue={initialData?.parentProjectId ?? ''}
+                    style={fieldStyle}
+                  >
+                    <option value="">None (standalone project)</option>
+                    {wholeHouseProjects.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.titleEn} / {p.titleZh}
+                      </option>
+                    ))}
+                  </select>
+                </FormField>
+              )}
+
+              {/* Child Display Order - shown if has parent */}
+              {initialData?.parentProjectId && (
+                <FormField label="Display Order in Parent" htmlFor="childDisplayOrder">
+                  <input
+                    id="childDisplayOrder"
+                    name="childDisplayOrder"
+                    type="number"
+                    min="0"
+                    defaultValue={initialData?.childDisplayOrder ?? 0}
+                    style={{ ...fieldStyle, width: '100px' }}
+                  />
+                </FormField>
+              )}
+
+              {/* Linked Children - shown if this is a whole house container */}
+              {initialData?.isWholeHouse && childProjects.length > 0 && (
+                <div>
+                  <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.75rem', marginBottom: '0.375rem' }}>
+                    Linked Child Projects ({childProjects.length})
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    {childProjects.sort((a, b) => a.childDisplayOrder - b.childDisplayOrder).map((child) => (
+                      <div
+                        key={child.id}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '0.5rem',
+                          backgroundColor: CARD,
+                          borderRadius: '6px',
+                          fontSize: '0.8125rem',
+                        }}
+                      >
+                        <span style={{ color: TEXT_MID }}>
+                          #{child.childDisplayOrder} - {child.titleEn}
+                        </span>
+                        <a
+                          href={`/admin/projects/${child.id}`}
+                          style={{ color: GOLD, textDecoration: 'none', fontSize: '0.75rem' }}
+                        >
+                          Edit
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {initialData?.isWholeHouse && childProjects.length === 0 && (
+                <p style={{ color: TEXT_MID, fontSize: '0.75rem', fontStyle: 'italic' }}>
+                  No child projects linked yet. Edit other projects to link them to this container.
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Checkboxes */}

@@ -164,6 +164,14 @@ export const projects = pgTable(
     featured: boolean('featured').default(false).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
 
+    // Parent-child relationship for Whole House projects
+    // Self-referential: children link to their parent container project
+    parentProjectId: uuid('parent_project_id'),
+    // Flag to mark project as a Whole House container
+    isWholeHouse: boolean('is_whole_house').default(false).notNull(),
+    // Display order for child projects within a parent
+    childDisplayOrder: integer('child_display_order').default(0).notNull(),
+
     // Timestamps
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -174,6 +182,8 @@ export const projects = pgTable(
     index('projects_service_type_idx').on(table.serviceType),
     index('projects_location_city_idx').on(table.locationCity),
     index('projects_featured_idx').on(table.featured),
+    index('projects_parent_id_idx').on(table.parentProjectId),
+    index('projects_is_whole_house_idx').on(table.isWholeHouse),
   ]
 );
 
@@ -184,6 +194,14 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   images: many(projectImages),
   scopes: many(projectScopes),
+  // Self-referential: parent project (for child projects)
+  parent: one(projects, {
+    fields: [projects.parentProjectId],
+    references: [projects.id],
+    relationName: 'parentChild',
+  }),
+  // Self-referential: child projects (for whole house containers)
+  children: many(projects, { relationName: 'parentChild' }),
 }));
 
 // ============================================================================

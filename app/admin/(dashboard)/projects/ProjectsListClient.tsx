@@ -6,8 +6,8 @@ import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
-import { deleteProject, toggleProjectFeatured, toggleProjectPublished } from '@/app/actions/admin/projects';
-import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
+import { deleteProject, toggleProjectFeatured, toggleProjectPublished, toggleWholeHouse } from '@/app/actions/admin/projects';
+import { GOLD, TEXT_MID, SUCCESS, ERROR, NAVY } from '@/lib/theme';
 
 interface ProjectRow {
   id: string;
@@ -18,6 +18,8 @@ interface ProjectRow {
   locationCity: string | null;
   featured: boolean;
   isPublished: boolean;
+  isWholeHouse: boolean;
+  parentProjectId: string | null;
 }
 
 interface Props {
@@ -30,12 +32,58 @@ export default function ProjectsListClient({ projects }: Props) {
   const { toast } = useToast();
   const { locale } = useAdminLocale();
 
+  // Build a map of parent IDs to their titles for quick lookup
+  const parentMap = useMemo(() => {
+    const map = new Map<string, { titleEn: string; titleZh: string }>();
+    projects.forEach((p) => {
+      if (p.isWholeHouse) {
+        map.set(p.id, { titleEn: p.titleEn, titleZh: p.titleZh });
+      }
+    });
+    return map;
+  }, [projects]);
+
   const columns: Column<ProjectRow>[] = useMemo(() => {
     const getT = (row: ProjectRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
       { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
       { key: 'serviceType', header: 'Type', sortable: true },
       { key: 'locationCity', header: 'City', sortable: true },
+      {
+        key: 'isWholeHouse',
+        header: 'Container',
+        render: (row: ProjectRow) => (
+          <button
+            type="button"
+            onClick={() => startTransition(async () => {
+              const result = await toggleWholeHouse(row.id, row.isWholeHouse);
+              if (result.error) toast(result.error, 'error');
+            })}
+            aria-label={`Toggle whole house for ${getT(row)}`}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isWholeHouse ? NAVY : TEXT_MID, fontSize: '0.8125rem', fontWeight: row.isWholeHouse ? 600 : 400 }}
+          >
+            {row.isWholeHouse ? '🏠 Yes' : 'No'}
+          </button>
+        ),
+      },
+      {
+        key: 'parentProjectId',
+        header: 'Parent',
+        render: (row: ProjectRow) => {
+          if (!row.parentProjectId) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>—</span>;
+          const parent = parentMap.get(row.parentProjectId);
+          if (!parent) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>—</span>;
+          const parentTitle = locale === 'zh' ? parent.titleZh : parent.titleEn;
+          return (
+            <Link
+              href={`/admin/projects/${row.parentProjectId}`}
+              style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
+            >
+              {parentTitle.length > 20 ? parentTitle.slice(0, 20) + '…' : parentTitle}
+            </Link>
+          );
+        },
+      },
       {
         key: 'featured',
         header: 'Featured',
@@ -71,7 +119,7 @@ export default function ProjectsListClient({ projects }: Props) {
         ),
       },
     ];
-  }, [locale, toast]);
+  }, [locale, toast, parentMap]);
 
   const handleDelete = () => {
     if (!deleteId) return;

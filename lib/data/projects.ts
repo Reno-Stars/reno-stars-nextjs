@@ -1,4 +1,4 @@
-import type { Project, ServiceType, Locale, LocalizedProject } from '../types';
+import type { Project, ServiceType, Locale, LocalizedProject, WholeHouseProject, LocalizedWholeHouseProject, LocalizedWholeHouseAggregated, LocalizedWholeHouseImage } from '../types';
 import { getAssetUrl } from '../storage';
 import { serviceTypeToCategory } from './services';
 
@@ -556,6 +556,7 @@ export function getFeaturedProjects(): Project[] {
 
 export function getLocalizedProject(project: Project, locale: Locale): LocalizedProject {
   return {
+    id: project.id,
     slug: project.slug,
     title: project.title[locale],
     description: project.description[locale],
@@ -576,6 +577,41 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     solution: project.solution?.[locale],
     featured: project.featured,
     badge: project.badge?.[locale],
+    parent_project_id: project.parent_project_id,
+    is_whole_house: project.is_whole_house,
+    child_display_order: project.child_display_order,
+  };
+}
+
+/**
+ * Localize a WholeHouseProject including its children and aggregated data.
+ */
+export function getLocalizedWholeHouseProject(
+  project: WholeHouseProject,
+  locale: Locale
+): LocalizedWholeHouseProject {
+  const base = getLocalizedProject(project, locale);
+  const children = project.children.map((child) => getLocalizedProject(child, locale));
+
+  const allImages: LocalizedWholeHouseImage[] = project.aggregated.allImages.map((img) => ({
+    src: img.src,
+    alt: img.alt[locale],
+    is_before: img.is_before,
+    childSlug: img.childSlug,
+    childTitle: img.childTitle[locale],
+  }));
+
+  const aggregated: LocalizedWholeHouseAggregated = {
+    totalBudget: project.aggregated.totalBudget,
+    totalDuration: project.aggregated.totalDuration?.[locale],
+    allServiceScopes: project.aggregated.allServiceScopes[locale],
+    allImages,
+  };
+
+  return {
+    ...base,
+    children,
+    aggregated,
   };
 }
 

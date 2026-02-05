@@ -19,7 +19,7 @@ import {
   faqs as faqsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq } from '../types';
+import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, WholeHouseProject, Localized } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -168,6 +168,7 @@ function mapDbProjectToProject(
   scopes: DbScopeRow[]
 ): Project {
   return {
+    id: row.id,
     slug: row.slug,
     title: { en: row.titleEn, zh: row.titleZh },
     description: { en: row.descriptionEn, zh: row.descriptionZh },
@@ -226,6 +227,10 @@ function mapDbProjectToProject(
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }
         : undefined,
+    // Parent-child relationship fields
+    parent_project_id: row.parentProjectId ?? undefined,
+    is_whole_house: row.isWholeHouse,
+    child_display_order: row.childDisplayOrder,
   };
 }
 
@@ -303,6 +308,200 @@ export async function getProjectSlugsFromDb(): Promise<string[]> {
     .where(eq(projectsTable.isPublished, true));
   return rows.map((r: { slug: string }) => r.slug);
 }
+
+// ============================================================================
+// WHOLE HOUSE PROJECT QUERIES
+// ============================================================================
+
+/** Fetch child projects for a given parent project ID. */
+export const getChildrenOfProject = cache(async (parentId: string): Promise<Project[]> => {
+  const rows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .where(and(eq(projectsTable.parentProjectId, parentId), eq(projectsTable.isPublished, true)))
+    .orderBy(asc(projectsTable.childDisplayOrder));
+
+  if (rows.length === 0) return [];
+
+  const ids = rows.map((r: DbProjectRow) => r.id);
+  const { images, scopes } = await fetchProjectRelations(ids);
+
+  return rows.map((row: DbProjectRow) =>
+    mapDbProjectToProject(
+      row,
+      images.filter((i: DbImageRow) => i.projectId === row.id),
+      scopes.filter((s: DbScopeRow) => s.projectId === row.id)
+    )
+  );
+});
+
+/**
+ * Parse a budget range string like "$15,000 - $25,000" and extract min/max values.
+ */
+function parseBudgetRange(budget: string): { min: number; max: number } {
+  const numbers = budget.match(/[\d,]+/g);
+  if (!numbers || numbers.length === 0) return { min: 0, max: 0 };
+  const values = numbers.map((n) => parseInt(n.replace(/,/g, ''), 10));
+  return { min: Math.min(...values), max: Math.max(...values) };
+}
+
+/**
+ * Calculate combined budget range from multiple projects.
+ */
+function calculateCombinedBudget(projects: Project[]): string | undefined {
+  const budgets = projects.filter((p) => p.budget_range).map((p) => parseBudgetRange(p.budget_range!));
+  if (budgets.length === 0) return undefined;
+  const totalMin = budgets.reduce((sum, b) => sum + b.min, 0);
+  const totalMax = budgets.reduce((sum, b) => sum + b.max, 0);
+  const formatNumber = (n: number) => new Intl.NumberFormat('en-US').format(n);
+  if (totalMin === totalMax) return `$${formatNumber(totalMin)}`;
+  return `$${formatNumber(totalMin)} - $${formatNumber(totalMax)}`;
+}
+
+/**
+ * Aggregate durations from multiple projects.
+ * Returns a summary like "12 weeks total" or combines different formats.
+ */
+function aggregateDurations(projects: Project[]): Localized<string> | undefined {
+  const durations = projects.filter((p) => p.duration);
+  if (durations.length === 0) return undefined;
+  // Sum weeks if all have week-based durations, otherwise concatenate
+  const weekPattern = /(\d+)\s*(?:weeks?|wks?)/i;
+  let totalWeeksEn = 0;
+  let totalWeeksZh = 0;
+  let canAggregate = true;
+  for (const p of durations) {
+    const matchEn = p.duration!.en.match(weekPattern);
+    const matchZh = p.duration!.zh.match(weekPattern);
+    if (matchEn && matchZh) {
+      totalWeeksEn += parseInt(matchEn[1], 10);
+      totalWeeksZh += parseInt(matchZh[1], 10);
+    } else {
+      canAggregate = false;
+      break;
+    }
+  }
+  if (canAggregate && totalWeeksEn > 0) {
+    return {
+      en: `${totalWeeksEn} weeks total`,
+      zh: `共${totalWeeksZh}周`,
+    };
+  }
+  // Fallback: list durations
+  return {
+    en: durations.map((p) => p.duration!.en).join(', '),
+    zh: durations.map((p) => p.duration!.zh).join('，'),
+  };
+}
+
+/**
+ * Merge unique service scopes from multiple projects.
+ */
+function mergeServiceScopes(projects: Project[]): Localized<string[]> {
+  const scopesEn = new Set<string>();
+  const scopesZh = new Set<string>();
+  for (const p of projects) {
+    if (p.service_scope) {
+      p.service_scope.en.forEach((s) => scopesEn.add(s));
+      p.service_scope.zh.forEach((s) => scopesZh.add(s));
+    }
+  }
+  return {
+    en: Array.from(scopesEn),
+    zh: Array.from(scopesZh),
+  };
+}
+
+/**
+ * Collect all images from parent + children with child attribution.
+ */
+function collectAllImages(parent: Project, children: Project[]): WholeHouseProject['aggregated']['allImages'] {
+  const images: WholeHouseProject['aggregated']['allImages'] = [];
+  // Add parent images first
+  for (const img of parent.images) {
+    images.push({
+      src: img.src,
+      alt: img.alt,
+      is_before: img.is_before,
+      childSlug: parent.slug,
+      childTitle: parent.title,
+    });
+  }
+  // Add child images
+  for (const child of children) {
+    for (const img of child.images) {
+      images.push({
+        src: img.src,
+        alt: img.alt,
+        is_before: img.is_before,
+        childSlug: child.slug,
+        childTitle: child.title,
+      });
+    }
+  }
+  return images;
+}
+
+/** Fetch a Whole House project by slug with its children and aggregated data. */
+export const getWholeHouseProjectBySlugFromDb = cache(
+  async (slug: string): Promise<WholeHouseProject | null> => {
+    // Fetch the parent project first
+    const rows = await db
+      .select()
+      .from(projectsTable)
+      .where(and(eq(projectsTable.slug, slug), eq(projectsTable.isPublished, true), eq(projectsTable.isWholeHouse, true)))
+      .limit(1);
+
+    const row = rows[0];
+    if (!row) return null;
+
+    // Fetch parent's images and scopes
+    const { images: parentImages, scopes: parentScopes } = await fetchProjectRelations([row.id]);
+    const parent = mapDbProjectToProject(row, parentImages, parentScopes);
+
+    // Fetch children
+    const children = await getChildrenOfProject(row.id);
+
+    // All projects including parent for aggregation
+    const allProjects = [parent, ...children];
+
+    // Build aggregated data
+    const aggregated: WholeHouseProject['aggregated'] = {
+      totalBudget: calculateCombinedBudget(allProjects),
+      totalDuration: aggregateDurations(allProjects),
+      allServiceScopes: mergeServiceScopes(allProjects),
+      allImages: collectAllImages(parent, children),
+    };
+
+    return {
+      ...parent,
+      children,
+      aggregated,
+    };
+  }
+);
+
+/** Fetch all published Whole House container projects. */
+export const getWholeHouseProjectsFromDb = cache(async (): Promise<Project[]> => {
+  const rows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .where(and(eq(projectsTable.isPublished, true), eq(projectsTable.isWholeHouse, true)))
+    .orderBy(desc(projectsTable.createdAt));
+
+  if (rows.length === 0) return [];
+
+  const ids = rows.map((r: DbProjectRow) => r.id);
+  const { images, scopes } = await fetchProjectRelations(ids);
+
+  return rows.map((row: DbProjectRow) =>
+    mapDbProjectToProject(
+      row,
+      images.filter((i: DbImageRow) => i.projectId === row.id),
+      scopes.filter((s: DbScopeRow) => s.projectId === row.id)
+    )
+  );
+});
 
 // ============================================================================
 // SERVICE AREA QUERIES

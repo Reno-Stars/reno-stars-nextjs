@@ -476,5 +476,17 @@
   "homeFaq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Common questions about our renovation services"
+  },
+  "wholeHouse": {
+    "projectOverview": "Project Overview",
+    "includedAreas": "Included Areas",
+    "totalBudget": "Combined Budget",
+    "totalDuration": "Total Timeline",
+    "allServiceScopes": "All Services Included",
+    "viewAreaProject": "View {area} Project",
+    "combinedGallery": "Project Gallery",
+    "filterByArea": "Filter by Area",
+    "allAreas": "All Areas",
+    "childProjectsCount": "{count} renovation areas"
   }
 }

@@ -57,6 +57,8 @@ function parseScopes(formData: FormData) {
 
 function getProjectData(formData: FormData) {
   const serviceType = getString(formData, 'serviceType');
+  const parentProjectId = getString(formData, 'parentProjectId').trim();
+  const childDisplayOrderStr = getString(formData, 'childDisplayOrder').trim();
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -81,6 +83,9 @@ function getProjectData(formData: FormData) {
     badgeZh: getString(formData, 'badgeZh') || null,
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',
+    isWholeHouse: formData.get('isWholeHouse') === 'on',
+    parentProjectId: parentProjectId && isValidUUID(parentProjectId) ? parentProjectId : null,
+    childDisplayOrder: childDisplayOrderStr ? parseInt(childDisplayOrderStr, 10) || 0 : 0,
     updatedAt: new Date(),
   };
 }
@@ -112,6 +117,11 @@ export async function createProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
+    // Whole House validation: cannot have a parent
+    if (data.isWholeHouse && data.parentProjectId) {
+      return { error: 'A Whole House container cannot have a parent project.' };
+    }
+
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
@@ -126,6 +136,21 @@ export async function createProject(
       .limit(1);
     if (!svcRows[0]) {
       return { error: `Service type "${data.serviceType}" not found in database.` };
+    }
+
+    // Validate parent project exists if specified
+    if (data.parentProjectId) {
+      const parentRows = await db
+        .select({ id: projects.id, isWholeHouse: projects.isWholeHouse })
+        .from(projects)
+        .where(eq(projects.id, data.parentProjectId))
+        .limit(1);
+      if (!parentRows[0]) {
+        return { error: 'Parent project not found.' };
+      }
+      if (!parentRows[0].isWholeHouse) {
+        return { error: 'Parent project must be a Whole House container.' };
+      }
     }
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
@@ -192,6 +217,26 @@ export async function updateProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
+    // Whole House validation: cannot have a parent
+    if (data.isWholeHouse && data.parentProjectId) {
+      return { error: 'A Whole House container cannot have a parent project.' };
+    }
+
+    // Circular reference check: parent cannot be self or a descendant
+    if (data.parentProjectId) {
+      if (data.parentProjectId === id) {
+        return { error: 'A project cannot be its own parent.' };
+      }
+      // Check if the proposed parent is a child of this project (circular)
+      const childrenRows = await db
+        .select({ id: projects.id })
+        .from(projects)
+        .where(eq(projects.parentProjectId, id));
+      if (childrenRows.some((c: { id: string }) => c.id === data.parentProjectId)) {
+        return { error: 'Cannot set a child project as the parent (circular reference).' };
+      }
+    }
+
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
@@ -205,6 +250,21 @@ export async function updateProject(
       .limit(1);
     if (!svcRows[0]) {
       return { error: `Service type "${data.serviceType}" not found in database.` };
+    }
+
+    // Validate parent project exists if specified
+    if (data.parentProjectId) {
+      const parentRows = await db
+        .select({ id: projects.id, isWholeHouse: projects.isWholeHouse })
+        .from(projects)
+        .where(eq(projects.id, data.parentProjectId))
+        .limit(1);
+      if (!parentRows[0]) {
+        return { error: 'Parent project not found.' };
+      }
+      if (!parentRows[0].isWholeHouse) {
+        return { error: 'Parent project must be a Whole House container.' };
+      }
     }
 
     // Ensure slug is unique (exclude current project's own slug)
@@ -301,5 +361,117 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
   } catch (error) {
     console.error('Failed to toggle published:', error);
     return { error: 'Failed to toggle published.' };
+  }
+}
+
+export async function toggleWholeHouse(id: string, current: boolean): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
+  try {
+    // If turning ON whole house, check project doesn't have a parent
+    if (!current) {
+      const projectRows = await db
+        .select({ parentProjectId: projects.parentProjectId })
+        .from(projects)
+        .where(eq(projects.id, id))
+        .limit(1);
+      if (projectRows[0]?.parentProjectId) {
+        return { error: 'Cannot make a child project into a Whole House container. Unlink it first.' };
+      }
+    }
+    // If turning OFF whole house, unlink all children
+    if (current) {
+      await db
+        .update(projects)
+        .set({ parentProjectId: null, updatedAt: new Date() })
+        .where(eq(projects.parentProjectId, id));
+    }
+    const updated = await db
+      .update(projects)
+      .set({ isWholeHouse: !current, updatedAt: new Date() })
+      .where(eq(projects.id, id))
+      .returning({ id: projects.id });
+    if (updated.length === 0) {
+      return { error: 'Project not found.' };
+    }
+    revalidatePath('/admin/projects');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to toggle whole house:', error);
+    return { error: 'Failed to toggle whole house.' };
+  }
+}
+
+export async function linkChildToParent(
+  childId: string,
+  parentId: string,
+  displayOrder: number = 0
+): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(childId)) return { error: 'Invalid child project ID.' };
+  if (!isValidUUID(parentId)) return { error: 'Invalid parent project ID.' };
+  if (childId === parentId) return { error: 'A project cannot be its own child.' };
+
+  try {
+    // Verify parent is a whole house container
+    const parentRows = await db
+      .select({ isWholeHouse: projects.isWholeHouse })
+      .from(projects)
+      .where(eq(projects.id, parentId))
+      .limit(1);
+    if (!parentRows[0]) {
+      return { error: 'Parent project not found.' };
+    }
+    if (!parentRows[0].isWholeHouse) {
+      return { error: 'Parent project must be a Whole House container.' };
+    }
+
+    // Verify child is not a whole house container
+    const childRows = await db
+      .select({ isWholeHouse: projects.isWholeHouse })
+      .from(projects)
+      .where(eq(projects.id, childId))
+      .limit(1);
+    if (!childRows[0]) {
+      return { error: 'Child project not found.' };
+    }
+    if (childRows[0].isWholeHouse) {
+      return { error: 'A Whole House container cannot be a child project.' };
+    }
+
+    await db
+      .update(projects)
+      .set({ parentProjectId: parentId, childDisplayOrder: displayOrder, updatedAt: new Date() })
+      .where(eq(projects.id, childId));
+
+    revalidatePath('/admin/projects');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to link child to parent:', error);
+    return { error: 'Failed to link projects.' };
+  }
+}
+
+export async function unlinkChildFromParent(childId: string): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(childId)) return { error: 'Invalid project ID.' };
+
+  try {
+    const updated = await db
+      .update(projects)
+      .set({ parentProjectId: null, childDisplayOrder: 0, updatedAt: new Date() })
+      .where(eq(projects.id, childId))
+      .returning({ id: projects.id });
+    if (updated.length === 0) {
+      return { error: 'Project not found.' };
+    }
+    revalidatePath('/admin/projects');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to unlink child from parent:', error);
+    return { error: 'Failed to unlink project.' };
   }
 }

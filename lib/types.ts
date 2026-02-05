@@ -23,6 +23,8 @@ export type ServiceType =
  * Contains bilingual content and project details.
  */
 export interface Project {
+  /** Unique identifier (UUID) */
+  id?: string;
   /** URL-friendly identifier */
   slug: string;
   /** Project title in both languages */
@@ -61,6 +63,47 @@ export interface Project {
   featured?: boolean;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
+  /** Parent project ID (for child projects linked to a Whole House container) */
+  parent_project_id?: string;
+  /** Whether this project is a Whole House container (defaults to false) */
+  is_whole_house?: boolean;
+  /** Display order within a parent project */
+  child_display_order?: number;
+}
+
+/**
+ * Image with attribution to child project slug (for whole house aggregation)
+ */
+export interface WholeHouseImage {
+  src: string;
+  alt: Localized<string>;
+  is_before?: boolean;
+  childSlug: string;
+  childTitle: Localized<string>;
+}
+
+/**
+ * Aggregated data for a Whole House project combining all child projects
+ */
+export interface WholeHouseAggregated {
+  /** Combined budget from all children */
+  totalBudget?: string;
+  /** Combined timeline from all children */
+  totalDuration?: Localized<string>;
+  /** Merged unique service scopes from all children */
+  allServiceScopes: Localized<string[]>;
+  /** All images from parent + children with child attribution */
+  allImages: WholeHouseImage[];
+}
+
+/**
+ * A Whole House project with its child projects and aggregated data
+ */
+export interface WholeHouseProject extends Project {
+  /** Child projects linked to this container */
+  children: Project[];
+  /** Aggregated data from all children */
+  aggregated: WholeHouseAggregated;
 }
 
 /**
@@ -213,6 +256,7 @@ export interface AboutSections {
 
 /** A project with content resolved to a single locale */
 export interface LocalizedProject {
+  id?: string;
   slug: string;
   title: string;
   description: string;
@@ -229,6 +273,32 @@ export interface LocalizedProject {
   solution?: string;
   featured?: boolean;
   badge?: string;
+  parent_project_id?: string;
+  is_whole_house?: boolean;
+  child_display_order?: number;
+}
+
+/** A localized image with child project attribution (for whole house views) */
+export interface LocalizedWholeHouseImage {
+  src: string;
+  alt: string;
+  is_before?: boolean;
+  childSlug: string;
+  childTitle: string;
+}
+
+/** Localized aggregated data for a Whole House project */
+export interface LocalizedWholeHouseAggregated {
+  totalBudget?: string;
+  totalDuration?: string;
+  allServiceScopes: string[];
+  allImages: LocalizedWholeHouseImage[];
+}
+
+/** A localized Whole House project with children and aggregated data */
+export interface LocalizedWholeHouseProject extends LocalizedProject {
+  children: LocalizedProject[];
+  aggregated: LocalizedWholeHouseAggregated;
 }
 
 /** A service with content resolved to a single locale */

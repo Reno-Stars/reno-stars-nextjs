@@ -2,14 +2,15 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject } from '@/lib/data/projects';
+import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedWholeHouseProject } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
+import WholeHouseDetailPage from '@/components/pages/WholeHouseDetailPage';
 import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
 import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getWholeHouseProjectBySlugFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -143,6 +144,38 @@ export default async function Page({ params }: PageProps) {
 
   if (!project) {
     notFound();
+  }
+
+  // Check if this is a Whole House container project
+  if (project.is_whole_house) {
+    const wholeHouseData = await getWholeHouseProjectBySlugFromDb(slug);
+    if (wholeHouseData) {
+      const localizedWholeHouse = getLocalizedWholeHouseProject(wholeHouseData, locale as Locale);
+      const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
+
+      const breadcrumbs = [
+        { name: t('home'), url: `/${locale}/` },
+        { name: t('projects'), url: `/${locale}/projects/` },
+        { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+      ];
+
+      return (
+        <>
+          <BreadcrumbSchema items={breadcrumbs} />
+          <ProjectSchema
+            company={company}
+            name={localizedWholeHouse.title}
+            description={localizedWholeHouse.description}
+            image={project.hero_image}
+            images={wholeHouseData.aggregated.allImages.map((img) => img.src)}
+            location={project.location_city}
+            serviceType={serviceTypeName}
+            url={`/${locale}/projects/${slug}/`}
+          />
+          <WholeHouseDetailPage locale={locale as Locale} project={localizedWholeHouse} company={company} />
+        </>
+      );
+    }
   }
 
   const localizedProject = getLocalizedProject(project, locale as Locale);
