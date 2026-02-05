@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { routing } from './i18n/config';
+import { routing, locales, defaultLocale, type Locale } from './i18n/config';
 import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN } from './lib/storage';
 
@@ -66,7 +66,15 @@ export default function proxy(request: NextRequest): NextResponse {
   }
 
   // All other routes — next-intl locale middleware + security headers
-  return addSecurityHeaders(intlMiddleware(request));
+  const response = addSecurityHeaders(intlMiddleware(request));
+
+  // Set x-locale header for the root layout to read
+  // Extract locale from pathname (first segment after /)
+  const pathLocale = pathname.split('/')[1];
+  const locale = locales.includes(pathLocale as Locale) ? pathLocale : defaultLocale;
+  response.headers.set('x-locale', locale);
+
+  return response;
 }
 
 export const config = {

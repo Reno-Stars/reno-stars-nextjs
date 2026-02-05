@@ -140,7 +140,9 @@
     "years": "年",
     "averageRating": "平均评分",
     "areasServed": "服务区域",
-    "rating": "评分"
+    "rating": "评分",
+    "srStats": "公司统计数据",
+    "srTrustBadges": "信任徽章和认证"
   },
   "form": {
     "name": "姓名",

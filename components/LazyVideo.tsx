@@ -21,12 +21,13 @@ export default function LazyVideo({ src, poster, className = '' }: LazyVideoProp
   const [isMobile, setIsMobile] = useState(true); // Default to mobile (SSR-safe)
   const [shouldPlay, setShouldPlay] = useState(false);
 
-  // Detect mobile on client
+  // Detect mobile using matchMedia (only fires on breakpoint changes, not every resize)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const mq = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mq.matches);
+    const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handleChange);
+    return () => mq.removeEventListener('change', handleChange);
   }, []);
 
   // Intersection Observer to detect when video is in viewport

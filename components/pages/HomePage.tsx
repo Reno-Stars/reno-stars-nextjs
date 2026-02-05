@@ -115,12 +115,12 @@ export default function HomePage({ locale, company, services, testimonials, abou
         locale={locale}
         translations={{ title: t('section.ourServices'), subtitle: t('section.servicesSubtitle') }}
       />
-      <StatsSection stats={stats} />
+      <StatsSection stats={stats} srTitle={t('stats.srStats')} />
       <AboutSection
         items={aboutItems}
         translations={{ title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') }}
       />
-      <TrustBadgesSection badges={localizedBadges} />
+      <TrustBadgesSection badges={localizedBadges} srTitle={t('stats.srTrustBadges')} />
       <BlogSection
         posts={localizedBlogPosts}
         translations={{ title: t('section.blogTips'), subtitle: t('section.blogSubtitle') }}

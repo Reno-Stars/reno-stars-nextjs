@@ -71,8 +71,8 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
             </a>
           </div>
           <div className="flex flex-wrap gap-4 pt-2">
-            {heroBadges.map((txt, i) => (
-              <span key={i} className="text-sm font-medium text-white/70 flex items-center gap-1.5">
+            {heroBadges.map((txt) => (
+              <span key={txt} className="text-sm font-medium text-white/70 flex items-center gap-1.5">
                 <Shield className="w-4 h-4" style={{ color: GOLD }} /> {txt}
               </span>
             ))}

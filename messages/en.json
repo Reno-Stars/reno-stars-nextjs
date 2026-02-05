@@ -140,7 +140,9 @@
     "years": "Years",
     "averageRating": "Average Rating",
     "areasServed": "Areas Served",
-    "rating": "Rating"
+    "rating": "Rating",
+    "srStats": "Company Statistics",
+    "srTrustBadges": "Trust Badges and Certifications"
   },
   "form": {
     "name": "Name",
