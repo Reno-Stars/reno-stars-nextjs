@@ -49,6 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: 'metadata.serviceLocation' });
   const title = t('title', { service: localizedService.title, area: localizedArea.name });
   const description = t('description', { service: localizedService.title, area: localizedArea.name });
+  const ogImage = service.image || siteImages.hero;
 
   return {
     title,
@@ -61,13 +62,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'website',
-      images: [{ url: siteImages.hero }],
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [siteImages.hero],
+      images: [ogImage],
     },
   };
 }

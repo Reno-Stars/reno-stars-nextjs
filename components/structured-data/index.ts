@@ -5,3 +5,4 @@ export { default as ServiceSchema } from './ServiceSchema';
 export { default as ProjectSchema } from './ProjectSchema';
 export { default as FAQSchema } from './FAQSchema';
 export { default as ArticleSchema } from './ArticleSchema';
+export { default as ReviewSchema } from './ReviewSchema';

@@ -33,7 +33,7 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
       {/* Poster image shown immediately for fast LCP */}
       <Image
         src={images.hero}
-        alt=""
+        alt="Vancouver home renovation showcase featuring modern kitchen and bathroom remodeling by Reno Stars"
         fill
         priority
         sizes="100vw"

@@ -9,6 +9,11 @@ import { defaultLocale, type Locale } from '@/i18n/config';
 export const metadata: Metadata = {
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
+  twitter: {
+    card: 'summary_large_image',
+    site: '@renostars',
+    creator: '@renostars',
+  },
 };
 
 export default async function RootLayout({

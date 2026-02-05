@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import HomePage from '@/components/pages/HomePage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ReviewSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import {
@@ -132,6 +132,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <ReviewSchema company={company} testimonials={testimonials} locale={locale} />
       <HomePage
         locale={locale}
         company={company}
