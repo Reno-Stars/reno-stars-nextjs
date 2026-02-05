@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
-import { useMemo, type SVGProps } from 'react';
+import { useMemo, useState, useCallback, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
 import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
@@ -55,6 +55,8 @@ interface FooterProps {
 export default function Footer({ company, socialLinks, services, areas }: FooterProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
+  const [wechatModalOpen, setWechatModalOpen] = useState(false);
+  const toggleWechatModal = useCallback(() => setWechatModalOpen((prev) => !prev), []);
   const localizedServices = useMemo(() => services.map((s) => ({ slug: s.slug, title: s.title[locale] })), [services, locale]);
 
   const quickLinks = useMemo(() => [
@@ -94,15 +96,17 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                 if (!Icon) return null;
                 if (social.platform === 'wechat') {
                   return (
-                    <span
+                    <button
                       key={social.label}
-                      className="w-9 h-9 rounded-lg flex items-center justify-center cursor-default group"
+                      type="button"
+                      onClick={toggleWechatModal}
+                      className="w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer group"
                       style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
                       title={t('footer.wechatId', { id: wechatId })}
                       aria-label={social.label}
                     >
                       <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
-                    </span>
+                    </button>
                   );
                 }
                 return (
@@ -120,7 +124,6 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                 );
               })}
             </div>
-            <p className="text-sm text-white/60 mt-2">{t('footer.wechatId', { id: wechatId })}</p>
           </div>
 
           {/* Quick Links */}
@@ -214,6 +217,44 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
           <p>{t('footer.licensedInsured')}</p>
         </div>
       </div>
+
+      {/* WeChat QR Code Modal */}
+      {wechatModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+          onClick={toggleWechatModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label="WeChat QR Code"
+        >
+          <div
+            className="relative bg-white rounded-2xl p-6 mx-4 max-w-sm w-full shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={toggleWechatModal}
+              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500 hover:text-gray-700"
+              aria-label="Close"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="text-center">
+              <h3 className="text-lg font-semibold mb-1" style={{ color: NAVY }}>WeChat</h3>
+              <p className="text-sm text-gray-500 mb-4">ID: {wechatId}</p>
+              <Image
+                src="/wechat-qr.png"
+                alt="WeChat QR Code"
+                width={300}
+                height={300}
+                className="mx-auto rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }
