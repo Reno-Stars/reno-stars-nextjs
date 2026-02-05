@@ -50,7 +50,7 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
         <div className="max-w-2xl space-y-5">
-          <Image src={company.logo} alt={company.name} width={220} height={56} priority className="h-14 w-auto object-contain rounded-md bg-white/95 px-4 py-1.5" />
+          <Image src={company.logo} alt={company.name} width={220} height={56} priority className="h-14 w-auto object-contain px-4 py-1.5" />
           <h1 id="hero-title" className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
             {t.transformYourSpace}
           </h1>
