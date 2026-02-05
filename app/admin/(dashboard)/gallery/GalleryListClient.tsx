@@ -4,8 +4,9 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
+import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleGalleryItemPublished } from '@/app/actions/admin/gallery';
-import { GOLD, TEXT_MID } from '@/lib/theme';
+import { GOLD } from '@/lib/theme';
 
 interface GalleryRow {
   id: string;
@@ -41,33 +42,21 @@ export default function GalleryListClient({ items }: Props) {
     {
       key: 'isPublished',
       header: 'Published',
-      render: (row) => {
-        const isRowPending = pendingId === row.id;
-        return (
-          <button
-            type="button"
-            disabled={isRowPending}
-            onClick={() => {
-              setPendingId(row.id);
-              startTransition(async () => {
-                const result = await toggleGalleryItemPublished(row.id, row.isPublished);
-                if (result.error) toast(result.error, 'error');
-                setPendingId(null);
-              });
-            }}
-            aria-label={`Toggle published for ${row.titleEn ?? row.imageUrl}`}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: isRowPending ? 'not-allowed' : 'pointer',
-              color: row.isPublished ? GOLD : TEXT_MID,
-              fontSize: '0.8125rem',
-            }}
-          >
-            {row.isPublished ? 'Yes' : 'No'}
-          </button>
-        );
-      },
+      render: (row) => (
+        <ToggleButton
+          isActive={row.isPublished}
+          isPending={pendingId === row.id}
+          ariaLabel={`Toggle published for ${row.titleEn ?? row.imageUrl}`}
+          onClick={() => {
+            setPendingId(row.id);
+            startTransition(async () => {
+              const result = await toggleGalleryItemPublished(row.id, row.isPublished);
+              if (result.error) toast(result.error, 'error');
+              setPendingId(null);
+            });
+          }}
+        />
+      ),
     },
   ];
 

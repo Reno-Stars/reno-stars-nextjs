@@ -1,11 +1,9 @@
-import { db } from '@/lib/db';
-import { aboutSections } from '@/lib/db/schema';
+import { getAboutSectionsAdmin } from '@/lib/db/queries';
 import AboutForm from './AboutForm';
 import { NAVY } from '@/lib/theme';
 
 export default async function AboutAdminPage() {
-  const rows = await db.select().from(aboutSections).limit(1);
-  const about = rows[0] ?? null;
+  const about = await getAboutSectionsAdmin();
 
   return (
     <div>

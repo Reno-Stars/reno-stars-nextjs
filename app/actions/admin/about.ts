@@ -34,7 +34,8 @@ export async function updateAboutSections(
     const rows = await db.select({ id: aboutSections.id }).from(aboutSections).limit(1);
     if (!rows[0]) return { error: 'About sections row not found. Run db:seed first.' };
 
-    await db.update(aboutSections).set(data).where(eq(aboutSections.id, rows[0].id));
+    const updated = await db.update(aboutSections).set(data).where(eq(aboutSections.id, rows[0].id)).returning({ id: aboutSections.id });
+    if (updated.length === 0) return { error: 'Failed to update about sections.' };
 
     revalidatePath('/', 'layout');
     return { success: true };

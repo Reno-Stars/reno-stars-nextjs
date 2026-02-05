@@ -4,8 +4,9 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
+import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleTrustBadgeActive } from '@/app/actions/admin/trust-badges';
-import { GOLD, TEXT_MID } from '@/lib/theme';
+import { GOLD } from '@/lib/theme';
 
 interface TrustBadgeRow {
   id: string;
@@ -31,33 +32,21 @@ export default function TrustBadgesListClient({ badges }: Props) {
     {
       key: 'isActive',
       header: 'Active',
-      render: (row) => {
-        const isRowPending = pendingId === row.id;
-        return (
-          <button
-            type="button"
-            disabled={isRowPending}
-            onClick={() => {
-              setPendingId(row.id);
-              startTransition(async () => {
-                const result = await toggleTrustBadgeActive(row.id, row.isActive);
-                if (result.error) toast(result.error, 'error');
-                setPendingId(null);
-              });
-            }}
-            aria-label={`Toggle active for ${row.badgeEn}`}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: isRowPending ? 'not-allowed' : 'pointer',
-              color: row.isActive ? GOLD : TEXT_MID,
-              fontSize: '0.8125rem',
-            }}
-          >
-            {row.isActive ? 'Yes' : 'No'}
-          </button>
-        );
-      },
+      render: (row) => (
+        <ToggleButton
+          isActive={row.isActive}
+          isPending={pendingId === row.id}
+          ariaLabel={`Toggle active for ${row.badgeEn}`}
+          onClick={() => {
+            setPendingId(row.id);
+            startTransition(async () => {
+              const result = await toggleTrustBadgeActive(row.id, row.isActive);
+              if (result.error) toast(result.error, 'error');
+              setPendingId(null);
+            });
+          }}
+        />
+      ),
     },
   ];
 

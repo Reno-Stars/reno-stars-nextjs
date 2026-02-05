@@ -490,3 +490,15 @@ export async function getAllGalleryItemsAdmin(): Promise<(typeof galleryItemsTab
 export async function getAllTrustBadgesAdmin(): Promise<(typeof trustBadgesTable.$inferSelect)[]> {
   return db.select().from(trustBadgesTable).orderBy(asc(trustBadgesTable.displayOrder));
 }
+
+/** Fetch about sections (admin — singleton row). */
+export async function getAboutSectionsAdmin(): Promise<(typeof aboutSectionsTable.$inferSelect) | null> {
+  const rows = await db.select().from(aboutSectionsTable).limit(1);
+  return rows[0] ?? null;
+}
+
+/** Fetch showroom info (admin — singleton row). */
+export async function getShowroomInfoAdmin(): Promise<(typeof showroomInfoTable.$inferSelect) | null> {
+  const rows = await db.select().from(showroomInfoTable).limit(1);
+  return rows[0] ?? null;
+}

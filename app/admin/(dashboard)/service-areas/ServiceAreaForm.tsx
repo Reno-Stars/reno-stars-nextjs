@@ -49,6 +49,7 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
+          {/* Slug is display-only (no name attribute) - slugs are immutable after creation */}
           <FormField label="Slug" htmlFor="slug">
             <input id="slug" value={initialData.slug} readOnly style={readOnlyStyle} />
           </FormField>

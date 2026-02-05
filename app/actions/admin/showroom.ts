@@ -6,6 +6,7 @@ import { showroomInfo } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth } from '@/lib/admin/auth';
 import { getString, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { isValidPhone } from '@/lib/utils';
 
 export async function updateShowroomInfo(
   _prevState: { success?: boolean; error?: string },
@@ -37,10 +38,16 @@ export async function updateShowroomInfo(
       return { error: 'Invalid email format.' };
     }
 
+    // Validate phone format if provided
+    if (data.phone && !isValidPhone(data.phone)) {
+      return { error: 'Invalid phone format.' };
+    }
+
     const rows = await db.select({ id: showroomInfo.id }).from(showroomInfo).limit(1);
     if (!rows[0]) return { error: 'Showroom info row not found. Run db:seed first.' };
 
-    await db.update(showroomInfo).set(data).where(eq(showroomInfo.id, rows[0].id));
+    const updated = await db.update(showroomInfo).set(data).where(eq(showroomInfo.id, rows[0].id)).returning({ id: showroomInfo.id });
+    if (updated.length === 0) return { error: 'Failed to update showroom info.' };
 
     revalidatePath('/', 'layout');
     return { success: true };

@@ -1,11 +1,9 @@
-import { db } from '@/lib/db';
-import { showroomInfo } from '@/lib/db/schema';
+import { getShowroomInfoAdmin } from '@/lib/db/queries';
 import ShowroomForm from './ShowroomForm';
 import { NAVY } from '@/lib/theme';
 
 export default async function ShowroomAdminPage() {
-  const rows = await db.select().from(showroomInfo).limit(1);
-  const showroom = rows[0] ?? null;
+  const showroom = await getShowroomInfoAdmin();
 
   return (
     <div>
