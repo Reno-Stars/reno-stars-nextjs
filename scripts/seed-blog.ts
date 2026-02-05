@@ -92,7 +92,7 @@ function extractArticleContent(html: string): { title: string; content: string; 
   if (h1Match) candidates.push(stripHtml(h1Match[1]));
 
   // Pick the first candidate that contains Chinese, or the first non-empty one
-  let title = candidates.find((c) => c && hasChinese(c)) || candidates.find((c) => c) || '';
+  const title = candidates.find((c) => c && hasChinese(c)) || candidates.find((c) => c) || '';
 
   // Try to find article content in common WordPress/Elementor containers
   let content = '';

@@ -212,7 +212,7 @@ export function isValidPhone(phone: string): boolean {
   if (!phone || typeof phone !== 'string') {
     return false;
   }
-  return /^[\d\s\-\(\)\+]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10;
+  return /^[\d\s\-()+]+$/.test(phone) && phone.replace(/\D/g, '').length >= 10;
 }
 
 /**

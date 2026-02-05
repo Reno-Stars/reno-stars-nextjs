@@ -88,19 +88,17 @@ test.describe('Contact Information Display', () => {
   test('should display company phone number', async ({ page }) => {
     await page.goto('/en/contact');
 
-    const phoneLink = page.locator('a[href^="tel:"]');
-    if (await phoneLink.isVisible()) {
-      await expect(phoneLink).toBeVisible();
-    }
+    // Use .first() since there are multiple phone links (nav, content, footer)
+    const phoneLink = page.locator('a[href^="tel:"]').first();
+    await expect(phoneLink).toBeVisible();
   });
 
   test('should display company email', async ({ page }) => {
     await page.goto('/en/contact');
 
-    const emailLink = page.locator('a[href^="mailto:"]');
-    if (await emailLink.isVisible()) {
-      await expect(emailLink).toBeVisible();
-    }
+    // Use .first() since there are multiple email links (nav, content, footer)
+    const emailLink = page.locator('a[href^="mailto:"]').first();
+    await expect(emailLink).toBeVisible();
   });
 
   test('should display company address', async ({ page }) => {
@@ -108,8 +106,6 @@ test.describe('Contact Information Display', () => {
 
     // Look for address element or text containing typical address patterns
     const addressText = page.getByText(/Vancouver|BC|British Columbia/i);
-    if (await addressText.first().isVisible()) {
-      await expect(addressText.first()).toBeVisible();
-    }
+    await expect(addressText.first()).toBeVisible();
   });
 });
