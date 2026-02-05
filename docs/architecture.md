@@ -43,7 +43,7 @@ app/                      # Next.js App Router
 
 components/
   pages/                  # One component per page route
-  home/                   # Homepage section components (11 files)
+  home/                   # Homepage section components (12 files: Hero, ServiceAreas, Testimonials, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
   admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx              # Global navigation (unified, no variants)
@@ -209,6 +209,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
 - **Admin components** (`components/admin/`): DataTable, ProjectForm, BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton.
+- **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons (gold highlight for active). Preference persists in localStorage (`admin_locale` key). All list clients show bilingual content (titleEn/titleZh, questionEn/questionZh, etc.) based on selected locale. Uses `useAdminLocale()` hook. Does not affect SEO (admin is auth-protected).
 
 ## Accessibility
 
