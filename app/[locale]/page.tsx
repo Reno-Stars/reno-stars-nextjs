@@ -51,12 +51,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
-  const { locale } = await params;
+  const { locale: localeParam } = await params;
+  const locale = localeParam as Locale;
   setRequestLocale(locale);
 
-  // Fetch all data in parallel - page waits for complete render (good for SEO)
+  // Fetch all data in parallel
   const [t, company, services, testimonials, aboutSections, gallery, trustBadges, blogPosts, showroom, areas] = await Promise.all([
-    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
     getTestimonialsFromDb(),
@@ -68,24 +69,77 @@ export default async function Page({ params }: PageProps) {
     getServiceAreasFromDb(),
   ]);
 
-  const breadcrumbs = [
-    { name: t('home'), url: `/${locale}/` },
+  // Pre-compute localized data server-side
+  const localizedAreas = areas.map((a) => ({ slug: a.slug, name: a.name[locale] }));
+  const localizedGallery = gallery.map((g) => ({ image: g.image, title: g.title[locale], category: g.category }));
+  const localizedBadges = trustBadges.map((b) => b[locale]);
+  const localizedBlogPosts = blogPosts.slice(0, 5).map((p) => ({ slug: p.slug, title: p.title[locale] }));
+  const localizedShowroom = { address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone };
+  const areasText = localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '…';
+
+  const aboutItems = [
+    { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
+    { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
+    { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
+    { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
+    { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
   ];
+
+  const stats = [
+    { value: '500+', label: t('stats.projectsDone') },
+    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { value: '100%', label: t('stats.satisfaction') },
+    { value: '24/7', label: t('stats.support') },
+  ];
+
+  // All translations computed server-side
+  const translations = {
+    hero: {
+      transformYourSpace: t('hero.transformYourSpace'),
+      professionalExcellenceDesc: t('hero.professionalExcellenceDesc', { experience: company.yearsExperience, coverage: company.liabilityCoverage }),
+      getFreeQuote: t('cta.getFreeQuote'),
+      callNow: t('cta.callNow'),
+      yearsExperience: t('stats.yearsExperience'),
+      liabilityCoverage: t('stats.liabilityCoverage'),
+      rating: t('stats.rating'),
+    },
+    serviceAreas: t('section.serviceAreas'),
+    testimonials: { title: t('section.whatOurClientsSay'), subtitle: t('section.testimonialsSubtitle') },
+    gallery: { title: t('section.ourPortfolio'), subtitle: t('section.gallerySubtitle2'), projectsLink: t('nav.projects') },
+    services: { title: t('section.ourServices'), subtitle: t('section.servicesSubtitle') },
+    stats: { srTitle: t('stats.srStats') },
+    about: { title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') },
+    trustBadges: { srTitle: t('stats.srTrustBadges') },
+    blog: { title: t('section.blogTips'), subtitle: t('section.blogSubtitle') },
+    showroom: { title: t('section.visitShowroom'), bookAppointment: t('cta.bookAppointment') },
+    contact: {
+      title: t('section.getInTouch'),
+      subtitle: t('section.contactSubtitle'),
+      phone: t('label.phone'),
+      email: t('label.email'),
+      serviceAreas: t('section.serviceAreas'),
+    },
+  };
+
+  const breadcrumbs = [{ name: t('nav.home'), url: `/${locale}/` }];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <HomePage
-        locale={locale as Locale}
+        locale={locale}
         company={company}
         services={services}
         testimonials={testimonials}
-        aboutSections={aboutSections}
-        gallery={gallery}
-        trustBadges={trustBadges}
-        blogPosts={blogPosts.slice(0, 5)}
-        showroom={showroom}
-        areas={areas}
+        gallery={localizedGallery}
+        trustBadges={localizedBadges}
+        blogPosts={localizedBlogPosts}
+        showroom={localizedShowroom}
+        areas={localizedAreas}
+        areasText={areasText}
+        aboutItems={aboutItems}
+        stats={stats}
+        translations={translations}
       />
     </>
   );

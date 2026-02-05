@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 // Parse storage URL for image optimization config
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_PROVIDER;
@@ -27,6 +31,12 @@ if (storageUrl) {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: true,
+  // Optimize imports for better tree-shaking
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
+  },
   images: {
     dangerouslyAllowLocalIP: allowLocalIP,
     remotePatterns: [
@@ -380,4 +390,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withBundleAnalyzer(withNextIntl(nextConfig));

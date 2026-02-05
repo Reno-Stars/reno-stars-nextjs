@@ -1,5 +1,3 @@
-'use client';
-
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface AboutSectionProps {

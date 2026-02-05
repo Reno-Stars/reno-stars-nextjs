@@ -1,5 +1,3 @@
-'use client';
-
 import { Star } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Testimonial } from '@/lib/types';

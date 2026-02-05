@@ -1,5 +1,3 @@
-'use client';
-
 import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2, type LucideIcon } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';

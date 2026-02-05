@@ -1,5 +1,3 @@
-'use client';
-
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';

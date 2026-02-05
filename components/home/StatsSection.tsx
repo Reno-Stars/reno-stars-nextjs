@@ -1,5 +1,3 @@
-'use client';
-
 import { NAVY, GOLD } from '@/lib/theme';
 
 interface StatsSectionProps {

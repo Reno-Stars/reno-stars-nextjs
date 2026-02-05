@@ -1,5 +1,3 @@
-'use client';
-
 import { Award } from 'lucide-react';
 import { GOLD, SURFACE_ALT, CARD, TEXT, neu } from '@/lib/theme';
 

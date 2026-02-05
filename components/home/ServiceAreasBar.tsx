@@ -1,5 +1,3 @@
-'use client';
-
 import { Link } from '@/navigation';
 import { GOLD, TEXT_MID, TEXT_MUTED, TEXT, SURFACE_ALT } from '@/lib/theme';
 
