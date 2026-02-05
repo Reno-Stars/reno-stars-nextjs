@@ -259,3 +259,15 @@ export interface SocialLink {
   /** Display label */
   label: string;
 }
+
+/**
+ * A frequently asked question.
+ */
+export interface Faq {
+  /** Unique identifier */
+  id: string;
+  /** Question text */
+  question: Localized<string>;
+  /** Answer text */
+  answer: Localized<string>;
+}

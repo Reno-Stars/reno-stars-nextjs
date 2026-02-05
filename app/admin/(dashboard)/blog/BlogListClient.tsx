@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useMemo } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
+import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { deleteBlogPost, toggleBlogPostPublished } from '@/app/actions/admin/blog';
 import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
 
@@ -12,6 +13,7 @@ interface BlogRow {
   id: string;
   slug: string;
   titleEn: string;
+  titleZh: string;
   author: string | null;
   isPublished: boolean;
   publishedAt: string | Date | null;
@@ -25,9 +27,12 @@ export default function BlogListClient({ posts }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
+  const { locale } = useAdminLocale();
 
-  const columns: Column<BlogRow>[] = [
-    { key: 'titleEn', header: 'Title (EN)', sortable: true },
+  const getTitle = (row: BlogRow) => locale === 'zh' ? row.titleZh : row.titleEn;
+
+  const columns: Column<BlogRow>[] = useMemo(() => [
+    { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
     { key: 'slug', header: 'Slug', sortable: true },
     { key: 'author', header: 'Author' },
     {
@@ -40,7 +45,7 @@ export default function BlogListClient({ posts }: Props) {
             const result = await toggleBlogPostPublished(row.id, row.isPublished);
             if (result.error) toast(result.error, 'error');
           })}
-          aria-label={`Toggle published for ${row.titleEn}`}
+          aria-label={`Toggle published for ${getTitle(row)}`}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
         >
           {row.isPublished ? 'Yes' : 'No'}
@@ -56,7 +61,7 @@ export default function BlogListClient({ posts }: Props) {
         </span>
       ),
     },
-  ];
+  ], [locale, toast]);
 
   const handleDelete = () => {
     if (!deleteId) return;
@@ -74,7 +79,7 @@ export default function BlogListClient({ posts }: Props) {
         columns={columns}
         data={posts}
         getRowKey={(row) => row.id}
-        searchKeys={['titleEn', 'slug', 'author']}
+        searchKeys={['titleEn', 'titleZh', 'slug', 'author']}
         actions={(row) => (
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
             <Link href={`/admin/blog/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>

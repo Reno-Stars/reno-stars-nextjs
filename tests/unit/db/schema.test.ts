@@ -14,6 +14,7 @@ import {
   aboutSections,
   trustBadges,
   socialLinks,
+  faqs,
   serviceTypeEnum,
   contactStatusEnum,
   socialPlatformEnum,
@@ -248,6 +249,33 @@ describe('Database Schema', () => {
       expect(columns).toContain('platform');
       expect(columns).toContain('url');
       expect(columns).toContain('isActive');
+    });
+  });
+
+  describe('FAQs Table', () => {
+    it('should have required columns', () => {
+      const columns = Object.keys(faqs);
+      expect(columns).toContain('id');
+      expect(columns).toContain('questionEn');
+      expect(columns).toContain('questionZh');
+      expect(columns).toContain('answerEn');
+      expect(columns).toContain('answerZh');
+      expect(columns).toContain('displayOrder');
+      expect(columns).toContain('isActive');
+    });
+
+    it('should have i18n fields for question and answer', () => {
+      const columns = Object.keys(faqs);
+      const i18nFields = ['questionEn', 'questionZh', 'answerEn', 'answerZh'];
+      i18nFields.forEach((field) => {
+        expect(columns).toContain(field);
+      });
+    });
+
+    it('should have timestamp columns', () => {
+      const columns = Object.keys(faqs);
+      expect(columns).toContain('createdAt');
+      expect(columns).toContain('updatedAt');
     });
   });
 });

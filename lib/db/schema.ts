@@ -465,6 +465,27 @@ export const trustBadges = pgTable(
 );
 
 // ============================================================================
+// FAQs
+// ============================================================================
+
+/** Frequently Asked Questions with i18n support */
+export const faqs = pgTable(
+  'faqs',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    questionEn: varchar('question_en', { length: 500 }).notNull(),
+    questionZh: varchar('question_zh', { length: 500 }).notNull(),
+    answerEn: text('answer_en').notNull(),
+    answerZh: text('answer_zh').notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+    isActive: boolean('is_active').default(true).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [index('faqs_active_order_idx').on(table.isActive, table.displayOrder)]
+);
+
+// ============================================================================
 // SOCIAL LINKS
 // ============================================================================
 
@@ -530,3 +551,6 @@ export type NewDbTrustBadge = typeof trustBadges.$inferInsert;
 
 export type DbSocialLink = typeof socialLinks.$inferSelect;
 export type NewDbSocialLink = typeof socialLinks.$inferInsert;
+
+export type DbFaq = typeof faqs.$inferSelect;
+export type NewDbFaq = typeof faqs.$inferInsert;

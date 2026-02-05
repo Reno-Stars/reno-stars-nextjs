@@ -12,6 +12,7 @@ import {
   getAboutSectionsFromDb,
   getGalleryItemsFromDb,
   getTrustBadgesFromDb,
+  getFaqsFromDb,
   getBlogPostsFromDb,
   getShowroomFromDb,
   getServiceAreasFromDb,
@@ -62,7 +63,7 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Fetch all data in parallel
-  const [t, company, services, testimonials, aboutSections, gallery, trustBadges, blogPosts, showroom, areas] = await Promise.all([
+  const [t, company, services, testimonials, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas] = await Promise.all([
     getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
@@ -70,6 +71,7 @@ export default async function Page({ params }: PageProps) {
     getAboutSectionsFromDb(),
     getGalleryItemsFromDb(),
     getTrustBadgesFromDb(),
+    getFaqsFromDb(),
     getBlogPostsFromDb(),
     getShowroomFromDb(),
     getServiceAreasFromDb(),
@@ -79,6 +81,7 @@ export default async function Page({ params }: PageProps) {
   const localizedAreas = areas.map((a) => ({ slug: a.slug, name: a.name[locale] }));
   const localizedGallery = gallery.map((g) => ({ image: g.image, title: g.title[locale], category: g.category }));
   const localizedBadges = trustBadges.map((b) => b[locale]);
+  const localizedFaqs = faqs.map((f) => ({ id: f.id, question: f.question[locale], answer: f.answer[locale] }));
   const localizedBlogPosts = blogPosts.slice(0, 5).map((p) => ({ slug: p.slug, title: p.title[locale] }));
   const localizedShowroom = { address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone };
   const areasText = localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '…';
@@ -116,6 +119,7 @@ export default async function Page({ params }: PageProps) {
     stats: { srTitle: t('stats.srStats') },
     about: { title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') },
     trustBadges: { srTitle: t('stats.srTrustBadges') },
+    faq: { title: t('homeFaq.title'), subtitle: t('homeFaq.subtitle') },
     blog: { title: t('section.blogTips'), subtitle: t('section.blogSubtitle') },
     showroom: { title: t('section.visitShowroom'), bookAppointment: t('cta.bookAppointment') },
     contact: {
@@ -140,6 +144,7 @@ export default async function Page({ params }: PageProps) {
         testimonials={testimonials}
         gallery={localizedGallery}
         trustBadges={localizedBadges}
+        faqs={localizedFaqs}
         blogPosts={localizedBlogPosts}
         showroom={localizedShowroom}
         areas={localizedAreas}

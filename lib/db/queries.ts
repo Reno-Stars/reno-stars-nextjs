@@ -16,9 +16,10 @@ import {
   galleryItems as galleryItemsTable,
   trustBadges as trustBadgesTable,
   showroomInfo as showroomInfoTable,
+  faqs as faqsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom } from '../types';
+import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -450,6 +451,25 @@ export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
 });
 
 // ============================================================================
+// FAQ QUERIES
+// ============================================================================
+
+/** Fetch active FAQs ordered by display_order. */
+export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
+  const rows = await db
+    .select()
+    .from(faqsTable)
+    .where(eq(faqsTable.isActive, true))
+    .orderBy(asc(faqsTable.displayOrder));
+
+  return rows.map((row: typeof faqsTable.$inferSelect) => ({
+    id: row.id,
+    question: { en: row.questionEn, zh: row.questionZh },
+    answer: { en: row.answerEn, zh: row.answerZh },
+  }));
+});
+
+// ============================================================================
 // ADMIN-ONLY QUERIES
 // ============================================================================
 
@@ -503,4 +523,9 @@ export async function getAboutSectionsAdmin(): Promise<(typeof aboutSectionsTabl
 export async function getShowroomInfoAdmin(): Promise<(typeof showroomInfoTable.$inferSelect) | null> {
   const rows = await db.select().from(showroomInfoTable).limit(1);
   return rows[0] ?? null;
+}
+
+/** Fetch all FAQs (admin — includes inactive). */
+export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)[]> {
+  return db.select().from(faqsTable).orderBy(asc(faqsTable.displayOrder));
 }

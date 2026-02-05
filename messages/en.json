@@ -472,5 +472,9 @@
     "error": "An error occurred",
     "notFound": "Page not found",
     "backToHome": "Back to Home"
+  },
+  "homeFaq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Common questions about our renovation services"
   }
 }

@@ -18,3 +18,16 @@ export const readOnlyStyle: React.CSSProperties = {
   opacity: 0.7,
   cursor: 'default',
 };
+
+export const textareaStyle: React.CSSProperties = {
+  ...inputStyle,
+  resize: 'vertical' as const,
+  minHeight: '100px',
+};
+
+export const readOnlyTextareaStyle: React.CSSProperties = {
+  ...textareaStyle,
+  opacity: 0.7,
+  cursor: 'default',
+  resize: 'none' as const,
+};

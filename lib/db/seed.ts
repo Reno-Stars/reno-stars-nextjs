@@ -9,6 +9,7 @@ import {
   aboutSections,
   testimonials,
   galleryItems,
+  faqs,
 } from './schema';
 
 async function seed() {
@@ -441,6 +442,37 @@ async function seed() {
     ])
     .onConflictDoNothing({ target: galleryItems.imageUrl });
   console.log('Gallery items seeded');
+
+  // Seed FAQs (idempotent via display_order check)
+  const existingFaqs = await db.select().from(faqs).limit(1);
+  if (existingFaqs.length === 0) {
+    await db.insert(faqs).values([
+      {
+        questionEn: 'What services does Reno Stars provide?',
+        questionZh: 'Reno Stars 提供哪些服务？',
+        answerEn: 'Reno Stars provides comprehensive renovation services including kitchen renovation, bathroom renovation, whole house remodeling, basement finishing, cabinet refacing, and commercial renovations. We handle everything from initial design consultation through final completion.',
+        answerZh: 'Reno Stars 提供广泛的装修服务，包括厨房装修、卫浴装修、全屋改造、地下室装修、橱柜翻新和商业装修。我们负责从初始设计咨询到最终完工的所有事项。',
+        displayOrder: 1,
+      },
+      {
+        questionEn: 'Why choose Reno Stars?',
+        questionZh: '为什么要选择 Reno Stars？',
+        answerEn: 'Reno Stars is committed to delivering high-quality craftsmanship with over 27 years of combined experience. We offer $5M liability coverage, a 3-year warranty on all work, transparent pricing, and a dedicated team of 17 professionals. Our 10/10 HomeStars rating reflects our commitment to customer satisfaction.',
+        answerZh: 'Reno Stars 始终致力于提供高品质的工艺，拥有超过27年的综合经验。我们提供500万美元责任保险、所有工程3年质保、透明定价和17人专业团队。我们的 HomeStars 10/10 评分反映了我们对客户满意度的承诺。',
+        displayOrder: 2,
+      },
+      {
+        questionEn: 'How can I contact Reno Stars?',
+        questionZh: '如何联系 Reno Stars？',
+        answerEn: 'You can reach us by phone at 778-960-7999, email at info@reno-stars.com, or visit our showroom at 21300 Gordon Way, Unit 188, Richmond, BC (by appointment). We also respond to inquiries via WeChat, WhatsApp, Instagram, and Facebook.',
+        answerZh: '您可以通过电话 778-960-7999、邮箱 info@reno-stars.com 联系我们，或预约参观我们位于 Richmond 的展厅（21300 Gordon Way, Unit 188）。我们也通过微信、WhatsApp、Instagram 和 Facebook 回复咨询。',
+        displayOrder: 3,
+      },
+    ]);
+    console.log('FAQs seeded');
+  } else {
+    console.log('FAQs already exist, skipping');
+  }
 
   console.log('Database seeded successfully!');
 }

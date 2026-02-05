@@ -16,6 +16,7 @@ const links = [
   { href: '/admin/service-areas', label: 'Service Areas' },
   { href: '/admin/gallery', label: 'Gallery' },
   { href: '/admin/trust-badges', label: 'Trust Badges' },
+  { href: '/admin/faqs', label: 'FAQs' },
   { href: '/admin/showroom', label: 'Showroom' },
   { href: '/admin/about', label: 'About' },
 ];
