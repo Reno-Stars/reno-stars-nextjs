@@ -24,9 +24,10 @@ Components in `components/structured-data/`:
 | `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific business info) |
 | `ServiceSchema` | Service | Service detail pages |
 | `ProjectSchema` | CreativeWork | Project detail pages (with images, location, service type) |
-| `ArticleSchema` | Article | Blog post pages |
+| `ArticleSchema` | Article | Blog post pages (includes `image` prop for featured image) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
+| `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (testimonials with ratings) |
 
 ## robots.txt
 
@@ -50,6 +51,7 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 - Navbar dropdown uses `role="menu"` / `role="menuitem"`
 - Decorative elements (video, star icons) have `aria-hidden="true"`
 - CTA links use descriptive text (e.g., "Explore Kitchen Renovation" instead of generic "Learn More")
+- Hero background image has descriptive alt text for SEO despite being decorative (crawlers index alt text)
 
 ## Project URL Structure
 
@@ -117,6 +119,34 @@ Next.js `<Image>` component configured for two remote patterns:
 // Local MinIO
 { protocol: 'http', hostname: 'localhost', port: '9000', pathname: '/reno-stars/**' }
 ```
+
+## OpenGraph Images
+
+Pages use page-specific images where available for better social sharing:
+
+| Page Type | OG Image Source |
+|-----------|-----------------|
+| Homepage | Hero image |
+| Blog posts | `post.featured_image` (fallback: hero) |
+| Projects | `project.hero_image` |
+| Service detail | `service.image` (fallback: hero) |
+| Service + location | `service.image` (fallback: hero) |
+| Hub pages | Hero image |
+
+## Twitter Cards
+
+All pages include Twitter Card meta tags for optimized social sharing:
+
+**Root layout** (`app/layout.tsx`) sets default Twitter card configuration:
+```tsx
+twitter: {
+  card: 'summary_large_image',
+  site: '@renostars',
+  creator: '@renostars',
+}
+```
+
+Individual pages override with page-specific titles, descriptions, and images.
 
 ## Canonical URLs
 
