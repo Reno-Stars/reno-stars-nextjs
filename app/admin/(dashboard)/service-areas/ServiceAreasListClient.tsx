@@ -4,39 +4,31 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
-import { toggleSocialLinkActive } from '@/app/actions/admin/social-links';
+import { toggleServiceAreaActive } from '@/app/actions/admin/service-areas';
 import { GOLD, TEXT_MID } from '@/lib/theme';
 
-interface SocialLinkRow {
+interface ServiceAreaRow {
   id: string;
-  platform: string;
-  url: string;
-  label: string | null;
+  slug: string;
+  nameEn: string;
+  nameZh: string;
   displayOrder: number;
   isActive: boolean;
 }
 
 interface Props {
-  socialLinks: SocialLinkRow[];
+  areas: ServiceAreaRow[];
 }
 
-export default function SocialLinksListClient({ socialLinks }: Props) {
+export default function ServiceAreasListClient({ areas }: Props) {
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const columns: Column<SocialLinkRow>[] = [
-    { key: 'platform', header: 'Platform', sortable: true },
-    { key: 'label', header: 'Label', sortable: true },
-    {
-      key: 'url',
-      header: 'URL',
-      render: (row) => (
-        <span title={row.url} style={{ fontSize: '0.8125rem' }}>
-          {row.url.length > 40 ? row.url.slice(0, 40) + '…' : row.url}
-        </span>
-      ),
-    },
+  const columns: Column<ServiceAreaRow>[] = [
+    { key: 'slug', header: 'Slug', sortable: true },
+    { key: 'nameEn', header: 'Name (EN)', sortable: true },
+    { key: 'nameZh', header: 'Name (ZH)' },
     { key: 'displayOrder', header: 'Order', sortable: true },
     {
       key: 'isActive',
@@ -50,12 +42,12 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
             onClick={() => {
               setPendingId(row.id);
               startTransition(async () => {
-                const result = await toggleSocialLinkActive(row.id, row.isActive);
+                const result = await toggleServiceAreaActive(row.id, row.isActive);
                 if (result.error) toast(result.error, 'error');
                 setPendingId(null);
               });
             }}
-            aria-label={`Toggle active for ${row.platform}`}
+            aria-label={`Toggle active for ${row.nameEn}`}
             style={{
               background: 'none',
               border: 'none',
@@ -74,12 +66,12 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
   return (
     <DataTable
       columns={columns}
-      data={socialLinks}
+      data={areas}
       getRowKey={(row) => row.id}
-      searchKeys={['platform', 'label']}
+      searchKeys={['slug', 'nameEn', 'nameZh']}
       actions={(row) => (
         <Link
-          href={`/admin/social-links/${row.id}`}
+          href={`/admin/service-areas/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
           Edit

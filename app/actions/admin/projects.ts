@@ -11,6 +11,7 @@ import {
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { ensureUniqueSlug } from '@/lib/utils';
 
 const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
@@ -127,6 +128,10 @@ export async function createProject(
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
 
+    // Ensure slug is unique (append -2, -3, etc. if collision)
+    const allSlugs = await db.select({ slug: projects.slug }).from(projects);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+
     const [inserted] = await db
       .insert(projects)
       .values({
@@ -201,6 +206,12 @@ export async function updateProject(
     if (!svcRows[0]) {
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
+
+    // Ensure slug is unique (exclude current project's own slug)
+    const currentProject = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
+    const currentSlug = currentProject[0]?.slug;
+    const allSlugs = await db.select({ slug: projects.slug }).from(projects);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
     const scopeData = parseScopes(formData);
 

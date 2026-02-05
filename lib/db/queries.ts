@@ -452,7 +452,7 @@ export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
 // ============================================================================
 
 /** Fetch all social links (admin — includes inactive). */
-export async function getAllSocialLinksAdmin() {
+export async function getAllSocialLinksAdmin(): Promise<(typeof socialLinksTable.$inferSelect)[]> {
   return db.select().from(socialLinksTable).orderBy(asc(socialLinksTable.displayOrder));
 }
 
@@ -474,4 +474,19 @@ export async function getAllBlogPostsAdmin() {
 /** Fetch all contact submissions (admin). */
 export async function getAllContactsAdmin() {
   return db.select().from(contactSubmissionsTable).orderBy(desc(contactSubmissionsTable.createdAt));
+}
+
+/** Fetch all service areas (admin — includes inactive). */
+export async function getAllServiceAreasAdmin(): Promise<(typeof serviceAreasTable.$inferSelect)[]> {
+  return db.select().from(serviceAreasTable).orderBy(asc(serviceAreasTable.displayOrder));
+}
+
+/** Fetch all gallery items (admin — includes unpublished). */
+export async function getAllGalleryItemsAdmin(): Promise<(typeof galleryItemsTable.$inferSelect)[]> {
+  return db.select().from(galleryItemsTable).orderBy(asc(galleryItemsTable.displayOrder));
+}
+
+/** Fetch all trust badges (admin — includes inactive). */
+export async function getAllTrustBadgesAdmin(): Promise<(typeof trustBadgesTable.$inferSelect)[]> {
+  return db.select().from(trustBadgesTable).orderBy(asc(trustBadgesTable.displayOrder));
 }

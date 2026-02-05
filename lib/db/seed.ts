@@ -324,7 +324,7 @@ async function seed() {
       },
       {
         platform: 'whatsapp',
-        url: 'https://wa.me/17889607999',
+        url: 'https://wa.me/17789607999',
         label: 'WhatsApp',
         displayOrder: 5,
       },

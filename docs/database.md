@@ -130,14 +130,25 @@ These functions return the same TypeScript types as the former static data expor
 
 ### Admin Queries
 
-Uncached query functions for the admin dashboard (return raw DB rows):
+Uncached query functions for the admin dashboard (return raw DB rows with explicit return types):
 
 ```typescript
 import {
-  getAllProjectsAdmin, getAllServicesAdmin,
-  getAllTestimonialsAdmin, getAllBlogPostsAdmin, getAllContactsAdmin,
+  getAllProjectsAdmin,      // DbProject[] with images/scopes
+  getAllServicesAdmin,      // DbService[]
+  getAllTestimonialsAdmin,  // DbTestimonial[]
+  getAllBlogPostsAdmin,     // DbBlogPost[]
+  getAllContactsAdmin,      // DbContactSubmission[]
+  getAllSocialLinksAdmin,   // DbSocialLink[] — includes inactive
+  getAllServiceAreasAdmin,  // DbServiceArea[] — includes inactive
+  getAllGalleryItemsAdmin,  // DbGalleryItem[] — includes unpublished
+  getAllTrustBadgesAdmin,   // DbTrustBadge[] — includes inactive
 } from '@/lib/db/queries';
 ```
+
+### Slug Uniqueness
+
+Project slugs have a unique index in the database. The admin actions use `ensureUniqueSlug()` from `lib/utils.ts` to auto-append `-2`, `-3`, etc. on collision before insert/update. This prevents duplicate URL errors while keeping the first project's URL clean.
 
 ## Configuration
 

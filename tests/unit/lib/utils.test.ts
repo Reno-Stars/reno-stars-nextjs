@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   getBaseUrl,
   formatSlug,
+  ensureUniqueSlug,
   truncate,
   capitalize,
   formatCurrency,
@@ -375,6 +376,58 @@ describe('Object Utilities', () => {
 
       expect(clone.arr).toEqual(original.arr);
       expect(clone.arr).not.toBe(original.arr);
+    });
+  });
+});
+
+describe('Slug Utilities', () => {
+  describe('ensureUniqueSlug', () => {
+    it('should return slug unchanged when no collision', () => {
+      const existingSlugs = ['kitchen-renovation', 'bathroom-remodel'];
+      expect(ensureUniqueSlug('new-project', existingSlugs)).toBe('new-project');
+    });
+
+    it('should append -2 on first collision', () => {
+      const existingSlugs = ['kitchen-renovation', 'bathroom-remodel'];
+      expect(ensureUniqueSlug('kitchen-renovation', existingSlugs)).toBe('kitchen-renovation-2');
+    });
+
+    it('should append -3 when -2 is also taken', () => {
+      const existingSlugs = ['kitchen-renovation', 'kitchen-renovation-2'];
+      expect(ensureUniqueSlug('kitchen-renovation', existingSlugs)).toBe('kitchen-renovation-3');
+    });
+
+    it('should find next available suffix with multiple collisions', () => {
+      const existingSlugs = [
+        'project',
+        'project-2',
+        'project-3',
+        'project-4',
+      ];
+      expect(ensureUniqueSlug('project', existingSlugs)).toBe('project-5');
+    });
+
+    it('should handle empty existing slugs array', () => {
+      expect(ensureUniqueSlug('any-slug', [])).toBe('any-slug');
+    });
+
+    it('should exclude specified slug (for updates)', () => {
+      const existingSlugs = ['kitchen-renovation', 'bathroom-remodel'];
+      // When updating, the project's own slug should not count as a collision
+      expect(ensureUniqueSlug('kitchen-renovation', existingSlugs, 'kitchen-renovation')).toBe('kitchen-renovation');
+    });
+
+    it('should still deduplicate when excludeSlug is different', () => {
+      const existingSlugs = ['kitchen-renovation', 'bathroom-remodel'];
+      // Updating bathroom-remodel but trying to change slug to kitchen-renovation
+      expect(ensureUniqueSlug('kitchen-renovation', existingSlugs, 'bathroom-remodel')).toBe('kitchen-renovation-2');
+    });
+
+    it('should handle excludeSlug with suffix collisions', () => {
+      const existingSlugs = ['project', 'project-2', 'project-3'];
+      // Updating project-2, trying to change to just 'project'
+      // Since project-2 is excluded, it becomes available as the first suffix
+      expect(ensureUniqueSlug('project', existingSlugs, 'project-2')).toBe('project-2');
     });
   });
 });

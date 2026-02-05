@@ -50,6 +50,16 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 - Decorative elements (video, star icons) have `aria-hidden="true"`
 - CTA links use descriptive text (e.g., "Explore Kitchen Renovation" instead of generic "Learn More")
 
+## Project URL Structure
+
+Project URLs follow the pattern `/[locale]/projects/[slug]/` where slugs are human-readable, SEO-friendly strings derived from project titles.
+
+- **First project:** `/projects/stunning-home-renovation-langley/`
+- **Duplicate title:** `/projects/stunning-home-renovation-langley-2/`
+- **Third duplicate:** `/projects/stunning-home-renovation-langley-3/`
+
+Keywords appear first in the URL; numeric suffix only appended when necessary to prevent collisions. This is handled automatically by `ensureUniqueSlug()` during project creation/update.
+
 ## Redirects
 
 `next.config.ts` contains 50+ permanent (301) redirects organized into categories:

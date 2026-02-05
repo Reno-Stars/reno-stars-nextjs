@@ -38,6 +38,31 @@ export function formatSlug(text: string): string {
 }
 
 /**
+ * Ensures a slug is unique by appending a numeric suffix if needed.
+ * Checks existing slugs and appends -2, -3, etc. on collision.
+ * @param slug - The desired slug
+ * @param existingSlugs - Array of slugs already in use
+ * @param excludeSlug - Optional slug to exclude from collision check (for updates)
+ * @returns A unique slug string
+ * @example ensureUniqueSlug('my-project', ['my-project', 'my-project-2']) // 'my-project-3'
+ */
+export function ensureUniqueSlug(
+  slug: string,
+  existingSlugs: string[],
+  excludeSlug?: string
+): string {
+  const taken = new Set(existingSlugs.filter((s) => s !== excludeSlug));
+  if (!taken.has(slug)) return slug;
+
+  let suffix = 2;
+  const MAX_SUFFIX = 1000;
+  while (taken.has(`${slug}-${suffix}`) && suffix < MAX_SUFFIX) {
+    suffix++;
+  }
+  return `${slug}-${suffix}`;
+}
+
+/**
  * Truncates text to a specified length with ellipsis.
  * @param text - The text to truncate
  * @param length - Maximum length before truncation

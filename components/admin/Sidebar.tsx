@@ -13,6 +13,11 @@ const links = [
   { href: '/admin/blog', label: 'Blog' },
   { href: '/admin/contacts', label: 'Contacts' },
   { href: '/admin/social-links', label: 'Social Links' },
+  { href: '/admin/service-areas', label: 'Service Areas' },
+  { href: '/admin/gallery', label: 'Gallery' },
+  { href: '/admin/trust-badges', label: 'Trust Badges' },
+  { href: '/admin/showroom', label: 'Showroom' },
+  { href: '/admin/about', label: 'About' },
 ];
 
 export default function Sidebar() {

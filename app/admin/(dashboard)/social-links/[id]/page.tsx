@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { socialLinks } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { isValidUUID } from '@/lib/admin/auth';
 import SocialLinkForm from '../SocialLinkForm';
 import { updateSocialLink } from '@/app/actions/admin/social-links';
 import { NAVY } from '@/lib/theme';
@@ -12,6 +13,7 @@ interface PageProps {
 
 export default async function EditSocialLinkPage({ params }: PageProps) {
   const { id } = await params;
+  if (!isValidUUID(id)) notFound();
   const rows = await db.select().from(socialLinks).where(eq(socialLinks.id, id)).limit(1);
   const socialLink = rows[0];
   if (!socialLink) notFound();

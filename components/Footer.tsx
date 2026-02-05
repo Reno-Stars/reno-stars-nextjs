@@ -67,6 +67,12 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
     { href: '/blog', label: t('nav.blogAndNews') },
   ], [t]);
 
+  const whyUsStats = useMemo(() => [
+    { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
+    { key: 'liability', val: company.liabilityCoverage, lbl: t('stats.liabilityCoverage') },
+    { key: 'rating', val: company.rating, lbl: `${company.ratingSource} ${t('stats.rating')}` },
+  ], [company, t]);
+
   return (
     <footer className="py-10" style={{ backgroundColor: NAVY }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -174,11 +180,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
           <div>
             <h4 className="text-white font-semibold text-sm mb-4">{t('section.whyUs')}</h4>
             <div className="space-y-2">
-              {[
-                { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
-                { key: 'liability', val: company.liabilityCoverage, lbl: t('stats.liabilityCoverage') },
-                { key: 'rating', val: company.rating, lbl: `${company.ratingSource} ${t('stats.rating')}` },
-              ].map((stat) => (
+              {whyUsStats.map((stat) => (
                 <div key={stat.key} className="flex items-center gap-2">
                   <span className="text-sm font-bold" style={{ color: GOLD }}>{stat.val}</span>
                   <span className="text-sm text-white/70">{stat.lbl}</span>

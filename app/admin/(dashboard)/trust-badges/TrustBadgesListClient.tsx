@@ -4,39 +4,29 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
-import { toggleSocialLinkActive } from '@/app/actions/admin/social-links';
+import { toggleTrustBadgeActive } from '@/app/actions/admin/trust-badges';
 import { GOLD, TEXT_MID } from '@/lib/theme';
 
-interface SocialLinkRow {
+interface TrustBadgeRow {
   id: string;
-  platform: string;
-  url: string;
-  label: string | null;
+  badgeEn: string;
+  badgeZh: string;
   displayOrder: number;
   isActive: boolean;
 }
 
 interface Props {
-  socialLinks: SocialLinkRow[];
+  badges: TrustBadgeRow[];
 }
 
-export default function SocialLinksListClient({ socialLinks }: Props) {
+export default function TrustBadgesListClient({ badges }: Props) {
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const columns: Column<SocialLinkRow>[] = [
-    { key: 'platform', header: 'Platform', sortable: true },
-    { key: 'label', header: 'Label', sortable: true },
-    {
-      key: 'url',
-      header: 'URL',
-      render: (row) => (
-        <span title={row.url} style={{ fontSize: '0.8125rem' }}>
-          {row.url.length > 40 ? row.url.slice(0, 40) + '…' : row.url}
-        </span>
-      ),
-    },
+  const columns: Column<TrustBadgeRow>[] = [
+    { key: 'badgeEn', header: 'Badge (EN)', sortable: true },
+    { key: 'badgeZh', header: 'Badge (ZH)' },
     { key: 'displayOrder', header: 'Order', sortable: true },
     {
       key: 'isActive',
@@ -50,12 +40,12 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
             onClick={() => {
               setPendingId(row.id);
               startTransition(async () => {
-                const result = await toggleSocialLinkActive(row.id, row.isActive);
+                const result = await toggleTrustBadgeActive(row.id, row.isActive);
                 if (result.error) toast(result.error, 'error');
                 setPendingId(null);
               });
             }}
-            aria-label={`Toggle active for ${row.platform}`}
+            aria-label={`Toggle active for ${row.badgeEn}`}
             style={{
               background: 'none',
               border: 'none',
@@ -74,12 +64,12 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
   return (
     <DataTable
       columns={columns}
-      data={socialLinks}
+      data={badges}
       getRowKey={(row) => row.id}
-      searchKeys={['platform', 'label']}
+      searchKeys={['badgeEn', 'badgeZh']}
       actions={(row) => (
         <Link
-          href={`/admin/social-links/${row.id}`}
+          href={`/admin/trust-badges/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
           Edit

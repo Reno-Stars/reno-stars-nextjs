@@ -36,7 +36,7 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 - **276 statically generated pages** across 13 route patterns
 - **Bilingual:** Full English/Chinese support with `next-intl`, locale-prefixed URLs
 - **Database-driven:** Company info, services, social links, testimonials, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info fetched from PostgreSQL via cached query layer (`lib/db/queries.ts`)
-- **Admin dashboard:** Auth-protected CRUD for projects, blog, testimonials, contacts, company info, and services at `/admin/`
+- **Admin dashboard:** Auth-protected CRUD for all 12 content types at `/admin/` (projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, showroom, about sections)
 - **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (6 schema types), 50+ WordPress redirects, security headers via proxy
 - **Neumorphic design:** Custom warm-beige design system with shadow utilities
 - **Accessible:** Elderly-friendly large text mode for contact forms, responsive hero scaling, valid heading hierarchy, lightbox `aria-live` counter, keyboard focus traps

@@ -96,10 +96,12 @@ lib/
     areas.ts              # Area localization helper (getLocalizedArea)
   admin/
     auth.ts               # Session cookie auth (24h TTL)
+    form-utils.ts         # Form validation (getString, isValidUrl, validateTextLengths, etc.)
+    gallery-categories.ts # Shared gallery category constants
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
   types.ts                # Core TypeScript types
   theme.ts                # Neumorphic design tokens + shadow helpers
-  utils.ts                # String, array, date, validation utilities
+  utils.ts                # String, array, date, validation utilities, ensureUniqueSlug()
 
 proxy.ts                  # Request proxy (i18n routing + admin auth + security headers)
 
@@ -125,13 +127,14 @@ tests/
 
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Hybrid data model:** Company info, services, social links, testimonials, about sections, **projects**, service areas, blog posts, gallery items, trust badges, and showroom info are fetched from the database via `lib/db/queries.ts`. Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
-- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getTestimonialsFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. Admin-only uncached queries also available.
+- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getTestimonialsFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllTestimonialsAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`.
 - **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
 - **Lazy DB proxy:** `db` export uses a Proxy that only connects on first query. Safe to import at build time.
 - **Dual DB driver:** `DATABASE_URL` containing `neon.tech` → Neon HTTP driver; otherwise → `pg` Pool.
 - **Asset URL rewriting:** `getAssetUrl()` rewrites production URLs to MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 - **Neumorphic design:** Warm beige surface (#E8E2DA), navy (#1B365D), gold (#C8922A) palette.
+- **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when project slugs collide. Used by `createProject()` and `updateProject()` admin actions.
 
 ## Environment Variables
 
@@ -174,7 +177,7 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for projects, blog, testimonials, contacts, company, services. Uses `components/admin/` and `app/actions/admin/`.
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, etc.) and `app/actions/admin/`.
 - **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop.
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
 - **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.

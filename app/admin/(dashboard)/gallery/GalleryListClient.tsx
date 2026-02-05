@@ -4,43 +4,43 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import { useToast } from '@/components/admin/ToastProvider';
-import { toggleSocialLinkActive } from '@/app/actions/admin/social-links';
+import { toggleGalleryItemPublished } from '@/app/actions/admin/gallery';
 import { GOLD, TEXT_MID } from '@/lib/theme';
 
-interface SocialLinkRow {
+interface GalleryRow {
   id: string;
-  platform: string;
-  url: string;
-  label: string | null;
+  imageUrl: string;
+  titleEn: string | null;
+  category: string;
   displayOrder: number;
-  isActive: boolean;
+  isPublished: boolean;
 }
 
 interface Props {
-  socialLinks: SocialLinkRow[];
+  items: GalleryRow[];
 }
 
-export default function SocialLinksListClient({ socialLinks }: Props) {
+export default function GalleryListClient({ items }: Props) {
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const columns: Column<SocialLinkRow>[] = [
-    { key: 'platform', header: 'Platform', sortable: true },
-    { key: 'label', header: 'Label', sortable: true },
+  const columns: Column<GalleryRow>[] = [
     {
-      key: 'url',
-      header: 'URL',
+      key: 'imageUrl',
+      header: 'Image',
       render: (row) => (
-        <span title={row.url} style={{ fontSize: '0.8125rem' }}>
-          {row.url.length > 40 ? row.url.slice(0, 40) + '…' : row.url}
+        <span title={row.imageUrl} style={{ fontSize: '0.8125rem' }}>
+          {row.imageUrl.length > 35 ? '…' + row.imageUrl.slice(-35) : row.imageUrl}
         </span>
       ),
     },
+    { key: 'titleEn', header: 'Title (EN)', sortable: true },
+    { key: 'category', header: 'Category', sortable: true },
     { key: 'displayOrder', header: 'Order', sortable: true },
     {
-      key: 'isActive',
-      header: 'Active',
+      key: 'isPublished',
+      header: 'Published',
       render: (row) => {
         const isRowPending = pendingId === row.id;
         return (
@@ -50,21 +50,21 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
             onClick={() => {
               setPendingId(row.id);
               startTransition(async () => {
-                const result = await toggleSocialLinkActive(row.id, row.isActive);
+                const result = await toggleGalleryItemPublished(row.id, row.isPublished);
                 if (result.error) toast(result.error, 'error');
                 setPendingId(null);
               });
             }}
-            aria-label={`Toggle active for ${row.platform}`}
+            aria-label={`Toggle published for ${row.titleEn ?? row.imageUrl}`}
             style={{
               background: 'none',
               border: 'none',
               cursor: isRowPending ? 'not-allowed' : 'pointer',
-              color: row.isActive ? GOLD : TEXT_MID,
+              color: row.isPublished ? GOLD : TEXT_MID,
               fontSize: '0.8125rem',
             }}
           >
-            {row.isActive ? 'Yes' : 'No'}
+            {row.isPublished ? 'Yes' : 'No'}
           </button>
         );
       },
@@ -74,12 +74,12 @@ export default function SocialLinksListClient({ socialLinks }: Props) {
   return (
     <DataTable
       columns={columns}
-      data={socialLinks}
+      data={items}
       getRowKey={(row) => row.id}
-      searchKeys={['platform', 'label']}
+      searchKeys={['titleEn', 'category']}
       actions={(row) => (
         <Link
-          href={`/admin/social-links/${row.id}`}
+          href={`/admin/gallery/${row.id}`}
           style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
         >
           Edit
