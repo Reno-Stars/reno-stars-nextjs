@@ -12,6 +12,7 @@ const links = [
   { href: '/admin/testimonials', label: 'Testimonials' },
   { href: '/admin/blog', label: 'Blog' },
   { href: '/admin/contacts', label: 'Contacts' },
+  { href: '/admin/social-links', label: 'Social Links' },
 ];
 
 export default function Sidebar() {

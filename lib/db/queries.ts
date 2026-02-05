@@ -451,6 +451,11 @@ export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
 // ADMIN-ONLY QUERIES
 // ============================================================================
 
+/** Fetch all social links (admin — includes inactive). */
+export async function getAllSocialLinksAdmin() {
+  return db.select().from(socialLinksTable).orderBy(asc(socialLinksTable.displayOrder));
+}
+
 /** Fetch all services (admin — includes all fields). */
 export async function getAllServicesAdmin() {
   return db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
