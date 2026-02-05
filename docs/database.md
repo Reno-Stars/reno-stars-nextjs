@@ -38,6 +38,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `gallery_items` | Gallery images | `id`, `image_url` (unique index) |
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
+| `faqs` | Frequently asked questions | `id`, composite index on `(isActive, displayOrder)` |
 
 ### Enums
 
@@ -80,6 +81,7 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 - About sections (bilingual, with `{yearsExperience}` placeholder in `ourJourney`)
 - 3 featured testimonials
 - 6 gallery items (uses `onConflictDoNothing` on `imageUrl` unique index)
+- 5 FAQs with bilingual content (uses `{yearsExperience}` placeholder in answers)
 
 All seed operations use `onConflictDoNothing` for idempotency.
 
@@ -124,6 +126,7 @@ const postSlugs = await getBlogPostSlugsFromDb();       // string[]
 const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
 const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
 const showroom = await getShowroomFromDb();             // Showroom
+const faqs = await getFaqsFromDb();                      // Faq[] (replaces {yearsExperience} placeholder)
 ```
 
 These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are capitalized in the query layer (`'whole-house'` → `'Whole House'`).
@@ -143,6 +146,7 @@ import {
   getAllServiceAreasAdmin,  // DbServiceArea[] — includes inactive
   getAllGalleryItemsAdmin,  // DbGalleryItem[] — includes unpublished
   getAllTrustBadgesAdmin,   // DbTrustBadge[] — includes inactive
+  getAllFaqsAdmin,          // DbFaq[] — includes inactive
 } from '@/lib/db/queries';
 ```
 

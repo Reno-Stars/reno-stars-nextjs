@@ -79,8 +79,8 @@ app/
 
 components/
   pages/                  # Page-level components (one per route)
-  home/                   # Homepage section components (11 files, 9 Server + 2 Client)
-  admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
+  home/                   # Homepage section components (12 files: Hero, ServiceAreas, Testimonials, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
+  admin/                  # Admin UI components (DataTable, ProjectForm, AdminLocaleProvider, TopBar, Sidebar, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, etc.
 
@@ -178,7 +178,8 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 13 content types: projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, etc.) and `app/actions/admin/`.
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 13 content types: projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
+- **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons. Preference persists in localStorage (`admin_locale` key). All list clients (projects, blog, FAQs, testimonials, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
 - **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Includes: LocalBusinessSchema (layout), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages), ReviewSchema (homepage testimonials).
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
 - **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.
