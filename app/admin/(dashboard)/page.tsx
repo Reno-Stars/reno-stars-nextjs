@@ -15,6 +15,13 @@ import {
 import { count, eq } from 'drizzle-orm';
 import { CARD, NAVY, TEXT_MID, GOLD, neu } from '@/lib/theme';
 
+interface DashboardCard {
+  label: string;
+  value: number;
+  href: string;
+  highlight?: boolean;
+}
+
 async function getStats() {
   const [
     projectCount,
@@ -60,7 +67,7 @@ async function getStats() {
 export default async function DashboardPage() {
   const stats = await getStats();
 
-  const cards = [
+  const cards: DashboardCard[] = [
     { label: 'Projects', value: stats.projects, href: '/admin/projects' },
     { label: 'Services', value: stats.services, href: '/admin/services' },
     { label: 'Testimonials', value: stats.testimonials, href: '/admin/testimonials' },
