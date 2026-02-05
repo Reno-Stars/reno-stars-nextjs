@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
@@ -21,12 +21,18 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [formStatus, setFormStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({ type: 'idle', message: '' });
   const [isPending, startTransition] = useTransition();
+  const successTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    return () => { if (successTimerRef.current) clearTimeout(successTimerRef.current); };
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus({ type: 'idle', message: '' });
 
@@ -35,12 +41,14 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
       if (result.success) {
         setFormStatus({ type: 'success', message: t('form.success') });
         setFormData({ name: '', email: '', phone: '', message: '' });
-        onSuccess?.();
+        if (onSuccess) {
+          successTimerRef.current = setTimeout(onSuccess, 1500);
+        }
       } else {
-        setFormStatus({ type: 'error', message: t('form.error') });
+        setFormStatus({ type: 'error', message: result.message || t('form.error') });
       }
     });
-  };
+  }, [formData, t, onSuccess]);
 
   return (
     <form onSubmit={handleSubmit} className={large ? 'space-y-6' : 'space-y-5'}>

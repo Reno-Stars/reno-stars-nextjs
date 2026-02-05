@@ -186,10 +186,20 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
 - **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop.
-- **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu.
+- **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
-- **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout.
+- **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
+- **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
 - **Admin components** (`components/admin/`): DataTable, ProjectForm, BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider.
+
+## Accessibility
+
+- **Elderly-friendly text**: The `ContactForm` component supports a `large` prop that increases input text to `text-lg` with larger padding (`py-3.5` / `py-4`) for better readability. Used on the homepage contact section.
+- **Hero text scaling**: Hero titles use responsive scaling up to `lg:text-6xl` for desktop readability.
+- **Heading hierarchy**: All pages maintain valid H1 → H2 → H3 structure. Use `sr-only` for structurally required but visually redundant headings.
+- **Lightbox accessibility**: Image lightbox includes `aria-live="polite"` counter, keyboard-accessible open/close handlers via `useCallback`.
+- **Navbar focus trap**: Mobile menu implements focus trap with Escape key close and Tab cycling.
+- **Functional updater pattern**: Toggle state setters use `setX((prev) => !prev)` to prevent stale closures in event handlers.
 
 ## Database Connection
 

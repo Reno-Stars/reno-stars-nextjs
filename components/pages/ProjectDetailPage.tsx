@@ -12,7 +12,7 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -34,6 +34,25 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
   const handleCardClick = useCallback((p: LocalizedProject) => {
     setSelectedProject(p);
+  }, []);
+
+  const handleModalClose = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
+
+  const handleLightboxClose = useCallback(() => {
+    setLightboxOpen(false);
+  }, []);
+
+  const handleLightboxOpen = useCallback(() => {
+    setLightboxOpen(true);
+  }, []);
+
+  const handleLightboxKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setLightboxOpen(true);
+    }
   }, []);
 
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
@@ -72,8 +91,8 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 role="button"
                 tabIndex={0}
                 aria-label={t('projects.openLightbox')}
-                onClick={() => setLightboxOpen(true)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxOpen(true); } }}
+                onClick={handleLightboxOpen}
+                onKeyDown={handleLightboxKeyDown}
               >
                 <Image
                   src={localizedProject.images[activeImageIndex]?.src || localizedProject.hero_image}
@@ -263,7 +282,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
       <ProjectModal
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={handleModalClose}
       />
 
       {/* Lightbox */}
@@ -273,7 +292,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           heroImage={localizedProject.hero_image}
           title={localizedProject.title}
           activeIndex={activeImageIndex}
-          onClose={() => setLightboxOpen(false)}
+          onClose={handleLightboxClose}
           onPrev={prevImage}
           onNext={nextImage}
           t={t}
@@ -360,6 +379,9 @@ function LightboxDialog({
       >
         <ChevronRight className="w-6 h-6 text-white" aria-hidden="true" />
       </button>
+      <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/70" aria-live="polite">
+        {activeIndex + 1} / {images.length}
+      </span>
       <div className="relative w-full max-w-4xl aspect-[4/3] mx-4" onClick={(e) => e.stopPropagation()}>
         <Image
           src={images[activeIndex]?.src || heroImage}

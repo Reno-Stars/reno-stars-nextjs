@@ -1,9 +1,9 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Shield, Clock, Award, Users, Wrench, CheckCircle } from 'lucide-react';
 import { Link } from '@/navigation';
-import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 import {
   NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
@@ -11,12 +11,18 @@ import {
 } from '@/lib/theme';
 
 interface BenefitsPageProps {
-  locale: Locale;
   company: Company;
 }
 
-export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
+export default function BenefitsPage({ company }: BenefitsPageProps) {
   const t = useTranslations();
+
+  const benefitStats = useMemo(() => [
+    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
+    { value: company.warranty, label: t('stats.warranty') },
+    { value: company.rating, label: `${company.ratingSource} ${t('stats.rating')}` },
+  ], [company, t]);
 
   const benefits = [
     {
@@ -68,6 +74,7 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
       {/* Benefits Grid */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
+          <h2 className="sr-only">{t('benefits.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
@@ -99,13 +106,8 @@ export default function BenefitsPage({ locale, company }: BenefitsPageProps) {
       {/* Stats */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-            { value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
-            { value: company.warranty, label: t('stats.warranty') },
-            { value: company.rating, label: `${company.ratingSource} ${t('stats.rating')}` },
-          ].map((stat) => (
-            <div key={stat.value} className="text-center">
+          {benefitStats.map((stat) => (
+            <div key={stat.label} className="text-center">
               <div className="text-3xl md:text-4xl font-bold mb-1" style={{ color: GOLD }}>
                 {stat.value}
               </div>

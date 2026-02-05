@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { X } from 'lucide-react';
@@ -32,7 +32,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
     return Array.from(locs).sort();
   }, [rawProjects]);
   const spaceTypes = useMemo(() => {
-    const types = new Set(rawProjects.map((p) => p.space_type?.en).filter((t): t is string => !!t));
+    const types = new Set(rawProjects.map((p) => p.space_type?.en).filter((v): v is string => !!v));
     return Array.from(types).sort();
   }, [rawProjects]);
   const budgetRanges = useMemo(() => {
@@ -44,12 +44,18 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
     });
   }, [rawProjects]);
 
+  const projectsRef = useRef<HTMLElement>(null);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
   const neuShadow4 = useMemo(() => neu(4), []);
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
+
+  const handleCategoryClick = useCallback((categoryEn: string) => {
+    setActiveCategory(categoryEn);
+    projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   const handleCardClick = useCallback((project: LocalizedProject) => {
     setSelectedProject(project);
@@ -99,14 +105,16 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch;
   }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, locale]);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setActiveCategory('All');
     setLocationFilter('All');
     setSpaceTypeFilter('All');
     setBudgetFilter('All');
-  };
+  }, []);
 
-  const hasActiveFilters = activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All';
+  const hasActiveFilters = useMemo(() =>
+    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All',
+  [activeCategory, locationFilter, spaceTypeFilter, budgetFilter]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -139,7 +147,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
               return (
                 <button
                   key={category.en}
-                  onClick={() => setActiveCategory(category.en)}
+                  onClick={() => handleCategoryClick(category.en)}
                   className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat"
                   style={{
                     width: '220px',
@@ -225,7 +233,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
       </section>
 
       {/* Projects Grid */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+      <section ref={projectsRef} className="py-14 px-4 sm:px-6 lg:px-8 scroll-mt-16" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
           {filteredProjects.length === 0 ? (
             <div className="text-center py-12">

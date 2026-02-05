@@ -39,6 +39,7 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 - **Admin dashboard:** Auth-protected CRUD for projects, blog, testimonials, contacts, company info, and services at `/admin/`
 - **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (6 schema types), 50+ WordPress redirects, security headers via proxy
 - **Neumorphic design:** Custom warm-beige design system with shadow utilities
+- **Accessible:** Elderly-friendly large text mode for contact forms, responsive hero scaling, valid heading hierarchy, lightbox `aria-live` counter, keyboard focus traps
 - **Social integration:** Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp with custom SVG icons
 - **Local-first dev:** Docker Compose with Postgres + MinIO, one-command setup
 - **Type-safe:** Drizzle ORM with full TypeScript inference, strict mode

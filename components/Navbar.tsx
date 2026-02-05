@@ -14,6 +14,8 @@ interface NavbarProps {
   areas: ServiceArea[];
 }
 
+const LINK_CLASS = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
+
 export default function Navbar({ company, areas }: NavbarProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
@@ -81,20 +83,18 @@ export default function Navbar({ company, areas }: NavbarProps) {
     { href: '/blog', label: t('nav.blogAndNews') },
   ], [t]);
 
-  const linkClass = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
-
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-sm" aria-label="Main navigation" style={{ backgroundColor: `${SURFACE}ee`, boxShadow: `0 1px 0 ${SH_DARK}40` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="shrink-0">
-            <Image src={company.logo} alt={company.name} width={180} height={40} className="h-10 w-auto object-contain" />
+            <Image src={company.logo} alt={company.name} width={180} height={40} priority className="h-10 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((item) => (
-              <Link key={item.href} href={item.href as '/'} className={linkClass} style={{ color: TEXT }}>
+              <Link key={item.href} href={item.href as '/'} className={LINK_CLASS} style={{ color: TEXT }}>
                 {item.label}
               </Link>
             ))}
@@ -102,8 +102,8 @@ export default function Navbar({ company, areas }: NavbarProps) {
             {/* Areas dropdown */}
             <div ref={areasRef} className="relative">
               <button
-                onClick={() => setIsAreasOpen(!isAreasOpen)}
-                className={`${linkClass} flex items-center gap-1`}
+                onClick={() => setIsAreasOpen((prev) => !prev)}
+                className={`${LINK_CLASS} flex items-center gap-1`}
                 style={{ color: TEXT }}
                 aria-expanded={isAreasOpen}
                 aria-haspopup="true"
@@ -147,7 +147,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
           {/* Mobile toggle */}
           <button
             ref={toggleRef}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
             className="lg:hidden p-2 rounded-lg cursor-pointer"
             style={{ boxShadow: neu(3) }}
             aria-expanded={isMenuOpen}
@@ -172,7 +172,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
 
             {/* Areas expandable */}
             <button
-              onClick={() => setIsAreasOpen(!isAreasOpen)}
+              onClick={() => setIsAreasOpen((prev) => !prev)}
               className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center justify-between"
               style={{ color: TEXT }}
               aria-expanded={isAreasOpen}

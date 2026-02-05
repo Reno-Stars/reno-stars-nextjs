@@ -5,8 +5,7 @@ import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
 import { useMemo, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
-import type { Company, SocialLink, Service } from '@/lib/types';
-import type { ServiceArea } from '@/lib/types';
+import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { NAVY, GOLD } from '@/lib/theme';
 
@@ -83,7 +82,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
               className="h-9 w-auto object-contain rounded bg-white/95 px-2 py-1 mb-3"
             />
             <p className="text-sm text-white/80 mb-4">{company.tagline}</p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {socialLinks.map((social) => {
                 const Icon = socialIcons[social.platform];
                 if (!Icon) return null;
@@ -91,7 +90,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                   return (
                     <span
                       key={social.label}
-                      className="w-10 h-10 rounded-lg flex items-center justify-center cursor-default group"
+                      className="w-9 h-9 rounded-lg flex items-center justify-center cursor-default group"
                       style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
                       title={t('footer.wechatId', { id: wechatId })}
                       aria-label={social.label}
@@ -106,7 +105,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group"
                     style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
                     aria-label={social.label}
                   >
@@ -194,7 +193,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
           <h4 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>
             {t('section.serviceAreas')}
           </h4>
-          <div className="flex flex-wrap gap-x-4 gap-y-2.5">
+          <div className="flex flex-wrap gap-x-2 gap-y-2 lg:gap-x-3">
             {areas.map((area) => (
               <Link
                 key={area.slug}

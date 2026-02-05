@@ -8,14 +8,30 @@ import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getProjectBySlugFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export async function generateStaticParams() {
+  const projects = await getProjectsFromDb();
+  const projectParams = projects.flatMap((p) =>
+    locales.map((locale) => ({ locale, slug: p.slug }))
+  );
+  const categoryParams = CATEGORY_SLUGS.flatMap((slug) =>
+    locales.map((locale) => ({ locale, slug }))
+  );
+  return [...categoryParams, ...projectParams];
+}
+
 function isCategory(slug: string): boolean {
   return CATEGORY_SLUGS.includes(slug);
+}
+
+function findCategoryBySlug(slug: string) {
+  const categories = getCategoriesLocalized();
+  return categories.find((c) => c.en.toLowerCase().replace(/\s+/g, '-') === slug) ?? null;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -24,10 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Check if it's a category page
   if (isCategory(slug)) {
-    const categories = getCategoriesLocalized();
-    const categoryData = categories.find(
-      (c) => c.en.toLowerCase().replace(/\s+/g, '-') === slug
-    );
+    const categoryData = findCategoryBySlug(slug);
 
     if (!categoryData) {
       return { title: 'Category Not Found', robots: { index: false, follow: false } };
@@ -55,8 +68,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  // It's a project detail page
-  const project = await getProjectBySlugFromDb(slug);
+  // It's a project detail page — uses getProjectsFromDb (deduped via React cache with Page)
+  const allProjects = await getProjectsFromDb();
+  const project = allProjects.find((p) => p.slug === slug);
 
   if (!project) {
     return { title: 'Project Not Found', robots: { index: false, follow: false } };
@@ -92,11 +106,9 @@ export default async function Page({ params }: PageProps) {
 
   // Check if it's a category page
   if (isCategory(slug)) {
-    const categories = getCategoriesLocalized();
-    const categoryData = categories.find(
-      (c) => c.en.toLowerCase().replace(/\s+/g, '-') === slug
-    );
-    const categoryName = categoryData?.[locale as Locale];
+    const categoryData = findCategoryBySlug(slug);
+    if (!categoryData) notFound();
+    const categoryName = categoryData[locale as Locale];
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
@@ -119,12 +131,10 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const localizedProject = getLocalizedProject(project, locale as Locale);
-
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('projects'), url: `/${locale}/projects/` },
-    { name: localizedProject.title, url: `/${locale}/projects/${slug}/` },
+    { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
   ];
 
   return (

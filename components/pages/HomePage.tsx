@@ -38,6 +38,33 @@ export default function HomePage({ locale, company, services, testimonials, abou
   const localizedShowroom = useMemo(() => ({ address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone, email: showroom.email }), [showroom, locale]);
   const localizedAreas = useMemo(() => areas.map((a) => ({ slug: a.slug, name: a.name[locale] })), [areas, locale]);
 
+  const heroBadges = useMemo(() => [
+    `${company.yearsExperience}+ ${t('stats.yearsExperience')}`,
+    `${company.liabilityCoverage} ${t('stats.liabilityCoverage')}`,
+    `${company.rating} ${t('stats.rating')}`,
+  ], [company, t]);
+
+  const stats = useMemo(() => [
+    { value: '500+', label: t('stats.projectsDone') },
+    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { value: '100%', label: t('stats.satisfaction') },
+    { value: '24/7', label: t('stats.support') },
+  ], [company, t]);
+
+  const aboutItems = useMemo(() => [
+    { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
+    { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
+    { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
+    { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
+    { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
+  ], [aboutSections, locale, t]);
+
+  const contactInfo = useMemo(() => [
+    { icon: Phone, title: t('label.phone'), value: company.phone, href: `tel:${company.phone}` },
+    { icon: Mail, title: t('label.email'), value: company.email, href: `mailto:${company.email}` },
+    { icon: MapPin, title: t('section.serviceAreas'), value: localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '\u2026' },
+  ], [company, t, localizedAreas]);
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
 
@@ -84,11 +111,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
               </a>
             </div>
             <div className="flex flex-wrap gap-4 pt-2">
-              {[
-                `${company.yearsExperience}+ ${t('stats.yearsExperience')}`,
-                `${company.liabilityCoverage} ${t('stats.liabilityCoverage')}`,
-                `${company.rating} ${t('stats.rating')}`,
-              ].map((txt) => (
+              {heroBadges.map((txt) => (
                 <span key={txt} className="text-sm font-medium text-white/70 flex items-center gap-1.5">
                   <Shield className="w-4 h-4" style={{ color: GOLD }} /> {txt}
                 </span>
@@ -194,7 +217,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
                       <Icon className="w-5 h-5" style={{ color: GOLD }} />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>{service.title[locale]}</h3>
+                      <h3 className="text-base font-bold mb-1 transition-colors" style={{ color: TEXT }}>{service.title[locale]}</h3>
                       <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>{service.description[locale]}</p>
                     </div>
                   </div>
@@ -208,13 +231,8 @@ export default function HomePage({ locale, company, services, testimonials, abou
       {/* STATS BAND */}
       <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { value: '500+', label: t('stats.projectsDone') },
-            { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-            { value: '100%', label: t('stats.satisfaction') },
-            { value: '24/7', label: t('stats.support') },
-          ].map((s) => (
-            <div key={s.value} className="text-center py-2">
+          {stats.map((s) => (
+            <div key={s.label} className="text-center py-2">
               <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
               <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
             </div>
@@ -230,13 +248,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
             <p className="text-base" style={{ color: TEXT_MID }}>{t('section.aboutSubtitle')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
-              { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
-              { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
-              { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
-              { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
-            ].map((item) => (
+            {aboutItems.map((item) => (
               <div key={item.title} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
                 <div className="w-8 h-0.5 rounded-full mb-3" style={{ backgroundColor: GOLD }} />
                 <h3 className="text-base font-bold mb-1.5" style={{ color: TEXT }}>{item.title}</h3>
@@ -305,11 +317,7 @@ export default function HomePage({ locale, company, services, testimonials, abou
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              {[
-                { icon: Phone, title: t('label.phone'), value: company.phone, href: `tel:${company.phone}` },
-                { icon: Mail, title: t('label.email'), value: company.email, href: `mailto:${company.email}` },
-                { icon: MapPin, title: t('section.serviceAreas'), value: localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '\u2026' },
-              ].map((c) => (
+              {contactInfo.map((c) => (
                 <div key={c.title} className="rounded-xl p-5 flex items-start gap-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: GOLD_PALE }}>
                     <c.icon className="w-5 h-5" style={{ color: GOLD }} />

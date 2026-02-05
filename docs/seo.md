@@ -41,6 +41,8 @@ Pages follow a consistent heading structure:
 - `<h2>` — Section headings
 - `<h3>` — List item titles (service cards, blog post cards, etc.)
 
+Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 → H3) but visually redundant (e.g., benefits grid), use `<h2 className="sr-only">` to keep it accessible without displaying duplicate text.
+
 ## Semantic HTML
 
 - Blog post cards wrapped in `<article>` elements

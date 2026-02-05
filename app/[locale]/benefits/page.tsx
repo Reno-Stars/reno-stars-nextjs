@@ -41,8 +41,12 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const nav = await getTranslations({ locale, namespace: 'nav' });
-  const t = await getTranslations({ locale, namespace: 'benefits' });
+  const [nav, t, company] = await Promise.all([
+    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'benefits' }),
+    getCompanyFromDb(),
+  ]);
+
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: nav('benefits'), url: `/${locale}/benefits/` },
@@ -57,13 +61,11 @@ export default async function Page({ params }: PageProps) {
     { question: t('service.title'), answer: t('service.description') },
   ];
 
-  const company = await getCompanyFromDb();
-
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <BenefitsPage locale={locale as Locale} company={company} />
+      <BenefitsPage company={company} />
     </>
   );
 }

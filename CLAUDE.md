@@ -176,9 +176,10 @@ Key patterns:
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
 - **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for projects, blog, testimonials, contacts, company, services. Uses `components/admin/` and `app/actions/admin/`.
 - **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop.
-- **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items).
+- **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
+- **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.
 - **CTA text**: Use service-specific text (e.g., `cta.exploreService`) instead of generic "Learn More".
-- **Performance**: Wrap data calls in `useMemo`, event handlers in `useCallback` in client components.
+- **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls.
 
 ## Homepage Section Order
 
