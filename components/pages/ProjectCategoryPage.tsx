@@ -11,8 +11,7 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, SURFACE, SURFACE_ALT,
-  TEXT, TEXT_MID,
+  NAVY, GOLD, SURFACE, TEXT_MID,
 } from '@/lib/theme';
 
 interface ProjectCategoryPageProps {

@@ -13,7 +13,7 @@ export async function updateAboutSections(
 ): Promise<{ success?: boolean; error?: string }> {
   await requireAuth();
   try {
-    const data = {
+    const textFields = {
       ourJourneyEn: getString(formData, 'ourJourneyEn'),
       ourJourneyZh: getString(formData, 'ourJourneyZh'),
       whatWeOfferEn: getString(formData, 'whatWeOfferEn'),
@@ -24,17 +24,15 @@ export async function updateAboutSections(
       whyChooseUsZh: getString(formData, 'whyChooseUsZh'),
       letsBuildTogetherEn: getString(formData, 'letsBuildTogetherEn'),
       letsBuildTogetherZh: getString(formData, 'letsBuildTogetherZh'),
-      updatedAt: new Date(),
     };
 
-    const { updatedAt: _, ...textFields } = data;
     const textError = validateTextLengths(textFields, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
     const rows = await db.select({ id: aboutSections.id }).from(aboutSections).limit(1);
     if (!rows[0]) return { error: 'About sections row not found. Run db:seed first.' };
 
-    const updated = await db.update(aboutSections).set(data).where(eq(aboutSections.id, rows[0].id)).returning({ id: aboutSections.id });
+    const updated = await db.update(aboutSections).set({ ...textFields, updatedAt: new Date() }).where(eq(aboutSections.id, rows[0].id)).returning({ id: aboutSections.id });
     if (updated.length === 0) return { error: 'Failed to update about sections.' };
 
     revalidatePath('/', 'layout');

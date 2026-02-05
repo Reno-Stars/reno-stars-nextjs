@@ -18,7 +18,7 @@ interface ContactPageProps {
   areaNames: string[];
 }
 
-export default function ContactPage({ locale, company, areaNames }: ContactPageProps) {
+export default function ContactPage({ locale: _locale, company, areaNames }: ContactPageProps) {
   const t = useTranslations();
   const router = useRouter();
 

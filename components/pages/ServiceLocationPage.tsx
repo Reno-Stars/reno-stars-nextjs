@@ -28,7 +28,7 @@ interface ServiceLocationPageProps {
   area: ServiceArea;
 }
 
-export default function ServiceLocationPage({ locale, serviceSlug, citySlug, company, service, area }: ServiceLocationPageProps) {
+export default function ServiceLocationPage({ locale, serviceSlug, citySlug: _citySlug, company, service, area }: ServiceLocationPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);

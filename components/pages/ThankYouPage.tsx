@@ -12,7 +12,7 @@ interface ThankYouPageProps {
   locale: Locale;
 }
 
-export default function ThankYouPage({ locale }: ThankYouPageProps) {
+export default function ThankYouPage({ locale: _locale }: ThankYouPageProps) {
   const t = useTranslations();
 
   return (

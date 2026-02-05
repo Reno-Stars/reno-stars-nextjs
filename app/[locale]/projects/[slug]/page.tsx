@@ -6,7 +6,7 @@ import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject } from '@/l
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
-import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
+import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb } from '@/lib/db/queries';

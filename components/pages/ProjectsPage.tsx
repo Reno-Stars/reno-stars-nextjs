@@ -14,7 +14,7 @@ import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT,
-  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
+  TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
 interface ProjectsPageProps {

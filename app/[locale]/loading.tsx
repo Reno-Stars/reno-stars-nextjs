@@ -1,4 +1,4 @@
-import { SURFACE, NAVY, GOLD } from '@/lib/theme';
+import { SURFACE, GOLD } from '@/lib/theme';
 
 /**
  * Loading UI shown instantly while page data loads.

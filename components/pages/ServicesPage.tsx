@@ -27,7 +27,7 @@ const iconMap: Record<string, typeof Hammer> = {
   Building2,
 };
 
-export default function ServicesPage({ locale, company, services }: ServicesPageProps) {
+export default function ServicesPage({ locale: _locale, company, services }: ServicesPageProps) {
   const t = useTranslations();
   const currentLocale = useLocale() as Locale;
   const localizedServices = useMemo(
