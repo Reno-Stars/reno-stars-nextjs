@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.0",
+    "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.49.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@testing-library/jest-dom": "^6.6.0",
