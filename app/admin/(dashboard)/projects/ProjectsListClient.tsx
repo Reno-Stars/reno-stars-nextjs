@@ -30,47 +30,48 @@ export default function ProjectsListClient({ projects }: Props) {
   const { toast } = useToast();
   const { locale } = useAdminLocale();
 
-  const getTitle = (row: ProjectRow) => locale === 'zh' ? row.titleZh : row.titleEn;
-
-  const columns: Column<ProjectRow>[] = useMemo(() => [
-    { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
-    { key: 'serviceType', header: 'Type', sortable: true },
-    { key: 'locationCity', header: 'City', sortable: true },
-    {
-      key: 'featured',
-      header: 'Featured',
-      render: (row) => (
-        <button
-          type="button"
-          onClick={() => startTransition(async () => {
-            const result = await toggleProjectFeatured(row.id, row.featured);
-            if (result.error) toast(result.error, 'error');
-          })}
-          aria-label={`Toggle featured for ${getTitle(row)}`}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.featured ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
-        >
-          {row.featured ? 'Yes' : 'No'}
-        </button>
-      ),
-    },
-    {
-      key: 'isPublished',
-      header: 'Published',
-      render: (row) => (
-        <button
-          type="button"
-          onClick={() => startTransition(async () => {
-            const result = await toggleProjectPublished(row.id, row.isPublished);
-            if (result.error) toast(result.error, 'error');
-          })}
-          aria-label={`Toggle published for ${getTitle(row)}`}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
-        >
-          {row.isPublished ? 'Yes' : 'No'}
-        </button>
-      ),
-    },
-  ], [locale, toast]);
+  const columns: Column<ProjectRow>[] = useMemo(() => {
+    const getT = (row: ProjectRow) => locale === 'zh' ? row.titleZh : row.titleEn;
+    return [
+      { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
+      { key: 'serviceType', header: 'Type', sortable: true },
+      { key: 'locationCity', header: 'City', sortable: true },
+      {
+        key: 'featured',
+        header: 'Featured',
+        render: (row: ProjectRow) => (
+          <button
+            type="button"
+            onClick={() => startTransition(async () => {
+              const result = await toggleProjectFeatured(row.id, row.featured);
+              if (result.error) toast(result.error, 'error');
+            })}
+            aria-label={`Toggle featured for ${getT(row)}`}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.featured ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
+          >
+            {row.featured ? 'Yes' : 'No'}
+          </button>
+        ),
+      },
+      {
+        key: 'isPublished',
+        header: 'Published',
+        render: (row: ProjectRow) => (
+          <button
+            type="button"
+            onClick={() => startTransition(async () => {
+              const result = await toggleProjectPublished(row.id, row.isPublished);
+              if (result.error) toast(result.error, 'error');
+            })}
+            aria-label={`Toggle published for ${getT(row)}`}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
+          >
+            {row.isPublished ? 'Yes' : 'No'}
+          </button>
+        ),
+      },
+    ];
+  }, [locale, toast]);
 
   const handleDelete = () => {
     if (!deleteId) return;

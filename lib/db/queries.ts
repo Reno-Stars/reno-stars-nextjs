@@ -454,7 +454,10 @@ export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
 // FAQ QUERIES
 // ============================================================================
 
-/** Fetch active FAQs ordered by display_order. */
+/**
+ * Fetch active FAQs ordered by display_order.
+ * Replaces `{yearsExperience}` placeholder with computed value from company info.
+ */
 export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
   const rows = await db
     .select()
@@ -462,10 +465,17 @@ export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
     .where(eq(faqsTable.isActive, true))
     .orderBy(asc(faqsTable.displayOrder));
 
+  // Get years experience for placeholder replacement
+  const company = await getCompanyFromDb();
+  const yearsExperience = company.yearsExperience;
+
+  const replaceYears = (text: string) =>
+    text.replace(/\{yearsExperience\}/g, yearsExperience);
+
   return rows.map((row: typeof faqsTable.$inferSelect) => ({
     id: row.id,
     question: { en: row.questionEn, zh: row.questionZh },
-    answer: { en: row.answerEn, zh: row.answerZh },
+    answer: { en: replaceYears(row.answerEn), zh: replaceYears(row.answerZh) },
   }));
 });
 

@@ -3,6 +3,7 @@
 import { useState, useTransition, useMemo } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
+import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import ToggleButton from '@/components/admin/ToggleButton';
@@ -24,88 +25,98 @@ interface Props {
 }
 
 export default function FaqsListClient({ faqs }: Props) {
+  const [isPending, startTransition] = useTransition();
   const [pendingId, setPendingId] = useState<string | null>(null);
-  const [, startTransition] = useTransition();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
 
-  const getQuestion = (row: FaqRow) => locale === 'zh' ? row.questionZh : row.questionEn;
-
-  const handleDelete = (id: string, row: FaqRow) => {
-    if (!confirm(`Delete FAQ: "${getQuestion(row)}"?`)) return;
-    setPendingId(id);
+  const handleDelete = () => {
+    if (!deleteId) return;
     startTransition(async () => {
-      const result = await deleteFaq(id);
+      const result = await deleteFaq(deleteId);
       if (result.error) toast(result.error, 'error');
       else toast('FAQ deleted.', 'success');
-      setPendingId(null);
+      setDeleteId(null);
     });
   };
 
-  const columns: Column<FaqRow>[] = useMemo(() => [
-    {
-      key: locale === 'zh' ? 'questionZh' : 'questionEn',
-      header: locale === 'zh' ? 'Question (ZH)' : 'Question (EN)',
-      sortable: true,
-      render: (row) => (
-        <span style={{ maxWidth: '300px', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {getQuestion(row)}
-        </span>
-      ),
-    },
-    { key: 'displayOrder', header: 'Order', sortable: true },
-    {
-      key: 'isActive',
-      header: 'Active',
-      render: (row) => (
-        <ToggleButton
-          isActive={row.isActive}
-          isPending={pendingId === row.id}
-          ariaLabel={`Toggle active for: ${getQuestion(row).slice(0, 50)}${getQuestion(row).length > 50 ? '...' : ''}`}
-          onClick={() => {
-            setPendingId(row.id);
-            startTransition(async () => {
-              const result = await toggleFaqActive(row.id, row.isActive);
-              if (result.error) toast(result.error, 'error');
-              setPendingId(null);
-            });
-          }}
-        />
-      ),
-    },
-  ], [locale, pendingId, toast]);
+  const columns: Column<FaqRow>[] = useMemo(() => {
+    const getQ = (row: FaqRow) => locale === 'zh' ? row.questionZh : row.questionEn;
+    return [
+      {
+        key: locale === 'zh' ? 'questionZh' : 'questionEn',
+        header: locale === 'zh' ? 'Question (ZH)' : 'Question (EN)',
+        sortable: true,
+        render: (row: FaqRow) => (
+          <span style={{ maxWidth: '300px', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {getQ(row)}
+          </span>
+        ),
+      },
+      { key: 'displayOrder', header: 'Order', sortable: true },
+      {
+        key: 'isActive',
+        header: 'Active',
+        render: (row: FaqRow) => (
+          <ToggleButton
+            isActive={row.isActive}
+            isPending={pendingId === row.id}
+            ariaLabel={`Toggle active for: ${getQ(row).slice(0, 50)}${getQ(row).length > 50 ? '...' : ''}`}
+            onClick={() => {
+              setPendingId(row.id);
+              startTransition(async () => {
+                const result = await toggleFaqActive(row.id, row.isActive);
+                if (result.error) toast(result.error, 'error');
+                setPendingId(null);
+              });
+            }}
+          />
+        ),
+      },
+    ];
+  }, [locale, pendingId, toast]);
 
   return (
-    <DataTable
-      columns={columns}
-      data={faqs}
-      getRowKey={(row) => row.id}
-      searchKeys={['questionEn', 'questionZh']}
-      actions={(row) => (
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <Link
-            href={`/admin/faqs/${row.id}`}
-            style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
-          >
-            Edit
-          </Link>
-          <button
-            type="button"
-            onClick={() => handleDelete(row.id, row)}
-            disabled={pendingId === row.id}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: TEXT_MID,
-              fontSize: '0.8125rem',
-              cursor: 'pointer',
-              padding: 0,
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      )}
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={faqs}
+        getRowKey={(row) => row.id}
+        searchKeys={['questionEn', 'questionZh']}
+        actions={(row) => (
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <Link
+              href={`/admin/faqs/${row.id}`}
+              style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              onClick={() => setDeleteId(row.id)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: TEXT_MID,
+                fontSize: '0.8125rem',
+                cursor: 'pointer',
+                padding: 0,
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+      />
+      <ConfirmDialog
+        open={!!deleteId}
+        title="Delete FAQ"
+        message="This will permanently delete the FAQ."
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteId(null)}
+        loading={isPending}
+      />
+    </>
   );
 }

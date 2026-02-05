@@ -457,8 +457,8 @@ async function seed() {
       {
         questionEn: 'Why choose Reno Stars?',
         questionZh: '为什么要选择 Reno Stars？',
-        answerEn: 'Reno Stars is committed to delivering high-quality craftsmanship with over 27 years of combined experience. We offer $5M liability coverage, a 3-year warranty on all work, transparent pricing, and a dedicated team of 17 professionals. Our 10/10 HomeStars rating reflects our commitment to customer satisfaction.',
-        answerZh: 'Reno Stars 始终致力于提供高品质的工艺，拥有超过27年的综合经验。我们提供500万美元责任保险、所有工程3年质保、透明定价和17人专业团队。我们的 HomeStars 10/10 评分反映了我们对客户满意度的承诺。',
+        answerEn: 'Reno Stars is committed to delivering high-quality craftsmanship with over {yearsExperience} years of combined experience. We offer $5M liability coverage, a 3-year warranty on all work, transparent pricing, and a dedicated team of 17 professionals. Our 10/10 HomeStars rating reflects our commitment to customer satisfaction.',
+        answerZh: 'Reno Stars 始终致力于提供高品质的工艺，拥有超过{yearsExperience}年的综合经验。我们提供500万美元责任保险、所有工程3年质保、透明定价和17人专业团队。我们的 HomeStars 10/10 评分反映了我们对客户满意度的承诺。',
         displayOrder: 2,
       },
       {
@@ -467,6 +467,20 @@ async function seed() {
         answerEn: 'You can reach us by phone at 778-960-7999, email at info@reno-stars.com, or visit our showroom at 21300 Gordon Way, Unit 188, Richmond, BC (by appointment). We also respond to inquiries via WeChat, WhatsApp, Instagram, and Facebook.',
         answerZh: '您可以通过电话 778-960-7999、邮箱 info@reno-stars.com 联系我们，或预约参观我们位于 Richmond 的展厅（21300 Gordon Way, Unit 188）。我们也通过微信、WhatsApp、Instagram 和 Facebook 回复咨询。',
         displayOrder: 3,
+      },
+      {
+        questionEn: 'How long does a typical renovation take?',
+        questionZh: '一般装修需要多长时间？',
+        answerEn: 'Project timelines vary based on scope and complexity. A bathroom renovation typically takes 2-4 weeks, kitchen renovations 4-8 weeks, and whole house remodels 3-6 months. During your free consultation, we provide a detailed timeline specific to your project.',
+        answerZh: '项目时间根据范围和复杂程度而有所不同。浴室装修通常需要2-4周，厨房装修需要4-8周，全屋改造需要3-6个月。在免费咨询期间，我们会为您的项目提供详细的时间表。',
+        displayOrder: 4,
+      },
+      {
+        questionEn: 'Do you offer free estimates?',
+        questionZh: '你们提供免费报价吗？',
+        answerEn: 'Yes! We offer free in-home consultations and detailed estimates for all renovation projects. Our team will assess your space, discuss your vision, and provide a transparent quote with no hidden fees. Contact us to schedule your free consultation.',
+        answerZh: '是的！我们为所有装修项目提供免费上门咨询和详细报价。我们的团队将评估您的空间，讨论您的愿景，并提供透明的报价，没有任何隐藏费用。请联系我们预约免费咨询。',
+        displayOrder: 5,
       },
     ]);
     console.log('FAQs seeded');

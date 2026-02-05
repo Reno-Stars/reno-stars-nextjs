@@ -72,11 +72,9 @@ export default function FaqForm({ action, initialData, isNew = false }: FaqFormP
             <textarea id="answerZh" name="answerZh" rows={4} defaultValue={defaults.answerZh} required style={taStyle} />
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label="Display Order" htmlFor="displayOrder">
-              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
-            </FormField>
-          </div>
+          <FormField label="Display Order" htmlFor="displayOrder">
+            <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={{ ...fieldStyle, maxWidth: '150px' }} />
+          </FormField>
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>

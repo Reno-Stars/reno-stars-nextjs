@@ -29,8 +29,6 @@ export default function BlogListClient({ posts }: Props) {
   const { toast } = useToast();
   const { locale } = useAdminLocale();
 
-  const getTitle = (row: BlogRow) => locale === 'zh' ? row.titleZh : row.titleEn;
-
   const columns: Column<BlogRow>[] = useMemo(() => [
     { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? 'Title (ZH)' : 'Title (EN)', sortable: true },
     { key: 'slug', header: 'Slug', sortable: true },
@@ -45,7 +43,7 @@ export default function BlogListClient({ posts }: Props) {
             const result = await toggleBlogPostPublished(row.id, row.isPublished);
             if (result.error) toast(result.error, 'error');
           })}
-          aria-label={`Toggle published for ${getTitle(row)}`}
+          aria-label={`Toggle published for ${locale === 'zh' ? row.titleZh : row.titleEn}`}
           style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
         >
           {row.isPublished ? 'Yes' : 'No'}
