@@ -37,9 +37,10 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 - **Bilingual:** Full English/Chinese support with `next-intl`, locale-prefixed URLs
 - **Database-driven:** Company info, services, social links, testimonials, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info fetched from PostgreSQL via cached query layer (`lib/db/queries.ts`)
 - **Admin dashboard:** Auth-protected CRUD for all 12 content types at `/admin/` (projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, showroom, about sections)
-- **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (6 schema types), 50+ WordPress redirects, security headers via proxy
+- **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (8 schema types including FAQ), 50+ WordPress redirects, meta description truncation, security headers via proxy
 - **Neumorphic design:** Custom warm-beige design system with shadow utilities
 - **Accessible:** Elderly-friendly large text mode for contact forms, responsive hero scaling, valid heading hierarchy, lightbox `aria-live` counter, keyboard focus traps
 - **Social integration:** Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp with custom SVG icons
 - **Local-first dev:** Docker Compose with Postgres + MinIO, one-command setup
 - **Type-safe:** Drizzle ORM with full TypeScript inference, strict mode
+- **Performance-optimized:** Homepage split into 11 code-split sections (9 Server Components), resource preloading, lazy-loaded below-fold content

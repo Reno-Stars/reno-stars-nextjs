@@ -21,11 +21,12 @@ Components in `components/structured-data/`:
 | Component | Schema Type | Used On |
 |-----------|-------------|---------|
 | `LocalBusinessSchema` | LocalBusiness | Layout (global, receives `company` + `socialLinks` props) |
+| `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific business info) |
 | `ServiceSchema` | Service | Service detail pages |
-| `ProductSchema` | Product | Project detail pages |
+| `ProjectSchema` | CreativeWork | Project detail pages (with images, location, service type) |
 | `ArticleSchema` | Article | Blog post pages |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
-| `FAQSchema` | FAQPage | Benefits page |
+| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
 
 ## robots.txt
 
@@ -139,3 +140,23 @@ Added via `proxy.ts` on all responses:
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy` (restricts camera, microphone, geolocation, payment, usb)
 - `X-Powered-By` disabled via `next.config.ts` (`poweredByHeader: false`)
+
+## Meta Description Optimization
+
+Meta descriptions are automatically truncated to 155 characters (optimal for SERP display) using `truncateMetaDescription()` in `lib/utils.ts`. This function:
+- Truncates at word boundaries (doesn't cut mid-word)
+- Appends ellipsis (`...`) when truncated
+- Applied to blog posts, project pages, and service pages
+
+## Performance & SEO Balance
+
+The homepage avoids Suspense streaming to ensure search engines receive fully-rendered content:
+- Data fetching uses `Promise.all` for parallel queries
+- Server fully renders all content before sending HTML
+- Below-fold sections use `next/dynamic` for code-splitting (client-side, after initial HTML)
+- Above-fold content (Hero, Service Areas) is directly imported for instant render
+
+This approach ensures:
+- Crawlers see complete content, links, and structured data
+- Users get fast initial paint with progressive enhancement
+- Code-splitting reduces JS bundle for below-fold sections

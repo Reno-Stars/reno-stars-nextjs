@@ -79,8 +79,9 @@ app/
 
 components/
   pages/                  # Page-level components (one per route)
+  home/                   # Homepage section components (11 files, 9 Server + 2 Client)
   admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
-  structured-data/        # JSON-LD schema components
+  structured-data/        # JSON-LD schema components (8 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, etc.
 
 lib/
@@ -101,7 +102,7 @@ lib/
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
   types.ts                # Core TypeScript types
   theme.ts                # Neumorphic design tokens + shadow helpers
-  utils.ts                # String, array, date, validation utilities, ensureUniqueSlug()
+  utils.ts                # String, array, date, validation utilities, ensureUniqueSlug(), truncateMetaDescription()
 
 proxy.ts                  # Request proxy (i18n routing + admin auth + security headers)
 
@@ -178,11 +179,11 @@ Key patterns:
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
 - **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, etc.) and `app/actions/admin/`.
-- **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop.
+- **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Includes: LocalBusinessSchema (layout), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages).
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
 - **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.
 - **CTA text**: Use service-specific text (e.g., `cta.exploreService`) instead of generic "Learn More".
-- **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls.
+- **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls. Homepage uses `next/dynamic` for below-fold sections with skeleton fallbacks. Avoid Suspense on SEO-critical pages (homepage) to ensure crawlers receive full content.
 
 ## Homepage Section Order
 

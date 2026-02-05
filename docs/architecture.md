@@ -43,8 +43,9 @@ app/                      # Next.js App Router
 
 components/
   pages/                  # One component per page route
+  home/                   # Homepage section components (11 files)
   admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
-  structured-data/        # JSON-LD schema components
+  structured-data/        # JSON-LD schema components (8 schemas)
   Navbar.tsx              # Global navigation (unified, no variants)
   Footer.tsx              # Global footer (5-column + service areas bar)
   ContactForm.tsx         # Contact form (client component)
@@ -200,7 +201,8 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 ## Component Patterns
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
-- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop.
+- **Homepage sections** (`components/home/`): 11 section components extracted from HomePage for code-splitting. 9 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, BlogSection, ShowroomSection), 2 are Client Components (GallerySection, ContactSection). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
+- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 8 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, ServiceSchema, ProjectSchema, ArticleSchema, BreadcrumbSchema, FAQSchema.
 - **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
