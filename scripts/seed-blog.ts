@@ -56,10 +56,17 @@ function cleanContent(html: string): string {
     .trim();
 }
 
-/** Decode URL-encoded slug characters. */
+/** Decode URL-encoded slug characters and sanitize invalid characters. */
 function decodeSlug(slug: string): string {
   try {
-    return decodeURIComponent(slug);
+    let decoded = decodeURIComponent(slug);
+    // Sanitize: keep only alphanumeric and hyphens, normalize format
+    decoded = decoded
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-') // Replace any non-alphanumeric/hyphen chars with hyphen
+      .replace(/-+/g, '-')          // Collapse multiple consecutive hyphens
+      .replace(/(^-|-$)/g, '');     // Remove leading/trailing hyphens
+    return decoded;
   } catch {
     return slug;
   }
