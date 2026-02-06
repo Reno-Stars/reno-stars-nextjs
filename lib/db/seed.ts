@@ -242,9 +242,7 @@ async function seed() {
       teamSize: 17,
       warranty: '3 Years',
       liabilityCoverage: '$5M',
-      rating: '5/5',
-      reviewCount: 150,
-      ratingSource: 'Google',
+      // rating/reviewCount now fetched from Google Reviews API
       geoLatitude: '49.1666',
       geoLongitude: '-123.1336',
     });

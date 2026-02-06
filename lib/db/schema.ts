@@ -469,9 +469,7 @@ export const companyInfo = pgTable('company_info', {
   teamSize: integer('team_size'),
   warranty: varchar('warranty', { length: 50 }),
   liabilityCoverage: varchar('liability_coverage', { length: 50 }),
-  rating: varchar('rating', { length: 20 }),
-  reviewCount: integer('review_count'),
-  ratingSource: varchar('rating_source', { length: 50 }),
+  // rating, reviewCount, ratingSource removed - now fetched from Google Reviews API
   geoLatitude: varchar('geo_latitude', { length: 20 }),
   geoLongitude: varchar('geo_longitude', { length: 20 }),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),

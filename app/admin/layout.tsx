@@ -11,5 +11,11 @@ export default function AdminRootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminLocaleProvider>{children}</AdminLocaleProvider>;
+  return (
+    <html lang="en">
+      <body className="antialiased">
+        <AdminLocaleProvider>{children}</AdminLocaleProvider>
+      </body>
+    </html>
+  );
 }

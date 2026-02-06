@@ -43,6 +43,8 @@ export default async function LocaleLayout({
     getGoogleReviews(),
   ]);
 
+  // suppressHydrationWarning: locale from URL params may differ during initial hydration;
+  // also handles browser extensions (Grammarly, etc.) modifying the DOM
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
