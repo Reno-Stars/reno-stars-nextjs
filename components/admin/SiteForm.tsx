@@ -97,8 +97,7 @@ function CheckboxWithTooltip({
             style={{
               position: 'absolute',
               top: '100%',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              left: '0',
               marginTop: '6px',
               padding: '0.5rem 0.75rem',
               backgroundColor: NAVY,
