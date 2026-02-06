@@ -391,35 +391,35 @@ export default function ProcessPage({ company }: ProcessPageProps) {
               <rect x="22" y="12" width="4" height="26" fill={ILLUS_WOOD} />
               <polygon points="24,8 18,16 30,16" fill={ILLUS_GRAY_MID} />
             </svg>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
               {t('process.hero.title')}
             </h1>
           </div>
-          <p className="text-base md:text-lg text-white/70 mb-8 uppercase tracking-widest">
+          <p className="text-lg md:text-xl text-white/70 mb-8 uppercase tracking-widest">
             {t('process.hero.subtitle')}
           </p>
 
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-5">
             {trustBadges.map((badge) => (
               <div
                 key={badge.label}
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm"
+                className="flex items-center gap-3 px-5 py-3 rounded-full text-base md:text-lg"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
               >
                 {badge.rating ? (
                   <>
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-1">
                       {[0, 1, 2, 3, 4].map((i) => (
-                        <Star key={i} className="w-4 h-4" style={{ fill: GOLD, color: GOLD }} />
+                        <Star key={i} className="w-5 h-5 md:w-6 md:h-6" style={{ fill: GOLD, color: GOLD }} />
                       ))}
                     </div>
                     <span className="text-white/80">{badge.label}</span>
                   </>
                 ) : (
                   <>
-                    {badge.icon && <badge.icon className="w-4 h-4" style={{ color: GOLD }} />}
-                    <span className="font-semibold" style={{ color: GOLD }}>{badge.value}</span>
+                    {badge.icon && <badge.icon className="w-5 h-5 md:w-6 md:h-6" style={{ color: GOLD }} />}
+                    <span className="font-semibold text-lg md:text-xl" style={{ color: GOLD }}>{badge.value}</span>
                     <span className="text-white/80">{badge.label}</span>
                   </>
                 )}
@@ -560,7 +560,7 @@ export default function ProcessPage({ company }: ProcessPageProps) {
                   {/* Content Card */}
                   <div className={`lg:w-[55%] relative z-10 ${isEven ? 'lg:pr-[10%]' : 'lg:pl-[10%]'}`}>
                     <div
-                      className="rounded-2xl p-5 lg:p-6 relative overflow-hidden"
+                      className="rounded-2xl p-6 lg:p-8 relative overflow-hidden"
                       style={{ boxShadow: neu(6), backgroundColor: CARD }}
                     >
                       {/* Colored accent bar */}
@@ -570,15 +570,15 @@ export default function ProcessPage({ company }: ProcessPageProps) {
                       />
 
                       {/* Step Label */}
-                      <div className="flex items-center gap-3 mb-3">
+                      <div className="flex items-center gap-3 mb-4">
                         <div
-                          className="px-3 py-1 rounded-full text-xs font-semibold"
+                          className="px-4 py-1.5 rounded-full text-sm md:text-base font-semibold"
                           style={{ backgroundColor: step.color, color: 'white' }}
                         >
                           STEP {stepNum}
                         </div>
                         <span
-                          className="text-2xl font-bold lg:hidden"
+                          className="text-3xl font-bold lg:hidden"
                           style={{ color: step.color, opacity: 0.4 }}
                         >
                           {step.number}
@@ -586,34 +586,34 @@ export default function ProcessPage({ company }: ProcessPageProps) {
                       </div>
 
                       {/* Title */}
-                      <h2 className="text-xl lg:text-2xl font-bold mb-1" style={{ color: TEXT }}>
+                      <h2 className="text-2xl lg:text-3xl font-bold mb-2" style={{ color: TEXT }}>
                         {t(step.titleKey)}
                       </h2>
-                      <p className="text-xs uppercase tracking-wider mb-4" style={{ color: step.color }}>
+                      <p className="text-sm md:text-base uppercase tracking-wider mb-5" style={{ color: step.color }}>
                         {t(step.subtitleKey)}
                       </p>
 
                       {/* Points */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5 mb-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-2.5 mb-5">
                         {points.map((point, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <span className="mt-1" style={{ color: step.color }}>•</span>
-                            <span className="text-sm" style={{ color: TEXT_MID }}>{point}</span>
+                          <div key={i} className="flex items-start gap-2.5">
+                            <span className="mt-0.5 text-lg" style={{ color: step.color }}>•</span>
+                            <span className="text-base md:text-lg leading-relaxed" style={{ color: TEXT_MID }}>{point}</span>
                           </div>
                         ))}
                       </div>
 
                       {/* Tags */}
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2.5">
                         {tags.map((tag, i) => {
                           const Icon = stepIcons[tag.icon] || CheckSquare;
                           return (
                             <div
                               key={i}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs"
+                              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm md:text-base"
                               style={{ backgroundColor: step.lightColor }}
                             >
-                              <Icon className="w-3.5 h-3.5" style={{ color: step.color }} />
+                              <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: step.color }} />
                               <span style={{ color: TEXT }}>{tag.label}</span>
                             </div>
                           );
@@ -628,30 +628,30 @@ export default function ProcessPage({ company }: ProcessPageProps) {
 
           {/* Tagline */}
           <div className="text-center mt-12 relative z-10">
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full" style={{ backgroundColor: CARD, boxShadow: neu(4) }}>
-              <Star className="w-5 h-5" style={{ color: GOLD }} />
-              <p className="text-lg font-medium" style={{ color: TEXT }}>
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full" style={{ backgroundColor: CARD, boxShadow: neu(4) }}>
+              <Star className="w-6 h-6" style={{ color: GOLD }} />
+              <p className="text-xl md:text-2xl font-medium" style={{ color: TEXT }}>
                 {t('process.tagline')}
               </p>
-              <Star className="w-5 h-5" style={{ color: GOLD }} />
+              <Star className="w-6 h-6" style={{ color: GOLD }} />
             </div>
           </div>
         </div>
       </section>
 
       {/* Why This Matters Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl p-8" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
-            <div className="flex items-start gap-4">
+          <div className="rounded-2xl p-10" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
+            <div className="flex items-start gap-5">
               <div className="shrink-0">
-                <HouseSvg className="w-16 h-16" />
+                <HouseSvg className="w-20 h-20" />
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2" style={{ color: TEXT }}>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: TEXT }}>
                   {t('process.whyMatters.title')}
                 </h3>
-                <p className="text-base" style={{ color: TEXT_MID }}>
+                <p className="text-lg md:text-xl leading-relaxed" style={{ color: TEXT_MID }}>
                   {t('process.whyMatters.description')}
                 </p>
               </div>
@@ -669,11 +669,11 @@ export default function ProcessPage({ company }: ProcessPageProps) {
       >
         <div className="max-w-5xl mx-auto">
           {/* Main Tagline */}
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
               {t('process.footer.tagline')}
             </h2>
-            <p className="text-sm uppercase tracking-widest text-white/60">
+            <p className="text-base md:text-lg uppercase tracking-widest text-white/60">
               {t('process.footer.taglineEn')}
             </p>
           </div>
@@ -681,53 +681,53 @@ export default function ProcessPage({ company }: ProcessPageProps) {
           {/* Contact Info Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             {/* Left: Contact Details */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               <a href={`tel:${company.phone}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <Phone className="w-5 h-5" style={{ color: GOLD }} />
-                <span className="text-white">{company.phone}</span>
+                <Phone className="w-6 h-6" style={{ color: GOLD }} />
+                <span className="text-white text-lg md:text-xl">{company.phone}</span>
               </a>
               <a href={`mailto:${company.email}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <Mail className="w-5 h-5" style={{ color: GOLD }} />
-                <span className="text-white">{company.email}</span>
+                <Mail className="w-6 h-6" style={{ color: GOLD }} />
+                <span className="text-white text-lg md:text-xl">{company.email}</span>
               </a>
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 mt-0.5" style={{ color: GOLD }} />
-                <span className="text-white">{company.address}</span>
+                <MapPin className="w-6 h-6 mt-0.5" style={{ color: GOLD }} />
+                <span className="text-white text-lg md:text-xl">{company.address}</span>
               </div>
               <a href={`https://${t('process.footer.website')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <Globe className="w-5 h-5" style={{ color: GOLD }} />
-                <span className="text-white">{t('process.footer.website')}</span>
+                <Globe className="w-6 h-6" style={{ color: GOLD }} />
+                <span className="text-white text-lg md:text-xl">{t('process.footer.website')}</span>
               </a>
             </div>
 
             {/* Center: WeChat QR */}
             <div className="flex flex-col items-center">
-              <div className="bg-white p-3 rounded-xl mb-2">
+              <div className="bg-white p-4 rounded-xl mb-3">
                 <Image
                   src="/wechat-qr.png"
                   alt="WeChat QR Code"
-                  width={112}
-                  height={112}
-                  className="w-28 h-28 object-contain"
+                  width={140}
+                  height={140}
+                  className="w-36 h-36 object-contain"
                   loading="lazy"
                 />
               </div>
-              <p className="text-sm text-white/70">{t('process.footer.scanWeChat')}</p>
+              <p className="text-base md:text-lg text-white/70">{t('process.footer.scanWeChat')}</p>
             </div>
 
             {/* Right: Stats */}
-            <div className="space-y-2.5">
+            <div className="space-y-4">
               {footerStats.map((stat) => (
-                <div key={stat.label} className="flex items-center justify-between md:justify-end gap-3">
-                  <span className="text-white/70 text-sm">{stat.label}</span>
+                <div key={stat.label} className="flex items-center justify-between md:justify-end gap-4">
+                  <span className="text-white/70 text-base md:text-lg">{stat.label}</span>
                   {stat.rating ? (
-                    <div className="flex gap-0.5">
+                    <div className="flex gap-1">
                       {[0, 1, 2, 3, 4].map((i) => (
-                        <Star key={i} className="w-4 h-4" style={{ fill: GOLD, color: GOLD }} />
+                        <Star key={i} className="w-5 h-5 md:w-6 md:h-6" style={{ fill: GOLD, color: GOLD }} />
                       ))}
                     </div>
                   ) : (
-                    <span className="font-semibold" style={{ color: GOLD }}>{stat.value}</span>
+                    <span className="font-semibold text-lg md:text-xl" style={{ color: GOLD }}>{stat.value}</span>
                   )}
                 </div>
               ))}
