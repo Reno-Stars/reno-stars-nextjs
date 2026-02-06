@@ -657,10 +657,24 @@ export async function getProjectsWithDetailsBySite(siteId: string) {
   const ids = rows.map((r: DbProjectRow) => r.id);
   const { images, scopes } = await fetchProjectRelations(ids);
 
+  // Build Maps for O(1) lookup per project
+  const imagesByProject = new Map<string, DbImageRow[]>();
+  for (const img of images) {
+    const arr = imagesByProject.get(img.projectId) ?? [];
+    arr.push(img);
+    imagesByProject.set(img.projectId, arr);
+  }
+  const scopesByProject = new Map<string, DbScopeRow[]>();
+  for (const s of scopes) {
+    const arr = scopesByProject.get(s.projectId) ?? [];
+    arr.push(s);
+    scopesByProject.set(s.projectId, arr);
+  }
+
   return rows.map((row: DbProjectRow) => ({
     ...row,
-    images: images.filter((i: DbImageRow) => i.projectId === row.id).sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
-    scopes: scopes.filter((s: DbScopeRow) => s.projectId === row.id).sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
+    images: (imagesByProject.get(row.id) ?? []).sort((a, b) => a.displayOrder - b.displayOrder),
+    scopes: (scopesByProject.get(row.id) ?? []).sort((a, b) => a.displayOrder - b.displayOrder),
   }));
 }
 

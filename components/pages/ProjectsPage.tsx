@@ -37,21 +37,23 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   // Convert sites to display format (as "Whole House" projects)
   const wholeHouseCategory = t('category.wholeHouse');
   const sitesAsDisplayProjects: DisplayProject[] = useMemo(() =>
-    sitesAsProjects.map((site) => ({
-      id: site.id,
-      slug: site.slug,
-      title: site.title[locale],
-      description: site.description[locale],
-      category: wholeHouseCategory,
-      service_type: 'whole-house' as const,
-      location_city: site.location_city || '',
-      hero_image: site.hero_image || '',
-      images: site.hero_image ? [{ src: site.hero_image, alt: site.title[locale] }] : [],
-      featured: site.featured,
-      badge: site.badge?.[locale],
-      isSiteProject: true,
-      projectCount: site.project_count,
-    })),
+    sitesAsProjects
+      .filter((site) => site.hero_image) // Skip sites without a hero image
+      .map((site) => ({
+        id: site.id,
+        slug: site.slug,
+        title: site.title[locale],
+        description: site.description[locale],
+        category: wholeHouseCategory,
+        service_type: 'whole-house' as const,
+        location_city: site.location_city || '',
+        hero_image: site.hero_image!,
+        images: [{ src: site.hero_image!, alt: site.title[locale] }],
+        featured: site.featured,
+        badge: site.badge?.[locale],
+        isSiteProject: true,
+        projectCount: site.project_count,
+      })),
   [sitesAsProjects, locale, wholeHouseCategory]);
 
   // Convert individual projects

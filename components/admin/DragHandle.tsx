@@ -9,17 +9,15 @@ interface DragHandleProps {
   color?: string;
 }
 
+const dotBase: React.CSSProperties = { width: '3px', height: '3px', borderRadius: '50%' };
+const rowStyle: React.CSSProperties = { display: 'flex', gap: '2px' };
+
 /**
  * 6-dot drag handle pattern for draggable items.
- * Shows 2 columns x 3 rows of small dots.
+ * Shows 2 columns x 2 rows of small dots.
  */
 export default function DragHandle({ active = false, color = NAVY }: DragHandleProps) {
-  const dotStyle = {
-    width: '3px',
-    height: '3px',
-    borderRadius: '50%',
-    backgroundColor: color,
-  };
+  const dot: React.CSSProperties = { ...dotBase, backgroundColor: color };
 
   return (
     <div
@@ -32,13 +30,13 @@ export default function DragHandle({ active = false, color = NAVY }: DragHandleP
       }}
       aria-hidden="true"
     >
-      <div style={{ display: 'flex', gap: '2px' }}>
-        <div style={dotStyle} />
-        <div style={dotStyle} />
+      <div style={rowStyle}>
+        <div style={dot} />
+        <div style={dot} />
       </div>
-      <div style={{ display: 'flex', gap: '2px' }}>
-        <div style={dotStyle} />
-        <div style={dotStyle} />
+      <div style={rowStyle}>
+        <div style={dot} />
+        <div style={dot} />
       </div>
     </div>
   );
