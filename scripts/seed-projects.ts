@@ -1,11 +1,15 @@
 /**
- * Seed projects from static data into the database.
+ * Seed projects and sites from static data into the database.
  * Usage: pnpm db:seed:projects
  *
  * NOTE: Run with NEXT_PUBLIC_STORAGE_PROVIDER unset so that raw
  * production URLs are stored in the database. getAssetUrl() is
  * applied at query-time, not at insert-time.
  */
+
+// Load environment variables from .env.local (must be first)
+import { config } from 'dotenv';
+config({ path: '.env.local' });
 
 import { db } from '../lib/db';
 import {
@@ -15,17 +19,109 @@ import {
   projectSites,
   services as servicesTable,
 } from '../lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
-// Static project data — uses raw URLs (NEXT_PUBLIC_STORAGE_PROVIDER should be unset)
-const PROJECTS_RAW = [
+// Valid service types (no 'whole-house' - that's represented by Sites)
+type ServiceType = 'kitchen' | 'bathroom' | 'basement' | 'cabinet' | 'commercial';
+
+interface ProjectData {
+  slug: string;
+  titleEn: string;
+  titleZh: string;
+  descriptionEn: string;
+  descriptionZh: string;
+  serviceType: ServiceType;
+  categoryEn: string;
+  categoryZh: string;
+  locationCity: string;
+  budgetRange: string;
+  durationEn: string;
+  durationZh: string;
+  spaceTypeEn: string;
+  spaceTypeZh: string;
+  heroImageUrl: string;
+  challengeEn?: string;
+  challengeZh?: string;
+  solutionEn?: string;
+  solutionZh?: string;
+  featured?: boolean;
+  badgeEn?: string;
+  badgeZh?: string;
+  images: { url: string; altEn: string; altZh: string; isBefore?: boolean }[];
+  scopes: { en: string; zh: string }[];
+}
+
+interface SiteData {
+  slug: string;
+  titleEn: string;
+  titleZh: string;
+  descriptionEn: string;
+  descriptionZh: string;
+  locationCity: string;
+  heroImageUrl: string;
+  showAsProject: boolean;
+  featured: boolean;
+  badgeEn?: string;
+  badgeZh?: string;
+  // Project slugs to associate with this site
+  projectSlugs: string[];
+}
+
+// ============================================================================
+// SITES DATA - These appear as "Whole House" projects in the listing
+// ============================================================================
+const SITES_RAW: SiteData[] = [
+  {
+    slug: 'oak-street-vancouver',
+    titleEn: 'Oak Street Whole House Renovation',
+    titleZh: '橡树街全屋装修',
+    descriptionEn: 'Complete home transformation including kitchen, bathrooms, and living spaces in Vancouver.',
+    descriptionZh: '温哥华全面的家居改造，包括厨房、浴室和起居空间。',
+    locationCity: 'Vancouver',
+    heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png',
+    showAsProject: true,
+    featured: true,
+    badgeEn: 'Featured',
+    badgeZh: '精选',
+    projectSlugs: ['stunning-home-renovation-langley', 'surrey-home-before-after', 'richmond-kitchen-remodel-bath'],
+  },
+  {
+    slug: 'richmond-family-home',
+    titleEn: 'Richmond Family Home Renovation',
+    titleZh: '列治文家庭住宅装修',
+    descriptionEn: 'Multi-room renovation for a growing family including kitchen and multiple bathrooms.',
+    descriptionZh: '为成长中的家庭进行多房间装修，包括厨房和多个浴室。',
+    locationCity: 'Richmond',
+    heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png',
+    showAsProject: true,
+    featured: false,
+    projectSlugs: ['richmond-kitchen-bathroom-remodel', 'richmond-bathroom-remodel'],
+  },
+  {
+    slug: 'surrey-modern-makeover',
+    titleEn: 'Surrey Modern Makeover',
+    titleZh: '素里现代风格改造',
+    descriptionEn: 'Contemporary whole house update with modern finishes throughout.',
+    descriptionZh: '采用现代风格装饰的全屋更新。',
+    locationCity: 'Surrey',
+    heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png',
+    showAsProject: true,
+    featured: false,
+    projectSlugs: ['surrey-home-renovation', 'white-toned-kitchen-surrey'],
+  },
+];
+
+// ============================================================================
+// PROJECTS DATA - Individual room/area renovations
+// ============================================================================
+const PROJECTS_RAW: ProjectData[] = [
   {
     slug: 'coquitlam-white-shaker-cabinets',
     titleEn: 'Coquitlam - White Shaker Cabinets',
     titleZh: '高贵林 - 白色摇门橱柜',
     descriptionEn: 'Modern white shaker cabinet installation with premium countertops and backsplash.',
     descriptionZh: '现代白色摇门橱柜安装，配备高端台面和后挡板。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
     locationCity: 'Coquitlam',
     budgetRange: '$15,000 - $25,000',
@@ -55,7 +151,7 @@ const PROJECTS_RAW = [
     titleZh: '列治文厨房和浴室改造',
     descriptionEn: 'Complete kitchen and bathroom transformation with contemporary finishes.',
     descriptionZh: '采用现代风格完成厨房和浴室全面改造。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
     locationCity: 'Richmond',
     budgetRange: '$30,000 - $45,000',
@@ -79,12 +175,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'surrey-home-renovation',
-    titleEn: 'Surrey Home Renovation', titleZh: '素里住宅装修',
+    titleEn: 'Surrey Home Renovation',
+    titleZh: '素里住宅装修',
     descriptionEn: 'Full home renovation including a stunning kitchen redesign.',
     descriptionZh: '全屋装修，包括令人惊叹的厨房重新设计。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Surrey', budgetRange: '$40,000 - $60,000',
+    locationCity: 'Surrey',
+    budgetRange: '$40,000 - $60,000',
     durationEn: '6 weeks', durationZh: '6周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png',
@@ -105,12 +203,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'white-toned-kitchen-surrey',
-    titleEn: 'White Toned Kitchen in Surrey', titleZh: '素里白色调厨房',
+    titleEn: 'White Toned Kitchen in Surrey',
+    titleZh: '素里白色调厨房',
     descriptionEn: 'Elegant white-toned kitchen renovation with clean lines and modern appliances.',
     descriptionZh: '优雅的白色调厨房装修，线条简洁，配备现代家电。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Surrey', budgetRange: '$20,000 - $35,000',
+    locationCity: 'Surrey',
+    budgetRange: '$20,000 - $35,000',
     durationEn: '4 weeks', durationZh: '4周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png',
@@ -131,12 +231,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'kitchen-renovation-delta',
-    titleEn: 'Kitchen Renovation in Delta BC', titleZh: '三角洲厨房装修',
+    titleEn: 'Kitchen Renovation in Delta BC',
+    titleZh: '三角洲厨房装修',
     descriptionEn: 'Modern kitchen renovation featuring custom cabinetry and quartz countertops.',
     descriptionZh: '现代厨房装修，配备定制橱柜和石英台面。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Delta', budgetRange: '$25,000 - $40,000',
+    locationCity: 'Delta',
+    budgetRange: '$25,000 - $40,000',
     durationEn: '4 weeks', durationZh: '4周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/73.png',
@@ -157,12 +259,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'modern-kitchen-richmond',
-    titleEn: 'Modern Kitchen Renovation in Richmond', titleZh: '列治文现代厨房装修',
+    titleEn: 'Modern Kitchen Renovation in Richmond',
+    titleZh: '列治文现代厨房装修',
     descriptionEn: 'Comprehensive modern kitchen renovation with island and premium fixtures.',
     descriptionZh: '全面的现代厨房装修，配备岛台和高端设备。',
-    serviceType: 'kitchen' as const,
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Richmond', budgetRange: '$35,000 - $50,000',
+    locationCity: 'Richmond',
+    budgetRange: '$35,000 - $50,000',
     durationEn: '5 weeks', durationZh: '5周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/75-1.png',
@@ -183,12 +287,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'bathroom-renovation-delta',
-    titleEn: 'Bathroom Renovation in Delta', titleZh: '三角洲浴室装修',
+    titleEn: 'Bathroom Renovation in Delta',
+    titleZh: '三角洲浴室装修',
     descriptionEn: 'Complete bathroom renovation with luxury tile work and modern vanity.',
     descriptionZh: '完整的浴室装修，配备豪华瓷砖和现代洗手台。',
-    serviceType: 'bathroom' as const,
+    serviceType: 'bathroom',
     categoryEn: 'Bathroom', categoryZh: '卫浴',
-    locationCity: 'Delta', budgetRange: '$12,000 - $20,000',
+    locationCity: 'Delta',
+    budgetRange: '$12,000 - $20,000',
     durationEn: '2 weeks', durationZh: '2周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/71.png',
@@ -209,12 +315,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'richmond-bathroom-remodel',
-    titleEn: 'Richmond Bathroom Remodel', titleZh: '列治文浴室改造',
+    titleEn: 'Richmond Bathroom Remodel',
+    titleZh: '列治文浴室改造',
     descriptionEn: 'Spa-inspired bathroom remodel with freestanding tub and walk-in shower.',
     descriptionZh: '水疗风格浴室改造，配备独立浴缸和步入式淋浴。',
-    serviceType: 'bathroom' as const,
+    serviceType: 'bathroom',
     categoryEn: 'Bathroom', categoryZh: '卫浴',
-    locationCity: 'Richmond', budgetRange: '$18,000 - $28,000',
+    locationCity: 'Richmond',
+    budgetRange: '$18,000 - $28,000',
     durationEn: '3 weeks', durationZh: '3周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg',
@@ -235,12 +343,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'bathroom-vanity-west-vancouver',
-    titleEn: 'Bathroom Vanity Renovation in West Vancouver', titleZh: '西温浴室洗手台装修',
+    titleEn: 'Bathroom Vanity Renovation in West Vancouver',
+    titleZh: '西温浴室洗手台装修',
     descriptionEn: 'Custom vanity installation with premium fixtures in a luxury home.',
     descriptionZh: '豪宅中的定制洗手台安装，配备高端洁具。',
-    serviceType: 'bathroom' as const,
+    serviceType: 'bathroom',
     categoryEn: 'Bathroom', categoryZh: '卫浴',
-    locationCity: 'West Vancouver', budgetRange: '$10,000 - $18,000',
+    locationCity: 'West Vancouver',
+    budgetRange: '$10,000 - $18,000',
     durationEn: '2 weeks', durationZh: '2周',
     spaceTypeEn: 'Luxury Residential', spaceTypeZh: '豪华住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/16.png',
@@ -261,64 +371,70 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'stunning-home-renovation-langley',
-    titleEn: 'Stunning Home Renovation in Langley', titleZh: '兰里全屋翻新',
-    descriptionEn: 'Full-scale home transformation including kitchen, bathrooms, and living spaces.',
-    descriptionZh: '全方位家居改造，包括厨房、浴室和起居空间。',
-    serviceType: 'kitchen' as const,
+    titleEn: 'Langley Kitchen Renovation',
+    titleZh: '兰里厨房翻新',
+    descriptionEn: 'Beautiful kitchen transformation as part of a larger home renovation project.',
+    descriptionZh: '作为大型家居装修项目一部分的美丽厨房改造。',
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Langley', budgetRange: '$80,000 - $120,000',
-    durationEn: '10 weeks', durationZh: '10周',
+    locationCity: 'Langley',
+    budgetRange: '$35,000 - $50,000',
+    durationEn: '4 weeks', durationZh: '4周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png',
-    challengeEn: 'A 30-year-old home with outdated finishes throughout, requiring a complete modernization while the family continued to live on-site.',
-    challengeZh: '一栋30年老屋，全屋装修过时，需要在家庭继续居住的情况下进行全面现代化改造。',
-    solutionEn: 'We phased the renovation room by room, starting with the kitchen and bathrooms, then moving to living areas — minimizing disruption while delivering a cohesive modern transformation.',
-    solutionZh: '我们分阶段逐房间施工，从厨房和浴室开始，再到起居空间——最大限度减少干扰，同时实现统一的现代化改造。',
+    challengeEn: 'A 30-year-old home with an outdated kitchen requiring complete modernization.',
+    challengeZh: '一栋30年老屋，厨房过时需要全面现代化改造。',
+    solutionEn: 'We redesigned the kitchen with modern cabinetry, quartz countertops, and new appliances for a fresh, contemporary look.',
+    solutionZh: '我们用现代橱柜、石英台面和新家电重新设计了厨房，打造清新现代的外观。',
     featured: true,
     images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', altEn: 'Langley home renovation', altZh: '兰里住宅装修' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altEn: 'Living space transformation', altZh: '起居空间改造' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', altEn: 'Kitchen and bathroom', altZh: '厨房和浴室' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', altEn: 'Langley kitchen renovation', altZh: '兰里厨房装修' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altEn: 'Kitchen transformation', altZh: '厨房改造' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', altEn: 'Modern kitchen', altZh: '现代厨房' },
     ],
     scopes: [
-      { en: 'Kitchen', zh: '厨房' }, { en: 'Bathrooms', zh: '浴室' }, { en: 'Flooring', zh: '地板' },
-      { en: 'Painting', zh: '油漆' }, { en: 'Lighting', zh: '灯光' }, { en: 'Living Spaces', zh: '起居空间' },
+      { en: 'Kitchen Design', zh: '厨房设计' }, { en: 'Cabinetry', zh: '橱柜' },
+      { en: 'Countertops', zh: '台面' }, { en: 'Appliances', zh: '家电' }, { en: 'Lighting', zh: '灯光' },
     ],
   },
   {
     slug: 'surrey-home-before-after',
-    titleEn: 'Surrey Home Before and After', titleZh: '素里住宅前后对比',
-    descriptionEn: 'Dramatic whole house renovation showcasing the complete transformation.',
-    descriptionZh: '震撼的全屋装修，展示完整的蜕变过程。',
-    serviceType: 'kitchen' as const,
+    titleEn: 'Surrey Kitchen Transformation',
+    titleZh: '素里厨房蜕变',
+    descriptionEn: 'Dramatic kitchen renovation showcasing a complete transformation.',
+    descriptionZh: '震撼的厨房装修，展示完整的蜕变过程。',
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Surrey', budgetRange: '$60,000 - $90,000',
-    durationEn: '8 weeks', durationZh: '8周',
+    locationCity: 'Surrey',
+    budgetRange: '$28,000 - $42,000',
+    durationEn: '4 weeks', durationZh: '4周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png',
-    challengeEn: 'A neglected property with severely dated interiors, requiring both cosmetic and structural updates to bring it up to modern standards.',
-    challengeZh: '一处被忽视的房产，室内严重过时，需要外观和结构两方面的更新才能达到现代标准。',
-    solutionEn: 'We addressed structural issues first, then completely refreshed every room with new flooring, modern fixtures, fresh paint, and updated electrical throughout.',
-    solutionZh: '我们先处理结构问题，然后对每个房间进行全面翻新——新地板、现代洁具、新鲜油漆和全屋电气升级。',
+    challengeEn: 'A neglected kitchen with severely dated interiors requiring both cosmetic and functional updates.',
+    challengeZh: '一个被忽视的厨房，室内严重过时，需要外观和功能两方面的更新。',
+    solutionEn: 'We completely refreshed the kitchen with new flooring, modern fixtures, fresh paint, and updated electrical.',
+    solutionZh: '我们对厨房进行全面翻新——新地板、现代洁具、新鲜油漆和电气升级。',
     featured: false,
     images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altEn: 'Surrey home before and after', altZh: '素里住宅前后对比' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', altEn: 'Home transformation', altZh: '住宅改造' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altEn: 'Surrey kitchen before and after', altZh: '素里厨房前后对比' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', altEn: 'Kitchen transformation', altZh: '厨房改造' },
       { url: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png', altEn: 'Renovation results', altZh: '装修成果' },
     ],
     scopes: [
-      { en: 'Kitchen', zh: '厨房' }, { en: 'Bathrooms', zh: '浴室' }, { en: 'Flooring', zh: '地板' },
-      { en: 'Painting', zh: '油漆' }, { en: 'Electrical', zh: '电气' },
+      { en: 'Cabinetry', zh: '橱柜' }, { en: 'Countertops', zh: '台面' },
+      { en: 'Flooring', zh: '地板' }, { en: 'Painting', zh: '油漆' }, { en: 'Electrical', zh: '电气' },
     ],
   },
   {
     slug: 'commercial-renovation-skin-lab-granville',
-    titleEn: 'Commercial Renovation - Skin Lab Granville', titleZh: '商业装修 - Skin Lab Granville',
+    titleEn: 'Commercial Renovation - Skin Lab Granville',
+    titleZh: '商业装修 - Skin Lab Granville',
     descriptionEn: 'Professional commercial space renovation for a skincare clinic on Granville.',
     descriptionZh: 'Granville街护肤诊所的专业商业空间装修。',
-    serviceType: 'commercial' as const,
+    serviceType: 'commercial',
     categoryEn: 'Commercial', categoryZh: '商业',
-    locationCity: 'Vancouver', budgetRange: '$50,000 - $75,000',
+    locationCity: 'Vancouver',
+    budgetRange: '$50,000 - $75,000',
     durationEn: '6 weeks', durationZh: '6周',
     spaceTypeEn: 'Commercial', spaceTypeZh: '商业',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/84.jpg',
@@ -339,12 +455,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'basement-renovation-vancouver',
-    titleEn: 'Basement Renovation in Vancouver', titleZh: '温哥华地下室装修',
+    titleEn: 'Basement Renovation in Vancouver',
+    titleZh: '温哥华地下室装修',
     descriptionEn: 'Full basement conversion into a modern living space with home theater and guest suite.',
     descriptionZh: '地下室全面改造为现代生活空间，配备家庭影院和客房。',
-    serviceType: 'basement' as const,
+    serviceType: 'basement',
     categoryEn: 'Basement', categoryZh: '地下室',
-    locationCity: 'Vancouver', budgetRange: '$40,000 - $60,000',
+    locationCity: 'Vancouver',
+    budgetRange: '$40,000 - $60,000',
     durationEn: '8 weeks', durationZh: '8周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png',
@@ -365,12 +483,14 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'cabinet-refacing-richmond',
-    titleEn: 'Cabinet Refacing in Richmond', titleZh: '列治文橱柜翻新',
+    titleEn: 'Cabinet Refacing in Richmond',
+    titleZh: '列治文橱柜翻新',
     descriptionEn: 'Professional cabinet refacing with new shaker-style doors, soft-close hardware, and modern pulls.',
     descriptionZh: '专业橱柜翻新，配备新摇门式柜门、缓冲五金件和现代拉手。',
-    serviceType: 'cabinet' as const,
+    serviceType: 'cabinet',
     categoryEn: 'Cabinet', categoryZh: '橱柜',
-    locationCity: 'Richmond', budgetRange: '$8,000 - $15,000',
+    locationCity: 'Richmond',
+    budgetRange: '$8,000 - $15,000',
     durationEn: '1 week', durationZh: '1周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/340.png',
@@ -391,166 +511,202 @@ const PROJECTS_RAW = [
   },
   {
     slug: 'richmond-kitchen-remodel-bath',
-    titleEn: 'Richmond Kitchen Remodel & Bath', titleZh: '列治文厨房和浴室改造',
-    descriptionEn: 'Combined kitchen remodel and bathroom renovation for a complete home upgrade.',
-    descriptionZh: '厨房和浴室联合改造，实现全屋升级。',
-    serviceType: 'kitchen' as const,
+    titleEn: 'Richmond Kitchen Remodel',
+    titleZh: '列治文厨房改造',
+    descriptionEn: 'Complete kitchen remodel with modern finishes and efficient layout.',
+    descriptionZh: '现代风格完整厨房改造，布局高效。',
+    serviceType: 'kitchen',
     categoryEn: 'Kitchen', categoryZh: '厨房',
-    locationCity: 'Richmond', budgetRange: '$35,000 - $55,000',
-    durationEn: '6 weeks', durationZh: '6周',
+    locationCity: 'Richmond',
+    budgetRange: '$35,000 - $55,000',
+    durationEn: '5 weeks', durationZh: '5周',
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png',
-    challengeEn: 'The homeowner needed both the kitchen and bathroom updated on a moderate budget without compromising on quality.',
-    challengeZh: '业主需要在有限预算内同时更新厨房和浴室，且不降低质量标准。',
-    solutionEn: 'We sourced high-quality materials at competitive prices and coordinated both renovations to run in parallel, delivering premium results within the budget.',
-    solutionZh: '我们以有竞争力的价格采购优质材料，并协调两项装修同步进行，在预算内交付高品质成果。',
+    challengeEn: 'The homeowner needed a complete kitchen update on a moderate budget without compromising on quality.',
+    challengeZh: '业主需要在有限预算内完成厨房更新，且不降低质量标准。',
+    solutionEn: 'We sourced high-quality materials at competitive prices and delivered premium results within the budget.',
+    solutionZh: '我们以有竞争力的价格采购优质材料，在预算内交付高品质成果。',
     featured: false,
     images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', altEn: 'Richmond kitchen and bath', altZh: '列治文厨房和浴室' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', altEn: 'Richmond kitchen remodel', altZh: '列治文厨房改造' },
       { url: 'https://reno-stars.com/wp-content/uploads/2025/04/35.png', altEn: 'Kitchen remodel', altZh: '厨房改造' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', altEn: 'Bathroom renovation', altZh: '浴室装修' },
+      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/主卫.jpg', altEn: 'Modern finishes', altZh: '现代饰面' },
     ],
     scopes: [
-      { en: 'Kitchen Remodel', zh: '厨房改造' }, { en: 'Bathroom Renovation', zh: '浴室装修' },
+      { en: 'Kitchen Remodel', zh: '厨房改造' }, { en: 'Cabinetry', zh: '橱柜' },
       { en: 'Flooring', zh: '地板' }, { en: 'Countertops', zh: '台面' },
     ],
   },
 ];
 
-async function main() {
-  console.log('Seeding projects...');
+// ============================================================================
+// SEED FUNCTIONS
+// ============================================================================
 
-  // First, create or get a default project site for seeded projects
-  let defaultSiteId: string;
-  const existingSites = await db
-    .select({ id: projectSites.id })
-    .from(projectSites)
-    .where(eq(projectSites.slug, 'seeded-projects'))
-    .limit(1);
+async function clearExistingData() {
+  console.log('Clearing existing project data...');
 
-  if (existingSites.length > 0) {
-    defaultSiteId = existingSites[0].id;
-    console.log('  Using existing default site for seeded projects');
-  } else {
-    const [newSite] = await db
+  // Delete in order to respect foreign keys
+  await db.delete(projectScopes);
+  await db.delete(projectImages);
+  await db.delete(projectsTable);
+  await db.delete(projectSites);
+
+  console.log('  Cleared all projects, images, scopes, and sites');
+}
+
+async function seedSites(): Promise<Map<string, string>> {
+  console.log('Seeding sites...');
+  const siteIdMap = new Map<string, string>();
+
+  for (const site of SITES_RAW) {
+    const [inserted] = await db
       .insert(projectSites)
       .values({
-        slug: 'seeded-projects',
-        titleEn: 'Seeded Projects',
-        titleZh: '种子项目',
-        descriptionEn: 'Default site container for seeded project data.',
-        descriptionZh: '用于种子项目数据的默认站点容器。',
-        showAsProject: false,
-        featured: false,
+        slug: site.slug,
+        titleEn: site.titleEn,
+        titleZh: site.titleZh,
+        descriptionEn: site.descriptionEn,
+        descriptionZh: site.descriptionZh,
+        locationCity: site.locationCity,
+        heroImageUrl: site.heroImageUrl,
+        showAsProject: site.showAsProject,
+        featured: site.featured,
+        badgeEn: site.badgeEn ?? null,
+        badgeZh: site.badgeZh ?? null,
         isPublished: true,
         publishedAt: new Date(),
       })
       .returning({ id: projectSites.id });
-    defaultSiteId = newSite.id;
-    console.log('  Created default site for seeded projects');
+
+    siteIdMap.set(site.slug, inserted.id);
+    console.log(`  Created site: ${site.slug}`);
   }
 
+  return siteIdMap;
+}
+
+async function seedProjects(siteIdMap: Map<string, string>) {
+  console.log('Seeding projects...');
+
   // Look up service IDs for linking
-  const serviceRows: { slug: string; id: string }[] = await db.select({ slug: servicesTable.slug, id: servicesTable.id }).from(servicesTable);
-  const serviceMap = new Map(serviceRows.map((s: { slug: string; id: string }) => [s.slug, s.id]));
+  const serviceRows = await db.select({ slug: servicesTable.slug, id: servicesTable.id }).from(servicesTable);
+  const serviceMap = new Map(serviceRows.map((s) => [s.slug, s.id]));
 
-  let seeded = 0;
-  let skipped = 0;
-  let failed = 0;
-
-  for (const p of PROJECTS_RAW) {
-    try {
-      // Insert project (skip if slug exists)
-      const existing = await db
-        .select({ id: projectsTable.id })
-        .from(projectsTable)
-        .where(eq(projectsTable.slug, p.slug))
-        .limit(1);
-
-      if (existing.length > 0) {
-        console.log(`  Skipping "${p.slug}" (already exists)`);
-        skipped++;
-        continue;
+  // Build a map of project slug -> site ID based on SITES_RAW
+  const projectToSiteMap = new Map<string, string>();
+  for (const site of SITES_RAW) {
+    const siteId = siteIdMap.get(site.slug);
+    if (siteId) {
+      for (const projectSlug of site.projectSlugs) {
+        projectToSiteMap.set(projectSlug, siteId);
       }
-
-      const serviceId = serviceMap.get(p.serviceType) ?? null;
-      if (!serviceId) {
-        console.warn(`  Warning: No service found for type "${p.serviceType}"`);
-      }
-
-      const [inserted] = await db
-        .insert(projectsTable)
-        .values({
-          slug: p.slug,
-          titleEn: p.titleEn,
-          titleZh: p.titleZh,
-          descriptionEn: p.descriptionEn,
-          descriptionZh: p.descriptionZh,
-          serviceType: p.serviceType,
-          serviceId,
-          categoryEn: p.categoryEn,
-          categoryZh: p.categoryZh,
-          locationCity: p.locationCity,
-          budgetRange: p.budgetRange,
-          durationEn: p.durationEn,
-          durationZh: p.durationZh,
-          spaceTypeEn: p.spaceTypeEn,
-          spaceTypeZh: p.spaceTypeZh,
-          heroImageUrl: p.heroImageUrl,
-          challengeEn: p.challengeEn,
-          challengeZh: p.challengeZh,
-          solutionEn: p.solutionEn,
-          solutionZh: p.solutionZh,
-          featured: p.featured,
-          badgeEn: p.badgeEn ?? null,
-          badgeZh: p.badgeZh ?? null,
-          isPublished: true,
-          publishedAt: new Date(),
-          siteId: defaultSiteId,
-        })
-        .returning({ id: projectsTable.id });
-
-      const projectId = inserted.id;
-
-      // Batch insert images
-      if (p.images.length > 0) {
-        await db.insert(projectImages).values(
-          p.images.map((img, i) => ({
-            projectId,
-            imageUrl: img.url,
-            altTextEn: img.altEn,
-            altTextZh: img.altZh,
-            isBefore: false,
-            displayOrder: i,
-          }))
-        );
-      }
-
-      // Batch insert scopes
-      if (p.scopes.length > 0) {
-        await db.insert(projectScopes).values(
-          p.scopes.map((scope, i) => ({
-            projectId,
-            scopeEn: scope.en,
-            scopeZh: scope.zh,
-            displayOrder: i,
-          }))
-        );
-      }
-
-      console.log(`  Seeded "${p.slug}"`);
-      seeded++;
-    } catch (err) {
-      console.error(`  Failed to seed "${p.slug}":`, err);
-      failed++;
     }
   }
 
-  console.log(`\nDone. Seeded: ${seeded}, Skipped: ${skipped}, Failed: ${failed}`);
-  process.exit(failed > 0 ? 1 : 0);
+  // Create a default site for projects not assigned to any site
+  const [defaultSite] = await db
+    .insert(projectSites)
+    .values({
+      slug: 'individual-projects',
+      titleEn: 'Individual Projects',
+      titleZh: '独立项目',
+      descriptionEn: 'Collection of individual renovation projects.',
+      descriptionZh: '独立装修项目集合。',
+      showAsProject: false,
+      featured: false,
+      isPublished: true,
+      publishedAt: new Date(),
+    })
+    .returning({ id: projectSites.id });
+
+  const defaultSiteId = defaultSite.id;
+
+  let seeded = 0;
+
+  for (const p of PROJECTS_RAW) {
+    const serviceId = serviceMap.get(p.serviceType) ?? null;
+    const siteId = projectToSiteMap.get(p.slug) ?? defaultSiteId;
+
+    const [inserted] = await db
+      .insert(projectsTable)
+      .values({
+        slug: p.slug,
+        titleEn: p.titleEn,
+        titleZh: p.titleZh,
+        descriptionEn: p.descriptionEn,
+        descriptionZh: p.descriptionZh,
+        serviceType: p.serviceType,
+        serviceId,
+        categoryEn: p.categoryEn,
+        categoryZh: p.categoryZh,
+        locationCity: p.locationCity,
+        budgetRange: p.budgetRange,
+        durationEn: p.durationEn,
+        durationZh: p.durationZh,
+        spaceTypeEn: p.spaceTypeEn,
+        spaceTypeZh: p.spaceTypeZh,
+        heroImageUrl: p.heroImageUrl,
+        challengeEn: p.challengeEn,
+        challengeZh: p.challengeZh,
+        solutionEn: p.solutionEn,
+        solutionZh: p.solutionZh,
+        featured: p.featured ?? false,
+        badgeEn: p.badgeEn ?? null,
+        badgeZh: p.badgeZh ?? null,
+        isPublished: true,
+        publishedAt: new Date(),
+        siteId,
+      })
+      .returning({ id: projectsTable.id });
+
+    const projectId = inserted.id;
+
+    // Insert images
+    if (p.images.length > 0) {
+      await db.insert(projectImages).values(
+        p.images.map((img, i) => ({
+          projectId,
+          imageUrl: img.url,
+          altTextEn: img.altEn,
+          altTextZh: img.altZh,
+          isBefore: img.isBefore ?? false,
+          displayOrder: i,
+        }))
+      );
+    }
+
+    // Insert scopes
+    if (p.scopes.length > 0) {
+      await db.insert(projectScopes).values(
+        p.scopes.map((scope, i) => ({
+          projectId,
+          scopeEn: scope.en,
+          scopeZh: scope.zh,
+          displayOrder: i,
+        }))
+      );
+    }
+
+    console.log(`  Seeded project: ${p.slug}${siteId !== defaultSiteId ? ` (site: ${[...projectToSiteMap.entries()].find(([k, v]) => v === siteId)?.[0] || 'unknown'})` : ''}`);
+    seeded++;
+  }
+
+  console.log(`\nSeeded ${seeded} projects`);
+}
+
+async function main() {
+  console.log('=== Seeding Projects and Sites ===\n');
+
+  await clearExistingData();
+  const siteIdMap = await seedSites();
+  await seedProjects(siteIdMap);
+
+  console.log('\n=== Seeding Complete ===');
+  process.exit(0);
 }
 
 main().catch((err) => {
-  console.error('Failed to seed projects:', err);
+  console.error('Failed to seed:', err);
   process.exit(1);
 });
