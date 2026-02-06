@@ -4,7 +4,7 @@ import { useState, useTransition, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
-import { GOLD, SURFACE, TEXT, TEXT_MUTED, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neuIn } from '@/lib/theme';
+import { GOLD, SURFACE, TEXT, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neuIn } from '@/lib/theme';
 
 interface ContactFormProps {
   /** Called after a successful submission */
