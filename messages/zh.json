@@ -259,10 +259,6 @@
   "category": {
     "wholeHouse": "全屋"
   },
-  "wholeHouse": {
-    "areasCount": "{count} 个区域",
-    "siteBadge": "工地"
-  },
   "services": {
     "kitchen": {
       "title": "厨房装修",
@@ -498,6 +494,7 @@
     "allAreas": "全部区域",
     "childProjectsCount": "{count}个装修区域",
     "noImagesForArea": "该区域暂无图片",
-    "areasCount": "{count}个区域"
+    "areasCount": "{count} 个区域",
+    "siteBadge": "工地"
   }
 }

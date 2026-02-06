@@ -648,8 +648,8 @@ export function getCategories(locale: Locale): string[] {
 export function getCategoriesLocalized(): { en: string; zh: string }[] {
   return [
     { en: 'All', zh: '全部' },
+    WHOLE_HOUSE_CATEGORY, // Sites displayed as projects - first after "All"
     ...Object.values(serviceTypeToCategory),
-    WHOLE_HOUSE_CATEGORY, // For Sites displayed as projects
   ];
 }
 
