@@ -27,7 +27,7 @@ interface ScopeEntry {
   zh: string;
 }
 
-interface HouseOption {
+interface SiteOption {
   id: string;
   titleEn: string;
   titleZh: string;
@@ -63,13 +63,13 @@ interface ProjectFormProps {
     badgeZh: string;
     featured: boolean;
     isPublished: boolean;
-    houseId: string | null;
-    displayOrderInHouse: number;
+    siteId: string | null;
+    displayOrderInSite: number;
     images: Omit<ImageEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
   };
-  /** Available houses to link this project to */
-  houses?: HouseOption[];
+  /** Available sites to link this project to (required) */
+  sites?: SiteOption[];
   submitLabel?: string;
 }
 
@@ -82,7 +82,7 @@ const readOnlyStyle: React.CSSProperties = {
 export default function ProjectForm({
   action,
   initialData,
-  houses = [],
+  sites = [],
   submitLabel,
 }: ProjectFormProps) {
   const t = useAdminTranslations();
@@ -255,45 +255,42 @@ export default function ProjectForm({
             )}
           </div>
 
-          {/* House Settings */}
-          {houses.length > 0 && (
-            <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
-              <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-                {t.projects.houseSettings}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <FormField label={t.projects.linkedHouse} htmlFor="houseId">
-                  <select
-                    id="houseId"
-                    name="houseId"
-                    defaultValue={initialData?.houseId ?? ''}
-                    style={fieldStyle}
-                  >
-                    <option value="">{t.projects.noneStandalone}</option>
-                    {houses.map((h) => (
-                      <option key={h.id} value={h.id}>
-                        {h.titleEn} / {h.titleZh}
-                      </option>
-                    ))}
-                  </select>
-                </FormField>
-
-                {/* Display Order in House - shown if house is selected */}
-                {initialData?.houseId && (
-                  <FormField label={t.projects.displayOrderInHouse} htmlFor="displayOrderInHouse">
-                    <input
-                      id="displayOrderInHouse"
-                      name="displayOrderInHouse"
-                      type="number"
-                      min="0"
-                      defaultValue={initialData?.displayOrderInHouse ?? 0}
-                      style={{ ...fieldStyle, width: '100px' }}
-                    />
-                  </FormField>
-                )}
-              </div>
+          {/* Site Settings (Required) */}
+          <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
+              {t.projects.siteSettings}
             </div>
-          )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <FormField label={t.projects.linkedSite} htmlFor="siteId">
+                <select
+                  id="siteId"
+                  name="siteId"
+                  defaultValue={initialData?.siteId ?? ''}
+                  required
+                  style={fieldStyle}
+                >
+                  <option value="">{t.projects.selectSite}</option>
+                  {sites.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.titleEn} / {s.titleZh}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+
+              {/* Display Order in Site */}
+              <FormField label={t.projects.displayOrderInSite} htmlFor="displayOrderInSite">
+                <input
+                  id="displayOrderInSite"
+                  name="displayOrderInSite"
+                  type="number"
+                  min="0"
+                  defaultValue={initialData?.displayOrderInSite ?? 0}
+                  style={{ ...fieldStyle, width: '100px' }}
+                />
+              </FormField>
+            </div>
+          </div>
 
           {/* Checkboxes */}
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>

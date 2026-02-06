@@ -7,7 +7,7 @@ import {
   projectImages,
   projectScopes,
   services as servicesTable,
-  houses as housesTable,
+  projectSites as sitesTable,
 } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
@@ -58,8 +58,8 @@ function parseScopes(formData: FormData) {
 
 function getProjectData(formData: FormData) {
   const serviceType = getString(formData, 'serviceType');
-  const houseId = getString(formData, 'houseId').trim();
-  const displayOrderInHouseStr = getString(formData, 'displayOrderInHouse').trim();
+  const siteId = getString(formData, 'siteId').trim();
+  const displayOrderInSiteStr = getString(formData, 'displayOrderInSite').trim();
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -84,8 +84,8 @@ function getProjectData(formData: FormData) {
     badgeZh: getString(formData, 'badgeZh') || null,
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',
-    houseId: houseId && isValidUUID(houseId) ? houseId : null,
-    displayOrderInHouse: displayOrderInHouseStr ? parseInt(displayOrderInHouseStr, 10) || 0 : 0,
+    siteId: siteId && isValidUUID(siteId) ? siteId : '',
+    displayOrderInSite: displayOrderInSiteStr ? parseInt(displayOrderInSiteStr, 10) || 0 : 0,
     updatedAt: new Date(),
   };
 }
@@ -133,16 +133,17 @@ export async function createProject(
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
 
-    // Validate house exists if specified
-    if (data.houseId) {
-      const houseRows = await db
-        .select({ id: housesTable.id })
-        .from(housesTable)
-        .where(eq(housesTable.id, data.houseId))
-        .limit(1);
-      if (!houseRows[0]) {
-        return { error: 'House not found.' };
-      }
+    // Site is required - validate it exists
+    if (!data.siteId) {
+      return { error: 'Site is required. Please select a project site.' };
+    }
+    const siteRows = await db
+      .select({ id: sitesTable.id })
+      .from(sitesTable)
+      .where(eq(sitesTable.id, data.siteId))
+      .limit(1);
+    if (!siteRows[0]) {
+      return { error: 'Site not found. Please select a valid project site.' };
     }
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
@@ -224,16 +225,17 @@ export async function updateProject(
       return { error: `Service type "${data.serviceType}" not found in database.` };
     }
 
-    // Validate house exists if specified
-    if (data.houseId) {
-      const houseRows = await db
-        .select({ id: housesTable.id })
-        .from(housesTable)
-        .where(eq(housesTable.id, data.houseId))
-        .limit(1);
-      if (!houseRows[0]) {
-        return { error: 'House not found.' };
-      }
+    // Site is required - validate it exists
+    if (!data.siteId) {
+      return { error: 'Site is required. Please select a project site.' };
+    }
+    const siteRows = await db
+      .select({ id: sitesTable.id })
+      .from(sitesTable)
+      .where(eq(sitesTable.id, data.siteId))
+      .limit(1);
+    if (!siteRows[0]) {
+      return { error: 'Site not found. Please select a valid project site.' };
     }
 
     // Ensure slug is unique (exclude current project's own slug)

@@ -5,9 +5,8 @@ import {
   companyInfo,
   socialLinks as socialLinksTable,
   services as servicesTable,
-  testimonials as testimonialsTable,
   aboutSections as aboutSectionsTable,
-  houses as housesTable,
+  projectSites as sitesTable,
   projects as projectsTable,
   projectImages as projectImagesTable,
   projectScopes as projectScopesTable,
@@ -21,7 +20,7 @@ import {
 } from './schema';
 import { getAssetUrl } from '../storage';
 import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages } from './helpers';
-import type { Company, SocialLink, Service, Testimonial, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, House, HouseWithProjects } from '../types';
+import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, Site, SiteWithProjects } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -94,24 +93,6 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
         : undefined,
     icon: row.iconName ?? undefined,
     image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
-  }));
-});
-
-/**
- * Fetch featured testimonials from DB, mapped to `Testimonial[]`.
- */
-export const getTestimonialsFromDb = cache(async (): Promise<Testimonial[]> => {
-  const rows = await db
-    .select()
-    .from(testimonialsTable)
-    .where(eq(testimonialsTable.isFeatured, true));
-
-  return rows.map((row: typeof testimonialsTable.$inferSelect) => ({
-    id: row.id,
-    name: row.name,
-    text: { en: row.textEn, zh: row.textZh },
-    rating: row.rating,
-    location: row.location ?? '',
   }));
 });
 
@@ -229,9 +210,9 @@ function mapDbProjectToProject(
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }
         : undefined,
-    // House relationship
-    house_id: row.houseId ?? undefined,
-    display_order_in_house: row.displayOrderInHouse,
+    // Site relationship (mandatory)
+    site_id: row.siteId,
+    display_order_in_site: row.displayOrderInSite,
   };
 }
 
@@ -311,12 +292,12 @@ export async function getProjectSlugsFromDb(): Promise<string[]> {
 }
 
 // ============================================================================
-// HOUSE QUERIES
+// SITE QUERIES
 // ============================================================================
 
-type DbHouseRow = typeof housesTable.$inferSelect;
+type DbSiteRow = typeof sitesTable.$inferSelect;
 
-function mapDbHouseToHouse(row: DbHouseRow): House {
+function mapDbSiteToSite(row: DbSiteRow): Site {
   return {
     id: row.id,
     slug: row.slug,
@@ -334,24 +315,24 @@ function mapDbHouseToHouse(row: DbHouseRow): House {
   };
 }
 
-/** Fetch all published houses. */
-export const getHousesFromDb = cache(async (): Promise<House[]> => {
+/** Fetch all published sites. */
+export const getSitesFromDb = cache(async (): Promise<Site[]> => {
   const rows = await db
     .select()
-    .from(housesTable)
-    .where(eq(housesTable.isPublished, true))
-    .orderBy(desc(housesTable.createdAt));
+    .from(sitesTable)
+    .where(eq(sitesTable.isPublished, true))
+    .orderBy(desc(sitesTable.createdAt));
 
-  return rows.map(mapDbHouseToHouse);
+  return rows.map(mapDbSiteToSite);
 });
 
-/** Fetch projects for a given house ID. */
-export const getProjectsOfHouse = cache(async (houseId: string): Promise<Project[]> => {
+/** Fetch projects for a given site ID. */
+export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]> => {
   const rows: DbProjectRow[] = await db
     .select()
     .from(projectsTable)
-    .where(and(eq(projectsTable.houseId, houseId), eq(projectsTable.isPublished, true)))
-    .orderBy(asc(projectsTable.displayOrderInHouse));
+    .where(and(eq(projectsTable.siteId, siteId), eq(projectsTable.isPublished, true)))
+    .orderBy(asc(projectsTable.displayOrderInSite));
 
   if (rows.length === 0) return [];
 
@@ -367,25 +348,25 @@ export const getProjectsOfHouse = cache(async (houseId: string): Promise<Project
   );
 });
 
-/** Fetch a house by slug with its projects and aggregated data. */
-export const getHouseBySlugFromDb = cache(
-  async (slug: string): Promise<HouseWithProjects | null> => {
+/** Fetch a site by slug with its projects and aggregated data. */
+export const getSiteBySlugFromDb = cache(
+  async (slug: string): Promise<SiteWithProjects | null> => {
     const rows = await db
       .select()
-      .from(housesTable)
-      .where(and(eq(housesTable.slug, slug), eq(housesTable.isPublished, true)))
+      .from(sitesTable)
+      .where(and(eq(sitesTable.slug, slug), eq(sitesTable.isPublished, true)))
       .limit(1);
 
     const row = rows[0];
     if (!row) return null;
 
-    const house = mapDbHouseToHouse(row);
+    const site = mapDbSiteToSite(row);
 
-    // Fetch projects belonging to this house
-    const projects = await getProjectsOfHouse(row.id);
+    // Fetch projects belonging to this site
+    const projects = await getProjectsOfSite(row.id);
 
     // Build aggregated data
-    const aggregated: HouseWithProjects['aggregated'] = {
+    const aggregated: SiteWithProjects['aggregated'] = {
       totalBudget: calculateCombinedBudget(projects),
       totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
@@ -393,22 +374,22 @@ export const getHouseBySlugFromDb = cache(
     };
 
     return {
-      ...house,
+      ...site,
       projects,
       aggregated,
     };
   }
 );
 
-/** Fetch all published houses that should show as projects. */
-export const getHousesAsProjectsFromDb = cache(async (): Promise<House[]> => {
+/** Fetch all published sites that should show as projects. */
+export const getSitesAsProjectsFromDb = cache(async (): Promise<Site[]> => {
   const rows = await db
     .select()
-    .from(housesTable)
-    .where(and(eq(housesTable.isPublished, true), eq(housesTable.showAsProject, true)))
-    .orderBy(desc(housesTable.createdAt));
+    .from(sitesTable)
+    .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)))
+    .orderBy(desc(sitesTable.createdAt));
 
-  return rows.map(mapDbHouseToHouse);
+  return rows.map(mapDbSiteToSite);
 });
 
 // ============================================================================
@@ -600,11 +581,6 @@ export async function getAllServicesAdmin() {
   return db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
 }
 
-/** Fetch all testimonials (admin — includes non-featured). */
-export async function getAllTestimonialsAdmin() {
-  return db.select().from(testimonialsTable).orderBy(desc(testimonialsTable.createdAt));
-}
-
 /** Fetch all blog posts (admin — includes unpublished). */
 export async function getAllBlogPostsAdmin() {
   return db.select().from(blogPostsTable).orderBy(desc(blogPostsTable.createdAt));
@@ -647,7 +623,7 @@ export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)
   return db.select().from(faqsTable).orderBy(asc(faqsTable.displayOrder));
 }
 
-/** Fetch all houses (admin — includes unpublished). */
-export async function getAllHousesAdmin(): Promise<(typeof housesTable.$inferSelect)[]> {
-  return db.select().from(housesTable).orderBy(desc(housesTable.createdAt));
+/** Fetch all sites (admin — includes unpublished). */
+export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect)[]> {
+  return db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
 }

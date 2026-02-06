@@ -12,6 +12,7 @@ import {
   projects as projectsTable,
   projectImages,
   projectScopes,
+  projectSites,
   services as servicesTable,
 } from '../lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -419,6 +420,36 @@ const PROJECTS_RAW = [
 async function main() {
   console.log('Seeding projects...');
 
+  // First, create or get a default project site for seeded projects
+  let defaultSiteId: string;
+  const existingSites = await db
+    .select({ id: projectSites.id })
+    .from(projectSites)
+    .where(eq(projectSites.slug, 'seeded-projects'))
+    .limit(1);
+
+  if (existingSites.length > 0) {
+    defaultSiteId = existingSites[0].id;
+    console.log('  Using existing default site for seeded projects');
+  } else {
+    const [newSite] = await db
+      .insert(projectSites)
+      .values({
+        slug: 'seeded-projects',
+        titleEn: 'Seeded Projects',
+        titleZh: '种子项目',
+        descriptionEn: 'Default site container for seeded project data.',
+        descriptionZh: '用于种子项目数据的默认站点容器。',
+        showAsProject: false,
+        featured: false,
+        isPublished: true,
+        publishedAt: new Date(),
+      })
+      .returning({ id: projectSites.id });
+    defaultSiteId = newSite.id;
+    console.log('  Created default site for seeded projects');
+  }
+
   // Look up service IDs for linking
   const serviceRows: { slug: string; id: string }[] = await db.select({ slug: servicesTable.slug, id: servicesTable.id }).from(servicesTable);
   const serviceMap = new Map(serviceRows.map((s: { slug: string; id: string }) => [s.slug, s.id]));
@@ -475,6 +506,7 @@ async function main() {
           badgeZh: p.badgeZh ?? null,
           isPublished: true,
           publishedAt: new Date(),
+          siteId: defaultSiteId,
         })
         .returning({ id: projectsTable.id });
 

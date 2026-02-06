@@ -3,7 +3,7 @@
 import ProjectForm from '@/components/admin/ProjectForm';
 import { updateProject } from '@/app/actions/admin/projects';
 
-interface HouseOption {
+interface SiteOption {
   id: string;
   titleEn: string;
   titleZh: string;
@@ -12,17 +12,17 @@ interface HouseOption {
 interface Props {
   id: string;
   initialData: Parameters<typeof ProjectForm>[0]['initialData'];
-  houses?: HouseOption[];
+  sites?: SiteOption[];
 }
 
-export default function EditProjectClient({ id, initialData, houses }: Props) {
+export default function EditProjectClient({ id, initialData, sites }: Props) {
   const boundAction = updateProject.bind(null, id);
 
   return (
     <ProjectForm
       action={boundAction}
       initialData={initialData}
-      houses={houses}
+      sites={sites}
       submitLabel="Update Project"
     />
   );

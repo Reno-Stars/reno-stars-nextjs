@@ -3,7 +3,7 @@
  * Extracted for testability and reuse.
  */
 
-import type { Project, Localized, HouseWithProjects } from '../types';
+import type { Project, Localized, SiteWithProjects } from '../types';
 
 /**
  * Parse a budget range string like "$15,000 - $25,000" and extract min/max values.
@@ -96,10 +96,10 @@ export function mergeServiceScopes(projects: Project[]): Localized<string[]> {
 }
 
 /**
- * Collect all images from projects belonging to a house, with project attribution.
+ * Collect all images from projects belonging to a site, with project attribution.
  */
-export function collectAllImages(projects: Project[]): HouseWithProjects['aggregated']['allImages'] {
-  const images: HouseWithProjects['aggregated']['allImages'] = [];
+export function collectAllImages(projects: Project[]): SiteWithProjects['aggregated']['allImages'] {
+  const images: SiteWithProjects['aggregated']['allImages'] = [];
   for (const project of projects) {
     for (const img of project.images) {
       images.push({

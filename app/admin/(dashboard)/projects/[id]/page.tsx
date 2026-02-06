@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projects, projectImages, projectScopes, houses, type DbProject, type DbProjectImage, type DbProjectScope } from '@/lib/db/schema';
+import { projects, projectImages, projectScopes, projectSites, type DbProject, type DbProjectImage, type DbProjectScope } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import EditProjectClient from './EditProjectClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
@@ -16,15 +16,15 @@ export default async function EditProjectPage({ params }: PageProps) {
   const project = rows[0];
   if (!project) notFound();
 
-  const [images, scopes, houseRows] = await Promise.all([
+  const [images, scopes, siteRows] = await Promise.all([
     db.select().from(projectImages).where(eq(projectImages.projectId, id)).orderBy(projectImages.displayOrder) as Promise<DbProjectImage[]>,
     db.select().from(projectScopes).where(eq(projectScopes.projectId, id)).orderBy(projectScopes.displayOrder) as Promise<DbProjectScope[]>,
-    // Fetch houses for house selection
+    // Fetch sites for site selection (required)
     db.select({
-      id: houses.id,
-      titleEn: houses.titleEn,
-      titleZh: houses.titleZh,
-    }).from(houses),
+      id: projectSites.id,
+      titleEn: projectSites.titleEn,
+      titleZh: projectSites.titleZh,
+    }).from(projectSites),
   ]);
 
   const initialData = {
@@ -52,8 +52,8 @@ export default async function EditProjectPage({ params }: PageProps) {
     badgeZh: project.badgeZh ?? '',
     featured: project.featured,
     isPublished: project.isPublished,
-    houseId: project.houseId,
-    displayOrderInHouse: project.displayOrderInHouse,
+    siteId: project.siteId,
+    displayOrderInSite: project.displayOrderInSite,
     images: images.map((img: DbProjectImage) => ({
       url: img.imageUrl,
       altEn: img.altTextEn ?? '',
@@ -72,7 +72,7 @@ export default async function EditProjectPage({ params }: PageProps) {
       <EditProjectClient
         id={id}
         initialData={initialData}
-        houses={houseRows}
+        sites={siteRows}
       />
     </div>
   );

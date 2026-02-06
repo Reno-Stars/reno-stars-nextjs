@@ -7,55 +7,62 @@ import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
-import { deleteProject, toggleProjectFeatured, toggleProjectPublished } from '@/app/actions/admin/projects';
+import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
 import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
 
-interface ProjectRow {
+interface SiteRow {
   id: string;
   slug: string;
   titleEn: string;
   titleZh: string;
-  serviceType: string;
   locationCity: string | null;
+  showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;
-  siteId: string;
 }
 
 interface Props {
-  projects: ProjectRow[];
+  sites: SiteRow[];
 }
 
-export default function ProjectsListClient({ projects }: Props) {
+export default function SitesListClient({ sites }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
 
-  const columns: Column<ProjectRow>[] = useMemo(() => {
-    const getT = (row: ProjectRow) => locale === 'zh' ? row.titleZh : row.titleEn;
+  const columns: Column<SiteRow>[] = useMemo(() => {
+    const getT = (row: SiteRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
-      { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.projects.titleZh : t.projects.titleEn, sortable: true },
-      { key: 'serviceType', header: t.projects.type, sortable: true },
-      { key: 'locationCity', header: t.projects.city, sortable: true },
+      { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.sites.titleZh : t.sites.titleEn, sortable: true },
+      { key: 'slug', header: t.sites.slug, sortable: true },
+      { key: 'locationCity', header: t.sites.city, sortable: true },
       {
-        key: 'siteId',
-        header: t.projects.linkedSite,
-        render: (row: ProjectRow) => (
-          <span style={{ color: GOLD, fontSize: '0.8125rem' }}>
-            {row.siteId ? t.common.yes : '—'}
-          </span>
+        key: 'showAsProject',
+        header: t.sites.showAsProject,
+        render: (row: SiteRow) => (
+          <button
+            type="button"
+            onClick={() => startTransition(async () => {
+              const result = await toggleSiteShowAsProject(row.id, row.showAsProject);
+              if (result.error) toast(result.error, 'error');
+            })}
+            aria-label={`Toggle show as project for ${getT(row)}`}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.showAsProject ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
+          >
+            {row.showAsProject ? t.common.yes : t.common.no}
+          </button>
         ),
       },
       {
         key: 'featured',
-        header: t.projects.featured,
-        render: (row: ProjectRow) => (
+        header: t.sites.featured,
+        render: (row: SiteRow) => (
           <button
             type="button"
             onClick={() => startTransition(async () => {
-              const result = await toggleProjectFeatured(row.id, row.featured);
+              const result = await toggleSiteFeatured(row.id, row.featured);
               if (result.error) toast(result.error, 'error');
             })}
             aria-label={`Toggle featured for ${getT(row)}`}
@@ -67,12 +74,12 @@ export default function ProjectsListClient({ projects }: Props) {
       },
       {
         key: 'isPublished',
-        header: t.projects.published,
-        render: (row: ProjectRow) => (
+        header: t.sites.published,
+        render: (row: SiteRow) => (
           <button
             type="button"
             onClick={() => startTransition(async () => {
-              const result = await toggleProjectPublished(row.id, row.isPublished);
+              const result = await toggleSitePublished(row.id, row.isPublished);
               if (result.error) toast(result.error, 'error');
             })}
             aria-label={`Toggle published for ${getT(row)}`}
@@ -88,9 +95,9 @@ export default function ProjectsListClient({ projects }: Props) {
   const handleDelete = () => {
     if (!deleteId) return;
     startTransition(async () => {
-      const result = await deleteProject(deleteId);
+      const result = await deleteSite(deleteId);
       if (result.error) toast(result.error, 'error');
-      else toast(t.projects.deleted);
+      else toast(t.sites.deleted);
       setDeleteId(null);
     });
   };
@@ -99,12 +106,12 @@ export default function ProjectsListClient({ projects }: Props) {
     <>
       <DataTable
         columns={columns}
-        data={projects}
+        data={sites}
         getRowKey={(row) => row.id}
-        searchKeys={['titleEn', 'titleZh', 'slug', 'locationCity', 'serviceType']}
+        searchKeys={['titleEn', 'titleZh', 'slug', 'locationCity']}
         actions={(row) => (
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-            <Link href={`/admin/projects/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
+            <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
               {t.common.edit}
             </Link>
             <button
@@ -119,8 +126,8 @@ export default function ProjectsListClient({ projects }: Props) {
       />
       <ConfirmDialog
         open={!!deleteId}
-        title={t.projects.deleteProject}
-        message={t.projects.deleteMessage}
+        title={t.sites.deleteSite}
+        message={t.sites.deleteMessage}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
         loading={isPending}

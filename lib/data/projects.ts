@@ -1,4 +1,4 @@
-import type { Project, ServiceType, Locale, LocalizedProject, HouseWithProjects, LocalizedHouseWithProjects, LocalizedHouseAggregated, LocalizedHouseImage, House, LocalizedHouse } from '../types';
+import type { Project, ServiceType, Locale, LocalizedProject, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
 import { serviceTypeToCategory } from './services';
 
@@ -577,39 +577,39 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     solution: project.solution?.[locale],
     featured: project.featured,
     badge: project.badge?.[locale],
-    house_id: project.house_id,
-    display_order_in_house: project.display_order_in_house,
+    site_id: project.site_id,
+    display_order_in_site: project.display_order_in_site,
   };
 }
 
 /**
- * Localize a House entity to a single locale.
+ * Localize a Site entity to a single locale.
  */
-export function getLocalizedHouse(house: House, locale: Locale): LocalizedHouse {
+export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
   return {
-    id: house.id,
-    slug: house.slug,
-    title: house.title[locale],
-    description: house.description[locale],
-    location_city: house.location_city,
-    hero_image: house.hero_image,
-    badge: house.badge?.[locale],
-    show_as_project: house.show_as_project,
-    featured: house.featured,
+    id: site.id,
+    slug: site.slug,
+    title: site.title[locale],
+    description: site.description[locale],
+    location_city: site.location_city,
+    hero_image: site.hero_image,
+    badge: site.badge?.[locale],
+    show_as_project: site.show_as_project,
+    featured: site.featured,
   };
 }
 
 /**
- * Localize a HouseWithProjects including its projects and aggregated data.
+ * Localize a SiteWithProjects including its projects and aggregated data.
  */
-export function getLocalizedHouseWithProjects(
-  house: HouseWithProjects,
+export function getLocalizedSiteWithProjects(
+  site: SiteWithProjects,
   locale: Locale
-): LocalizedHouseWithProjects {
-  const base = getLocalizedHouse(house, locale);
-  const projects = house.projects.map((project) => getLocalizedProject(project, locale));
+): LocalizedSiteWithProjects {
+  const base = getLocalizedSite(site, locale);
+  const projects = site.projects.map((project) => getLocalizedProject(project, locale));
 
-  const allImages: LocalizedHouseImage[] = house.aggregated.allImages.map((img) => ({
+  const allImages: LocalizedSiteImage[] = site.aggregated.allImages.map((img) => ({
     src: img.src,
     alt: img.alt[locale],
     is_before: img.is_before,
@@ -617,10 +617,10 @@ export function getLocalizedHouseWithProjects(
     projectTitle: img.projectTitle[locale],
   }));
 
-  const aggregated: LocalizedHouseAggregated = {
-    totalBudget: house.aggregated.totalBudget,
-    totalDuration: house.aggregated.totalDuration?.[locale],
-    allServiceScopes: house.aggregated.allServiceScopes[locale],
+  const aggregated: LocalizedSiteAggregated = {
+    totalBudget: site.aggregated.totalBudget,
+    totalDuration: site.aggregated.totalDuration?.[locale],
+    allServiceScopes: site.aggregated.allServiceScopes[locale],
     allImages,
   };
 

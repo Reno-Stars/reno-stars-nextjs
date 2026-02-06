@@ -2,35 +2,35 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedHouseWithProjects } from '@/lib/data/projects';
+import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
-import HouseDetailPage from '@/components/pages/HouseDetailPage';
+import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
 import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getHouseBySlugFromDb, getHousesAsProjectsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const [projects, houses] = await Promise.all([
+  const [projects, sites] = await Promise.all([
     getProjectsFromDb(),
-    getHousesAsProjectsFromDb(),
+    getSitesAsProjectsFromDb(),
   ]);
   const projectParams = projects.flatMap((p) =>
     locales.map((locale) => ({ locale, slug: p.slug }))
   );
-  const houseParams = houses.flatMap((h) =>
-    locales.map((locale) => ({ locale, slug: h.slug }))
+  const siteParams = sites.flatMap((s) =>
+    locales.map((locale) => ({ locale, slug: s.slug }))
   );
   const categoryParams = CATEGORY_SLUGS.flatMap((slug) =>
     locales.map((locale) => ({ locale, slug }))
   );
-  return [...categoryParams, ...projectParams, ...houseParams];
+  return [...categoryParams, ...projectParams, ...siteParams];
 }
 
 function isCategory(slug: string): boolean {
@@ -112,12 +112,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  // Check if it's a house
-  const houseData = await getHouseBySlugFromDb(slug);
+  // Check if it's a site
+  const siteData = await getSiteBySlugFromDb(slug);
 
-  if (houseData) {
-    const title = houseData.title[locale as Locale];
-    const description = truncateMetaDescription(houseData.description[locale as Locale]);
+  if (siteData) {
+    const title = siteData.title[locale as Locale];
+    const description = truncateMetaDescription(siteData.description[locale as Locale]);
 
     return {
       title: `${title} | ${SITE_NAME}`,
@@ -130,13 +130,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         type: 'article',
-        images: houseData.hero_image ? [{ url: houseData.hero_image }] : [{ url: siteImages.hero }],
+        images: siteData.hero_image ? [{ url: siteData.hero_image }] : [{ url: siteImages.hero }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${title} | ${SITE_NAME}`,
         description,
-        images: houseData.hero_image ? [houseData.hero_image] : [siteImages.hero],
+        images: siteData.hero_image ? [siteData.hero_image] : [siteImages.hero],
       },
     };
   }
@@ -205,16 +205,16 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  // Check if it's a house
-  const houseData = await getHouseBySlugFromDb(slug);
+  // Check if it's a site
+  const siteData = await getSiteBySlugFromDb(slug);
 
-  if (houseData) {
-    const localizedHouse = getLocalizedHouseWithProjects(houseData, locale as Locale);
+  if (siteData) {
+    const localizedSite = getLocalizedSiteWithProjects(siteData, locale as Locale);
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
       { name: t('projects'), url: `/${locale}/projects/` },
-      { name: houseData.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+      { name: siteData.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
     ];
 
     return (
@@ -222,15 +222,15 @@ export default async function Page({ params }: PageProps) {
         <BreadcrumbSchema items={breadcrumbs} />
         <ProjectSchema
           company={company}
-          name={localizedHouse.title}
-          description={localizedHouse.description}
-          image={houseData.hero_image ?? ''}
-          images={houseData.aggregated.allImages.map((img) => img.src)}
-          location={houseData.location_city ?? ''}
+          name={localizedSite.title}
+          description={localizedSite.description}
+          image={siteData.hero_image ?? ''}
+          images={siteData.aggregated.allImages.map((img) => img.src)}
+          location={siteData.location_city ?? ''}
           serviceType="Whole House"
           url={`/${locale}/projects/${slug}/`}
         />
-        <HouseDetailPage locale={locale as Locale} house={localizedHouse} company={company} />
+        <SiteDetailPage locale={locale as Locale} site={localizedSite} company={company} />
       </>
     );
   }

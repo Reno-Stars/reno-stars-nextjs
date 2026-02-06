@@ -1,0 +1,41 @@
+import { notFound } from 'next/navigation';
+import { db } from '@/lib/db';
+import { projectSites, type DbSite } from '@/lib/db/schema';
+import { eq } from 'drizzle-orm';
+import EditSiteClient from './EditSiteClient';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function EditSitePage({ params }: PageProps) {
+  const { id } = await params;
+
+  const rows: DbSite[] = await db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1);
+  const site = rows[0];
+  if (!site) notFound();
+
+  const initialData = {
+    id: site.id,
+    slug: site.slug,
+    titleEn: site.titleEn,
+    titleZh: site.titleZh,
+    descriptionEn: site.descriptionEn,
+    descriptionZh: site.descriptionZh,
+    locationCity: site.locationCity ?? '',
+    heroImageUrl: site.heroImageUrl ?? '',
+    badgeEn: site.badgeEn ?? '',
+    badgeZh: site.badgeZh ?? '',
+    showAsProject: site.showAsProject,
+    featured: site.featured,
+    isPublished: site.isPublished,
+  };
+
+  return (
+    <div>
+      <AdminPageHeader titleKey="sites.editSite" />
+      <EditSiteClient id={id} initialData={initialData} />
+    </div>
+  );
+}

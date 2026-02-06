@@ -12,9 +12,9 @@ export default function Sidebar() {
   const links = [
     { href: '/admin', label: t.nav.dashboard, exact: true },
     { href: '/admin/company', label: t.nav.company },
+    { href: '/admin/sites', label: t.nav.sites },
     { href: '/admin/projects', label: t.nav.projects },
     { href: '/admin/services', label: t.nav.services },
-    { href: '/admin/testimonials', label: t.nav.testimonials },
     { href: '/admin/blog', label: t.nav.blog },
     { href: '/admin/contacts', label: t.nav.contacts },
     { href: '/admin/social-links', label: t.nav.socialLinks },

@@ -1,0 +1,226 @@
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { db } from '@/lib/db';
+import { projectSites, projects } from '@/lib/db/schema';
+import { eq, count } from 'drizzle-orm';
+import { requireAuth, isValidUUID } from '@/lib/admin/auth';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { ensureUniqueSlug } from '@/lib/utils';
+
+function getSiteData(formData: FormData) {
+  return {
+    slug: getString(formData, 'slug').trim(),
+    titleEn: getString(formData, 'titleEn').trim(),
+    titleZh: getString(formData, 'titleZh').trim(),
+    descriptionEn: getString(formData, 'descriptionEn').trim(),
+    descriptionZh: getString(formData, 'descriptionZh').trim(),
+    locationCity: getString(formData, 'locationCity') || null,
+    heroImageUrl: getString(formData, 'heroImageUrl') || null,
+    badgeEn: getString(formData, 'badgeEn') || null,
+    badgeZh: getString(formData, 'badgeZh') || null,
+    showAsProject: formData.get('showAsProject') === 'on',
+    featured: formData.get('featured') === 'on',
+    isPublished: formData.get('isPublished') === 'on',
+    updatedAt: new Date(),
+  };
+}
+
+export async function createSite(
+  _prevState: { success?: boolean; error?: string },
+  formData: FormData
+): Promise<{ success?: boolean; error?: string }> {
+  await requireAuth();
+
+  try {
+    const data = getSiteData(formData);
+    if (!data.slug || !data.titleEn || !data.titleZh) {
+      return { error: 'Slug and titles are required.' };
+    }
+    if (!isValidSlug(data.slug)) {
+      return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
+    }
+    if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
+      return { error: 'Hero image URL is not a valid URL.' };
+    }
+    const textError = validateTextLengths({
+      descriptionEn: data.descriptionEn,
+      descriptionZh: data.descriptionZh,
+    }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
+
+    // Ensure slug is unique (append -2, -3, etc. if collision)
+    const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+
+    await db.insert(projectSites).values({
+      ...data,
+      publishedAt: data.isPublished ? new Date() : null,
+    });
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to create site:', error);
+    return { error: 'Failed to create site.' };
+  }
+}
+
+export async function updateSite(
+  id: string,
+  _prevState: { success?: boolean; error?: string },
+  formData: FormData
+): Promise<{ success?: boolean; error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
+
+  try {
+    const data = getSiteData(formData);
+    if (!data.slug || !data.titleEn || !data.titleZh) {
+      return { error: 'Slug and titles are required.' };
+    }
+    if (!isValidSlug(data.slug)) {
+      return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
+    }
+    if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
+      return { error: 'Hero image URL is not a valid URL.' };
+    }
+    const textError = validateTextLengths({
+      descriptionEn: data.descriptionEn,
+      descriptionZh: data.descriptionZh,
+    }, MAX_TEXT_LENGTH);
+    if (textError) return { error: textError };
+
+    // Ensure slug is unique (exclude current site's own slug)
+    const currentSite = await db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1);
+    const currentSlug = currentSite[0]?.slug;
+    const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+
+    const updated = await db
+      .update(projectSites)
+      .set(data)
+      .where(eq(projectSites.id, id))
+      .returning({ id: projectSites.id });
+
+    if (updated.length === 0) {
+      return { error: 'Site not found.' };
+    }
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to update site:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return { error: process.env.NODE_ENV === 'development' ? `Failed to update site: ${errorMessage}` : 'Failed to update site.' };
+  }
+}
+
+export async function deleteSite(id: string): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
+
+  try {
+    // Check if site has any projects - cannot delete if projects exist
+    const projectCount = await db
+      .select({ count: count() })
+      .from(projects)
+      .where(eq(projects.siteId, id));
+
+    if (projectCount[0] && projectCount[0].count > 0) {
+      return { error: `Cannot delete site with ${projectCount[0].count} project(s). Delete or reassign projects first.` };
+    }
+
+    await db.delete(projectSites).where(eq(projectSites.id, id));
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to delete site:', error);
+    return { error: 'Failed to delete site.' };
+  }
+}
+
+export async function toggleSitePublished(id: string, current: boolean): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
+
+  try {
+    const updated = await db
+      .update(projectSites)
+      .set({
+        isPublished: !current,
+        publishedAt: !current ? new Date() : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(projectSites.id, id))
+      .returning({ id: projectSites.id });
+
+    if (updated.length === 0) {
+      return { error: 'Site not found.' };
+    }
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to toggle published:', error);
+    return { error: 'Failed to toggle published.' };
+  }
+}
+
+export async function toggleSiteShowAsProject(id: string, current: boolean): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
+
+  try {
+    const updated = await db
+      .update(projectSites)
+      .set({
+        showAsProject: !current,
+        updatedAt: new Date(),
+      })
+      .where(eq(projectSites.id, id))
+      .returning({ id: projectSites.id });
+
+    if (updated.length === 0) {
+      return { error: 'Site not found.' };
+    }
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to toggle show as project:', error);
+    return { error: 'Failed to toggle show as project.' };
+  }
+}
+
+export async function toggleSiteFeatured(id: string, current: boolean): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
+
+  try {
+    const updated = await db
+      .update(projectSites)
+      .set({
+        featured: !current,
+        updatedAt: new Date(),
+      })
+      .where(eq(projectSites.id, id))
+      .returning({ id: projectSites.id });
+
+    if (updated.length === 0) {
+      return { error: 'Site not found.' };
+    }
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to toggle featured:', error);
+    return { error: 'Failed to toggle featured.' };
+  }
+}

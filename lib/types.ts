@@ -19,25 +19,26 @@ export type ServiceType =
   | 'commercial';
 
 /**
- * A house entity that groups multiple renovation projects.
+ * A project site entity that groups multiple renovation projects.
  * Represents a single property with various renovated areas.
+ * Projects MUST belong to a site (mandatory container).
  */
-export interface House {
+export interface Site {
   /** Unique identifier (UUID) */
   id: string;
   /** URL-friendly identifier */
   slug: string;
-  /** House title in both languages */
+  /** Site title in both languages */
   title: Localized<string>;
-  /** House description */
+  /** Site description */
   description: Localized<string>;
-  /** City where house is located */
+  /** City where site is located */
   location_city?: string;
   /** Primary display image URL */
   hero_image?: string;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
-  /** Whether to show this house as a project in listings */
+  /** Whether to show this site as a project in listings */
   show_as_project: boolean;
   /** Whether to feature on homepage */
   featured: boolean;
@@ -46,19 +47,19 @@ export interface House {
 }
 
 /**
- * A house with all its associated projects and aggregated data.
+ * A site with all its associated projects and aggregated data.
  */
-export interface HouseWithProjects extends House {
-  /** Projects belonging to this house */
+export interface SiteWithProjects extends Site {
+  /** Projects belonging to this site */
   projects: Project[];
   /** Aggregated data from all projects */
-  aggregated: HouseAggregated;
+  aggregated: SiteAggregated;
 }
 
 /**
- * Aggregated data for a house combining all its projects.
+ * Aggregated data for a site combining all its projects.
  */
-export interface HouseAggregated {
+export interface SiteAggregated {
   /** Combined budget from all projects */
   totalBudget?: string;
   /** Combined timeline from all projects */
@@ -66,13 +67,13 @@ export interface HouseAggregated {
   /** Merged unique service scopes from all projects */
   allServiceScopes: Localized<string[]>;
   /** All images from all projects with project attribution */
-  allImages: HouseImage[];
+  allImages: SiteImage[];
 }
 
 /**
- * Image with attribution to project (for house aggregation)
+ * Image with attribution to project (for site aggregation)
  */
-export interface HouseImage {
+export interface SiteImage {
   src: string;
   alt: Localized<string>;
   is_before?: boolean;
@@ -125,10 +126,10 @@ export interface Project {
   featured?: boolean;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
-  /** House ID if this project belongs to a house */
-  house_id?: string;
-  /** Display order within a house */
-  display_order_in_house?: number;
+  /** Site ID - project belongs to a site (required for DB projects) */
+  site_id?: string;
+  /** Display order within a site */
+  display_order_in_site?: number;
 }
 
 /**
@@ -162,19 +163,26 @@ export interface ServiceArea {
 }
 
 /**
- * A customer testimonial/review.
+ * A single Google review from the Places API.
  */
-export interface Testimonial {
-  /** Unique identifier */
-  id: string;
-  /** Customer name */
-  name: string;
-  /** Review text */
-  text: Localized<string>;
-  /** Rating from 1-5 */
+export interface GoogleReview {
+  authorName: string;
+  authorUri: string;
+  authorPhotoUri: string;
   rating: number;
-  /** Customer location */
-  location: string;
+  text: string;
+  languageCode: string;
+  publishTime: string;
+  relativePublishTime: string;
+}
+
+/**
+ * Aggregate Google Place rating data with reviews.
+ */
+export interface GooglePlaceRating {
+  rating: number;
+  userRatingCount: number;
+  reviews: GoogleReview[];
 }
 
 /**
@@ -298,12 +306,12 @@ export interface LocalizedProject {
   solution?: string;
   featured?: boolean;
   badge?: string;
-  house_id?: string;
-  display_order_in_house?: number;
+  site_id?: string;
+  display_order_in_site?: number;
 }
 
-/** A house with content resolved to a single locale */
-export interface LocalizedHouse {
+/** A site with content resolved to a single locale */
+export interface LocalizedSite {
   id: string;
   slug: string;
   title: string;
@@ -315,8 +323,8 @@ export interface LocalizedHouse {
   featured: boolean;
 }
 
-/** A localized image with project attribution (for house views) */
-export interface LocalizedHouseImage {
+/** A localized image with project attribution (for site views) */
+export interface LocalizedSiteImage {
   src: string;
   alt: string;
   is_before?: boolean;
@@ -324,18 +332,18 @@ export interface LocalizedHouseImage {
   projectTitle: string;
 }
 
-/** Localized aggregated data for a house */
-export interface LocalizedHouseAggregated {
+/** Localized aggregated data for a site */
+export interface LocalizedSiteAggregated {
   totalBudget?: string;
   totalDuration?: string;
   allServiceScopes: string[];
-  allImages: LocalizedHouseImage[];
+  allImages: LocalizedSiteImage[];
 }
 
-/** A localized house with projects and aggregated data */
-export interface LocalizedHouseWithProjects extends LocalizedHouse {
+/** A localized site with projects and aggregated data */
+export interface LocalizedSiteWithProjects extends LocalizedSite {
   projects: LocalizedProject[];
-  aggregated: LocalizedHouseAggregated;
+  aggregated: LocalizedSiteAggregated;
 }
 
 /** A service with content resolved to a single locale */

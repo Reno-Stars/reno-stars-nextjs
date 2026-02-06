@@ -10,7 +10,6 @@ import {
   index,
   uniqueIndex,
   check,
-  foreignKey,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -112,16 +111,17 @@ export const serviceAreas = pgTable(
 );
 
 // ============================================================================
-// HOUSES
+// PROJECT SITES
 // ============================================================================
 
 /**
- * House entity - groups multiple renovation projects under one property.
- * A house can contain kitchen, bathroom, basement projects etc.
- * When `showAsProject` is true, the house appears in project listings.
+ * Project Site entity - groups multiple renovation projects under one property.
+ * A site can contain kitchen, bathroom, basement projects etc.
+ * When `showAsProject` is true, the site appears in project listings.
+ * Projects MUST belong to a site (mandatory relationship).
  */
-export const houses = pgTable(
-  'houses',
+export const projectSites = pgTable(
+  'project_sites',
   {
     id: uuid('id').defaultRandom().primaryKey(),
     slug: varchar('slug', { length: 100 }).notNull().unique(),
@@ -153,13 +153,13 @@ export const houses = pgTable(
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
   (table) => [
-    uniqueIndex('houses_slug_idx').on(table.slug),
-    index('houses_show_as_project_idx').on(table.showAsProject),
-    index('houses_featured_idx').on(table.featured),
+    uniqueIndex('project_sites_slug_idx').on(table.slug),
+    index('project_sites_show_as_project_idx').on(table.showAsProject),
+    index('project_sites_featured_idx').on(table.featured),
   ]
 );
 
-export const housesRelations = relations(houses, ({ many }) => ({
+export const projectSitesRelations = relations(projectSites, ({ many }) => ({
   projects: many(projects),
 }));
 
@@ -217,12 +217,12 @@ export const projects = pgTable(
     featured: boolean('featured').default(false).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
 
-    // House relationship - project can optionally belong to a house
-    houseId: uuid('house_id').references(() => houses.id, {
-      onDelete: 'set null',
-    }),
-    // Display order within a house
-    displayOrderInHouse: integer('display_order_in_house').default(0).notNull(),
+    // Site relationship - project MUST belong to a site (mandatory)
+    siteId: uuid('site_id')
+      .references(() => projectSites.id, { onDelete: 'restrict' })
+      .notNull(),
+    // Display order within a site
+    displayOrderInSite: integer('display_order_in_site').default(0).notNull(),
 
     // Timestamps
     publishedAt: timestamp('published_at'),
@@ -234,7 +234,7 @@ export const projects = pgTable(
     index('projects_service_type_idx').on(table.serviceType),
     index('projects_location_city_idx').on(table.locationCity),
     index('projects_featured_idx').on(table.featured),
-    index('projects_house_id_idx').on(table.houseId),
+    index('projects_site_id_idx').on(table.siteId),
   ]
 );
 
@@ -245,9 +245,9 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   images: many(projectImages),
   scopes: many(projectScopes),
-  house: one(houses, {
-    fields: [projects.houseId],
-    references: [houses.id],
+  site: one(projectSites, {
+    fields: [projects.siteId],
+    references: [projectSites.id],
   }),
 }));
 
@@ -340,7 +340,9 @@ export const blogPosts = pgTable(
 // TESTIMONIALS
 // ============================================================================
 
-/** Customer reviews and ratings (1-5 scale) */
+// TODO: Drop testimonials table in a follow-up migration.
+// Reviews now come from Google Places API (lib/google-reviews.ts).
+/** @deprecated — kept only to avoid a migration in this PR. */
 export const testimonials = pgTable(
   'testimonials',
   {
@@ -581,8 +583,8 @@ export type NewDbService = typeof services.$inferInsert;
 export type DbServiceArea = typeof serviceAreas.$inferSelect;
 export type NewDbServiceArea = typeof serviceAreas.$inferInsert;
 
-export type DbHouse = typeof houses.$inferSelect;
-export type NewDbHouse = typeof houses.$inferInsert;
+export type DbSite = typeof projectSites.$inferSelect;
+export type NewDbSite = typeof projectSites.$inferInsert;
 
 export type DbProject = typeof projects.$inferSelect;
 export type NewDbProject = typeof projects.$inferInsert;

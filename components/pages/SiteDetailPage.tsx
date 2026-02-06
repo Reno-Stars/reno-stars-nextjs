@@ -6,20 +6,20 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, LocalizedHouseWithProjects, LocalizedProject } from '@/lib/types';
+import type { Company, LocalizedSiteWithProjects, LocalizedProject } from '@/lib/types';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
-interface HouseDetailPageProps {
+interface SiteDetailPageProps {
   locale: Locale;
-  house: LocalizedHouseWithProjects;
+  site: LocalizedSiteWithProjects;
   company: Company;
 }
 
-export default function HouseDetailPage({ locale: _locale, house, company }: HouseDetailPageProps) {
+export default function SiteDetailPage({ locale: _locale, site, company }: SiteDetailPageProps) {
   const t = useTranslations();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
   useEffect(() => {
     setActiveImageIndex(0);
     setAreaFilter('all');
-  }, [house.slug]);
+  }, [site.slug]);
 
   const handleLightboxClose = useCallback(() => {
     setLightboxOpen(false);
@@ -47,18 +47,18 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
 
   // Filter images by selected project
   const filteredImages = useMemo(() => {
-    if (areaFilter === 'all') return house.aggregated.allImages;
-    return house.aggregated.allImages.filter((img) => img.projectSlug === areaFilter);
-  }, [house.aggregated.allImages, areaFilter]);
+    if (areaFilter === 'all') return site.aggregated.allImages;
+    return site.aggregated.allImages.filter((img) => img.projectSlug === areaFilter);
+  }, [site.aggregated.allImages, areaFilter]);
 
   // Area options for filter - memoize based on projects
   const areaOptions = useMemo(() => {
     const areas = new Map<string, string>();
-    house.projects.forEach((project) => {
+    site.projects.forEach((project) => {
       areas.set(project.slug, project.title);
     });
     return Array.from(areas.entries()).map(([slug, title]) => ({ slug, title }));
-  }, [house.projects]);
+  }, [site.projects]);
 
   const nextImage = useCallback(() => {
     if (filteredImages.length === 0) return;
@@ -82,7 +82,7 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
       <VisualBreadcrumb variant="light" items={[
         { href: '/', label: t('nav.home') },
         { href: '/projects', label: t('nav.projects') },
-        { label: house.title },
+        { label: site.title },
       ]} />
 
       {/* Hero Section */}
@@ -117,12 +117,12 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                     </p>
                   </div>
                 )}
-                {house.badge && (
+                {site.badge && (
                   <span
                     className="absolute top-4 left-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
                     style={{ backgroundColor: GOLD }}
                   >
-                    {house.badge}
+                    {site.badge}
                   </span>
                 )}
                 {currentImage && (
@@ -203,15 +203,15 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                 </span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
-                {house.title}
+                {site.title}
               </h1>
               <p className="text-base mb-6" style={{ color: TEXT_MID }}>
-                {house.description}
+                {site.description}
               </p>
 
               {/* Aggregated Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
-                {house.location_city && (
+                {site.location_city && (
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <MapPin className="w-4 h-4" style={{ color: GOLD }} />
@@ -220,11 +220,11 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {house.location_city}
+                      {site.location_city}
                     </span>
                   </div>
                 )}
-                {house.aggregated.totalDuration && (
+                {site.aggregated.totalDuration && (
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Calendar className="w-4 h-4" style={{ color: GOLD }} />
@@ -233,11 +233,11 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {house.aggregated.totalDuration}
+                      {site.aggregated.totalDuration}
                     </span>
                   </div>
                 )}
-                {house.aggregated.totalBudget && (
+                {site.aggregated.totalBudget && (
                   <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
@@ -246,7 +246,7 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {house.aggregated.totalBudget}
+                      {site.aggregated.totalBudget}
                     </span>
                   </div>
                 )}
@@ -258,19 +258,19 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
                     </span>
                   </div>
                   <span className="text-base font-semibold" style={{ color: TEXT }}>
-                    {house.projects.length} {t('wholeHouse.areas')}
+                    {site.projects.length} {t('wholeHouse.areas')}
                   </span>
                 </div>
               </div>
 
               {/* Aggregated Service Scope */}
-              {house.aggregated.allServiceScopes.length > 0 && (
+              {site.aggregated.allServiceScopes.length > 0 && (
                 <div className="mb-6">
                   <h2 className="text-base font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
                     {t('wholeHouse.allServiceScopes')}
                   </h2>
                   <div className="flex flex-wrap gap-2">
-                    {house.aggregated.allServiceScopes.map((scope) => (
+                    {site.aggregated.allServiceScopes.map((scope) => (
                       <span
                         key={scope}
                         className="px-3 py-1 rounded-full text-sm"
@@ -306,17 +306,17 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
       </section>
 
       {/* Included Projects Section */}
-      {house.projects.length > 0 && (
+      {site.projects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>
               {t('wholeHouse.includedAreas')}
             </h2>
             <p className="text-sm mb-8" style={{ color: TEXT_MID }}>
-              {t('wholeHouse.childProjectsCount', { count: house.projects.length })}
+              {t('wholeHouse.childProjectsCount', { count: site.projects.length })}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {house.projects.map((project) => (
+              {site.projects.map((project) => (
                 <ProjectCard key={project.slug} project={project} t={t} />
               ))}
             </div>
@@ -339,7 +339,7 @@ export default function HouseDetailPage({ locale: _locale, house, company }: Hou
   );
 }
 
-/** Card for a project within the house view */
+/** Card for a project within the site view (for whole-house renovations) */
 function ProjectCard({
   project,
   t,
