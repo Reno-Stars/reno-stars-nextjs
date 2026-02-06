@@ -1,14 +1,9 @@
-import { getAllProjectsAdmin } from '@/lib/db/queries';
-import ProjectsListClient from './ProjectsListClient';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { redirect } from 'next/navigation';
 
+/**
+ * Redirect old projects listing to sites page.
+ * Projects are now managed via the House Stack UI on site detail pages.
+ */
 export default async function ProjectsAdminPage() {
-  const projects = await getAllProjectsAdmin();
-
-  return (
-    <div>
-      <AdminPageHeader titleKey="projects.title" actionKey="projects.newProject" actionHref="/admin/projects/new" />
-      <ProjectsListClient projects={projects} />
-    </div>
-  );
+  redirect('/admin/sites');
 }

@@ -44,6 +44,8 @@ export interface Site {
   featured: boolean;
   /** Publication date */
   published_at?: Date;
+  /** Number of projects belonging to this site */
+  project_count?: number;
 }
 
 /**

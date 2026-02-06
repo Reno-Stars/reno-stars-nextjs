@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Hom
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject } from '@/lib/types';
+import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
@@ -103,13 +104,16 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                 } : {})}
               >
                 {currentImage ? (
-                  <Image
-                    src={currentImage.src}
-                    alt={currentImage.alt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain"
-                  />
+                  <>
+                    <Image
+                      src={currentImage.src}
+                      alt={currentImage.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-contain"
+                    />
+                    <BeforeAfterBadge isBefore={currentImage.is_before} t={t} />
+                  </>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <p className="text-sm" style={{ color: TEXT_MUTED }}>
@@ -119,7 +123,7 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                 )}
                 {site.badge && (
                   <span
-                    className="absolute top-4 left-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
+                    className="absolute top-4 right-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
                     style={{ backgroundColor: GOLD }}
                   >
                     {site.badge}
@@ -188,6 +192,7 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                         sizes="80px"
                         className="object-cover"
                       />
+                      <BeforeAfterBadge isBefore={img.is_before} t={t} compact />
                     </button>
                   ))}
                 </div>
@@ -403,7 +408,7 @@ function LightboxDialog({
   onNext,
   t,
 }: {
-  images: { src: string; alt: string; projectTitle: string }[];
+  images: { src: string; alt: string; is_before?: boolean; projectTitle: string }[];
   activeIndex: number;
   onClose: () => void;
   onPrev: () => void;
@@ -488,13 +493,16 @@ function LightboxDialog({
       </div>
       <div className="relative w-full max-w-4xl aspect-[4/3] mx-4" onClick={(e) => e.stopPropagation()}>
         {currentImage && (
-          <Image
-            src={currentImage.src}
-            alt={currentImage.alt}
-            fill
-            sizes="(max-width: 1024px) 100vw, 60vw"
-            className="object-contain"
-          />
+          <>
+            <Image
+              src={currentImage.src}
+              alt={currentImage.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              className="object-contain"
+            />
+            <BeforeAfterBadge isBefore={currentImage.is_before} t={t} />
+          </>
         )}
       </div>
     </div>

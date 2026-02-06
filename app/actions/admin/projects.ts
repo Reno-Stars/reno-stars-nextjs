@@ -13,10 +13,20 @@ import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeKey } from '@/lib/admin/constants';
 
 const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
-const VALID_SERVICE_TYPES = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
+
+// Format budget range from min/max
+function formatBudgetRange(min: string, max: string): string | null {
+  const minNum = parseInt(min, 10);
+  const maxNum = parseInt(max, 10);
+  if (isNaN(minNum) && isNaN(maxNum)) return null;
+  if (isNaN(minNum)) return `$${maxNum.toLocaleString()}`;
+  if (isNaN(maxNum)) return `$${minNum.toLocaleString()}+`;
+  return `$${minNum.toLocaleString()} - $${maxNum.toLocaleString()}`;
+}
 
 function parseImages(formData: FormData) {
   const images: {
@@ -60,6 +70,16 @@ function getProjectData(formData: FormData) {
   const serviceType = getString(formData, 'serviceType');
   const siteId = getString(formData, 'siteId').trim();
   const displayOrderInSiteStr = getString(formData, 'displayOrderInSite').trim();
+  // Auto-derive category from service type
+  const category = (serviceType in SERVICE_TYPE_TO_CATEGORY
+    ? SERVICE_TYPE_TO_CATEGORY[serviceType as ServiceTypeKey]
+    : { en: serviceType, zh: serviceType });
+  // Budget min/max to range string
+  const budgetMin = getString(formData, 'budgetMin').trim();
+  const budgetMax = getString(formData, 'budgetMax').trim();
+  // Space type EN to ZH
+  const spaceTypeEn = getString(formData, 'spaceType').trim();
+  const spaceTypeZh = SPACE_TYPE_TO_ZH[spaceTypeEn] || spaceTypeEn;
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -67,14 +87,14 @@ function getProjectData(formData: FormData) {
     descriptionEn: getString(formData, 'descriptionEn').trim(),
     descriptionZh: getString(formData, 'descriptionZh').trim(),
     serviceType: serviceType as typeof projects.$inferInsert['serviceType'],
-    categoryEn: getString(formData, 'categoryEn') || null,
-    categoryZh: getString(formData, 'categoryZh') || null,
+    categoryEn: category.en,
+    categoryZh: category.zh,
     locationCity: getString(formData, 'locationCity') || null,
-    budgetRange: getString(formData, 'budgetRange') || null,
+    budgetRange: formatBudgetRange(budgetMin, budgetMax),
     durationEn: getString(formData, 'durationEn') || null,
     durationZh: getString(formData, 'durationZh') || null,
-    spaceTypeEn: getString(formData, 'spaceTypeEn') || null,
-    spaceTypeZh: getString(formData, 'spaceTypeZh') || null,
+    spaceTypeEn: spaceTypeEn || null,
+    spaceTypeZh: spaceTypeZh || null,
     heroImageUrl: getString(formData, 'heroImageUrl') || null,
     challengeEn: getString(formData, 'challengeEn') || null,
     challengeZh: getString(formData, 'challengeZh') || null,
@@ -104,7 +124,7 @@ export async function createProject(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
-    if (!(VALID_SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
+    if (!(SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
       return { error: 'Invalid service type.' };
     }
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
@@ -197,7 +217,7 @@ export async function updateProject(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
-    if (!(VALID_SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
+    if (!(SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
       return { error: 'Invalid service type.' };
     }
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
@@ -334,6 +354,38 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
   } catch (error) {
     console.error('Failed to toggle published:', error);
     return { error: 'Failed to toggle published.' };
+  }
+}
+
+export async function reorderProjectsInSite(
+  siteId: string,
+  projectIds: string[]
+): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(siteId)) return { error: 'Invalid site ID.' };
+
+  try {
+    // Validate all IDs first
+    const validIds = projectIds.filter((id) => isValidUUID(id));
+    if (validIds.length === 0) return { error: 'No valid project IDs provided.' };
+
+    // Update display order for all projects in parallel
+    const now = new Date();
+    await Promise.all(
+      validIds.map((projectId, index) =>
+        db
+          .update(projects)
+          .set({ displayOrderInSite: index, updatedAt: now })
+          .where(eq(projects.id, projectId))
+      )
+    );
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder projects:', error);
+    return { error: 'Failed to reorder projects.' };
   }
 }
 

@@ -67,6 +67,8 @@ lib/
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation helpers (getString, isValidUrl, etc.)
     gallery-categories.ts # Shared gallery category constants
+    constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
+    translations.ts       # Admin translation hooks
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)
   types.ts                # Shared TypeScript types
@@ -211,7 +213,8 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
-- **Admin components** (`components/admin/`): DataTable, ProjectForm, BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton.
+- **Admin components** (`components/admin/`): DataTable, ProjectForm, SiteForm, HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton, Tooltip (reusable help icons), DragHandle (6-dot drag indicator).
+- **House Stack UI**: Visual metaphor for site/project management. Roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Renders on `/admin/sites/[id]` page with detail panel for editing selected item.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons (gold highlight for active). Preference persists in localStorage (`admin_locale` key). All list clients show bilingual content (titleEn/titleZh, questionEn/questionZh, etc.) based on selected locale. Uses `useAdminLocale()` hook. Does not affect SEO (admin is auth-protected).
 
 ## Accessibility

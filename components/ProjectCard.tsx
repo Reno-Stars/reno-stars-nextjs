@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Layers } from 'lucide-react';
 import type { LocalizedProject } from '@/lib/types';
-import { GOLD, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import { GOLD, NAVY, CARD, TEXT, TEXT_MID, TEXT_MUTED, SH_DARK, neu } from '@/lib/theme';
 
 interface ProjectCardProps {
   project: LocalizedProject;
@@ -11,17 +11,24 @@ interface ProjectCardProps {
   showChevron?: boolean;
   /** Called when the card is clicked (opens modal) */
   onClick?: (project: LocalizedProject) => void;
+  /** Whether this card represents a whole-house site project */
+  isSiteProject?: boolean;
+  /** Number of project areas in the site */
+  projectCount?: number;
+  /** Translated label for the areas count badge (e.g. "3 Areas") */
+  areasCountLabel?: string;
 }
 
-export default function ProjectCard({ project, showDescription, showChevron, onClick }: ProjectCardProps) {
-  return (
-    <button
-      type="button"
-      onClick={() => onClick?.(project)}
-      className="rounded-2xl overflow-hidden group text-left cursor-pointer w-full"
-      style={{ boxShadow: neu(5), backgroundColor: CARD }}
-    >
-      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-800">
+export default function ProjectCard({
+  project, showDescription, showChevron, onClick,
+  isSiteProject, projectCount, areasCountLabel,
+}: ProjectCardProps) {
+  // Render as <article> when used inside a Link (no onClick), <button> otherwise
+  const Tag = onClick ? 'button' : 'article';
+
+  const cardContent = (
+    <>
+      <figure className="relative aspect-[4/3] overflow-hidden bg-neutral-800">
         <Image
           src={project.hero_image}
           alt={project.title}
@@ -29,6 +36,7 @@ export default function ProjectCard({ project, showDescription, showChevron, onC
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
+        <figcaption className="sr-only">{project.title}</figcaption>
         {project.badge && (
           <span
             className="absolute top-3 left-3 px-2 py-1 rounded-md text-xs font-semibold text-white"
@@ -37,7 +45,16 @@ export default function ProjectCard({ project, showDescription, showChevron, onC
             {project.badge}
           </span>
         )}
-      </div>
+        {isSiteProject && projectCount != null && projectCount > 0 && areasCountLabel && (
+          <span
+            className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-white"
+            style={{ backgroundColor: NAVY }}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            {areasCountLabel}
+          </span>
+        )}
+      </figure>
       <div className="p-4">
         <h3 className="font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
           {project.title}
@@ -54,6 +71,23 @@ export default function ProjectCard({ project, showDescription, showChevron, onC
           {showChevron && <ChevronRight className="w-4 h-4" style={{ color: GOLD }} />}
         </div>
       </div>
-    </button>
+    </>
+  );
+
+  // Stacked card effect for site projects
+  const stackedStyle = isSiteProject
+    ? {
+        boxShadow: `${neu(5)}, 4px 8px 0 -2px ${CARD}, 4px 8px 4px -2px ${SH_DARK}`,
+      }
+    : { boxShadow: neu(5) };
+
+  return (
+    <Tag
+      {...(onClick ? { type: 'button' as const, onClick: () => onClick(project) } : {})}
+      className="rounded-2xl overflow-hidden group text-left cursor-pointer w-full"
+      style={{ ...stackedStyle, backgroundColor: CARD }}
+    >
+      {cardContent}
+    </Tag>
   );
 }

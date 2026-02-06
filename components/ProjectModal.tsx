@@ -6,6 +6,7 @@ import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight } from 'luc
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
+import { BeforeAfterBadge } from '@/components/ImageBadge';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, SH_DARK,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
@@ -69,8 +70,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   if (!project) return null;
 
   const gallery = project.images.length > 0
-    ? project.images.map(img => img.src)
-    : [project.hero_image];
+    ? project.images
+    : [{ src: project.hero_image, alt: project.title }];
 
   const sidebarItems = [
     { icon: MapPin, label: t('modal.location'), value: project.location_city },
@@ -138,19 +139,20 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               style={{ boxShadow: neuIn(4), backgroundColor: SURFACE_ALT }}
             >
               <Image
-                src={gallery[activeImage]}
-                alt={`${project.title} - Image ${activeImage + 1} of ${gallery.length}`}
+                src={gallery[activeImage].src}
+                alt={gallery[activeImage].alt || `${project.title} - Image ${activeImage + 1} of ${gallery.length}`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 className="object-contain"
               />
+              <BeforeAfterBadge isBefore={gallery[activeImage].is_before} t={t} />
             </div>
 
             {gallery.length > 1 && (
               <div className="flex gap-3 mb-8" role="group" aria-label="Image gallery thumbnails">
                 {gallery.map((img, i) => (
                   <button
-                    key={img}
+                    key={img.src}
                     onClick={() => setActiveImage(i)}
                     className="relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer"
                     style={{
@@ -160,7 +162,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     aria-label={`View image ${i + 1} of ${gallery.length}`}
                     aria-pressed={i === activeImage}
                   >
-                    <Image src={img} alt={`${project.title} - image ${i + 1}`} fill sizes="80px" className="object-cover" />
+                    <Image src={img.src} alt={img.alt || `${project.title} - image ${i + 1}`} fill sizes="80px" className="object-cover" />
+                    <BeforeAfterBadge isBefore={img.is_before} t={t} compact />
                   </button>
                 ))}
               </div>

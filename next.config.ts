@@ -46,6 +46,12 @@ const nextConfig: NextConfig = {
         hostname: 'lh3.googleusercontent.com',
         pathname: '/a/**',
       },
+      // Cloudflare R2 public bucket for production assets
+      {
+        protocol: 'https',
+        hostname: 'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
+        pathname: '/**',
+      },
       ...storagePatterns,
     ],
   },

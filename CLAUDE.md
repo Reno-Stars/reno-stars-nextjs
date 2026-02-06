@@ -80,7 +80,7 @@ app/
 components/
   pages/                  # Page-level components (one per route)
   home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
-  admin/                  # Admin UI components (DataTable, ProjectForm, AdminLocaleProvider, TopBar, Sidebar, etc.)
+  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, etc.
 
@@ -99,6 +99,8 @@ lib/
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation (getString, isValidUrl, validateTextLengths, etc.)
     gallery-categories.ts # Shared gallery category constants
+    constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
+    translations.ts       # Admin translation hooks
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
   types.ts                # Core TypeScript types
@@ -181,13 +183,16 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, Tooltip, DragHandle, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
+- **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
+- **Reusable admin components**: `Tooltip` (hover help icons), `DragHandle` (6-dot drag indicator), `FormField` (label + input wrapper with optional tooltip).
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons. Preference persists in localStorage (`admin_locale` key). All list clients (projects, blog, FAQs, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
 - **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Includes: LocalBusinessSchema (layout), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages), ReviewSchema (homepage, uses Google Reviews aggregate rating).
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
 - **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.
 - **CTA text**: Use service-specific text (e.g., `cta.exploreService`) instead of generic "Learn More".
-- **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls. Homepage uses `next/dynamic` for below-fold sections with skeleton fallbacks. Avoid Suspense on SEO-critical pages (homepage) to ensure crawlers receive full content.
+- **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls (e.g., batch DB updates). Homepage uses `next/dynamic` for below-fold sections with skeleton fallbacks. Avoid Suspense on SEO-critical pages (homepage) to ensure crawlers receive full content.
+- **Shared constants**: Use `lib/admin/constants.ts` for service types, space types, and their EN/ZH mappings. Export TypeScript union types (e.g., `ServiceTypeKey`) for type safety.
 
 ## Homepage Section Order
 

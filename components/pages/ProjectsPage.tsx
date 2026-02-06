@@ -3,9 +3,10 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import Link from 'next/link';
 import { X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, Project, LocalizedProject } from '@/lib/types';
+import type { Company, Project, LocalizedProject, Site } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
 import { getCategoriesLocalized } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
@@ -17,20 +18,62 @@ import {
   TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
+// Extended type that can be either a project or a site displayed as project
+interface DisplayProject extends LocalizedProject {
+  isSiteProject?: boolean;
+  projectCount?: number;
+}
+
 interface ProjectsPageProps {
   locale: Locale;
   company: Company;
   projects: Project[];
+  sitesAsProjects?: Site[];
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [] }: ProjectsPageProps) {
   const t = useTranslations();
-  const allProjects = useMemo(() => rawProjects.map((p) => getLocalizedProject(p, locale)), [rawProjects, locale]);
+
+  // Convert sites to display format (as "Whole House" projects)
+  const wholeHouseCategory = t('category.wholeHouse');
+  const sitesAsDisplayProjects: DisplayProject[] = useMemo(() =>
+    sitesAsProjects.map((site) => ({
+      id: site.id,
+      slug: site.slug,
+      title: site.title[locale],
+      description: site.description[locale],
+      category: wholeHouseCategory,
+      service_type: 'whole-house' as const,
+      location_city: site.location_city || '',
+      hero_image: site.hero_image || '',
+      images: site.hero_image ? [{ src: site.hero_image, alt: site.title[locale] }] : [],
+      featured: site.featured,
+      badge: site.badge?.[locale],
+      isSiteProject: true,
+      projectCount: site.project_count,
+    })),
+  [sitesAsProjects, locale, wholeHouseCategory]);
+
+  // Convert individual projects
+  const projectsAsDisplay: DisplayProject[] = useMemo(() =>
+    rawProjects.map((p) => ({ ...getLocalizedProject(p, locale), isSiteProject: false })),
+  [rawProjects, locale]);
+
+  // Combine all displayable items (sites first if featured, then projects)
+  const allProjects: DisplayProject[] = useMemo(() => {
+    const featured = [...sitesAsDisplayProjects, ...projectsAsDisplay].filter((p) => p.featured);
+    const nonFeatured = [...sitesAsDisplayProjects, ...projectsAsDisplay].filter((p) => !p.featured);
+    return [...featured, ...nonFeatured];
+  }, [sitesAsDisplayProjects, projectsAsDisplay]);
+
   const categories = useMemo(() => getCategoriesLocalized(), []);
   const locations = useMemo(() => {
-    const locs = new Set(rawProjects.map((p) => p.location_city));
-    return Array.from(locs).sort();
-  }, [rawProjects]);
+    const locs = new Set([
+      ...rawProjects.map((p) => p.location_city),
+      ...sitesAsProjects.map((s) => s.location_city).filter(Boolean),
+    ]);
+    return Array.from(locs).filter(Boolean).sort() as string[];
+  }, [rawProjects, sitesAsProjects]);
   const spaceTypes = useMemo(() => {
     const types = new Set(rawProjects.map((p) => p.space_type?.en).filter((v): v is string => !!v));
     return Array.from(types).sort();
@@ -50,15 +93,18 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
   const neuShadow4 = useMemo(() => neu(4), []);
-  const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
+  const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
   const handleCategoryClick = useCallback((categoryEn: string) => {
     setActiveCategory(categoryEn);
     projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  const handleCardClick = useCallback((project: LocalizedProject) => {
-    setSelectedProject(project);
+  // Only open modal for regular projects, not site-projects (they link directly)
+  const handleCardClick = useCallback((project: DisplayProject) => {
+    if (!project.isSiteProject) {
+      setSelectedProject(project);
+    }
   }, []);
 
   const handleModalClose = useCallback(() => {
@@ -251,7 +297,22 @@ export default function ProjectsPage({ locale, company, projects: rawProjects }:
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} showDescription showChevron onClick={handleCardClick} />
+                project.isSiteProject ? (
+                  // Site-as-project: wrap in Link for direct navigation
+                  <Link key={project.slug} href={`/${locale}/projects/${project.slug}`}>
+                    <ProjectCard
+                      project={project}
+                      showDescription
+                      showChevron
+                      isSiteProject
+                      projectCount={project.projectCount}
+                      areasCountLabel={t('wholeHouse.areasCount', { count: project.projectCount ?? 0 })}
+                    />
+                  </Link>
+                ) : (
+                  // Regular project: onClick opens modal
+                  <ProjectCard key={project.slug} project={project} showDescription showChevron onClick={handleCardClick} />
+                )
               ))}
             </div>
           )}

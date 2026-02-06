@@ -1,25 +1,9 @@
-import ProjectForm from '@/components/admin/ProjectForm';
-import { createProject } from '@/app/actions/admin/projects';
-import { db } from '@/lib/db';
-import { projectSites } from '@/lib/db/schema';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { redirect } from 'next/navigation';
 
+/**
+ * Redirect old new project page to sites page.
+ * Projects are now created via the House Stack UI on site detail pages.
+ */
 export default async function NewProjectPage() {
-  // Fetch sites for site selection (required)
-  const siteRows = await db.select({
-    id: projectSites.id,
-    titleEn: projectSites.titleEn,
-    titleZh: projectSites.titleZh,
-  }).from(projectSites);
-
-  return (
-    <div>
-      <AdminPageHeader titleKey="projects.newProject" />
-      <ProjectForm
-        action={createProject}
-        sites={siteRows}
-        submitLabel="Create Project"
-      />
-    </div>
-  );
+  redirect('/admin/sites');
 }

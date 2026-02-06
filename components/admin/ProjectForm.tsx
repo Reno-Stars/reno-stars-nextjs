@@ -1,17 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
-import { inputStyle } from './shared-styles';
+import { inputStyle, readOnlyStyle } from './shared-styles';
+import { uploadImage } from '@/app/actions/admin/upload';
+import { getAssetUrl } from '@/lib/storage';
+import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
 import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
-
-const SERVICE_TYPE_KEYS = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
+import { useAdminLocale } from './AdminLocaleProvider';
 
 interface ImageEntry {
   id: string;
@@ -33,6 +36,11 @@ interface SiteOption {
   titleZh: string;
 }
 
+interface CityOption {
+  nameEn: string;
+  nameZh: string;
+}
+
 interface ProjectFormProps {
   action: (
     prevState: { success?: boolean; error?: string },
@@ -46,10 +54,9 @@ interface ProjectFormProps {
     descriptionEn: string;
     descriptionZh: string;
     serviceType: string;
-    categoryEn: string;
-    categoryZh: string;
     locationCity: string;
-    budgetRange: string;
+    budgetMin: string;
+    budgetMax: string;
     durationEn: string;
     durationZh: string;
     spaceTypeEn: string;
@@ -64,28 +71,31 @@ interface ProjectFormProps {
     featured: boolean;
     isPublished: boolean;
     siteId: string | null;
-    displayOrderInSite: number;
     images: Omit<ImageEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
   };
-  /** Available sites to link this project to (required) */
+  /** Available sites to link this project to (required when not using fixedSiteId) */
   sites?: SiteOption[];
+  /** Available cities for location selection */
+  cities?: CityOption[];
   submitLabel?: string;
+  /** Hide the site selector dropdown and use fixedSiteId instead */
+  hideSiteSelector?: boolean;
+  /** Fixed site ID when hideSiteSelector is true */
+  fixedSiteId?: string;
 }
-
-const readOnlyStyle: React.CSSProperties = {
-  ...inputStyle,
-  opacity: 0.7,
-  cursor: 'default',
-};
 
 export default function ProjectForm({
   action,
   initialData,
   sites = [],
+  cities = [],
   submitLabel,
+  hideSiteSelector = false,
+  fixedSiteId,
 }: ProjectFormProps) {
   const t = useAdminTranslations();
+  const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
   const [state, formAction, isPending] = useActionState(action, {});
@@ -99,6 +109,84 @@ export default function ProjectForm({
   const [scopes, setScopes] = useState<ScopeEntry[]>(
     initialData?.scopes.map((s) => ({ ...s, id: crypto.randomUUID() })) ?? [{ id: crypto.randomUUID(), en: '', zh: '' }]
   );
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle batch image upload with improved error handling
+  const handleBatchUpload = async (files: FileList) => {
+    setUploading(true);
+    setUploadError('');
+
+    const newImages: ImageEntry[] = [];
+    const errors: string[] = [];
+
+    // Process all files, collecting errors instead of breaking
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith('image/')) {
+        errors.push(`${file.name}: Not an image file`);
+        continue;
+      }
+
+      const formData = new FormData();
+      formData.set('file', file);
+
+      try {
+        const result = await uploadImage({}, formData);
+
+        if (result.error) {
+          errors.push(`${file.name}: ${result.error}`);
+        } else if (result.url) {
+          newImages.push({
+            id: crypto.randomUUID(),
+            url: result.url,
+            altEn: '',
+            altZh: '',
+            isBefore: false,
+          });
+        }
+      } catch {
+        errors.push(`${file.name}: Upload failed`);
+      }
+    }
+
+    // Add successfully uploaded images
+    if (newImages.length > 0) {
+      // If there's only one empty image entry, replace it; otherwise append
+      if (images.length === 1 && !images[0].url) {
+        setImages(newImages);
+      } else {
+        setImages([...images, ...newImages]);
+      }
+    }
+
+    // Show error summary if any uploads failed
+    if (errors.length > 0) {
+      const successCount = newImages.length;
+      const failCount = errors.length;
+      if (successCount > 0) {
+        setUploadError(`Uploaded ${successCount} image(s). Failed: ${failCount} (${errors[0]}${failCount > 1 ? '...' : ''})`);
+      } else {
+        setUploadError(`Failed to upload: ${errors[0]}${failCount > 1 ? ` and ${failCount - 1} more` : ''}`);
+      }
+    }
+
+    setUploading(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer.files?.length) {
+      handleBatchUpload(e.dataTransfer.files);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
 
   return (
     <form action={formAction}>
@@ -164,65 +252,196 @@ export default function ProjectForm({
         )}
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <FormField label={t.projects.slug} htmlFor="slug">
+          <FormField label={t.projects.slug} htmlFor="slug" tooltip={t.projects.tooltips.slug}>
             <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder={t.projects.slugPlaceholder} />
           </FormField>
 
-          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required />
-          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} />
+          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required tooltip={t.projects.tooltips.title} />
+          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} tooltip={t.projects.tooltips.description} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label={t.projects.serviceType} htmlFor="serviceType">
+            <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
               <select id="serviceType" name="serviceType" defaultValue={initialData?.serviceType ?? 'kitchen'} style={fieldStyle}>
-                {SERVICE_TYPE_KEYS.map((key) => (
+                {SERVICE_TYPES.map((key) => (
                   <option key={key} value={key}>{t.projects.serviceTypes[key]}</option>
                 ))}
               </select>
             </FormField>
-            <FormField label={t.projects.locationCity} htmlFor="locationCity">
-              <input id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle} />
+            <FormField label={t.projects.locationCity} htmlFor="locationCity" tooltip={t.projects.tooltips.locationCity}>
+              <select id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle}>
+                <option value="">{t.sites.selectCity}</option>
+                {cities.map((city) => (
+                  <option key={city.nameEn} value={city.nameEn}>
+                    {locale === 'zh' ? city.nameZh : city.nameEn}
+                  </option>
+                ))}
+              </select>
             </FormField>
           </div>
 
-          <BilingualInput nameEn="categoryEn" nameZh="categoryZh" label={t.projects.category} defaultValueEn={initialData?.categoryEn} defaultValueZh={initialData?.categoryZh} />
+          <FormField label={t.projects.budgetRange} htmlFor="budgetMin" tooltip={t.projects.tooltips.budgetRange}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '0.5rem', alignItems: 'center' }}>
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: TEXT_MID, fontSize: '0.875rem' }}>$</span>
+                <input
+                  id="budgetMin"
+                  name="budgetMin"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  defaultValue={initialData?.budgetMin ?? ''}
+                  style={{ ...fieldStyle, paddingLeft: '1.5rem' }}
+                  placeholder="15000"
+                />
+              </div>
+              <span style={{ color: TEXT_MID, fontSize: '0.875rem' }}>–</span>
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: TEXT_MID, fontSize: '0.875rem' }}>$</span>
+                <input
+                  id="budgetMax"
+                  name="budgetMax"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  defaultValue={initialData?.budgetMax ?? ''}
+                  style={{ ...fieldStyle, paddingLeft: '1.5rem' }}
+                  placeholder="25000"
+                />
+              </div>
+            </div>
+          </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label={t.projects.budgetRange} htmlFor="budgetRange">
-              <input id="budgetRange" name="budgetRange" defaultValue={initialData?.budgetRange ?? ''} style={fieldStyle} placeholder={t.projects.budgetPlaceholder} />
-            </FormField>
-          </div>
+          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} tooltip={t.projects.tooltips.duration} />
 
-          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} />
-          <BilingualInput nameEn="spaceTypeEn" nameZh="spaceTypeZh" label={t.projects.spaceType} defaultValueEn={initialData?.spaceTypeEn} defaultValueZh={initialData?.spaceTypeZh} />
+          <FormField label={t.projects.spaceType} htmlFor="spaceType" tooltip={t.projects.tooltips.spaceType}>
+            <select id="spaceType" name="spaceType" defaultValue={initialData?.spaceTypeEn ?? ''} style={fieldStyle}>
+              <option value="">{t.projects.selectSpaceType}</option>
+              {SPACE_TYPES.map(({ en, zh }) => (
+                <option key={en} value={en}>
+                  {locale === 'zh' ? zh : en}
+                </option>
+              ))}
+            </select>
+          </FormField>
 
-          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} />
+          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} />
 
-          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={initialData?.challengeEn} defaultValueZh={initialData?.challengeZh} rows={3} />
-          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={initialData?.solutionEn} defaultValueZh={initialData?.solutionZh} rows={3} />
-          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} />
+          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={initialData?.challengeEn} defaultValueZh={initialData?.challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} />
+          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={initialData?.solutionEn} defaultValueZh={initialData?.solutionZh} rows={3} tooltip={t.projects.tooltips.solution} />
+          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} tooltip={t.projects.tooltips.badge} />
 
           {/* Images */}
           <div style={{ marginBottom: '1rem' }}>
-            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              {t.projects.images}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.projects.images}
+              </span>
+              <Tooltip content={t.projects.tooltips.images} />
             </div>
+
+            {/* Batch upload drop zone */}
+            {editing && (
+              <button
+                type="button"
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                style={{
+                  width: '100%',
+                  marginBottom: '0.75rem',
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  border: `2px dashed ${uploading ? GOLD : '#ccc'}`,
+                  backgroundColor: CARD,
+                  textAlign: 'center',
+                  cursor: uploading ? 'wait' : 'pointer',
+                  opacity: uploading ? 0.6 : 1,
+                }}
+                onClick={() => !uploading && fileInputRef.current?.click()}
+                aria-label={t.upload.clickOrDrag}
+                disabled={uploading}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"
+                  multiple
+                  onChange={(e) => e.target.files && handleBatchUpload(e.target.files)}
+                  style={{ display: 'none' }}
+                  aria-hidden="true"
+                />
+                <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
+                  {uploading ? t.upload.uploading : t.upload.clickOrDrag}
+                </div>
+                <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
+                  {t.upload.formatHint}
+                </div>
+              </button>
+            )}
+
+            {uploadError && (
+              <div role="alert" style={{ color: ERROR, fontSize: '0.75rem', marginBottom: '0.5rem' }}>
+                {uploadError}
+              </div>
+            )}
+
             {images.map((img, idx) => (
               <div key={img.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.5rem' }}>
-                <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '0.375rem' }}>
-                  <input name={`images[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altEn: e.target.value }; setImages(n); }} placeholder={t.projects.altEn} aria-label={`Image ${idx + 1} alt text (English)`} style={fieldStyle} />
-                  <input name={`images[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altZh: e.target.value }; setImages(n); }} placeholder={t.projects.altZh} aria-label={`Image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: NAVY }}>
-                    <input type="checkbox" checked={img.isBefore} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], isBefore: e.target.checked }; setImages(n); }} />
-                    <input type="hidden" name={`images[${idx}].isBefore`} value={String(img.isBefore)} />
-                    {t.projects.before}
-                  </label>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                  {/* Square preview */}
+                  {img.url && (
+                    <div
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        flexShrink: 0,
+                        borderRadius: '6px',
+                        overflow: 'hidden',
+                        backgroundColor: '#f0f0f0',
+                        boxShadow: neu(2),
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getAssetUrl(img.url)}
+                        alt={img.altEn || `Image ${idx + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
+                      <div>
+                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                          <span role="img" aria-label="English">🇺🇸</span> {t.projects.altEn}
+                        </label>
+                        <input name={`images[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altEn: e.target.value }; setImages(n); }} placeholder={t.projects.altEn} aria-label={`Image ${idx + 1} alt text (English)`} style={fieldStyle} />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                          <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.altZh}
+                        </label>
+                        <input name={`images[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altZh: e.target.value }; setImages(n); }} placeholder={t.projects.altZh} aria-label={`Image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: NAVY }}>
+                        <input type="checkbox" checked={img.isBefore} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], isBefore: e.target.checked }; setImages(n); }} />
+                        <input type="hidden" name={`images[${idx}].isBefore`} value={String(img.isBefore)} />
+                        {t.projects.before}
+                      </label>
+                      {editing && images.length > 1 && (
+                        <button type="button" onClick={() => setImages(images.filter((_, i) => i !== idx))} aria-label={`Remove image ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                          {t.common.remove}
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                {editing && images.length > 1 && (
-                  <button type="button" onClick={() => setImages(images.filter((_, i) => i !== idx))} aria-label={`Remove image ${idx + 1}`} style={{ marginTop: '0.25rem', color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
-                    {t.common.remove}
-                  </button>
-                )}
               </div>
             ))}
             {editing && (
@@ -234,16 +453,31 @@ export default function ProjectForm({
 
           {/* Scopes */}
           <div style={{ marginBottom: '1rem' }}>
-            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              {t.projects.serviceScope}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.projects.serviceScope}
+              </span>
+              <Tooltip content={t.projects.tooltips.serviceScope} />
             </div>
             {scopes.map((scope, idx) => (
-              <div key={scope.id} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.375rem', alignItems: 'center' }}>
-                <input name={`scopes[${idx}].en`} value={scope.en} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], en: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeEn} aria-label={`Scope ${idx + 1} (English)`} style={{ ...fieldStyle, flex: 1 }} />
-                <input name={`scopes[${idx}].zh`} value={scope.zh} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], zh: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeZh} aria-label={`Scope ${idx + 1} (Chinese)`} style={{ ...fieldStyle, flex: 1 }} />
+              <div key={scope.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="English">🇺🇸</span> {t.projects.scopeEn}
+                    </label>
+                    <input name={`scopes[${idx}].en`} value={scope.en} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], en: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeEn} aria-label={`Scope ${idx + 1} (English)`} style={fieldStyle} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.scopeZh}
+                    </label>
+                    <input name={`scopes[${idx}].zh`} value={scope.zh} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], zh: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeZh} aria-label={`Scope ${idx + 1} (Chinese)`} style={fieldStyle} />
+                  </div>
+                </div>
                 {editing && scopes.length > 1 && (
                   <button type="button" onClick={() => setScopes(scopes.filter((_, i) => i !== idx))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
-                    x
+                    {t.common.remove}
                   </button>
                 )}
               </div>
@@ -256,11 +490,13 @@ export default function ProjectForm({
           </div>
 
           {/* Site Settings (Required) */}
-          <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
-            <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
-              {t.projects.siteSettings}
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          {hideSiteSelector && fixedSiteId ? (
+            <input type="hidden" name="siteId" value={fixedSiteId} />
+          ) : (
+            <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+              <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
+                {t.projects.siteSettings}
+              </div>
               <FormField label={t.projects.linkedSite} htmlFor="siteId">
                 <select
                   id="siteId"
@@ -277,20 +513,8 @@ export default function ProjectForm({
                   ))}
                 </select>
               </FormField>
-
-              {/* Display Order in Site */}
-              <FormField label={t.projects.displayOrderInSite} htmlFor="displayOrderInSite">
-                <input
-                  id="displayOrderInSite"
-                  name="displayOrderInSite"
-                  type="number"
-                  min="0"
-                  defaultValue={initialData?.displayOrderInSite ?? 0}
-                  style={{ ...fieldStyle, width: '100px' }}
-                />
-              </FormField>
             </div>
-          </div>
+          )}
 
           {/* Checkboxes */}
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>

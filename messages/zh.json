@@ -226,7 +226,9 @@
     "viewImage": "查看图片",
     "imageGallery": "图片展示",
     "previousImage": "上一张图片",
-    "nextImage": "下一张图片"
+    "nextImage": "下一张图片",
+    "beforeLabel": "施工前",
+    "afterLabel": "施工后"
   },
   "modal": {
     "location": "地点",
@@ -253,6 +255,9 @@
     "clearAll": "清除筛选",
     "browseByCategory": "按类别浏览",
     "noProjectsMatch": "没有符合筛选条件的项目。"
+  },
+  "category": {
+    "wholeHouse": "全屋"
   },
   "services": {
     "kitchen": {
@@ -488,6 +493,7 @@
     "filterByArea": "按区域筛选",
     "allAreas": "全部区域",
     "childProjectsCount": "{count}个装修区域",
-    "noImagesForArea": "该区域暂无图片"
+    "noImagesForArea": "该区域暂无图片",
+    "areasCount": "{count}个区域"
   }
 }

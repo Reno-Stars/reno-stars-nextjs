@@ -10,6 +10,7 @@ import type { Company, Project, LocalizedProject } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
+import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
@@ -94,16 +95,24 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 onClick={handleLightboxOpen}
                 onKeyDown={handleLightboxKeyDown}
               >
-                <Image
-                  src={localizedProject.images[activeImageIndex]?.src || localizedProject.hero_image}
-                  alt={localizedProject.images[activeImageIndex]?.alt || localizedProject.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-contain"
-                />
+                {(() => {
+                  const activeImg = localizedProject.images[activeImageIndex];
+                  return (
+                    <>
+                      <Image
+                        src={activeImg?.src || localizedProject.hero_image}
+                        alt={activeImg?.alt || localizedProject.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-contain"
+                      />
+                      <BeforeAfterBadge isBefore={activeImg?.is_before} t={t} />
+                    </>
+                  );
+                })()}
                 {localizedProject.badge && (
                   <span
-                    className="absolute top-4 left-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
+                    className="absolute top-4 right-4 px-3 py-1 rounded-lg text-sm font-semibold text-white"
                     style={{ backgroundColor: GOLD }}
                   >
                     {localizedProject.badge}
@@ -131,6 +140,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         sizes="80px"
                         className="object-cover"
                       />
+                      <BeforeAfterBadge isBefore={img.is_before} t={t} compact />
                     </button>
                   ))}
                 </div>
@@ -306,7 +316,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 function LightboxDialog({
   images, heroImage, title, activeIndex, onClose, onPrev, onNext, t,
 }: {
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; is_before?: boolean }[];
   heroImage: string;
   title: string;
   activeIndex: number;
@@ -382,15 +392,21 @@ function LightboxDialog({
       <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/70" aria-live="polite">
         {activeIndex + 1} / {images.length}
       </span>
-      <div className="relative w-full max-w-4xl aspect-[4/3] mx-4" onClick={(e) => e.stopPropagation()}>
-        <Image
-          src={images[activeIndex]?.src || heroImage}
-          alt={images[activeIndex]?.alt || title}
-          fill
-          sizes="(max-width: 1024px) 100vw, 60vw"
-          className="object-contain"
-        />
-      </div>
+      {(() => {
+        const currentImg = images[activeIndex];
+        return (
+          <div className="relative w-full max-w-4xl aspect-[4/3] mx-4" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={currentImg?.src || heroImage}
+              alt={currentImg?.alt || title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              className="object-contain"
+            />
+            <BeforeAfterBadge isBefore={currentImg?.is_before} t={t} />
+          </div>
+        );
+      })()}
     </div>
   );
 }

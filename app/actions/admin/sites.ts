@@ -143,18 +143,29 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
   }
 }
 
-export async function toggleSitePublished(id: string, current: boolean): Promise<{ error?: string }> {
+/** Generic toggle function for site boolean fields */
+async function toggleSiteField(
+  id: string,
+  field: 'isPublished' | 'showAsProject' | 'featured',
+  current: boolean
+): Promise<{ error?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
 
   try {
+    const updateData: Record<string, unknown> = {
+      [field]: !current,
+      updatedAt: new Date(),
+    };
+
+    // Special handling for isPublished - also update publishedAt
+    if (field === 'isPublished') {
+      updateData.publishedAt = !current ? new Date() : null;
+    }
+
     const updated = await db
       .update(projectSites)
-      .set({
-        isPublished: !current,
-        publishedAt: !current ? new Date() : null,
-        updatedAt: new Date(),
-      })
+      .set(updateData)
       .where(eq(projectSites.id, id))
       .returning({ id: projectSites.id });
 
@@ -166,61 +177,19 @@ export async function toggleSitePublished(id: string, current: boolean): Promise
     revalidatePath('/', 'layout');
     return {};
   } catch (error) {
-    console.error('Failed to toggle published:', error);
-    return { error: 'Failed to toggle published.' };
+    console.error(`Failed to toggle ${field}:`, error);
+    return { error: `Failed to toggle ${field}.` };
   }
+}
+
+export async function toggleSitePublished(id: string, current: boolean): Promise<{ error?: string }> {
+  return toggleSiteField(id, 'isPublished', current);
 }
 
 export async function toggleSiteShowAsProject(id: string, current: boolean): Promise<{ error?: string }> {
-  await requireAuth();
-  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
-
-  try {
-    const updated = await db
-      .update(projectSites)
-      .set({
-        showAsProject: !current,
-        updatedAt: new Date(),
-      })
-      .where(eq(projectSites.id, id))
-      .returning({ id: projectSites.id });
-
-    if (updated.length === 0) {
-      return { error: 'Site not found.' };
-    }
-
-    revalidatePath('/admin/sites');
-    revalidatePath('/', 'layout');
-    return {};
-  } catch (error) {
-    console.error('Failed to toggle show as project:', error);
-    return { error: 'Failed to toggle show as project.' };
-  }
+  return toggleSiteField(id, 'showAsProject', current);
 }
 
 export async function toggleSiteFeatured(id: string, current: boolean): Promise<{ error?: string }> {
-  await requireAuth();
-  if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
-
-  try {
-    const updated = await db
-      .update(projectSites)
-      .set({
-        featured: !current,
-        updatedAt: new Date(),
-      })
-      .where(eq(projectSites.id, id))
-      .returning({ id: projectSites.id });
-
-    if (updated.length === 0) {
-      return { error: 'Site not found.' };
-    }
-
-    revalidatePath('/admin/sites');
-    revalidatePath('/', 'layout');
-    return {};
-  } catch (error) {
-    console.error('Failed to toggle featured:', error);
-    return { error: 'Failed to toggle featured.' };
-  }
+  return toggleSiteField(id, 'featured', current);
 }

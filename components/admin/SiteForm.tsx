@@ -6,8 +6,9 @@ import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
-import { inputStyle } from './shared-styles';
+import { inputStyle, readOnlyStyle } from './shared-styles';
 import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
@@ -41,12 +42,6 @@ interface SiteFormProps {
   submitLabel?: string;
 }
 
-const readOnlyStyle: React.CSSProperties = {
-  ...inputStyle,
-  opacity: 0.7,
-  cursor: 'default',
-};
-
 function CheckboxWithTooltip({
   name,
   label,
@@ -58,63 +53,13 @@ function CheckboxWithTooltip({
   defaultChecked: boolean;
   tooltip: string;
 }) {
-  const [showTooltip, setShowTooltip] = useState(false);
-
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
       <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
         <input type="checkbox" name={name} defaultChecked={defaultChecked} />
         {label}
       </label>
-      <div style={{ position: 'relative', display: 'inline-flex' }}>
-        <button
-          type="button"
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-          onFocus={() => setShowTooltip(true)}
-          onBlur={() => setShowTooltip(false)}
-          style={{
-            width: '14px',
-            height: '14px',
-            borderRadius: '50%',
-            border: `1px solid ${TEXT_MID}`,
-            backgroundColor: 'transparent',
-            color: TEXT_MID,
-            fontSize: '9px',
-            fontWeight: 600,
-            cursor: 'help',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0,
-          }}
-          aria-label="Help"
-        >
-          ?
-        </button>
-        {showTooltip && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: '0',
-              marginTop: '6px',
-              padding: '0.5rem 0.75rem',
-              backgroundColor: NAVY,
-              color: CARD,
-              fontSize: '0.75rem',
-              lineHeight: 1.4,
-              borderRadius: '6px',
-              whiteSpace: 'pre-wrap',
-              width: '200px',
-              zIndex: 100,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            }}
-          >
-            {tooltip}
-          </div>
-        )}
-      </div>
+      <Tooltip content={tooltip} size="sm" />
     </div>
   );
 }

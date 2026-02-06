@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc, desc, and, inArray } from 'drizzle-orm';
+import { eq, asc, desc, and, inArray, sql } from 'drizzle-orm';
 import { db } from './index';
 import {
   companyInfo,
@@ -381,7 +381,7 @@ export const getSiteBySlugFromDb = cache(
   }
 );
 
-/** Fetch all published sites that should show as projects. */
+/** Fetch all published sites that should show as projects, with project counts. */
 export const getSitesAsProjectsFromDb = cache(async (): Promise<Site[]> => {
   const rows = await db
     .select()
@@ -389,7 +389,23 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<Site[]> => {
     .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)))
     .orderBy(desc(sitesTable.createdAt));
 
-  return rows.map(mapDbSiteToSite);
+  // Fetch project counts per site
+  const siteIds = rows.map((r: DbSiteRow) => r.id);
+  const countMap = siteIds.length > 0
+    ? new Map(
+        (await db
+          .select({ siteId: projectsTable.siteId, count: sql<number>`count(*)::int` })
+          .from(projectsTable)
+          .where(and(inArray(projectsTable.siteId, siteIds), eq(projectsTable.isPublished, true)))
+          .groupBy(projectsTable.siteId)
+        ).map((c: { siteId: string; count: number }) => [c.siteId, c.count] as const),
+      )
+    : new Map<string, number>();
+
+  return rows.map((row: DbSiteRow) => ({
+    ...mapDbSiteToSite(row),
+    project_count: countMap.get(row.id) ?? 0,
+  }));
 });
 
 // ============================================================================
@@ -626,4 +642,44 @@ export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)
 /** Fetch all sites (admin — includes unpublished). */
 export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect)[]> {
   return db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
+}
+
+/** Fetch all projects for a site with images and scopes (admin). */
+export async function getProjectsWithDetailsBySite(siteId: string) {
+  const rows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .where(eq(projectsTable.siteId, siteId))
+    .orderBy(asc(projectsTable.displayOrderInSite));
+
+  if (rows.length === 0) return [];
+
+  const ids = rows.map((r: DbProjectRow) => r.id);
+  const { images, scopes } = await fetchProjectRelations(ids);
+
+  return rows.map((row: DbProjectRow) => ({
+    ...row,
+    images: images.filter((i: DbImageRow) => i.projectId === row.id).sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
+    scopes: scopes.filter((s: DbScopeRow) => s.projectId === row.id).sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
+  }));
+}
+
+/** Get project by ID with images and scopes (admin). */
+export async function getProjectByIdAdmin(id: string) {
+  const rows = await db
+    .select()
+    .from(projectsTable)
+    .where(eq(projectsTable.id, id))
+    .limit(1);
+
+  const row = rows[0];
+  if (!row) return null;
+
+  const { images, scopes } = await fetchProjectRelations([row.id]);
+
+  return {
+    ...row,
+    images: images.sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
+    scopes: scopes.sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
+  };
 }

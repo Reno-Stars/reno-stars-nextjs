@@ -226,7 +226,9 @@
     "viewImage": "View image",
     "imageGallery": "Image gallery",
     "previousImage": "Previous image",
-    "nextImage": "Next image"
+    "nextImage": "Next image",
+    "beforeLabel": "Before",
+    "afterLabel": "After"
   },
   "modal": {
     "location": "Location",
@@ -253,6 +255,9 @@
     "clearAll": "Clear Filters",
     "browseByCategory": "Browse by Category",
     "noProjectsMatch": "No projects match your filters."
+  },
+  "category": {
+    "wholeHouse": "Whole House"
   },
   "services": {
     "kitchen": {
@@ -488,6 +493,7 @@
     "filterByArea": "Filter by Area",
     "allAreas": "All Areas",
     "childProjectsCount": "{count} renovation areas",
-    "noImagesForArea": "No images available for this area"
+    "noImagesForArea": "No images available for this area",
+    "areasCount": "{count} Areas"
   }
 }

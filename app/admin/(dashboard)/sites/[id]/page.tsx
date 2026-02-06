@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, type DbSite } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import EditSiteClient from './EditSiteClient';
+import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getAllServiceAreasAdmin } from '@/lib/db/queries';
+import { getAllServiceAreasAdmin, getProjectsWithDetailsBySite } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -13,9 +13,10 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
+    getProjectsWithDetailsBySite(id),
   ]);
 
   const site = rows[0];
@@ -26,7 +27,7 @@ export default async function EditSitePage({ params }: PageProps) {
     nameZh: area.nameZh,
   }));
 
-  const initialData = {
+  const siteData = {
     id: site.id,
     slug: site.slug,
     titleEn: site.titleEn,
@@ -45,7 +46,7 @@ export default async function EditSitePage({ params }: PageProps) {
   return (
     <div>
       <AdminPageHeader titleKey="sites.editSite" />
-      <EditSiteClient id={id} initialData={initialData} cities={cities} />
+      <SiteDetailClient site={siteData} projects={projectsWithDetails} cities={cities} />
     </div>
   );
 }
