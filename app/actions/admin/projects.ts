@@ -9,7 +9,7 @@ import {
   services as servicesTable,
   projectSites as sitesTable,
 } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -369,14 +369,14 @@ export async function reorderProjectsInSite(
     const validIds = projectIds.filter((id) => isValidUUID(id));
     if (validIds.length === 0) return { error: 'No valid project IDs provided.' };
 
-    // Update display order for all projects in parallel
+    // Update display order — scoped to the specified site for safety
     const now = new Date();
     await Promise.all(
       validIds.map((projectId, index) =>
         db
           .update(projects)
           .set({ displayOrderInSite: index, updatedAt: now })
-          .where(eq(projects.id, projectId))
+          .where(and(eq(projects.id, projectId), eq(projects.siteId, siteId)))
       )
     );
 
