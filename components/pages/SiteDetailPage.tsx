@@ -26,10 +26,16 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [areaFilter, setAreaFilter] = useState<string>('all');
 
+  // Find first "after" image index helper
+  const findFirstAfterIndex = useCallback((images: { is_before?: boolean }[]) => {
+    const idx = images.findIndex((img) => !img.is_before);
+    return idx >= 0 ? idx : 0;
+  }, []);
+
   useEffect(() => {
-    setActiveImageIndex(0);
+    setActiveImageIndex(findFirstAfterIndex(site.aggregated.allImages));
     setAreaFilter('all');
-  }, [site.slug]);
+  }, [site.slug, site.aggregated.allImages, findFirstAfterIndex]);
 
   const handleLightboxClose = useCallback(() => {
     setLightboxOpen(false);
@@ -71,10 +77,10 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
     setActiveImageIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
   }, [filteredImages.length]);
 
-  // Reset image index when filter changes
+  // Reset to first "after" image when filter changes
   useEffect(() => {
-    setActiveImageIndex(0);
-  }, [areaFilter]);
+    setActiveImageIndex(findFirstAfterIndex(filteredImages));
+  }, [areaFilter, filteredImages, findFirstAfterIndex]);
 
   const currentImage = filteredImages[activeImageIndex];
 

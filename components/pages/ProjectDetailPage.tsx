@@ -26,10 +26,18 @@ interface ProjectDetailPageProps {
 
 export default function ProjectDetailPage({ locale, project, allProjects, company }: ProjectDetailPageProps) {
   const t = useTranslations();
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
+
+  // Find first "after" image index (default to 0 if none found)
+  const firstAfterIndex = useMemo(() => {
+    const idx = localizedProject.images.findIndex((img) => !img.is_before);
+    return idx >= 0 ? idx : 0;
+  }, [localizedProject.images]);
+
+  const [activeImageIndex, setActiveImageIndex] = useState(firstAfterIndex);
   useEffect(() => {
-    setActiveImageIndex(0);
-  }, [project.slug]);
+    setActiveImageIndex(firstAfterIndex);
+  }, [project.slug, firstAfterIndex]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
 
@@ -56,7 +64,6 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
     }
   }, []);
 
-  const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
   const relatedProjects = useMemo(() => {
     return allProjects
       .filter((p) => p.slug !== project.slug && p.service_type === project.service_type)

@@ -64,7 +64,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   }, [project, handleKeyDown]);
 
   useEffect(() => {
-    setActiveImage(0);
+    if (!project) return;
+    // Find first "after" image index (default to 0 if none found)
+    const gallery = project.images.length > 0 ? project.images : [];
+    const firstAfterIdx = gallery.findIndex((img) => !img.is_before);
+    setActiveImage(firstAfterIdx >= 0 ? firstAfterIdx : 0);
   }, [project]);
 
   if (!project) return null;
