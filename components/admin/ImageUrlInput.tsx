@@ -11,6 +11,7 @@ interface ImageUrlInputProps {
   label: string;
   defaultValue?: string;
   required?: boolean;
+  tooltip?: string;
 }
 
 export default function ImageUrlInput({
@@ -18,9 +19,11 @@ export default function ImageUrlInput({
   label,
   defaultValue = '',
   required = false,
+  tooltip,
 }: ImageUrlInputProps) {
   const t = useAdminTranslations();
   const [url, setUrl] = useState(defaultValue);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -77,18 +80,70 @@ export default function ImageUrlInput({
 
   return (
     <div style={{ marginBottom: '1rem' }}>
-      <label
-        htmlFor={name}
-        style={{
-          color: NAVY,
-          fontWeight: 600,
-          fontSize: '0.8125rem',
-          marginBottom: '0.375rem',
-          display: 'block',
-        }}
-      >
-        {label}
-      </label>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
+        <label
+          htmlFor={name}
+          style={{
+            color: NAVY,
+            fontWeight: 600,
+            fontSize: '0.8125rem',
+          }}
+        >
+          {label}
+        </label>
+        {tooltip && (
+          <div style={{ position: 'relative', display: 'inline-flex' }}>
+            <button
+              type="button"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              onFocus={() => setShowTooltip(true)}
+              onBlur={() => setShowTooltip(false)}
+              style={{
+                width: '16px',
+                height: '16px',
+                borderRadius: '50%',
+                border: `1px solid ${TEXT_MID}`,
+                backgroundColor: 'transparent',
+                color: TEXT_MID,
+                fontSize: '10px',
+                fontWeight: 600,
+                cursor: 'help',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+              }}
+              aria-label="Help"
+            >
+              ?
+            </button>
+            {showTooltip && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  marginTop: '6px',
+                  padding: '0.5rem 0.75rem',
+                  backgroundColor: NAVY,
+                  color: CARD,
+                  fontSize: '0.75rem',
+                  lineHeight: 1.4,
+                  borderRadius: '6px',
+                  whiteSpace: 'pre-wrap',
+                  width: '220px',
+                  zIndex: 100,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                }}
+              >
+                {tooltip}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* URL input */}
       <input

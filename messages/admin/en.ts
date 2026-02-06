@@ -357,6 +357,17 @@ const en = {
     featured: 'Featured',
     published: 'Published',
     displayOrder: 'Display Order',
+    tooltips: {
+      slug: 'URL-friendly identifier. Used in the page URL (e.g., /projects/oak-street-house). Use lowercase letters, numbers, and hyphens only.',
+      title: 'The display name for this site. Shown on cards and page headers. Provide both English and Chinese versions.',
+      description: 'Brief summary of the project site. Appears in cards and search results. Keep it concise but informative.',
+      city: 'The city where this project is located. Used for filtering and local SEO.',
+      heroImage: 'Main banner image for the site page. Recommended size: 1920×1080px. Use high-quality photos.',
+      badge: 'Optional label shown on the site card (e.g., "Whole House", "Kitchen", "Luxury"). Leave empty if not needed.',
+      showAsProject: 'When enabled, this site appears in the projects listing as a standalone project card.',
+      featured: 'Featured sites are highlighted and may appear in prominent positions on the website.',
+      published: 'Only published sites are visible to website visitors. Unpublish to hide without deleting.',
+    },
   },
 };
 
