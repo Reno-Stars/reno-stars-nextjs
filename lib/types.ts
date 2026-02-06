@@ -9,10 +9,13 @@ export type Locale = 'en' | 'zh';
 /** Helper type for bilingual content */
 export type Localized<T> = Record<Locale, T>;
 
-/** Available service types for renovation projects (room-level, not whole-house) */
+/** Available service types for renovation projects.
+ * 'whole-house' is kept for DB compatibility but hidden from admin forms —
+ * whole-house renovations are now represented by Sites, not individual projects. */
 export type ServiceType =
   | 'kitchen'
   | 'bathroom'
+  | 'whole-house'
   | 'basement'
   | 'cabinet'
   | 'commercial';

@@ -215,6 +215,9 @@ export default function DataTable<T extends object>({
                   return (
                     <Fragment key={rowKey}>
                       <tr
+                        role={renderExpandedRow ? 'button' : undefined}
+                        tabIndex={renderExpandedRow ? 0 : undefined}
+                        aria-expanded={renderExpandedRow ? isExpanded : undefined}
                         style={{
                           borderBottom: `1px solid ${SURFACE}`,
                           cursor: renderExpandedRow ? 'pointer' : undefined,
@@ -222,6 +225,12 @@ export default function DataTable<T extends object>({
                           transition: 'background-color 0.15s ease',
                         }}
                         onClick={renderExpandedRow ? () => toggleExpanded(rowKey) : undefined}
+                        onKeyDown={renderExpandedRow ? (e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            toggleExpanded(rowKey);
+                          }
+                        } : undefined}
                       >
                         {renderExpandedRow && (
                           <td style={{ padding: '0.625rem 0 0.625rem 1rem', width: '1.5rem' }}>

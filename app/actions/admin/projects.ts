@@ -20,8 +20,8 @@ const MAX_SCOPES = 50;
 
 // Format budget range from min/max
 function formatBudgetRange(min: string, max: string): string | null {
-  const minNum = parseInt(min, 10);
-  const maxNum = parseInt(max, 10);
+  const minNum = Math.max(0, parseInt(min, 10));
+  const maxNum = Math.max(0, parseInt(max, 10));
   if (isNaN(minNum) && isNaN(maxNum)) return null;
   if (isNaN(minNum)) return `$${maxNum.toLocaleString()}`;
   if (isNaN(maxNum)) return `$${minNum.toLocaleString()}+`;

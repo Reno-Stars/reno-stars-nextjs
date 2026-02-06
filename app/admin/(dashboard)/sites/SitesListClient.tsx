@@ -9,6 +9,7 @@ import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
 import { GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
+import type { ProjectSummary } from '@/lib/db/queries';
 
 interface SiteRow {
   id: string;
@@ -19,16 +20,6 @@ interface SiteRow {
   showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;
-}
-
-interface ProjectSummary {
-  id: string;
-  siteId: string;
-  titleEn: string;
-  titleZh: string;
-  serviceType: string;
-  isPublished: boolean;
-  displayOrderInSite: number;
 }
 
 interface Props {

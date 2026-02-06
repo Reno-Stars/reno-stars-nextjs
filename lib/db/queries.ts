@@ -644,8 +644,18 @@ export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelec
   return db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
 }
 
+export interface ProjectSummary {
+  id: string;
+  siteId: string;
+  titleEn: string;
+  titleZh: string;
+  serviceType: string;
+  isPublished: boolean;
+  displayOrderInSite: number;
+}
+
 /** Fetch all projects grouped by siteId for the sites list (admin). Lightweight — no images/scopes. */
-export async function getAllProjectsBySiteAdmin() {
+export async function getAllProjectsBySiteAdmin(): Promise<Record<string, ProjectSummary[]>> {
   const rows = await db
     .select({
       id: projectsTable.id,

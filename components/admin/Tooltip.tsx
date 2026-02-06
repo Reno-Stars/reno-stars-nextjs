@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { NAVY, TEXT_MID, CARD } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
@@ -16,19 +16,37 @@ interface TooltipProps {
  */
 export default function Tooltip({ content, size = 'md' }: TooltipProps) {
   const [show, setShow] = useState(false);
+  const [flipUp, setFlipUp] = useState(false);
+  const tipRef = useRef<HTMLDivElement>(null);
   const t = useAdminTranslations();
 
   const buttonSize = size === 'sm' ? '14px' : '16px';
   const fontSize = size === 'sm' ? '9px' : '10px';
 
+  const handleShow = useCallback(() => {
+    setShow(true);
+    // Check on next frame if tooltip clips below viewport
+    requestAnimationFrame(() => {
+      const el = tipRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setFlipUp(rect.bottom > window.innerHeight - 8);
+    });
+  }, []);
+
+  const handleHide = useCallback(() => {
+    setShow(false);
+    setFlipUp(false);
+  }, []);
+
   return (
     <div style={{ position: 'relative', display: 'inline-flex' }}>
       <button
         type="button"
-        onMouseEnter={() => setShow(true)}
-        onMouseLeave={() => setShow(false)}
-        onFocus={() => setShow(true)}
-        onBlur={() => setShow(false)}
+        onMouseEnter={handleShow}
+        onMouseLeave={handleHide}
+        onFocus={handleShow}
+        onBlur={handleHide}
         style={{
           width: buttonSize,
           height: buttonSize,
@@ -50,12 +68,14 @@ export default function Tooltip({ content, size = 'md' }: TooltipProps) {
       </button>
       {show && (
         <div
+          ref={tipRef}
           role="tooltip"
           style={{
             position: 'absolute',
-            top: '100%',
+            ...(flipUp
+              ? { bottom: '100%', marginBottom: '6px' }
+              : { top: '100%', marginTop: '6px' }),
             left: '0',
-            marginTop: '6px',
             padding: '0.5rem 0.75rem',
             backgroundColor: NAVY,
             color: CARD,

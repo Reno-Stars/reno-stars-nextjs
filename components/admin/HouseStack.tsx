@@ -176,11 +176,10 @@ export default function HouseStack({
     setConfirmDeleteId(null);
   }, []);
 
-  // Memoized project count text using translations
   const projectCountText = useMemo(() => {
-    const count = projects.length;
-    // Use translation with interpolation
-    return t.sites.projectCount.replace('{count}', String(count));
+    const template = t.sites.projectCount;
+    const count = String(projects.length);
+    return template.includes('{count}') ? template.replace('{count}', count) : `${count} projects`;
   }, [projects.length, t.sites.projectCount]);
 
   return (
