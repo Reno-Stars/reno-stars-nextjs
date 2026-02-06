@@ -350,6 +350,7 @@ const en = {
     description: 'Description',
     city: 'City',
     locationCity: 'Location City',
+    selectCity: 'Select a city...',
     heroImageUrl: 'Hero Image URL',
     badge: 'Badge',
     showAsProject: 'Show as Project',

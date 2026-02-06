@@ -352,6 +352,7 @@ const zh: AdminMessages = {
     description: '描述',
     city: '城市',
     locationCity: '所在城市',
+    selectCity: '选择城市...',
     heroImageUrl: '主图 URL',
     badge: '标签',
     showAsProject: '显示为项目',

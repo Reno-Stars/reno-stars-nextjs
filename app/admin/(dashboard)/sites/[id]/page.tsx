@@ -4,6 +4,7 @@ import { projectSites, type DbSite } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import EditSiteClient from './EditSiteClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { getAllServiceAreasAdmin } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -12,9 +13,18 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const rows: DbSite[] = await db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1);
+  const [rows, serviceAreas] = await Promise.all([
+    db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
+    getAllServiceAreasAdmin(),
+  ]);
+
   const site = rows[0];
   if (!site) notFound();
+
+  const cities = serviceAreas.map((area) => ({
+    nameEn: area.nameEn,
+    nameZh: area.nameZh,
+  }));
 
   const initialData = {
     id: site.id,
@@ -35,7 +45,7 @@ export default async function EditSitePage({ params }: PageProps) {
   return (
     <div>
       <AdminPageHeader titleKey="sites.editSite" />
-      <EditSiteClient id={id} initialData={initialData} />
+      <EditSiteClient id={id} initialData={initialData} cities={cities} />
     </div>
   );
 }

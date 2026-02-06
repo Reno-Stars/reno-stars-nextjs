@@ -10,12 +10,19 @@ import { useFormToast } from './useFormToast';
 import { inputStyle } from './shared-styles';
 import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import { useAdminLocale } from './AdminLocaleProvider';
+
+interface City {
+  nameEn: string;
+  nameZh: string;
+}
 
 interface SiteFormProps {
   action: (
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
+  cities: City[];
   initialData?: {
     id?: string;
     slug: string;
@@ -42,10 +49,12 @@ const readOnlyStyle: React.CSSProperties = {
 
 export default function SiteForm({
   action,
+  cities,
   initialData,
   submitLabel,
 }: SiteFormProps) {
   const t = useAdminTranslations();
+  const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
   const [state, formAction, isPending] = useActionState(action, {});
@@ -125,7 +134,14 @@ export default function SiteForm({
           <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.sites.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} />
 
           <FormField label={t.sites.locationCity} htmlFor="locationCity">
-            <input id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle} />
+            <select id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle}>
+              <option value="">{t.sites.selectCity}</option>
+              {cities.map((city) => (
+                <option key={city.nameEn} value={city.nameEn}>
+                  {locale === 'zh' ? city.nameZh : city.nameEn}
+                </option>
+              ))}
+            </select>
           </FormField>
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} />
