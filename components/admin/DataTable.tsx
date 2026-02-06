@@ -137,6 +137,7 @@ export default function DataTable<T extends object>({
           >
             <thead>
               <tr style={{ borderBottom: `1px solid ${SURFACE}` }}>
+                {renderExpandedRow && <th style={{ width: '1.5rem' }} />}
                 {columns.map((col) => (
                   <th
                     key={col.key}
@@ -191,7 +192,7 @@ export default function DataTable<T extends object>({
               {paged.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={columns.length + (actions ? 1 : 0)}
+                    colSpan={columns.length + (actions ? 1 : 0) + (renderExpandedRow ? 1 : 0)}
                     style={{
                       padding: '2rem',
                       textAlign: 'center',
@@ -212,9 +213,26 @@ export default function DataTable<T extends object>({
                           borderBottom: `1px solid ${SURFACE}`,
                           cursor: renderExpandedRow ? 'pointer' : undefined,
                           backgroundColor: isExpanded ? SURFACE_ALT : undefined,
+                          transition: 'background-color 0.15s ease',
                         }}
                         onClick={renderExpandedRow ? () => toggleExpanded(rowKey) : undefined}
                       >
+                        {renderExpandedRow && (
+                          <td style={{ padding: '0.625rem 0 0.625rem 1rem', width: '1.5rem' }}>
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                transition: 'transform 0.2s ease',
+                                transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                                color: TEXT_MUTED,
+                                fontSize: '0.75rem',
+                              }}
+                              aria-hidden="true"
+                            >
+                              &#9654;
+                            </span>
+                          </td>
+                        )}
                         {columns.map((col) => (
                           <td
                             key={col.key}
@@ -240,17 +258,27 @@ export default function DataTable<T extends object>({
                           </td>
                         )}
                       </tr>
-                      {renderExpandedRow && isExpanded && (
+                      {renderExpandedRow && (
                         <tr>
                           <td
-                            colSpan={columns.length + (actions ? 1 : 0)}
+                            colSpan={columns.length + (actions ? 1 : 0) + 1}
                             style={{
                               padding: 0,
                               backgroundColor: SURFACE_ALT,
-                              borderBottom: `1px solid ${SURFACE}`,
+                              borderBottom: isExpanded ? `1px solid ${SURFACE}` : 'none',
                             }}
                           >
-                            {renderExpandedRow(row)}
+                            <div
+                              style={{
+                                display: 'grid',
+                                gridTemplateRows: isExpanded ? '1fr' : '0fr',
+                                transition: 'grid-template-rows 0.2s ease',
+                              }}
+                            >
+                              <div style={{ overflow: 'hidden' }}>
+                                {renderExpandedRow(row)}
+                              </div>
+                            </div>
                           </td>
                         </tr>
                       )}
