@@ -63,6 +63,7 @@ app/
     contact/              # Contact form + thank-you
     benefits/             # Benefits page
     design/               # Design showcase
+    process/              # 5-step renovation workflow page
     layout.tsx            # Locale layout (NextIntlClientProvider, Navbar, Footer)
     not-found.tsx         # Locale-aware 404 page
   admin/                  # Admin dashboard (auth-protected)
@@ -166,7 +167,7 @@ Key patterns:
 15+ tables in `lib/db/schema.ts`. Key tables:
 - `services` — 6 renovation service types
 - `service_areas` — 14 geographic areas
-- `projects`, `project_images`, `project_scopes` — portfolio
+- `projects`, `project_images`, `project_scopes`, `project_external_products` — portfolio
 - `blog_posts` — articles
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
@@ -178,7 +179,7 @@ Key patterns:
 
 ## Component Conventions
 
-- **Navbar**: Unified, no variant props. 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown. Receives `company` and `areas` props from layout.
+- **Navbar**: Unified, no variant props. 8 links (Home, Services, Projects, Design, Benefits, Contact, Process, Blog & News) + Areas dropdown. Receives `company` and `areas` props from layout.
 - **Footer**: 5-column grid + service areas bar. Custom SVG icons for non-lucide platforms. Receives `company`, `socialLinks`, `services`, `areas` props from layout.
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.

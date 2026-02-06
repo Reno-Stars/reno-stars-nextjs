@@ -511,6 +511,8 @@
       "googleReviews": "Google Reviews"
     },
     "downloadPoster": "Download Poster",
+    "downloadSuccess": "Downloaded!",
+    "downloadError": "Failed",
     "step1": {
       "title": "Initial Consultation",
       "subtitle": "Discovery",

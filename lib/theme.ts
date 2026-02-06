@@ -3,6 +3,7 @@
 export const NAVY = '#1B365D';
 export const NAVY_MID = '#243f6c';
 export const NAVY_LIGHT = '#2d4f7e';
+export const NAVY_PALE = '#E8EBF0';
 export const GOLD = '#C8922A';
 export const GOLD_HOVER = '#b3811f';
 export const GOLD_PALE = 'rgba(200,146,42,0.12)';

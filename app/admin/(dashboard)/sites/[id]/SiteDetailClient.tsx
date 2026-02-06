@@ -67,7 +67,8 @@ interface ProjectWithDetails {
   displayOrderInSite: number;
   images: ProjectImage[];
   scopes: ProjectScope[];
-  externalProducts: ProjectExternalProduct[];}
+  externalProducts: ProjectExternalProduct[];
+}
 
 interface SiteData {
   id: string;

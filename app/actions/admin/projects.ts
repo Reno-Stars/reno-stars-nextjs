@@ -162,6 +162,16 @@ export async function createProject(
       return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
     }
 
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+    }
+
     // Look up serviceId
     const svcRows = await db
       .select({ id: servicesTable.id })
@@ -211,15 +221,6 @@ export async function createProject(
       );
     }
 
-    const epData = parseExternalProducts(formData);
-    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
-    if (invalidEpUrl) {
-      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
-    }
-    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
-    if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
-    }
     if (epData.length > 0) {
       await db.insert(projectExternalProducts).values(
         epData.map((ep) => ({ ...ep, projectId: inserted.id }))
@@ -268,6 +269,16 @@ export async function updateProject(
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
       return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
+    }
+
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
     }
 
     const svcRows = await db
@@ -325,15 +336,6 @@ export async function updateProject(
     }
 
     // Delete and re-insert external products
-    const epData = parseExternalProducts(formData);
-    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
-    if (invalidEpUrl) {
-      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
-    }
-    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
-    if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
-    }
     await db.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
     if (epData.length > 0) {
       await db.insert(projectExternalProducts).values(

@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { toPng } from 'html-to-image';
 import {
-  Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2,
+  Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
   MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
   Users, Settings, ClipboardCheck, HeartHandshake, Shield, Headphones,
 } from 'lucide-react';
 import type { Company } from '@/lib/types';
 import {
-  NAVY, NAVY_MID, GOLD, SURFACE, CARD, TEXT, TEXT_MID, SH_DARK, neu,
+  NAVY, NAVY_MID, NAVY_PALE, GOLD, SURFACE, CARD, TEXT, TEXT_MID, SH_DARK, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
   ILLUS_SKIN, ILLUS_SKIN_DARK, ILLUS_SKY, ILLUS_WOOD, ILLUS_YELLOW,
@@ -58,7 +58,7 @@ const stepColors = [
   { color: STEP_ORANGE, lightColor: STEP_ORANGE_LIGHT },
   { color: STEP_GREEN, lightColor: STEP_GREEN_LIGHT },
   { color: STEP_RED, lightColor: STEP_RED_LIGHT },
-  { color: NAVY, lightColor: '#E8EBF0' }, // Navy uses main theme color
+  { color: NAVY, lightColor: NAVY_PALE },
 ];
 
 // SVG Illustrations for each step
@@ -276,11 +276,13 @@ export default function ProcessPage({ company }: ProcessPageProps) {
 
   const posterRef = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleDownload = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
 
     setIsDownloading(true);
+    setDownloadStatus('idle');
     try {
       const dataUrl = await toPng(posterRef.current, {
         pixelRatio: 2,
@@ -291,8 +293,12 @@ export default function ProcessPage({ company }: ProcessPageProps) {
       link.download = 'reno-stars-process-poster.png';
       link.href = dataUrl;
       link.click();
-    } catch (error) {
-      console.error('Failed to generate poster:', error);
+      setDownloadStatus('success');
+      // Reset status after 3 seconds
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    } catch {
+      setDownloadStatus('error');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
     } finally {
       setIsDownloading(false);
     }
@@ -306,18 +312,28 @@ export default function ProcessPage({ company }: ProcessPageProps) {
         disabled={isDownloading}
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full font-semibold shadow-lg transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed print:hidden"
         style={{
-          backgroundColor: GOLD,
-          color: NAVY,
+          backgroundColor: downloadStatus === 'success' ? '#16a34a' : downloadStatus === 'error' ? '#dc2626' : GOLD,
+          color: downloadStatus === 'idle' ? NAVY : 'white',
           boxShadow: `0 4px 14px rgba(200, 146, 42, 0.4)`,
         }}
         aria-label={t('process.downloadPoster')}
       >
         {isDownloading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
+        ) : downloadStatus === 'success' ? (
+          <Check className="w-5 h-5" />
+        ) : downloadStatus === 'error' ? (
+          <AlertCircle className="w-5 h-5" />
         ) : (
           <Download className="w-5 h-5" />
         )}
-        <span className="hidden sm:inline">{t('process.downloadPoster')}</span>
+        <span className="hidden sm:inline">
+          {downloadStatus === 'success'
+            ? t('process.downloadSuccess')
+            : downloadStatus === 'error'
+              ? t('process.downloadError')
+              : t('process.downloadPoster')}
+        </span>
       </button>
 
       <div ref={posterRef} className="min-h-screen relative overflow-hidden" style={{ backgroundColor: SURFACE }}>

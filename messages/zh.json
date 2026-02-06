@@ -511,6 +511,8 @@
       "googleReviews": "Google 评价"
     },
     "downloadPoster": "下载海报",
+    "downloadSuccess": "下载成功!",
+    "downloadError": "下载失败",
     "step1": {
       "title": "前期沟通",
       "subtitle": "Discovery",
