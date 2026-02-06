@@ -44,7 +44,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         title: site.title[locale],
         description: site.description[locale],
         category: wholeHouseCategory,
-        service_type: 'whole-house' as const,
+        // Sites don't have a service_type - they're collections of room projects
         location_city: site.location_city || '',
         hero_image: site.hero_image!,
         images: [{ src: site.hero_image!, alt: site.title[locale] }],
@@ -305,6 +305,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   isSiteProject={project.isSiteProject}
                   projectCount={project.projectCount}
                   areasCountLabel={project.isSiteProject ? t('wholeHouse.areasCount', { count: project.projectCount ?? 0 }) : undefined}
+                  siteBadgeLabel={project.isSiteProject ? t('wholeHouse.siteBadge') : undefined}
                 />
               ))}
             </div>

@@ -2,15 +2,14 @@
  * Shared constants for admin forms and server actions.
  */
 
-/** Valid service types for projects */
-export const SERVICE_TYPES = ['kitchen', 'bathroom', 'whole-house', 'basement', 'cabinet', 'commercial'] as const;
+/** Valid service types for projects (room-level only, whole-house is represented by Sites) */
+export const SERVICE_TYPES = ['kitchen', 'bathroom', 'basement', 'cabinet', 'commercial'] as const;
 export type ServiceTypeKey = (typeof SERVICE_TYPES)[number];
 
 /** Service type to category mapping (auto-derived) */
 export const SERVICE_TYPE_TO_CATEGORY: Record<ServiceTypeKey, { en: string; zh: string }> = {
   kitchen: { en: 'Kitchen', zh: '厨房' },
   bathroom: { en: 'Bathroom', zh: '卫浴' },
-  'whole-house': { en: 'Whole House', zh: '全屋' },
   basement: { en: 'Basement', zh: '地下室' },
   cabinet: { en: 'Cabinet', zh: '橱柜' },
   commercial: { en: 'Commercial', zh: '商业' },

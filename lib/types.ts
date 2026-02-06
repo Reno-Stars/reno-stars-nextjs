@@ -9,11 +9,10 @@ export type Locale = 'en' | 'zh';
 /** Helper type for bilingual content */
 export type Localized<T> = Record<Locale, T>;
 
-/** Available service types for renovation projects */
+/** Available service types for renovation projects (room-level, not whole-house) */
 export type ServiceType =
   | 'kitchen'
   | 'bathroom'
-  | 'whole-house'
   | 'basement'
   | 'cabinet'
   | 'commercial';
@@ -296,7 +295,7 @@ export interface LocalizedProject {
   title: string;
   description: string;
   category: string;
-  service_type: ServiceType;
+  service_type?: ServiceType; // Optional: Sites displayed as projects don't have a single service type
   location_city: string;
   budget_range?: string;
   duration?: string;

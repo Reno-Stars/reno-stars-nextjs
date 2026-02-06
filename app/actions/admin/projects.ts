@@ -25,7 +25,9 @@ function formatBudgetRange(min: string, max: string): string | null {
   if (isNaN(minNum) && isNaN(maxNum)) return null;
   if (isNaN(minNum)) return `$${maxNum.toLocaleString()}`;
   if (isNaN(maxNum)) return `$${minNum.toLocaleString()}+`;
-  return `$${minNum.toLocaleString()} - $${maxNum.toLocaleString()}`;
+  const lo = Math.min(minNum, maxNum);
+  const hi = Math.max(minNum, maxNum);
+  return `$${lo.toLocaleString()} - $${hi.toLocaleString()}`;
 }
 
 function parseImages(formData: FormData) {

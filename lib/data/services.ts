@@ -11,15 +11,17 @@ export function getLocalizedService(service: Service, locale: Locale): Localized
   };
 }
 
-// Map service types to category names
+// Map service types to category names (whole-house is Sites-only, not a service type)
 export const serviceTypeToCategory: Record<ServiceType, { en: string; zh: string }> = {
   kitchen: { en: 'Kitchen', zh: '厨房' },
   bathroom: { en: 'Bathroom', zh: '卫浴' },
-  'whole-house': { en: 'Whole House', zh: '全屋' },
   basement: { en: 'Basement', zh: '地下室' },
   cabinet: { en: 'Cabinet', zh: '橱柜' },
   commercial: { en: 'Commercial', zh: '商业' },
 };
+
+// Whole House category (only for Sites displayed as projects)
+export const WHOLE_HOUSE_CATEGORY = { en: 'Whole House', zh: '全屋' };
 
 // Derived inverse mapping — kept in sync with serviceTypeToCategory automatically
 export const categoryToServiceType: Record<string, ServiceType> = Object.entries(

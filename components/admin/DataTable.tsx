@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { CARD, NAVY, TEXT_MID, TEXT_MUTED, GOLD, SURFACE, neu, neuIn } from '@/lib/theme';
+import { useState, useMemo, useEffect, useCallback, Fragment } from 'react';
+import { CARD, NAVY, TEXT_MID, TEXT_MUTED, GOLD, SURFACE, SURFACE_ALT, neu, neuIn } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import type { ReactNode } from 'react';
 
@@ -21,6 +21,7 @@ interface DataTableProps<T> {
   searchKeys?: string[];
   pageSize?: number;
   actions?: (row: T) => ReactNode;
+  renderExpandedRow?: (row: T) => ReactNode;
 }
 
 const EMPTY_SEARCH_KEYS: string[] = [];
@@ -37,12 +38,18 @@ export default function DataTable<T extends object>({
   searchKeys = EMPTY_SEARCH_KEYS,
   pageSize = 15,
   actions,
+  renderExpandedRow,
 }: DataTableProps<T>) {
   const t = useAdminTranslations();
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
+
+  const toggleExpanded = useCallback((key: string) => {
+    setExpandedKey((prev) => (prev === key ? null : key));
+  }, []);
 
   useEffect(() => {
     setPage(0);
@@ -195,36 +202,61 @@ export default function DataTable<T extends object>({
                   </td>
                 </tr>
               ) : (
-                paged.map((row) => (
-                  <tr
-                    key={getRowKey(row)}
-                    style={{ borderBottom: `1px solid ${SURFACE}` }}
-                  >
-                    {columns.map((col) => (
-                      <td
-                        key={col.key}
+                paged.map((row) => {
+                  const rowKey = getRowKey(row);
+                  const isExpanded = expandedKey === rowKey;
+                  return (
+                    <Fragment key={rowKey}>
+                      <tr
                         style={{
-                          padding: '0.625rem 1rem',
-                          color: NAVY,
+                          borderBottom: `1px solid ${SURFACE}`,
+                          cursor: renderExpandedRow ? 'pointer' : undefined,
+                          backgroundColor: isExpanded ? SURFACE_ALT : undefined,
                         }}
+                        onClick={renderExpandedRow ? () => toggleExpanded(rowKey) : undefined}
                       >
-                        {col.render
-                          ? col.render(row)
-                          : (getField(row, col.key) as ReactNode) ?? '—'}
-                      </td>
-                    ))}
-                    {actions && (
-                      <td
-                        style={{
-                          padding: '0.625rem 1rem',
-                          textAlign: 'right',
-                        }}
-                      >
-                        {actions(row)}
-                      </td>
-                    )}
-                  </tr>
-                ))
+                        {columns.map((col) => (
+                          <td
+                            key={col.key}
+                            style={{
+                              padding: '0.625rem 1rem',
+                              color: NAVY,
+                            }}
+                          >
+                            {col.render
+                              ? col.render(row)
+                              : (getField(row, col.key) as ReactNode) ?? '—'}
+                          </td>
+                        ))}
+                        {actions && (
+                          <td
+                            style={{
+                              padding: '0.625rem 1rem',
+                              textAlign: 'right',
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {actions(row)}
+                          </td>
+                        )}
+                      </tr>
+                      {renderExpandedRow && isExpanded && (
+                        <tr>
+                          <td
+                            colSpan={columns.length + (actions ? 1 : 0)}
+                            style={{
+                              padding: 0,
+                              backgroundColor: SURFACE_ALT,
+                              borderBottom: `1px solid ${SURFACE}`,
+                            }}
+                          >
+                            {renderExpandedRow(row)}
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  );
+                })
               )}
             </tbody>
           </table>

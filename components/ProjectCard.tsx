@@ -19,11 +19,13 @@ interface ProjectCardProps {
   projectCount?: number;
   /** Translated label for the areas count badge (e.g. "3 Areas") */
   areasCountLabel?: string;
+  /** Translated label for site badge (e.g. "Site") */
+  siteBadgeLabel?: string;
 }
 
 export default function ProjectCard({
   project, showDescription, showChevron, onClick,
-  isSiteProject, projectCount, areasCountLabel,
+  isSiteProject, projectCount, areasCountLabel, siteBadgeLabel,
 }: ProjectCardProps) {
   // Render as <article> when used inside a Link (no onClick), <button> otherwise
   const Tag = onClick ? 'button' : 'article';
@@ -47,14 +49,26 @@ export default function ProjectCard({
             {project.badge}
           </span>
         )}
-        {isSiteProject && projectCount != null && projectCount > 0 && areasCountLabel && (
-          <span
-            className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-white"
-            style={{ backgroundColor: NAVY }}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            {areasCountLabel}
-          </span>
+        {isSiteProject && (
+          <div className="absolute top-3 right-3 flex flex-col gap-1 items-end">
+            {siteBadgeLabel && (
+              <span
+                className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold text-white"
+                style={{ backgroundColor: NAVY }}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                {siteBadgeLabel}
+              </span>
+            )}
+            {projectCount != null && projectCount > 0 && areasCountLabel && (
+              <span
+                className="px-2 py-0.5 rounded-md text-xs font-medium"
+                style={{ backgroundColor: 'rgba(27,54,93,0.8)', color: 'white' }}
+              >
+                {areasCountLabel}
+              </span>
+            )}
+          </div>
         )}
       </figure>
       <div className="p-4">

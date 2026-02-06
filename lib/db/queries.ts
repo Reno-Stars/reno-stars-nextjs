@@ -644,6 +644,30 @@ export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelec
   return db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
 }
 
+/** Fetch all projects grouped by siteId for the sites list (admin). Lightweight — no images/scopes. */
+export async function getAllProjectsBySiteAdmin() {
+  const rows = await db
+    .select({
+      id: projectsTable.id,
+      siteId: projectsTable.siteId,
+      titleEn: projectsTable.titleEn,
+      titleZh: projectsTable.titleZh,
+      serviceType: projectsTable.serviceType,
+      isPublished: projectsTable.isPublished,
+      displayOrderInSite: projectsTable.displayOrderInSite,
+    })
+    .from(projectsTable)
+    .orderBy(asc(projectsTable.displayOrderInSite));
+
+  const bySite = new Map<string, typeof rows>();
+  for (const row of rows) {
+    const arr = bySite.get(row.siteId) ?? [];
+    arr.push(row);
+    bySite.set(row.siteId, arr);
+  }
+  return Object.fromEntries(bySite);
+}
+
 /** Fetch all projects for a site with images and scopes (admin). */
 export async function getProjectsWithDetailsBySite(siteId: string) {
   const rows: DbProjectRow[] = await db

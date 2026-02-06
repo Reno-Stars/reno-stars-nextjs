@@ -389,6 +389,7 @@ const zh: AdminMessages = {
     clickToEdit: '点击编辑工地',
     addProject: '添加项目',
     projectCount: '{count} 个项目',
+    projectsColumn: '项目',
     noProjects: '暂无项目',
     deleteProject: '删除项目',
     deleteProjectConfirm: '确定删除此项目？',

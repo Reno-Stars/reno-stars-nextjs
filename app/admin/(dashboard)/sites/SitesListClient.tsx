@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition, useMemo } from 'react';
+import { useState, useTransition, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
@@ -8,7 +8,7 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
-import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
+import { GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
 
 interface SiteRow {
   id: string;
@@ -21,11 +21,22 @@ interface SiteRow {
   isPublished: boolean;
 }
 
-interface Props {
-  sites: SiteRow[];
+interface ProjectSummary {
+  id: string;
+  siteId: string;
+  titleEn: string;
+  titleZh: string;
+  serviceType: string;
+  isPublished: boolean;
+  displayOrderInSite: number;
 }
 
-export default function SitesListClient({ sites }: Props) {
+interface Props {
+  sites: SiteRow[];
+  projectsBySite: Record<string, ProjectSummary[]>;
+}
+
+export default function SitesListClient({ sites, projectsBySite }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -39,15 +50,30 @@ export default function SitesListClient({ sites }: Props) {
       { key: 'slug', header: t.sites.slug, sortable: true },
       { key: 'locationCity', header: t.sites.city, sortable: true },
       {
+        key: '_projectCount',
+        header: t.sites.projectsColumn,
+        render: (row: SiteRow) => {
+          const count = projectsBySite[row.id]?.length ?? 0;
+          return (
+            <span style={{ color: count > 0 ? NAVY : TEXT_MUTED, fontSize: '0.8125rem' }}>
+              {count}
+            </span>
+          );
+        },
+      },
+      {
         key: 'showAsProject',
         header: t.sites.showAsProject,
         render: (row: SiteRow) => (
           <button
             type="button"
-            onClick={() => startTransition(async () => {
-              const result = await toggleSiteShowAsProject(row.id, row.showAsProject);
-              if (result.error) toast(result.error, 'error');
-            })}
+            onClick={(e) => {
+              e.stopPropagation();
+              startTransition(async () => {
+                const result = await toggleSiteShowAsProject(row.id, row.showAsProject);
+                if (result.error) toast(result.error, 'error');
+              });
+            }}
             aria-label={`Toggle show as project for ${getT(row)}`}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.showAsProject ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
           >
@@ -61,10 +87,13 @@ export default function SitesListClient({ sites }: Props) {
         render: (row: SiteRow) => (
           <button
             type="button"
-            onClick={() => startTransition(async () => {
-              const result = await toggleSiteFeatured(row.id, row.featured);
-              if (result.error) toast(result.error, 'error');
-            })}
+            onClick={(e) => {
+              e.stopPropagation();
+              startTransition(async () => {
+                const result = await toggleSiteFeatured(row.id, row.featured);
+                if (result.error) toast(result.error, 'error');
+              });
+            }}
             aria-label={`Toggle featured for ${getT(row)}`}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.featured ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
           >
@@ -78,10 +107,13 @@ export default function SitesListClient({ sites }: Props) {
         render: (row: SiteRow) => (
           <button
             type="button"
-            onClick={() => startTransition(async () => {
-              const result = await toggleSitePublished(row.id, row.isPublished);
-              if (result.error) toast(result.error, 'error');
-            })}
+            onClick={(e) => {
+              e.stopPropagation();
+              startTransition(async () => {
+                const result = await toggleSitePublished(row.id, row.isPublished);
+                if (result.error) toast(result.error, 'error');
+              });
+            }}
             aria-label={`Toggle published for ${getT(row)}`}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
           >
@@ -90,7 +122,7 @@ export default function SitesListClient({ sites }: Props) {
         ),
       },
     ];
-  }, [locale, toast, t]);
+  }, [locale, toast, t, projectsBySite]);
 
   const handleDelete = () => {
     if (!deleteId) return;
@@ -101,6 +133,54 @@ export default function SitesListClient({ sites }: Props) {
       setDeleteId(null);
     });
   };
+
+  const renderExpandedRow = useCallback((row: SiteRow) => {
+    const siteProjects = projectsBySite[row.id] ?? [];
+    if (siteProjects.length === 0) {
+      return (
+        <div style={{ padding: '1rem 1.5rem', color: TEXT_MUTED, fontSize: '0.8125rem' }}>
+          {t.sites.noProjects}
+        </div>
+      );
+    }
+
+    return (
+      <div style={{ padding: '0.5rem 1.5rem 0.75rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
+          <tbody>
+            {siteProjects.map((project) => {
+              const title = locale === 'zh' ? project.titleZh : project.titleEn;
+              const serviceLabel = project.serviceType in t.projects.serviceTypes
+                ? t.projects.serviceTypes[project.serviceType as keyof typeof t.projects.serviceTypes]
+                : project.serviceType;
+              return (
+                <tr key={project.id} style={{ borderBottom: '1px solid rgba(27,54,93,0.06)' }}>
+                  <td style={{ padding: '0.5rem 0.5rem 0.5rem 0', color: NAVY, fontWeight: 500 }}>
+                    {title}
+                  </td>
+                  <td style={{ padding: '0.5rem', color: TEXT_MID }}>
+                    {serviceLabel}
+                  </td>
+                  <td style={{ padding: '0.5rem', color: project.isPublished ? SUCCESS : ERROR }}>
+                    {project.isPublished ? t.common.yes : t.common.no}
+                  </td>
+                  <td style={{ padding: '0.5rem', textAlign: 'right' }}>
+                    <Link
+                      href={`/admin/sites/${row.id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{ color: GOLD, fontSize: '0.75rem', textDecoration: 'none' }}
+                    >
+                      {t.common.edit}
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }, [projectsBySite, locale, t]);
 
   return (
     <>
@@ -123,6 +203,7 @@ export default function SitesListClient({ sites }: Props) {
             </button>
           </div>
         )}
+        renderExpandedRow={renderExpandedRow}
       />
       <ConfirmDialog
         open={!!deleteId}

@@ -1,6 +1,6 @@
 import type { Project, ServiceType, Locale, LocalizedProject, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
-import { serviceTypeToCategory } from './services';
+import { serviceTypeToCategory, WHOLE_HOUSE_CATEGORY } from './services';
 
 export const projects: Project[] = [
   {
@@ -330,8 +330,8 @@ export const projects: Project[] = [
       en: 'Full-scale home transformation including kitchen, bathrooms, and living spaces.',
       zh: '全方位家居改造，包括厨房、浴室和起居空间。',
     },
-    service_type: 'whole-house',
-    category: { en: 'Whole House', zh: '全屋' },
+    service_type: 'kitchen',
+    category: { en: 'Kitchen', zh: '厨房' },
     location_city: 'Langley',
     budget_range: '$80,000 - $120,000',
     duration: { en: '10 weeks', zh: '10周' },
@@ -366,8 +366,8 @@ export const projects: Project[] = [
       en: 'Dramatic whole house renovation showcasing the complete transformation.',
       zh: '震撼的全屋装修，展示完整的蜕变过程。',
     },
-    service_type: 'whole-house',
-    category: { en: 'Whole House', zh: '全屋' },
+    service_type: 'kitchen',
+    category: { en: 'Kitchen', zh: '厨房' },
     location_city: 'Surrey',
     budget_range: '$60,000 - $90,000',
     duration: { en: '8 weeks', zh: '8周' },
@@ -507,8 +507,8 @@ export const projects: Project[] = [
       en: 'Combined kitchen remodel and bathroom renovation for a complete home upgrade.',
       zh: '厨房和浴室联合改造，实现全屋升级。',
     },
-    service_type: 'whole-house',
-    category: { en: 'Whole House', zh: '全屋' },
+    service_type: 'kitchen',
+    category: { en: 'Kitchen', zh: '厨房' },
     location_city: 'Richmond',
     budget_range: '$35,000 - $55,000',
     duration: { en: '6 weeks', zh: '6周' },
@@ -649,6 +649,7 @@ export function getCategoriesLocalized(): { en: string; zh: string }[] {
   return [
     { en: 'All', zh: '全部' },
     ...Object.values(serviceTypeToCategory),
+    WHOLE_HOUSE_CATEGORY, // For Sites displayed as projects
   ];
 }
 

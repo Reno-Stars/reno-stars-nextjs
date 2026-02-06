@@ -259,6 +259,10 @@
   "category": {
     "wholeHouse": "Whole House"
   },
+  "wholeHouse": {
+    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
+    "siteBadge": "Site"
+  },
   "services": {
     "kitchen": {
       "title": "Kitchen Renovation",

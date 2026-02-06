@@ -259,6 +259,10 @@
   "category": {
     "wholeHouse": "全屋"
   },
+  "wholeHouse": {
+    "areasCount": "{count} 个区域",
+    "siteBadge": "工地"
+  },
   "services": {
     "kitchen": {
       "title": "厨房装修",

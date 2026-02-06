@@ -387,6 +387,7 @@ const en = {
     clickToEdit: 'Click to edit site',
     addProject: 'Add Project',
     projectCount: '{count} projects',
+    projectsColumn: 'Projects',
     noProjects: 'No projects yet',
     deleteProject: 'Delete Project',
     deleteProjectConfirm: 'Delete this project?',
