@@ -245,6 +245,7 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   images: many(projectImages),
   scopes: many(projectScopes),
+  externalProducts: many(projectExternalProducts),
   site: one(projectSites, {
     fields: [projects.siteId],
     references: [projectSites.id],
@@ -302,6 +303,35 @@ export const projectScopes = pgTable(
 export const projectScopesRelations = relations(projectScopes, ({ one }) => ({
   project: one(projects, {
     fields: [projectScopes.projectId],
+    references: [projects.id],
+  }),
+}));
+
+// ============================================================================
+// PROJECT EXTERNAL PRODUCTS
+// ============================================================================
+
+/** External product links (tiles, countertops, fixtures, etc.) for projects */
+export const projectExternalProducts = pgTable(
+  'project_external_products',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    projectId: uuid('project_id')
+      .references(() => projects.id, { onDelete: 'cascade' })
+      .notNull(),
+    url: varchar('url', { length: 500 }).notNull(),
+    imageUrl: varchar('image_url', { length: 500 }),
+    labelEn: varchar('label_en', { length: 200 }).notNull(),
+    labelZh: varchar('label_zh', { length: 200 }).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [index('project_external_products_project_id_idx').on(table.projectId)]
+);
+
+export const projectExternalProductsRelations = relations(projectExternalProducts, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectExternalProducts.projectId],
     references: [projects.id],
   }),
 }));
@@ -622,3 +652,6 @@ export type NewDbSocialLink = typeof socialLinks.$inferInsert;
 
 export type DbFaq = typeof faqs.$inferSelect;
 export type NewDbFaq = typeof faqs.$inferInsert;
+
+export type DbProjectExternalProduct = typeof projectExternalProducts.$inferSelect;
+export type NewDbProjectExternalProduct = typeof projectExternalProducts.$inferInsert;

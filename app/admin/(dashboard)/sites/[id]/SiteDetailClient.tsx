@@ -30,6 +30,14 @@ interface ProjectScope {
   displayOrder: number;
 }
 
+interface ProjectExternalProduct {
+  url: string;
+  imageUrl: string | null;
+  labelEn: string;
+  labelZh: string;
+  displayOrder: number;
+}
+
 interface ProjectWithDetails {
   id: string;
   slug: string;
@@ -59,7 +67,7 @@ interface ProjectWithDetails {
   displayOrderInSite: number;
   images: ProjectImage[];
   scopes: ProjectScope[];
-}
+  externalProducts: ProjectExternalProduct[];}
 
 interface SiteData {
   id: string;
@@ -180,6 +188,12 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
       scopes: project.scopes.map((s) => ({
         en: s.scopeEn,
         zh: s.scopeZh,
+      })),
+      externalProducts: project.externalProducts.map((ep) => ({
+        url: ep.url,
+        imageUrl: ep.imageUrl ?? '',
+        labelEn: ep.labelEn,
+        labelZh: ep.labelZh,
       })),
     };
   };

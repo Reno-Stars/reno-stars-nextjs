@@ -130,6 +130,8 @@ export interface Project {
   featured?: boolean;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
+  /** External product links (tiles, countertops, fixtures, etc.) */
+  external_products?: { url: string; image_url?: string; label: Localized<string> }[];
   /** Site ID - project belongs to a site (required for DB projects) */
   site_id?: string;
   /** Display order within a site */
@@ -304,6 +306,7 @@ export interface LocalizedProject {
   solution?: string;
   featured?: boolean;
   badge?: string;
+  external_products?: { url: string; image_url?: string; label: string }[];
   site_id?: string;
   display_order_in_site?: number;
 }

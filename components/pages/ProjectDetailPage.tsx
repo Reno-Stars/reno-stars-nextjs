@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { ChevronRight, ChevronLeft, MapPin, Calendar, DollarSign, Layers, X } from 'lucide-react';
+import { ChevronRight, ChevronLeft, MapPin, Calendar, DollarSign, Layers, X, ExternalLink } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject } from '@/lib/types';
@@ -253,6 +253,38 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                       >
                         {scope}
                       </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* External Products */}
+              {localizedProject.external_products && localizedProject.external_products.length > 0 && (
+                <div className="mb-6">
+                  <h2 className="text-base font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
+                    {t('projects.externalProducts')}
+                  </h2>
+                  <div className="flex flex-col gap-2">
+                    {localizedProject.external_products.map((ep) => (
+                      <a
+                        key={ep.url}
+                        href={ep.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 rounded-xl p-3 transition-all duration-200 hover:brightness-95"
+                        style={{ boxShadow: neu(3), backgroundColor: CARD }}
+                      >
+                        {ep.image_url && (
+                          <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0" style={{ backgroundColor: SURFACE_ALT }}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={ep.image_url} alt={ep.label} className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                        <span className="flex-1 text-sm font-medium" style={{ color: TEXT }}>
+                          {ep.label}
+                        </span>
+                        <ExternalLink className="w-4 h-4 flex-shrink-0" style={{ color: TEXT_MUTED }} />
+                      </a>
                     ))}
                   </div>
                 </div>

@@ -17,6 +17,7 @@
     "areas": "服务区域",
     "design": "设计",
     "benefits": "优势",
+    "process": "服务流程",
     "openMenu": "打开菜单",
     "closeMenu": "关闭菜单",
     "switchLanguage": "Switch to English",
@@ -228,7 +229,8 @@
     "previousImage": "上一张图片",
     "nextImage": "下一张图片",
     "beforeLabel": "施工前",
-    "afterLabel": "施工后"
+    "afterLabel": "施工后",
+    "externalProducts": "使用产品"
   },
   "modal": {
     "location": "地点",
@@ -470,6 +472,10 @@
     "thankYou": {
       "title": "感谢您 | Reno Stars",
       "description": "您的消息已收到，我们会尽快回复您。"
+    },
+    "process": {
+      "title": "装修服务流程 — 5 步走 | Reno Stars 温哥华",
+      "description": "了解我们精简的5步装修流程。从初步咨询到项目交付，让您的装修之旅简单无忧。"
     }
   },
   "common": {
@@ -496,5 +502,118 @@
     "noImagesForArea": "该区域暂无图片",
     "areasCount": "{count} 个区域",
     "siteBadge": "整屋项目"
+  },
+  "process": {
+    "hero": {
+      "title": "装修服务流程 — 5 步走",
+      "subtitle": "Renovation Service Workflow — 5 Steps",
+      "projectsCount": "500+",
+      "googleReviews": "Google 评价"
+    },
+    "downloadPoster": "下载海报",
+    "step1": {
+      "title": "前期沟通",
+      "subtitle": "Discovery",
+      "points": [
+        "客户初步联系（电话 / 邮件 / 微信 / 短信）",
+        "确认翻新区域（厨房 / 客厅 / 洗手间 / 全屋）",
+        "风格偏好确认",
+        "材料预算与定位",
+        "了解装修需求与期望",
+        "获取平面图与现场照片（如有）",
+        "功能需求沟通"
+      ],
+      "tags": [
+        { "icon": "phone", "label": "电话" },
+        { "icon": "email", "label": "邮件" },
+        { "icon": "wechat", "label": "微信" },
+        { "icon": "sms", "label": "短信" }
+      ],
+      "faqAnswer": "我们首先进行初步咨询，您可以通过电话、邮件、微信或短信联系我们。我们将讨论您的装修需求、风格偏好、预算，并收集现有的平面图或照片。"
+    },
+    "step2": {
+      "title": "现场测量与报价",
+      "subtitle": "On-Site Measure & Quote",
+      "points": [
+        "专业现场测量，获取精准尺寸数据",
+        "确保设计方案贴合真实空间",
+        "明确施工范围、内容与付款节点",
+        "深入沟通使用习惯与功能需求",
+        "基于材料选择与施工工艺，提供清晰报价方案"
+      ],
+      "tags": [
+        { "icon": "ruler", "label": "精准测量" },
+        { "icon": "quote", "label": "透明报价" },
+        { "icon": "site", "label": "实地考察" }
+      ],
+      "faqAnswer": "我们的团队进行专业的现场测量以确保精确性。我们会详细讨论您的功能需求，并根据您的材料选择和项目范围提供透明、详细的报价。"
+    },
+    "step3": {
+      "title": "确认与签约",
+      "subtitle": "Confirm & Contract",
+      "points": [
+        "邀请客户到公司 / Showroom 面谈确认方案",
+        "解答疑问并优化方案细节",
+        "确认开工日期",
+        "协助材料采购、下单、送货与安装时间协调",
+        "确认设计方案与材料样品",
+        "签订施工合同并收取定金",
+        "建立项目群（项目经理 / 工程管理 / 协调员）"
+      ],
+      "tags": [
+        { "icon": "contract", "label": "签约" },
+        { "icon": "meeting", "label": "面谈" },
+        { "icon": "team", "label": "项目团队" }
+      ],
+      "faqAnswer": "在最终确定设计后，我们邀请您到展厅查看材料样品并签订合同。我们将建立专门的项目团队，协调材料和安装的所有时间安排。"
+    },
+    "step4": {
+      "title": "施工与管理",
+      "subtitle": "Execution & Management",
+      "points": [
+        "项目团队统一管理",
+        "施工进度统一协调",
+        "材料配送与现场协调",
+        "客户无需直接对接施工人员",
+        "施工质量统一管控",
+        "问题快速响应与处理"
+      ],
+      "tags": [
+        { "icon": "management", "label": "统一管理" },
+        { "icon": "progress", "label": "进度管控" },
+        { "icon": "response", "label": "快速响应" }
+      ],
+      "faqAnswer": "我们的项目团队负责施工管理的各个方面。您无需与单独的工人协调——我们管理质量控制、进度跟踪，并处理出现的任何问题。"
+    },
+    "step5": {
+      "title": "验收与售后",
+      "subtitle": "Handover & Aftercare",
+      "points": [
+        "最终验收，确保整体效果符合预期",
+        "项目交付确认",
+        "提供质保服务",
+        "后续升级与维护支持"
+      ],
+      "tags": [
+        { "icon": "inspection", "label": "严格验收" },
+        { "icon": "warranty", "label": "质保服务" },
+        { "icon": "support", "label": "持续支持" }
+      ],
+      "faqAnswer": "完工后，我们会与您一起进行全面的最终验收，确保一切符合您的期望。我们提供质保服务和持续的维护支持，让您安心无忧。"
+    },
+    "tagline": "让装修真正做到",
+    "whyMatters": {
+      "title": "为什么这很重要",
+      "description": "Reno Stars 的标准化装修流程让客户在每个阶段都清楚了解进度。我们清晰的5步流程确保从首次联系到最终交付的整个装修过程顺畅无忧。"
+    },
+    "footer": {
+      "tagline": "简单 · 省心 · 安全 · 有保障",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "年行业经验",
+      "googleRating": "Google",
+      "warrantyService": "质保服务",
+      "scanWeChat": "扫码添加微信咨询",
+      "website": "reno-stars.com"
+    }
   }
 }

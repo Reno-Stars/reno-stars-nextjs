@@ -17,6 +17,7 @@
     "areas": "Areas",
     "design": "Design",
     "benefits": "Benefits",
+    "process": "Process",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "Switch to Chinese",
@@ -228,7 +229,8 @@
     "previousImage": "Previous image",
     "nextImage": "Next image",
     "beforeLabel": "Before",
-    "afterLabel": "After"
+    "afterLabel": "After",
+    "externalProducts": "Products Used"
   },
   "modal": {
     "location": "Location",
@@ -470,6 +472,10 @@
     "thankYou": {
       "title": "Thank You | Reno Stars",
       "description": "Your message has been received. We will get back to you shortly."
+    },
+    "process": {
+      "title": "Renovation Process — 5 Steps | Reno Stars Vancouver",
+      "description": "Learn about our streamlined 5-step renovation process. From initial consultation to project handover, we make your renovation journey simple and worry-free."
     }
   },
   "common": {
@@ -496,5 +502,118 @@
     "noImagesForArea": "No images available for this area",
     "areasCount": "{count, plural, one {# Area} other {# Areas}}",
     "siteBadge": "Whole House"
+  },
+  "process": {
+    "hero": {
+      "title": "Renovation Service Workflow — 5 Steps",
+      "subtitle": "Renovation Service Workflow — 5 Steps",
+      "projectsCount": "500+",
+      "googleReviews": "Google Reviews"
+    },
+    "downloadPoster": "Download Poster",
+    "step1": {
+      "title": "Initial Consultation",
+      "subtitle": "Discovery",
+      "points": [
+        "Initial contact via phone, email, WeChat, or SMS",
+        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
+        "Style preference confirmation",
+        "Material budget and positioning",
+        "Understand renovation needs and expectations",
+        "Obtain floor plans and site photos (if available)",
+        "Functional requirements communication"
+      ],
+      "tags": [
+        { "icon": "phone", "label": "Phone" },
+        { "icon": "email", "label": "Email" },
+        { "icon": "wechat", "label": "WeChat" },
+        { "icon": "sms", "label": "SMS" }
+      ],
+      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+    },
+    "step2": {
+      "title": "On-Site Measurement & Quote",
+      "subtitle": "On-Site Measure & Quote",
+      "points": [
+        "Professional on-site measurement for precise dimensions",
+        "Ensure design plans match actual space",
+        "Define scope of work, content, and payment milestones",
+        "In-depth communication on usage habits and functional needs",
+        "Provide clear quotation based on material selection and craftsmanship"
+      ],
+      "tags": [
+        { "icon": "ruler", "label": "Precise Measurement" },
+        { "icon": "quote", "label": "Transparent Quote" },
+        { "icon": "site", "label": "Site Visit" }
+      ],
+      "faqAnswer": "Our team conducts professional on-site measurements to ensure accuracy. We discuss your functional needs in detail and provide a transparent, itemized quotation based on your material selections and project scope."
+    },
+    "step3": {
+      "title": "Confirmation & Contract",
+      "subtitle": "Confirm & Contract",
+      "points": [
+        "Invite clients to company/showroom for in-person consultation",
+        "Address questions and optimize design details",
+        "Confirm project start date",
+        "Coordinate material procurement, ordering, delivery, and installation schedule",
+        "Confirm design proposal and material samples",
+        "Sign construction contract and collect deposit",
+        "Establish project team: Project Manager, Engineer, Coordinator"
+      ],
+      "tags": [
+        { "icon": "contract", "label": "Contract" },
+        { "icon": "meeting", "label": "Consultation" },
+        { "icon": "team", "label": "Project Team" }
+      ],
+      "faqAnswer": "After finalizing your design, we invite you to our showroom to review material samples and sign the contract. We establish a dedicated project team and coordinate all scheduling for materials and installation."
+    },
+    "step4": {
+      "title": "Execution & Management",
+      "subtitle": "Execution & Management",
+      "points": [
+        "Unified project team management",
+        "Coordinated construction progress",
+        "Material delivery and on-site coordination",
+        "No direct interaction with workers needed",
+        "Unified construction quality control",
+        "Quick response to issues and resolution"
+      ],
+      "tags": [
+        { "icon": "management", "label": "Unified Management" },
+        { "icon": "progress", "label": "Progress Tracking" },
+        { "icon": "response", "label": "Quick Response" }
+      ],
+      "faqAnswer": "Our project team handles all aspects of construction management. You won't need to coordinate with individual workers—we manage quality control, progress tracking, and handle any issues that arise."
+    },
+    "step5": {
+      "title": "Handover & Aftercare",
+      "subtitle": "Handover & Aftercare",
+      "points": [
+        "Final inspection to ensure results meet expectations",
+        "Project handover confirmation",
+        "Warranty service provided",
+        "Ongoing upgrade and maintenance support"
+      ],
+      "tags": [
+        { "icon": "inspection", "label": "Strict Inspection" },
+        { "icon": "warranty", "label": "Warranty Service" },
+        { "icon": "support", "label": "Ongoing Support" }
+      ],
+      "faqAnswer": "Upon completion, we conduct a thorough final inspection with you to ensure everything meets your expectations. We provide warranty service and ongoing maintenance support for your peace of mind."
+    },
+    "tagline": "Making renovation truly achievable",
+    "whyMatters": {
+      "title": "Why This Matters",
+      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+    },
+    "footer": {
+      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "Years Industry Experience",
+      "googleRating": "Google",
+      "warrantyService": "Warranty Service",
+      "scanWeChat": "Scan to add WeChat for consultation",
+      "website": "reno-stars.com"
+    }
   }
 }

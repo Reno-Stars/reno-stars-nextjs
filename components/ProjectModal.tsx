@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight } from 'lucide-react';
+import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
@@ -250,6 +250,36 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       >
                         {s}
                       </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {project.external_products && project.external_products.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2" style={{ color: TEXT_MUTED }}>
+                    <ExternalLink className="w-4 h-4" style={{ color: GOLD }} />
+                    {t('projects.externalProducts')}
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    {project.external_products.map((ep) => (
+                      <a
+                        key={ep.url}
+                        href={ep.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
+                        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                      >
+                        {ep.image_url && (
+                          <div className="w-6 h-6 rounded overflow-hidden flex-shrink-0">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={ep.image_url} alt={ep.label} className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                        <span className="flex-1 truncate">{ep.label}</span>
+                        <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                      </a>
                     ))}
                   </div>
                 </div>

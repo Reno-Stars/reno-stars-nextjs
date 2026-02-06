@@ -6,6 +6,7 @@ import {
   projects,
   projectImages,
   projectScopes,
+  projectExternalProducts,
   services as servicesTable,
   projectSites as sitesTable,
 } from '@/lib/db/schema';
@@ -17,6 +18,7 @@ import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeK
 
 const MAX_IMAGES = 50;
 const MAX_SCOPES = 50;
+const MAX_EXTERNAL_PRODUCTS = 20;
 
 // Format budget range from min/max
 function formatBudgetRange(min: string, max: string): string | null {
@@ -66,6 +68,21 @@ function parseScopes(formData: FormData) {
     i++;
   }
   return scopes;
+}
+
+function parseExternalProducts(formData: FormData) {
+  const products: { url: string; imageUrl: string | null; labelEn: string; labelZh: string; displayOrder: number }[] = [];
+  let i = 0;
+  while (formData.has(`externalProducts[${i}].url`) && i < MAX_EXTERNAL_PRODUCTS) {
+    const url = getString(formData, `externalProducts[${i}].url`).trim();
+    const labelEn = getString(formData, `externalProducts[${i}].labelEn`).trim();
+    if (!url || !labelEn) { i++; continue; }
+    const labelZh = getString(formData, `externalProducts[${i}].labelZh`).trim() || labelEn;
+    const imageUrl = getString(formData, `externalProducts[${i}].imageUrl`).trim() || null;
+    products.push({ url, imageUrl, labelEn, labelZh, displayOrder: i });
+    i++;
+  }
+  return products;
 }
 
 function getProjectData(formData: FormData) {
@@ -194,6 +211,21 @@ export async function createProject(
       );
     }
 
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+    }
+    if (epData.length > 0) {
+      await db.insert(projectExternalProducts).values(
+        epData.map((ep) => ({ ...ep, projectId: inserted.id }))
+      );
+    }
+
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
     return { success: true };
@@ -289,6 +321,23 @@ export async function updateProject(
     if (scopeData.length > 0) {
       await db.insert(projectScopes).values(
         scopeData.map((s) => ({ ...s, projectId: id }))
+      );
+    }
+
+    // Delete and re-insert external products
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+    }
+    await db.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
+    if (epData.length > 0) {
+      await db.insert(projectExternalProducts).values(
+        epData.map((ep) => ({ ...ep, projectId: id }))
       );
     }
 

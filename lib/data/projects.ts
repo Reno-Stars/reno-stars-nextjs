@@ -577,6 +577,11 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     solution: project.solution?.[locale],
     featured: project.featured,
     badge: project.badge?.[locale],
+    external_products: project.external_products?.map((ep) => ({
+      url: ep.url,
+      image_url: ep.image_url,
+      label: ep.label[locale],
+    })),
     site_id: project.site_id,
     display_order_in_site: project.display_order_in_site,
   };

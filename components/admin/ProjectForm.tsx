@@ -30,6 +30,14 @@ interface ScopeEntry {
   zh: string;
 }
 
+interface ExternalProductEntry {
+  id: string;
+  url: string;
+  imageUrl: string;
+  labelEn: string;
+  labelZh: string;
+}
+
 interface SiteOption {
   id: string;
   titleEn: string;
@@ -73,6 +81,7 @@ interface ProjectFormProps {
     siteId: string | null;
     images: Omit<ImageEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
+    externalProducts?: Omit<ExternalProductEntry, 'id'>[];
   };
   /** Available sites to link this project to (required when not using fixedSiteId) */
   sites?: SiteOption[];
@@ -108,6 +117,9 @@ export default function ProjectForm({
   );
   const [scopes, setScopes] = useState<ScopeEntry[]>(
     initialData?.scopes.map((s) => ({ ...s, id: crypto.randomUUID() })) ?? [{ id: crypto.randomUUID(), en: '', zh: '' }]
+  );
+  const [externalProducts, setExternalProducts] = useState<ExternalProductEntry[]>(
+    initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
   );
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -473,6 +485,46 @@ export default function ProjectForm({
             {editing && (
               <button type="button" onClick={() => setScopes([...scopes, { id: crypto.randomUUID(), en: '', zh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
                 {t.projects.addScope}
+              </button>
+            )}
+          </div>
+
+          {/* External Products */}
+          <div style={{ marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.projects.externalProducts}
+              </span>
+              <Tooltip content={t.projects.tooltips.externalProducts} />
+            </div>
+            {externalProducts.map((ep, idx) => (
+              <div key={ep.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
+                <input name={`externalProducts[${idx}].url`} value={ep.url} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <input name={`externalProducts[${idx}].imageUrl`} value={ep.imageUrl} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], imageUrl: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productImageUrl} aria-label={`Product ${idx + 1} image URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="English">🇺🇸</span> {t.projects.productLabelEn}
+                    </label>
+                    <input name={`externalProducts[${idx}].labelEn`} value={ep.labelEn} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], labelEn: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelEn} aria-label={`Product ${idx + 1} label (English)`} style={fieldStyle} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.productLabelZh}
+                    </label>
+                    <input name={`externalProducts[${idx}].labelZh`} value={ep.labelZh} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], labelZh: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelZh} aria-label={`Product ${idx + 1} label (Chinese)`} style={fieldStyle} />
+                  </div>
+                </div>
+                {editing && (
+                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((_, i) => i !== idx))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                    {t.common.remove}
+                  </button>
+                )}
+              </div>
+            ))}
+            {editing && (
+              <button type="button" onClick={() => setExternalProducts([...externalProducts, { id: crypto.randomUUID(), url: '', imageUrl: '', labelEn: '', labelZh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
+                {t.projects.addExternalProduct}
               </button>
             )}
           </div>

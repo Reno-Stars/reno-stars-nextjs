@@ -22,5 +22,26 @@ export const ERROR_BG = 'rgba(239, 68, 68, 0.1)';
 export const INFO = '#3b82f6';
 export const INFO_BG = 'rgba(59, 130, 246, 0.1)';
 
+// Process page step colors
+export const STEP_TEAL = '#00A99D';
+export const STEP_TEAL_LIGHT = '#E6F7F6';
+export const STEP_ORANGE = '#F7931E';
+export const STEP_ORANGE_LIGHT = '#FEF3E6';
+export const STEP_GREEN = '#8DC63F';
+export const STEP_GREEN_LIGHT = '#F3FAE9';
+export const STEP_RED = '#ED1C24';
+export const STEP_RED_LIGHT = '#FDE8E9';
+
+// Illustration palette
+export const ILLUS_SKIN = '#FFD5C8';
+export const ILLUS_SKIN_DARK = '#D4A574';
+export const ILLUS_SKY = '#4FC3F7';
+export const ILLUS_WOOD = '#8B4513';
+export const ILLUS_YELLOW = '#FFD700';
+export const ILLUS_GRAY_DARK = '#333';
+export const ILLUS_GRAY_MID = '#666';
+export const ILLUS_GRAY_LIGHT = '#888';
+export const ILLUS_GRAY_PALE = '#ccc';
+
 export const neu = (s = 6): string => `${s}px ${s}px ${s*2}px ${SH_DARK}, -${s}px -${s}px ${s*2}px ${SH_LIGHT}`;
 export const neuIn = (s = 6): string => `inset ${s}px ${s}px ${s*2}px ${SH_DARK}, inset -${s}px -${s}px ${s*2}px ${SH_LIGHT}`;
