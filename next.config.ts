@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
         hostname: 'reno-stars.com',
         pathname: '/wp-content/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '/a/**',
+      },
       ...storagePatterns,
     ],
   },

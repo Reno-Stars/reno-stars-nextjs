@@ -27,7 +27,7 @@ Components in `components/structured-data/`:
 | `ArticleSchema` | Article | Blog post pages (includes `image` prop for featured image) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
-| `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (testimonials with ratings) |
+| `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (Google Reviews with aggregate rating) |
 
 ## robots.txt
 

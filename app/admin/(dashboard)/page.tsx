@@ -2,7 +2,6 @@ import { db } from '@/lib/db';
 import {
   projects,
   services,
-  testimonials,
   contactSubmissions,
   blogPosts,
   faqs,
@@ -18,7 +17,6 @@ async function getStats() {
   const [
     projectCount,
     serviceCount,
-    testimonialCount,
     contactCount,
     newContactCount,
     blogCount,
@@ -30,7 +28,6 @@ async function getStats() {
   ] = await Promise.all([
     db.select({ value: count() }).from(projects),
     db.select({ value: count() }).from(services),
-    db.select({ value: count() }).from(testimonials),
     db.select({ value: count() }).from(contactSubmissions),
     db.select({ value: count() }).from(contactSubmissions).where(eq(contactSubmissions.status, 'new')),
     db.select({ value: count() }).from(blogPosts),
@@ -44,7 +41,6 @@ async function getStats() {
   return {
     projects: projectCount[0].value,
     services: serviceCount[0].value,
-    testimonials: testimonialCount[0].value,
     contacts: contactCount[0].value,
     newContacts: newContactCount[0].value,
     blogPosts: blogCount[0].value,

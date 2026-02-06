@@ -1,39 +1,34 @@
-import type { Company, Testimonial } from '@/lib/types';
-import type { Locale } from '@/i18n/config';
+import type { Company, GooglePlaceRating } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
 
 interface ReviewSchemaProps {
   company: Company;
-  testimonials: Testimonial[];
-  locale: Locale;
+  googleReviews: GooglePlaceRating;
 }
 
 export default function ReviewSchema({
   company,
-  testimonials,
-  locale,
-}: ReviewSchemaProps): React.ReactElement {
+  googleReviews,
+}: ReviewSchemaProps): React.ReactElement | null {
+  if (googleReviews.reviews.length === 0) return null;
+
   const baseUrl = getBaseUrl();
 
-  const reviews = testimonials.map((t) => ({
+  const reviews = googleReviews.reviews.map((r) => ({
     '@type': 'Review',
     author: {
       '@type': 'Person',
-      name: t.name,
+      name: r.authorName,
+      ...(r.authorUri && { url: r.authorUri }),
     },
     reviewRating: {
       '@type': 'Rating',
-      ratingValue: t.rating,
+      ratingValue: r.rating,
       bestRating: 5,
       worstRating: 1,
     },
-    reviewBody: t.text[locale],
-    ...(t.location && {
-      locationCreated: {
-        '@type': 'Place',
-        name: t.location,
-      },
-    }),
+    reviewBody: r.text,
+    ...(r.publishTime && { datePublished: r.publishTime }),
   }));
 
   const schema = {
@@ -46,18 +41,17 @@ export default function ReviewSchema({
     review: reviews,
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: company.rating.split('/')[0],
-      bestRating: company.rating.split('/')[1] || '10',
+      ratingValue: googleReviews.rating,
+      bestRating: 5,
       worstRating: 1,
-      ratingCount: company.reviewCount,
-      reviewCount: testimonials.length,
+      ratingCount: googleReviews.userRatingCount,
     },
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 }

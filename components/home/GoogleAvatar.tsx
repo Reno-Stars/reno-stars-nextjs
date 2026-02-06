@@ -9,7 +9,7 @@ export default function GoogleAvatar({ src, name }: { src: string; name: string 
   if (!src || failed) {
     return (
       <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0" style={{ backgroundColor: NAVY }}>
-        {name.charAt(0)}
+        {name.charAt(0) || '?'}
       </div>
     );
   }

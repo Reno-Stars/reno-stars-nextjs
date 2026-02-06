@@ -34,7 +34,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `company_info` | Singleton company data | `id` |
 | `showroom_info` | Singleton showroom data | `id` |
 | `about_sections` | Singleton about-page content | `id` |
-| `testimonials` | Customer reviews | `id` |
+| `testimonials` | ~~Customer reviews~~ (deprecated — replaced by Google Reviews API) | `id` |
 | `gallery_items` | Gallery images | `id`, `image_url` (unique index) |
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
@@ -79,7 +79,6 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 - Showroom info, trust badges
 - 5 social links (Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp)
 - About sections (bilingual, with `{yearsExperience}` placeholder in `ourJourney`)
-- 3 featured testimonials
 - 6 gallery items (uses `onConflictDoNothing` on `imageUrl` unique index)
 - 5 FAQs with bilingual content (uses `{yearsExperience}` placeholder in answers)
 
@@ -103,7 +102,7 @@ Crawls the old WordPress site for real blog content:
 ```typescript
 import {
   getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb,
-  getTestimonialsFromDb, getAboutSectionsFromDb,
+  getAboutSectionsFromDb,
   getProjectsFromDb, getProjectBySlugFromDb, getProjectSlugsFromDb,
   getServiceAreasFromDb, getBlogPostsFromDb, getBlogPostBySlugFromDb,
   getBlogPostSlugsFromDb, getGalleryItemsFromDb, getTrustBadgesFromDb,
@@ -114,7 +113,6 @@ import {
 const company = await getCompanyFromDb();              // Company
 const links = await getSocialLinksFromDb();             // SocialLink[]
 const services = await getServicesFromDb();             // Service[]
-const testimonials = await getTestimonialsFromDb();     // Testimonial[]
 const about = await getAboutSectionsFromDb();           // AboutSections
 const projects = await getProjectsFromDb();             // Project[]
 const project = await getProjectBySlugFromDb('slug');   // Project | null
@@ -129,6 +127,8 @@ const showroom = await getShowroomFromDb();             // Showroom
 const faqs = await getFaqsFromDb();                      // Faq[] (replaces {yearsExperience} placeholder)
 ```
 
+> **Note:** Homepage testimonials are no longer fetched from the database. They use `getGoogleReviews()` from `lib/google-reviews.ts` (Google Places API with 24h caching). The `testimonials` table is deprecated and will be dropped in a future migration.
+
 These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are capitalized in the query layer (`'whole-house'` → `'Whole House'`).
 
 ### Admin Queries
@@ -139,7 +139,6 @@ Uncached query functions for the admin dashboard (return raw DB rows with explic
 import {
   getAllProjectsAdmin,      // DbProject[] with images/scopes
   getAllServicesAdmin,      // DbService[]
-  getAllTestimonialsAdmin,  // DbTestimonial[]
   getAllBlogPostsAdmin,     // DbBlogPost[]
   getAllContactsAdmin,      // DbContactSubmission[]
   getAllSocialLinksAdmin,   // DbSocialLink[] — includes inactive

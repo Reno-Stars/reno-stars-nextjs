@@ -67,7 +67,7 @@ app/
     not-found.tsx         # Locale-aware 404 page
   admin/                  # Admin dashboard (auth-protected)
     (auth)/               # Login page
-    (dashboard)/          # CRUD pages (projects, blog, testimonials, etc.)
+    (dashboard)/          # CRUD pages (projects, blog, etc.)
     layout.tsx            # Admin shell with sidebar
   layout.tsx              # Root layout (<html>/<body>, locale detection, metadata)
   not-found.tsx           # Root 404 fallback (no <html>/<body>)
@@ -79,7 +79,7 @@ app/
 
 components/
   pages/                  # Page-level components (one per route)
-  home/                   # Homepage section components (12 files: Hero, ServiceAreas, Testimonials, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
+  home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
   admin/                  # Admin UI components (DataTable, ProjectForm, AdminLocaleProvider, TopBar, Sidebar, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, etc.
@@ -89,7 +89,7 @@ lib/
     schema.ts             # Drizzle schema (15+ tables)
     index.ts              # Lazy DB client (Neon or pg Pool)
     queries.ts            # Cached query functions (company, services, projects, areas, blog, gallery, badges, showroom) + admin queries
-    seed.ts               # Database seed script (services, areas, company, showroom, badges, social, about, testimonials, blog, gallery)
+    seed.ts               # Database seed script (services, areas, company, showroom, badges, social, about, blog, gallery)
   data/
     index.ts              # Static assets (images, video), type re-exports, localization helpers (blog post, area)
     projects.ts           # Project localization helpers, category slugs
@@ -99,6 +99,7 @@ lib/
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation (getString, isValidUrl, validateTextLengths, etc.)
     gallery-categories.ts # Shared gallery category constants
+  google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
   types.ts                # Core TypeScript types
   theme.ts                # Neumorphic design tokens + shadow helpers
@@ -127,8 +128,8 @@ tests/
 ## Key Architecture Decisions
 
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
-- **Hybrid data model:** Company info, services, social links, testimonials, about sections, **projects**, service areas, blog posts, gallery items, trust badges, and showroom info are fetched from the database via `lib/db/queries.ts`. Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
-- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getTestimonialsFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllTestimonialsAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`.
+- **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
+- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`.
 - **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
 - **Lazy DB proxy:** `db` export uses a Proxy that only connects on first query. Safe to import at build time.
@@ -144,6 +145,8 @@ tests/
 | `DATABASE_URL` | Yes | PostgreSQL connection string |
 | `NEXT_PUBLIC_BASE_URL` | Yes | Canonical site URL |
 | `NEXT_PUBLIC_STORAGE_PROVIDER` | No | Set to `minio` for local dev asset rewriting |
+| `GOOGLE_PLACES_API_KEY` | No | Google Places API key for homepage reviews |
+| `GOOGLE_PLACE_ID` | No | Google Place ID for the business location |
 
 ## Routing & Proxy
 
@@ -165,7 +168,7 @@ Key patterns:
 - `blog_posts` — articles
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
-- `testimonials`, `gallery_items`, `trust_badges`, `social_links`, `faqs`
+- `testimonials` (deprecated — replaced by Google Reviews API), `gallery_items`, `trust_badges`, `social_links`, `faqs`
 
 ## Social Links
 
@@ -178,9 +181,9 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 13 content types: projects, blog, testimonials, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
-- **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons. Preference persists in localStorage (`admin_locale` key). All list clients (projects, blog, FAQs, testimonials, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
-- **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Includes: LocalBusinessSchema (layout), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages), ReviewSchema (homepage testimonials).
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
+- **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons. Preference persists in localStorage (`admin_locale` key). All list clients (projects, blog, FAQs, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
+- **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Includes: LocalBusinessSchema (layout), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages), ReviewSchema (homepage, uses Google Reviews aggregate rating).
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
 - **Heading hierarchy**: H1 (page title) → H2 (sections) → H3 (list items). Use `sr-only` H2 where visually redundant but structurally needed.
 - **CTA text**: Use service-specific text (e.g., `cta.exploreService`) instead of generic "Learn More".

@@ -1,5 +1,5 @@
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, Testimonial } from '@/lib/types';
+import type { Company, Service, GooglePlaceRating } from '@/lib/types';
 import { SURFACE } from '@/lib/theme';
 
 // Server components - no client JS needed
@@ -29,7 +29,7 @@ interface HomePageProps {
   locale: Locale;
   company: Company;
   services: Service[];
-  testimonials: Testimonial[];
+  googleReviews: GooglePlaceRating;
   gallery: LocalizedGalleryItem[];
   trustBadges: string[];
   faqs: LocalizedFaq[];
@@ -73,7 +73,7 @@ export default function HomePage({
   locale,
   company,
   services,
-  testimonials,
+  googleReviews,
   gallery,
   trustBadges,
   faqs,
@@ -89,7 +89,7 @@ export default function HomePage({
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} translations={t.hero} />
       <ServiceAreasBar areas={areas} label={t.serviceAreas} />
-      <TestimonialsSection testimonials={testimonials} locale={locale} translations={t.testimonials} />
+      <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />
       <StatsSection stats={stats} srTitle={t.stats.srTitle} />

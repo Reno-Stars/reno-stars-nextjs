@@ -8,7 +8,6 @@ import { images as siteImages } from '@/lib/data';
 import {
   getCompanyFromDb,
   getServicesFromDb,
-  getTestimonialsFromDb,
   getAboutSectionsFromDb,
   getGalleryItemsFromDb,
   getTrustBadgesFromDb,
@@ -17,6 +16,7 @@ import {
   getShowroomFromDb,
   getServiceAreasFromDb,
 } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 // Revalidate homepage every hour (ISR) - serves cached HTML instantly
 export const revalidate = 3600;
@@ -63,11 +63,11 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Fetch all data in parallel
-  const [t, company, services, testimonials, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas] = await Promise.all([
+  const [t, company, services, googleReviews, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas] = await Promise.all([
     getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
-    getTestimonialsFromDb(),
+    getGoogleReviews(),
     getAboutSectionsFromDb(),
     getGalleryItemsFromDb(),
     getTrustBadgesFromDb(),
@@ -136,12 +136,12 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ReviewSchema company={company} testimonials={testimonials} locale={locale} />
+      <ReviewSchema company={company} googleReviews={googleReviews} />
       <HomePage
         locale={locale}
         company={company}
         services={services}
-        testimonials={testimonials}
+        googleReviews={googleReviews}
         gallery={localizedGallery}
         trustBadges={localizedBadges}
         faqs={localizedFaqs}

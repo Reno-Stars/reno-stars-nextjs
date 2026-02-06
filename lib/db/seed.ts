@@ -7,7 +7,6 @@ import {
   trustBadges,
   socialLinks,
   aboutSections,
-  testimonials,
   galleryItems,
   faqs,
 } from './schema';
@@ -351,43 +350,6 @@ async function seed() {
     console.log('About sections seeded');
   } else {
     console.log('About sections already exist, skipping');
-  }
-
-  // Seed Testimonials (idempotent via name check)
-  const existingTestimonials = await db.select().from(testimonials).limit(1);
-  if (existingTestimonials.length === 0) {
-    await db.insert(testimonials).values([
-      {
-        name: 'Sarah M.',
-        textEn: 'Reno Stars transformed our outdated kitchen into a modern masterpiece. The attention to detail was incredible!',
-        textZh: 'Reno Stars 将我们过时的厨房改造成了现代杰作。对细节的关注令人难以置信！',
-        rating: 5,
-        location: 'Vancouver, BC',
-        isFeatured: true,
-        verified: true,
-      },
-      {
-        name: 'David L.',
-        textEn: 'Professional team from start to finish. Our bathroom renovation exceeded all expectations.',
-        textZh: '从头到尾都非常专业。我们的浴室装修超出了所有期望。',
-        rating: 5,
-        location: 'Richmond, BC',
-        isFeatured: true,
-        verified: true,
-      },
-      {
-        name: 'Jennifer K.',
-        textEn: 'Best renovation experience we\'ve had. On time, on budget, and the quality is outstanding.',
-        textZh: '我们最好的装修体验。准时、不超预算，质量出众。',
-        rating: 5,
-        location: 'Burnaby, BC',
-        isFeatured: true,
-        verified: true,
-      },
-    ]);
-    console.log('Testimonials seeded');
-  } else {
-    console.log('Testimonials already exist, skipping');
   }
 
   // Blog posts are seeded separately via `pnpm db:seed:blog` (crawls WP REST API)

@@ -3,18 +3,9 @@ import { getAssetUrl } from '../storage';
 
 // Re-export types
 export type {
-  Locale, Localized, Company, Showroom, AboutSections, GalleryItem, Testimonial, BlogPost, SocialLink,
+  Locale, Localized, Company, Showroom, AboutSections, GalleryItem, GoogleReview, GooglePlaceRating, BlogPost, SocialLink,
   LocalizedProject, LocalizedService, LocalizedArea,
 } from '../types';
-
-// Localized return types (ones that live only in this barrel file)
-export interface LocalizedTestimonial {
-  id: string;
-  name: string;
-  text: string;
-  rating: number;
-  location: string;
-}
 
 export interface LocalizedGalleryItem {
   image: string;

@@ -31,7 +31,7 @@ app/                      # Next.js App Router
     design/               # Design showcase
   admin/                  # Admin dashboard (auth-protected)
     (auth)/               # Login page
-    (dashboard)/          # CRUD pages (projects, blog, testimonials, etc.)
+    (dashboard)/          # CRUD pages (projects, blog, etc.)
     layout.tsx            # Admin shell with sidebar
   layout.tsx              # Root layout (<html>/<body>, locale detection, fonts, metadata)
   not-found.tsx           # Root 404 (fallback, no <html>/<body>)
@@ -67,6 +67,7 @@ lib/
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation helpers (getString, isValidUrl, etc.)
     gallery-categories.ts # Shared gallery category constants
+  google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)
   types.ts                # Shared TypeScript types
   theme.ts                # Neumorphic design tokens
@@ -107,7 +108,8 @@ Browser → proxy.ts (admin auth check OR next-intl locale routing + security he
 
 The app uses a **hybrid static/database** model:
 
-- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, testimonials, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
+- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
+- **Google Reviews** (`lib/google-reviews.ts`): Testimonials are fetched from the Google Places API (New, v1) with 24h server-side caching, replacing the former database-managed testimonials. Two parallel requests (MOST_RELEVANT + NEWEST sort) are deduplicated and filtered to 5-star reviews.
 - **Static data** (`lib/data/`): Only `video` and `images` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers and category slug constants.
 - **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 
@@ -120,7 +122,6 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getCompanyFromDb()` | `Company` | Computes `yearsExperience` from `foundingYear` |
 | `getSocialLinksFromDb()` | `SocialLink[]` | Filters `isActive`, orders by `displayOrder` |
 | `getServicesFromDb()` | `Service[]` | Orders by `displayOrder`, applies `getAssetUrl()` |
-| `getTestimonialsFromDb()` | `Testimonial[]` | Filters `isFeatured` |
 | `getAboutSectionsFromDb()` | `AboutSections` | Replaces `{yearsExperience}` placeholder |
 | `getProjectsFromDb()` | `Project[]` | Published projects with images and scopes |
 | `getProjectBySlugFromDb(slug)` | `Project \| null` | Single project lookup by slug |
@@ -134,7 +135,9 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getShowroomFromDb()` | `Showroom` | Singleton row |
 | `getFaqsFromDb()` | `Faq[]` | Active FAQs, replaces `{yearsExperience}` placeholder |
 
-Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllTestimonialsAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`.
+Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`.
+
+**Google Reviews** (not in `queries.ts`): Homepage testimonials are fetched via `getGoogleReviews()` from `lib/google-reviews.ts` using the Google Places API with `next: { revalidate: 86400 }` for 24h caching. Returns `GooglePlaceRating` type with rating, userRatingCount, and reviews array.
 
 ### Slug Utilities (`lib/utils.ts`)
 
@@ -202,8 +205,8 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 ## Component Patterns
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
-- **Homepage sections** (`components/home/`): 12 section components extracted from HomePage for code-splitting. 9 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection). FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
-- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 9 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, ServiceSchema, ProjectSchema, ArticleSchema, BreadcrumbSchema, FAQSchema, ReviewSchema.
+- **Homepage sections** (`components/home/`): 13 section components extracted from HomePage for code-splitting. 9 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar). TestimonialsSection uses CSS `@keyframes` marquee for infinite horizontal scroll with pause-on-hover. FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
+- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 9 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, ServiceSchema, ProjectSchema, ArticleSchema, BreadcrumbSchema, FAQSchema, ReviewSchema. ReviewSchema uses Google Reviews data (rating, userRatingCount, individual reviews with datePublished).
 - **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.

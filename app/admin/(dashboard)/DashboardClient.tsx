@@ -8,7 +8,6 @@ import AdminPageHeader from '@/components/admin/AdminPageHeader';
 interface DashboardStats {
   projects: number;
   services: number;
-  testimonials: number;
   contacts: number;
   newContacts: number;
   blogPosts: number;
@@ -32,7 +31,6 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
   const cards: DashboardCard[] = [
     { label: t.dashboard.projects, value: stats.projects, href: '/admin/projects' },
     { label: t.dashboard.services, value: stats.services, href: '/admin/services' },
-    { label: t.dashboard.testimonials, value: stats.testimonials, href: '/admin/testimonials' },
     { label: t.dashboard.blogPosts, value: stats.blogPosts, href: '/admin/blog' },
     { label: t.dashboard.faqs, value: stats.faqs, href: '/admin/faqs' },
     { label: t.dashboard.gallery, value: stats.gallery, href: '/admin/gallery' },

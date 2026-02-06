@@ -1,6 +1,8 @@
 import type { GoogleReview, GooglePlaceRating } from './types';
 
-const EMPTY_RESULT: GooglePlaceRating = { rating: 0, userRatingCount: 0, reviews: [] };
+const REVALIDATE_24H = 86400;
+
+const EMPTY_RESULT: GooglePlaceRating = { rating: 0, userRatingCount: 0, reviews: [] } as const satisfies GooglePlaceRating;
 
 interface RawReview {
   authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
@@ -37,10 +39,13 @@ async function fetchReviews(
         'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
         'X-Goog-Reviews-Sort': sort,
       },
-      next: { revalidate: 86400 },
+      next: { revalidate: REVALIDATE_24H },
     },
   );
-  if (!res.ok) return { rating: 0, userRatingCount: 0, reviews: [] };
+  if (!res.ok) {
+    console.error(`[getGoogleReviews] Places API ${sort} request failed: ${res.status} ${res.statusText}`);
+    return { rating: 0, userRatingCount: 0, reviews: [] };
+  }
   return res.json();
 }
 
@@ -62,13 +67,14 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       fetchReviews(placeId, apiKey, 'NEWEST'),
     ]);
 
-    // Deduplicate by author name
+    // Deduplicate by authorUri (unique per Google user), fall back to authorName
     const seen = new Set<string>();
     const allReviews: GoogleReview[] = [];
     for (const r of [...(relevant.reviews ?? []), ...(newest.reviews ?? [])]) {
       const mapped = mapReview(r);
-      if (!seen.has(mapped.authorName)) {
-        seen.add(mapped.authorName);
+      const dedupeKey = mapped.authorUri || mapped.authorName;
+      if (dedupeKey && !seen.has(dedupeKey)) {
+        seen.add(dedupeKey);
         allReviews.push(mapped);
       }
     }
@@ -81,7 +87,8 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       userRatingCount: relevant.userRatingCount ?? 0,
       reviews: fiveStarReviews,
     };
-  } catch {
+  } catch (error) {
+    console.error('[getGoogleReviews] Failed to fetch reviews:', error);
     return EMPTY_RESULT;
   }
 }
