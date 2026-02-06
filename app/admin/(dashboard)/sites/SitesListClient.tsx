@@ -135,6 +135,7 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
     return siteProjects.some((p) =>
       p.titleEn.toLowerCase().includes(query) ||
       p.titleZh.toLowerCase().includes(query) ||
+      p.slug.toLowerCase().includes(query) ||
       p.serviceType.toLowerCase().includes(query)
     );
   }, [projectsBySite]);
@@ -149,9 +150,19 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
       );
     }
 
+    const thStyle: React.CSSProperties = { padding: '0.375rem 0.5rem', color: TEXT_MID, fontWeight: 500, fontSize: '0.75rem', textAlign: 'left', borderBottom: '1px solid rgba(27,54,93,0.1)' };
     return (
       <div style={{ padding: '0.5rem 1.5rem 0.75rem' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
+          <thead>
+            <tr>
+              <th style={thStyle}>{locale === 'zh' ? t.projects.titleZh : t.projects.titleEn}</th>
+              <th style={thStyle}>{t.projects.slug}</th>
+              <th style={thStyle}>{t.projects.serviceType}</th>
+              <th style={thStyle}>{t.sites.published}</th>
+              <th style={{ ...thStyle, textAlign: 'right' }}>{t.common.actions}</th>
+            </tr>
+          </thead>
           <tbody>
             {siteProjects.map((project) => {
               const title = locale === 'zh' ? project.titleZh : project.titleEn;
@@ -164,6 +175,9 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
                     {title}
                   </td>
                   <td style={{ padding: '0.5rem', color: TEXT_MID }}>
+                    {project.slug}
+                  </td>
+                  <td style={{ padding: '0.5rem', color: TEXT_MID }}>
                     {serviceLabel}
                   </td>
                   <td style={{ padding: '0.5rem', color: project.isPublished ? SUCCESS : ERROR }}>
@@ -171,7 +185,7 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
                   </td>
                   <td style={{ padding: '0.5rem', textAlign: 'right' }}>
                     <Link
-                      href={`/admin/sites/${row.id}`}
+                      href={`/admin/sites/${row.id}?project=${project.id}`}
                       onClick={(e) => e.stopPropagation()}
                       style={{ color: GOLD, fontSize: '0.75rem', textDecoration: 'none' }}
                     >

@@ -643,6 +643,7 @@ export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelec
 
 export interface ProjectSummary {
   id: string;
+  slug: string;
   siteId: string;
   titleEn: string;
   titleZh: string;
@@ -656,6 +657,7 @@ export async function getAllProjectsBySiteAdmin(): Promise<Record<string, Projec
   const rows = await db
     .select({
       id: projectsTable.id,
+      slug: projectsTable.slug,
       siteId: projectsTable.siteId,
       titleEn: projectsTable.titleEn,
       titleZh: projectsTable.titleZh,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import HouseStack from '@/components/admin/HouseStack';
 import SiteForm from '@/components/admin/SiteForm';
 import ProjectForm from '@/components/admin/ProjectForm';
@@ -87,8 +87,13 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
   const t = useAdminTranslations();
   const { locale } = useAdminLocale();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
-  const [selected, setSelected] = useState<string | 'site' | 'new'>('site');
+
+  // Pre-select project from URL param (e.g. ?project=<id>)
+  const projectParam = searchParams.get('project');
+  const initialSelected = projectParam && projects.some((p) => p.id === projectParam) ? projectParam : 'site';
+  const [selected, setSelected] = useState<string | 'site' | 'new'>(initialSelected);
 
   // Find selected project
   const selectedProject = selected !== 'site' && selected !== 'new'
