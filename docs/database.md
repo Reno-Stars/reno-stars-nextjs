@@ -75,7 +75,7 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 `lib/db/seed.ts` populates:
 - 6 services (kitchen, bathroom, whole-house, basement, cabinet, commercial) with icons, descriptions, and image URLs
 - 14 service areas (Vancouver, Richmond, Burnaby, Surrey, etc.)
-- Company info (including `foundingYear`, `reviewCount`, geo coordinates, logo URL)
+- Company info (including `foundingYear`, geo coordinates, logo URL)
 - Showroom info, trust badges
 - 5 social links (Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp)
 - About sections (bilingual, with `{yearsExperience}` placeholder in `ourJourney`)

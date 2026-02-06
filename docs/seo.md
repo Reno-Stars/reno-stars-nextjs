@@ -20,14 +20,14 @@ Components in `components/structured-data/`:
 
 | Component | Schema Type | Used On |
 |-----------|-------------|---------|
-| `LocalBusinessSchema` | LocalBusiness | Layout (global, receives `company` + `socialLinks` props) |
-| `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific business info) |
+| `LocalBusinessSchema` | LocalBusiness | Layout (global, `aggregateRating` from Google Reviews API) |
+| `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific, `aggregateRating` from Google Reviews) |
 | `ServiceSchema` | Service | Service detail pages |
-| `ProjectSchema` | CreativeWork | Project detail pages (with images, location, service type) |
+| `ProjectSchema` | CreativeWork | Project detail pages (`aggregateRating` from Google Reviews) |
 | `ArticleSchema` | Article | Blog post pages (includes `image` prop for featured image) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
-| `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (Google Reviews with aggregate rating) |
+| `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 
 ## robots.txt
 
