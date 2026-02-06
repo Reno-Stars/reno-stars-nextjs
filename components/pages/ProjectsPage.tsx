@@ -3,7 +3,6 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import Link from 'next/link';
 import { X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject, Site } from '@/lib/types';
@@ -102,11 +101,9 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  // Only open modal for regular projects, not site-projects (they link directly)
+  // Open modal for all projects (including whole house site-projects)
   const handleCardClick = useCallback((project: DisplayProject) => {
-    if (!project.isSiteProject) {
-      setSelectedProject(project);
-    }
+    setSelectedProject(project);
   }, []);
 
   const handleModalClose = useCallback(() => {
@@ -299,22 +296,16 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProjects.map((project) => (
-                project.isSiteProject ? (
-                  // Site-as-project: wrap in Link for direct navigation
-                  <Link key={project.slug} href={`/${locale}/projects/${project.slug}`}>
-                    <ProjectCard
-                      project={project}
-                      showDescription
-                      showChevron
-                      isSiteProject
-                      projectCount={project.projectCount}
-                      areasCountLabel={t('wholeHouse.areasCount', { count: project.projectCount ?? 0 })}
-                    />
-                  </Link>
-                ) : (
-                  // Regular project: onClick opens modal
-                  <ProjectCard key={project.slug} project={project} showDescription showChevron onClick={handleCardClick} />
-                )
+                <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  showDescription
+                  showChevron
+                  onClick={handleCardClick}
+                  isSiteProject={project.isSiteProject}
+                  projectCount={project.projectCount}
+                  areasCountLabel={project.isSiteProject ? t('wholeHouse.areasCount', { count: project.projectCount ?? 0 }) : undefined}
+                />
               ))}
             </div>
           )}
