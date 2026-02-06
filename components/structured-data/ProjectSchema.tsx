@@ -10,6 +10,8 @@ interface ProjectSchemaProps {
   location?: string;
   serviceType?: string;
   url: string;
+  googleRating?: number;
+  googleReviewCount?: number;
 }
 
 export default function ProjectSchema({
@@ -21,6 +23,8 @@ export default function ProjectSchema({
   location,
   serviceType,
   url,
+  googleRating,
+  googleReviewCount,
 }: ProjectSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const allImages = [image, ...images].filter(Boolean);
@@ -59,12 +63,14 @@ export default function ProjectSchema({
     provider: {
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: company.rating.split('/')[0],
-        bestRating: company.rating.split('/')[1] || '10',
-        ratingCount: company.reviewCount,
-      },
+      ...(googleRating && googleReviewCount && {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: googleRating,
+          bestRating: 5,
+          ratingCount: googleReviewCount,
+        },
+      }),
     },
   };
 

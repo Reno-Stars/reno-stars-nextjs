@@ -9,6 +9,7 @@ import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
   params: Promise<{ locale: string; city: string }>;
@@ -69,10 +70,11 @@ export default async function Page({ params }: PageProps) {
   const { locale, city } = await params;
   setRequestLocale(locale);
 
-  const [areas, company, services] = await Promise.all([
+  const [areas, company, services, googleReviews] = await Promise.all([
     getServiceAreasFromDb(),
     getCompanyFromDb(),
     getServicesFromDb(),
+    getGoogleReviews(),
   ]);
 
   const area = areas.find((a) => a.slug === city);
@@ -100,6 +102,8 @@ export default async function Page({ params }: PageProps) {
         areaName={localizedArea.name}
         areaSlug={city}
         services={serviceNames}
+        googleRating={googleReviews.rating}
+        googleReviewCount={googleReviews.userRatingCount}
       />
       <AreaPage locale={locale as Locale} area={area} company={company} services={localizedServices} />
     </>

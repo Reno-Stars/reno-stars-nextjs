@@ -71,15 +71,6 @@ export default function CompanyForm({ company }: CompanyFormProps) {
             <FormField label={t.company.liabilityCoverage} htmlFor="liabilityCoverage">
               <input id="liabilityCoverage" name="liabilityCoverage" defaultValue={company.liabilityCoverage ?? ''} style={fieldStyle} />
             </FormField>
-            <FormField label={t.company.rating} htmlFor="rating">
-              <input id="rating" name="rating" defaultValue={company.rating ?? ''} style={fieldStyle} />
-            </FormField>
-            <FormField label={t.company.reviewCount} htmlFor="reviewCount">
-              <input id="reviewCount" name="reviewCount" type="number" defaultValue={company.reviewCount ?? ''} style={fieldStyle} />
-            </FormField>
-            <FormField label={t.company.ratingSource} htmlFor="ratingSource">
-              <input id="ratingSource" name="ratingSource" defaultValue={company.ratingSource ?? ''} style={fieldStyle} />
-            </FormField>
             <FormField label={t.company.geoLatitude} htmlFor="geoLatitude">
               <input id="geoLatitude" name="geoLatitude" defaultValue={company.geoLatitude ?? ''} style={fieldStyle} />
             </FormField>

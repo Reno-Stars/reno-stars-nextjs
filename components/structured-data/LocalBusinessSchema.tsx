@@ -16,24 +16,16 @@ function parseAddress(address: string): {
   return { streetAddress, locality, region, postalCode };
 }
 
-// Parse rating: "10/10" -> { value: 10, best: 10 }
-function parseRating(rating: string): { value: number; best: number } {
-  const match = rating.match(/^(\d+)\/(\d+)$/);
-  if (match) {
-    return { value: Number(match[1]), best: Number(match[2]) };
-  }
-  return { value: Number(rating) || 0, best: 10 };
-}
-
 interface LocalBusinessSchemaProps {
   company: Company;
   socialLinks: SocialLink[];
   areas: ServiceArea[];
+  googleRating?: number;
+  googleReviewCount?: number;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
-  const ratingParts = parseRating(company.rating);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -68,14 +60,16 @@ export default function LocalBusinessSchema({ company, socialLinks, areas }: Loc
       closes: '18:00',
     },
     sameAs: socialLinks.map((link) => link.url).filter((url) => url !== '#'),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: ratingParts.value,
-      bestRating: ratingParts.best,
-      worstRating: 1,
-      ratingCount: company.reviewCount,
-      reviewCount: company.reviewCount,
-    },
+    ...(googleRating && googleReviewCount && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: googleRating,
+        bestRating: 5,
+        worstRating: 1,
+        ratingCount: googleReviewCount,
+        reviewCount: googleReviewCount,
+      },
+    }),
     description:
       `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} liability coverage.`,
     foundingDate: String(company.foundingYear),

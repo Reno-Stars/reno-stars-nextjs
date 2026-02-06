@@ -6,6 +6,7 @@ import { LocalBusinessSchema } from '@/components/structured-data';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 // Revalidate layout data every hour (ISR)
 export const revalidate = 3600;
@@ -31,17 +32,18 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const [messages, company, socialLinks, services, areas] = await Promise.all([
+  const [messages, company, socialLinks, services, areas, googleReviews] = await Promise.all([
     getMessages(),
     getCompanyFromDb(),
     getSocialLinksFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
+    getGoogleReviews(),
   ]);
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <LocalBusinessSchema company={company} socialLinks={socialLinks} areas={areas} />
+      <LocalBusinessSchema company={company} socialLinks={socialLinks} areas={areas} googleRating={googleReviews.rating} googleReviewCount={googleReviews.userRatingCount} />
       <Navbar company={company} areas={areas} />
       <main id="main-content">
         {children}

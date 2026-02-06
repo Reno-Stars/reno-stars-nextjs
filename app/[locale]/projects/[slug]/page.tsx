@@ -11,6 +11,7 @@ import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -148,10 +149,11 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const [t, company, allProjects] = await Promise.all([
+  const [t, company, allProjects, googleReviews] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
+    getGoogleReviews(),
   ]);
 
   // Check if it's a category page
@@ -199,6 +201,8 @@ export default async function Page({ params }: PageProps) {
           location={project.location_city}
           serviceType={serviceTypeName}
           url={`/${locale}/projects/${slug}/`}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
         />
         <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
       </>
@@ -229,6 +233,8 @@ export default async function Page({ params }: PageProps) {
           location={siteData.location_city ?? ''}
           serviceType="Whole House"
           url={`/${locale}/projects/${slug}/`}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
         />
         <SiteDetailPage locale={locale as Locale} site={localizedSite} company={company} />
       </>

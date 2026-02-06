@@ -6,6 +6,8 @@ interface LocalBusinessAreaSchemaProps {
   areaName: string;
   areaSlug: string;
   services: string[];
+  googleRating?: number;
+  googleReviewCount?: number;
 }
 
 export default function LocalBusinessAreaSchema({
@@ -13,6 +15,8 @@ export default function LocalBusinessAreaSchema({
   areaName,
   areaSlug,
   services,
+  googleRating,
+  googleReviewCount,
 }: LocalBusinessAreaSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
 
@@ -23,11 +27,6 @@ export default function LocalBusinessAreaSchema({
   const regionPostal = addressParts[3] || 'BC V6W 1M2';
   const [region, ...postalParts] = regionPostal.split(' ');
   const postalCode = postalParts.join(' ');
-
-  // Parse rating
-  const ratingMatch = company.rating.match(/^(\d+)\/(\d+)$/);
-  const ratingValue = ratingMatch ? Number(ratingMatch[1]) : 10;
-  const bestRating = ratingMatch ? Number(ratingMatch[2]) : 10;
 
   const schema = {
     '@context': 'https://schema.org',
@@ -71,13 +70,15 @@ export default function LocalBusinessAreaSchema({
         },
       })),
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue,
-      bestRating,
-      worstRating: 1,
-      ratingCount: company.reviewCount,
-    },
+    ...(googleRating && googleReviewCount && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: googleRating,
+        bestRating: 5,
+        worstRating: 1,
+        ratingCount: googleReviewCount,
+      },
+    }),
     priceRange: '$$',
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
