@@ -24,6 +24,8 @@ const zh: AdminMessages = {
     dataTable: '数据表',
     preview: '预览',
     remove: '移除',
+    draft: '草稿',
+    help: '帮助',
   },
   nav: {
     dashboard: '仪表盘',
@@ -59,6 +61,10 @@ const zh: AdminMessages = {
     uploading: '上传中...',
     clickOrDrag: '点击或拖拽上传图片',
     formatHint: 'JPEG、PNG、WebP、SVG、GIF — 最大 5 MB',
+    notImage: '已跳过 {count} 个文件（非图片）',
+    failed: '上传失败',
+    partialSuccess: '已上传 {success} 张图片，失败 {fail} 张（{error}）',
+    allFailed: '上传失败：{error}{more}',
   },
   status: {
     new: '新提交',

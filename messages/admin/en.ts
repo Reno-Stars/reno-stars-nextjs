@@ -22,6 +22,8 @@ const en = {
     dataTable: 'Data table',
     preview: 'Preview',
     remove: 'Remove',
+    draft: 'Draft',
+    help: 'Help',
   },
   nav: {
     dashboard: 'Dashboard',
@@ -57,6 +59,10 @@ const en = {
     uploading: 'Uploading...',
     clickOrDrag: 'Click or drag & drop to upload image',
     formatHint: 'JPEG, PNG, WebP, SVG, GIF — max 5 MB',
+    notImage: '{count} file(s) skipped (not an image)',
+    failed: 'Upload failed',
+    partialSuccess: 'Uploaded {success} image(s). Failed: {fail} ({error})',
+    allFailed: 'Failed to upload: {error}{more}',
   },
   status: {
     new: 'New',

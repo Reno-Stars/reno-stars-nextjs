@@ -119,32 +119,53 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                   </span>
                 )}
               </div>
-              {localizedProject.images.length > 1 && (
-                <div className="flex gap-3 mt-4 overflow-x-auto p-1">
-                  {localizedProject.images.map((img, i) => (
-                    <button
-                      key={img.src}
-                      onClick={() => setActiveImageIndex(i)}
-                      className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0"
-                      aria-label={`${t('projects.viewImage')} ${i + 1} / ${localizedProject.images.length}`}
-                      aria-pressed={i === activeImageIndex}
-                      style={{
-                        outline: i === activeImageIndex ? `2px solid ${GOLD}` : 'none',
-                        outlineOffset: '2px',
-                      }}
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        sizes="80px"
-                        className="object-cover"
-                      />
-                      <BeforeAfterBadge isBefore={img.is_before} t={t} compact />
-                    </button>
-                  ))}
-                </div>
-              )}
+              {localizedProject.images.length > 1 && (() => {
+                // Separate images: After first, then Before
+                const afterImages = localizedProject.images
+                  .map((img, i) => ({ ...img, originalIndex: i }))
+                  .filter((img) => !img.is_before);
+                const beforeImages = localizedProject.images
+                  .map((img, i) => ({ ...img, originalIndex: i }))
+                  .filter((img) => img.is_before);
+
+                const renderRow = (images: typeof afterImages, label: string) => images.length > 0 && (
+                  <div className="mt-4">
+                    <span className="text-xs font-medium uppercase tracking-wide mb-2 block" style={{ color: TEXT_MUTED }}>
+                      {label}
+                    </span>
+                    <div className="flex gap-3 overflow-x-auto p-1">
+                      {images.map((img) => (
+                        <button
+                          key={img.src}
+                          onClick={() => setActiveImageIndex(img.originalIndex)}
+                          className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0"
+                          aria-label={`${t('projects.viewImage')} ${img.originalIndex + 1} / ${localizedProject.images.length}`}
+                          aria-pressed={img.originalIndex === activeImageIndex}
+                          style={{
+                            outline: img.originalIndex === activeImageIndex ? `2px solid ${GOLD}` : 'none',
+                            outlineOffset: '2px',
+                          }}
+                        >
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            sizes="80px"
+                            className="object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+
+                return (
+                  <>
+                    {renderRow(afterImages, t('projects.afterLabel'))}
+                    {renderRow(beforeImages, t('projects.beforeLabel'))}
+                  </>
+                );
+              })()}
             </div>
 
             {/* Details */}

@@ -148,26 +148,47 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <BeforeAfterBadge isBefore={gallery[activeImage].is_before} t={t} />
             </div>
 
-            {gallery.length > 1 && (
-              <div className="flex gap-3 mb-8" role="group" aria-label="Image gallery thumbnails">
-                {gallery.map((img, i) => (
-                  <button
-                    key={img.src}
-                    onClick={() => setActiveImage(i)}
-                    className="relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer"
-                    style={{
-                      boxShadow: i === activeImage ? `0 0 0 2px ${GOLD}` : neu(2),
-                      opacity: i === activeImage ? 1 : 0.7,
-                    }}
-                    aria-label={`View image ${i + 1} of ${gallery.length}`}
-                    aria-pressed={i === activeImage}
-                  >
-                    <Image src={img.src} alt={img.alt || `${project.title} - image ${i + 1}`} fill sizes="80px" className="object-cover" />
-                    <BeforeAfterBadge isBefore={img.is_before} t={t} compact />
-                  </button>
-                ))}
-              </div>
-            )}
+            {gallery.length > 1 && (() => {
+              // Separate images: After first, then Before
+              const afterImages = gallery
+                .map((img, i) => ({ ...img, originalIndex: i }))
+                .filter((img) => !img.is_before);
+              const beforeImages = gallery
+                .map((img, i) => ({ ...img, originalIndex: i }))
+                .filter((img) => img.is_before);
+
+              const renderRow = (images: typeof afterImages, label: string) => images.length > 0 && (
+                <div className="mb-4">
+                  <span className="text-xs font-medium uppercase tracking-wide mb-2 block" style={{ color: TEXT_MUTED }}>
+                    {label}
+                  </span>
+                  <div className="flex gap-3" role="group" aria-label={`${label} thumbnails`}>
+                    {images.map((img) => (
+                      <button
+                        key={img.src}
+                        onClick={() => setActiveImage(img.originalIndex)}
+                        className="relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer"
+                        style={{
+                          boxShadow: img.originalIndex === activeImage ? `0 0 0 2px ${GOLD}` : neu(2),
+                          opacity: img.originalIndex === activeImage ? 1 : 0.7,
+                        }}
+                        aria-label={`View image ${img.originalIndex + 1} of ${gallery.length}`}
+                        aria-pressed={img.originalIndex === activeImage}
+                      >
+                        <Image src={img.src} alt={img.alt || `${project.title} - image ${img.originalIndex + 1}`} fill sizes="80px" className="object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+
+              return (
+                <div className="mb-4">
+                  {renderRow(afterImages, t('projects.afterLabel'))}
+                  {renderRow(beforeImages, t('projects.beforeLabel'))}
+                </div>
+              );
+            })()}
 
             <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>
               {project.description}

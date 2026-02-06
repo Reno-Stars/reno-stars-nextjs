@@ -153,15 +153,13 @@ async function toggleSiteField(
   if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
 
   try {
-    const updateData: Record<string, unknown> = {
+    const now = new Date();
+    const updateData: Partial<typeof projectSites.$inferInsert> = {
       [field]: !current,
-      updatedAt: new Date(),
+      updatedAt: now,
+      // Also update publishedAt when toggling isPublished
+      ...(field === 'isPublished' ? { publishedAt: !current ? now : null } : {}),
     };
-
-    // Special handling for isPublished - also update publishedAt
-    if (field === 'isPublished') {
-      updateData.publishedAt = !current ? new Date() : null;
-    }
 
     const updated = await db
       .update(projectSites)

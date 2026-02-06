@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { NAVY, TEXT_MID, CARD } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface TooltipProps {
   content: string;
@@ -15,6 +16,7 @@ interface TooltipProps {
  */
 export default function Tooltip({ content, size = 'md' }: TooltipProps) {
   const [show, setShow] = useState(false);
+  const t = useAdminTranslations();
 
   const buttonSize = size === 'sm' ? '14px' : '16px';
   const fontSize = size === 'sm' ? '9px' : '10px';
@@ -42,7 +44,7 @@ export default function Tooltip({ content, size = 'md' }: TooltipProps) {
           justifyContent: 'center',
           padding: 0,
         }}
-        aria-label="Help"
+        aria-label={t.common.help}
       >
         ?
       </button>

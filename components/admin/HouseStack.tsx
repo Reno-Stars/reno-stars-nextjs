@@ -369,7 +369,7 @@ export default function HouseStack({
                           marginTop: '1px',
                         }}
                       >
-                        {t.projects.serviceTypes[project.serviceType as keyof typeof t.projects.serviceTypes] || project.serviceType}
+                        {(project.serviceType in t.projects.serviceTypes ? t.projects.serviceTypes[project.serviceType as keyof typeof t.projects.serviceTypes] : project.serviceType)}
                         {!project.isPublished && (
                           <span
                             style={{
@@ -377,7 +377,7 @@ export default function HouseStack({
                               color: isSelected ? 'rgba(255,255,255,0.6)' : ERROR,
                             }}
                           >
-                            · Draft
+                            · {t.common.draft}
                           </span>
                         )}
                       </div>

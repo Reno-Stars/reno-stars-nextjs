@@ -3,6 +3,8 @@ import { ChevronRight, Layers } from 'lucide-react';
 import type { LocalizedProject } from '@/lib/types';
 import { GOLD, NAVY, CARD, TEXT, TEXT_MID, TEXT_MUTED, SH_DARK, neu } from '@/lib/theme';
 
+const NEU5 = neu(5);
+
 interface ProjectCardProps {
   project: LocalizedProject;
   /** Show the project description below the title */
@@ -76,10 +78,8 @@ export default function ProjectCard({
 
   // Stacked card effect for site projects
   const stackedStyle = isSiteProject
-    ? {
-        boxShadow: `${neu(5)}, 4px 8px 0 -2px ${CARD}, 4px 8px 4px -2px ${SH_DARK}`,
-      }
-    : { boxShadow: neu(5) };
+    ? { boxShadow: `${NEU5}, 4px 8px 0 -2px ${CARD}, 4px 8px 4px -2px ${SH_DARK}` }
+    : { boxShadow: NEU5 };
 
   return (
     <Tag

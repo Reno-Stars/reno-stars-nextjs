@@ -113,46 +113,37 @@ export default function ProjectForm({
   const [uploadError, setUploadError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handle batch image upload with improved error handling
+  // Handle batch image upload — uploads in parallel for speed
   const handleBatchUpload = async (files: FileList) => {
     setUploading(true);
     setUploadError('');
 
+    const imageFiles = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    const skipped = files.length - imageFiles.length;
+
+    const results = await Promise.allSettled(
+      imageFiles.map(async (file) => {
+        const fd = new FormData();
+        fd.set('file', file);
+        const result = await uploadImage({}, fd);
+        if (result.error) throw new Error(`${file.name}: ${result.error}`);
+        return { url: result.url!, name: file.name };
+      })
+    );
+
     const newImages: ImageEntry[] = [];
     const errors: string[] = [];
+    if (skipped > 0) errors.push(t.upload.notImage.replace('{count}', String(skipped)));
 
-    // Process all files, collecting errors instead of breaking
-    for (const file of Array.from(files)) {
-      if (!file.type.startsWith('image/')) {
-        errors.push(`${file.name}: Not an image file`);
-        continue;
-      }
-
-      const formData = new FormData();
-      formData.set('file', file);
-
-      try {
-        const result = await uploadImage({}, formData);
-
-        if (result.error) {
-          errors.push(`${file.name}: ${result.error}`);
-        } else if (result.url) {
-          newImages.push({
-            id: crypto.randomUUID(),
-            url: result.url,
-            altEn: '',
-            altZh: '',
-            isBefore: false,
-          });
-        }
-      } catch {
-        errors.push(`${file.name}: Upload failed`);
+    for (const r of results) {
+      if (r.status === 'fulfilled') {
+        newImages.push({ id: crypto.randomUUID(), url: r.value.url, altEn: '', altZh: '', isBefore: false });
+      } else {
+        errors.push(r.reason?.message ?? t.upload.failed);
       }
     }
 
-    // Add successfully uploaded images
     if (newImages.length > 0) {
-      // If there's only one empty image entry, replace it; otherwise append
       if (images.length === 1 && !images[0].url) {
         setImages(newImages);
       } else {
@@ -160,21 +151,18 @@ export default function ProjectForm({
       }
     }
 
-    // Show error summary if any uploads failed
     if (errors.length > 0) {
-      const successCount = newImages.length;
-      const failCount = errors.length;
-      if (successCount > 0) {
-        setUploadError(`Uploaded ${successCount} image(s). Failed: ${failCount} (${errors[0]}${failCount > 1 ? '...' : ''})`);
-      } else {
-        setUploadError(`Failed to upload: ${errors[0]}${failCount > 1 ? ` and ${failCount - 1} more` : ''}`);
-      }
+      const ok = newImages.length;
+      const fail = errors.length;
+      setUploadError(
+        ok > 0
+          ? t.upload.partialSuccess.replace('{success}', String(ok)).replace('{fail}', String(fail)).replace('{error}', errors[0])
+          : t.upload.allFailed.replace('{error}', errors[0]).replace('{more}', fail > 1 ? ` (+${fail - 1})` : '')
+      );
     }
 
     setUploading(false);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleDrop = (e: React.DragEvent) => {
