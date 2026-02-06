@@ -22,6 +22,8 @@ interface DataTableProps<T> {
   pageSize?: number;
   actions?: (row: T) => ReactNode;
   renderExpandedRow?: (row: T) => ReactNode;
+  /** Custom filter that replaces default searchKeys matching. Return true to include the row. */
+  filterRow?: (row: T, query: string) => boolean;
 }
 
 const EMPTY_SEARCH_KEYS: string[] = [];
@@ -39,6 +41,7 @@ export default function DataTable<T extends object>({
   pageSize = 15,
   actions,
   renderExpandedRow,
+  filterRow,
 }: DataTableProps<T>) {
   const t = useAdminTranslations();
   const [search, setSearch] = useState('');
@@ -55,16 +58,19 @@ export default function DataTable<T extends object>({
     setPage(0);
   }, [data.length]);
 
+  const isSearching = search.trim().length > 0;
+
   const filtered = useMemo(() => {
-    if (!search.trim()) return data;
+    if (!isSearching) return data;
     const q = search.toLowerCase();
+    if (filterRow) return data.filter((row) => filterRow(row, q));
     return data.filter((row) =>
       searchKeys.some((key) => {
         const val = getField(row, key);
         return typeof val === 'string' && val.toLowerCase().includes(q);
       })
     );
-  }, [data, search, searchKeys]);
+  }, [data, search, isSearching, searchKeys, filterRow]);
 
   const sorted = useMemo(() => {
     if (!sortKey) return filtered;
@@ -205,7 +211,7 @@ export default function DataTable<T extends object>({
               ) : (
                 paged.map((row) => {
                   const rowKey = getRowKey(row);
-                  const isExpanded = expandedKey === rowKey;
+                  const isExpanded = isSearching || expandedKey === rowKey;
                   return (
                     <Fragment key={rowKey}>
                       <tr

@@ -134,6 +134,20 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
     });
   };
 
+  const filterRow = useCallback((row: SiteRow, query: string) => {
+    // Match site's own fields
+    const siteMatch = [row.titleEn, row.titleZh, row.slug, row.locationCity]
+      .some((val) => val && val.toLowerCase().includes(query));
+    if (siteMatch) return true;
+    // Match any project inside the site
+    const siteProjects = projectsBySite[row.id] ?? [];
+    return siteProjects.some((p) =>
+      p.titleEn.toLowerCase().includes(query) ||
+      p.titleZh.toLowerCase().includes(query) ||
+      p.serviceType.toLowerCase().includes(query)
+    );
+  }, [projectsBySite]);
+
   const renderExpandedRow = useCallback((row: SiteRow) => {
     const siteProjects = projectsBySite[row.id] ?? [];
     if (siteProjects.length === 0) {
@@ -188,7 +202,7 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
         columns={columns}
         data={sites}
         getRowKey={(row) => row.id}
-        searchKeys={['titleEn', 'titleZh', 'slug', 'locationCity']}
+        filterRow={filterRow}
         actions={(row) => (
           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
             <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
