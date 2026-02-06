@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Shield } from 'lucide-react';
+import { Shield, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import { video, images } from '@/lib/data';
@@ -25,7 +25,6 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
   const heroBadges = [
     `${company.yearsExperience}+ ${t.yearsExperience}`,
     `${company.liabilityCoverage} ${t.liabilityCoverage}`,
-    `${company.rating} ${t.rating}`,
   ];
 
   return (
@@ -75,6 +74,12 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
                 <Shield className="w-4 h-4" style={{ color: GOLD }} /> {txt}
               </span>
             ))}
+            <span className="text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`5/5 ${t.rating}`}>
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
+              ))}
+              <span>{t.rating}</span>
+            </span>
           </div>
         </div>
       </div>

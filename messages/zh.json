@@ -335,8 +335,8 @@
       "description": "每个项目都有完整的保险覆盖，让您安心无忧。"
     },
     "rating": {
-      "title": "HomeStars 10/10评分",
-      "description": "在HomeStars上持续获得满意客户的最高评价。"
+      "title": "Google 五星好评",
+      "description": "在Google上持续获得满意客户的五星好评。"
     },
     "team": {
       "title": "专业团队",
@@ -353,7 +353,7 @@
     "warranty": "{warranty}工艺保修",
     "coverage": "{coverage}责任保险",
     "experience": "{years}年以上经验",
-    "rating": "{source} {rating}评分"
+    "rating": "Google 五星好评"
   },
   "faq": {
     "kitchen": {
@@ -424,7 +424,7 @@
   "metadata": {
     "home": {
       "title": "Reno Stars | 温哥华装修承包商",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。27年以上经验、500万保险、HomeStars 10/10评分。"
+      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。27年以上经验、500万保险、Google五星好评。"
     },
     "services": {
       "title": "装修服务 | Reno Stars 温哥华",
@@ -444,7 +444,7 @@
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 温哥华装修承包商",
-      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。27年以上经验、500万美元保险、3年质保、HomeStars 10/10评分。"
+      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。27年以上经验、500万美元保险、3年质保、Google五星好评。"
     },
     "design": {
       "title": "装修设计灵感 | Reno Stars 温哥华",

@@ -45,7 +45,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
     t('serviceBenefits.warranty', { warranty: company.warranty }),
     t('serviceBenefits.coverage', { coverage: company.liabilityCoverage }),
     t('serviceBenefits.experience', { years: company.yearsExperience }),
-    t('serviceBenefits.rating', { rating: company.rating, source: company.ratingSource }),
+    t('serviceBenefits.rating'),
   ];
 
   return (

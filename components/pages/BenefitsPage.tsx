@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { Shield, Clock, Award, Users, Wrench, CheckCircle } from 'lucide-react';
+import { Shield, Clock, Award, Users, Wrench, CheckCircle, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import {
@@ -21,7 +21,6 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
     { value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
     { value: company.warranty, label: t('stats.warranty') },
-    { value: company.rating, label: `${company.ratingSource} ${t('stats.rating')}` },
   ], [company, t]);
 
   const benefits = [
@@ -114,6 +113,14 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
               <div className="text-base text-white/80">{stat.label}</div>
             </div>
           ))}
+          <div className="text-center">
+            <div className="flex justify-center gap-1 mb-1" role="img" aria-label={`5/5 ${t('stats.rating')}`}>
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} className="w-7 h-7 md:w-8 md:h-8" style={{ fill: GOLD, color: GOLD }} />
+              ))}
+            </div>
+            <div className="text-base text-white/80">{t('stats.rating')}</div>
+          </div>
         </div>
       </section>
 

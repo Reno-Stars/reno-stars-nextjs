@@ -335,8 +335,8 @@
       "description": "Full insurance coverage for your peace of mind during every project."
     },
     "rating": {
-      "title": "10/10 HomeStars Rating",
-      "description": "Consistently top-rated by our satisfied customers on HomeStars."
+      "title": "5-Star Google Rating",
+      "description": "Consistently top-rated by our satisfied customers on Google."
     },
     "team": {
       "title": "Expert Team",
@@ -353,7 +353,7 @@
     "warranty": "{warranty} warranty on workmanship",
     "coverage": "{coverage} liability coverage",
     "experience": "{years}+ years of experience",
-    "rating": "{rating} {source} rating"
+    "rating": "5-star Google rating"
   },
   "faq": {
     "kitchen": {
@@ -424,7 +424,7 @@
   "metadata": {
     "home": {
       "title": "Reno Stars | Vancouver Renovation Contractor",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. 27+ years experience, $5M coverage, 10/10 HomeStars."
+      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. 27+ years experience, $5M coverage, 5-star Google rating."
     },
     "services": {
       "title": "Renovation Services | Reno Stars Vancouver",
@@ -444,7 +444,7 @@
     },
     "benefits": {
       "title": "Why Choose Reno Stars | Vancouver Renovation Contractor",
-      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. 27+ years experience, $5M coverage, 3-year warranty, 10/10 HomeStars rating."
+      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. 27+ years experience, $5M coverage, 3-year warranty, 5-star Google rating."
     },
     "design": {
       "title": "Renovation Design Inspiration | Reno Stars Vancouver",

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Star } from 'lucide-react';
 import { useMemo, useState, useCallback, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
@@ -72,7 +72,6 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
   const whyUsStats = useMemo(() => [
     { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
     { key: 'liability', val: company.liabilityCoverage, lbl: t('stats.liabilityCoverage') },
-    { key: 'rating', val: company.rating, lbl: `${company.ratingSource} ${t('stats.rating')}` },
   ], [company, t]);
 
   return (
@@ -189,6 +188,12 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                   <span className="text-sm text-white/70">{stat.lbl}</span>
                 </div>
               ))}
+              <div className="flex items-center gap-1.5" role="img" aria-label={`5/5 ${t('stats.rating')}`}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
+                ))}
+                <span className="text-sm text-white/70 ml-0.5">{t('stats.rating')}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { Phone, Mail, MapPin, Clock, Shield, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle } from 'lucide-react';
 import { useRouter } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
@@ -36,7 +36,6 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
   const heroBadges = useMemo(() => [
     { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
     { label: `${company.liabilityCoverage} ${t('stats.liabilityCoverage')}` },
-    { label: `${company.rating} ${t('stats.rating')}` },
   ], [company, t]);
 
   const whyContactUs = useMemo(() => [
@@ -75,6 +74,17 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
                 <span className="text-base font-medium text-white/90">{badge.label}</span>
               </div>
             ))}
+            <div
+              className="flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+              role="img"
+              aria-label={`5/5 ${t('stats.rating')}`}
+            >
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} className="w-4 h-4" style={{ fill: GOLD, color: GOLD }} />
+              ))}
+              <span className="text-base font-medium text-white/90">{t('stats.rating')}</span>
+            </div>
           </div>
         </div>
       </section>
