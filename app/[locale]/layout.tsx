@@ -7,6 +7,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { images } from '@/lib/data';
+import { ASSET_ORIGIN } from '@/lib/storage';
 
 // Revalidate layout data every hour (ISR)
 export const revalidate = 3600;
@@ -42,13 +44,29 @@ export default async function LocaleLayout({
   ]);
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <LocalBusinessSchema company={company} socialLinks={socialLinks} areas={areas} googleRating={googleReviews.rating} googleReviewCount={googleReviews.userRatingCount} />
-      <Navbar company={company} areas={areas} />
-      <main id="main-content">
-        {children}
-      </main>
-      <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} />
-    </NextIntlClientProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        {/* Preconnect for faster asset loading (implies dns-prefetch) */}
+        <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
+        {/* Preload hero image for faster LCP */}
+        <link rel="preload" as="image" href={images.hero} fetchPriority="high" />
+      </head>
+      <body className="antialiased" suppressHydrationWarning>
+        <NextIntlClientProvider messages={messages}>
+          <LocalBusinessSchema
+            company={company}
+            socialLinks={socialLinks}
+            areas={areas}
+            googleRating={googleReviews.rating}
+            googleReviewCount={googleReviews.userRatingCount}
+          />
+          <Navbar company={company} areas={areas} />
+          <main id="main-content">
+            {children}
+          </main>
+          <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} />
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

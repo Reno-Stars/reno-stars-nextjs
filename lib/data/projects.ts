@@ -646,10 +646,15 @@ export function getCategories(locale: Locale): string[] {
 }
 
 export function getCategoriesLocalized(): { en: string; zh: string }[] {
+  // Exclude 'whole-house' from serviceTypeToCategory since we add it explicitly first
+  const otherCategories = Object.entries(serviceTypeToCategory)
+    .filter(([key]) => key !== 'whole-house')
+    .map(([, value]) => value);
+
   return [
     { en: 'All', zh: '全部' },
     WHOLE_HOUSE_CATEGORY, // Sites displayed as projects - first after "All"
-    ...Object.values(serviceTypeToCategory),
+    ...otherCategories,
   ];
 }
 
