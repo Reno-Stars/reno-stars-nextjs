@@ -19,7 +19,6 @@ import {
   projectSites,
   services as servicesTable,
 } from '../lib/db/schema';
-import { eq, sql } from 'drizzle-orm';
 
 // Valid service types (no 'whole-house' - that's represented by Sites)
 type ServiceType = 'kitchen' | 'bathroom' | 'basement' | 'cabinet' | 'commercial';
@@ -591,7 +590,7 @@ async function seedProjects(siteIdMap: Map<string, string>) {
 
   // Look up service IDs for linking
   const serviceRows = await db.select({ slug: servicesTable.slug, id: servicesTable.id }).from(servicesTable);
-  const serviceMap = new Map(serviceRows.map((s) => [s.slug, s.id]));
+  const serviceMap = new Map(serviceRows.map((s: { slug: string; id: string }) => [s.slug, s.id]));
 
   // Build a map of project slug -> site ID based on SITES_RAW
   const projectToSiteMap = new Map<string, string>();
@@ -621,6 +620,10 @@ async function seedProjects(siteIdMap: Map<string, string>) {
     .returning({ id: projectSites.id });
 
   const defaultSiteId = defaultSite.id;
+
+  // Build reverse lookup: siteId -> site slug (for logging)
+  const siteIdToSlug = new Map<string, string>();
+  for (const [slug, id] of siteIdMap) siteIdToSlug.set(id, slug);
 
   let seeded = 0;
 
@@ -662,9 +665,10 @@ async function seedProjects(siteIdMap: Map<string, string>) {
 
     const projectId = inserted.id;
 
-    // Insert images
+    // Insert images and scopes in parallel
+    const insertions: Promise<unknown>[] = [];
     if (p.images.length > 0) {
-      await db.insert(projectImages).values(
+      insertions.push(db.insert(projectImages).values(
         p.images.map((img, i) => ({
           projectId,
           imageUrl: img.url,
@@ -673,22 +677,23 @@ async function seedProjects(siteIdMap: Map<string, string>) {
           isBefore: img.isBefore ?? false,
           displayOrder: i,
         }))
-      );
+      ));
     }
-
-    // Insert scopes
     if (p.scopes.length > 0) {
-      await db.insert(projectScopes).values(
+      insertions.push(db.insert(projectScopes).values(
         p.scopes.map((scope, i) => ({
           projectId,
           scopeEn: scope.en,
           scopeZh: scope.zh,
           displayOrder: i,
         }))
-      );
+      ));
     }
+    await Promise.all(insertions);
 
-    console.log(`  Seeded project: ${p.slug}${siteId !== defaultSiteId ? ` (site: ${[...projectToSiteMap.entries()].find(([k, v]) => v === siteId)?.[0] || 'unknown'})` : ''}`);
+    const siteSlug = siteIdToSlug.get(siteId);
+    const siteLabel = siteId !== defaultSiteId && siteSlug ? ` (site: ${siteSlug})` : '';
+    console.log(`  Seeded project: ${p.slug}${siteLabel}`);
     seeded++;
   }
 

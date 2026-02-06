@@ -224,8 +224,15 @@ export default function ImageUrlInput({
             src={previewSrc}
             alt={t.common.preview}
             style={{ width: '100%', height: 'auto', display: 'block' }}
-            onError={() => {
-              setImageError(true);
+            onError={(e) => {
+              // If rewritten URL fails (e.g. local MinIO doesn't have the file),
+              // fall back to the original URL before giving up
+              const img = e.currentTarget;
+              if (img.src !== url && url.startsWith('http')) {
+                img.src = url;
+              } else {
+                setImageError(true);
+              }
             }}
           />
         </div>

@@ -47,9 +47,6 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
     teamSize: row.teamSize ?? 0,
     warranty: row.warranty ?? '',
     liabilityCoverage: row.liabilityCoverage ?? '',
-    rating: row.rating ?? '',
-    reviewCount: row.reviewCount ?? 0,
-    ratingSource: row.ratingSource ?? '',
     geo: {
       latitude: row.geoLatitude ? Number(row.geoLatitude) : 0,
       longitude: row.geoLongitude ? Number(row.geoLongitude) : 0,

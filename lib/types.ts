@@ -249,12 +249,6 @@ export interface Company {
   warranty: string;
   /** Liability insurance coverage */
   liabilityCoverage: string;
-  /** Customer rating */
-  rating: string;
-  /** Number of customer reviews */
-  reviewCount: number;
-  /** Rating platform source */
-  ratingSource: string;
   /** Geographic coordinates for structured data */
   geo: { latitude: number; longitude: number };
 }

@@ -39,13 +39,6 @@ export default function ReviewSchema({
     url: baseUrl,
     telephone: `+1-${company.phone}`,
     review: reviews,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: googleReviews.rating,
-      bestRating: 5,
-      worstRating: 1,
-      ratingCount: googleReviews.userRatingCount,
-    },
   };
 
   return (
