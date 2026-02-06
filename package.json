@@ -28,6 +28,7 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:reset": "docker compose down -v && docker compose up -d",
+    "reviews:cache": "dotenv -e .env.local -- tsx scripts/update-reviews-cache.ts",
     "storage:seed": "dotenv -e .env.local -- tsx scripts/seed-storage.ts",
     "dev:services": "docker compose up -d && pnpm db:push && pnpm db:seed && pnpm db:seed:projects && pnpm db:seed:blog && pnpm storage:seed"
   },
