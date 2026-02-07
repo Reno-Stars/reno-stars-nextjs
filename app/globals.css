@@ -12,3 +12,29 @@
     display: none;
   }
 }
+
+/* Semi-transparent scrollbar for category browsing */
+.category-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27, 54, 93, 0.2) transparent;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Smooth scrolling when not actively dragging */
+.category-scroll:not(:active) {
+  scroll-behavior: smooth;
+}
+.category-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.category-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.category-scroll::-webkit-scrollbar-thumb {
+  background: rgba(27, 54, 93, 0.2);
+  border-radius: 3px;
+}
+.category-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(27, 54, 93, 0.35);
+}

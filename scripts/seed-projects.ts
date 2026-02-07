@@ -16,6 +16,7 @@ import {
   projects as projectsTable,
   projectImages,
   projectScopes,
+  projectExternalProducts,
   projectSites,
   services as servicesTable,
 } from '../lib/db/schema';
@@ -48,6 +49,7 @@ interface ProjectData {
   badgeZh?: string;
   images: { url: string; altEn: string; altZh: string; isBefore?: boolean }[];
   scopes: { en: string; zh: string }[];
+  externalProducts?: { url: string; imageUrl?: string; labelEn: string; labelZh: string }[];
 }
 
 interface SiteData {
@@ -143,6 +145,11 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Countertops', zh: '台面' },
       { en: 'Backsplash', zh: '后挡板' },
     ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/belanger-laminates-stretta-72-in-white-marble-look-right-hand-miter-laminate-kitchen-countertop-6010225733-58166958', labelEn: 'Belanger Stretta 72-in White Marble-Look Countertop', labelZh: 'Belanger Stretta 72英寸白色仿大理石台面' },
+      { url: 'https://www.rona.ca/en/product/kohler-simplice-touchless-pull-down-kitchen-sink-faucet-w-3-function-sprayhead-in-polished-chrome-22036-cp-332069940', labelEn: 'KOHLER Simplice Touchless Pull-Down Kitchen Faucet', labelZh: 'KOHLER Simplice 感应式下拉厨房水龙头' },
+      { url: 'https://www.rona.ca/en/product/kraus-kore-24-in-farmhouse-stainless-steel-single-bowl-kitchen-sink-kwf210-24-330949271', labelEn: 'Kraus Kore 24-in Farmhouse Stainless Steel Kitchen Sink', labelZh: 'Kraus Kore 24英寸农舍风格不锈钢厨房水槽' },
+    ],
   },
   {
     slug: 'richmond-kitchen-bathroom-remodel',
@@ -171,6 +178,11 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Cabinetry', zh: '橱柜' }, { en: 'Countertops', zh: '台面' },
       { en: 'Flooring', zh: '地板' }, { en: 'Plumbing', zh: '水管' }, { en: 'Tile Work', zh: '瓷砖' },
     ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/pfister-ceylon-pull-down-kitchen-faucet-1-handle-with-soap-dispenser-stainless-steel-f5297clo2gs-56305366', labelEn: 'Pfister Ceylon Pull-Down Kitchen Faucet with Soap Dispenser', labelZh: 'Pfister Ceylon 下拉式厨房水龙头配皂液器' },
+      { url: 'https://www.rona.ca/en/product/procore-flex-vinyl-flooring-river-oak-9-in-x-5972-in-6-pieces-lwd6906rcb-45885003', labelEn: 'Procore Flex Vinyl Flooring - River Oak', labelZh: 'Procore Flex 乙烯基地板 - 河橡木色' },
+      { url: 'https://www.rona.ca/en/product/vanity-art-36-in-w-single-sink-bathroom-vanity-w-engineered-marble-top-and-brushed-gold-handle-natural-oak-va9036-no-gb-332066601', labelEn: 'Vanity Art 36-in Single Sink Bathroom Vanity - Natural Oak', labelZh: 'Vanity Art 36英寸单盆浴室柜 - 天然橡木' },
+    ],
   },
   {
     slug: 'surrey-home-renovation',
@@ -198,6 +210,11 @@ const PROJECTS_RAW: ProjectData[] = [
     scopes: [
       { en: 'Kitchen Design', zh: '厨房设计' }, { en: 'Cabinetry', zh: '橱柜' },
       { en: 'Countertops', zh: '台面' }, { en: 'Flooring', zh: '地板' }, { en: 'Painting', zh: '油漆' },
+    ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/goodfellow-engineered-hardwood-flooring-prefinished-natural-acacia-75-in-x-12-mm-708553000-50905286', labelEn: 'Goodfellow Engineered Hardwood Flooring - Natural Acacia', labelZh: 'Goodfellow 工程实木地板 - 天然相思木' },
+      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
+      { url: 'https://www.rona.ca/en/product/belanger-laminates-formica-countertop-walnut-wood-grain-stain-resistant-8-ft-l-x-25-1-2-in-d-x-1-1-4-in-t-12322490899479-58166850', labelEn: 'Belanger Formica Countertop - Walnut Wood Grain', labelZh: 'Belanger Formica 台面 - 胡桃木纹' },
     ],
   },
   {
@@ -311,6 +328,11 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Tile Work', zh: '瓷砖' }, { en: 'Vanity', zh: '洗手台' },
       { en: 'Plumbing', zh: '水管' }, { en: 'Lighting', zh: '灯光' },
     ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/style-selections-ellenbee-30-in-white-bathroom-vanity-bv-8382-30w-31915078', labelEn: 'Style Selections Ellenbee 30-in White Bathroom Vanity', labelZh: 'Style Selections Ellenbee 30英寸白色浴室柜' },
+      { url: 'https://www.rona.ca/en/product/american-standard-tofino-toilet-with-elongated-bowl-one-piece-dual-flush-41-lpf-white-2996c203020-00535178', labelEn: 'American Standard Tofino Dual Flush Toilet - White', labelZh: 'American Standard Tofino 双冲马桶 - 白色' },
+      { url: 'https://www.rona.ca/en/product/ore-international-luminere-8-light-gold-traditional-led-crystal-chandelier-k-5806h-330998032', labelEn: 'Ore International Luminere 8-Light LED Crystal Chandelier', labelZh: 'Ore International Luminere 8头LED水晶吊灯' },
+    ],
   },
   {
     slug: 'richmond-bathroom-remodel',
@@ -338,6 +360,11 @@ const PROJECTS_RAW: ProjectData[] = [
     scopes: [
       { en: 'Tile Work', zh: '瓷砖' }, { en: 'Plumbing', zh: '水管' },
       { en: 'Freestanding Tub', zh: '独立浴缸' }, { en: 'Walk-in Shower', zh: '步入式淋浴' }, { en: 'Vanity', zh: '洗手台' },
+    ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/landon-co-landon-co-aqualine-clear-glass-sliding-alcove-shower-door-with-chrome-hardware-60-in-lv-8001-60245452', labelEn: 'Landon & Co. Aqualine 60-in Glass Sliding Shower Door', labelZh: 'Landon & Co. Aqualine 60英寸玻璃滑动淋浴门' },
+      { url: 'https://www.rona.ca/en/product/diamond-now-masterbrand-vada-36-in-sandy-engineered-wood-bathroom-vanity-with-single-sink-white-cultured-marble-top-13847774', labelEn: 'Diamond Now Vada 36-in Bathroom Vanity with Marble Top', labelZh: 'Diamond Now Vada 36英寸浴室柜配大理石台面' },
+      { url: 'https://www.rona.ca/en/product/deervalley-white-elongated-smart-toilet-bidet-dv-1s0029-332064471', labelEn: 'DeerValley Smart Toilet Bidet with Heated Seat', labelZh: 'DeerValley 智能马桶盖一体机 - 带加热座圈' },
     ],
   },
   {
@@ -479,6 +506,10 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Framing', zh: '框架' }, { en: 'Drywall', zh: '石膏板' }, { en: 'Flooring', zh: '地板' },
       { en: 'Electrical', zh: '电气' }, { en: 'Plumbing', zh: '水管' }, { en: 'Home Theater', zh: '家庭影院' },
     ],
+    externalProducts: [
+      { url: 'https://www.rona.ca/en/product/procore-flex-vinyl-flooring-river-oak-9-in-x-5972-in-6-pieces-lwd6906rcb-45885003', labelEn: 'Procore Flex Vinyl Flooring - River Oak', labelZh: 'Procore Flex 乙烯基地板 - 河橡木色' },
+      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
+    ],
   },
   {
     slug: 'cabinet-refacing-richmond',
@@ -546,12 +577,13 @@ async function clearExistingData() {
   console.log('Clearing existing project data...');
 
   // Delete in order to respect foreign keys
+  await db.delete(projectExternalProducts);
   await db.delete(projectScopes);
   await db.delete(projectImages);
   await db.delete(projectsTable);
   await db.delete(projectSites);
 
-  console.log('  Cleared all projects, images, scopes, and sites');
+  console.log('  Cleared all projects, images, scopes, external products, and sites');
 }
 
 async function seedSites(): Promise<Map<string, string>> {
@@ -685,6 +717,18 @@ async function seedProjects(siteIdMap: Map<string, string>) {
           projectId,
           scopeEn: scope.en,
           scopeZh: scope.zh,
+          displayOrder: i,
+        }))
+      ));
+    }
+    if (p.externalProducts && p.externalProducts.length > 0) {
+      insertions.push(db.insert(projectExternalProducts).values(
+        p.externalProducts.map((ep, i) => ({
+          projectId,
+          url: ep.url,
+          imageUrl: ep.imageUrl ?? null,
+          labelEn: ep.labelEn,
+          labelZh: ep.labelZh,
           displayOrder: i,
         }))
       ));

@@ -317,7 +317,8 @@
     "publishedOn": "Published on",
     "backToBlog": "Back to Blog",
     "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights."
+    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
+    "relatedProject": "Related Project"
   },
   "contact": {
     "title": "Contact Us",
@@ -615,6 +616,7 @@
       "googleRating": "Google",
       "warrantyService": "Warranty Service",
       "scanWeChat": "Scan to add WeChat for consultation",
+      "scanWhatsApp": "Scan to chat on WhatsApp",
       "website": "reno-stars.com"
     }
   }

@@ -194,6 +194,10 @@ const zh: AdminMessages = {
     heroImage: '主图 URL',
     metaTitle: 'Meta 标题',
     metaDescription: 'Meta 描述',
+    seoKeywords: 'SEO 关键词',
+    relatedProject: '关联项目',
+    selectProject: '选择项目...',
+    noProject: '无关联项目',
   },
   contacts: {
     title: '联系表单提交',

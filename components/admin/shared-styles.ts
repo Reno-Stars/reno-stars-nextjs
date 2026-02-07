@@ -31,3 +31,9 @@ export const readOnlyTextareaStyle: React.CSSProperties = {
   cursor: 'default',
   resize: 'none' as const,
 };
+
+export const selectStyle: React.CSSProperties = {
+  ...inputStyle,
+  cursor: 'pointer',
+  appearance: 'auto' as const,
+};

@@ -10,6 +10,7 @@ import {
   Users, Settings, ClipboardCheck, HeartHandshake, Shield, Headphones,
 } from 'lucide-react';
 import type { Company } from '@/lib/types';
+import type { Locale } from '@/i18n/config';
 import {
   NAVY, NAVY_MID, NAVY_PALE, GOLD, SURFACE, CARD, TEXT, TEXT_MID, SH_DARK, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
@@ -20,6 +21,7 @@ import {
 
 interface ProcessPageProps {
   company: Company;
+  locale: Locale;
 }
 
 interface StepData {
@@ -249,7 +251,7 @@ function HouseSvg({ className }: { className?: string }) {
   );
 }
 
-export default function ProcessPage({ company }: ProcessPageProps) {
+export default function ProcessPage({ company, locale }: ProcessPageProps) {
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
@@ -700,19 +702,32 @@ export default function ProcessPage({ company }: ProcessPageProps) {
               </a>
             </div>
 
-            {/* Center: WeChat QR */}
+            {/* Center: QR Code - WeChat for Chinese, WhatsApp for English */}
             <div className="flex flex-col items-center">
               <div className="bg-white p-4 rounded-xl mb-3">
-                <Image
-                  src="/wechat-qr.png"
-                  alt="WeChat QR Code"
-                  width={140}
-                  height={140}
-                  className="w-36 h-36 object-contain"
-                  loading="lazy"
-                />
+                {locale === 'zh' ? (
+                  <Image
+                    src="/wechat-qr.png"
+                    alt="WeChat QR Code"
+                    width={140}
+                    height={140}
+                    className="w-36 h-36 object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <Image
+                    src="/whatsapp-qr.png"
+                    alt="WhatsApp QR Code"
+                    width={140}
+                    height={140}
+                    className="w-36 h-36 object-contain"
+                    loading="lazy"
+                  />
+                )}
               </div>
-              <p className="text-base md:text-lg text-white/70">{t('process.footer.scanWeChat')}</p>
+              <p className="text-base md:text-lg text-white/70">
+                {locale === 'zh' ? t('process.footer.scanWeChat') : t('process.footer.scanWhatsApp')}
+              </p>
             </div>
 
             {/* Right: Stats */}

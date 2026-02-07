@@ -192,6 +192,20 @@ export interface GooglePlaceRating {
 }
 
 /**
+ * Related project info included in blog posts.
+ */
+export interface BlogRelatedProject {
+  /** URL-friendly identifier */
+  slug: string;
+  /** Project title */
+  title: Localized<string>;
+  /** Primary display image URL */
+  hero_image?: string;
+  /** External product links */
+  external_products?: { url: string; image_url?: string; label: Localized<string> }[];
+}
+
+/**
  * A blog post entry.
  */
 export interface BlogPost {
@@ -209,6 +223,8 @@ export interface BlogPost {
   published_at?: Date;
   /** External URL (if linking elsewhere) */
   url?: string;
+  /** Related project with external products */
+  related_project?: BlogRelatedProject;
 }
 
 /**

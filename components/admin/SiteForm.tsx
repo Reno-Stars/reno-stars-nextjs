@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
@@ -9,7 +9,8 @@ import ImageUrlInput from './ImageUrlInput';
 import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
-import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
+import SubmitButton from './SubmitButton';
+import { CARD, NAVY, GOLD, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 
@@ -74,8 +75,14 @@ export default function SiteForm({
   const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
+  const [selectedCity, setSelectedCity] = useState(initialData?.locationCity ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.sites.saved);
+
+  // Sync selectedCity when initialData changes (after save + revalidation)
+  useEffect(() => {
+    setSelectedCity(initialData?.locationCity ?? '');
+  }, [initialData?.locationCity]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -151,7 +158,13 @@ export default function SiteForm({
           <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.sites.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} tooltip={t.sites.tooltips.description} />
 
           <FormField label={t.sites.locationCity} htmlFor="locationCity" tooltip={t.sites.tooltips.city}>
-            <select id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle}>
+            <select
+              id="locationCity"
+              name="locationCity"
+              value={selectedCity}
+              onChange={(e) => setSelectedCity(e.target.value)}
+              style={fieldStyle}
+            >
               <option value="">{t.sites.selectCity}</option>
               {cities.map((city) => (
                 <option key={city.nameEn} value={city.nameEn}>
@@ -173,23 +186,7 @@ export default function SiteForm({
           </div>
 
           {editing && (
-            <button
-              type="submit"
-              disabled={isPending}
-              style={{
-                padding: '0.625rem 1.5rem',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: isPending ? GOLD_HOVER : GOLD,
-                color: '#fff',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: isPending ? 'not-allowed' : 'pointer',
-                opacity: isPending ? 0.7 : 1,
-              }}
-            >
-              {isPending ? t.common.saving : (submitLabel ?? t.common.save)}
-            </button>
+            <SubmitButton isPending={isPending} label={submitLabel} />
           )}
         </fieldset>
       </div>

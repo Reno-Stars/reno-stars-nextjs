@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import BilingualInput from '@/components/admin/BilingualInput';
@@ -9,9 +9,18 @@ import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
-import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
-import { CARD, NAVY, GOLD, GOLD_HOVER, neu } from '@/lib/theme';
+import { inputStyle, readOnlyStyle, selectStyle } from '@/components/admin/shared-styles';
+import SubmitButton from '@/components/admin/SubmitButton';
+import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+
+/** Project summary for the dropdown */
+export interface ProjectOption {
+  id: string;
+  titleEn: string;
+  titleZh: string;
+}
 
 interface BlogPostFormProps {
   action: (
@@ -31,16 +40,26 @@ interface BlogPostFormProps {
     seoKeywords: string;
     isPublished: boolean;
     publishedAt: string;
+    projectId?: string;
   };
+  /** Available projects for the related project dropdown */
+  projects?: ProjectOption[];
   submitLabel?: string;
 }
 
-export default function BlogPostForm({ action, initialData, submitLabel }: BlogPostFormProps) {
+export default function BlogPostForm({ action, initialData, projects = [], submitLabel }: BlogPostFormProps) {
   const t = useAdminTranslations();
+  const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
+  const [selectedProjectId, setSelectedProjectId] = useState(initialData?.projectId ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.blog.saved);
+
+  // Sync selectedProjectId when initialData changes (after save + revalidation)
+  useEffect(() => {
+    setSelectedProjectId(initialData?.projectId ?? '');
+  }, [initialData?.projectId]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -78,9 +97,28 @@ export default function BlogPostForm({ action, initialData, submitLabel }: BlogP
             </FormField>
           </div>
 
-          <FormField label={t.blog.metaTitle} htmlFor="seoKeywords" hint="Comma-separated">
+          <FormField label={t.blog.seoKeywords} htmlFor="seoKeywords" hint="Comma-separated">
             <input id="seoKeywords" name="seoKeywords" defaultValue={initialData?.seoKeywords ?? ''} style={fieldStyle} />
           </FormField>
+
+          {projects.length > 0 && (
+            <FormField label={t.blog.relatedProject} htmlFor="projectId">
+              <select
+                id="projectId"
+                name="projectId"
+                value={selectedProjectId}
+                onChange={(e) => setSelectedProjectId(e.target.value)}
+                style={editing ? selectStyle : readOnlyStyle}
+              >
+                <option value="">{t.blog.noProject}</option>
+                {projects.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {locale === 'zh' ? p.titleZh : p.titleEn}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+          )}
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
@@ -90,23 +128,7 @@ export default function BlogPostForm({ action, initialData, submitLabel }: BlogP
           </div>
 
           {editing && (
-            <button
-              type="submit"
-              disabled={isPending}
-              style={{
-                padding: '0.625rem 1.5rem',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: isPending ? GOLD_HOVER : GOLD,
-                color: '#fff',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: isPending ? 'not-allowed' : 'pointer',
-                opacity: isPending ? 0.7 : 1,
-              }}
-            >
-              {isPending ? t.common.saving : (submitLabel ?? t.common.save)}
-            </button>
+            <SubmitButton isPending={isPending} label={submitLabel} />
           )}
         </fieldset>
       </div>

@@ -13,6 +13,14 @@ export interface LocalizedGalleryItem {
   category: string;
 }
 
+/** Localized related project info for blog posts */
+export interface LocalizedBlogRelatedProject {
+  slug: string;
+  title: string;
+  hero_image?: string;
+  external_products?: { url: string; image_url?: string; label: string }[];
+}
+
 export interface LocalizedBlogPost {
   slug: string;
   title: string;
@@ -20,6 +28,7 @@ export interface LocalizedBlogPost {
   content?: string;
   published_at?: Date;
   url?: string;
+  related_project?: LocalizedBlogRelatedProject;
 }
 
 export interface LocalizedShowroom {
@@ -63,6 +72,22 @@ export const images = {
 
 // Helper function for localized blog post (takes data as input, no static dependency)
 export function getLocalizedBlogPost(post: BlogPost, locale: Locale): LocalizedBlogPost {
+  let localizedRelatedProject: LocalizedBlogRelatedProject | undefined;
+
+  if (post.related_project) {
+    const rp = post.related_project;
+    localizedRelatedProject = {
+      slug: rp.slug,
+      title: rp.title[locale],
+      hero_image: rp.hero_image,
+      external_products: rp.external_products?.map((ep) => ({
+        url: ep.url,
+        image_url: ep.image_url,
+        label: ep.label[locale],
+      })),
+    };
+  }
+
   return {
     slug: post.slug,
     title: post.title[locale],
@@ -70,5 +95,6 @@ export function getLocalizedBlogPost(post: BlogPost, locale: Locale): LocalizedB
     content: post.content?.[locale],
     published_at: post.published_at,
     url: post.url,
+    related_project: localizedRelatedProject,
   };
 }

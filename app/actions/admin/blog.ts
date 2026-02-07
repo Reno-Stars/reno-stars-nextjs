@@ -14,6 +14,11 @@ function getBlogData(formData: FormData) {
   const publishedAt = parsedDate && !isNaN(parsedDate.getTime())
     ? parsedDate
     : isPublished ? new Date() : null;
+
+  // Handle projectId - can be empty string, 'null', or a UUID
+  const projectIdRaw = getString(formData, 'projectId').trim();
+  const projectId = projectIdRaw && projectIdRaw !== '' ? projectIdRaw : null;
+
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -27,6 +32,7 @@ function getBlogData(formData: FormData) {
     seoKeywords: getString(formData, 'seoKeywords') || null,
     isPublished,
     publishedAt,
+    projectId,
     updatedAt: new Date(),
   };
 }
@@ -46,6 +52,9 @@ export async function createBlogPost(
     }
     if (data.featuredImageUrl && !isValidUrl(data.featuredImageUrl)) {
       return { error: 'Featured image URL is not a valid URL.' };
+    }
+    if (data.projectId && !isValidUUID(data.projectId)) {
+      return { error: 'Invalid project ID.' };
     }
     const shortTextError = validateTextLengths(
       { titleEn: data.titleEn, titleZh: data.titleZh, excerptEn: data.excerptEn, excerptZh: data.excerptZh, author: data.author }, MAX_SHORT_TEXT_LENGTH
@@ -82,6 +91,9 @@ export async function updateBlogPost(
     }
     if (data.featuredImageUrl && !isValidUrl(data.featuredImageUrl)) {
       return { error: 'Featured image URL is not a valid URL.' };
+    }
+    if (data.projectId && !isValidUUID(data.projectId)) {
+      return { error: 'Invalid project ID.' };
     }
     const shortTextError = validateTextLengths(
       { titleEn: data.titleEn, titleZh: data.titleZh, excerptEn: data.excerptEn, excerptZh: data.excerptZh, author: data.author }, MAX_SHORT_TEXT_LENGTH

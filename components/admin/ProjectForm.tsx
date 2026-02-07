@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
@@ -8,11 +8,12 @@ import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
+import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import { uploadImage } from '@/app/actions/admin/upload';
 import { getAssetUrl } from '@/lib/storage';
 import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
-import { CARD, NAVY, GOLD, GOLD_HOVER, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
+import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 
@@ -107,8 +108,20 @@ export default function ProjectForm({
   const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
+  const [selectedServiceType, setSelectedServiceType] = useState(initialData?.serviceType ?? 'kitchen');
+  const [selectedLocationCity, setSelectedLocationCity] = useState(initialData?.locationCity ?? '');
+  const [selectedSpaceType, setSelectedSpaceType] = useState(initialData?.spaceTypeEn ?? '');
+  const [selectedSiteId, setSelectedSiteId] = useState(initialData?.siteId ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.projects.saved);
+
+  // Sync state when initialData changes (after save + revalidation)
+  useEffect(() => {
+    setSelectedServiceType(initialData?.serviceType ?? 'kitchen');
+    setSelectedLocationCity(initialData?.locationCity ?? '');
+    setSelectedSpaceType(initialData?.spaceTypeEn ?? '');
+    setSelectedSiteId(initialData?.siteId ?? '');
+  }, [initialData?.serviceType, initialData?.locationCity, initialData?.spaceTypeEn, initialData?.siteId]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -123,7 +136,9 @@ export default function ProjectForm({
   );
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragCounterRef = useRef(0);
 
   // Handle batch image upload — uploads in parallel for speed
   const handleBatchUpload = async (files: FileList) => {
@@ -138,8 +153,8 @@ export default function ProjectForm({
         const fd = new FormData();
         fd.set('file', file);
         const result = await uploadImage({}, fd);
-        if (result.error) throw new Error(`${file.name}: ${result.error}`);
-        return { url: result.url!, name: file.name };
+        if (result.error || !result.url) throw new Error(`${file.name}: ${result.error ?? 'No URL returned'}`);
+        return { url: result.url, name: file.name };
       })
     );
 
@@ -179,6 +194,9 @@ export default function ProjectForm({
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current = 0;
+    setIsDragging(false);
     if (e.dataTransfer.files?.length) {
       handleBatchUpload(e.dataTransfer.files);
     }
@@ -186,6 +204,25 @@ export default function ProjectForm({
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current++;
+    if (e.dataTransfer.items?.length) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current--;
+    if (dragCounterRef.current === 0) {
+      setIsDragging(false);
+    }
   };
 
   return (
@@ -261,14 +298,14 @@ export default function ProjectForm({
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
-              <select id="serviceType" name="serviceType" defaultValue={initialData?.serviceType ?? 'kitchen'} style={fieldStyle}>
+              <select id="serviceType" name="serviceType" value={selectedServiceType} onChange={(e) => setSelectedServiceType(e.target.value)} style={fieldStyle}>
                 {SERVICE_TYPES.map((key) => (
                   <option key={key} value={key}>{t.projects.serviceTypes[key]}</option>
                 ))}
               </select>
             </FormField>
             <FormField label={t.projects.locationCity} htmlFor="locationCity" tooltip={t.projects.tooltips.locationCity}>
-              <select id="locationCity" name="locationCity" defaultValue={initialData?.locationCity ?? ''} style={fieldStyle}>
+              <select id="locationCity" name="locationCity" value={selectedLocationCity} onChange={(e) => setSelectedLocationCity(e.target.value)} style={fieldStyle}>
                 <option value="">{t.sites.selectCity}</option>
                 {cities.map((city) => (
                   <option key={city.nameEn} value={city.nameEn}>
@@ -314,7 +351,7 @@ export default function ProjectForm({
           <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} tooltip={t.projects.tooltips.duration} />
 
           <FormField label={t.projects.spaceType} htmlFor="spaceType" tooltip={t.projects.tooltips.spaceType}>
-            <select id="spaceType" name="spaceType" defaultValue={initialData?.spaceTypeEn ?? ''} style={fieldStyle}>
+            <select id="spaceType" name="spaceType" value={selectedSpaceType} onChange={(e) => setSelectedSpaceType(e.target.value)} style={fieldStyle}>
               <option value="">{t.projects.selectSpaceType}</option>
               {SPACE_TYPES.map(({ en, zh }) => (
                 <option key={en} value={en}>
@@ -345,16 +382,20 @@ export default function ProjectForm({
                 type="button"
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
                 style={{
                   width: '100%',
                   marginBottom: '0.75rem',
                   padding: '1rem',
                   borderRadius: '8px',
-                  border: `2px dashed ${uploading ? GOLD : '#ccc'}`,
-                  backgroundColor: CARD,
+                  border: `2px dashed ${isDragging ? GOLD : uploading ? GOLD : TEXT_MID}`,
+                  backgroundColor: isDragging ? 'rgba(200, 146, 42, 0.08)' : CARD,
                   textAlign: 'center',
                   cursor: uploading ? 'wait' : 'pointer',
                   opacity: uploading ? 0.6 : 1,
+                  transition: 'border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease',
+                  transform: isDragging ? 'scale(1.01)' : 'scale(1)',
                 }}
                 onClick={() => !uploading && fileInputRef.current?.click()}
                 aria-label={t.upload.clickOrDrag}
@@ -541,7 +582,8 @@ export default function ProjectForm({
                 <select
                   id="siteId"
                   name="siteId"
-                  defaultValue={initialData?.siteId ?? ''}
+                  value={selectedSiteId}
+                  onChange={(e) => setSelectedSiteId(e.target.value)}
                   required
                   style={fieldStyle}
                 >
@@ -569,23 +611,7 @@ export default function ProjectForm({
           </div>
 
           {editing && (
-            <button
-              type="submit"
-              disabled={isPending}
-              style={{
-                padding: '0.625rem 1.5rem',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: isPending ? GOLD_HOVER : GOLD,
-                color: '#fff',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                cursor: isPending ? 'not-allowed' : 'pointer',
-                opacity: isPending ? 0.7 : 1,
-              }}
-            >
-              {isPending ? t.common.saving : (submitLabel ?? t.common.save)}
-            </button>
+            <SubmitButton isPending={isPending} label={submitLabel} />
           )}
         </fieldset>
       </div>

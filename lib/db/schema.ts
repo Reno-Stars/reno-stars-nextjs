@@ -357,14 +357,26 @@ export const blogPosts = pgTable(
     seoKeywords: text('seo_keywords'),
     isPublished: boolean('is_published').default(false).notNull(),
     publishedAt: timestamp('published_at'),
+    // Optional related project reference
+    projectId: uuid('project_id').references(() => projects.id, {
+      onDelete: 'set null',
+    }),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
   (table) => [
     uniqueIndex('blog_posts_slug_idx').on(table.slug),
     index('blog_posts_published_at_idx').on(table.publishedAt),
+    index('blog_posts_project_id_idx').on(table.projectId),
   ]
 );
+
+export const blogPostsRelations = relations(blogPosts, ({ one }) => ({
+  project: one(projects, {
+    fields: [blogPosts.projectId],
+    references: [projects.id],
+  }),
+}));
 
 // ============================================================================
 // TESTIMONIALS

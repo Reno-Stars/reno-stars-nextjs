@@ -317,7 +317,8 @@
     "publishedOn": "发布于",
     "backToBlog": "返回博客",
     "comingSoon": "完整文章内容即将上线。如有任何装修问题，请随时联系我们。",
-    "noPosts": "暂无博客文章。请稍后查看装修技巧和见解。"
+    "noPosts": "暂无博客文章。请稍后查看装修技巧和见解。",
+    "relatedProject": "相关项目"
   },
   "contact": {
     "title": "联系我们",
@@ -615,6 +616,7 @@
       "googleRating": "Google",
       "warrantyService": "质保服务",
       "scanWeChat": "扫码添加微信咨询",
+      "scanWhatsApp": "扫码通过 WhatsApp 联系",
       "website": "reno-stars.com"
     }
   }

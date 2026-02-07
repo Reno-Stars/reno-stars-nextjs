@@ -21,7 +21,7 @@ import {
 } from './schema';
 import { getAssetUrl } from '../storage';
 import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages } from './helpers';
-import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, GalleryItem, Showroom, Faq, Site, SiteWithProjects } from '../types';
+import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects } from '../types';
 
 /**
  * Fetch company info from DB and map to the `Company` type.
@@ -473,7 +473,7 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
   }));
 });
 
-/** Fetch a single published blog post by slug. */
+/** Fetch a single published blog post by slug, with related project if linked. */
 export const getBlogPostBySlugFromDb = cache(
   async (slug: string): Promise<BlogPost | null> => {
     const rows = await db
@@ -484,6 +484,39 @@ export const getBlogPostBySlugFromDb = cache(
 
     const row = rows[0];
     if (!row) return null;
+
+    // Fetch related project and external products if projectId is set
+    let relatedProject: BlogRelatedProject | undefined;
+    if (row.projectId) {
+      const projectRows = await db
+        .select()
+        .from(projectsTable)
+        .where(eq(projectsTable.id, row.projectId))
+        .limit(1);
+
+      const project = projectRows[0];
+      if (project) {
+        const externalProducts: DbExternalProductRow[] = await db
+          .select()
+          .from(projectExternalProductsTable)
+          .where(eq(projectExternalProductsTable.projectId, project.id))
+          .orderBy(asc(projectExternalProductsTable.displayOrder));
+
+        relatedProject = {
+          slug: project.slug,
+          title: { en: project.titleEn, zh: project.titleZh },
+          hero_image: project.heroImageUrl ? getAssetUrl(project.heroImageUrl) : undefined,
+          external_products:
+            externalProducts.length > 0
+              ? externalProducts.map((ep) => ({
+                  url: ep.url,
+                  image_url: ep.imageUrl ? getAssetUrl(ep.imageUrl) : undefined,
+                  label: { en: ep.labelEn, zh: ep.labelZh },
+                }))
+              : undefined,
+        };
+      }
+    }
 
     return {
       slug: row.slug,
@@ -498,6 +531,7 @@ export const getBlogPostBySlugFromDb = cache(
           : undefined,
       featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
       published_at: row.publishedAt ?? undefined,
+      related_project: relatedProject,
     };
   }
 );

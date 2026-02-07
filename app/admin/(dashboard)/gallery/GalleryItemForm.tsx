@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
@@ -31,8 +31,14 @@ interface GalleryItemFormProps {
 export default function GalleryItemForm({ action, initialData }: GalleryItemFormProps) {
   const t = useAdminTranslations();
   const [editing, setEditing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(initialData.category);
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.gallery.saved);
+
+  // Sync selectedCategory when initialData changes (after save + revalidation)
+  useEffect(() => {
+    setSelectedCategory(initialData.category);
+  }, [initialData.category]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -64,7 +70,14 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.gallery.categoryLabel} htmlFor="category">
-              <select id="category" name="category" defaultValue={initialData.category} required style={fieldStyle}>
+              <select
+                id="category"
+                name="category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                required
+                style={fieldStyle}
+              >
                 {GALLERY_CATEGORY_OPTIONS.map((cat) => (
                   <option key={cat.value} value={cat.value}>
                     {cat.label}

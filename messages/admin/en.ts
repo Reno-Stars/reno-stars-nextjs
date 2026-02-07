@@ -192,6 +192,10 @@ const en = {
     heroImage: 'Hero Image URL',
     metaTitle: 'Meta Title',
     metaDescription: 'Meta Description',
+    seoKeywords: 'SEO Keywords',
+    relatedProject: 'Related Project',
+    selectProject: 'Select a project...',
+    noProject: 'No related project',
   },
   contacts: {
     title: 'Contact Submissions',

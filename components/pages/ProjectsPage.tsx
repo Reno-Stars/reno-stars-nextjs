@@ -89,6 +89,64 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   }, [rawProjects]);
 
   const projectsRef = useRef<HTMLElement>(null);
+  const categoryScrollRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0, hasDragged: false, lastX: 0, velocity: 0, lastTime: 0 });
+
+  const handleDragStart = useCallback((e: React.MouseEvent) => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    e.preventDefault();
+    dragState.current = { isDown: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft, hasDragged: false, lastX: e.pageX, velocity: 0, lastTime: Date.now() };
+    el.style.cursor = 'grabbing';
+    el.style.userSelect = 'none';
+    el.style.scrollSnapType = 'none'; // Disable snap during drag
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    const ds = dragState.current;
+    ds.isDown = false;
+    el.style.cursor = 'grab';
+    el.style.userSelect = '';
+
+    // Apply momentum scrolling
+    if (Math.abs(ds.velocity) > 0.5) {
+      const momentum = ds.velocity * 150; // Adjust multiplier for momentum strength
+      el.scrollBy({ left: -momentum, behavior: 'smooth' });
+    }
+
+    // Re-enable snap after momentum settles
+    setTimeout(() => {
+      el.style.scrollSnapType = 'x proximity';
+    }, 300);
+
+    // Reset hasDragged after click event fires (click fires after mouseup)
+    requestAnimationFrame(() => { dragState.current.hasDragged = false; });
+  }, []);
+
+  const handleDragMove = useCallback((e: React.MouseEvent) => {
+    const ds = dragState.current;
+    if (!ds.isDown) return;
+    const el = categoryScrollRef.current;
+    if (!el) return;
+
+    const now = Date.now();
+    const dt = now - (ds.lastTime || now);
+    const x = e.pageX - el.offsetLeft;
+    const walk = x - ds.startX;
+
+    // Calculate velocity for momentum
+    if (dt > 0) {
+      ds.velocity = (e.pageX - (ds.lastX || e.pageX)) / dt;
+    }
+    ds.lastX = e.pageX;
+    ds.lastTime = now;
+
+    if (Math.abs(walk) > 3) ds.hasDragged = true;
+    el.scrollLeft = ds.scrollLeft - walk;
+  }, []);
+
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
@@ -181,7 +239,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           <h2 className="text-lg font-bold mb-4" style={{ color: TEXT }}>
             {t('filter.browseByCategory')}
           </h2>
-          <div className="flex gap-4 overflow-x-auto p-2 -m-2 snap-x snap-mandatory scrollbar-hide">
+          <div
+            ref={categoryScrollRef}
+            className="flex gap-4 overflow-x-auto p-2 -m-2 snap-x snap-proximity category-scroll"
+            style={{ cursor: 'grab', scrollBehavior: 'auto' }}
+            onMouseDown={handleDragStart}
+            onMouseLeave={handleDragEnd}
+            onMouseUp={handleDragEnd}
+            onMouseMove={handleDragMove}
+          >
             {categories.filter((c) => c.en !== 'All' && allProjects.some((p) => p.category === c[locale])).map((category) => {
               const categoryProjects = allProjects.filter(
                 (p) => p.category === category[locale]
@@ -192,7 +258,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               return (
                 <button
                   key={category.en}
-                  onClick={() => handleCategoryClick(category.en)}
+                  onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.en); }}
                   className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat"
                   style={{
                     width: '220px',
