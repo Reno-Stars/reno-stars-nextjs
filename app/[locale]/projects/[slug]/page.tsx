@@ -236,7 +236,7 @@ export default async function Page({ params }: PageProps) {
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
         />
-        <SiteDetailPage locale={locale as Locale} site={localizedSite} company={company} />
+        <SiteDetailPage site={localizedSite} company={company} />
       </>
     );
   }

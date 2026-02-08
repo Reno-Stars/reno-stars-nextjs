@@ -5,6 +5,9 @@
 
 import type { Project, Localized, Site, SiteWithProjects } from '../types';
 
+/** Sentinel slug used for site-level images in aggregated image lists. */
+export const SITE_IMAGE_SLUG = '__site__';
+
 /**
  * Parse a budget range string like "$15,000 - $25,000" and extract min/max values.
  * Returns null for non-parseable budget strings (e.g., "TBD", "Call for quote").
@@ -109,7 +112,7 @@ export function collectAllImages(projects: Project[], site?: Site): SiteWithProj
         src: img.src,
         alt: img.alt,
         is_before: img.is_before,
-        projectSlug: '__site__',
+        projectSlug: SITE_IMAGE_SLUG,
         projectTitle: site.title,
       });
     }

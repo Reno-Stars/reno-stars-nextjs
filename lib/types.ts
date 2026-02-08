@@ -369,6 +369,21 @@ export interface LocalizedSiteWithProjects extends LocalizedSite {
   aggregated: LocalizedSiteAggregated;
 }
 
+/**
+ * Extended project type for display purposes.
+ * Can represent either a regular project or a site displayed as a "Whole House" project.
+ */
+export interface DisplayProject extends LocalizedProject {
+  isSiteProject?: boolean;
+  projectCount?: number;
+  // Site-specific fields for whole house projects
+  childAreas?: string[];
+  totalBudget?: string;
+  totalDuration?: string;
+  allServiceScopes?: string[];
+  allExternalProducts?: { url: string; image_url?: string; label: string }[];
+}
+
 /** A service with content resolved to a single locale */
 export interface LocalizedService {
   slug: string;

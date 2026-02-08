@@ -39,7 +39,7 @@ function parseSiteImages(formData: FormData) {
   let i = 0;
   while (formData.has(`siteImages[${i}].url`) && i < MAX_SITE_IMAGES) {
     const imageUrl = getString(formData, `siteImages[${i}].url`).trim();
-    if (!imageUrl) { i++; continue; }
+    if (!imageUrl || !isValidUrl(imageUrl)) { i++; continue; }
     images.push({
       imageUrl,
       altTextEn: getString(formData, `siteImages[${i}].altEn`),
@@ -142,14 +142,16 @@ export async function updateSite(
       return { error: 'Site not found.' };
     }
 
-    // Replace site images: delete existing, insert new
+    // Replace site images atomically: delete existing, insert new
     const imgData = parseSiteImages(formData);
-    await db.delete(siteImages).where(eq(siteImages.siteId, id));
-    if (imgData.length > 0) {
-      await db.insert(siteImages).values(
-        imgData.map((img) => ({ ...img, siteId: id }))
-      );
-    }
+    await db.transaction(async (tx: typeof db) => {
+      await tx.delete(siteImages).where(eq(siteImages.siteId, id));
+      if (imgData.length > 0) {
+        await tx.insert(siteImages).values(
+          imgData.map((img) => ({ ...img, siteId: id }))
+        );
+      }
+    });
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');

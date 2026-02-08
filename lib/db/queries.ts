@@ -343,7 +343,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImageRows?: DbSiteImageRow[]): Site
   };
 }
 
-/** Fetch all published sites. */
+/** Fetch all published sites (listing only — omits site images for performance). */
 export const getSitesFromDb = cache(async (): Promise<Site[]> => {
   const rows = await db
     .select()

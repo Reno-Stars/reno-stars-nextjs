@@ -5,23 +5,13 @@ import Image from 'next/image';
 import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
-import type { LocalizedProject } from '@/lib/types';
+import type { DisplayProject } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
+import ProductLink from '@/components/ProductLink';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, SH_DARK,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
 } from '@/lib/theme';
-
-// Extended project type that includes site-specific fields
-interface DisplayProject extends LocalizedProject {
-  isSiteProject?: boolean;
-  projectCount?: number;
-  childAreas?: string[];
-  totalBudget?: string;
-  totalDuration?: string;
-  allServiceScopes?: string[];
-  allExternalProducts?: { url: string; image_url?: string; label: string }[];
-}
 
 interface ProjectModalProps {
   project: DisplayProject | null;
@@ -305,7 +295,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   </div>
                   <div className="flex flex-col gap-1.5">
                     {externalProducts.map((ep) => (
-                      <ProductLinkWithPreview key={ep.url} product={ep} />
+                      <ProductLink key={ep.url} product={ep} size="sm" />
                     ))}
                   </div>
                 </div>
@@ -327,49 +317,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-/** Product link with hover image preview */
-function ProductLinkWithPreview({ product }: { product: { url: string; image_url?: string; label: string } }) {
-  const [showPreview, setShowPreview] = useState(false);
-
-  return (
-    <div className="relative">
-      <a
-        href={product.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
-        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-        onMouseEnter={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
-      >
-        {product.image_url && (
-          <div className="w-6 h-6 rounded overflow-hidden flex-shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.image_url} alt={product.label} className="w-full h-full object-cover" />
-          </div>
-        )}
-        <span className="flex-1 truncate">{product.label}</span>
-        <ExternalLink className="w-3 h-3 flex-shrink-0" />
-      </a>
-
-      {/* Hover preview - positioned outside the link */}
-      {showPreview && product.image_url && (
-        <div
-          className="absolute left-0 bottom-full mb-2 z-[100] p-2 rounded-xl pointer-events-none"
-          style={{ backgroundColor: 'white', boxShadow: '0 10px 40px rgba(0,0,0,0.25)' }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={product.image_url}
-            alt={product.label}
-            className="w-40 h-40 object-contain rounded-lg"
-          />
-        </div>
-      )}
     </div>
   );
 }

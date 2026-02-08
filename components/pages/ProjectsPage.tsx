@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, Project, LocalizedProject, SiteWithProjects, Localized } from '@/lib/types';
+import type { Company, Project, SiteWithProjects, DisplayProject } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
 import { getCategoriesLocalized } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
@@ -16,18 +16,6 @@ import {
   NAVY, GOLD, SURFACE, SURFACE_ALT,
   TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
-
-// Extended type that can be either a project or a site displayed as project
-interface DisplayProject extends LocalizedProject {
-  isSiteProject?: boolean;
-  projectCount?: number;
-  // Site-specific fields for whole house projects
-  childAreas?: string[]; // Area names (e.g., "Kitchen", "Bathroom")
-  totalBudget?: string;
-  totalDuration?: string;
-  allServiceScopes?: string[];
-  allExternalProducts?: { url: string; image_url?: string; label: string }[];
-}
 
 interface ProjectsPageProps {
   locale: Locale;

@@ -3,24 +3,24 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home } from 'lucide-react';
 import { Link } from '@/navigation';
-import type { Locale } from '@/i18n/config';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
+import ProductLink from '@/components/ProductLink';
+import { SITE_IMAGE_SLUG } from '@/lib/db/helpers';
 import {
   GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
 interface SiteDetailPageProps {
-  locale: Locale;
   site: LocalizedSiteWithProjects;
   company: Company;
 }
 
-export default function SiteDetailPage({ locale: _locale, site, company }: SiteDetailPageProps) {
+export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   const t = useTranslations();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -135,7 +135,7 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                     {site.badge}
                   </span>
                 )}
-                {currentImage && currentImage.projectSlug !== '__site__' && (
+                {currentImage && currentImage.projectSlug !== SITE_IMAGE_SLUG && (
                   <span
                     className="absolute bottom-4 left-4 px-3 py-1 rounded-lg text-xs font-medium"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}
@@ -545,49 +545,6 @@ function LightboxDialog({
           </>
         )}
       </div>
-    </div>
-  );
-}
-
-/** Product link with hover image preview */
-function ProductLink({ product }: { product: { url: string; image_url?: string; label: string } }) {
-  const [showPreview, setShowPreview] = useState(false);
-
-  return (
-    <div className="relative">
-      <a
-        href={product.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:brightness-95"
-        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-        onMouseEnter={() => setShowPreview(true)}
-        onMouseLeave={() => setShowPreview(false)}
-      >
-        {product.image_url && (
-          <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.image_url} alt={product.label} className="w-full h-full object-cover" />
-          </div>
-        )}
-        <span className="flex-1">{product.label}</span>
-        <ExternalLink className="w-4 h-4 flex-shrink-0" />
-      </a>
-
-      {/* Hover preview - positioned outside the link */}
-      {showPreview && product.image_url && (
-        <div
-          className="absolute left-0 bottom-full mb-2 z-50 p-2 rounded-xl shadow-2xl pointer-events-none"
-          style={{ backgroundColor: 'white', boxShadow: '0 10px 40px rgba(0,0,0,0.2)' }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={product.image_url}
-            alt={product.label}
-            className="w-48 h-48 object-contain rounded-lg"
-          />
-        </div>
-      )}
     </div>
   );
 }
