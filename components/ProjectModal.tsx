@@ -20,6 +20,7 @@ interface DisplayProject extends LocalizedProject {
   totalBudget?: string;
   totalDuration?: string;
   allServiceScopes?: string[];
+  allExternalProducts?: { url: string; image_url?: string; label: string }[];
 }
 
 interface ProjectModalProps {
@@ -101,6 +102,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const childAreas = isSite ? project.childAreas : undefined;
   // Service scopes (for whole house sites, use aggregated; otherwise use project)
   const serviceScopes = isSite ? project.allServiceScopes : project.service_scope;
+  // External products (for whole house sites, use aggregated; otherwise use project)
+  const externalProducts = isSite ? project.allExternalProducts : project.external_products;
 
   return (
     <div
@@ -294,14 +297,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               )}
 
-              {project.external_products && project.external_products.length > 0 && (
+              {externalProducts && externalProducts.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2" style={{ color: TEXT_MUTED }}>
                     <ExternalLink className="w-4 h-4" style={{ color: GOLD }} />
                     {t('projects.externalProducts')}
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    {project.external_products.map((ep) => (
+                    {externalProducts.map((ep) => (
                       <a
                         key={ep.url}
                         href={ep.url}

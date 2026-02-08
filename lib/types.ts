@@ -72,6 +72,8 @@ export interface SiteAggregated {
   allServiceScopes: Localized<string[]>;
   /** All images from all projects with project attribution */
   allImages: SiteImage[];
+  /** All external products from all projects */
+  allExternalProducts: { url: string; image_url?: string; label: Localized<string> }[];
 }
 
 /**
@@ -355,6 +357,7 @@ export interface LocalizedSiteAggregated {
   totalDuration?: string;
   allServiceScopes: string[];
   allImages: LocalizedSiteImage[];
+  allExternalProducts: { url: string; image_url?: string; label: string }[];
 }
 
 /** A localized site with projects and aggregated data */

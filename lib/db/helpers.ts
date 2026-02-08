@@ -113,3 +113,26 @@ export function collectAllImages(projects: Project[]): SiteWithProjects['aggrega
   }
   return images;
 }
+
+/**
+ * Collect all external products from projects, deduped by URL.
+ */
+export function collectAllExternalProducts(projects: Project[]): SiteWithProjects['aggregated']['allExternalProducts'] {
+  const seen = new Set<string>();
+  const products: SiteWithProjects['aggregated']['allExternalProducts'] = [];
+  for (const project of projects) {
+    if (project.external_products) {
+      for (const ep of project.external_products) {
+        if (!seen.has(ep.url)) {
+          seen.add(ep.url);
+          products.push({
+            url: ep.url,
+            image_url: ep.image_url,
+            label: ep.label,
+          });
+        }
+      }
+    }
+  }
+  return products;
+}

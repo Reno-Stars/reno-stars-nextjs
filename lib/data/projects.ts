@@ -627,6 +627,11 @@ export function getLocalizedSiteWithProjects(
     totalDuration: site.aggregated.totalDuration?.[locale],
     allServiceScopes: site.aggregated.allServiceScopes[locale],
     allImages,
+    allExternalProducts: site.aggregated.allExternalProducts.map((ep) => ({
+      url: ep.url,
+      image_url: ep.image_url,
+      label: ep.label[locale],
+    })),
   };
 
   return {

@@ -26,6 +26,7 @@ interface DisplayProject extends LocalizedProject {
   totalBudget?: string;
   totalDuration?: string;
   allServiceScopes?: string[];
+  allExternalProducts?: { url: string; image_url?: string; label: string }[];
 }
 
 interface ProjectsPageProps {
@@ -62,6 +63,11 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         totalBudget: site.aggregated?.totalBudget,
         totalDuration: site.aggregated?.totalDuration?.[locale],
         allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
+        allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
+          url: ep.url,
+          image_url: ep.image_url,
+          label: ep.label[locale],
+        })) ?? [],
       })),
   [sitesAsProjects, locale, wholeHouseCategory]);
 

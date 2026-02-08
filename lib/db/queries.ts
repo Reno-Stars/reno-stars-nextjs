@@ -20,7 +20,7 @@ import {
   faqs as faqsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages } from './helpers';
+import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
 import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects } from '../types';
 
 /**
@@ -386,6 +386,7 @@ export const getSiteBySlugFromDb = cache(
       totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects),
+      allExternalProducts: collectAllExternalProducts(projects),
     };
 
     return {
@@ -415,6 +416,7 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
       totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects),
+      allExternalProducts: collectAllExternalProducts(projects),
     };
 
     results.push({
