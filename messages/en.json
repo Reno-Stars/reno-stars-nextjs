@@ -502,7 +502,8 @@
     "childProjectsCount": "{count} renovation areas",
     "noImagesForArea": "No images available for this area",
     "areasCount": "{count, plural, one {# Area} other {# Areas}}",
-    "siteBadge": "Whole House"
+    "siteBadge": "Whole House",
+    "areas": "Areas"
   },
   "process": {
     "hero": {
