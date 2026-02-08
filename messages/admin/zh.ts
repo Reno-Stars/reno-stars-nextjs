@@ -82,6 +82,11 @@ const zh: AdminMessages = {
   },
   dashboard: {
     title: '仪表盘',
+    welcome: '欢迎回来',
+    subtitle: '以下是您网站内容的概览。',
+    groupPortfolio: '作品集',
+    groupContent: '内容',
+    groupCrm: '客户管理',
     projects: '项目案例',
     services: '服务项目',
     blogPosts: '博客文章',

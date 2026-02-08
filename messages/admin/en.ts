@@ -80,6 +80,11 @@ const en = {
   },
   dashboard: {
     title: 'Dashboard',
+    welcome: 'Welcome back',
+    subtitle: 'Here is an overview of your site content.',
+    groupPortfolio: 'Portfolio',
+    groupContent: 'Content',
+    groupCrm: 'CRM',
     projects: 'Projects',
     services: 'Services',
     blogPosts: 'Blog Posts',
