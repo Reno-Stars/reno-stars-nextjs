@@ -336,38 +336,40 @@ function ProductLinkWithPreview({ product }: { product: { url: string; image_url
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <a
-      href={product.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="relative flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
-      style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-      onMouseEnter={() => setShowPreview(true)}
-      onMouseLeave={() => setShowPreview(false)}
-    >
-      {product.image_url && (
-        <div className="relative w-6 h-6 rounded overflow-hidden flex-shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={product.image_url} alt={product.label} className="w-full h-full object-cover" />
+    <div className="relative">
+      <a
+        href={product.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
+        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+        onMouseEnter={() => setShowPreview(true)}
+        onMouseLeave={() => setShowPreview(false)}
+      >
+        {product.image_url && (
+          <div className="w-6 h-6 rounded overflow-hidden flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={product.image_url} alt={product.label} className="w-full h-full object-cover" />
+          </div>
+        )}
+        <span className="flex-1 truncate">{product.label}</span>
+        <ExternalLink className="w-3 h-3 flex-shrink-0" />
+      </a>
 
-          {/* Hover preview */}
-          {showPreview && (
-            <div
-              className="absolute left-8 bottom-0 z-[60] p-2 rounded-xl shadow-2xl pointer-events-none"
-              style={{ backgroundColor: 'white' }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={product.image_url}
-                alt={product.label}
-                className="w-40 h-40 object-contain rounded-lg"
-              />
-            </div>
-          )}
+      {/* Hover preview - positioned outside the link */}
+      {showPreview && product.image_url && (
+        <div
+          className="absolute left-0 bottom-full mb-2 z-[100] p-2 rounded-xl pointer-events-none"
+          style={{ backgroundColor: 'white', boxShadow: '0 10px 40px rgba(0,0,0,0.25)' }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={product.image_url}
+            alt={product.label}
+            className="w-40 h-40 object-contain rounded-lg"
+          />
         </div>
       )}
-      <span className="flex-1 truncate">{product.label}</span>
-      <ExternalLink className="w-3 h-3 flex-shrink-0" />
-    </a>
+    </div>
   );
 }
