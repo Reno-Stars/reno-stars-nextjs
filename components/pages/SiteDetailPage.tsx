@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home, ExternalLink } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject } from '@/lib/types';
@@ -309,6 +309,36 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                       >
                         {scope}
                       </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* External Products Used */}
+              {site.aggregated.allExternalProducts && site.aggregated.allExternalProducts.length > 0 && (
+                <div className="mb-6">
+                  <h2 className="text-base font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
+                    {t('projects.externalProducts')}
+                  </h2>
+                  <div className="flex flex-col gap-2">
+                    {site.aggregated.allExternalProducts.map((ep) => (
+                      <a
+                        key={ep.url}
+                        href={ep.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:brightness-95"
+                        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                      >
+                        {ep.image_url && (
+                          <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={ep.image_url} alt={ep.label} className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                        <span className="flex-1">{ep.label}</span>
+                        <ExternalLink className="w-4 h-4 flex-shrink-0" />
+                      </a>
                     ))}
                   </div>
                 </div>
