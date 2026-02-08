@@ -25,7 +25,7 @@ export default function ProductLink({ product, size = 'md' }: ProductLinkProps) 
         href={product.url}
         target="_blank"
         rel="noopener noreferrer"
-        className={`flex items-center rounded-${isSmall ? 'lg' : 'xl'} font-medium transition-colors hover:brightness-95`}
+        className={`flex items-center ${isSmall ? 'rounded-lg' : 'rounded-xl'} font-medium transition-colors hover:brightness-95`}
         style={{
           backgroundColor: GOLD_PALE,
           color: GOLD,

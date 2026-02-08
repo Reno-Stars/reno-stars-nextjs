@@ -79,18 +79,20 @@ export async function createSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
 
-    const [inserted] = await db.insert(projectSites).values({
-      ...data,
-      publishedAt: data.isPublished ? new Date() : null,
-    }).returning({ id: projectSites.id });
-
-    // Insert site images
+    // Insert site and images atomically
     const imgData = parseSiteImages(formData);
-    if (imgData.length > 0) {
-      await db.insert(siteImages).values(
-        imgData.map((img) => ({ ...img, siteId: inserted.id }))
-      );
-    }
+    await db.transaction(async (tx: typeof db) => {
+      const [inserted] = await tx.insert(projectSites).values({
+        ...data,
+        publishedAt: data.isPublished ? new Date() : null,
+      }).returning({ id: projectSites.id });
+
+      if (imgData.length > 0) {
+        await tx.insert(siteImages).values(
+          imgData.map((img) => ({ ...img, siteId: inserted.id }))
+        );
+      }
+    });
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');
