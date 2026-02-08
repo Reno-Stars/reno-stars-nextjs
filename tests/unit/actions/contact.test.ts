@@ -16,6 +16,13 @@ vi.mock('@/lib/db/schema', () => ({
 // Dynamic import after mocks are set up
 const { submitContactForm } = await import('@/app/actions/contact');
 
+// Generate unique phone numbers to avoid rate limiting between tests
+let phoneCounter = 0;
+function uniquePhone(): string {
+  phoneCounter++;
+  return `604-555-${String(phoneCounter).padStart(4, '0')}`;
+}
+
 describe('submitContactForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -25,17 +32,17 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: '',
       email: 'test@example.com',
-      phone: '',
+      phone: uniquePhone(),
       message: 'Hello',
     });
     expect(result.success).toBe(false);
     expect(result.message).toContain('required fields');
   });
 
-  it('should reject empty email', async () => {
+  it('should reject empty phone (phone is required)', async () => {
     const result = await submitContactForm({
       name: 'John',
-      email: '',
+      email: 'test@example.com',
       phone: '',
       message: 'Hello',
     });
@@ -47,18 +54,18 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: 'John',
       email: 'test@example.com',
-      phone: '',
+      phone: uniquePhone(),
       message: '',
     });
     expect(result.success).toBe(false);
     expect(result.message).toContain('required fields');
   });
 
-  it('should reject invalid email format', async () => {
+  it('should reject invalid email format when email is provided', async () => {
     const result = await submitContactForm({
       name: 'John',
       email: 'not-an-email',
-      phone: '',
+      phone: uniquePhone(),
       message: 'Hello',
     });
     expect(result.success).toBe(false);
@@ -69,7 +76,7 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: 'A'.repeat(101),
       email: 'test@example.com',
-      phone: '',
+      phone: uniquePhone(),
       message: 'Hello',
     });
     expect(result.success).toBe(false);
@@ -80,7 +87,7 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: 'John',
       email: 'test@example.com',
-      phone: '',
+      phone: uniquePhone(),
       message: 'A'.repeat(5001),
     });
     expect(result.success).toBe(false);
@@ -91,18 +98,18 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: 'John Doe',
       email: 'john@example.com',
-      phone: '604-555-0123',
+      phone: uniquePhone(),
       message: 'I need a kitchen renovation.',
     });
     expect(result.success).toBe(true);
     expect(result.message).toContain('successfully');
   });
 
-  it('should succeed without phone (optional field)', async () => {
+  it('should succeed without email (email is optional)', async () => {
     const result = await submitContactForm({
       name: 'Jane',
-      email: 'jane@example.com',
-      phone: '',
+      email: '',
+      phone: uniquePhone(),
       message: 'Interested in bathroom reno.',
     });
     expect(result.success).toBe(true);
@@ -113,7 +120,7 @@ describe('submitContactForm', () => {
     const result = await submitContactForm({
       name: '<script>alert("xss")</script>John',
       email: 'john@example.com',
-      phone: '',
+      phone: uniquePhone(),
       message: '<b>Bold</b> message',
     });
     expect(result.success).toBe(true);

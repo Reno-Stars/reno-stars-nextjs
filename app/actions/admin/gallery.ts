@@ -114,3 +114,32 @@ export async function deleteGalleryItem(id: string): Promise<{ error?: string }>
     return { error: 'Failed to delete gallery item.' };
   }
 }
+
+export async function reorderGalleryItems(
+  orderedIds: string[]
+): Promise<{ error?: string }> {
+  await requireAuth();
+
+  // Validate all IDs
+  for (const id of orderedIds) {
+    if (!isValidUUID(id)) return { error: 'Invalid gallery item ID in list.' };
+  }
+
+  try {
+    // Update display order for each item based on its position in the array
+    await Promise.all(
+      orderedIds.map((id, index) =>
+        db.update(galleryItems)
+          .set({ displayOrder: index })
+          .where(eq(galleryItems.id, id))
+      )
+    );
+
+    revalidatePath('/admin/gallery');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder gallery items:', error);
+    return { error: 'Failed to reorder gallery items.' };
+  }
+}

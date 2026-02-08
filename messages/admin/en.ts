@@ -258,6 +258,7 @@ const en = {
     altText: 'Alt Text',
     displayOrder: 'Display Order',
     published: 'Published',
+    dragToReorder: 'Drag to reorder',
   },
   services: {
     title: 'Services',

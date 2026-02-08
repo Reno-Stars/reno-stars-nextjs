@@ -260,6 +260,7 @@ const zh: AdminMessages = {
     altText: 'Alt 文本',
     displayOrder: '显示顺序',
     published: '已发布',
+    dragToReorder: '拖拽重新排序',
   },
   services: {
     title: '服务项目',
