@@ -44,10 +44,10 @@ const en = {
     renoStars: 'Reno Stars',
     adminNavigation: 'Admin navigation',
     groups: {
-      portfolio: 'PORTFOLIO',
-      content: 'CONTENT',
+      portfolio: 'Portfolio',
+      content: 'Content',
       crm: 'CRM',
-      settings: 'SETTINGS',
+      settings: 'Settings',
     },
   },
   topBar: {
