@@ -45,6 +45,12 @@ const zh: AdminMessages = {
     about: '关于我们',
     renoStars: 'Reno Stars',
     adminNavigation: '管理员导航',
+    groups: {
+      portfolio: '作品集',
+      content: '内容',
+      crm: '客户管理',
+      settings: '设置',
+    },
   },
   topBar: {
     title: 'Reno Stars 管理后台',
@@ -265,9 +271,16 @@ const zh: AdminMessages = {
   },
   services: {
     title: '服务项目',
+    addService: '添加服务',
+    addNewService: '新建服务',
+    createService: '创建服务',
     editService: '编辑服务',
+    deleteService: '删除服务',
+    deleteMessage: '此操作将永久删除该服务。',
+    deleted: '服务已删除。',
     saved: '服务已保存。',
     slug: 'Slug',
+    slugPlaceholder: 'my-service-slug',
     titleEn: '标题 (EN)',
     titleZh: '标题 (ZH)',
     nameLabel: '名称',
@@ -275,6 +288,7 @@ const zh: AdminMessages = {
     longDescription: '详细描述',
     heroImage: '主图 URL',
     iconName: '图标名称',
+    iconNamePlaceholder: '例如 Hammer',
     displayOrder: '显示顺序',
   },
   socialLinks: {

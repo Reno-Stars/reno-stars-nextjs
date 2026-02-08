@@ -7,7 +7,7 @@ export default async function ServicesAdminPage() {
 
   return (
     <div>
-      <AdminPageHeader titleKey="services.title" />
+      <AdminPageHeader titleKey="services.title" actionKey="services.addService" actionHref="/admin/services/new" />
       <ServicesListClient services={services} />
     </div>
   );

@@ -43,6 +43,12 @@ const en = {
     about: 'About',
     renoStars: 'Reno Stars',
     adminNavigation: 'Admin navigation',
+    groups: {
+      portfolio: 'PORTFOLIO',
+      content: 'CONTENT',
+      crm: 'CRM',
+      settings: 'SETTINGS',
+    },
   },
   topBar: {
     title: 'Reno Stars Admin',
@@ -263,9 +269,16 @@ const en = {
   },
   services: {
     title: 'Services',
+    addService: 'Add Service',
+    addNewService: 'Add New Service',
+    createService: 'Create Service',
     editService: 'Edit Service',
+    deleteService: 'Delete Service',
+    deleteMessage: 'This will permanently delete the service.',
+    deleted: 'Service deleted.',
     saved: 'Service saved.',
     slug: 'Slug',
+    slugPlaceholder: 'my-service-slug',
     titleEn: 'Title (EN)',
     titleZh: 'Title (ZH)',
     nameLabel: 'Name',
@@ -273,6 +286,7 @@ const en = {
     longDescription: 'Long Description',
     heroImage: 'Hero Image URL',
     iconName: 'Icon Name',
+    iconNamePlaceholder: 'e.g. Hammer',
     displayOrder: 'Display Order',
   },
   socialLinks: {
