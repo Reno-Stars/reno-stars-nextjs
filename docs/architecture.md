@@ -43,20 +43,22 @@ app/                      # Next.js App Router
 
 components/
   pages/                  # One component per page route
-  home/                   # Homepage section components (12 files: Hero, ServiceAreas, Testimonials, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
-  admin/                  # Admin UI components (DataTable, ProjectForm, etc.)
+  home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
+  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx              # Global navigation (unified, no variants)
   Footer.tsx              # Global footer (5-column + service areas bar)
   ContactForm.tsx         # Contact form (client component)
-  ProjectModal.tsx        # Project detail modal
+  ProjectModal.tsx        # Project detail modal (uses DisplayProject type)
+  ProductLink.tsx         # External product link with hover preview
   TetrisGallery.tsx       # Masonry gallery layout
 
 lib/
   db/                     # Database layer
     schema.ts             # Drizzle table definitions
     index.ts              # Lazy-init DB client
-    queries.ts            # Cached query functions (company, services, projects, etc.)
+    queries.ts            # Cached query functions (company, services, projects, sites, blog, etc.)
+    helpers.ts            # Query aggregation helpers (budget, duration, images, products)
     seed.ts               # Seed script
   data/                   # Static assets & localization helpers
     index.ts              # Images, video constants, type re-exports, localization helpers
@@ -71,7 +73,7 @@ lib/
     translations.ts       # Admin translation hooks
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)
-  types.ts                # Shared TypeScript types
+  types.ts                # Shared TypeScript types (includes DisplayProject for modals)
   theme.ts                # Neumorphic design tokens
   utils.ts                # Utility functions
 
@@ -130,12 +132,13 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getProjectSlugsFromDb()` | `string[]` | Published slugs for sitemap |
 | `getServiceAreasFromDb()` | `ServiceArea[]` | Active areas, ordered by `displayOrder` |
 | `getBlogPostsFromDb()` | `BlogPost[]` | Published posts, ordered by `publishedAt desc` |
-| `getBlogPostBySlugFromDb(slug)` | `BlogPost \| null` | Single post lookup |
+| `getBlogPostBySlugFromDb(slug)` | `BlogPost \| null` | Single post lookup, includes related project if linked |
 | `getBlogPostSlugsFromDb()` | `string[]` | Published slugs for sitemap (uncached) |
 | `getGalleryItemsFromDb()` | `GalleryItem[]` | Published items, `getAssetUrl()` applied to images |
 | `getTrustBadgesFromDb()` | `{ en: string; zh: string }[]` | Active badges, ordered by `displayOrder` |
 | `getShowroomFromDb()` | `Showroom` | Singleton row |
 | `getFaqsFromDb()` | `Faq[]` | Active FAQs, replaces `{yearsExperience}` placeholder |
+| `getSitesAsProjectsFromDb()` | `SiteWithProjects[]` | Sites with aggregated data for "Whole House" display |
 
 Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`.
 
@@ -187,7 +190,19 @@ interface Project {
   slug: string;
   title: Localized<string>;
   description: Localized<string>;
+  external_products?: { url: string; image_url?: string; label: Localized<string> }[];
   // ...
+}
+
+// Display-ready project (for modals, cards) with optional site aggregation:
+interface DisplayProject extends LocalizedProject {
+  isSiteProject?: boolean;
+  projectCount?: number;
+  childAreas?: string[];
+  totalBudget?: string;
+  totalDuration?: string;
+  allServiceScopes?: string[];
+  allExternalProducts?: { url: string; image_url?: string; label: string }[];
 }
 ```
 

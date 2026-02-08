@@ -21,11 +21,13 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 |-------|---------|------------|
 | `services` | Renovation service types | `slug` |
 | `service_areas` | Geographic coverage | `slug` |
+| `project_sites` | Site containers for projects | `slug` |
+| `site_images` | Images per site | `(siteId, displayOrder)` |
 | `projects` | Portfolio entries | `slug` |
 | `project_images` | Images per project | `(projectId, displayOrder)` |
 | `project_scopes` | Scope items per project | `(projectId, displayOrder)` |
 | `project_external_products` | External product links per project | `(projectId, displayOrder)` |
-| `blog_posts` | Blog articles | `slug` |
+| `blog_posts` | Blog articles (optional project link) | `slug` |
 | `contact_submissions` | CRM leads | `id` (auto) |
 
 ### Reference Tables
@@ -120,12 +122,26 @@ const project = await getProjectBySlugFromDb('slug');   // Project | null
 const slugs = await getProjectSlugsFromDb();            // string[]
 const areas = await getServiceAreasFromDb();            // ServiceArea[]
 const posts = await getBlogPostsFromDb();               // BlogPost[]
-const post = await getBlogPostBySlugFromDb('slug');     // BlogPost | null
+const post = await getBlogPostBySlugFromDb('slug');     // BlogPost | null (includes related_project if linked)
 const postSlugs = await getBlogPostSlugsFromDb();       // string[]
 const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
 const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
 const showroom = await getShowroomFromDb();             // Showroom
 const faqs = await getFaqsFromDb();                      // Faq[] (replaces {yearsExperience} placeholder)
+const sites = await getSitesAsProjectsFromDb();         // SiteWithProjects[] (with aggregated data)
+```
+
+### Helper Functions (`lib/db/helpers.ts`)
+
+Query aggregation utilities for site data:
+
+```typescript
+parseBudgetRange(budget: string): { min: number; max: number } | null
+calculateCombinedBudget(projects: Project[]): string | undefined
+aggregateDurations(projects: Project[]): Localized<string> | undefined
+mergeServiceScopes(projects: Project[]): Localized<string[]>
+collectAllImages(projects: Project[], site?: Site): SiteImage[]
+collectAllExternalProducts(projects: Project[]): ExternalProduct[]
 ```
 
 > **Note:** Homepage testimonials are no longer fetched from the database. They use `getGoogleReviews()` from `lib/google-reviews.ts` (Google Places API with 24h caching). The `testimonials` table is deprecated and will be dropped in a future migration.
@@ -147,6 +163,7 @@ import {
   getAllGalleryItemsAdmin,  // DbGalleryItem[] — includes unpublished
   getAllTrustBadgesAdmin,   // DbTrustBadge[] — includes inactive
   getAllFaqsAdmin,          // DbFaq[] — includes inactive
+  getAllSitesAdmin,         // DbSite[] with siteImages — includes unpublished
 } from '@/lib/db/queries';
 ```
 
