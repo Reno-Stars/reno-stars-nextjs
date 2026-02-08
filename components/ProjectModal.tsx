@@ -312,7 +312,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
 
               <Link
-                href={isSite ? `/projects/${project.slug}` : `/projects/${project.slug}`}
+                href={`/projects/${project.slug}`}
                 className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:brightness-110"
                 style={{
                   backgroundColor: GOLD,

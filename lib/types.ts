@@ -48,6 +48,8 @@ export interface Site {
   published_at?: Date;
   /** Number of projects belonging to this site */
   project_count?: number;
+  /** Site-level gallery images (before/after) */
+  images?: { src: string; alt: Localized<string>; is_before?: boolean }[];
 }
 
 /**
@@ -340,6 +342,7 @@ export interface LocalizedSite {
   badge?: string;
   show_as_project: boolean;
   featured: boolean;
+  images?: { src: string; alt: string; is_before?: boolean }[];
 }
 
 /** A localized image with project attribution (for site views) */

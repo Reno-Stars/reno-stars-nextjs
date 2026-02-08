@@ -135,7 +135,7 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                     {site.badge}
                   </span>
                 )}
-                {currentImage && (
+                {currentImage && currentImage.projectSlug !== '__site__' && (
                   <span
                     className="absolute bottom-4 left-4 px-3 py-1 rounded-lg text-xs font-medium"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}

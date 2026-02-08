@@ -2,11 +2,13 @@
 
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
-import { projectSites, projects } from '@/lib/db/schema';
+import { projectSites, projects, siteImages } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+
+const MAX_SITE_IMAGES = 50;
 
 function getSiteData(formData: FormData) {
   return {
@@ -24,6 +26,30 @@ function getSiteData(formData: FormData) {
     isPublished: formData.get('isPublished') === 'on',
     updatedAt: new Date(),
   };
+}
+
+function parseSiteImages(formData: FormData) {
+  const images: {
+    imageUrl: string;
+    altTextEn: string;
+    altTextZh: string;
+    isBefore: boolean;
+    displayOrder: number;
+  }[] = [];
+  let i = 0;
+  while (formData.has(`siteImages[${i}].url`) && i < MAX_SITE_IMAGES) {
+    const imageUrl = getString(formData, `siteImages[${i}].url`).trim();
+    if (!imageUrl) { i++; continue; }
+    images.push({
+      imageUrl,
+      altTextEn: getString(formData, `siteImages[${i}].altEn`),
+      altTextZh: getString(formData, `siteImages[${i}].altZh`),
+      isBefore: formData.get(`siteImages[${i}].isBefore`) === 'true',
+      displayOrder: i,
+    });
+    i++;
+  }
+  return images;
 }
 
 export async function createSite(
@@ -53,10 +79,18 @@ export async function createSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
 
-    await db.insert(projectSites).values({
+    const [inserted] = await db.insert(projectSites).values({
       ...data,
       publishedAt: data.isPublished ? new Date() : null,
-    });
+    }).returning({ id: projectSites.id });
+
+    // Insert site images
+    const imgData = parseSiteImages(formData);
+    if (imgData.length > 0) {
+      await db.insert(siteImages).values(
+        imgData.map((img) => ({ ...img, siteId: inserted.id }))
+      );
+    }
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');
@@ -106,6 +140,15 @@ export async function updateSite(
 
     if (updated.length === 0) {
       return { error: 'Site not found.' };
+    }
+
+    // Replace site images: delete existing, insert new
+    const imgData = parseSiteImages(formData);
+    await db.delete(siteImages).where(eq(siteImages.siteId, id));
+    if (imgData.length > 0) {
+      await db.insert(siteImages).values(
+        imgData.map((img) => ({ ...img, siteId: id }))
+      );
     }
 
     revalidatePath('/admin/sites');

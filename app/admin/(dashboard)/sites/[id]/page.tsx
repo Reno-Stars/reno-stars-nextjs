@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, type DbSite } from '@/lib/db/schema';
+import { projectSites, siteImages, type DbSite, type DbSiteImage } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
@@ -13,10 +13,11 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas, projectsWithDetails] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails, siteImageRows] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
+    db.select().from(siteImages).where(eq(siteImages.siteId, id)).orderBy(siteImages.displayOrder) as Promise<DbSiteImage[]>,
   ]);
 
   const site = rows[0];
@@ -41,6 +42,12 @@ export default async function EditSitePage({ params }: PageProps) {
     showAsProject: site.showAsProject,
     featured: site.featured,
     isPublished: site.isPublished,
+    images: siteImageRows.map((img) => ({
+      url: img.imageUrl,
+      altEn: img.altTextEn ?? '',
+      altZh: img.altTextZh ?? '',
+      isBefore: img.isBefore,
+    })),
   };
 
   return (

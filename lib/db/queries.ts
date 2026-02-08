@@ -7,6 +7,7 @@ import {
   services as servicesTable,
   aboutSections as aboutSectionsTable,
   projectSites as sitesTable,
+  siteImages as siteImagesTable,
   projects as projectsTable,
   projectImages as projectImagesTable,
   projectScopes as projectScopesTable,
@@ -310,8 +311,9 @@ export async function getProjectSlugsFromDb(): Promise<string[]> {
 // ============================================================================
 
 type DbSiteRow = typeof sitesTable.$inferSelect;
+type DbSiteImageRow = typeof siteImagesTable.$inferSelect;
 
-function mapDbSiteToSite(row: DbSiteRow): Site {
+function mapDbSiteToSite(row: DbSiteRow, siteImageRows?: DbSiteImageRow[]): Site {
   return {
     id: row.id,
     slug: row.slug,
@@ -326,6 +328,18 @@ function mapDbSiteToSite(row: DbSiteRow): Site {
     show_as_project: row.showAsProject,
     featured: row.featured,
     published_at: row.publishedAt ?? undefined,
+    images: siteImageRows && siteImageRows.length > 0
+      ? siteImageRows
+          .sort((a, b) => a.displayOrder - b.displayOrder)
+          .map((img) => ({
+            src: getAssetUrl(img.imageUrl),
+            alt: {
+              en: img.altTextEn ?? '',
+              zh: img.altTextZh ?? '',
+            },
+            is_before: img.isBefore,
+          }))
+      : undefined,
   };
 }
 
@@ -375,17 +389,20 @@ export const getSiteBySlugFromDb = cache(
     const row = rows[0];
     if (!row) return null;
 
-    const site = mapDbSiteToSite(row);
+    // Fetch site images and projects in parallel
+    const [siteImageRows, projects] = await Promise.all([
+      db.select().from(siteImagesTable).where(eq(siteImagesTable.siteId, row.id)) as Promise<DbSiteImageRow[]>,
+      getProjectsOfSite(row.id),
+    ]);
 
-    // Fetch projects belonging to this site
-    const projects = await getProjectsOfSite(row.id);
+    const site = mapDbSiteToSite(row, siteImageRows);
 
     // Build aggregated data
     const aggregated: SiteWithProjects['aggregated'] = {
       totalBudget: calculateCombinedBudget(projects),
       totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
-      allImages: collectAllImages(projects),
+      allImages: collectAllImages(projects, site),
       allExternalProducts: collectAllExternalProducts(projects),
     };
 
@@ -405,17 +422,24 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
     .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)))
     .orderBy(desc(sitesTable.createdAt));
 
+  // Fetch all site images for these sites in one query
+  const siteIds = rows.map((r: DbSiteRow) => r.id);
+  const allSiteImages: DbSiteImageRow[] = siteIds.length > 0
+    ? await db.select().from(siteImagesTable).where(inArray(siteImagesTable.siteId, siteIds))
+    : [];
+
   // Fetch projects for each site and build aggregated data
   const results: SiteWithProjects[] = [];
   for (const row of rows) {
-    const site = mapDbSiteToSite(row);
+    const rowImages = allSiteImages.filter((img) => img.siteId === row.id);
+    const site = mapDbSiteToSite(row, rowImages);
     const projects = await getProjectsOfSite(row.id);
 
     const aggregated: SiteWithProjects['aggregated'] = {
       totalBudget: calculateCombinedBudget(projects),
       totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
-      allImages: collectAllImages(projects),
+      allImages: collectAllImages(projects, site),
       allExternalProducts: collectAllExternalProducts(projects),
     };
 
@@ -696,8 +720,17 @@ export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)
 }
 
 /** Fetch all sites (admin — includes unpublished). */
-export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect)[]> {
-  return db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
+export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect & { siteImages: DbSiteImageRow[] })[]> {
+  const rows: DbSiteRow[] = await db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
+  const siteIds = rows.map((r: DbSiteRow) => r.id);
+  const allImages: DbSiteImageRow[] = siteIds.length > 0
+    ? await db.select().from(siteImagesTable).where(inArray(siteImagesTable.siteId, siteIds))
+    : [];
+
+  return rows.map((row: DbSiteRow) => ({
+    ...row,
+    siteImages: allImages.filter((img) => img.siteId === row.id).sort((a, b) => a.displayOrder - b.displayOrder),
+  }));
 }
 
 export interface ProjectSummary {

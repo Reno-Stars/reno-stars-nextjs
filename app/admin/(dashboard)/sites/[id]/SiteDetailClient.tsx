@@ -84,6 +84,7 @@ interface SiteData {
   showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;
+  images?: { url: string; altEn: string; altZh: string; isBefore: boolean }[];
 }
 
 interface Props {

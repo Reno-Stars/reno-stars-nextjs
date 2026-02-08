@@ -601,6 +601,11 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
     badge: site.badge?.[locale],
     show_as_project: site.show_as_project,
     featured: site.featured,
+    images: site.images?.map((img) => ({
+      src: img.src,
+      alt: img.alt[locale],
+      is_before: img.is_before,
+    })),
   };
 }
 

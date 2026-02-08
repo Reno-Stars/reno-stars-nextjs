@@ -13,6 +13,15 @@ import SubmitButton from './SubmitButton';
 import { CARD, NAVY, GOLD, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
+import { getAssetUrl } from '@/lib/storage';
+
+interface SiteImageEntry {
+  id: string;
+  url: string;
+  altEn: string;
+  altZh: string;
+  isBefore: boolean;
+}
 
 interface City {
   nameEn: string;
@@ -39,6 +48,7 @@ interface SiteFormProps {
     showAsProject: boolean;
     featured: boolean;
     isPublished: boolean;
+    images?: { url: string; altEn: string; altZh: string; isBefore: boolean }[];
   };
   submitLabel?: string;
 }
@@ -78,6 +88,10 @@ export default function SiteForm({
   const [selectedCity, setSelectedCity] = useState(initialData?.locationCity ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.sites.saved);
+
+  const [siteImages, setSiteImages] = useState<SiteImageEntry[]>(
+    initialData?.images?.map((img) => ({ ...img, id: crypto.randomUUID() })) ?? []
+  );
 
   // Sync selectedCity when initialData changes (after save + revalidation)
   useEffect(() => {
@@ -175,6 +189,76 @@ export default function SiteForm({
           </FormField>
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} />
+
+          {/* Site Images */}
+          <div style={{ marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.sites.images}
+              </span>
+              <Tooltip content={t.sites.tooltips.images} size="sm" />
+            </div>
+            {siteImages.map((img, idx) => (
+              <div key={img.id} style={{ marginBottom: '0.75rem', padding: '0.75rem', borderRadius: '8px', boxShadow: neu(2), backgroundColor: CARD }}>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  {img.url && (
+                    <div
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        flexShrink: 0,
+                        backgroundColor: '#f0f0f0',
+                        boxShadow: neu(2),
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getAssetUrl(img.url)}
+                        alt={img.altEn || `Image ${idx + 1}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <input name={`siteImages[${idx}].url`} value={img.url} onChange={(e) => { const n = [...siteImages]; n[idx] = { ...n[idx], url: e.target.value }; setSiteImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Site image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
+                      <div>
+                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                          <span role="img" aria-label="English">🇺🇸</span> {t.projects.altEn}
+                        </label>
+                        <input name={`siteImages[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...siteImages]; n[idx] = { ...n[idx], altEn: e.target.value }; setSiteImages(n); }} placeholder={t.projects.altEn} aria-label={`Site image ${idx + 1} alt text (English)`} style={fieldStyle} />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                          <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.altZh}
+                        </label>
+                        <input name={`siteImages[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...siteImages]; n[idx] = { ...n[idx], altZh: e.target.value }; setSiteImages(n); }} placeholder={t.projects.altZh} aria-label={`Site image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: NAVY }}>
+                        <input type="checkbox" checked={img.isBefore} onChange={(e) => { const n = [...siteImages]; n[idx] = { ...n[idx], isBefore: e.target.checked }; setSiteImages(n); }} />
+                        <input type="hidden" name={`siteImages[${idx}].isBefore`} value={String(img.isBefore)} />
+                        {t.projects.before}
+                      </label>
+                      {editing && (
+                        <button type="button" onClick={() => setSiteImages(siteImages.filter((_, i) => i !== idx))} aria-label={`Remove site image ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                          {t.common.remove}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {editing && (
+              <button type="button" onClick={() => setSiteImages([...siteImages, { id: crypto.randomUUID(), url: '', altEn: '', altZh: '', isBefore: false }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
+                {t.sites.addImage}
+              </button>
+            )}
+          </div>
 
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.sites.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} tooltip={t.sites.tooltips.badge} />
 

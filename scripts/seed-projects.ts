@@ -18,6 +18,7 @@ import {
   projectScopes,
   projectExternalProducts,
   projectSites,
+  siteImages,
   services as servicesTable,
 } from '../lib/db/schema';
 
@@ -66,6 +67,8 @@ interface SiteData {
   badgeZh?: string;
   // Project slugs to associate with this site
   projectSlugs: string[];
+  // Site-level images (exterior/overview shots)
+  images?: { imageUrl: string; altTextEn: string; altTextZh: string; isBefore: boolean }[];
 }
 
 // ============================================================================
@@ -85,6 +88,10 @@ const SITES_RAW: SiteData[] = [
     badgeEn: 'Featured',
     badgeZh: '精选',
     projectSlugs: ['stunning-home-renovation-langley', 'surrey-home-before-after', 'richmond-kitchen-remodel-bath'],
+    images: [
+      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/49.png', altTextEn: 'Oak Street house exterior', altTextZh: '橡树街房屋外观', isBefore: false },
+      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altTextEn: 'Oak Street overview', altTextZh: '橡树街全景', isBefore: false },
+    ],
   },
   {
     slug: 'richmond-family-home',
@@ -97,6 +104,9 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['richmond-kitchen-bathroom-remodel', 'richmond-bathroom-remodel'],
+    images: [
+      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/53.png', altTextEn: 'Richmond family home exterior', altTextZh: '列治文家庭住宅外观', isBefore: false },
+    ],
   },
   {
     slug: 'surrey-modern-makeover',
@@ -109,6 +119,10 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['surrey-home-renovation', 'white-toned-kitchen-surrey'],
+    images: [
+      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/52.png', altTextEn: 'Surrey modern makeover exterior', altTextZh: '素里现代风格改造外观', isBefore: false },
+      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/15.png', altTextEn: 'Surrey home overview', altTextZh: '素里住宅全景', isBefore: false },
+    ],
   },
 ];
 
@@ -581,9 +595,10 @@ async function clearExistingData() {
   await db.delete(projectScopes);
   await db.delete(projectImages);
   await db.delete(projectsTable);
+  await db.delete(siteImages);
   await db.delete(projectSites);
 
-  console.log('  Cleared all projects, images, scopes, external products, and sites');
+  console.log('  Cleared all projects, images, scopes, external products, site images, and sites');
 }
 
 async function seedSites(): Promise<Map<string, string>> {
@@ -611,7 +626,22 @@ async function seedSites(): Promise<Map<string, string>> {
       .returning({ id: projectSites.id });
 
     siteIdMap.set(site.slug, inserted.id);
-    console.log(`  Created site: ${site.slug}`);
+
+    // Insert site images
+    if (site.images && site.images.length > 0) {
+      await db.insert(siteImages).values(
+        site.images.map((img, i) => ({
+          siteId: inserted.id,
+          imageUrl: img.imageUrl,
+          altTextEn: img.altTextEn,
+          altTextZh: img.altTextZh,
+          isBefore: img.isBefore,
+          displayOrder: i,
+        }))
+      );
+    }
+
+    console.log(`  Created site: ${site.slug} (${site.images?.length ?? 0} images)`);
   }
 
   return siteIdMap;

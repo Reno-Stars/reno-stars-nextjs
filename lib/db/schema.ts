@@ -161,6 +161,36 @@ export const projectSites = pgTable(
 
 export const projectSitesRelations = relations(projectSites, ({ many }) => ({
   projects: many(projects),
+  images: many(siteImages),
+}));
+
+// ============================================================================
+// SITE IMAGES
+// ============================================================================
+
+/** Before/after images for project sites */
+export const siteImages = pgTable(
+  'site_images',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    siteId: uuid('site_id')
+      .references(() => projectSites.id, { onDelete: 'cascade' })
+      .notNull(),
+    imageUrl: varchar('image_url', { length: 500 }).notNull(),
+    altTextEn: varchar('alt_text_en', { length: 255 }),
+    altTextZh: varchar('alt_text_zh', { length: 255 }),
+    isBefore: boolean('is_before').default(false).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [index('site_images_site_id_idx').on(table.siteId)]
+);
+
+export const siteImagesRelations = relations(siteImages, ({ one }) => ({
+  site: one(projectSites, {
+    fields: [siteImages.siteId],
+    references: [projectSites.id],
+  }),
 }));
 
 // ============================================================================
@@ -625,6 +655,9 @@ export type NewDbServiceArea = typeof serviceAreas.$inferInsert;
 
 export type DbSite = typeof projectSites.$inferSelect;
 export type NewDbSite = typeof projectSites.$inferInsert;
+
+export type DbSiteImage = typeof siteImages.$inferSelect;
+export type NewDbSiteImage = typeof siteImages.$inferInsert;
 
 export type DbProject = typeof projects.$inferSelect;
 export type NewDbProject = typeof projects.$inferInsert;
