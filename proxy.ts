@@ -28,7 +28,7 @@ const securityHeaders: Record<string, string> = {
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
       : "script-src 'self' 'unsafe-inline'",
     "style-src 'self' 'unsafe-inline'",
-    `img-src 'self' data: blob: ${ASSET_ORIGIN} https://lh3.googleusercontent.com`,
+    `img-src 'self' data: blob: https: ${ASSET_ORIGIN}`,
     "font-src 'self' data:",
     isDev
       ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN}`
