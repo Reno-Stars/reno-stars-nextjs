@@ -146,9 +146,9 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Backsplash', zh: '后挡板' },
     ],
     externalProducts: [
-      { url: 'https://www.rona.ca/en/product/belanger-laminates-stretta-72-in-white-marble-look-right-hand-miter-laminate-kitchen-countertop-6010225733-58166958', labelEn: 'Belanger Stretta 72-in White Marble-Look Countertop', labelZh: 'Belanger Stretta 72英寸白色仿大理石台面' },
-      { url: 'https://www.rona.ca/en/product/kohler-simplice-touchless-pull-down-kitchen-sink-faucet-w-3-function-sprayhead-in-polished-chrome-22036-cp-332069940', labelEn: 'KOHLER Simplice Touchless Pull-Down Kitchen Faucet', labelZh: 'KOHLER Simplice 感应式下拉厨房水龙头' },
-      { url: 'https://www.rona.ca/en/product/kraus-kore-24-in-farmhouse-stainless-steel-single-bowl-kitchen-sink-kwf210-24-330949271', labelEn: 'Kraus Kore 24-in Farmhouse Stainless Steel Kitchen Sink', labelZh: 'Kraus Kore 24英寸农舍风格不锈钢厨房水槽' },
+      { url: 'https://www.rona.ca/en/product/belanger-laminates-stretta-72-in-white-marble-look-right-hand-miter-laminate-kitchen-countertop-6010225733-58166958', imageUrl: 'https://cdn.shopify.com/s/files/1/0797/4682/6545/files/VT-STRE-STRAIGHT-06.jpg?v=1740521373', labelEn: 'Belanger Stretta 72-in White Marble-Look Countertop', labelZh: 'Belanger Stretta 72英寸白色仿大理石台面' },
+      { url: 'https://www.rona.ca/en/product/kohler-simplice-touchless-pull-down-kitchen-sink-faucet-w-3-function-sprayhead-in-polished-chrome-22036-cp-332069940', imageUrl: 'https://cdn.shopify.com/s/files/1/0312/4104/4099/files/zac74608_rgb.jpg?v=1731734955', labelEn: 'KOHLER Simplice Touchless Pull-Down Kitchen Faucet', labelZh: 'KOHLER Simplice 感应式下拉厨房水龙头' },
+      { url: 'https://www.rona.ca/en/product/kraus-kore-24-in-farmhouse-stainless-steel-single-bowl-kitchen-sink-kwf210-24-330949271', imageUrl: 'https://cdn.shopify.com/s/files/1/2568/3480/products/KRAUS-Kore-24-Apron-Front-Workstation-16-Gauge-Stainless-Steel-Single-Bowl-Kitchen-Sink-with-Accessories.jpg?v=1664285853', labelEn: 'Kraus Kore 24-in Farmhouse Stainless Steel Kitchen Sink', labelZh: 'Kraus Kore 24英寸农舍风格不锈钢厨房水槽' },
     ],
   },
   {
@@ -179,9 +179,9 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Flooring', zh: '地板' }, { en: 'Plumbing', zh: '水管' }, { en: 'Tile Work', zh: '瓷砖' },
     ],
     externalProducts: [
-      { url: 'https://www.rona.ca/en/product/pfister-ceylon-pull-down-kitchen-faucet-1-handle-with-soap-dispenser-stainless-steel-f5297clo2gs-56305366', labelEn: 'Pfister Ceylon Pull-Down Kitchen Faucet with Soap Dispenser', labelZh: 'Pfister Ceylon 下拉式厨房水龙头配皂液器' },
+      { url: 'https://www.rona.ca/en/product/pfister-ceylon-pull-down-kitchen-faucet-1-handle-with-soap-dispenser-stainless-steel-f5297clo2gs-56305366', imageUrl: 'https://images.pfisterfaucets.com/is/image/WebAssets/pf_ceylon_f-529-7cloc_c1-dp-sp?wid=600&qlt=80&resMode=sharp&fmt=png-alpha', labelEn: 'Pfister Ceylon Pull-Down Kitchen Faucet with Soap Dispenser', labelZh: 'Pfister Ceylon 下拉式厨房水龙头配皂液器' },
       { url: 'https://www.rona.ca/en/product/procore-flex-vinyl-flooring-river-oak-9-in-x-5972-in-6-pieces-lwd6906rcb-45885003', labelEn: 'Procore Flex Vinyl Flooring - River Oak', labelZh: 'Procore Flex 乙烯基地板 - 河橡木色' },
-      { url: 'https://www.rona.ca/en/product/vanity-art-36-in-w-single-sink-bathroom-vanity-w-engineered-marble-top-and-brushed-gold-handle-natural-oak-va9036-no-gb-332066601', labelEn: 'Vanity Art 36-in Single Sink Bathroom Vanity - Natural Oak', labelZh: 'Vanity Art 36英寸单盆浴室柜 - 天然橡木' },
+      { url: 'https://www.rona.ca/en/product/vanity-art-36-in-w-single-sink-bathroom-vanity-w-engineered-marble-top-and-brushed-gold-handle-natural-oak-va9036-no-gb-332066601', imageUrl: 'https://cdn.shopify.com/s/files/1/0554/4614/2999/files/CVI36-G-GB-3.webp?v=1763315870', labelEn: 'Vanity Art 36-in Single Sink Bathroom Vanity - Natural Oak', labelZh: 'Vanity Art 36英寸单盆浴室柜 - 天然橡木' },
     ],
   },
   {
@@ -212,9 +212,9 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Countertops', zh: '台面' }, { en: 'Flooring', zh: '地板' }, { en: 'Painting', zh: '油漆' },
     ],
     externalProducts: [
-      { url: 'https://www.rona.ca/en/product/goodfellow-engineered-hardwood-flooring-prefinished-natural-acacia-75-in-x-12-mm-708553000-50905286', labelEn: 'Goodfellow Engineered Hardwood Flooring - Natural Acacia', labelZh: 'Goodfellow 工程实木地板 - 天然相思木' },
-      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
-      { url: 'https://www.rona.ca/en/product/belanger-laminates-formica-countertop-walnut-wood-grain-stain-resistant-8-ft-l-x-25-1-2-in-d-x-1-1-4-in-t-12322490899479-58166850', labelEn: 'Belanger Formica Countertop - Walnut Wood Grain', labelZh: 'Belanger Formica 台面 - 胡桃木纹' },
+      { url: 'https://www.rona.ca/en/product/goodfellow-engineered-hardwood-flooring-prefinished-natural-acacia-75-in-x-12-mm-708553000-50905286', imageUrl: 'https://cdn.shopify.com/s/files/1/0053/7575/4338/files/Specification.jpg?v=1704261079', labelEn: 'Goodfellow Engineered Hardwood Flooring - Natural Acacia', labelZh: 'Goodfellow 工程实木地板 - 天然相思木' },
+      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', imageUrl: 'https://www.bmr.ca/media/catalog/product/cache/4d338e88f705b4164ea551ad342bc06e/0/6/062-6905_001_3.jpg', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
+      { url: 'https://www.rona.ca/en/product/belanger-laminates-formica-countertop-walnut-wood-grain-stain-resistant-8-ft-l-x-25-1-2-in-d-x-1-1-4-in-t-12322490899479-58166850', imageUrl: 'https://cdn.shopify.com/s/files/1/0670/7442/5131/files/9479-wide-planked-walnut.jpg?v=1717092506', labelEn: 'Belanger Formica Countertop - Walnut Wood Grain', labelZh: 'Belanger Formica 台面 - 胡桃木纹' },
     ],
   },
   {
@@ -329,8 +329,8 @@ const PROJECTS_RAW: ProjectData[] = [
       { en: 'Plumbing', zh: '水管' }, { en: 'Lighting', zh: '灯光' },
     ],
     externalProducts: [
-      { url: 'https://www.rona.ca/en/product/style-selections-ellenbee-30-in-white-bathroom-vanity-bv-8382-30w-31915078', labelEn: 'Style Selections Ellenbee 30-in White Bathroom Vanity', labelZh: 'Style Selections Ellenbee 30英寸白色浴室柜' },
-      { url: 'https://www.rona.ca/en/product/american-standard-tofino-toilet-with-elongated-bowl-one-piece-dual-flush-41-lpf-white-2996c203020-00535178', labelEn: 'American Standard Tofino Dual Flush Toilet - White', labelZh: 'American Standard Tofino 双冲马桶 - 白色' },
+      { url: 'https://www.rona.ca/en/product/style-selections-ellenbee-30-in-white-bathroom-vanity-bv-8382-30w-31915078', imageUrl: 'https://cdn.shopify.com/s/files/1/0830/3499/7051/files/e69fd6e489e74826cd3cd925dcef4a73.jpg?v=1763302836', labelEn: 'Style Selections Ellenbee 30-in White Bathroom Vanity', labelZh: 'Style Selections Ellenbee 30英寸白色浴室柜' },
+      { url: 'https://www.rona.ca/en/product/american-standard-tofino-toilet-with-elongated-bowl-one-piece-dual-flush-41-lpf-white-2996c203020-00535178', imageUrl: 'https://www.lapennaco.com/5979-large_default/american-standard-tofino-1pc-dual-flush-toilet.jpg', labelEn: 'American Standard Tofino Dual Flush Toilet - White', labelZh: 'American Standard Tofino 双冲马桶 - 白色' },
       { url: 'https://www.rona.ca/en/product/ore-international-luminere-8-light-gold-traditional-led-crystal-chandelier-k-5806h-330998032', labelEn: 'Ore International Luminere 8-Light LED Crystal Chandelier', labelZh: 'Ore International Luminere 8头LED水晶吊灯' },
     ],
   },
@@ -364,7 +364,7 @@ const PROJECTS_RAW: ProjectData[] = [
     externalProducts: [
       { url: 'https://www.rona.ca/en/product/landon-co-landon-co-aqualine-clear-glass-sliding-alcove-shower-door-with-chrome-hardware-60-in-lv-8001-60245452', labelEn: 'Landon & Co. Aqualine 60-in Glass Sliding Shower Door', labelZh: 'Landon & Co. Aqualine 60英寸玻璃滑动淋浴门' },
       { url: 'https://www.rona.ca/en/product/diamond-now-masterbrand-vada-36-in-sandy-engineered-wood-bathroom-vanity-with-single-sink-white-cultured-marble-top-13847774', labelEn: 'Diamond Now Vada 36-in Bathroom Vanity with Marble Top', labelZh: 'Diamond Now Vada 36英寸浴室柜配大理石台面' },
-      { url: 'https://www.rona.ca/en/product/deervalley-white-elongated-smart-toilet-bidet-dv-1s0029-332064471', labelEn: 'DeerValley Smart Toilet Bidet with Heated Seat', labelZh: 'DeerValley 智能马桶盖一体机 - 带加热座圈' },
+      { url: 'https://www.rona.ca/en/product/deervalley-white-elongated-smart-toilet-bidet-dv-1s0029-332064471', imageUrl: 'https://cdn.shopify.com/s/files/1/0526/3536/9660/files/DV-1S0029V3-0624_19.jpg?v=1762168409', labelEn: 'DeerValley Smart Toilet Bidet with Heated Seat', labelZh: 'DeerValley 智能马桶盖一体机 - 带加热座圈' },
     ],
   },
   {
@@ -508,7 +508,7 @@ const PROJECTS_RAW: ProjectData[] = [
     ],
     externalProducts: [
       { url: 'https://www.rona.ca/en/product/procore-flex-vinyl-flooring-river-oak-9-in-x-5972-in-6-pieces-lwd6906rcb-45885003', labelEn: 'Procore Flex Vinyl Flooring - River Oak', labelZh: 'Procore Flex 乙烯基地板 - 河橡木色' },
-      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
+      { url: 'https://www.rona.ca/en/product/sico-378-l-pure-white-pearl-latex-interior-paint-for-doors-and-trim-50316662', imageUrl: 'https://www.bmr.ca/media/catalog/product/cache/4d338e88f705b4164ea551ad342bc06e/0/6/062-6905_001_3.jpg', labelEn: 'SICO 3.78L Pure White Pearl Interior Paint', labelZh: 'SICO 3.78升纯白珍珠乳胶内墙漆' },
     ],
   },
   {
