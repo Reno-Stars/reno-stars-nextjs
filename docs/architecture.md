@@ -140,7 +140,21 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getFaqsFromDb()` | `Faq[]` | Active FAQs, replaces `{yearsExperience}` placeholder |
 | `getSitesAsProjectsFromDb()` | `SiteWithProjects[]` | Sites with aggregated data for "Whole House" display |
 
-Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`.
+Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllSitesAdmin()`.
+
+#### Query Helpers (`lib/db/helpers.ts`)
+
+Aggregation utilities used when building `SiteWithProjects` data:
+
+| Function | Purpose |
+|----------|---------|
+| `calculateCombinedBudget(projects)` | Sum budget ranges from child projects |
+| `aggregateDurations(projects)` | Sum week-based durations or concatenate mixed formats |
+| `mergeServiceScopes(projects)` | Deduplicate scopes across projects |
+| `collectAllImages(projects, site?)` | Combine project + site images; site images prepended with `SITE_IMAGE_SLUG` |
+| `collectAllExternalProducts(projects)` | Deduplicate external product links by URL |
+
+`SITE_IMAGE_SLUG = '__site__'` is a sentinel value used to distinguish site-level images from project images in aggregated image lists.
 
 **Google Reviews** (not in `queries.ts`): Homepage testimonials are fetched via `getGoogleReviews()` from `lib/google-reviews.ts` using the Google Places API with `next: { revalidate: 86400 }` for 24h caching. Returns `GooglePlaceRating` type with rating, userRatingCount, and reviews array.
 
@@ -228,7 +242,8 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
-- **Admin components** (`components/admin/`): DataTable, ProjectForm, SiteForm, HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton, Tooltip (reusable help icons), DragHandle (6-dot drag indicator).
+- **ProductLink** (`components/ProductLink.tsx`): Reusable external product link with hover image preview. Supports `size` prop (`'sm'` for modal, `'md'` for detail page). Used by `ProjectModal` and `SiteDetailPage`.
+- **Admin components** (`components/admin/`): DataTable, ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton, Tooltip (reusable help icons), DragHandle (6-dot drag indicator).
 - **House Stack UI**: Visual metaphor for site/project management. Roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Renders on `/admin/sites/[id]` page with detail panel for editing selected item. Supports `?project=<id>` URL param for deep-linking directly to a specific project's edit form.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons (gold highlight for active). Preference persists in localStorage (`admin_locale` key). All list clients show bilingual content (titleEn/titleZh, questionEn/questionZh, etc.) based on selected locale. Uses `useAdminLocale()` hook. Does not affect SEO (admin is auth-protected).
 

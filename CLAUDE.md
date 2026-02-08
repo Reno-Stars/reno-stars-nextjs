@@ -83,7 +83,7 @@ components/
   home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
   admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
-  Navbar.tsx, Footer.tsx, ContactForm.tsx, etc.
+  Navbar.tsx, Footer.tsx, ContactForm.tsx, ProductLink.tsx, etc.
 
 lib/
   db/
@@ -133,7 +133,7 @@ tests/
 
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
-- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`.
+- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. `lib/db/helpers.ts` provides aggregation utilities (`collectAllImages`, `calculateCombinedBudget`, etc.) with `SITE_IMAGE_SLUG` sentinel for site-level images. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`, `getAllSitesAdmin`.
 - **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
 - **Lazy DB proxy:** `db` export uses a Proxy that only connects on first query. Safe to import at build time.

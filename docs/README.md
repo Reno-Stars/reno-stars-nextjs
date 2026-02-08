@@ -37,7 +37,7 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 - **Bilingual:** Full English/Chinese support with `next-intl`, locale-prefixed URLs
 - **Database-driven:** Company info, services, social links, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info fetched from PostgreSQL via cached query layer (`lib/db/queries.ts`). Homepage testimonials powered by Google Places API (`lib/google-reviews.ts`) with 24h caching
 - **Admin dashboard:** Auth-protected CRUD for all 12 content types at `/admin/` with unified House Stack UI for site/project management (sites, projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, showroom, about sections, FAQs). Blog posts can link to related projects to display products used
-- **Whole House projects:** Sites aggregate child projects with combined budget, duration, service scopes, and external products for "Whole House" renovation display
+- **Whole House projects:** Sites aggregate child projects with combined budget, duration, service scopes, and external products for "Whole House" renovation display. Sites have their own image gallery (before/after) shown in "All Areas" view
 - **SEO-optimized:** Dynamic sitemap, JSON-LD structured data (8 schema types including FAQ), 50+ WordPress redirects, meta description truncation, security headers via proxy
 - **Neumorphic design:** Custom warm-beige design system with shadow utilities
 - **Accessible:** Elderly-friendly large text mode for contact forms, responsive hero scaling, valid heading hierarchy, lightbox `aria-live` counter, keyboard focus traps
