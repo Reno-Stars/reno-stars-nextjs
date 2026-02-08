@@ -92,6 +92,7 @@ export default function ConfirmDialog({
             ref={cancelRef}
             type="button"
             onClick={handleCancel}
+            className="confirm-dialog-btn"
             style={{
               padding: '0.5rem 1rem',
               borderRadius: '6px',
@@ -100,14 +101,6 @@ export default function ConfirmDialog({
               color: TEXT_MID,
               cursor: 'pointer',
               fontSize: '0.875rem',
-              outline: 'none',
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.outline = `2px solid ${NAVY}`;
-              e.currentTarget.style.outlineOffset = '2px';
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.outline = 'none';
             }}
           >
             {t.common.cancel}
@@ -116,6 +109,7 @@ export default function ConfirmDialog({
             type="button"
             onClick={onConfirm}
             disabled={loading}
+            className="confirm-dialog-btn"
             style={{
               padding: '0.5rem 1rem',
               borderRadius: '6px',

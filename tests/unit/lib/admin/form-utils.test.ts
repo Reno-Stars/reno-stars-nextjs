@@ -54,6 +54,8 @@ describe('form-utils', () => {
       expect(isValidSlug('my project')).toBe(false); // space
       expect(isValidSlug('-start-with-hyphen')).toBe(false);
       expect(isValidSlug('end-with-hyphen-')).toBe(false);
+      expect(isValidSlug('a--b')).toBe(false); // consecutive hyphens
+      expect(isValidSlug('test---slug')).toBe(false); // multiple consecutive hyphens
     });
 
     it('returns false for slugs exceeding max length', () => {

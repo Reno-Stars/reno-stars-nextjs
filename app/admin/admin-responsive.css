@@ -1,3 +1,8 @@
+/* Admin panel theme variables */
+:root {
+  --color-navy: #1B365D;
+}
+
 /* Mobile overrides for admin panel — max-width: 768px */
 @media (max-width: 768px) {
   /* Sidebar: slide-out drawer */
@@ -75,4 +80,13 @@
 }
 .admin-hamburger {
   display: none;
+}
+
+/* Confirm dialog button focus styles */
+.confirm-dialog-btn {
+  outline: none;
+}
+.confirm-dialog-btn:focus-visible {
+  outline: 2px solid var(--color-navy, #1B365D);
+  outline-offset: 2px;
 }

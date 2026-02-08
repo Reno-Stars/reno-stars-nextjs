@@ -1,5 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
+/** Minimum pixel movement to distinguish a drag from a click */
+const DRAG_THRESHOLD_PX = 5;
+
 interface DragReorderState<T> {
   draggedId: string | null;
   dragOverId: string | null;
@@ -7,7 +10,7 @@ interface DragReorderState<T> {
   isReordering: boolean;
 }
 
-interface DragReorderActions<T> {
+interface DragReorderActions {
   handleDragStart: (e: React.DragEvent, id: string) => void;
   handleDragOver: (e: React.DragEvent, id: string) => void;
   handleDragLeave: () => void;
@@ -34,7 +37,7 @@ export function useDragReorder<T>({
   onReorder,
   onSuccess,
   onError,
-}: UseDragReorderOptions<T>): DragReorderState<T> & DragReorderActions<T> {
+}: UseDragReorderOptions<T>): DragReorderState<T> & DragReorderActions {
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [dragOverId, setDragOverId] = useState<string | null>(null);
   const [localOrder, setLocalOrder] = useState<T[] | null>(null);
@@ -141,7 +144,7 @@ export function useDragReorder<T>({
     if (dragStartPos.current) {
       const dx = Math.abs(e.clientX - dragStartPos.current.x);
       const dy = Math.abs(e.clientY - dragStartPos.current.y);
-      if (dx > 5 || dy > 5) {
+      if (dx > DRAG_THRESHOLD_PX || dy > DRAG_THRESHOLD_PX) {
         return false;
       }
     }

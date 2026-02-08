@@ -129,7 +129,8 @@ export async function reorderGalleryItems(
 
   try {
     // Update display order for each item in a transaction for atomicity
-    await db.transaction(async (tx: typeof db) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await db.transaction(async (tx: any) => {
       for (let i = 0; i < orderedIds.length; i++) {
         await tx.update(galleryItems)
           .set({ displayOrder: i })

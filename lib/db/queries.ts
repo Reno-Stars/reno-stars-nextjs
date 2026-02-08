@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc, desc, and, inArray, sql } from 'drizzle-orm';
+import { eq, asc, desc, and, inArray } from 'drizzle-orm';
 import { db } from './index';
 import {
   companyInfo,

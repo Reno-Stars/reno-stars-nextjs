@@ -197,14 +197,13 @@ export default function GalleryListClient({ items }: Props) {
                       router.push(`/admin/gallery/${item.id}`);
                     }
                   }}
-                  className={`${layout.col} ${layout.aspect} overflow-hidden relative group rounded-xl cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                  className={`${layout.col} ${layout.aspect} overflow-hidden relative group rounded-xl cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500`}
                   style={{
                     boxShadow: isDragOver ? `0 0 0 3px ${GOLD}` : neu(5),
                     opacity: isDragging ? 0.5 : 1,
                     transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
                     transition: 'transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease',
-                    '--tw-ring-color': GOLD,
-                  } as React.CSSProperties}
+                  }}
                   aria-label={`${t.common.edit} ${altText}. ${t.gallery.dragToReorder}`}
                 >
                   {hasFailed ? (

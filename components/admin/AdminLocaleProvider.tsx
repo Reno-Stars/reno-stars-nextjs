@@ -20,15 +20,23 @@ export function AdminLocaleProvider({ children }: { children: ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'en' || stored === 'zh') {
-      setLocaleState(stored);
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === 'en' || stored === 'zh') {
+        setLocaleState(stored);
+      }
+    } catch {
+      // localStorage may be unavailable in private browsing mode
     }
   }, []);
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem(STORAGE_KEY, newLocale);
+    try {
+      localStorage.setItem(STORAGE_KEY, newLocale);
+    } catch {
+      // localStorage may be unavailable in private browsing mode
+    }
   }, []);
 
   const value = useMemo(

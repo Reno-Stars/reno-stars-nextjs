@@ -7,7 +7,7 @@ export function getString(formData: FormData, key: string): string {
   return typeof value === 'string' ? value : '';
 }
 
-const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /**
  * Validate that a string is a valid URL-safe slug.

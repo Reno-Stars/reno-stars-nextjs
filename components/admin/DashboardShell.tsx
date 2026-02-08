@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 import { useAdminLocale } from './AdminLocaleProvider';
@@ -10,14 +10,18 @@ import { SURFACE } from '@/lib/theme';
 export default function DashboardShell({ children }: { children: ReactNode }) {
   const { sidebarOpen, setSidebarOpen } = useAdminLocale();
   const isMobile = useIsMobile();
+  const prevMobileRef = useRef(isMobile);
 
   const closeSidebar = useCallback(() => {
     if (isMobile) setSidebarOpen(false);
   }, [isMobile, setSidebarOpen]);
 
-  // Close sidebar when resizing from mobile to desktop
+  // Close sidebar only when transitioning from mobile to desktop
   useEffect(() => {
-    if (!isMobile) setSidebarOpen(false);
+    if (prevMobileRef.current && !isMobile) {
+      setSidebarOpen(false);
+    }
+    prevMobileRef.current = isMobile;
   }, [isMobile, setSidebarOpen]);
 
   // Close sidebar on Escape key

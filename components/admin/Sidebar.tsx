@@ -30,8 +30,10 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
   ];
 
   function isActive(href: string, exact?: boolean) {
-    if (exact) return pathname === href || pathname === href + '/';
-    return pathname.startsWith(href + '/') || pathname === href;
+    const normalizedPath = pathname.replace(/\/$/, '');
+    const normalizedHref = href.replace(/\/$/, '');
+    if (exact) return normalizedPath === normalizedHref;
+    return normalizedPath.startsWith(normalizedHref + '/') || normalizedPath === normalizedHref;
   }
 
   return (
