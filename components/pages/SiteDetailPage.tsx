@@ -322,23 +322,7 @@ export default function SiteDetailPage({ locale: _locale, site, company }: SiteD
                   </h2>
                   <div className="flex flex-col gap-2">
                     {site.aggregated.allExternalProducts.map((ep) => (
-                      <a
-                        key={ep.url}
-                        href={ep.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:brightness-95"
-                        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-                      >
-                        {ep.image_url && (
-                          <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={ep.image_url} alt={ep.label} className="w-full h-full object-cover" />
-                          </div>
-                        )}
-                        <span className="flex-1">{ep.label}</span>
-                        <ExternalLink className="w-4 h-4 flex-shrink-0" />
-                      </a>
+                      <ProductLink key={ep.url} product={ep} />
                     ))}
                   </div>
                 </div>
@@ -562,5 +546,46 @@ function LightboxDialog({
         )}
       </div>
     </div>
+  );
+}
+
+/** Product link with hover image preview */
+function ProductLink({ product }: { product: { url: string; image_url?: string; label: string } }) {
+  const [showPreview, setShowPreview] = useState(false);
+
+  return (
+    <a
+      href={product.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors hover:brightness-95"
+      style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+      onMouseEnter={() => setShowPreview(true)}
+      onMouseLeave={() => setShowPreview(false)}
+    >
+      {product.image_url && (
+        <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-white">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={product.image_url} alt={product.label} className="w-full h-full object-cover" />
+
+          {/* Hover preview */}
+          {showPreview && (
+            <div
+              className="absolute left-12 bottom-0 z-50 p-2 rounded-xl shadow-2xl pointer-events-none"
+              style={{ backgroundColor: 'white' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.image_url}
+                alt={product.label}
+                className="w-48 h-48 object-contain rounded-lg"
+              />
+            </div>
+          )}
+        </div>
+      )}
+      <span className="flex-1">{product.label}</span>
+      <ExternalLink className="w-4 h-4 flex-shrink-0" />
+    </a>
   );
 }
