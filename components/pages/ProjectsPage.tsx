@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, Project, LocalizedProject, Site } from '@/lib/types';
+import type { Company, Project, LocalizedProject, SiteWithProjects, Localized } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
 import { getCategoriesLocalized } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
@@ -21,13 +21,18 @@ import {
 interface DisplayProject extends LocalizedProject {
   isSiteProject?: boolean;
   projectCount?: number;
+  // Site-specific fields for whole house projects
+  childAreas?: string[]; // Area names (e.g., "Kitchen", "Bathroom")
+  totalBudget?: string;
+  totalDuration?: string;
+  allServiceScopes?: string[];
 }
 
 interface ProjectsPageProps {
   locale: Locale;
   company: Company;
   projects: Project[];
-  sitesAsProjects?: Site[];
+  sitesAsProjects?: SiteWithProjects[];
 }
 
 export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [] }: ProjectsPageProps) {
@@ -51,7 +56,12 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         featured: site.featured,
         badge: site.badge?.[locale],
         isSiteProject: true,
-        projectCount: site.project_count,
+        projectCount: site.project_count ?? site.projects?.length ?? 0,
+        // Site-specific aggregated data
+        childAreas: site.projects?.map((p) => p.category[locale]) ?? [],
+        totalBudget: site.aggregated?.totalBudget,
+        totalDuration: site.aggregated?.totalDuration?.[locale],
+        allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
       })),
   [sitesAsProjects, locale, wholeHouseCategory]);
 

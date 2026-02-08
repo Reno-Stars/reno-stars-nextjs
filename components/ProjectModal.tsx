@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink } from 'lucide-react';
+import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
@@ -12,8 +12,18 @@ import {
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
 } from '@/lib/theme';
 
+// Extended project type that includes site-specific fields
+interface DisplayProject extends LocalizedProject {
+  isSiteProject?: boolean;
+  projectCount?: number;
+  childAreas?: string[];
+  totalBudget?: string;
+  totalDuration?: string;
+  allServiceScopes?: string[];
+}
+
 interface ProjectModalProps {
-  project: LocalizedProject | null;
+  project: DisplayProject | null;
   onClose: () => void;
 }
 
@@ -77,13 +87,20 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     ? project.images
     : [{ src: project.hero_image, alt: project.title }];
 
+  // For whole house sites, use aggregated data; otherwise use project data
+  const isSite = project.isSiteProject;
   const sidebarItems = [
     { icon: MapPin, label: t('modal.location'), value: project.location_city },
     { icon: Tag, label: t('modal.category'), value: project.category },
-    { icon: DollarSign, label: t('modal.budget'), value: project.budget_range },
-    { icon: Home, label: t('modal.spaceType'), value: project.space_type },
-    { icon: Clock, label: t('modal.duration'), value: project.duration },
+    { icon: DollarSign, label: t('modal.budget'), value: isSite ? project.totalBudget : project.budget_range },
+    { icon: Home, label: t('modal.spaceType'), value: isSite ? undefined : project.space_type },
+    { icon: Clock, label: t('modal.duration'), value: isSite ? project.totalDuration : project.duration },
   ];
+
+  // Areas included (for whole house sites)
+  const childAreas = isSite ? project.childAreas : undefined;
+  // Service scopes (for whole house sites, use aggregated; otherwise use project)
+  const serviceScopes = isSite ? project.allServiceScopes : project.service_scope;
 
   return (
     <div
@@ -235,14 +252,36 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 ) : null
               )}
 
-              {project.service_scope && project.service_scope.length > 0 && (
+              {/* Areas Included (for whole house sites) */}
+              {childAreas && childAreas.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2" style={{ color: TEXT_MUTED }}>
+                    <Layers className="w-4 h-4" style={{ color: GOLD }} />
+                    {t('wholeHouse.includedAreas')}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {childAreas.map((area) => (
+                      <span
+                        key={area}
+                        className="px-3 py-1 rounded-full text-xs font-medium"
+                        style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Service Scope */}
+              {serviceScopes && serviceScopes.length > 0 && (
                 <div>
                   <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-2" style={{ color: TEXT_MUTED }}>
                     <Wrench className="w-4 h-4" style={{ color: GOLD }} />
                     {t('modal.serviceScope')}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {project.service_scope.map((s) => (
+                    {serviceScopes.map((s) => (
                       <span
                         key={s}
                         className="px-3 py-1 rounded-full text-xs font-medium"
@@ -286,7 +325,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
 
               <Link
-                href={`/projects/${project.slug}`}
+                href={isSite ? `/projects/${project.slug}` : `/projects/${project.slug}`}
                 className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:brightness-110"
                 style={{
                   backgroundColor: GOLD,

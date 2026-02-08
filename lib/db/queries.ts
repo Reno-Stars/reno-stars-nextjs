@@ -396,31 +396,36 @@ export const getSiteBySlugFromDb = cache(
   }
 );
 
-/** Fetch all published sites that should show as projects, with project counts. */
-export const getSitesAsProjectsFromDb = cache(async (): Promise<Site[]> => {
+/** Fetch all published sites that should show as projects, with projects and aggregated data. */
+export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects[]> => {
   const rows = await db
     .select()
     .from(sitesTable)
     .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)))
     .orderBy(desc(sitesTable.createdAt));
 
-  // Fetch project counts per site
-  const siteIds = rows.map((r: DbSiteRow) => r.id);
-  const countMap = siteIds.length > 0
-    ? new Map(
-        (await db
-          .select({ siteId: projectsTable.siteId, count: sql<number>`count(*)::int` })
-          .from(projectsTable)
-          .where(and(inArray(projectsTable.siteId, siteIds), eq(projectsTable.isPublished, true)))
-          .groupBy(projectsTable.siteId)
-        ).map((c: { siteId: string; count: number }) => [c.siteId, c.count] as const),
-      )
-    : new Map<string, number>();
+  // Fetch projects for each site and build aggregated data
+  const results: SiteWithProjects[] = [];
+  for (const row of rows) {
+    const site = mapDbSiteToSite(row);
+    const projects = await getProjectsOfSite(row.id);
 
-  return rows.map((row: DbSiteRow) => ({
-    ...mapDbSiteToSite(row),
-    project_count: countMap.get(row.id) ?? 0,
-  }));
+    const aggregated: SiteWithProjects['aggregated'] = {
+      totalBudget: calculateCombinedBudget(projects),
+      totalDuration: aggregateDurations(projects),
+      allServiceScopes: mergeServiceScopes(projects),
+      allImages: collectAllImages(projects),
+    };
+
+    results.push({
+      ...site,
+      project_count: projects.length,
+      projects,
+      aggregated,
+    });
+  }
+
+  return results;
 });
 
 // ============================================================================
