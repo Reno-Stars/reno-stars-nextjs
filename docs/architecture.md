@@ -168,7 +168,7 @@ ensureUniqueSlug(slug, existingSlugs, excludeSlug?) → string
 
 - If slug doesn't collide, returns it unchanged (clean URL)
 - On collision, appends `-2`, `-3`, etc. until unique
-- Used by `createProject()` and `updateProject()` admin actions
+- Used by `createProject()`, `updateProject()`, and `createServiceArea()` admin actions
 - `excludeSlug` param allows updates to keep their own slug without collision
 
 ### Layout Data Flow
@@ -243,7 +243,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
 - **ProductLink** (`components/ProductLink.tsx`): Reusable external product link with hover image preview. Supports `size` prop (`'sm'` for modal, `'md'` for detail page). Used by `ProjectModal` and `SiteDetailPage`.
-- **Admin components** (`components/admin/`): DataTable, ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog, Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton, Tooltip (reusable help icons), DragHandle (6-dot drag indicator).
+- **Admin components** (`components/admin/`): DataTable (supports `headerAction` prop for toolbar controls), ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog (used for delete confirmation in FAQs, gallery, service areas), Sidebar, TopBar, StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, ToggleButton, Tooltip (reusable help icons), DragHandle (6-dot drag indicator).
 - **House Stack UI**: Visual metaphor for site/project management. Roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Renders on `/admin/sites/[id]` page with detail panel for editing selected item. Supports `?project=<id>` URL param for deep-linking directly to a specific project's edit form.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons (gold highlight for active). Preference persists in localStorage (`admin_locale` key). All list clients show bilingual content (titleEn/titleZh, questionEn/questionZh, etc.) based on selected locale. Uses `useAdminLocale()` hook. Does not affect SEO (admin is auth-protected).
 

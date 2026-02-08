@@ -18,7 +18,7 @@ interface GalleryItemFormProps {
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
-  initialData: {
+  initialData?: {
     imageUrl: string;
     titleEn: string;
     titleZh: string;
@@ -26,21 +26,33 @@ interface GalleryItemFormProps {
     displayOrder: number;
     isPublished: boolean;
   };
+  isNew?: boolean;
 }
 
-export default function GalleryItemForm({ action, initialData }: GalleryItemFormProps) {
+export default function GalleryItemForm({ action, initialData, isNew = false }: GalleryItemFormProps) {
   const t = useAdminTranslations();
-  const [editing, setEditing] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(initialData.category);
+  const [editing, setEditing] = useState(isNew);
+  const [selectedCategory, setSelectedCategory] = useState(initialData?.category ?? 'kitchen');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.gallery.saved);
 
   // Sync selectedCategory when initialData changes (after save + revalidation)
   useEffect(() => {
-    setSelectedCategory(initialData.category);
-  }, [initialData.category]);
+    if (initialData?.category) {
+      setSelectedCategory(initialData.category);
+    }
+  }, [initialData?.category]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
+
+  const defaults = initialData ?? {
+    imageUrl: '',
+    titleEn: '',
+    titleZh: '',
+    category: 'kitchen',
+    displayOrder: 0,
+    isPublished: true,
+  };
 
   return (
     <form action={formAction}>
@@ -53,18 +65,18 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
           maxWidth: '800px',
         }}
       >
-        <EditModeToggle editing={editing} setEditing={setEditing} />
+        {!isNew && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={initialData.imageUrl} required />
+          <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={defaults.imageUrl} required />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.gallery.titleEn} htmlFor="titleEn">
-              <input id="titleEn" name="titleEn" defaultValue={initialData.titleEn} style={fieldStyle} />
+              <input id="titleEn" name="titleEn" defaultValue={defaults.titleEn} style={fieldStyle} />
             </FormField>
             <FormField label={t.gallery.titleZh} htmlFor="titleZh">
-              <input id="titleZh" name="titleZh" defaultValue={initialData.titleZh} style={fieldStyle} />
+              <input id="titleZh" name="titleZh" defaultValue={defaults.titleZh} style={fieldStyle} />
             </FormField>
           </div>
 
@@ -86,19 +98,19 @@ export default function GalleryItemForm({ action, initialData }: GalleryItemForm
               </select>
             </FormField>
             <FormField label={t.gallery.displayOrder} htmlFor="displayOrder">
-              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
+              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
-              <input type="checkbox" name="isPublished" defaultChecked={initialData.isPublished} />
+              <input type="checkbox" name="isPublished" defaultChecked={defaults.isPublished} />
               {t.gallery.published}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label={t.common.update} />
+            <SubmitButton isPending={isPending} label={isNew ? t.gallery.createGalleryItem : t.common.update} />
           )}
         </fieldset>
       </div>

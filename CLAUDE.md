@@ -140,7 +140,7 @@ tests/
 - **Dual DB driver:** `DATABASE_URL` containing `neon.tech` → Neon HTTP driver; otherwise → `pg` Pool.
 - **Asset URL rewriting:** `getAssetUrl()` rewrites production URLs to MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 - **Neumorphic design:** Warm beige surface (#E8E2DA), navy (#1B365D), gold (#C8922A) palette.
-- **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when project slugs collide. Used by `createProject()` and `updateProject()` admin actions.
+- **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when slugs collide. Used by `createProject()`, `updateProject()`, and `createServiceArea()` admin actions.
 
 ## Environment Variables
 
@@ -149,6 +149,7 @@ tests/
 | `DATABASE_URL` | Yes | PostgreSQL connection string |
 | `NEXT_PUBLIC_BASE_URL` | Yes | Canonical site URL |
 | `NEXT_PUBLIC_STORAGE_PROVIDER` | No | Set to `minio` for local dev asset rewriting |
+| `S3_PUBLIC_URL` | No | Public-facing URL for the S3 bucket (e.g., R2 or MinIO public URL). Used by image upload to build public URLs. Falls back to `NEXT_PUBLIC_STORAGE_PROVIDER` |
 | `GOOGLE_PLACES_API_KEY` | No | Google Places API key for homepage reviews |
 | `GOOGLE_PLACE_ID` | No | Google Place ID for the business location |
 

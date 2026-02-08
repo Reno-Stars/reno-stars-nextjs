@@ -24,6 +24,8 @@ interface DataTableProps<T> {
   renderExpandedRow?: (row: T) => ReactNode;
   /** Custom filter that replaces default searchKeys matching. Return true to include the row. */
   filterRow?: (row: T, query: string) => boolean;
+  /** Optional content rendered on the right side of the search bar row */
+  headerAction?: ReactNode;
 }
 
 const EMPTY_SEARCH_KEYS: string[] = [];
@@ -42,6 +44,7 @@ export default function DataTable<T extends object>({
   actions,
   renderExpandedRow,
   filterRow,
+  headerAction,
 }: DataTableProps<T>) {
   const t = useAdminTranslations();
   const [search, setSearch] = useState('');
@@ -98,30 +101,33 @@ export default function DataTable<T extends object>({
 
   return (
     <div>
-      {searchable && (
-        <div style={{ marginBottom: '1rem' }}>
-          <input
-            type="text"
-            placeholder={t.common.search}
-            aria-label={t.common.searchRecords}
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(0);
-            }}
-            style={{
-              padding: '0.5rem 0.75rem',
-              borderRadius: '6px',
-              border: 'none',
-              boxShadow: neuIn(3),
-              backgroundColor: CARD,
-              color: NAVY,
-              fontSize: '0.875rem',
-              outline: 'none',
-              width: '280px',
-              maxWidth: '100%',
-            }}
-          />
+      {(searchable || headerAction) && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', gap: '1rem' }}>
+          {searchable ? (
+            <input
+              type="text"
+              placeholder={t.common.search}
+              aria-label={t.common.searchRecords}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(0);
+              }}
+              style={{
+                padding: '0.5rem 0.75rem',
+                borderRadius: '6px',
+                border: 'none',
+                boxShadow: neuIn(3),
+                backgroundColor: CARD,
+                color: NAVY,
+                fontSize: '0.875rem',
+                outline: 'none',
+                width: '280px',
+                maxWidth: '100%',
+              }}
+            />
+          ) : <div />}
+          {headerAction}
         </div>
       )}
       <div

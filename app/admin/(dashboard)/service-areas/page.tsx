@@ -7,7 +7,7 @@ export default async function ServiceAreasAdminPage() {
 
   return (
     <div>
-      <AdminPageHeader titleKey="serviceAreas.title" />
+      <AdminPageHeader titleKey="serviceAreas.title" actionKey="serviceAreas.addServiceArea" actionHref="/admin/service-areas/new" />
       <ServiceAreasListClient areas={areas} />
     </div>
   );

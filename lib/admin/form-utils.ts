@@ -30,11 +30,13 @@ export const CONTACT_STATUSES = ['new', 'contacted', 'converted', 'rejected'] as
 export type ContactStatus = typeof CONTACT_STATUSES[number];
 
 /**
- * Validate that a string is a valid URL (http or https).
+ * Validate that a string is a valid URL (http, https, or relative path).
  * Returns true for empty strings (optional fields).
  */
 export function isValidUrl(url: string): boolean {
   if (!url) return true;
+  // Allow relative paths starting with /
+  if (url.startsWith('/')) return true;
   try {
     const parsed = new URL(url);
     return parsed.protocol === 'http:' || parsed.protocol === 'https:';

@@ -6,6 +6,14 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'];
 
+const MIME_TO_EXT: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg',
+  'image/gif': 'gif',
+};
+
 function getS3Client() {
   const endpoint = process.env.S3_ENDPOINT;
   const accessKey = process.env.S3_ACCESS_KEY;
@@ -51,10 +59,12 @@ export async function uploadImage(
   }
 
   const bucket = process.env.S3_BUCKET || 'reno-stars';
-  const storageOrigin = process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
+  // S3_PUBLIC_URL is the public-facing URL for the bucket (e.g., R2 public bucket URL or MinIO public URL)
+  // Falls back to NEXT_PUBLIC_STORAGE_PROVIDER for backwards compatibility
+  const publicUrl = process.env.S3_PUBLIC_URL || process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
 
-  // Generate a unique filename with original extension
-  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+  // Generate a unique filename with original extension (fallback to mime type)
+  const ext = file.name.split('.').pop()?.toLowerCase() || MIME_TO_EXT[file.type] || 'jpg';
   const timestamp = Date.now();
   const random = Math.random().toString(36).slice(2, 8);
   const key = `uploads/admin/${timestamp}-${random}.${ext}`;
@@ -71,7 +81,10 @@ export async function uploadImage(
   );
 
   // Build the public URL
-  const url = storageOrigin ? `${storageOrigin}/${key}` : `/${key}`;
+  if (!publicUrl) {
+    return { error: 'S3_PUBLIC_URL or NEXT_PUBLIC_STORAGE_PROVIDER must be set to return public image URLs.' };
+  }
 
+  const url = `${publicUrl}/${key}`;
   return { url };
 }

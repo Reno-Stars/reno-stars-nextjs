@@ -169,7 +169,7 @@ import {
 
 ### Slug Uniqueness
 
-Project slugs have a unique index in the database. The admin actions use `ensureUniqueSlug()` from `lib/utils.ts` to auto-append `-2`, `-3`, etc. on collision before insert/update. This prevents duplicate URL errors while keeping the first project's URL clean.
+Project and service area slugs have unique indexes in the database. The admin actions use `ensureUniqueSlug()` from `lib/utils.ts` to auto-append `-2`, `-3`, etc. on collision before insert/update. This prevents duplicate URL errors while keeping the first entry's URL clean. Used by `createProject()`, `updateProject()`, and `createServiceArea()`.
 
 ## Configuration
 

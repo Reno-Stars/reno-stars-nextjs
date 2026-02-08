@@ -21,6 +21,7 @@ const en = {
     savedSuccessfully: 'Saved successfully.',
     dataTable: 'Data table',
     preview: 'Preview',
+    imageLoadError: 'Image failed to load',
     remove: 'Remove',
     draft: 'Draft',
     help: 'Help',
@@ -242,6 +243,8 @@ const en = {
   },
   gallery: {
     title: 'Gallery',
+    addGalleryItem: 'Add Gallery Item',
+    createGalleryItem: 'Create Gallery Item',
     editGalleryItem: 'Edit Gallery Item',
     deleteGalleryItem: 'Delete Gallery Item',
     deleteMessage: 'This will permanently delete the gallery item.',
@@ -283,6 +286,9 @@ const en = {
   },
   serviceAreas: {
     title: 'Service Areas',
+    addServiceArea: 'Add Service Area',
+    addNewServiceArea: 'Add New Service Area',
+    createServiceArea: 'Create Service Area',
     editServiceArea: 'Edit Service Area',
     deleteServiceArea: 'Delete Service Area',
     deleteMessage: 'This will permanently delete the service area.',

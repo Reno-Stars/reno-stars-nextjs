@@ -23,6 +23,7 @@ const zh: AdminMessages = {
     savedSuccessfully: '保存成功。',
     dataTable: '数据表',
     preview: '预览',
+    imageLoadError: '图片加载失败',
     remove: '移除',
     draft: '草稿',
     help: '帮助',
@@ -244,6 +245,8 @@ const zh: AdminMessages = {
   },
   gallery: {
     title: '图片库',
+    addGalleryItem: '添加图片',
+    createGalleryItem: '创建图片',
     editGalleryItem: '编辑图片',
     deleteGalleryItem: '删除图片',
     deleteMessage: '此操作将永久删除该图片。',
@@ -285,6 +288,9 @@ const zh: AdminMessages = {
   },
   serviceAreas: {
     title: '服务区域',
+    addServiceArea: '添加服务区域',
+    addNewServiceArea: '新建服务区域',
+    createServiceArea: '创建服务区域',
     editServiceArea: '编辑服务区域',
     deleteServiceArea: '删除服务区域',
     deleteMessage: '此操作将永久删除该服务区域。',

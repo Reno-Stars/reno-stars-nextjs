@@ -17,7 +17,7 @@ interface ServiceAreaFormProps {
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
-  initialData: {
+  initialData?: {
     slug: string;
     nameEn: string;
     nameZh: string;
@@ -26,15 +26,26 @@ interface ServiceAreaFormProps {
     displayOrder: number;
     isActive: boolean;
   };
+  isNew?: boolean;
 }
 
-export default function ServiceAreaForm({ action, initialData }: ServiceAreaFormProps) {
+export default function ServiceAreaForm({ action, initialData, isNew = false }: ServiceAreaFormProps) {
   const t = useAdminTranslations();
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(isNew);
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.serviceAreas.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
+
+  const defaults = initialData ?? {
+    slug: '',
+    nameEn: '',
+    nameZh: '',
+    descriptionEn: '',
+    descriptionZh: '',
+    displayOrder: 0,
+    isActive: true,
+  };
 
   return (
     <form action={formAction}>
@@ -47,21 +58,24 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
           maxWidth: '800px',
         }}
       >
-        <EditModeToggle editing={editing} setEditing={setEditing} />
+        {!isNew && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          {/* Slug is display-only (no name attribute) - slugs are immutable after creation */}
           <FormField label={t.serviceAreas.slug} htmlFor="slug">
-            <input id="slug" value={initialData.slug} readOnly style={readOnlyStyle} />
+            {isNew ? (
+              <input id="slug" name="slug" defaultValue={defaults.slug} required style={fieldStyle} />
+            ) : (
+              <input id="slug" value={defaults.slug} readOnly style={readOnlyStyle} />
+            )}
           </FormField>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.serviceAreas.nameEn} htmlFor="nameEn">
-              <input id="nameEn" name="nameEn" defaultValue={initialData.nameEn} required style={fieldStyle} />
+              <input id="nameEn" name="nameEn" defaultValue={defaults.nameEn} required style={fieldStyle} />
             </FormField>
             <FormField label={t.serviceAreas.nameZh} htmlFor="nameZh">
-              <input id="nameZh" name="nameZh" defaultValue={initialData.nameZh} required style={fieldStyle} />
+              <input id="nameZh" name="nameZh" defaultValue={defaults.nameZh} required style={fieldStyle} />
             </FormField>
           </div>
 
@@ -69,26 +83,26 @@ export default function ServiceAreaForm({ action, initialData }: ServiceAreaForm
             nameEn="descriptionEn"
             nameZh="descriptionZh"
             label={t.serviceAreas.descriptionLabel}
-            defaultValueEn={initialData.descriptionEn}
-            defaultValueZh={initialData.descriptionZh}
+            defaultValueEn={defaults.descriptionEn}
+            defaultValueZh={defaults.descriptionZh}
             rows={4}
           />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.serviceAreas.displayOrder} htmlFor="displayOrder">
-              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
+              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
-              <input type="checkbox" name="isActive" defaultChecked={initialData.isActive} />
+              <input type="checkbox" name="isActive" defaultChecked={defaults.isActive} />
               {t.serviceAreas.isActive}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label={t.common.update} />
+            <SubmitButton isPending={isPending} label={isNew ? t.serviceAreas.createServiceArea : t.common.update} />
           )}
         </fieldset>
       </div>
