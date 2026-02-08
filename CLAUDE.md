@@ -124,6 +124,10 @@ scripts/
   seed-projects.ts        # Import static projects into DB
   seed-blog.ts            # WordPress blog crawler (EN via REST API, ZH via HTML crawling)
 
+hooks/
+  useDragReorder.ts       # Reusable drag-and-drop reordering with optimistic UI
+  useIsMobile.ts          # Mobile breakpoint detection hook
+
 tests/
   unit/                   # Vitest unit tests
   e2e/                    # Playwright e2e tests
@@ -187,11 +191,12 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB + Google Reviews API (via `Promise.all`) and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, Tooltip, DragHandle, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, Tooltip, DragHandleIcon, ConfirmDialog, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`.
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
-- **Reusable admin components**: `Tooltip` (hover help icons), `DragHandle` (6-dot drag indicator), `FormField` (label + input wrapper with optional tooltip).
+- **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning and keyboard a11y), `FormField` (label + input wrapper with optional tooltip).
+- **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Used by `GalleryListClient` for drag-to-reorder functionality.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale context for admin panel. TopBar displays EN/ZH switcher buttons. Preference persists in localStorage (`admin_locale` key). All list clients (projects, blog, FAQs, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
 - **Structured data**: Added in server page route files, not in client components. Schema components accept `company` as a prop. Rating data comes from Google Reviews API (`googleRating`/`googleReviewCount` props) — no longer stored in the Company model. `aggregateRating` is conditionally rendered only when Google data is available. Includes: LocalBusinessSchema (layout, global aggregateRating), LocalBusinessAreaSchema (area pages), ServiceSchema (service pages), ProjectSchema (project pages), ArticleSchema (blog), BreadcrumbSchema (all), FAQSchema (benefits + service pages), ReviewSchema (homepage, individual reviews only — no aggregate).
 - **ContactForm**: Reusable form with optional `large` prop (bigger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages via `result.message`.
