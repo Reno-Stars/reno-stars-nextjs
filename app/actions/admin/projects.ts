@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import {
   projects,
@@ -229,11 +230,12 @@ export async function createProject(
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
-    return { success: true };
   } catch (error) {
     console.error('Failed to create project:', error);
     return { error: 'Failed to create project.' };
   }
+
+  redirect('/admin/projects');
 }
 
 export async function updateProject(

@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { faqs } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -34,11 +35,12 @@ export async function createFaq(
 
     revalidatePath('/admin/faqs');
     revalidatePath('/', 'layout');
-    return { success: true };
   } catch (error) {
     console.error('Failed to create FAQ:', error);
     return { error: 'Failed to create FAQ.' };
   }
+
+  redirect('/admin/faqs');
 }
 
 export async function updateFaq(

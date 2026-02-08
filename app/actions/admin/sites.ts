@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, projects, siteImages } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
@@ -96,11 +97,12 @@ export async function createSite(
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');
-    return { success: true };
   } catch (error) {
     console.error('Failed to create site:', error);
     return { error: 'Failed to create site.' };
   }
+
+  redirect('/admin/sites');
 }
 
 export async function updateSite(

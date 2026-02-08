@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { serviceAreas, contactSubmissions } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
@@ -48,11 +49,12 @@ export async function createServiceArea(
 
     revalidatePath('/admin/service-areas');
     revalidatePath('/', 'layout');
-    return { success: true };
   } catch (error) {
     console.error('Failed to create service area:', error);
     return { error: 'Failed to create service area.' };
   }
+
+  redirect('/admin/service-areas');
 }
 
 export async function deleteServiceArea(id: string): Promise<{ error?: string }> {

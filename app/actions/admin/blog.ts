@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -67,11 +68,12 @@ export async function createBlogPost(
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
     revalidatePath('/', 'layout');
-    return { success: true };
   } catch (error) {
     console.error('Failed to create blog post:', error);
     return { error: 'Failed to create blog post.' };
   }
+
+  redirect('/admin/blog');
 }
 
 export async function updateBlogPost(
