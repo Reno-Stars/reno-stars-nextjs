@@ -57,6 +57,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -71,7 +72,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={defaults.imageUrl} required />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.gallery.titleEn} htmlFor="titleEn">
               <input id="titleEn" name="titleEn" defaultValue={defaults.titleEn} style={fieldStyle} />
             </FormField>
@@ -80,7 +81,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
             </FormField>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.gallery.categoryLabel} htmlFor="category">
               <select
                 id="category"

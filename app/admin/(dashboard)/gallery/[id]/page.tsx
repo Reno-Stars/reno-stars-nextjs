@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { galleryItems } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
-import GalleryItemForm from '../GalleryItemForm';
+import GalleryEditClient from './GalleryEditClient';
 import { updateGalleryItem } from '@/app/actions/admin/gallery';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
@@ -23,7 +23,8 @@ export default async function EditGalleryItemPage({ params }: PageProps) {
   return (
     <div>
       <AdminPageHeader titleKey="gallery.editGalleryItem" />
-      <GalleryItemForm
+      <GalleryEditClient
+        id={id}
         action={boundAction}
         initialData={{
           imageUrl: item.imageUrl,

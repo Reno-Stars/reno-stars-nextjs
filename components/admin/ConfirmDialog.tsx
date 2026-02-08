@@ -69,6 +69,11 @@ export default function ConfirmDialog({
         width: '90%',
         boxShadow: neu(10),
         backgroundColor: CARD,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        margin: 0,
       }}
       onClose={handleCancel}
     >
@@ -95,6 +100,14 @@ export default function ConfirmDialog({
               color: TEXT_MID,
               cursor: 'pointer',
               fontSize: '0.875rem',
+              outline: 'none',
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.outline = `2px solid ${NAVY}`;
+              e.currentTarget.style.outlineOffset = '2px';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.outline = 'none';
             }}
           >
             {t.common.cancel}

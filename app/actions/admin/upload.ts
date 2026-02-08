@@ -59,14 +59,17 @@ export async function uploadImage(
   }
 
   const bucket = process.env.S3_BUCKET || 'reno-stars';
-  // S3_PUBLIC_URL is the public-facing URL for the bucket (e.g., R2 public bucket URL or MinIO public URL)
-  // Falls back to NEXT_PUBLIC_STORAGE_PROVIDER for backwards compatibility
+  // S3_PUBLIC_URL: The public-facing URL for the bucket (e.g., R2 public bucket URL or MinIO public URL).
+  // Fallback order:
+  //   1. S3_PUBLIC_URL (preferred) - explicit public URL for S3-compatible storage
+  //   2. NEXT_PUBLIC_STORAGE_PROVIDER (legacy) - used by getAssetUrl() for URL rewriting
+  // One of these MUST be set for uploads to return accessible URLs.
   const publicUrl = process.env.S3_PUBLIC_URL || process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
 
   // Generate a unique filename with original extension (fallback to mime type)
   const ext = file.name.split('.').pop()?.toLowerCase() || MIME_TO_EXT[file.type] || 'jpg';
   const timestamp = Date.now();
-  const random = Math.random().toString(36).slice(2, 8);
+  const random = crypto.randomUUID().slice(0, 8);
   const key = `uploads/admin/${timestamp}-${random}.${ext}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());

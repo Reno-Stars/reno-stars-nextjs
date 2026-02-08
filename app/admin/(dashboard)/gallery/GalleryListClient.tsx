@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useTransition, useMemo, useCallback, useRef } from 'react';
+import { useState, useTransition, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
+import DragHandleIcon from '@/components/admin/DragHandleIcon';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -12,6 +13,7 @@ import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleGalleryItemPublished, deleteGalleryItem, reorderGalleryItems } from '@/app/actions/admin/gallery';
 import { GOLD, TEXT_MID, CARD, NAVY, neu, SURFACE_ALT, TEXT_MUTED } from '@/lib/theme';
 import { getAssetUrl } from '@/lib/storage';
+import { useDragReorder } from '@/hooks/useDragReorder';
 
 interface GalleryRow {
   id: string;
@@ -49,14 +51,31 @@ export default function GalleryListClient({ items }: Props) {
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
-  const [draggedId, setDraggedId] = useState<string | null>(null);
-  const [dragOverId, setDragOverId] = useState<string | null>(null);
-  const [localOrder, setLocalOrder] = useState<GalleryRow[] | null>(null);
-  const [isReordering, setIsReordering] = useState(false);
-  const dragStartPos = useRef<{ x: number; y: number } | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
+
+  // Drag and drop reordering
+  const {
+    draggedId,
+    dragOverId,
+    localOrder,
+    isReordering,
+    handleDragStart,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleDragEnd,
+    shouldNavigate,
+  } = useDragReorder({
+    items,
+    getId: (item) => item.id,
+    getDisplayOrder: (item) => item.displayOrder,
+    isIncluded: (item) => item.isPublished,
+    onReorder: reorderGalleryItems,
+    onSuccess: () => toast(t.common.savedSuccessfully, 'success'),
+    onError: (error) => toast(error, 'error'),
+  });
 
   const handleImageError = useCallback((id: string) => {
     setFailedImages((prev) => new Set(prev).add(id));
@@ -78,100 +97,11 @@ export default function GalleryListClient({ items }: Props) {
     });
   };
 
-  // Drag and drop handlers
-  const handleDragStart = useCallback((e: React.DragEvent, id: string) => {
-    setDraggedId(id);
-    dragStartPos.current = { x: e.clientX, y: e.clientY };
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', id);
-    // Make the drag image semi-transparent
-    if (e.currentTarget instanceof HTMLElement) {
-      e.dataTransfer.setDragImage(e.currentTarget, 50, 50);
-    }
-  }, []);
-
-  const handleDragOver = useCallback((e: React.DragEvent, id: string) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    if (draggedId && id !== draggedId) {
-      setDragOverId(id);
-    }
-  }, [draggedId]);
-
-  const handleDragLeave = useCallback(() => {
-    setDragOverId(null);
-  }, []);
-
-  const handleDrop = useCallback((e: React.DragEvent, targetId: string) => {
-    e.preventDefault();
-    setDragOverId(null);
-
-    if (!draggedId || draggedId === targetId) {
-      setDraggedId(null);
-      return;
-    }
-
-    // Optimistic reorder
-    const currentItems = localOrder ?? [...items];
-    const publishedOnly = currentItems.filter((item) => item.isPublished).sort((a, b) => a.displayOrder - b.displayOrder);
-
-    const draggedIndex = publishedOnly.findIndex((item) => item.id === draggedId);
-    const targetIndex = publishedOnly.findIndex((item) => item.id === targetId);
-
-    if (draggedIndex === -1 || targetIndex === -1) {
-      setDraggedId(null);
-      return;
-    }
-
-    // Reorder the array
-    const newOrder = [...publishedOnly];
-    const [draggedItem] = newOrder.splice(draggedIndex, 1);
-    newOrder.splice(targetIndex, 0, draggedItem);
-
-    // Update display orders
-    const updatedItems = newOrder.map((item, index) => ({
-      ...item,
-      displayOrder: index,
-    }));
-
-    // Merge back with unpublished items
-    const unpublished = currentItems.filter((item) => !item.isPublished);
-    setLocalOrder([...updatedItems, ...unpublished]);
-    setDraggedId(null);
-
-    // Save to server
-    setIsReordering(true);
-    startTransition(async () => {
-      const result = await reorderGalleryItems(updatedItems.map((item) => item.id));
-      if (result.error) {
-        toast(result.error, 'error');
-        setLocalOrder(null); // Revert on error
-      } else {
-        toast(t.common.savedSuccessfully, 'success');
-        setLocalOrder(null); // Clear local state, use server data
-      }
-      setIsReordering(false);
-    });
-  }, [draggedId, items, localOrder, startTransition, toast, t]);
-
-  const handleDragEnd = useCallback(() => {
-    setDraggedId(null);
-    setDragOverId(null);
-    dragStartPos.current = null;
-  }, []);
-
   const handleItemClick = useCallback((e: React.MouseEvent, id: string) => {
-    // Only navigate if we haven't dragged significantly
-    if (dragStartPos.current) {
-      const dx = Math.abs(e.clientX - dragStartPos.current.x);
-      const dy = Math.abs(e.clientY - dragStartPos.current.y);
-      if (dx > 5 || dy > 5) {
-        e.preventDefault();
-        return;
-      }
+    if (shouldNavigate(e)) {
+      router.push(`/admin/gallery/${id}`);
     }
-    router.push(`/admin/gallery/${id}`);
-  }, [router]);
+  }, [router, shouldNavigate]);
 
   const columns: Column<GalleryRow>[] = useMemo(() => {
     const getT = (row: GalleryRow) => locale === 'zh' ? row.titleZh : row.titleEn;
@@ -232,7 +162,7 @@ export default function GalleryListClient({ items }: Props) {
           </h2>
           {publishedItems.length > 1 && (
             <span style={{ color: TEXT_MID, fontSize: '0.75rem' }}>
-              {isReordering ? t.common.saving : t.gallery.dragToReorder || 'Drag to reorder'}
+              {isReordering ? t.common.saving : t.gallery.dragToReorder}
             </span>
           )}
         </div>
@@ -275,7 +205,7 @@ export default function GalleryListClient({ items }: Props) {
                     transition: 'transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease',
                     '--tw-ring-color': GOLD,
                   } as React.CSSProperties}
-                  aria-label={`${t.common.edit} ${altText}. ${t.gallery.dragToReorder || 'Drag to reorder'}`}
+                  aria-label={`${t.common.edit} ${altText}. ${t.gallery.dragToReorder}`}
                 >
                   {hasFailed ? (
                     <div
@@ -321,14 +251,7 @@ export default function GalleryListClient({ items }: Props) {
                     className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-70 transition-opacity duration-300 pointer-events-none"
                     style={{ color: '#fff' }}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <circle cx="9" cy="6" r="1.5" />
-                      <circle cx="15" cy="6" r="1.5" />
-                      <circle cx="9" cy="12" r="1.5" />
-                      <circle cx="15" cy="12" r="1.5" />
-                      <circle cx="9" cy="18" r="1.5" />
-                      <circle cx="15" cy="18" r="1.5" />
-                    </svg>
+                    <DragHandleIcon size={20} />
                   </div>
                 </div>
               );

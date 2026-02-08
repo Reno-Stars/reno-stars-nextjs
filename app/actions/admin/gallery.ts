@@ -1,5 +1,7 @@
 'use server';
 
+// NOTE: console.error is used for error logging until a structured logger is available.
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
@@ -47,10 +49,10 @@ export async function createGalleryItem(
 ): Promise<{ success?: boolean; error?: string }> {
   await requireAuth();
   try {
-    const { data, error } = parseGalleryFormData(formData, '0');
-    if (error) return { error };
+    const result = parseGalleryFormData(formData, '0');
+    if (result.error || !result.data) return { error: result.error ?? 'Invalid data.' };
 
-    await db.insert(galleryItems).values(data!);
+    await db.insert(galleryItems).values(result.data);
 
     revalidatePath('/admin/gallery');
     revalidatePath('/', 'layout');
@@ -70,10 +72,10 @@ export async function updateGalleryItem(
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid gallery item ID.' };
   try {
-    const { data, error } = parseGalleryFormData(formData);
-    if (error) return { error };
+    const result = parseGalleryFormData(formData);
+    if (result.error || !result.data) return { error: result.error ?? 'Invalid data.' };
 
-    const updated = await db.update(galleryItems).set(data!).where(eq(galleryItems.id, id)).returning({ id: galleryItems.id });
+    const updated = await db.update(galleryItems).set(result.data).where(eq(galleryItems.id, id)).returning({ id: galleryItems.id });
     if (updated.length === 0) return { error: 'Gallery item not found.' };
 
     revalidatePath('/admin/gallery');
@@ -126,14 +128,14 @@ export async function reorderGalleryItems(
   }
 
   try {
-    // Update display order for each item based on its position in the array
-    await Promise.all(
-      orderedIds.map((id, index) =>
-        db.update(galleryItems)
-          .set({ displayOrder: index })
-          .where(eq(galleryItems.id, id))
-      )
-    );
+    // Update display order for each item in a transaction for atomicity
+    await db.transaction(async (tx: typeof db) => {
+      for (let i = 0; i < orderedIds.length; i++) {
+        await tx.update(galleryItems)
+          .set({ displayOrder: i })
+          .where(eq(galleryItems.id, orderedIds[i]));
+      }
+    });
 
     revalidatePath('/admin/gallery');
     revalidatePath('/', 'layout');
