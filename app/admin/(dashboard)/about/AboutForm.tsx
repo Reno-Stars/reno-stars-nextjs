@@ -25,6 +25,7 @@ export default function AboutForm({ about }: AboutFormProps) {
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',

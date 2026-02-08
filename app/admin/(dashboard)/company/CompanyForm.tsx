@@ -28,6 +28,7 @@ export default function CompanyForm({ company }: CompanyFormProps) {
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -40,7 +41,7 @@ export default function CompanyForm({ company }: CompanyFormProps) {
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.company.nameLabel} htmlFor="name">
               <input id="name" name="name" defaultValue={company.name} required style={fieldStyle} />
             </FormField>

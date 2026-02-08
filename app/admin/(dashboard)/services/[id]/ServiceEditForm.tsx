@@ -31,6 +31,7 @@ export default function ServiceEditForm({ service }: Props) {
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',

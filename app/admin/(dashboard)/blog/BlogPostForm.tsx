@@ -66,6 +66,7 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -88,7 +89,7 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
 
           <ImageUrlInput name="featuredImageUrl" label={t.blog.heroImage} defaultValue={initialData?.featuredImageUrl ?? ''} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.blog.authorLabel} htmlFor="author">
               <input id="author" name="author" defaultValue={initialData?.author ?? ''} style={fieldStyle} />
             </FormField>

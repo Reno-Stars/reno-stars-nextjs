@@ -29,6 +29,7 @@ export default function ShowroomForm({ showroom }: ShowroomFormProps) {
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -45,7 +46,7 @@ export default function ShowroomForm({ showroom }: ShowroomFormProps) {
             <input id="address" name="address" defaultValue={showroom.address ?? ''} style={fieldStyle} />
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.showroom.phone} htmlFor="phone">
               <input id="phone" name="phone" defaultValue={showroom.phone ?? ''} style={fieldStyle} />
             </FormField>

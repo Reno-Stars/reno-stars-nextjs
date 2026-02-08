@@ -26,6 +26,8 @@ function uniquePhone(): string {
 describe('submitContactForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Note: phoneCounter is NOT reset to ensure unique phones across all tests
+    // This prevents rate limiting issues from the module-level rateLimitStore
   });
 
   it('should reject empty required fields', async () => {

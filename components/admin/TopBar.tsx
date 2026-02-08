@@ -7,11 +7,12 @@ import { useAdminTranslations } from '@/lib/admin/translations';
 import { localeNames, type Locale } from '@/i18n/config';
 
 export default function TopBar() {
-  const { locale, setLocale } = useAdminLocale();
+  const { locale, setLocale, setSidebarOpen } = useAdminLocale();
   const t = useAdminTranslations();
 
   return (
     <header
+      className="admin-topbar"
       style={{
         backgroundColor: CARD,
         boxShadow: neu(3),
@@ -21,9 +22,30 @@ export default function TopBar() {
         justifyContent: 'space-between',
       }}
     >
-      <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.875rem' }}>
-        {t.topBar.title}
-      </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <button
+          type="button"
+          className="admin-hamburger"
+          onClick={() => setSidebarOpen(true)}
+          aria-label={t.topBar.openMenu}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '0.25rem',
+            color: NAVY,
+          }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.875rem' }}>
+          {t.topBar.title}
+        </span>
+      </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <div style={{ display: 'flex', gap: '0.25rem' }}>
           {(['en', 'zh'] as Locale[]).map((loc) => (

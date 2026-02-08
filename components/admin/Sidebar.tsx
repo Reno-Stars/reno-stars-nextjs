@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { NAVY, NAVY_LIGHT, GOLD, SURFACE } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
-export default function Sidebar() {
+interface SidebarProps {
+  onNavigate?: () => void;
+}
+
+export default function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname();
   const t = useAdminTranslations();
 
@@ -40,7 +44,7 @@ export default function Sidebar() {
         padding: '1.5rem 0',
         display: 'flex',
         flexDirection: 'column',
-        flexShrink: 0,
+        flex: 1,
       }}
     >
       <div
@@ -60,6 +64,7 @@ export default function Sidebar() {
           <Link
             key={link.href}
             href={link.href}
+            onClick={onNavigate}
             aria-current={active ? 'page' : undefined}
             style={{
               display: 'block',

@@ -35,6 +35,7 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -47,7 +48,7 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.trustBadges.badgeEn} htmlFor="badgeEn">
               <input id="badgeEn" name="badgeEn" defaultValue={initialData.badgeEn} required style={fieldStyle} />
             </FormField>
@@ -56,7 +57,7 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
             </FormField>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.trustBadges.displayOrder} htmlFor="displayOrder">
               <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
             </FormField>

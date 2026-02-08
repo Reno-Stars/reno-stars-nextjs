@@ -50,6 +50,7 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -70,7 +71,7 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
             )}
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.serviceAreas.nameEn} htmlFor="nameEn">
               <input id="nameEn" name="nameEn" defaultValue={defaults.nameEn} required style={fieldStyle} />
             </FormField>
@@ -88,7 +89,7 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
             rows={4}
           />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.serviceAreas.displayOrder} htmlFor="displayOrder">
               <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
             </FormField>

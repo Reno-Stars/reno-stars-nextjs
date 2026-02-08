@@ -39,7 +39,7 @@ export default function BilingualInput({
         </legend>
         {tooltip && <Tooltip content={tooltip} />}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+      <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
         <div>
           <label htmlFor={nameEn} style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.25rem', display: 'block' }}>
             <span role="img" aria-label="English">🇺🇸</span> EN

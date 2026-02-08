@@ -49,6 +49,7 @@ const zh: AdminMessages = {
   topBar: {
     title: 'Reno Stars 管理后台',
     logout: '退出登录',
+    openMenu: '打开菜单',
   },
   login: {
     title: 'Reno Stars 管理后台',

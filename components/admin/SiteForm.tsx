@@ -103,6 +103,7 @@ export default function SiteForm({
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -223,7 +224,7 @@ export default function SiteForm({
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <input name={`siteImages[${idx}].url`} value={img.url} onChange={(e) => { const n = [...siteImages]; n[idx] = { ...n[idx], url: e.target.value }; setSiteImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Site image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
+                    <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
                       <div>
                         <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                           <span role="img" aria-label="English">🇺🇸</span> {t.projects.altEn}

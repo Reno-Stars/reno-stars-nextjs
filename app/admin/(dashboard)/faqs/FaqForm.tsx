@@ -48,6 +48,7 @@ export default function FaqForm({ action, initialData, isNew = false }: FaqFormP
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',

@@ -212,6 +212,7 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
 
   return (
     <div
+      className="admin-site-detail-grid"
       style={{
         display: 'grid',
         gridTemplateColumns: '280px 1fr',

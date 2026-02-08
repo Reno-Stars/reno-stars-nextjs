@@ -1,11 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
 
 interface AdminLocaleContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
 const AdminLocaleContext = createContext<AdminLocaleContextValue | null>(null);
@@ -14,6 +16,7 @@ const STORAGE_KEY = 'admin_locale';
 
 export function AdminLocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -28,8 +31,13 @@ export function AdminLocaleProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, newLocale);
   }, []);
 
+  const value = useMemo(
+    () => ({ locale, setLocale, sidebarOpen, setSidebarOpen }),
+    [locale, setLocale, sidebarOpen, setSidebarOpen],
+  );
+
   return (
-    <AdminLocaleContext.Provider value={{ locale, setLocale }}>
+    <AdminLocaleContext.Provider value={value}>
       {children}
     </AdminLocaleContext.Provider>
   );

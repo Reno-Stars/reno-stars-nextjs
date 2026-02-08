@@ -36,6 +36,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -77,7 +78,7 @@ export default function SocialLinkForm({ action, initialData }: SocialLinkFormPr
             />
           </FormField>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.socialLinks.displayOrder} htmlFor="displayOrder">
               <input
                 id="displayOrder"

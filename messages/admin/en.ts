@@ -47,6 +47,7 @@ const en = {
   topBar: {
     title: 'Reno Stars Admin',
     logout: 'Logout',
+    openMenu: 'Open menu',
   },
   login: {
     title: 'Reno Stars Admin',

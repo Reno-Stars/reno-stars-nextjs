@@ -30,7 +30,7 @@ export default function AdminPageHeader({ titleKey, actionKey, actionHref }: Adm
   const actionLabel = actionKey ? resolve(t as unknown as Record<string, unknown>, actionKey) : undefined;
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+    <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
       <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
       {actionLabel && actionHref && (
         <Link

@@ -228,6 +228,7 @@ export default function ProjectForm({
   return (
     <form action={formAction}>
       <div
+        className="admin-form-card"
         style={{
           backgroundColor: CARD,
           borderRadius: '12px',
@@ -296,7 +297,7 @@ export default function ProjectForm({
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required tooltip={t.projects.tooltips.title} />
           <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} tooltip={t.projects.tooltips.description} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
+          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
               <select id="serviceType" name="serviceType" value={selectedServiceType} onChange={(e) => setSelectedServiceType(e.target.value)} style={fieldStyle}>
                 {SERVICE_TYPES.map((key) => (
@@ -455,7 +456,7 @@ export default function ProjectForm({
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
+                    <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
                       <div>
                         <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                           <span role="img" aria-label="English">🇺🇸</span> {t.projects.altEn}
@@ -502,7 +503,7 @@ export default function ProjectForm({
             </div>
             {scopes.map((scope, idx) => (
               <div key={scope.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="English">🇺🇸</span> {t.projects.scopeEn}
@@ -542,7 +543,7 @@ export default function ProjectForm({
               <div key={ep.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
                 <input name={`externalProducts[${idx}].url`} value={ep.url} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
                 <input name={`externalProducts[${idx}].imageUrl`} value={ep.imageUrl} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], imageUrl: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productImageUrl} aria-label={`Product ${idx + 1} image URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="English">🇺🇸</span> {t.projects.productLabelEn}
