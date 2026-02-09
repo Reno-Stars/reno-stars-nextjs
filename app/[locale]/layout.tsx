@@ -3,6 +3,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { LocalBusinessSchema } from '@/components/structured-data';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -52,6 +53,7 @@ export default async function LocaleLayout({
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
         {/* Preload hero image for faster LCP */}
         <link rel="preload" as="image" href={images.hero} fetchPriority="high" />
+        <GoogleAnalytics />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>

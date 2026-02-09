@@ -156,6 +156,7 @@ tests/
 | `S3_PUBLIC_URL` | No | Public-facing URL for the S3 bucket (e.g., R2 or MinIO public URL). Used by image upload to build public URLs. Falls back to `NEXT_PUBLIC_STORAGE_PROVIDER` |
 | `GOOGLE_PLACES_API_KEY` | No | Google Places API key for homepage reviews |
 | `GOOGLE_PLACE_ID` | No | Google Place ID for the business location |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 Measurement ID (e.g., `G-XXXXXXXXXX`) for tracking |
 
 ## Routing & Proxy
 
@@ -195,7 +196,7 @@ Key patterns:
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
-- **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y), `FormField` (label + input wrapper with optional tooltip).
+- **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y), `FormField` (label + input wrapper with optional tooltip), `SearchableSelect` (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project in BlogPostForm and linked site in ProjectForm).
 - **Slug validation**: `isValidSlug()` in `lib/admin/form-utils.ts` rejects consecutive hyphens (e.g., `a--b` is invalid). Uses regex `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. Used by `GalleryListClient` for drag-to-reorder functionality.
 - **useIsMobile hook** (`hooks/useIsMobile.ts`): Mobile breakpoint detection with SSR-safe lazy initialization (prevents hydration mismatch). Defaults to 768px breakpoint.

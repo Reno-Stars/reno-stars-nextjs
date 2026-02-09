@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
 import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
+import { trackPhoneClick } from '@/lib/analytics';
 import { NAVY, GOLD } from '@/lib/theme';
 
 type IconComponent = React.ComponentType<{ className?: string }>;
@@ -160,6 +161,7 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
             <div className="space-y-3">
               <a
                 href={`tel:${company.phone}`}
+                onClick={() => trackPhoneClick(company.phone)}
                 className="flex items-center gap-2 text-sm text-white/80 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4 shrink-0" style={{ color: GOLD }} />

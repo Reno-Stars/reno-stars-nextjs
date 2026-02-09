@@ -4,6 +4,7 @@ import { useState, useTransition, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
+import { trackFormSubmission } from '@/lib/analytics';
 import { GOLD, SURFACE, TEXT, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neuIn } from '@/lib/theme';
 
 interface ContactFormProps {
@@ -41,6 +42,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
       if (result.success) {
         setFormStatus({ type: 'success', message: t('form.success') });
         setFormData({ name: '', email: '', phone: '', message: '' });
+        trackFormSubmission('contact');
         if (onSuccess) {
           successTimerRef.current = setTimeout(onSuccess, 1500);
         }
