@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import Tooltip from './Tooltip';
+import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
 import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
@@ -122,6 +123,15 @@ export default function ProjectForm({
     setSelectedSpaceType(initialData?.spaceTypeEn ?? '');
     setSelectedSiteId(initialData?.siteId ?? '');
   }, [initialData?.serviceType, initialData?.locationCity, initialData?.spaceTypeEn, initialData?.siteId]);
+
+  // Convert sites to SearchableSelect options format
+  const siteOptions = useMemo(() =>
+    sites.map((s) => ({
+      id: s.id,
+      label: locale === 'zh' ? `${s.titleZh} / ${s.titleEn}` : `${s.titleEn} / ${s.titleZh}`,
+    })),
+    [sites, locale]
+  );
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -579,22 +589,16 @@ export default function ProjectForm({
               <div style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem', marginBottom: '0.5rem' }}>
                 {t.projects.siteSettings}
               </div>
-              <FormField label={t.projects.linkedSite} htmlFor="siteId">
-                <select
-                  id="siteId"
+              <FormField label={t.projects.linkedSite}>
+                <SearchableSelect
                   name="siteId"
+                  options={siteOptions}
                   value={selectedSiteId}
-                  onChange={(e) => setSelectedSiteId(e.target.value)}
-                  required
-                  style={fieldStyle}
-                >
-                  <option value="">{t.projects.selectSite}</option>
-                  {sites.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.titleEn} / {s.titleZh}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setSelectedSiteId}
+                  placeholder={t.projects.selectSite}
+                  noResultsText={t.common.noRecords}
+                  disabled={!editing}
+                />
               </FormField>
             </div>
           )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import BilingualInput from '@/components/admin/BilingualInput';
@@ -9,8 +9,9 @@ import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
-import { inputStyle, readOnlyStyle, selectStyle } from '@/components/admin/shared-styles';
+import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
+import SearchableSelect from '@/components/admin/SearchableSelect';
 import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
@@ -61,6 +62,15 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
     setSelectedProjectId(initialData?.projectId ?? '');
   }, [initialData?.projectId]);
 
+  // Convert projects to SearchableSelect options format
+  const projectOptions = useMemo(() =>
+    projects.map((p) => ({
+      id: p.id,
+      label: locale === 'zh' ? `${p.titleZh} / ${p.titleEn}` : `${p.titleEn} / ${p.titleZh}`,
+    })),
+    [projects, locale]
+  );
+
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
   return (
@@ -103,21 +113,16 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
           </FormField>
 
           {projects.length > 0 && (
-            <FormField label={t.blog.relatedProject} htmlFor="projectId">
-              <select
-                id="projectId"
+            <FormField label={t.blog.relatedProject}>
+              <SearchableSelect
                 name="projectId"
+                options={projectOptions}
                 value={selectedProjectId}
-                onChange={(e) => setSelectedProjectId(e.target.value)}
-                style={editing ? selectStyle : readOnlyStyle}
-              >
-                <option value="">{t.blog.noProject}</option>
-                {projects.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {locale === 'zh' ? p.titleZh : p.titleEn}
-                  </option>
-                ))}
-              </select>
+                onChange={setSelectedProjectId}
+                placeholder={t.blog.selectProject}
+                noResultsText={t.common.noRecords}
+                disabled={!editing}
+              />
             </FormField>
           )}
 
