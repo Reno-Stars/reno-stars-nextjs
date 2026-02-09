@@ -102,6 +102,57 @@ const nextConfig: NextConfig = {
       // ================================================================
       // 4. Old WP page renames
       // ================================================================
+      // --- WP project CPT slugs (long WP slugs don't exist in new DB) ---
+      {
+        source: '/:locale(en|zh)/project/whole-house-renovation-modern-luxury-kitchen-and-bathroom-renovation',
+        destination: '/:locale/projects/whole-house',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/modernizing-the-core-of-the-home-kitchen-bath-living-space',
+        destination: '/:locale/projects/kitchen',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/richmond-whole-house-renovation-from-kitchen-to-bedroom',
+        destination: '/:locale/projects/richmond-kitchen-bathroom-remodel',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/small-budget-modern-kitchen-makeover',
+        destination: '/:locale/projects/kitchen',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/affordable-modern-remodel-from-outdated-to-fresh-in-kitchen-bathroom-living-room',
+        destination: '/:locale/projects',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/stunning-beauty-clinic-remodel-in-vancouver-a-full-commercial-renovation-transformation',
+        destination: '/:locale/projects/commercial-renovation-skin-lab-granville',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/richmond-townhouse-makeover-kitchen-bathroom-laundry-room',
+        destination: '/:locale/projects/richmond-kitchen-bathroom-remodel',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/vancouver-whole-house-renovation-full-home-remodel-and-interior-upgrade',
+        destination: '/:locale/projects/whole-house',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/customized-kitchen-and-bathroom-cabinet-refacing-in-coquitlam',
+        destination: '/:locale/projects/coquitlam-white-shaker-cabinets',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/project/luxury-kitchen-remodel-bathroom-renovation-in-richmond-bc-reno-stars',
+        destination: '/:locale/projects/richmond-kitchen-remodel-bath',
+        permanent: true,
+      },
       // /project/ (singular CPT) → /projects/
       {
         source: '/:locale(en|zh)/project/:slug',
@@ -124,6 +175,12 @@ const nextConfig: NextConfig = {
       {
         source: '/:locale(en|zh)/vancouver-renovation-blog',
         destination: '/:locale/blog',
+        permanent: true,
+      },
+      // Unicode comma blog slug → clean slug
+      {
+        source: '/:locale(en|zh)/renovation_article/the-story-of-reno-stars\uFF0C-vancouver-local-renovation-company',
+        destination: '/:locale/blog/the-story-of-reno-stars-vancouver-local-renovation-company',
         permanent: true,
       },
       // /renovation_article/:slug → /blog/:slug
@@ -352,6 +409,95 @@ const nextConfig: NextConfig = {
       {
         source: '/:locale(en|zh)/commercial-pokin',
         destination: '/:locale/projects/commercial',
+        permanent: true,
+      },
+
+      // ================================================================
+      // 9b. Additional old root-level post slugs from WP sitemap
+      // ================================================================
+      {
+        source: '/:locale(en|zh)/kitchen-renovation-section',
+        destination: '/:locale/projects/kitchen',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/home-renovation-in-richmond-kitchen-and-livingroom',
+        destination: '/:locale/projects/richmond-kitchen-bathroom-remodel',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/modern-bathroom-renovation-in-vancouver',
+        destination: '/:locale/projects/bathroom',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/washroom-renovation-in-surrey-modern-walkin-shower',
+        destination: '/:locale/projects/bathroom',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/condo-renovation-in-surrey-kitchen-bathroom',
+        destination: '/:locale/projects',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/whole-house-renovation-from-kitchen-to-bathroom',
+        destination: '/:locale/projects/whole-house',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/commercial-emergency-renovation-rescue',
+        destination: '/:locale/blog/emergency-renovation-rescue',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/commercial-wall-opening-project',
+        destination: '/:locale/projects/commercial',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/downtown-duplex-apartment-electrical-fireplace-copy',
+        destination: '/:locale/projects',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/kitchen-remodel-in-vancouver',
+        destination: '/:locale/projects/kitchen',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/budget-friendly-reno',
+        destination: '/:locale/projects',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/coquitlam-white-shaker-cabinets',
+        destination: '/:locale/projects/coquitlam-white-shaker-cabinets',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/richmond-kitchen-and-bathroom-remodel',
+        destination: '/:locale/projects/richmond-kitchen-bathroom-remodel',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/kitchen-renovation-in-surrey-white-toned-kitchen',
+        destination: '/:locale/projects/white-toned-kitchen-surrey',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/kitchen-renovation-in-delta-bc',
+        destination: '/:locale/projects/kitchen-renovation-delta',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/comprehensive-modern-kitchen-renovation-in-richmond',
+        destination: '/:locale/projects/modern-kitchen-richmond',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh)/a-stunning-bathroom-renovation',
+        destination: '/:locale/projects/bathroom',
         permanent: true,
       },
 

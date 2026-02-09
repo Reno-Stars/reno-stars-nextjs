@@ -154,7 +154,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             >
               <Image
                 src={gallery[activeImage].src}
-                alt={gallery[activeImage].alt || `${project.title} - Image ${activeImage + 1} of ${gallery.length}`}
+                alt={gallery[activeImage].alt || `${project.title} - renovation project photo`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"
                 className="object-contain"
@@ -189,7 +189,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         aria-label={`View image ${img.originalIndex + 1} of ${gallery.length}`}
                         aria-pressed={img.originalIndex === activeImage}
                       >
-                        <Image src={img.src} alt={img.alt || `${project.title} - image ${img.originalIndex + 1}`} fill sizes="80px" className="object-cover" />
+                        <Image src={img.src} alt={img.alt || `${project.title} - renovation photo`} fill sizes="80px" className="object-cover" />
                       </button>
                     ))}
                   </div>

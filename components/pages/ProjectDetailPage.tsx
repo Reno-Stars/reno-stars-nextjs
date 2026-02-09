@@ -155,7 +155,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         >
                           <Image
                             src={img.src}
-                            alt={img.alt}
+                            alt={img.alt || localizedProject.title}
                             fill
                             sizes="80px"
                             className="object-cover"

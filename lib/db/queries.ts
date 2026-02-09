@@ -24,6 +24,31 @@ import { getAssetUrl } from '../storage';
 import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
 import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects } from '../types';
 
+// ============================================================================
+// HELPERS
+// ============================================================================
+
+/** Helper to sort arrays by displayOrder field */
+function sortByDisplayOrder<T extends { displayOrder: number }>(arr: T[]): T[] {
+  return arr.slice().sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
+/** Helper to group array items by a key field into a Map */
+function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T) => K): Map<K, T[]> {
+  const map = new Map<K, T[]>();
+  for (const item of arr) {
+    const key = keyFn(item);
+    const group = map.get(key) ?? [];
+    group.push(item);
+    map.set(key, group);
+  }
+  return map;
+}
+
+// ============================================================================
+// COMPANY QUERIES
+// ============================================================================
+
 /**
  * Fetch company info from DB and map to the `Company` type.
  * `yearsExperience` is computed from `foundingYear` so it stays current.
@@ -180,21 +205,19 @@ function mapDbProjectToProject(
         ? { en: row.spaceTypeEn, zh: row.spaceTypeZh }
         : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
-    images: images
-      .sort((a, b) => a.displayOrder - b.displayOrder)
-      .map((img) => ({
-        src: getAssetUrl(img.imageUrl),
-        alt: {
-          en: img.altTextEn ?? '',
-          zh: img.altTextZh ?? '',
-        },
-        is_before: img.isBefore,
-      })),
+    images: sortByDisplayOrder(images).map((img) => ({
+      src: getAssetUrl(img.imageUrl),
+      alt: {
+        en: img.altTextEn ?? '',
+        zh: img.altTextZh ?? '',
+      },
+      is_before: img.isBefore,
+    })),
     service_scope:
       scopes.length > 0
         ? {
-            en: scopes.sort((a, b) => a.displayOrder - b.displayOrder).map((s) => s.scopeEn),
-            zh: scopes.sort((a, b) => a.displayOrder - b.displayOrder).map((s) => s.scopeZh),
+            en: sortByDisplayOrder(scopes).map((s) => s.scopeEn),
+            zh: sortByDisplayOrder(scopes).map((s) => s.scopeZh),
           }
         : undefined,
     challenge:
@@ -213,13 +236,11 @@ function mapDbProjectToProject(
         : undefined,
     external_products:
       externalProducts.length > 0
-        ? externalProducts
-            .sort((a, b) => a.displayOrder - b.displayOrder)
-            .map((ep) => ({
-              url: ep.url,
-              image_url: ep.imageUrl ? getAssetUrl(ep.imageUrl) : undefined,
-              label: { en: ep.labelEn, zh: ep.labelZh },
-            }))
+        ? sortByDisplayOrder(externalProducts).map((ep) => ({
+            url: ep.url,
+            image_url: ep.imageUrl ? getAssetUrl(ep.imageUrl) : undefined,
+            label: { en: ep.labelEn, zh: ep.labelZh },
+          }))
         : undefined,
     // Site relationship (mandatory)
     site_id: row.siteId,
@@ -291,9 +312,9 @@ export async function getAllProjectsAdmin() {
 
   return rows.map((row: DbProjectRow) => ({
     ...row,
-    images: images.filter((i: DbImageRow) => i.projectId === row.id).sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
-    scopes: scopes.filter((s: DbScopeRow) => s.projectId === row.id).sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
-    externalProducts: externalProducts.filter((ep: DbExternalProductRow) => ep.projectId === row.id).sort((a: DbExternalProductRow, b: DbExternalProductRow) => a.displayOrder - b.displayOrder),
+    images: sortByDisplayOrder(images.filter((i: DbImageRow) => i.projectId === row.id)),
+    scopes: sortByDisplayOrder(scopes.filter((s: DbScopeRow) => s.projectId === row.id)),
+    externalProducts: sortByDisplayOrder(externalProducts.filter((ep: DbExternalProductRow) => ep.projectId === row.id)),
   }));
 }
 
@@ -329,16 +350,14 @@ function mapDbSiteToSite(row: DbSiteRow, siteImageRows?: DbSiteImageRow[]): Site
     featured: row.featured,
     published_at: row.publishedAt ?? undefined,
     images: siteImageRows && siteImageRows.length > 0
-      ? siteImageRows
-          .sort((a, b) => a.displayOrder - b.displayOrder)
-          .map((img) => ({
-            src: getAssetUrl(img.imageUrl),
-            alt: {
-              en: img.altTextEn ?? '',
-              zh: img.altTextZh ?? '',
-            },
-            is_before: img.isBefore,
-          }))
+      ? sortByDisplayOrder(siteImageRows).map((img) => ({
+          src: getAssetUrl(img.imageUrl),
+          alt: {
+            en: img.altTextEn ?? '',
+            zh: img.altTextZh ?? '',
+          },
+          is_before: img.isBefore,
+        }))
       : undefined,
   };
 }
@@ -422,18 +441,49 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
     .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)))
     .orderBy(desc(sitesTable.createdAt));
 
-  // Fetch all site images for these sites in one query
   const siteIds = rows.map((r: DbSiteRow) => r.id);
-  const allSiteImages: DbSiteImageRow[] = siteIds.length > 0
-    ? await db.select().from(siteImagesTable).where(inArray(siteImagesTable.siteId, siteIds))
-    : [];
+  if (siteIds.length === 0) return [];
 
-  // Fetch projects for each site and build aggregated data
+  // Fetch all site images and all projects for these sites in parallel (avoids N+1)
+  const [allSiteImages, allProjects] = await Promise.all([
+    db.select().from(siteImagesTable).where(inArray(siteImagesTable.siteId, siteIds)) as Promise<DbSiteImageRow[]>,
+    db
+      .select()
+      .from(projectsTable)
+      .where(and(inArray(projectsTable.siteId, siteIds), eq(projectsTable.isPublished, true)))
+      .orderBy(asc(projectsTable.displayOrderInSite)) as Promise<DbProjectRow[]>,
+  ]);
+
+  // Fetch relations for all projects in one batch
+  const projectIds = allProjects.map((p: DbProjectRow) => p.id);
+  const { images: allProjectImages, scopes: allScopes, externalProducts: allExternalProducts } = await fetchProjectRelations(projectIds);
+
+  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
+  const imagesByProject = groupBy(allProjectImages, (i: DbImageRow) => i.projectId);
+  const scopesByProject = groupBy(allScopes, (s: DbScopeRow) => s.projectId);
+  const epByProject = groupBy(allExternalProducts, (ep: DbExternalProductRow) => ep.projectId);
+  const siteImagesBySite = groupBy(allSiteImages, (img: DbSiteImageRow) => img.siteId);
+
+  // Group projects by siteId for efficient lookup
+  const projectsBySite = new Map<string, Project[]>();
+  for (const row of allProjects) {
+    const project = mapDbProjectToProject(
+      row,
+      imagesByProject.get(row.id) ?? [],
+      scopesByProject.get(row.id) ?? [],
+      epByProject.get(row.id) ?? []
+    );
+    const arr = projectsBySite.get(row.siteId) ?? [];
+    arr.push(project);
+    projectsBySite.set(row.siteId, arr);
+  }
+
+  // Build results
   const results: SiteWithProjects[] = [];
   for (const row of rows) {
-    const rowImages = allSiteImages.filter((img) => img.siteId === row.id);
+    const rowImages = siteImagesBySite.get(row.id) ?? [];
     const site = mapDbSiteToSite(row, rowImages);
-    const projects = await getProjectsOfSite(row.id);
+    const projects = projectsBySite.get(row.id) ?? [];
 
     const aggregated: SiteWithProjects['aggregated'] = {
       totalBudget: calculateCombinedBudget(projects),
@@ -480,6 +530,17 @@ export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
 // BLOG POST QUERIES
 // ============================================================================
 
+/** Default number of blog posts per page */
+export const BLOG_POSTS_PER_PAGE = 10;
+
+/** Result of paginated blog posts query */
+export interface PaginatedBlogPosts {
+  posts: BlogPost[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+}
+
 /** Fetch all published blog posts ordered by publishedAt desc. */
 export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
   const rows = await db
@@ -501,8 +562,51 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
         : undefined,
     featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
     published_at: row.publishedAt ?? undefined,
+    updated_at: row.updatedAt ?? undefined,
   }));
 });
+
+/** Fetch paginated published blog posts ordered by publishedAt desc. */
+export const getBlogPostsPaginatedFromDb = cache(
+  async (page: number = 1, perPage: number = BLOG_POSTS_PER_PAGE): Promise<PaginatedBlogPosts> => {
+    // Get total count first
+    const countResult = await db
+      .select({ count: blogPostsTable.id })
+      .from(blogPostsTable)
+      .where(eq(blogPostsTable.isPublished, true));
+
+    const totalCount = countResult.length;
+    const totalPages = Math.ceil(totalCount / perPage);
+    const currentPage = Math.max(1, Math.min(page, totalPages || 1));
+    const offset = (currentPage - 1) * perPage;
+
+    const rows = await db
+      .select()
+      .from(blogPostsTable)
+      .where(eq(blogPostsTable.isPublished, true))
+      .orderBy(desc(blogPostsTable.publishedAt))
+      .limit(perPage)
+      .offset(offset);
+
+    const posts = rows.map((row: typeof blogPostsTable.$inferSelect) => ({
+      slug: row.slug,
+      title: { en: row.titleEn, zh: row.titleZh },
+      excerpt:
+        row.excerptEn && row.excerptZh
+          ? { en: row.excerptEn, zh: row.excerptZh }
+          : undefined,
+      content:
+        row.contentEn && row.contentZh
+          ? { en: row.contentEn, zh: row.contentZh }
+          : undefined,
+      featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
+      published_at: row.publishedAt ?? undefined,
+      updated_at: row.updatedAt ?? undefined,
+    }));
+
+    return { posts, totalCount, totalPages, currentPage };
+  }
+);
 
 /** Fetch a single published blog post by slug, with related project if linked. */
 export const getBlogPostBySlugFromDb = cache(
@@ -562,6 +666,7 @@ export const getBlogPostBySlugFromDb = cache(
           : undefined,
       featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
       published_at: row.publishedAt ?? undefined,
+      updated_at: row.updatedAt ?? undefined,
       related_project: relatedProject,
     };
   }
@@ -729,7 +834,7 @@ export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelec
 
   return rows.map((row: DbSiteRow) => ({
     ...row,
-    siteImages: allImages.filter((img) => img.siteId === row.id).sort((a, b) => a.displayOrder - b.displayOrder),
+    siteImages: sortByDisplayOrder(allImages.filter((img) => img.siteId === row.id)),
   }));
 }
 
@@ -804,9 +909,9 @@ export async function getProjectsWithDetailsBySite(siteId: string) {
 
   return rows.map((row: DbProjectRow) => ({
     ...row,
-    images: (imagesByProject.get(row.id) ?? []).sort((a, b) => a.displayOrder - b.displayOrder),
-    scopes: (scopesByProject.get(row.id) ?? []).sort((a, b) => a.displayOrder - b.displayOrder),
-    externalProducts: (epByProject.get(row.id) ?? []).sort((a, b) => a.displayOrder - b.displayOrder),
+    images: sortByDisplayOrder(imagesByProject.get(row.id) ?? []),
+    scopes: sortByDisplayOrder(scopesByProject.get(row.id) ?? []),
+    externalProducts: sortByDisplayOrder(epByProject.get(row.id) ?? []),
   }));
 }
 
@@ -825,8 +930,8 @@ export async function getProjectByIdAdmin(id: string) {
 
   return {
     ...row,
-    images: images.sort((a: DbImageRow, b: DbImageRow) => a.displayOrder - b.displayOrder),
-    scopes: scopes.sort((a: DbScopeRow, b: DbScopeRow) => a.displayOrder - b.displayOrder),
-    externalProducts: externalProducts.sort((a: DbExternalProductRow, b: DbExternalProductRow) => a.displayOrder - b.displayOrder),
+    images: sortByDisplayOrder(images),
+    scopes: sortByDisplayOrder(scopes),
+    externalProducts: sortByDisplayOrder(externalProducts),
   };
 }

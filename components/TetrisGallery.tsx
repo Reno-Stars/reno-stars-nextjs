@@ -45,7 +45,7 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" role="list" aria-label="Project gallery">
       {items.map((item, index) => {
         const layout = layouts[index % layouts.length];
-        const altText = item.title || item.category || `Gallery image ${index + 1}`;
+        const altText = item.title || item.category || 'Renovation project showcase';
         // col-span-2 items are twice as wide, need larger images
         const isWide = layout.col === 'col-span-2';
         const sizes = isWide

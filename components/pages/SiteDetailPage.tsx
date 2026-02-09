@@ -113,7 +113,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   <>
                     <Image
                       src={currentImage.src}
-                      alt={currentImage.alt}
+                      alt={currentImage.alt || site.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-contain"
@@ -205,7 +205,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                         >
                           <Image
                             src={img.src}
-                            alt={img.alt}
+                            alt={img.alt || site.title}
                             fill
                             sizes="80px"
                             className="object-cover"
@@ -536,7 +536,7 @@ function LightboxDialog({
           <>
             <Image
               src={currentImage.src}
-              alt={currentImage.alt}
+              alt={currentImage.alt || currentImage.projectTitle}
               fill
               sizes="(max-width: 1024px) 100vw, 60vw"
               className="object-contain"

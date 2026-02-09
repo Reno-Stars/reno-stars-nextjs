@@ -91,6 +91,7 @@ export default async function Page({ params }: PageProps) {
         headline={localizedPost.title}
         description={localizedPost.excerpt}
         datePublished={post.published_at?.toISOString()}
+        dateModified={post.updated_at?.toISOString()}
         url={`/${locale}/blog/${slug}/`}
         image={post.featured_image}
       />

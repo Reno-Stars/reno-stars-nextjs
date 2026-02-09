@@ -225,6 +225,8 @@ export interface BlogPost {
   featured_image?: string;
   /** Publication date */
   published_at?: Date;
+  /** Last updated date */
+  updated_at?: Date;
   /** External URL (if linking elsewhere) */
   url?: string;
   /** Related project with external products */
