@@ -38,7 +38,7 @@ export function trackEvent(
 ): void {
   if (!isAnalyticsEnabled()) return;
   try {
-    window.gtag('event', eventName, params);
+    window.gtag?.('event', eventName, params);
   } catch {
     // Silently ignore errors (e.g., ad blockers, CSP violations)
   }
