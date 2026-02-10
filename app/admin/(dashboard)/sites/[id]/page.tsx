@@ -52,7 +52,7 @@ export default async function EditSitePage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="sites.editSite" />
+      <AdminPageHeader titleKey="sites.editSite" viewHref={`/en/projects/${site.slug}`} />
       <SiteDetailClient site={siteData} projects={projectsWithDetails} cities={cities} />
     </div>
   );

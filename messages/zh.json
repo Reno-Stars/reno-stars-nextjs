@@ -170,6 +170,7 @@
     "messagePlaceholder2": "请告诉我们您的装修项目需求...",
     "sending": "发送中...",
     "success": "感谢您！您的信息已成功发送。",
+    "successTitle": "消息已发送！",
     "error": "出了点问题，请重试。"
   },
   "footer": {

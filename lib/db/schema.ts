@@ -243,6 +243,16 @@ export const projects = pgTable(
     badgeEn: varchar('badge_en', { length: 50 }),
     badgeZh: varchar('badge_zh', { length: 50 }),
 
+    // SEO fields
+    metaTitleEn: varchar('meta_title_en', { length: 70 }),
+    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
+    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    seoKeywordsEn: text('seo_keywords_en'),
+    seoKeywordsZh: text('seo_keywords_zh'),
+
     // Flags
     featured: boolean('featured').default(false).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
@@ -384,7 +394,18 @@ export const blogPosts = pgTable(
     contentZh: text('content_zh').notNull(),
     featuredImageUrl: varchar('featured_image_url', { length: 500 }),
     author: varchar('author', { length: 100 }),
-    seoKeywords: text('seo_keywords'),
+
+    // SEO fields
+    metaTitleEn: varchar('meta_title_en', { length: 70 }),
+    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
+    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    seoKeywordsEn: text('seo_keywords_en'),
+    seoKeywordsZh: text('seo_keywords_zh'),
+    readingTimeMinutes: integer('reading_time_minutes'),
+
     isPublished: boolean('is_published').default(false).notNull(),
     publishedAt: timestamp('published_at'),
     // Optional related project reference

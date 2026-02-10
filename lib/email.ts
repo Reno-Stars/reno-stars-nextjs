@@ -53,9 +53,6 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
 
   // Skip if Resend is not configured
   if (!resend) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Email notification skipped: RESEND_API_KEY not configured');
-    }
     return false;
   }
 
@@ -135,9 +132,6 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
       return false;
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Contact notification email sent successfully');
-    }
     return true;
   } catch (error) {
     console.error('Error sending contact notification email:', error);

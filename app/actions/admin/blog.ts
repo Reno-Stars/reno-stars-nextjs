@@ -21,6 +21,10 @@ function getBlogData(formData: FormData) {
   const projectIdRaw = getString(formData, 'projectId').trim();
   const projectId = projectIdRaw && projectIdRaw !== '' ? projectIdRaw : null;
 
+  // Parse reading time
+  const readingTimeStr = getString(formData, 'readingTimeMinutes');
+  const readingTimeMinutes = readingTimeStr ? parseInt(readingTimeStr, 10) || null : null;
+
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -31,7 +35,16 @@ function getBlogData(formData: FormData) {
     contentZh: getString(formData, 'contentZh').trim(),
     featuredImageUrl: getString(formData, 'featuredImageUrl') || null,
     author: getString(formData, 'author') || null,
-    seoKeywords: getString(formData, 'seoKeywords') || null,
+    // SEO fields
+    metaTitleEn: getString(formData, 'metaTitleEn') || null,
+    metaTitleZh: getString(formData, 'metaTitleZh') || null,
+    metaDescriptionEn: getString(formData, 'metaDescriptionEn') || null,
+    metaDescriptionZh: getString(formData, 'metaDescriptionZh') || null,
+    focusKeywordEn: getString(formData, 'focusKeywordEn') || null,
+    focusKeywordZh: getString(formData, 'focusKeywordZh') || null,
+    seoKeywordsEn: getString(formData, 'seoKeywordsEn') || null,
+    seoKeywordsZh: getString(formData, 'seoKeywordsZh') || null,
+    readingTimeMinutes,
     isPublished,
     publishedAt,
     projectId,

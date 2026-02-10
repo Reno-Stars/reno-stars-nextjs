@@ -61,6 +61,14 @@ interface ProjectWithDetails {
   solutionZh: string | null;
   badgeEn: string | null;
   badgeZh: string | null;
+  metaTitleEn: string | null;
+  metaTitleZh: string | null;
+  metaDescriptionEn: string | null;
+  metaDescriptionZh: string | null;
+  focusKeywordEn: string | null;
+  focusKeywordZh: string | null;
+  seoKeywordsEn: string | null;
+  seoKeywordsZh: string | null;
   featured: boolean;
   isPublished: boolean;
   siteId: string;
@@ -178,6 +186,14 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
       solutionZh: project.solutionZh ?? '',
       badgeEn: project.badgeEn ?? '',
       badgeZh: project.badgeZh ?? '',
+      metaTitleEn: project.metaTitleEn ?? '',
+      metaTitleZh: project.metaTitleZh ?? '',
+      metaDescriptionEn: project.metaDescriptionEn ?? '',
+      metaDescriptionZh: project.metaDescriptionZh ?? '',
+      focusKeywordEn: project.focusKeywordEn ?? '',
+      focusKeywordZh: project.focusKeywordZh ?? '',
+      seoKeywordsEn: project.seoKeywordsEn ?? '',
+      seoKeywordsZh: project.seoKeywordsZh ?? '',
       featured: project.featured,
       isPublished: project.isPublished,
       siteId: project.siteId,

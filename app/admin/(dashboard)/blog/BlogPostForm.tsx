@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import BilingualInput from '@/components/admin/BilingualInput';
-import BilingualTextarea from '@/components/admin/BilingualTextarea';
+import AIContentEditor from '@/components/admin/AIContentEditor';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
@@ -38,10 +38,19 @@ interface BlogPostFormProps {
     contentZh: string;
     featuredImageUrl: string;
     author: string;
-    seoKeywords: string;
     isPublished: boolean;
     publishedAt: string;
     projectId?: string;
+    // SEO fields
+    metaTitleEn?: string;
+    metaTitleZh?: string;
+    metaDescriptionEn?: string;
+    metaDescriptionZh?: string;
+    focusKeywordEn?: string;
+    focusKeywordZh?: string;
+    seoKeywordsEn?: string;
+    seoKeywordsZh?: string;
+    readingTimeMinutes?: number;
   };
   /** Available projects for the related project dropdown */
   projects?: ProjectOption[];
@@ -94,8 +103,32 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.blog.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required />
-          <BilingualTextarea nameEn="excerptEn" nameZh="excerptZh" label={t.blog.excerpt} defaultValueEn={initialData?.excerptEn} defaultValueZh={initialData?.excerptZh} rows={2} />
-          <BilingualTextarea nameEn="contentEn" nameZh="contentZh" label={t.blog.content} defaultValueEn={initialData?.contentEn} defaultValueZh={initialData?.contentZh} required rows={10} />
+
+          <AIContentEditor
+            nameContentEn="contentEn"
+            nameContentZh="contentZh"
+            nameExcerptEn="excerptEn"
+            nameExcerptZh="excerptZh"
+            defaultContentEn={initialData?.contentEn}
+            defaultContentZh={initialData?.contentZh}
+            defaultExcerptEn={initialData?.excerptEn}
+            defaultExcerptZh={initialData?.excerptZh}
+            defaultSeo={{
+              metaTitleEn: initialData?.metaTitleEn,
+              metaTitleZh: initialData?.metaTitleZh,
+              metaDescriptionEn: initialData?.metaDescriptionEn,
+              metaDescriptionZh: initialData?.metaDescriptionZh,
+              focusKeywordEn: initialData?.focusKeywordEn,
+              focusKeywordZh: initialData?.focusKeywordZh,
+              seoKeywordsEn: initialData?.seoKeywordsEn,
+              seoKeywordsZh: initialData?.seoKeywordsZh,
+              readingTimeMinutes: initialData?.readingTimeMinutes,
+            }}
+            label={t.blog.content}
+            excerptLabel={t.blog.excerpt}
+            required
+            disabled={!editing}
+          />
 
           <ImageUrlInput name="featuredImageUrl" label={t.blog.heroImage} defaultValue={initialData?.featuredImageUrl ?? ''} />
 
@@ -107,10 +140,6 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
               <input id="publishedAt" name="publishedAt" type="date" defaultValue={initialData?.publishedAt ?? ''} style={fieldStyle} />
             </FormField>
           </div>
-
-          <FormField label={t.blog.seoKeywords} htmlFor="seoKeywords" hint="Comma-separated">
-            <input id="seoKeywords" name="seoKeywords" defaultValue={initialData?.seoKeywords ?? ''} style={fieldStyle} />
-          </FormField>
 
           {projects.length > 0 && (
             <FormField label={t.blog.relatedProject}>

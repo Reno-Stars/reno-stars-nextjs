@@ -289,6 +289,8 @@ export default function SearchableSelect({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
+                  outline: index === highlightedIndex ? `2px solid ${GOLD}` : 'none',
+                  outlineOffset: '-2px',
                 }}
               >
                 {option.id === value && (

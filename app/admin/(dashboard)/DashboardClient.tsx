@@ -180,8 +180,8 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
               gap: '1rem',
             }}
           >
-            {section.cards.map((card) => (
-              <DashboardCard key={card.href + card.label} card={card} />
+            {section.cards.map((card, index) => (
+              <DashboardCard key={`${section.title}-${index}`} card={card} />
             ))}
           </div>
         </div>

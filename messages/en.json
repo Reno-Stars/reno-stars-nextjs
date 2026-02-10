@@ -170,6 +170,7 @@
     "messagePlaceholder2": "Tell us about your renovation project...",
     "sending": "Sending...",
     "success": "Thank you! Your message has been sent successfully.",
+    "successTitle": "Message Sent!",
     "error": "Something went wrong. Please try again."
   },
   "footer": {

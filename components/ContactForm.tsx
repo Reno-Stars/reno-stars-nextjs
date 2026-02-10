@@ -2,10 +2,10 @@
 
 import { useState, useTransition, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Loader2 } from 'lucide-react';
+import { Loader2, CheckCircle, X } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
 import { trackFormSubmission } from '@/lib/analytics';
-import { GOLD, SURFACE, TEXT, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neuIn } from '@/lib/theme';
+import { GOLD, SURFACE, TEXT, SUCCESS, ERROR, ERROR_BG, neuIn, neu, CARD } from '@/lib/theme';
 
 interface ContactFormProps {
   /** Called after a successful submission */
@@ -16,11 +16,19 @@ interface ContactFormProps {
   large?: boolean;
 }
 
+/** Field configuration for the contact form - defined outside component to avoid recreation */
+const FORM_FIELDS = [
+  { id: 'name', type: 'text', labelKey: 'form.name', placeholderKey: 'form.namePlaceholder', required: true },
+  { id: 'email', type: 'email', labelKey: 'form.email', placeholderKey: 'form.emailPlaceholder', required: false },
+  { id: 'phone', type: 'tel', labelKey: 'form.phone', placeholderKey: 'form.phonePlaceholder2', required: true },
+] as const;
+
 export default function ContactForm({ onSuccess, submitLabel, large }: ContactFormProps) {
   const t = useTranslations();
 
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
-  const [formStatus, setFormStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({ type: 'idle', message: '' });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isPending, startTransition] = useTransition();
   const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -33,62 +41,122 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
     setFormData((prev) => ({ ...prev, [name]: value }));
   }, []);
 
+  const closeModalAndCallback = useCallback(() => {
+    setShowSuccessModal(false);
+    if (onSuccess) onSuccess();
+  }, [onSuccess]);
+
+  const handleCloseModal = useCallback(() => {
+    if (successTimerRef.current) {
+      clearTimeout(successTimerRef.current);
+      successTimerRef.current = null;
+    }
+    closeModalAndCallback();
+  }, [closeModalAndCallback]);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    if (!showSuccessModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleCloseModal();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [showSuccessModal, handleCloseModal]);
+
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus({ type: 'idle', message: '' });
+    setErrorMessage(null);
 
     startTransition(async () => {
       const result = await submitContactForm(formData);
       if (result.success) {
-        setFormStatus({ type: 'success', message: t('form.success') });
         setFormData({ name: '', email: '', phone: '', message: '' });
         trackFormSubmission('contact');
-        if (onSuccess) {
-          successTimerRef.current = setTimeout(onSuccess, 1500);
-        }
+        setShowSuccessModal(true);
+        // Auto-close modal after 4 seconds
+        successTimerRef.current = setTimeout(closeModalAndCallback, 4000);
       } else {
-        setFormStatus({ type: 'error', message: result.message || t('form.error') });
+        setErrorMessage(result.message || t('form.error'));
       }
     });
-  }, [formData, t, onSuccess]);
+  }, [formData, t, closeModalAndCallback]);
 
   return (
-    <form onSubmit={handleSubmit} className={large ? 'space-y-6' : 'space-y-5'}>
-      {formStatus.type !== 'idle' && (
+    <>
+      {/* Success Modal */}
+      {showSuccessModal && (
         <div
-          className={`p-4 rounded-xl font-medium ${large ? 'text-base' : 'text-sm'}`}
-          style={{
-            backgroundColor: formStatus.type === 'success' ? SUCCESS_BG : ERROR_BG,
-            color: formStatus.type === 'success' ? SUCCESS : ERROR,
-          }}
-          role="alert"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+          onClick={handleCloseModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="success-modal-title"
         >
-          {formStatus.message}
+          <div
+            className="relative w-full max-w-md p-8 rounded-2xl text-center"
+            style={{
+              backgroundColor: CARD,
+              boxShadow: neu(12),
+              animation: 'modalFadeIn 0.3s ease-out',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={handleCloseModal}
+              className="absolute top-4 right-4 p-1 rounded-full hover:bg-black/5 transition-colors cursor-pointer"
+              aria-label={t('modal.close')}
+            >
+              <X className="w-5 h-5" style={{ color: TEXT }} />
+            </button>
+            <div
+              className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+              style={{ backgroundColor: `${SUCCESS}15` }}
+            >
+              <CheckCircle className="w-10 h-10" style={{ color: SUCCESS }} />
+            </div>
+            <h2 id="success-modal-title" className="text-xl font-bold mb-2" style={{ color: TEXT }}>
+              {t('form.successTitle')}
+            </h2>
+            <p className="text-base" style={{ color: TEXT, opacity: 0.8 }}>
+              {t('form.success')}
+            </p>
+          </div>
         </div>
       )}
-      {[
-        { id: 'name', type: 'text', label: t('form.name'), ph: t('form.namePlaceholder'), required: true },
-        { id: 'email', type: 'email', label: t('form.email'), ph: t('form.emailPlaceholder'), required: false },
-        { id: 'phone', type: 'tel', label: t('form.phone'), ph: t('form.phonePlaceholder2'), required: true },
-      ].map((f) => (
-        <div key={f.id}>
-          <label htmlFor={f.id} className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
-            {f.label}{f.required ? ' *' : ''}
-          </label>
-          <input
-            type={f.type}
-            id={f.id}
-            name={f.id}
-            value={formData[f.id as keyof typeof formData]}
-            onChange={handleInputChange}
-            className={`w-full rounded-xl border-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
-            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
-            placeholder={f.ph}
-            required={f.required}
-            disabled={isPending}
-          />
-        </div>
-      ))}
+
+      <form onSubmit={handleSubmit} className={large ? 'space-y-6' : 'space-y-5'}>
+        {/* Error alert - inline */}
+        {errorMessage && (
+          <div
+            className={`p-4 rounded-xl font-medium ${large ? 'text-base' : 'text-sm'}`}
+            style={{ backgroundColor: ERROR_BG, color: ERROR }}
+            role="alert"
+          >
+            {errorMessage}
+          </div>
+        )}
+        {FORM_FIELDS.map((f) => (
+          <div key={f.id}>
+            <label htmlFor={f.id} className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
+              {t(f.labelKey)}{f.required ? ' *' : ''}
+            </label>
+            <input
+              type={f.type}
+              id={f.id}
+              name={f.id}
+              value={formData[f.id as keyof typeof formData]}
+              onChange={handleInputChange}
+              className={`w-full rounded-xl border-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
+              style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
+              placeholder={t(f.placeholderKey)}
+              required={f.required}
+              disabled={isPending}
+            />
+          </div>
+        ))}
       <div>
         <label htmlFor="message" className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
           {t('form.message')} *
@@ -116,6 +184,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
         {isPending && <Loader2 className={large ? 'w-5 h-5 animate-spin' : 'w-4 h-4 animate-spin'} />}
         {isPending ? t('form.sending') : (submitLabel || t('cta.sendMessage'))}
       </button>
-    </form>
+      </form>
+    </>
   );
 }

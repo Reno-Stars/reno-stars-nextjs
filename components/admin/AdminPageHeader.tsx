@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ExternalLink } from 'lucide-react';
 import { NAVY, GOLD } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
@@ -22,16 +23,43 @@ interface AdminPageHeaderProps {
   titleKey: string;
   actionKey?: string;
   actionHref?: string;
+  /** Link to view the item on the public site */
+  viewHref?: string;
 }
 
-export default function AdminPageHeader({ titleKey, actionKey, actionHref }: AdminPageHeaderProps) {
+export default function AdminPageHeader({ titleKey, actionKey, actionHref, viewHref }: AdminPageHeaderProps) {
   const t = useAdminTranslations();
   const title = resolve(t as unknown as Record<string, unknown>, titleKey);
   const actionLabel = actionKey ? resolve(t as unknown as Record<string, unknown>, actionKey) : undefined;
 
   return (
     <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-      <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
+        {viewHref && (
+          <a
+            href={viewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.25rem',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: 'rgba(27,54,93,0.08)',
+              color: NAVY,
+              textDecoration: 'none',
+              fontSize: '0.75rem',
+              fontWeight: 500,
+            }}
+            title={t.common.preview}
+          >
+            <ExternalLink size={14} />
+            {t.common.preview}
+          </a>
+        )}
+      </div>
       {actionLabel && actionHref && (
         <Link
           href={actionHref}

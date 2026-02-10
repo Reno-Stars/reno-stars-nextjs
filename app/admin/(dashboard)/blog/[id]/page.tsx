@@ -28,7 +28,7 @@ export default async function EditBlogPostPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="blog.editBlogPost" />
+      <AdminPageHeader titleKey="blog.editBlogPost" viewHref={`/en/blog/${post.slug}`} />
       <BlogPostForm
         action={boundAction}
         submitLabel="Update Post"
@@ -43,10 +43,19 @@ export default async function EditBlogPostPage({ params }: PageProps) {
           contentZh: post.contentZh,
           featuredImageUrl: post.featuredImageUrl ?? '',
           author: post.author ?? '',
-          seoKeywords: post.seoKeywords ?? '',
           isPublished: post.isPublished,
           publishedAt: post.publishedAt?.toISOString().split('T')[0] ?? '',
           projectId: post.projectId ?? undefined,
+          // SEO fields
+          metaTitleEn: post.metaTitleEn ?? undefined,
+          metaTitleZh: post.metaTitleZh ?? undefined,
+          metaDescriptionEn: post.metaDescriptionEn ?? undefined,
+          metaDescriptionZh: post.metaDescriptionZh ?? undefined,
+          focusKeywordEn: post.focusKeywordEn ?? undefined,
+          focusKeywordZh: post.focusKeywordZh ?? undefined,
+          seoKeywordsEn: post.seoKeywordsEn ?? undefined,
+          seoKeywordsZh: post.seoKeywordsZh ?? undefined,
+          readingTimeMinutes: post.readingTimeMinutes ?? undefined,
         }}
       />
     </div>

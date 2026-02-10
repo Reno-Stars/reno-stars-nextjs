@@ -81,11 +81,14 @@ app/
 components/
   pages/                  # Page-level components (one per route)
   home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
-  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, DashboardShell, etc.)
+  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, DashboardShell, AIContentEditor, AIBilingualTextarea, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, ProductLink.tsx, etc.
 
 lib/
+  ai/
+    openai.ts             # Lazy-initialized OpenAI client
+    content-optimizer.ts  # AI content optimization (semantic HTML, translation, excerpts)
   db/
     schema.ts             # Drizzle schema (15+ tables)
     index.ts              # Lazy DB client (Neon or pg Pool)
@@ -161,6 +164,7 @@ tests/
 | `RESEND_API_KEY` | No | Resend API key for contact form email notifications |
 | `EMAIL_FROM` | No | Sender email for notifications (must be verified in Resend) |
 | `EMAIL_TO` | No | Recipient email(s) for contact form notifications |
+| `OPENAI_API_KEY` | No | OpenAI API key for AI content optimization in admin (blog + project forms) |
 
 ## Routing & Proxy
 
@@ -201,6 +205,7 @@ Key patterns:
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
 - **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y), `FormField` (label + input wrapper with optional tooltip), `SearchableSelect` (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project in BlogPostForm and linked site in ProjectForm).
+- **AI content editor components**: `AIContentEditor` (tabbed interface for blog content with paste/EN/ZH tabs, AI optimization, preview mode, excerpt generation) and `AIBilingualTextarea` (simpler bilingual textarea with inline AI button for project descriptions/challenges/solutions). Both use OpenAI GPT-4o for language detection, translation, and content improvement. Uses DOMPurify for XSS protection in preview mode, zod for response validation. Respects `disabled` prop and syncs with form edit mode.
 - **Slug validation**: `isValidSlug()` in `lib/admin/form-utils.ts` rejects consecutive hyphens (e.g., `a--b` is invalid). Uses regex `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. Used by `GalleryListClient` for drag-to-reorder functionality.
 - **useIsMobile hook** (`hooks/useIsMobile.ts`): Mobile breakpoint detection with SSR-safe lazy initialization (prevents hydration mismatch). Defaults to 768px breakpoint.

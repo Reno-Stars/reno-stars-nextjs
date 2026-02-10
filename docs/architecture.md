@@ -71,7 +71,12 @@ lib/
     gallery-categories.ts # Shared gallery category constants
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
     translations.ts       # Admin translation hooks
+  ai/                     # AI content optimization
+    openai.ts             # OpenAI client initialization (lazy loading)
+    content-optimizer.ts  # AI functions for blog, project, alt text generation
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
+  analytics.ts            # GA4 event tracking (disabled in development)
+  email.ts                # Resend email notifications for contact form
   storage.ts              # Asset URL rewriting (prod ↔ MinIO)
   types.ts                # Shared TypeScript types (includes DisplayProject for modals)
   theme.ts                # Neumorphic design tokens
@@ -247,7 +252,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
 - **ProductLink** (`components/ProductLink.tsx`): Reusable external product link with hover image preview. Supports `size` prop (`'sm'` for modal, `'md'` for detail page). Used by `ProjectModal` and `SiteDetailPage`.
-- **Admin components** (`components/admin/`): DataTable (supports `headerAction` prop for toolbar controls), ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog (modal with fixed centering and keyboard focus styles for a11y), Sidebar (collapsible navigation groups with Dashboard + Portfolio/Content/CRM/Settings sections, localStorage-persisted expanded state, auto-expand on child route navigation), TopBar (hamburger menu for mobile, hidden on desktop via CSS), DashboardShell (client wrapper for sidebar drawer with overlay, Escape key close, auto-close on desktop resize), DashboardClient (grouped stat cards in 3 sections — Portfolio/Content/CRM — with lucide-react icons in accent-colored circles, hover lift with neumorphic shadow transition, red notification dot for new contacts), StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider (provides locale + sidebar open/close state, memoized context value), AdminPageHeader (responsive flex→column on mobile), ToggleButton, Tooltip (reusable help icons), DragHandleIcon (6-dot drag indicator SVG), SearchableSelect (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project and linked site).
+- **Admin components** (`components/admin/`): DataTable (supports `headerAction` prop for toolbar controls), ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog (modal with fixed centering and keyboard focus styles for a11y), Sidebar (collapsible navigation groups with Dashboard + Portfolio/Content/CRM/Settings sections, localStorage-persisted expanded state, auto-expand on child route navigation), TopBar (hamburger menu for mobile, hidden on desktop via CSS), DashboardShell (client wrapper for sidebar drawer with overlay, Escape key close, auto-close on desktop resize), DashboardClient (grouped stat cards in 3 sections — Portfolio/Content/CRM — with lucide-react icons in accent-colored circles, hover lift with neumorphic shadow transition, red notification dot for new contacts), StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider (provides locale + sidebar open/close state, memoized context value), AdminPageHeader (responsive flex→column on mobile), ToggleButton, Tooltip (reusable help icons), DragHandleIcon (6-dot drag indicator SVG), SearchableSelect (type-to-filter dropdown with keyboard navigation, ARIA accessibility, visible keyboard focus indicator), AIContentEditor (blog content editor with AI optimization), AIBilingualTextarea (bilingual textarea with AI translation), AIProjectGenerator (project description generator with AI — includes memory leak prevention via mountedRef pattern).
 - **Admin mobile responsive** (`app/admin/admin-responsive.css`): CSS-only mobile overrides at `@media (max-width: 768px)`. Uses `className` attributes alongside inline styles — `!important` overrides inline values on mobile. Classes: `admin-sidebar` (fixed drawer), `admin-sidebar--open` (slide in), `admin-sidebar-overlay` (backdrop), `admin-hamburger` (shown on mobile), `admin-topbar`/`admin-main-content` (reduced padding), `admin-form-grid` (single column), `admin-form-card` (full width), `admin-page-header` (vertical stack), `admin-site-detail-grid` (single column). Desktop: overlay and hamburger hidden via `display: none`. Body scroll lock via `body:has(.admin-sidebar--open)`. Defines `--color-navy` CSS variable for theme consistency. Includes `.confirm-dialog-btn:focus-visible` for keyboard accessibility.
 - **Reusable hooks** (`hooks/`): `useDragReorder<T>` — generic drag-and-drop reordering with optimistic UI, server sync, and proper cleanup (mountedRef pattern to prevent state updates after unmount). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. `useIsMobile(breakpoint?)` — `matchMedia` hook with SSR-safe lazy initialization (prevents hydration mismatch), defaults to 768px.
 - **House Stack UI**: Visual metaphor for site/project management. Roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Renders on `/admin/sites/[id]` page with detail panel for editing selected item. Supports `?project=<id>` URL param for deep-linking directly to a specific project's edit form.
@@ -273,3 +278,103 @@ The `db` export in `lib/db/index.ts` uses a **Proxy** for lazy initialization:
    - Otherwise → `pg` Pool + `drizzle-orm/node-postgres`
 
 This pattern prevents build-time crashes at import time. Note that `DATABASE_URL` is still required at build time because `layout.tsx` and page components make DB queries during pre-rendering.
+
+## AI Content Optimization
+
+The admin panel includes AI-powered content generation using OpenAI's GPT-4 models.
+
+### Configuration (`lib/ai/openai.ts`)
+
+```typescript
+export const AI_CONFIG = {
+  model: 'gpt-4o-mini',           // Default for short text, alt text
+  modelContent: 'gpt-4o',          // Higher quality for blog content
+  temperature: 0.7,
+  maxTokensContent: 8192,          // Blog articles
+  maxTokensShort: 1024,            // Short text translations
+  maxTokensAltText: 256,           // Image alt text
+  maxTokensProjectDescription: 2048, // Project descriptions + SEO
+};
+```
+
+### Functions (`lib/ai/content-optimizer.ts`)
+
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `optimizeContent(rawContent)` | Blog content optimization | `{ contentEn, contentZh, excerptEn, excerptZh, metaTitleEn, metaTitleZh, ... }` |
+| `optimizeShortText(rawText)` | Short text translation | `{ textEn, textZh, detectedLanguage }` |
+| `optimizeProjectDescription(rawNotes)` | Project description generation | `{ descriptionEn, descriptionZh, challengeEn, ..., metaTitleEn, seoKeywordsEn, ... }` |
+| `generateAltText(image)` | Image alt text via vision | `{ altEn, altZh, isFallback? }` |
+
+### Server Actions (`app/actions/admin/optimize-content.ts`)
+
+All actions require admin authentication and handle errors gracefully:
+
+- `optimizeBlogContent(rawContent)` — For blog post editing
+- `optimizeProjectDescriptionAction(rawNotes)` — For project forms
+- `generateImageAltText(imageUrl)` — For image uploads
+
+### Admin Components
+
+| Component | Usage |
+|-----------|-------|
+| `AIContentEditor` | Blog post form — paste content, AI cleans up and translates |
+| `AIBilingualTextarea` | Short text fields with AI translation button |
+| `AIProjectGenerator` | Project form — paste notes, generates all text fields + SEO |
+
+### Memory Leak Prevention
+
+`AIProjectGenerator` uses the `mountedRef` pattern to prevent state updates after unmount:
+
+```typescript
+const mountedRef = useRef(true);
+useEffect(() => {
+  mountedRef.current = true;
+  return () => {
+    mountedRef.current = false;
+    if (successTimeoutRef.current) {
+      clearTimeout(successTimeoutRef.current);
+    }
+  };
+}, []);
+```
+
+## Analytics
+
+Google Analytics 4 integration with development mode filtering.
+
+### Configuration
+
+Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to enable tracking. Analytics are automatically disabled on `localhost` and `127.0.0.1` to prevent polluting production data during development.
+
+### Tracking Functions (`lib/analytics.ts`)
+
+| Function | Event | Usage |
+|----------|-------|-------|
+| `trackEvent(name, params?)` | Custom event | Generic tracking |
+| `trackFormSubmission(formName, params?)` | `form_submission` | Contact forms |
+| `trackPhoneClick(phoneNumber)` | `phone_click` | Phone link clicks |
+| `trackExternalLinkClick(url, linkType?)` | `external_link_click` | Product/social links |
+| `trackCtaClick(ctaName, location?)` | `cta_click` | CTA buttons |
+| `trackProjectView(slug, title?)` | `project_view` | Project pages |
+| `trackBlogView(slug, title?)` | `blog_view` | Blog articles |
+
+## Email Notifications
+
+Contact form submissions trigger email notifications via Resend.
+
+### Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `RESEND_API_KEY` | Resend API key |
+| `EMAIL_FROM` | Sender email (must be verified in Resend) |
+| `EMAIL_TO` | Recipient email(s) for notifications |
+
+### Function (`lib/email.ts`)
+
+```typescript
+sendContactNotification(submission: ContactSubmission): Promise<boolean>
+```
+
+Sends HTML email with contact details, service requested, and project description.

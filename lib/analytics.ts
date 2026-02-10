@@ -17,15 +17,26 @@
 // Type declarations in types/gtag.d.ts
 
 /**
+ * Check if analytics should be enabled.
+ * Disabled in development/localhost to avoid polluting production data.
+ */
+function isAnalyticsEnabled(): boolean {
+  if (typeof window === 'undefined') return false;
+  if (!window.gtag) return false;
+  // Skip tracking on localhost and development
+  const hostname = window.location.hostname;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') return false;
+  return true;
+}
+
+/**
  * Track a custom event in GA4.
  */
 export function trackEvent(
   eventName: string,
   params?: Record<string, string | number | boolean>
 ): void {
-  if (typeof window === 'undefined' || !window.gtag) {
-    return;
-  }
+  if (!isAnalyticsEnabled()) return;
   try {
     window.gtag('event', eventName, params);
   } catch {

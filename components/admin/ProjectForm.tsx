@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
-import BilingualTextarea from './BilingualTextarea';
+import AIBilingualTextarea from './AIBilingualTextarea';
+import AIProjectGenerator from './AIProjectGenerator';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import Tooltip from './Tooltip';
@@ -78,6 +79,14 @@ interface ProjectFormProps {
     solutionZh: string;
     badgeEn: string;
     badgeZh: string;
+    metaTitleEn: string;
+    metaTitleZh: string;
+    metaDescriptionEn: string;
+    metaDescriptionZh: string;
+    focusKeywordEn: string;
+    focusKeywordZh: string;
+    seoKeywordsEn: string;
+    seoKeywordsZh: string;
     featured: boolean;
     isPublished: boolean;
     siteId: string | null;
@@ -116,13 +125,85 @@ export default function ProjectForm({
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.projects.saved);
 
+  // State for AI-generated text fields
+  const [descriptionEn, setDescriptionEn] = useState(initialData?.descriptionEn ?? '');
+  const [descriptionZh, setDescriptionZh] = useState(initialData?.descriptionZh ?? '');
+  const [challengeEn, setChallengeEn] = useState(initialData?.challengeEn ?? '');
+  const [challengeZh, setChallengeZh] = useState(initialData?.challengeZh ?? '');
+  const [solutionEn, setSolutionEn] = useState(initialData?.solutionEn ?? '');
+  const [solutionZh, setSolutionZh] = useState(initialData?.solutionZh ?? '');
+  const [badgeEn, setBadgeEn] = useState(initialData?.badgeEn ?? '');
+  const [badgeZh, setBadgeZh] = useState(initialData?.badgeZh ?? '');
+  // SEO fields state
+  const [metaTitleEn, setMetaTitleEn] = useState(initialData?.metaTitleEn ?? '');
+  const [metaTitleZh, setMetaTitleZh] = useState(initialData?.metaTitleZh ?? '');
+  const [metaDescriptionEn, setMetaDescriptionEn] = useState(initialData?.metaDescriptionEn ?? '');
+  const [metaDescriptionZh, setMetaDescriptionZh] = useState(initialData?.metaDescriptionZh ?? '');
+  const [focusKeywordEn, setFocusKeywordEn] = useState(initialData?.focusKeywordEn ?? '');
+  const [focusKeywordZh, setFocusKeywordZh] = useState(initialData?.focusKeywordZh ?? '');
+  const [seoKeywordsEn, setSeoKeywordsEn] = useState(initialData?.seoKeywordsEn ?? '');
+  const [seoKeywordsZh, setSeoKeywordsZh] = useState(initialData?.seoKeywordsZh ?? '');
+
   // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
     setSelectedServiceType(initialData?.serviceType ?? 'kitchen');
     setSelectedLocationCity(initialData?.locationCity ?? '');
     setSelectedSpaceType(initialData?.spaceTypeEn ?? '');
     setSelectedSiteId(initialData?.siteId ?? '');
-  }, [initialData?.serviceType, initialData?.locationCity, initialData?.spaceTypeEn, initialData?.siteId]);
+    setDescriptionEn(initialData?.descriptionEn ?? '');
+    setDescriptionZh(initialData?.descriptionZh ?? '');
+    setChallengeEn(initialData?.challengeEn ?? '');
+    setChallengeZh(initialData?.challengeZh ?? '');
+    setSolutionEn(initialData?.solutionEn ?? '');
+    setSolutionZh(initialData?.solutionZh ?? '');
+    setBadgeEn(initialData?.badgeEn ?? '');
+    setBadgeZh(initialData?.badgeZh ?? '');
+    setMetaTitleEn(initialData?.metaTitleEn ?? '');
+    setMetaTitleZh(initialData?.metaTitleZh ?? '');
+    setMetaDescriptionEn(initialData?.metaDescriptionEn ?? '');
+    setMetaDescriptionZh(initialData?.metaDescriptionZh ?? '');
+    setFocusKeywordEn(initialData?.focusKeywordEn ?? '');
+    setFocusKeywordZh(initialData?.focusKeywordZh ?? '');
+    setSeoKeywordsEn(initialData?.seoKeywordsEn ?? '');
+    setSeoKeywordsZh(initialData?.seoKeywordsZh ?? '');
+  }, [initialData]);
+
+  // Callback for AI project generator
+  const handleAIGenerate = useCallback((data: {
+    descriptionEn: string;
+    descriptionZh: string;
+    challengeEn: string;
+    challengeZh: string;
+    solutionEn: string;
+    solutionZh: string;
+    badgeEn: string;
+    badgeZh: string;
+    metaTitleEn: string;
+    metaTitleZh: string;
+    metaDescriptionEn: string;
+    metaDescriptionZh: string;
+    focusKeywordEn: string;
+    focusKeywordZh: string;
+    seoKeywordsEn: string;
+    seoKeywordsZh: string;
+  }) => {
+    setDescriptionEn(data.descriptionEn);
+    setDescriptionZh(data.descriptionZh);
+    setChallengeEn(data.challengeEn);
+    setChallengeZh(data.challengeZh);
+    setSolutionEn(data.solutionEn);
+    setSolutionZh(data.solutionZh);
+    setBadgeEn(data.badgeEn);
+    setBadgeZh(data.badgeZh);
+    setMetaTitleEn(data.metaTitleEn);
+    setMetaTitleZh(data.metaTitleZh);
+    setMetaDescriptionEn(data.metaDescriptionEn);
+    setMetaDescriptionZh(data.metaDescriptionZh);
+    setFocusKeywordEn(data.focusKeywordEn);
+    setFocusKeywordZh(data.focusKeywordZh);
+    setSeoKeywordsEn(data.seoKeywordsEn);
+    setSeoKeywordsZh(data.seoKeywordsZh);
+  }, []);
 
   // Convert sites to SearchableSelect options format
   const siteOptions = useMemo(() =>
@@ -305,7 +386,13 @@ export default function ProjectForm({
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required tooltip={t.projects.tooltips.title} />
-          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={initialData?.descriptionEn} defaultValueZh={initialData?.descriptionZh} required rows={3} tooltip={t.projects.tooltips.description} />
+
+          {/* AI Project Generator - only show when editing */}
+          {editing && (
+            <AIProjectGenerator onGenerate={handleAIGenerate} disabled={!editing} />
+          )}
+
+          <AIBilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={descriptionEn} defaultValueZh={descriptionZh} required rows={3} tooltip={t.projects.tooltips.description} disabled={!editing} />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
@@ -374,9 +461,48 @@ export default function ProjectForm({
 
           <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} />
 
-          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={initialData?.challengeEn} defaultValueZh={initialData?.challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} />
-          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={initialData?.solutionEn} defaultValueZh={initialData?.solutionZh} rows={3} tooltip={t.projects.tooltips.solution} />
-          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} tooltip={t.projects.tooltips.badge} />
+          <AIBilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={challengeEn} defaultValueZh={challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
+          <AIBilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={solutionEn} defaultValueZh={solutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />
+          <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} defaultValueEn={badgeEn} defaultValueZh={badgeZh} tooltip={t.projects.tooltips.badge} />
+
+          {/* SEO Settings */}
+          <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.75rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.ai.seoSettings}
+              </span>
+              <Tooltip content={t.ai.seoTooltip} />
+            </div>
+
+            <BilingualInput
+              nameEn="metaTitleEn"
+              nameZh="metaTitleZh"
+              label={t.ai.metaTitle}
+              defaultValueEn={metaTitleEn}
+              defaultValueZh={metaTitleZh}
+            />
+            <BilingualInput
+              nameEn="metaDescriptionEn"
+              nameZh="metaDescriptionZh"
+              label={t.ai.metaDescription}
+              defaultValueEn={metaDescriptionEn}
+              defaultValueZh={metaDescriptionZh}
+            />
+            <BilingualInput
+              nameEn="focusKeywordEn"
+              nameZh="focusKeywordZh"
+              label={t.ai.focusKeyword}
+              defaultValueEn={focusKeywordEn}
+              defaultValueZh={focusKeywordZh}
+            />
+            <BilingualInput
+              nameEn="seoKeywordsEn"
+              nameZh="seoKeywordsZh"
+              label={t.ai.seoKeywords}
+              defaultValueEn={seoKeywordsEn}
+              defaultValueZh={seoKeywordsZh}
+            />
+          </div>
 
           {/* Images */}
           <div style={{ marginBottom: '1rem' }}>
