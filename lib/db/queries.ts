@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc, desc, and, inArray } from 'drizzle-orm';
+import { eq, asc, desc, and, inArray, count } from 'drizzle-orm';
 import { db } from './index';
 import {
   companyInfo,
@@ -273,12 +273,17 @@ export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
   const ids = rows.map((r: DbProjectRow) => r.id);
   const { images, scopes, externalProducts } = await fetchProjectRelations(ids);
 
+  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
+  const imagesByProject = groupBy(images, (i: DbImageRow) => i.projectId);
+  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+
   return rows.map((row: DbProjectRow) =>
     mapDbProjectToProject(
       row,
-      images.filter((i: DbImageRow) => i.projectId === row.id),
-      scopes.filter((s: DbScopeRow) => s.projectId === row.id),
-      externalProducts.filter((ep: DbExternalProductRow) => ep.projectId === row.id)
+      imagesByProject.get(row.id) ?? [],
+      scopesByProject.get(row.id) ?? [],
+      epByProject.get(row.id) ?? []
     )
   );
 });
@@ -569,13 +574,13 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
 /** Fetch paginated published blog posts ordered by publishedAt desc. */
 export const getBlogPostsPaginatedFromDb = cache(
   async (page: number = 1, perPage: number = BLOG_POSTS_PER_PAGE): Promise<PaginatedBlogPosts> => {
-    // Get total count first
+    // Get total count using SQL COUNT for efficiency
     const countResult = await db
-      .select({ count: blogPostsTable.id })
+      .select({ value: count() })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true));
 
-    const totalCount = countResult.length;
+    const totalCount = countResult[0]?.value ?? 0;
     const totalPages = Math.ceil(totalCount / perPage);
     const currentPage = Math.max(1, Math.min(page, totalPages || 1));
     const offset = (currentPage - 1) * perPage;

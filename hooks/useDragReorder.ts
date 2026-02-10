@@ -137,6 +137,7 @@ export function useDragReorder<T>({
   const handleDragEnd = useCallback(() => {
     setDraggedId(null);
     setDragOverId(null);
+    // Reset drag start position to ensure shouldNavigate works correctly
     dragStartPos.current = null;
   }, []);
 

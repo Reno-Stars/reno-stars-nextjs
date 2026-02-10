@@ -26,7 +26,11 @@ export function trackEvent(
   if (typeof window === 'undefined' || !window.gtag) {
     return;
   }
-  window.gtag('event', eventName, params);
+  try {
+    window.gtag('event', eventName, params);
+  } catch {
+    // Silently ignore errors (e.g., ad blockers, CSP violations)
+  }
 }
 
 /**

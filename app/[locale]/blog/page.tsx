@@ -5,30 +5,36 @@ import BlogPage from '@/components/pages/BlogPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getBlogPostsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getBlogPostsPaginatedFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { locale } = await params;
+  const { page } = await searchParams;
   const t = await getTranslations({ locale, namespace: 'metadata.blog' });
 
   const baseUrl = getBaseUrl();
+  const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
+  const pageParam = currentPage > 1 ? `?page=${currentPage}` : '';
+
+  const title = currentPage > 1 ? `${t('title')} - Page ${currentPage}` : t('title');
 
   return {
-    title: t('title'),
+    title,
     description: t('description'),
-    alternates: buildAlternates('/blog/', locale),
+    alternates: buildAlternates(`/blog/${pageParam}`, locale),
     openGraph: {
-      title: t('title'),
+      title,
       description: t('description'),
-      url: `${baseUrl}/${locale}/blog/`,
+      url: `${baseUrl}/${locale}/blog/${pageParam}`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'website',
@@ -36,21 +42,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('title'),
+      title,
       description: t('description'),
       images: [siteImages.hero],
     },
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { locale } = await params;
+  const { page } = await searchParams;
   setRequestLocale(locale);
 
-  const [t, company, blogPosts] = await Promise.all([
+  const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
+
+  const [t, company, paginatedPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
-    getBlogPostsFromDb(),
+    getBlogPostsPaginatedFromDb(currentPage, BLOG_POSTS_PER_PAGE),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -60,7 +69,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <BlogPage locale={locale as Locale} company={company} blogPosts={blogPosts} />
+      <BlogPage
+        locale={locale as Locale}
+        company={company}
+        blogPosts={paginatedPosts.posts}
+        currentPage={paginatedPosts.currentPage}
+        totalPages={paginatedPosts.totalPages}
+        totalCount={paginatedPosts.totalCount}
+      />
     </>
   );
 }

@@ -1,5 +1,21 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Counter for unique IPs to avoid rate limiting between tests
+let ipCounter = 0;
+
+// Mock next/headers before importing the action
+vi.mock('next/headers', () => ({
+  headers: vi.fn().mockImplementation(async () => ({
+    get: vi.fn().mockImplementation((name: string) => {
+      if (name === 'x-forwarded-for') {
+        ipCounter++;
+        return `192.168.1.${ipCounter}`;
+      }
+      return null;
+    }),
+  })),
+}));
+
 // Mock the database module before importing the action
 vi.mock('@/lib/db', () => ({
   db: {
@@ -11,6 +27,12 @@ vi.mock('@/lib/db', () => ({
 
 vi.mock('@/lib/db/schema', () => ({
   contactSubmissions: {},
+}));
+
+// Mock the email module
+const mockSendContactNotification = vi.fn().mockResolvedValue(true);
+vi.mock('@/lib/email', () => ({
+  sendContactNotification: mockSendContactNotification,
 }));
 
 // Dynamic import after mocks are set up
@@ -128,5 +150,44 @@ describe('submitContactForm', () => {
     expect(result.success).toBe(true);
     // Verify the insert was called (sanitized values are handled internally)
     expect(db.insert).toHaveBeenCalled();
+  });
+
+  it('should call email notification on successful submission', async () => {
+    mockSendContactNotification.mockClear();
+    const phone = uniquePhone();
+    const result = await submitContactForm({
+      name: 'Email Test',
+      email: 'email@test.com',
+      phone,
+      message: 'Testing email notification.',
+    });
+    expect(result.success).toBe(true);
+    // Allow async email call to complete
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(mockSendContactNotification).toHaveBeenCalledWith({
+      name: 'Email Test',
+      email: 'email@test.com',
+      phone,
+      message: 'Testing email notification.',
+    });
+  });
+
+  it('should call email notification with null email when not provided', async () => {
+    mockSendContactNotification.mockClear();
+    const phone = uniquePhone();
+    const result = await submitContactForm({
+      name: 'No Email User',
+      email: '',
+      phone,
+      message: 'No email provided.',
+    });
+    expect(result.success).toBe(true);
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(mockSendContactNotification).toHaveBeenCalledWith({
+      name: 'No Email User',
+      email: null,
+      phone,
+      message: 'No email provided.',
+    });
   });
 });

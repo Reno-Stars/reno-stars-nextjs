@@ -19,18 +19,14 @@ function getSigningKey(): string {
     .digest('hex');
 }
 
-/** Timing-safe compare against ADMIN_PASSWORD */
+/** Timing-safe compare against ADMIN_PASSWORD using hashed values */
 export function verifyPassword(password: string): boolean {
   const expected = getAdminPassword();
-  if (password.length !== expected.length) {
-    // still do a compare to keep timing constant
-    crypto.timingSafeEqual(
-      Buffer.from(password.padEnd(expected.length, '\0')),
-      Buffer.from(expected)
-    );
-    return false;
-  }
-  return crypto.timingSafeEqual(Buffer.from(password), Buffer.from(expected));
+  // Hash both values to ensure constant-time comparison regardless of length
+  // This eliminates timing attacks that could reveal password length
+  const passwordHash = crypto.createHash('sha256').update(password).digest();
+  const expectedHash = crypto.createHash('sha256').update(expected).digest();
+  return crypto.timingSafeEqual(passwordHash, expectedHash);
 }
 
 /** Create HMAC-signed session token: `timestamp.hmac` */
@@ -97,7 +93,11 @@ export async function requireAuth(): Promise<void> {
   }
 }
 
-/** Validate that a string is a valid UUID v4 format */
+/**
+ * Validate that a string is a valid UUID format.
+ * Intentionally permissive: accepts any valid UUID format (v1-v5),
+ * not just v4, since database-generated UUIDs may vary by version.
+ */
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export function isValidUUID(id: string): boolean {
   return UUID_RE.test(id);

@@ -7,6 +7,7 @@ import { blogPosts } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { ensureUniqueSlug } from '@/lib/utils';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -65,6 +66,11 @@ export async function createBlogPost(
       { contentEn: data.contentEn, contentZh: data.contentZh }, MAX_TEXT_LENGTH
     );
     if (textError) return { error: textError };
+
+    // Ensure slug is unique (append -2, -3, etc. if collision)
+    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
     revalidatePath('/', 'layout');
@@ -105,6 +111,13 @@ export async function updateBlogPost(
       { contentEn: data.contentEn, contentZh: data.contentZh }, MAX_TEXT_LENGTH
     );
     if (textError) return { error: textError };
+
+    // Ensure slug is unique (exclude current post's own slug)
+    const currentPost = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+    const currentSlug = currentPost[0]?.slug;
+    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
+    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+
     const updated = await db.update(blogPosts).set(data).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };

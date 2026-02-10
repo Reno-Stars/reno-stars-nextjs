@@ -22,6 +22,7 @@ const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
 
 // Format budget range from min/max
+// Coerces negative values to 0 since budgets cannot be negative
 function formatBudgetRange(min: string, max: string): string | null {
   const minNum = Math.max(0, parseInt(min, 10));
   const maxNum = Math.max(0, parseInt(max, 10));
@@ -313,37 +314,37 @@ export async function updateProject(
 
     const scopeData = parseScopes(formData);
 
-    // Update project and related data
-    // Note: Not using transaction as Neon HTTP driver has limited transaction support.
-    // For admin operations, sequential updates are acceptable.
-    await db
-      .update(projects)
-      .set({ ...data, serviceId: svcRows[0].id })
-      .where(eq(projects.id, id));
+    // Update project and related data atomically
+    await db.transaction(async (tx: typeof db) => {
+      await tx
+        .update(projects)
+        .set({ ...data, serviceId: svcRows[0].id })
+        .where(eq(projects.id, id));
 
-    // Delete and re-insert images
-    await db.delete(projectImages).where(eq(projectImages.projectId, id));
-    if (imgData.length > 0) {
-      await db.insert(projectImages).values(
-        imgData.map((img) => ({ ...img, projectId: id }))
-      );
-    }
+      // Delete and re-insert images
+      await tx.delete(projectImages).where(eq(projectImages.projectId, id));
+      if (imgData.length > 0) {
+        await tx.insert(projectImages).values(
+          imgData.map((img) => ({ ...img, projectId: id }))
+        );
+      }
 
-    // Delete and re-insert scopes
-    await db.delete(projectScopes).where(eq(projectScopes.projectId, id));
-    if (scopeData.length > 0) {
-      await db.insert(projectScopes).values(
-        scopeData.map((s) => ({ ...s, projectId: id }))
-      );
-    }
+      // Delete and re-insert scopes
+      await tx.delete(projectScopes).where(eq(projectScopes.projectId, id));
+      if (scopeData.length > 0) {
+        await tx.insert(projectScopes).values(
+          scopeData.map((s) => ({ ...s, projectId: id }))
+        );
+      }
 
-    // Delete and re-insert external products
-    await db.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
-    if (epData.length > 0) {
-      await db.insert(projectExternalProducts).values(
-        epData.map((ep) => ({ ...ep, projectId: id }))
-      );
-    }
+      // Delete and re-insert external products
+      await tx.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
+      if (epData.length > 0) {
+        await tx.insert(projectExternalProducts).values(
+          epData.map((ep) => ({ ...ep, projectId: id }))
+        );
+      }
+    });
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');

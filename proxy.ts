@@ -22,8 +22,12 @@ const securityHeaders: Record<string, string> = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Content-Security-Policy': [
     "default-src 'self'",
-    // unsafe-inline required for Next.js inline scripts and JSON-LD structured data.
-    // TODO: Migrate to nonce-based CSP via next.config.ts experimental.cspNonce.
+    // 'unsafe-inline' required for:
+    // - Next.js inline scripts (hydration, route announcer)
+    // - JSON-LD structured data in <script type="application/ld+json">
+    // - Inline styles from component libraries
+    // Migration path: Use next.config.ts experimental.cspNonce when stable,
+    // which adds nonces to inline scripts. See: https://nextjs.org/docs/app/api-reference/next-config-js/cspNonce
     isDev
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
       : "script-src 'self' 'unsafe-inline'",

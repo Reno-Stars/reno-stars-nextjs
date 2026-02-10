@@ -9,6 +9,56 @@ export interface SearchableSelectOption {
   label: string;
 }
 
+/** Get background color for dropdown option based on state */
+function getOptionBackground(isHighlighted: boolean, isSelected: boolean): string {
+  if (isHighlighted) return 'rgba(200, 146, 42, 0.15)';
+  if (isSelected) return 'rgba(200, 146, 42, 0.08)';
+  return 'transparent';
+}
+
+/** Sanitize ID for use in HTML attributes (remove special chars, ensure valid ID) */
+function sanitizeHtmlId(id: string): string {
+  return id.replace(/[^a-zA-Z0-9-_]/g, '_');
+}
+
+// Static styles extracted to avoid re-creation on each render
+const dropdownListStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: '100%',
+  left: 0,
+  right: 0,
+  marginTop: '4px',
+  padding: '0.25rem 0',
+  backgroundColor: CARD,
+  borderRadius: '8px',
+  boxShadow: neu(8),
+  maxHeight: '240px',
+  overflowY: 'auto',
+  zIndex: 100,
+  listStyle: 'none',
+};
+
+const noResultsStyle: React.CSSProperties = {
+  padding: '0.625rem 0.75rem',
+  color: TEXT_MUTED,
+  fontSize: '0.875rem',
+};
+
+const clearButtonStyle: React.CSSProperties = {
+  position: 'absolute',
+  right: '0.5rem',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  background: 'none',
+  border: 'none',
+  padding: '0.25rem',
+  cursor: 'pointer',
+  color: TEXT_MUTED,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
 interface SearchableSelectProps {
   name: string;
   options: SearchableSelectOption[];
@@ -140,6 +190,11 @@ export default function SearchableSelect({
     }
   }, [disabled]);
 
+  const listboxId = `${name}-listbox`;
+  const activeDescendantId = highlightedIndex >= 0 && filteredOptions[highlightedIndex]
+    ? `${name}-option-${sanitizeHtmlId(filteredOptions[highlightedIndex].id)}`
+    : undefined;
+
   return (
     <div ref={containerRef} style={{ position: 'relative' }}>
       {/* Hidden input for form submission */}
@@ -163,6 +218,8 @@ export default function SearchableSelect({
           role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          aria-controls={listboxId}
+          aria-activedescendant={activeDescendantId}
           aria-autocomplete="list"
           autoComplete="off"
         />
@@ -192,20 +249,7 @@ export default function SearchableSelect({
             type="button"
             onClick={handleClear}
             aria-label={clearText}
-            style={{
-              position: 'absolute',
-              right: '0.5rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'none',
-              border: 'none',
-              padding: '0.25rem',
-              cursor: 'pointer',
-              color: TEXT_MUTED,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            style={clearButtonStyle}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -218,37 +262,19 @@ export default function SearchableSelect({
       {isOpen && (
         <ul
           ref={listRef}
+          id={listboxId}
           role="listbox"
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            marginTop: '4px',
-            padding: '0.25rem 0',
-            backgroundColor: CARD,
-            borderRadius: '8px',
-            boxShadow: neu(8),
-            maxHeight: '240px',
-            overflowY: 'auto',
-            zIndex: 100,
-            listStyle: 'none',
-          }}
+          style={dropdownListStyle}
         >
           {filteredOptions.length === 0 ? (
-            <li
-              style={{
-                padding: '0.625rem 0.75rem',
-                color: TEXT_MUTED,
-                fontSize: '0.875rem',
-              }}
-            >
+            <li style={noResultsStyle}>
               {noResultsText}
             </li>
           ) : (
             filteredOptions.map((option, index) => (
               <li
                 key={option.id}
+                id={`${name}-option-${sanitizeHtmlId(option.id)}`}
                 role="option"
                 aria-selected={option.id === value}
                 onClick={() => handleSelect(option.id)}
@@ -258,12 +284,7 @@ export default function SearchableSelect({
                   cursor: 'pointer',
                   fontSize: '0.875rem',
                   color: NAVY,
-                  backgroundColor:
-                    index === highlightedIndex
-                      ? 'rgba(200, 146, 42, 0.15)'
-                      : option.id === value
-                        ? 'rgba(200, 146, 42, 0.08)'
-                        : 'transparent',
+                  backgroundColor: getOptionBackground(index === highlightedIndex, option.id === value),
                   fontWeight: option.id === value ? 600 : 400,
                   display: 'flex',
                   alignItems: 'center',

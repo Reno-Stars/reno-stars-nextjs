@@ -13,15 +13,35 @@ const LOGIN_ATTEMPTS = new Map<string, { count: number; resetAt: number }>();
 // For production use, consider using a persistent store (Redis, database).
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const MAX_ENTRIES = 10000; // Prevent memory exhaustion
+
+let checkCounter = 0;
+
+/** Evicts expired entries to prevent memory leaks */
+function evictExpiredEntries(): void {
+  const now = Date.now();
+  for (const [key, entry] of LOGIN_ATTEMPTS) {
+    if (now > entry.resetAt) {
+      LOGIN_ATTEMPTS.delete(key);
+    }
+  }
+}
 
 function checkRateLimit(ip: string): boolean {
+  // Periodic cleanup or when approaching max capacity
+  if (++checkCounter % 100 === 0 || LOGIN_ATTEMPTS.size >= MAX_ENTRIES) {
+    evictExpiredEntries();
+  }
+
   const now = Date.now();
   const entry = LOGIN_ATTEMPTS.get(ip);
   if (!entry || now > entry.resetAt) {
+    // Reject if at max capacity to prevent memory exhaustion
+    if (LOGIN_ATTEMPTS.size >= MAX_ENTRIES) return false;
     LOGIN_ATTEMPTS.set(ip, { count: 1, resetAt: now + WINDOW_MS });
     return true;
   }
-  if (entry.count > MAX_ATTEMPTS) return false;
+  if (entry.count >= MAX_ATTEMPTS) return false;
   entry.count++;
   return entry.count <= MAX_ATTEMPTS;
 }

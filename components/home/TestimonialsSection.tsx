@@ -13,6 +13,12 @@ interface TestimonialsSectionProps {
   };
 }
 
+/** Map app locales to valid Intl.RelativeTimeFormat locales */
+const INTL_LOCALE_MAP: Record<string, string> = {
+  en: 'en-US',
+  zh: 'zh-CN',
+};
+
 function getRelativeTime(publishTime: string, locale: string): string {
   if (!publishTime) return '';
   const timestamp = new Date(publishTime).getTime();
@@ -21,7 +27,8 @@ function getRelativeTime(publishTime: string, locale: string): string {
   const days = Math.floor(diff / 86400000);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+  const intlLocale = INTL_LOCALE_MAP[locale] || 'en-US';
+  const rtf = new Intl.RelativeTimeFormat(intlLocale, { numeric: 'auto' });
   if (years > 0) return rtf.format(-years, 'year');
   if (months > 0) return rtf.format(-months, 'month');
   if (days > 0) return rtf.format(-days, 'day');

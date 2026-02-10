@@ -22,7 +22,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
   const [formStatus, setFormStatus] = useState<{ type: 'idle' | 'success' | 'error'; message: string }>({ type: 'idle', message: '' });
   const [isPending, startTransition] = useTransition();
-  const successTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     return () => { if (successTimerRef.current) clearTimeout(successTimerRef.current); };

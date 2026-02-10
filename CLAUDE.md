@@ -104,6 +104,7 @@ lib/
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
     translations.ts       # Admin translation hooks
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
+  email.ts                # Resend email notifications for contact form
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
   types.ts                # Core TypeScript types
   theme.ts                # Neumorphic design tokens + shadow helpers
@@ -157,6 +158,9 @@ tests/
 | `GOOGLE_PLACES_API_KEY` | No | Google Places API key for homepage reviews |
 | `GOOGLE_PLACE_ID` | No | Google Place ID for the business location |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 Measurement ID (e.g., `G-XXXXXXXXXX`) for tracking |
+| `RESEND_API_KEY` | No | Resend API key for contact form email notifications |
+| `EMAIL_FROM` | No | Sender email for notifications (must be verified in Resend) |
+| `EMAIL_TO` | No | Recipient email(s) for contact form notifications |
 
 ## Routing & Proxy
 
