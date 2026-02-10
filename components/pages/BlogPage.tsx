@@ -6,7 +6,6 @@ import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, BlogPost } from '@/lib/types';
-import { BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE,
@@ -20,6 +19,7 @@ interface BlogPageProps {
   currentPage?: number;
   totalPages?: number;
   totalCount?: number;
+  perPage?: number;
 }
 
 export default function BlogPage({
@@ -29,6 +29,7 @@ export default function BlogPage({
   currentPage = 1,
   totalPages = 1,
   totalCount = 0,
+  perPage = 10,
 }: BlogPageProps) {
   const t = useTranslations();
   const localizedPosts = useMemo(() => blogPosts.map((p) => ({ slug: p.slug, title: p.title[locale], excerpt: p.excerpt?.[locale] })), [blogPosts, locale]);
@@ -195,8 +196,8 @@ export default function BlogPage({
               {totalCount > 0 && (
                 <p className="mt-4 text-center text-sm" style={{ color: TEXT_MUTED }}>
                   {t('blog.showingPosts', {
-                    start: (currentPage - 1) * BLOG_POSTS_PER_PAGE + 1,
-                    end: Math.min(currentPage * BLOG_POSTS_PER_PAGE, totalCount),
+                    start: (currentPage - 1) * perPage + 1,
+                    end: Math.min(currentPage * perPage, totalCount),
                     total: totalCount,
                   })}
                 </p>

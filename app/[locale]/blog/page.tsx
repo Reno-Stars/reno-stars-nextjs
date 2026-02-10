@@ -76,6 +76,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         currentPage={paginatedPosts.currentPage}
         totalPages={paginatedPosts.totalPages}
         totalCount={paginatedPosts.totalCount}
+        perPage={BLOG_POSTS_PER_PAGE}
       />
     </>
   );
