@@ -188,26 +188,27 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 const renderRow = (images: typeof afterImages, label: string) => images.length > 0 && (
                   <div className="mt-4">
                     <span className="text-xs font-medium uppercase tracking-wide mb-2 block" style={{ color: TEXT_MUTED }}>
-                      {label}
+                      {label} ({images.length})
                     </span>
-                    <div className="flex gap-3 overflow-x-auto p-1">
+                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
                       {images.map((img) => (
                         <button
                           key={`${img.projectSlug}-${img.src}`}
                           onClick={() => setActiveImageIndex(img.originalIndex)}
-                          className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0"
+                          className="relative aspect-square rounded-lg overflow-hidden transition-transform hover:scale-105"
                           aria-label={`${t('projects.viewImage')} ${img.originalIndex + 1}`}
                           aria-pressed={img.originalIndex === activeImageIndex}
                           style={{
-                            outline: img.originalIndex === activeImageIndex ? `2px solid ${GOLD}` : 'none',
+                            outline: img.originalIndex === activeImageIndex ? `3px solid ${GOLD}` : 'none',
                             outlineOffset: '2px',
+                            boxShadow: img.originalIndex === activeImageIndex ? `0 0 10px ${GOLD}66` : 'none',
                           }}
                         >
                           <Image
                             src={img.src}
                             alt={img.alt || site.title}
                             fill
-                            sizes="80px"
+                            sizes="100px"
                             className="object-cover"
                           />
                         </button>
@@ -350,7 +351,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
         </div>
       </section>
 
-      {/* Included Projects Section */}
+      {/* Detailed Area Breakdown Section */}
       {site.projects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-7xl mx-auto">
@@ -360,9 +361,9 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
             <p className="text-sm mb-8" style={{ color: TEXT_MID }}>
               {t('wholeHouse.childProjectsCount', { count: site.projects.length })}
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {site.projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} t={t} />
+            <div className="space-y-8">
+              {site.projects.map((project, index) => (
+                <AreaDetailCard key={project.slug} project={project} t={t} isEven={index % 2 === 0} />
               ))}
             </div>
           </div>
@@ -384,58 +385,166 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   );
 }
 
-/** Card for a project within the site view (for whole-house renovations) */
-function ProjectCard({
+/** Detailed card for a project area within the site view */
+function AreaDetailCard({
   project,
   t,
+  isEven,
 }: {
   project: LocalizedProject;
   t: ReturnType<typeof useTranslations>;
+  isEven: boolean;
 }) {
+  // Get project images (up to 4 for the grid)
+  const projectImages = project.images?.slice(0, 4) || [];
+  const hasMultipleImages = projectImages.length > 1;
+
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="block rounded-xl overflow-hidden transition-all duration-200 hover:translate-y-[-4px]"
+    <div
+      className="rounded-2xl overflow-hidden"
       style={{ boxShadow: neu(4), backgroundColor: CARD }}
     >
-      <div className="relative aspect-[4/3]">
-        <Image
-          src={project.hero_image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover"
-        />
-        <div
-          className="absolute bottom-0 left-0 right-0 px-4 py-3"
-          style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}
-        >
-          <span className="text-white text-lg font-semibold">{project.title}</span>
+      <div className={`grid ${hasMultipleImages ? 'lg:grid-cols-2' : 'lg:grid-cols-5'} gap-0`}>
+        {/* Image Section */}
+        <div className={`${hasMultipleImages ? '' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
+          {hasMultipleImages ? (
+            <div className="grid grid-cols-2 gap-1 h-full">
+              {projectImages.map((img, idx) => (
+                <div key={idx} className="relative aspect-square">
+                  <Image
+                    src={img.src}
+                    alt={img.alt || project.title}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover"
+                  />
+                  {img.is_before && (
+                    <span className="absolute top-2 left-2 px-2 py-0.5 text-xs font-medium rounded bg-black/60 text-white">
+                      {t('projects.beforeLabel')}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px]">
+              <Image
+                src={project.hero_image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Content Section */}
+        <div className={`${hasMultipleImages ? '' : 'lg:col-span-3'} p-6 lg:p-8 flex flex-col`}>
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <span
+                className="inline-block px-3 py-1 rounded-full text-xs font-medium mb-2"
+                style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+              >
+                {project.category}
+              </span>
+              <h3 className="text-xl font-bold" style={{ color: TEXT }}>
+                {project.title}
+              </h3>
+            </div>
+            <div className="flex gap-3 text-sm" style={{ color: TEXT_MID }}>
+              {project.duration && (
+                <span className="flex items-center gap-1">
+                  <Calendar className="w-4 h-4" />
+                  {project.duration}
+                </span>
+              )}
+              {project.budget_range && (
+                <span className="flex items-center gap-1">
+                  <DollarSign className="w-4 h-4" />
+                  {project.budget_range}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <p className="text-sm mb-4" style={{ color: TEXT_MID }}>
+            {project.description}
+          </p>
+
+          {/* Challenge & Solution */}
+          {(project.challenge || project.solution) && (
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              {project.challenge && (
+                <div className="rounded-lg p-4" style={{ backgroundColor: SURFACE_ALT }}>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                    {t('projects.challenge')}
+                  </h4>
+                  <p className="text-sm" style={{ color: TEXT_MID }}>
+                    {project.challenge}
+                  </p>
+                </div>
+              )}
+              {project.solution && (
+                <div className="rounded-lg p-4" style={{ backgroundColor: SURFACE_ALT }}>
+                  <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                    {t('projects.solution')}
+                  </h4>
+                  <p className="text-sm" style={{ color: TEXT_MID }}>
+                    {project.solution}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Service Scope */}
+          {project.service_scope && project.service_scope.length > 0 && (
+            <div className="mb-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                {t('projects.serviceScope')}
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {project.service_scope.map((scope) => (
+                  <span
+                    key={scope}
+                    className="px-2 py-1 rounded text-xs"
+                    style={{ backgroundColor: SURFACE_ALT, color: TEXT_MID }}
+                  >
+                    {scope}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* External Products */}
+          {project.external_products && project.external_products.length > 0 && (
+            <div className="mb-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+                {t('projects.externalProducts')}
+              </h4>
+              <div className="flex flex-col gap-1">
+                {project.external_products.slice(0, 3).map((ep) => (
+                  <ProductLink key={ep.url} product={ep} size="sm" />
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mt-auto pt-4">
+            <Link
+              href={`/projects/${project.slug}`}
+              className="inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:brightness-110"
+              style={{ color: GOLD }}
+            >
+              {t('wholeHouse.viewAreaDetails')} &rarr;
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="p-4">
-        <div className="flex items-center gap-4 text-sm" style={{ color: TEXT_MID }}>
-          {project.duration && (
-            <span className="flex items-center gap-1">
-              <Calendar className="w-4 h-4" />
-              {project.duration}
-            </span>
-          )}
-          {project.budget_range && (
-            <span className="flex items-center gap-1">
-              <DollarSign className="w-4 h-4" />
-              {project.budget_range}
-            </span>
-          )}
-        </div>
-        <p className="text-sm mt-2 line-clamp-2" style={{ color: TEXT_MID }}>
-          {project.description}
-        </p>
-        <span className="inline-block mt-3 text-sm font-semibold" style={{ color: GOLD }}>
-          {t('wholeHouse.viewAreaProject', { area: project.category })} &rarr;
-        </span>
-      </div>
-    </Link>
+    </div>
   );
 }
 
