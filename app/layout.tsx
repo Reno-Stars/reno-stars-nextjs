@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SITE_NAME } from '@/lib/utils';
+import { SITE_NAME, getBaseUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getBaseUrl()),
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
   twitter: {

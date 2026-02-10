@@ -5,6 +5,7 @@ interface LocalBusinessAreaSchemaProps {
   company: Company;
   areaName: string;
   areaSlug: string;
+  locale: string;
   services: string[];
   googleRating?: number;
   googleReviewCount?: number;
@@ -14,6 +15,7 @@ export default function LocalBusinessAreaSchema({
   company,
   areaName,
   areaSlug,
+  locale,
   services,
   googleRating,
   googleReviewCount,
@@ -34,7 +36,7 @@ export default function LocalBusinessAreaSchema({
     '@id': `${baseUrl}/#${areaSlug}-business`,
     name: `${company.name} - ${areaName}`,
     description: `Professional home renovation services in ${areaName}. Kitchen, bathroom, whole house renovations by ${company.name}.`,
-    url: `${baseUrl}/en/areas/${areaSlug}/`,
+    url: `${baseUrl}/${locale}/areas/${areaSlug}/`,
     telephone: `+1-${company.phone}`,
     email: company.email,
     image: company.logo,

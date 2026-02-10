@@ -101,6 +101,7 @@ export default async function Page({ params }: PageProps) {
         company={company}
         areaName={localizedArea.name}
         areaSlug={city}
+        locale={locale}
         services={serviceNames}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
