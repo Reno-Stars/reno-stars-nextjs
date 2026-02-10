@@ -351,6 +351,26 @@ function mapDbSiteToSite(row: DbSiteRow, siteImageRows?: DbSiteImageRow[]): Site
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }
         : undefined,
+    excerpt:
+      row.excerptEn && row.excerptZh
+        ? { en: row.excerptEn, zh: row.excerptZh }
+        : undefined,
+    meta_title:
+      row.metaTitleEn && row.metaTitleZh
+        ? { en: row.metaTitleEn, zh: row.metaTitleZh }
+        : undefined,
+    meta_description:
+      row.metaDescriptionEn && row.metaDescriptionZh
+        ? { en: row.metaDescriptionEn, zh: row.metaDescriptionZh }
+        : undefined,
+    focus_keyword:
+      row.focusKeywordEn && row.focusKeywordZh
+        ? { en: row.focusKeywordEn, zh: row.focusKeywordZh }
+        : undefined,
+    seo_keywords:
+      row.seoKeywordsEn && row.seoKeywordsZh
+        ? { en: row.seoKeywordsEn, zh: row.seoKeywordsZh }
+        : undefined,
     show_as_project: row.showAsProject,
     featured: row.featured,
     published_at: row.publishedAt ?? undefined,

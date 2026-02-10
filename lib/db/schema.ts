@@ -142,6 +142,20 @@ export const projectSites = pgTable(
     badgeEn: varchar('badge_en', { length: 50 }),
     badgeZh: varchar('badge_zh', { length: 50 }),
 
+    // Excerpt (short summary for listings)
+    excerptEn: text('excerpt_en'),
+    excerptZh: text('excerpt_zh'),
+
+    // SEO fields
+    metaTitleEn: varchar('meta_title_en', { length: 70 }),
+    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
+    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    seoKeywordsEn: text('seo_keywords_en'),
+    seoKeywordsZh: text('seo_keywords_zh'),
+
     // Display settings
     showAsProject: boolean('show_as_project').default(true).notNull(),
     featured: boolean('featured').default(false).notNull(),

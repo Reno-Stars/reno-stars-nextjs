@@ -40,6 +40,16 @@ export interface Site {
   hero_image?: string;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
+  /** Short excerpt for listings/previews */
+  excerpt?: Localized<string>;
+  /** SEO meta title (max 70 chars) */
+  meta_title?: Localized<string>;
+  /** SEO meta description (max 155 chars) */
+  meta_description?: Localized<string>;
+  /** Primary focus keyword for SEO */
+  focus_keyword?: Localized<string>;
+  /** Additional SEO keywords (comma-separated) */
+  seo_keywords?: Localized<string>;
   /** Whether to show this site as a project in listings */
   show_as_project: boolean;
   /** Whether to feature on homepage */

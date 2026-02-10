@@ -117,16 +117,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteData = await getSiteBySlugFromDb(slug);
 
   if (siteData) {
-    const title = siteData.title[locale as Locale];
-    const description = truncateMetaDescription(siteData.description[locale as Locale]);
+    // Use dedicated SEO fields, fallback to title/description if not set
+    const metaTitle = siteData.meta_title?.[locale as Locale] ?? `${siteData.title[locale as Locale]} | ${SITE_NAME}`;
+    const metaDescription = siteData.meta_description?.[locale as Locale] ?? truncateMetaDescription(siteData.description[locale as Locale]);
 
     return {
-      title: `${title} | ${SITE_NAME}`,
-      description,
+      title: metaTitle,
+      description: metaDescription,
+      keywords: siteData.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()),
       alternates: buildAlternates(`/projects/${slug}/`, locale),
       openGraph: {
-        title: `${title} | ${SITE_NAME}`,
-        description,
+        title: metaTitle,
+        description: metaDescription,
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
@@ -135,8 +137,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${title} | ${SITE_NAME}`,
-        description,
+        title: metaTitle,
+        description: metaDescription,
         images: siteData.hero_image ? [siteData.hero_image] : [siteImages.hero],
       },
     };
