@@ -328,6 +328,9 @@ const zh: AdminMessages = {
   },
   trustBadges: {
     title: '信任徽章',
+    addTrustBadge: '添加信任徽章',
+    addNewTrustBadge: '添加新信任徽章',
+    createTrustBadge: '创建信任徽章',
     editTrustBadge: '编辑信任徽章',
     deleteTrustBadge: '删除信任徽章',
     deleteMessage: '此操作将永久删除该信任徽章。',

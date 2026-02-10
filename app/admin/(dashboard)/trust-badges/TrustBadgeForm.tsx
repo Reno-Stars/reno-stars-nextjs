@@ -16,21 +16,29 @@ interface TrustBadgeFormProps {
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
-  initialData: {
+  initialData?: {
     badgeEn: string;
     badgeZh: string;
     displayOrder: number;
     isActive: boolean;
   };
+  isNew?: boolean;
 }
 
-export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormProps) {
+export default function TrustBadgeForm({ action, initialData, isNew = false }: TrustBadgeFormProps) {
   const t = useAdminTranslations();
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(isNew);
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.trustBadges.saved);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
+
+  const defaults = initialData ?? {
+    badgeEn: '',
+    badgeZh: '',
+    displayOrder: 0,
+    isActive: true,
+  };
 
   return (
     <form action={formAction}>
@@ -44,34 +52,34 @@ export default function TrustBadgeForm({ action, initialData }: TrustBadgeFormPr
           maxWidth: '800px',
         }}
       >
-        <EditModeToggle editing={editing} setEditing={setEditing} />
+        {!isNew && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.trustBadges.badgeEn} htmlFor="badgeEn">
-              <input id="badgeEn" name="badgeEn" defaultValue={initialData.badgeEn} required style={fieldStyle} />
+              <input id="badgeEn" name="badgeEn" defaultValue={defaults.badgeEn} required style={fieldStyle} />
             </FormField>
             <FormField label={t.trustBadges.badgeZh} htmlFor="badgeZh">
-              <input id="badgeZh" name="badgeZh" defaultValue={initialData.badgeZh} required style={fieldStyle} />
+              <input id="badgeZh" name="badgeZh" defaultValue={defaults.badgeZh} required style={fieldStyle} />
             </FormField>
           </div>
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.trustBadges.displayOrder} htmlFor="displayOrder">
-              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={initialData.displayOrder} required style={fieldStyle} />
+              <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
             </FormField>
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.5rem' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', color: NAVY, fontSize: '0.875rem' }}>
-              <input type="checkbox" name="isActive" defaultChecked={initialData.isActive} />
+              <input type="checkbox" name="isActive" defaultChecked={defaults.isActive} />
               {t.trustBadges.isActive}
             </label>
           </div>
 
           {editing && (
-            <SubmitButton isPending={isPending} label={t.common.update} />
+            <SubmitButton isPending={isPending} label={isNew ? t.trustBadges.createTrustBadge : t.common.update} />
           )}
         </fieldset>
       </div>

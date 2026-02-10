@@ -7,7 +7,7 @@ export default async function TrustBadgesAdminPage() {
 
   return (
     <div>
-      <AdminPageHeader titleKey="trustBadges.title" />
+      <AdminPageHeader titleKey="trustBadges.title" actionKey="trustBadges.addTrustBadge" actionHref="/admin/trust-badges/new" />
       <TrustBadgesListClient badges={badges} />
     </div>
   );

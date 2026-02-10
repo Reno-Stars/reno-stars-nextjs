@@ -326,6 +326,9 @@ const en = {
   },
   trustBadges: {
     title: 'Trust Badges',
+    addTrustBadge: 'Add Trust Badge',
+    addNewTrustBadge: 'Add New Trust Badge',
+    createTrustBadge: 'Create Trust Badge',
     editTrustBadge: 'Edit Trust Badge',
     deleteTrustBadge: 'Delete Trust Badge',
     deleteMessage: 'This will permanently delete the trust badge.',
