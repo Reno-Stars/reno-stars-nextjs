@@ -124,7 +124,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: metaTitle,
       description: metaDescription,
-      keywords: siteData.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()),
+      keywords: siteData.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
       alternates: buildAlternates(`/projects/${slug}/`, locale),
       openGraph: {
         title: metaTitle,

@@ -18,6 +18,17 @@ import { relations, sql } from 'drizzle-orm';
 // application update queries, or create a database trigger if preferred.
 
 // ============================================================================
+// SEO FIELD LENGTH CONSTANTS
+// ============================================================================
+
+/** Maximum length for SEO meta title (Google truncates at ~60 chars, we allow 70) */
+export const SEO_META_TITLE_MAX = 70;
+/** Maximum length for SEO meta description (Google truncates at ~155-160 chars) */
+export const SEO_META_DESCRIPTION_MAX = 155;
+/** Maximum length for focus keyword */
+export const SEO_FOCUS_KEYWORD_MAX = 50;
+
+// ============================================================================
 // ENUMS
 // ============================================================================
 
@@ -147,12 +158,12 @@ export const projectSites = pgTable(
     excerptZh: text('excerpt_zh'),
 
     // SEO fields
-    metaTitleEn: varchar('meta_title_en', { length: 70 }),
-    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
-    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
-    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
-    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
-    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    metaTitleEn: varchar('meta_title_en', { length: SEO_META_TITLE_MAX }),
+    metaTitleZh: varchar('meta_title_zh', { length: SEO_META_TITLE_MAX }),
+    metaDescriptionEn: varchar('meta_description_en', { length: SEO_META_DESCRIPTION_MAX }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: SEO_META_DESCRIPTION_MAX }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: SEO_FOCUS_KEYWORD_MAX }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: SEO_FOCUS_KEYWORD_MAX }),
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
 
@@ -258,12 +269,12 @@ export const projects = pgTable(
     badgeZh: varchar('badge_zh', { length: 50 }),
 
     // SEO fields
-    metaTitleEn: varchar('meta_title_en', { length: 70 }),
-    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
-    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
-    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
-    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
-    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    metaTitleEn: varchar('meta_title_en', { length: SEO_META_TITLE_MAX }),
+    metaTitleZh: varchar('meta_title_zh', { length: SEO_META_TITLE_MAX }),
+    metaDescriptionEn: varchar('meta_description_en', { length: SEO_META_DESCRIPTION_MAX }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: SEO_META_DESCRIPTION_MAX }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: SEO_FOCUS_KEYWORD_MAX }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: SEO_FOCUS_KEYWORD_MAX }),
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
 
@@ -410,12 +421,12 @@ export const blogPosts = pgTable(
     author: varchar('author', { length: 100 }),
 
     // SEO fields
-    metaTitleEn: varchar('meta_title_en', { length: 70 }),
-    metaTitleZh: varchar('meta_title_zh', { length: 70 }),
-    metaDescriptionEn: varchar('meta_description_en', { length: 155 }),
-    metaDescriptionZh: varchar('meta_description_zh', { length: 155 }),
-    focusKeywordEn: varchar('focus_keyword_en', { length: 50 }),
-    focusKeywordZh: varchar('focus_keyword_zh', { length: 50 }),
+    metaTitleEn: varchar('meta_title_en', { length: SEO_META_TITLE_MAX }),
+    metaTitleZh: varchar('meta_title_zh', { length: SEO_META_TITLE_MAX }),
+    metaDescriptionEn: varchar('meta_description_en', { length: SEO_META_DESCRIPTION_MAX }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: SEO_META_DESCRIPTION_MAX }),
+    focusKeywordEn: varchar('focus_keyword_en', { length: SEO_FOCUS_KEYWORD_MAX }),
+    focusKeywordZh: varchar('focus_keyword_zh', { length: SEO_FOCUS_KEYWORD_MAX }),
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
     readingTimeMinutes: integer('reading_time_minutes'),

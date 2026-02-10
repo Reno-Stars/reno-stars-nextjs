@@ -177,53 +177,15 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               </div>
 
               {/* Thumbnails - After first, then Before */}
-              {filteredImages.length > 1 && (() => {
-                const afterImages = filteredImages
-                  .map((img, i) => ({ ...img, originalIndex: i }))
-                  .filter((img) => !img.is_before);
-                const beforeImages = filteredImages
-                  .map((img, i) => ({ ...img, originalIndex: i }))
-                  .filter((img) => img.is_before);
-
-                const renderRow = (images: typeof afterImages, label: string) => images.length > 0 && (
-                  <div className="mt-4">
-                    <span className="text-xs font-medium uppercase tracking-wide mb-2 block" style={{ color: TEXT_MUTED }}>
-                      {label} ({images.length})
-                    </span>
-                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-                      {images.map((img) => (
-                        <button
-                          key={`${img.projectSlug}-${img.src}`}
-                          onClick={() => setActiveImageIndex(img.originalIndex)}
-                          className="relative aspect-square rounded-lg overflow-hidden transition-transform hover:scale-105"
-                          aria-label={`${t('projects.viewImage')} ${img.originalIndex + 1}`}
-                          aria-pressed={img.originalIndex === activeImageIndex}
-                          style={{
-                            outline: img.originalIndex === activeImageIndex ? `3px solid ${GOLD}` : 'none',
-                            outlineOffset: '2px',
-                            boxShadow: img.originalIndex === activeImageIndex ? `0 0 10px ${GOLD}66` : 'none',
-                          }}
-                        >
-                          <Image
-                            src={img.src}
-                            alt={img.alt || site.title}
-                            fill
-                            sizes="100px"
-                            className="object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                );
-
-                return (
-                  <>
-                    {renderRow(afterImages, t('projects.afterLabel'))}
-                    {renderRow(beforeImages, t('projects.beforeLabel'))}
-                  </>
-                );
-              })()}
+              {filteredImages.length > 1 && (
+                <ThumbnailGallery
+                  images={filteredImages}
+                  activeImageIndex={activeImageIndex}
+                  onSelectImage={setActiveImageIndex}
+                  siteTitle={site.title}
+                  t={t}
+                />
+              )}
             </div>
 
             {/* Details */}
@@ -385,6 +347,72 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   );
 }
 
+/** Thumbnail gallery with before/after image rows */
+function ThumbnailGallery({
+  images,
+  activeImageIndex,
+  onSelectImage,
+  siteTitle,
+  t,
+}: {
+  images: { src: string; alt: string; is_before?: boolean; projectSlug: string }[];
+  activeImageIndex: number;
+  onSelectImage: (index: number) => void;
+  siteTitle: string;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  const { afterImages, beforeImages } = useMemo(() => {
+    const withIndex = images.map((img, i) => ({ ...img, originalIndex: i }));
+    return {
+      afterImages: withIndex.filter((img) => !img.is_before),
+      beforeImages: withIndex.filter((img) => img.is_before),
+    };
+  }, [images]);
+
+  const renderRow = (rowImages: typeof afterImages, label: string) =>
+    rowImages.length > 0 && (
+      <div className="mt-4">
+        <span
+          className="text-xs font-medium uppercase tracking-wide mb-2 block"
+          style={{ color: TEXT_MUTED }}
+        >
+          {label} ({rowImages.length})
+        </span>
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+          {rowImages.map((img) => (
+            <button
+              key={`${img.projectSlug}-${img.src}`}
+              onClick={() => onSelectImage(img.originalIndex)}
+              className="relative aspect-square rounded-lg overflow-hidden transition-transform hover:scale-105"
+              aria-label={`${t('projects.viewImage')} ${img.originalIndex + 1}`}
+              aria-pressed={img.originalIndex === activeImageIndex}
+              style={{
+                outline: img.originalIndex === activeImageIndex ? `3px solid ${GOLD}` : 'none',
+                outlineOffset: '2px',
+                boxShadow: img.originalIndex === activeImageIndex ? `0 0 10px ${GOLD}66` : 'none',
+              }}
+            >
+              <Image
+                src={img.src}
+                alt={img.alt || siteTitle}
+                fill
+                sizes="100px"
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+
+  return (
+    <>
+      {renderRow(afterImages, t('projects.afterLabel'))}
+      {renderRow(beforeImages, t('projects.beforeLabel'))}
+    </>
+  );
+}
+
 /** Detailed card for a project area within the site view */
 function AreaDetailCard({
   project,
@@ -409,8 +437,8 @@ function AreaDetailCard({
         <div className={`${hasMultipleImages ? '' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
           {hasMultipleImages ? (
             <div className="grid grid-cols-2 gap-1 h-full">
-              {projectImages.map((img, idx) => (
-                <div key={idx} className="relative aspect-square">
+              {projectImages.map((img) => (
+                <div key={img.src} className="relative aspect-square">
                   <Image
                     src={img.src}
                     alt={img.alt || project.title}
