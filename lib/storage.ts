@@ -1,4 +1,4 @@
-const PROD_ORIGIN = 'https://reno-stars.com';
+export const PROD_ORIGIN = 'https://reno-stars.com';
 const STORAGE_ORIGIN = process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
 const WP_UPLOADS_PREFIX = '/wp-content/uploads/';
 

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { routing, locales, defaultLocale, type Locale } from './i18n/config';
 import { verifyToken } from './lib/admin/auth';
-import { ASSET_ORIGIN } from './lib/storage';
+import { ASSET_ORIGIN, PROD_ORIGIN } from './lib/storage';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -37,7 +37,7 @@ const securityHeaders: Record<string, string> = {
     isDev
       ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN}`
       : `connect-src 'self' ${ASSET_ORIGIN}`,
-    `media-src 'self' ${ASSET_ORIGIN}`,
+    `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
     "object-src 'none'",
     "frame-ancestors 'self'",
     "base-uri 'self'",
