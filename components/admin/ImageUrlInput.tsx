@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { uploadImage } from '@/app/actions/admin/upload';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
@@ -46,7 +46,7 @@ export default function ImageUrlInput({
   // Resolve production URLs to configured storage origin for preview
   const previewSrc = useMemo(() => (url ? getAssetUrl(url) : ''), [url]);
 
-  const handleUpload = async (file: File) => {
+  const handleUpload = useCallback(async (file: File) => {
     setUploading(true);
     setUploadError('');
 
@@ -68,24 +68,24 @@ export default function ImageUrlInput({
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  };
+  }, [slug, imageRole]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) handleUpload(file);
-  };
+  }, [handleUpload]);
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
       handleUpload(file);
     }
-  };
+  }, [handleUpload]);
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-  };
+  }, []);
 
   return (
     <div style={{ marginBottom: '1rem' }}>

@@ -60,11 +60,11 @@ export async function uploadImage(
 
   const bucket = process.env.S3_BUCKET || 'reno-stars';
   // S3_PUBLIC_URL: The public-facing URL for the bucket (e.g., R2 public bucket URL or MinIO public URL).
-  // Fallback order:
-  //   1. S3_PUBLIC_URL (preferred) - explicit public URL for S3-compatible storage
-  //   2. NEXT_PUBLIC_STORAGE_PROVIDER (legacy) - used by getAssetUrl() for URL rewriting
-  // One of these MUST be set for uploads to return accessible URLs.
-  const publicUrl = process.env.S3_PUBLIC_URL || process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
+  // Must be set for uploads to return accessible URLs.
+  const publicUrl = process.env.S3_PUBLIC_URL;
+  if (!publicUrl) {
+    return { error: 'S3_PUBLIC_URL must be set to return public image URLs.' };
+  }
 
   // Generate the S3 key: use customKey if provided, otherwise timestamp-random
   const ext = file.name.split('.').pop()?.toLowerCase() || MIME_TO_EXT[file.type] || 'jpg';
@@ -86,11 +86,6 @@ export async function uploadImage(
       ContentType: file.type,
     })
   );
-
-  // Build the public URL
-  if (!publicUrl) {
-    return { error: 'S3_PUBLIC_URL or NEXT_PUBLIC_STORAGE_PROVIDER must be set to return public image URLs.' };
-  }
 
   const url = `${publicUrl}/${key}`;
   return { url };

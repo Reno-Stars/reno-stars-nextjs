@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useId } from 'react';
 import { ChevronDown, ChevronUp, X, Upload } from 'lucide-react';
 import Tooltip from './Tooltip';
 import { inputStyle, readOnlyStyle } from './shared-styles';
@@ -486,7 +486,7 @@ function ImageZone({
   t: ReturnType<typeof useAdminTranslations>;
 }) {
   const [isDragging, setIsDragging] = useState(false);
-  const fileInputId = `file-${crypto.randomUUID()}`;
+  const fileInputId = useId();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();

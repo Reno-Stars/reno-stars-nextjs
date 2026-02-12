@@ -19,10 +19,11 @@ import {
   trustBadges as trustBadgesTable,
   showroomInfo as showroomInfoTable,
   faqs as faqsTable,
+  partners as partnersTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
 import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
-import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair } from '../types';
+import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
 
 // ============================================================================
 // HELPERS
@@ -463,12 +464,17 @@ export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]
   const ids = rows.map((r: DbProjectRow) => r.id);
   const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
 
+  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
+  const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
+  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+
   return rows.map((row: DbProjectRow) =>
     mapDbProjectToProject(
       row,
-      scopes.filter((s: DbScopeRow) => s.projectId === row.id),
-      externalProducts.filter((ep: DbExternalProductRow) => ep.projectId === row.id),
-      imagePairs.filter((ip: DbImagePairRow) => ip.projectId === row.id)
+      scopesByProject.get(row.id) ?? [],
+      epByProject.get(row.id) ?? [],
+      imagePairsByProject.get(row.id) ?? []
     )
   );
 });
@@ -1014,4 +1020,29 @@ export async function getProjectByIdAdmin(id: string) {
     scopes: sortByDisplayOrder(scopes),
     externalProducts: sortByDisplayOrder(externalProducts),
   };
+}
+
+// ============================================================================
+// PARTNER QUERIES
+// ============================================================================
+
+/** Fetch active partners ordered by display_order. */
+export const getPartnersFromDb = cache(async (): Promise<Partner[]> => {
+  const rows = await db
+    .select()
+    .from(partnersTable)
+    .where(eq(partnersTable.isActive, true))
+    .orderBy(asc(partnersTable.displayOrder));
+
+  return rows.map((row: typeof partnersTable.$inferSelect) => ({
+    name: { en: row.nameEn, zh: row.nameZh },
+    logo: getAssetUrl(row.logoUrl),
+    url: row.websiteUrl ?? undefined,
+    isHiddenVisually: row.isHiddenVisually,
+  }));
+});
+
+/** Fetch all partners (admin — includes inactive). */
+export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$inferSelect)[]> {
+  return db.select().from(partnersTable).orderBy(asc(partnersTable.displayOrder));
 }
