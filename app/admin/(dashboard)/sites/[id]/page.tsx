@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, siteImages, siteImagePairs, type DbSite, type DbSiteImage, type DbSiteImagePair } from '@/lib/db/schema';
+import { projectSites, siteImagePairs, type DbSite, type DbSiteImagePair } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
@@ -14,11 +14,10 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas, projectsWithDetails, siteImageRows, siteImagePairRows] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
-    db.select().from(siteImages).where(eq(siteImages.siteId, id)).orderBy(siteImages.displayOrder) as Promise<DbSiteImage[]>,
     db.select().from(siteImagePairs).where(eq(siteImagePairs.siteId, id)).orderBy(siteImagePairs.displayOrder) as Promise<DbSiteImagePair[]>,
   ]);
 
@@ -44,12 +43,6 @@ export default async function EditSitePage({ params }: PageProps) {
     showAsProject: site.showAsProject,
     featured: site.featured,
     isPublished: site.isPublished,
-    images: siteImageRows.map((img) => ({
-      url: img.imageUrl,
-      altEn: img.altTextEn ?? '',
-      altZh: img.altTextZh ?? '',
-      isBefore: img.isBefore,
-    })),
     imagePairs: siteImagePairRows.map(mapDbImagePairToForm),
   };
 

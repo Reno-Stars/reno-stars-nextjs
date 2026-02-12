@@ -18,7 +18,7 @@
 import { db } from '../lib/db';
 import {
   projects as projectsTable,
-  projectImages,
+  projectImagePairs,
   projectScopes,
   projectSites,
   services as servicesTable,
@@ -1335,15 +1335,17 @@ async function main() {
 
         const projectId = inserted.id;
 
-        // Batch insert images
+        // Batch insert images as pairs (after images only - no before images in seed data)
         if (p.images.length > 0) {
-          await db.insert(projectImages).values(
+          await db.insert(projectImagePairs).values(
             p.images.map((img, idx) => ({
               projectId,
-              imageUrl: img.url,
-              altTextEn: img.altEn,
-              altTextZh: img.altZh,
-              isBefore: img.isBefore ?? false,
+              beforeImageUrl: img.isBefore ? img.url : null,
+              beforeAltTextEn: img.isBefore ? img.altEn : null,
+              beforeAltTextZh: img.isBefore ? img.altZh : null,
+              afterImageUrl: img.isBefore ? null : img.url,
+              afterAltTextEn: img.isBefore ? null : img.altEn,
+              afterAltTextZh: img.isBefore ? null : img.altZh,
               displayOrder: idx,
             }))
           );

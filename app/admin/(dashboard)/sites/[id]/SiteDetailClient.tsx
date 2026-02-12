@@ -17,14 +17,6 @@ interface City {
   nameZh: string;
 }
 
-interface ProjectImage {
-  imageUrl: string;
-  altTextEn: string | null;
-  altTextZh: string | null;
-  isBefore: boolean;
-  displayOrder: number;
-}
-
 interface ProjectImagePair {
   beforeImageUrl: string | null;
   beforeAltTextEn: string | null;
@@ -90,7 +82,6 @@ interface ProjectWithDetails {
   isPublished: boolean;
   siteId: string;
   displayOrderInSite: number;
-  images: ProjectImage[];
   imagePairs: ProjectImagePair[];
   scopes: ProjectScope[];
   externalProducts: ProjectExternalProduct[];
@@ -110,7 +101,6 @@ interface SiteData {
   showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;
-  images?: { url: string; altEn: string; altZh: string; isBefore: boolean }[];
   imagePairs?: {
     beforeUrl: string;
     beforeAltEn: string;

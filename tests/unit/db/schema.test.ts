@@ -3,7 +3,7 @@ import {
   services,
   serviceAreas,
   projects,
-  projectImages,
+  projectImagePairs,
   projectScopes,
   blogPosts,
   testimonials,
@@ -134,13 +134,13 @@ describe('Database Schema', () => {
     });
   });
 
-  describe('Project Images Table', () => {
+  describe('Project Image Pairs Table', () => {
     it('should have required columns', () => {
-      const columns = Object.keys(projectImages);
+      const columns = Object.keys(projectImagePairs);
       expect(columns).toContain('id');
       expect(columns).toContain('projectId');
-      expect(columns).toContain('imageUrl');
-      expect(columns).toContain('isBefore');
+      expect(columns).toContain('beforeImageUrl');
+      expect(columns).toContain('afterImageUrl');
       expect(columns).toContain('displayOrder');
     });
   });

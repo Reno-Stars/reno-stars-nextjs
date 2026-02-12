@@ -3,13 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, projects, siteImages, siteImagePairs } from '@/lib/db/schema';
+import { projectSites, projects, siteImagePairs } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 
-const MAX_SITE_IMAGES = 50;
 const MAX_SITE_IMAGE_PAIRS = 50;
 
 function getSiteData(formData: FormData) {
@@ -28,30 +27,6 @@ function getSiteData(formData: FormData) {
     isPublished: formData.get('isPublished') === 'on',
     updatedAt: new Date(),
   };
-}
-
-function parseSiteImages(formData: FormData) {
-  const images: {
-    imageUrl: string;
-    altTextEn: string;
-    altTextZh: string;
-    isBefore: boolean;
-    displayOrder: number;
-  }[] = [];
-  let i = 0;
-  while (formData.has(`siteImages[${i}].url`) && i < MAX_SITE_IMAGES) {
-    const imageUrl = getString(formData, `siteImages[${i}].url`).trim();
-    if (!imageUrl || !isValidUrl(imageUrl)) { i++; continue; }
-    images.push({
-      imageUrl,
-      altTextEn: getString(formData, `siteImages[${i}].altEn`),
-      altTextZh: getString(formData, `siteImages[${i}].altZh`),
-      isBefore: formData.get(`siteImages[${i}].isBefore`) === 'true',
-      displayOrder: i,
-    });
-    i++;
-  }
-  return images;
 }
 
 function parseSiteImagePairs(formData: FormData) {
@@ -123,10 +98,7 @@ export async function createSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
 
-    // Parse legacy images
-    const imgData = parseSiteImages(formData);
-
-    // Parse image pairs (new structure)
+    // Parse image pairs
     const pairData = parseSiteImagePairs(formData);
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
@@ -137,21 +109,14 @@ export async function createSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Insert site and images atomically
+    // Insert site and image pairs atomically
     await db.transaction(async (tx: typeof db) => {
       const [inserted] = await tx.insert(projectSites).values({
         ...data,
         publishedAt: data.isPublished ? new Date() : null,
       }).returning({ id: projectSites.id });
 
-      // Insert legacy images (for backward compatibility)
-      if (imgData.length > 0) {
-        await tx.insert(siteImages).values(
-          imgData.map((img) => ({ ...img, siteId: inserted.id }))
-        );
-      }
-
-      // Insert image pairs (new structure)
+      // Insert image pairs
       if (pairData.length > 0) {
         await tx.insert(siteImagePairs).values(
           pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
@@ -200,10 +165,7 @@ export async function updateSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
-    // Parse legacy images
-    const imgData = parseSiteImages(formData);
-
-    // Parse image pairs (new structure)
+    // Parse image pairs
     const pairData = parseSiteImagePairs(formData);
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
@@ -224,14 +186,6 @@ export async function updateSite(
 
       if (updated.length === 0) {
         throw new Error('Site not found.');
-      }
-
-      // Replace legacy site images: delete existing, insert new
-      await tx.delete(siteImages).where(eq(siteImages.siteId, id));
-      if (imgData.length > 0) {
-        await tx.insert(siteImages).values(
-          imgData.map((img) => ({ ...img, siteId: id }))
-        );
       }
 
       // Replace site image pairs: delete existing, insert new

@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import {
   projects,
-  projectImages,
   projectImagePairs,
   projectScopes,
   projectExternalProducts,
@@ -18,7 +17,6 @@ import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGT
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeKey } from '@/lib/admin/constants';
 
-const MAX_IMAGES = 50;
 const MAX_IMAGE_PAIRS = 50;
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
@@ -34,30 +32,6 @@ function formatBudgetRange(min: string, max: string): string | null {
   const lo = Math.min(minNum, maxNum);
   const hi = Math.max(minNum, maxNum);
   return `$${lo.toLocaleString()} - $${hi.toLocaleString()}`;
-}
-
-function parseImages(formData: FormData) {
-  const images: {
-    imageUrl: string;
-    altTextEn: string;
-    altTextZh: string;
-    isBefore: boolean;
-    displayOrder: number;
-  }[] = [];
-  let i = 0;
-  while (formData.has(`images[${i}].url`) && i < MAX_IMAGES) {
-    const imageUrl = getString(formData, `images[${i}].url`).trim();
-    if (!imageUrl) { i++; continue; }
-    images.push({
-      imageUrl,
-      altTextEn: getString(formData, `images[${i}].altEn`),
-      altTextZh: getString(formData, `images[${i}].altZh`),
-      isBefore: formData.get(`images[${i}].isBefore`) === 'true',
-      displayOrder: i,
-    });
-    i++;
-  }
-  return images;
 }
 
 function parseImagePairs(formData: FormData) {
@@ -211,14 +185,7 @@ export async function createProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
-    // Parse legacy images
-    const imgData = parseImages(formData);
-    const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
-    if (invalidImgUrl) {
-      return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
-    }
-
-    // Parse image pairs (new structure)
+    // Parse image pairs
     const pairData = parseImagePairs(formData);
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
@@ -275,14 +242,7 @@ export async function createProject(
       })
       .returning({ id: projects.id });
 
-    // Insert legacy images (for backward compatibility)
-    if (imgData.length > 0) {
-      await db.insert(projectImages).values(
-        imgData.map((img) => ({ ...img, projectId: inserted.id }))
-      );
-    }
-
-    // Insert image pairs (new structure)
+    // Insert image pairs
     if (pairData.length > 0) {
       await db.insert(projectImagePairs).values(
         pairData.map((pair) => ({ ...pair, projectId: inserted.id }))
@@ -341,14 +301,7 @@ export async function updateProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
-    // Parse legacy images
-    const imgData = parseImages(formData);
-    const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
-    if (invalidImgUrl) {
-      return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
-    }
-
-    // Parse image pairs (new structure)
+    // Parse image pairs
     const pairData = parseImagePairs(formData);
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
@@ -405,14 +358,6 @@ export async function updateProject(
         .update(projects)
         .set({ ...data, serviceId: svcRows[0].id })
         .where(eq(projects.id, id));
-
-      // Delete and re-insert legacy images
-      await tx.delete(projectImages).where(eq(projectImages.projectId, id));
-      if (imgData.length > 0) {
-        await tx.insert(projectImages).values(
-          imgData.map((img) => ({ ...img, projectId: id }))
-        );
-      }
 
       // Delete and re-insert image pairs
       await tx.delete(projectImagePairs).where(eq(projectImagePairs.projectId, id));
