@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X } from 'lucide-react';
+import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedImagePair } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
@@ -523,9 +523,39 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
             </div>
           )}
 
+          {/* Previous arrow */}
+          {filteredPairs.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActivePairIndex((prev) => (prev > 0 ? prev - 1 : filteredPairs.length - 1));
+                setShowBefore(false);
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              aria-label={t('projects.previousImage')}
+            >
+              <ChevronLeft className="w-8 h-8 text-white" />
+            </button>
+          )}
+
+          {/* Next arrow */}
+          {filteredPairs.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActivePairIndex((prev) => (prev < filteredPairs.length - 1 ? prev + 1 : 0));
+                setShowBefore(false);
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              aria-label={t('projects.nextImage')}
+            >
+              <ChevronRight className="w-8 h-8 text-white" />
+            </button>
+          )}
+
           {/* Fullscreen image */}
           <div
-            className={`relative w-full h-full max-w-[90vw] max-h-[90vh]${hasBothImages ? ' cursor-pointer' : ''}`}
+            className={`relative w-full h-full max-w-[90vw] max-h-[80vh]${hasBothImages ? ' cursor-pointer' : ''}`}
             onClick={(e) => {
               e.stopPropagation();
               if (hasBothImages) {
