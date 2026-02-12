@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -126,6 +126,40 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
     setShowBefore(false); // Reset to showing after when selecting new pair
   }, []);
 
+  // Navigation handlers
+  const goToPrev = useCallback(() => {
+    setActivePairIndex((prev) => (prev > 0 ? prev - 1 : filteredPairs.length - 1));
+    setShowBefore(false);
+  }, [filteredPairs.length]);
+
+  const goToNext = useCallback(() => {
+    setActivePairIndex((prev) => (prev < filteredPairs.length - 1 ? prev + 1 : 0));
+    setShowBefore(false);
+  }, [filteredPairs.length]);
+
+  // Swipe detection for touch devices
+  const touchStartX = useRef<number | null>(null);
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) {
+        goToNext(); // Swipe left = next
+      } else {
+        goToPrev(); // Swipe right = prev
+      }
+    }
+    touchStartX.current = null;
+  }, [goToNext, goToPrev]);
+
   // Fullscreen handlers
   const openFullscreen = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -174,6 +208,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
                 onClick={hasBothImages ? handleImageClick : undefined}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
               >
                 {displayImage ? (
                   <>
@@ -215,6 +251,26 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   >
                     {currentPair.projectTitle}
                   </span>
+                )}
+
+                {/* Navigation arrows */}
+                {filteredPairs.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); goToPrev(); }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      aria-label={t('projects.previousImage')}
+                    >
+                      <ChevronLeft className="w-6 h-6 text-white" />
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      aria-label={t('projects.nextImage')}
+                    >
+                      <ChevronRight className="w-6 h-6 text-white" />
+                    </button>
+                  </>
                 )}
 
                 {/* Thumbnail Strip - Inside image, bottom left with horizontal scroll */}
