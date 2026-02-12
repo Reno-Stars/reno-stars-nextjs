@@ -229,12 +229,6 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
       featured: project.featured,
       isPublished: project.isPublished,
       siteId: project.siteId,
-      images: project.images.map((img) => ({
-        url: img.imageUrl,
-        altEn: img.altTextEn ?? '',
-        altZh: img.altTextZh ?? '',
-        isBefore: img.isBefore,
-      })),
       imagePairs: project.imagePairs.map(mapDbImagePairToForm),
       scopes: project.scopes.map((s) => ({
         en: s.scopeEn,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import AIBilingualTextarea from './AIBilingualTextarea';
@@ -13,20 +13,10 @@ import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
 import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
-import { uploadImage } from '@/app/actions/admin/upload';
-import { getAssetUrl } from '@/lib/storage';
 import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
-
-interface ImageEntry {
-  id: string;
-  url: string;
-  altEn: string;
-  altZh: string;
-  isBefore: boolean;
-}
 
 interface ScopeEntry {
   id: string;
@@ -91,7 +81,6 @@ interface ProjectFormProps {
     featured: boolean;
     isPublished: boolean;
     siteId: string | null;
-    images: Omit<ImageEntry, 'id'>[];
     imagePairs?: Omit<ImagePairEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
     externalProducts?: Omit<ExternalProductEntry, 'id'>[];
@@ -218,9 +207,6 @@ export default function ProjectForm({
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
-  const [images, setImages] = useState<ImageEntry[]>(
-    initialData?.images.map((img) => ({ ...img, id: crypto.randomUUID() })) ?? [{ id: crypto.randomUUID(), url: '', altEn: '', altZh: '', isBefore: false }]
-  );
   const [imagePairs, setImagePairs] = useState<ImagePairEntry[]>(
     initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
   );
@@ -230,96 +216,6 @@ export default function ProjectForm({
   const [externalProducts, setExternalProducts] = useState<ExternalProductEntry[]>(
     initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
   );
-  const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState('');
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const dragCounterRef = useRef(0);
-
-  // Handle batch image upload — uploads in parallel for speed
-  const handleBatchUpload = async (files: FileList) => {
-    setUploading(true);
-    setUploadError('');
-
-    const imageFiles = Array.from(files).filter((f) => f.type.startsWith('image/'));
-    const skipped = files.length - imageFiles.length;
-
-    const results = await Promise.allSettled(
-      imageFiles.map(async (file) => {
-        const fd = new FormData();
-        fd.set('file', file);
-        const result = await uploadImage({}, fd);
-        if (result.error || !result.url) throw new Error(`${file.name}: ${result.error ?? 'No URL returned'}`);
-        return { url: result.url, name: file.name };
-      })
-    );
-
-    const newImages: ImageEntry[] = [];
-    const errors: string[] = [];
-    if (skipped > 0) errors.push(t.upload.notImage.replace('{count}', String(skipped)));
-
-    for (const r of results) {
-      if (r.status === 'fulfilled') {
-        newImages.push({ id: crypto.randomUUID(), url: r.value.url, altEn: '', altZh: '', isBefore: false });
-      } else {
-        errors.push(r.reason?.message ?? t.upload.failed);
-      }
-    }
-
-    if (newImages.length > 0) {
-      if (images.length === 1 && !images[0].url) {
-        setImages(newImages);
-      } else {
-        setImages([...images, ...newImages]);
-      }
-    }
-
-    if (errors.length > 0) {
-      const ok = newImages.length;
-      const fail = errors.length;
-      setUploadError(
-        ok > 0
-          ? t.upload.partialSuccess.replace('{success}', String(ok)).replace('{fail}', String(fail)).replace('{error}', errors[0])
-          : t.upload.allFailed.replace('{error}', errors[0]).replace('{more}', fail > 1 ? ` (+${fail - 1})` : '')
-      );
-    }
-
-    setUploading(false);
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current = 0;
-    setIsDragging(false);
-    if (e.dataTransfer.files?.length) {
-      handleBatchUpload(e.dataTransfer.files);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDragEnter = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current++;
-    if (e.dataTransfer.items?.length) {
-      setIsDragging(true);
-    }
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current--;
-    if (dragCounterRef.current === 0) {
-      setIsDragging(false);
-    }
-  };
 
   return (
     <form action={formAction}>
@@ -509,132 +405,7 @@ export default function ProjectForm({
             />
           </div>
 
-          {/* Images */}
-          <div style={{ marginBottom: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
-              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
-                {t.projects.images}
-              </span>
-              <Tooltip content={t.projects.tooltips.images} />
-            </div>
-
-            {/* Batch upload drop zone */}
-            {editing && (
-              <button
-                type="button"
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                style={{
-                  width: '100%',
-                  marginBottom: '0.75rem',
-                  padding: '1rem',
-                  borderRadius: '8px',
-                  border: `2px dashed ${isDragging ? GOLD : uploading ? GOLD : TEXT_MID}`,
-                  backgroundColor: isDragging ? 'rgba(200, 146, 42, 0.08)' : CARD,
-                  textAlign: 'center',
-                  cursor: uploading ? 'wait' : 'pointer',
-                  opacity: uploading ? 0.6 : 1,
-                  transition: 'border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease',
-                  transform: isDragging ? 'scale(1.01)' : 'scale(1)',
-                }}
-                onClick={() => !uploading && fileInputRef.current?.click()}
-                aria-label={t.upload.clickOrDrag}
-                disabled={uploading}
-              >
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"
-                  multiple
-                  onChange={(e) => e.target.files && handleBatchUpload(e.target.files)}
-                  style={{ display: 'none' }}
-                  aria-hidden="true"
-                />
-                <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
-                  {uploading ? t.upload.uploading : t.upload.clickOrDrag}
-                </div>
-                <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
-                  {t.upload.formatHint}
-                </div>
-              </button>
-            )}
-
-            {uploadError && (
-              <div role="alert" style={{ color: ERROR, fontSize: '0.75rem', marginBottom: '0.5rem' }}>
-                {uploadError}
-              </div>
-            )}
-
-            {images.map((img, idx) => (
-              <div key={img.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.5rem' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                  {/* Square preview */}
-                  {img.url && (
-                    <div
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        flexShrink: 0,
-                        borderRadius: '6px',
-                        overflow: 'hidden',
-                        backgroundColor: '#f0f0f0',
-                        boxShadow: neu(2),
-                      }}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={getAssetUrl(img.url)}
-                        alt={img.altEn || `Image ${idx + 1}`}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                        }}
-                      />
-                    </div>
-                  )}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <input name={`images[${idx}].url`} value={img.url} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], url: e.target.value }; setImages(n); }} placeholder={t.projects.imageUrl} aria-label={`Image ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                    <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.375rem', marginBottom: '0.375rem' }}>
-                      <div>
-                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
-                          <span role="img" aria-label="English">🇺🇸</span> {t.projects.altEn}
-                        </label>
-                        <input name={`images[${idx}].altEn`} value={img.altEn} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altEn: e.target.value }; setImages(n); }} placeholder={t.projects.altEn} aria-label={`Image ${idx + 1} alt text (English)`} style={fieldStyle} />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
-                          <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.altZh}
-                        </label>
-                        <input name={`images[${idx}].altZh`} value={img.altZh} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], altZh: e.target.value }; setImages(n); }} placeholder={t.projects.altZh} aria-label={`Image ${idx + 1} alt text (Chinese)`} style={fieldStyle} />
-                      </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: NAVY }}>
-                        <input type="checkbox" checked={img.isBefore} onChange={(e) => { const n = [...images]; n[idx] = { ...n[idx], isBefore: e.target.checked }; setImages(n); }} />
-                        <input type="hidden" name={`images[${idx}].isBefore`} value={String(img.isBefore)} />
-                        {t.projects.before}
-                      </label>
-                      {editing && images.length > 1 && (
-                        <button type="button" onClick={() => setImages(images.filter((_, i) => i !== idx))} aria-label={`Remove image ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
-                          {t.common.remove}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {editing && (
-              <button type="button" onClick={() => setImages([...images, { id: crypto.randomUUID(), url: '', altEn: '', altZh: '', isBefore: false }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
-                {t.projects.addImage}
-              </button>
-            )}
-          </div>
-
-          {/* Image Pairs (new structure) */}
+          {/* Image Pairs */}
           <ImagePairEditor
             namePrefix="imagePairs"
             pairs={imagePairs}
