@@ -2,9 +2,10 @@ import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, siteImages, siteImagePairs, type DbSite, type DbSiteImage, type DbSiteImagePair } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import SiteDetailClient, { mapDbImagePairToForm } from './SiteDetailClient';
+import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { getAllServiceAreasAdmin, getProjectsWithDetailsBySite } from '@/lib/db/queries';
+import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
 
 interface PageProps {
   params: Promise<{ id: string }>;

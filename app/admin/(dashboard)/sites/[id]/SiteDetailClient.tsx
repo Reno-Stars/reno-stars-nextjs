@@ -10,6 +10,7 @@ import { createProject, updateProject, deleteProject, reorderProjectsInSite } fr
 import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
 
 interface City {
   nameEn: string;
@@ -38,24 +39,6 @@ interface ProjectImagePair {
   photographerCredit: string | null;
   keywords: string | null;
   displayOrder: number;
-}
-
-/** Map a DB image pair row to form-compatible shape */
-export function mapDbImagePairToForm(p: Omit<ProjectImagePair, 'displayOrder'>) {
-  return {
-    beforeUrl: p.beforeImageUrl ?? '',
-    beforeAltEn: p.beforeAltTextEn ?? '',
-    beforeAltZh: p.beforeAltTextZh ?? '',
-    afterUrl: p.afterImageUrl ?? '',
-    afterAltEn: p.afterAltTextEn ?? '',
-    afterAltZh: p.afterAltTextZh ?? '',
-    titleEn: p.titleEn ?? '',
-    titleZh: p.titleZh ?? '',
-    captionEn: p.captionEn ?? '',
-    captionZh: p.captionZh ?? '',
-    photographerCredit: p.photographerCredit ?? '',
-    keywords: p.keywords ?? '',
-  };
 }
 
 interface ProjectScope {

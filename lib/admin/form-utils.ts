@@ -60,3 +60,53 @@ export function validateTextLengths(
   }
   return null;
 }
+
+/** Database image pair row shape (from schema) */
+export interface DbImagePairRow {
+  beforeImageUrl: string | null;
+  beforeAltTextEn: string | null;
+  beforeAltTextZh: string | null;
+  afterImageUrl: string | null;
+  afterAltTextEn: string | null;
+  afterAltTextZh: string | null;
+  titleEn: string | null;
+  titleZh: string | null;
+  captionEn: string | null;
+  captionZh: string | null;
+  photographerCredit: string | null;
+  keywords: string | null;
+}
+
+/** Form-compatible image pair shape */
+export interface FormImagePair {
+  beforeUrl: string;
+  beforeAltEn: string;
+  beforeAltZh: string;
+  afterUrl: string;
+  afterAltEn: string;
+  afterAltZh: string;
+  titleEn: string;
+  titleZh: string;
+  captionEn: string;
+  captionZh: string;
+  photographerCredit: string;
+  keywords: string;
+}
+
+/** Map a DB image pair row to form-compatible shape */
+export function mapDbImagePairToForm(p: DbImagePairRow): FormImagePair {
+  return {
+    beforeUrl: p.beforeImageUrl ?? '',
+    beforeAltEn: p.beforeAltTextEn ?? '',
+    beforeAltZh: p.beforeAltTextZh ?? '',
+    afterUrl: p.afterImageUrl ?? '',
+    afterAltEn: p.afterAltTextEn ?? '',
+    afterAltZh: p.afterAltTextZh ?? '',
+    titleEn: p.titleEn ?? '',
+    titleZh: p.titleZh ?? '',
+    captionEn: p.captionEn ?? '',
+    captionZh: p.captionZh ?? '',
+    photographerCredit: p.photographerCredit ?? '',
+    keywords: p.keywords ?? '',
+  };
+}
