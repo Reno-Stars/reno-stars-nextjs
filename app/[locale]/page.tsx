@@ -15,6 +15,7 @@ import {
   getBlogPostsFromDb,
   getShowroomFromDb,
   getServiceAreasFromDb,
+  getPartnersFromDb,
 } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -63,7 +64,7 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Fetch all data in parallel
-  const [t, company, services, googleReviews, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas] = await Promise.all([
+  const [t, company, services, googleReviews, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas, partners] = await Promise.all([
     getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
@@ -75,6 +76,7 @@ export default async function Page({ params }: PageProps) {
     getBlogPostsFromDb(),
     getShowroomFromDb(),
     getServiceAreasFromDb(),
+    getPartnersFromDb(),
   ]);
 
   // Pre-compute localized data server-side
@@ -84,6 +86,7 @@ export default async function Page({ params }: PageProps) {
   const localizedFaqs = faqs.map((f) => ({ id: f.id, question: f.question[locale], answer: f.answer[locale] }));
   const localizedBlogPosts = blogPosts.slice(0, 5).map((p) => ({ slug: p.slug, title: p.title[locale] }));
   const localizedShowroom = { address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone };
+  const localizedPartners = partners.map((p) => ({ name: p.name[locale], logo: p.logo, url: p.url, isHiddenVisually: p.isHiddenVisually }));
   const areasText = localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '…';
 
   const aboutItems = [
@@ -119,6 +122,7 @@ export default async function Page({ params }: PageProps) {
     stats: { srTitle: t('stats.srStats') },
     about: { title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') },
     trustBadges: { srTitle: t('stats.srTrustBadges') },
+    partners: { title: t('homePartners.title'), subtitle: t('homePartners.subtitle') },
     faq: { title: t('homeFaq.title'), subtitle: t('homeFaq.subtitle') },
     blog: { title: t('section.blogTips'), subtitle: t('section.blogSubtitle') },
     showroom: { title: t('section.visitShowroom'), bookAppointment: t('cta.bookAppointment') },
@@ -144,6 +148,7 @@ export default async function Page({ params }: PageProps) {
         googleReviews={googleReviews}
         gallery={localizedGallery}
         trustBadges={localizedBadges}
+        partners={localizedPartners}
         faqs={localizedFaqs}
         blogPosts={localizedBlogPosts}
         showroom={localizedShowroom}

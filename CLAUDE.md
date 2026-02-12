@@ -234,7 +234,7 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 
 ## Homepage Section Order
 
-Hero → Service Areas → Testimonials → Gallery → Services → Stats → About → Trust Badges → FAQ → Blog → Showroom CTA → Contact
+Hero → Service Areas → Gallery → Services → Testimonials → Stats → About → Trust Badges → FAQ → Blog → Showroom CTA → Contact
 
 ## Known Issues
 

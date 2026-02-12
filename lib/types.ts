@@ -493,3 +493,17 @@ export interface Faq {
   /** Answer text */
   answer: Localized<string>;
 }
+
+/**
+ * A partner company/brand for the homepage carousel.
+ */
+export interface Partner {
+  /** Partner name */
+  name: Localized<string>;
+  /** Logo image URL */
+  logo: string;
+  /** Optional website URL */
+  url?: string;
+  /** Whether to hide visually but keep in DOM for SEO */
+  isHiddenVisually: boolean;
+}

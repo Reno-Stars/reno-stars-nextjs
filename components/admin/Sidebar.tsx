@@ -73,6 +73,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
         { href: '/admin/gallery', label: t.nav.gallery },
         { href: '/admin/faqs', label: t.nav.faqs },
         { href: '/admin/trust-badges', label: t.nav.trustBadges },
+        { href: '/admin/partners', label: t.nav.partners },
       ],
       defaultExpanded: true,
     },

@@ -784,3 +784,32 @@ export type NewDbFaq = typeof faqs.$inferInsert;
 
 export type DbProjectExternalProduct = typeof projectExternalProducts.$inferSelect;
 export type NewDbProjectExternalProduct = typeof projectExternalProducts.$inferInsert;
+
+// ============================================================================
+// PARTNERS
+// ============================================================================
+
+/** Partner company/brand logos for homepage carousel */
+export const partners = pgTable(
+  'partners',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    nameEn: varchar('name_en', { length: 100 }).notNull(),
+    nameZh: varchar('name_zh', { length: 100 }).notNull(),
+    logoUrl: varchar('logo_url', { length: 500 }).notNull(),
+    websiteUrl: varchar('website_url', { length: 500 }),
+    displayOrder: integer('display_order').default(0).notNull(),
+    isActive: boolean('is_active').default(true).notNull(),
+    /** When true, partner is rendered in DOM with sr-only class (SEO-visible, user-hidden) */
+    isHiddenVisually: boolean('is_hidden_visually').default(false).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex('partners_name_en_idx').on(table.nameEn),
+    index('partners_active_order_idx').on(table.isActive, table.displayOrder),
+  ]
+);
+
+export type DbPartner = typeof partners.$inferSelect;
+export type NewDbPartner = typeof partners.$inferInsert;

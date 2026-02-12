@@ -11,6 +11,7 @@ import ServicesSection from '@/components/home/ServicesSection';
 import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TrustBadgesSection from '@/components/home/TrustBadgesSection';
+import PartnersSection from '@/components/home/PartnersSection';
 import FaqSection from '@/components/home/FaqSection';
 import BlogSection from '@/components/home/BlogSection';
 import ShowroomSection from '@/components/home/ShowroomSection';
@@ -22,6 +23,7 @@ interface LocalizedGalleryItem { image: string; title: string; category: string 
 interface LocalizedBlogPost { slug: string; title: string }
 interface LocalizedShowroom { address: string; appointmentText: string; phone: string }
 interface LocalizedFaq { id: string; question: string; answer: string }
+interface LocalizedPartner { name: string; logo: string; url?: string; isHiddenVisually: boolean }
 interface AboutItem { title: string; text: string }
 interface Stat { value: string; label: string }
 
@@ -32,6 +34,7 @@ interface HomePageProps {
   googleReviews: GooglePlaceRating;
   gallery: LocalizedGalleryItem[];
   trustBadges: string[];
+  partners: LocalizedPartner[];
   faqs: LocalizedFaq[];
   blogPosts: LocalizedBlogPost[];
   showroom: LocalizedShowroom;
@@ -56,6 +59,7 @@ interface HomePageProps {
     stats: { srTitle: string };
     about: { title: string; subtitle: string };
     trustBadges: { srTitle: string };
+    partners: { title: string; subtitle: string };
     faq: { title: string; subtitle: string };
     blog: { title: string; subtitle: string };
     showroom: { title: string; bookAppointment: string };
@@ -76,6 +80,7 @@ export default function HomePage({
   googleReviews,
   gallery,
   trustBadges,
+  partners,
   faqs,
   blogPosts,
   showroom,
@@ -89,12 +94,13 @@ export default function HomePage({
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} translations={t.hero} />
       <ServiceAreasBar areas={areas} label={t.serviceAreas} />
-      <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />
+      <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />
       <StatsSection stats={stats} srTitle={t.stats.srTitle} />
       <AboutSection items={aboutItems} translations={t.about} />
       <TrustBadgesSection badges={trustBadges} srTitle={t.trustBadges.srTitle} />
+      <PartnersSection partners={partners} translations={t.partners} />
       <FaqSection faqs={faqs} translations={t.faq} />
       <BlogSection posts={blogPosts} translations={t.blog} />
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />
