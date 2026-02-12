@@ -226,9 +226,9 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       {/* Hero */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+      <section className="py-10 sm:py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             {t('section.ourProjects')}
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
@@ -263,9 +263,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                 <button
                   key={category.en}
                   onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.en); }}
-                  className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat"
+                  className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat w-[180px] sm:w-[220px]"
                   style={{
-                    width: '220px',
                     boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neuShadow4,
                   }}
                 >
@@ -275,7 +274,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                         src={firstProject.hero_image}
                         alt={category[locale]}
                         fill
-                        sizes="220px"
+                        sizes="(max-width: 640px) 180px, 220px"
                         className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
                       />
                     )}

@@ -3,13 +3,14 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, projects, siteImages } from '@/lib/db/schema';
+import { projectSites, projects, siteImages, siteImagePairs } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 
 const MAX_SITE_IMAGES = 50;
+const MAX_SITE_IMAGE_PAIRS = 50;
 
 function getSiteData(formData: FormData) {
   return {
@@ -53,6 +54,48 @@ function parseSiteImages(formData: FormData) {
   return images;
 }
 
+function parseSiteImagePairs(formData: FormData) {
+  const pairs: {
+    beforeImageUrl: string | null;
+    beforeAltTextEn: string | null;
+    beforeAltTextZh: string | null;
+    afterImageUrl: string | null;
+    afterAltTextEn: string | null;
+    afterAltTextZh: string | null;
+    titleEn: string | null;
+    titleZh: string | null;
+    captionEn: string | null;
+    captionZh: string | null;
+    photographerCredit: string | null;
+    keywords: string | null;
+    displayOrder: number;
+  }[] = [];
+  let i = 0;
+  while (formData.has(`siteImagePairs[${i}].id`) && i < MAX_SITE_IMAGE_PAIRS) {
+    const beforeUrl = getString(formData, `siteImagePairs[${i}].beforeUrl`).trim();
+    const afterUrl = getString(formData, `siteImagePairs[${i}].afterUrl`).trim();
+    // Skip pairs with no images
+    if (!beforeUrl && !afterUrl) { i++; continue; }
+    pairs.push({
+      beforeImageUrl: beforeUrl || null,
+      beforeAltTextEn: getString(formData, `siteImagePairs[${i}].beforeAltEn`) || null,
+      beforeAltTextZh: getString(formData, `siteImagePairs[${i}].beforeAltZh`) || null,
+      afterImageUrl: afterUrl || null,
+      afterAltTextEn: getString(formData, `siteImagePairs[${i}].afterAltEn`) || null,
+      afterAltTextZh: getString(formData, `siteImagePairs[${i}].afterAltZh`) || null,
+      titleEn: getString(formData, `siteImagePairs[${i}].titleEn`) || null,
+      titleZh: getString(formData, `siteImagePairs[${i}].titleZh`) || null,
+      captionEn: getString(formData, `siteImagePairs[${i}].captionEn`) || null,
+      captionZh: getString(formData, `siteImagePairs[${i}].captionZh`) || null,
+      photographerCredit: getString(formData, `siteImagePairs[${i}].photographerCredit`) || null,
+      keywords: getString(formData, `siteImagePairs[${i}].keywords`) || null,
+      displayOrder: i,
+    });
+    i++;
+  }
+  return pairs;
+}
+
 export async function createSite(
   _prevState: { success?: boolean; error?: string },
   formData: FormData
@@ -80,17 +123,38 @@ export async function createSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
 
-    // Insert site and images atomically
+    // Parse legacy images
     const imgData = parseSiteImages(formData);
+
+    // Parse image pairs (new structure)
+    const pairData = parseSiteImagePairs(formData);
+    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
+    if (invalidPairBeforeUrl) {
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+    }
+    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
+    if (invalidPairAfterUrl) {
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
+    }
+
+    // Insert site and images atomically
     await db.transaction(async (tx: typeof db) => {
       const [inserted] = await tx.insert(projectSites).values({
         ...data,
         publishedAt: data.isPublished ? new Date() : null,
       }).returning({ id: projectSites.id });
 
+      // Insert legacy images (for backward compatibility)
       if (imgData.length > 0) {
         await tx.insert(siteImages).values(
           imgData.map((img) => ({ ...img, siteId: inserted.id }))
+        );
+      }
+
+      // Insert image pairs (new structure)
+      if (pairData.length > 0) {
+        await tx.insert(siteImagePairs).values(
+          pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
         );
       }
     });
@@ -136,23 +200,45 @@ export async function updateSite(
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
-    const updated = await db
-      .update(projectSites)
-      .set(data)
-      .where(eq(projectSites.id, id))
-      .returning({ id: projectSites.id });
+    // Parse legacy images
+    const imgData = parseSiteImages(formData);
 
-    if (updated.length === 0) {
-      return { error: 'Site not found.' };
+    // Parse image pairs (new structure)
+    const pairData = parseSiteImagePairs(formData);
+    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
+    if (invalidPairBeforeUrl) {
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+    }
+    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
+    if (invalidPairAfterUrl) {
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Replace site images atomically: delete existing, insert new
-    const imgData = parseSiteImages(formData);
+    // Update site and related data atomically
     await db.transaction(async (tx: typeof db) => {
+      const updated = await tx
+        .update(projectSites)
+        .set(data)
+        .where(eq(projectSites.id, id))
+        .returning({ id: projectSites.id });
+
+      if (updated.length === 0) {
+        throw new Error('Site not found.');
+      }
+
+      // Replace legacy site images: delete existing, insert new
       await tx.delete(siteImages).where(eq(siteImages.siteId, id));
       if (imgData.length > 0) {
         await tx.insert(siteImages).values(
           imgData.map((img) => ({ ...img, siteId: id }))
+        );
+      }
+
+      // Replace site image pairs: delete existing, insert new
+      await tx.delete(siteImagePairs).where(eq(siteImagePairs.siteId, id));
+      if (pairData.length > 0) {
+        await tx.insert(siteImagePairs).values(
+          pairData.map((pair) => ({ ...pair, siteId: id }))
         );
       }
     });

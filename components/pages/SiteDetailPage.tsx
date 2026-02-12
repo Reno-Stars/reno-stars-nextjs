@@ -1,17 +1,18 @@
 'use client';
 
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, MapPin, Calendar, DollarSign, Layers, X, Home } from 'lucide-react';
+import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X } from 'lucide-react';
 import { Link } from '@/navigation';
-import type { Company, LocalizedSiteWithProjects, LocalizedProject } from '@/lib/types';
+import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedImagePair } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import ProductLink from '@/components/ProductLink';
 import { SITE_IMAGE_SLUG } from '@/lib/db/helpers';
+import { useDragScroll } from '@/hooks/useDragScroll';
 import {
-  GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -20,69 +21,139 @@ interface SiteDetailPageProps {
   company: Company;
 }
 
+// Extended image pair with project attribution
+interface AttributedImagePair extends LocalizedImagePair {
+  projectSlug: string;
+  projectTitle: string;
+}
+
 export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   const t = useTranslations();
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activePairIndex, setActivePairIndex] = useState(0);
+  const [showBefore, setShowBefore] = useState(false);
   const [areaFilter, setAreaFilter] = useState<string>('all');
 
-  // Find first "after" image index helper
-  const findFirstAfterIndex = useCallback((images: { is_before?: boolean }[]) => {
-    const idx = images.findIndex((img) => !img.is_before);
-    return idx >= 0 ? idx : 0;
-  }, []);
+  // Build all image pairs from site and projects
+  const allImagePairs = useMemo(() => {
+    const pairs: AttributedImagePair[] = [];
 
-  useEffect(() => {
-    setActiveImageIndex(findFirstAfterIndex(site.aggregated.allImages));
-    setAreaFilter('all');
-  }, [site.slug, site.aggregated.allImages, findFirstAfterIndex]);
-
-  const handleLightboxClose = useCallback(() => {
-    setLightboxOpen(false);
-  }, []);
-
-  const handleLightboxOpen = useCallback(() => {
-    setLightboxOpen(true);
-  }, []);
-
-  const handleLightboxKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      setLightboxOpen(true);
+    // Add site-level image pairs
+    if (site.image_pairs) {
+      for (const pair of site.image_pairs) {
+        if (pair.beforeImage || pair.afterImage) {
+          pairs.push({
+            ...pair,
+            projectSlug: SITE_IMAGE_SLUG,
+            projectTitle: site.title,
+          });
+        }
+      }
     }
-  }, []);
 
-  // Filter images by selected project
-  const filteredImages = useMemo(() => {
-    if (areaFilter === 'all') return site.aggregated.allImages;
-    return site.aggregated.allImages.filter((img) => img.projectSlug === areaFilter);
-  }, [site.aggregated.allImages, areaFilter]);
+    // Add project image pairs
+    for (const project of site.projects) {
+      if (project.image_pairs) {
+        for (const pair of project.image_pairs) {
+          if (pair.beforeImage || pair.afterImage) {
+            pairs.push({
+              ...pair,
+              projectSlug: project.slug,
+              projectTitle: project.title,
+            });
+          }
+        }
+      }
+    }
 
-  // Area options for filter - memoize based on projects
+    return pairs;
+  }, [site]);
+
+  // Filter pairs by selected project
+  const filteredPairs = useMemo(() => {
+    if (areaFilter === 'all') return allImagePairs;
+    return allImagePairs.filter((pair) => pair.projectSlug === areaFilter);
+  }, [allImagePairs, areaFilter]);
+
+  // Area options for filter — use short category names with dedup (Kitchen, Kitchen 2)
   const areaOptions = useMemo(() => {
-    const areas = new Map<string, string>();
-    site.projects.forEach((project) => {
-      areas.set(project.slug, project.title);
+    const categoryCounts = new Map<string, number>();
+    return site.projects.map((project) => {
+      const cat = project.category;
+      const count = (categoryCounts.get(cat) ?? 0) + 1;
+      categoryCounts.set(cat, count);
+      return { slug: project.slug, label: count > 1 ? `${cat} ${count}` : cat, category: cat };
+    }).map((opt) => {
+      // If a category appeared only once total, don't append "1"
+      const total = categoryCounts.get(opt.category) ?? 1;
+      return { slug: opt.slug, label: total > 1 ? opt.label : opt.category };
     });
-    return Array.from(areas.entries()).map(([slug, title]) => ({ slug, title }));
   }, [site.projects]);
 
-  const nextImage = useCallback(() => {
-    if (filteredImages.length === 0) return;
-    setActiveImageIndex((prev) => (prev + 1) % filteredImages.length);
-  }, [filteredImages.length]);
-
-  const prevImage = useCallback(() => {
-    if (filteredImages.length === 0) return;
-    setActiveImageIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
-  }, [filteredImages.length]);
-
-  // Reset to first "after" image when filter changes
+  // Reset when filter changes
   useEffect(() => {
-    setActiveImageIndex(findFirstAfterIndex(filteredImages));
-  }, [areaFilter, filteredImages, findFirstAfterIndex]);
+    setActivePairIndex(0);
+    setShowBefore(false);
+  }, [areaFilter]);
 
-  const currentImage = filteredImages[activeImageIndex];
+  // Reset when site changes
+  useEffect(() => {
+    setActivePairIndex(0);
+    setShowBefore(false);
+    setAreaFilter('all');
+  }, [site.slug]);
+
+  const currentPair = filteredPairs[activePairIndex];
+  const hasBothImages = !!(currentPair?.beforeImage && currentPair?.afterImage);
+
+  // Current display image
+  const displayImage = showBefore && currentPair?.beforeImage
+    ? currentPair.beforeImage
+    : currentPair?.afterImage || currentPair?.beforeImage;
+
+  // Fullscreen state
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Toggle before/after on click
+  const handleImageClick = useCallback(() => {
+    if (hasBothImages) {
+      setShowBefore((prev) => !prev);
+    }
+  }, [hasBothImages]);
+
+  // Select a pair from thumbnails
+  const handleSelectPair = useCallback((index: number) => {
+    setActivePairIndex(index);
+    setShowBefore(false); // Reset to showing after when selecting new pair
+  }, []);
+
+  // Fullscreen handlers
+  const openFullscreen = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsFullscreen(true);
+  }, []);
+
+  const closeFullscreen = useCallback(() => {
+    setIsFullscreen(false);
+  }, []);
+
+  // Drag to scroll for thumbnail strips with elastic bounce
+  const {
+    handlePointerDown,
+    handlePointerUp,
+    handlePointerMove,
+    wasJustDragging,
+    stopPropagation,
+  } = useDragScroll();
+
+  // Thumbnail click handler (prevents firing after drag)
+  const handleThumbClick = useCallback((e: React.MouseEvent, index: number) => {
+    e.stopPropagation();
+    if (wasJustDragging()) {
+      e.preventDefault();
+      return;
+    }
+    handleSelectPair(index);
+  }, [wasJustDragging, handleSelectPair]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -95,30 +166,32 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
       {/* Hero Section */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Gallery with area filtering */}
-            <div>
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Gallery - Image Pairs */}
+            <div className="col-span-2">
+              {/* Main Image */}
               <div
-                className={`relative aspect-[4/3] rounded-2xl overflow-hidden${currentImage ? ' cursor-pointer' : ''}`}
+                className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
-                {...(currentImage ? {
-                  role: 'button',
-                  tabIndex: 0,
-                  'aria-label': t('projects.openLightbox'),
-                  onClick: handleLightboxOpen,
-                  onKeyDown: handleLightboxKeyDown,
-                } : {})}
+                onClick={hasBothImages ? handleImageClick : undefined}
               >
-                {currentImage ? (
+                {displayImage ? (
                   <>
                     <Image
-                      src={currentImage.src}
-                      alt={currentImage.alt || site.title}
+                      src={displayImage.src}
+                      alt={displayImage.alt || site.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 100vw, 66vw"
                       className="object-contain"
+                      priority
                     />
-                    <BeforeAfterBadge isBefore={currentImage.is_before} t={t} />
+                    <BeforeAfterBadge
+                      isBefore={showBefore && hasBothImages}
+                      t={t}
+                      showClickTip={hasBothImages}
+                      hasPair={hasBothImages}
+                    />
+
                   </>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -135,13 +208,112 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     {site.badge}
                   </span>
                 )}
-                {currentImage && currentImage.projectSlug !== SITE_IMAGE_SLUG && (
+                {currentPair && currentPair.projectSlug !== SITE_IMAGE_SLUG && (
                   <span
-                    className="absolute bottom-4 left-4 px-3 py-1 rounded-lg text-xs font-medium"
+                    className="absolute bottom-24 left-4 px-3 py-1 rounded-lg text-xs font-medium z-10"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}
                   >
-                    {currentImage.projectTitle}
+                    {currentPair.projectTitle}
                   </span>
+                )}
+
+                {/* Thumbnail Strip - Inside image, bottom left with horizontal scroll */}
+                {filteredPairs.length > 1 && (
+                  <div
+                    className="absolute bottom-0 left-0 right-12 z-40 overflow-x-auto cursor-grab select-none touch-pan-x"
+                    style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.5) transparent' }}
+                    onClick={stopPropagation}
+                    onPointerDown={handlePointerDown}
+                    onPointerUp={handlePointerUp}
+                    onPointerCancel={handlePointerUp}
+                    onPointerMove={handlePointerMove}
+                  >
+                    <div className="flex gap-1.5 p-3">
+                      {filteredPairs.map((pair, idx) => (
+                        <button
+                          key={`${pair.projectSlug}-${idx}`}
+                          onClick={(e) => handleThumbClick(e, idx)}
+                          className="relative rounded-lg overflow-hidden shrink-0 transition-all duration-200"
+                          aria-label={`${t('projects.viewImage')} ${idx + 1} / ${filteredPairs.length}`}
+                          aria-pressed={idx === activePairIndex}
+                          style={{
+                            width: pair.beforeImage && pair.afterImage ? '90px' : '60px',
+                            height: '60px',
+                            outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
+                            outlineOffset: '1px',
+                            opacity: idx === activePairIndex ? 1 : 0.75,
+                          }}
+                        >
+                          {pair.beforeImage && pair.afterImage ? (
+                            // Split view: before on left, after on right
+                            <div className="flex h-full">
+                              <div className="relative w-1/2 h-full">
+                                <Image
+                                  src={pair.beforeImage.src}
+                                  alt={pair.beforeImage.alt || 'Before'}
+                                  fill
+                                  sizes="45px"
+                                  className="object-cover"
+                                />
+                                <span
+                                  className="absolute bottom-0.5 left-0.5 px-0.5 py-px text-[6px] font-semibold rounded text-white"
+                                  style={{ backgroundColor: NAVY_90 }}
+                                >
+                                  {t('projects.beforeLabel')}
+                                </span>
+                              </div>
+                              <div className="w-px bg-white/80" />
+                              <div className="relative w-1/2 h-full">
+                                <Image
+                                  src={pair.afterImage.src}
+                                  alt={pair.afterImage.alt || 'After'}
+                                  fill
+                                  sizes="45px"
+                                  className="object-cover"
+                                />
+                                <span
+                                  className="absolute bottom-0.5 right-0.5 px-0.5 py-px text-[6px] font-semibold rounded text-white"
+                                  style={{ backgroundColor: GOLD }}
+                                >
+                                  {t('projects.afterLabel')}
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            // Single image (before or after only)
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={(pair.afterImage || pair.beforeImage)!.src}
+                                alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
+                                fill
+                                sizes="60px"
+                                className="object-cover"
+                              />
+                              {pair.beforeImage && !pair.afterImage && (
+                                <span
+                                  className="absolute bottom-0.5 left-0.5 px-0.5 py-px text-[6px] font-semibold rounded text-white"
+                                  style={{ backgroundColor: NAVY_90 }}
+                                >
+                                  {t('projects.beforeLabel')}
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Fullscreen button - bottom right */}
+                {displayImage && (
+                  <button
+                    onClick={openFullscreen}
+                    className="absolute bottom-3 right-3 z-40 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer"
+                    aria-label={t('projects.viewFullscreen')}
+                  >
+                    <ZoomIn className="w-5 h-5 text-white" />
+                  </button>
                 )}
               </div>
 
@@ -171,21 +343,10 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                       color: areaFilter === area.slug ? 'white' : TEXT_MID,
                     }}
                   >
-                    {area.title}
+                    {area.label}
                   </button>
                 ))}
               </div>
-
-              {/* Thumbnails - After first, then Before */}
-              {filteredImages.length > 1 && (
-                <ThumbnailGallery
-                  images={filteredImages}
-                  activeImageIndex={activeImageIndex}
-                  onSelectImage={setActiveImageIndex}
-                  siteTitle={site.title}
-                  t={t}
-                />
-              )}
             </div>
 
             {/* Details */}
@@ -204,9 +365,9 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               </p>
 
               {/* Aggregated Stats */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
                 {site.location_city && (
-                  <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                  <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <MapPin className="w-4 h-4" style={{ color: GOLD }} />
                       <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
@@ -219,7 +380,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   </div>
                 )}
                 {site.aggregated.totalDuration && (
-                  <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                  <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Calendar className="w-4 h-4" style={{ color: GOLD }} />
                       <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
@@ -232,7 +393,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   </div>
                 )}
                 {site.aggregated.totalBudget && (
-                  <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                  <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
                       <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
@@ -244,7 +405,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     </span>
                   </div>
                 )}
-                <div className="rounded-xl p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="flex items-center gap-2 mb-1">
                     <Layers className="w-4 h-4" style={{ color: GOLD }} />
                     <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
@@ -332,84 +493,121 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
         </section>
       )}
 
-      {/* Lightbox */}
-      {lightboxOpen && filteredImages.length > 0 && (
-        <LightboxDialog
-          images={filteredImages}
-          activeIndex={activeImageIndex}
-          onClose={handleLightboxClose}
-          onPrev={prevImage}
-          onNext={nextImage}
-          t={t}
-        />
+      {/* Fullscreen Image Overlay */}
+      {isFullscreen && displayImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          onClick={closeFullscreen}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeFullscreen}
+            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+            aria-label={t('modal.close')}
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          {/* Before/After Badge in fullscreen */}
+          {hasBothImages && (
+            <div className="absolute top-4 left-4 z-10">
+              <BeforeAfterBadge
+                isBefore={showBefore}
+                t={t}
+                showClickTip={true}
+                hasPair={true}
+              />
+            </div>
+          )}
+
+          {/* Fullscreen image */}
+          <div
+            className={`relative w-full h-full max-w-[90vw] max-h-[90vh]${hasBothImages ? ' cursor-pointer' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (hasBothImages) {
+                setShowBefore((prev) => !prev);
+              }
+            }}
+          >
+            <Image
+              src={displayImage.src}
+              alt={displayImage.alt || site.title}
+              fill
+              sizes="90vw"
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          {/* Thumbnail strip in fullscreen with horizontal scroll */}
+          {filteredPairs.length > 1 && (
+            <div
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 max-w-[90vw] overflow-x-auto cursor-grab select-none touch-pan-x"
+              style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.5) transparent' }}
+              onClick={stopPropagation}
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              onPointerMove={handlePointerMove}
+            >
+              <div className="flex gap-2 p-4">
+                {filteredPairs.map((pair, idx) => (
+                  <button
+                    key={`fs-${pair.projectSlug}-${idx}`}
+                    onClick={(e) => handleThumbClick(e, idx)}
+                    className="relative rounded-lg overflow-hidden shrink-0 transition-all duration-200"
+                    aria-label={`${t('projects.viewImage')} ${idx + 1} / ${filteredPairs.length}`}
+                    aria-pressed={idx === activePairIndex}
+                    style={{
+                      width: pair.beforeImage && pair.afterImage ? '100px' : '70px',
+                      height: '70px',
+                      outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
+                      outlineOffset: '2px',
+                      opacity: idx === activePairIndex ? 1 : 0.6,
+                    }}
+                  >
+                    {pair.beforeImage && pair.afterImage ? (
+                      <div className="flex h-full">
+                        <div className="relative w-1/2 h-full">
+                          <Image
+                            src={pair.beforeImage.src}
+                            alt={pair.beforeImage.alt || 'Before'}
+                            fill
+                            sizes="50px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="w-px bg-white/80" />
+                        <div className="relative w-1/2 h-full">
+                          <Image
+                            src={pair.afterImage.src}
+                            alt={pair.afterImage.alt || 'After'}
+                            fill
+                            sizes="50px"
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={(pair.afterImage || pair.beforeImage)!.src}
+                          alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
+                          fill
+                          sizes="70px"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
-  );
-}
-
-/** Thumbnail gallery with before/after image rows */
-function ThumbnailGallery({
-  images,
-  activeImageIndex,
-  onSelectImage,
-  siteTitle,
-  t,
-}: {
-  images: { src: string; alt: string; is_before?: boolean; projectSlug: string }[];
-  activeImageIndex: number;
-  onSelectImage: (index: number) => void;
-  siteTitle: string;
-  t: ReturnType<typeof useTranslations>;
-}) {
-  const { afterImages, beforeImages } = useMemo(() => {
-    const withIndex = images.map((img, i) => ({ ...img, originalIndex: i }));
-    return {
-      afterImages: withIndex.filter((img) => !img.is_before),
-      beforeImages: withIndex.filter((img) => img.is_before),
-    };
-  }, [images]);
-
-  const renderRow = (rowImages: typeof afterImages, label: string) =>
-    rowImages.length > 0 && (
-      <div className="mt-4">
-        <span
-          className="text-xs font-medium uppercase tracking-wide mb-2 block"
-          style={{ color: TEXT_MUTED }}
-        >
-          {label} ({rowImages.length})
-        </span>
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-          {rowImages.map((img) => (
-            <button
-              key={`${img.projectSlug}-${img.src}`}
-              onClick={() => onSelectImage(img.originalIndex)}
-              className="relative aspect-square rounded-lg overflow-hidden transition-transform hover:scale-105"
-              aria-label={`${t('projects.viewImage')} ${img.originalIndex + 1}`}
-              aria-pressed={img.originalIndex === activeImageIndex}
-              style={{
-                outline: img.originalIndex === activeImageIndex ? `3px solid ${GOLD}` : 'none',
-                outlineOffset: '2px',
-                boxShadow: img.originalIndex === activeImageIndex ? `0 0 10px ${GOLD}66` : 'none',
-              }}
-            >
-              <Image
-                src={img.src}
-                alt={img.alt || siteTitle}
-                fill
-                sizes="100px"
-                className="object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-
-  return (
-    <>
-      {renderRow(afterImages, t('projects.afterLabel'))}
-      {renderRow(beforeImages, t('projects.beforeLabel'))}
-    </>
   );
 }
 
@@ -423,52 +621,78 @@ function AreaDetailCard({
   t: ReturnType<typeof useTranslations>;
   isEven: boolean;
 }) {
-  // Get project images (up to 4 for the grid)
-  const projectImages = project.images?.slice(0, 4) || [];
-  const hasMultipleImages = projectImages.length > 1;
+  // Flatten image pairs into individual images for grid display
+  const cardImages = useMemo(() => {
+    const imgs: { src: string; alt: string; is_before?: boolean }[] = [];
+    if (project.image_pairs && project.image_pairs.length > 0) {
+      // Extract individual images from pairs — after images first for better visual
+      for (const pair of project.image_pairs) {
+        if (pair.afterImage) imgs.push({ src: pair.afterImage.src, alt: pair.afterImage.alt, is_before: false });
+        if (pair.beforeImage) imgs.push({ src: pair.beforeImage.src, alt: pair.beforeImage.alt, is_before: true });
+      }
+    } else if (project.images && project.images.length > 0) {
+      imgs.push(...project.images);
+    }
+    return imgs.slice(0, 4);
+  }, [project.image_pairs, project.images]);
+
+  const hasMultipleImages = cardImages.length > 1;
 
   return (
     <div
       className="rounded-2xl overflow-hidden"
       style={{ boxShadow: neu(4), backgroundColor: CARD }}
     >
-      <div className={`grid ${hasMultipleImages ? 'lg:grid-cols-2' : 'lg:grid-cols-5'} gap-0`}>
+      <div className={`grid ${hasMultipleImages ? 'lg:grid-cols-2' : cardImages.length === 1 ? 'lg:grid-cols-5' : 'lg:grid-cols-1'} gap-0`}>
         {/* Image Section */}
-        <div className={`${hasMultipleImages ? '' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
-          {hasMultipleImages ? (
-            <div className="grid grid-cols-2 gap-1 h-full">
-              {projectImages.map((img) => (
-                <div key={img.src} className="relative aspect-square">
-                  <Image
-                    src={img.src}
-                    alt={img.alt || project.title}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                  {img.is_before && (
-                    <span className="absolute top-2 left-2 px-2 py-0.5 text-xs font-medium rounded bg-black/60 text-white">
-                      {t('projects.beforeLabel')}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px]">
-              <Image
-                src={project.hero_image}
-                alt={project.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="object-cover"
-              />
-            </div>
-          )}
-        </div>
+        {cardImages.length > 0 && (
+          <div className={`${hasMultipleImages ? '' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
+            {hasMultipleImages ? (
+              <div className="grid grid-cols-2 gap-1 h-full">
+                {cardImages.map((img) => (
+                  <div key={img.src} className="relative aspect-square">
+                    <Image
+                      src={img.src}
+                      alt={img.alt || project.title}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover"
+                    />
+                    {img.is_before && (
+                      <span
+                        className="absolute top-2 left-2 px-2 py-0.5 text-xs font-medium rounded text-white"
+                        style={{ backgroundColor: 'rgba(27,54,93,0.8)' }}
+                      >
+                        {t('projects.beforeLabel')}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px]">
+                <Image
+                  src={cardImages[0].src}
+                  alt={cardImages[0].alt || project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                {cardImages[0].is_before && (
+                  <span
+                    className="absolute top-2 left-2 px-2 py-0.5 text-xs font-medium rounded text-white"
+                    style={{ backgroundColor: 'rgba(27,54,93,0.8)' }}
+                  >
+                    {t('projects.beforeLabel')}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Content Section */}
-        <div className={`${hasMultipleImages ? '' : 'lg:col-span-3'} p-6 lg:p-8 flex flex-col`}>
+        <div className={`${!hasMultipleImages && cardImages.length === 1 ? 'lg:col-span-3' : ''} p-6 lg:p-8 flex flex-col`}>
           <div className="flex items-start justify-between mb-4">
             <div>
               <span
@@ -507,7 +731,7 @@ function AreaDetailCard({
               {project.challenge && (
                 <div className="rounded-lg p-4" style={{ backgroundColor: SURFACE_ALT }}>
                   <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('projects.challenge')}
+                    {t('modal.challenge')}
                   </h4>
                   <p className="text-sm" style={{ color: TEXT_MID }}>
                     {project.challenge}
@@ -517,7 +741,7 @@ function AreaDetailCard({
               {project.solution && (
                 <div className="rounded-lg p-4" style={{ backgroundColor: SURFACE_ALT }}>
                   <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('projects.solution')}
+                    {t('modal.solution')}
                   </h4>
                   <p className="text-sm" style={{ color: TEXT_MID }}>
                     {project.solution}
@@ -531,7 +755,7 @@ function AreaDetailCard({
           {project.service_scope && project.service_scope.length > 0 && (
             <div className="mb-4">
               <h4 className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                {t('projects.serviceScope')}
+                {t('modal.serviceScope')}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.service_scope.map((scope) => (
@@ -571,116 +795,6 @@ function AreaDetailCard({
             </Link>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/** Accessible lightbox dialog */
-function LightboxDialog({
-  images,
-  activeIndex,
-  onClose,
-  onPrev,
-  onNext,
-  t,
-}: {
-  images: { src: string; alt: string; is_before?: boolean; projectTitle: string }[];
-  activeIndex: number;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-  t: ReturnType<typeof useTranslations>;
-}) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') onClose();
-    if (e.key === 'ArrowLeft') onPrev();
-    if (e.key === 'ArrowRight') onNext();
-    if (e.key === 'Tab' && dialogRef.current) {
-      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  }, [onClose, onPrev, onNext]);
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
-    const closeBtn = dialogRef.current?.querySelector<HTMLElement>('button');
-    closeBtn?.focus();
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [handleKeyDown]);
-
-  const currentImage = images[activeIndex];
-
-  return (
-    <div
-      ref={dialogRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-      role="dialog"
-      aria-modal="true"
-      aria-label={t('projects.imageGallery')}
-      onClick={onClose}
-    >
-      <button
-        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-        onClick={onClose}
-        aria-label={t('modal.close')}
-      >
-        <X className="w-6 h-6 text-white" aria-hidden="true" />
-      </button>
-      <button
-        className="absolute left-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-        onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        aria-label={t('projects.previousImage')}
-      >
-        <ChevronLeft className="w-6 h-6 text-white" aria-hidden="true" />
-      </button>
-      <button
-        className="absolute right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-        onClick={(e) => { e.stopPropagation(); onNext(); }}
-        aria-label={t('projects.nextImage')}
-      >
-        <ChevronRight className="w-6 h-6 text-white" aria-hidden="true" />
-      </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
-        <span className="text-sm text-white/70" aria-live="polite">
-          {activeIndex + 1} / {images.length}
-        </span>
-        {currentImage && (
-          <span className="text-xs text-white/50">
-            {currentImage.projectTitle}
-          </span>
-        )}
-      </div>
-      <div className="relative w-full max-w-4xl aspect-[4/3] mx-4" onClick={(e) => e.stopPropagation()}>
-        {currentImage && (
-          <>
-            <Image
-              src={currentImage.src}
-              alt={currentImage.alt || currentImage.projectTitle}
-              fill
-              sizes="(max-width: 1024px) 100vw, 60vw"
-              className="object-contain"
-            />
-            <BeforeAfterBadge isBefore={currentImage.is_before} t={t} />
-          </>
-        )}
       </div>
     </div>
   );

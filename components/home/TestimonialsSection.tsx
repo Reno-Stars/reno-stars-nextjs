@@ -48,7 +48,7 @@ function GoogleIcon({ className }: { className?: string }) {
 
 function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }) {
   return (
-    <div className="w-80 shrink-0 rounded-2xl p-5 relative flex flex-col" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
+    <div className="w-72 sm:w-80 shrink-0 rounded-2xl p-4 sm:p-5 relative flex flex-col" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
       <div className="absolute left-0 top-5 bottom-5 w-0.5 rounded-r-full" style={{ backgroundColor: GOLD }} />
       <div className="pl-4 flex flex-col flex-1">
         <div className="flex gap-0.5 mb-3" role="img" aria-label="5/5">

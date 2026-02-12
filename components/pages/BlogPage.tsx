@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Calendar, BookOpen } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, BlogPost } from '@/lib/types';
@@ -32,7 +33,21 @@ export default function BlogPage({
   perPage = 10,
 }: BlogPageProps) {
   const t = useTranslations();
-  const localizedPosts = useMemo(() => blogPosts.map((p) => ({ slug: p.slug, title: p.title[locale], excerpt: p.excerpt?.[locale] })), [blogPosts, locale]);
+  const localizedPosts = useMemo(() => blogPosts.map((p) => ({
+    slug: p.slug,
+    title: p.title[locale],
+    excerpt: p.excerpt?.[locale],
+    featured_image: p.featured_image,
+    published_at: p.published_at,
+  })), [blogPosts, locale]);
+
+  const formatDate = useCallback((date: Date) => {
+    return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-CA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }).format(new Date(date));
+  }, [locale]);
 
   const hasPagination = totalPages > 1;
 
@@ -67,19 +82,27 @@ export default function BlogPage({
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
 
       {/* Hero */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4" style={{ backgroundColor: `${GOLD}20` }}>
+            <BookOpen className="w-6 h-6" style={{ color: GOLD }} />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             {t('blog.title')}
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-white/70 max-w-2xl mx-auto mb-4">
             {t('blog.subtitle')}
           </p>
+          {totalCount > 0 && (
+            <span className="inline-block text-xs font-medium px-3 py-1 rounded-full" style={{ color: GOLD, backgroundColor: `${GOLD}15`, border: `1px solid ${GOLD}30` }}>
+              {totalCount} {locale === 'zh' ? '篇文章' : totalCount === 1 ? 'Article' : 'Articles'}
+            </span>
+          )}
         </div>
       </section>
 
       {/* Blog Posts */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           {localizedPosts.length === 0 ? (
             <p className="text-center text-lg py-12" style={{ color: TEXT_MID }}>
@@ -92,20 +115,44 @@ export default function BlogPage({
                   <article key={post.slug}>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="rounded-xl p-6 flex items-start justify-between gap-4 transition-all duration-200 hover:translate-x-1 block"
+                      className="rounded-xl overflow-hidden flex flex-col sm:flex-row transition-all duration-200 hover:translate-y-[-2px] block"
                       style={{ boxShadow: neu(5), backgroundColor: CARD }}
                     >
-                      <div>
-                        <h3 className="text-lg font-bold mb-2 hover:text-gold transition-colors" style={{ color: TEXT }}>
-                          {post.title}
-                        </h3>
-                        {post.excerpt && (
-                          <p className="text-sm" style={{ color: TEXT_MID }}>
-                            {post.excerpt}
-                          </p>
-                        )}
+                      {post.featured_image && (
+                        <div className="relative w-full sm:w-48 h-40 sm:h-auto shrink-0">
+                          <Image
+                            src={post.featured_image}
+                            alt={post.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 100vw, 192px"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
+                        <div>
+                          <h3 className="text-lg font-bold mb-1.5 transition-colors" style={{ color: TEXT }}>
+                            {post.title}
+                          </h3>
+                          {post.excerpt && (
+                            <p className="text-sm line-clamp-2" style={{ color: TEXT_MID }}>
+                              {post.excerpt}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center justify-between mt-3">
+                          {post.published_at && (
+                            <span className="flex items-center gap-1.5 text-xs" style={{ color: TEXT_MUTED }}>
+                              <Calendar className="w-3.5 h-3.5" />
+                              {formatDate(post.published_at)}
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1 text-sm font-medium" style={{ color: GOLD }}>
+                            {t('blog.readMore')}
+                            <ChevronRight className="w-4 h-4" />
+                          </span>
+                        </div>
                       </div>
-                      <ChevronRight className="w-5 h-5 shrink-0 mt-1" style={{ color: GOLD }} />
                     </Link>
                   </article>
                 ))}

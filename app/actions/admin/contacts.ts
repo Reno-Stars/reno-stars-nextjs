@@ -33,6 +33,27 @@ export async function updateContactStatus(
   }
 }
 
+export async function deleteContact(
+  id: string
+): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid contact ID.' };
+  try {
+    const deleted = await db
+      .delete(contactSubmissions)
+      .where(eq(contactSubmissions.id, id))
+      .returning({ id: contactSubmissions.id });
+    if (deleted.length === 0) {
+      return { error: 'Contact not found.' };
+    }
+    revalidatePath('/admin/contacts');
+    return {};
+  } catch (error) {
+    console.error('Failed to delete contact:', error);
+    return { error: 'Failed to delete contact.' };
+  }
+}
+
 export async function updateContactNotes(
   id: string,
   notes: string

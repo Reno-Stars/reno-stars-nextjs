@@ -6,6 +6,7 @@ import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
 import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
@@ -49,6 +50,7 @@ interface SiteFormProps {
     featured: boolean;
     isPublished: boolean;
     images?: { url: string; altEn: string; altZh: string; isBefore: boolean }[];
+    imagePairs?: Omit<ImagePairEntry, 'id'>[];
   };
   submitLabel?: string;
 }
@@ -91,6 +93,9 @@ export default function SiteForm({
 
   const [siteImages, setSiteImages] = useState<SiteImageEntry[]>(
     initialData?.images?.map((img) => ({ ...img, id: crypto.randomUUID() })) ?? []
+  );
+  const [siteImagePairs, setSiteImagePairs] = useState<ImagePairEntry[]>(
+    initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
   );
 
   // Sync selectedCity when initialData changes (after save + revalidation)
@@ -260,6 +265,16 @@ export default function SiteForm({
               </button>
             )}
           </div>
+
+          {/* Site Image Pairs (new structure) */}
+          <ImagePairEditor
+            namePrefix="siteImagePairs"
+            pairs={siteImagePairs}
+            onChange={setSiteImagePairs}
+            editing={editing}
+            label={t.imagePairs?.title}
+            tooltip={t.imagePairs?.tooltips?.title}
+          />
 
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.sites.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} tooltip={t.sites.tooltips.badge} />
 

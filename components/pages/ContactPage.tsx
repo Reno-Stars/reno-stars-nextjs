@@ -56,7 +56,7 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
       {/* Hero */}
       <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             {t('contact.title')}
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
@@ -91,7 +91,7 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
 
       {/* Quick Contact Bar */}
       <section className="py-4 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 md:gap-10">
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10">
           <a href={`tel:${company.phone}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Phone className="w-5 h-5" style={{ color: GOLD }} />
             <span className="text-base font-medium" style={{ color: TEXT }}>{company.phone}</span>
@@ -112,7 +112,7 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
       {/* Contact Section */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-10">
             {/* Contact Form — shown first on mobile */}
             <div className="order-1 lg:order-2 rounded-2xl p-6 lg:p-8 h-fit lg:sticky lg:top-8" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
               <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>
@@ -224,10 +224,10 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
 
       {/* Stats Band */}
       <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((s) => (
             <div key={s.label} className="text-center py-2">
-              <div className="text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
               <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
             </div>
           ))}

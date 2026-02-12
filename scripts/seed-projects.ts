@@ -14,16 +14,28 @@ config({ path: '.env.local' });
 import { db } from '../lib/db';
 import {
   projects as projectsTable,
-  projectImages,
+  projectImagePairs,
   projectScopes,
   projectExternalProducts,
   projectSites,
-  siteImages,
+  siteImagePairs,
   services as servicesTable,
 } from '../lib/db/schema';
 
 // Valid service types (no 'whole-house' - that's represented by Sites)
 type ServiceType = 'kitchen' | 'bathroom' | 'basement' | 'cabinet' | 'commercial';
+
+// Image pair structure for before/after comparisons
+interface ImagePairData {
+  beforeUrl?: string;
+  beforeAltEn?: string;
+  beforeAltZh?: string;
+  afterUrl?: string;
+  afterAltEn?: string;
+  afterAltZh?: string;
+  titleEn?: string;
+  titleZh?: string;
+}
 
 interface ProjectData {
   slug: string;
@@ -48,7 +60,8 @@ interface ProjectData {
   featured?: boolean;
   badgeEn?: string;
   badgeZh?: string;
-  images: { url: string; altEn: string; altZh: string; isBefore?: boolean }[];
+  // Before/after image pairs
+  imagePairs: ImagePairData[];
   scopes: { en: string; zh: string }[];
   externalProducts?: { url: string; imageUrl?: string; labelEn: string; labelZh: string }[];
 }
@@ -67,8 +80,8 @@ interface SiteData {
   badgeZh?: string;
   // Project slugs to associate with this site
   projectSlugs: string[];
-  // Site-level images (exterior/overview shots)
-  images?: { imageUrl: string; altTextEn: string; altTextZh: string; isBefore: boolean }[];
+  // Site-level image pairs (before/after comparisons)
+  imagePairs?: ImagePairData[];
 }
 
 // ============================================================================
@@ -88,10 +101,24 @@ const SITES_RAW: SiteData[] = [
     badgeEn: 'Featured',
     badgeZh: '精选',
     projectSlugs: ['langley-kitchen-renovation', 'langley-bathroom-renovation', 'langley-basement-renovation'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/68.jpg', altTextEn: 'Langley home kitchen after renovation', altTextZh: '兰里住宅厨房装修后', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/55.png', altTextEn: 'Langley home kitchen before renovation', altTextZh: '兰里住宅厨房装修前', isBefore: true },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/73.jpg', altTextEn: 'Langley basement renovation', altTextZh: '兰里地下室装修', isBefore: false },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/55.png',
+        beforeAltEn: 'Langley home kitchen before renovation',
+        beforeAltZh: '兰里住宅厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/68.jpg',
+        afterAltEn: 'Langley home kitchen after renovation',
+        afterAltZh: '兰里住宅厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/73.jpg',
+        afterAltEn: 'Langley basement renovation',
+        afterAltZh: '兰里地下室装修',
+        titleEn: 'Basement',
+        titleZh: '地下室',
+      },
     ],
   },
   {
@@ -105,9 +132,17 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['surrey-customized-kitchen', 'surrey-bathroom-renovation', 'surrey-staircase-renovation'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-after-p1.png', altTextEn: 'Surrey home kitchen after', altTextZh: '素里住宅厨房装修后', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-before-p1.png', altTextEn: 'Surrey home kitchen before', altTextZh: '素里住宅厨房装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-before-p1.png',
+        beforeAltEn: 'Surrey home kitchen before',
+        beforeAltZh: '素里住宅厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-after-p1.png',
+        afterAltEn: 'Surrey home kitchen after',
+        afterAltZh: '素里住宅厨房装修后',
+        titleEn: 'Kitchen',
+        titleZh: '厨房',
+      },
     ],
   },
   {
@@ -123,10 +158,24 @@ const SITES_RAW: SiteData[] = [
     badgeEn: 'Featured',
     badgeZh: '精选',
     projectSlugs: ['richmond-modern-kitchen', 'richmond-bathroom-update', 'richmond-flooring-staircase'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/76.jpg', altTextEn: 'Richmond modern home overview', altTextZh: '列治文现代住宅概览', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-after.png', altTextEn: 'Richmond kitchen after', altTextZh: '列治文厨房装修后', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-before.png', altTextEn: 'Richmond kitchen before', altTextZh: '列治文厨房装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-before.png',
+        beforeAltEn: 'Richmond kitchen before',
+        beforeAltZh: '列治文厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-after.png',
+        afterAltEn: 'Richmond kitchen after',
+        afterAltZh: '列治文厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/76.jpg',
+        afterAltEn: 'Richmond modern home overview',
+        afterAltZh: '列治文现代住宅概览',
+        titleEn: 'Home Overview',
+        titleZh: '住宅概览',
+      },
     ],
   },
   {
@@ -140,9 +189,17 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['richmond-kitchen-remodel', 'richmond-bathrooms-remodel', 'richmond-ceiling-staircase'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-remodel-project-after-renovation.png', altTextEn: 'Richmond kitchen remodel after', altTextZh: '列治文厨房改造后', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/微信图片_20221125115328.jpg', altTextEn: 'Richmond kitchen before', altTextZh: '列治文厨房改造前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/微信图片_20221125115328.jpg',
+        beforeAltEn: 'Richmond kitchen before',
+        beforeAltZh: '列治文厨房改造前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-remodel-project-after-renovation.png',
+        afterAltEn: 'Richmond kitchen remodel after',
+        afterAltZh: '列治文厨房改造后',
+        titleEn: 'Kitchen Remodel',
+        titleZh: '厨房改造',
+      },
     ],
   },
   {
@@ -158,8 +215,14 @@ const SITES_RAW: SiteData[] = [
     badgeEn: 'Featured',
     badgeZh: '精选',
     projectSlugs: ['whole-house-kitchen-to-bedroom'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/whole-house-renovation-open-living-and-dining-space.jpg', altTextEn: 'Whole house renovation', altTextZh: '全屋翻新', isBefore: false },
+    imagePairs: [
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/whole-house-renovation-open-living-and-dining-space.jpg',
+        afterAltEn: 'Whole house renovation',
+        afterAltZh: '全屋翻新',
+        titleEn: 'Living Space',
+        titleZh: '生活空间',
+      },
     ],
   },
   {
@@ -173,8 +236,14 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['coquitlam-cabinet-refacing', 'coquitlam-wainscoting-cabinet'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-after.png', altTextEn: 'Coquitlam kitchen after', altTextZh: '高贵林厨房装修后', isBefore: false },
+    imagePairs: [
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-after.png',
+        afterAltEn: 'Coquitlam kitchen after',
+        afterAltZh: '高贵林厨房装修后',
+        titleEn: 'Kitchen',
+        titleZh: '厨房',
+      },
     ],
   },
   {
@@ -188,9 +257,21 @@ const SITES_RAW: SiteData[] = [
     showAsProject: true,
     featured: false,
     projectSlugs: ['delta-townhouse-kitchen', 'delta-townhouse-bathroom'],
-    images: [
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/90-2.png', altTextEn: 'Delta kitchen after', altTextZh: 'Delta厨房装修后', isBefore: false },
-      { imageUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/88-2.png', altTextEn: 'Delta bathroom after', altTextZh: 'Delta浴室装修后', isBefore: false },
+    imagePairs: [
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/90-2.png',
+        afterAltEn: 'Delta kitchen after',
+        afterAltZh: 'Delta厨房装修后',
+        titleEn: 'Kitchen',
+        titleZh: '厨房',
+      },
+      {
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/88-2.png',
+        afterAltEn: 'Delta bathroom after',
+        afterAltZh: 'Delta浴室装修后',
+        titleEn: 'Bathroom',
+        titleZh: '浴室',
+      },
     ],
   },
 ];
@@ -219,13 +300,13 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionZh: '我们拆除了隔墙以增强明亮度和开放感，安装了极简设计的白色摇门橱柜以反射光线，添加了带大理石纹理的石英台面以保证耐用性，并改善了整体照明和空间连通性。',
     featured: true,
     badgeEn: 'New', badgeZh: '新',
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/微信图片_20250303161101-mfrh-original-scaled.jpg', altEn: 'White Shaker kitchen after renovation', altZh: '白色摇门厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114131-1-scaled.jpg', altEn: 'Kitchen island with quartz countertop', altZh: '配备石英台面的厨房岛台' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114139-mfrh-original-scaled.jpg', altEn: 'White cabinets with modern hardware', altZh: '配备现代五金的白色橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114429-mfrh-original-scaled.jpg', altEn: 'Kitchen backsplash detail', altZh: '厨房后挡板细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114441-mfrh-original-scaled.jpg', altEn: 'Open concept kitchen view', altZh: '开放式厨房视角' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114455-mfrh-original-scaled.jpg', altEn: 'Kitchen storage cabinets', altZh: '厨房储物柜' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/微信图片_20250303161101-mfrh-original-scaled.jpg', afterAltEn: 'White Shaker kitchen after renovation', afterAltZh: '白色摇门厨房装修后', titleEn: 'Kitchen After', titleZh: '厨房装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114131-1-scaled.jpg', afterAltEn: 'Kitchen island with quartz countertop', afterAltZh: '配备石英台面的厨房岛台', titleEn: 'Kitchen Island', titleZh: '厨房岛台' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114139-mfrh-original-scaled.jpg', afterAltEn: 'White cabinets with modern hardware', afterAltZh: '配备现代五金的白色橱柜', titleEn: 'White Cabinets', titleZh: '白色橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114429-mfrh-original-scaled.jpg', afterAltEn: 'Kitchen backsplash detail', afterAltZh: '厨房后挡板细节', titleEn: 'Backsplash Detail', titleZh: '后挡板细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114441-mfrh-original-scaled.jpg', afterAltEn: 'Open concept kitchen view', afterAltZh: '开放式厨房视角', titleEn: 'Open Concept View', titleZh: '开放式视角' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/02/微信图片_20250228114455-mfrh-original-scaled.jpg', afterAltEn: 'Kitchen storage cabinets', afterAltZh: '厨房储物柜', titleEn: 'Storage Cabinets', titleZh: '储物柜' },
     ],
     scopes: [
       { en: 'Wall Removal', zh: '拆墙' },
@@ -255,13 +336,13 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We replaced dark cabinets with sleek white cabinet systems that brighten the space and maximize storage. Energy-efficient stainless steel appliances were installed, along with comprehensive lighting including recessed ceiling fixtures and under-cabinet lighting.',
     solutionZh: '我们用简洁的白色橱柜系统替换了深色橱柜，使空间更明亮并最大化储物空间。安装了节能的不锈钢家电，以及包括嵌入式天花灯和橱柜下照明的综合照明系统。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p3kiitchen-new.png', altEn: 'Surrey white kitchen after', altZh: '素里白色厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/35.png', altEn: 'Kitchen cabinets detail', altZh: '厨房橱柜细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/36.png', altEn: 'Modern appliances', altZh: '现代家电' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/37.png', altEn: 'Kitchen lighting', altZh: '厨房照明' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/38.png', altEn: 'Kitchen countertops', altZh: '厨房台面' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/39.png', altEn: 'Kitchen overview', altZh: '厨房全景' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p3kiitchen-new.png', afterAltEn: 'Surrey white kitchen after', afterAltZh: '素里白色厨房装修后', titleEn: 'Kitchen After', titleZh: '厨房装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/35.png', afterAltEn: 'Kitchen cabinets detail', afterAltZh: '厨房橱柜细节', titleEn: 'Cabinets Detail', titleZh: '橱柜细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/36.png', afterAltEn: 'Modern appliances', afterAltZh: '现代家电', titleEn: 'Modern Appliances', titleZh: '现代家电' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/37.png', afterAltEn: 'Kitchen lighting', afterAltZh: '厨房照明', titleEn: 'Kitchen Lighting', titleZh: '厨房照明' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/38.png', afterAltEn: 'Kitchen countertops', afterAltZh: '厨房台面', titleEn: 'Countertops', titleZh: '台面' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/39.png', afterAltEn: 'Kitchen overview', afterAltZh: '厨房全景', titleEn: 'Kitchen Overview', titleZh: '厨房全景' },
     ],
     scopes: [
       { en: 'White Cabinetry', zh: '白色橱柜' },
@@ -291,9 +372,17 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed a two-tone shaker cabinet design with grey lower and white upper cabinets, added white subway tile backsplash with white brick countertops, and upgraded to black hardware and water fittings with LED under-cabinet lighting.',
     solutionZh: '我们安装了双色摇门橱柜设计，灰色下柜配白色上柜，添加了白色地铁砖后挡板和白砖台面，升级为黑色五金和水龙头配LED橱柜下照明。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/90-2.png', altEn: 'Delta kitchen after renovation', altZh: 'Delta厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/delta-townhouse-before.png', altEn: 'Delta kitchen before renovation', altZh: 'Delta厨房装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/delta-townhouse-before.png',
+        beforeAltEn: 'Delta kitchen before renovation',
+        beforeAltZh: 'Delta厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/90-2.png',
+        afterAltEn: 'Delta kitchen after renovation',
+        afterAltZh: 'Delta厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
     ],
     scopes: [
       { en: 'Two-Tone Shaker Cabinets', zh: '双色摇门橱柜' },
@@ -323,10 +412,18 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Installed walk-in glass shower enclosure with modern fixtures, replaced outdated vanities with updated storage solutions, added new tile selections reflecting the grey-and-white design theme, and improved lighting throughout.',
     solutionZh: '安装了配有现代设备的步入式玻璃淋浴房，用更新的储物方案替换了过时的洗手台，添加了反映灰白设计主题的新瓷砖选择，并改善了整体照明。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/88-2.png', altEn: 'Delta bathroom main after', altZh: 'Delta主浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/43-3.png', altEn: 'Delta small bathroom after', altZh: 'Delta小浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p7-bath-before.png', altEn: 'Delta bathroom before', altZh: 'Delta浴室装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p7-bath-before.png',
+        beforeAltEn: 'Delta bathroom before',
+        beforeAltZh: 'Delta浴室装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/88-2.png',
+        afterAltEn: 'Delta bathroom main after',
+        afterAltZh: 'Delta主浴室装修后',
+        titleEn: 'Main Bathroom',
+        titleZh: '主浴室',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/43-3.png', afterAltEn: 'Delta small bathroom after', afterAltZh: 'Delta小浴室装修后', titleEn: 'Small Bathroom', titleZh: '小浴室' },
     ],
     scopes: [
       { en: 'Walk-in Glass Shower', zh: '步入式玻璃淋浴房' },
@@ -356,13 +453,21 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We designed and installed a wall-mounted floating vanity that exposes floor space, creating visual spaciousness. The vanity features spacious drawers for storage with open shelving design, paired with marble tile installation and modern lighting.',
     solutionZh: '我们设计并安装了壁挂式悬浮洗手台，露出地面空间，创造视觉宽敞感。洗手台配备宽敞抽屉储物和开放式搁板设计，搭配大理石瓷砖安装和现代照明。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-after.png', altEn: 'West Vancouver bathroom after', altZh: '西温浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-before.png', altEn: 'West Vancouver bathroom before', altZh: '西温浴室装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-wash-after.png', altEn: 'Floating vanity detail', altZh: '悬浮洗手台细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/43.png', altEn: 'Marble tile detail', altZh: '大理石瓷砖细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/44.png', altEn: 'Bathroom fixtures', altZh: '浴室设备' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-after-2.png', altEn: 'Bathroom overview', altZh: '浴室全景' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-before.png',
+        beforeAltEn: 'West Vancouver bathroom before',
+        beforeAltZh: '西温浴室装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-after.png',
+        afterAltEn: 'West Vancouver bathroom after',
+        afterAltZh: '西温浴室装修后',
+        titleEn: 'Bathroom Transformation',
+        titleZh: '浴室改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-wash-after.png', afterAltEn: 'Floating vanity detail', afterAltZh: '悬浮洗手台细节', titleEn: 'Floating Vanity', titleZh: '悬浮洗手台' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/43.png', afterAltEn: 'Marble tile detail', afterAltZh: '大理石瓷砖细节', titleEn: 'Marble Tiles', titleZh: '大理石瓷砖' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/44.png', afterAltEn: 'Bathroom fixtures', afterAltZh: '浴室设备', titleEn: 'Fixtures', titleZh: '设备' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p4-bath-after-2.png', afterAltEn: 'Bathroom overview', afterAltZh: '浴室全景', titleEn: 'Bathroom Overview', titleZh: '浴室全景' },
     ],
     scopes: [
       { en: 'Floating Vanity', zh: '悬浮洗手台' },
@@ -392,10 +497,18 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed premium quartz countertops with custom white cabinetry, added a central island with seating for dual-purpose meal preparation and dining, upgraded to stainless steel appliances, and incorporated strategic lighting design.',
     solutionZh: '我们安装了高端石英台面和定制白色橱柜，添加了带座位的中央岛台用于备餐和用餐双重用途，升级为不锈钢家电，并融入了策略性照明设计。',
     featured: true,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/68.jpg', altEn: 'Langley kitchen after', altZh: '兰里厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/55.png', altEn: 'Langley kitchen before', altZh: '兰里厨房装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/33.png', altEn: 'Kitchen island', altZh: '厨房岛台' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/55.png',
+        beforeAltEn: 'Langley kitchen before',
+        beforeAltZh: '兰里厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/68.jpg',
+        afterAltEn: 'Langley kitchen after',
+        afterAltZh: '兰里厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/33.png', afterAltEn: 'Kitchen island', afterAltZh: '厨房岛台', titleEn: 'Kitchen Island', titleZh: '厨房岛台' },
     ],
     scopes: [
       { en: 'White Cabinetry', zh: '白色橱柜' },
@@ -425,9 +538,9 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed high-quality fixtures including rainfall showerheads, double vanities with modern faucets, and freestanding soaking tubs. Natural stone tiles were used throughout with LED mirrors and dimmable ambient lighting systems.',
     solutionZh: '我们安装了高品质设备，包括雨淋花洒、配现代水龙头的双洗手台和独立泡澡浴缸。全程使用天然石材瓷砖，配备LED镜子和可调光环境照明系统。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/70.jpg', altEn: 'Langley bathroom after', altZh: '兰里浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/72.jpg', altEn: 'Luxury bathroom with tub', altZh: '带浴缸的豪华浴室' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/70.jpg', afterAltEn: 'Langley bathroom after', afterAltZh: '兰里浴室装修后', titleEn: 'Bathroom After', titleZh: '浴室装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/72.jpg', afterAltEn: 'Luxury bathroom with tub', afterAltZh: '带浴缸的豪华浴室', titleEn: 'Luxury Bathroom', titleZh: '豪华浴室' },
     ],
     scopes: [
       { en: 'Rainfall Showerhead', zh: '雨淋花洒' },
@@ -458,9 +571,9 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We created a modern family room with neutral color schemes and stylish furnishings. Custom storage solutions including shelving units and multi-functional furniture were installed, along with modern flooring and comprehensive lighting design.',
     solutionZh: '我们打造了采用中性色调和时尚家具的现代家庭活动室。安装了包括搁架单元和多功能家具的定制储物方案，以及现代地板和综合照明设计。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/73.jpg', altEn: 'Langley basement after', altZh: '兰里地下室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/57.png', altEn: 'Basement living area', altZh: '地下室生活区' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/73.jpg', afterAltEn: 'Langley basement after', afterAltZh: '兰里地下室装修后', titleEn: 'Basement After', titleZh: '地下室装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/57.png', afterAltEn: 'Basement living area', afterAltZh: '地下室生活区', titleEn: 'Living Area', titleZh: '生活区' },
     ],
     scopes: [
       { en: 'Framing & Drywall', zh: '框架和石膏板' },
@@ -490,11 +603,19 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We designed and installed custom kitchen cabinetry with modern finishes, optimized storage solutions, and updated all fixtures and appliances to create a functional, contemporary kitchen space.',
     solutionZh: '我们设计并安装了现代饰面的定制厨房橱柜，优化了储物方案，并更新了所有设备和家电，打造功能性的现代厨房空间。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-after-p1.png', altEn: 'Surrey kitchen after', altZh: '素里厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-before-p1.png', altEn: 'Surrey kitchen before', altZh: '素里厨房装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/18-1.png', altEn: 'Kitchen cabinets', altZh: '厨房橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/19-1.png', altEn: 'Kitchen countertops', altZh: '厨房台面' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-before-p1.png',
+        beforeAltEn: 'Surrey kitchen before',
+        beforeAltZh: '素里厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-after-p1.png',
+        afterAltEn: 'Surrey kitchen after',
+        afterAltZh: '素里厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/18-1.png', afterAltEn: 'Kitchen cabinets', afterAltZh: '厨房橱柜', titleEn: 'Kitchen Cabinets', titleZh: '厨房橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/19-1.png', afterAltEn: 'Kitchen countertops', afterAltZh: '厨房台面', titleEn: 'Countertops', titleZh: '台面' },
     ],
     scopes: [
       { en: 'Custom Cabinetry', zh: '定制橱柜' },
@@ -524,10 +645,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed modern fixtures, updated all tile work with contemporary designs, and improved the lighting system throughout the bathroom.',
     solutionZh: '我们安装了现代设备，用现代设计更新了所有瓷砖工程，并改善了整个浴室的照明系统。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/21.png', altEn: 'Surrey bathroom after', altZh: '素里浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/22.png', altEn: 'Bathroom vanity', altZh: '浴室洗手台' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/23.png', altEn: 'Shower area', altZh: '淋浴区' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/21.png', afterAltEn: 'Surrey bathroom after', afterAltZh: '素里浴室装修后', titleEn: 'Bathroom After', titleZh: '浴室装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/22.png', afterAltEn: 'Bathroom vanity', afterAltZh: '浴室洗手台', titleEn: 'Vanity', titleZh: '洗手台' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/23.png', afterAltEn: 'Shower area', afterAltZh: '淋浴区', titleEn: 'Shower Area', titleZh: '淋浴区' },
     ],
     scopes: [
       { en: 'Modern Fixtures', zh: '现代设备' },
@@ -557,10 +678,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We refinished the staircase with fresh paint and updated hardware, along with comprehensive wall painting and ceiling updates throughout.',
     solutionZh: '我们用新油漆和更新的五金件翻新了楼梯，同时进行了全面的墙面涂装和天花板更新。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/24.png', altEn: 'Surrey staircase after', altZh: '素里楼梯装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/25.png', altEn: 'Wall updates', altZh: '墙面更新' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/26.png', altEn: 'Ceiling work', altZh: '天花板工程' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/24.png', afterAltEn: 'Surrey staircase after', afterAltZh: '素里楼梯装修后', titleEn: 'Staircase After', titleZh: '楼梯装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/25.png', afterAltEn: 'Wall updates', afterAltZh: '墙面更新', titleEn: 'Wall Updates', titleZh: '墙面更新' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/26.png', afterAltEn: 'Ceiling work', afterAltZh: '天花板工程', titleEn: 'Ceiling Work', titleZh: '天花板工程' },
     ],
     scopes: [
       { en: 'Staircase Refinishing', zh: '楼梯翻新' },
@@ -589,11 +710,19 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed stylish handleless white cabinets that reflect light and enhance spatial perception, paired with durable quartz countertops and strategic lighting placement including ceiling spotlights and pendant fixtures above the island.',
     solutionZh: '我们安装了时尚的无把手白色橱柜，能反射光线并增强空间感，搭配耐用的石英台面和策略性的照明布置，包括天花板射灯和岛台上方的吊灯。',
     featured: true,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-after.png', altEn: 'Richmond modern kitchen after', altZh: '列治文现代厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-before.png', altEn: 'Richmond modern kitchen before', altZh: '列治文现代厨房装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/61.png', altEn: 'Kitchen cabinets', altZh: '厨房橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/63.png', altEn: 'Kitchen island', altZh: '厨房岛台' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-before.png',
+        beforeAltEn: 'Richmond modern kitchen before',
+        beforeAltZh: '列治文现代厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-kitchen-after.png',
+        afterAltEn: 'Richmond modern kitchen after',
+        afterAltZh: '列治文现代厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/61.png', afterAltEn: 'Kitchen cabinets', afterAltZh: '厨房橱柜', titleEn: 'Kitchen Cabinets', titleZh: '厨房橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/63.png', afterAltEn: 'Kitchen island', afterAltZh: '厨房岛台', titleEn: 'Kitchen Island', titleZh: '厨房岛台' },
     ],
     scopes: [
       { en: 'Handleless Cabinetry', zh: '无把手橱柜' },
@@ -623,9 +752,9 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed compact modern bathrooms with new tile throughout, contemporary fixtures, and optimized storage solutions that respect the spatial constraints while maintaining high-end aesthetics.',
     solutionZh: '我们安装了紧凑型现代浴室，全程使用新瓷砖、现代设备和优化的储物方案，在尊重空间限制的同时保持高端美感。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-bath-after.png', altEn: 'Richmond bathroom after', altZh: '列治文浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/62.png', altEn: 'Bathroom tiles', altZh: '浴室瓷砖' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-bath-after.png', afterAltEn: 'Richmond bathroom after', afterAltZh: '列治文浴室装修后', titleEn: 'Bathroom After', titleZh: '浴室装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/62.png', afterAltEn: 'Bathroom tiles', afterAltZh: '浴室瓷砖', titleEn: 'Bathroom Tiles', titleZh: '浴室瓷砖' },
     ],
     scopes: [
       { en: 'Floor Tiles', zh: '地砖' },
@@ -655,11 +784,11 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We installed SPC Vinyl Plank flooring throughout for visual flow, refinished the staircase with fresh paint, and updated the fireplace with a sleek white frame and improved lighting.',
     solutionZh: '我们全程安装SPC乙烯基木板地板以实现视觉流畅，用新油漆翻新了楼梯，并用简洁的白框和改进的照明更新了壁炉。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-stair-floorings-after.png', altEn: 'Richmond flooring and staircase', altZh: '列治文地板和楼梯' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/64.png', altEn: 'Fireplace update', altZh: '壁炉更新' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/66.png', altEn: 'Flooring detail', altZh: '地板细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/68.png', altEn: 'Staircase detail', altZh: '楼梯细节' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p6-stair-floorings-after.png', afterAltEn: 'Richmond flooring and staircase', afterAltZh: '列治文地板和楼梯', titleEn: 'Flooring & Staircase', titleZh: '地板和楼梯' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/64.png', afterAltEn: 'Fireplace update', afterAltZh: '壁炉更新', titleEn: 'Fireplace', titleZh: '壁炉' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/66.png', afterAltEn: 'Flooring detail', afterAltZh: '地板细节', titleEn: 'Flooring Detail', titleZh: '地板细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/68.png', afterAltEn: 'Staircase detail', afterAltZh: '楼梯细节', titleEn: 'Staircase Detail', titleZh: '楼梯细节' },
     ],
     scopes: [
       { en: 'SPC Vinyl Flooring', zh: 'SPC乙烯基地板' },
@@ -688,11 +817,19 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We utilized warm toned white based materials throughout the kitchen and dining area remodel, creating a cohesive modern look with excellent functionality.',
     solutionZh: '我们在厨房和餐厅改造中全程使用暖色调白色基础材料，创造出功能出色的统一现代外观。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-remodel-project-after-renovation.png', altEn: 'Richmond kitchen after', altZh: '列治文厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/微信图片_20221125115328.jpg', altEn: 'Richmond kitchen before', altZh: '列治文厨房装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/10-1.png', altEn: 'Kitchen cabinets', altZh: '厨房橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/11-1.png', altEn: 'Dining area', altZh: '餐厅区' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/微信图片_20221125115328.jpg',
+        beforeAltEn: 'Richmond kitchen before',
+        beforeAltZh: '列治文厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/richmond-kitchen-remodel-project-after-renovation.png',
+        afterAltEn: 'Richmond kitchen after',
+        afterAltZh: '列治文厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/10-1.png', afterAltEn: 'Kitchen cabinets', afterAltZh: '厨房橱柜', titleEn: 'Kitchen Cabinets', titleZh: '厨房橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/11-1.png', afterAltEn: 'Dining area', afterAltZh: '餐厅区', titleEn: 'Dining Area', titleZh: '餐厅区' },
     ],
     scopes: [
       { en: 'Kitchen Remodel', zh: '厨房改造' },
@@ -722,12 +859,20 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We renovated all bathrooms with cohesive design elements, modern fixtures, and updated tile work throughout both floors.',
     solutionZh: '我们用统一的设计元素、现代设备和更新的瓷砖工程翻新了所有浴室。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/7-1.png', altEn: 'Richmond bathroom after', altZh: '列治文浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼卫生间.jpg', altEn: 'First floor bathroom', altZh: '一楼卫生间' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼卫生间旧图-1.jpg', altEn: 'First floor bathroom before', altZh: '一楼卫生间装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼小卫生间1.jpg', altEn: 'Second floor small bathroom', altZh: '二楼小卫生间' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼小卫生间2-1-scaled.jpg', altEn: 'Second floor bathroom detail', altZh: '二楼浴室细节' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/7-1.png', afterAltEn: 'Richmond bathroom after', afterAltZh: '列治文浴室装修后', titleEn: 'Bathroom After', titleZh: '浴室装修后' },
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼卫生间旧图-1.jpg',
+        beforeAltEn: 'First floor bathroom before',
+        beforeAltZh: '一楼卫生间装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼卫生间.jpg',
+        afterAltEn: 'First floor bathroom',
+        afterAltZh: '一楼卫生间',
+        titleEn: 'First Floor Bathroom',
+        titleZh: '一楼卫生间',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼小卫生间1.jpg', afterAltEn: 'Second floor small bathroom', afterAltZh: '二楼小卫生间', titleEn: 'Second Floor Small Bathroom', titleZh: '二楼小卫生间' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼小卫生间2-1-scaled.jpg', afterAltEn: 'Second floor bathroom detail', afterAltZh: '二楼浴室细节', titleEn: 'Second Floor Detail', titleZh: '二楼细节' },
     ],
     scopes: [
       { en: 'Multiple Bathroom Renovation', zh: '多浴室翻新' },
@@ -757,13 +902,29 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'We completed comprehensive ceiling renovations on both floors, updated the staircase with modern finishes, installed custom closets and wardrobes, and renovated the laundry room.',
     solutionZh: '我们完成了两层楼的全面天花板翻新，用现代饰面更新了楼梯，安装了定制衣柜，并翻新了洗衣房。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼天花after.jpg', altEn: 'First floor ceiling after', altZh: '一楼天花板装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼天花.jpg', altEn: 'First floor ceiling before', altZh: '一楼天花板装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼楼梯.jpg', altEn: 'Second floor staircase', altZh: '二楼楼梯' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼楼梯旧图.jpg', altEn: 'Staircase before', altZh: '楼梯装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/衣柜.jpg', altEn: 'Closet installation', altZh: '衣柜安装' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/洗衣房.jpg', altEn: 'Laundry room', altZh: '洗衣房' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼天花.jpg',
+        beforeAltEn: 'First floor ceiling before',
+        beforeAltZh: '一楼天花板装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/一楼天花after.jpg',
+        afterAltEn: 'First floor ceiling after',
+        afterAltZh: '一楼天花板装修后',
+        titleEn: 'First Floor Ceiling',
+        titleZh: '一楼天花板',
+      },
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼楼梯旧图.jpg',
+        beforeAltEn: 'Staircase before',
+        beforeAltZh: '楼梯装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/二楼楼梯.jpg',
+        afterAltEn: 'Second floor staircase',
+        afterAltZh: '二楼楼梯',
+        titleEn: 'Staircase',
+        titleZh: '楼梯',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/衣柜.jpg', afterAltEn: 'Closet installation', afterAltZh: '衣柜安装', titleEn: 'Closet', titleZh: '衣柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/洗衣房.jpg', afterAltEn: 'Laundry room', afterAltZh: '洗衣房', titleEn: 'Laundry Room', titleZh: '洗衣房' },
     ],
     scopes: [
       { en: 'Ceiling Work', zh: '天花板工程' },
@@ -790,10 +951,10 @@ const PROJECTS_RAW: ProjectData[] = [
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg',
     featured: true,
     badgeEn: 'New', badgeZh: '新',
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg', altEn: 'Luxury modern bathroom', altZh: '豪华现代浴室' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/04/VCT_VCT07508_Large-1-scaled.jpg', altEn: 'Bathroom detail', altZh: '浴室细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/vct_vct07481_large-1-scaled.jpg', altEn: 'Bathroom fixtures', altZh: '浴室设备' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg', afterAltEn: 'Luxury modern bathroom', afterAltZh: '豪华现代浴室', titleEn: 'Luxury Bathroom', titleZh: '豪华浴室' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/VCT_VCT07508_Large-1-scaled.jpg', afterAltEn: 'Bathroom detail', afterAltZh: '浴室细节', titleEn: 'Bathroom Detail', titleZh: '浴室细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/vct_vct07481_large-1-scaled.jpg', afterAltEn: 'Bathroom fixtures', afterAltZh: '浴室设备', titleEn: 'Fixtures', titleZh: '设备' },
     ],
     scopes: [
       { en: 'Modern Design', zh: '现代设计' },
@@ -822,10 +983,18 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Cabinet refacing rather than full replacement, modern lighting upgrades, contemporary fixture selections, and staged renovation approach minimizing disruption.',
     solutionZh: '采用橱柜翻新而非完全更换，现代照明升级，当代设备选择，以及分阶段翻新方法最小化干扰。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-after.png', altEn: 'Coquitlam kitchen after', altZh: '高贵林厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-before.png', altEn: 'Coquitlam kitchen before', altZh: '高贵林厨房装修前', isBefore: true },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/90.png', altEn: 'Bathroom after', altZh: '浴室装修后' },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-before.png',
+        beforeAltEn: 'Coquitlam kitchen before',
+        beforeAltZh: '高贵林厨房装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p9-kitchen-after.png',
+        afterAltEn: 'Coquitlam kitchen after',
+        afterAltZh: '高贵林厨房装修后',
+        titleEn: 'Kitchen Transformation',
+        titleZh: '厨房改造',
+      },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/90.png', afterAltEn: 'Bathroom after', afterAltZh: '浴室装修后', titleEn: 'Bathroom', titleZh: '浴室' },
     ],
     scopes: [
       { en: 'Cabinet Refacing', zh: '橱柜翻新' },
@@ -854,10 +1023,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'White upper and gray lower cabinetry to brighten spaces, quartz countertops for durability, modern lighting including recessed lights and LED-lit mirrors, sliding-door shower replacing built-in tub for space efficiency.',
     solutionZh: '白色上柜和灰色下柜使空间更明亮，石英台面保证耐用性，现代照明包括嵌入式灯和LED镜子，滑动门淋浴替代内置浴缸以提高空间效率。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p13-kitchen-after.png', altEn: 'Surrey condo kitchen after', altZh: '素里公寓厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p13-bath.jpg', altEn: 'Surrey condo bathroom', altZh: '素里公寓浴室' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/17-2.png', altEn: 'Kitchen detail', altZh: '厨房细节' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p13-kitchen-after.png', afterAltEn: 'Surrey condo kitchen after', afterAltZh: '素里公寓厨房装修后', titleEn: 'Kitchen After', titleZh: '厨房装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p13-bath.jpg', afterAltEn: 'Surrey condo bathroom', afterAltZh: '素里公寓浴室', titleEn: 'Bathroom', titleZh: '浴室' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/17-2.png', afterAltEn: 'Kitchen detail', afterAltZh: '厨房细节', titleEn: 'Kitchen Detail', titleZh: '厨房细节' },
     ],
     scopes: [
       { en: 'Two-Tone Cabinetry', zh: '双色橱柜' },
@@ -882,11 +1051,11 @@ const PROJECTS_RAW: ProjectData[] = [
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/0c986c5d-d8cf-4ce8-bed7-6f1736a8d916-1.jpg',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/0c986c5d-d8cf-4ce8-bed7-6f1736a8d916-1.jpg', altEn: 'Burnaby kitchen after', altZh: '本拿比厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/2dc54065-997c-47b3-97e7-50eff87b4ec4-1.jpg', altEn: 'Kitchen cabinets', altZh: '厨房橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/41fafa63-e37b-4f06-8dc3-73e91555c73f-1.jpg', altEn: 'Kitchen countertops', altZh: '厨房台面' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/43df5ebc-9f93-4376-ab84-e332f8ab143c.jpg', altEn: 'Kitchen overview', altZh: '厨房全景' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/0c986c5d-d8cf-4ce8-bed7-6f1736a8d916-1.jpg', afterAltEn: 'Burnaby kitchen after', afterAltZh: '本拿比厨房装修后', titleEn: 'Kitchen After', titleZh: '厨房装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/2dc54065-997c-47b3-97e7-50eff87b4ec4-1.jpg', afterAltEn: 'Kitchen cabinets', afterAltZh: '厨房橱柜', titleEn: 'Kitchen Cabinets', titleZh: '厨房橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/41fafa63-e37b-4f06-8dc3-73e91555c73f-1.jpg', afterAltEn: 'Kitchen countertops', afterAltZh: '厨房台面', titleEn: 'Countertops', titleZh: '台面' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/43df5ebc-9f93-4376-ab84-e332f8ab143c.jpg', afterAltEn: 'Kitchen overview', afterAltZh: '厨房全景', titleEn: 'Kitchen Overview', titleZh: '厨房全景' },
     ],
     scopes: [
       { en: 'Modern Cabinetry', zh: '现代橱柜' },
@@ -915,11 +1084,11 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Custom wardrobes, stylish lighting, and modern design elements combined with tailored storage solutions and high-quality materials throughout the home.',
     solutionZh: '定制衣柜、时尚照明和现代设计元素，结合量身定制的储物方案和全屋高品质材料。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/3-4.png', altEn: 'Coquitlam bedroom design', altZh: '高贵林卧室设计' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p10-kitchen.png', altEn: 'Kitchen renovation', altZh: '厨房翻新' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p10-cabinet.png', altEn: 'Custom cabinet', altZh: '定制橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/51.png', altEn: 'TV stand', altZh: '电视柜' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/3-4.png', afterAltEn: 'Coquitlam bedroom design', afterAltZh: '高贵林卧室设计', titleEn: 'Bedroom Design', titleZh: '卧室设计' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p10-kitchen.png', afterAltEn: 'Kitchen renovation', afterAltZh: '厨房翻新', titleEn: 'Kitchen', titleZh: '厨房' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p10-cabinet.png', afterAltEn: 'Custom cabinet', afterAltZh: '定制橱柜', titleEn: 'Custom Cabinet', titleZh: '定制橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/51.png', afterAltEn: 'TV stand', afterAltZh: '电视柜', titleEn: 'TV Stand', titleZh: '电视柜' },
     ],
     scopes: [
       { en: 'Wainscoting', zh: '护墙板' },
@@ -948,11 +1117,11 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'White cabinets replaced the old wooden ones, opening up the room and reflecting light. Quartz countertops for durability and aesthetics. Recessed and track lighting systems. Custom-built cabinetry for optimized storage.',
     solutionZh: '白色橱柜替换了旧的木质橱柜，使房间更开阔并反射光线。石英台面保证耐用性和美感。嵌入式和轨道照明系统。定制橱柜优化储物。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/13-3.png', altEn: 'Richmond modern kitchen', altZh: '列治文现代厨房' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/14.png', altEn: 'Kitchen after', altZh: '厨房装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/55-1.png', altEn: 'Modern sink', altZh: '现代水槽' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/54-1.png', altEn: 'Bathroom detail', altZh: '浴室细节' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/13-3.png', afterAltEn: 'Richmond modern kitchen', afterAltZh: '列治文现代厨房', titleEn: 'Modern Kitchen', titleZh: '现代厨房' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/14.png', afterAltEn: 'Kitchen after', afterAltZh: '厨房装修后', titleEn: 'Kitchen After', titleZh: '厨房装修后' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/55-1.png', afterAltEn: 'Modern sink', afterAltZh: '现代水槽', titleEn: 'Modern Sink', titleZh: '现代水槽' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/54-1.png', afterAltEn: 'Bathroom detail', afterAltZh: '浴室细节', titleEn: 'Bathroom Detail', titleZh: '浴室细节' },
     ],
     scopes: [
       { en: 'White Shaker Cabinets', zh: '白色摇门橱柜' },
@@ -981,11 +1150,11 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'White shaker-style upper cabinets paired with soft gray lower cabinets for brightness and contrast. Central island addition for workspace, storage, and seating. Custom storage solutions with pull-out pantry drawers and soft-close cabinets.',
     solutionZh: '白色摇门式上柜搭配柔和灰色下柜，增加明亮度和对比度。添加中央岛台用于工作空间、储物和座位。拉出式储物抽屉和缓冲柜等定制储物方案。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/28-1.png', altEn: 'White Rock kitchen countertops', altZh: '白石镇厨房台面' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/27-1.png', altEn: 'Mono-toned design', altZh: '单色调设计' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/26-2.png', altEn: 'Kitchen cabinets', altZh: '厨房橱柜' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/25-2.png', altEn: 'Kitchen island', altZh: '厨房岛台' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/28-1.png', afterAltEn: 'White Rock kitchen countertops', afterAltZh: '白石镇厨房台面', titleEn: 'Kitchen Countertops', titleZh: '厨房台面' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/27-1.png', afterAltEn: 'Mono-toned design', afterAltZh: '单色调设计', titleEn: 'Mono-Toned Design', titleZh: '单色调设计' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/26-2.png', afterAltEn: 'Kitchen cabinets', afterAltZh: '厨房橱柜', titleEn: 'Kitchen Cabinets', titleZh: '厨房橱柜' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/25-2.png', afterAltEn: 'Kitchen island', afterAltZh: '厨房岛台', titleEn: 'Kitchen Island', titleZh: '厨房岛台' },
     ],
     scopes: [
       { en: 'Two-Tone Cabinetry', zh: '双色橱柜' },
@@ -1015,10 +1184,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionZh: '密封一侧淋浴门，创造宽敞的双淋浴布局。全程安装新瓷砖。添加定制双洗手台增加储物。采用无框玻璃淋浴房打造极简美学。',
     featured: false,
     badgeEn: 'New', badgeZh: '新',
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/maple-ridge-double-vanity-glass-shower.jpg', altEn: 'Maple Ridge bathroom', altZh: '枫树岭浴室' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/double-vanity-with-round-mirrors-and-wall-mounted-lighting-in-modern-bathroom.jpg', altEn: 'Double vanity with mirrors', altZh: '带镜子的双洗手台' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/modern-double-shower-with-built-in-shelf-dual-showerheads-and-glass-enclosure.jpg', altEn: 'Modern shower', altZh: '现代淋浴' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/maple-ridge-double-vanity-glass-shower.jpg', afterAltEn: 'Maple Ridge bathroom', afterAltZh: '枫树岭浴室', titleEn: 'Bathroom', titleZh: '浴室' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/double-vanity-with-round-mirrors-and-wall-mounted-lighting-in-modern-bathroom.jpg', afterAltEn: 'Double vanity with mirrors', afterAltZh: '带镜子的双洗手台', titleEn: 'Double Vanity', titleZh: '双洗手台' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/modern-double-shower-with-built-in-shelf-dual-showerheads-and-glass-enclosure.jpg', afterAltEn: 'Modern shower', afterAltZh: '现代淋浴', titleEn: 'Modern Shower', titleZh: '现代淋浴' },
     ],
     scopes: [
       { en: 'Double Vanity', zh: '双洗手台' },
@@ -1047,10 +1216,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Removed structural walls to achieve an open-concept space that improved workflow and aesthetics. Modern design repositioned fixtures and added contemporary elements like frameless glass shower doors. Installed 12mm laminate flooring throughout.',
     solutionZh: '拆除结构墙实现开放式空间，改善工作流程和美感。现代设计重新定位设备，添加无框玻璃淋浴门等现代元素。全程安装12mm强化地板。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p8-kitchen.png', altEn: 'Richmond kitchen', altZh: '列治文厨房' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p8-living-after.png', altEn: 'Living area after', altZh: '客厅装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/flooring-in-vancouver.png', altEn: 'Flooring', altZh: '地板' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p8-kitchen.png', afterAltEn: 'Richmond kitchen', afterAltZh: '列治文厨房', titleEn: 'Kitchen', titleZh: '厨房' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p8-living-after.png', afterAltEn: 'Living area after', afterAltZh: '客厅装修后', titleEn: 'Living Area', titleZh: '客厅' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/flooring-in-vancouver.png', afterAltEn: 'Flooring', afterAltZh: '地板', titleEn: 'Flooring', titleZh: '地板' },
     ],
     scopes: [
       { en: 'Wall Removal', zh: '拆墙' },
@@ -1079,10 +1248,10 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Installed freestanding bathtub positioned near windows for an open and airy feel. Added customized glass shower enclosure with chrome finishes. Incorporated built-in niches for organizing toiletries.',
     solutionZh: '安装靠近窗户的独立浴缸，营造开放通风的感觉。添加带镀铬饰面的定制玻璃淋浴房。融入内置壁龛用于整理洗漱用品。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/spacious-modern-bathroom-with-freestanding-tub-and-glass-shower.webp', altEn: 'Surrey bathroom with tub and shower', altZh: '素里浴室配浴缸和淋浴' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/e03c6eaa8e5f4bab6055afb1d790a96.webp', altEn: 'Bathroom detail', altZh: '浴室细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/21-2.png', altEn: 'Walk-in shower', altZh: '步入式淋浴' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/spacious-modern-bathroom-with-freestanding-tub-and-glass-shower.webp', afterAltEn: 'Surrey bathroom with tub and shower', afterAltZh: '素里浴室配浴缸和淋浴', titleEn: 'Bathroom with Tub', titleZh: '带浴缸浴室' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/e03c6eaa8e5f4bab6055afb1d790a96.webp', afterAltEn: 'Bathroom detail', afterAltZh: '浴室细节', titleEn: 'Bathroom Detail', titleZh: '浴室细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/21-2.png', afterAltEn: 'Walk-in shower', afterAltZh: '步入式淋浴', titleEn: 'Walk-in Shower', titleZh: '步入式淋浴' },
     ],
     scopes: [
       { en: 'Freestanding Bathtub', zh: '独立浴缸' },
@@ -1111,9 +1280,17 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Installed white cabinetry with minimalist design for storage and brightness. Added wall-mounted sconces and recessed lighting for layered illumination. Integrated matte black fixtures for design cohesion.',
     solutionZh: '安装极简设计的白色橱柜用于储物和增加亮度。添加壁灯和嵌入式照明实现分层照明。整合哑光黑色设备实现设计统一。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p16-bath.png', altEn: 'Vancouver bathroom after', altZh: '温哥华浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/61-1.png', altEn: 'Bathroom before', altZh: '浴室装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/61-1.png',
+        beforeAltEn: 'Bathroom before',
+        beforeAltZh: '浴室装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p16-bath.png',
+        afterAltEn: 'Vancouver bathroom after',
+        afterAltZh: '温哥华浴室装修后',
+        titleEn: 'Bathroom Transformation',
+        titleZh: '浴室改造',
+      },
     ],
     scopes: [
       { en: 'White Cabinetry', zh: '白色橱柜' },
@@ -1142,9 +1319,17 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Selected white cabinetry and fixtures to maximize the light and create a fresh, airy environment. Black brick shower wall with white mosaic floor tiles. LED-lit mirror with front and rear illumination.',
     solutionZh: '选择白色橱柜和设备最大化光线，创造清新通透的环境。黑色砖块淋浴墙配白色马赛克地砖。带前后照明的LED镜子。',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p17-bath-after.png', altEn: 'Coquitlam condo bathroom after', altZh: '高贵林公寓浴室装修后' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/04/p17-bath-before.png', altEn: 'Bathroom before', altZh: '浴室装修前', isBefore: true },
+    imagePairs: [
+      {
+        beforeUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p17-bath-before.png',
+        beforeAltEn: 'Bathroom before',
+        beforeAltZh: '浴室装修前',
+        afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/04/p17-bath-after.png',
+        afterAltEn: 'Coquitlam condo bathroom after',
+        afterAltZh: '高贵林公寓浴室装修后',
+        titleEn: 'Bathroom Transformation',
+        titleZh: '浴室改造',
+      },
     ],
     scopes: [
       { en: 'Black Brick Shower Wall', zh: '黑色砖块淋浴墙' },
@@ -1173,8 +1358,8 @@ const PROJECTS_RAW: ProjectData[] = [
     solutionEn: 'Custom cabinet installations in treatment areas, innovative hallway design with integrated shelving, professional indirect lighting systems, and modern minimalist aesthetic implementation.',
     solutionZh: '治疗区定制橱柜安装，创新走廊设计配集成搁架，专业间接照明系统，以及现代极简美学实施。',
     featured: true,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2024/06/1.jpg', altEn: 'Beauty clinic reception', altZh: '美容诊所接待区' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2024/06/1.jpg', afterAltEn: 'Beauty clinic reception', afterAltZh: '美容诊所接待区', titleEn: 'Reception', titleZh: '接待区' },
     ],
     scopes: [
       { en: 'Reception Design', zh: '接待区设计' },
@@ -1199,10 +1384,10 @@ const PROJECTS_RAW: ProjectData[] = [
     spaceTypeEn: 'Townhouse', spaceTypeZh: '联排别墅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143240_085.jpg',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143240_085.jpg', altEn: 'Richmond townhouse kitchen', altZh: '列治文联排别墅厨房' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143308_670.jpg', altEn: 'Kitchen detail', altZh: '厨房细节' },
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143635_841.jpg', altEn: 'Bathroom', altZh: '浴室' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143240_085.jpg', afterAltEn: 'Richmond townhouse kitchen', afterAltZh: '列治文联排别墅厨房', titleEn: 'Kitchen', titleZh: '厨房' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143308_670.jpg', afterAltEn: 'Kitchen detail', afterAltZh: '厨房细节', titleEn: 'Kitchen Detail', titleZh: '厨房细节' },
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/dji_20241210_143635_841.jpg', afterAltEn: 'Bathroom', afterAltZh: '浴室', titleEn: 'Bathroom', titleZh: '浴室' },
     ],
     scopes: [
       { en: 'Kitchen Redesign', zh: '厨房重新设计' },
@@ -1227,8 +1412,8 @@ const PROJECTS_RAW: ProjectData[] = [
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/img_3051-2-mfrh-original-scaled.jpg',
     featured: false,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/img_3051-2-mfrh-original-scaled.jpg', altEn: 'Vancouver whole house renovation', altZh: '温哥华全屋翻新' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/img_3051-2-mfrh-original-scaled.jpg', afterAltEn: 'Vancouver whole house renovation', afterAltZh: '温哥华全屋翻新', titleEn: 'Whole House Renovation', titleZh: '全屋翻新' },
     ],
     scopes: [
       { en: 'Kitchen Renovation', zh: '厨房翻新' },
@@ -1253,8 +1438,8 @@ const PROJECTS_RAW: ProjectData[] = [
     spaceTypeEn: 'Residential', spaceTypeZh: '住宅',
     heroImageUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/whole-house-renovation-open-living-and-dining-space.jpg',
     featured: true,
-    images: [
-      { url: 'https://reno-stars.com/wp-content/uploads/2025/03/whole-house-renovation-open-living-and-dining-space.jpg', altEn: 'Whole house kitchen', altZh: '全屋厨房' },
+    imagePairs: [
+      { afterUrl: 'https://reno-stars.com/wp-content/uploads/2025/03/whole-house-renovation-open-living-and-dining-space.jpg', afterAltEn: 'Whole house kitchen', afterAltZh: '全屋厨房', titleEn: 'Whole House', titleZh: '全屋' },
     ],
     scopes: [
       { en: 'Kitchen Renovation', zh: '厨房翻新' },
@@ -1276,12 +1461,12 @@ async function clearExistingData() {
   // Delete in order to respect foreign keys
   await db.delete(projectExternalProducts);
   await db.delete(projectScopes);
-  await db.delete(projectImages);
+  await db.delete(projectImagePairs);
   await db.delete(projectsTable);
-  await db.delete(siteImages);
+  await db.delete(siteImagePairs);
   await db.delete(projectSites);
 
-  console.log('  Cleared all projects, images, scopes, external products, site images, and sites');
+  console.log('  Cleared all projects, image pairs, scopes, external products, site image pairs, and sites');
 }
 
 async function seedSites(): Promise<Map<string, string>> {
@@ -1310,21 +1495,25 @@ async function seedSites(): Promise<Map<string, string>> {
 
     siteIdMap.set(site.slug, inserted.id);
 
-    // Insert site images
-    if (site.images && site.images.length > 0) {
-      await db.insert(siteImages).values(
-        site.images.map((img, i) => ({
+    // Insert site image pairs
+    if (site.imagePairs && site.imagePairs.length > 0) {
+      await db.insert(siteImagePairs).values(
+        site.imagePairs.map((pair, i) => ({
           siteId: inserted.id,
-          imageUrl: img.imageUrl,
-          altTextEn: img.altTextEn,
-          altTextZh: img.altTextZh,
-          isBefore: img.isBefore,
+          beforeImageUrl: pair.beforeUrl ?? null,
+          beforeAltTextEn: pair.beforeAltEn ?? null,
+          beforeAltTextZh: pair.beforeAltZh ?? null,
+          afterImageUrl: pair.afterUrl ?? null,
+          afterAltTextEn: pair.afterAltEn ?? null,
+          afterAltTextZh: pair.afterAltZh ?? null,
+          titleEn: pair.titleEn ?? null,
+          titleZh: pair.titleZh ?? null,
           displayOrder: i,
         }))
       );
     }
 
-    console.log(`  Created site: ${site.slug} (${site.images?.length ?? 0} images)`);
+    console.log(`  Created site: ${site.slug} (${site.imagePairs?.length ?? 0} image pairs)`);
   }
 
   return siteIdMap;
@@ -1410,16 +1599,20 @@ async function seedProjects(siteIdMap: Map<string, string>) {
 
     const projectId = inserted.id;
 
-    // Insert images and scopes in parallel
+    // Insert image pairs and scopes in parallel
     const insertions: Promise<unknown>[] = [];
-    if (p.images.length > 0) {
-      insertions.push(db.insert(projectImages).values(
-        p.images.map((img, i) => ({
+    if (p.imagePairs.length > 0) {
+      insertions.push(db.insert(projectImagePairs).values(
+        p.imagePairs.map((pair, i) => ({
           projectId,
-          imageUrl: img.url,
-          altTextEn: img.altEn,
-          altTextZh: img.altZh,
-          isBefore: img.isBefore ?? false,
+          beforeImageUrl: pair.beforeUrl ?? null,
+          beforeAltTextEn: pair.beforeAltEn ?? null,
+          beforeAltTextZh: pair.beforeAltZh ?? null,
+          afterImageUrl: pair.afterUrl ?? null,
+          afterAltTextEn: pair.afterAltEn ?? null,
+          afterAltTextZh: pair.afterAltZh ?? null,
+          titleEn: pair.titleEn ?? null,
+          titleZh: pair.titleZh ?? null,
           displayOrder: i,
         }))
       ));

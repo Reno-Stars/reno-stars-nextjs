@@ -6,6 +6,7 @@ import { db } from '@/lib/db';
 import {
   projects,
   projectImages,
+  projectImagePairs,
   projectScopes,
   projectExternalProducts,
   services as servicesTable,
@@ -18,6 +19,7 @@ import { ensureUniqueSlug } from '@/lib/utils';
 import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeKey } from '@/lib/admin/constants';
 
 const MAX_IMAGES = 50;
+const MAX_IMAGE_PAIRS = 50;
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
 
@@ -56,6 +58,48 @@ function parseImages(formData: FormData) {
     i++;
   }
   return images;
+}
+
+function parseImagePairs(formData: FormData) {
+  const pairs: {
+    beforeImageUrl: string | null;
+    beforeAltTextEn: string | null;
+    beforeAltTextZh: string | null;
+    afterImageUrl: string | null;
+    afterAltTextEn: string | null;
+    afterAltTextZh: string | null;
+    titleEn: string | null;
+    titleZh: string | null;
+    captionEn: string | null;
+    captionZh: string | null;
+    photographerCredit: string | null;
+    keywords: string | null;
+    displayOrder: number;
+  }[] = [];
+  let i = 0;
+  while (formData.has(`imagePairs[${i}].id`) && i < MAX_IMAGE_PAIRS) {
+    const beforeUrl = getString(formData, `imagePairs[${i}].beforeUrl`).trim();
+    const afterUrl = getString(formData, `imagePairs[${i}].afterUrl`).trim();
+    // Skip pairs with no images
+    if (!beforeUrl && !afterUrl) { i++; continue; }
+    pairs.push({
+      beforeImageUrl: beforeUrl || null,
+      beforeAltTextEn: getString(formData, `imagePairs[${i}].beforeAltEn`) || null,
+      beforeAltTextZh: getString(formData, `imagePairs[${i}].beforeAltZh`) || null,
+      afterImageUrl: afterUrl || null,
+      afterAltTextEn: getString(formData, `imagePairs[${i}].afterAltEn`) || null,
+      afterAltTextZh: getString(formData, `imagePairs[${i}].afterAltZh`) || null,
+      titleEn: getString(formData, `imagePairs[${i}].titleEn`) || null,
+      titleZh: getString(formData, `imagePairs[${i}].titleZh`) || null,
+      captionEn: getString(formData, `imagePairs[${i}].captionEn`) || null,
+      captionZh: getString(formData, `imagePairs[${i}].captionZh`) || null,
+      photographerCredit: getString(formData, `imagePairs[${i}].photographerCredit`) || null,
+      keywords: getString(formData, `imagePairs[${i}].keywords`) || null,
+      displayOrder: i,
+    });
+    i++;
+  }
+  return pairs;
 }
 
 function parseScopes(formData: FormData) {
@@ -167,10 +211,22 @@ export async function createProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
+    // Parse legacy images
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
       return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
+    }
+
+    // Parse image pairs (new structure)
+    const pairData = parseImagePairs(formData);
+    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
+    if (invalidPairBeforeUrl) {
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+    }
+    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
+    if (invalidPairAfterUrl) {
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
     const epData = parseExternalProducts(formData);
@@ -219,9 +275,17 @@ export async function createProject(
       })
       .returning({ id: projects.id });
 
+    // Insert legacy images (for backward compatibility)
     if (imgData.length > 0) {
       await db.insert(projectImages).values(
         imgData.map((img) => ({ ...img, projectId: inserted.id }))
+      );
+    }
+
+    // Insert image pairs (new structure)
+    if (pairData.length > 0) {
+      await db.insert(projectImagePairs).values(
+        pairData.map((pair) => ({ ...pair, projectId: inserted.id }))
       );
     }
 
@@ -277,10 +341,22 @@ export async function updateProject(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
+    // Parse legacy images
     const imgData = parseImages(formData);
     const invalidImgUrl = imgData.find((img) => !isValidUrl(img.imageUrl));
     if (invalidImgUrl) {
       return { error: `Image URL is not valid: ${invalidImgUrl.imageUrl.slice(0, 60)}` };
+    }
+
+    // Parse image pairs (new structure)
+    const pairData = parseImagePairs(formData);
+    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
+    if (invalidPairBeforeUrl) {
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+    }
+    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
+    if (invalidPairAfterUrl) {
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
     const epData = parseExternalProducts(formData);
@@ -330,11 +406,19 @@ export async function updateProject(
         .set({ ...data, serviceId: svcRows[0].id })
         .where(eq(projects.id, id));
 
-      // Delete and re-insert images
+      // Delete and re-insert legacy images
       await tx.delete(projectImages).where(eq(projectImages.projectId, id));
       if (imgData.length > 0) {
         await tx.insert(projectImages).values(
           imgData.map((img) => ({ ...img, projectId: id }))
+        );
+      }
+
+      // Delete and re-insert image pairs
+      await tx.delete(projectImagePairs).where(eq(projectImagePairs.projectId, id));
+      if (pairData.length > 0) {
+        await tx.insert(projectImagePairs).values(
+          pairData.map((pair) => ({ ...pair, projectId: id }))
         );
       }
 

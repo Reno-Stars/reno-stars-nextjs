@@ -9,6 +9,53 @@ export type Locale = 'en' | 'zh';
 /** Helper type for bilingual content */
 export type Localized<T> = Record<Locale, T>;
 
+// ============================================================================
+// IMAGE PAIR TYPES
+// ============================================================================
+
+/** An image with bilingual alt text */
+export interface ImageWithAlt {
+  src: string;
+  alt: Localized<string>;
+}
+
+/** A localized image with resolved alt text */
+export interface LocalizedImageWithAlt {
+  src: string;
+  alt: string;
+}
+
+/**
+ * A before/after image pair with comprehensive SEO metadata.
+ * At least one of beforeImage or afterImage must be present.
+ */
+export interface ImagePair {
+  /** Before image (optional if afterImage exists) */
+  beforeImage?: ImageWithAlt;
+  /** After image (optional if beforeImage exists) */
+  afterImage?: ImageWithAlt;
+  /** Pair title for SEO */
+  title?: Localized<string>;
+  /** Pair caption/description */
+  caption?: Localized<string>;
+  /** Photographer credit */
+  photographerCredit?: string;
+  /** SEO keywords (comma-separated) */
+  keywords?: string;
+}
+
+/**
+ * Localized image pair with resolved locale-specific content.
+ */
+export interface LocalizedImagePair {
+  beforeImage?: LocalizedImageWithAlt;
+  afterImage?: LocalizedImageWithAlt;
+  title?: string;
+  caption?: string;
+  photographerCredit?: string;
+  keywords?: string;
+}
+
 /** Available service types for renovation projects.
  * 'whole-house' is kept for DB compatibility but hidden from admin forms —
  * whole-house renovations are now represented by Sites, not individual projects. */
@@ -58,8 +105,10 @@ export interface Site {
   published_at?: Date;
   /** Number of projects belonging to this site */
   project_count?: number;
-  /** Site-level gallery images (before/after) */
+  /** @deprecated Use image_pairs instead */
   images?: { src: string; alt: Localized<string>; is_before?: boolean }[];
+  /** Before/after image pairs with SEO metadata */
+  image_pairs?: ImagePair[];
 }
 
 /**
@@ -128,8 +177,10 @@ export interface Project {
   duration?: Localized<string>;
   /** Type of space (Residential, Commercial, etc.) */
   space_type?: Localized<string>;
-  /** Project images with before/after indicators */
+  /** @deprecated Use image_pairs instead */
   images: { src: string; alt: Localized<string>; is_before?: boolean }[];
+  /** Before/after image pairs with SEO metadata */
+  image_pairs?: ImagePair[];
   /** Primary display image URL */
   hero_image: string;
   /** List of work scope items */
@@ -332,7 +383,10 @@ export interface LocalizedProject {
   duration?: string;
   space_type?: string;
   hero_image: string;
+  /** @deprecated Use image_pairs instead */
   images: { src: string; alt: string; is_before?: boolean }[];
+  /** Before/after image pairs with localized SEO metadata */
+  image_pairs?: LocalizedImagePair[];
   service_scope?: string[];
   challenge?: string;
   solution?: string;
@@ -354,7 +408,10 @@ export interface LocalizedSite {
   badge?: string;
   show_as_project: boolean;
   featured: boolean;
+  /** @deprecated Use image_pairs instead */
   images?: { src: string; alt: string; is_before?: boolean }[];
+  /** Before/after image pairs with localized SEO metadata */
+  image_pairs?: LocalizedImagePair[];
 }
 
 /** A localized image with project attribution (for site views) */

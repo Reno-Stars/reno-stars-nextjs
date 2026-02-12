@@ -187,6 +187,7 @@ export const projectSites = pgTable(
 export const projectSitesRelations = relations(projectSites, ({ many }) => ({
   projects: many(projects),
   images: many(siteImages),
+  imagePairs: many(siteImagePairs),
 }));
 
 // ============================================================================
@@ -214,6 +215,54 @@ export const siteImages = pgTable(
 export const siteImagesRelations = relations(siteImages, ({ one }) => ({
   site: one(projectSites, {
     fields: [siteImages.siteId],
+    references: [projectSites.id],
+  }),
+}));
+
+// ============================================================================
+// SITE IMAGE PAIRS
+// ============================================================================
+
+/**
+ * Before/after image pairs for sites with comprehensive SEO metadata.
+ * Each pair can have a before image, after image, or both (at least one required).
+ */
+export const siteImagePairs = pgTable(
+  'site_image_pairs',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    siteId: uuid('site_id')
+      .references(() => projectSites.id, { onDelete: 'cascade' })
+      .notNull(),
+    // Before image (optional)
+    beforeImageUrl: varchar('before_image_url', { length: 500 }),
+    beforeAltTextEn: varchar('before_alt_text_en', { length: 255 }),
+    beforeAltTextZh: varchar('before_alt_text_zh', { length: 255 }),
+    // After image (optional)
+    afterImageUrl: varchar('after_image_url', { length: 500 }),
+    afterAltTextEn: varchar('after_alt_text_en', { length: 255 }),
+    afterAltTextZh: varchar('after_alt_text_zh', { length: 255 }),
+    // SEO metadata
+    titleEn: varchar('title_en', { length: 200 }),
+    titleZh: varchar('title_zh', { length: 200 }),
+    captionEn: text('caption_en'),
+    captionZh: text('caption_zh'),
+    photographerCredit: varchar('photographer_credit', { length: 100 }),
+    keywords: text('keywords'),
+    // Display
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('site_image_pairs_site_id_idx').on(table.siteId),
+    // Constraint: at least one image URL required
+    check('site_at_least_one_image', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL`),
+  ]
+);
+
+export const siteImagePairsRelations = relations(siteImagePairs, ({ one }) => ({
+  site: one(projectSites, {
+    fields: [siteImagePairs.siteId],
     references: [projectSites.id],
   }),
 }));
@@ -309,6 +358,7 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
     references: [services.id],
   }),
   images: many(projectImages),
+  imagePairs: many(projectImagePairs),
   scopes: many(projectScopes),
   externalProducts: many(projectExternalProducts),
   site: one(projectSites, {
@@ -342,6 +392,54 @@ export const projectImages = pgTable(
 export const projectImagesRelations = relations(projectImages, ({ one }) => ({
   project: one(projects, {
     fields: [projectImages.projectId],
+    references: [projects.id],
+  }),
+}));
+
+// ============================================================================
+// PROJECT IMAGE PAIRS
+// ============================================================================
+
+/**
+ * Before/after image pairs for projects with comprehensive SEO metadata.
+ * Each pair can have a before image, after image, or both (at least one required).
+ */
+export const projectImagePairs = pgTable(
+  'project_image_pairs',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    projectId: uuid('project_id')
+      .references(() => projects.id, { onDelete: 'cascade' })
+      .notNull(),
+    // Before image (optional)
+    beforeImageUrl: varchar('before_image_url', { length: 500 }),
+    beforeAltTextEn: varchar('before_alt_text_en', { length: 255 }),
+    beforeAltTextZh: varchar('before_alt_text_zh', { length: 255 }),
+    // After image (optional)
+    afterImageUrl: varchar('after_image_url', { length: 500 }),
+    afterAltTextEn: varchar('after_alt_text_en', { length: 255 }),
+    afterAltTextZh: varchar('after_alt_text_zh', { length: 255 }),
+    // SEO metadata
+    titleEn: varchar('title_en', { length: 200 }),
+    titleZh: varchar('title_zh', { length: 200 }),
+    captionEn: text('caption_en'),
+    captionZh: text('caption_zh'),
+    photographerCredit: varchar('photographer_credit', { length: 100 }),
+    keywords: text('keywords'),
+    // Display
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('project_image_pairs_project_id_idx').on(table.projectId),
+    // Constraint: at least one image URL required
+    check('at_least_one_image', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL`),
+  ]
+);
+
+export const projectImagePairsRelations = relations(projectImagePairs, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectImagePairs.projectId],
     references: [projects.id],
   }),
 }));
@@ -705,11 +803,17 @@ export type NewDbSite = typeof projectSites.$inferInsert;
 export type DbSiteImage = typeof siteImages.$inferSelect;
 export type NewDbSiteImage = typeof siteImages.$inferInsert;
 
+export type DbSiteImagePair = typeof siteImagePairs.$inferSelect;
+export type NewDbSiteImagePair = typeof siteImagePairs.$inferInsert;
+
 export type DbProject = typeof projects.$inferSelect;
 export type NewDbProject = typeof projects.$inferInsert;
 
 export type DbProjectImage = typeof projectImages.$inferSelect;
 export type NewDbProjectImage = typeof projectImages.$inferInsert;
+
+export type DbProjectImagePair = typeof projectImagePairs.$inferSelect;
+export type NewDbProjectImagePair = typeof projectImagePairs.$inferInsert;
 
 export type DbProjectScope = typeof projectScopes.$inferSelect;
 export type NewDbProjectScope = typeof projectScopes.$inferInsert;

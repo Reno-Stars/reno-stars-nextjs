@@ -1,46 +1,53 @@
 import type { useTranslations } from 'next-intl';
-import { NAVY, GOLD } from '@/lib/theme';
+import { NAVY, GOLD, TEXT_MUTED } from '@/lib/theme';
 
-interface ImageBadgeProps {
-  /** Translated label text (e.g. "Before" / "施工前") */
-  label: string;
-  /** Visual variant: navy background for before, gold for after */
-  variant: 'before' | 'after';
-  /** Compact size for small thumbnails */
-  compact?: boolean;
-}
-
-export default function ImageBadge({ label, variant, compact }: ImageBadgeProps) {
-  const sizeClasses = compact
-    ? 'top-1 left-1 px-1.5 py-0.5 text-[10px]'
-    : 'top-2 left-2 px-2 py-1 text-xs';
-
-  return (
-    <span
-      className={`absolute ${sizeClasses} rounded font-semibold text-white z-10`}
-      style={{ backgroundColor: variant === 'before' ? NAVY : GOLD }}
-    >
-      {label}
-    </span>
-  );
-}
-
-/** Convenience wrapper that handles the null check + label/variant derivation */
+/** Before/after badge with optional click tip */
 export function BeforeAfterBadge({
   isBefore,
   t,
   compact,
+  showClickTip,
+  hasPair,
 }: {
   isBefore?: boolean;
   t: ReturnType<typeof useTranslations>;
   compact?: boolean;
+  /** Show "click to see before/after" tip */
+  showClickTip?: boolean;
+  /** Whether this image has a paired before/after counterpart */
+  hasPair?: boolean;
 }) {
   if (isBefore == null) return null;
+
+  const label = isBefore ? t('projects.beforeLabel') : t('projects.afterLabel');
+  const variant = isBefore ? 'before' : 'after';
+
+  // Show click tip if requested and there's a counterpart
+  const shouldShowTip = showClickTip && hasPair;
+  const tipText = isBefore
+    ? t('projects.clickToSeeAfter')
+    : t('projects.clickToSeeBefore');
+
   return (
-    <ImageBadge
-      label={isBefore ? t('projects.beforeLabel') : t('projects.afterLabel')}
-      variant={isBefore ? 'before' : 'after'}
-      compact={compact}
-    />
+    <div className="absolute top-2 left-2 z-10 flex items-center gap-2">
+      <span
+        className={`${compact ? 'px-1.5 py-0.5 text-[10px]' : 'px-2 py-1 text-xs'} rounded font-semibold text-white`}
+        style={{ backgroundColor: variant === 'before' ? NAVY : GOLD }}
+      >
+        {label}
+      </span>
+      {shouldShowTip && (
+        <span
+          className="px-2 py-1 text-xs rounded font-medium"
+          style={{
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            color: TEXT_MUTED,
+            backdropFilter: 'blur(4px)',
+          }}
+        >
+          {tipText}
+        </span>
+      )}
+    </div>
   );
 }

@@ -24,6 +24,40 @@ interface ProjectImage {
   displayOrder: number;
 }
 
+interface ProjectImagePair {
+  beforeImageUrl: string | null;
+  beforeAltTextEn: string | null;
+  beforeAltTextZh: string | null;
+  afterImageUrl: string | null;
+  afterAltTextEn: string | null;
+  afterAltTextZh: string | null;
+  titleEn: string | null;
+  titleZh: string | null;
+  captionEn: string | null;
+  captionZh: string | null;
+  photographerCredit: string | null;
+  keywords: string | null;
+  displayOrder: number;
+}
+
+/** Map a DB image pair row to form-compatible shape */
+export function mapDbImagePairToForm(p: Omit<ProjectImagePair, 'displayOrder'>) {
+  return {
+    beforeUrl: p.beforeImageUrl ?? '',
+    beforeAltEn: p.beforeAltTextEn ?? '',
+    beforeAltZh: p.beforeAltTextZh ?? '',
+    afterUrl: p.afterImageUrl ?? '',
+    afterAltEn: p.afterAltTextEn ?? '',
+    afterAltZh: p.afterAltTextZh ?? '',
+    titleEn: p.titleEn ?? '',
+    titleZh: p.titleZh ?? '',
+    captionEn: p.captionEn ?? '',
+    captionZh: p.captionZh ?? '',
+    photographerCredit: p.photographerCredit ?? '',
+    keywords: p.keywords ?? '',
+  };
+}
+
 interface ProjectScope {
   scopeEn: string;
   scopeZh: string;
@@ -74,6 +108,7 @@ interface ProjectWithDetails {
   siteId: string;
   displayOrderInSite: number;
   images: ProjectImage[];
+  imagePairs: ProjectImagePair[];
   scopes: ProjectScope[];
   externalProducts: ProjectExternalProduct[];
 }
@@ -93,6 +128,20 @@ interface SiteData {
   featured: boolean;
   isPublished: boolean;
   images?: { url: string; altEn: string; altZh: string; isBefore: boolean }[];
+  imagePairs?: {
+    beforeUrl: string;
+    beforeAltEn: string;
+    beforeAltZh: string;
+    afterUrl: string;
+    afterAltEn: string;
+    afterAltZh: string;
+    titleEn: string;
+    titleZh: string;
+    captionEn: string;
+    captionZh: string;
+    photographerCredit: string;
+    keywords: string;
+  }[];
 }
 
 interface Props {
@@ -203,6 +252,7 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
         altZh: img.altTextZh ?? '',
         isBefore: img.isBefore,
       })),
+      imagePairs: project.imagePairs.map(mapDbImagePairToForm),
       scopes: project.scopes.map((s) => ({
         en: s.scopeEn,
         zh: s.scopeZh,

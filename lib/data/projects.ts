@@ -572,6 +572,18 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
       alt: img.alt[locale],
       is_before: img.is_before,
     })),
+    image_pairs: project.image_pairs?.map((pair) => ({
+      beforeImage: pair.beforeImage
+        ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+        : undefined,
+      afterImage: pair.afterImage
+        ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+        : undefined,
+      title: pair.title?.[locale],
+      caption: pair.caption?.[locale],
+      photographerCredit: pair.photographerCredit,
+      keywords: pair.keywords,
+    })),
     service_scope: project.service_scope?.[locale],
     challenge: project.challenge?.[locale],
     solution: project.solution?.[locale],
@@ -605,6 +617,18 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
       src: img.src,
       alt: img.alt[locale],
       is_before: img.is_before,
+    })),
+    image_pairs: site.image_pairs?.map((pair) => ({
+      beforeImage: pair.beforeImage
+        ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+        : undefined,
+      afterImage: pair.afterImage
+        ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+        : undefined,
+      title: pair.title?.[locale],
+      caption: pair.caption?.[locale],
+      photographerCredit: pair.photographerCredit,
+      keywords: pair.keywords,
     })),
   };
 }

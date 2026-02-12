@@ -231,7 +231,11 @@
     "nextImage": "Next image",
     "beforeLabel": "Before",
     "afterLabel": "After",
-    "externalProducts": "Products Used"
+    "clickToSeeBefore": "Click to see before",
+    "clickToSeeAfter": "Click to see after",
+    "externalProducts": "Products Used",
+    "noImages": "No images available",
+    "viewFullscreen": "View fullscreen"
   },
   "modal": {
     "location": "Location",

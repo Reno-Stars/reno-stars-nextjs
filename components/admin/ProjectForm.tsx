@@ -7,6 +7,7 @@ import AIBilingualTextarea from './AIBilingualTextarea';
 import AIProjectGenerator from './AIProjectGenerator';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
 import Tooltip from './Tooltip';
 import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
@@ -91,6 +92,7 @@ interface ProjectFormProps {
     isPublished: boolean;
     siteId: string | null;
     images: Omit<ImageEntry, 'id'>[];
+    imagePairs?: Omit<ImagePairEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
     externalProducts?: Omit<ExternalProductEntry, 'id'>[];
   };
@@ -218,6 +220,9 @@ export default function ProjectForm({
 
   const [images, setImages] = useState<ImageEntry[]>(
     initialData?.images.map((img) => ({ ...img, id: crypto.randomUUID() })) ?? [{ id: crypto.randomUUID(), url: '', altEn: '', altZh: '', isBefore: false }]
+  );
+  const [imagePairs, setImagePairs] = useState<ImagePairEntry[]>(
+    initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
   );
   const [scopes, setScopes] = useState<ScopeEntry[]>(
     initialData?.scopes.map((s) => ({ ...s, id: crypto.randomUUID() })) ?? [{ id: crypto.randomUUID(), en: '', zh: '' }]
@@ -628,6 +633,16 @@ export default function ProjectForm({
               </button>
             )}
           </div>
+
+          {/* Image Pairs (new structure) */}
+          <ImagePairEditor
+            namePrefix="imagePairs"
+            pairs={imagePairs}
+            onChange={setImagePairs}
+            editing={editing}
+            label={t.imagePairs?.title}
+            tooltip={t.imagePairs?.tooltips?.title}
+          />
 
           {/* Scopes */}
           <div style={{ marginBottom: '1rem' }}>

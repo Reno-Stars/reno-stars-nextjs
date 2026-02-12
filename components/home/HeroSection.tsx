@@ -49,7 +49,7 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
         <div className="max-w-2xl space-y-5">
-          <h1 id="hero-title" className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
+          <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
             {t.transformYourSpace}
           </h1>
           <p className="text-base lg:text-lg leading-relaxed text-white/80">
@@ -57,13 +57,13 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
           </p>
           <div className="flex flex-wrap gap-3 pt-1">
             <Link href="/contact"
-              className="px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200 text-white hover:brightness-110"
+              className="px-5 sm:px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200 text-white hover:brightness-110"
               style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}55` }}
             >
               {t.getFreeQuote}
             </Link>
             <a href={`tel:${company.phone}`}
-              className="px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer border border-white/30 text-white/90 hover:text-white hover:border-white/50 transition-all duration-200 backdrop-blur-sm"
+              className="px-5 sm:px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer border border-white/30 text-white/90 hover:text-white hover:border-white/50 transition-all duration-200 backdrop-blur-sm"
             >
               {t.callNow}
             </a>

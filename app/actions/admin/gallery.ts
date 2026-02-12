@@ -128,8 +128,7 @@ export async function reorderGalleryItems(
   }
 
   try {
-    // Update display order for each item in a transaction for atomicity
-    // Transaction callback type depends on db driver (Neon vs pg Pool)
+    // Update display order for each item atomically
     await db.transaction(async (tx: typeof db) => {
       for (let i = 0; i < orderedIds.length; i++) {
         await tx.update(galleryItems)

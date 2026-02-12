@@ -3,10 +3,11 @@
 import { useState, useTransition, useEffect } from 'react';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import StatusBadge from '@/components/admin/StatusBadge';
+import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
-import { updateContactStatus, updateContactNotes } from '@/app/actions/admin/contacts';
-import { CARD, NAVY, TEXT_MID, GOLD, neuIn, neu } from '@/lib/theme';
+import { updateContactStatus, updateContactNotes, deleteContact } from '@/app/actions/admin/contacts';
+import { CARD, NAVY, TEXT_MID, GOLD, ERROR, neuIn, neu } from '@/lib/theme';
 import { truncate } from '@/lib/utils';
 import { CONTACT_STATUSES, type ContactStatus } from '@/lib/admin/form-utils';
 
@@ -162,6 +163,8 @@ export default function ContactsListClient({ contacts }: Props) {
 function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () => void }) {
   const [notes, setNotes] = useState(contact.notes ?? '');
   const [isPending, startTransition] = useTransition();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { toast } = useToast();
   const t = useAdminTranslations();
 
@@ -218,31 +221,68 @@ function ContactDetail({ contact, onClose }: { contact: ContactRow; onClose: () 
           boxSizing: 'border-box',
         }}
       />
-      <button
-        type="button"
-        disabled={isPending}
-        onClick={() => {
-          startTransition(async () => {
-            const result = await updateContactNotes(contact.id, notes);
-            if (result.error) toast(result.error, 'error');
-            else toast(t.contacts.notesSaved);
-          });
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+        <button
+          type="button"
+          disabled={isPending}
+          onClick={() => {
+            startTransition(async () => {
+              const result = await updateContactNotes(contact.id, notes);
+              if (result.error) toast(result.error, 'error');
+              else toast(t.contacts.notesSaved);
+            });
+          }}
+          style={{
+            padding: '0.375rem 1rem',
+            borderRadius: '6px',
+            border: 'none',
+            backgroundColor: GOLD,
+            color: '#fff',
+            fontSize: '0.8125rem',
+            fontWeight: 600,
+            cursor: isPending ? 'not-allowed' : 'pointer',
+            opacity: isPending ? 0.7 : 1,
+          }}
+        >
+          {isPending ? t.contacts.savingNotes : t.contacts.saveNotes}
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowDeleteConfirm(true)}
+          style={{
+            padding: '0.375rem 1rem',
+            borderRadius: '6px',
+            border: 'none',
+            backgroundColor: 'transparent',
+            color: ERROR,
+            fontSize: '0.8125rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          {t.contacts.deleteContact}
+        </button>
+      </div>
+      <ConfirmDialog
+        open={showDeleteConfirm}
+        title={t.contacts.deleteContact}
+        message={t.contacts.deleteMessage}
+        confirmLabel={t.common.delete}
+        loading={isDeleting}
+        onCancel={() => setShowDeleteConfirm(false)}
+        onConfirm={async () => {
+          setIsDeleting(true);
+          const result = await deleteContact(contact.id);
+          setIsDeleting(false);
+          if (result.error) {
+            toast(result.error, 'error');
+          } else {
+            toast(t.contacts.deleted);
+            setShowDeleteConfirm(false);
+            onClose();
+          }
         }}
-        style={{
-          marginTop: '0.5rem',
-          padding: '0.375rem 1rem',
-          borderRadius: '6px',
-          border: 'none',
-          backgroundColor: GOLD,
-          color: '#fff',
-          fontSize: '0.8125rem',
-          fontWeight: 600,
-          cursor: isPending ? 'not-allowed' : 'pointer',
-          opacity: isPending ? 0.7 : 1,
-        }}
-      >
-        {isPending ? t.contacts.savingNotes : t.contacts.saveNotes}
-      </button>
+      />
     </div>
   );
 }

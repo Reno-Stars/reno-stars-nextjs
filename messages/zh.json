@@ -231,7 +231,11 @@
     "nextImage": "下一张图片",
     "beforeLabel": "施工前",
     "afterLabel": "施工后",
-    "externalProducts": "使用产品"
+    "clickToSeeBefore": "点击查看施工前",
+    "clickToSeeAfter": "点击查看施工后",
+    "externalProducts": "使用产品",
+    "noImages": "暂无图片",
+    "viewFullscreen": "全屏查看"
   },
   "modal": {
     "location": "地点",

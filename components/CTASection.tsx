@@ -28,7 +28,7 @@ export default function CTASection({ heading, subtitle, bg = SURFACE_ALT, showCa
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="/contact"
-            className="px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
+            className="px-6 sm:px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
             style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}44` }}
           >
             {t('cta.getFreeQuote')}
@@ -36,7 +36,7 @@ export default function CTASection({ heading, subtitle, bg = SURFACE_ALT, showCa
           {showCallButton && phone && (
             <a
               href={`tel:${phone}`}
-              className="px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
+              className="px-6 sm:px-8 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(4), backgroundColor: CARD, color: TEXT }}
             >
               {t('cta.callNow')}

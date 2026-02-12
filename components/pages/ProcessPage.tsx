@@ -308,36 +308,6 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
 
   return (
     <>
-      {/* Floating Download Button */}
-      <button
-        onClick={handleDownload}
-        disabled={isDownloading}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 px-3 py-2.5 sm:px-4 sm:py-3 rounded-full font-semibold shadow-lg transition-all hover:scale-105 disabled:opacity-70 disabled:cursor-not-allowed print:hidden"
-        style={{
-          backgroundColor: downloadStatus === 'success' ? '#16a34a' : downloadStatus === 'error' ? '#dc2626' : GOLD,
-          color: downloadStatus === 'idle' ? NAVY : 'white',
-          boxShadow: `0 4px 14px rgba(200, 146, 42, 0.4)`,
-        }}
-        aria-label={t('process.downloadPoster')}
-      >
-        {isDownloading ? (
-          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-        ) : downloadStatus === 'success' ? (
-          <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-        ) : downloadStatus === 'error' ? (
-          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-        ) : (
-          <Download className="w-4 h-4 sm:w-5 sm:h-5" />
-        )}
-        <span className="hidden sm:inline">
-          {downloadStatus === 'success'
-            ? t('process.downloadSuccess')
-            : downloadStatus === 'error'
-              ? t('process.downloadError')
-              : t('process.downloadPoster')}
-        </span>
-      </button>
-
       <div ref={posterRef} className="min-h-screen relative overflow-hidden" style={{ backgroundColor: SURFACE }}>
         {/* Decorative background elements - hidden on mobile */}
         <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
@@ -680,7 +650,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
           </div>
 
           {/* Contact Info Grid - stacked on mobile, 3 cols on desktop */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start">
             {/* Left: Contact Details */}
             <div className="space-y-3 sm:space-y-4 order-2 md:order-1">
               <a href={`tel:${company.phone}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
@@ -749,6 +719,33 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
           </div>
         </div>
       </section>
+      </div>
+
+      {/* Subtle Download Button at Bottom */}
+      <div className="py-4 text-center print:hidden" style={{ backgroundColor: SURFACE }}>
+        <button
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className="inline-flex items-center gap-1.5 text-sm opacity-40 hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ color: TEXT_MID }}
+        >
+          {isDownloading ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : downloadStatus === 'success' ? (
+            <Check className="w-3.5 h-3.5" style={{ color: '#16a34a' }} />
+          ) : downloadStatus === 'error' ? (
+            <AlertCircle className="w-3.5 h-3.5" style={{ color: '#dc2626' }} />
+          ) : (
+            <Download className="w-3.5 h-3.5" />
+          )}
+          <span>
+            {downloadStatus === 'success'
+              ? t('process.downloadSuccess')
+              : downloadStatus === 'error'
+                ? t('process.downloadError')
+                : t('process.downloadPoster')}
+          </span>
+        </button>
       </div>
     </>
   );

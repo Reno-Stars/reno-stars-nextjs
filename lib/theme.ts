@@ -1,6 +1,7 @@
 // Light-only neumorphic theme. The shadow utilities (neu, neuIn) rely on the
 // warm surface palette and will not render correctly on dark backgrounds.
 export const NAVY = '#1B365D';
+export const NAVY_90 = 'rgba(27,54,93,0.9)';
 export const NAVY_MID = '#243f6c';
 export const NAVY_LIGHT = '#2d4f7e';
 export const NAVY_PALE = '#E8EBF0';
