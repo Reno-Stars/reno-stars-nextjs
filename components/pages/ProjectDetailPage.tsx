@@ -25,6 +25,9 @@ interface ProjectDetailPageProps {
   company: Company;
 }
 
+/** Minimum swipe distance in pixels to trigger navigation */
+const SWIPE_THRESHOLD = 50;
+
 export default function ProjectDetailPage({ locale, project, allProjects, company }: ProjectDetailPageProps) {
   const t = useTranslations();
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
@@ -121,7 +124,6 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
   // Swipe detection for touch devices
   const touchStartX = useRef<number | null>(null);
-  const SWIPE_THRESHOLD = 50;
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;

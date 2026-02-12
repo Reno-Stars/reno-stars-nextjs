@@ -27,6 +27,9 @@ interface AttributedImagePair extends LocalizedImagePair {
   projectTitle: string;
 }
 
+/** Minimum swipe distance in pixels to trigger navigation */
+const SWIPE_THRESHOLD = 50;
+
 export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   const t = useTranslations();
   const [activePairIndex, setActivePairIndex] = useState(0);
@@ -139,7 +142,6 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
 
   // Swipe detection for touch devices
   const touchStartX = useRef<number | null>(null);
-  const SWIPE_THRESHOLD = 50;
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -735,9 +737,9 @@ function AreaDetailCard({
       <div className={`grid ${hasMultipleImages ? 'lg:grid-cols-2' : cardImages.length === 1 ? 'lg:grid-cols-5' : 'lg:grid-cols-1'} gap-0`}>
         {/* Image Section */}
         {cardImages.length > 0 && (
-          <div className={`${hasMultipleImages ? '' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
+          <div className={`${hasMultipleImages ? 'flex items-center' : 'lg:col-span-2'} ${!isEven && hasMultipleImages ? 'lg:order-2' : ''}`}>
             {hasMultipleImages ? (
-              <div className="grid grid-cols-2 gap-1 h-full">
+              <div className="grid grid-cols-2 gap-1 w-full">
                 {cardImages.map((img) => (
                   <div key={img.src} className="relative aspect-square">
                     <Image
