@@ -12,7 +12,7 @@ import ProductLink from '@/components/ProductLink';
 import { SITE_IMAGE_SLUG } from '@/lib/db/helpers';
 import { useDragScroll } from '@/hooks/useDragScroll';
 import {
-  GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT,
+  NAVY, GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -510,13 +510,16 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
 
           {/* Before/After Badge in fullscreen */}
           {hasBothImages && (
-            <div className="absolute top-4 left-4 z-10">
-              <BeforeAfterBadge
-                isBefore={showBefore}
-                t={t}
-                showClickTip={true}
-                hasPair={true}
-              />
+            <div className="absolute top-4 left-4 z-10 flex items-center gap-3">
+              <span
+                className="px-3 py-1.5 text-sm rounded-lg font-semibold text-white"
+                style={{ backgroundColor: showBefore ? NAVY : GOLD }}
+              >
+                {showBefore ? t('projects.beforeLabel') : t('projects.afterLabel')}
+              </span>
+              <span className="text-white/70 text-sm">
+                {t('projects.clickToToggle')}
+              </span>
             </div>
           )}
 

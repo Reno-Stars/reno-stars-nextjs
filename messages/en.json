@@ -233,6 +233,7 @@
     "afterLabel": "After",
     "clickToSeeBefore": "Click to see before",
     "clickToSeeAfter": "Click to see after",
+    "clickToToggle": "Click to toggle",
     "externalProducts": "Products Used",
     "noImages": "No images available",
     "viewFullscreen": "View fullscreen"
