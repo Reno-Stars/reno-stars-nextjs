@@ -16,6 +16,8 @@ interface ImageUrlInputProps {
   slug?: string;
   /** Image role used in the S3 key (default: 'hero') */
   imageRole?: string;
+  /** Whether the input is disabled (view mode) */
+  disabled?: boolean;
 }
 
 export default function ImageUrlInput({
@@ -26,6 +28,7 @@ export default function ImageUrlInput({
   tooltip,
   slug,
   imageRole = 'hero',
+  disabled = false,
 }: ImageUrlInputProps) {
   const t = useAdminTranslations();
   const [url, setUrl] = useState(defaultValue);
@@ -123,7 +126,7 @@ export default function ImageUrlInput({
                 justifyContent: 'center',
                 padding: 0,
               }}
-              aria-label="Help"
+              aria-label={t.common.help}
             >
               ?
             </button>
@@ -160,6 +163,7 @@ export default function ImageUrlInput({
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         required={required}
+        disabled={disabled}
         placeholder={t.upload.placeholder}
         style={{
           width: '100%',
@@ -172,14 +176,16 @@ export default function ImageUrlInput({
           fontSize: '0.875rem',
           outline: 'none',
           boxSizing: 'border-box',
+          opacity: disabled ? 0.7 : 1,
+          cursor: disabled ? 'not-allowed' : 'text',
         }}
       />
 
       {/* Upload area */}
       <button
         type="button"
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
+        onDrop={disabled ? undefined : handleDrop}
+        onDragOver={disabled ? undefined : handleDragOver}
         style={{
           width: '100%',
           marginTop: '0.5rem',
@@ -188,12 +194,12 @@ export default function ImageUrlInput({
           border: `2px dashed ${uploading ? GOLD : '#ccc'}`,
           backgroundColor: CARD,
           textAlign: 'center',
-          cursor: uploading ? 'wait' : 'pointer',
-          opacity: uploading ? 0.6 : 1,
+          cursor: disabled ? 'not-allowed' : uploading ? 'wait' : 'pointer',
+          opacity: disabled || uploading ? 0.6 : 1,
         }}
-        onClick={() => !uploading && fileInputRef.current?.click()}
+        onClick={() => !uploading && !disabled && fileInputRef.current?.click()}
         aria-label={`${t.upload.uploadImageFor} ${label}`}
-        disabled={uploading}
+        disabled={uploading || disabled}
       >
         <input
           ref={fileInputRef}

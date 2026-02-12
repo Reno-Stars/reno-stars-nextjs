@@ -12,6 +12,7 @@ interface PartnersSectionProps {
   translations: {
     title: string;
     subtitle: string;
+    srTitle: string;
   };
 }
 
@@ -81,7 +82,7 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       {/* Hidden partners for SEO - screen reader only */}
       {hiddenPartners.length > 0 && (
         <div className="sr-only">
-          <h3>Our Partners</h3>
+          <h3>{t.srTitle}</h3>
           <ul>
             {hiddenPartners.map((partner, i) => (
               <li key={i}>

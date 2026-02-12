@@ -9,6 +9,7 @@ import {
   serviceAreas,
   socialLinks,
   trustBadges,
+  partners,
 } from '@/lib/db/schema';
 import { count, eq } from 'drizzle-orm';
 import DashboardClient from './DashboardClient';
@@ -25,6 +26,7 @@ async function getStats() {
     areaCount,
     socialCount,
     badgeCount,
+    partnerCount,
   ] = await Promise.all([
     db.select({ value: count() }).from(projects),
     db.select({ value: count() }).from(services),
@@ -36,6 +38,7 @@ async function getStats() {
     db.select({ value: count() }).from(serviceAreas),
     db.select({ value: count() }).from(socialLinks),
     db.select({ value: count() }).from(trustBadges),
+    db.select({ value: count() }).from(partners),
   ]);
 
   return {
@@ -49,6 +52,7 @@ async function getStats() {
     areas: areaCount[0].value,
     socialLinks: socialCount[0].value,
     badges: badgeCount[0].value,
+    partners: partnerCount[0].value,
   };
 }
 

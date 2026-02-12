@@ -113,7 +113,7 @@ export default function PartnersListClient({ partners }: Props) {
           <ToggleButton
             isActive={row.isActive}
             isPending={pendingId === `active-${row.id}`}
-            ariaLabel={`Toggle active for ${getName(row)}`}
+            ariaLabel={t.partners.toggleActiveFor.replace('{name}', getName(row))}
             onClick={() => {
               setPendingId(`active-${row.id}`);
               startTransition(async () => {
@@ -132,7 +132,7 @@ export default function PartnersListClient({ partners }: Props) {
           <ToggleButton
             isActive={row.isHiddenVisually}
             isPending={pendingId === `hidden-${row.id}`}
-            ariaLabel={`Toggle hidden for ${getName(row)}`}
+            ariaLabel={t.partners.toggleHiddenFor.replace('{name}', getName(row))}
             onClick={() => {
               setPendingId(`hidden-${row.id}`);
               startTransition(async () => {
@@ -161,7 +161,7 @@ export default function PartnersListClient({ partners }: Props) {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
           <h2 style={{ color: NAVY, fontSize: '1rem', fontWeight: 600, margin: 0 }}>
-            {t.common.preview} ({activePartners.length} {t.partners.active.toLowerCase()})
+            {t.common.preview} ({t.partners.activeCount.replace('{count}', String(activePartners.length))})
           </h2>
           {activePartners.length > 1 && (
             <span style={{ color: TEXT_MID, fontSize: '0.75rem' }}>
@@ -253,7 +253,7 @@ export default function PartnersListClient({ partners }: Props) {
                       className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded text-xs font-medium"
                       style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', fontSize: '0.6rem' }}
                     >
-                      SEO only
+                      {t.partners.seoOnly}
                     </div>
                   )}
                   {/* Drag indicator */}

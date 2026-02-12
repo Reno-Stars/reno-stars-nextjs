@@ -79,6 +79,7 @@ export default function PartnerForm({ action, initialData, isNew = false }: Part
             defaultValue={defaults.logoUrl}
             required
             imageRole="logo"
+            disabled={!editing}
           />
 
           <FormField label={t.partners.websiteUrl} htmlFor="websiteUrl">

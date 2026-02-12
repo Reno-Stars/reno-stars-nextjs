@@ -59,7 +59,7 @@ interface HomePageProps {
     stats: { srTitle: string };
     about: { title: string; subtitle: string };
     trustBadges: { srTitle: string };
-    partners: { title: string; subtitle: string };
+    partners: { title: string; subtitle: string; srTitle: string };
     faq: { title: string; subtitle: string };
     blog: { title: string; subtitle: string };
     showroom: { title: string; bookAppointment: string };

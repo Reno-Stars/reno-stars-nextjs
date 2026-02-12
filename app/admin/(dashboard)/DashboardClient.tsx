@@ -13,6 +13,7 @@ import {
   CircleHelp,
   Share2,
   ShieldCheck,
+  Handshake,
   Mail,
   BellRing,
   type LucideIcon,
@@ -29,6 +30,7 @@ interface DashboardStats {
   areas: number;
   socialLinks: number;
   badges: number;
+  partners: number;
 }
 
 interface CardDef {
@@ -137,6 +139,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
         { label: t.dashboard.faqs, value: stats.faqs, href: '/admin/faqs', icon: CircleHelp, accent: INFO },
         { label: t.dashboard.socialLinks, value: stats.socialLinks, href: '/admin/social-links', icon: Share2, accent: INFO },
         { label: t.dashboard.trustBadges, value: stats.badges, href: '/admin/trust-badges', icon: ShieldCheck, accent: INFO },
+        { label: t.dashboard.partners, value: stats.partners, href: '/admin/partners', icon: Handshake, accent: INFO },
       ],
     },
     {

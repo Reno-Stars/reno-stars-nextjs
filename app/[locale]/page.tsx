@@ -122,7 +122,7 @@ export default async function Page({ params }: PageProps) {
     stats: { srTitle: t('stats.srStats') },
     about: { title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') },
     trustBadges: { srTitle: t('stats.srTrustBadges') },
-    partners: { title: t('homePartners.title'), subtitle: t('homePartners.subtitle') },
+    partners: { title: t('homePartners.title'), subtitle: t('homePartners.subtitle'), srTitle: t('homePartners.srTitle') },
     faq: { title: t('homeFaq.title'), subtitle: t('homeFaq.subtitle') },
     blog: { title: t('section.blogTips'), subtitle: t('section.blogSubtitle') },
     showroom: { title: t('section.visitShowroom'), bookAppointment: t('cta.bookAppointment') },
