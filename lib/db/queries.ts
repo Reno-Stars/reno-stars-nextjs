@@ -169,9 +169,26 @@ type DbProjectRow = typeof projectsTable.$inferSelect;
 type DbImagePairRow = typeof projectImagePairsTable.$inferSelect;
 type DbScopeRow = typeof projectScopesTable.$inferSelect;
 type DbExternalProductRow = typeof projectExternalProductsTable.$inferSelect;
+type DbSiteImagePairRow = typeof siteImagePairsTable.$inferSelect;
 
-/** Convert a DB image pair row to the ImagePair type */
-function mapDbImagePairToImagePair(row: DbImagePairRow): ImagePair {
+/** Generic interface for image pair DB rows (works for both project and site image pairs) */
+interface DbImagePairBase {
+  beforeImageUrl: string | null;
+  beforeAltTextEn: string | null;
+  beforeAltTextZh: string | null;
+  afterImageUrl: string | null;
+  afterAltTextEn: string | null;
+  afterAltTextZh: string | null;
+  titleEn: string | null;
+  titleZh: string | null;
+  captionEn: string | null;
+  captionZh: string | null;
+  photographerCredit: string | null;
+  keywords: string | null;
+}
+
+/** Convert a DB image pair row to the ImagePair type (generic for project/site) */
+function mapDbImagePairRowToImagePair(row: DbImagePairBase): ImagePair {
   const pair: ImagePair = {};
 
   if (row.beforeImageUrl) {
@@ -248,8 +265,8 @@ function mapDbProjectToProject(
         ? { en: row.spaceTypeEn, zh: row.spaceTypeZh }
         : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
-    images: [], // Legacy field - kept for type compatibility, always empty
-    image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairToImagePair),
+    images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
+    image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairRowToImagePair),
     service_scope:
       scopes.length > 0
         ? {
@@ -352,11 +369,16 @@ export async function getAllProjectsAdmin() {
   const ids = rows.map((r: DbProjectRow) => r.id);
   const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
 
+  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
+  const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
+  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+
   return rows.map((row: DbProjectRow) => ({
     ...row,
-    imagePairs: sortByDisplayOrder(imagePairs.filter((ip: DbImagePairRow) => ip.projectId === row.id)),
-    scopes: sortByDisplayOrder(scopes.filter((s: DbScopeRow) => s.projectId === row.id)),
-    externalProducts: sortByDisplayOrder(externalProducts.filter((ep: DbExternalProductRow) => ep.projectId === row.id)),
+    imagePairs: sortByDisplayOrder(imagePairsByProject.get(row.id) ?? []),
+    scopes: sortByDisplayOrder(scopesByProject.get(row.id) ?? []),
+    externalProducts: sortByDisplayOrder(epByProject.get(row.id) ?? []),
   }));
 }
 
@@ -374,50 +396,6 @@ export async function getProjectSlugsFromDb(): Promise<string[]> {
 // ============================================================================
 
 type DbSiteRow = typeof sitesTable.$inferSelect;
-type DbSiteImagePairRow = typeof siteImagePairsTable.$inferSelect;
-
-/** Convert a DB site image pair row to the ImagePair type */
-function mapDbSiteImagePairToImagePair(row: DbSiteImagePairRow): ImagePair {
-  const pair: ImagePair = {};
-
-  if (row.beforeImageUrl) {
-    pair.beforeImage = {
-      src: getAssetUrl(row.beforeImageUrl),
-      alt: {
-        en: row.beforeAltTextEn ?? '',
-        zh: row.beforeAltTextZh ?? '',
-      },
-    };
-  }
-
-  if (row.afterImageUrl) {
-    pair.afterImage = {
-      src: getAssetUrl(row.afterImageUrl),
-      alt: {
-        en: row.afterAltTextEn ?? '',
-        zh: row.afterAltTextZh ?? '',
-      },
-    };
-  }
-
-  if (row.titleEn || row.titleZh) {
-    pair.title = { en: row.titleEn ?? '', zh: row.titleZh ?? '' };
-  }
-
-  if (row.captionEn || row.captionZh) {
-    pair.caption = { en: row.captionEn ?? '', zh: row.captionZh ?? '' };
-  }
-
-  if (row.photographerCredit) {
-    pair.photographerCredit = row.photographerCredit;
-  }
-
-  if (row.keywords) {
-    pair.keywords = row.keywords;
-  }
-
-  return pair;
-}
 
 function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[]): Site {
   return {
@@ -456,7 +434,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     published_at: row.publishedAt ?? undefined,
     images: undefined, // Legacy field - kept for type compatibility, always empty
     image_pairs: siteImagePairRows && siteImagePairRows.length > 0
-      ? sortByDisplayOrder(siteImagePairRows).map(mapDbSiteImagePairToImagePair)
+      ? sortByDisplayOrder(siteImagePairRows).map(mapDbImagePairRowToImagePair)
       : undefined,
   };
 }
@@ -927,13 +905,16 @@ export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)
 export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect & { siteImagePairs: DbSiteImagePairRow[] })[]> {
   const rows: DbSiteRow[] = await db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
   const siteIds = rows.map((r: DbSiteRow) => r.id);
-  const allImagePairs = siteIds.length > 0
-    ? await db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds)) as Promise<DbSiteImagePairRow[]>
+  const allImagePairs: DbSiteImagePairRow[] = siteIds.length > 0
+    ? await db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds))
     : [];
+
+  // Pre-group image pairs by siteId for O(1) lookup
+  const imagePairsBySite = groupBy(allImagePairs, (ip: DbSiteImagePairRow) => ip.siteId);
 
   return rows.map((row: DbSiteRow) => ({
     ...row,
-    siteImagePairs: sortByDisplayOrder((allImagePairs as DbSiteImagePairRow[]).filter((ip) => ip.siteId === row.id)),
+    siteImagePairs: sortByDisplayOrder(imagePairsBySite.get(row.id) ?? []),
   }));
 }
 

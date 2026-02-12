@@ -77,6 +77,7 @@ export default function SiteForm({
   const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
+  const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [selectedCity, setSelectedCity] = useState(initialData?.locationCity ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.sites.saved);
@@ -85,10 +86,11 @@ export default function SiteForm({
     initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
   );
 
-  // Sync selectedCity when initialData changes (after save + revalidation)
+  // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
+    setSlug(initialData?.slug ?? '');
     setSelectedCity(initialData?.locationCity ?? '');
-  }, [initialData?.locationCity]);
+  }, [initialData?.slug, initialData?.locationCity]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -158,7 +160,7 @@ export default function SiteForm({
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.sites.slug} htmlFor="slug" tooltip={t.sites.tooltips.slug}>
-            <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder={t.sites.slugPlaceholder} />
+            <input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required style={fieldStyle} placeholder={t.sites.slugPlaceholder} />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.sites.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required tooltip={t.sites.tooltips.title} />
@@ -181,7 +183,7 @@ export default function SiteForm({
             </select>
           </FormField>
 
-          <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} />
+          <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} />
 
           {/* Site Image Pairs */}
           <ImagePairEditor
@@ -191,6 +193,7 @@ export default function SiteForm({
             editing={editing}
             label={t.imagePairs?.title}
             tooltip={t.imagePairs?.tooltips?.title}
+            slug={slug}
           />
 
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.sites.badge} defaultValueEn={initialData?.badgeEn} defaultValueZh={initialData?.badgeZh} tooltip={t.sites.tooltips.badge} />

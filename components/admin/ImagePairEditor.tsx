@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { ChevronDown, ChevronUp, X, Upload } from 'lucide-react';
 import Tooltip from './Tooltip';
 import { inputStyle, readOnlyStyle } from './shared-styles';
@@ -25,6 +25,14 @@ export interface ImagePairEntry {
   keywords: string;
 }
 
+/** Convert a slug like "richmond-full-house-renovation" to "Richmond Full House Renovation" */
+function humanizeSlug(slug: string): string {
+  return slug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 interface ImagePairEditorProps {
   /** Field name prefix for form data (e.g., "imagePairs" or "siteImagePairs") */
   namePrefix: string;
@@ -38,6 +46,8 @@ interface ImagePairEditorProps {
   label?: string;
   /** Optional tooltip content */
   tooltip?: string;
+  /** Optional slug for SEO-friendly upload filenames and auto-fill alt text */
+  slug?: string;
 }
 
 export default function ImagePairEditor({
@@ -47,8 +57,13 @@ export default function ImagePairEditor({
   editing,
   label,
   tooltip,
+  slug,
 }: ImagePairEditorProps) {
   const t = useAdminTranslations();
+  // Ref to access latest pairs after async gaps (avoids stale closure)
+  const pairsRef = useRef(pairs);
+  useEffect(() => { pairsRef.current = pairs; }, [pairs]);
+
   const [expandedPairs, setExpandedPairs] = useState<Set<string>>(new Set());
   const [uploadingPair, setUploadingPair] = useState<string | null>(null);
   const [uploadingSide, setUploadingSide] = useState<'before' | 'after' | null>(null);
@@ -114,6 +129,14 @@ export default function ImagePairEditor({
       try {
         const fd = new FormData();
         fd.set('file', file);
+
+        // Build custom S3 key based on slug
+        if (slug) {
+          const idx = pairsRef.current.findIndex((p) => p.id === pairId);
+          const sideLabel = side === 'before' ? 'before-renovation' : 'after-renovation';
+          fd.set('customKey', `${slug}-${sideLabel}-${idx + 1}`);
+        }
+
         const result = await uploadImage({}, fd);
 
         if (result.error || !result.url) {
@@ -121,8 +144,31 @@ export default function ImagePairEditor({
           return;
         }
 
+        // Read latest pairs via ref to avoid stale closure after async gap
+        const latestPairs = pairsRef.current;
         const urlField = side === 'before' ? 'beforeUrl' : 'afterUrl';
-        updatePair(pairId, urlField, result.url);
+        const altEnField = side === 'before' ? 'beforeAltEn' : 'afterAltEn';
+        const altZhField = side === 'before' ? 'beforeAltZh' : 'afterAltZh';
+        const sideEn = side === 'before' ? 'Before' : 'After';
+        const sideZh = side === 'before' ? '装修前' : '装修后';
+
+        onChange(
+          latestPairs.map((p) => {
+            if (p.id !== pairId) return p;
+            const updates: Partial<ImagePairEntry> = { [urlField]: result.url };
+            if (slug) {
+              const humanized = humanizeSlug(slug);
+              const num = latestPairs.findIndex((x) => x.id === pairId) + 1;
+              if (!p[altEnField]) {
+                updates[altEnField] = `${humanized} - ${sideEn} Renovation ${num}`;
+              }
+              if (!p[altZhField]) {
+                updates[altZhField] = `${humanized} - ${sideZh} ${num}`;
+              }
+            }
+            return { ...p, ...updates };
+          })
+        );
       } catch {
         setUploadError(t.upload.failed);
       } finally {
@@ -130,7 +176,7 @@ export default function ImagePairEditor({
         setUploadingSide(null);
       }
     },
-    [updatePair, t]
+    [t, slug, onChange]
   );
 
   const handleFileSelect = useCallback(

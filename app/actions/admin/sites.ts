@@ -6,10 +6,8 @@ import { db } from '@/lib/db';
 import { projectSites, projects, siteImagePairs } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
-
-const MAX_SITE_IMAGE_PAIRS = 50;
 
 function getSiteData(formData: FormData) {
   return {
@@ -27,48 +25,6 @@ function getSiteData(formData: FormData) {
     isPublished: formData.get('isPublished') === 'on',
     updatedAt: new Date(),
   };
-}
-
-function parseSiteImagePairs(formData: FormData) {
-  const pairs: {
-    beforeImageUrl: string | null;
-    beforeAltTextEn: string | null;
-    beforeAltTextZh: string | null;
-    afterImageUrl: string | null;
-    afterAltTextEn: string | null;
-    afterAltTextZh: string | null;
-    titleEn: string | null;
-    titleZh: string | null;
-    captionEn: string | null;
-    captionZh: string | null;
-    photographerCredit: string | null;
-    keywords: string | null;
-    displayOrder: number;
-  }[] = [];
-  let i = 0;
-  while (formData.has(`siteImagePairs[${i}].id`) && i < MAX_SITE_IMAGE_PAIRS) {
-    const beforeUrl = getString(formData, `siteImagePairs[${i}].beforeUrl`).trim();
-    const afterUrl = getString(formData, `siteImagePairs[${i}].afterUrl`).trim();
-    // Skip pairs with no images
-    if (!beforeUrl && !afterUrl) { i++; continue; }
-    pairs.push({
-      beforeImageUrl: beforeUrl || null,
-      beforeAltTextEn: getString(formData, `siteImagePairs[${i}].beforeAltEn`) || null,
-      beforeAltTextZh: getString(formData, `siteImagePairs[${i}].beforeAltZh`) || null,
-      afterImageUrl: afterUrl || null,
-      afterAltTextEn: getString(formData, `siteImagePairs[${i}].afterAltEn`) || null,
-      afterAltTextZh: getString(formData, `siteImagePairs[${i}].afterAltZh`) || null,
-      titleEn: getString(formData, `siteImagePairs[${i}].titleEn`) || null,
-      titleZh: getString(formData, `siteImagePairs[${i}].titleZh`) || null,
-      captionEn: getString(formData, `siteImagePairs[${i}].captionEn`) || null,
-      captionZh: getString(formData, `siteImagePairs[${i}].captionZh`) || null,
-      photographerCredit: getString(formData, `siteImagePairs[${i}].photographerCredit`) || null,
-      keywords: getString(formData, `siteImagePairs[${i}].keywords`) || null,
-      displayOrder: i,
-    });
-    i++;
-  }
-  return pairs;
 }
 
 export async function createSite(
@@ -99,7 +55,7 @@ export async function createSite(
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
 
     // Parse image pairs
-    const pairData = parseSiteImagePairs(formData);
+    const pairData = parseImagePairs(formData, 'siteImagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
       return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
@@ -166,7 +122,7 @@ export async function updateSite(
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
     // Parse image pairs
-    const pairData = parseSiteImagePairs(formData);
+    const pairData = parseImagePairs(formData, 'siteImagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
       return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };

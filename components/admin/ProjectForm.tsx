@@ -109,6 +109,7 @@ export default function ProjectForm({
   const { locale } = useAdminLocale();
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
+  const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [selectedServiceType, setSelectedServiceType] = useState(initialData?.serviceType ?? 'kitchen');
   const [selectedLocationCity, setSelectedLocationCity] = useState(initialData?.locationCity ?? '');
   const [selectedSpaceType, setSelectedSpaceType] = useState(initialData?.spaceTypeEn ?? '');
@@ -137,6 +138,7 @@ export default function ProjectForm({
 
   // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
+    setSlug(initialData?.slug ?? '');
     setSelectedServiceType(initialData?.serviceType ?? 'kitchen');
     setSelectedLocationCity(initialData?.locationCity ?? '');
     setSelectedSpaceType(initialData?.spaceTypeEn ?? '');
@@ -283,7 +285,7 @@ export default function ProjectForm({
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.projects.slug} htmlFor="slug" tooltip={t.projects.tooltips.slug}>
-            <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder={t.projects.slugPlaceholder} />
+            <input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required style={fieldStyle} placeholder={t.projects.slugPlaceholder} />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required tooltip={t.projects.tooltips.title} />
@@ -360,7 +362,7 @@ export default function ProjectForm({
             </select>
           </FormField>
 
-          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} />
+          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} slug={slug} />
 
           <AIBilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={challengeEn} defaultValueZh={challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
           <AIBilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={solutionEn} defaultValueZh={solutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />
@@ -413,6 +415,7 @@ export default function ProjectForm({
             editing={editing}
             label={t.imagePairs?.title}
             tooltip={t.imagePairs?.tooltips?.title}
+            slug={slug}
           />
 
           {/* Scopes */}

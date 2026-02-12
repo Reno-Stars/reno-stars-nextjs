@@ -105,7 +105,7 @@ export interface Site {
   published_at?: Date;
   /** Number of projects belonging to this site */
   project_count?: number;
-  /** @deprecated Use image_pairs instead */
+  /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images?: { src: string; alt: Localized<string>; is_before?: boolean }[];
   /** Before/after image pairs with SEO metadata */
   image_pairs?: ImagePair[];
@@ -177,7 +177,7 @@ export interface Project {
   duration?: Localized<string>;
   /** Type of space (Residential, Commercial, etc.) */
   space_type?: Localized<string>;
-  /** @deprecated Use image_pairs instead */
+  /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images: { src: string; alt: Localized<string>; is_before?: boolean }[];
   /** Before/after image pairs with SEO metadata */
   image_pairs?: ImagePair[];
@@ -383,7 +383,7 @@ export interface LocalizedProject {
   duration?: string;
   space_type?: string;
   hero_image: string;
-  /** @deprecated Use image_pairs instead */
+  /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images: { src: string; alt: string; is_before?: boolean }[];
   /** Before/after image pairs with localized SEO metadata */
   image_pairs?: LocalizedImagePair[];
@@ -408,7 +408,7 @@ export interface LocalizedSite {
   badge?: string;
   show_as_project: boolean;
   featured: boolean;
-  /** @deprecated Use image_pairs instead */
+  /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images?: { src: string; alt: string; is_before?: boolean }[];
   /** Before/after image pairs with localized SEO metadata */
   image_pairs?: LocalizedImagePair[];

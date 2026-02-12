@@ -12,6 +12,10 @@ interface ImageUrlInputProps {
   defaultValue?: string;
   required?: boolean;
   tooltip?: string;
+  /** Optional slug for SEO-friendly upload filenames */
+  slug?: string;
+  /** Image role used in the S3 key (default: 'hero') */
+  imageRole?: string;
 }
 
 export default function ImageUrlInput({
@@ -20,6 +24,8 @@ export default function ImageUrlInput({
   defaultValue = '',
   required = false,
   tooltip,
+  slug,
+  imageRole = 'hero',
 }: ImageUrlInputProps) {
   const t = useAdminTranslations();
   const [url, setUrl] = useState(defaultValue);
@@ -46,6 +52,9 @@ export default function ImageUrlInput({
 
     const formData = new FormData();
     formData.set('file', file);
+    if (slug) {
+      formData.set('customKey', `${slug}-${imageRole}`);
+    }
 
     const result = await uploadImage({}, formData);
 

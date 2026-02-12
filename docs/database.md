@@ -22,13 +22,34 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `services` | Renovation service types | `slug` |
 | `service_areas` | Geographic coverage | `slug` |
 | `project_sites` | Site containers for projects | `slug` |
-| `site_images` | Images per site | `(siteId, displayOrder)` |
+| `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
 | `projects` | Portfolio entries | `slug` |
-| `project_images` | Images per project | `(projectId, displayOrder)` |
+| `project_image_pairs` | Before/after image pairs per project | `(projectId, displayOrder)` |
 | `project_scopes` | Scope items per project | `(projectId, displayOrder)` |
 | `project_external_products` | External product links per project | `(projectId, displayOrder)` |
 | `blog_posts` | Blog articles (optional project link) | `slug` |
 | `contact_submissions` | CRM leads | `id` (auto) |
+
+### Image Pair Tables
+
+Both `project_image_pairs` and `site_image_pairs` share the same structure with comprehensive SEO metadata:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary key |
+| `project_id` / `site_id` | UUID | FK (cascade delete) |
+| `before_image_url` | VARCHAR(500) | Before image URL (optional if after exists) |
+| `before_alt_text_en` / `_zh` | VARCHAR(255) | Bilingual alt text for before image |
+| `after_image_url` | VARCHAR(500) | After image URL (optional if before exists) |
+| `after_alt_text_en` / `_zh` | VARCHAR(255) | Bilingual alt text for after image |
+| `title_en` / `_zh` | VARCHAR(200) | Bilingual title for SEO |
+| `caption_en` / `_zh` | TEXT | Bilingual caption |
+| `photographer_credit` | VARCHAR(100) | Photographer attribution |
+| `keywords` | TEXT | SEO keywords (comma-separated) |
+| `display_order` | INTEGER | Sort order |
+| `created_at` | TIMESTAMP | Creation timestamp |
+
+**Constraint:** At least one of `before_image_url` or `after_image_url` must be non-null (CHECK constraint).
 
 ### Reference Tables
 

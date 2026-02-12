@@ -102,7 +102,7 @@ lib/
     areas.ts              # Area localization helper (getLocalizedArea)
   admin/
     auth.ts               # Session cookie auth (24h TTL)
-    form-utils.ts         # Form validation (getString, isValidUrl, validateTextLengths, etc.)
+    form-utils.ts         # Form validation + image pair parsing (getString, isValidUrl, validateTextLengths, parseImagePairs, etc.)
     gallery-categories.ts # Shared gallery category constants
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
     translations.ts       # Admin translation hooks
@@ -182,12 +182,21 @@ Key patterns:
 15+ tables in `lib/db/schema.ts`. Key tables:
 - `services` — 6 renovation service types
 - `service_areas` — 14 geographic areas
-- `project_sites`, `site_images` — site containers for whole-house renovations
-- `projects`, `project_images`, `project_scopes`, `project_external_products` — portfolio
+- `project_sites`, `site_image_pairs` — site containers for whole-house renovations with before/after image pairs
+- `projects`, `project_image_pairs`, `project_scopes`, `project_external_products` — portfolio with before/after image pairs
 - `blog_posts` — articles (with optional project reference for products display)
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
 - `testimonials` (deprecated — replaced by Google Reviews API), `gallery_items`, `trust_badges`, `social_links`, `faqs`
+
+### Image Pair Tables
+
+Both `project_image_pairs` and `site_image_pairs` use a paired before/after structure with SEO metadata:
+- Before/after image URLs (at least one required via CHECK constraint)
+- Bilingual alt text (`*_en`, `*_zh`)
+- Bilingual title and caption for SEO
+- Photographer credit and keywords
+- Display order for sorting
 
 ## Social Links
 
@@ -200,7 +209,10 @@ Key patterns:
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB + Google Reviews API (via `Promise.all`) and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, Tooltip, DragHandleIcon, ConfirmDialog, DashboardShell, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`. Mobile-responsive via `app/admin/admin-responsive.css` (CSS-only overrides with `className` hooks on form grids/cards/headers).
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, ImagePairEditor, Tooltip, DragHandleIcon, ConfirmDialog, DashboardShell, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`. Mobile-responsive via `app/admin/admin-responsive.css` (CSS-only overrides with `className` hooks on form grids/cards/headers).
+- **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata sections (title, caption, photographer credit, keywords). Supports drag-and-drop upload, bilingual alt text fields (with flag emoji labels), add/remove pairs, and reordering. Accepts optional `slug` prop for SEO-friendly upload naming (`{slug}-before-renovation-{index}`) and auto-fills empty alt text fields on upload (EN: `{Humanized Slug} - Before Renovation {index}`, ZH: `{Humanized Slug} - 装修前 {index}`). Uses `pairsRef` pattern to read latest state after async upload gap. Used by ProjectForm and SiteForm. Shared `parseImagePairs()` utility in `lib/admin/form-utils.ts` handles FormData parsing for both projects and sites.
+- **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview, and tooltip. Accepts optional `slug` and `imageRole` (default `'hero'`) props for SEO-friendly upload naming (`{slug}-{imageRole}.{ext}`).
+- **Upload action** (`app/actions/admin/upload.ts`): S3 upload server action. Accepts optional `customKey` from FormData for slug-based naming; falls back to timestamp-random naming. `customKey` is sanitized server-side (`/[a-z0-9-]/` only, max 200 chars).
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).

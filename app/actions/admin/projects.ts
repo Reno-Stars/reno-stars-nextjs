@@ -13,11 +13,10 @@ import {
 } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeKey } from '@/lib/admin/constants';
 
-const MAX_IMAGE_PAIRS = 50;
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
 
@@ -32,48 +31,6 @@ function formatBudgetRange(min: string, max: string): string | null {
   const lo = Math.min(minNum, maxNum);
   const hi = Math.max(minNum, maxNum);
   return `$${lo.toLocaleString()} - $${hi.toLocaleString()}`;
-}
-
-function parseImagePairs(formData: FormData) {
-  const pairs: {
-    beforeImageUrl: string | null;
-    beforeAltTextEn: string | null;
-    beforeAltTextZh: string | null;
-    afterImageUrl: string | null;
-    afterAltTextEn: string | null;
-    afterAltTextZh: string | null;
-    titleEn: string | null;
-    titleZh: string | null;
-    captionEn: string | null;
-    captionZh: string | null;
-    photographerCredit: string | null;
-    keywords: string | null;
-    displayOrder: number;
-  }[] = [];
-  let i = 0;
-  while (formData.has(`imagePairs[${i}].id`) && i < MAX_IMAGE_PAIRS) {
-    const beforeUrl = getString(formData, `imagePairs[${i}].beforeUrl`).trim();
-    const afterUrl = getString(formData, `imagePairs[${i}].afterUrl`).trim();
-    // Skip pairs with no images
-    if (!beforeUrl && !afterUrl) { i++; continue; }
-    pairs.push({
-      beforeImageUrl: beforeUrl || null,
-      beforeAltTextEn: getString(formData, `imagePairs[${i}].beforeAltEn`) || null,
-      beforeAltTextZh: getString(formData, `imagePairs[${i}].beforeAltZh`) || null,
-      afterImageUrl: afterUrl || null,
-      afterAltTextEn: getString(formData, `imagePairs[${i}].afterAltEn`) || null,
-      afterAltTextZh: getString(formData, `imagePairs[${i}].afterAltZh`) || null,
-      titleEn: getString(formData, `imagePairs[${i}].titleEn`) || null,
-      titleZh: getString(formData, `imagePairs[${i}].titleZh`) || null,
-      captionEn: getString(formData, `imagePairs[${i}].captionEn`) || null,
-      captionZh: getString(formData, `imagePairs[${i}].captionZh`) || null,
-      photographerCredit: getString(formData, `imagePairs[${i}].photographerCredit`) || null,
-      keywords: getString(formData, `imagePairs[${i}].keywords`) || null,
-      displayOrder: i,
-    });
-    i++;
-  }
-  return pairs;
 }
 
 function parseScopes(formData: FormData) {
@@ -186,7 +143,7 @@ export async function createProject(
     if (textError) return { error: textError };
 
     // Parse image pairs
-    const pairData = parseImagePairs(formData);
+    const pairData = parseImagePairs(formData, 'imagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
       return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
@@ -302,7 +259,7 @@ export async function updateProject(
     if (textError) return { error: textError };
 
     // Parse image pairs
-    const pairData = parseImagePairs(formData);
+    const pairData = parseImagePairs(formData, 'imagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
       return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };

@@ -55,7 +55,7 @@ components/
 
 lib/
   db/                     # Database layer
-    schema.ts             # Drizzle table definitions
+    schema.ts             # Drizzle table definitions (includes image pair tables)
     index.ts              # Lazy-init DB client
     queries.ts            # Cached query functions (company, services, projects, sites, blog, etc.)
     helpers.ts            # Query aggregation helpers (budget, duration, images, products)
@@ -67,7 +67,7 @@ lib/
     areas.ts              # Area localization helper (getLocalizedArea)
   admin/                  # Admin utilities
     auth.ts               # Session cookie auth (24h TTL)
-    form-utils.ts         # Form validation helpers (getString, isValidUrl, etc.)
+    form-utils.ts         # Form validation + image pair parsing (getString, isValidUrl, parseImagePairs, etc.)
     gallery-categories.ts # Shared gallery category constants
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, mappings)
     translations.ts       # Admin translation hooks
@@ -252,7 +252,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
 - **Server vs Client**: Page route files (`app/[locale]/**/page.tsx`) are server components that fetch data from DB, handle metadata, and render structured data. Page content components (`components/pages/`) are client components that receive all data as props. Navbar and Footer are client components rendered by the layout. Server routes should use `Promise.all` to parallelize independent async calls.
 - **ProductLink** (`components/ProductLink.tsx`): Reusable external product link with hover image preview. Supports `size` prop (`'sm'` for modal, `'md'` for detail page). Used by `ProjectModal` and `SiteDetailPage`.
-- **Admin components** (`components/admin/`): DataTable (supports `headerAction` prop for toolbar controls), ProjectForm, SiteForm (with site images gallery section), HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput, ConfirmDialog (modal with fixed centering and keyboard focus styles for a11y), Sidebar (collapsible navigation groups with Dashboard + Portfolio/Content/CRM/Settings sections, localStorage-persisted expanded state, auto-expand on child route navigation), TopBar (hamburger menu for mobile, hidden on desktop via CSS), DashboardShell (client wrapper for sidebar drawer with overlay, Escape key close, auto-close on desktop resize), DashboardClient (grouped stat cards in 3 sections — Portfolio/Content/CRM — with lucide-react icons in accent-colored circles, hover lift with neumorphic shadow transition, red notification dot for new contacts), StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider (provides locale + sidebar open/close state, memoized context value), AdminPageHeader (responsive flex→column on mobile), ToggleButton, Tooltip (reusable help icons), DragHandleIcon (6-dot drag indicator SVG), SearchableSelect (type-to-filter dropdown with keyboard navigation, ARIA accessibility, visible keyboard focus indicator), AIContentEditor (blog content editor with AI optimization), AIBilingualTextarea (bilingual textarea with AI translation), AIProjectGenerator (project description generator with AI — includes memory leak prevention via mountedRef pattern).
+- **Admin components** (`components/admin/`): DataTable (supports `headerAction` prop for toolbar controls), ProjectForm, SiteForm, HouseStack (unified site/project management), BilingualInput, BilingualTextarea, ImageUrlInput (with optional `slug`/`imageRole` props for SEO-friendly upload naming), ImagePairEditor (before/after image pair management with SEO metadata fields, optional `slug` prop for slug-based S3 keys and auto-fill alt text), ConfirmDialog (modal with fixed centering and keyboard focus styles for a11y), Sidebar (collapsible navigation groups with Dashboard + Portfolio/Content/CRM/Settings sections, localStorage-persisted expanded state, auto-expand on child route navigation), TopBar (hamburger menu for mobile, hidden on desktop via CSS), DashboardShell (client wrapper for sidebar drawer with overlay, Escape key close, auto-close on desktop resize), DashboardClient (grouped stat cards in 3 sections — Portfolio/Content/CRM — with lucide-react icons in accent-colored circles, hover lift with neumorphic shadow transition, red notification dot for new contacts), StatusBadge, ToastProvider, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider (provides locale + sidebar open/close state, memoized context value), AdminPageHeader (responsive flex→column on mobile), ToggleButton, Tooltip (reusable help icons), DragHandleIcon (6-dot drag indicator SVG), SearchableSelect (type-to-filter dropdown with keyboard navigation, ARIA accessibility, visible keyboard focus indicator), AIContentEditor (blog content editor with AI optimization), AIBilingualTextarea (bilingual textarea with AI translation), AIProjectGenerator (project description generator with AI — includes memory leak prevention via mountedRef pattern).
 - **Admin mobile responsive** (`app/admin/admin-responsive.css`): CSS-only mobile overrides at `@media (max-width: 768px)`. Uses `className` attributes alongside inline styles — `!important` overrides inline values on mobile. Classes: `admin-sidebar` (fixed drawer), `admin-sidebar--open` (slide in), `admin-sidebar-overlay` (backdrop), `admin-hamburger` (shown on mobile), `admin-topbar`/`admin-main-content` (reduced padding), `admin-form-grid` (single column), `admin-form-card` (full width), `admin-page-header` (vertical stack), `admin-site-detail-grid` (single column). Desktop: overlay and hamburger hidden via `display: none`. Body scroll lock via `body:has(.admin-sidebar--open)`. Defines `--color-navy` CSS variable for theme consistency. Includes `.confirm-dialog-btn:focus-visible` for keyboard accessibility.
 - **Reusable hooks** (`hooks/`): `useDragReorder<T>` — generic drag-and-drop reordering with optimistic UI, server sync, and proper cleanup (mountedRef pattern to prevent state updates after unmount). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. `useIsMobile(breakpoint?)` — `matchMedia` hook with SSR-safe lazy initialization (prevents hydration mismatch), defaults to 768px.
 - **House Stack UI**: Visual metaphor for site/project management. Roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Renders on `/admin/sites/[id]` page with detail panel for editing selected item. Supports `?project=<id>` URL param for deep-linking directly to a specific project's edit form.
@@ -338,6 +338,36 @@ useEffect(() => {
   };
 }, []);
 ```
+
+## Image Upload
+
+The admin panel supports direct image upload to S3-compatible storage (R2 in production, MinIO locally).
+
+### Upload Action (`app/actions/admin/upload.ts`)
+
+Server action behind `requireAuth()`. Accepts a `file` and optional `customKey` via FormData:
+
+- **Custom key**: If `customKey` is provided, the S3 key becomes `uploads/admin/{customKey}.{ext}`. Sanitized to `/[a-z0-9-]/` only and capped at 200 chars.
+- **Fallback**: Without `customKey`, uses `uploads/admin/{timestamp}-{random8}.{ext}`.
+- **Validation**: Max 5 MB, allowed types: JPEG, PNG, WebP, SVG, GIF.
+
+### SEO-Friendly Naming
+
+When a slug is available in the form, image components pass a `customKey` to produce readable S3 keys:
+
+| Component | Key Format | Example |
+|-----------|------------|---------|
+| `ImageUrlInput` | `{slug}-{imageRole}` | `richmond-kitchen-hero.webp` |
+| `ImagePairEditor` (before) | `{slug}-before-renovation-{index}` | `richmond-kitchen-before-renovation-1.jpg` |
+| `ImagePairEditor` (after) | `{slug}-after-renovation-{index}` | `richmond-kitchen-after-renovation-1.jpg` |
+
+### Auto-Fill Alt Text
+
+`ImagePairEditor` auto-populates empty alt text fields after a successful upload:
+- **EN**: `{Humanized Slug} - Before/After Renovation {index}` (e.g., "Richmond Kitchen - Before Renovation 1")
+- **ZH**: `{Humanized Slug} - 装修前/装修后 {index}` (e.g., "Richmond Kitchen - 装修前 1")
+
+The `humanizeSlug()` helper converts `richmond-kitchen` to `Richmond Kitchen`.
 
 ## Analytics
 

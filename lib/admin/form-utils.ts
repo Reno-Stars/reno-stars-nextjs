@@ -110,3 +110,58 @@ export function mapDbImagePairToForm(p: DbImagePairRow): FormImagePair {
     keywords: p.keywords ?? '',
   };
 }
+
+/** Parsed image pair data ready for DB insertion */
+export interface ParsedImagePair {
+  beforeImageUrl: string | null;
+  beforeAltTextEn: string | null;
+  beforeAltTextZh: string | null;
+  afterImageUrl: string | null;
+  afterAltTextEn: string | null;
+  afterAltTextZh: string | null;
+  titleEn: string | null;
+  titleZh: string | null;
+  captionEn: string | null;
+  captionZh: string | null;
+  photographerCredit: string | null;
+  keywords: string | null;
+  displayOrder: number;
+}
+
+/**
+ * Parse image pairs from FormData with a given prefix.
+ * @param formData - The form data to parse
+ * @param prefix - The field prefix (e.g., 'imagePairs' or 'siteImagePairs')
+ * @param maxPairs - Maximum number of pairs to parse (default: 50)
+ */
+export function parseImagePairs(
+  formData: FormData,
+  prefix: string,
+  maxPairs = 50
+): ParsedImagePair[] {
+  const pairs: ParsedImagePair[] = [];
+  let i = 0;
+  while (formData.has(`${prefix}[${i}].id`) && i < maxPairs) {
+    const beforeUrl = getString(formData, `${prefix}[${i}].beforeUrl`).trim();
+    const afterUrl = getString(formData, `${prefix}[${i}].afterUrl`).trim();
+    // Skip pairs with no images
+    if (!beforeUrl && !afterUrl) { i++; continue; }
+    pairs.push({
+      beforeImageUrl: beforeUrl || null,
+      beforeAltTextEn: getString(formData, `${prefix}[${i}].beforeAltEn`) || null,
+      beforeAltTextZh: getString(formData, `${prefix}[${i}].beforeAltZh`) || null,
+      afterImageUrl: afterUrl || null,
+      afterAltTextEn: getString(formData, `${prefix}[${i}].afterAltEn`) || null,
+      afterAltTextZh: getString(formData, `${prefix}[${i}].afterAltZh`) || null,
+      titleEn: getString(formData, `${prefix}[${i}].titleEn`) || null,
+      titleZh: getString(formData, `${prefix}[${i}].titleZh`) || null,
+      captionEn: getString(formData, `${prefix}[${i}].captionEn`) || null,
+      captionZh: getString(formData, `${prefix}[${i}].captionZh`) || null,
+      photographerCredit: getString(formData, `${prefix}[${i}].photographerCredit`) || null,
+      keywords: getString(formData, `${prefix}[${i}].keywords`) || null,
+      displayOrder: i,
+    });
+    i++;
+  }
+  return pairs;
+}

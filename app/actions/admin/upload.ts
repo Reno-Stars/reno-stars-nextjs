@@ -66,11 +66,15 @@ export async function uploadImage(
   // One of these MUST be set for uploads to return accessible URLs.
   const publicUrl = process.env.S3_PUBLIC_URL || process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
 
-  // Generate a unique filename with original extension (fallback to mime type)
+  // Generate the S3 key: use customKey if provided, otherwise timestamp-random
   const ext = file.name.split('.').pop()?.toLowerCase() || MIME_TO_EXT[file.type] || 'jpg';
-  const timestamp = Date.now();
-  const random = crypto.randomUUID().slice(0, 8);
-  const key = `uploads/admin/${timestamp}-${random}.${ext}`;
+  const rawCustomKey = formData.get('customKey');
+  const sanitizedKey = typeof rawCustomKey === 'string'
+    ? rawCustomKey.replace(/[^a-z0-9-]/g, '').slice(0, 200)
+    : '';
+  const key = sanitizedKey.length > 0
+    ? `uploads/admin/${sanitizedKey}.${ext}`
+    : `uploads/admin/${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
