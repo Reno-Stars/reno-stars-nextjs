@@ -43,13 +43,13 @@ app/                      # Next.js App Router
 
 components/
   pages/                  # One component per page route
-  home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
+  home/                   # Homepage section components (14 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, Partners, FAQ, Blog, Showroom, Contact)
   admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx              # Global navigation (unified, no variants)
   Footer.tsx              # Global footer (5-column + service areas bar)
   ContactForm.tsx         # Contact form (client component)
-  ProjectModal.tsx        # Project detail modal (uses DisplayProject type)
+  ProjectModal.tsx        # Project detail modal with mobile swipe and slide animation
   ProductLink.tsx         # External product link with hover preview
   TetrisGallery.tsx       # Masonry gallery layout
 
@@ -121,7 +121,7 @@ Browser → proxy.ts (admin auth check OR next-intl locale routing + security he
 
 The app uses a **hybrid static/database** model:
 
-- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, about sections, projects, service areas, blog posts, gallery items, trust badges, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
+- **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, about sections, projects, service areas, blog posts, gallery items, trust badges, partners, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
 - **Google Reviews** (`lib/google-reviews.ts`): Testimonials are fetched from the Google Places API (New, v1) with 24h server-side caching, replacing the former database-managed testimonials. Two parallel requests (MOST_RELEVANT + NEWEST sort) are deduplicated and filtered to 5-star reviews.
 - **Static data** (`lib/data/`): Only `video` and `images` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers and category slug constants.
 - **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
@@ -147,9 +147,10 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getTrustBadgesFromDb()` | `{ en: string; zh: string }[]` | Active badges, ordered by `displayOrder` |
 | `getShowroomFromDb()` | `Showroom` | Singleton row |
 | `getFaqsFromDb()` | `Faq[]` | Active FAQs, replaces `{yearsExperience}` placeholder |
+| `getPartnersFromDb()` | `Partner[]` | Active partners, ordered by `displayOrder` |
 | `getSitesAsProjectsFromDb()` | `SiteWithProjects[]` | Sites with aggregated data for "Whole House" display |
 
-Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllSitesAdmin()`.
+Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllPartnersAdmin()`, `getAllSitesAdmin()`.
 
 #### Query Helpers (`lib/db/helpers.ts`)
 
@@ -245,7 +246,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 ## Component Patterns
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
-- **Homepage sections** (`components/home/`): 13 section components extracted from HomePage for code-splitting. 9 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar). TestimonialsSection uses CSS `@keyframes` marquee for infinite horizontal scroll with pause-on-hover. FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
+- **Homepage sections** (`components/home/`): 14 section components extracted from HomePage for code-splitting. 10 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, PartnersSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar). TestimonialsSection uses CSS `@keyframes` marquee for infinite horizontal scroll with pause-on-hover. PartnersSection uses CSS `@keyframes` for infinite logo carousel with pause-on-hover/focus and `prefers-reduced-motion` support. FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
 - **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 9 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, ServiceSchema, ProjectSchema, ArticleSchema, BreadcrumbSchema, FAQSchema, ReviewSchema. Rating data comes from Google Reviews API (`googleRating`/`googleReviewCount` props) — no longer stored in the Company model. `aggregateRating` is conditionally rendered only when Google data is available. ReviewSchema emits individual reviews only (aggregate rating handled globally by LocalBusinessSchema in the layout).
 - **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
@@ -408,3 +409,78 @@ sendContactNotification(submission: ContactSubmission): Promise<boolean>
 ```
 
 Sends HTML email with contact details, service requested, and project description.
+
+## Admin CRUD Patterns
+
+### Insert-Before-Delete Pattern
+
+Admin update actions that modify related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. The Neon HTTP driver does not support interactive transactions, so actions:
+
+1. Fetch existing related record IDs before modification
+2. Insert new records first (old data remains as fallback if insert fails)
+3. Delete old records by ID after successful insert
+
+This prevents data loss on partial failure. Used by `updateProject()` and `updateSite()`.
+
+```typescript
+// 1. Fetch existing IDs
+const [existingPairs, existingScopes] = await Promise.all([
+  db.select({ id: projectImagePairs.id }).from(projectImagePairs).where(eq(projectImagePairs.projectId, id)),
+  db.select({ id: projectScopes.id }).from(projectScopes).where(eq(projectScopes.projectId, id)),
+]);
+
+// 2. Insert new data (old data still exists as fallback)
+if (pairData.length > 0) {
+  await db.insert(projectImagePairs).values(pairData.map((p) => ({ ...p, projectId: id })));
+}
+
+// 3. Delete old data by ID (new data already safely inserted)
+if (existingPairs.length > 0) {
+  await db.delete(projectImagePairs).where(inArray(projectImagePairs.id, existingPairs.map(r => r.id)));
+}
+```
+
+For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
+
+## Project Modal (`components/ProjectModal.tsx`)
+
+Rich image gallery modal with mobile-friendly interactions:
+
+### Touch Swipe Navigation
+
+```typescript
+const SWIPE_THRESHOLD = 50; // pixels
+
+const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+  const deltaX = touchEnd.x - touchStart.x;
+  const deltaY = touchEnd.y - touchStart.y;
+  // Only trigger if horizontal > vertical movement
+  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+    deltaX < 0 ? handleNextImage() : handlePrevImage();
+  }
+}, [handleNextImage, handlePrevImage]);
+```
+
+### Slide Animation
+
+CSS keyframes with `prefers-reduced-motion` support:
+
+```css
+@keyframes slide-in-left {
+  from { transform: translateX(100%); opacity: 0.5; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes slide-in-left { from, to { transform: none; opacity: 1; } }
+}
+```
+
+Animation triggered via `key={activeImage}` and `slideDirection` state.
+
+### Z-Index Layering
+
+| Element | Z-Index | Purpose |
+|---------|---------|---------|
+| Touch overlay | `z-[5]` | Captures swipe events |
+| Before/After badge | `z-10` | Image metadata indicator |
+| Navigation arrows | `z-20` | Always accessible above overlay |

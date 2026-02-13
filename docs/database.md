@@ -63,6 +63,7 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
 | `faqs` | Frequently asked questions | `id`, composite index on `(isActive, displayOrder)` |
+| `partners` | Partner logos (homepage carousel) | `id`, composite index on `(isActive, displayOrder)` |
 
 ### Enums
 
@@ -149,6 +150,7 @@ const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
 const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
 const showroom = await getShowroomFromDb();             // Showroom
 const faqs = await getFaqsFromDb();                      // Faq[] (replaces {yearsExperience} placeholder)
+const partners = await getPartnersFromDb();             // Partner[] (active, ordered)
 const sites = await getSitesAsProjectsFromDb();         // SiteWithProjects[] (with aggregated data)
 ```
 
@@ -184,6 +186,7 @@ import {
   getAllGalleryItemsAdmin,  // DbGalleryItem[] — includes unpublished
   getAllTrustBadgesAdmin,   // DbTrustBadge[] — includes inactive
   getAllFaqsAdmin,          // DbFaq[] — includes inactive
+  getAllPartnersAdmin,      // DbPartner[] — includes inactive
   getAllSitesAdmin,         // DbSite[] with siteImages — includes unpublished
 } from '@/lib/db/queries';
 ```
