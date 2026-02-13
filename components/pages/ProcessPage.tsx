@@ -281,9 +281,73 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // PDF download (default)
+  // Detect mobile/touch device
+  const isMobile = typeof window !== 'undefined' && (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 0 && window.innerWidth < 768)
+  );
+
+  // Helper to trigger download with blob (more reliable on mobile)
+  const downloadBlob = useCallback((blob: Blob, filename: string) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+
+    // For iOS Safari, we need to open in a new tab
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      // Open blob URL in new tab - user can then share/save
+      window.open(url, '_blank');
+    } else {
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Clean up after a delay
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, []);
+
+  // PNG download with mobile-friendly settings
+  const handleDownloadPNG = useCallback(async () => {
+    if (!posterRef.current || isDownloading) return;
+
+    setIsDownloading(true);
+    setDownloadStatus('idle');
+    try {
+      // Use lower pixelRatio on mobile to avoid memory issues
+      const pixelRatio = isMobile ? 1.5 : 2;
+
+      const dataUrl = await toPng(posterRef.current, {
+        pixelRatio,
+        backgroundColor: SURFACE,
+      });
+
+      // Convert data URL to blob for more reliable mobile download
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      downloadBlob(blob, 'reno-stars-process-poster.png');
+
+      setDownloadStatus('success');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    } catch (error) {
+      console.error('PNG generation failed:', error);
+      setDownloadStatus('error');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    } finally {
+      setIsDownloading(false);
+    }
+  }, [isDownloading, isMobile, downloadBlob]);
+
+  // PDF download (default) - falls back to PNG on mobile
   const handleDownload = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
+
+    // On mobile, use PNG download instead (more reliable)
+    if (isMobile) {
+      return handleDownloadPNG();
+    }
 
     setIsDownloading(true);
     setDownloadStatus('idle');
@@ -324,39 +388,17 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } catch (error) {
       console.error('PDF generation failed:', error);
-      setDownloadStatus('error');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
+      // Fall back to PNG on error
+      try {
+        await handleDownloadPNG();
+      } catch {
+        setDownloadStatus('error');
+        setTimeout(() => setDownloadStatus('idle'), 3000);
+      }
     } finally {
       setIsDownloading(false);
     }
-  }, [isDownloading]);
-
-  // PNG download - accessible via Shift+click on download button
-  const handleDownloadPNG = useCallback(async () => {
-    if (!posterRef.current || isDownloading) return;
-
-    setIsDownloading(true);
-    setDownloadStatus('idle');
-    try {
-      const dataUrl = await toPng(posterRef.current, {
-        pixelRatio: 2,
-        backgroundColor: SURFACE,
-      });
-
-      const link = document.createElement('a');
-      link.download = 'reno-stars-process-poster.png';
-      link.href = dataUrl;
-      link.click();
-      setDownloadStatus('success');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
-    } catch (error) {
-      console.error('PNG generation failed:', error);
-      setDownloadStatus('error');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
-    } finally {
-      setIsDownloading(false);
-    }
-  }, [isDownloading]);
+  }, [isDownloading, isMobile, handleDownloadPNG]);
 
   return (
     <>
