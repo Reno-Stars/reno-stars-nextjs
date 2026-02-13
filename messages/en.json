@@ -534,10 +534,10 @@
       "projectsCount": "500+",
       "googleReviews": "Google Reviews"
     },
-    "downloadPoster": "Download PDF",
+    "downloadPoster": "Download PNG",
     "downloadSuccess": "Downloaded!",
     "downloadError": "Failed",
-    "downloadPosterHint": "Shift+click for PNG",
+    "downloadPosterHint": "Click to download PNG",
     "step1": {
       "title": "Initial Consultation",
       "subtitle": "Discovery",

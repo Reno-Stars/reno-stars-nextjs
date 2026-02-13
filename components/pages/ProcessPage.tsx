@@ -350,11 +350,11 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
           <div className="mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo.jpg"
+              src="/logo.png"
               alt={company.name}
               width={240}
               height={60}
-              className="h-14 w-auto mx-auto brightness-0 invert"
+              className="w-3/4 sm:w-2/3 h-auto mx-auto brightness-0 invert"
             />
           </div>
 
