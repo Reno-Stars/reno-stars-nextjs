@@ -3,7 +3,6 @@
 import { useMemo, useRef, useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toPng } from 'html-to-image';
-import { jsPDF } from 'jspdf';
 import {
   Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
   MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
@@ -281,150 +280,34 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Detect mobile/touch device
-  const isMobile = typeof window !== 'undefined' && (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    (navigator.maxTouchPoints > 0 && window.innerWidth < 768)
-  );
-
-  // Helper to trigger download with blob (more reliable on mobile)
-  const downloadBlob = useCallback((blob: Blob, filename: string) => {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-
-    // For iOS Safari, we need to open in a new tab
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (isIOS) {
-      // Open blob URL in new tab - user can then share/save
-      window.open(url, '_blank');
-    } else {
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    // Clean up after a delay
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }, []);
-
-  // PNG download with mobile-friendly settings
-  const handleDownloadPNG = useCallback(async () => {
+  // PNG download
+  const handleDownload = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
 
     setIsDownloading(true);
     setDownloadStatus('idle');
     try {
-      // Use lower pixelRatio on mobile to avoid memory issues
-      const pixelRatio = isMobile ? 1 : 2;
-
       const dataUrl = await toPng(posterRef.current, {
-        pixelRatio,
+        pixelRatio: 2,
         backgroundColor: SURFACE,
-        // Handle CORS issues with external images
         cacheBust: true,
-        // Skip external images that fail CORS (like company logo from CDN)
-        skipAutoScale: true,
-        // Filter out problematic external images on mobile
-        filter: isMobile
-          ? (node: HTMLElement) => {
-              // Skip external images that might fail CORS
-              if (node.tagName === 'IMG') {
-                const src = (node as HTMLImageElement).src || '';
-                // Allow local images, skip external ones
-                if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-                  return false;
-                }
-              }
-              return true;
-            }
-          : undefined,
       });
 
-      // Convert data URL to blob for more reliable mobile download
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-      downloadBlob(blob, 'reno-stars-process-poster.png');
+      const link = document.createElement('a');
+      link.download = 'reno-stars-process-poster.png';
+      link.href = dataUrl;
+      link.click();
 
       setDownloadStatus('success');
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } catch (error) {
       console.error('PNG generation failed:', error);
-      // On mobile, offer print as fallback
-      if (isMobile && window.print) {
-        window.print();
-        setDownloadStatus('success');
-        setTimeout(() => setDownloadStatus('idle'), 3000);
-      } else {
-        setDownloadStatus('error');
-        setTimeout(() => setDownloadStatus('idle'), 3000);
-      }
-    } finally {
-      setIsDownloading(false);
-    }
-  }, [isDownloading, isMobile, downloadBlob]);
-
-  // PDF download (default) - uses print dialog on mobile
-  const handleDownload = useCallback(async () => {
-    if (!posterRef.current || isDownloading) return;
-
-    // On mobile, use print dialog (most reliable way to save as PDF)
-    if (isMobile) {
-      window.print();
-      return;
-    }
-
-    setIsDownloading(true);
-    setDownloadStatus('idle');
-    try {
-      // Generate high-quality PNG first
-      const dataUrl = await toPng(posterRef.current, {
-        pixelRatio: 2,
-        backgroundColor: SURFACE,
-      });
-
-      // Create PDF from the image
-      const img = new window.Image();
-      img.src = dataUrl;
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-      });
-
-      // Calculate PDF dimensions (A4-ish aspect ratio, portrait)
-      const imgWidth = img.width;
-      const imgHeight = img.height;
-      const aspectRatio = imgWidth / imgHeight;
-
-      // Use mm units, A4 width is 210mm
-      const pdfWidth = 210;
-      const pdfHeight = pdfWidth / aspectRatio;
-
-      const pdf = new jsPDF({
-        orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
-        unit: 'mm',
-        format: [pdfWidth, pdfHeight],
-      });
-
-      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('reno-stars-process-poster.pdf');
-
-      setDownloadStatus('success');
+      setDownloadStatus('error');
       setTimeout(() => setDownloadStatus('idle'), 3000);
-    } catch (error) {
-      console.error('PDF generation failed:', error);
-      // Fall back to PNG on error
-      try {
-        await handleDownloadPNG();
-      } catch {
-        setDownloadStatus('error');
-        setTimeout(() => setDownloadStatus('idle'), 3000);
-      }
     } finally {
       setIsDownloading(false);
     }
-  }, [isDownloading, isMobile, handleDownloadPNG]);
+  }, [isDownloading]);
 
   return (
     <>
@@ -842,10 +725,10 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       </section>
       </div>
 
-      {/* Subtle Download Button at Bottom - Shift+click for PNG */}
+      {/* Download Button */}
       <div className="py-4 text-center print:hidden" style={{ backgroundColor: SURFACE }}>
         <button
-          onClick={(e) => e.shiftKey ? handleDownloadPNG() : handleDownload()}
+          onClick={handleDownload}
           disabled={isDownloading}
           className="inline-flex items-center gap-1.5 text-sm opacity-40 hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
           style={{ color: TEXT_MID }}
