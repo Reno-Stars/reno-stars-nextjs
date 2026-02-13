@@ -17,6 +17,44 @@ import {
   TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
+/** Collected image for display in modal gallery */
+interface GalleryImage {
+  src: string;
+  alt: string;
+  is_before?: boolean;
+}
+
+/**
+ * Collects unique images from image pairs, skipping duplicates.
+ * Used by both site and project conversion to avoid code duplication.
+ */
+function collectImagesFromPairs(
+  pairs: Array<{
+    afterImage?: { src: string; alt: string } | null;
+    beforeImage?: { src: string; alt: string } | null;
+  }> | undefined,
+  existingImages: GalleryImage[],
+  fallbackAlt: string
+): void {
+  if (!pairs) return;
+  for (const pair of pairs) {
+    if (pair.afterImage && !existingImages.some((img) => img.src === pair.afterImage!.src)) {
+      existingImages.push({
+        src: pair.afterImage.src,
+        alt: pair.afterImage.alt || fallbackAlt,
+        is_before: false,
+      });
+    }
+    if (pair.beforeImage && !existingImages.some((img) => img.src === pair.beforeImage!.src)) {
+      existingImages.push({
+        src: pair.beforeImage.src,
+        alt: pair.beforeImage.alt || fallbackAlt,
+        is_before: true,
+      });
+    }
+  }
+}
+
 interface ProjectsPageProps {
   locale: Locale;
   company: Company;
@@ -32,36 +70,99 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const sitesAsDisplayProjects: DisplayProject[] = useMemo(() =>
     sitesAsProjects
       .filter((site) => site.hero_image) // Skip sites without a hero image
-      .map((site) => ({
-        id: site.id,
-        slug: site.slug,
-        title: site.title[locale],
-        description: site.description[locale],
-        category: wholeHouseCategory,
-        // Sites don't have a service_type - they're collections of room projects
-        location_city: site.location_city || '',
-        hero_image: site.hero_image!,
-        images: [{ src: site.hero_image!, alt: site.title[locale] }],
-        featured: site.featured,
-        badge: site.badge?.[locale],
-        isSiteProject: true,
-        projectCount: site.project_count ?? site.projects?.length ?? 0,
-        // Site-specific aggregated data
-        childAreas: site.projects?.map((p) => p.category[locale]) ?? [],
-        totalBudget: site.aggregated?.totalBudget,
-        totalDuration: site.aggregated?.totalDuration?.[locale],
-        allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
-        allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
-          url: ep.url,
-          image_url: ep.image_url,
-          label: ep.label[locale],
-        })) ?? [],
-      })),
+      .map((site) => {
+        // Collect all images: hero + site image pairs + all aggregated images from child projects
+        const allImages: GalleryImage[] = [];
+        const siteTitle = site.title[locale];
+
+        // Add hero image first
+        allImages.push({ src: site.hero_image!, alt: siteTitle });
+
+        // Add site's own image pairs (if any), skip duplicates
+        // Transform bilingual pairs to localized format for the helper
+        const localizedSitePairs = site.image_pairs?.map((pair) => ({
+          afterImage: pair.afterImage ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] } : null,
+          beforeImage: pair.beforeImage ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] } : null,
+        }));
+        collectImagesFromPairs(localizedSitePairs, allImages, siteTitle);
+
+        // Add all images from child projects (aggregated)
+        if (site.aggregated?.allImages) {
+          site.aggregated.allImages.forEach((img) => {
+            // Skip duplicates (hero image might be in allImages too)
+            if (!allImages.some((existing) => existing.src === img.src)) {
+              allImages.push({
+                src: img.src,
+                alt: img.alt[locale],
+                is_before: img.is_before,
+              });
+            }
+          });
+        }
+
+        return {
+          id: site.id,
+          slug: site.slug,
+          title: site.title[locale],
+          description: site.description[locale],
+          category: wholeHouseCategory,
+          // Sites don't have a service_type - they're collections of room projects
+          location_city: site.location_city || '',
+          hero_image: site.hero_image!,
+          images: allImages,
+          featured: site.featured,
+          badge: site.badge?.[locale],
+          isSiteProject: true,
+          projectCount: site.project_count ?? site.projects?.length ?? 0,
+          // Site-specific aggregated data
+          childAreas: site.projects?.map((p) => p.category[locale]) ?? [],
+          totalBudget: site.aggregated?.totalBudget,
+          totalDuration: site.aggregated?.totalDuration?.[locale],
+          allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
+          allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
+            url: ep.url,
+            image_url: ep.image_url,
+            label: ep.label[locale],
+          })) ?? [],
+        };
+      }),
   [sitesAsProjects, locale, wholeHouseCategory]);
 
-  // Convert individual projects
+  // Convert individual projects with all images collected
   const projectsAsDisplay: DisplayProject[] = useMemo(() =>
-    rawProjects.map((p) => ({ ...getLocalizedProject(p, locale), isSiteProject: false })),
+    rawProjects.map((p) => {
+      const localized = getLocalizedProject(p, locale);
+
+      // Collect all images: hero + images array + image_pairs
+      const allImages: GalleryImage[] = [];
+
+      // Add hero image first (if not already in images array)
+      if (localized.hero_image) {
+        allImages.push({ src: localized.hero_image, alt: localized.title });
+      }
+
+      // Add images from images array (skip duplicates)
+      if (localized.images) {
+        localized.images.forEach((img) => {
+          if (!allImages.some((existing) => existing.src === img.src)) {
+            allImages.push({
+              src: img.src,
+              alt: img.alt || localized.title,
+              is_before: img.is_before,
+            });
+          }
+        });
+      }
+
+      // Add images from image_pairs using shared helper (skip duplicates)
+      collectImagesFromPairs(localized.image_pairs, allImages, localized.title);
+
+      return {
+        ...localized,
+        images: allImages,
+        isSiteProject: false,
+      };
+    }),
   [rawProjects, locale]);
 
   // Combine all displayable items (sites first if featured, then projects)

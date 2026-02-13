@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, projects, siteImagePairs } from '@/lib/db/schema';
-import { eq, count } from 'drizzle-orm';
+import { eq, count, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -65,16 +65,22 @@ export async function createSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Insert site and image pairs (Neon HTTP driver does not support transactions)
+    // Insert site, then image pairs with rollback on failure
     const [inserted] = await db.insert(projectSites).values({
       ...data,
       publishedAt: data.isPublished ? new Date() : null,
     }).returning({ id: projectSites.id });
 
-    if (pairData.length > 0) {
-      await db.insert(siteImagePairs).values(
-        pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
-      );
+    try {
+      if (pairData.length > 0) {
+        await db.insert(siteImagePairs).values(
+          pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
+        );
+      }
+    } catch (pairError) {
+      // Clean up orphaned site record
+      await db.delete(projectSites).where(eq(projectSites.id, inserted.id));
+      throw pairError;
     }
 
     revalidatePath('/admin/sites');
@@ -129,7 +135,10 @@ export async function updateSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Update site and related data (Neon HTTP driver does not support transactions)
+    // Fetch existing image pair IDs before modification
+    const existingPairs = await db.select({ id: siteImagePairs.id }).from(siteImagePairs).where(eq(siteImagePairs.siteId, id));
+
+    // Update site
     const updated = await db
       .update(projectSites)
       .set(data)
@@ -140,12 +149,17 @@ export async function updateSite(
       return { error: 'Site not found.' };
     }
 
-    // Replace site image pairs: delete existing, insert new
-    await db.delete(siteImagePairs).where(eq(siteImagePairs.siteId, id));
+    // Insert new image pairs first (old data still exists as fallback if insert fails)
     if (pairData.length > 0) {
       await db.insert(siteImagePairs).values(
         pairData.map((pair) => ({ ...pair, siteId: id }))
       );
+    }
+
+    // Delete old image pairs (new data already safely inserted)
+    const oldPairIds = existingPairs.map((r: { id: string }) => r.id);
+    if (oldPairIds.length > 0) {
+      await db.delete(siteImagePairs).where(inArray(siteImagePairs.id, oldPairIds));
     }
 
     revalidatePath('/admin/sites');

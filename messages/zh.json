@@ -250,6 +250,10 @@
     "close": "关闭",
     "viewDetails": "查看完整详情"
   },
+  "gallery": {
+    "previous": "上一张",
+    "next": "下一张"
+  },
   "filter": {
     "allCategories": "所有类别",
     "location": "地点",

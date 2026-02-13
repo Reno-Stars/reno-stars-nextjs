@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers } from 'lucide-react';
+import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { DisplayProject } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import ProductLink from '@/components/ProductLink';
 import {
-  GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, SH_DARK,
+  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, SH_DARK,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
 } from '@/lib/theme';
 
@@ -18,21 +18,81 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+// Minimum swipe distance to trigger navigation (in pixels)
+const SWIPE_THRESHOLD = 50;
+
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const t = useTranslations();
   const [activeImage, setActiveImage] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
-
   const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  // Compute gallery early so it can be used in callbacks
+  const gallery = project?.images && project.images.length > 0
+    ? project.images
+    : project ? [{ src: project.hero_image, alt: project.title }] : [];
+
+  // Store gallery length in ref for stable callback references.
+  // This avoids adding `gallery.length` to callback dependencies, which would
+  // cause unnecessary re-creation of handlers and potential stale closure issues.
+  const galleryLengthRef = useRef(gallery.length);
+  galleryLengthRef.current = gallery.length;
 
   const handleClose = useCallback(() => {
     setVisible(false);
     closeTimerRef.current = setTimeout(() => onClose(), 200);
   }, [onClose]);
 
+  const handlePrevImage = useCallback(() => {
+    setSlideDirection('right');
+    setActiveImage((prev) => (prev > 0 ? prev - 1 : galleryLengthRef.current - 1));
+  }, []);
+
+  const handleNextImage = useCallback(() => {
+    setSlideDirection('left');
+    setActiveImage((prev) => (prev < galleryLengthRef.current - 1 ? prev + 1 : 0));
+  }, []);
+
+  // Touch swipe handlers for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current || galleryLengthRef.current <= 1) return;
+
+    const touchEnd = {
+      x: e.changedTouches[0].clientX,
+      y: e.changedTouches[0].clientY,
+    };
+
+    const deltaX = touchEnd.x - touchStartRef.current.x;
+    const deltaY = touchEnd.y - touchStartRef.current.y;
+
+    // Only trigger swipe if horizontal movement is greater than vertical (avoid scroll conflicts)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+      if (deltaX < 0) {
+        // Swipe left → next image
+        handleNextImage();
+      } else {
+        // Swipe right → previous image
+        handlePrevImage();
+      }
+    }
+
+    touchStartRef.current = null;
+  }, [handleNextImage, handlePrevImage]);
+
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') handleClose();
+    if (e.key === 'ArrowLeft') { e.preventDefault(); handlePrevImage(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); handleNextImage(); }
     if (e.key === 'Tab' && modalRef.current) {
       const focusable = modalRef.current.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -48,7 +108,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         first.focus();
       }
     }
-  }, [handleClose]);
+  }, [handleClose, handlePrevImage, handleNextImage]);
 
   useEffect(() => {
     if (!project) return;
@@ -67,16 +127,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   useEffect(() => {
     if (!project) return;
     // Find first "after" image index (default to 0 if none found)
-    const gallery = project.images.length > 0 ? project.images : [];
-    const firstAfterIdx = gallery.findIndex((img) => !img.is_before);
+    const projectGallery = project.images?.length > 0 ? project.images : [];
+    const firstAfterIdx = projectGallery.findIndex((img) => !img.is_before);
     setActiveImage(firstAfterIdx >= 0 ? firstAfterIdx : 0);
   }, [project]);
 
   if (!project) return null;
-
-  const gallery = project.images.length > 0
-    ? project.images
-    : [{ src: project.hero_image, alt: project.title }];
 
   // For whole house sites, use aggregated data; otherwise use project data
   const isSite = project.isSiteProject;
@@ -96,18 +152,34 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const externalProducts = isSite ? project.allExternalProducts : project.external_products;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-opacity duration-200"
-      style={{
-        opacity: visible ? 1 : 0,
-        backgroundColor: 'rgba(27,54,93,0.45)',
-        backdropFilter: 'blur(6px)',
-      }}
-      onClick={handleClose}
-    >
+    <>
+      {/* Slide animation keyframes */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes slide-in-left {
+          from { transform: translateX(100%); opacity: 0.5; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slide-in-right {
+          from { transform: translateX(-100%); opacity: 0.5; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          @keyframes slide-in-left { from, to { transform: none; opacity: 1; } }
+          @keyframes slide-in-right { from, to { transform: none; opacity: 1; } }
+        }
+      `}} />
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 transition-opacity duration-200"
+        style={{
+          opacity: visible ? 1 : 0,
+          backgroundColor: 'rgba(27,54,93,0.45)',
+          backdropFilter: 'blur(6px)',
+        }}
+        onClick={handleClose}
+      >
       <div
         ref={modalRef}
-        className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl transition-all duration-200"
+        className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-2xl transition-all duration-200"
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? 'scale(1)' : 'scale(0.97)',
@@ -122,7 +194,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       >
         {/* Header */}
         <div
-          className="sticky top-0 z-10 flex items-center justify-between px-6 py-4"
+          className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4"
           style={{
             backgroundColor: SURFACE,
             boxShadow: `0 1px 3px ${SH_DARK}`,
@@ -145,71 +217,111 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </button>
         </div>
 
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row overflow-hidden">
           {/* Gallery + description */}
-          <div className="flex-1 p-6">
+          <div className="flex-1 min-w-0 p-4 sm:p-6">
             <div
-              className="relative overflow-hidden rounded-xl aspect-[16/10] mb-4"
+              className="relative overflow-hidden rounded-xl aspect-[16/10] mb-4 group"
               style={{ boxShadow: neuIn(4), backgroundColor: SURFACE_ALT }}
             >
-              <Image
-                src={gallery[activeImage].src}
-                alt={gallery[activeImage].alt || `${project.title} - renovation project photo`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-contain"
-              />
+              {/* Animated image wrapper - key triggers re-render and animation */}
+              <div
+                key={activeImage}
+                className="absolute inset-0"
+                style={{
+                  animation: slideDirection
+                    ? `slide-in-${slideDirection} 0.3s ease-out`
+                    : undefined,
+                }}
+                onAnimationEnd={() => setSlideDirection(null)}
+              >
+                <Image
+                  src={gallery[activeImage].src}
+                  alt={gallery[activeImage].alt || `${project.title} - renovation project photo`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-contain"
+                />
+              </div>
+              {/* Touch swipe overlay - captures touch events for mobile navigation */}
+              {gallery.length > 1 && (
+                <div
+                  className="absolute inset-0 z-[5]"
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  style={{ touchAction: 'pan-y pinch-zoom' }}
+                />
+              )}
               <BeforeAfterBadge isBefore={gallery[activeImage].is_before} t={t} />
+
+              {/* Navigation arrows */}
+              {gallery.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevImage}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100 cursor-pointer hover:scale-110 z-20"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.9)', boxShadow: neu(3), color: TEXT }}
+                    aria-label={t('gallery.previous')}
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button
+                    onClick={handleNextImage}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100 cursor-pointer hover:scale-110 z-20"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.9)', boxShadow: neu(3), color: TEXT }}
+                    aria-label={t('gallery.next')}
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+
+                  {/* Image counter */}
+                  <div
+                    className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-sm font-medium z-20"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}
+                  >
+                    {activeImage + 1} / {gallery.length}
+                  </div>
+                </>
+              )}
             </div>
 
-            {gallery.length > 1 && (() => {
-              // Separate images: After first, then Before
-              const afterImages = gallery
-                .map((img, i) => ({ ...img, originalIndex: i }))
-                .filter((img) => !img.is_before);
-              const beforeImages = gallery
-                .map((img, i) => ({ ...img, originalIndex: i }))
-                .filter((img) => img.is_before);
-
-              const renderRow = (images: typeof afterImages, label: string) => images.length > 0 && (
-                <div className="mb-4">
-                  <span className="text-xs font-medium uppercase tracking-wide mb-2 block" style={{ color: TEXT_MUTED }}>
-                    {label}
-                  </span>
-                  <div className="flex gap-3" role="group" aria-label={`${label} thumbnails`}>
-                    {images.map((img) => (
-                      <button
-                        key={img.src}
-                        onClick={() => setActiveImage(img.originalIndex)}
-                        className="relative w-20 h-16 rounded-lg overflow-hidden transition-all cursor-pointer"
-                        style={{
-                          boxShadow: img.originalIndex === activeImage ? `0 0 0 2px ${GOLD}` : neu(2),
-                          opacity: img.originalIndex === activeImage ? 1 : 0.7,
-                        }}
-                        aria-label={`View image ${img.originalIndex + 1} of ${gallery.length}`}
-                        aria-pressed={img.originalIndex === activeImage}
-                      >
-                        <Image src={img.src} alt={img.alt || `${project.title} - renovation photo`} fill sizes="80px" className="object-cover" />
-                      </button>
-                    ))}
-                  </div>
+            {gallery.length > 1 && (
+              <div className="mb-4 -mx-2">
+                <div className="flex gap-2 overflow-x-auto py-1 px-2" role="group" aria-label="Image thumbnails">
+                  {gallery.map((img, i) => (
+                    <button
+                      key={img.src}
+                      onClick={() => setActiveImage(i)}
+                      className="relative w-16 h-12 flex-shrink-0 rounded-lg overflow-hidden transition-all cursor-pointer"
+                      style={{
+                        boxShadow: i === activeImage ? `0 0 0 2px ${GOLD}` : neu(2),
+                        opacity: i === activeImage ? 1 : 0.7,
+                      }}
+                      aria-label={`View image ${i + 1} of ${gallery.length}${img.is_before ? ` (${t('projects.beforeLabel')})` : ''}`}
+                      aria-pressed={i === activeImage}
+                    >
+                      <Image src={img.src} alt={img.alt || `${project.title} - renovation photo`} fill sizes="64px" className="object-cover" />
+                      {/* Small before/after indicator */}
+                      {img.is_before != null && (
+                        <span
+                          className="absolute bottom-0.5 left-0.5 px-1 py-0.5 text-[8px] font-bold text-white rounded"
+                          style={{ backgroundColor: img.is_before ? NAVY : GOLD }}
+                        >
+                          {img.is_before ? 'B' : 'A'}
+                        </span>
+                      )}
+                    </button>
+                  ))}
                 </div>
-              );
+              </div>
+            )}
 
-              return (
-                <div className="mb-4">
-                  {renderRow(afterImages, t('projects.afterLabel'))}
-                  {renderRow(beforeImages, t('projects.beforeLabel'))}
-                </div>
-              );
-            })()}
-
-            <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>
+            <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-8" style={{ color: TEXT_MID }}>
               {project.description}
             </p>
 
             {project.challenge && (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: TEXT }}>{t('modal.challenge')}</h3>
                   <p className="leading-relaxed" style={{ color: TEXT_MID }}>{project.challenge}</p>
@@ -226,25 +338,29 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Sidebar */}
           <div
-            className="w-full lg:w-72 flex-shrink-0 p-6"
+            className="w-full lg:w-72 flex-shrink-0 p-4 sm:p-6"
             style={{
               backgroundColor: SURFACE_ALT,
               boxShadow: `inset 2px 0 4px -2px ${SH_DARK}`,
             }}
           >
-            <div className="space-y-5">
+            {/* Key details — 2-col grid on mobile, single column on desktop sidebar */}
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-1 lg:gap-5">
               {sidebarItems.map(({ icon: Icon, label, value }) =>
                 value ? (
                   <div key={label}>
-                    <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide mb-1" style={{ color: TEXT_MUTED }}>
-                      <Icon className="w-4 h-4" style={{ color: GOLD }} />
+                    <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide mb-1" style={{ color: TEXT_MUTED }}>
+                      <Icon className="w-3.5 h-3.5 lg:w-4 lg:h-4" style={{ color: GOLD }} />
                       {label}
                     </div>
-                    <div className="font-medium" style={{ color: TEXT }}>{value}</div>
+                    <div className="text-sm lg:text-base font-medium" style={{ color: TEXT }}>{value}</div>
                   </div>
                 ) : null
               )}
+            </div>
 
+            {/* Tags & links — always full width */}
+            <div className="mt-4 space-y-3 sm:space-y-4 lg:space-y-5">
               {/* Areas Included (for whole house sites) */}
               {childAreas && childAreas.length > 0 && (
                 <div>
@@ -252,11 +368,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <Layers className="w-4 h-4" style={{ color: GOLD }} />
                     {t('wholeHouse.includedAreas')}
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {childAreas.map((area) => (
                       <span
                         key={area}
-                        className="px-3 py-1 rounded-full text-xs font-medium"
+                        className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium"
                         style={{ backgroundColor: GOLD_PALE, color: GOLD }}
                       >
                         {area}
@@ -273,11 +389,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <Wrench className="w-4 h-4" style={{ color: GOLD }} />
                     {t('modal.serviceScope')}
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {serviceScopes.map((s) => (
                       <span
                         key={s}
-                        className="px-3 py-1 rounded-full text-xs font-medium"
+                        className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium"
                         style={{ backgroundColor: GOLD_PALE, color: GOLD }}
                       >
                         {s}
@@ -303,7 +419,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
               <Link
                 href={`/projects/${project.slug}`}
-                className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:brightness-110"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:brightness-110"
                 style={{
                   backgroundColor: GOLD,
                   boxShadow: `0 4px 20px ${GOLD}44`,
@@ -318,5 +434,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }

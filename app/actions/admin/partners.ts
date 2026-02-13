@@ -150,10 +150,11 @@ export async function reorderPartners(orderedIds: string[]): Promise<{ error?: s
   }
 
   try {
+    const now = new Date();
     await Promise.all(
       orderedIds.map((id, i) =>
         db.update(partners)
-          .set({ displayOrder: i, updatedAt: new Date() })
+          .set({ displayOrder: i, updatedAt: now })
           .where(eq(partners.id, id))
       )
     );

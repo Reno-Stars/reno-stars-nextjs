@@ -11,7 +11,7 @@ import {
   services as servicesTable,
   projectSites as sitesTable,
 } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -309,35 +309,45 @@ export async function updateProject(
 
     const scopeData = parseScopes(formData);
 
-    // Update project and related data (Neon HTTP driver does not support transactions)
+    // Fetch existing related record IDs before modification
+    const [existingPairs, existingScopes, existingEps] = await Promise.all([
+      db.select({ id: projectImagePairs.id }).from(projectImagePairs).where(eq(projectImagePairs.projectId, id)),
+      db.select({ id: projectScopes.id }).from(projectScopes).where(eq(projectScopes.projectId, id)),
+      db.select({ id: projectExternalProducts.id }).from(projectExternalProducts).where(eq(projectExternalProducts.projectId, id)),
+    ]);
+
+    // Update project
     await db
       .update(projects)
       .set({ ...data, serviceId: svcRows[0].id })
       .where(eq(projects.id, id));
 
-    // Delete and re-insert image pairs
-    await db.delete(projectImagePairs).where(eq(projectImagePairs.projectId, id));
+    // Insert new related data first (old data still exists as fallback if insert fails)
     if (pairData.length > 0) {
       await db.insert(projectImagePairs).values(
         pairData.map((pair) => ({ ...pair, projectId: id }))
       );
     }
-
-    // Delete and re-insert scopes
-    await db.delete(projectScopes).where(eq(projectScopes.projectId, id));
     if (scopeData.length > 0) {
       await db.insert(projectScopes).values(
         scopeData.map((s) => ({ ...s, projectId: id }))
       );
     }
-
-    // Delete and re-insert external products
-    await db.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
     if (epData.length > 0) {
       await db.insert(projectExternalProducts).values(
         epData.map((ep) => ({ ...ep, projectId: id }))
       );
     }
+
+    // Delete old related data (new data already safely inserted)
+    const oldPairIds = existingPairs.map((r: { id: string }) => r.id);
+    const oldScopeIds = existingScopes.map((r: { id: string }) => r.id);
+    const oldEpIds = existingEps.map((r: { id: string }) => r.id);
+    await Promise.all([
+      oldPairIds.length > 0 ? db.delete(projectImagePairs).where(inArray(projectImagePairs.id, oldPairIds)) : Promise.resolve(),
+      oldScopeIds.length > 0 ? db.delete(projectScopes).where(inArray(projectScopes.id, oldScopeIds)) : Promise.resolve(),
+      oldEpIds.length > 0 ? db.delete(projectExternalProducts).where(inArray(projectExternalProducts.id, oldEpIds)) : Promise.resolve(),
+    ]);
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');

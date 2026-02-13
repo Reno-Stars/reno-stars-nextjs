@@ -14,6 +14,30 @@ interface BenefitsPageProps {
   company: Company;
 }
 
+// Static benefit items - defined outside component to avoid recreation
+const BENEFITS = [
+  {
+    icon: Shield,
+    titleKey: 'benefits.warranty.title',
+    descKey: 'benefits.warranty.description',
+  },
+  {
+    icon: Award,
+    titleKey: 'benefits.rating.title',
+    descKey: 'benefits.rating.description',
+  },
+  {
+    icon: Users,
+    titleKey: 'benefits.team.title',
+    descKey: 'benefits.team.description',
+  },
+  {
+    icon: Wrench,
+    titleKey: 'benefits.service.title',
+    descKey: 'benefits.service.description',
+  },
+] as const;
+
 export default function BenefitsPage({ company }: BenefitsPageProps) {
   const t = useTranslations();
 
@@ -22,29 +46,6 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
     { value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
     { value: company.warranty, label: t('stats.warranty') },
   ], [company, t]);
-
-  const benefits = [
-    {
-      icon: Shield,
-      titleKey: 'benefits.warranty.title',
-      descKey: 'benefits.warranty.description',
-    },
-    {
-      icon: Award,
-      titleKey: 'benefits.rating.title',
-      descKey: 'benefits.rating.description',
-    },
-    {
-      icon: Users,
-      titleKey: 'benefits.team.title',
-      descKey: 'benefits.team.description',
-    },
-    {
-      icon: Wrench,
-      titleKey: 'benefits.service.title',
-      descKey: 'benefits.service.description',
-    },
-  ];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -65,7 +66,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
         <div className="max-w-7xl mx-auto">
           <h2 className="sr-only">{t('benefits.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit) => {
+            {BENEFITS.map((benefit) => {
               const Icon = benefit.icon;
               return (
                 <div

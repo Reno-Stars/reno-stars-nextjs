@@ -80,7 +80,7 @@ app/
 
 components/
   pages/                  # Page-level components (one per route)
-  home/                   # Homepage section components (13 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, FAQ, Blog, Showroom, Contact)
+  home/                   # Homepage section components (14 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, Partners, FAQ, Blog, Showroom, Contact)
   admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, DashboardShell, AIContentEditor, AIBilingualTextarea, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, ProductLink.tsx, etc.
@@ -140,8 +140,8 @@ tests/
 ## Key Architecture Decisions
 
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
-- **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
-- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. `lib/db/helpers.ts` provides aggregation utilities (`collectAllImages`, `calculateCombinedBudget`, etc.) with `SITE_IMAGE_SLUG` sentinel for site-level images. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`, `getAllSitesAdmin`.
+- **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, partners, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
+- **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`, `getFaqsFromDb`, `getPartnersFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. `lib/db/helpers.ts` provides aggregation utilities (`collectAllImages`, `calculateCombinedBudget`, etc.) with `SITE_IMAGE_SLUG` sentinel for site-level images. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`, `getAllSitesAdmin`, `getAllPartnersAdmin`.
 - **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
 - **Lazy DB proxy:** `db` export uses a Proxy that only connects on first query. Safe to import at build time.
@@ -149,6 +149,7 @@ tests/
 - **Asset URL rewriting:** `getAssetUrl()` rewrites production URLs to MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 - **Neumorphic design:** Warm beige surface (#E8E2DA), navy (#1B365D), gold (#C8922A) palette.
 - **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when slugs collide. Used by `createProject()`, `updateProject()`, and `createServiceArea()` admin actions.
+- **Insert-before-delete pattern:** Admin CRUD actions that update related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. The Neon HTTP driver does not support interactive transactions, so actions fetch existing record IDs, insert new records first (old data remains as fallback if insert fails), then delete old records by ID. This prevents data loss on partial failure. Used by `updateProject()` and `updateSite()`. For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
 
 ## Environment Variables
 
@@ -187,6 +188,7 @@ Key patterns:
 - `blog_posts` — articles (with optional project reference for products display)
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
+- `partners` — partner logos with bilingual names, optional website URL, active/hidden-visually states
 - `testimonials` (deprecated — replaced by Google Reviews API), `gallery_items`, `trust_badges`, `social_links`, `faqs`
 
 ### Image Pair Tables
@@ -209,12 +211,13 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB + Google Reviews API (via `Promise.all`) and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
-- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 12 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, ImagePairEditor, Tooltip, DragHandleIcon, ConfirmDialog, DashboardShell, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`. Mobile-responsive via `app/admin/admin-responsive.css` (CSS-only overrides with `className` hooks on form grids/cards/headers).
+- **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 13 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections, partners. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, ImagePairEditor, Tooltip, DragHandleIcon, ConfirmDialog, DashboardShell, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`. Mobile-responsive via `app/admin/admin-responsive.css` (CSS-only overrides with `className` hooks on form grids/cards/headers).
 - **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata sections (title, caption, photographer credit, keywords). Supports drag-and-drop upload, bilingual alt text fields (with flag emoji labels), add/remove pairs, and reordering. Accepts optional `slug` prop for SEO-friendly upload naming (`{slug}-before-renovation-{index}`) and auto-fills empty alt text fields on upload (EN: `{Humanized Slug} - Before Renovation {index}`, ZH: `{Humanized Slug} - 装修前 {index}`). Uses `pairsRef` pattern to read latest state after async upload gap. Used by ProjectForm and SiteForm. Shared `parseImagePairs()` utility in `lib/admin/form-utils.ts` handles FormData parsing for both projects and sites.
 - **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview, and tooltip. Accepts optional `slug` and `imageRole` (default `'hero'`) props for SEO-friendly upload naming (`{slug}-{imageRole}.{ext}`).
 - **Upload action** (`app/actions/admin/upload.ts`): S3 upload server action. Accepts optional `customKey` from FormData for slug-based naming; falls back to timestamp-random naming. `customKey` is sanitized server-side (`/[a-z0-9-]/` only, max 200 chars).
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
+- **ProjectModal** (`components/ProjectModal.tsx`): Gallery with prev/next navigation arrows (hover-reveal), keyboard navigation (ArrowLeft/ArrowRight), and image counter overlay. Thumbnails split into before/after rows with horizontal scroll for overflow.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
 - **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y), `FormField` (label + input wrapper with optional tooltip), `SearchableSelect` (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project in BlogPostForm and linked site in ProjectForm).
 - **AI content editor components**: `AIContentEditor` (tabbed interface for blog content with paste/EN/ZH tabs, AI optimization, preview mode, excerpt generation) and `AIBilingualTextarea` (simpler bilingual textarea with inline AI button for project descriptions/challenges/solutions). Both use OpenAI GPT-4o for language detection, translation, and content improvement. Uses DOMPurify for XSS protection in preview mode, zod for response validation. Respects `disabled` prop and syncs with form edit mode.
@@ -234,7 +237,7 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 
 ## Homepage Section Order
 
-Hero → Service Areas → Gallery → Services → Testimonials → Stats → About → Trust Badges → FAQ → Blog → Showroom CTA → Contact
+Hero → Service Areas → Gallery → Services → Testimonials → Stats → About → Trust Badges → Partners → FAQ → Blog → Showroom CTA → Contact
 
 ## Known Issues
 

@@ -8,6 +8,7 @@ import {
   Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
   MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
   Users, Settings, ClipboardCheck, HeartHandshake, Shield, Headphones,
+  type LucideIcon,
 } from 'lucide-react';
 import type { Company } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
@@ -34,7 +35,7 @@ interface StepData {
   lightColor: string;
 }
 
-const stepIcons: Record<string, typeof Phone> = {
+const stepIcons: Record<string, LucideIcon> = {
   phone: Phone,
   email: Mail,
   wechat: MessageCircle,
@@ -321,7 +322,8 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
 
       setDownloadStatus('success');
       setTimeout(() => setDownloadStatus('idle'), 3000);
-    } catch {
+    } catch (error) {
+      console.error('PDF generation failed:', error);
       setDownloadStatus('error');
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } finally {
@@ -329,7 +331,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
     }
   }, [isDownloading]);
 
-  // PNG download (kept for future use)
+  // PNG download - accessible via Shift+click on download button
   const handleDownloadPNG = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
 
@@ -347,7 +349,8 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       link.click();
       setDownloadStatus('success');
       setTimeout(() => setDownloadStatus('idle'), 3000);
-    } catch {
+    } catch (error) {
+      console.error('PNG generation failed:', error);
       setDownloadStatus('error');
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } finally {
@@ -395,6 +398,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
         <div className="max-w-5xl mx-auto text-center relative z-10">
           {/* Brand Logo - using <img> for PDF/PNG export compatibility */}
           <div className="mb-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={company.logo}
               alt={company.name}
@@ -724,6 +728,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
             <div className="flex flex-col items-center order-1 md:order-2">
               <div className="bg-white p-4 rounded-xl mb-3">
                 {locale === 'zh' ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src="/wechat-qr.png"
                     alt="WeChat QR Code"
@@ -732,6 +737,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
                     className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
                   />
                 ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     src="/whatsapp-qr.png"
                     alt="WhatsApp QR Code"

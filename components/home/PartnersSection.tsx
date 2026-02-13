@@ -37,6 +37,7 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       className="py-14"
       style={{ backgroundColor: SURFACE }}
     >
+      {/* Duration is computed from partners.length (trusted server data), safe to inject */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes scroll-partners {
           0% { transform: translateX(0); }
@@ -84,8 +85,8 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
         <div className="sr-only">
           <h3>{t.srTitle}</h3>
           <ul>
-            {hiddenPartners.map((partner, i) => (
-              <li key={i}>
+            {hiddenPartners.map((partner) => (
+              <li key={partner.name}>
                 {partner.url ? (
                   <a href={partner.url} target="_blank" rel="noopener noreferrer">
                     {partner.name}

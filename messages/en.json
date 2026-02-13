@@ -250,6 +250,10 @@
     "close": "Close",
     "viewDetails": "View Full Details"
   },
+  "gallery": {
+    "previous": "Previous image",
+    "next": "Next image"
+  },
   "filter": {
     "allCategories": "All Categories",
     "location": "Location",
