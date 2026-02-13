@@ -290,7 +290,6 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       const dataUrl = await toPng(posterRef.current, {
         pixelRatio: 2,
         backgroundColor: SURFACE,
-        cacheBust: true,
       });
 
       const link = document.createElement('a');
@@ -347,11 +346,11 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Brand Logo - using <img> for PDF/PNG export compatibility */}
+          {/* Brand Logo - using local path for PNG export compatibility */}
           <div className="mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={company.logo}
+              src="/logo.jpg"
               alt={company.name}
               width={240}
               height={60}
