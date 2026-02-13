@@ -317,11 +317,29 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
     setDownloadStatus('idle');
     try {
       // Use lower pixelRatio on mobile to avoid memory issues
-      const pixelRatio = isMobile ? 1.5 : 2;
+      const pixelRatio = isMobile ? 1 : 2;
 
       const dataUrl = await toPng(posterRef.current, {
         pixelRatio,
         backgroundColor: SURFACE,
+        // Handle CORS issues with external images
+        cacheBust: true,
+        // Skip external images that fail CORS (like company logo from CDN)
+        skipAutoScale: true,
+        // Filter out problematic external images on mobile
+        filter: isMobile
+          ? (node: HTMLElement) => {
+              // Skip external images that might fail CORS
+              if (node.tagName === 'IMG') {
+                const src = (node as HTMLImageElement).src || '';
+                // Allow local images, skip external ones
+                if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+                  return false;
+                }
+              }
+              return true;
+            }
+          : undefined,
       });
 
       // Convert data URL to blob for more reliable mobile download
@@ -333,20 +351,28 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } catch (error) {
       console.error('PNG generation failed:', error);
-      setDownloadStatus('error');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
+      // On mobile, offer print as fallback
+      if (isMobile && window.print) {
+        window.print();
+        setDownloadStatus('success');
+        setTimeout(() => setDownloadStatus('idle'), 3000);
+      } else {
+        setDownloadStatus('error');
+        setTimeout(() => setDownloadStatus('idle'), 3000);
+      }
     } finally {
       setIsDownloading(false);
     }
   }, [isDownloading, isMobile, downloadBlob]);
 
-  // PDF download (default) - falls back to PNG on mobile
+  // PDF download (default) - uses print dialog on mobile
   const handleDownload = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
 
-    // On mobile, use PNG download instead (more reliable)
+    // On mobile, use print dialog (most reliable way to save as PDF)
     if (isMobile) {
-      return handleDownloadPNG();
+      window.print();
+      return;
     }
 
     setIsDownloading(true);
