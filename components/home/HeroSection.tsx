@@ -8,6 +8,15 @@ import { video, images } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
 
+/** WorkSafe BC logo SVG for hero badge */
+function WorkSafeBCLogo({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+    </svg>
+  );
+}
+
 interface HeroSectionProps {
   company: Company;
   translations: {
@@ -22,11 +31,6 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ company, translations: t }: HeroSectionProps) {
-  const heroBadges = [
-    `${company.yearsExperience}+ ${t.yearsExperience}`,
-    `${company.liabilityCoverage} ${t.liabilityCoverage}`,
-  ];
-
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden min-h-[70vh] flex items-center">
       {/* Poster image shown immediately for fast LCP */}
@@ -69,11 +73,17 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
             </a>
           </div>
           <div className="flex flex-wrap gap-4 pt-2">
-            {heroBadges.map((txt) => (
-              <span key={txt} className="text-sm font-medium text-white/70 flex items-center gap-1.5">
-                <Shield className="w-4 h-4" style={{ color: GOLD }} /> {txt}
-              </span>
-            ))}
+            {/* Years of Experience badge */}
+            <span className="text-sm font-medium text-white/70 flex items-center gap-1.5">
+              <Shield className="w-4 h-4" style={{ color: GOLD }} />
+              {company.yearsExperience}+ {t.yearsExperience}
+            </span>
+            {/* WorkSafe BC badge */}
+            <span className="text-sm font-medium text-white/70 flex items-center gap-1.5">
+              <WorkSafeBCLogo className="w-4 h-4" style={{ color: GOLD }} />
+              {t.liabilityCoverage}
+            </span>
+            {/* Star rating */}
             <span className="text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`5/5 ${t.rating}`}>
               {[0, 1, 2, 3, 4].map((i) => (
                 <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
