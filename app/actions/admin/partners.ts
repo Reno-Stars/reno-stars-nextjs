@@ -150,13 +150,13 @@ export async function reorderPartners(orderedIds: string[]): Promise<{ error?: s
   }
 
   try {
-    await db.transaction(async (tx: typeof db) => {
-      for (let i = 0; i < orderedIds.length; i++) {
-        await tx.update(partners)
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(partners)
           .set({ displayOrder: i, updatedAt: new Date() })
-          .where(eq(partners.id, orderedIds[i]));
-      }
-    });
+          .where(eq(partners.id, id))
+      )
+    );
 
     revalidatePath('/admin/partners');
     revalidatePath('/', 'layout');

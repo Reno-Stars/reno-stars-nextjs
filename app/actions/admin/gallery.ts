@@ -128,14 +128,14 @@ export async function reorderGalleryItems(
   }
 
   try {
-    // Update display order for each item atomically
-    await db.transaction(async (tx: typeof db) => {
-      for (let i = 0; i < orderedIds.length; i++) {
-        await tx.update(galleryItems)
+    // Update display order for each item
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(galleryItems)
           .set({ displayOrder: i })
-          .where(eq(galleryItems.id, orderedIds[i]));
-      }
-    });
+          .where(eq(galleryItems.id, id))
+      )
+    );
 
     revalidatePath('/admin/gallery');
     revalidatePath('/', 'layout');

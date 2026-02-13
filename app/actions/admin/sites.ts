@@ -65,20 +65,17 @@ export async function createSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Insert site and image pairs atomically
-    await db.transaction(async (tx: typeof db) => {
-      const [inserted] = await tx.insert(projectSites).values({
-        ...data,
-        publishedAt: data.isPublished ? new Date() : null,
-      }).returning({ id: projectSites.id });
+    // Insert site and image pairs (Neon HTTP driver does not support transactions)
+    const [inserted] = await db.insert(projectSites).values({
+      ...data,
+      publishedAt: data.isPublished ? new Date() : null,
+    }).returning({ id: projectSites.id });
 
-      // Insert image pairs
-      if (pairData.length > 0) {
-        await tx.insert(siteImagePairs).values(
-          pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
-        );
-      }
-    });
+    if (pairData.length > 0) {
+      await db.insert(siteImagePairs).values(
+        pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
+      );
+    }
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');
@@ -132,26 +129,24 @@ export async function updateSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Update site and related data atomically
-    await db.transaction(async (tx: typeof db) => {
-      const updated = await tx
-        .update(projectSites)
-        .set(data)
-        .where(eq(projectSites.id, id))
-        .returning({ id: projectSites.id });
+    // Update site and related data (Neon HTTP driver does not support transactions)
+    const updated = await db
+      .update(projectSites)
+      .set(data)
+      .where(eq(projectSites.id, id))
+      .returning({ id: projectSites.id });
 
-      if (updated.length === 0) {
-        throw new Error('Site not found.');
-      }
+    if (updated.length === 0) {
+      return { error: 'Site not found.' };
+    }
 
-      // Replace site image pairs: delete existing, insert new
-      await tx.delete(siteImagePairs).where(eq(siteImagePairs.siteId, id));
-      if (pairData.length > 0) {
-        await tx.insert(siteImagePairs).values(
-          pairData.map((pair) => ({ ...pair, siteId: id }))
-        );
-      }
-    });
+    // Replace site image pairs: delete existing, insert new
+    await db.delete(siteImagePairs).where(eq(siteImagePairs.siteId, id));
+    if (pairData.length > 0) {
+      await db.insert(siteImagePairs).values(
+        pairData.map((pair) => ({ ...pair, siteId: id }))
+      );
+    }
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');

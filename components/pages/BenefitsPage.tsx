@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { Shield, Clock, Award, Users, Wrench, CheckCircle, Star } from 'lucide-react';
+import { Shield, Award, Users, Wrench, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import {
@@ -25,19 +25,9 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
 
   const benefits = [
     {
-      icon: Clock,
-      titleKey: 'benefits.experience.title',
-      descKey: 'benefits.experience.description',
-    },
-    {
       icon: Shield,
       titleKey: 'benefits.warranty.title',
       descKey: 'benefits.warranty.description',
-    },
-    {
-      icon: CheckCircle,
-      titleKey: 'benefits.coverage.title',
-      descKey: 'benefits.coverage.description',
     },
     {
       icon: Award,

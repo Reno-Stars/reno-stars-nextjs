@@ -309,37 +309,35 @@ export async function updateProject(
 
     const scopeData = parseScopes(formData);
 
-    // Update project and related data atomically
-    await db.transaction(async (tx: typeof db) => {
-      await tx
-        .update(projects)
-        .set({ ...data, serviceId: svcRows[0].id })
-        .where(eq(projects.id, id));
+    // Update project and related data (Neon HTTP driver does not support transactions)
+    await db
+      .update(projects)
+      .set({ ...data, serviceId: svcRows[0].id })
+      .where(eq(projects.id, id));
 
-      // Delete and re-insert image pairs
-      await tx.delete(projectImagePairs).where(eq(projectImagePairs.projectId, id));
-      if (pairData.length > 0) {
-        await tx.insert(projectImagePairs).values(
-          pairData.map((pair) => ({ ...pair, projectId: id }))
-        );
-      }
+    // Delete and re-insert image pairs
+    await db.delete(projectImagePairs).where(eq(projectImagePairs.projectId, id));
+    if (pairData.length > 0) {
+      await db.insert(projectImagePairs).values(
+        pairData.map((pair) => ({ ...pair, projectId: id }))
+      );
+    }
 
-      // Delete and re-insert scopes
-      await tx.delete(projectScopes).where(eq(projectScopes.projectId, id));
-      if (scopeData.length > 0) {
-        await tx.insert(projectScopes).values(
-          scopeData.map((s) => ({ ...s, projectId: id }))
-        );
-      }
+    // Delete and re-insert scopes
+    await db.delete(projectScopes).where(eq(projectScopes.projectId, id));
+    if (scopeData.length > 0) {
+      await db.insert(projectScopes).values(
+        scopeData.map((s) => ({ ...s, projectId: id }))
+      );
+    }
 
-      // Delete and re-insert external products
-      await tx.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
-      if (epData.length > 0) {
-        await tx.insert(projectExternalProducts).values(
-          epData.map((ep) => ({ ...ep, projectId: id }))
-        );
-      }
-    });
+    // Delete and re-insert external products
+    await db.delete(projectExternalProducts).where(eq(projectExternalProducts.projectId, id));
+    if (epData.length > 0) {
+      await db.insert(projectExternalProducts).values(
+        epData.map((ep) => ({ ...ep, projectId: id }))
+      );
+    }
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
