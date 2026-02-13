@@ -530,9 +530,10 @@
       "projectsCount": "500+",
       "googleReviews": "Google 评价"
     },
-    "downloadPoster": "下载海报",
+    "downloadPoster": "下载 PDF",
     "downloadSuccess": "下载成功!",
     "downloadError": "下载失败",
+    "downloadPosterHint": "按住 Shift 点击下载 PNG",
     "step1": {
       "title": "前期沟通",
       "subtitle": "Discovery",

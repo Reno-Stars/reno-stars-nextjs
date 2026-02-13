@@ -2,8 +2,8 @@
 
 import { useMemo, useRef, useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { toPng } from 'html-to-image';
+import { jsPDF } from 'jspdf';
 import {
   Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
   MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
@@ -280,7 +280,57 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // PDF download (default)
   const handleDownload = useCallback(async () => {
+    if (!posterRef.current || isDownloading) return;
+
+    setIsDownloading(true);
+    setDownloadStatus('idle');
+    try {
+      // Generate high-quality PNG first
+      const dataUrl = await toPng(posterRef.current, {
+        pixelRatio: 2,
+        backgroundColor: SURFACE,
+      });
+
+      // Create PDF from the image
+      const img = new window.Image();
+      img.src = dataUrl;
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+
+      // Calculate PDF dimensions (A4-ish aspect ratio, portrait)
+      const imgWidth = img.width;
+      const imgHeight = img.height;
+      const aspectRatio = imgWidth / imgHeight;
+
+      // Use mm units, A4 width is 210mm
+      const pdfWidth = 210;
+      const pdfHeight = pdfWidth / aspectRatio;
+
+      const pdf = new jsPDF({
+        orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
+        unit: 'mm',
+        format: [pdfWidth, pdfHeight],
+      });
+
+      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('reno-stars-process-poster.pdf');
+
+      setDownloadStatus('success');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    } catch {
+      setDownloadStatus('error');
+      setTimeout(() => setDownloadStatus('idle'), 3000);
+    } finally {
+      setIsDownloading(false);
+    }
+  }, [isDownloading]);
+
+  // PNG download (kept for future use)
+  const handleDownloadPNG = useCallback(async () => {
     if (!posterRef.current || isDownloading) return;
 
     setIsDownloading(true);
@@ -296,7 +346,6 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       link.href = dataUrl;
       link.click();
       setDownloadStatus('success');
-      // Reset status after 3 seconds
       setTimeout(() => setDownloadStatus('idle'), 3000);
     } catch {
       setDownloadStatus('error');
@@ -344,15 +393,14 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Brand Logo */}
+          {/* Brand Logo - using <img> for PDF/PNG export compatibility */}
           <div className="mb-6">
-            <Image
+            <img
               src={company.logo}
               alt={company.name}
               width={240}
               height={60}
               className="h-14 w-auto mx-auto brightness-0 invert"
-              priority
             />
           </div>
 
@@ -672,25 +720,24 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
             </div>
 
             {/* Center: QR Code - WeChat for Chinese, WhatsApp for English */}
+            {/* Using <img> instead of next/image for PDF/PNG export compatibility */}
             <div className="flex flex-col items-center order-1 md:order-2">
               <div className="bg-white p-4 rounded-xl mb-3">
                 {locale === 'zh' ? (
-                  <Image
+                  <img
                     src="/wechat-qr.png"
                     alt="WeChat QR Code"
                     width={140}
                     height={140}
                     className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
-                    loading="lazy"
                   />
                 ) : (
-                  <Image
+                  <img
                     src="/whatsapp-qr.png"
                     alt="WhatsApp QR Code"
                     width={140}
                     height={140}
                     className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
-                    loading="lazy"
                   />
                 )}
               </div>
@@ -721,13 +768,14 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       </section>
       </div>
 
-      {/* Subtle Download Button at Bottom */}
+      {/* Subtle Download Button at Bottom - Shift+click for PNG */}
       <div className="py-4 text-center print:hidden" style={{ backgroundColor: SURFACE }}>
         <button
-          onClick={handleDownload}
+          onClick={(e) => e.shiftKey ? handleDownloadPNG() : handleDownload()}
           disabled={isDownloading}
           className="inline-flex items-center gap-1.5 text-sm opacity-40 hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
           style={{ color: TEXT_MID }}
+          title={t('process.downloadPosterHint')}
         >
           {isDownloading ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
