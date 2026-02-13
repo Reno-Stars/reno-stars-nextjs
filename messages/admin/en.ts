@@ -462,6 +462,10 @@ const en = {
     deleteProjectConfirm: 'Delete this project?',
     siteDetails: 'Site Details',
     newProjectInSite: 'New Project',
+    generateBlog: 'Generate Blog Post',
+    generatingBlog: 'Generating...',
+    blogGenerated: 'Blog draft created! Redirecting to editor...',
+    blogGenerateFailed: 'Failed to generate blog post',
     tooltips: {
       slug: 'URL-friendly identifier. Used in the page URL (e.g., /projects/oak-street-house). Use lowercase letters, numbers, and hyphens only.',
       title: 'The display name for this site. Shown on cards and page headers. Provide both English and Chinese versions.',

@@ -9,6 +9,7 @@ import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { trackPhoneClick } from '@/lib/analytics';
 import { NAVY, GOLD } from '@/lib/theme';
+import { WORKSAFE_BC_LOGO } from '@/lib/data';
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
@@ -73,7 +74,8 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
 
   const whyUsStats = useMemo(() => [
     { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
-    { key: 'liability', val: company.liabilityCoverage, lbl: t('stats.liabilityCoverage') },
+    { key: 'team', val: String(company.teamSize), lbl: t('stats.expertTeamMembers') },
+    { key: 'warranty', val: company.warranty, lbl: t('stats.warranty') },
   ], [company, t]);
 
   return (
@@ -191,6 +193,10 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                   <span className="text-sm text-white/70">{stat.lbl}</span>
                 </div>
               ))}
+              <div className="flex items-center gap-1.5">
+                <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
+                <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
+              </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`5/5 ${t('stats.rating')}`}>
                 {[0, 1, 2, 3, 4].map((i) => (
                   <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />

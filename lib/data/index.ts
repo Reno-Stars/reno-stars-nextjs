@@ -61,6 +61,9 @@ export const video = {
   hero: getAssetUrl("https://reno-stars.com/wp-content/uploads/2024/07/Untitled-design-1.mp4") + "#t=10,77",
 };
 
+/** WorkSafe BC logo for trust badges (hero, stats, footer) */
+export const WORKSAFE_BC_LOGO = '/worksafe-bc-logo.jpg';
+
 export const images = {
   hero: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg"),
   bathroom: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg"),

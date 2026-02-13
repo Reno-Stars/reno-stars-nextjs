@@ -241,7 +241,7 @@ async function seed() {
       foundingYear: 1997,
       teamSize: 17,
       warranty: '3 Years',
-      liabilityCoverage: '$5M',
+      liabilityCoverage: 'Active WCB',
       // rating/reviewCount now fetched from Google Reviews API
       geoLatitude: '49.1666',
       geoLongitude: '-123.1336',
@@ -340,8 +340,8 @@ async function seed() {
       whatWeOfferZh: '从厨房和浴室装修到全屋改造，我们提供端到端的装修服务，包括设计咨询、项目管理和专业施工。',
       ourValuesEn: 'Integrity, quality, and client satisfaction drive everything we do. We believe in transparent communication, fair pricing, and standing behind our work with a comprehensive warranty.',
       ourValuesZh: '诚信、品质和客户满意是我们一切工作的驱动力。我们坚持透明沟通、公平定价，并以全面的保修为我们的工作提供保障。',
-      whyChooseUsEn: 'Licensed, insured with $5M liability coverage, and backed by a 3-year warranty. Our 5-star Google rating and dedicated team of 17 professionals ensure your project is in expert hands.',
-      whyChooseUsZh: '持证经营，拥有500万美元责任保险和3年保修。我们的Google五星好评和17人专业团队确保您的项目由专家负责。',
+      whyChooseUsEn: 'Licensed, WorkSafe BC insured, and backed by a 3-year warranty. Our 5-star Google rating and dedicated team of 17 professionals ensure your project is in expert hands.',
+      whyChooseUsZh: '持证经营，拥有WorkSafe BC保障和3年保修。我们的Google五星好评和17人专业团队确保您的项目由专家负责。',
       letsBuildTogetherEn: 'Your dream home is just a conversation away. Whether you\'re planning a minor update or a major transformation, we\'d love to bring your vision to life.',
       letsBuildTogetherZh: '您的梦想之家只需一次对话。无论您是计划小幅更新还是大规模改造，我们都乐意将您的愿景变为现实。',
     });
@@ -417,8 +417,8 @@ async function seed() {
       {
         questionEn: 'Why choose Reno Stars?',
         questionZh: '为什么要选择 Reno Stars？',
-        answerEn: 'Reno Stars is committed to delivering high-quality craftsmanship with over {yearsExperience} years of combined experience. We offer $5M liability coverage, a 3-year warranty on all work, transparent pricing, and a dedicated team of 17 professionals. Our 5-star Google rating reflects our commitment to customer satisfaction.',
-        answerZh: 'Reno Stars 始终致力于提供高品质的工艺，拥有超过{yearsExperience}年的综合经验。我们提供500万美元责任保险、所有工程3年质保、透明定价和17人专业团队。我们的Google五星好评反映了我们对客户满意度的承诺。',
+        answerEn: 'Reno Stars is committed to delivering high-quality craftsmanship with over {yearsExperience} years of combined experience. We are WorkSafe BC insured, offer a 3-year warranty on all work, transparent pricing, and a dedicated team of 17 professionals. Our 5-star Google rating reflects our commitment to customer satisfaction.',
+        answerZh: 'Reno Stars 始终致力于提供高品质的工艺，拥有超过{yearsExperience}年的综合经验。我们拥有WorkSafe BC保障、所有工程3年质保、透明定价和17人专业团队。我们的Google五星好评反映了我们对客户满意度的承诺。',
         displayOrder: 2,
       },
       {

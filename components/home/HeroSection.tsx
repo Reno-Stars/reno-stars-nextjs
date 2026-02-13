@@ -4,18 +4,10 @@ import Image from 'next/image';
 import { Shield, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
-import { video, images } from '@/lib/data';
+import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
 
-/** WorkSafe BC logo SVG for hero badge */
-function WorkSafeBCLogo({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-    </svg>
-  );
-}
 
 interface HeroSectionProps {
   company: Company;
@@ -80,7 +72,7 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
             </span>
             {/* WorkSafe BC badge */}
             <span className="text-sm font-medium text-white/70 flex items-center gap-1.5">
-              <WorkSafeBCLogo className="w-4 h-4" style={{ color: GOLD }} />
+              <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
               {t.liabilityCoverage}
             </span>
             {/* Star rating */}

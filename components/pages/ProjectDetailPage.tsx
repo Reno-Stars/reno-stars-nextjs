@@ -7,7 +7,7 @@ import { MapPin, Calendar, DollarSign, Layers, ExternalLink, ZoomIn, X, ChevronL
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject, LocalizedImagePair } from '@/lib/types';
-import { getLocalizedProject } from '@/lib/data/projects';
+import { getLocalizedProject, imagesToPairs } from '@/lib/data/projects';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
@@ -37,36 +37,8 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
     if (localizedProject.image_pairs && localizedProject.image_pairs.length > 0) {
       return localizedProject.image_pairs;
     }
-    // Fallback: convert legacy images to pairs format
     if (localizedProject.images && localizedProject.images.length > 0) {
-      // Group consecutive before/after images
-      const pairs: LocalizedImagePair[] = [];
-      let i = 0;
-      while (i < localizedProject.images.length) {
-        const current = localizedProject.images[i];
-        const next = localizedProject.images[i + 1];
-        if (current.is_before && next && !next.is_before) {
-          // Pair: current is before, next is after
-          pairs.push({
-            beforeImage: { src: current.src, alt: current.alt },
-            afterImage: { src: next.src, alt: next.alt },
-          });
-          i += 2;
-        } else if (current.is_before) {
-          // Before-only
-          pairs.push({
-            beforeImage: { src: current.src, alt: current.alt },
-          });
-          i += 1;
-        } else {
-          // After-only
-          pairs.push({
-            afterImage: { src: current.src, alt: current.alt },
-          });
-          i += 1;
-        }
-      }
-      return pairs;
+      return imagesToPairs(localizedProject.images);
     }
     return [];
   }, [localizedProject.image_pairs, localizedProject.images]);
@@ -241,14 +213,14 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                   <>
                     <button
                       onClick={(e) => { e.stopPropagation(); goToPrev(); }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer hidden sm:block"
                       aria-label={t('projects.previousImage')}
                     >
                       <ChevronLeft className="w-6 h-6 text-white" />
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer hidden sm:block"
                       aria-label={t('projects.nextImage')}
                     >
                       <ChevronRight className="w-6 h-6 text-white" />
@@ -272,15 +244,14 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         <button
                           key={`${pair.afterImage?.src || pair.beforeImage?.src || idx}-${idx}`}
                           onClick={(e) => handleThumbClick(e, idx)}
-                          className="relative rounded-lg overflow-hidden shrink-0 transition-all duration-200"
+                          className={`relative rounded-lg overflow-hidden shrink-0 transition-all duration-200 h-[30px] sm:h-[60px] ${
+                            pair.beforeImage && pair.afterImage ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
+                          } ${idx === activePairIndex ? 'opacity-85 sm:opacity-100' : 'opacity-50 sm:opacity-75'}`}
                           aria-label={`${t('projects.viewImage')} ${idx + 1} / ${imagePairs.length}`}
                           aria-pressed={idx === activePairIndex}
                           style={{
-                            width: pair.beforeImage && pair.afterImage ? '90px' : '60px',
-                            height: '60px',
                             outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
                             outlineOffset: '1px',
-                            opacity: idx === activePairIndex ? 1 : 0.75,
                           }}
                         >
                           {pair.beforeImage && pair.afterImage ? (
@@ -575,7 +546,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 setActivePairIndex((prev) => (prev > 0 ? prev - 1 : imagePairs.length - 1));
                 setShowBefore(false);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.previousImage')}
             >
               <ChevronLeft className="w-8 h-8 text-white" />
@@ -590,7 +561,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 setActivePairIndex((prev) => (prev < imagePairs.length - 1 ? prev + 1 : 0));
                 setShowBefore(false);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.nextImage')}
             >
               <ChevronRight className="w-8 h-8 text-white" />
@@ -606,6 +577,8 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 setShowBefore((prev) => !prev);
               }
             }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <Image
               src={displayImage.src}

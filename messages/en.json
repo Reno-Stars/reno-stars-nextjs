@@ -252,7 +252,9 @@
   },
   "gallery": {
     "previous": "Previous image",
-    "next": "Next image"
+    "next": "Next image",
+    "beforeShort": "B",
+    "afterShort": "A"
   },
   "filter": {
     "allCategories": "All Categories",

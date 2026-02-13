@@ -25,7 +25,7 @@ interface LocalizedShowroom { address: string; appointmentText: string; phone: s
 interface LocalizedFaq { id: string; question: string; answer: string }
 interface LocalizedPartner { name: string; logo: string; url?: string; isHiddenVisually: boolean }
 interface AboutItem { title: string; text: string }
-interface Stat { value: string; label: string }
+interface Stat { value: string; label: string; image?: string }
 
 interface HomePageProps {
   locale: Locale;

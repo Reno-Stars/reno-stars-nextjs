@@ -220,6 +220,9 @@ function KeyIllustration() {
   );
 }
 
+// Local path used instead of next/image for html-to-image PNG export compatibility
+const LOGO_PATH = '/logo.png';
+
 const stepIllustrations = [
   PhoneIllustration,
   MeasureIllustration,
@@ -350,10 +353,10 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
           <div className="mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo.png"
+              src={LOGO_PATH}
               alt={company.name}
-              width={240}
-              height={60}
+              width={2227}
+              height={300}
               className="w-3/4 sm:w-2/3 h-auto mx-auto brightness-0 invert"
             />
           </div>

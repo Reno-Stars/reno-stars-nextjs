@@ -7,7 +7,8 @@ import SiteForm from '@/components/admin/SiteForm';
 import ProjectForm from '@/components/admin/ProjectForm';
 import { updateSite } from '@/app/actions/admin/sites';
 import { createProject, updateProject, deleteProject, reorderProjectsInSite } from '@/app/actions/admin/projects';
-import { CARD, NAVY, neu } from '@/lib/theme';
+import { generateBlogFromProject, generateBlogFromSite } from '@/app/actions/admin/generate-blog';
+import { CARD, NAVY, GOLD, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
@@ -129,6 +130,8 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [isBlogPending, startBlogTransition] = useTransition();
+  const [blogMessage, setBlogMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Pre-select project from URL param (e.g. ?project=<id>)
   const projectParam = searchParams.get('project');
@@ -233,6 +236,23 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
     };
   };
 
+  // Handle blog generation from project or site
+  const handleGenerateBlog = () => {
+    setBlogMessage(null);
+    startBlogTransition(async () => {
+      const result = selected === 'site'
+        ? await generateBlogFromSite(site.id)
+        : await generateBlogFromProject(selected);
+
+      if (result.success && result.blogPostId) {
+        setBlogMessage({ type: 'success', text: t.sites.blogGenerated });
+        router.push(`/admin/blog/${result.blogPostId}`);
+      } else {
+        setBlogMessage({ type: 'error', text: result.error || t.sites.blogGenerateFailed });
+      }
+    });
+  };
+
   // Get panel title
   const getPanelTitle = () => {
     if (selected === 'site') return t.sites.siteDetails;
@@ -302,12 +322,51 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
           >
             {getPanelTitle()}
           </h2>
-          {isPending && (
-            <span style={{ fontSize: '0.8125rem', color: 'rgba(27,54,93,0.5)' }}>
-              {t.common.processing}
-            </span>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {selected !== 'new' && (
+              <button
+                type="button"
+                onClick={handleGenerateBlog}
+                disabled={isBlogPending}
+                style={{
+                  padding: '0.375rem 0.75rem',
+                  fontSize: '0.8125rem',
+                  fontWeight: 500,
+                  color: '#fff',
+                  backgroundColor: GOLD,
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: isBlogPending ? 'not-allowed' : 'pointer',
+                  opacity: isBlogPending ? 0.6 : 1,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {isBlogPending ? t.sites.generatingBlog : t.sites.generateBlog}
+              </button>
+            )}
+            {isPending && (
+              <span style={{ fontSize: '0.8125rem', color: 'rgba(27,54,93,0.5)' }}>
+                {t.common.processing}
+              </span>
+            )}
+          </div>
         </div>
+
+        {/* Blog generation feedback */}
+        {blogMessage && (
+          <div
+            style={{
+              padding: '0.75rem 1rem',
+              marginBottom: '1rem',
+              borderRadius: '8px',
+              fontSize: '0.875rem',
+              backgroundColor: blogMessage.type === 'success' ? '#e8f5e9' : '#fce4ec',
+              color: blogMessage.type === 'success' ? '#2e7d32' : '#c62828',
+            }}
+          >
+            {blogMessage.text}
+          </div>
+        )}
 
         {/* Panel Content */}
         {selected === 'site' && (

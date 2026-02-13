@@ -246,9 +246,10 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     {site.badge}
                   </span>
                 )}
+                {/* bottom-14 on mobile clears 30px thumbnails + p-3 padding; bottom-24 on desktop clears 60px thumbnails */}
                 {currentPair && currentPair.projectSlug !== SITE_IMAGE_SLUG && (
                   <span
-                    className="absolute bottom-24 left-4 px-3 py-1 rounded-lg text-xs font-medium z-10"
+                    className="absolute bottom-14 sm:bottom-24 left-4 px-3 py-1 rounded-lg text-xs font-medium z-10"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: 'white' }}
                   >
                     {currentPair.projectTitle}
@@ -260,14 +261,14 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   <>
                     <button
                       onClick={(e) => { e.stopPropagation(); goToPrev(); }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer hidden sm:block"
                       aria-label={t('projects.previousImage')}
                     >
                       <ChevronLeft className="w-6 h-6 text-white" />
                     </button>
                     <button
                       onClick={(e) => { e.stopPropagation(); goToNext(); }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors cursor-pointer hidden sm:block"
                       aria-label={t('projects.nextImage')}
                     >
                       <ChevronRight className="w-6 h-6 text-white" />
@@ -291,15 +292,14 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                         <button
                           key={`${pair.projectSlug}-${idx}`}
                           onClick={(e) => handleThumbClick(e, idx)}
-                          className="relative rounded-lg overflow-hidden shrink-0 transition-all duration-200"
+                          className={`relative rounded-lg overflow-hidden shrink-0 transition-all duration-200 h-[30px] sm:h-[60px] ${
+                            pair.beforeImage && pair.afterImage ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
+                          } ${idx === activePairIndex ? 'opacity-85 sm:opacity-100' : 'opacity-50 sm:opacity-75'}`}
                           aria-label={`${t('projects.viewImage')} ${idx + 1} / ${filteredPairs.length}`}
                           aria-pressed={idx === activePairIndex}
                           style={{
-                            width: pair.beforeImage && pair.afterImage ? '90px' : '60px',
-                            height: '60px',
                             outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
                             outlineOffset: '1px',
-                            opacity: idx === activePairIndex ? 1 : 0.75,
                           }}
                         >
                           {pair.beforeImage && pair.afterImage ? (
@@ -589,7 +589,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 setActivePairIndex((prev) => (prev > 0 ? prev - 1 : filteredPairs.length - 1));
                 setShowBefore(false);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.previousImage')}
             >
               <ChevronLeft className="w-8 h-8 text-white" />
@@ -604,7 +604,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 setActivePairIndex((prev) => (prev < filteredPairs.length - 1 ? prev + 1 : 0));
                 setShowBefore(false);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.nextImage')}
             >
               <ChevronRight className="w-8 h-8 text-white" />
@@ -620,6 +620,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 setShowBefore((prev) => !prev);
               }
             }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <Image
               src={displayImage.src}

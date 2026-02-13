@@ -464,6 +464,10 @@ const zh: AdminMessages = {
     deleteProjectConfirm: '确定删除此项目？',
     siteDetails: '工地详情',
     newProjectInSite: '新建项目',
+    generateBlog: '生成博客文章',
+    generatingBlog: '生成中...',
+    blogGenerated: '博客草稿已创建，正在跳转到编辑器...',
+    blogGenerateFailed: '生成博客文章失败',
     tooltips: {
       slug: 'URL友好标识符，用于页面网址（如 /projects/oak-street-house）。仅使用小写字母、数字和连字符。',
       title: '工地的显示名称，显示在卡片和页面标题上。请提供英文和中文两个版本。',

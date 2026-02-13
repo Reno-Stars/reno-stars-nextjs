@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import { NAVY, GOLD } from '@/lib/theme';
 
 interface StatsSectionProps {
-  stats: { value: string; label: string }[];
+  stats: { value: string; label: string; image?: string }[];
   srTitle: string;
 }
 
@@ -12,7 +13,11 @@ export default function StatsSection({ stats, srTitle }: StatsSectionProps) {
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((s) => (
           <div key={s.label} className="text-center py-2">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
+            {s.image ? (
+              <Image src={s.image} alt={s.label} width={120} height={32} className="h-8 w-auto object-contain mx-auto" />
+            ) : (
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
+            )}
             <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
           </div>
         ))}

@@ -1,4 +1,4 @@
-import type { Project, ServiceType, Locale, LocalizedProject, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
+import type { Project, ServiceType, Locale, LocalizedProject, LocalizedImagePair, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
 import { serviceTypeToCategory, WHOLE_HOUSE_CATEGORY } from './services';
 
@@ -695,6 +695,33 @@ export function getCategoriesLocalized(): { en: string; zh: string }[] {
     WHOLE_HOUSE_CATEGORY, // Sites displayed as projects - first after "All"
     ...otherCategories,
   ];
+}
+
+/**
+ * Convert a flat legacy images array into before/after image pairs.
+ * Groups consecutive before→after images; standalone images become single-sided pairs.
+ */
+export function imagesToPairs(images: { src: string; alt: string; is_before?: boolean }[]): LocalizedImagePair[] {
+  const pairs: LocalizedImagePair[] = [];
+  let i = 0;
+  while (i < images.length) {
+    const current = images[i];
+    const next = images[i + 1];
+    if (current.is_before && next && !next.is_before) {
+      pairs.push({
+        beforeImage: { src: current.src, alt: current.alt },
+        afterImage: { src: next.src, alt: next.alt },
+      });
+      i += 2;
+    } else if (current.is_before) {
+      pairs.push({ beforeImage: { src: current.src, alt: current.alt } });
+      i += 1;
+    } else {
+      pairs.push({ afterImage: { src: current.src, alt: current.alt } });
+      i += 1;
+    }
+  }
+  return pairs;
 }
 
 // Category slugs for routing (excludes 'All')

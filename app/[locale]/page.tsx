@@ -4,7 +4,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import HomePage from '@/components/pages/HomePage';
 import { BreadcrumbSchema, ReviewSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
-import { images as siteImages } from '@/lib/data';
+import { images as siteImages, WORKSAFE_BC_LOGO } from '@/lib/data';
 import {
   getCompanyFromDb,
   getServicesFromDb,
@@ -98,10 +98,10 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const stats = [
-    { value: '500+', label: t('stats.projectsDone') },
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: '100%', label: t('stats.satisfaction') },
-    { value: '24/7', label: t('stats.support') },
+    { value: String(company.teamSize), label: t('stats.expertTeamMembers') },
+    { value: company.warranty, label: t('stats.warranty') },
+    { value: '', label: t('stats.liabilityCoverage'), image: WORKSAFE_BC_LOGO },
   ];
 
   // All translations computed server-side

@@ -252,7 +252,9 @@
   },
   "gallery": {
     "previous": "上一张",
-    "next": "下一张"
+    "next": "下一张",
+    "beforeShort": "前",
+    "afterShort": "后"
   },
   "filter": {
     "allCategories": "所有类别",

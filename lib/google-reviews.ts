@@ -47,7 +47,7 @@ async function fetchReviews(
     },
   );
   if (!res.ok) {
-    console.error(`[getGoogleReviews] Places API ${sort} request failed: ${res.status} ${res.statusText}`);
+    console.warn(`[getGoogleReviews] Places API ${sort} request failed: ${res.status} ${res.statusText}`);
     return { rating: 0, userRatingCount: 0, reviews: [] };
   }
   return res.json();
