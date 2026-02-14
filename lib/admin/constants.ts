@@ -24,6 +24,9 @@ export const SPACE_TYPES = [
   { en: 'Commercial', zh: '商业' },
 ] as const;
 
+/** Slug of the container site for standalone (non-whole-house) projects */
+export const STANDALONE_SITE_SLUG = 'individual-projects';
+
 /** Space type EN to ZH mapping */
 export const SPACE_TYPE_TO_ZH: Record<string, string> = Object.fromEntries(
   SPACE_TYPES.map(({ en, zh }) => [en, zh])

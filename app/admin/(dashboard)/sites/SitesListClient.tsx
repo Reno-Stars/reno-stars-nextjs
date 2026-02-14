@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
@@ -36,9 +37,10 @@ interface SiteRow {
 interface Props {
   sites: SiteRow[];
   projectsBySite: Record<string, ProjectSummary[]>;
+  standaloneSiteId: string | null;
 }
 
-export default function SitesListClient({ sites, projectsBySite }: Props) {
+export default function SitesListClient({ sites, projectsBySite, standaloneSiteId }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'sites' | 'standalone'>('sites');
@@ -125,7 +127,8 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
         ),
       },
     ];
-  }, [locale, toast, t, projectsBySite]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- toast is stable (useCallback with [] deps)
+  }, [locale, t, projectsBySite]);
 
   const handleDelete = () => {
     if (!deleteId) return;
@@ -277,6 +280,17 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
 
   return (
     <>
+      {/* Page Header */}
+      <AdminPageHeader
+        titleKey="sites.title"
+        actions={[
+          ...(standaloneSiteId
+            ? [{ labelKey: 'sites.newStandaloneProject', href: `/admin/sites/${standaloneSiteId}?new`, color: NAVY }]
+            : []),
+          { labelKey: 'sites.newSite', href: '/admin/sites/new' },
+        ]}
+      />
+
       {/* Tabs */}
       <div role="tablist" style={{ display: 'flex', gap: '0.25rem', marginBottom: '1rem', borderBottom: '1px solid rgba(27,54,93,0.1)' }}>
         <button

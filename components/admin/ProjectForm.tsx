@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, startTransition } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import AIBilingualTextarea from './AIBilingualTextarea';
 import AIProjectGenerator from './AIProjectGenerator';
+import ConfirmDialog from './ConfirmDialog';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
@@ -219,8 +220,65 @@ export default function ProjectForm({
     initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
   );
 
+  // Pre-save warning state
+  const [showSaveWarning, setShowSaveWarning] = useState(false);
+  const [pendingFormData, setPendingFormData] = useState<FormData | null>(null);
+  const [missingFields, setMissingFields] = useState<string[]>([]);
+
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+
+    const missing: string[] = [];
+    if (!fd.get('heroImageUrl')) missing.push(t.projects.heroImageUrl);
+    if (imagePairs.length === 0) missing.push(t.imagePairs.title);
+    if (!fd.get('challengeEn') && !fd.get('challengeZh')) missing.push(t.projects.challenge);
+    if (!fd.get('solutionEn') && !fd.get('solutionZh')) missing.push(t.projects.solution);
+    if (!fd.get('locationCity')) missing.push(t.projects.locationCity);
+    if (!fd.get('budgetMin') && !fd.get('budgetMax')) missing.push(t.projects.budgetRange);
+    if (!fd.get('durationEn') && !fd.get('durationZh')) missing.push(t.projects.duration);
+    if (!fd.get('badgeEn') && !fd.get('badgeZh')) missing.push(t.projects.badge);
+    if (!fd.get('metaTitleEn') && !fd.get('metaTitleZh')) missing.push(t.ai.metaTitle);
+    if (!fd.get('metaDescriptionEn') && !fd.get('metaDescriptionZh')) missing.push(t.ai.metaDescription);
+    if (!fd.get('focusKeywordEn') && !fd.get('focusKeywordZh')) missing.push(t.ai.focusKeyword);
+    if (!fd.get('seoKeywordsEn') && !fd.get('seoKeywordsZh')) missing.push(t.ai.seoKeywords);
+
+    if (missing.length > 0) {
+      setPendingFormData(fd);
+      setMissingFields(missing);
+      setShowSaveWarning(true);
+    } else {
+      startTransition(() => formAction(fd));
+    }
+  }, [imagePairs.length, formAction, t]);
+
+  const handleSaveConfirm = useCallback(() => {
+    if (pendingFormData) {
+      startTransition(() => formAction(pendingFormData));
+    }
+    setShowSaveWarning(false);
+    setPendingFormData(null);
+    setMissingFields([]);
+  }, [pendingFormData, formAction]);
+
+  const handleSaveCancel = useCallback(() => {
+    setShowSaveWarning(false);
+    setPendingFormData(null);
+    setMissingFields([]);
+  }, []);
+
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
+      <ConfirmDialog
+        open={showSaveWarning}
+        title={t.common.saveWarningTitle}
+        message={t.common.saveWarningMessage}
+        items={missingFields}
+        variant="warning"
+        confirmLabel={t.common.saveAnyway}
+        onConfirm={handleSaveConfirm}
+        onCancel={handleSaveCancel}
+      />
       <div
         className="admin-form-card"
         style={{

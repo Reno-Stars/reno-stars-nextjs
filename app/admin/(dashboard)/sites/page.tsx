@@ -1,6 +1,6 @@
 import { getAllSitesAdmin, getAllProjectsBySiteAdmin } from '@/lib/db/queries';
+import { STANDALONE_SITE_SLUG } from '@/lib/admin/constants';
 import SitesListClient from './SitesListClient';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 
 export default async function SitesAdminPage() {
   const [sites, projectsBySite] = await Promise.all([
@@ -8,10 +8,14 @@ export default async function SitesAdminPage() {
     getAllProjectsBySiteAdmin(),
   ]);
 
+  // Find the standalone projects container site for the "New Standalone Project" button
+  const standaloneSite = sites.find((s) => s.slug === STANDALONE_SITE_SLUG);
+
   return (
-    <div>
-      <AdminPageHeader titleKey="sites.title" actionKey="sites.newSite" actionHref="/admin/sites/new" />
-      <SitesListClient sites={sites} projectsBySite={projectsBySite} />
-    </div>
+    <SitesListClient
+      sites={sites}
+      projectsBySite={projectsBySite}
+      standaloneSiteId={standaloneSite?.id ?? null}
+    />
   );
 }

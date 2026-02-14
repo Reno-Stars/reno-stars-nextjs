@@ -133,9 +133,11 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
   const [isBlogPending, startBlogTransition] = useTransition();
   const [blogMessage, setBlogMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // Pre-select project from URL param (e.g. ?project=<id>)
+  // Pre-select project or new-project form from URL params (e.g. ?project=<id> or ?new)
   const projectParam = searchParams.get('project');
-  const initialSelected = projectParam && projects.some((p) => p.id === projectParam) ? projectParam : 'site';
+  const isNewParam = searchParams.has('new');
+  const hasValidProject = projectParam && projects.some((p) => p.id === projectParam);
+  const initialSelected = isNewParam ? 'new' : hasValidProject ? projectParam : 'site';
   const [selected, setSelected] = useState<string | 'site' | 'new'>(initialSelected);
 
   // Find selected project

@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, startTransition } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
+import ConfirmDialog from './ConfirmDialog';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
@@ -92,10 +93,59 @@ export default function SiteForm({
     setSelectedCity(initialData?.locationCity ?? '');
   }, [initialData?.slug, initialData?.locationCity]);
 
+  // Pre-save warning state
+  const [showSaveWarning, setShowSaveWarning] = useState(false);
+  const [pendingFormData, setPendingFormData] = useState<FormData | null>(null);
+  const [missingFields, setMissingFields] = useState<string[]>([]);
+
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+
+    const missing: string[] = [];
+    if (!fd.get('heroImageUrl')) missing.push(t.sites.heroImageUrl);
+    if (siteImagePairs.length === 0) missing.push(t.imagePairs.title);
+    if (!fd.get('locationCity')) missing.push(t.sites.locationCity);
+    if (!fd.get('badgeEn') && !fd.get('badgeZh')) missing.push(t.sites.badge);
+
+    if (missing.length > 0) {
+      setPendingFormData(fd);
+      setMissingFields(missing);
+      setShowSaveWarning(true);
+    } else {
+      startTransition(() => formAction(fd));
+    }
+  }, [siteImagePairs.length, formAction, t]);
+
+  const handleSaveConfirm = useCallback(() => {
+    if (pendingFormData) {
+      startTransition(() => formAction(pendingFormData));
+    }
+    setShowSaveWarning(false);
+    setPendingFormData(null);
+    setMissingFields([]);
+  }, [pendingFormData, formAction]);
+
+  const handleSaveCancel = useCallback(() => {
+    setShowSaveWarning(false);
+    setPendingFormData(null);
+    setMissingFields([]);
+  }, []);
+
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
+      <ConfirmDialog
+        open={showSaveWarning}
+        title={t.common.saveWarningTitle}
+        message={t.common.saveWarningMessage}
+        items={missingFields}
+        variant="warning"
+        confirmLabel={t.common.saveAnyway}
+        onConfirm={handleSaveConfirm}
+        onCancel={handleSaveCancel}
+      />
       <div
         className="admin-form-card"
         style={{

@@ -27,6 +27,9 @@ const en = {
     help: 'Help',
     uploadTooLarge: 'Upload too large. Try reducing image sizes or uploading fewer images at once.',
     unexpectedError: 'An unexpected error occurred. Please try again.',
+    saveWarningTitle: 'Missing Optional Fields',
+    saveWarningMessage: 'The following fields are empty. Save anyway?',
+    saveAnyway: 'Save Anyway',
   },
   nav: {
     dashboard: 'Dashboard',
@@ -459,6 +462,7 @@ const en = {
     addProject: 'Add Project',
     projectCount: '{count} projects',
     projectsColumn: 'Projects',
+    newStandaloneProject: 'New Standalone Project',
     tabSites: 'All Sites',
     tabStandalone: 'Standalone Projects',
     noProjects: 'No projects yet',

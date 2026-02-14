@@ -19,18 +19,54 @@ function resolve(obj: Record<string, unknown>, path: string): string {
   return typeof current === 'string' ? current : path;
 }
 
+/** Shared style for action buttons in admin page headers */
+export const headerActionStyle: React.CSSProperties = {
+  padding: '0.5rem 1rem',
+  borderRadius: '8px',
+  color: '#fff',
+  textDecoration: 'none',
+  fontWeight: 600,
+  fontSize: '0.875rem',
+};
+
+interface HeaderAction {
+  labelKey: string;
+  href: string;
+  color?: string;
+}
+
 interface AdminPageHeaderProps {
   titleKey: string;
+  /** Single action button (legacy) */
   actionKey?: string;
   actionHref?: string;
+  /** Multiple action buttons */
+  actions?: HeaderAction[];
   /** Link to view the item on the public site */
   viewHref?: string;
 }
 
-export default function AdminPageHeader({ titleKey, actionKey, actionHref, viewHref }: AdminPageHeaderProps) {
+export default function AdminPageHeader({ titleKey, actionKey, actionHref, actions, viewHref }: AdminPageHeaderProps) {
   const t = useAdminTranslations();
   const title = resolve(t as unknown as Record<string, unknown>, titleKey);
-  const actionLabel = actionKey ? resolve(t as unknown as Record<string, unknown>, actionKey) : undefined;
+
+  // Build actions list: support both legacy single action and new multi-action prop
+  const resolvedActions: { label: string; href: string; color: string }[] = [];
+  if (actions) {
+    for (const a of actions) {
+      resolvedActions.push({
+        label: resolve(t as unknown as Record<string, unknown>, a.labelKey),
+        href: a.href,
+        color: a.color ?? GOLD,
+      });
+    }
+  } else if (actionKey && actionHref) {
+    resolvedActions.push({
+      label: resolve(t as unknown as Record<string, unknown>, actionKey),
+      href: actionHref,
+      color: GOLD,
+    });
+  }
 
   return (
     <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -60,21 +96,18 @@ export default function AdminPageHeader({ titleKey, actionKey, actionHref, viewH
           </a>
         )}
       </div>
-      {actionLabel && actionHref && (
-        <Link
-          href={actionHref}
-          style={{
-            padding: '0.5rem 1rem',
-            borderRadius: '8px',
-            backgroundColor: GOLD,
-            color: '#fff',
-            textDecoration: 'none',
-            fontWeight: 600,
-            fontSize: '0.875rem',
-          }}
-        >
-          {actionLabel}
-        </Link>
+      {resolvedActions.length > 0 && (
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {resolvedActions.map((action) => (
+            <Link
+              key={action.href}
+              href={action.href}
+              style={{ ...headerActionStyle, backgroundColor: action.color }}
+            >
+              {action.label}
+            </Link>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useCallback, useRef, useId } from 'react';
-import { CARD, NAVY, TEXT_MID, ERROR, neu } from '@/lib/theme';
+import { CARD, NAVY, TEXT_MID, ERROR, GOLD, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ConfirmDialogProps {
   open: boolean;
   title: string;
   message: string;
+  items?: string[];
+  variant?: 'danger' | 'warning';
   onConfirm: () => void;
   onCancel: () => void;
   confirmLabel?: string;
@@ -18,6 +20,8 @@ export default function ConfirmDialog({
   open,
   title,
   message,
+  items,
+  variant = 'danger',
   onConfirm,
   onCancel,
   confirmLabel,
@@ -84,9 +88,16 @@ export default function ConfirmDialog({
         >
           {title}
         </h3>
-        <p id={descId} style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+        <p id={descId} style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: items?.length ? '0.75rem' : '1.5rem' }}>
           {message}
         </p>
+        {items && items.length > 0 && (
+          <ul style={{ color: TEXT_MID, fontSize: '0.8125rem', marginBottom: '1.5rem', paddingLeft: '1.25rem', lineHeight: 1.6 }}>
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        )}
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
           <button
             ref={cancelRef}
@@ -114,7 +125,7 @@ export default function ConfirmDialog({
               padding: '0.5rem 1rem',
               borderRadius: '6px',
               border: 'none',
-              backgroundColor: ERROR,
+              backgroundColor: variant === 'warning' ? GOLD : ERROR,
               color: '#fff',
               cursor: loading ? 'not-allowed' : 'pointer',
               fontSize: '0.875rem',
