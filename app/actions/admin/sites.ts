@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, projects, siteImagePairs } from '@/lib/db/schema';
+import { projectSites, projects, siteImagePairs, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { eq, count, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
@@ -59,6 +59,10 @@ export async function createSite(
       descriptionZh: data.descriptionZh,
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
+    const seoError = validateTextLengths({ metaTitleEn: data.metaTitleEn, metaTitleZh: data.metaTitleZh }, SEO_META_TITLE_MAX)
+      || validateTextLengths({ metaDescriptionEn: data.metaDescriptionEn, metaDescriptionZh: data.metaDescriptionZh }, SEO_META_DESCRIPTION_MAX)
+      || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
+    if (seoError) return { error: seoError };
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
@@ -127,6 +131,10 @@ export async function updateSite(
       descriptionZh: data.descriptionZh,
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
+    const seoError = validateTextLengths({ metaTitleEn: data.metaTitleEn, metaTitleZh: data.metaTitleZh }, SEO_META_TITLE_MAX)
+      || validateTextLengths({ metaDescriptionEn: data.metaDescriptionEn, metaDescriptionZh: data.metaDescriptionZh }, SEO_META_DESCRIPTION_MAX)
+      || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
+    if (seoError) return { error: seoError };
 
     // Ensure slug is unique (exclude current site's own slug)
     const currentSite = await db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1);

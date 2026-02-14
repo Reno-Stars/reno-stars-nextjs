@@ -49,6 +49,28 @@ const ProjectDescriptionSchema = z.object({
   detectedLanguage: z.enum(['en', 'zh']),
 });
 
+const SiteDescriptionSchema = z.object({
+  slug: z.string(),
+  titleEn: z.string(),
+  titleZh: z.string(),
+  locationCity: z.string(),
+  descriptionEn: z.string(),
+  descriptionZh: z.string(),
+  badgeEn: z.string(),
+  badgeZh: z.string(),
+  excerptEn: z.string(),
+  excerptZh: z.string(),
+  metaTitleEn: z.string(),
+  metaTitleZh: z.string(),
+  metaDescriptionEn: z.string(),
+  metaDescriptionZh: z.string(),
+  focusKeywordEn: z.string(),
+  focusKeywordZh: z.string(),
+  seoKeywordsEn: z.string(),
+  seoKeywordsZh: z.string(),
+  detectedLanguage: z.enum(['en', 'zh']),
+});
+
 const AltTextSchema = z.object({
   altEn: z.string(),
   altZh: z.string(),
@@ -182,28 +204,6 @@ Response format:
   "seoKeywordsEn": "keyword1, keyword2, keyword3",
   "seoKeywordsZh": "关键词1, 关键词2, 关键词3"
 }`;
-
-const SiteDescriptionSchema = z.object({
-  slug: z.string(),
-  titleEn: z.string(),
-  titleZh: z.string(),
-  locationCity: z.string(),
-  descriptionEn: z.string(),
-  descriptionZh: z.string(),
-  badgeEn: z.string(),
-  badgeZh: z.string(),
-  excerptEn: z.string(),
-  excerptZh: z.string(),
-  metaTitleEn: z.string(),
-  metaTitleZh: z.string(),
-  metaDescriptionEn: z.string(),
-  metaDescriptionZh: z.string(),
-  focusKeywordEn: z.string(),
-  focusKeywordZh: z.string(),
-  seoKeywordsEn: z.string(),
-  seoKeywordsZh: z.string(),
-  detectedLanguage: z.enum(['en', 'zh']),
-});
 
 const SITE_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
 

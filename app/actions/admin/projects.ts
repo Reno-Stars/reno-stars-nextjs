@@ -10,6 +10,9 @@ import {
   projectExternalProducts,
   services as servicesTable,
   projectSites as sitesTable,
+  SEO_META_TITLE_MAX,
+  SEO_META_DESCRIPTION_MAX,
+  SEO_FOCUS_KEYWORD_MAX,
 } from '@/lib/db/schema';
 import { eq, and, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
@@ -141,6 +144,10 @@ export async function createProject(
       solutionEn: data.solutionEn, solutionZh: data.solutionZh,
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
+    const seoError = validateTextLengths({ metaTitleEn: data.metaTitleEn, metaTitleZh: data.metaTitleZh }, SEO_META_TITLE_MAX)
+      || validateTextLengths({ metaDescriptionEn: data.metaDescriptionEn, metaDescriptionZh: data.metaDescriptionZh }, SEO_META_DESCRIPTION_MAX)
+      || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
+    if (seoError) return { error: seoError };
 
     // Parse image pairs
     const pairData = parseImagePairs(formData, 'imagePairs');
@@ -257,6 +264,10 @@ export async function updateProject(
       solutionEn: data.solutionEn, solutionZh: data.solutionZh,
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
+    const seoError = validateTextLengths({ metaTitleEn: data.metaTitleEn, metaTitleZh: data.metaTitleZh }, SEO_META_TITLE_MAX)
+      || validateTextLengths({ metaDescriptionEn: data.metaDescriptionEn, metaDescriptionZh: data.metaDescriptionZh }, SEO_META_DESCRIPTION_MAX)
+      || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
+    if (seoError) return { error: seoError };
 
     // Parse image pairs
     const pairData = parseImagePairs(formData, 'imagePairs');
