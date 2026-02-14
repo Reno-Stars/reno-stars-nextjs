@@ -25,6 +25,8 @@ const en = {
     remove: 'Remove',
     draft: 'Draft',
     help: 'Help',
+    uploadTooLarge: 'Upload too large. Try reducing image sizes or uploading fewer images at once.',
+    unexpectedError: 'An unexpected error occurred. Please try again.',
   },
   nav: {
     dashboard: 'Dashboard',
@@ -457,6 +459,8 @@ const en = {
     addProject: 'Add Project',
     projectCount: '{count} projects',
     projectsColumn: 'Projects',
+    tabSites: 'All Sites',
+    tabStandalone: 'Standalone Projects',
     noProjects: 'No projects yet',
     deleteProject: 'Delete Project',
     deleteProjectConfirm: 'Delete this project?',

@@ -27,6 +27,11 @@ if (storageUrl) {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '50mb',
+    },
+  },
   // Optimize imports for better tree-shaking
   modularizeImports: {
     'lucide-react': {

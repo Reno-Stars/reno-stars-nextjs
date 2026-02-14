@@ -27,6 +27,8 @@ const zh: AdminMessages = {
     remove: '移除',
     draft: '草稿',
     help: '帮助',
+    uploadTooLarge: '上传内容过大，请减少图片大小或数量后重试。',
+    unexpectedError: '发生意外错误，请重试。',
   },
   nav: {
     dashboard: '仪表盘',
@@ -459,6 +461,8 @@ const zh: AdminMessages = {
     addProject: '添加项目',
     projectCount: '{count} 个项目',
     projectsColumn: '项目',
+    tabSites: '所有工地',
+    tabStandalone: '独立项目',
     noProjects: '暂无项目',
     deleteProject: '删除项目',
     deleteProjectConfirm: '确定删除此项目？',
