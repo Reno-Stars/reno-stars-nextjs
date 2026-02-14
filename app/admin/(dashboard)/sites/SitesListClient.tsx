@@ -8,8 +8,19 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
-import { GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
+import { CARD, GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
 import type { ProjectSummary } from '@/lib/db/queries';
+
+// Flat project row for the standalone tab
+interface StandaloneProjectRow {
+  id: string;
+  slug: string;
+  siteId: string;
+  titleEn: string;
+  titleZh: string;
+  serviceType: string;
+  isPublished: boolean;
+}
 
 interface SiteRow {
   id: string;
@@ -30,6 +41,7 @@ interface Props {
 export default function SitesListClient({ sites, projectsBySite }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'sites' | 'standalone'>('sites');
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
@@ -140,6 +152,57 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
     );
   }, [projectsBySite]);
 
+  // Standalone projects: all projects from sites NOT shown as whole-house
+  const standaloneProjects = useMemo<StandaloneProjectRow[]>(() => {
+    const nonWholeSiteIds = new Set(sites.filter((s) => !s.showAsProject).map((s) => s.id));
+    const rows: StandaloneProjectRow[] = [];
+    for (const [siteId, projects] of Object.entries(projectsBySite)) {
+      if (!nonWholeSiteIds.has(siteId)) continue;
+      for (const p of projects) {
+        rows.push({
+          id: p.id,
+          slug: p.slug,
+          siteId: p.siteId,
+          titleEn: p.titleEn,
+          titleZh: p.titleZh,
+          serviceType: p.serviceType,
+          isPublished: p.isPublished,
+        });
+      }
+    }
+    return rows;
+  }, [sites, projectsBySite]);
+
+  const standaloneColumns: Column<StandaloneProjectRow>[] = useMemo(() => [
+    { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.projects.titleZh : t.projects.titleEn, sortable: true },
+    { key: 'slug', header: t.projects.slug, sortable: true },
+    {
+      key: 'serviceType',
+      header: t.projects.serviceType,
+      sortable: true,
+      render: (row: StandaloneProjectRow) => {
+        const label = row.serviceType in t.projects.serviceTypes
+          ? t.projects.serviceTypes[row.serviceType as keyof typeof t.projects.serviceTypes]
+          : row.serviceType;
+        return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>{label}</span>;
+      },
+    },
+    {
+      key: 'isPublished',
+      header: t.sites.published,
+      render: (row: StandaloneProjectRow) => (
+        <span style={{ color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}>
+          {row.isPublished ? t.common.yes : t.common.no}
+        </span>
+      ),
+    },
+  ], [locale, t]);
+
+  const filterStandaloneRow = useCallback((row: StandaloneProjectRow, query: string) => {
+    return [row.titleEn, row.titleZh, row.slug, row.serviceType]
+      .some((val) => val.toLowerCase().includes(query));
+  }, []);
+
   const renderExpandedRow = useCallback((row: SiteRow) => {
     const siteProjects = projectsBySite[row.id] ?? [];
     if (siteProjects.length === 0) {
@@ -201,29 +264,93 @@ export default function SitesListClient({ sites, projectsBySite }: Props) {
     );
   }, [projectsBySite, locale, t]);
 
+  const tabBaseStyle: React.CSSProperties = {
+    padding: '0.5rem 1rem',
+    fontSize: '0.875rem',
+    fontWeight: 600,
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'color 0.15s, border-color 0.15s',
+  };
+  const activeTabStyle: React.CSSProperties = { ...tabBaseStyle, color: NAVY, backgroundColor: CARD, borderBottom: `2px solid ${GOLD}` };
+  const inactiveTabStyle: React.CSSProperties = { ...tabBaseStyle, color: TEXT_MID, backgroundColor: 'transparent', borderBottom: '2px solid transparent' };
+
   return (
     <>
-      <DataTable
-        columns={columns}
-        data={sites}
-        getRowKey={(row) => row.id}
-        filterRow={filterRow}
-        actions={(row) => (
-          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-            <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
-              {t.common.edit}
-            </Link>
-            <button
-              type="button"
-              onClick={() => setDeleteId(row.id)}
-              style={{ background: 'none', border: 'none', color: ERROR, cursor: 'pointer', fontSize: '0.8125rem' }}
-            >
-              {t.common.delete}
-            </button>
-          </div>
-        )}
-        renderExpandedRow={renderExpandedRow}
-      />
+      {/* Tabs */}
+      <div role="tablist" style={{ display: 'flex', gap: '0.25rem', marginBottom: '1rem', borderBottom: '1px solid rgba(27,54,93,0.1)' }}>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'sites'}
+          aria-controls="tabpanel-sites"
+          onClick={() => setActiveTab('sites')}
+          style={activeTab === 'sites' ? activeTabStyle : inactiveTabStyle}
+        >
+          {t.sites.tabSites}
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={activeTab === 'standalone'}
+          aria-controls="tabpanel-standalone"
+          onClick={() => setActiveTab('standalone')}
+          style={activeTab === 'standalone' ? activeTabStyle : inactiveTabStyle}
+        >
+          {t.sites.tabStandalone}
+          <span style={{ marginLeft: '0.375rem', fontSize: '0.75rem', color: TEXT_MUTED }}>
+            ({standaloneProjects.length})
+          </span>
+        </button>
+      </div>
+
+      {/* Tab 1: Sites with expandable project rows */}
+      {activeTab === 'sites' && (
+        <div id="tabpanel-sites" role="tabpanel">
+          <DataTable
+            columns={columns}
+            data={sites}
+            getRowKey={(row) => row.id}
+            filterRow={filterRow}
+            actions={(row) => (
+              <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
+                  {t.common.edit}
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setDeleteId(row.id)}
+                  style={{ background: 'none', border: 'none', color: ERROR, cursor: 'pointer', fontSize: '0.8125rem' }}
+                >
+                  {t.common.delete}
+                </button>
+              </div>
+            )}
+            renderExpandedRow={renderExpandedRow}
+          />
+        </div>
+      )}
+
+      {/* Tab 2: Flat list of standalone projects (parent site not shown as whole house) */}
+      {activeTab === 'standalone' && (
+        <div id="tabpanel-standalone" role="tabpanel">
+          <DataTable
+            columns={standaloneColumns}
+            data={standaloneProjects}
+            getRowKey={(row) => row.id}
+            filterRow={filterStandaloneRow}
+            actions={(row) => (
+              <Link
+                href={`/admin/sites/${row.siteId}?project=${row.id}`}
+                style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
+              >
+                {t.common.edit}
+              </Link>
+            )}
+          />
+        </div>
+      )}
+
       <ConfirmDialog
         open={!!deleteId}
         title={t.sites.deleteSite}

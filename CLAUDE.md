@@ -89,6 +89,7 @@ lib/
   ai/
     openai.ts             # Lazy-initialized OpenAI client
     content-optimizer.ts  # AI content optimization (semantic HTML, translation, excerpts)
+    blog-generator.ts     # AI blog generation from project/site data (GPT-4o, zod-validated)
   db/
     schema.ts             # Drizzle schema (15+ tables)
     index.ts              # Lazy DB client (Neon or pg Pool)
@@ -96,8 +97,8 @@ lib/
     helpers.ts            # Query aggregation helpers (budget, duration, images, products)
     seed.ts               # Database seed script (services, areas, company, showroom, badges, social, about, blog, gallery)
   data/
-    index.ts              # Static assets (images, video), type re-exports, localization helpers (blog post, area)
-    projects.ts           # Project localization helpers, category slugs
+    index.ts              # Static assets (images, video, WORKSAFE_BC_LOGO), type re-exports, localization helpers (blog post, area)
+    projects.ts           # Project localization helpers, category slugs, imagesToPairs() utility
     services.ts           # Service type mappings and localization helpers
     areas.ts              # Area localization helper (getLocalizedArea)
   admin/
@@ -140,7 +141,7 @@ tests/
 ## Key Architecture Decisions
 
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
-- **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, partners, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video` and `images` constants (hardcoded asset URLs) and project localization helpers remain as static TypeScript in `lib/data/`.
+- **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, partners, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video`, `images`, and `WORKSAFE_BC_LOGO` constants (hardcoded asset URLs), project localization helpers, and the `imagesToPairs()` utility remain as static TypeScript in `lib/data/`.
 - **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`, `getFaqsFromDb`, `getPartnersFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. `lib/db/helpers.ts` provides aggregation utilities (`collectAllImages`, `calculateCombinedBudget`, etc.) with `SITE_IMAGE_SLUG` sentinel for site-level images. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`, `getAllSitesAdmin`, `getAllPartnersAdmin`.
 - **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
@@ -148,7 +149,7 @@ tests/
 - **Dual DB driver:** `DATABASE_URL` containing `neon.tech` → Neon HTTP driver; otherwise → `pg` Pool.
 - **Asset URL rewriting:** `getAssetUrl()` rewrites production URLs to MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 - **Neumorphic design:** Warm beige surface (#E8E2DA), navy (#1B365D), gold (#C8922A) palette.
-- **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when slugs collide. Used by `createProject()`, `updateProject()`, and `createServiceArea()` admin actions.
+- **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when slugs collide. Used by `createProject()`, `updateProject()`, `createServiceArea()`, and blog generation actions. Blog generation additionally sanitizes AI-generated slugs via `sanitizeSlug()` before deduplication.
 - **Insert-before-delete pattern:** Admin CRUD actions that update related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. The Neon HTTP driver does not support interactive transactions, so actions fetch existing record IDs, insert new records first (old data remains as fallback if insert fails), then delete old records by ID. This prevents data loss on partial failure. Used by `updateProject()` and `updateSite()`. For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
 
 ## Environment Variables
@@ -217,10 +218,11 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **Upload action** (`app/actions/admin/upload.ts`): S3 upload server action. Accepts optional `customKey` from FormData for slug-based naming; falls back to timestamp-random naming. `customKey` is sanitized server-side (`/[a-z0-9-]/` only, max 200 chars).
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
-- **ProjectModal** (`components/ProjectModal.tsx`): Gallery with prev/next navigation arrows (hover-reveal), keyboard navigation (ArrowLeft/ArrowRight), and image counter overlay. Thumbnails split into before/after rows with horizontal scroll for overflow.
+- **ProjectModal** (`components/ProjectModal.tsx`): Image-pairs gallery with click-to-toggle before/after. Uses `imagePairs[]`/`activePairIndex`/`showBefore` state model. Supports touch swipe, keyboard navigation (ArrowLeft/ArrowRight), slide animation (dual-key strategy: wrapper `key={activePairIndex}` for slide, Image `key` includes `showBefore` for swap). Navigation arrows hidden on mobile (`hidden sm:flex`), visible on desktop hover. Thumbnails show split before/after preview per pair. Falls back to `imagesToPairs()` for legacy flat images.
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
 - **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y), `FormField` (label + input wrapper with optional tooltip), `SearchableSelect` (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project in BlogPostForm and linked site in ProjectForm).
 - **AI content editor components**: `AIContentEditor` (tabbed interface for blog content with paste/EN/ZH tabs, AI optimization, preview mode, excerpt generation) and `AIBilingualTextarea` (simpler bilingual textarea with inline AI button for project descriptions/challenges/solutions). Both use OpenAI GPT-4o for language detection, translation, and content improvement. Uses DOMPurify for XSS protection in preview mode, zod for response validation. Respects `disabled` prop and syncs with form edit mode.
+- **AI blog generation** (`lib/ai/blog-generator.ts` + `app/actions/admin/generate-blog.ts`): Generates bilingual case study blog posts from project/site data via GPT-4o. Server actions `generateBlogFromProject(id)` and `generateBlogFromSite(id)` fetch data with relations, call AI, validate with Zod, truncate SEO fields to DB limits, sanitize/deduplicate slugs, and insert unpublished drafts. Triggered from "Generate Blog Post" button on site detail admin page.
 - **Slug validation**: `isValidSlug()` in `lib/admin/form-utils.ts` rejects consecutive hyphens (e.g., `a--b` is invalid). Uses regex `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. Used by `GalleryListClient` for drag-to-reorder functionality.
 - **useIsMobile hook** (`hooks/useIsMobile.ts`): Mobile breakpoint detection with SSR-safe lazy initialization (prevents hydration mismatch). Defaults to 768px breakpoint.

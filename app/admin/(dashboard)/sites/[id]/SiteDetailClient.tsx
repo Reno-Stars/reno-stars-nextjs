@@ -8,7 +8,7 @@ import ProjectForm from '@/components/admin/ProjectForm';
 import { updateSite } from '@/app/actions/admin/sites';
 import { createProject, updateProject, deleteProject, reorderProjectsInSite } from '@/app/actions/admin/projects';
 import { generateBlogFromProject, generateBlogFromSite } from '@/app/actions/admin/generate-blog';
-import { CARD, NAVY, GOLD, neu } from '@/lib/theme';
+import { CARD, NAVY, GOLD, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
@@ -323,11 +323,12 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
             {getPanelTitle()}
           </h2>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {selected !== 'new' && (
+            {selected !== 'new' && !(selected === 'site' && projects.length === 0) && (
               <button
                 type="button"
                 onClick={handleGenerateBlog}
-                disabled={isBlogPending}
+                disabled={isBlogPending || isPending}
+                aria-busy={isBlogPending}
                 style={{
                   padding: '0.375rem 0.75rem',
                   fontSize: '0.8125rem',
@@ -336,8 +337,8 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
                   backgroundColor: GOLD,
                   border: 'none',
                   borderRadius: '6px',
-                  cursor: isBlogPending ? 'not-allowed' : 'pointer',
-                  opacity: isBlogPending ? 0.6 : 1,
+                  cursor: isBlogPending || isPending ? 'not-allowed' : 'pointer',
+                  opacity: isBlogPending || isPending ? 0.6 : 1,
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -360,8 +361,8 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
               marginBottom: '1rem',
               borderRadius: '8px',
               fontSize: '0.875rem',
-              backgroundColor: blogMessage.type === 'success' ? '#e8f5e9' : '#fce4ec',
-              color: blogMessage.type === 'success' ? '#2e7d32' : '#c62828',
+              backgroundColor: blogMessage.type === 'success' ? SUCCESS_BG : ERROR_BG,
+              color: blogMessage.type === 'success' ? SUCCESS : ERROR,
             }}
           >
             {blogMessage.text}

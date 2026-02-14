@@ -29,6 +29,7 @@ app/                      # Next.js App Router
     contact/              # Contact form
     benefits/             # Benefits page
     design/               # Design showcase
+    process/              # 5-step renovation workflow page
   admin/                  # Admin dashboard (auth-protected)
     (auth)/               # Login page
     (dashboard)/          # CRUD pages (projects, blog, etc.)
@@ -49,7 +50,7 @@ components/
   Navbar.tsx              # Global navigation (unified, no variants)
   Footer.tsx              # Global footer (5-column + service areas bar)
   ContactForm.tsx         # Contact form (client component)
-  ProjectModal.tsx        # Project detail modal with mobile swipe and slide animation
+  ProjectModal.tsx        # Project detail modal with image-pairs UX, click-to-toggle before/after
   ProductLink.tsx         # External product link with hover preview
   TetrisGallery.tsx       # Masonry gallery layout
 
@@ -74,6 +75,7 @@ lib/
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
     content-optimizer.ts  # AI functions for blog, project, alt text generation
+    blog-generator.ts     # AI blog generation from project/site data (GPT-4o)
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   analytics.ts            # GA4 event tracking (disabled in development)
   email.ts                # Resend email notifications for contact form
@@ -123,7 +125,7 @@ The app uses a **hybrid static/database** model:
 
 - **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, about sections, projects, service areas, blog posts, gallery items, trust badges, partners, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
 - **Google Reviews** (`lib/google-reviews.ts`): Testimonials are fetched from the Google Places API (New, v1) with 24h server-side caching, replacing the former database-managed testimonials. Two parallel requests (MOST_RELEVANT + NEWEST sort) are deduplicated and filtered to 5-star reviews.
-- **Static data** (`lib/data/`): Only `video` and `images` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers and category slug constants.
+- **Static data** (`lib/data/`): Only `video`, `images`, and `WORKSAFE_BC_LOGO` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers, category slug constants, and the `imagesToPairs()` utility for converting legacy flat image arrays to `LocalizedImagePair[]`.
 - **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 
 ### Query Layer (`lib/db/queries.ts`)
@@ -288,13 +290,15 @@ The admin panel includes AI-powered content generation using OpenAI's GPT-4 mode
 
 ```typescript
 export const AI_CONFIG = {
-  model: 'gpt-4o-mini',           // Default for short text, alt text
-  modelContent: 'gpt-4o',          // Higher quality for blog content
-  temperature: 0.7,
-  maxTokensContent: 8192,          // Blog articles
-  maxTokensShort: 1024,            // Short text translations
-  maxTokensAltText: 256,           // Image alt text
-  maxTokensProjectDescription: 2048, // Project descriptions + SEO
+  model: 'gpt-4o-mini',              // Default for short text, alt text
+  modelContent: 'gpt-4o',             // Higher quality for blog content
+  temperature: 0.3,
+  maxTokensContent: 8192,             // Blog article optimization
+  maxTokensBlogGeneration: 16384,     // Blog generation (bilingual 800-1200 words x2 + SEO in JSON)
+  maxTokensShort: 1024,               // Short text translations
+  maxTokensProjectDescription: 2048,  // Project descriptions + SEO (16 fields)
+  maxTokensAltText: 256,              // Image alt text
+  fetchTimeoutMs: 60000,
 };
 ```
 
@@ -307,13 +311,32 @@ export const AI_CONFIG = {
 | `optimizeProjectDescription(rawNotes)` | Project description generation | `{ descriptionEn, descriptionZh, challengeEn, ..., metaTitleEn, seoKeywordsEn, ... }` |
 | `generateAltText(image)` | Image alt text via vision | `{ altEn, altZh, isFallback? }` |
 
-### Server Actions (`app/actions/admin/optimize-content.ts`)
+### Blog Generation (`lib/ai/blog-generator.ts`)
 
-All actions require admin authentication and handle errors gracefully:
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `generateBlogFromProjectData(project)` | Generate case study from single project | `BlogGeneration` (zod-validated) |
+| `generateBlogFromSiteData(site, projects)` | Generate case study from whole-house site | `BlogGeneration` (zod-validated) |
 
+`BlogGeneration` includes: bilingual title, content (semantic HTML), excerpt, SEO meta fields, focus/SEO keywords, reading time, and slug.
+
+### Server Actions
+
+**`app/actions/admin/optimize-content.ts`** — Content optimization actions (require admin auth):
 - `optimizeBlogContent(rawContent)` — For blog post editing
 - `optimizeProjectDescriptionAction(rawNotes)` — For project forms
 - `generateImageAltText(imageUrl)` — For image uploads
+
+**`app/actions/admin/generate-blog.ts`** — Blog generation actions (require admin auth):
+- `generateBlogFromProject(projectId)` — Generate draft blog from single project
+- `generateBlogFromSite(siteId)` — Generate draft blog from site + all child projects
+
+Blog generation actions fetch project data with relations (image pairs, scopes, products), call GPT-4o, validate response with Zod, and insert an unpublished draft blog post. Safety measures include:
+- **SEO field truncation**: `truncateField()` ensures metaTitle, metaDescription, and focusKeyword fit DB column max lengths (`SEO_META_TITLE_MAX=70`, `SEO_META_DESCRIPTION_MAX=155`, `SEO_FOCUS_KEYWORD_MAX=50`)
+- **Slug sanitization**: `sanitizeSlug()` normalizes AI-generated slugs (lowercase, no consecutive hyphens, no leading/trailing hyphens, fallback to `'blog-post'`)
+- **Slug deduplication**: `ensureUniqueSlug()` appends `-2`, `-3` etc. to prevent URL collisions
+- **Shared insert logic**: `insertBlogDraft()` helper handles all post-processing (sanitize slug, truncate fields, insert, revalidate) for both actions
+- **Truncation detection**: Throws clear error if `finish_reason === 'length'`
 
 ### Admin Components
 
@@ -444,38 +467,26 @@ For `createSite()`, a rollback cleanup deletes the orphaned parent record if chi
 
 ## Project Modal (`components/ProjectModal.tsx`)
 
-Rich image gallery modal with mobile-friendly interactions:
+Rich image gallery modal with image-pairs model and mobile-friendly interactions:
+
+### Image Pairs Model
+
+The modal uses `imagePairs[]` / `activePairIndex` / `showBefore` state instead of a flat image array. Each pair can have a `beforeImage` and/or `afterImage`. Users click the main image to toggle between before/after views when both exist.
+
+Data source priority:
+1. `project.image_pairs` (from DB) if available
+2. `imagesToPairs(project.images)` (legacy conversion via shared utility)
+3. Hero image as a single-pair fallback
+
+### Animation Keys
+
+Two-level key strategy prevents animation flicker on before/after toggle:
+- Outer wrapper div: `key={activePairIndex}` — triggers slide animation on pair navigation
+- Inner `<Image>`: `key={\`${activePairIndex}-${showBefore}\`}` — swaps image without re-triggering slide animation
 
 ### Touch Swipe Navigation
 
-```typescript
-const SWIPE_THRESHOLD = 50; // pixels
-
-const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-  const deltaX = touchEnd.x - touchStart.x;
-  const deltaY = touchEnd.y - touchStart.y;
-  // Only trigger if horizontal > vertical movement
-  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
-    deltaX < 0 ? handleNextImage() : handlePrevImage();
-  }
-}, [handleNextImage, handlePrevImage]);
-```
-
-### Slide Animation
-
-CSS keyframes with `prefers-reduced-motion` support:
-
-```css
-@keyframes slide-in-left {
-  from { transform: translateX(100%); opacity: 0.5; }
-  to { transform: translateX(0); opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  @keyframes slide-in-left { from, to { transform: none; opacity: 1; } }
-}
-```
-
-Animation triggered via `key={activeImage}` and `slideDirection` state.
+Swipe threshold: 50px. Only triggers when horizontal movement exceeds vertical (avoids scroll conflicts). Navigation arrows hidden on mobile (`hidden sm:flex`), visible on desktop hover.
 
 ### Z-Index Layering
 
@@ -484,3 +495,7 @@ Animation triggered via `key={activeImage}` and `slideDirection` state.
 | Touch overlay | `z-[5]` | Captures swipe events |
 | Before/After badge | `z-10` | Image metadata indicator |
 | Navigation arrows | `z-20` | Always accessible above overlay |
+
+### Thumbnails
+
+Split before/after preview per pair (matching detail page UX). Each thumbnail shows both images side-by-side with a white divider line. Responsive sizing: `h-[30px] sm:h-[48px]`.

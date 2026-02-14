@@ -2,10 +2,10 @@ import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from './openai';
 
 // ============================================================================
-// Types for project/site data passed to the generator
+// Types for project/site data passed to the generator (#8: exported)
 // ============================================================================
 
-interface ProjectDataForBlog {
+export interface ProjectDataForBlog {
   slug: string;
   titleEn: string;
   titleZh: string;
@@ -31,7 +31,7 @@ interface ProjectDataForBlog {
   }[];
 }
 
-interface SiteDataForBlog {
+export interface SiteDataForBlog {
   slug: string;
   titleEn: string;
   titleZh: string;
@@ -98,6 +98,7 @@ IMPORTANT RULES:
 - excerpts should be 150-200 characters
 - metaTitle under 60 characters
 - metaDescription under 155 characters
+- focusKeyword under 50 characters
 - slug should be lowercase with hyphens only (e.g., "oak-street-kitchen-renovation-case-study")
 
 Response format:
@@ -134,7 +135,12 @@ function buildProjectContext(project: ProjectDataForBlog): string {
 
   if (project.locationCity) lines.push(`Location: ${project.locationCity}`);
   if (project.budgetRange) lines.push(`Budget: ${project.budgetRange}`);
-  if (project.durationEn) lines.push(`Duration: ${project.durationEn} / ${project.durationZh}`);
+  // #13: Check both EN and ZH duration before building the line
+  if (project.durationEn && project.durationZh) {
+    lines.push(`Duration: ${project.durationEn} / ${project.durationZh}`);
+  } else if (project.durationEn) {
+    lines.push(`Duration: ${project.durationEn}`);
+  }
   if (project.challengeEn) lines.push(`Challenge (EN): ${project.challengeEn}`);
   if (project.challengeZh) lines.push(`Challenge (ZH): ${project.challengeZh}`);
   if (project.solutionEn) lines.push(`Solution (EN): ${project.solutionEn}`);
@@ -190,7 +196,7 @@ export async function generateBlogFromProjectData(
       },
     ],
     temperature: AI_CONFIG.temperature,
-    max_tokens: AI_CONFIG.maxTokensContent,
+    max_tokens: AI_CONFIG.maxTokensBlogGeneration,
   });
 
   const choice = response.choices[0];
@@ -217,24 +223,23 @@ export async function generateBlogFromSiteData(
 ): Promise<BlogGeneration> {
   const client = getOpenAIClient();
 
-  const siteContext = [
+  // #7: Build context lines without filter(Boolean) to preserve intentional structure
+  const contextParts: string[] = [
     `Whole House Renovation Site: ${site.titleEn} / ${site.titleZh}`,
     `Description (EN): ${site.descriptionEn}`,
     `Description (ZH): ${site.descriptionZh}`,
-    site.locationCity ? `Location: ${site.locationCity}` : '',
-    site.heroImageUrl ? `Site Hero Image: ${site.heroImageUrl}` : '',
-    '',
-    `This whole-house renovation includes ${projects.length} project areas:`,
-    '',
-  ]
-    .filter(Boolean)
-    .join('\n');
+  ];
+  if (site.locationCity) contextParts.push(`Location: ${site.locationCity}`);
+  if (site.heroImageUrl) contextParts.push(`Site Hero Image: ${site.heroImageUrl}`);
+  contextParts.push(`\nThis whole-house renovation includes ${projects.length} project areas:`);
+
+  const siteContext = contextParts.join('\n');
 
   const projectContexts = projects.map(
     (p, i) => `--- Area ${i + 1}: ${p.titleEn} (${p.serviceType}) ---\n${buildProjectContext(p)}`
   );
 
-  const fullContext = siteContext + projectContexts.join('\n\n');
+  const fullContext = siteContext + '\n\n' + projectContexts.join('\n\n');
 
   const response = await client.chat.completions.create({
     model: AI_CONFIG.modelContent,
@@ -246,7 +251,7 @@ export async function generateBlogFromSiteData(
       },
     ],
     temperature: AI_CONFIG.temperature,
-    max_tokens: AI_CONFIG.maxTokensContent,
+    max_tokens: AI_CONFIG.maxTokensBlogGeneration,
   });
 
   const choice = response.choices[0];

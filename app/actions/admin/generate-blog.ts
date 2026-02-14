@@ -9,6 +9,9 @@ import {
   projectScopes as projectScopesTable,
   projectExternalProducts as projectExternalProductsTable,
   projectSites as sitesTable,
+  SEO_META_TITLE_MAX,
+  SEO_META_DESCRIPTION_MAX,
+  SEO_FOCUS_KEYWORD_MAX,
 } from '@/lib/db/schema';
 import type { DbProjectImagePair, DbProjectScope, DbProjectExternalProduct, DbProject } from '@/lib/db/schema';
 import { eq, asc, inArray } from 'drizzle-orm';
@@ -18,6 +21,67 @@ import {
   generateBlogFromProjectData,
   generateBlogFromSiteData,
 } from '@/lib/ai/blog-generator';
+import type { BlogGeneration } from '@/lib/ai/blog-generator';
+
+// #3: Sanitize AI-generated slug to match isValidSlug rules
+function sanitizeSlug(raw: string): string {
+  return raw
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, '-') // Replace invalid chars with hyphen
+    .replace(/-{2,}/g, '-')       // Collapse consecutive hyphens
+    .replace(/^-|-$/g, '')        // Trim leading/trailing hyphens
+    || 'blog-post';               // Fallback if empty
+}
+
+// #1: Truncate SEO fields to match DB column max lengths
+function truncateField(value: string, max: number): string {
+  return value.length > max ? value.slice(0, max) : value;
+}
+
+// #4: Shared helper to insert a draft blog post from generated data
+async function insertBlogDraft(
+  generated: BlogGeneration,
+  featuredImageUrl: string | null,
+  projectId: string
+): Promise<string> {
+  // Ensure unique slug
+  const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
+  const slug = ensureUniqueSlug(
+    sanitizeSlug(generated.slug),
+    allSlugs.map((r: { slug: string }) => r.slug)
+  );
+
+  const inserted = await db
+    .insert(blogPosts)
+    .values({
+      slug,
+      titleEn: generated.titleEn,
+      titleZh: generated.titleZh,
+      contentEn: generated.contentEn,
+      contentZh: generated.contentZh,
+      excerptEn: generated.excerptEn,
+      excerptZh: generated.excerptZh,
+      // #1: Truncate SEO fields to DB column max lengths
+      metaTitleEn: truncateField(generated.metaTitleEn, SEO_META_TITLE_MAX),
+      metaTitleZh: truncateField(generated.metaTitleZh, SEO_META_TITLE_MAX),
+      metaDescriptionEn: truncateField(generated.metaDescriptionEn, SEO_META_DESCRIPTION_MAX),
+      metaDescriptionZh: truncateField(generated.metaDescriptionZh, SEO_META_DESCRIPTION_MAX),
+      focusKeywordEn: truncateField(generated.focusKeywordEn, SEO_FOCUS_KEYWORD_MAX),
+      focusKeywordZh: truncateField(generated.focusKeywordZh, SEO_FOCUS_KEYWORD_MAX),
+      seoKeywordsEn: generated.seoKeywordsEn,
+      seoKeywordsZh: generated.seoKeywordsZh,
+      readingTimeMinutes: generated.readingTimeMinutes,
+      featuredImageUrl,
+      projectId,
+      isPublished: false,
+      author: 'Reno Stars',
+    })
+    .returning({ id: blogPosts.id });
+
+  revalidatePath('/admin/blog');
+
+  return inserted[0].id;
+}
 
 /**
  * Generate a blog post from a single project's data using AI.
@@ -89,43 +153,8 @@ export async function generateBlogFromProject(
       })),
     });
 
-    // Ensure unique slug
-    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-    const slug = ensureUniqueSlug(
-      generated.slug,
-      allSlugs.map((r: { slug: string }) => r.slug)
-    );
-
-    // Insert draft blog post
-    const inserted = await db
-      .insert(blogPosts)
-      .values({
-        slug,
-        titleEn: generated.titleEn,
-        titleZh: generated.titleZh,
-        contentEn: generated.contentEn,
-        contentZh: generated.contentZh,
-        excerptEn: generated.excerptEn,
-        excerptZh: generated.excerptZh,
-        metaTitleEn: generated.metaTitleEn,
-        metaTitleZh: generated.metaTitleZh,
-        metaDescriptionEn: generated.metaDescriptionEn,
-        metaDescriptionZh: generated.metaDescriptionZh,
-        focusKeywordEn: generated.focusKeywordEn,
-        focusKeywordZh: generated.focusKeywordZh,
-        seoKeywordsEn: generated.seoKeywordsEn,
-        seoKeywordsZh: generated.seoKeywordsZh,
-        readingTimeMinutes: generated.readingTimeMinutes,
-        featuredImageUrl: project.heroImageUrl,
-        projectId,
-        isPublished: false,
-        author: 'Reno Stars',
-      })
-      .returning({ id: blogPosts.id });
-
-    revalidatePath('/admin/blog');
-
-    return { success: true, blogPostId: inserted[0].id };
+    const blogPostId = await insertBlogDraft(generated, project.heroImageUrl, projectId);
+    return { success: true, blogPostId };
   } catch (error) {
     console.error('Failed to generate blog from project:', error);
     const message =
@@ -260,43 +289,12 @@ export async function generateBlogFromSite(
       projectDataArray
     );
 
-    // Ensure unique slug
-    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-    const slug = ensureUniqueSlug(
-      generated.slug,
-      allSlugs.map((r: { slug: string }) => r.slug)
+    const blogPostId = await insertBlogDraft(
+      generated,
+      site.heroImageUrl ?? projectRows[0].heroImageUrl,
+      projectRows[0].id
     );
-
-    // Insert draft blog post (link to first child project for product display)
-    const inserted = await db
-      .insert(blogPosts)
-      .values({
-        slug,
-        titleEn: generated.titleEn,
-        titleZh: generated.titleZh,
-        contentEn: generated.contentEn,
-        contentZh: generated.contentZh,
-        excerptEn: generated.excerptEn,
-        excerptZh: generated.excerptZh,
-        metaTitleEn: generated.metaTitleEn,
-        metaTitleZh: generated.metaTitleZh,
-        metaDescriptionEn: generated.metaDescriptionEn,
-        metaDescriptionZh: generated.metaDescriptionZh,
-        focusKeywordEn: generated.focusKeywordEn,
-        focusKeywordZh: generated.focusKeywordZh,
-        seoKeywordsEn: generated.seoKeywordsEn,
-        seoKeywordsZh: generated.seoKeywordsZh,
-        readingTimeMinutes: generated.readingTimeMinutes,
-        featuredImageUrl: site.heroImageUrl ?? projectRows[0].heroImageUrl,
-        projectId: projectRows[0].id,
-        isPublished: false,
-        author: 'Reno Stars',
-      })
-      .returning({ id: blogPosts.id });
-
-    revalidatePath('/admin/blog');
-
-    return { success: true, blogPostId: inserted[0].id };
+    return { success: true, blogPostId };
   } catch (error) {
     console.error('Failed to generate blog from site:', error);
     const message =

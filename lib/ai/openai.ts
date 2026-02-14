@@ -7,6 +7,8 @@ export const AI_CONFIG = {
   modelContent: 'gpt-4o',
   temperature: 0.3,
   maxTokensContent: 8192,
+  // Blog generation: bilingual content (800-1200 words x2) + SEO fields in JSON
+  maxTokensBlogGeneration: 16384,
   maxTokensShort: 1024,
   // Project descriptions need more tokens for 16 fields (content + SEO)
   maxTokensProjectDescription: 2048,

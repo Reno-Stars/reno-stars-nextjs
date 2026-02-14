@@ -69,14 +69,17 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const wholeHouseCategory = t('category.wholeHouse');
   const sitesAsDisplayProjects: DisplayProject[] = useMemo(() =>
     sitesAsProjects
-      .filter((site) => site.hero_image) // Skip sites without a hero image
-      .map((site) => {
+      .reduce<DisplayProject[]>((acc, site) => {
+        // Resolve hero image: site's own or first child project's
+        const heroImage = site.hero_image || site.projects?.find((p) => p.hero_image)?.hero_image;
+        if (!heroImage) return acc; // Skip sites with no hero image at all
+
         // Collect all images: hero + site image pairs + all aggregated images from child projects
         const allImages: GalleryImage[] = [];
         const siteTitle = site.title[locale];
 
         // Add hero image first
-        allImages.push({ src: site.hero_image!, alt: siteTitle });
+        allImages.push({ src: heroImage, alt: siteTitle });
 
         // Add site's own image pairs (if any), skip duplicates
         // Transform bilingual pairs to localized format for the helper
@@ -100,7 +103,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           });
         }
 
-        return {
+        acc.push({
           id: site.id,
           slug: site.slug,
           title: site.title[locale],
@@ -108,7 +111,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           category: wholeHouseCategory,
           // Sites don't have a service_type - they're collections of room projects
           location_city: site.location_city || '',
-          hero_image: site.hero_image!,
+          hero_image: heroImage,
           images: allImages,
           featured: site.featured,
           badge: site.badge?.[locale],
@@ -124,8 +127,9 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             image_url: ep.image_url,
             label: ep.label[locale],
           })) ?? [],
-        };
-      }),
+        });
+        return acc;
+      }, []),
   [sitesAsProjects, locale, wholeHouseCategory]);
 
   // Convert individual projects with all images collected
