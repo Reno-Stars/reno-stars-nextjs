@@ -309,10 +309,13 @@ export const AI_CONFIG = {
 
 | Function | Purpose | Returns |
 |----------|---------|---------|
-| `optimizeContent(rawContent)` | Blog content optimization | `{ contentEn, contentZh, excerptEn, excerptZh, metaTitleEn, metaTitleZh, ... }` |
-| `optimizeShortText(rawText)` | Short text translation | `{ textEn, textZh, detectedLanguage }` |
-| `optimizeProjectDescription(rawNotes)` | Project description generation | `{ descriptionEn, descriptionZh, challengeEn, ..., metaTitleEn, seoKeywordsEn, ... }` |
-| `generateAltText(image)` | Image alt text via vision | `{ altEn, altZh, isFallback? }` |
+| `optimizeContent(rawContent)` | Blog content optimization | `OptimizedContent` (contentEn/Zh, excerptEn/Zh, SEO fields) |
+| `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
+| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, SEO fields, locationCity) |
+| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, SEO fields, locationCity) |
+| `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
+
+All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for reuse by form components via `Omit<T, 'detectedLanguage'>`.
 
 ### Blog Generation (`lib/ai/blog-generator.ts`)
 
@@ -328,6 +331,7 @@ export const AI_CONFIG = {
 **`app/actions/admin/optimize-content.ts`** — Content optimization actions (require admin auth):
 - `optimizeBlogContent(rawContent)` — For blog post editing
 - `optimizeProjectDescriptionAction(rawNotes)` — For project forms
+- `optimizeSiteDescriptionAction(rawNotes)` — For site forms
 - `generateImageAltText(imageUrl)` — For image uploads
 
 **`app/actions/admin/generate-blog.ts`** — Blog generation actions (require admin auth):
@@ -347,11 +351,15 @@ Blog generation actions fetch project data with relations (image pairs, scopes, 
 |-----------|-------|
 | `AIContentEditor` | Blog post form — paste content, AI cleans up and translates |
 | `AIBilingualTextarea` | Short text fields with AI translation button |
-| `AIProjectGenerator` | Project form — paste notes, generates all text fields + SEO |
+| `AIFieldGenerator<T>` | Generic AI generator — notes textarea + generate button (used by wrappers below) |
+| `AIProjectGenerator` | Project form — thin wrapper, generates slug, title, description, challenge, solution, badge, SEO |
+| `AISiteGenerator` | Site form — thin wrapper, generates slug, title, description, badge, excerpt, SEO |
+
+`AIProjectGenerator` and `AISiteGenerator` use exported `ProjectDescription` / `SiteDescription` types from `content-optimizer.ts` via `Omit<T, 'detectedLanguage'>` for their callback signatures, eliminating inline type duplication.
 
 ### Memory Leak Prevention
 
-`AIProjectGenerator` uses the `mountedRef` pattern to prevent state updates after unmount:
+`AIFieldGenerator` uses the `mountedRef` pattern to prevent state updates after unmount:
 
 ```typescript
 const mountedRef = useRef(true);

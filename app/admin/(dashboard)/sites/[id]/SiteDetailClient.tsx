@@ -99,6 +99,16 @@ interface SiteData {
   heroImageUrl: string;
   badgeEn: string;
   badgeZh: string;
+  excerptEn?: string;
+  excerptZh?: string;
+  metaTitleEn?: string;
+  metaTitleZh?: string;
+  metaDescriptionEn?: string;
+  metaDescriptionZh?: string;
+  focusKeywordEn?: string;
+  focusKeywordZh?: string;
+  seoKeywordsEn?: string;
+  seoKeywordsZh?: string;
   showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;

@@ -6,10 +6,12 @@ import {
   optimizeContent,
   optimizeShortText,
   optimizeProjectDescription,
+  optimizeSiteDescription,
   generateAltText,
   type OptimizedContent,
   type BilingualText,
   type ProjectDescription,
+  type SiteDescription,
 } from '@/lib/ai/content-optimizer';
 
 const MAX_CONTENT_LENGTH = 100_000;
@@ -28,6 +30,11 @@ export interface OptimizeShortTextResult {
 export interface OptimizeProjectDescriptionResult {
   success: true;
   data: ProjectDescription;
+}
+
+export interface OptimizeSiteDescriptionResult {
+  success: true;
+  data: SiteDescription;
 }
 
 export interface OptimizeError {
@@ -121,6 +128,34 @@ export async function optimizeProjectDescriptionAction(
     console.error('Failed to optimize project description:', error);
     const message = error instanceof Error ? error.message : 'Unknown error';
     return { success: false, error: `Failed to optimize project description: ${message}` };
+  }
+}
+
+/**
+ * Server action to optimize site description fields using AI
+ * - Requires admin authentication
+ * - Generates description, badge, excerpt, and SEO metadata in both languages
+ */
+export async function optimizeSiteDescriptionAction(
+  rawNotes: string
+): Promise<OptimizeSiteDescriptionResult | OptimizeError> {
+  await requireAuth();
+
+  if (!rawNotes || rawNotes.trim().length === 0) {
+    return { success: false, error: 'Site notes are required' };
+  }
+
+  if (rawNotes.length > MAX_SHORT_TEXT_LENGTH) {
+    return { success: false, error: `Notes are too long (max ${MAX_SHORT_TEXT_LENGTH.toLocaleString()} characters)` };
+  }
+
+  try {
+    const result = await optimizeSiteDescription(rawNotes);
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Failed to optimize site description:', error);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, error: `Failed to optimize site description: ${message}` };
   }
 }
 

@@ -81,14 +81,14 @@ app/
 components/
   pages/                  # Page-level components (one per route)
   home/                   # Homepage section components (14 files: Hero, ServiceAreas, Testimonials, GoogleAvatar, Gallery, Services, Stats, About, TrustBadges, Partners, FAQ, Blog, Showroom, Contact)
-  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, DashboardShell, AIContentEditor, AIBilingualTextarea, etc.)
+  admin/                  # Admin UI components (DataTable, ProjectForm, HouseStack, Tooltip, DragHandle, AdminLocaleProvider, TopBar, Sidebar, DashboardShell, AIContentEditor, AIBilingualTextarea, AIFieldGenerator, AIProjectGenerator, AISiteGenerator, etc.)
   structured-data/        # JSON-LD schema components (9 schemas)
   Navbar.tsx, Footer.tsx, ContactForm.tsx, ProductLink.tsx, etc.
 
 lib/
   ai/
     openai.ts             # Lazy-initialized OpenAI client
-    content-optimizer.ts  # AI content optimization (semantic HTML, translation, excerpts)
+    content-optimizer.ts  # AI content optimization (blog HTML, project/site description+SEO generation, translation, alt text)
     blog-generator.ts     # AI blog generation from project/site data (GPT-4o, zod-validated)
   db/
     schema.ts             # Drizzle schema (15+ tables)
@@ -167,7 +167,7 @@ tests/
 | `RESEND_API_KEY` | No | Resend API key for contact form email notifications |
 | `EMAIL_FROM` | No | Sender email for notifications (must be verified in Resend) |
 | `EMAIL_TO` | No | Recipient email(s) for contact form notifications |
-| `OPENAI_API_KEY` | No | OpenAI API key for AI content optimization in admin (blog + project forms) |
+| `OPENAI_API_KEY` | No | OpenAI API key for AI content optimization in admin (blog, project forms, site forms) |
 
 ## Routing & Proxy
 
@@ -223,6 +223,7 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **DisplayProject type** (`lib/types.ts`): Extended project type for display purposes. Can represent regular projects or sites displayed as "Whole House" projects with aggregated data (childAreas, totalBudget, totalDuration, allServiceScopes, allExternalProducts).
 - **Reusable admin components**: `Tooltip` (hover help icons), `DragHandleIcon` (6-dot drag indicator SVG), `ConfirmDialog` (modal with centered positioning, CSS `:focus-visible` for keyboard a11y; supports `items` list prop for bullet-point detail and `variant` prop — `'danger'` (red, default) or `'warning'` (gold) — for non-destructive confirmations like missing optional fields), `FormField` (label + input wrapper with optional tooltip), `SearchableSelect` (type-to-filter dropdown with keyboard navigation and ARIA accessibility — used for scalable dropdowns like related project in BlogPostForm and linked site in ProjectForm), `AdminPageHeader` (client component with bilingual title via dot-path translation resolver; supports single action via `actionKey`/`actionHref` or multiple actions via `actions` array with per-action `color`; exports shared `headerActionStyle`).
 - **AI content editor components**: `AIContentEditor` (tabbed interface for blog content with paste/EN/ZH tabs, AI optimization, preview mode, excerpt generation) and `AIBilingualTextarea` (simpler bilingual textarea with inline AI button for project descriptions/challenges/solutions). Both use OpenAI GPT-4o for language detection, translation, and content improvement. Uses DOMPurify for XSS protection in preview mode, zod for response validation. Respects `disabled` prop and syncs with form edit mode.
+- **AI field generators**: `AIFieldGenerator<T>` (generic component — notes textarea + generate button with error/success feedback, `mountedRef` cleanup). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers providing entity-specific server actions and translations. Both generate slug, bilingual titles, descriptions, badges, and full SEO metadata. Positioned at the top of their respective forms (before slug/title fields). Response validated with Zod schemas in `lib/ai/content-optimizer.ts`.
 - **AI blog generation** (`lib/ai/blog-generator.ts` + `app/actions/admin/generate-blog.ts`): Generates bilingual case study blog posts from project/site data via GPT-4o. Server actions `generateBlogFromProject(id)` and `generateBlogFromSite(id)` fetch data with relations, call AI, validate with Zod, truncate SEO fields to DB limits, sanitize/deduplicate slugs, and insert unpublished drafts. Triggered from "Generate Blog Post" button on site detail admin page.
 - **Slug validation**: `isValidSlug()` in `lib/admin/form-utils.ts` rejects consecutive hyphens (e.g., `a--b` is invalid). Uses regex `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. Used by `GalleryListClient` for drag-to-reorder functionality.
@@ -238,7 +239,7 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **CTA text**: Use service-specific text (e.g., `cta.exploreService`) instead of generic "Learn More".
 - **Performance**: Wrap derived data in `useMemo`, event handlers in `useCallback`, inline arrays in `useMemo`. Use functional updater form for toggle state setters (`setX((prev) => !prev)`). Use `key={label}` instead of `key={value}` for stats/badges to avoid collisions. Server routes should use `Promise.all` to parallelize independent async calls (e.g., batch DB updates). Homepage uses `next/dynamic` for below-fold sections with skeleton fallbacks. Avoid Suspense on SEO-critical pages (homepage) to ensure crawlers receive full content.
 - **Shared constants**: Use `lib/admin/constants.ts` for service types, space types, `STANDALONE_SITE_SLUG`, and their EN/ZH mappings. Export TypeScript union types (e.g., `ServiceTypeKey`) for type safety.
-- **Pre-save warnings**: `ProjectForm` and `SiteForm` check for empty optional fields (hero image, image pairs, SEO metadata, etc.) before submission. If fields are missing, a `ConfirmDialog` with `variant="warning"` lists them and asks the user to confirm. Uses `onSubmit` handler with `startTransition` instead of `action` prop to support the intercept flow.
+- **Pre-save warnings**: `ProjectForm` and `SiteForm` check for empty optional fields (hero image, image pairs, badge, SEO metadata including metaTitle, metaDescription, focusKeyword, seoKeywords, excerpt, etc.) before submission. If fields are missing, a `ConfirmDialog` with `variant="warning"` lists them and asks the user to confirm. Uses `onSubmit` handler with `startTransition` instead of `action` prop to support the intercept flow.
 
 ## Homepage Section Order
 

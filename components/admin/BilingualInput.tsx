@@ -10,6 +10,14 @@ interface BilingualInputProps {
   label: string;
   defaultValueEn?: string;
   defaultValueZh?: string;
+  /** Controlled value for EN field. When provided, the input uses controlled mode. */
+  valueEn?: string;
+  /** Change handler for controlled EN field */
+  onChangeEn?: (value: string) => void;
+  /** Controlled value for ZH field. When provided, the input uses controlled mode. */
+  valueZh?: string;
+  /** Change handler for controlled ZH field */
+  onChangeZh?: (value: string) => void;
   required?: boolean;
   placeholder?: string;
   tooltip?: string;
@@ -21,10 +29,20 @@ export default function BilingualInput({
   label,
   defaultValueEn = '',
   defaultValueZh = '',
+  valueEn,
+  onChangeEn,
+  valueZh,
+  onChangeZh,
   required = false,
   placeholder,
   tooltip,
 }: BilingualInputProps) {
+  // Dual-mode: controlled (valueEn/onChangeEn) for AI-populated fields,
+  // uncontrolled (defaultValueEn) for static fields. Avoids React warnings
+  // about switching between controlled/uncontrolled by spreading conditionally.
+  const isControlledEn = valueEn !== undefined;
+  const isControlledZh = valueZh !== undefined;
+
   return (
     <fieldset style={{ marginBottom: '1rem', border: 'none', padding: 0, margin: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
@@ -47,7 +65,10 @@ export default function BilingualInput({
           <input
             id={nameEn}
             name={nameEn}
-            defaultValue={defaultValueEn}
+            {...(isControlledEn
+              ? { value: valueEn, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChangeEn?.(e.target.value) }
+              : { defaultValue: defaultValueEn }
+            )}
             required={required}
             placeholder={placeholder}
             style={inputStyle}
@@ -60,7 +81,10 @@ export default function BilingualInput({
           <input
             id={nameZh}
             name={nameZh}
-            defaultValue={defaultValueZh}
+            {...(isControlledZh
+              ? { value: valueZh, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChangeZh?.(e.target.value) }
+              : { defaultValue: defaultValueZh }
+            )}
             required={required}
             placeholder={placeholder}
             style={inputStyle}

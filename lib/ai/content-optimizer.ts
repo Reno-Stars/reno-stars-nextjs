@@ -26,6 +26,10 @@ const BilingualTextSchema = z.object({
 });
 
 const ProjectDescriptionSchema = z.object({
+  slug: z.string(),
+  titleEn: z.string(),
+  titleZh: z.string(),
+  locationCity: z.string(),
   descriptionEn: z.string(),
   descriptionZh: z.string(),
   challengeEn: z.string(),
@@ -59,6 +63,7 @@ export interface AltTextResult extends AltText {
 export type OptimizedContent = z.infer<typeof OptimizedContentSchema>;
 export type BilingualText = z.infer<typeof BilingualTextSchema>;
 export type ProjectDescription = z.infer<typeof ProjectDescriptionSchema>;
+export type SiteDescription = z.infer<typeof SiteDescriptionSchema>;
 export type AltText = z.infer<typeof AltTextSchema>;
 
 export interface ImageForAltText {
@@ -130,7 +135,7 @@ Response format:
 
 const PROJECT_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
 
-Given raw project notes or a brief description, generate comprehensive project content and SEO metadata in both English and Chinese.
+Given raw project notes or a brief description, generate a URL slug, bilingual titles, comprehensive project content, and SEO metadata in both English and Chinese.
 
 CRITICAL REQUIREMENTS:
 1. All English fields MUST be in English
@@ -139,6 +144,9 @@ CRITICAL REQUIREMENTS:
 4. SEO fields should be optimized for search engines
 
 Field guidelines:
+- slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "modern-kitchen-renovation-vancouver"). No consecutive hyphens.
+- titleEn/titleZh: Short, descriptive title for the project (e.g., "Modern Kitchen Renovation" / "现代厨房翻新")
+- locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
 - description: 2-3 sentences about the project scope and transformation (50-150 words)
 - challenge: 1-2 sentences about the main challenges faced (30-80 words)
 - solution: 1-2 sentences about how challenges were addressed (30-80 words)
@@ -153,6 +161,10 @@ Return ONLY valid JSON, no markdown.
 Response format:
 {
   "detectedLanguage": "en" or "zh",
+  "slug": "url-friendly-slug",
+  "titleEn": "English Project Title",
+  "titleZh": "中文项目标题",
+  "locationCity": "Vancouver",
   "descriptionEn": "English project description",
   "descriptionZh": "中文项目描述",
   "challengeEn": "English challenge description",
@@ -161,6 +173,75 @@ Response format:
   "solutionZh": "中文解决方案",
   "badgeEn": "Badge text",
   "badgeZh": "标签文字",
+  "metaTitleEn": "SEO Title | Reno Stars",
+  "metaTitleZh": "SEO标题 | Reno Stars",
+  "metaDescriptionEn": "Compelling SEO description under 155 chars",
+  "metaDescriptionZh": "引人注目的SEO描述，少于155字符",
+  "focusKeywordEn": "primary keyword",
+  "focusKeywordZh": "主要关键词",
+  "seoKeywordsEn": "keyword1, keyword2, keyword3",
+  "seoKeywordsZh": "关键词1, 关键词2, 关键词3"
+}`;
+
+const SiteDescriptionSchema = z.object({
+  slug: z.string(),
+  titleEn: z.string(),
+  titleZh: z.string(),
+  locationCity: z.string(),
+  descriptionEn: z.string(),
+  descriptionZh: z.string(),
+  badgeEn: z.string(),
+  badgeZh: z.string(),
+  excerptEn: z.string(),
+  excerptZh: z.string(),
+  metaTitleEn: z.string(),
+  metaTitleZh: z.string(),
+  metaDescriptionEn: z.string(),
+  metaDescriptionZh: z.string(),
+  focusKeywordEn: z.string(),
+  focusKeywordZh: z.string(),
+  seoKeywordsEn: z.string(),
+  seoKeywordsZh: z.string(),
+  detectedLanguage: z.enum(['en', 'zh']),
+});
+
+const SITE_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
+
+Given raw notes or a brief description about a whole-house renovation site (property), generate a URL slug, bilingual titles, comprehensive site content, and SEO metadata in both English and Chinese.
+
+CRITICAL REQUIREMENTS:
+1. All English fields MUST be in English
+2. All Chinese fields MUST be in Chinese characters (中文)
+3. Content should be professional, engaging, and highlight the overall renovation transformation
+4. SEO fields should be optimized for search engines
+
+Field guidelines:
+- slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "west-vancouver-whole-house-renovation"). No consecutive hyphens.
+- titleEn/titleZh: Short, descriptive title for the site (e.g., "West Vancouver Whole House Renovation" / "西温哥华全屋装修")
+- locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
+- description: 2-3 sentences about the overall renovation scope and transformation of the property (50-150 words)
+- badge: Short highlight text for a badge/tag (2-5 words, e.g., "Whole House" / "全屋装修")
+- excerpt: 1-2 sentences summarizing the site for listings (100-200 characters)
+- metaTitle: SEO title under 60 characters, include primary keyword
+- metaDescription: SEO description under 155 characters, compelling and keyword-rich
+- focusKeyword: Primary keyword/phrase for this site (e.g., "whole house renovation Vancouver")
+- seoKeywords: 3-5 comma-separated keywords related to the site
+
+Return ONLY valid JSON, no markdown.
+
+Response format:
+{
+  "detectedLanguage": "en" or "zh",
+  "slug": "url-friendly-slug",
+  "titleEn": "English Site Title",
+  "titleZh": "中文工地标题",
+  "locationCity": "West Vancouver",
+  "descriptionEn": "English site description",
+  "descriptionZh": "中文工地描述",
+  "badgeEn": "Badge text",
+  "badgeZh": "标签文字",
+  "excerptEn": "English excerpt 100-200 chars",
+  "excerptZh": "中文摘要100-200字符",
   "metaTitleEn": "SEO Title | Reno Stars",
   "metaTitleZh": "SEO标题 | Reno Stars",
   "metaDescriptionEn": "Compelling SEO description under 155 chars",
@@ -277,6 +358,34 @@ export async function optimizeProjectDescription(rawNotes: string): Promise<Proj
 
   const parsed = parseJsonResponse<unknown>(content);
   const result = ProjectDescriptionSchema.parse(parsed);
+  return result;
+}
+
+/**
+ * Optimize site description fields using GPT-4
+ * - Detects source language
+ * - Generates description, badge, excerpt, and SEO metadata in both languages
+ */
+export async function optimizeSiteDescription(rawNotes: string): Promise<SiteDescription> {
+  const client = getOpenAIClient();
+
+  const response = await client.chat.completions.create({
+    model: AI_CONFIG.model,
+    messages: [
+      { role: 'system', content: SITE_DESCRIPTION_PROMPT },
+      { role: 'user', content: rawNotes },
+    ],
+    temperature: AI_CONFIG.temperature,
+    max_tokens: AI_CONFIG.maxTokensProjectDescription,
+  });
+
+  const content = response.choices[0]?.message?.content;
+  if (!content) {
+    throw new Error('No response from OpenAI');
+  }
+
+  const parsed = parseJsonResponse<unknown>(content);
+  const result = SiteDescriptionSchema.parse(parsed);
   return result;
 }
 
