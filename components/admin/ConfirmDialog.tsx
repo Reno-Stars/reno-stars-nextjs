@@ -88,16 +88,18 @@ export default function ConfirmDialog({
         >
           {title}
         </h3>
-        <p id={descId} style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: items?.length ? '0.75rem' : '1.5rem' }}>
-          {message}
-        </p>
-        {items && items.length > 0 && (
-          <ul style={{ color: TEXT_MID, fontSize: '0.8125rem', marginBottom: '1.5rem', paddingLeft: '1.25rem', lineHeight: 1.6 }}>
-            {items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        )}
+        <div id={descId}>
+          <p style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: items?.length ? '0.75rem' : '1.5rem' }}>
+            {message}
+          </p>
+          {items && items.length > 0 && (
+            <ul style={{ color: TEXT_MID, fontSize: '0.8125rem', marginBottom: '1.5rem', paddingLeft: '1.25rem', lineHeight: 1.6 }}>
+              {items.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          )}
+        </div>
         <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
           <button
             ref={cancelRef}

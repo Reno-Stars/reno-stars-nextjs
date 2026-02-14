@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback, startTransition } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import AIBilingualTextarea from './AIBilingualTextarea';
@@ -18,6 +18,7 @@ import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
+import { useSaveWarning } from '@/hooks/useSaveWarning';
 
 interface ScopeEntry {
   id: string;
@@ -220,10 +221,8 @@ export default function ProjectForm({
     initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
   );
 
-  // Pre-save warning state
-  const [showSaveWarning, setShowSaveWarning] = useState(false);
-  const [pendingFormData, setPendingFormData] = useState<FormData | null>(null);
-  const [missingFields, setMissingFields] = useState<string[]>([]);
+  // Pre-save warning
+  const { showWarning, missingFields, requestSave, confirm: confirmSave, cancel: cancelSave } = useSaveWarning(formAction);
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -243,41 +242,20 @@ export default function ProjectForm({
     if (!fd.get('focusKeywordEn') && !fd.get('focusKeywordZh')) missing.push(t.ai.focusKeyword);
     if (!fd.get('seoKeywordsEn') && !fd.get('seoKeywordsZh')) missing.push(t.ai.seoKeywords);
 
-    if (missing.length > 0) {
-      setPendingFormData(fd);
-      setMissingFields(missing);
-      setShowSaveWarning(true);
-    } else {
-      startTransition(() => formAction(fd));
-    }
-  }, [imagePairs.length, formAction, t]);
-
-  const handleSaveConfirm = useCallback(() => {
-    if (pendingFormData) {
-      startTransition(() => formAction(pendingFormData));
-    }
-    setShowSaveWarning(false);
-    setPendingFormData(null);
-    setMissingFields([]);
-  }, [pendingFormData, formAction]);
-
-  const handleSaveCancel = useCallback(() => {
-    setShowSaveWarning(false);
-    setPendingFormData(null);
-    setMissingFields([]);
-  }, []);
+    requestSave(fd, missing);
+  }, [imagePairs.length, requestSave, t]);
 
   return (
     <form onSubmit={handleSubmit}>
       <ConfirmDialog
-        open={showSaveWarning}
+        open={showWarning}
         title={t.common.saveWarningTitle}
         message={t.common.saveWarningMessage}
         items={missingFields}
         variant="warning"
         confirmLabel={t.common.saveAnyway}
-        onConfirm={handleSaveConfirm}
-        onCancel={handleSaveCancel}
+        onConfirm={confirmSave}
+        onCancel={cancelSave}
       />
       <div
         className="admin-form-card"

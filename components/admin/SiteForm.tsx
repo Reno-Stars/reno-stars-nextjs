@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, startTransition } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
 import BilingualTextarea from './BilingualTextarea';
@@ -15,6 +15,7 @@ import SubmitButton from './SubmitButton';
 import { CARD, NAVY, GOLD, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
+import { useSaveWarning } from '@/hooks/useSaveWarning';
 
 interface City {
   nameEn: string;
@@ -93,10 +94,8 @@ export default function SiteForm({
     setSelectedCity(initialData?.locationCity ?? '');
   }, [initialData?.slug, initialData?.locationCity]);
 
-  // Pre-save warning state
-  const [showSaveWarning, setShowSaveWarning] = useState(false);
-  const [pendingFormData, setPendingFormData] = useState<FormData | null>(null);
-  const [missingFields, setMissingFields] = useState<string[]>([]);
+  // Pre-save warning
+  const { showWarning, missingFields, requestSave, confirm: confirmSave, cancel: cancelSave } = useSaveWarning(formAction);
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -108,43 +107,22 @@ export default function SiteForm({
     if (!fd.get('locationCity')) missing.push(t.sites.locationCity);
     if (!fd.get('badgeEn') && !fd.get('badgeZh')) missing.push(t.sites.badge);
 
-    if (missing.length > 0) {
-      setPendingFormData(fd);
-      setMissingFields(missing);
-      setShowSaveWarning(true);
-    } else {
-      startTransition(() => formAction(fd));
-    }
-  }, [siteImagePairs.length, formAction, t]);
-
-  const handleSaveConfirm = useCallback(() => {
-    if (pendingFormData) {
-      startTransition(() => formAction(pendingFormData));
-    }
-    setShowSaveWarning(false);
-    setPendingFormData(null);
-    setMissingFields([]);
-  }, [pendingFormData, formAction]);
-
-  const handleSaveCancel = useCallback(() => {
-    setShowSaveWarning(false);
-    setPendingFormData(null);
-    setMissingFields([]);
-  }, []);
+    requestSave(fd, missing);
+  }, [siteImagePairs.length, requestSave, t]);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
   return (
     <form onSubmit={handleSubmit}>
       <ConfirmDialog
-        open={showSaveWarning}
+        open={showWarning}
         title={t.common.saveWarningTitle}
         message={t.common.saveWarningMessage}
         items={missingFields}
         variant="warning"
         confirmLabel={t.common.saveAnyway}
-        onConfirm={handleSaveConfirm}
-        onCancel={handleSaveCancel}
+        onConfirm={confirmSave}
+        onCancel={cancelSave}
       />
       <div
         className="admin-form-card"
