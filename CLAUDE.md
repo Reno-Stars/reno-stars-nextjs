@@ -132,6 +132,7 @@ scripts/
 hooks/
   useDragReorder.ts       # Reusable drag-and-drop reordering with optimistic UI
   useIsMobile.ts          # Mobile breakpoint detection hook
+  useSaveWarning.ts       # Pre-save warning dialog state for admin forms
 
 tests/
   unit/                   # Vitest unit tests
@@ -226,6 +227,7 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **Slug validation**: `isValidSlug()` in `lib/admin/form-utils.ts` rejects consecutive hyphens (e.g., `a--b` is invalid). Uses regex `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **useDragReorder hook** (`hooks/useDragReorder.ts`): Reusable drag-and-drop reordering logic with optimistic UI updates, server sync, and proper cleanup (mountedRef pattern). Uses `DRAG_THRESHOLD_PX` constant (5px) to distinguish clicks from drags. Used by `GalleryListClient` for drag-to-reorder functionality.
 - **useIsMobile hook** (`hooks/useIsMobile.ts`): Mobile breakpoint detection with SSR-safe lazy initialization (prevents hydration mismatch). Defaults to 768px breakpoint.
+- **useSaveWarning hook** (`hooks/useSaveWarning.ts`): Manages pre-save warning dialog state for admin forms. Single `SaveWarningState` object (`open`, `formData`, `missingFields`). Returns `{ showWarning, missingFields, requestSave, confirm, cancel }`. `requestSave(fd, missing)` shows the warning dialog if missing fields exist, otherwise submits directly via `startTransition`. Used by `ProjectForm` and `SiteForm` for pre-save optional field validation.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale + sidebar state context for admin panel. TopBar displays EN/ZH switcher buttons and hamburger menu (mobile only). Preference persists in localStorage (`admin_locale` key) with try/catch for private browsing mode. All list clients (projects, blog, FAQs, gallery, service areas, trust badges) show bilingual content based on selected locale. Does not affect SEO (admin is auth-protected).
 - **Admin mobile responsive**: `DashboardShell` (client component) wraps the dashboard layout with sidebar drawer (slide-out on mobile, always visible on desktop). Uses `prevMobileRef` to only close sidebar on mobile→desktop transition. `admin-responsive.css` overrides inline styles at `@media (max-width: 768px)` via `!important`. Form grids (`admin-form-grid`) collapse to single column; form cards (`admin-form-card`) go full-width; page headers stack vertically. Sidebar closes on: overlay click, Escape key, nav link click, resize to desktop. Defines `--color-navy` CSS variable and `.confirm-dialog-btn:focus-visible` for keyboard accessibility.
 - **Admin sidebar navigation**: Reorganized into 4 collapsible groups (Portfolio, Content, CRM, Settings) with Dashboard as standalone link. Groups expand/collapse on click with animated chevron. Settings is collapsed by default. Auto-expands when navigating to child routes. Expanded state persists in localStorage (`admin_sidebar_groups` key). Full accessibility: `aria-expanded`, `aria-controls`, `role="region"`, `aria-labelledby`. Group labels use CSS `text-transform: uppercase` for proper screen reader pronunciation.
