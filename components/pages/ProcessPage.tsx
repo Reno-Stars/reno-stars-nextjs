@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useRef, useCallback, useState } from 'react';
+import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { toPng } from 'html-to-image';
+import jsPDF from 'jspdf';
 import {
   Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
   MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
@@ -13,6 +14,7 @@ import type { Company } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import {
   NAVY, NAVY_MID, NAVY_PALE, GOLD, SURFACE, CARD, TEXT, TEXT_MID, SH_DARK, neu,
+  SUCCESS, ERROR,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
   ILLUS_SKIN, ILLUS_SKIN_DARK, ILLUS_SKY, ILLUS_WOOD, ILLUS_YELLOW,
@@ -280,8 +282,24 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
   ], [company, t]);
 
   const posterRef = useRef<HTMLDivElement>(null);
+  const statusTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const pdfStatusTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isPdfDownloading, setIsPdfDownloading] = useState(false);
+  const [pdfDownloadStatus, setPdfDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(statusTimerRef.current);
+      clearTimeout(pdfStatusTimerRef.current);
+    };
+  }, []);
+
+  const capturePoster = useCallback(() => {
+    if (!posterRef.current) return Promise.reject(new Error('Poster ref not available'));
+    return toPng(posterRef.current, { pixelRatio: 2, backgroundColor: SURFACE });
+  }, []);
 
   // PNG download
   const handleDownload = useCallback(async () => {
@@ -290,10 +308,7 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
     setIsDownloading(true);
     setDownloadStatus('idle');
     try {
-      const dataUrl = await toPng(posterRef.current, {
-        pixelRatio: 2,
-        backgroundColor: SURFACE,
-      });
+      const dataUrl = await capturePoster();
 
       const link = document.createElement('a');
       link.download = 'reno-stars-process-poster.png';
@@ -301,15 +316,53 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       link.click();
 
       setDownloadStatus('success');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
+      statusTimerRef.current = setTimeout(() => setDownloadStatus('idle'), 3000);
     } catch (error) {
       console.error('PNG generation failed:', error);
       setDownloadStatus('error');
-      setTimeout(() => setDownloadStatus('idle'), 3000);
+      statusTimerRef.current = setTimeout(() => setDownloadStatus('idle'), 3000);
     } finally {
       setIsDownloading(false);
     }
-  }, [isDownloading]);
+  }, [isDownloading, capturePoster]);
+
+  // PDF download
+  const handlePdfDownload = useCallback(async () => {
+    if (!posterRef.current || isPdfDownloading) return;
+
+    setIsPdfDownloading(true);
+    setPdfDownloadStatus('idle');
+    try {
+      const dataUrl = await capturePoster();
+
+      const img = new Image();
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = dataUrl;
+      });
+
+      const imgWidth = img.naturalWidth;
+      const imgHeight = img.naturalHeight;
+      const orientation = imgWidth > imgHeight ? 'landscape' : 'portrait';
+      const pdf = new jsPDF({
+        orientation,
+        unit: 'px',
+        format: [imgWidth, imgHeight],
+      });
+      pdf.addImage(dataUrl, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('reno-stars-process-poster.pdf');
+
+      setPdfDownloadStatus('success');
+      pdfStatusTimerRef.current = setTimeout(() => setPdfDownloadStatus('idle'), 3000);
+    } catch (error) {
+      console.error('PDF generation failed:', error);
+      setPdfDownloadStatus('error');
+      pdfStatusTimerRef.current = setTimeout(() => setPdfDownloadStatus('idle'), 3000);
+    } finally {
+      setIsPdfDownloading(false);
+    }
+  }, [isPdfDownloading, capturePoster]);
 
   return (
     <>
@@ -727,8 +780,8 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
       </section>
       </div>
 
-      {/* Download Button */}
-      <div className="py-4 text-center print:hidden" style={{ backgroundColor: SURFACE }}>
+      {/* Download Buttons */}
+      <div className="py-4 flex justify-center gap-4 print:hidden" style={{ backgroundColor: SURFACE }}>
         <button
           onClick={handleDownload}
           disabled={isDownloading}
@@ -739,9 +792,9 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
           {isDownloading ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
           ) : downloadStatus === 'success' ? (
-            <Check className="w-3.5 h-3.5" style={{ color: '#16a34a' }} />
+            <Check className="w-3.5 h-3.5" style={{ color: SUCCESS }} />
           ) : downloadStatus === 'error' ? (
-            <AlertCircle className="w-3.5 h-3.5" style={{ color: '#dc2626' }} />
+            <AlertCircle className="w-3.5 h-3.5" style={{ color: ERROR }} />
           ) : (
             <Download className="w-3.5 h-3.5" />
           )}
@@ -751,6 +804,30 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
               : downloadStatus === 'error'
                 ? t('process.downloadError')
                 : t('process.downloadPoster')}
+          </span>
+        </button>
+        <button
+          onClick={handlePdfDownload}
+          disabled={isPdfDownloading}
+          className="hidden sm:inline-flex items-center gap-1.5 text-sm opacity-40 hover:opacity-70 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ color: TEXT_MID }}
+          title={t('process.downloadPdfHint')}
+        >
+          {isPdfDownloading ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : pdfDownloadStatus === 'success' ? (
+            <Check className="w-3.5 h-3.5" style={{ color: SUCCESS }} />
+          ) : pdfDownloadStatus === 'error' ? (
+            <AlertCircle className="w-3.5 h-3.5" style={{ color: ERROR }} />
+          ) : (
+            <FileText className="w-3.5 h-3.5" />
+          )}
+          <span>
+            {pdfDownloadStatus === 'success'
+              ? t('process.downloadSuccess')
+              : pdfDownloadStatus === 'error'
+                ? t('process.downloadError')
+                : t('process.downloadPdf')}
           </span>
         </button>
       </div>

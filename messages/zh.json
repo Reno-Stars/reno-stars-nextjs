@@ -537,9 +537,11 @@
       "googleReviews": "Google 评价"
     },
     "downloadPoster": "下载 PNG",
+    "downloadPdf": "下载 PDF",
     "downloadSuccess": "下载成功!",
     "downloadError": "下载失败",
     "downloadPosterHint": "点击下载 PNG 图片",
+    "downloadPdfHint": "点击下载 PDF 文件",
     "step1": {
       "title": "前期沟通",
       "subtitle": "Discovery",

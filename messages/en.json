@@ -537,9 +537,11 @@
       "googleReviews": "Google Reviews"
     },
     "downloadPoster": "Download PNG",
+    "downloadPdf": "Download PDF",
     "downloadSuccess": "Downloaded!",
     "downloadError": "Failed",
     "downloadPosterHint": "Click to download PNG",
+    "downloadPdfHint": "Click to download PDF",
     "step1": {
       "title": "Initial Consultation",
       "subtitle": "Discovery",
