@@ -53,6 +53,8 @@ export default function ArticleSchema({
       image: {
         '@type': 'ImageObject',
         url: image,
+        width: 1200,
+        height: 630,
       },
     }),
   };

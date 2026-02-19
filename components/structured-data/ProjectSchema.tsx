@@ -28,48 +28,50 @@ export default function ProjectSchema({
 }: ProjectSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const allImages = [image, ...images].filter(Boolean);
+  const fullUrl = `${baseUrl}${url}`;
+
+  const provider = {
+    '@type': 'HomeAndConstructionBusiness' as const,
+    name: company.name,
+    url: baseUrl,
+    telephone: `+1-${company.phone}`,
+    ...(googleRating && googleReviewCount && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: googleRating,
+        bestRating: 5,
+        ratingCount: googleReviewCount,
+      },
+    }),
+  };
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    '@type': 'WebPage',
     name,
     description,
+    url: fullUrl,
     image: allImages,
-    url: `${baseUrl}${url}`,
-    creator: {
-      '@type': 'HomeAndConstructionBusiness',
-      name: company.name,
-      url: baseUrl,
-      telephone: `+1-${company.phone}`,
-    },
-    ...(location && {
-      contentLocation: {
-        '@type': 'Place',
-        name: location,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: location,
-          addressRegion: 'BC',
-          addressCountry: 'CA',
+    mainEntity: {
+      '@type': 'Service',
+      name,
+      description,
+      provider,
+      ...(serviceType && { serviceType }),
+      ...(location && {
+        areaServed: {
+          '@type': 'Place',
+          name: location,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: location,
+            addressRegion: 'BC',
+            addressCountry: 'CA',
+          },
         },
-      },
-    }),
-    ...(serviceType && {
-      about: {
-        '@type': 'Service',
-        name: serviceType,
-      },
-    }),
-    provider: {
-      '@type': 'HomeAndConstructionBusiness',
-      name: company.name,
-      ...(googleRating && googleReviewCount && {
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: googleRating,
-          bestRating: 5,
-          ratingCount: googleReviewCount,
-        },
+      }),
+      ...(allImages.length > 0 && {
+        image: allImages[0],
       }),
     },
   };

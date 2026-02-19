@@ -260,7 +260,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                               <div className="relative w-1/2 h-full">
                                 <Image
                                   src={pair.beforeImage.src}
-                                  alt={pair.beforeImage.alt || 'Before'}
+                                  alt={pair.beforeImage.alt || `${localizedProject.title} - ${t('projects.beforeLabel')}`}
                                   fill
                                   sizes="45px"
                                   className="object-cover"
@@ -276,7 +276,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                               <div className="relative w-1/2 h-full">
                                 <Image
                                   src={pair.afterImage.src}
-                                  alt={pair.afterImage.alt || 'After'}
+                                  alt={pair.afterImage.alt || `${localizedProject.title} - ${t('projects.afterLabel')}`}
                                   fill
                                   sizes="45px"
                                   className="object-cover"
@@ -622,7 +622,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         <div className="relative w-1/2 h-full">
                           <Image
                             src={pair.beforeImage.src}
-                            alt={pair.beforeImage.alt || 'Before'}
+                            alt={pair.beforeImage.alt || `${localizedProject.title} - ${t('projects.beforeLabel')}`}
                             fill
                             sizes="50px"
                             className="object-cover"
@@ -632,7 +632,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         <div className="relative w-1/2 h-full">
                           <Image
                             src={pair.afterImage.src}
-                            alt={pair.afterImage.alt || 'After'}
+                            alt={pair.afterImage.alt || `${localizedProject.title} - ${t('projects.afterLabel')}`}
                             fill
                             sizes="50px"
                             className="object-cover"

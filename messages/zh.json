@@ -466,7 +466,7 @@
     },
     "blog": {
       "title": "装修博客 | 技巧与创意 | Reno Stars 温哥华",
-      "description": "专业的装修技巧、趋势和家居改善项目创意。Reno Stars温哥华装修博客。"
+      "description": "专业的装修技巧、设计趋势和实用家居改善创意。阅读温哥华装修案例分析、改造前后对比和Reno Stars的专业建议。"
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 温哥华装修承包商",
@@ -478,11 +478,11 @@
     },
     "projectCategory": {
       "title": "{category}装修项目 | Reno Stars 温哥华",
-      "description": "探索我们在温哥华及低陆平原地区的{category}装修项目。"
+      "description": "探索我们在温哥华及低陆平原地区的{category}装修项目。查看改造前后对比照片、项目详情和Reno Stars的设计灵感。"
     },
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
-      "description": "{area}专业{service}服务。联系Reno Stars获取免费报价。"
+      "description": "{area}专业{service}服务。拥有27年以上经验和五星好评的值得信赖的本地承包商。联系Reno Stars获取免费报价。"
     },
     "areas": {
       "title": "服务区域 | Reno Stars 温哥华",
