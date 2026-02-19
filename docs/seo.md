@@ -23,8 +23,8 @@ Components in `components/structured-data/`:
 | `LocalBusinessSchema` | LocalBusiness | Layout (global, `aggregateRating` from Google Reviews API) |
 | `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific, `aggregateRating` from Google Reviews) |
 | `ServiceSchema` | Service | Service detail pages |
-| `ProjectSchema` | CreativeWork | Project detail pages (`aggregateRating` from Google Reviews) |
-| `ArticleSchema` | Article | Blog post pages (includes `image` prop for featured image) |
+| `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
+| `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
@@ -52,6 +52,27 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 - Decorative elements (video, star icons) have `aria-hidden="true"`
 - CTA links use descriptive text (e.g., "Explore Kitchen Renovation" instead of generic "Learn More")
 - Hero background image has descriptive alt text for SEO despite being decorative (crawlers index alt text)
+
+## Image Alt Text
+
+Before/after image pairs use a bilingual fallback pattern when alt text is not set in the database:
+
+```tsx
+alt={pair.beforeImage.alt || `${title} - ${t('projects.beforeLabel')}`}
+```
+
+- EN: `"Kitchen Remodel - Before"` / `"Kitchen Remodel - After"`
+- ZH: `"厨房改造 - 施工前"` / `"厨房改造 - 施工后"`
+
+Translation keys `projects.beforeLabel` and `projects.afterLabel` are used for i18n support. Title is always the localized project or site title, providing descriptive context for screen readers and search engines.
+
+Components using this pattern: `ProjectModal`, `ProjectDetailPage`, `SiteDetailPage`.
+
+## Meta Description Lengths
+
+Static meta descriptions in `messages/en.json` and `messages/zh.json` target 120-160 characters (optimal for SERP display). All descriptions are bilingual.
+
+Dynamic descriptions (blog posts, project pages) are truncated via `truncateMetaDescription()` in `lib/utils.ts` (max 155 chars, word-boundary truncation with ellipsis).
 
 ## Project URL Structure
 
