@@ -2,7 +2,7 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Includes:
+Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps), while static pages use the current date. Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design, process, areas)
 - All service detail pages
@@ -22,6 +22,7 @@ Components in `components/structured-data/`:
 |-----------|-------------|---------|
 | `LocalBusinessSchema` | LocalBusiness | Layout (global, `aggregateRating` from Google Reviews API) |
 | `LocalBusinessAreaSchema` | HomeAndConstructionBusiness | Area pages (location-specific, `aggregateRating` from Google Reviews) |
+| `WebSiteSchema` | WebSite | Layout (global, includes `SearchAction` for sitelinks search) |
 | `ServiceSchema` | Service | Service detail pages |
 | `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
 | `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
@@ -143,16 +144,31 @@ Next.js `<Image>` component configured for two remote patterns:
 
 ## OpenGraph Images
 
-Pages use page-specific images where available for better social sharing:
+All pages include `width: 1200`, `height: 630`, and `alt` text on their OpenGraph images. Twitter card images also include `alt` text. Pages use page-specific images where available:
 
-| Page Type | OG Image Source |
-|-----------|-----------------|
-| Homepage | Hero image |
-| Blog posts | `post.featured_image` (fallback: hero) |
-| Projects | `project.hero_image` |
-| Service detail | `service.image` (fallback: hero) |
-| Service + location | `service.image` (fallback: hero) |
-| Hub pages | Hero image |
+| Page Type | OG Image Source | Alt Text Source |
+|-----------|-----------------|-----------------|
+| Homepage | Hero image | Page title (`metadata.home.title`) |
+| Blog posts | `post.featured_image` (fallback: hero) | Localized post title |
+| Projects | `project.hero_image` | Localized project title |
+| Sites (whole house) | `site.hero_image` (fallback: hero) | Localized site title |
+| Service detail | `service.image` (fallback: hero) | Localized service title |
+| Service + location | `service.image` (fallback: hero) | Combined service+area title |
+| Project category | Hero image | Localized category name |
+| Area detail | Hero image | Localized area name |
+| Hub pages | Hero image | Page title from translations |
+
+## SEO Metadata from Database
+
+Project and blog post pages use dedicated SEO fields from the database when available, with automatic fallbacks:
+
+| Field | Source | Fallback |
+|-------|--------|----------|
+| `title` | `meta_title[locale]` | `${localizedTitle} \| ${SITE_NAME}` |
+| `description` | `meta_description[locale]` | `truncateMetaDescription(description)` |
+| `keywords` | `seo_keywords[locale]` (comma-split) | *(none)* |
+
+Blog posts additionally include `og:article:published_time` and `og:article:modified_time` from `published_at` and `updated_at` timestamps.
 
 ## Twitter Cards
 
