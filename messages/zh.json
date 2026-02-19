@@ -484,6 +484,10 @@
       "title": "{area}{service} | Reno Stars",
       "description": "{area}专业{service}服务。联系Reno Stars获取免费报价。"
     },
+    "areas": {
+      "title": "服务区域 | Reno Stars 温哥华",
+      "description": "Reno Stars 服务温哥华及低陆平原地区。了解我们的装修服务区域，获取免费报价。"
+    },
     "area": {
       "title": "{area}装修服务 | Reno Stars",
       "description": "{area}专业装修服务。厨房、浴室、全屋装修。联系我们获取免费报价。"

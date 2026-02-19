@@ -29,14 +29,14 @@ const securityHeaders: Record<string, string> = {
     // Migration path: Use next.config.ts experimental.cspNonce when stable,
     // which adds nonces to inline scripts. See: https://nextjs.org/docs/app/api-reference/next-config-js/cspNonce
     isDev
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-      : "script-src 'self' 'unsafe-inline'",
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com"
+      : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline'",
     `img-src 'self' data: blob: https: ${ASSET_ORIGIN}`,
     "font-src 'self' data:",
     isDev
-      ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN}`
-      : `connect-src 'self' ${ASSET_ORIGIN}`,
+      ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN} https://www.google-analytics.com https://www.googletagmanager.com`
+      : `connect-src 'self' ${ASSET_ORIGIN} https://www.google-analytics.com https://www.googletagmanager.com`,
     `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
     "object-src 'none'",
     "frame-ancestors 'self'",

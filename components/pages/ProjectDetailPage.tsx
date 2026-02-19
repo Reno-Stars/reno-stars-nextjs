@@ -165,7 +165,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Gallery - Image Pairs with Before/After Toggle */}
-            <div className='col-span-2'>
+            <div className="lg:col-span-2">
               {/* Main Image */}
               <div
                 className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}

@@ -1,11 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SITE_NAME, getBaseUrl } from '@/lib/utils';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   twitter: {
     card: 'summary_large_image',
     site: '@renostars',

@@ -484,6 +484,10 @@
       "title": "{service} in {area} | Reno Stars",
       "description": "Professional {service} services in {area}. Contact Reno Stars for a free quote."
     },
+    "areas": {
+      "title": "Service Areas | Reno Stars Vancouver",
+      "description": "Reno Stars serves communities across Vancouver and the Lower Mainland. Explore our renovation service areas and get a free quote."
+    },
     "area": {
       "title": "Renovation Services in {area} | Reno Stars",
       "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
