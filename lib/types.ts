@@ -197,6 +197,14 @@ export interface Project {
   badge?: Localized<string>;
   /** External product links (tiles, countertops, fixtures, etc.) */
   external_products?: { url: string; image_url?: string; label: Localized<string> }[];
+  /** SEO meta title (max 70 chars) */
+  meta_title?: Localized<string>;
+  /** SEO meta description (max 155 chars) */
+  meta_description?: Localized<string>;
+  /** Primary focus keyword for SEO */
+  focus_keyword?: Localized<string>;
+  /** Additional SEO keywords (comma-separated) */
+  seo_keywords?: Localized<string>;
   /** Site ID - project belongs to a site (required for DB projects) */
   site_id?: string;
   /** Display order within a site */
@@ -284,10 +292,20 @@ export interface BlogPost {
   content?: Localized<string>;
   /** Featured image URL for OG/social sharing */
   featured_image?: string;
+  /** Author name */
+  author?: string;
   /** Publication date */
   published_at?: Date;
   /** Last updated date */
   updated_at?: Date;
+  /** SEO meta title (max 70 chars) */
+  meta_title?: Localized<string>;
+  /** SEO meta description (max 155 chars) */
+  meta_description?: Localized<string>;
+  /** Primary focus keyword for SEO */
+  focus_keyword?: Localized<string>;
+  /** Additional SEO keywords (comma-separated) */
+  seo_keywords?: Localized<string>;
   /** External URL (if linking elsewhere) */
   url?: string;
   /** Related project with external products */

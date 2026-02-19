@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import BilingualInput from '@/components/admin/BilingualInput';
 import AIContentEditor from '@/components/admin/AIContentEditor';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
+import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
@@ -15,6 +16,8 @@ import SearchableSelect from '@/components/admin/SearchableSelect';
 import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useSaveWarning } from '@/hooks/useSaveWarning';
+import { useBeforeUnload } from '@/hooks/useBeforeUnload';
 
 /** Project summary for the dropdown */
 export interface ProjectOption {
@@ -66,6 +69,29 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.blog.saved);
 
+  // Dirty form tracking — warns before navigating away with unsaved changes
+  const [dirty, setDirty] = useState(false);
+  useBeforeUnload(dirty);
+  useEffect(() => { if (state.success) setDirty(false); }, [state.success]);
+
+  // Pre-save warning
+  const { showWarning, missingFields, requestSave, confirm: confirmSave, cancel: cancelSave } = useSaveWarning(formAction);
+
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+
+    const missing: string[] = [];
+    if (!fd.get('featuredImageUrl')) missing.push(t.blog.heroImage);
+    if (!fd.get('excerptEn') && !fd.get('excerptZh')) missing.push(t.blog.excerpt);
+    if (!fd.get('metaTitleEn') && !fd.get('metaTitleZh')) missing.push(t.blog.metaTitle);
+    if (!fd.get('metaDescriptionEn') && !fd.get('metaDescriptionZh')) missing.push(t.blog.metaDescription);
+    if (!fd.get('focusKeywordEn') && !fd.get('focusKeywordZh')) missing.push(t.blog.focusKeyword);
+    if (!fd.get('seoKeywordsEn') && !fd.get('seoKeywordsZh')) missing.push(t.blog.seoKeywords);
+
+    requestSave(fd, missing);
+  }, [requestSave, t]);
+
   // Sync selectedProjectId when initialData changes (after save + revalidation)
   useEffect(() => {
     setSelectedProjectId(initialData?.projectId ?? '');
@@ -83,7 +109,17 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit} onChange={() => setDirty(true)}>
+      <ConfirmDialog
+        open={showWarning}
+        title={t.common.saveWarningTitle}
+        message={t.common.saveWarningMessage}
+        items={missingFields}
+        variant="warning"
+        confirmLabel={t.common.saveAnyway}
+        onConfirm={confirmSave}
+        onCancel={cancelSave}
+      />
       <div
         className="admin-form-card"
         style={{

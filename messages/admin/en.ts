@@ -224,6 +224,7 @@ const en = {
     metaTitle: 'Meta Title',
     metaDescription: 'Meta Description',
     seoKeywords: 'SEO Keywords',
+    focusKeyword: 'Focus Keyword',
     relatedProject: 'Related Project',
     selectProject: 'Select a project...',
     noProject: 'No related project',

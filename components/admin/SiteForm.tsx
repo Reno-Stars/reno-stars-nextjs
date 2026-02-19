@@ -19,6 +19,7 @@ import { CARD, NAVY, GOLD, SURFACE, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, E
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 import { useSaveWarning } from '@/hooks/useSaveWarning';
+import { useBeforeUnload } from '@/hooks/useBeforeUnload';
 
 interface City {
   nameEn: string;
@@ -96,6 +97,11 @@ export default function SiteForm({
   const [selectedCity, setSelectedCity] = useState(initialData?.locationCity ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.sites.saved, { slugRenameLabel: t.common.slugRenamed });
+
+  // Dirty form tracking — warns before navigating away with unsaved changes
+  const [dirty, setDirty] = useState(false);
+  useBeforeUnload(dirty);
+  useEffect(() => { if (state.success) setDirty(false); }, [state.success]);
 
   const [siteImagePairs, setSiteImagePairs] = useState<ImagePairEntry[]>(
     initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
@@ -192,7 +198,7 @@ export default function SiteForm({
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onChange={() => setDirty(true)}>
       <ConfirmDialog
         open={showWarning}
         title={t.common.saveWarningTitle}

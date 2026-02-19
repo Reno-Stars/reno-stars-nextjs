@@ -14,12 +14,12 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getBlogPostSlugsFromDb();
+  const posts = await getBlogPostSlugsFromDb();
   const params: { locale: string; slug: string }[] = [];
 
   for (const locale of locales) {
-    for (const slug of slugs) {
-      params.push({ locale, slug });
+    for (const post of posts) {
+      params.push({ locale, slug: post.slug });
     }
   }
 
@@ -37,25 +37,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
   const baseUrl = getBaseUrl();
   const ogImage = post.featured_image || siteImages.hero;
-  const description = truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
+  // Use dedicated SEO fields, fallback to excerpt/title if not set
+  const metaTitle = post.meta_title?.[locale as Locale] || `${localizedPost.title} | ${SITE_NAME}`;
+  const metaDescription = post.meta_description?.[locale as Locale] || truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
 
   return {
-    title: `${localizedPost.title} | ${SITE_NAME}`,
-    description,
+    title: metaTitle,
+    description: metaDescription,
+    keywords: post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
     alternates: buildAlternates(`/blog/${slug}/`, locale),
     openGraph: {
-      title: `${localizedPost.title} | ${SITE_NAME}`,
-      description,
+      title: metaTitle,
+      description: metaDescription,
       url: `${baseUrl}/${locale}/blog/${slug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'article',
-      images: [{ url: ogImage }],
+      publishedTime: post.published_at?.toISOString(),
+      modifiedTime: post.updated_at?.toISOString(),
+      images: [{ url: ogImage, width: 1200, height: 630, alt: localizedPost.title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${localizedPost.title} | ${SITE_NAME}`,
-      description,
+      title: metaTitle,
+      description: metaDescription,
       images: [ogImage],
     },
   };
@@ -92,6 +97,7 @@ export default async function Page({ params }: PageProps) {
         description={localizedPost.excerpt}
         datePublished={post.published_at?.toISOString()}
         dateModified={post.updated_at?.toISOString()}
+        authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
         image={post.featured_image}
       />

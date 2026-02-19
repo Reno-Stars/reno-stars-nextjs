@@ -299,6 +299,23 @@ function mapDbProjectToProject(
             label: { en: ep.labelEn, zh: ep.labelZh },
           }))
         : undefined,
+    // SEO fields
+    meta_title:
+      row.metaTitleEn || row.metaTitleZh
+        ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
+        : undefined,
+    meta_description:
+      row.metaDescriptionEn || row.metaDescriptionZh
+        ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
+        : undefined,
+    focus_keyword:
+      row.focusKeywordEn || row.focusKeywordZh
+        ? { en: row.focusKeywordEn ?? '', zh: row.focusKeywordZh ?? '' }
+        : undefined,
+    seo_keywords:
+      row.seoKeywordsEn || row.seoKeywordsZh
+        ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
+        : undefined,
     // Site relationship (mandatory)
     site_id: row.siteId,
     display_order_in_site: row.displayOrderInSite,
@@ -385,13 +402,13 @@ export async function getAllProjectsAdmin() {
   }));
 }
 
-/** Fetch all published project slugs (for sitemap). */
-export async function getProjectSlugsFromDb(): Promise<string[]> {
-  const rows: { slug: string }[] = await db
-    .select({ slug: projectsTable.slug })
+/** Fetch all published project slugs with dates (for sitemap). */
+export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
+  const rows = await db
+    .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt })
     .from(projectsTable)
     .where(eq(projectsTable.isPublished, true));
-  return rows.map((r: { slug: string }) => r.slug);
+  return rows;
 }
 
 // ============================================================================
@@ -750,20 +767,37 @@ export const getBlogPostBySlugFromDb = cache(
           ? { en: row.contentEn, zh: row.contentZh }
           : undefined,
       featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
+      author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
+      meta_title:
+        row.metaTitleEn || row.metaTitleZh
+          ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
+          : undefined,
+      meta_description:
+        row.metaDescriptionEn || row.metaDescriptionZh
+          ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
+          : undefined,
+      focus_keyword:
+        row.focusKeywordEn || row.focusKeywordZh
+          ? { en: row.focusKeywordEn ?? '', zh: row.focusKeywordZh ?? '' }
+          : undefined,
+      seo_keywords:
+        row.seoKeywordsEn || row.seoKeywordsZh
+          ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
+          : undefined,
       related_project: relatedProject,
     };
   }
 );
 
-/** Fetch all published blog post slugs (for sitemap). */
-export async function getBlogPostSlugsFromDb(): Promise<string[]> {
-  const rows: { slug: string }[] = await db
-    .select({ slug: blogPostsTable.slug })
+/** Fetch all published blog post slugs with dates (for sitemap). */
+export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
+  const rows = await db
+    .select({ slug: blogPostsTable.slug, updatedAt: blogPostsTable.updatedAt })
     .from(blogPostsTable)
     .where(eq(blogPostsTable.isPublished, true));
-  return rows.map((r: { slug: string }) => r.slug);
+  return rows;
 }
 
 // ============================================================================

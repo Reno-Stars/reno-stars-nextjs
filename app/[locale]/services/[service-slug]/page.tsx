@@ -54,13 +54,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       type: 'website',
-      images: [{ url: ogImage }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: localizedService.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${localizedService.title} | ${SITE_NAME}`,
       description,
-      images: [ogImage],
+      images: [{ url: ogImage, alt: localizedService.title }],
     },
   };
 }

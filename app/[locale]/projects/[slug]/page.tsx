@@ -72,13 +72,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         type: 'website',
-        images: [{ url: siteImages.hero }],
+        images: [{ url: siteImages.hero, width: 1200, height: 630, alt: categoryName }],
       },
       twitter: {
         card: 'summary_large_image',
         title,
         description,
-        images: [siteImages.hero],
+        images: [{ url: siteImages.hero, alt: categoryName }],
       },
     };
   }
@@ -89,25 +89,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (project) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
-    const description = truncateMetaDescription(localizedProject.description);
+    // Use dedicated SEO fields, fallback to title/description if not set
+    const metaTitle = project.meta_title?.[locale as Locale] || `${localizedProject.title} | ${SITE_NAME}`;
+    const metaDescription = project.meta_description?.[locale as Locale] || truncateMetaDescription(localizedProject.description);
 
     return {
-      title: `${localizedProject.title} | ${SITE_NAME}`,
-      description,
+      title: metaTitle,
+      description: metaDescription,
+      keywords: project.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
       alternates: buildAlternates(`/projects/${slug}/`, locale),
       openGraph: {
-        title: `${localizedProject.title} | ${SITE_NAME}`,
-        description,
+        title: metaTitle,
+        description: metaDescription,
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         type: 'article',
-        images: [{ url: project.hero_image }],
+        images: [{ url: project.hero_image, width: 1200, height: 630, alt: localizedProject.title }],
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${localizedProject.title} | ${SITE_NAME}`,
-        description,
+        title: metaTitle,
+        description: metaDescription,
         images: [project.hero_image],
       },
     };
@@ -133,13 +136,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
         type: 'article',
-        images: siteData.hero_image ? [{ url: siteData.hero_image }] : [{ url: siteImages.hero }],
+        images: siteData.hero_image
+          ? [{ url: siteData.hero_image, width: 1200, height: 630, alt: siteData.title[locale as Locale] }]
+          : [{ url: siteImages.hero, width: 1200, height: 630, alt: siteData.title[locale as Locale] }],
       },
       twitter: {
         card: 'summary_large_image',
         title: metaTitle,
         description: metaDescription,
-        images: siteData.hero_image ? [siteData.hero_image] : [siteImages.hero],
+        images: siteData.hero_image
+          ? [{ url: siteData.hero_image, alt: siteData.title[locale as Locale] }]
+          : [{ url: siteImages.hero, alt: siteData.title[locale as Locale] }],
       },
     };
   }

@@ -2,7 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
-import { LocalBusinessSchema } from '@/components/structured-data';
+import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -57,6 +57,7 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
+          <WebSiteSchema />
           <LocalBusinessSchema
             company={company}
             socialLinks={socialLinks}

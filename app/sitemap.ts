@@ -11,11 +11,15 @@ const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectSlugs, blogPostSlugs, serviceAreas] = await Promise.all([
+  const [projectRows, blogPostRows, serviceAreas] = await Promise.all([
     getProjectSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
   ]);
+  const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+  const blogDateMap = new Map(blogPostRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+  const projectSlugs = projectRows.map(r => r.slug);
+  const blogPostSlugs = blogPostRows.map(r => r.slug);
 
   const entries: MetadataRoute.Sitemap = [];
 
@@ -116,7 +120,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
-        lastModified: now,
+        lastModified: projectDateMap.get(slug) ?? now,
         changeFrequency: 'monthly',
         priority: 0.6,
         alternates: {
@@ -135,7 +139,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
-        lastModified: now,
+        lastModified: blogDateMap.get(slug) ?? now,
         changeFrequency: 'monthly',
         priority: 0.6,
         alternates: {

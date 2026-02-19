@@ -21,6 +21,7 @@ import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 import { useSaveWarning } from '@/hooks/useSaveWarning';
+import { useBeforeUnload } from '@/hooks/useBeforeUnload';
 
 interface ScopeEntry {
   id: string;
@@ -120,6 +121,11 @@ export default function ProjectForm({
   const [selectedSiteId, setSelectedSiteId] = useState(initialData?.siteId ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.projects.saved, { slugRenameLabel: t.common.slugRenamed });
+
+  // Dirty form tracking — warns before navigating away with unsaved changes
+  const [dirty, setDirty] = useState(false);
+  useBeforeUnload(dirty);
+  useEffect(() => { if (state.success) setDirty(false); }, [state.success]);
 
   // State for AI-generated text fields
   const [titleEn, setTitleEn] = useState(initialData?.titleEn ?? '');
@@ -243,7 +249,7 @@ export default function ProjectForm({
   }, [imagePairs.length, requestSave, t]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onChange={() => setDirty(true)}>
       <ConfirmDialog
         open={showWarning}
         title={t.common.saveWarningTitle}

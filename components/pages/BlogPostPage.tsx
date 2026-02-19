@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react';
 import { Link } from '@/navigation';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
@@ -37,9 +37,35 @@ export default function BlogPostPage({ locale, post, company }: BlogPostPageProp
       <article className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl p-8 md:p-12" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
-            <h1 className="text-2xl md:text-3xl font-bold mb-6" style={{ color: TEXT }}>
+            <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
               {localizedPost.title}
             </h1>
+
+            {/* Article meta: date + author */}
+            <div className="flex flex-wrap items-center gap-4 mb-6 text-sm" style={{ color: TEXT_MID }}>
+              {post.published_at && (
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4" />
+                  <time dateTime={post.published_at.toISOString()}>
+                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(post.published_at)}
+                  </time>
+                </span>
+              )}
+              {post.author && (
+                <span className="flex items-center gap-1.5">
+                  <User className="w-4 h-4" />
+                  {post.author}
+                </span>
+              )}
+              {post.updated_at && post.published_at && post.updated_at.getTime() > post.published_at.getTime() + 86400000 && (
+                <span className="flex items-center gap-1.5" style={{ color: TEXT_MID }}>
+                  {t('blog.updated')}{' '}
+                  <time dateTime={post.updated_at.toISOString()}>
+                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(post.updated_at)}
+                  </time>
+                </span>
+              )}
+            </div>
 
             {localizedPost.excerpt && (
               <p className="text-lg mb-8 leading-relaxed" style={{ color: TEXT_MID }}>
