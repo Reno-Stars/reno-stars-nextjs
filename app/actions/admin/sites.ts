@@ -109,9 +109,9 @@ export async function createSite(
 
 export async function updateSite(
   id: string,
-  _prevState: { success?: boolean; error?: string },
+  _prevState: { success?: boolean; error?: string; renamedSlug?: string },
   formData: FormData
-): Promise<{ success?: boolean; error?: string }> {
+): Promise<{ success?: boolean; error?: string; renamedSlug?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
 
@@ -137,10 +137,12 @@ export async function updateSite(
     if (seoError) return { error: seoError };
 
     // Ensure slug is unique (exclude current site's own slug)
+    const submittedSlug = data.slug;
     const currentSite = await db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1);
     const currentSlug = currentSite[0]?.slug;
     const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    const renamedSlug = data.slug !== submittedSlug ? data.slug : undefined;
 
     // Parse image pairs
     const pairData = parseImagePairs(formData, 'siteImagePairs');
@@ -182,7 +184,7 @@ export async function updateSite(
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');
-    return { success: true };
+    return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update site:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';

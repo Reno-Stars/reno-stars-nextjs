@@ -1,6 +1,7 @@
 'use client';
 
-import { NAVY } from '@/lib/theme';
+import { useState } from 'react';
+import { NAVY, GOLD, ERROR, TEXT_MUTED } from '@/lib/theme';
 import { inputStyle } from './shared-styles';
 import Tooltip from './Tooltip';
 
@@ -21,6 +22,14 @@ interface BilingualInputProps {
   required?: boolean;
   placeholder?: string;
   tooltip?: string;
+  /** When provided, shows a character counter below each input */
+  maxLength?: number;
+}
+
+function getCounterColor(length: number, max: number): string {
+  if (length >= max) return ERROR;
+  if (length >= max * 0.8) return GOLD;
+  return TEXT_MUTED;
 }
 
 export default function BilingualInput({
@@ -36,12 +45,20 @@ export default function BilingualInput({
   required = false,
   placeholder,
   tooltip,
+  maxLength,
 }: BilingualInputProps) {
   // Dual-mode: controlled (valueEn/onChangeEn) for AI-populated fields,
   // uncontrolled (defaultValueEn) for static fields. Avoids React warnings
   // about switching between controlled/uncontrolled by spreading conditionally.
   const isControlledEn = valueEn !== undefined;
   const isControlledZh = valueZh !== undefined;
+
+  // Track input length for uncontrolled mode (only meaningful when maxLength is set)
+  const [uncontrolledEnLen, setUncontrolledEnLen] = useState(defaultValueEn.length);
+  const [uncontrolledZhLen, setUncontrolledZhLen] = useState(defaultValueZh.length);
+
+  const enLen = isControlledEn ? valueEn!.length : uncontrolledEnLen;
+  const zhLen = isControlledZh ? valueZh!.length : uncontrolledZhLen;
 
   return (
     <fieldset style={{ marginBottom: '1rem', border: 'none', padding: 0, margin: 0 }}>
@@ -67,12 +84,23 @@ export default function BilingualInput({
             name={nameEn}
             {...(isControlledEn
               ? { value: valueEn, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChangeEn?.(e.target.value) }
-              : { defaultValue: defaultValueEn }
+              : {
+                  defaultValue: defaultValueEn,
+                  ...(maxLength !== undefined
+                    ? { onInput: (e: React.FormEvent<HTMLInputElement>) => setUncontrolledEnLen(e.currentTarget.value.length) }
+                    : {}
+                  ),
+                }
             )}
             required={required}
             placeholder={placeholder}
             style={inputStyle}
           />
+          {maxLength !== undefined && (
+            <span style={{ fontSize: '0.6875rem', color: getCounterColor(enLen, maxLength), marginTop: '0.125rem', display: 'block', textAlign: 'right' }}>
+              {enLen}/{maxLength}
+            </span>
+          )}
         </div>
         <div>
           <label htmlFor={nameZh} style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.25rem', display: 'block' }}>
@@ -83,12 +111,23 @@ export default function BilingualInput({
             name={nameZh}
             {...(isControlledZh
               ? { value: valueZh, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChangeZh?.(e.target.value) }
-              : { defaultValue: defaultValueZh }
+              : {
+                  defaultValue: defaultValueZh,
+                  ...(maxLength !== undefined
+                    ? { onInput: (e: React.FormEvent<HTMLInputElement>) => setUncontrolledZhLen(e.currentTarget.value.length) }
+                    : {}
+                  ),
+                }
             )}
             required={required}
             placeholder={placeholder}
             style={inputStyle}
           />
+          {maxLength !== undefined && (
+            <span style={{ fontSize: '0.6875rem', color: getCounterColor(zhLen, maxLength), marginTop: '0.125rem', display: 'block', textAlign: 'right' }}>
+              {zhLen}/{maxLength}
+            </span>
+          )}
         </div>
       </div>
     </fieldset>

@@ -16,6 +16,7 @@ import { useFormToast } from './useFormToast';
 import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
+import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
@@ -48,9 +49,9 @@ interface CityOption {
 
 interface ProjectFormProps {
   action: (
-    prevState: { success?: boolean; error?: string },
+    prevState: { success?: boolean; error?: string; renamedSlug?: string },
     formData: FormData
-  ) => Promise<{ success?: boolean; error?: string }>;
+  ) => Promise<{ success?: boolean; error?: string; renamedSlug?: string }>;
   initialData?: {
     id?: string;
     slug: string;
@@ -118,7 +119,7 @@ export default function ProjectForm({
   const [selectedSpaceType, setSelectedSpaceType] = useState(initialData?.spaceTypeEn ?? '');
   const [selectedSiteId, setSelectedSiteId] = useState(initialData?.siteId ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, t.projects.saved);
+  useFormToast(state, t.projects.saved, { slugRenameLabel: t.common.slugRenamed });
 
   // State for AI-generated text fields
   const [titleEn, setTitleEn] = useState(initialData?.titleEn ?? '');
@@ -418,6 +419,7 @@ export default function ProjectForm({
               valueZh={metaTitleZh}
               onChangeZh={setMetaTitleZh}
               tooltip={t.projects.tooltips.metaTitle}
+              maxLength={SEO_META_TITLE_MAX}
             />
             <BilingualInput
               nameEn="metaDescriptionEn"
@@ -428,6 +430,7 @@ export default function ProjectForm({
               valueZh={metaDescriptionZh}
               onChangeZh={setMetaDescriptionZh}
               tooltip={t.projects.tooltips.metaDescription}
+              maxLength={SEO_META_DESCRIPTION_MAX}
             />
             <BilingualInput
               nameEn="focusKeywordEn"
@@ -438,6 +441,7 @@ export default function ProjectForm({
               valueZh={focusKeywordZh}
               onChangeZh={setFocusKeywordZh}
               tooltip={t.projects.tooltips.focusKeyword}
+              maxLength={SEO_FOCUS_KEYWORD_MAX}
             />
             <BilingualInput
               nameEn="seoKeywordsEn"

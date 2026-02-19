@@ -30,6 +30,7 @@ const en = {
     saveWarningTitle: 'Missing Optional Fields',
     saveWarningMessage: 'The following fields are empty. Save anyway?',
     saveAnyway: 'Save Anyway',
+    slugRenamed: 'Slug auto-adjusted to',
   },
   nav: {
     dashboard: 'Dashboard',

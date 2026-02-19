@@ -32,6 +32,7 @@ const zh: AdminMessages = {
     saveWarningTitle: '可选字段未填写',
     saveWarningMessage: '以下字段为空，是否仍要保存？',
     saveAnyway: '仍然保存',
+    slugRenamed: 'Slug 已自动调整为',
   },
   nav: {
     dashboard: '仪表盘',

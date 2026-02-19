@@ -238,9 +238,9 @@ export async function createProject(
 
 export async function updateProject(
   id: string,
-  _prevState: { success?: boolean; error?: string },
+  _prevState: { success?: boolean; error?: string; renamedSlug?: string },
   formData: FormData
-): Promise<{ success?: boolean; error?: string }> {
+): Promise<{ success?: boolean; error?: string; renamedSlug?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
 
@@ -313,10 +313,12 @@ export async function updateProject(
     }
 
     // Ensure slug is unique (exclude current project's own slug)
+    const submittedSlug = data.slug;
     const currentProject = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
     const currentSlug = currentProject[0]?.slug;
     const allSlugs = await db.select({ slug: projects.slug }).from(projects);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    const renamedSlug = data.slug !== submittedSlug ? data.slug : undefined;
 
     const scopeData = parseScopes(formData);
 
@@ -362,7 +364,7 @@ export async function updateProject(
 
     revalidatePath('/admin/projects');
     revalidatePath('/', 'layout');
-    return { success: true };
+    return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update project:', error);
     // Return more specific error message in development

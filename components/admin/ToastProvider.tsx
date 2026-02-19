@@ -1,17 +1,25 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from 'react';
-import { SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
+import { SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, GOLD, GOLD_PALE, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+
+type ToastType = 'success' | 'error' | 'warning';
+
+const TOAST_COLORS: Record<ToastType, { bg: string; fg: string }> = {
+  success: { bg: SUCCESS_BG, fg: SUCCESS },
+  error: { bg: ERROR_BG, fg: ERROR },
+  warning: { bg: GOLD_PALE, fg: GOLD },
+};
 
 interface Toast {
   id: number;
   message: string;
-  type: 'success' | 'error';
+  type: ToastType;
 }
 
 interface ToastContextType {
-  toast: (message: string, type?: 'success' | 'error') => void;
+  toast: (message: string, type?: ToastType) => void;
 }
 
 const ToastContext = createContext<ToastContextType>({ toast: () => {} });
@@ -26,7 +34,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const t = useAdminTranslations();
 
-  const toast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
+  const toast = useCallback((message: string, type: ToastType = 'success') => {
     const id = ++nextIdRef.current;
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
@@ -71,14 +79,14 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={item.id}
             role="alert"
             style={{
-              backgroundColor: item.type === 'success' ? SUCCESS_BG : ERROR_BG,
-              color: item.type === 'success' ? SUCCESS : ERROR,
+              backgroundColor: TOAST_COLORS[item.type].bg,
+              color: TOAST_COLORS[item.type].fg,
               padding: '0.75rem 1rem',
               borderRadius: '8px',
               fontSize: '0.875rem',
               boxShadow: neu(4),
               maxWidth: '350px',
-              border: `1px solid ${item.type === 'success' ? SUCCESS : ERROR}`,
+              border: `1px solid ${TOAST_COLORS[item.type].fg}`,
             }}
           >
             {item.message}

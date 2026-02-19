@@ -14,6 +14,7 @@ import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import SubmitButton from './SubmitButton';
+import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { CARD, NAVY, GOLD, SURFACE, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
@@ -26,9 +27,9 @@ interface City {
 
 interface SiteFormProps {
   action: (
-    prevState: { success?: boolean; error?: string },
+    prevState: { success?: boolean; error?: string; renamedSlug?: string },
     formData: FormData
-  ) => Promise<{ success?: boolean; error?: string }>;
+  ) => Promise<{ success?: boolean; error?: string; renamedSlug?: string }>;
   cities: City[];
   initialData?: {
     id?: string;
@@ -94,7 +95,7 @@ export default function SiteForm({
   const [slug, setSlug] = useState(initialData?.slug ?? '');
   const [selectedCity, setSelectedCity] = useState(initialData?.locationCity ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
-  useFormToast(state, t.sites.saved);
+  useFormToast(state, t.sites.saved, { slugRenameLabel: t.common.slugRenamed });
 
   const [siteImagePairs, setSiteImagePairs] = useState<ImagePairEntry[]>(
     initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
@@ -328,6 +329,7 @@ export default function SiteForm({
               valueZh={metaTitleZh}
               onChangeZh={setMetaTitleZh}
               tooltip={t.sites.tooltips.metaTitle}
+              maxLength={SEO_META_TITLE_MAX}
             />
             <BilingualInput
               nameEn="metaDescriptionEn"
@@ -338,6 +340,7 @@ export default function SiteForm({
               valueZh={metaDescriptionZh}
               onChangeZh={setMetaDescriptionZh}
               tooltip={t.sites.tooltips.metaDescription}
+              maxLength={SEO_META_DESCRIPTION_MAX}
             />
             <BilingualInput
               nameEn="focusKeywordEn"
@@ -348,6 +351,7 @@ export default function SiteForm({
               valueZh={focusKeywordZh}
               onChangeZh={setFocusKeywordZh}
               tooltip={t.sites.tooltips.focusKeyword}
+              maxLength={SEO_FOCUS_KEYWORD_MAX}
             />
             <BilingualInput
               nameEn="seoKeywordsEn"
