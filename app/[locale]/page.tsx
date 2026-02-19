@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
+      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
       type: 'website',
       images: [{ url: siteImages.hero, width: 1200, height: 630, alt: t('title') }],
     },

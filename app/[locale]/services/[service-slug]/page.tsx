@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
@@ -53,6 +53,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/services/${serviceSlug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
+      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
       type: 'website',
       images: [{ url: ogImage, width: 1200, height: 630, alt: localizedService.title }],
     },
@@ -69,7 +70,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
   setRequestLocale(locale);
 
-  const [company, services] = await Promise.all([getCompanyFromDb(), getServicesFromDb()]);
+  const [company, services, areas] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb()]);
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service) {
@@ -105,7 +106,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/services/${serviceSlug}/`}
       />
       <FAQSchema faqs={faqs} />
-      <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} />
+      <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} />
     </>
   );
 }

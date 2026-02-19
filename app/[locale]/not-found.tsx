@@ -12,10 +12,10 @@ export default async function LocaleNotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ backgroundColor: SURFACE }}>
       <div className="text-center">
-        <h1 className="text-6xl font-bold mb-4" style={{ color: NAVY }}>404</h1>
-        <h2 className="text-2xl font-semibold mb-4" style={{ color: NAVY }}>
-          {t('notFound')}
-        </h2>
+        <h1 className="mb-4" style={{ color: NAVY }}>
+          <span className="block text-6xl font-bold">404</span>
+          <span className="block text-2xl font-semibold">{t('notFound')}</span>
+        </h1>
         <p className="mb-8" style={{ color: TEXT_MID }}>
           {t('error')}
         </p>

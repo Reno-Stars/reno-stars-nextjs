@@ -52,6 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/blog/${slug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
+      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
       type: 'article',
       publishedTime: post.published_at?.toISOString(),
       modifiedTime: post.updated_at?.toISOString(),

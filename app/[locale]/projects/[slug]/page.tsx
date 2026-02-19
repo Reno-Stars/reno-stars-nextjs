@@ -71,6 +71,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
+        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
         type: 'website',
         images: [{ url: siteImages.hero, width: 1200, height: 630, alt: categoryName }],
       },
@@ -91,7 +92,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const localizedProject = getLocalizedProject(project, locale as Locale);
     // Use dedicated SEO fields, fallback to title/description if not set
     const metaTitle = project.meta_title?.[locale as Locale] || `${localizedProject.title} | ${SITE_NAME}`;
-    const metaDescription = project.meta_description?.[locale as Locale] || truncateMetaDescription(localizedProject.description);
+    const metaDescription = project.meta_description?.[locale as Locale]
+      || truncateMetaDescription(project.excerpt?.[locale as Locale] || localizedProject.description);
 
     return {
       title: metaTitle,
@@ -104,6 +106,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
+        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
         type: 'article',
         images: [{ url: project.hero_image, width: 1200, height: 630, alt: localizedProject.title }],
       },
@@ -135,6 +138,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
+        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
         type: 'article',
         images: siteData.hero_image
           ? [{ url: siteData.hero_image, width: 1200, height: 630, alt: siteData.title[locale as Locale] }]

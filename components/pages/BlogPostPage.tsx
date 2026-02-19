@@ -37,6 +37,20 @@ export default function BlogPostPage({ locale, post, company }: BlogPostPageProp
       <article className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl p-8 md:p-12" style={{ boxShadow: neu(6), backgroundColor: CARD }}>
+            {/* Featured image */}
+            {post.featured_image && (
+              <div className="relative w-full aspect-[2/1] rounded-xl overflow-hidden mb-6">
+                <Image
+                  src={post.featured_image}
+                  alt={localizedPost.title}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 800px"
+                  className="object-cover"
+                />
+              </div>
+            )}
+
             <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
               {localizedPost.title}
             </h1>

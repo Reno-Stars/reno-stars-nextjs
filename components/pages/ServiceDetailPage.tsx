@@ -5,14 +5,16 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceType } from '@/lib/types';
+import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
+import { Link } from '@/navigation';
+import { getLocalizedArea } from '@/lib/data/areas';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, TEXT,
+  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, TEXT, CARD, neu,
 } from '@/lib/theme';
 
 interface ServiceDetailPageProps {
@@ -20,6 +22,7 @@ interface ServiceDetailPageProps {
   serviceSlug: ServiceType;
   company: Company;
   service: Service;
+  areas?: ServiceArea[];
 }
 
 const iconMap: Record<string, typeof Hammer> = {
@@ -31,7 +34,7 @@ const iconMap: Record<string, typeof Hammer> = {
   Building2,
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [] }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -58,6 +61,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
               src={service.image}
               alt={localizedService.title}
               fill
+              priority
               sizes="100vw"
               className="object-cover"
             />
@@ -101,6 +105,32 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         heading={t('section.ourProjects')}
         projects={relatedProjects}
       />
+
+      {/* Areas We Serve */}
+      {areas.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('section.areasWeServe')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {areas.map((area) => {
+                const localizedArea = getLocalizedArea(area, locale);
+                return (
+                  <Link
+                    key={area.slug}
+                    href={`/services/${serviceSlug}/${area.slug}`}
+                    className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                    style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                  >
+                    {localizedArea.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection
         heading={t('services.getQuoteForService', { service: localizedService.title })}
