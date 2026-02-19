@@ -58,7 +58,7 @@ app/
     page.tsx              # Homepage
     projects/             # Projects hub + [slug] + category pages
     services/             # Services hub + [slug] + [slug]/[city]
-    areas/                # Service area pages
+    areas/                # Service areas hub + [slug] pages
     blog/                 # Blog listing + [slug]
     contact/              # Contact form + thank-you
     benefits/             # Benefits page
@@ -70,7 +70,7 @@ app/
     (auth)/               # Login page
     (dashboard)/          # CRUD pages (projects, blog, etc.)
     layout.tsx            # Admin shell with sidebar
-  layout.tsx              # Root layout (<html>/<body>, locale detection, metadata)
+  layout.tsx              # Root layout (metadata, viewport, pass-through to locale layout)
   not-found.tsx           # Root 404 fallback (no <html>/<body>)
   sitemap.ts              # Dynamic async sitemap (DB + static data)
   robots.ts               # robots.txt generator
@@ -144,7 +144,7 @@ tests/
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Hybrid data model:** Company info, services, social links, about sections, **projects**, service areas, blog posts, gallery items, trust badges, partners, and showroom info are fetched from the database via `lib/db/queries.ts`. Homepage testimonials and structured data ratings are fetched from the Google Places API via `lib/google-reviews.ts` (24h cached, 5-star reviews only). Only `video`, `images`, and `WORKSAFE_BC_LOGO` constants (hardcoded asset URLs), project localization helpers, and the `imagesToPairs()` utility remain as static TypeScript in `lib/data/`.
 - **Query layer:** `lib/db/queries.ts` provides cached async functions (`getCompanyFromDb`, `getSocialLinksFromDb`, `getServicesFromDb`, `getAboutSectionsFromDb`, `getProjectsFromDb`, `getProjectBySlugFromDb`, `getProjectSlugsFromDb`, `getSitesAsProjectsFromDb`, `getServiceAreasFromDb`, `getBlogPostsFromDb`, `getBlogPostBySlugFromDb`, `getBlogPostSlugsFromDb`, `getGalleryItemsFromDb`, `getTrustBadgesFromDb`, `getShowroomFromDb`, `getFaqsFromDb`, `getPartnersFromDb`) using React `cache()` for request-level dedup. `getBlogPostBySlugFromDb` includes related project with external products when linked. `lib/db/helpers.ts` provides aggregation utilities (`collectAllImages`, `calculateCombinedBudget`, etc.) with `SITE_IMAGE_SLUG` sentinel for site-level images. Admin-only uncached queries: `getAllProjectsAdmin`, `getAllServicesAdmin`, `getAllBlogPostsAdmin`, `getAllContactsAdmin`, `getAllSocialLinksAdmin`, `getAllServiceAreasAdmin`, `getAllGalleryItemsAdmin`, `getAllTrustBadgesAdmin`, `getAllSitesAdmin`, `getAllPartnersAdmin`.
-- **Layout structure:** Root layout (`app/layout.tsx`) provides the single `<html>/<body>` with locale detection via `getLocale()`. Locale layout (`app/[locale]/layout.tsx`) renders Navbar, Footer, and providers without `<html>/<body>`. Page components do not render Navbar/Footer.
+- **Layout structure:** Root layout (`app/layout.tsx`) is a pass-through that exports metadata (title, icons) and viewport config; it does not render `<html>/<body>`. Locale layout (`app/[locale]/layout.tsx`) provides the single `<html lang={locale}>` and `<body>`, renders Navbar, Footer, and providers. Page components do not render Navbar/Footer.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing (next-intl), admin auth (session cookies), and security headers (CSP, etc.). `middleware.ts` is deprecated in Next.js 16.
 - **Lazy DB proxy:** `db` export uses a Proxy that only connects on first query. Safe to import at build time.
 - **Dual DB driver:** `DATABASE_URL` containing `neon.tech` → Neon HTTP driver; otherwise → `pg` Pool.
@@ -211,8 +211,8 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **Navbar**: Unified, no variant props. 8 links (Home, Services, Projects, Design, Benefits, Contact, Process, Blog & News) + Areas dropdown. Receives `company` and `areas` props from layout.
 - **Footer**: 5-column grid + service areas bar. Custom SVG icons for non-lucide platforms. Receives `company`, `socialLinks`, `services`, `areas` props from layout.
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props (plus additional data props as needed). Do NOT render Navbar or Footer.
-- **Root layout** (`app/layout.tsx`): Provides `<html lang={locale}>` and `<body>`. Detects locale via `getLocale()` from next-intl/server.
-- **Locale layout** (`app/[locale]/layout.tsx`): Server Component that fetches shared data from DB + Google Reviews API (via `Promise.all`) and renders Navbar/Footer around page content. Does NOT render `<html>/<body>`.
+- **Root layout** (`app/layout.tsx`): Pass-through layout that exports `metadata` (title, icons, twitter) and `viewport` config. Does not render `<html>/<body>` — delegates to locale layout.
+- **Locale layout** (`app/[locale]/layout.tsx`): Server Component that renders `<html lang={locale}>` and `<body>`, fetches shared data from DB + Google Reviews API (via `Promise.all`), and renders Navbar/Footer around page content.
 - **Admin** (`app/admin/`): Auth-protected dashboard with CRUD for all 13 content types: projects, blog, contacts, company, services, social links, service areas, gallery, trust badges, FAQs, showroom, about sections, partners. Uses `components/admin/` (DataTable, HouseStack, ProjectForm, SiteForm, ImagePairEditor, Tooltip, DragHandleIcon, ConfirmDialog, DashboardShell, SubmitButton, EditModeToggle, FormField, FormAlerts, AdminLocaleProvider, etc.) and `app/actions/admin/`. Mobile-responsive via `app/admin/admin-responsive.css` (CSS-only overrides with `className` hooks on form grids/cards/headers).
 - **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata sections (title, caption, photographer credit, keywords). Supports drag-and-drop upload, bilingual alt text fields (with flag emoji labels), add/remove pairs, and reordering. Accepts optional `slug` prop for SEO-friendly upload naming (`{slug}-before-renovation-{index}`) and auto-fills empty alt text fields on upload (EN: `{Humanized Slug} - Before Renovation {index}`, ZH: `{Humanized Slug} - 装修前 {index}`). Uses `pairsRef` pattern to read latest state after async upload gap. Used by ProjectForm and SiteForm. Shared `parseImagePairs()` utility in `lib/admin/form-utils.ts` handles FormData parsing for both projects and sites.
 - **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview, and tooltip. Accepts optional `slug` and `imageRole` (default `'hero'`) props for SEO-friendly upload naming (`{slug}-{imageRole}.{ext}`).

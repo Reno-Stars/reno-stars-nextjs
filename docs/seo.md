@@ -4,7 +4,7 @@
 
 Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Includes:
 
-- Static pages (home, services, projects, blog, contact, benefits, design)
+- Static pages (home, services, projects, blog, contact, benefits, design, process, areas)
 - All service detail pages
 - Service × location combination pages (e.g., `/en/services/kitchen/vancouver/`)
 - Project category pages
@@ -164,7 +164,7 @@ Uses Next.js App Router file convention:
 ## Security Headers
 
 Added via `proxy.ts` on all responses:
-- `Content-Security-Policy` (environment-aware: allows unsafe-eval in dev)
+- `Content-Security-Policy` (environment-aware: allows unsafe-eval in dev; whitelists Google Analytics and Tag Manager in `script-src` and `connect-src`)
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: SAMEORIGIN`
 - `Referrer-Policy: strict-origin-when-cross-origin`

@@ -24,7 +24,7 @@ app/                      # Next.js App Router
     page.tsx              # Homepage
     projects/             # Portfolio routes
     services/             # Service routes
-    areas/                # Service area routes
+    areas/                # Service areas hub + [slug] pages
     blog/                 # Blog routes
     contact/              # Contact form
     benefits/             # Benefits page
@@ -34,7 +34,7 @@ app/                      # Next.js App Router
     (auth)/               # Login page
     (dashboard)/          # CRUD pages (projects, blog, etc.)
     layout.tsx            # Admin shell with sidebar
-  layout.tsx              # Root layout (<html>/<body>, locale detection, fonts, metadata)
+  layout.tsx              # Root layout (metadata, viewport, pass-through to locale layout)
   not-found.tsx           # Root 404 (fallback, no <html>/<body>)
   sitemap.ts              # Dynamic async sitemap (DB + static data)
   robots.ts               # robots.txt
@@ -187,15 +187,15 @@ ensureUniqueSlug(slug, existingSlugs, excludeSlug?) → string
 ### Layout Data Flow
 
 **Root layout** (`app/layout.tsx`):
-- Detects locale via `getLocale()` from next-intl/server
-- Renders the single `<html lang={locale}>` and `<body>` wrapper for the entire app
-- Prevents hydration mismatches by ensuring only one `<html>` element exists
+- Pass-through layout that delegates rendering to the locale layout
+- Exports `metadata` (title, description, icons, twitter cards) and `viewport` (device-width, initial-scale)
+- Does **not** render `<html>/<body>` — that is handled by the locale layout
 
 **Locale layout** (`app/[locale]/layout.tsx`) is a Server Component that:
-1. Fetches `company`, `socialLinks`, `services`, `areas`, `googleReviews` from DB / Google API (via `Promise.all`)
-2. Renders `<Navbar>` and `<Footer>` with this data as props
-3. Renders `<LocalBusinessSchema>` for JSON-LD structured data (receives `areas`, `googleRating`, `googleReviewCount` props)
-4. Does **not** render `<html>/<body>` (root layout handles that)
+1. Renders `<html lang={locale}>` and `<body>` (the single HTML/body wrapper for the app)
+2. Fetches `company`, `socialLinks`, `services`, `areas`, `googleReviews` from DB / Google API (via `Promise.all`)
+3. Renders `<Navbar>` and `<Footer>` with this data as props
+4. Renders `<LocalBusinessSchema>` for JSON-LD structured data (receives `areas`, `googleRating`, `googleReviewCount` props)
 
 Page components (`components/pages/`) do **not** render Navbar or Footer — they only render page content and receive data as props from their server page files.
 
