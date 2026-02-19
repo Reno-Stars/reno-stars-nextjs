@@ -10,7 +10,7 @@ import { imagesToPairs } from '@/lib/data/projects';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import ProductLink from '@/components/ProductLink';
 import {
-  NAVY, GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT, SH_DARK,
+  GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT, SH_DARK,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, neuIn,
 } from '@/lib/theme';
 
