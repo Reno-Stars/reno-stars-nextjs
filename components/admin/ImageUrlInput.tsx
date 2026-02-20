@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { uploadImage } from '@/app/actions/admin/upload';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
@@ -36,7 +36,6 @@ export default function ImageUrlInput({
   const [imageError, setImageError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setUrl(defaultValue);
@@ -68,14 +67,18 @@ export default function ImageUrlInput({
     }
 
     setUploading(false);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   }, [slug, imageRole]);
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleUpload(file);
+  // Open a detached file picker — immune to <fieldset disabled>
+  const openFilePicker = useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/jpeg,image/png,image/webp,image/svg+xml,image/gif';
+    input.onchange = () => {
+      const file = input.files?.[0];
+      if (file) handleUpload(file);
+    };
+    input.click();
   }, [handleUpload]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -170,22 +173,24 @@ export default function ImageUrlInput({
           padding: '0.5rem 0.75rem',
           borderRadius: '6px',
           border: 'none',
-          boxShadow: neuIn(3),
+          boxShadow: disabled ? 'none' : neuIn(3),
           backgroundColor: CARD,
           color: NAVY,
           fontSize: '0.875rem',
           outline: 'none',
           boxSizing: 'border-box',
           opacity: disabled ? 0.7 : 1,
-          cursor: disabled ? 'not-allowed' : 'text',
+          cursor: disabled ? 'default' : 'text',
         }}
       />
 
-      {/* Upload area */}
-      <button
-        type="button"
-        onDrop={disabled ? undefined : handleDrop}
-        onDragOver={disabled ? undefined : handleDragOver}
+      {/* Upload area — only visible in edit mode; uses <div> so <fieldset disabled> won't block clicks */}
+      {!disabled && <div
+        role="button"
+        tabIndex={0}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onKeyDown={(e) => { if (!uploading && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openFilePicker(); } }}
         style={{
           width: '100%',
           marginTop: '0.5rem',
@@ -194,28 +199,21 @@ export default function ImageUrlInput({
           border: `2px dashed ${uploading ? GOLD : '#ccc'}`,
           backgroundColor: CARD,
           textAlign: 'center',
-          cursor: disabled ? 'not-allowed' : uploading ? 'wait' : 'pointer',
-          opacity: disabled || uploading ? 0.6 : 1,
+          cursor: uploading ? 'wait' : 'pointer',
+          opacity: uploading ? 0.6 : 1,
         }}
-        onClick={() => !uploading && !disabled && fileInputRef.current?.click()}
+        onClick={() => !uploading && openFilePicker()}
         aria-label={`${t.upload.uploadImageFor} ${label}`}
-        disabled={uploading || disabled}
+        aria-disabled={uploading}
       >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-          aria-hidden="true"
-        />
         <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
           {uploading ? t.upload.uploading : t.upload.clickOrDrag}
         </div>
         <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
           {t.upload.formatHint}
         </div>
-      </button>
+      </div>
+      }
 
       {uploadError && (
         <div role="alert" style={{ color: ERROR, fontSize: '0.75rem', marginTop: '0.25rem' }}>

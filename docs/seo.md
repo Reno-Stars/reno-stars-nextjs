@@ -29,6 +29,20 @@ Components in `components/structured-data/`:
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
+| `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
+
+## OpenGraph Locale Alternates
+
+All pages include `alternateLocale` in their OpenGraph metadata to signal the availability of alternate-language versions:
+
+```typescript
+openGraph: {
+  locale: ogLocaleMap[locale as Locale],  // 'en_US' or 'zh_CN'
+  alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+}
+```
+
+This is set in all 16 `generateMetadata()` functions across all page routes.
 
 ## robots.txt
 
@@ -165,8 +179,10 @@ Project and blog post pages use dedicated SEO fields from the database when avai
 | Field | Source | Fallback |
 |-------|--------|----------|
 | `title` | `meta_title[locale]` | `${localizedTitle} \| ${SITE_NAME}` |
-| `description` | `meta_description[locale]` | `truncateMetaDescription(description)` |
+| `description` | `meta_description[locale]` | `truncateMetaDescription(excerpt \|\| description)` |
 | `keywords` | `seo_keywords[locale]` (comma-split) | *(none)* |
+
+Project meta descriptions use a three-tier fallback: dedicated SEO field → excerpt → full description. Excerpts are typically more concise and SERP-optimized than full descriptions.
 
 Blog posts additionally include `og:article:published_time` and `og:article:modified_time` from `published_at` and `updated_at` timestamps.
 
@@ -214,6 +230,14 @@ Meta descriptions are automatically truncated to 155 characters (optimal for SER
 - Truncates at word boundaries (doesn't cut mid-word)
 - Appends ellipsis (`...`) when truncated
 - Applied to blog posts, project pages, and service pages
+
+## Blog Featured Image
+
+Blog post pages render the featured image (`post.featured_image`) above the H1 title with `priority` for LCP optimization and a 2:1 aspect ratio. The image is not locale-specific.
+
+## Service Area Internal Links
+
+Service detail pages include an "Areas We Serve" section with a responsive grid of links to service+location pages (e.g., `/services/kitchen/vancouver/`). This creates internal links that improve crawlability and keyword targeting for location-based searches. Areas are fetched from the database and passed as an optional prop to `ServiceDetailPage`.
 
 ## Performance & SEO Balance
 

@@ -309,8 +309,7 @@ const en = {
     shortDescription: 'Short Description',
     longDescription: 'Long Description',
     heroImage: 'Hero Image URL',
-    iconName: 'Icon Name',
-    iconNamePlaceholder: 'e.g. Hammer',
+    iconImage: 'Icon Image',
     displayOrder: 'Display Order',
   },
   socialLinks: {

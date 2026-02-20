@@ -29,6 +29,7 @@ async function seed() {
         longDescriptionZh:
           '将您的厨房打造成家的核心空间。从定制橱柜和高端台面到先进家电和创新储物解决方案，我们创造既美观又实用的厨房。',
         iconName: 'Hammer',
+        iconUrl: '/icons/services/hammer.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg',
         displayOrder: 1,
       },
@@ -43,6 +44,7 @@ async function seed() {
         longDescriptionZh:
           '通过我们的浴室装修专业知识，创造您的私人休憩空间。我们专注于豪华水疗风格设计、现代洁具、定制瓷砖工艺和创新储物解决方案。',
         iconName: 'Bath',
+        iconUrl: '/icons/services/bath.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg',
         displayOrder: 2,
       },
@@ -57,6 +59,7 @@ async function seed() {
         longDescriptionZh:
           '通过我们的全屋装修服务体验完整的家居改造。我们管理项目的每个方面，从初始设计概念到最终完成，确保无缝的装修体验。',
         iconName: 'Home',
+        iconUrl: '/icons/services/home.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-open-concept-living-and-dining-room.jpg',
         displayOrder: 3,
       },
@@ -71,6 +74,7 @@ async function seed() {
         longDescriptionZh:
           '通过我们屡获殊荣的地下室改造服务，释放您家的全部潜力。无论您想要家庭影院、健身房、客房套间还是家庭办公室，我们都能将闲置的地下室改造成美丽实用的生活空间。',
         iconName: 'ArrowDown',
+        iconUrl: '/icons/services/arrow-down.svg',
         displayOrder: 4,
       },
       {
@@ -84,6 +88,7 @@ async function seed() {
         longDescriptionZh:
           '无需全面装修的成本，即可让您的厨房焕然一新。我们的橱柜翻新服务包括新门板、抽屉面板和五金件，在保留现有橱柜箱体的同时改变厨房的外观。',
         iconName: 'Paintbrush',
+        iconUrl: '/icons/services/paintbrush.svg',
         displayOrder: 5,
       },
       {
@@ -97,6 +102,7 @@ async function seed() {
         longDescriptionZh:
           '通过我们的商业装修专业知识提升您的商业空间。我们处理办公室建设、零售店装修、餐厅重新设计等，提供专业成果，提升您的品牌和客户体验。',
         iconName: 'Building2',
+        iconUrl: '/icons/services/building-2.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/from-1-skin-lab-granville-commercial-renovation.jpg',
         displayOrder: 6,
       },

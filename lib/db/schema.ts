@@ -87,6 +87,7 @@ export const services = pgTable(
     longDescriptionEn: text('long_description_en'),
     longDescriptionZh: text('long_description_zh'),
     iconName: varchar('icon_name', { length: 50 }),
+    iconUrl: varchar('icon_url', { length: 500 }),
     imageUrl: varchar('image_url', { length: 500 }),
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),

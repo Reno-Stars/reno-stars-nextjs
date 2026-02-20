@@ -166,7 +166,7 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
             disabled={!editing}
           />
 
-          <ImageUrlInput name="featuredImageUrl" label={t.blog.heroImage} defaultValue={initialData?.featuredImageUrl ?? ''} />
+          <ImageUrlInput name="featuredImageUrl" label={t.blog.heroImage} defaultValue={initialData?.featuredImageUrl ?? ''} disabled={!editing} />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.blog.authorLabel} htmlFor="author">

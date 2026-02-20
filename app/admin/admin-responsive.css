@@ -82,6 +82,13 @@
   display: none;
 }
 
+/* Disabled form fields: flat (no inset shadow) in view mode */
+fieldset:disabled input,
+fieldset:disabled textarea,
+fieldset:disabled select {
+  box-shadow: none !important;
+}
+
 /* Confirm dialog button focus styles */
 .confirm-dialog-btn {
   outline: none;

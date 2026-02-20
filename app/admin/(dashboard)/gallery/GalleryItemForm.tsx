@@ -70,7 +70,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={defaults.imageUrl} required />
+          <ImageUrlInput name="imageUrl" label={t.gallery.imageUrl} defaultValue={defaults.imageUrl} required disabled={!editing} />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.gallery.titleEn} htmlFor="titleEn">

@@ -3,7 +3,6 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
@@ -14,7 +13,7 @@ import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import { Link } from '@/navigation';
 import { getLocalizedArea } from '@/lib/data/areas';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, TEXT, CARD, neu,
+  NAVY, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, CARD, neu,
 } from '@/lib/theme';
 
 interface ServiceDetailPageProps {
@@ -25,23 +24,12 @@ interface ServiceDetailPageProps {
   areas?: ServiceArea[];
 }
 
-const iconMap: Record<string, typeof Hammer> = {
-  Hammer,
-  Bath,
-  Home,
-  ArrowDown,
-  Paintbrush,
-  Building2,
-};
-
 export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [] }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
   const relatedProjects = useMemo(() => allProjects.filter((p) => p.service_type === serviceSlug).slice(0, 3), [allProjects, serviceSlug]);
-  const Icon = iconMap[service.icon || 'Hammer'] || Hammer;
-
   const benefits = [
     t('serviceBenefits.freeConsultation'),
     t('serviceBenefits.licensedInsured'),
@@ -74,11 +62,14 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             { label: localizedService.title },
           ]} />
           <div className="flex items-start gap-6">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
-              style={{ backgroundColor: GOLD_PALE }}
-            >
-              <Icon className="w-8 h-8" style={{ color: GOLD }} />
-            </div>
+            {service.icon && (
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
+                style={{ backgroundColor: GOLD_PALE }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={service.icon} alt="" className="w-8 h-8" style={{ filter: GOLD_ICON_FILTER }} />
+              </div>
+            )}
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 {localizedService.title}

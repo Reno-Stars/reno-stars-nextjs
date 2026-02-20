@@ -302,7 +302,7 @@ export default function SiteForm({
             </select>
           </FormField>
 
-          <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} />
+          <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} disabled={!editing} />
 
           {/* Site Image Pairs */}
           <ImagePairEditor

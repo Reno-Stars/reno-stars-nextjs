@@ -27,7 +27,7 @@ interface ServiceFormProps {
     descriptionZh: string;
     longDescriptionEn: string | null;
     longDescriptionZh: string | null;
-    iconName: string | null;
+    iconUrl: string | null;
     imageUrl: string | null;
     displayOrder: number;
   };
@@ -50,7 +50,7 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
     descriptionZh: '',
     longDescriptionEn: '',
     longDescriptionZh: '',
-    iconName: '',
+    iconUrl: '',
     imageUrl: '',
     displayOrder: 0,
   };
@@ -83,11 +83,9 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
           <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.services.shortDescription} defaultValueEn={defaults.descriptionEn} defaultValueZh={defaults.descriptionZh} required rows={3} />
           <BilingualTextarea nameEn="longDescriptionEn" nameZh="longDescriptionZh" label={t.services.longDescription} defaultValueEn={defaults.longDescriptionEn ?? ''} defaultValueZh={defaults.longDescriptionZh ?? ''} rows={5} />
 
-          <FormField label={t.services.iconName} htmlFor="iconName">
-            <input id="iconName" name="iconName" defaultValue={defaults.iconName ?? ''} style={fieldStyle} placeholder={t.services.iconNamePlaceholder} />
-          </FormField>
+          <ImageUrlInput name="iconUrl" label={t.services.iconImage} defaultValue={defaults.iconUrl ?? ''} slug={defaults.slug || undefined} imageRole="icon" disabled={!editing} />
 
-          <ImageUrlInput name="imageUrl" label={t.services.heroImage} defaultValue={defaults.imageUrl ?? ''} />
+          <ImageUrlInput name="imageUrl" label={t.services.heroImage} defaultValue={defaults.imageUrl ?? ''} disabled={!editing} />
 
           <FormField label={t.services.displayOrder} htmlFor="displayOrder">
             <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />

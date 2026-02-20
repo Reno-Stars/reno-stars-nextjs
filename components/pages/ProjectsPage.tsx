@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, SiteWithProjects, DisplayProject } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
@@ -13,8 +13,8 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, SURFACE, SURFACE_ALT,
-  TEXT, TEXT_MID, neu,
+  NAVY, GOLD, SURFACE, SURFACE_ALT, CARD,
+  TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
 /** Collected image for display in modal gallery */
@@ -54,6 +54,8 @@ function collectImagesFromPairs(
     }
   }
 }
+
+const PROJECTS_PER_PAGE = 12;
 
 interface ProjectsPageProps {
   locale: Locale;
@@ -169,10 +171,14 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     }),
   [rawProjects, locale]);
 
-  // Combine all displayable items (sites first if featured, then projects)
+  // Combine all displayable items (sites first if featured, then projects).
+  // Exclude individual projects whose slug matches a site-as-project to avoid duplicates.
   const allProjects: DisplayProject[] = useMemo(() => {
-    const featured = [...sitesAsDisplayProjects, ...projectsAsDisplay].filter((p) => p.featured);
-    const nonFeatured = [...sitesAsDisplayProjects, ...projectsAsDisplay].filter((p) => !p.featured);
+    const siteSlugs = new Set(sitesAsDisplayProjects.map((s) => s.slug));
+    const dedupedProjects = projectsAsDisplay.filter((p) => !siteSlugs.has(p.slug));
+    const combined = [...sitesAsDisplayProjects, ...dedupedProjects];
+    const featured = combined.filter((p) => p.featured);
+    const nonFeatured = combined.filter((p) => !p.featured);
     return [...featured, ...nonFeatured];
   }, [sitesAsDisplayProjects, projectsAsDisplay]);
 
@@ -260,11 +266,13 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
+  const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
   const handleCategoryClick = useCallback((categoryEn: string) => {
     setActiveCategory(categoryEn);
+    setCurrentPage(1);
     projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
@@ -317,16 +325,46 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch;
   }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, locale]);
 
+  const handleCategoryChange = useCallback((v: string) => { setActiveCategory(v); setCurrentPage(1); }, []);
+  const handleLocationChange = useCallback((v: string) => { setLocationFilter(v); setCurrentPage(1); }, []);
+  const handleSpaceTypeChange = useCallback((v: string) => { setSpaceTypeFilter(v); setCurrentPage(1); }, []);
+  const handleBudgetChange = useCallback((v: string) => { setBudgetFilter(v); setCurrentPage(1); }, []);
+
   const clearFilters = useCallback(() => {
     setActiveCategory('All');
     setLocationFilter('All');
     setSpaceTypeFilter('All');
     setBudgetFilter('All');
+    setCurrentPage(1);
   }, []);
 
   const hasActiveFilters = useMemo(() =>
     activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All',
   [activeCategory, locationFilter, spaceTypeFilter, budgetFilter]);
+
+  // Pagination
+  const totalPages = useMemo(() => Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE), [filteredProjects.length]);
+  const paginatedProjects = useMemo(() => {
+    const start = (currentPage - 1) * PROJECTS_PER_PAGE;
+    return filteredProjects.slice(start, start + PROJECTS_PER_PAGE);
+  }, [filteredProjects, currentPage]);
+
+  const pageNumbers = useMemo(() => {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const pages: (number | 'ellipsis')[] = [1];
+    const left = Math.max(2, currentPage - 1);
+    const right = Math.min(totalPages - 1, currentPage + 1);
+    if (left > 2) pages.push('ellipsis');
+    for (let i = left; i <= right; i++) pages.push(i);
+    if (right < totalPages - 1) pages.push('ellipsis');
+    pages.push(totalPages);
+    return pages;
+  }, [currentPage, totalPages]);
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+    projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -411,25 +449,25 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
           <SelectDropdown
             value={activeCategory}
-            onChange={setActiveCategory}
+            onChange={handleCategoryChange}
             options={categoryOptions}
             ariaLabel={t('modal.category')}
           />
           <SelectDropdown
             value={locationFilter}
-            onChange={setLocationFilter}
+            onChange={handleLocationChange}
             options={locationOptions}
             ariaLabel={t('filter.location')}
           />
           <SelectDropdown
             value={spaceTypeFilter}
-            onChange={setSpaceTypeFilter}
+            onChange={handleSpaceTypeChange}
             options={spaceTypeOptions}
             ariaLabel={t('filter.spaceType')}
           />
           <SelectDropdown
             value={budgetFilter}
-            onChange={setBudgetFilter}
+            onChange={handleBudgetChange}
             options={budgetOptions}
             ariaLabel={t('filter.budget')}
           />
@@ -468,21 +506,100 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project) => (
-                <ProjectCard
-                  key={project.slug}
-                  project={project}
-                  showDescription
-                  showChevron
-                  onClick={handleCardClick}
-                  isSiteProject={project.isSiteProject}
-                  projectCount={project.projectCount}
-                  areasCountLabel={project.isSiteProject ? t('wholeHouse.areasCount', { count: project.projectCount ?? 0 }) : undefined}
-                  siteBadgeLabel={project.isSiteProject ? t('wholeHouse.siteBadge') : undefined}
-                />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {paginatedProjects.map((project) => (
+                  <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    showDescription
+                    showChevron
+                    onClick={handleCardClick}
+                    isSiteProject={project.isSiteProject}
+                    projectCount={project.projectCount}
+                    areasCountLabel={project.isSiteProject ? t('wholeHouse.areasCount', { count: project.projectCount ?? 0 }) : undefined}
+                    siteBadgeLabel={project.isSiteProject ? t('wholeHouse.siteBadge') : undefined}
+                  />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <nav
+                  className="mt-10 flex items-center justify-center gap-2"
+                  aria-label={t('filter.pagination')}
+                >
+                  <button
+                    onClick={currentPage > 1 ? () => handlePageChange(currentPage - 1) : undefined}
+                    disabled={currentPage <= 1}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage > 1 ? 'hover:translate-x-[-2px]' : 'opacity-50 cursor-not-allowed'}`}
+                    style={{
+                      color: currentPage > 1 ? NAVY : TEXT_MUTED,
+                      boxShadow: currentPage > 1 ? neu(3) : undefined,
+                      backgroundColor: CARD,
+                    }}
+                    aria-label={t('filter.previousPage')}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span className="hidden sm:inline">{t('filter.previous')}</span>
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {pageNumbers.map((pageNum, idx) =>
+                      pageNum === 'ellipsis' ? (
+                        <span
+                          key={`ellipsis-${idx}`}
+                          className="px-2 py-2 text-sm"
+                          style={{ color: TEXT_MUTED }}
+                        >
+                          …
+                        </span>
+                      ) : (
+                        <button
+                          key={pageNum}
+                          onClick={() => handlePageChange(pageNum)}
+                          className="min-w-[40px] h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200"
+                          style={{
+                            color: pageNum === currentPage ? 'white' : NAVY,
+                            backgroundColor: pageNum === currentPage ? GOLD : CARD,
+                            boxShadow: pageNum === currentPage ? `0 4px 12px ${GOLD}44` : neu(3),
+                          }}
+                          aria-current={pageNum === currentPage ? 'page' : undefined}
+                        >
+                          {pageNum}
+                        </button>
+                      )
+                    )}
+                  </div>
+
+                  <button
+                    onClick={currentPage < totalPages ? () => handlePageChange(currentPage + 1) : undefined}
+                    disabled={currentPage >= totalPages}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage < totalPages ? 'hover:translate-x-[2px]' : 'opacity-50 cursor-not-allowed'}`}
+                    style={{
+                      color: currentPage < totalPages ? NAVY : TEXT_MUTED,
+                      boxShadow: currentPage < totalPages ? neu(3) : undefined,
+                      backgroundColor: CARD,
+                    }}
+                    aria-label={t('filter.nextPage')}
+                  >
+                    <span className="hidden sm:inline">{t('filter.next')}</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </nav>
+              )}
+
+              {/* Count info */}
+              {filteredProjects.length > 0 && (
+                <p className="mt-4 text-center text-sm" style={{ color: TEXT_MUTED }}>
+                  {t('filter.showingProjects', {
+                    start: (currentPage - 1) * PROJECTS_PER_PAGE + 1,
+                    end: Math.min(currentPage * PROJECTS_PER_PAGE, filteredProjects.length),
+                    total: filteredProjects.length,
+                  })}
+                </p>
+              )}
+            </>
           )}
         </div>
       </section>

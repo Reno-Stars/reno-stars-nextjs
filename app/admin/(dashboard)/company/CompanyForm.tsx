@@ -80,7 +80,7 @@ export default function CompanyForm({ company }: CompanyFormProps) {
             </FormField>
           </div>
 
-          <ImageUrlInput name="logoUrl" label={t.company.logoUrl} defaultValue={company.logoUrl ?? ''} />
+          <ImageUrlInput name="logoUrl" label={t.company.logoUrl} defaultValue={company.logoUrl ?? ''} disabled={!editing} />
 
           {editing && (
             <button

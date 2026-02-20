@@ -223,7 +223,7 @@ export interface Service {
   description: Localized<string>;
   /** Detailed service explanation */
   long_description?: Localized<string>;
-  /** Lucide icon name */
+  /** Icon image URL (SVG or image) */
   icon?: string;
   /** Service showcase image URL */
   image?: string;

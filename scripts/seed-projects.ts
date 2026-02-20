@@ -49,17 +49,24 @@ const DRY_RUN = process.argv.includes('--dry-run');
 // ============================================================================
 
 const WP_BASE = 'https://reno-stars.com';
+const WP_HOSTNAME = new URL(WP_BASE).hostname;
 const WP_API_PROJECTS = `${WP_BASE}/wp-json/wp/v2/project`;
 const CONCURRENCY = 3;
 const FETCH_TIMEOUT = 30_000;
+const PAIR_BATCH = 5;
 
-/** Category listing pages on the old WP site (Elementor) — may contain projects not in REST API */
+/** Category listing pages on the old WP site (Elementor) — may contain projects not in REST API.
+ * NOTE: The site was restructured — old /vancouver-renovation-projects/* URLs return 404.
+ * The current category pages live under /projects/*. We also keep the legacy main page as fallback. */
 const CATEGORY_PAGES: { url: string; inferredServiceType: ServiceTypeKey | 'whole-house' }[] = [
+  // Current category pages
+  { url: `${WP_BASE}/projects/kitchen/`, inferredServiceType: 'kitchen' },
+  { url: `${WP_BASE}/projects/bathroom/`, inferredServiceType: 'bathroom' },
+  { url: `${WP_BASE}/projects/full-house/`, inferredServiceType: 'whole-house' },
+  { url: `${WP_BASE}/projects/home-installation/`, inferredServiceType: 'cabinet' },
+  { url: `${WP_BASE}/projects/commercial/`, inferredServiceType: 'commercial' },
+  // Legacy main page (still has some project links)
   { url: `${WP_BASE}/vancouver-renovation-projects/`, inferredServiceType: 'kitchen' },
-  { url: `${WP_BASE}/vancouver-renovation-projects/kitchen-renovations/`, inferredServiceType: 'kitchen' },
-  { url: `${WP_BASE}/vancouver-renovation-projects/bathroom-renovations/`, inferredServiceType: 'bathroom' },
-  { url: `${WP_BASE}/vancouver-renovation-projects/whole-house-renovations/`, inferredServiceType: 'whole-house' },
-  { url: `${WP_BASE}/vancouver-renovation-projects/commercial-renovations/`, inferredServiceType: 'commercial' },
 ];
 
 /** WP category term ID → service type (discovered by inspecting WP REST API responses) */
@@ -88,6 +95,7 @@ const CITY_ZH: Record<string, string> = {
   Delta: 'Delta', Langley: '兰里', 'White Rock': '白石',
   'Maple Ridge': '枫树岭', 'North Vancouver': '北温哥华',
   'West Vancouver': '西温哥华', Abbotsford: '阿伯茨福德',
+  Chilliwack: '奇利瓦克', Squamish: '斯阔米什', Victoria: '维多利亚',
 };
 
 /** Known non-project slugs to skip when scraping category pages */
@@ -97,8 +105,21 @@ const NON_PROJECT_SLUGS = new Set([
   'kitchen-renovations', 'bathroom-renovations', 'whole-house-renovations',
   'commercial-renovations', 'design', 'benefits', 'process', 'areas',
   'wp-admin', 'wp-login', 'wp-content', 'wp-json', 'feed',
-  'projects', 'vancouver-renovation-blog', 'renovation-blog', 'commercial-pokin',
+  'projects', 'vancouver-renovation-blog', 'renovation-blog',
   'sample-page', 'my-account', 'cart', 'checkout', 'shop',
+  // New-style category page slugs (these are listing pages, not projects)
+  'kitchen', 'bathroom', 'full-house', 'home-installation', 'commercial',
+  // Site pages that appear in project listings but aren't projects
+  'features-benefits',
+  // Listing / gallery pages (not individual projects)
+  'kitchen-renovation-section',
+  // Duplicate shorter slugs — same projects exist under longer canonical slugs
+  'whole-house-renovation-from-kitchen', // → richmond-whole-house-renovation-from-kitchen-to-bedroom
+  'whole-house-renovation-from-kitchen-to-bathroom', // → richmond-whole-house-renovation-from-kitchen-to-bedroom
+  'vancouver-whole-house-renovation',    // → vancouver-whole-house-renovation-full-home-remodel-and-interior-upgrade
+  'kitchen-bathroom-cabinet-refacing-in-coquitlam', // → customized-kitchen-and-bathroom-cabinet-refacing-in-coquitlam
+  'richmond-townhouse-whole-house',      // → richmond-townhouse-makeover-kitchen-bathroom-laundry-room
+  'condo-renovation-in-surrey-kitchen-bathroom', // → surrey-condo-renovation-kitchen-bathroom-cabinet-pending-light
 ]);
 
 // ============================================================================
@@ -113,8 +134,8 @@ interface WPProjectResponse {
   featured_media: number;
   link: string;
   categories?: number[];
-  // Custom taxonomies may appear under their own field names
-  [key: string]: unknown;
+  /** Custom taxonomy: WP project_category term IDs */
+  project_category?: number[];
 }
 
 interface DiscoveredProject {
@@ -166,7 +187,7 @@ interface EnrichedProject {
   categoryEn: string;
   categoryZh: string;
   locationCity: string;
-  budgetRange: string;
+  budgetRange?: string;
   durationEn: string;
   durationZh: string;
   spaceTypeEn: string;
@@ -223,18 +244,30 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-/** Clean WP content HTML — remove inline styles, scripts, shortcodes. */
-function cleanContent(html: string): string {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '')
-    .replace(/\[\/?\w+[^\]]*\]/g, '')
-    .replace(/ style="[^"]*"/g, '')
-    .replace(/ class="[^"]*"/g, '')
-    .replace(/ data-[\w-]+="[^"]*"/g, '')
-    .replace(/ id="[^"]*"/g, '')
-    .replace(/<div>\s*<\/div>/g, '')
-    .replace(/\n{3,}/g, '\n\n')
+/** Remove WordPress boilerplate (comment forms, contact info, JSON metadata) from plain text. */
+function stripBoilerplate(text: string): string {
+  return text
+    // WP comment form boilerplate (EN)
+    .replace(/Leave a Reply.*$/i, '')
+    .replace(/Cancel reply.*$/i, '')
+    // WP comment form boilerplate (ZH)
+    .replace(/您的电子邮箱地址不会被公开。.*$/, '')
+    .replace(/必填项已用.*$/, '')
+    .replace(/在此浏览器中保存我的显示名称.*$/, '')
+    .replace(/以便下次评论时使用.*$/, '')
+    .replace(/发表评论.*$/, '')
+    .replace(/取消回复.*$/, '')
+    // Leaked JSON metadata (e.g. ARInfo, FaceliftInfo from beauty plugins)
+    .replace(/\{"\w+Info":\{[\s\S]*$/i, '')
+    // WP footer contact info that leaks into content
+    .replace(/📞\s*Phone:.*$/i, '')
+    .replace(/✉\s*Email:.*$/i, '')
+    // "Save my name, email..." checkbox label (EN + ZH)
+    .replace(/Save my name,?\s*email.*$/i, '')
+    .replace(/保存我的显示名称.*$/i, '')
+    // Common WP sidebar/widget text
+    .replace(/Recent Posts.*$/i, '')
+    .replace(/Recent Comments.*$/i, '')
     .trim();
 }
 
@@ -243,16 +276,17 @@ function hasChinese(text: string): boolean {
   return /[\u4e00-\u9fff]/.test(text);
 }
 
-/** Decode URL-encoded slug and sanitize to [a-z0-9-]. */
+/** Decode URL-encoded slug and sanitize to [a-z0-9-]. Truncates to 100 chars (DB varchar limit). */
 function decodeSlug(slug: string): string {
   try {
     return decodeURIComponent(slug)
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, '-')
       .replace(/-+/g, '-')
-      .replace(/(^-|-$)/g, '');
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 100);
   } catch {
-    return slug;
+    return slug.slice(0, 100);
   }
 }
 
@@ -283,7 +317,7 @@ function extractArticleContent(html: string): { title: string; content: string }
 
   const title = candidates.find((c) => c && hasChinese(c)) || candidates.find((c) => c) || '';
 
-  // Try entry-content div
+  // Try entry-content div (assumes standard WP theme structure; Elementor pages may differ)
   let content = '';
   const entryMatch = html.match(/<div[^>]*class="[^"]*entry-content[^"]*"[^>]*>([\s\S]*?)<\/div>\s*(?:<\/div>|<div[^>]*class="[^"]*(?:post-|entry-|comment))/i);
   if (entryMatch) content = entryMatch[1];
@@ -309,7 +343,23 @@ function extractArticleContent(html: string): { title: string; content: string }
   }
 
   if (!content && !title) return null;
-  return { title, content: cleanContent(content) };
+  // Clean WP content: remove comment forms, scripts, styles, shortcodes, inline attributes
+  const cleaned = content
+    // Strip WP comment form and respond section (HTML-level, before tag stripping)
+    .replace(/<div[^>]*id="respond"[\s\S]*$/i, '')
+    .replace(/<section[^>]*id="respond"[\s\S]*$/i, '')
+    .replace(/<form[^>]*class="[^"]*comment-form[\s\S]*?<\/form>/gi, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/\[\/?\w+[^\]]*\]/g, '')
+    .replace(/ style="[^"]*"/g, '')
+    .replace(/ class="[^"]*"/g, '')
+    .replace(/ data-[\w-]+="[^"]*"/g, '')
+    .replace(/ id="[^"]*"/g, '')
+    .replace(/<div>\s*<\/div>/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return { title, content: cleaned };
 }
 
 /** Fetch with AbortController timeout. */
@@ -323,34 +373,50 @@ async function crawlFetch(url: string, timeout = FETCH_TIMEOUT): Promise<Respons
   }
 }
 
-/** Strip WordPress dimension suffixes (-300x200), ensure absolute URL, encode non-ASCII chars. */
+/** Strip WordPress dimension suffixes (-300x200), ensure absolute URL, enforce HTTPS, encode non-ASCII chars. */
 function normalizeImageUrl(url: string): string {
   if (url.startsWith('/')) url = WP_BASE + url;
   if (url.startsWith('//')) url = 'https:' + url;
-  // Strip WP thumbnail dimension suffixes: -300x200, -1024x768, etc.
-  url = url.replace(/-\d+x\d+(\.[a-z]+)$/i, '$1');
+  // Enforce HTTPS (next/image remotePatterns requires https for reno-stars.com)
+  url = url.replace(/^http:\/\//i, 'https://');
+  // Strip WP thumbnail dimension suffixes (-300x200 or -300×200) and -scaled / -mfrh-original-scaled
+  // WordPress uses both 'x' and '×' (U+00D7 multiplication sign), and may have double extensions (.png.webp)
+  url = url.replace(/-\d+[x\u00d7]\d+(\.[a-z]+(?:\.[a-z]+)?)$/i, '$1');
+  url = url.replace(/-(?:mfrh-original-)?scaled(\.[a-z]+(?:\.[a-z]+)?)$/i, '$1');
   // Encode non-ASCII characters (Chinese filenames etc.) for safe DB storage
   // encodeURI keeps /:?#[]@!$&'()*+,;= intact but encodes multibyte chars
   try { url = encodeURI(decodeURI(url)); } catch { url = encodeURI(url); }
   return url;
 }
 
-/** Sanitize text for safe insertion via Neon HTTP driver — removes stray backslashes. */
+/**
+ * Sanitize text for safe insertion via Neon HTTP driver.
+ * Neon sends queries as JSON over HTTP. Invalid escape sequences break parsing.
+ * Strip all backslashes — renovation project content has no legitimate use for them.
+ */
 function sanitizeText(text: string): string {
-  // Remove lone backslashes that could create invalid escape sequences in HTTP transport
-  return text.replace(/\\(?![\\nrt"/])/g, '');
+  return text
+    .replace(/\\/g, '')  // Remove all backslashes
+    .replace(/\x00/g, '') // Remove null bytes
+    .replace(/[\x01-\x08\x0b\x0c\x0e-\x1f]/g, '') // Remove control characters
+    // Remove lone surrogates (can appear when .slice() splits a surrogate pair / emoji)
+    .replace(/[\ud800-\udbff](?![\udc00-\udfff])/g, '')  // lone high surrogate
+    .replace(/(?<![\ud800-\udbff])[\udc00-\udfff]/g, ''); // lone low surrogate
 }
 
 /** Extract project slug from a WP page URL. Returns null for non-project URLs. */
 function extractSlugFromUrl(href: string): string | null {
   try {
     const u = new URL(href, WP_BASE);
-    if (u.hostname !== new URL(WP_BASE).hostname) return null;
-    // Strip /en/, /zh/, /project/ prefixes
-    const path = u.pathname.replace(/^\/(en|zh)\//, '/').replace(/^\/project\//, '/');
+    if (u.hostname !== WP_HOSTNAME) return null;
+    // Strip locale prefixes and known path prefixes
+    let path = u.pathname.replace(/^\/(en|zh)\//, '/');
+    path = path.replace(/^\/project\//, '/');
+    path = path.replace(/^\/projects\//, '/');
     const segments = path.split('/').filter(Boolean);
-    if (segments.length !== 1) return null;
-    const slug = decodeSlug(segments[0]);
+    // Accept last segment as slug (handles /projects/category/slug/ and /slug/)
+    if (segments.length === 0 || segments.length > 2) return null;
+    const slug = decodeSlug(segments[segments.length - 1]);
     if (!slug || slug.length < 4 || NON_PROJECT_SLUGS.has(slug)) return null;
     return slug;
   } catch {
@@ -378,12 +444,11 @@ function inferServiceType(
     if (mapped) return mapped;
   }
   // Title keyword inference
-  const t = title.toLowerCase();
-  if (/kitchen|cabinet/i.test(t)) return 'kitchen';
-  if (/bath|shower|vanit/i.test(t)) return 'bathroom';
-  if (/basement|下/i.test(t)) return 'basement';
-  if (/commercial|商业|office|store/i.test(t)) return 'commercial';
-  if (/whole.house|full.house|full.home|全屋/i.test(t)) return 'whole-house';
+  if (/kitchen|cabinet/i.test(title)) return 'kitchen';
+  if (/bath|shower|vanit/i.test(title)) return 'bathroom';
+  if (/basement|下/i.test(title)) return 'basement';
+  if (/commercial|商业|office|store/i.test(title)) return 'commercial';
+  if (/whole[\s-]house|full[\s-]house|full[\s-]home|全屋/i.test(title)) return 'whole-house';
   return fallback || 'kitchen';
 }
 
@@ -401,25 +466,96 @@ function formatSlug(text: string): string {
   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
 }
 
-/** Extract all images from HTML content. */
+/** Filename patterns for non-project images (logos, headers, placeholders, stock photos). */
+const NON_PROJECT_IMAGE_RE = /logo|favicon|banner|header|placeholder|loading|spinner|avatar|icon|social|facebook|instagram|whatsapp|wechat|xiaohongshu|\.svg|renostars|\.psd|2x2/i;
+
+/** Known stock photo filenames to exclude (after normalization strips dimensions). */
+const STOCK_PHOTO_STEMS = new Set(['11-3']);
+
+/** Check if a normalized URL is a non-project image (stock photo, icon, logo, etc.) */
+function isNonProjectImage(normalizedUrl: string): boolean {
+  const filename = normalizedUrl.split('/').pop() || '';
+  // Decode percent-encoded chars for accurate filename matching
+  let decoded = filename;
+  try { decoded = decodeURIComponent(filename); } catch { /* keep encoded */ }
+  if (NON_PROJECT_IMAGE_RE.test(decoded)) return true;
+  // Check against known stock photo stems (filename without extensions)
+  const stem = decoded.replace(/\.[a-z]+(\.[a-z]+)?$/i, '');
+  return STOCK_PHOTO_STEMS.has(stem.toLowerCase());
+}
+
+/** Extract all project images from HTML content, filtering out site chrome images.
+ * Parses Happy Addons gallery filter buttons (After/Before tabs) to classify
+ * images by role when available, falling back to filename-based classification. */
 function extractImages(html: string): CrawledImage[] {
+  // Parse Happy Addons gallery filter buttons to map __fltr-N → role
+  // e.g. <button data-filter=".__fltr-1">After</button>
+  //      <button data-filter=".__fltr-2">Before</button>
+  const galleryBeforeFilters = new Set<string>();
+  const galleryAfterFilters = new Set<string>();
+  const filterBtnRe = /data-filter="\.__fltr-(\d+)">(After|Before|之后|之前)<\/button/gi;
+  let fm;
+  while ((fm = filterBtnRe.exec(html)) !== null) {
+    if (fm[2] === 'Before' || fm[2] === '之前') galleryBeforeFilters.add(fm[1]);
+    else galleryAfterFilters.add(fm[1]);
+  }
+  const hasGalleryFilters = galleryBeforeFilters.size > 0 || galleryAfterFilters.size > 0;
+
+  // Build sets of image URLs tagged by their gallery container's filter class
+  const beforeUrlsFromGallery = new Set<string>();
+  const afterUrlsFromGallery = new Set<string>();
+  if (hasGalleryFilters) {
+    // Match: <div/a class="...ha-justified-grid__item...__fltr-N...">...<img data-lazy-src="URL">
+    const galleryItemRe = /class="[^"]*ha-justified-grid__item[^"]*__fltr-(\d+)[^"]*"[\s\S]*?data-lazy-src="([^"]+)"/g;
+    let gm;
+    while ((gm = galleryItemRe.exec(html)) !== null) {
+      const normalized = normalizeImageUrl(gm[2]);
+      if (isNonProjectImage(normalized)) continue;
+      if (galleryBeforeFilters.has(gm[1])) beforeUrlsFromGallery.add(normalized);
+      else if (galleryAfterFilters.has(gm[1])) afterUrlsFromGallery.add(normalized);
+    }
+  }
+
+  // When galleries exist, ONLY extract images from gallery containers.
+  // This excludes CTA stock photos, related-website images, and other non-project content.
+  if (beforeUrlsFromGallery.size > 0 || afterUrlsFromGallery.size > 0) {
+    const images: CrawledImage[] = [];
+    for (const url of beforeUrlsFromGallery) {
+      images.push({ url, alt: '', role: 'before' });
+    }
+    for (const url of afterUrlsFromGallery) {
+      images.push({ url, alt: '', role: 'after' });
+    }
+    return images;
+  }
+
+  // Fallback for pages without gallery filters (REST API / Gutenberg pages):
+  // extract all wp-content/uploads images from the content area.
+  const cleaned = html
+    .replace(/<header[\s\S]*?<\/header>/gi, '')
+    .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+    .replace(/<nav[\s\S]*?<\/nav>/gi, '');
+
   const images: CrawledImage[] = [];
   const seen = new Set<string>();
   const imgRe = /<img[^>]+>/gi;
   let m;
-  while ((m = imgRe.exec(html)) !== null) {
+  while ((m = imgRe.exec(cleaned)) !== null) {
     const tag = m[0];
     const dataSrc = tag.match(/data-(?:lazy-)?src="([^"]*)"/i);
     const src = tag.match(/\bsrc="([^"]*)"/i);
     const rawUrl = dataSrc?.[1] || src?.[1];
     if (!rawUrl || !rawUrl.includes('wp-content/uploads')) continue;
 
+    // Classify role from raw URL before percent-encoding
+    const role = classifyImageRole(rawUrl);
     const url = normalizeImageUrl(rawUrl);
     if (seen.has(url)) continue;
+    if (isNonProjectImage(url)) continue;
     seen.add(url);
 
     const altMatch = tag.match(/alt="([^"]*)"/i);
-    images.push({ url, alt: altMatch ? stripHtml(altMatch[1]) : '', role: classifyImageRole(url) });
+    images.push({ url, alt: altMatch ? stripHtml(altMatch[1]) : '', role });
   }
   return images;
 }
@@ -446,15 +582,10 @@ async function discoverProjects(): Promise<Map<string, DiscoveredProject>> {
       for (const wp of data) {
         const slug = decodeSlug(wp.slug);
         if (!slug || NON_PROJECT_SLUGS.has(slug)) continue;
-        // Extract categories from all possible taxonomy fields
+        // Extract categories from standard and custom taxonomy fields
         const cats: number[] = [];
         if (Array.isArray(wp.categories)) cats.push(...wp.categories);
-        // Some WP setups use project_category or other custom taxonomy names
-        for (const key of Object.keys(wp)) {
-          if (key !== 'categories' && Array.isArray(wp[key]) && (wp[key] as unknown[]).every(v => typeof v === 'number')) {
-            cats.push(...(wp[key] as number[]));
-          }
-        }
+        if (Array.isArray(wp.project_category)) cats.push(...wp.project_category);
         map.set(slug, {
           slug,
           url: wp.link || `${WP_BASE}/project/${slug}/`,
@@ -473,33 +604,67 @@ async function discoverProjects(): Promise<Map<string, DiscoveredProject>> {
   }
   console.log(`  Found ${restCount} projects via REST API`);
 
-  // Step B — Category listing pages (Elementor-only projects)
+  // Step B — Category listing pages (Elementor-only projects, fetched in parallel)
   console.log('Discovering projects from category pages...');
   let elementorCount = 0;
-  for (const { url, inferredServiceType } of CATEGORY_PAGES) {
-    try {
-      const res = await crawlFetch(url);
-      if (!res.ok) continue;
-      const html = await res.text();
+  const categoryResults = await Promise.all(
+    CATEGORY_PAGES.map(async ({ url, inferredServiceType }) => {
+      try {
+        const res = await crawlFetch(url);
+        if (!res.ok) return [];
+        const html = await res.text();
+        const found: { slug: string; href: string; inferredServiceType: ServiceTypeKey | 'whole-house' }[] = [];
+        const linkRe = /<a[^>]*href="([^"]*)"[^>]*>/gi;
+        let lm;
+        while ((lm = linkRe.exec(html)) !== null) {
+          const slug = extractSlugFromUrl(lm[1]);
+          if (slug) found.push({ slug, href: lm[1], inferredServiceType });
+        }
+        return found;
+      } catch { return []; }
+    }),
+  );
+  for (const entries of categoryResults) {
+    for (const { slug, href, inferredServiceType } of entries) {
+      if (!map.has(slug)) {
+        map.set(slug, {
+          slug,
+          url: href.startsWith('http') ? href : `${WP_BASE}${href}`,
+          source: 'elementor',
+          wpCategories: [],
+          inferredServiceType,
+        });
+        elementorCount++;
+      }
+    }
+  }
+  console.log(`  Found ${elementorCount} additional projects from category pages`);
 
-      const linkRe = /<a[^>]*href="([^"]*)"[^>]*>/gi;
-      let lm;
-      while ((lm = linkRe.exec(html)) !== null) {
-        const slug = extractSlugFromUrl(lm[1]);
+  // Step C — Post sitemap (catches regular WP posts that are project pages but not in category listings)
+  console.log('Discovering projects from post sitemap...');
+  let sitemapCount = 0;
+  try {
+    const sitemapRes = await crawlFetch(`${WP_BASE}/post-sitemap.xml`);
+    if (sitemapRes.ok) {
+      const xml = await sitemapRes.text();
+      // Extract <loc> URLs from sitemap XML
+      const locRe = /<loc>([^<]+)<\/loc>/gi;
+      let sm;
+      while ((sm = locRe.exec(xml)) !== null) {
+        const slug = extractSlugFromUrl(sm[1]);
         if (slug && !map.has(slug)) {
           map.set(slug, {
             slug,
-            url: lm[1].startsWith('http') ? lm[1] : `${WP_BASE}${lm[1]}`,
+            url: sm[1],
             source: 'elementor',
             wpCategories: [],
-            inferredServiceType,
           });
-          elementorCount++;
+          sitemapCount++;
         }
       }
-    } catch { /* skip failed category pages */ }
-  }
-  console.log(`  Found ${elementorCount} additional projects from category pages`);
+    }
+  } catch { /* sitemap fetch is supplementary */ }
+  console.log(`  Found ${sitemapCount} additional projects from post sitemap`);
 
   console.log(`  Total discovered: ${map.size} unique projects\n`);
   return map;
@@ -509,102 +674,129 @@ async function discoverProjects(): Promise<Map<string, DiscoveredProject>> {
 // PHASE 2: CRAWL
 // ============================================================================
 
+/** Extract og:image URL from HTML page. */
+function extractOgImage(html: string): string {
+  const ogMatch = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]*)"[^>]*>/i)
+    || html.match(/<meta[^>]*content="([^"]*)"[^>]*property="og:image"[^>]*>/i);
+  return ogMatch ? normalizeImageUrl(ogMatch[1]) : '';
+}
+
+/** Crawl a project from the REST API (structured JSON + supplementary page HTML). */
+async function crawlFromRestApi(
+  wp: WPProjectResponse,
+  pageUrl: string,
+): Promise<{ titleEn: string; descriptionEn: string; heroImageUrl: string; images: CrawledImage[] }> {
+  const titleEn = stripHtml(wp.title.rendered);
+  const descriptionEn = stripBoilerplate(stripHtml(wp.content.rendered)).slice(0, 500);
+  let heroImageUrl = '';
+
+  // Fetch featured media URL
+  if (wp.featured_media) {
+    try {
+      const mediaRes = await crawlFetch(`${WP_BASE}/wp-json/wp/v2/media/${wp.featured_media}?_fields=source_url`);
+      if (mediaRes.ok) {
+        const media = await mediaRes.json() as { source_url?: string };
+        heroImageUrl = media.source_url ? normalizeImageUrl(media.source_url) : '';
+      }
+    } catch { /* will fall back to first image */ }
+  }
+
+  // Fetch the rendered page HTML — prefer gallery-extracted images over content.rendered
+  // because content.rendered includes CTA stock photos that galleries filter out.
+  let images: CrawledImage[] = [];
+  try {
+    const pageRes = await crawlFetch(pageUrl);
+    if (pageRes.ok) {
+      const pageHtml = await pageRes.text();
+      images = extractImages(pageHtml);
+      if (!heroImageUrl) heroImageUrl = extractOgImage(pageHtml);
+    }
+  } catch { /* page fetch is supplementary */ }
+
+  // Fallback to content.rendered images only if page fetch yielded nothing
+  if (images.length === 0) {
+    images = extractImages(wp.content.rendered);
+  }
+
+  return { titleEn, descriptionEn, heroImageUrl, images };
+}
+
+/** Crawl a project from an Elementor page (raw HTML only). */
+async function crawlFromElementorPage(
+  url: string,
+  slug: string,
+): Promise<{ titleEn: string; descriptionEn: string; heroImageUrl: string; images: CrawledImage[] } | null> {
+  const res = await crawlFetch(url);
+  if (!res.ok) {
+    console.log(`  ✗ ${slug} (HTTP ${res.status})`);
+    return null;
+  }
+  const html = await res.text();
+  const extracted = extractArticleContent(html);
+  if (!extracted) {
+    console.log(`  ✗ ${slug} (no content found)`);
+    return null;
+  }
+  return {
+    titleEn: extracted.title,
+    descriptionEn: stripBoilerplate(stripHtml(extracted.content)).slice(0, 500),
+    heroImageUrl: extractOgImage(html),
+    images: extractImages(html),
+  };
+}
+
+/** Crawl ZH content for a project, trying multiple URL paths. */
+async function crawlZhContent(
+  slug: string,
+  source: 'rest-api' | 'elementor',
+  fallbackTitleZh: string,
+  fallbackDescZh: string,
+): Promise<{ titleZh: string; descriptionZh: string }> {
+  const zhPaths = source === 'rest-api'
+    ? [`/zh/project/${slug}/`, `/zh/${slug}/`]
+    : [`/zh/${slug}/`, `/zh/project/${slug}/`];
+
+  for (const path of zhPaths) {
+    try {
+      const zhRes = await crawlFetch(`${WP_BASE}${path}`);
+      if (!zhRes.ok) continue;
+      const zhHtml = await zhRes.text();
+      const zhExtracted = extractArticleContent(zhHtml);
+      if (zhExtracted && hasChinese(zhExtracted.title)) {
+        return {
+          titleZh: zhExtracted.title,
+          descriptionZh: stripBoilerplate(stripHtml(zhExtracted.content)).slice(0, 500),
+        };
+      }
+    } catch { /* try next ZH URL */ }
+  }
+  return { titleZh: fallbackTitleZh, descriptionZh: fallbackDescZh };
+}
+
 async function crawlProject(discovered: DiscoveredProject): Promise<CrawledProject | null> {
   try {
-    let titleEn = '';
-    let descriptionEn = '';
-    let heroImageUrl = '';
-    let images: CrawledImage[] = [];
+    let result: { titleEn: string; descriptionEn: string; heroImageUrl: string; images: CrawledImage[] } | null;
 
     if (discovered.source === 'rest-api' && discovered.wpData) {
-      const wp = discovered.wpData;
-      titleEn = stripHtml(wp.title.rendered);
-      const contentText = stripHtml(wp.content.rendered);
-      descriptionEn = contentText.slice(0, 500);
-
-      // Fetch featured media URL
-      if (wp.featured_media) {
-        try {
-          const mediaRes = await crawlFetch(`${WP_BASE}/wp-json/wp/v2/media/${wp.featured_media}?_fields=source_url`);
-          if (mediaRes.ok) {
-            const media = await mediaRes.json() as { source_url?: string };
-            heroImageUrl = media.source_url || '';
-          }
-        } catch { /* will fall back to first image */ }
-      }
-
-      // Extract images from content HTML
-      images = extractImages(wp.content.rendered);
-
-      // Also fetch the page HTML for additional images Elementor might inject
-      try {
-        const pageRes = await crawlFetch(discovered.url);
-        if (pageRes.ok) {
-          const pageHtml = await pageRes.text();
-          const pageImages = extractImages(pageHtml);
-          const existingUrls = new Set(images.map(i => i.url));
-          for (const img of pageImages) {
-            if (!existingUrls.has(img.url)) {
-              images.push(img);
-              existingUrls.add(img.url);
-            }
-          }
-          // Get hero from og:image if API didn't provide one
-          if (!heroImageUrl) {
-            const ogMatch = pageHtml.match(/<meta[^>]*property="og:image"[^>]*content="([^"]*)"[^>]*>/i)
-              || pageHtml.match(/<meta[^>]*content="([^"]*)"[^>]*property="og:image"[^>]*>/i);
-            if (ogMatch) heroImageUrl = ogMatch[1];
-          }
-        }
-      } catch { /* page fetch is supplementary */ }
+      result = await crawlFromRestApi(discovered.wpData, discovered.url);
     } else {
-      // Elementor page — crawl HTML
-      const res = await crawlFetch(discovered.url);
-      if (!res.ok) {
-        console.log(`  ✗ ${discovered.slug} (HTTP ${res.status})`);
-        return null;
-      }
-      const html = await res.text();
-      const extracted = extractArticleContent(html);
-      if (!extracted) {
-        console.log(`  ✗ ${discovered.slug} (no content found)`);
-        return null;
-      }
-      titleEn = extracted.title;
-      descriptionEn = stripHtml(extracted.content).slice(0, 500);
-      images = extractImages(html);
-
-      const ogMatch = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]*)"[^>]*>/i)
-        || html.match(/<meta[^>]*content="([^"]*)"[^>]*property="og:image"[^>]*>/i);
-      heroImageUrl = ogMatch ? ogMatch[1] : '';
+      result = await crawlFromElementorPage(discovered.url, discovered.slug);
     }
+    if (!result) return null;
 
+    const { titleEn, descriptionEn, images } = result;
+    let { heroImageUrl } = result;
+    // If the hero image (from og:image or featured_media) is a stock/non-project image, discard it
+    if (heroImageUrl && isNonProjectImage(heroImageUrl)) heroImageUrl = '';
     if (!heroImageUrl && images.length > 0) heroImageUrl = images[0].url;
 
-    // Fetch ZH content
-    let titleZh = titleEn;
-    let descriptionZh = descriptionEn;
-    const zhPaths = discovered.source === 'rest-api'
-      ? [`/zh/project/${discovered.slug}/`, `/zh/${discovered.slug}/`]
-      : [`/zh/${discovered.slug}/`, `/zh/project/${discovered.slug}/`];
-
-    for (const path of zhPaths) {
-      try {
-        const zhRes = await crawlFetch(`${WP_BASE}${path}`);
-        if (!zhRes.ok) continue;
-        const zhHtml = await zhRes.text();
-        const zhExtracted = extractArticleContent(zhHtml);
-        if (zhExtracted && hasChinese(zhExtracted.title)) {
-          titleZh = zhExtracted.title;
-          descriptionZh = stripHtml(zhExtracted.content).slice(0, 500);
-          break;
-        }
-      } catch { /* try next ZH URL */ }
-    }
+    const { titleZh, descriptionZh } = await crawlZhContent(
+      discovered.slug, discovered.source, titleEn, descriptionEn,
+    );
 
     const inferredServiceType = inferServiceType(discovered.wpCategories, titleEn, discovered.inferredServiceType);
     const isWholeHouse = discovered.wpCategories.includes(77)
-      || /whole.house|full.house|full.home|全屋/i.test(`${titleEn} ${titleZh}`);
+      || /whole[\s-]house|full[\s-]house|full[\s-]home|全屋/i.test(`${titleEn} ${titleZh}`);
 
     console.log(`  ✓ ${discovered.slug} (${images.length} imgs, ${hasChinese(titleZh) ? 'ZH' : 'EN only'}, ${inferredServiceType})`);
 
@@ -630,48 +822,33 @@ async function crawlProject(discovered: DiscoveredProject): Promise<CrawledProje
 
 function pairImages(images: CrawledImage[]): ImagePairData[] {
   const pairs: ImagePairData[] = [];
-  const used = new Set<number>();
 
-  // Strategy 1: Match by before/after filename keywords
-  const befores = images.map((img, i) => ({ img, i })).filter(({ img }) => img.role === 'before');
-  for (const { img: beforeImg, i: bi } of befores) {
-    const stem = beforeImg.url.replace(/before/i, 'after');
-    const afterIdx = images.findIndex((img, i) => !used.has(i) && i !== bi && img.url === stem);
-    if (afterIdx >= 0) {
-      pairs.push({
-        beforeUrl: beforeImg.url, beforeAltEn: beforeImg.alt || undefined,
-        afterUrl: images[afterIdx].url, afterAltEn: images[afterIdx].alt || undefined,
-      });
-      used.add(bi);
-      used.add(afterIdx);
-    }
-  }
+  const befores = images.filter(img => img.role === 'before');
+  const afters = images.filter(img => img.role === 'after');
+  const unknowns = images.filter(img => img.role === 'unknown');
 
-  // Strategy 2: Match a/b suffix pairs (e.g., image-a.jpg / image-b.jpg)
-  for (let i = 0; i < images.length; i++) {
-    if (used.has(i)) continue;
-    const url = images[i].url;
-    const aMatch = url.match(/(.+)-a(\.[a-z]+)$/i);
-    if (!aMatch) continue;
-    const bUrl = `${aMatch[1]}-b${aMatch[2]}`;
-    const bIdx = images.findIndex((img, j) => !used.has(j) && j !== i && img.url === bUrl);
-    if (bIdx >= 0) {
-      pairs.push({
-        beforeUrl: url, beforeAltEn: images[i].alt || undefined,
-        afterUrl: images[bIdx].url, afterAltEn: images[bIdx].alt || undefined,
-      });
-      used.add(i);
-      used.add(bIdx);
-    }
-  }
-
-  // Strategy 3: Remaining images → after-only pairs (valid per DB CHECK constraint)
-  for (let i = 0; i < images.length; i++) {
-    if (used.has(i)) continue;
+  // Pair before/after by index (1st before ↔ 1st after, etc.)
+  const pairedCount = Math.min(befores.length, afters.length);
+  for (let k = 0; k < pairedCount; k++) {
     pairs.push({
-      afterUrl: images[i].url,
-      afterAltEn: images[i].alt || undefined,
+      beforeUrl: befores[k].url, beforeAltEn: befores[k].alt || undefined,
+      afterUrl: afters[k].url, afterAltEn: afters[k].alt || undefined,
     });
+  }
+
+  // Leftover befores → before-only
+  for (let k = pairedCount; k < befores.length; k++) {
+    pairs.push({ beforeUrl: befores[k].url, beforeAltEn: befores[k].alt || undefined });
+  }
+
+  // Leftover afters → after-only
+  for (let k = pairedCount; k < afters.length; k++) {
+    pairs.push({ afterUrl: afters[k].url, afterAltEn: afters[k].alt || undefined });
+  }
+
+  // Unknown-role images → after-only
+  for (const img of unknowns) {
+    pairs.push({ afterUrl: img.url, afterAltEn: img.alt || undefined });
   }
 
   return pairs;
@@ -727,7 +904,7 @@ function buildPlaceholderEnrichment(crawled: CrawledProject): EnrichedProject {
     categoryEn: cat.en,
     categoryZh: cat.zh,
     locationCity: city,
-    budgetRange: '$15,000 - $30,000',
+    budgetRange: undefined,
     durationEn: '3-4 weeks',
     durationZh: '3-4周',
     spaceTypeEn: 'Residential',
@@ -785,40 +962,41 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
 
     const parsed = CrawlerEnrichmentSchema.parse(parseJsonResponse(content));
     const imagePairs = pairImages(crawled.images);
+    const s = sanitizeText; // sanitize AI output for safe Neon HTTP insertion
 
     return {
       slug: crawled.slug,
-      titleEn: parsed.titleEn,
-      titleZh: parsed.titleZh,
-      descriptionEn: parsed.descriptionEn,
-      descriptionZh: parsed.descriptionZh,
+      titleEn: s(parsed.titleEn),
+      titleZh: s(parsed.titleZh),
+      descriptionEn: s(parsed.descriptionEn),
+      descriptionZh: s(parsed.descriptionZh),
       serviceType: parsed.serviceType,
       categoryEn: SERVICE_TYPE_TO_CATEGORY[parsed.serviceType].en,
       categoryZh: SERVICE_TYPE_TO_CATEGORY[parsed.serviceType].zh,
       locationCity: parsed.locationCity,
       budgetRange: parsed.budgetRange,
-      durationEn: parsed.durationEn,
-      durationZh: parsed.durationZh,
-      spaceTypeEn: parsed.spaceTypeEn,
-      spaceTypeZh: parsed.spaceTypeZh,
+      durationEn: s(parsed.durationEn),
+      durationZh: s(parsed.durationZh),
+      spaceTypeEn: s(parsed.spaceTypeEn),
+      spaceTypeZh: s(parsed.spaceTypeZh),
       heroImageUrl: crawled.heroImageUrl,
-      challengeEn: parsed.challengeEn,
-      challengeZh: parsed.challengeZh,
-      solutionEn: parsed.solutionEn,
-      solutionZh: parsed.solutionZh,
-      badgeEn: parsed.badgeEn,
-      badgeZh: parsed.badgeZh,
+      challengeEn: s(parsed.challengeEn),
+      challengeZh: s(parsed.challengeZh),
+      solutionEn: s(parsed.solutionEn),
+      solutionZh: s(parsed.solutionZh),
+      badgeEn: s(parsed.badgeEn),
+      badgeZh: s(parsed.badgeZh),
       imagePairs,
-      scopes: parsed.scopes,
+      scopes: parsed.scopes.map(sc => ({ en: s(sc.en), zh: s(sc.zh) })),
       isWholeHouse: crawled.isWholeHouse,
-      metaTitleEn: parsed.metaTitleEn,
-      metaTitleZh: parsed.metaTitleZh,
-      metaDescriptionEn: parsed.metaDescriptionEn,
-      metaDescriptionZh: parsed.metaDescriptionZh,
-      focusKeywordEn: parsed.focusKeywordEn,
-      focusKeywordZh: parsed.focusKeywordZh,
-      seoKeywordsEn: parsed.seoKeywordsEn,
-      seoKeywordsZh: parsed.seoKeywordsZh,
+      metaTitleEn: s(parsed.metaTitleEn),
+      metaTitleZh: s(parsed.metaTitleZh),
+      metaDescriptionEn: s(parsed.metaDescriptionEn),
+      metaDescriptionZh: s(parsed.metaDescriptionZh),
+      focusKeywordEn: s(parsed.focusKeywordEn),
+      focusKeywordZh: s(parsed.focusKeywordZh),
+      seoKeywordsEn: s(parsed.seoKeywordsEn),
+      seoKeywordsZh: s(parsed.seoKeywordsZh),
     };
   } catch (err) {
     console.log(`  ⚠ AI enrichment failed for ${crawled.slug}: ${err instanceof Error ? err.message : err}`);
@@ -832,42 +1010,25 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
 // ============================================================================
 
 function groupIntoSites(enriched: EnrichedProject[]): { sites: SiteGroup[]; standalone: EnrichedProject[] } {
-  // Find cities that have at least one whole-house project
-  const wholeHouseCities = new Set<string>();
-  for (const p of enriched) {
-    if (p.isWholeHouse) wholeHouseCities.add(p.locationCity);
-  }
-
-  // Group projects by city for whole-house cities
-  const cityProjects = new Map<string, EnrichedProject[]>();
+  const sites: SiteGroup[] = [];
   const standalone: EnrichedProject[] = [];
 
   for (const p of enriched) {
-    if (wholeHouseCities.has(p.locationCity)) {
-      const existing = cityProjects.get(p.locationCity) || [];
-      existing.push(p);
-      cityProjects.set(p.locationCity, existing);
+    if (p.isWholeHouse) {
+      // Each whole-house project is a specific renovation job → its own site
+      sites.push({
+        slug: p.slug,
+        titleEn: p.titleEn,
+        titleZh: p.titleZh,
+        descriptionEn: p.descriptionEn,
+        descriptionZh: p.descriptionZh,
+        locationCity: p.locationCity,
+        heroImageUrl: p.heroImageUrl,
+        projectSlugs: [p.slug],
+      });
     } else {
       standalone.push(p);
     }
-  }
-
-  // Create site groups
-  const sites: SiteGroup[] = [];
-  for (const [city, projects] of cityProjects) {
-    const slug = formatSlug(`${city}-home-renovation`);
-    const first = projects[0];
-    const cityZh = CITY_ZH[city] || city;
-    sites.push({
-      slug,
-      titleEn: `${city} Home Renovation`,
-      titleZh: `${cityZh}住宅翻新`,
-      descriptionEn: `Complete home renovation in ${city} featuring ${projects.map(p => p.categoryEn.toLowerCase()).join(', ')} updates.`,
-      descriptionZh: `${cityZh}全面住宅翻新，包括${projects.map(p => p.categoryZh).join('、')}更新。`,
-      locationCity: city,
-      heroImageUrl: first.heroImageUrl,
-      projectSlugs: projects.map(p => p.slug),
-    });
   }
 
   return { sites, standalone };
@@ -877,6 +1038,7 @@ function groupIntoSites(enriched: EnrichedProject[]): { sites: SiteGroup[]; stan
 // PHASE 6: DATABASE SEEDING
 // ============================================================================
 
+/** WARNING: Deletes ALL projects and sites. Any manually-added admin content will be lost. */
 async function clearExistingData() {
   console.log('Clearing existing project data...');
   // Delete in FK order
@@ -956,92 +1118,108 @@ async function seedProjects(
   const serviceMap = new Map(serviceRows.map((s: { slug: string; id: string }) => [s.slug, s.id]));
 
   let seeded = 0;
+  let failed = 0;
   for (const p of enriched) {
-    const serviceId = serviceMap.get(p.serviceType) ?? null;
-    const siteId = siteIdMap.get(`project:${p.slug}`) ?? defaultSiteId;
+    try {
+      const serviceId = serviceMap.get(p.serviceType) ?? null;
+      const siteId = siteIdMap.get(`project:${p.slug}`) ?? defaultSiteId;
 
-    const s = sanitizeText; // alias
-    const [inserted] = await db
-      .insert(projectsTable)
-      .values({
-        slug: p.slug,
-        titleEn: s(p.titleEn),
-        titleZh: s(p.titleZh),
-        descriptionEn: s(p.descriptionEn),
-        descriptionZh: s(p.descriptionZh),
-        serviceType: p.serviceType,
-        serviceId,
-        categoryEn: p.categoryEn,
-        categoryZh: p.categoryZh,
-        locationCity: p.locationCity,
-        budgetRange: p.budgetRange,
-        durationEn: p.durationEn,
-        durationZh: p.durationZh,
-        spaceTypeEn: p.spaceTypeEn,
-        spaceTypeZh: p.spaceTypeZh,
-        heroImageUrl: p.heroImageUrl,
-        challengeEn: s(p.challengeEn),
-        challengeZh: s(p.challengeZh),
-        solutionEn: s(p.solutionEn),
-        solutionZh: s(p.solutionZh),
-        featured: false,
-        badgeEn: p.badgeEn || null,
-        badgeZh: p.badgeZh || null,
-        metaTitleEn: p.metaTitleEn ? s(p.metaTitleEn) : null,
-        metaTitleZh: p.metaTitleZh ? s(p.metaTitleZh) : null,
-        metaDescriptionEn: p.metaDescriptionEn ? s(p.metaDescriptionEn) : null,
-        metaDescriptionZh: p.metaDescriptionZh ? s(p.metaDescriptionZh) : null,
-        focusKeywordEn: p.focusKeywordEn || null,
-        focusKeywordZh: p.focusKeywordZh || null,
-        seoKeywordsEn: p.seoKeywordsEn || null,
-        seoKeywordsZh: p.seoKeywordsZh || null,
-        isPublished: true,
-        publishedAt: new Date(),
-        siteId,
-      })
-      .returning({ id: projectsTable.id });
+      const s = sanitizeText; // alias
+      const [inserted] = await db
+        .insert(projectsTable)
+        .values({
+          slug: p.slug,
+          titleEn: s(p.titleEn),
+          titleZh: s(p.titleZh),
+          descriptionEn: s(p.descriptionEn),
+          descriptionZh: s(p.descriptionZh),
+          serviceType: p.serviceType,
+          serviceId,
+          categoryEn: p.categoryEn,
+          categoryZh: p.categoryZh,
+          locationCity: p.locationCity,
+          budgetRange: p.budgetRange || null,
+          durationEn: p.durationEn,
+          durationZh: p.durationZh,
+          spaceTypeEn: p.spaceTypeEn,
+          spaceTypeZh: p.spaceTypeZh,
+          heroImageUrl: s(p.heroImageUrl),
+          challengeEn: s(p.challengeEn),
+          challengeZh: s(p.challengeZh),
+          solutionEn: s(p.solutionEn),
+          solutionZh: s(p.solutionZh),
+          featured: false,
+          badgeEn: p.badgeEn || null,
+          badgeZh: p.badgeZh || null,
+          metaTitleEn: p.metaTitleEn ? s(p.metaTitleEn) : null,
+          metaTitleZh: p.metaTitleZh ? s(p.metaTitleZh) : null,
+          metaDescriptionEn: p.metaDescriptionEn ? s(p.metaDescriptionEn) : null,
+          metaDescriptionZh: p.metaDescriptionZh ? s(p.metaDescriptionZh) : null,
+          focusKeywordEn: p.focusKeywordEn || null,
+          focusKeywordZh: p.focusKeywordZh || null,
+          seoKeywordsEn: p.seoKeywordsEn || null,
+          seoKeywordsZh: p.seoKeywordsZh || null,
+          isPublished: true,
+          publishedAt: new Date(),
+          siteId,
+        })
+        .returning({ id: projectsTable.id });
 
-    const projectId = inserted.id;
+      const projectId = inserted.id;
 
-    // Insert child records in parallel
-    const insertions: Promise<unknown>[] = [];
+      // Insert child records in parallel. Note: if one batch fails, others may
+      // have already committed — re-run the full seed to fix inconsistencies.
+      const insertions: Promise<unknown>[] = [];
 
-    if (p.imagePairs.length > 0) {
-      insertions.push(db.insert(projectImagePairs).values(
-        p.imagePairs.map((pair, i) => ({
-          projectId,
-          beforeImageUrl: pair.beforeUrl ?? null,
-          beforeAltTextEn: pair.beforeAltEn ? s(pair.beforeAltEn) : null,
-          beforeAltTextZh: pair.beforeAltZh ? s(pair.beforeAltZh) : null,
-          afterImageUrl: pair.afterUrl ?? null,
-          afterAltTextEn: pair.afterAltEn ? s(pair.afterAltEn) : null,
-          afterAltTextZh: pair.afterAltZh ? s(pair.afterAltZh) : null,
-          titleEn: pair.titleEn ? s(pair.titleEn) : null,
-          titleZh: pair.titleZh ? s(pair.titleZh) : null,
-          displayOrder: i,
-        })),
-      ));
+      if (p.imagePairs.length > 0) {
+        // Truncation helpers to respect DB varchar limits
+        const url500 = (v?: string) => v ? s(v).slice(0, 500) : null;
+        const alt255 = (v?: string) => v ? s(v).slice(0, 255) : null;
+        const title200 = (v?: string) => v ? s(v).slice(0, 200) : null;
+
+        // Insert image pairs in batches to avoid Neon HTTP body size limits
+        for (let i = 0; i < p.imagePairs.length; i += PAIR_BATCH) {
+          const batch = p.imagePairs.slice(i, i + PAIR_BATCH);
+          insertions.push(db.insert(projectImagePairs).values(
+            batch.map((pair, j) => ({
+              projectId,
+              beforeImageUrl: url500(pair.beforeUrl),
+              beforeAltTextEn: alt255(pair.beforeAltEn),
+              beforeAltTextZh: alt255(pair.beforeAltZh),
+              afterImageUrl: url500(pair.afterUrl),
+              afterAltTextEn: alt255(pair.afterAltEn),
+              afterAltTextZh: alt255(pair.afterAltZh),
+              titleEn: title200(pair.titleEn),
+              titleZh: title200(pair.titleZh),
+              displayOrder: i + j,
+            })),
+          ));
+        }
+      }
+
+      if (p.scopes.length > 0) {
+        insertions.push(db.insert(projectScopes).values(
+          p.scopes.map((scope, i) => ({
+            projectId,
+            scopeEn: s(scope.en),
+            scopeZh: s(scope.zh),
+            displayOrder: i,
+          })),
+        ));
+      }
+
+      await Promise.all(insertions);
+
+      const inSite = siteId !== defaultSiteId;
+      console.log(`  Seeded: ${p.slug} (${p.imagePairs.length} pairs${inSite ? ', in site' : ''})`);
+      seeded++;
+    } catch (err) {
+      console.error(`  ✗ Failed to seed ${p.slug}: ${err instanceof Error ? err.message : err}`);
+      failed++;
     }
-
-    if (p.scopes.length > 0) {
-      insertions.push(db.insert(projectScopes).values(
-        p.scopes.map((scope, i) => ({
-          projectId,
-          scopeEn: scope.en,
-          scopeZh: scope.zh,
-          displayOrder: i,
-        })),
-      ));
-    }
-
-    await Promise.all(insertions);
-
-    const inSite = siteId !== defaultSiteId;
-    console.log(`  Seeded: ${p.slug} (${p.imagePairs.length} pairs${inSite ? ', in site' : ''})`);
-    seeded++;
   }
 
-  console.log(`\nSeeded ${seeded} projects`);
+  console.log(`\nSeeded ${seeded} projects${failed > 0 ? ` (${failed} failed)` : ''}`);
 }
 
 // ============================================================================

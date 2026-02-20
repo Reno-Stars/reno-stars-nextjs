@@ -2,13 +2,13 @@
 
 import { useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Hammer, Bath, Home, ArrowDown, Paintbrush, Building2, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service } from '@/lib/types';
 import { getLocalizedService } from '@/lib/data/services';
 import {
-  GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
@@ -17,15 +17,6 @@ interface ServicesPageProps {
   company: Company;
   services: Service[];
 }
-
-const iconMap: Record<string, typeof Hammer> = {
-  Hammer,
-  Bath,
-  Home,
-  ArrowDown,
-  Paintbrush,
-  Building2,
-};
 
 export default function ServicesPage({ locale: _locale, company, services }: ServicesPageProps) {
   const t = useTranslations();
@@ -54,7 +45,6 @@ export default function ServicesPage({ locale: _locale, company, services }: Ser
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {localizedServices.map((service) => {
-              const Icon = iconMap[service.icon || 'Hammer'] || Hammer;
               return (
                 <Link
                   key={service.slug}
@@ -62,11 +52,14 @@ export default function ServicesPage({ locale: _locale, company, services }: Ser
                   className="rounded-2xl p-6 cursor-pointer transition-all duration-200 group block hover:scale-[1.02]"
                   style={{ boxShadow: neu(6), backgroundColor: CARD }}
                 >
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4"
-                    style={{ backgroundColor: GOLD_PALE }}
-                  >
-                    <Icon className="w-7 h-7" style={{ color: GOLD }} />
-                  </div>
+                  {service.icon && (
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: GOLD_PALE }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={service.icon} alt="" className="w-7 h-7" style={{ filter: GOLD_ICON_FILTER }} />
+                    </div>
+                  )}
                   <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
                     {service.title}
                   </h3>

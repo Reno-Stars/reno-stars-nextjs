@@ -79,7 +79,7 @@ function makeFormData(overrides: Record<string, string> = {}): FormData {
     descriptionZh: '中文描述',
     longDescriptionEn: '',
     longDescriptionZh: '',
-    iconName: '',
+    iconUrl: '',
     imageUrl: '',
     displayOrder: '0',
   };
@@ -114,6 +114,11 @@ describe('Service Actions', () => {
     it('should reject empty descriptions', async () => {
       const result = await createService({}, makeFormData({ descriptionEn: '' }));
       expect(result.error).toBe('Short descriptions are required.');
+    });
+
+    it('should reject invalid icon URL', async () => {
+      const result = await createService({}, makeFormData({ iconUrl: 'not-a-url' }));
+      expect(result.error).toBe('Icon URL is not a valid URL.');
     });
 
     it('should reject invalid image URL', async () => {
@@ -159,6 +164,11 @@ describe('Service Actions', () => {
     it('should reject empty descriptions', async () => {
       const result = await updateService(VALID_UUID, {}, makeFormData({ descriptionEn: '' }));
       expect(result.error).toBe('Short descriptions are required.');
+    });
+
+    it('should reject invalid icon URL', async () => {
+      const result = await updateService(VALID_UUID, {}, makeFormData({ iconUrl: 'not-a-url' }));
+      expect(result.error).toBe('Icon URL is not a valid URL.');
     });
 
     it('should reject invalid image URL', async () => {

@@ -43,7 +43,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
 
   const benefitStats = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
+    { value: '', label: t('stats.liabilityCoverage') },
     { value: company.warranty, label: t('stats.warranty') },
   ], [company, t]);
 

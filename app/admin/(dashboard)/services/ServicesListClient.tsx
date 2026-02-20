@@ -8,13 +8,15 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { deleteService } from '@/app/actions/admin/services';
-import { GOLD, TEXT_MID } from '@/lib/theme';
+import { getAssetUrl } from '@/lib/storage';
+import { GOLD, GOLD_PALE, GOLD_ICON_FILTER, TEXT_MID, TEXT_MUTED } from '@/lib/theme';
 
 interface ServiceRow {
   id: string;
   slug: string;
   titleEn: string;
   titleZh: string;
+  iconUrl: string | null;
   displayOrder: number;
 }
 
@@ -41,7 +43,40 @@ export default function ServicesListClient({ services }: Props) {
 
   const columns: Column<ServiceRow>[] = useMemo(() => [
     { key: 'slug', header: t.services.slug, sortable: true },
-    { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.services.titleZh : t.services.titleEn, sortable: true },
+    {
+      key: locale === 'zh' ? 'titleZh' : 'titleEn',
+      header: locale === 'zh' ? t.services.titleZh : t.services.titleEn,
+      sortable: true,
+      render: (row) => {
+        const title = locale === 'zh' ? row.titleZh : row.titleEn;
+        return (
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {row.iconUrl ? (
+              <span
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: 24, height: 24, borderRadius: 6, backgroundColor: GOLD_PALE, flexShrink: 0,
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={getAssetUrl(row.iconUrl)} alt="" style={{ width: 14, height: 14, filter: GOLD_ICON_FILTER }} />
+              </span>
+            ) : (
+              <span
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  width: 24, height: 24, borderRadius: 6, backgroundColor: `${TEXT_MUTED}20`, flexShrink: 0,
+                  fontSize: 10, color: TEXT_MUTED,
+                }}
+              >
+                ?
+              </span>
+            )}
+            {title}
+          </span>
+        );
+      },
+    },
     { key: 'displayOrder', header: t.services.displayOrder, sortable: true },
   ], [locale, t]);
 

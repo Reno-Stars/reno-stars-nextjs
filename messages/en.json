@@ -269,7 +269,13 @@
     "projects": "projects",
     "clearAll": "Clear Filters",
     "browseByCategory": "Browse by Category",
-    "noProjectsMatch": "No projects match your filters."
+    "noProjectsMatch": "No projects match your filters.",
+    "pagination": "Projects pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "showingProjects": "Showing {start}-{end} of {total} projects"
   },
   "category": {
     "wholeHouse": "Whole House"

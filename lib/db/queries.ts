@@ -118,7 +118,7 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
       row.longDescriptionEn && row.longDescriptionZh
         ? { en: row.longDescriptionEn, zh: row.longDescriptionZh }
         : undefined,
-    icon: row.iconName ?? undefined,
+    icon: row.iconUrl ? getAssetUrl(row.iconUrl) : undefined,
     image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
   }));
 });

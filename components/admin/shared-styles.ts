@@ -15,6 +15,7 @@ export const inputStyle: React.CSSProperties = {
 
 export const readOnlyStyle: React.CSSProperties = {
   ...inputStyle,
+  boxShadow: 'none',
   opacity: 0.7,
   cursor: 'default',
 };
@@ -27,6 +28,7 @@ export const textareaStyle: React.CSSProperties = {
 
 export const readOnlyTextareaStyle: React.CSSProperties = {
   ...textareaStyle,
+  boxShadow: 'none',
   opacity: 0.7,
   cursor: 'default',
   resize: 'none' as const,

@@ -22,7 +22,7 @@ export async function createService(
     const descriptionZh = getString(formData, 'descriptionZh').trim();
     const longDescriptionEn = getString(formData, 'longDescriptionEn') || null;
     const longDescriptionZh = getString(formData, 'longDescriptionZh') || null;
-    const iconName = getString(formData, 'iconName') || null;
+    const iconUrl = getString(formData, 'iconUrl') || null;
     const imageUrl = getString(formData, 'imageUrl') || null;
     const displayOrder = parseInt(getString(formData, 'displayOrder') || '0', 10);
 
@@ -37,6 +37,7 @@ export async function createService(
       descriptionEn, descriptionZh, longDescriptionEn, longDescriptionZh,
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
+    if (iconUrl && !isValidUrl(iconUrl)) return { error: 'Icon URL is not a valid URL.' };
     if (imageUrl && !isValidUrl(imageUrl)) return { error: 'Image URL is not a valid URL.' };
     if (!Number.isFinite(displayOrder) || displayOrder < 0) {
       return { error: 'Display order must be a non-negative number.' };
@@ -53,7 +54,7 @@ export async function createService(
       descriptionZh,
       longDescriptionEn,
       longDescriptionZh,
-      iconName,
+      iconUrl,
       imageUrl,
       displayOrder,
     });
@@ -110,7 +111,7 @@ export async function updateService(
       descriptionZh: getString(formData, 'descriptionZh').trim(),
       longDescriptionEn: getString(formData, 'longDescriptionEn') || null,
       longDescriptionZh: getString(formData, 'longDescriptionZh') || null,
-      iconName: getString(formData, 'iconName') || null,
+      iconUrl: getString(formData, 'iconUrl') || null,
       imageUrl: getString(formData, 'imageUrl') || null,
       updatedAt: new Date(),
     };
@@ -125,6 +126,9 @@ export async function updateService(
       { titleEn: data.titleEn, titleZh: data.titleZh }, MAX_SHORT_TEXT_LENGTH
     );
     if (titleError) return { error: titleError };
+    if (data.iconUrl && !isValidUrl(data.iconUrl)) {
+      return { error: 'Icon URL is not a valid URL.' };
+    }
     if (data.imageUrl && !isValidUrl(data.imageUrl)) {
       return { error: 'Image URL is not a valid URL.' };
     }

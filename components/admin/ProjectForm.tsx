@@ -401,7 +401,7 @@ export default function ProjectForm({
             </select>
           </FormField>
 
-          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} slug={slug} />
+          <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} slug={slug} disabled={!editing} />
 
           <AIBilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={challengeEn} defaultValueZh={challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
           <AIBilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={solutionEn} defaultValueZh={solutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />

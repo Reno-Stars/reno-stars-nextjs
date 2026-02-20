@@ -311,8 +311,7 @@ const zh: AdminMessages = {
     shortDescription: '简短描述',
     longDescription: '详细描述',
     heroImage: '主图 URL',
-    iconName: '图标名称',
-    iconNamePlaceholder: '例如 Hammer',
+    iconImage: '图标图片',
     displayOrder: '显示顺序',
   },
   socialLinks: {

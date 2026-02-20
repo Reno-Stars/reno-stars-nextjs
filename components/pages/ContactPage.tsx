@@ -35,7 +35,7 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
 
   const heroBadges = useMemo(() => [
     { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
-    { label: `${company.liabilityCoverage} ${t('stats.liabilityCoverage')}` },
+    { label: t('stats.liabilityCoverage') },
   ], [company, t]);
 
   const whyContactUs = useMemo(() => [

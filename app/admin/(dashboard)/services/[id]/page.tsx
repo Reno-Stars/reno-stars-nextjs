@@ -32,7 +32,7 @@ export default async function EditServicePage({ params }: PageProps) {
           descriptionZh: service.descriptionZh,
           longDescriptionEn: service.longDescriptionEn,
           longDescriptionZh: service.longDescriptionZh,
-          iconName: service.iconName,
+          iconUrl: service.iconUrl,
           imageUrl: service.imageUrl,
           displayOrder: service.displayOrder,
         }}
