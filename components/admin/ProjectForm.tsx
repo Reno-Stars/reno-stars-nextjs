@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import BilingualInput from './BilingualInput';
-import AIBilingualTextarea from './AIBilingualTextarea';
+import BilingualTextarea from './BilingualTextarea';
 import AIProjectGenerator from './AIProjectGenerator';
 import type { ProjectDescription } from '@/lib/ai/content-optimizer';
 import ConfirmDialog from './ConfirmDialog';
@@ -334,7 +334,7 @@ export default function ProjectForm({
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.projects.tooltips.title} />
 
-          <AIBilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} defaultValueEn={descriptionEn} defaultValueZh={descriptionZh} required rows={6} tooltip={t.projects.tooltips.description} disabled={!editing} />
+          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.projects.description} valueEn={descriptionEn} onChangeEn={setDescriptionEn} valueZh={descriptionZh} onChangeZh={setDescriptionZh} required rows={6} tooltip={t.projects.tooltips.description} disabled={!editing} />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
@@ -403,8 +403,8 @@ export default function ProjectForm({
 
           <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} slug={slug} disabled={!editing} />
 
-          <AIBilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} defaultValueEn={challengeEn} defaultValueZh={challengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
-          <AIBilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} defaultValueEn={solutionEn} defaultValueZh={solutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />
+          <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} valueEn={challengeEn} onChangeEn={setChallengeEn} valueZh={challengeZh} onChangeZh={setChallengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
+          <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} valueEn={solutionEn} onChangeEn={setSolutionEn} valueZh={solutionZh} onChangeZh={setSolutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} valueEn={badgeEn} onChangeEn={setBadgeEn} valueZh={badgeZh} onChangeZh={setBadgeZh} tooltip={t.projects.tooltips.badge} />
 
           {/* SEO Settings */}

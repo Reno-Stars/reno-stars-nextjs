@@ -1,6 +1,6 @@
 'use client';
 
-import { NAVY } from '@/lib/theme';
+import { NAVY, SURFACE } from '@/lib/theme';
 import { inputStyle } from './shared-styles';
 import Tooltip from './Tooltip';
 
@@ -10,9 +10,18 @@ interface BilingualTextareaProps {
   label: string;
   defaultValueEn?: string;
   defaultValueZh?: string;
+  /** Controlled value for EN field */
+  valueEn?: string;
+  /** Change handler for controlled EN field */
+  onChangeEn?: (value: string) => void;
+  /** Controlled value for ZH field */
+  valueZh?: string;
+  /** Change handler for controlled ZH field */
+  onChangeZh?: (value: string) => void;
   required?: boolean;
   rows?: number;
   tooltip?: string;
+  disabled?: boolean;
 }
 
 const textareaStyle = {
@@ -26,10 +35,18 @@ export default function BilingualTextarea({
   label,
   defaultValueEn = '',
   defaultValueZh = '',
+  valueEn,
+  onChangeEn,
+  valueZh,
+  onChangeZh,
   required = false,
   rows = 4,
   tooltip,
+  disabled = false,
 }: BilingualTextareaProps) {
+  const isControlledEn = valueEn !== undefined;
+  const isControlledZh = valueZh !== undefined;
+
   return (
     <fieldset style={{ marginBottom: '1rem', border: 'none', padding: 0, margin: 0 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
@@ -52,10 +69,14 @@ export default function BilingualTextarea({
           <textarea
             id={nameEn}
             name={nameEn}
-            defaultValue={defaultValueEn}
+            {...(isControlledEn
+              ? { value: valueEn, onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeEn?.(e.target.value) }
+              : { defaultValue: defaultValueEn }
+            )}
             required={required}
             rows={rows}
-            style={textareaStyle}
+            style={{ ...textareaStyle, background: SURFACE, opacity: disabled ? 0.6 : 1 }}
+            disabled={disabled}
           />
         </div>
         <div>
@@ -65,10 +86,14 @@ export default function BilingualTextarea({
           <textarea
             id={nameZh}
             name={nameZh}
-            defaultValue={defaultValueZh}
+            {...(isControlledZh
+              ? { value: valueZh, onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeZh?.(e.target.value) }
+              : { defaultValue: defaultValueZh }
+            )}
             required={required}
             rows={rows}
-            style={textareaStyle}
+            style={{ ...textareaStyle, background: SURFACE, opacity: disabled ? 0.6 : 1 }}
+            disabled={disabled}
           />
         </div>
       </div>

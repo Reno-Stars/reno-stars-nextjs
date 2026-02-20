@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useActionState } from 'react';
 import AISiteGenerator from './AISiteGenerator';
 import type { SiteDescription } from '@/lib/ai/content-optimizer';
-import AIBilingualTextarea from './AIBilingualTextarea';
+import BilingualTextarea from './BilingualTextarea';
 import BilingualInput from './BilingualInput';
 import ConfirmDialog from './ConfirmDialog';
 import FormField from './FormField';
@@ -283,7 +283,7 @@ export default function SiteForm({
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.sites.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.sites.tooltips.title} />
 
-          <AIBilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.sites.description} defaultValueEn={descriptionEn} defaultValueZh={descriptionZh} required rows={6} tooltip={t.sites.tooltips.description} disabled={!editing} />
+          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.sites.description} valueEn={descriptionEn} onChangeEn={setDescriptionEn} valueZh={descriptionZh} onChangeZh={setDescriptionZh} required rows={6} tooltip={t.sites.tooltips.description} disabled={!editing} />
 
           <FormField label={t.sites.locationCity} htmlFor="locationCity" tooltip={t.sites.tooltips.city}>
             <select
@@ -369,7 +369,7 @@ export default function SiteForm({
               onChangeZh={setSeoKeywordsZh}
               tooltip={t.sites.tooltips.seoKeywords}
             />
-            <AIBilingualTextarea nameEn="excerptEn" nameZh="excerptZh" label={t.sites.excerpt} defaultValueEn={excerptEn} defaultValueZh={excerptZh} rows={2} tooltip={t.sites.tooltips.excerpt} disabled={!editing} />
+            <BilingualTextarea nameEn="excerptEn" nameZh="excerptZh" label={t.sites.excerpt} valueEn={excerptEn} onChangeEn={setExcerptEn} valueZh={excerptZh} onChangeZh={setExcerptZh} rows={2} tooltip={t.sites.tooltips.excerpt} disabled={!editing} />
           </div>
 
           {/* Checkboxes */}
