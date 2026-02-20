@@ -261,7 +261,6 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
 
   const trustBadges = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: '', label: t('stats.liabilityCoverage') },
     { value: t('process.hero.projectsCount'), label: t('stats.projectsCompleted') },
     { icon: Star, rating: true, label: t('process.hero.googleReviews') },
   ], [company, t]);
@@ -276,7 +275,6 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
 
   const footerStats = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
-    { value: '', label: t('stats.liabilityCoverage') },
     { icon: Star, rating: true, label: t('process.footer.googleRating') },
     { value: company.warranty, label: t('process.footer.warrantyService') },
   ], [company, t]);

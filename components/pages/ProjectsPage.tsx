@@ -530,7 +530,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   aria-label={t('filter.pagination')}
                 >
                   <button
-                    onClick={currentPage > 1 ? () => handlePageChange(currentPage - 1) : undefined}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
                     className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage > 1 ? 'hover:translate-x-[-2px]' : 'opacity-50 cursor-not-allowed'}`}
                     style={{
@@ -573,7 +573,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   </div>
 
                   <button
-                    onClick={currentPage < totalPages ? () => handlePageChange(currentPage + 1) : undefined}
+                    onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
                     className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage < totalPages ? 'hover:translate-x-[2px]' : 'opacity-50 cursor-not-allowed'}`}
                     style={{

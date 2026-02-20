@@ -210,9 +210,17 @@ Individual pages override with page-specific titles, descriptions, and images.
 
 ## Favicon
 
-Uses Next.js App Router file convention:
-- `app/icon.png` — 32×32 favicon (auto-served as `/favicon.ico`)
-- `app/apple-icon.png` — 180×180 Apple touch icon
+Uses Next.js App Router file convention with the real Reno Stars logo (R+house icon mark sourced from the production WordPress site):
+
+| File | Size | Purpose |
+|------|------|---------|
+| `app/icon.png` | 512×512 | Primary favicon (Next.js auto-generates optimized sizes) |
+| `app/apple-icon.png` | 180×180 | Apple touch icon |
+| `public/favicon.ico` | 32×32 | Legacy `.ico` fallback |
+| `public/favicon.png` | 256×256 | High-res PNG fallback |
+| `public/apple-icon.png` | 180×180 | Public fallback |
+
+`app/layout.tsx` relies on file convention (no manual `icons` metadata config needed).
 
 ## Security Headers
 

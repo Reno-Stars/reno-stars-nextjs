@@ -45,4 +45,4 @@ The site is available at `http://localhost:3000`. MinIO console at `http://local
 - **Local-first dev:** Docker Compose with Postgres + MinIO, one-command setup
 - **Type-safe:** Drizzle ORM with full TypeScript inference, strict mode
 - **Performance-optimized:** Homepage split into 12 code-split sections (10 Server Components), resource preloading, lazy-loaded below-fold content
-- **Well-tested:** 326 unit tests across 21 test files (Vitest), covering admin components, hooks, actions, and utilities
+- **Well-tested:** 328 unit tests across 21 test files (Vitest), covering admin components, hooks, actions, and utilities
