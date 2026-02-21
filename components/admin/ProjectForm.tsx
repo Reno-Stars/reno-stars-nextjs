@@ -224,6 +224,10 @@ export default function ProjectForm({
     initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
   );
 
+  const COLLAPSE_THRESHOLD = 3;
+  const [showAllScopes, setShowAllScopes] = useState(false);
+  const [showAllProducts, setShowAllProducts] = useState(false);
+
   // Pre-save warning
   const { showWarning, missingFields, requestSave, confirm: confirmSave, cancel: cancelSave } = useSaveWarning(formAction);
 
@@ -480,29 +484,42 @@ export default function ProjectForm({
               </span>
               <Tooltip content={t.projects.tooltips.serviceScope} />
             </div>
+            {/* Hidden inputs for ALL scopes (form submission) */}
             {scopes.map((scope, idx) => (
+              <div key={`hidden-scope-${scope.id}`}>
+                <input type="hidden" name={`scopes[${idx}].en`} value={scope.en} />
+                <input type="hidden" name={`scopes[${idx}].zh`} value={scope.zh} />
+              </div>
+            ))}
+            {/* Visible scope cards */}
+            {(showAllScopes ? scopes : scopes.slice(0, COLLAPSE_THRESHOLD)).map((scope, idx) => (
               <div key={scope.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
                 <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="English">🇺🇸</span> {t.projects.scopeEn}
                     </label>
-                    <input name={`scopes[${idx}].en`} value={scope.en} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], en: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeEn} aria-label={`Scope ${idx + 1} (English)`} style={fieldStyle} />
+                    <input value={scope.en} onChange={(e) => { const n = [...scopes]; const realIdx = scopes.indexOf(scope); n[realIdx] = { ...n[realIdx], en: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeEn} aria-label={`Scope ${idx + 1} (English)`} style={fieldStyle} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.scopeZh}
                     </label>
-                    <input name={`scopes[${idx}].zh`} value={scope.zh} onChange={(e) => { const n = [...scopes]; n[idx] = { ...n[idx], zh: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeZh} aria-label={`Scope ${idx + 1} (Chinese)`} style={fieldStyle} />
+                    <input value={scope.zh} onChange={(e) => { const n = [...scopes]; const realIdx = scopes.indexOf(scope); n[realIdx] = { ...n[realIdx], zh: e.target.value }; setScopes(n); }} placeholder={t.projects.scopeZh} aria-label={`Scope ${idx + 1} (Chinese)`} style={fieldStyle} />
                   </div>
                 </div>
                 {editing && scopes.length > 1 && (
-                  <button type="button" onClick={() => setScopes(scopes.filter((_, i) => i !== idx))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                  <button type="button" onClick={() => setScopes(scopes.filter((s) => s.id !== scope.id))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
                     {t.common.remove}
                   </button>
                 )}
               </div>
             ))}
+            {scopes.length > COLLAPSE_THRESHOLD && (
+              <button type="button" onClick={() => setShowAllScopes((prev) => !prev)} style={{ color: NAVY, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.25rem 0', marginBottom: '0.25rem' }}>
+                {showAllScopes ? t.common.showLess : t.common.showAll.replace('{count}', String(scopes.length))}
+              </button>
+            )}
             {editing && (
               <button type="button" onClick={() => setScopes([...scopes, { id: crypto.randomUUID(), en: '', zh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
                 {t.projects.addScope}
@@ -518,31 +535,46 @@ export default function ProjectForm({
               </span>
               <Tooltip content={t.projects.tooltips.externalProducts} />
             </div>
+            {/* Hidden inputs for ALL products (form submission) */}
             {externalProducts.map((ep, idx) => (
+              <div key={`hidden-product-${ep.id}`}>
+                <input type="hidden" name={`externalProducts[${idx}].url`} value={ep.url} />
+                <input type="hidden" name={`externalProducts[${idx}].imageUrl`} value={ep.imageUrl} />
+                <input type="hidden" name={`externalProducts[${idx}].labelEn`} value={ep.labelEn} />
+                <input type="hidden" name={`externalProducts[${idx}].labelZh`} value={ep.labelZh} />
+              </div>
+            ))}
+            {/* Visible product cards */}
+            {(showAllProducts ? externalProducts : externalProducts.slice(0, COLLAPSE_THRESHOLD)).map((ep, idx) => (
               <div key={ep.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
-                <input name={`externalProducts[${idx}].url`} value={ep.url} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                <input name={`externalProducts[${idx}].imageUrl`} value={ep.imageUrl} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], imageUrl: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productImageUrl} aria-label={`Product ${idx + 1} image URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <input value={ep.url} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <input value={ep.imageUrl} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], imageUrl: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productImageUrl} aria-label={`Product ${idx + 1} image URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
                 <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="English">🇺🇸</span> {t.projects.productLabelEn}
                     </label>
-                    <input name={`externalProducts[${idx}].labelEn`} value={ep.labelEn} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], labelEn: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelEn} aria-label={`Product ${idx + 1} label (English)`} style={fieldStyle} />
+                    <input value={ep.labelEn} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], labelEn: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelEn} aria-label={`Product ${idx + 1} label (English)`} style={fieldStyle} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
                       <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.productLabelZh}
                     </label>
-                    <input name={`externalProducts[${idx}].labelZh`} value={ep.labelZh} onChange={(e) => { const n = [...externalProducts]; n[idx] = { ...n[idx], labelZh: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelZh} aria-label={`Product ${idx + 1} label (Chinese)`} style={fieldStyle} />
+                    <input value={ep.labelZh} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], labelZh: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelZh} aria-label={`Product ${idx + 1} label (Chinese)`} style={fieldStyle} />
                   </div>
                 </div>
                 {editing && (
-                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((_, i) => i !== idx))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((p) => p.id !== ep.id))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
                     {t.common.remove}
                   </button>
                 )}
               </div>
             ))}
+            {externalProducts.length > COLLAPSE_THRESHOLD && (
+              <button type="button" onClick={() => setShowAllProducts((prev) => !prev)} style={{ color: NAVY, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.25rem 0', marginBottom: '0.25rem' }}>
+                {showAllProducts ? t.common.showLess : t.common.showAll.replace('{count}', String(externalProducts.length))}
+              </button>
+            )}
             {editing && (
               <button type="button" onClick={() => setExternalProducts([...externalProducts, { id: crypto.randomUUID(), url: '', imageUrl: '', labelEn: '', labelZh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
                 {t.projects.addExternalProduct}

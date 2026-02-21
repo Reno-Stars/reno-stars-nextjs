@@ -64,6 +64,8 @@ export default function ImagePairEditor({
   const pairsRef = useRef(pairs);
   useEffect(() => { pairsRef.current = pairs; }, [pairs]);
 
+  const COLLAPSE_THRESHOLD = 3;
+  const [showAllPairs, setShowAllPairs] = useState(false);
   const [expandedPairs, setExpandedPairs] = useState<Set<string>>(new Set());
   const [uploadingPair, setUploadingPair] = useState<string | null>(null);
   const [uploadingSide, setUploadingSide] = useState<'before' | 'after' | null>(null);
@@ -225,8 +227,27 @@ export default function ImagePairEditor({
         </div>
       )}
 
-      {/* Image pairs list */}
-      {pairs.map((pair, idx) => {
+      {/* Hidden form inputs for ALL pairs (always rendered for form submission) */}
+      {pairs.map((pair, idx) => (
+        <div key={`hidden-${pair.id}`}>
+          <input type="hidden" name={`${namePrefix}[${idx}].id`} value={pair.id} />
+          <input type="hidden" name={`${namePrefix}[${idx}].beforeUrl`} value={pair.beforeUrl} />
+          <input type="hidden" name={`${namePrefix}[${idx}].beforeAltEn`} value={pair.beforeAltEn} />
+          <input type="hidden" name={`${namePrefix}[${idx}].beforeAltZh`} value={pair.beforeAltZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].afterUrl`} value={pair.afterUrl} />
+          <input type="hidden" name={`${namePrefix}[${idx}].afterAltEn`} value={pair.afterAltEn} />
+          <input type="hidden" name={`${namePrefix}[${idx}].afterAltZh`} value={pair.afterAltZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].titleEn`} value={pair.titleEn} />
+          <input type="hidden" name={`${namePrefix}[${idx}].titleZh`} value={pair.titleZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].captionEn`} value={pair.captionEn} />
+          <input type="hidden" name={`${namePrefix}[${idx}].captionZh`} value={pair.captionZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].photographerCredit`} value={pair.photographerCredit} />
+          <input type="hidden" name={`${namePrefix}[${idx}].keywords`} value={pair.keywords} />
+        </div>
+      ))}
+
+      {/* Visible image pair cards (collapsed to first N) */}
+      {(showAllPairs ? pairs : pairs.slice(0, COLLAPSE_THRESHOLD)).map((pair, idx) => {
         const isExpanded = expandedPairs.has(pair.id);
         const isUploading = uploadingPair === pair.id;
 
@@ -257,21 +278,6 @@ export default function ImagePairEditor({
                 </button>
               )}
             </div>
-
-            {/* Hidden form inputs - id is used as sentinel by parseImagePairs */}
-            <input type="hidden" name={`${namePrefix}[${idx}].id`} value={pair.id} />
-            <input type="hidden" name={`${namePrefix}[${idx}].beforeUrl`} value={pair.beforeUrl} />
-            <input type="hidden" name={`${namePrefix}[${idx}].beforeAltEn`} value={pair.beforeAltEn} />
-            <input type="hidden" name={`${namePrefix}[${idx}].beforeAltZh`} value={pair.beforeAltZh} />
-            <input type="hidden" name={`${namePrefix}[${idx}].afterUrl`} value={pair.afterUrl} />
-            <input type="hidden" name={`${namePrefix}[${idx}].afterAltEn`} value={pair.afterAltEn} />
-            <input type="hidden" name={`${namePrefix}[${idx}].afterAltZh`} value={pair.afterAltZh} />
-            <input type="hidden" name={`${namePrefix}[${idx}].titleEn`} value={pair.titleEn} />
-            <input type="hidden" name={`${namePrefix}[${idx}].titleZh`} value={pair.titleZh} />
-            <input type="hidden" name={`${namePrefix}[${idx}].captionEn`} value={pair.captionEn} />
-            <input type="hidden" name={`${namePrefix}[${idx}].captionZh`} value={pair.captionZh} />
-            <input type="hidden" name={`${namePrefix}[${idx}].photographerCredit`} value={pair.photographerCredit} />
-            <input type="hidden" name={`${namePrefix}[${idx}].keywords`} value={pair.keywords} />
 
             {/* Before/After image zones side by side */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
@@ -425,6 +431,32 @@ export default function ImagePairEditor({
           </div>
         );
       })}
+
+      {/* Show All / Show Less toggle */}
+      {pairs.length > COLLAPSE_THRESHOLD && (
+        <button
+          type="button"
+          onClick={() => setShowAllPairs((prev) => !prev)}
+          style={{
+            color: NAVY,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            padding: '0.25rem 0',
+            marginBottom: '0.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.25rem',
+          }}
+        >
+          {showAllPairs ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          {showAllPairs
+            ? t.common.showLess
+            : t.common.showAll.replace('{count}', String(pairs.length))}
+        </button>
+      )}
 
       {/* Add pair button */}
       {editing && (

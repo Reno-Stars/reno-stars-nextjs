@@ -31,6 +31,8 @@ const en = {
     saveWarningMessage: 'The following fields are empty. Save anyway?',
     saveAnyway: 'Save Anyway',
     slugRenamed: 'Slug auto-adjusted to',
+    showAll: 'Show All ({count})',
+    showLess: 'Show Less',
   },
   nav: {
     dashboard: 'Dashboard',

@@ -33,6 +33,8 @@ const zh: AdminMessages = {
     saveWarningMessage: '以下字段为空，是否仍要保存？',
     saveAnyway: '仍然保存',
     slugRenamed: 'Slug 已自动调整为',
+    showAll: '显示全部 ({count})',
+    showLess: '收起',
   },
   nav: {
     dashboard: '仪表盘',
