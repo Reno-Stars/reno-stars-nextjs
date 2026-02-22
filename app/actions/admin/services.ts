@@ -95,6 +95,32 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
   }
 }
 
+export async function reorderServices(orderedIds: string[]): Promise<{ error?: string }> {
+  await requireAuth();
+
+  for (const id of orderedIds) {
+    if (!isValidUUID(id)) return { error: 'Invalid service ID in list.' };
+  }
+
+  try {
+    const now = new Date();
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(services)
+          .set({ displayOrder: i, updatedAt: now })
+          .where(eq(services.id, id))
+      )
+    );
+
+    revalidatePath('/admin/services');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder services:', error);
+    return { error: 'Failed to reorder services.' };
+  }
+}
+
 export async function updateService(
   id: string,
   _prevState: { success?: boolean; error?: string },

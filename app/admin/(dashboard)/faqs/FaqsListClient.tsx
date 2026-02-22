@@ -8,8 +8,9 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
-import { toggleFaqActive, deleteFaq } from '@/app/actions/admin/faqs';
-import { GOLD, TEXT_MID } from '@/lib/theme';
+import { useDragReorder } from '@/hooks/useDragReorder';
+import { toggleFaqActive, deleteFaq, reorderFaqs } from '@/app/actions/admin/faqs';
+import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface FaqRow {
   id: string;
@@ -29,9 +30,28 @@ export default function FaqsListClient({ faqs }: Props) {
   const [isPending, startTransition] = useTransition();
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [openFaqId, setOpenFaqId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
+
+  const {
+    draggedId, dragOverId, localOrder, isReordering,
+    handleDragStart, handleDragOver, handleDragLeave, handleDrop, handleDragEnd,
+  } = useDragReorder<FaqRow>({
+    items: faqs,
+    getId: (item) => item.id,
+    getDisplayOrder: (item) => item.displayOrder,
+    isIncluded: (item) => item.isActive,
+    onReorder: reorderFaqs,
+    onSuccess: () => toast(t.common.savedSuccessfully, 'success'),
+    onError: (err) => toast(err, 'error'),
+  });
+
+  const displayData = useMemo(
+    () => localOrder ?? [...faqs].sort((a, b) => a.displayOrder - b.displayOrder),
+    [localOrder, faqs],
+  );
 
   const handleDelete = () => {
     if (!deleteId) return;
@@ -49,14 +69,13 @@ export default function FaqsListClient({ faqs }: Props) {
       {
         key: locale === 'zh' ? 'questionZh' : 'questionEn',
         header: locale === 'zh' ? t.faqs.questionZh : t.faqs.questionEn,
-        sortable: true,
         render: (row: FaqRow) => (
           <span style={{ maxWidth: '300px', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {getQ(row)}
           </span>
         ),
       },
-      { key: 'displayOrder', header: t.faqs.displayOrder, sortable: true },
+      { key: 'displayOrder', header: t.faqs.displayOrder },
       {
         key: 'isActive',
         header: t.faqs.active,
@@ -79,13 +98,31 @@ export default function FaqsListClient({ faqs }: Props) {
     ];
   }, [locale, pendingId, toast, t]);
 
+  const activeFaqs = useMemo(
+    () => displayData
+      .filter((f) => f.isActive)
+      .map((f) => ({
+        id: f.id,
+        question: locale === 'zh' ? f.questionZh : f.questionEn,
+        answer: locale === 'zh' ? f.answerZh : f.answerEn,
+      })),
+    [displayData, locale],
+  );
+
   return (
     <>
       <DataTable
         columns={columns}
-        data={faqs}
+        data={displayData}
         getRowKey={(row) => row.id}
         searchKeys={['questionEn', 'questionZh']}
+        headerAction={isReordering ? (
+          <span style={{ fontSize: '0.8125rem', color: TEXT_MID }}>{t.common.saving}</span>
+        ) : undefined}
+        dragReorder={{
+          draggedId, dragOverId, isReordering,
+          handleDragStart, handleDragOver, handleDragLeave, handleDrop, handleDragEnd,
+        }}
         actions={(row) => (
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <Link
@@ -111,6 +148,85 @@ export default function FaqsListClient({ faqs }: Props) {
           </div>
         )}
       />
+
+      {/* Landing page preview */}
+      {activeFaqs.length > 0 && (
+        <div style={{ marginTop: '2rem' }}>
+          <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: TEXT_MID, marginBottom: '1rem' }}>
+            {t.faqs.landingPreview}
+          </h3>
+          <div
+            style={{
+              backgroundColor: SURFACE_ALT,
+              borderRadius: 16,
+              padding: '1.5rem',
+            }}
+          >
+            <div style={{ maxWidth: 640, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {activeFaqs.map((faq) => {
+                const isOpen = openFaqId === faq.id;
+                return (
+                  <div
+                    key={faq.id}
+                    style={{
+                      backgroundColor: CARD,
+                      borderRadius: 16,
+                      boxShadow: neu(4),
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqId(isOpen ? null : faq.id)}
+                      aria-expanded={isOpen}
+                      aria-controls={`preview-faq-${faq.id}`}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1rem 1.25rem',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                      }}
+                    >
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: TEXT, paddingRight: '1rem' }}>
+                        {faq.question}
+                      </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke={GOLD}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        style={{
+                          flexShrink: 0,
+                          transition: 'transform 0.3s',
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        }}
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div id={`preview-faq-${faq.id}`} style={{ padding: '0 1.25rem 1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: TEXT_MID }}>
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
       <ConfirmDialog
         open={!!deleteId}
         title={t.faqs.deleteFaq}

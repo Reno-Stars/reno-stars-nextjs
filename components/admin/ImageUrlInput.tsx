@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { uploadImage } from '@/app/actions/admin/upload';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
@@ -45,9 +45,6 @@ export default function ImageUrlInput({
     setImageError(false);
   }, [url]);
 
-  // Resolve production URLs to configured storage origin for preview
-  const previewSrc = useMemo(() => (url ? getAssetUrl(url) : ''), [url]);
-
   const handleUpload = useCallback(async (file: File) => {
     setUploading(true);
     setUploadError('');
@@ -55,7 +52,11 @@ export default function ImageUrlInput({
     const formData = new FormData();
     formData.set('file', file);
     if (slug) {
-      formData.set('customKey', `${slug}-${imageRole}`);
+      // Include a short timestamp suffix so each upload produces a unique S3 key/URL.
+      // Without this, re-uploading the same file type overwrites the same key and
+      // the browser serves the cached old image (identical URL).
+      const ts = Date.now().toString(36);
+      formData.set('customKey', `${slug}-${imageRole}-${ts}`);
     }
 
     const result = await uploadImage({}, formData);
@@ -234,7 +235,7 @@ export default function ImageUrlInput({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={previewSrc}
+            src={getAssetUrl(url)}
             alt={t.common.preview}
             style={{ width: '100%', height: 'auto', display: 'block' }}
             onError={(e) => {

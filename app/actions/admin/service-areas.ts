@@ -80,6 +80,32 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
   }
 }
 
+export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error?: string }> {
+  await requireAuth();
+
+  for (const id of orderedIds) {
+    if (!isValidUUID(id)) return { error: 'Invalid service area ID in list.' };
+  }
+
+  try {
+    const now = new Date();
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(serviceAreas)
+          .set({ displayOrder: i, updatedAt: now })
+          .where(eq(serviceAreas.id, id))
+      )
+    );
+
+    revalidatePath('/admin/service-areas');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder service areas:', error);
+    return { error: 'Failed to reorder service areas.' };
+  }
+}
+
 export async function updateServiceArea(
   id: string,
   _prevState: { success?: boolean; error?: string },

@@ -33,6 +33,7 @@ const en = {
     slugRenamed: 'Slug auto-adjusted to',
     showAll: 'Show All ({count})',
     showLess: 'Show Less',
+    dragToReorder: 'Drag to reorder',
   },
   nav: {
     dashboard: 'Dashboard',
@@ -273,6 +274,7 @@ const en = {
     displayOrder: 'Display Order',
     active: 'Active',
     published: 'Published',
+    landingPreview: 'Landing Page Preview',
   },
   gallery: {
     title: 'Gallery',
@@ -313,6 +315,8 @@ const en = {
     heroImage: 'Hero Image URL',
     iconImage: 'Icon Image',
     displayOrder: 'Display Order',
+    landingPreview: 'Landing Page Preview',
+    exploreService: 'Explore {service}',
   },
   socialLinks: {
     title: 'Social Links',
@@ -340,6 +344,7 @@ const en = {
     slug: 'Slug',
     displayOrder: 'Display Order',
     isActive: 'Active',
+    landingPreview: 'Landing Page Preview',
     descriptionLabel: 'Description',
     metaTitle: 'Meta Title',
     metaDescription: 'Meta Description',
@@ -365,6 +370,7 @@ const en = {
     isActive: 'Active',
     labelField: 'Label',
     valueField: 'Value',
+    landingPreview: 'Landing Page Preview',
   },
   company: {
     title: 'Company Info',

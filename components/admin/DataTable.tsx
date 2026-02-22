@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, Fragment } from 'react';
 import { CARD, NAVY, TEXT_MID, TEXT_MUTED, GOLD, SURFACE, SURFACE_ALT, neu, neuIn } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import DragHandleIcon from '@/components/admin/DragHandleIcon';
 import type { ReactNode } from 'react';
 
 export interface Column<T> {
@@ -11,6 +12,18 @@ export interface Column<T> {
   render?: (row: T) => ReactNode;
   sortable?: boolean;
   width?: string;
+}
+
+/** Config object passed from list clients that use useDragReorder */
+export interface DragReorderConfig {
+  draggedId: string | null;
+  dragOverId: string | null;
+  isReordering: boolean;
+  handleDragStart: (e: React.DragEvent, id: string) => void;
+  handleDragOver: (e: React.DragEvent, id: string) => void;
+  handleDragLeave: () => void;
+  handleDrop: (e: React.DragEvent, targetId: string) => void;
+  handleDragEnd: () => void;
 }
 
 interface DataTableProps<T> {
@@ -26,6 +39,8 @@ interface DataTableProps<T> {
   filterRow?: (row: T, query: string) => boolean;
   /** Optional content rendered on the right side of the search bar row */
   headerAction?: ReactNode;
+  /** Enable drag-and-drop row reordering with insertion line indicator */
+  dragReorder?: DragReorderConfig;
 }
 
 const EMPTY_SEARCH_KEYS: string[] = [];
@@ -45,6 +60,7 @@ export default function DataTable<T extends object>({
   renderExpandedRow,
   filterRow,
   headerAction,
+  dragReorder,
 }: DataTableProps<T>) {
   const t = useAdminTranslations();
   const [search, setSearch] = useState('');
@@ -62,6 +78,7 @@ export default function DataTable<T extends object>({
   }, [data.length]);
 
   const isSearching = search.trim().length > 0;
+  const isDragEnabled = !!dragReorder && !isSearching;
 
   const filtered = useMemo(() => {
     if (!isSearching) return data;
@@ -90,6 +107,14 @@ export default function DataTable<T extends object>({
   const totalPages = Math.ceil(sorted.length / pageSize);
   const paged = sorted.slice(page * pageSize, (page + 1) * pageSize);
 
+  // Build index map for insertion line: rowKey → index in paged array
+  const dragIndexMap = useMemo(() => {
+    if (!dragReorder?.draggedId || !dragReorder.dragOverId) return null;
+    const map = new Map<string, number>();
+    paged.forEach((row, i) => map.set(getRowKey(row), i));
+    return map;
+  }, [dragReorder?.draggedId, dragReorder?.dragOverId, paged, getRowKey]);
+
   function handleSort(key: string) {
     if (sortKey === key) {
       setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
@@ -98,6 +123,25 @@ export default function DataTable<T extends object>({
       setSortDir('asc');
     }
   }
+
+  /**
+   * Determine where to show the insertion line on the dragOver target row.
+   * Returns 'top' | 'bottom' | null.
+   * - Dragging down (D < T): show line on bottom of target
+   * - Dragging up (D > T): show line on top of target
+   */
+  function getInsertionEdge(rowKey: string): 'top' | 'bottom' | null {
+    if (!dragReorder?.draggedId || !dragReorder.dragOverId || !dragIndexMap) return null;
+    if (rowKey !== dragReorder.dragOverId) return null;
+    if (rowKey === dragReorder.draggedId) return null;
+    const D = dragIndexMap.get(dragReorder.draggedId);
+    const T = dragIndexMap.get(dragReorder.dragOverId);
+    if (D === undefined || T === undefined) return null;
+    return D < T ? 'bottom' : 'top';
+  }
+
+  const hasDragCol = !!dragReorder;
+  const totalCols = columns.length + (actions ? 1 : 0) + (renderExpandedRow ? 1 : 0) + (hasDragCol ? 1 : 0);
 
   return (
     <div>
@@ -149,40 +193,46 @@ export default function DataTable<T extends object>({
           >
             <thead>
               <tr style={{ borderBottom: `1px solid ${SURFACE}` }}>
+                {hasDragCol && (
+                  <th style={{ width: '2rem', padding: '0.75rem 0 0.75rem 0.75rem' }} />
+                )}
                 {renderExpandedRow && <th style={{ width: '1.5rem' }} />}
-                {columns.map((col) => (
-                  <th
-                    key={col.key}
-                    tabIndex={col.sortable ? 0 : undefined}
-                    role={col.sortable ? 'button' : undefined}
-                    aria-sort={sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined}
-                    onKeyDown={col.sortable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort(col.key); } } : undefined}
-                    style={{
-                      padding: '0.75rem 1rem',
-                      textAlign: 'left',
-                      color: TEXT_MUTED,
-                      fontWeight: 600,
-                      fontSize: '0.75rem',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      cursor: col.sortable ? 'pointer' : 'default',
-                      userSelect: 'none',
-                      outline: 'none',
-                      whiteSpace: 'nowrap',
-                      width: col.width,
-                    }}
-                    onFocus={(e) => { if (col.sortable) e.currentTarget.style.outline = `2px solid ${GOLD}`; }}
-                    onBlur={(e) => { e.currentTarget.style.outline = 'none'; }}
-                    onClick={() => col.sortable && handleSort(col.key)}
-                  >
-                    {col.header}
-                    {col.sortable && sortKey === col.key && (
-                      <span aria-hidden="true" style={{ marginLeft: '0.25rem' }}>
-                        {sortDir === 'asc' ? '\u2191' : '\u2193'}
-                      </span>
-                    )}
-                  </th>
-                ))}
+                {columns.map((col) => {
+                  const effectiveSortable = col.sortable && !dragReorder;
+                  return (
+                    <th
+                      key={col.key}
+                      tabIndex={effectiveSortable ? 0 : undefined}
+                      role={effectiveSortable ? 'button' : undefined}
+                      aria-sort={sortKey === col.key && effectiveSortable ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined}
+                      onKeyDown={effectiveSortable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSort(col.key); } } : undefined}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        textAlign: 'left',
+                        color: TEXT_MUTED,
+                        fontWeight: 600,
+                        fontSize: '0.75rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        cursor: effectiveSortable ? 'pointer' : 'default',
+                        userSelect: 'none',
+                        outline: 'none',
+                        whiteSpace: 'nowrap',
+                        width: col.width,
+                      }}
+                      onFocus={(e) => { if (effectiveSortable) e.currentTarget.style.outline = `2px solid ${GOLD}`; }}
+                      onBlur={(e) => { e.currentTarget.style.outline = 'none'; }}
+                      onClick={() => effectiveSortable && handleSort(col.key)}
+                    >
+                      {col.header}
+                      {effectiveSortable && sortKey === col.key && (
+                        <span aria-hidden="true" style={{ marginLeft: '0.25rem' }}>
+                          {sortDir === 'asc' ? '\u2191' : '\u2193'}
+                        </span>
+                      )}
+                    </th>
+                  );
+                })}
                 {actions && (
                   <th
                     style={{
@@ -204,7 +254,7 @@ export default function DataTable<T extends object>({
               {paged.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={columns.length + (actions ? 1 : 0) + (renderExpandedRow ? 1 : 0)}
+                    colSpan={totalCols}
                     style={{
                       padding: '2rem',
                       textAlign: 'center',
@@ -218,17 +268,36 @@ export default function DataTable<T extends object>({
                 paged.map((row) => {
                   const rowKey = getRowKey(row);
                   const isExpanded = isSearching || expandedKey === rowKey;
+                  const isDragged = dragReorder?.draggedId === rowKey;
+                  const insertionEdge = getInsertionEdge(rowKey);
+
                   return (
                     <Fragment key={rowKey}>
                       <tr
                         role={renderExpandedRow ? 'button' : undefined}
                         tabIndex={renderExpandedRow ? 0 : undefined}
                         aria-expanded={renderExpandedRow ? isExpanded : undefined}
+                        draggable={isDragEnabled ? true : undefined}
+                        onDragStart={isDragEnabled ? (e) => dragReorder!.handleDragStart(e, rowKey) : undefined}
+                        onDragOver={isDragEnabled ? (e) => dragReorder!.handleDragOver(e, rowKey) : undefined}
+                        onDragLeave={isDragEnabled ? dragReorder!.handleDragLeave : undefined}
+                        onDrop={isDragEnabled ? (e) => dragReorder!.handleDrop(e, rowKey) : undefined}
+                        onDragEnd={isDragEnabled ? dragReorder!.handleDragEnd : undefined}
                         style={{
-                          borderBottom: `1px solid ${SURFACE}`,
-                          cursor: renderExpandedRow ? 'pointer' : undefined,
-                          backgroundColor: isExpanded ? SURFACE_ALT : undefined,
+                          borderBottom: insertionEdge === 'bottom'
+                            ? `2px solid ${GOLD}`
+                            : `1px solid ${SURFACE}`,
+                          borderTop: insertionEdge === 'top'
+                            ? `2px solid ${GOLD}`
+                            : undefined,
+                          cursor: renderExpandedRow ? 'pointer' : isDragEnabled ? 'grab' : undefined,
+                          backgroundColor: isExpanded
+                            ? SURFACE_ALT
+                            : insertionEdge
+                              ? `${GOLD}08`
+                              : undefined,
                           transition: 'background-color 0.15s ease',
+                          ...(isDragged ? { opacity: 0.4 } : {}),
                         }}
                         onClick={renderExpandedRow ? () => toggleExpanded(rowKey) : undefined}
                         onKeyDown={renderExpandedRow ? (e) => {
@@ -238,6 +307,19 @@ export default function DataTable<T extends object>({
                           }
                         } : undefined}
                       >
+                        {hasDragCol && (
+                          <td
+                            style={{
+                              padding: '0.625rem 0 0.625rem 0.75rem',
+                              width: '2rem',
+                              color: isDragEnabled ? TEXT_MUTED : `${TEXT_MUTED}40`,
+                              cursor: isDragEnabled ? 'grab' : 'default',
+                            }}
+                            title={isDragEnabled ? t.common.dragToReorder : undefined}
+                          >
+                            <DragHandleIcon size={16} />
+                          </td>
+                        )}
                         {renderExpandedRow && (
                           <td style={{ padding: '0.625rem 0 0.625rem 1rem', width: '1.5rem' }}>
                             <span
@@ -282,7 +364,7 @@ export default function DataTable<T extends object>({
                       {renderExpandedRow && (
                         <tr>
                           <td
-                            colSpan={columns.length + (actions ? 1 : 0) + 1}
+                            colSpan={totalCols}
                             style={{
                               padding: 0,
                               backgroundColor: SURFACE_ALT,

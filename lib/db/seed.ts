@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import { db } from './index';
 import {
   services,
@@ -9,6 +10,7 @@ import {
   aboutSections,
   galleryItems,
   faqs,
+  partners,
 } from './schema';
 
 async function seed() {
@@ -453,6 +455,78 @@ async function seed() {
   } else {
     console.log('FAQs already exist, skipping');
   }
+
+  // Seed Partners (upsert - insert or skip on conflict)
+  await db
+    .insert(partners)
+    .values([
+      {
+        nameEn: 'Home Depot',
+        nameZh: '家得宝',
+        logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/TheHomeDepot.svg/512px-TheHomeDepot.svg.png',
+        websiteUrl: 'https://www.homedepot.ca',
+        displayOrder: 0,
+      },
+      {
+        nameEn: 'IKEA',
+        nameZh: '宜家',
+        logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/512px-Ikea_logo.svg.png',
+        websiteUrl: 'https://www.ikea.com/ca',
+        displayOrder: 1,
+      },
+      {
+        nameEn: 'Kohler',
+        nameZh: '科勒',
+        logoUrl: 'https://cdn.worldvectorlogo.com/logos/kohler.svg',
+        websiteUrl: 'https://www.kohler.ca',
+        displayOrder: 2,
+      },
+      {
+        nameEn: 'Moen',
+        nameZh: '摩恩',
+        logoUrl: 'https://cdn.worldvectorlogo.com/logos/moen.svg',
+        websiteUrl: 'https://www.moen.ca',
+        displayOrder: 3,
+      },
+      {
+        nameEn: 'Delta Faucet',
+        nameZh: 'Delta 水龙头',
+        logoUrl: 'https://cdn.worldvectorlogo.com/logos/delta-faucet.svg',
+        websiteUrl: 'https://www.deltafaucet.ca',
+        displayOrder: 4,
+      },
+      {
+        nameEn: 'Benjamin Moore',
+        nameZh: 'Benjamin Moore',
+        logoUrl: 'https://cdn.worldvectorlogo.com/logos/benjamin-moore-paints-1.svg',
+        websiteUrl: 'https://www.benjaminmoore.com',
+        displayOrder: 5,
+      },
+      {
+        nameEn: 'Sherwin-Williams',
+        nameZh: '宣伟涂料',
+        logoUrl: 'https://cdn.worldvectorlogo.com/logos/sherwin-williams-2.svg',
+        websiteUrl: 'https://www.sherwin-williams.com',
+        displayOrder: 6,
+      },
+      {
+        nameEn: 'Caesarstone',
+        nameZh: 'Caesarstone',
+        logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/14/Caesarstone_logo_-_2.png',
+        websiteUrl: 'https://www.caesarstone.ca',
+        displayOrder: 7,
+      },
+    ])
+    .onConflictDoUpdate({
+      target: partners.nameEn,
+      set: {
+        nameZh: sql`excluded.name_zh`,
+        logoUrl: sql`excluded.logo_url`,
+        websiteUrl: sql`excluded.website_url`,
+        displayOrder: sql`excluded.display_order`,
+      },
+    });
+  console.log('Partners seeded');
 
   console.log('Database seeded successfully!');
 }

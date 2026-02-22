@@ -37,6 +37,31 @@ export async function createTrustBadge(
   redirect('/admin/trust-badges');
 }
 
+export async function reorderTrustBadges(orderedIds: string[]): Promise<{ error?: string }> {
+  await requireAuth();
+
+  for (const id of orderedIds) {
+    if (!isValidUUID(id)) return { error: 'Invalid trust badge ID in list.' };
+  }
+
+  try {
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(trustBadges)
+          .set({ displayOrder: i })
+          .where(eq(trustBadges.id, id))
+      )
+    );
+
+    revalidatePath('/admin/trust-badges');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder trust badges:', error);
+    return { error: 'Failed to reorder trust badges.' };
+  }
+}
+
 export async function deleteTrustBadge(id: string): Promise<{ error?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid trust badge ID.' };

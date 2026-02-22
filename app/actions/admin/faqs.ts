@@ -43,6 +43,32 @@ export async function createFaq(
   redirect('/admin/faqs');
 }
 
+export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: string }> {
+  await requireAuth();
+
+  for (const id of orderedIds) {
+    if (!isValidUUID(id)) return { error: 'Invalid FAQ ID in list.' };
+  }
+
+  try {
+    const now = new Date();
+    await Promise.all(
+      orderedIds.map((id, i) =>
+        db.update(faqs)
+          .set({ displayOrder: i, updatedAt: now })
+          .where(eq(faqs.id, id))
+      )
+    );
+
+    revalidatePath('/admin/faqs');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to reorder FAQs:', error);
+    return { error: 'Failed to reorder FAQs.' };
+  }
+}
+
 export async function updateFaq(
   id: string,
   _prevState: { success?: boolean; error?: string },

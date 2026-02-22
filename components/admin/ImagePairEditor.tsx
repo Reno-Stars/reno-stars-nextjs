@@ -132,11 +132,13 @@ export default function ImagePairEditor({
         const fd = new FormData();
         fd.set('file', file);
 
-        // Build custom S3 key based on slug
+        // Build custom S3 key based on slug.  Include a short timestamp so each
+        // upload produces a unique URL (avoids browser-cache stale-image issues).
         if (slug) {
           const idx = pairsRef.current.findIndex((p) => p.id === pairId);
           const sideLabel = side === 'before' ? 'before-renovation' : 'after-renovation';
-          fd.set('customKey', `${slug}-${sideLabel}-${idx + 1}`);
+          const ts = Date.now().toString(36);
+          fd.set('customKey', `${slug}-${sideLabel}-${idx + 1}-${ts}`);
         }
 
         const result = await uploadImage({}, fd);

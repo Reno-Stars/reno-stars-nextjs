@@ -35,6 +35,7 @@ const zh: AdminMessages = {
     slugRenamed: 'Slug 已自动调整为',
     showAll: '显示全部 ({count})',
     showLess: '收起',
+    dragToReorder: '拖拽重新排序',
   },
   nav: {
     dashboard: '仪表盘',
@@ -275,6 +276,7 @@ const zh: AdminMessages = {
     displayOrder: '显示顺序',
     active: '启用',
     published: '已发布',
+    landingPreview: '落地页预览',
   },
   gallery: {
     title: '图片库',
@@ -315,6 +317,8 @@ const zh: AdminMessages = {
     heroImage: '主图 URL',
     iconImage: '图标图片',
     displayOrder: '显示顺序',
+    landingPreview: '落地页预览',
+    exploreService: '探索{service}',
   },
   socialLinks: {
     title: '社交链接',
@@ -342,6 +346,7 @@ const zh: AdminMessages = {
     slug: 'Slug',
     displayOrder: '显示顺序',
     isActive: '启用',
+    landingPreview: '落地页预览',
     descriptionLabel: '描述',
     metaTitle: 'Meta 标题',
     metaDescription: 'Meta 描述',
@@ -367,6 +372,7 @@ const zh: AdminMessages = {
     isActive: '启用',
     labelField: '标签',
     valueField: '值',
+    landingPreview: '落地页预览',
   },
   company: {
     title: '公司信息',
