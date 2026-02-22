@@ -482,6 +482,17 @@ if (existingPairs.length > 0) {
 
 For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
 
+### Reorder Actions Pattern
+
+Six entity types support drag-and-drop display order reordering via server actions: services, service areas, FAQs, trust badges, gallery items, and partners. All follow the same pattern:
+
+1. `requireAuth()` — admin session required
+2. **Max-length guard**: `orderedIds.length > 200` — prevents unbounded parallel DB updates
+3. **Duplicate-ID guard**: `new Set(orderedIds).size !== orderedIds.length` — catches buggy callers
+4. **UUID validation**: Each ID checked via `isValidUUID()`
+5. `Promise.all` update `displayOrder: i` for each item (plus `updatedAt: now` where the table has that column — `trustBadges` does not)
+6. Revalidate admin + public paths
+
 ## Project Modal (`components/ProjectModal.tsx`)
 
 Rich image gallery modal with image-pairs model and mobile-friendly interactions:
