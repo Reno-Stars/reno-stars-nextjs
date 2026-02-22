@@ -87,17 +87,6 @@ const BC_CITIES = [
   'Delta', 'Langley', 'Abbotsford', 'Chilliwack', 'Squamish', 'Victoria',
 ];
 
-/** City name → Chinese translation */
-const CITY_ZH: Record<string, string> = {
-  Vancouver: '温哥华', Burnaby: '本拿比', Richmond: '列治文',
-  Surrey: '素里', Coquitlam: '高贵林', 'Port Coquitlam': '高贵林港',
-  'Port Moody': '穆迪港', 'New Westminster': '新威斯敏斯特',
-  Delta: 'Delta', Langley: '兰里', 'White Rock': '白石',
-  'Maple Ridge': '枫树岭', 'North Vancouver': '北温哥华',
-  'West Vancouver': '西温哥华', Abbotsford: '阿伯茨福德',
-  Chilliwack: '奇利瓦克', Squamish: '斯阔米什', Victoria: '维多利亚',
-};
-
 /** Known non-project slugs to skip when scraping category pages */
 const NON_PROJECT_SLUGS = new Set([
   'about', 'contact', 'services', 'blog', 'news', 'faq', 'privacy-policy',
@@ -397,7 +386,9 @@ function normalizeImageUrl(url: string): string {
 function sanitizeText(text: string): string {
   return text
     .replace(/\\/g, '')  // Remove all backslashes
+    // eslint-disable-next-line no-control-regex
     .replace(/\x00/g, '') // Remove null bytes
+    // eslint-disable-next-line no-control-regex
     .replace(/[\x01-\x08\x0b\x0c\x0e-\x1f]/g, '') // Remove control characters
     // Remove lone surrogates (can appear when .slice() splits a surrogate pair / emoji)
     .replace(/[\ud800-\udbff](?![\udc00-\udfff])/g, '')  // lone high surrogate
@@ -459,11 +450,6 @@ function inferLocationCity(title: string, description: string): string {
     if (text.toLowerCase().includes(city.toLowerCase())) return city;
   }
   return 'Vancouver';
-}
-
-/** Convert text to a slug: lowercase, hyphens, no consecutive hyphens. */
-function formatSlug(text: string): string {
-  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
 }
 
 /** Filename patterns for non-project images (logos, headers, placeholders, stock photos). */
