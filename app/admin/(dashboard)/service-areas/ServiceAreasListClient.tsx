@@ -62,7 +62,6 @@ export default function ServiceAreasListClient({ areas }: Props) {
   };
 
   const columns: Column<ServiceAreaRow>[] = useMemo(() => {
-    const getN = (row: ServiceAreaRow) => locale === 'zh' ? row.nameZh : row.nameEn;
     return [
       { key: 'slug', header: t.serviceAreas.slug },
       { key: locale === 'zh' ? 'nameZh' : 'nameEn', header: locale === 'zh' ? t.serviceAreas.nameZh : t.serviceAreas.nameEn },
@@ -74,7 +73,7 @@ export default function ServiceAreasListClient({ areas }: Props) {
           <ToggleButton
             isActive={row.isActive}
             isPending={pendingId === row.id}
-            ariaLabel={`Toggle active for ${getN(row)}`}
+            ariaLabel={`Toggle active for ${locale === 'zh' ? row.nameZh : row.nameEn}`}
             onClick={() => {
               setPendingId(row.id);
               startTransition(async () => {

@@ -40,11 +40,14 @@ export async function createTrustBadge(
 export async function reorderTrustBadges(orderedIds: string[]): Promise<{ error?: string }> {
   await requireAuth();
 
+  if (orderedIds.length > 200) return { error: 'Too many items.' };
+  if (new Set(orderedIds).size !== orderedIds.length) return { error: 'Duplicate IDs.' };
   for (const id of orderedIds) {
     if (!isValidUUID(id)) return { error: 'Invalid trust badge ID in list.' };
   }
 
   try {
+    // trustBadges table has no updatedAt column (unlike services/serviceAreas/faqs)
     await Promise.all(
       orderedIds.map((id, i) =>
         db.update(trustBadges)

@@ -122,7 +122,8 @@ export async function reorderGalleryItems(
 ): Promise<{ error?: string }> {
   await requireAuth();
 
-  // Validate all IDs
+  if (orderedIds.length > 200) return { error: 'Too many items.' };
+  if (new Set(orderedIds).size !== orderedIds.length) return { error: 'Duplicate IDs.' };
   for (const id of orderedIds) {
     if (!isValidUUID(id)) return { error: 'Invalid gallery item ID in list.' };
   }

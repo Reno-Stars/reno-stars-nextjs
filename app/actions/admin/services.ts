@@ -98,6 +98,8 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
 export async function reorderServices(orderedIds: string[]): Promise<{ error?: string }> {
   await requireAuth();
 
+  if (orderedIds.length > 200) return { error: 'Too many items.' };
+  if (new Set(orderedIds).size !== orderedIds.length) return { error: 'Duplicate IDs.' };
   for (const id of orderedIds) {
     if (!isValidUUID(id)) return { error: 'Invalid service ID in list.' };
   }

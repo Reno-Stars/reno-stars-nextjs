@@ -145,6 +145,8 @@ export async function togglePartnerHidden(id: string, current: boolean): Promise
 export async function reorderPartners(orderedIds: string[]): Promise<{ error?: string }> {
   await requireAuth();
 
+  if (orderedIds.length > 200) return { error: 'Too many items.' };
+  if (new Set(orderedIds).size !== orderedIds.length) return { error: 'Duplicate IDs.' };
   for (const id of orderedIds) {
     if (!isValidUUID(id)) return { error: 'Invalid partner ID in list.' };
   }

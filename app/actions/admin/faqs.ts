@@ -46,6 +46,8 @@ export async function createFaq(
 export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: string }> {
   await requireAuth();
 
+  if (orderedIds.length > 200) return { error: 'Too many items.' };
+  if (new Set(orderedIds).size !== orderedIds.length) return { error: 'Duplicate IDs.' };
   for (const id of orderedIds) {
     if (!isValidUUID(id)) return { error: 'Invalid FAQ ID in list.' };
   }
