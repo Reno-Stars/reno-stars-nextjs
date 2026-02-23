@@ -96,45 +96,45 @@ export default function AdminPageHeader({ titleKey, actionKey, actionHref, actio
         </Link>
       )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
-        {viewHref && (
-          <a
-            href={viewHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.25rem',
-              padding: '0.25rem 0.5rem',
-              borderRadius: '4px',
-              backgroundColor: 'rgba(27,54,93,0.08)',
-              color: NAVY,
-              textDecoration: 'none',
-              fontSize: '0.75rem',
-              fontWeight: 500,
-            }}
-            title={t.common.preview}
-          >
-            <ExternalLink size={14} />
-            {t.common.preview}
-          </a>
-        )}
-      </div>
-      {resolvedActions.length > 0 && (
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {resolvedActions.map((action) => (
-            <Link
-              key={action.href}
-              href={action.href}
-              style={{ ...headerActionStyle, backgroundColor: action.color }}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
+          {viewHref && (
+            <a
+              href={viewHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                padding: '0.25rem 0.5rem',
+                borderRadius: '4px',
+                backgroundColor: 'rgba(27,54,93,0.08)',
+                color: NAVY,
+                textDecoration: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+              }}
+              title={t.common.preview}
             >
-              {action.label}
-            </Link>
-          ))}
+              <ExternalLink size={14} />
+              {t.common.preview}
+            </a>
+          )}
         </div>
-      )}
+        {resolvedActions.length > 0 && (
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {resolvedActions.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                style={{ ...headerActionStyle, backgroundColor: action.color }}
+              >
+                {action.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

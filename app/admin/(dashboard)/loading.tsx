@@ -30,7 +30,6 @@ export default function AdminLoading() {
         }}
       />
       <span style={{ color: TEXT_MID, fontSize: '0.875rem' }}>{t.common.loading}</span>
-      <style>{`@keyframes admin-spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }

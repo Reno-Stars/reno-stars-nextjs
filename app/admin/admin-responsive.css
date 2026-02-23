@@ -89,6 +89,11 @@ fieldset:disabled select {
   box-shadow: none !important;
 }
 
+/* Admin loading spinner */
+@keyframes admin-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Confirm dialog button focus styles */
 .confirm-dialog-btn {
   outline: none;

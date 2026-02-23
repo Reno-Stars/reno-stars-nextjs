@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { getAllContactsAdmin } from '@/lib/db/queries';
 import ContactsListClient from './ContactsListClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
@@ -8,7 +9,9 @@ export default async function ContactsAdminPage() {
   return (
     <div>
       <AdminPageHeader titleKey="contacts.title" />
-      <ContactsListClient contacts={contacts} />
+      <Suspense>
+        <ContactsListClient contacts={contacts} />
+      </Suspense>
     </div>
   );
 }
