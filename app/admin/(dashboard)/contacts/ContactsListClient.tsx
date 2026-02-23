@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import StatusBadge from '@/components/admin/StatusBadge';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
@@ -27,9 +28,13 @@ interface Props {
 }
 
 export default function ContactsListClient({ contacts }: Props) {
+  const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const initialStatus = searchParams.get('status');
+  const [statusFilter, setStatusFilter] = useState<string>(
+    initialStatus && CONTACT_STATUSES.includes(initialStatus as ContactStatus) ? initialStatus : 'all'
+  );
   const { toast } = useToast();
   const t = useAdminTranslations();
 
@@ -81,7 +86,7 @@ export default function ContactsListClient({ contacts }: Props) {
           }}
         >
           {CONTACT_STATUSES.map((s) => (
-            <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+            <option key={s} value={s}>{t.status[s as keyof typeof t.status]}</option>
           ))}
         </select>
       ),
@@ -128,7 +133,7 @@ export default function ContactsListClient({ contacts }: Props) {
               boxShadow: neu(3),
             }}
           >
-            {s === 'all' ? t.contacts.all : s.charAt(0).toUpperCase() + s.slice(1)}
+            {s === 'all' ? t.contacts.all : t.status[s as keyof typeof t.status]}
           </button>
         ))}
       </div>

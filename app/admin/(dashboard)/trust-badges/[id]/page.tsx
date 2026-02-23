@@ -22,7 +22,7 @@ export default async function EditTrustBadgePage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="trustBadges.editTrustBadge" />
+      <AdminPageHeader titleKey="trustBadges.editTrustBadge" backHref="/admin/trust-badges" backLabelKey="nav.trustBadges" />
       <TrustBadgeEditClient
         id={id}
         action={boundAction}

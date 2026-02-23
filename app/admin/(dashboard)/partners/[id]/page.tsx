@@ -22,7 +22,7 @@ export default async function EditPartnerPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="partners.editPartner" />
+      <AdminPageHeader titleKey="partners.editPartner" backHref="/admin/partners" backLabelKey="nav.partners" />
       <PartnerEditClient
         id={id}
         action={boundAction}

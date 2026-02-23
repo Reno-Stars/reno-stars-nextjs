@@ -7,8 +7,9 @@ import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import ToggleButton from '@/components/admin/ToggleButton';
 import { deleteBlogPost, toggleBlogPostPublished } from '@/app/actions/admin/blog';
-import { GOLD, TEXT_MID, SUCCESS, ERROR } from '@/lib/theme';
+import { GOLD, TEXT_MID, ERROR } from '@/lib/theme';
 
 interface BlogRow {
   id: string;
@@ -27,6 +28,7 @@ interface Props {
 export default function BlogListClient({ posts }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
@@ -39,17 +41,19 @@ export default function BlogListClient({ posts }: Props) {
       key: 'isPublished',
       header: t.blog.publishedLabel,
       render: (row) => (
-        <button
-          type="button"
-          onClick={() => startTransition(async () => {
-            const result = await toggleBlogPostPublished(row.id, row.isPublished);
-            if (result.error) toast(result.error, 'error');
-          })}
-          aria-label={`Toggle published for ${locale === 'zh' ? row.titleZh : row.titleEn}`}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
-        >
-          {row.isPublished ? t.common.yes : t.common.no}
-        </button>
+        <ToggleButton
+          isActive={row.isPublished}
+          isPending={pendingId === row.id}
+          ariaLabel={`Toggle published for ${locale === 'zh' ? row.titleZh : row.titleEn}`}
+          onClick={() => {
+            setPendingId(row.id);
+            startTransition(async () => {
+              const result = await toggleBlogPostPublished(row.id, row.isPublished);
+              if (result.error) toast(result.error, 'error');
+              setPendingId(null);
+            });
+          }}
+        />
       ),
     },
     {
@@ -61,7 +65,7 @@ export default function BlogListClient({ posts }: Props) {
         </span>
       ),
     },
-  ], [locale, toast, t]);
+  ], [locale, pendingId, toast, t]);
 
   const handleDelete = () => {
     if (!deleteId) return;

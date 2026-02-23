@@ -22,7 +22,7 @@ export default async function EditServiceAreaPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="serviceAreas.editServiceArea" />
+      <AdminPageHeader titleKey="serviceAreas.editServiceArea" backHref="/admin/service-areas" backLabelKey="nav.serviceAreas" />
       <ServiceAreaForm
         action={boundAction}
         initialData={{

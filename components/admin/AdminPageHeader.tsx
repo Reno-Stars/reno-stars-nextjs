@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
-import { NAVY, GOLD } from '@/lib/theme';
+import { ExternalLink, ChevronLeft } from 'lucide-react';
+import { NAVY, GOLD, TEXT_MID } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
 // Simple dot-path resolver
@@ -44,9 +44,13 @@ interface AdminPageHeaderProps {
   actions?: HeaderAction[];
   /** Link to view the item on the public site */
   viewHref?: string;
+  /** Back navigation link (href) */
+  backHref?: string;
+  /** Back navigation label key (resolved via translations) */
+  backLabelKey?: string;
 }
 
-export default function AdminPageHeader({ titleKey, actionKey, actionHref, actions, viewHref }: AdminPageHeaderProps) {
+export default function AdminPageHeader({ titleKey, actionKey, actionHref, actions, viewHref, backHref, backLabelKey }: AdminPageHeaderProps) {
   const t = useAdminTranslations();
   const title = resolve(t as unknown as Record<string, unknown>, titleKey);
 
@@ -68,8 +72,30 @@ export default function AdminPageHeader({ titleKey, actionKey, actionHref, actio
     });
   }
 
+  const backLabel = backLabelKey
+    ? t.common.backTo.replace('{page}', resolve(t as unknown as Record<string, unknown>, backLabelKey))
+    : undefined;
+
   return (
-    <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+    <div className="admin-page-header" style={{ marginBottom: '1.5rem' }}>
+      {backHref && backLabel && (
+        <Link
+          href={backHref}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.25rem',
+            color: TEXT_MID,
+            textDecoration: 'none',
+            fontSize: '0.8125rem',
+            marginBottom: '0.5rem',
+          }}
+        >
+          <ChevronLeft size={16} />
+          {backLabel}
+        </Link>
+      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
         <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h1>
         {viewHref && (
@@ -109,6 +135,7 @@ export default function AdminPageHeader({ titleKey, actionKey, actionHref, actio
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

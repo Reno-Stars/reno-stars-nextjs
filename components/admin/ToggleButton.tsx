@@ -1,6 +1,7 @@
 'use client';
 
 import { GOLD, TEXT_MID } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ToggleButtonProps {
   isActive: boolean;
@@ -16,9 +17,13 @@ export default function ToggleButton({
   isPending,
   onClick,
   ariaLabel,
-  activeLabel = 'Yes',
-  inactiveLabel = 'No',
+  activeLabel,
+  inactiveLabel,
 }: ToggleButtonProps) {
+  const t = useAdminTranslations();
+  const yesLabel = activeLabel ?? t.common.yes;
+  const noLabel = inactiveLabel ?? t.common.no;
+
   return (
     <button
       type="button"
@@ -33,7 +38,7 @@ export default function ToggleButton({
         fontSize: '0.8125rem',
       }}
     >
-      {isActive ? activeLabel : inactiveLabel}
+      {isActive ? yesLabel : noLabel}
     </button>
   );
 }

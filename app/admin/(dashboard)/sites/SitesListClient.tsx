@@ -8,6 +8,7 @@ import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import ToggleButton from '@/components/admin/ToggleButton';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
 import { CARD, GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
 import type { ProjectSummary } from '@/lib/db/queries';
@@ -43,6 +44,7 @@ interface Props {
 export default function SitesListClient({ sites, projectsBySite, standaloneSiteId }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'sites' | 'standalone'>('sites');
   const { toast } = useToast();
   const { locale } = useAdminLocale();
@@ -70,65 +72,68 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
         key: 'showAsProject',
         header: t.sites.showAsProject,
         render: (row: SiteRow) => (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              startTransition(async () => {
-                const result = await toggleSiteShowAsProject(row.id, row.showAsProject);
-                if (result.error) toast(result.error, 'error');
-              });
-            }}
-            aria-label={`Toggle show as project for ${getT(row)}`}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.showAsProject ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
-          >
-            {row.showAsProject ? t.common.yes : t.common.no}
-          </button>
+          <span onClick={(e) => e.stopPropagation()}>
+            <ToggleButton
+              isActive={row.showAsProject}
+              isPending={pendingId === `show-${row.id}`}
+              ariaLabel={`Toggle show as project for ${getT(row)}`}
+              onClick={() => {
+                setPendingId(`show-${row.id}`);
+                startTransition(async () => {
+                  const result = await toggleSiteShowAsProject(row.id, row.showAsProject);
+                  if (result.error) toast(result.error, 'error');
+                  setPendingId(null);
+                });
+              }}
+            />
+          </span>
         ),
       },
       {
         key: 'featured',
         header: t.sites.featured,
         render: (row: SiteRow) => (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              startTransition(async () => {
-                const result = await toggleSiteFeatured(row.id, row.featured);
-                if (result.error) toast(result.error, 'error');
-              });
-            }}
-            aria-label={`Toggle featured for ${getT(row)}`}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.featured ? GOLD : TEXT_MID, fontSize: '0.8125rem' }}
-          >
-            {row.featured ? t.common.yes : t.common.no}
-          </button>
+          <span onClick={(e) => e.stopPropagation()}>
+            <ToggleButton
+              isActive={row.featured}
+              isPending={pendingId === `feat-${row.id}`}
+              ariaLabel={`Toggle featured for ${getT(row)}`}
+              onClick={() => {
+                setPendingId(`feat-${row.id}`);
+                startTransition(async () => {
+                  const result = await toggleSiteFeatured(row.id, row.featured);
+                  if (result.error) toast(result.error, 'error');
+                  setPendingId(null);
+                });
+              }}
+            />
+          </span>
         ),
       },
       {
         key: 'isPublished',
         header: t.sites.published,
         render: (row: SiteRow) => (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              startTransition(async () => {
-                const result = await toggleSitePublished(row.id, row.isPublished);
-                if (result.error) toast(result.error, 'error');
-              });
-            }}
-            aria-label={`Toggle published for ${getT(row)}`}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}
-          >
-            {row.isPublished ? t.common.yes : t.common.no}
-          </button>
+          <span onClick={(e) => e.stopPropagation()}>
+            <ToggleButton
+              isActive={row.isPublished}
+              isPending={pendingId === `pub-${row.id}`}
+              ariaLabel={`Toggle published for ${getT(row)}`}
+              onClick={() => {
+                setPendingId(`pub-${row.id}`);
+                startTransition(async () => {
+                  const result = await toggleSitePublished(row.id, row.isPublished);
+                  if (result.error) toast(result.error, 'error');
+                  setPendingId(null);
+                });
+              }}
+            />
+          </span>
         ),
       },
     ];
   // eslint-disable-next-line react-hooks/exhaustive-deps -- toast is stable (useCallback with [] deps)
-  }, [locale, t, projectsBySite]);
+  }, [locale, t, pendingId, projectsBySite]);
 
   const handleDelete = () => {
     if (!deleteId) return;

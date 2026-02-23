@@ -22,7 +22,7 @@ export default async function EditFaqPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="faqs.editFaq" />
+      <AdminPageHeader titleKey="faqs.editFaq" backHref="/admin/faqs" backLabelKey="nav.faqs" />
       <FaqForm
         action={boundAction}
         initialData={{

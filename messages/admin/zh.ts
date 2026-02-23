@@ -36,6 +36,10 @@ const zh: AdminMessages = {
     showAll: '显示全部 ({count})',
     showLess: '收起',
     dragToReorder: '拖拽重新排序',
+    loading: '加载中...',
+    errorTitle: '出错了',
+    tryAgain: '重试',
+    backTo: '返回{page}',
   },
   nav: {
     dashboard: '仪表盘',

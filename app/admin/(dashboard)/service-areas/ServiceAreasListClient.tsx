@@ -10,7 +10,7 @@ import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { useDragReorder } from '@/hooks/useDragReorder';
 import { toggleServiceAreaActive, deleteServiceArea, reorderServiceAreas } from '@/app/actions/admin/service-areas';
-import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, ERROR, neu } from '@/lib/theme';
 
 interface ServiceAreaRow {
   id: string;
@@ -126,7 +126,7 @@ export default function ServiceAreasListClient({ areas }: Props) {
               style={{
                 background: 'none',
                 border: 'none',
-                color: TEXT_MID,
+                color: ERROR,
                 fontSize: '0.8125rem',
                 cursor: 'pointer',
                 padding: 0,

@@ -5,7 +5,7 @@ import AdminPageHeader from '@/components/admin/AdminPageHeader';
 export default function NewPartnerPage() {
   return (
     <div>
-      <AdminPageHeader titleKey="partners.addNewPartner" />
+      <AdminPageHeader titleKey="partners.addNewPartner" backHref="/admin/partners" backLabelKey="nav.partners" />
       <PartnerForm action={createPartner} isNew />
     </div>
   );

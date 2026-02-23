@@ -14,7 +14,7 @@ export default async function NewBlogPostPage() {
 
   return (
     <div>
-      <AdminPageHeader titleKey="blog.newBlogPost" />
+      <AdminPageHeader titleKey="blog.newBlogPost" backHref="/admin/blog" backLabelKey="nav.blog" />
       <BlogPostForm action={createBlogPost} submitLabel="Create Post" projects={projectRows} />
     </div>
   );

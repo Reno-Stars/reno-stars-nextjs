@@ -10,7 +10,7 @@ import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { useDragReorder } from '@/hooks/useDragReorder';
 import { toggleTrustBadgeActive, deleteTrustBadge, reorderTrustBadges } from '@/app/actions/admin/trust-badges';
-import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, ERROR, neu } from '@/lib/theme';
 
 interface TrustBadgeRow {
   id: string;
@@ -122,7 +122,7 @@ export default function TrustBadgesListClient({ badges }: Props) {
               style={{
                 background: 'none',
                 border: 'none',
-                color: TEXT_MID,
+                color: ERROR,
                 fontSize: '0.8125rem',
                 cursor: 'pointer',
                 padding: 0,

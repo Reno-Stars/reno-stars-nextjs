@@ -21,7 +21,7 @@ export default async function EditServicePage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="services.editService" />
+      <AdminPageHeader titleKey="services.editService" backHref="/admin/services" backLabelKey="nav.services" />
       <ServiceForm
         action={updateService.bind(null, service.id)}
         initialData={{

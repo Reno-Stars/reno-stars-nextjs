@@ -22,7 +22,7 @@ export default async function EditGalleryItemPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="gallery.editGalleryItem" />
+      <AdminPageHeader titleKey="gallery.editGalleryItem" backHref="/admin/gallery" backLabelKey="nav.gallery" />
       <GalleryEditClient
         id={id}
         action={boundAction}

@@ -34,6 +34,10 @@ const en = {
     showAll: 'Show All ({count})',
     showLess: 'Show Less',
     dragToReorder: 'Drag to reorder',
+    loading: 'Loading...',
+    errorTitle: 'Something went wrong',
+    tryAgain: 'Try Again',
+    backTo: 'Back to {page}',
   },
   nav: {
     dashboard: 'Dashboard',

@@ -28,7 +28,7 @@ export default async function EditBlogPostPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="blog.editBlogPost" viewHref={`/en/blog/${post.slug}`} />
+      <AdminPageHeader titleKey="blog.editBlogPost" viewHref={`/en/blog/${post.slug}`} backHref="/admin/blog" backLabelKey="nav.blog" />
       <BlogPostForm
         action={boundAction}
         submitLabel="Update Post"

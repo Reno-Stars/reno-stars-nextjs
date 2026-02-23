@@ -22,7 +22,7 @@ export default async function EditSocialLinkPage({ params }: PageProps) {
 
   return (
     <div>
-      <AdminPageHeader titleKey="socialLinks.editSocialLink" />
+      <AdminPageHeader titleKey="socialLinks.editSocialLink" backHref="/admin/social-links" backLabelKey="nav.socialLinks" />
       <SocialLinkForm
         action={boundAction}
         initialData={{

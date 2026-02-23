@@ -1,6 +1,7 @@
 'use client';
 
 import { CARD, NAVY, ERROR, ERROR_BG, GOLD, neu } from '@/lib/theme';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 export default function AdminError({
   error,
@@ -9,6 +10,8 @@ export default function AdminError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useAdminTranslations();
+
   return (
     <div style={{ padding: '2rem', maxWidth: '600px' }}>
       <div
@@ -20,7 +23,7 @@ export default function AdminError({
         }}
       >
         <h1 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>
-          Something went wrong
+          {t.common.errorTitle}
         </h1>
         <div
           role="alert"
@@ -33,7 +36,7 @@ export default function AdminError({
             fontSize: '0.875rem',
           }}
         >
-          {error.message || 'An unexpected error occurred.'}
+          {error.message || t.common.unexpectedError}
         </div>
         <button
           type="button"
@@ -49,7 +52,7 @@ export default function AdminError({
             cursor: 'pointer',
           }}
         >
-          Try Again
+          {t.common.tryAgain}
         </button>
       </div>
     </div>

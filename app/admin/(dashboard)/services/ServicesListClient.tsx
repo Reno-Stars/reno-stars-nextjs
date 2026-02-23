@@ -12,7 +12,7 @@ import { deleteService, reorderServices } from '@/app/actions/admin/services';
 import { getAssetUrl } from '@/lib/storage';
 import {
   GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, CARD,
-  TEXT, TEXT_MID, TEXT_MUTED, neu,
+  TEXT, TEXT_MID, TEXT_MUTED, ERROR, neu,
 } from '@/lib/theme';
 
 interface ServiceRow {
@@ -141,7 +141,7 @@ export default function ServicesListClient({ services }: Props) {
               style={{
                 background: 'none',
                 border: 'none',
-                color: TEXT_MID,
+                color: ERROR,
                 fontSize: '0.8125rem',
                 cursor: 'pointer',
                 padding: 0,

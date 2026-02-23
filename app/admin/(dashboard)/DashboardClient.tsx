@@ -146,7 +146,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
       title: t.dashboard.groupCrm,
       cards: [
         { label: t.dashboard.contacts, value: stats.contacts, href: '/admin/contacts', icon: Mail, accent: NAVY },
-        { label: t.dashboard.newContacts, value: stats.newContacts, href: '/admin/contacts', icon: BellRing, accent: GOLD, highlight: stats.newContacts > 0, notify: stats.newContacts > 0 },
+        { label: t.dashboard.newContacts, value: stats.newContacts, href: '/admin/contacts?status=new', icon: BellRing, accent: GOLD, highlight: stats.newContacts > 0, notify: stats.newContacts > 0 },
       ],
     },
   ];

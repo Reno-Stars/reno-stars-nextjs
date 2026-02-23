@@ -11,7 +11,7 @@ import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleGalleryItemPublished, deleteGalleryItem, reorderGalleryItems } from '@/app/actions/admin/gallery';
-import { GOLD, TEXT_MID, CARD, NAVY, neu, SURFACE_ALT, TEXT_MUTED } from '@/lib/theme';
+import { GOLD, TEXT_MID, CARD, NAVY, ERROR, neu, SURFACE_ALT, TEXT_MUTED } from '@/lib/theme';
 import { getAssetUrl } from '@/lib/storage';
 import { useDragReorder } from '@/hooks/useDragReorder';
 
@@ -297,7 +297,7 @@ export default function GalleryListClient({ items }: Props) {
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: TEXT_MID,
+                  color: ERROR,
                   fontSize: '0.8125rem',
                   cursor: 'pointer',
                   padding: 0,

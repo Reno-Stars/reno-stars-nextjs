@@ -5,7 +5,7 @@ import AdminPageHeader from '@/components/admin/AdminPageHeader';
 export default function NewServicePage() {
   return (
     <div>
-      <AdminPageHeader titleKey="services.addNewService" />
+      <AdminPageHeader titleKey="services.addNewService" backHref="/admin/services" backLabelKey="nav.services" />
       <ServiceForm action={createService} isNew />
     </div>
   );

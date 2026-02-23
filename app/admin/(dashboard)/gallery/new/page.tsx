@@ -5,7 +5,7 @@ import AdminPageHeader from '@/components/admin/AdminPageHeader';
 export default function NewGalleryItemPage() {
   return (
     <div>
-      <AdminPageHeader titleKey="gallery.addGalleryItem" />
+      <AdminPageHeader titleKey="gallery.addGalleryItem" backHref="/admin/gallery" backLabelKey="nav.gallery" />
       <GalleryItemForm action={createGalleryItem} isNew />
     </div>
   );
