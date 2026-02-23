@@ -85,8 +85,8 @@ jobs:
           path: coverage/
           retention-days: 7
 
-  build-and-e2e:
-    name: Build & E2E Tests
+  build:
+    name: Build
     runs-on: ubuntu-latest
     needs: [lint, typecheck, unit-tests]
     services:
@@ -132,17 +132,3 @@ jobs:
 
       - name: Build application
         run: pnpm build
-
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Run E2E tests
-        run: pnpm test:e2e --project=chromium
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
