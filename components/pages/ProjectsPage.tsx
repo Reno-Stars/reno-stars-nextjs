@@ -532,7 +532,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
-                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage > 1 ? 'hover:translate-x-[-2px]' : 'opacity-50 cursor-not-allowed'}`}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage > 1 ? 'cursor-pointer hover:translate-x-[-2px] hover:shadow-lg' : 'opacity-50 cursor-not-allowed'}`}
                     style={{
                       color: currentPage > 1 ? NAVY : TEXT_MUTED,
                       boxShadow: currentPage > 1 ? neu(3) : undefined,
@@ -558,7 +558,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                         <button
                           key={pageNum}
                           onClick={() => handlePageChange(pageNum)}
-                          className="min-w-[40px] h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200"
+                          className="min-w-[40px] h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer hover:shadow-lg"
                           style={{
                             color: pageNum === currentPage ? 'white' : NAVY,
                             backgroundColor: pageNum === currentPage ? GOLD : CARD,
@@ -575,7 +575,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
-                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage < totalPages ? 'hover:translate-x-[2px]' : 'opacity-50 cursor-not-allowed'}`}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage < totalPages ? 'cursor-pointer hover:translate-x-[2px] hover:shadow-lg' : 'opacity-50 cursor-not-allowed'}`}
                     style={{
                       color: currentPage < totalPages ? NAVY : TEXT_MUTED,
                       boxShadow: currentPage < totalPages ? neu(3) : undefined,

@@ -10,6 +10,10 @@ interface ImageUrlInputProps {
   name: string;
   label: string;
   defaultValue?: string;
+  /** Controlled value — when provided, component is controlled (ignores defaultValue) */
+  value?: string;
+  /** Change handler for controlled mode */
+  onChange?: (url: string) => void;
   required?: boolean;
   tooltip?: string;
   /** Optional slug for SEO-friendly upload filenames */
@@ -18,28 +22,45 @@ interface ImageUrlInputProps {
   imageRole?: string;
   /** Whether the input is disabled (view mode) */
   disabled?: boolean;
+  /** Hide the label row (when label is rendered externally) */
+  hideLabel?: boolean;
+  /** Placeholder override */
+  placeholder?: string;
 }
 
 export default function ImageUrlInput({
   name,
   label,
   defaultValue = '',
+  value: controlledValue,
+  onChange: controlledOnChange,
   required = false,
   tooltip,
   slug,
   imageRole = 'hero',
   disabled = false,
+  hideLabel = false,
+  placeholder,
 }: ImageUrlInputProps) {
   const t = useAdminTranslations();
-  const [url, setUrl] = useState(defaultValue);
+  const isControlled = controlledValue !== undefined;
+  const [internalUrl, setInternalUrl] = useState(defaultValue);
+  const url = isControlled ? controlledValue : internalUrl;
+  const setUrl = useCallback((newUrl: string) => {
+    if (isControlled) {
+      controlledOnChange?.(newUrl);
+    } else {
+      setInternalUrl(newUrl);
+    }
+  }, [isControlled, controlledOnChange]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
   useEffect(() => {
-    setUrl(defaultValue);
-  }, [defaultValue]);
+    if (!isControlled) setInternalUrl(defaultValue);
+  }, [defaultValue, isControlled]);
 
   useEffect(() => {
     setImageError(false);
@@ -68,7 +89,7 @@ export default function ImageUrlInput({
     }
 
     setUploading(false);
-  }, [slug, imageRole]);
+  }, [slug, imageRole, setUrl]);
 
   // Open a detached file picker — immune to <fieldset disabled>
   const openFilePicker = useCallback(() => {
@@ -95,70 +116,72 @@ export default function ImageUrlInput({
   }, []);
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
-        <label
-          htmlFor={name}
-          style={{
-            color: NAVY,
-            fontWeight: 600,
-            fontSize: '0.8125rem',
-          }}
-        >
-          {label}
-        </label>
-        {tooltip && (
-          <div style={{ position: 'relative', display: 'inline-flex' }}>
-            <button
-              type="button"
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              onFocus={() => setShowTooltip(true)}
-              onBlur={() => setShowTooltip(false)}
-              style={{
-                width: '16px',
-                height: '16px',
-                borderRadius: '50%',
-                border: `1px solid ${TEXT_MID}`,
-                backgroundColor: 'transparent',
-                color: TEXT_MID,
-                fontSize: '10px',
-                fontWeight: 600,
-                cursor: 'help',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 0,
-              }}
-              aria-label={t.common.help}
-            >
-              ?
-            </button>
-            {showTooltip && (
-              <div
+    <div style={{ marginBottom: hideLabel ? '0.375rem' : '1rem' }}>
+      {!hideLabel && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
+          <label
+            htmlFor={name}
+            style={{
+              color: NAVY,
+              fontWeight: 600,
+              fontSize: '0.8125rem',
+            }}
+          >
+            {label}
+          </label>
+          {tooltip && (
+            <div style={{ position: 'relative', display: 'inline-flex' }}>
+              <button
+                type="button"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+                onFocus={() => setShowTooltip(true)}
+                onBlur={() => setShowTooltip(false)}
                 style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: '0',
-                  marginTop: '6px',
-                  padding: '0.5rem 0.75rem',
-                  backgroundColor: NAVY,
-                  color: CARD,
-                  fontSize: '0.75rem',
-                  lineHeight: 1.4,
-                  borderRadius: '6px',
-                  whiteSpace: 'pre-wrap',
-                  width: '220px',
-                  zIndex: 100,
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  border: `1px solid ${TEXT_MID}`,
+                  backgroundColor: 'transparent',
+                  color: TEXT_MID,
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  cursor: 'help',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 0,
                 }}
+                aria-label={t.common.help}
               >
-                {tooltip}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+                ?
+              </button>
+              {showTooltip && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0',
+                    marginTop: '6px',
+                    padding: '0.5rem 0.75rem',
+                    backgroundColor: NAVY,
+                    color: CARD,
+                    fontSize: '0.75rem',
+                    lineHeight: 1.4,
+                    borderRadius: '6px',
+                    whiteSpace: 'pre-wrap',
+                    width: '220px',
+                    zIndex: 100,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  }}
+                >
+                  {tooltip}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* URL input */}
       <input
@@ -168,7 +191,7 @@ export default function ImageUrlInput({
         onChange={(e) => setUrl(e.target.value)}
         required={required}
         disabled={disabled}
-        placeholder={t.upload.placeholder}
+        placeholder={placeholder ?? t.upload.placeholder}
         style={{
           width: '100%',
           padding: '0.5rem 0.75rem',

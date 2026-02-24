@@ -510,7 +510,17 @@ export default function ProjectForm({
             {(showAllProducts ? externalProducts : externalProducts.slice(0, COLLAPSE_THRESHOLD)).map((ep, idx) => (
               <div key={ep.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
                 <input value={ep.url} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
-                <input value={ep.imageUrl} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], imageUrl: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productImageUrl} aria-label={`Product ${idx + 1} image URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <ImageUrlInput
+                  name={`product-image-${ep.id}`}
+                  label={t.projects.productImageUrl}
+                  value={ep.imageUrl}
+                  onChange={(newUrl) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], imageUrl: newUrl }; setExternalProducts(n); }}
+                  slug={slug}
+                  imageRole={`product-${idx + 1}`}
+                  disabled={!editing}
+                  hideLabel
+                  placeholder={t.projects.productImageUrl}
+                />
                 <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
                   <div>
                     <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
