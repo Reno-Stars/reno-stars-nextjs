@@ -304,7 +304,7 @@ export const projects = pgTable(
 
     // Site relationship - project MUST belong to a site (mandatory)
     siteId: uuid('site_id')
-      .references(() => projectSites.id, { onDelete: 'restrict' })
+      .references(() => projectSites.id, { onDelete: 'cascade' })
       .notNull(),
     // Display order within a site
     displayOrderInSite: integer('display_order_in_site').default(0).notNull(),

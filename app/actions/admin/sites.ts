@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, projects, siteImagePairs, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
-import { eq, count, inArray } from 'drizzle-orm';
+import { projectSites, siteImagePairs, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
+import { eq, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -197,16 +197,7 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
   if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
 
   try {
-    // Check if site has any projects - cannot delete if projects exist
-    const projectCount = await db
-      .select({ count: count() })
-      .from(projects)
-      .where(eq(projects.siteId, id));
-
-    if (projectCount[0] && projectCount[0].count > 0) {
-      return { error: `Cannot delete site with ${projectCount[0].count} project(s). Delete or reassign projects first.` };
-    }
-
+    // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');

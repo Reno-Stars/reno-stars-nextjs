@@ -374,6 +374,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
         open={!!deleteId}
         title={t.sites.deleteSite}
         message={t.sites.deleteMessage}
+        items={deleteId ? (projectsBySite[deleteId] ?? []).map((p) => locale === 'zh' ? p.titleZh : p.titleEn) : []}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
         loading={isPending}
