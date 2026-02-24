@@ -168,6 +168,9 @@ export const projectSites = pgTable(
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
 
+    // Internal tracking
+    poNumber: varchar('po_number', { length: 50 }),
+
     // Display settings
     showAsProject: boolean('show_as_project').default(true).notNull(),
     featured: boolean('featured').default(false).notNull(),
@@ -297,6 +300,9 @@ export const projects = pgTable(
     focusKeywordZh: varchar('focus_keyword_zh', { length: SEO_FOCUS_KEYWORD_MAX }),
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
+
+    // Internal tracking
+    poNumber: varchar('po_number', { length: 50 }),
 
     // Flags
     featured: boolean('featured').default(false).notNull(),

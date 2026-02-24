@@ -44,6 +44,7 @@ interface SiteFormProps {
     heroImageUrl: string;
     badgeEn: string;
     badgeZh: string;
+    poNumber?: string;
     excerptEn?: string;
     excerptZh?: string;
     metaTitleEn?: string;
@@ -241,6 +242,10 @@ export default function SiteForm({
 
           <FormField label={t.sites.slug} htmlFor="slug" tooltip={t.sites.tooltips.slug}>
             <input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required style={fieldStyle} placeholder={t.sites.slugPlaceholder} />
+          </FormField>
+
+          <FormField label={t.sites.poNumber} htmlFor="poNumber" tooltip={t.sites.tooltips.poNumber}>
+            <input id="poNumber" name="poNumber" defaultValue={initialData?.poNumber ?? ''} style={fieldStyle} placeholder="PO-12345" />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.sites.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.sites.tooltips.title} />

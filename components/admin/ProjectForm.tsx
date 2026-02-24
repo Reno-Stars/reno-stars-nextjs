@@ -76,6 +76,7 @@ interface ProjectFormProps {
     solutionZh: string;
     badgeEn: string;
     badgeZh: string;
+    poNumber?: string;
     metaTitleEn: string;
     metaTitleZh: string;
     metaDescriptionEn: string;
@@ -296,6 +297,10 @@ export default function ProjectForm({
 
           <FormField label={t.projects.slug} htmlFor="slug" tooltip={t.projects.tooltips.slug}>
             <input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required style={fieldStyle} placeholder={t.projects.slugPlaceholder} />
+          </FormField>
+
+          <FormField label={t.projects.poNumber} htmlFor="poNumber" tooltip={t.projects.tooltips.poNumber}>
+            <input id="poNumber" name="poNumber" defaultValue={initialData?.poNumber ?? ''} style={fieldStyle} placeholder="PO-12345" />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.projects.tooltips.title} />

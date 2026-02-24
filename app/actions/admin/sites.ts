@@ -30,6 +30,7 @@ function getSiteData(formData: FormData) {
     focusKeywordZh: getString(formData, 'focusKeywordZh') || null,
     seoKeywordsEn: getString(formData, 'seoKeywordsEn') || null,
     seoKeywordsZh: getString(formData, 'seoKeywordsZh') || null,
+    poNumber: getString(formData, 'poNumber') || null,
     showAsProject: formData.get('showAsProject') === 'on',
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',

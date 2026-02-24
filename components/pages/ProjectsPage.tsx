@@ -117,6 +117,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           images: allImages,
           featured: site.featured,
           badge: site.badge?.[locale],
+          po_number: site.po_number,
           isSiteProject: true,
           projectCount: site.project_count ?? site.projects?.length ?? 0,
           // Site-specific aggregated data
@@ -266,6 +267,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
@@ -322,8 +324,9 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
     const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
-    return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch;
-  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, locale]);
+    const searchMatch = !searchQuery || project.po_number?.toLowerCase().includes(searchQuery.toLowerCase());
+    return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch && searchMatch;
+  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, searchQuery, locale]);
 
   const handleCategoryChange = useCallback((v: string) => { setActiveCategory(v); setCurrentPage(1); }, []);
   const handleLocationChange = useCallback((v: string) => { setLocationFilter(v); setCurrentPage(1); }, []);
@@ -335,12 +338,13 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setLocationFilter('All');
     setSpaceTypeFilter('All');
     setBudgetFilter('All');
+    setSearchQuery('');
     setCurrentPage(1);
   }, []);
 
   const hasActiveFilters = useMemo(() =>
-    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All',
-  [activeCategory, locationFilter, spaceTypeFilter, budgetFilter]);
+    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All' || searchQuery !== '',
+  [activeCategory, locationFilter, spaceTypeFilter, budgetFilter, searchQuery]);
 
   // Pagination
   const totalPages = useMemo(() => Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE), [filteredProjects.length]);
@@ -447,6 +451,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
       {/* Filters */}
       <section className="py-6 px-4 sm:px-6 lg:px-8 border-b" style={{ backgroundColor: SURFACE, borderColor: `${TEXT}10` }}>
         <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            placeholder={t('filter.searchPO')}
+            aria-label={t('filter.searchPO')}
+            className="rounded-lg text-sm px-3 py-2 border-0 outline-none"
+            style={{ backgroundColor: CARD, color: TEXT, boxShadow: neu(3), width: '140px' }}
+          />
           <SelectDropdown
             value={activeCategory}
             onChange={handleCategoryChange}

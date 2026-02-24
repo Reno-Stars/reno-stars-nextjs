@@ -40,6 +40,7 @@ export default async function EditSitePage({ params }: PageProps) {
     heroImageUrl: site.heroImageUrl ?? '',
     badgeEn: site.badgeEn ?? '',
     badgeZh: site.badgeZh ?? '',
+    poNumber: site.poNumber ?? '',
     excerptEn: site.excerptEn ?? '',
     excerptZh: site.excerptZh ?? '',
     metaTitleEn: site.metaTitleEn ?? '',

@@ -97,6 +97,8 @@ export interface Site {
   focus_keyword?: Localized<string>;
   /** Additional SEO keywords (comma-separated) */
   seo_keywords?: Localized<string>;
+  /** Internal purchase order number for sales tracking */
+  po_number?: string;
   /** Whether to show this site as a project in listings */
   show_as_project: boolean;
   /** Whether to feature on homepage */
@@ -205,6 +207,8 @@ export interface Project {
   focus_keyword?: Localized<string>;
   /** Additional SEO keywords (comma-separated) */
   seo_keywords?: Localized<string>;
+  /** Internal purchase order number for sales tracking */
+  po_number?: string;
   /** Site ID - project belongs to a site (required for DB projects) */
   site_id?: string;
   /** Display order within a site */
@@ -411,6 +415,7 @@ export interface LocalizedProject {
   featured?: boolean;
   badge?: string;
   external_products?: { url: string; image_url?: string; label: string }[];
+  po_number?: string;
   site_id?: string;
   display_order_in_site?: number;
 }

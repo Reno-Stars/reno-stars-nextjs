@@ -71,6 +71,7 @@ interface ProjectWithDetails {
   solutionZh: string | null;
   badgeEn: string | null;
   badgeZh: string | null;
+  poNumber: string | null;
   metaTitleEn: string | null;
   metaTitleZh: string | null;
   metaDescriptionEn: string | null;
@@ -99,6 +100,7 @@ interface SiteData {
   heroImageUrl: string;
   badgeEn: string;
   badgeZh: string;
+  poNumber?: string;
   excerptEn?: string;
   excerptZh?: string;
   metaTitleEn?: string;
@@ -223,6 +225,7 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
       solutionZh: project.solutionZh ?? '',
       badgeEn: project.badgeEn ?? '',
       badgeZh: project.badgeZh ?? '',
+      poNumber: project.poNumber ?? '',
       metaTitleEn: project.metaTitleEn ?? '',
       metaTitleZh: project.metaTitleZh ?? '',
       metaDescriptionEn: project.metaDescriptionEn ?? '',

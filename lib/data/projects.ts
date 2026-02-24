@@ -594,6 +594,7 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
       image_url: ep.image_url,
       label: ep.label[locale],
     })),
+    po_number: project.po_number,
     site_id: project.site_id,
     display_order_in_site: project.display_order_in_site,
   };

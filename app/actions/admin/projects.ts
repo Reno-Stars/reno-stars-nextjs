@@ -110,6 +110,7 @@ function getProjectData(formData: FormData) {
     focusKeywordZh: getString(formData, 'focusKeywordZh') || null,
     seoKeywordsEn: getString(formData, 'seoKeywordsEn') || null,
     seoKeywordsZh: getString(formData, 'seoKeywordsZh') || null,
+    poNumber: getString(formData, 'poNumber') || null,
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',
     siteId: siteId && isValidUUID(siteId) ? siteId : '',

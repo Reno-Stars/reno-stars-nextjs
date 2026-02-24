@@ -316,6 +316,7 @@ function mapDbProjectToProject(
       row.seoKeywordsEn || row.seoKeywordsZh
         ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
         : undefined,
+    po_number: row.poNumber ?? undefined,
     // Site relationship (mandatory)
     site_id: row.siteId,
     display_order_in_site: row.displayOrderInSite,
@@ -449,6 +450,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
       row.seoKeywordsEn || row.seoKeywordsZh
         ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
         : undefined,
+    po_number: row.poNumber ?? undefined,
     show_as_project: row.showAsProject,
     featured: row.featured,
     published_at: row.publishedAt ?? undefined,
@@ -969,6 +971,7 @@ export interface ProjectSummary {
   serviceType: string;
   isPublished: boolean;
   displayOrderInSite: number;
+  poNumber: string | null;
 }
 
 /** Fetch all projects grouped by siteId for the sites list (admin). Lightweight — no images/scopes. */
@@ -983,6 +986,7 @@ export async function getAllProjectsBySiteAdmin(): Promise<Record<string, Projec
       serviceType: projectsTable.serviceType,
       isPublished: projectsTable.isPublished,
       displayOrderInSite: projectsTable.displayOrderInSite,
+      poNumber: projectsTable.poNumber,
     })
     .from(projectsTable)
     .orderBy(asc(projectsTable.displayOrderInSite));

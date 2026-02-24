@@ -275,7 +275,8 @@
     "next": "Next",
     "previousPage": "Go to previous page",
     "nextPage": "Go to next page",
-    "showingProjects": "Showing {start}-{end} of {total} projects"
+    "showingProjects": "Showing {start}-{end} of {total} projects",
+    "searchPO": "Search PO #"
   },
   "category": {
     "wholeHouse": "Whole House"

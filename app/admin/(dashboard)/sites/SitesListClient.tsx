@@ -22,6 +22,7 @@ interface StandaloneProjectRow {
   titleZh: string;
   serviceType: string;
   isPublished: boolean;
+  poNumber: string | null;
 }
 
 interface SiteRow {
@@ -30,6 +31,7 @@ interface SiteRow {
   titleEn: string;
   titleZh: string;
   locationCity: string | null;
+  poNumber: string | null;
   showAsProject: boolean;
   featured: boolean;
   isPublished: boolean;
@@ -53,6 +55,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   const columns: Column<SiteRow>[] = useMemo(() => {
     const getT = (row: SiteRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
+      { key: 'poNumber', header: t.sites.poNumber, sortable: true },
       { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.sites.titleZh : t.sites.titleEn, sortable: true },
       { key: 'slug', header: t.sites.slug, sortable: true },
       { key: 'locationCity', header: t.sites.city, sortable: true },
@@ -147,7 +150,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
 
   const filterRow = useCallback((row: SiteRow, query: string) => {
     // Match site's own fields
-    const siteMatch = [row.titleEn, row.titleZh, row.slug, row.locationCity]
+    const siteMatch = [row.titleEn, row.titleZh, row.slug, row.locationCity, row.poNumber]
       .some((val) => val && val.toLowerCase().includes(query));
     if (siteMatch) return true;
     // Match any project inside the site
@@ -156,7 +159,8 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
       p.titleEn.toLowerCase().includes(query) ||
       p.titleZh.toLowerCase().includes(query) ||
       p.slug.toLowerCase().includes(query) ||
-      p.serviceType.toLowerCase().includes(query)
+      p.serviceType.toLowerCase().includes(query) ||
+      (p.poNumber && p.poNumber.toLowerCase().includes(query))
     );
   }, [projectsBySite]);
 
@@ -175,6 +179,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
           titleZh: p.titleZh,
           serviceType: p.serviceType,
           isPublished: p.isPublished,
+          poNumber: p.poNumber,
         });
       }
     }
@@ -182,6 +187,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   }, [sites, projectsBySite]);
 
   const standaloneColumns: Column<StandaloneProjectRow>[] = useMemo(() => [
+    { key: 'poNumber', header: t.projects.poNumber, sortable: true },
     { key: locale === 'zh' ? 'titleZh' : 'titleEn', header: locale === 'zh' ? t.projects.titleZh : t.projects.titleEn, sortable: true },
     { key: 'slug', header: t.projects.slug, sortable: true },
     {
@@ -207,8 +213,8 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   ], [locale, t]);
 
   const filterStandaloneRow = useCallback((row: StandaloneProjectRow, query: string) => {
-    return [row.titleEn, row.titleZh, row.slug, row.serviceType]
-      .some((val) => val.toLowerCase().includes(query));
+    return [row.titleEn, row.titleZh, row.slug, row.serviceType, row.poNumber]
+      .some((val) => val && val.toLowerCase().includes(query));
   }, []);
 
   const renderExpandedRow = useCallback((row: SiteRow) => {
