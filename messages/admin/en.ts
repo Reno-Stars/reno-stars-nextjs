@@ -115,6 +115,10 @@ const en = {
     partners: 'Partners',
     contacts: 'Contacts',
     newContacts: 'New Contacts',
+    groupSettings: 'Settings',
+    company: 'Company',
+    showroom: 'Showroom',
+    about: 'About',
   },
   projects: {
     title: 'Projects',
@@ -440,6 +444,7 @@ const en = {
     ourValues: 'Our Values',
     whyChooseUs: 'Why Choose Us',
     letsBuildTogether: "Let's Build Together",
+    landingPreview: 'Landing Page Preview',
   },
   ai: {
     pasteContent: 'Paste Content',

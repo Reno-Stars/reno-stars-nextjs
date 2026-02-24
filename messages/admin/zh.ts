@@ -117,6 +117,10 @@ const zh: AdminMessages = {
     partners: '合作伙伴',
     contacts: '联系表单',
     newContacts: '新联系表单',
+    groupSettings: '设置',
+    company: '公司信息',
+    showroom: '展厅',
+    about: '关于我们',
   },
   projects: {
     title: '项目案例',
@@ -442,6 +446,7 @@ const zh: AdminMessages = {
     ourValues: '我们的价值观',
     whyChooseUs: '为什么选择我们',
     letsBuildTogether: '一起建造',
+    landingPreview: '落地页预览',
   },
   ai: {
     pasteContent: '粘贴内容',

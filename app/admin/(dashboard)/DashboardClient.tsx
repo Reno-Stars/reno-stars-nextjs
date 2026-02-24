@@ -16,6 +16,9 @@ import {
   Handshake,
   Mail,
   BellRing,
+  Building2,
+  Store,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -41,6 +44,13 @@ interface CardDef {
   accent: string;
   highlight?: boolean;
   notify?: boolean;
+}
+
+interface LinkCardDef {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  accent: string;
 }
 
 interface SectionDef {
@@ -119,8 +129,57 @@ function DashboardCard({ card }: { card: CardDef }) {
   );
 }
 
+function SettingsLinkCard({ card }: { card: LinkCardDef }) {
+  const [hovered, setHovered] = useState(false);
+  const Icon = card.icon;
+
+  return (
+    <Link
+      href={card.href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        backgroundColor: CARD,
+        borderRadius: '12px',
+        padding: '1rem 1.25rem',
+        boxShadow: hovered ? neu(8) : neu(4),
+        textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.75rem',
+        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      }}
+    >
+      <div
+        style={{
+          width: 36,
+          height: 36,
+          borderRadius: '50%',
+          backgroundColor: card.accent + '14',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+      >
+        <Icon size={18} color={card.accent} strokeWidth={1.8} />
+      </div>
+      <span style={{ color: TEXT, fontSize: '0.875rem', fontWeight: 500 }}>
+        {card.label}
+      </span>
+    </Link>
+  );
+}
+
 export default function DashboardClient({ stats }: { stats: DashboardStats }) {
   const t = useAdminTranslations();
+
+  const settingsCards: LinkCardDef[] = [
+    { label: t.dashboard.company, href: '/admin/company', icon: Building2, accent: NAVY },
+    { label: t.dashboard.showroom, href: '/admin/showroom', icon: Store, accent: NAVY },
+    { label: t.dashboard.about, href: '/admin/about', icon: BookOpen, accent: NAVY },
+  ];
 
   const sections: SectionDef[] = [
     {
@@ -189,6 +248,33 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
           </div>
         </div>
       ))}
+
+      {/* Settings — link-only cards (singletons, no counts) */}
+      <div style={{ marginBottom: '2rem' }}>
+        <h2
+          style={{
+            color: TEXT_MID,
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            margin: '0 0 0.75rem',
+          }}
+        >
+          {t.dashboard.groupSettings}
+        </h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: '1rem',
+          }}
+        >
+          {settingsCards.map((card) => (
+            <SettingsLinkCard key={card.href} card={card} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
