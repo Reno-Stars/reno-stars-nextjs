@@ -38,7 +38,7 @@ interface DashboardStats {
 
 interface CardDef {
   label: string;
-  value: number;
+  value?: number;
   href: string;
   icon: LucideIcon;
   accent: string;
@@ -46,21 +46,30 @@ interface CardDef {
   notify?: boolean;
 }
 
-interface LinkCardDef {
-  label: string;
-  href: string;
-  icon: LucideIcon;
-  accent: string;
-}
-
 interface SectionDef {
   title: string;
   cards: CardDef[];
 }
 
+const sectionHeaderStyle: React.CSSProperties = {
+  color: TEXT_MID,
+  fontSize: '0.8rem',
+  fontWeight: 600,
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+  margin: '0 0 0.75rem',
+};
+
+const sectionGridStyle: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1rem',
+};
+
 function DashboardCard({ card }: { card: CardDef }) {
   const [hovered, setHovered] = useState(false);
   const Icon = card.icon;
+  const isLink = card.value === undefined;
 
   return (
     <Link
@@ -70,11 +79,12 @@ function DashboardCard({ card }: { card: CardDef }) {
       style={{
         backgroundColor: CARD,
         borderRadius: '12px',
-        padding: '1.25rem',
+        padding: isLink ? '1rem 1.25rem' : '1.25rem',
         boxShadow: hovered ? neu(8) : neu(4),
         textDecoration: 'none',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: isLink ? 'row' : 'column',
+        alignItems: isLink ? 'center' : undefined,
         gap: '0.75rem',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         transition: 'transform 0.2s ease, box-shadow 0.2s ease',
@@ -84,8 +94,8 @@ function DashboardCard({ card }: { card: CardDef }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
         <div
           style={{
-            width: 40,
-            height: 40,
+            width: isLink ? 36 : 40,
+            height: isLink ? 36 : 40,
             borderRadius: '50%',
             backgroundColor: card.accent + '14',
             display: 'flex',
@@ -95,7 +105,7 @@ function DashboardCard({ card }: { card: CardDef }) {
             position: 'relative',
           }}
         >
-          <Icon size={20} color={card.accent} strokeWidth={1.8} />
+          <Icon size={isLink ? 18 : 20} color={card.accent} strokeWidth={1.8} />
           {card.notify && (
             <span
               style={{
@@ -111,75 +121,28 @@ function DashboardCard({ card }: { card: CardDef }) {
             />
           )}
         </div>
-        <span style={{ color: TEXT_MID, fontSize: '0.875rem' }}>
+        <span style={{ color: isLink ? TEXT : TEXT_MID, fontSize: '0.875rem', fontWeight: isLink ? 500 : undefined }}>
           {card.label}
         </span>
       </div>
-      <div
-        style={{
-          color: card.highlight ? GOLD : NAVY,
-          fontSize: '2rem',
-          fontWeight: 700,
-          lineHeight: 1,
-        }}
-      >
-        {card.value}
-      </div>
-    </Link>
-  );
-}
-
-function SettingsLinkCard({ card }: { card: LinkCardDef }) {
-  const [hovered, setHovered] = useState(false);
-  const Icon = card.icon;
-
-  return (
-    <Link
-      href={card.href}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        backgroundColor: CARD,
-        borderRadius: '12px',
-        padding: '1rem 1.25rem',
-        boxShadow: hovered ? neu(8) : neu(4),
-        textDecoration: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem',
-        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-      }}
-    >
-      <div
-        style={{
-          width: 36,
-          height: 36,
-          borderRadius: '50%',
-          backgroundColor: card.accent + '14',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-        }}
-      >
-        <Icon size={18} color={card.accent} strokeWidth={1.8} />
-      </div>
-      <span style={{ color: TEXT, fontSize: '0.875rem', fontWeight: 500 }}>
-        {card.label}
-      </span>
+      {card.value !== undefined && (
+        <div
+          style={{
+            color: card.highlight ? GOLD : NAVY,
+            fontSize: '2rem',
+            fontWeight: 700,
+            lineHeight: 1,
+          }}
+        >
+          {card.value}
+        </div>
+      )}
     </Link>
   );
 }
 
 export default function DashboardClient({ stats }: { stats: DashboardStats }) {
   const t = useAdminTranslations();
-
-  const settingsCards: LinkCardDef[] = [
-    { label: t.dashboard.company, href: '/admin/company', icon: Building2, accent: NAVY },
-    { label: t.dashboard.showroom, href: '/admin/showroom', icon: Store, accent: NAVY },
-    { label: t.dashboard.about, href: '/admin/about', icon: BookOpen, accent: NAVY },
-  ];
 
   const sections: SectionDef[] = [
     {
@@ -208,6 +171,14 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
         { label: t.dashboard.newContacts, value: stats.newContacts, href: '/admin/contacts?status=new', icon: BellRing, accent: GOLD, highlight: stats.newContacts > 0, notify: stats.newContacts > 0 },
       ],
     },
+    {
+      title: t.dashboard.groupSettings,
+      cards: [
+        { label: t.dashboard.company, href: '/admin/company', icon: Building2, accent: NAVY },
+        { label: t.dashboard.showroom, href: '/admin/showroom', icon: Store, accent: NAVY },
+        { label: t.dashboard.about, href: '/admin/about', icon: BookOpen, accent: NAVY },
+      ],
+    },
   ];
 
   return (
@@ -223,58 +194,14 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
 
       {sections.map((section) => (
         <div key={section.title} style={{ marginBottom: '2rem' }}>
-          <h2
-            style={{
-              color: TEXT_MID,
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              margin: '0 0 0.75rem',
-            }}
-          >
-            {section.title}
-          </h2>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-              gap: '1rem',
-            }}
-          >
+          <h2 style={sectionHeaderStyle}>{section.title}</h2>
+          <div style={sectionGridStyle}>
             {section.cards.map((card, index) => (
               <DashboardCard key={`${section.title}-${index}`} card={card} />
             ))}
           </div>
         </div>
       ))}
-
-      {/* Settings — link-only cards (singletons, no counts) */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h2
-          style={{
-            color: TEXT_MID,
-            fontSize: '0.8rem',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            margin: '0 0 0.75rem',
-          }}
-        >
-          {t.dashboard.groupSettings}
-        </h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-            gap: '1rem',
-          }}
-        >
-          {settingsCards.map((card) => (
-            <SettingsLinkCard key={card.href} card={card} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

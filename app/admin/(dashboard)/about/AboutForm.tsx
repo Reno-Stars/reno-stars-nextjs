@@ -34,122 +34,122 @@ export default function AboutForm({ about }: AboutFormProps) {
 
   return (
     <>
-    <form action={formAction}>
-      <div
-        className="admin-form-card"
-        style={{
-          backgroundColor: CARD,
-          borderRadius: '12px',
-          padding: '1.5rem',
-          boxShadow: neu(6),
-          maxWidth: '800px',
-        }}
-      >
-        <EditModeToggle editing={editing} setEditing={setEditing} />
-        <FormAlerts state={state} />
-
-        <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <BilingualTextarea
-            nameEn="ourJourneyEn"
-            nameZh="ourJourneyZh"
-            label={t.about.ourJourney}
-            defaultValueEn={about.ourJourneyEn ?? ''}
-            defaultValueZh={about.ourJourneyZh ?? ''}
-            rows={4}
-          />
-
-          <BilingualTextarea
-            nameEn="whatWeOfferEn"
-            nameZh="whatWeOfferZh"
-            label={t.about.whatWeOffer}
-            defaultValueEn={about.whatWeOfferEn ?? ''}
-            defaultValueZh={about.whatWeOfferZh ?? ''}
-            rows={4}
-          />
-
-          <BilingualTextarea
-            nameEn="ourValuesEn"
-            nameZh="ourValuesZh"
-            label={t.about.ourValues}
-            defaultValueEn={about.ourValuesEn ?? ''}
-            defaultValueZh={about.ourValuesZh ?? ''}
-            rows={4}
-          />
-
-          <BilingualTextarea
-            nameEn="whyChooseUsEn"
-            nameZh="whyChooseUsZh"
-            label={t.about.whyChooseUs}
-            defaultValueEn={about.whyChooseUsEn ?? ''}
-            defaultValueZh={about.whyChooseUsZh ?? ''}
-            rows={4}
-          />
-
-          <BilingualTextarea
-            nameEn="letsBuildTogetherEn"
-            nameZh="letsBuildTogetherZh"
-            label={t.about.letsBuildTogether}
-            defaultValueEn={about.letsBuildTogetherEn ?? ''}
-            defaultValueZh={about.letsBuildTogetherZh ?? ''}
-            rows={4}
-          />
-
-          {editing && (
-            <div style={{ marginTop: '1rem' }}>
-              <SubmitButton isPending={isPending} />
-            </div>
-          )}
-        </fieldset>
-      </div>
-    </form>
-
-    {/* Landing page preview */}
-    {previewItems.some((item) => item.text) && (
-      <div style={{ marginTop: '2rem' }}>
-        <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: TEXT_MID, marginBottom: '1rem' }}>
-          {t.about.landingPreview}
-        </h3>
+      <form action={formAction}>
         <div
+          className="admin-form-card"
           style={{
-            backgroundColor: SURFACE_ALT,
-            borderRadius: 16,
+            backgroundColor: CARD,
+            borderRadius: '12px',
             padding: '1.5rem',
+            boxShadow: neu(6),
+            maxWidth: '800px',
           }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
-            {previewItems.map((item) => (
-              <div
-                key={item.title}
-                style={{
-                  backgroundColor: CARD,
-                  borderRadius: 16,
-                  padding: '1.25rem',
-                  boxShadow: neu(4),
-                }}
-              >
-                <div style={{ width: 32, height: 2, borderRadius: 9999, marginBottom: '0.75rem', backgroundColor: GOLD }} />
-                <div style={{ fontSize: '0.875rem', fontWeight: 700, color: TEXT, marginBottom: '0.375rem' }}>
-                  {item.title}
-                </div>
+          <EditModeToggle editing={editing} setEditing={setEditing} />
+          <FormAlerts state={state} />
+
+          <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
+            <BilingualTextarea
+              nameEn="ourJourneyEn"
+              nameZh="ourJourneyZh"
+              label={t.about.ourJourney}
+              defaultValueEn={about.ourJourneyEn ?? ''}
+              defaultValueZh={about.ourJourneyZh ?? ''}
+              rows={4}
+            />
+
+            <BilingualTextarea
+              nameEn="whatWeOfferEn"
+              nameZh="whatWeOfferZh"
+              label={t.about.whatWeOffer}
+              defaultValueEn={about.whatWeOfferEn ?? ''}
+              defaultValueZh={about.whatWeOfferZh ?? ''}
+              rows={4}
+            />
+
+            <BilingualTextarea
+              nameEn="ourValuesEn"
+              nameZh="ourValuesZh"
+              label={t.about.ourValues}
+              defaultValueEn={about.ourValuesEn ?? ''}
+              defaultValueZh={about.ourValuesZh ?? ''}
+              rows={4}
+            />
+
+            <BilingualTextarea
+              nameEn="whyChooseUsEn"
+              nameZh="whyChooseUsZh"
+              label={t.about.whyChooseUs}
+              defaultValueEn={about.whyChooseUsEn ?? ''}
+              defaultValueZh={about.whyChooseUsZh ?? ''}
+              rows={4}
+            />
+
+            <BilingualTextarea
+              nameEn="letsBuildTogetherEn"
+              nameZh="letsBuildTogetherZh"
+              label={t.about.letsBuildTogether}
+              defaultValueEn={about.letsBuildTogetherEn ?? ''}
+              defaultValueZh={about.letsBuildTogetherZh ?? ''}
+              rows={4}
+            />
+
+            {editing && (
+              <div style={{ marginTop: '1rem' }}>
+                <SubmitButton isPending={isPending} />
+              </div>
+            )}
+          </fieldset>
+        </div>
+      </form>
+
+      {/* Landing page preview */}
+      {previewItems.some((item) => item.text) && (
+        <div style={{ marginTop: '2rem' }}>
+          <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: TEXT_MID, marginBottom: '1rem' }}>
+            {t.about.landingPreview}
+          </h3>
+          <div
+            style={{
+              backgroundColor: SURFACE_ALT,
+              borderRadius: 16,
+              padding: '1.5rem',
+            }}
+          >
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.75rem' }}>
+              {previewItems.map((item) => (
                 <div
+                  key={item.title}
                   style={{
-                    fontSize: '0.8125rem',
-                    lineHeight: 1.6,
-                    color: TEXT_MID,
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
+                    backgroundColor: CARD,
+                    borderRadius: 16,
+                    padding: '1.25rem',
+                    boxShadow: neu(4),
                   }}
                 >
-                  {item.text}
+                  <div style={{ width: 32, height: 2, borderRadius: 9999, marginBottom: '0.75rem', backgroundColor: GOLD }} />
+                  <div style={{ fontSize: '0.875rem', fontWeight: 700, color: TEXT, marginBottom: '0.375rem' }}>
+                    {item.title}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '0.8125rem',
+                      lineHeight: 1.6,
+                      color: TEXT_MID,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {item.text}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </>
   );
 }
