@@ -483,6 +483,10 @@ if (existingPairs.length > 0) {
 
 For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
 
+### New Project Ordering
+
+`createProject()` queries `max(display_order_in_site)` for the target site and places the new project at `max + 1` (end of list). Uses `coalesce(max(...), -1)` so the first project in an empty site gets order `0`. Users can then drag-reorder via the House Stack UI.
+
 ### Reorder Actions Pattern
 
 Six entity types support drag-and-drop display order reordering via server actions: services, service areas, FAQs, trust badges, gallery items, and partners. All follow the same pattern:

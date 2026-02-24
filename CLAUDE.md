@@ -153,6 +153,7 @@ tests/
 - **Neumorphic design:** Warm beige surface (#E8E2DA), navy (#1B365D), gold (#C8922A) palette. `GOLD_ICON_FILTER` in `lib/theme.ts` tints black SVG icons to gold via CSS filter.
 - **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3`, etc. when slugs collide. Used by `createProject()`, `updateProject()`, `createServiceArea()`, and blog generation actions. Blog generation additionally sanitizes AI-generated slugs via `sanitizeSlug()` before deduplication. `updateProject()` and `updateSite()` detect slug renames and return `renamedSlug` in the action response; `useFormToast` shows a bilingual warning toast via the `'warning'` toast type.
 - **Insert-before-delete pattern:** Admin CRUD actions that update related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. The Neon HTTP driver does not support interactive transactions, so actions fetch existing record IDs, insert new records first (old data remains as fallback if insert fails), then delete old records by ID. This prevents data loss on partial failure. Used by `updateProject()` and `updateSite()`. For `createSite()`, a rollback cleanup deletes the orphaned parent record if child insertion fails.
+- **New project ordering:** `createProject()` queries `max(display_order_in_site)` for the target site and places the new project at `max + 1` (end of list). Users can then drag-reorder via the House Stack UI.
 
 ## Environment Variables
 

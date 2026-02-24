@@ -14,7 +14,7 @@ import {
   SEO_META_DESCRIPTION_MAX,
   SEO_FOCUS_KEYWORD_MAX,
 } from '@/lib/db/schema';
-import { eq, and, inArray } from 'drizzle-orm';
+import { eq, and, inArray, sql } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -196,6 +196,13 @@ export async function createProject(
     // Ensure slug is unique (append -2, -3, etc. if collision)
     const allSlugs = await db.select({ slug: projects.slug }).from(projects);
     data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+
+    // Place new project at the end of the site's project list
+    const [maxRow] = await db
+      .select({ max: sql<number>`coalesce(max(${projects.displayOrderInSite}), -1)` })
+      .from(projects)
+      .where(eq(projects.siteId, data.siteId));
+    data.displayOrderInSite = (maxRow?.max ?? -1) + 1;
 
     const [inserted] = await db
       .insert(projects)
