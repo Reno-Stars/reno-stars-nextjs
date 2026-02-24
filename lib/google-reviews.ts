@@ -1,10 +1,10 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 import type { GoogleReview, GooglePlaceRating } from './types';
-import fallbackCache from './google-reviews-cache.json';
+import fallbackCache from '../google-reviews-cache.json';
 
 const REVALIDATE_24H = 86400;
-const CACHE_PATH = join(process.cwd(), 'lib/google-reviews-cache.json');
+const CACHE_PATH = join(process.cwd(), 'google-reviews-cache.json');
 
 const EMPTY_RESULT: GooglePlaceRating = { rating: 0, userRatingCount: 0, reviews: [] } as const satisfies GooglePlaceRating;
 

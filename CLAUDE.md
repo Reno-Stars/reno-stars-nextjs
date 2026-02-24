@@ -187,8 +187,8 @@ Key patterns:
 15+ tables in `lib/db/schema.ts`. Key tables:
 - `services` — 6 renovation service types (icons stored as `iconUrl` pointing to SVGs in `public/icons/services/`; old `iconName` column retained but unused)
 - `service_areas` — 14 geographic areas
-- `project_sites`, `site_image_pairs` — site containers for whole-house renovations with before/after image pairs
-- `projects`, `project_image_pairs`, `project_scopes`, `project_external_products` — portfolio with before/after image pairs
+- `project_sites`, `site_image_pairs` — site containers for whole-house renovations with before/after image pairs and optional `po_number` for sales tracking
+- `projects`, `project_image_pairs`, `project_scopes`, `project_external_products` — portfolio with before/after image pairs and optional `po_number` for sales tracking
 - `blog_posts` — articles (with optional project reference for products display)
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
