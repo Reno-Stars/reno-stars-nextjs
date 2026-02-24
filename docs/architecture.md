@@ -487,6 +487,16 @@ For `createSite()`, a rollback cleanup deletes the orphaned parent record if chi
 
 `createProject()` queries `max(display_order_in_site)` for the target site and places the new project at `max + 1` (end of list). Uses `coalesce(max(...), -1)` so the first project in an empty site gets order `0`. Users can then drag-reorder via the House Stack UI.
 
+### Site Cascade Deletion
+
+Deleting a site cascades through the full hierarchy via DB foreign keys:
+- `project_sites` → `projects` (`onDelete: cascade`)
+- `project_sites` → `site_image_pairs` (`onDelete: cascade`)
+- `projects` → `project_image_pairs`, `project_scopes`, `project_external_products` (`onDelete: cascade`)
+- `blog_posts.project_id` → `onDelete: set null` (blog posts survive, just lose the project link)
+
+The `deleteSite()` action simply deletes the site row. The ConfirmDialog lists all project names inside the site before confirming.
+
 ### Reorder Actions Pattern
 
 Six entity types support drag-and-drop display order reordering via server actions: services, service areas, FAQs, trust badges, gallery items, and partners. All follow the same pattern:
