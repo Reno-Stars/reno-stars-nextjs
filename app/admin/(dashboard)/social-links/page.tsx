@@ -7,7 +7,7 @@ export default async function SocialLinksAdminPage() {
 
   return (
     <div>
-      <AdminPageHeader titleKey="socialLinks.title" />
+      <AdminPageHeader titleKey="socialLinks.title" actionKey="socialLinks.addSocialLink" actionHref="/admin/social-links/new" />
       <SocialLinksListClient socialLinks={socialLinks} />
     </div>
   );

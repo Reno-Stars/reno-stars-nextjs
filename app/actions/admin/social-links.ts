@@ -45,6 +45,26 @@ export async function updateSocialLink(
   }
 }
 
+export async function deleteSocialLink(id: string): Promise<{ error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(id)) return { error: 'Invalid social link ID.' };
+  try {
+    const deleted = await db
+      .delete(socialLinks)
+      .where(eq(socialLinks.id, id))
+      .returning({ id: socialLinks.id });
+
+    if (deleted.length === 0) return { error: 'Social link not found.' };
+
+    revalidatePath('/admin/social-links');
+    revalidatePath('/', 'layout');
+    return {};
+  } catch (error) {
+    console.error('Failed to delete social link:', error);
+    return { error: 'Failed to delete social link.' };
+  }
+}
+
 export async function toggleSocialLinkActive(
   id: string,
   current: boolean

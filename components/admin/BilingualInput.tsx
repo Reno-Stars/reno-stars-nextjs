@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { NAVY, GOLD, ERROR, TEXT_MUTED } from '@/lib/theme';
 import { inputStyle } from './shared-styles';
 import Tooltip from './Tooltip';
+import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface BilingualInputProps {
   nameEn: string;
@@ -47,6 +48,7 @@ export default function BilingualInput({
   tooltip,
   maxLength,
 }: BilingualInputProps) {
+  const t = useAdminTranslations();
   // Dual-mode: controlled (valueEn/onChangeEn) for AI-populated fields,
   // uncontrolled (defaultValueEn) for static fields. Avoids React warnings
   // about switching between controlled/uncontrolled by spreading conditionally.
@@ -70,7 +72,11 @@ export default function BilingualInput({
             fontSize: '0.8125rem',
           }}
         >
-          {label}
+          {label}{maxLength !== undefined && (
+            <span style={{ fontWeight: 400, color: TEXT_MUTED, fontSize: '0.6875rem', marginLeft: '0.375rem' }}>
+              ({t.common.maxLength.replace('{count}', String(maxLength))})
+            </span>
+          )}
         </legend>
         {tooltip && <Tooltip content={tooltip} />}
       </div>

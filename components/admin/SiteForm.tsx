@@ -15,9 +15,10 @@ import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import SubmitButton from './SubmitButton';
 import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
-import { CARD, NAVY, GOLD, SURFACE, TEXT_MID, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
+import { CARD, NAVY, SURFACE, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
+import EditModeToggle from './EditModeToggle';
 import { useSaveWarning } from '@/hooks/useSaveWarning';
 import { useBeforeUnload } from '@/hooks/useBeforeUnload';
 
@@ -219,46 +220,7 @@ export default function SiteForm({
           maxWidth: '900px',
         }}
       >
-        {/* Edit / Cancel button — only for edit mode */}
-        {isEdit && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-            {!editing ? (
-              <button
-                type="button"
-                onClick={() => setEditing(true)}
-                style={{
-                  padding: '0.5rem 1.25rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: GOLD,
-                  color: '#fff',
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                {t.common.edit}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setEditing(false)}
-                style={{
-                  padding: '0.5rem 1.25rem',
-                  borderRadius: '8px',
-                  border: `1px solid ${TEXT_MID}`,
-                  backgroundColor: 'transparent',
-                  color: TEXT_MID,
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                {t.common.cancel}
-              </button>
-            )}
-          </div>
-        )}
+        {isEdit && <EditModeToggle editing={editing} setEditing={setEditing} />}
 
         {state.error && (
           <div role="alert" style={{ backgroundColor: ERROR_BG, color: ERROR, padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.875rem' }}>

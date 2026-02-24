@@ -20,6 +20,7 @@ import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } f
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
+import EditModeToggle from './EditModeToggle';
 import { useSaveWarning } from '@/hooks/useSaveWarning';
 import { useBeforeUnload } from '@/hooks/useBeforeUnload';
 
@@ -274,46 +275,7 @@ export default function ProjectForm({
           maxWidth: '900px',
         }}
       >
-        {/* Edit / Cancel button — only for edit mode */}
-        {isEdit && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-            {!editing ? (
-              <button
-                type="button"
-                onClick={() => setEditing(true)}
-                style={{
-                  padding: '0.5rem 1.25rem',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: GOLD,
-                  color: '#fff',
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                {t.common.edit}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setEditing(false)}
-                style={{
-                  padding: '0.5rem 1.25rem',
-                  borderRadius: '8px',
-                  border: `1px solid ${TEXT_MID}`,
-                  backgroundColor: 'transparent',
-                  color: TEXT_MID,
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                }}
-              >
-                {t.common.cancel}
-              </button>
-            )}
-          </div>
-        )}
+        {isEdit && <EditModeToggle editing={editing} setEditing={setEditing} />}
 
         {state.error && (
           <div role="alert" style={{ backgroundColor: ERROR_BG, color: ERROR, padding: '0.75rem 1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.875rem' }}>
@@ -509,7 +471,7 @@ export default function ProjectForm({
                   </div>
                 </div>
                 {editing && scopes.length > 1 && (
-                  <button type="button" onClick={() => setScopes(scopes.filter((s) => s.id !== scope.id))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                  <button type="button" onClick={() => setScopes(scopes.filter((s) => s.id !== scope.id))} aria-label={`Remove scope ${idx + 1}`} style={{ color: ERROR, background: 'none', border: `1px solid ${ERROR}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>
                     {t.common.remove}
                   </button>
                 )}
@@ -564,7 +526,7 @@ export default function ProjectForm({
                   </div>
                 </div>
                 {editing && (
-                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((p) => p.id !== ep.id))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem' }}>
+                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((p) => p.id !== ep.id))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: `1px solid ${ERROR}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>
                     {t.common.remove}
                   </button>
                 )}

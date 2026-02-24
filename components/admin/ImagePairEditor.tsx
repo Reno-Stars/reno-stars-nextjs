@@ -223,6 +223,21 @@ export default function ImagePairEditor({
         {tooltip && <Tooltip content={tooltip} />}
       </div>
 
+      {uploadingPair && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: GOLD, marginBottom: '0.5rem' }}>
+          <span style={{
+            display: 'inline-block',
+            width: 14,
+            height: 14,
+            border: `2px solid ${GOLD}`,
+            borderTopColor: 'transparent',
+            borderRadius: '50%',
+            animation: 'admin-spin 0.8s linear infinite',
+          }} />
+          {t.upload.uploading}
+        </div>
+      )}
+
       {uploadError && (
         <div role="alert" style={{ color: ERROR, fontSize: '0.75rem', marginBottom: '0.5rem' }}>
           {uploadError}

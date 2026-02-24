@@ -109,7 +109,7 @@ export default function TrustBadgesListClient({ badges }: Props) {
           handleDragStart, handleDragOver, handleDragLeave, handleDrop, handleDragEnd,
         }}
         actions={(row) => (
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
             <Link
               href={`/admin/trust-badges/${row.id}`}
               style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}

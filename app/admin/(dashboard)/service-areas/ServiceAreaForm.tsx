@@ -63,7 +63,7 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
         <FormAlerts state={state} />
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
-          <FormField label={t.serviceAreas.slug} htmlFor="slug">
+          <FormField label={t.serviceAreas.slug} htmlFor="slug" tooltip={isNew ? undefined : t.serviceAreas.slugTooltip}>
             {isNew ? (
               <input id="slug" name="slug" defaultValue={defaults.slug} required style={fieldStyle} />
             ) : (

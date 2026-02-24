@@ -261,7 +261,9 @@ export default function DataTable<T extends object>({
                       color: TEXT_MUTED,
                     }}
                   >
-                    {t.common.noRecords}
+                    {isSearching
+                      ? t.common.noResultsFor.replace('{query}', search.trim())
+                      : t.common.noRecords}
                   </td>
                 </tr>
               ) : (
