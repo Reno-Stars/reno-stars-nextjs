@@ -43,6 +43,19 @@ interface Props {
   standaloneSiteId: string | null;
 }
 
+function matchesSite(row: SiteRow, query: string): boolean {
+  return [row.titleEn, row.titleZh, row.slug, row.locationCity, row.poNumber]
+    .some((val) => val && val.toLowerCase().includes(query));
+}
+
+function matchesProject(p: ProjectSummary | StandaloneProjectRow, query: string): boolean {
+  return p.titleEn.toLowerCase().includes(query) ||
+    p.titleZh.toLowerCase().includes(query) ||
+    p.slug.toLowerCase().includes(query) ||
+    p.serviceType.toLowerCase().includes(query) ||
+    (p.poNumber != null && p.poNumber.toLowerCase().includes(query));
+}
+
 export default function SitesListClient({ sites, projectsBySite, standaloneSiteId }: Props) {
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -149,19 +162,8 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   };
 
   const filterRow = useCallback((row: SiteRow, query: string) => {
-    // Match site's own fields
-    const siteMatch = [row.titleEn, row.titleZh, row.slug, row.locationCity, row.poNumber]
-      .some((val) => val && val.toLowerCase().includes(query));
-    if (siteMatch) return true;
-    // Match any project inside the site
-    const siteProjects = projectsBySite[row.id] ?? [];
-    return siteProjects.some((p) =>
-      p.titleEn.toLowerCase().includes(query) ||
-      p.titleZh.toLowerCase().includes(query) ||
-      p.slug.toLowerCase().includes(query) ||
-      p.serviceType.toLowerCase().includes(query) ||
-      (p.poNumber && p.poNumber.toLowerCase().includes(query))
-    );
+    if (matchesSite(row, query)) return true;
+    return (projectsBySite[row.id] ?? []).some((p) => matchesProject(p, query));
   }, [projectsBySite]);
 
   // Standalone projects: all projects from sites NOT shown as whole-house
@@ -213,12 +215,15 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   ], [locale, t]);
 
   const filterStandaloneRow = useCallback((row: StandaloneProjectRow, query: string) => {
-    return [row.titleEn, row.titleZh, row.slug, row.serviceType, row.poNumber]
-      .some((val) => val && val.toLowerCase().includes(query));
+    return matchesProject(row, query);
   }, []);
 
-  const renderExpandedRow = useCallback((row: SiteRow) => {
-    const siteProjects = projectsBySite[row.id] ?? [];
+  const renderExpandedRow = useCallback((row: SiteRow, searchQuery: string) => {
+    const allProjects = projectsBySite[row.id] ?? [];
+    // When searching, only show matching projects (unless the site itself matches)
+    const siteProjects = searchQuery && !matchesSite(row, searchQuery)
+      ? allProjects.filter((p) => matchesProject(p, searchQuery))
+      : allProjects;
     if (siteProjects.length === 0) {
       return (
         <div style={{ padding: '1rem 1.5rem', color: TEXT_MUTED, fontSize: '0.8125rem' }}>
@@ -233,6 +238,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8125rem' }}>
           <thead>
             <tr>
+              <th style={thStyle}>{t.projects.poNumber}</th>
               <th style={thStyle}>{locale === 'zh' ? t.projects.titleZh : t.projects.titleEn}</th>
               <th style={thStyle}>{t.projects.slug}</th>
               <th style={thStyle}>{t.projects.serviceType}</th>
@@ -248,7 +254,10 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
                 : project.serviceType;
               return (
                 <tr key={project.id} style={{ borderBottom: '1px solid rgba(27,54,93,0.06)' }}>
-                  <td style={{ padding: '0.5rem 0.5rem 0.5rem 0', color: NAVY, fontWeight: 500 }}>
+                  <td style={{ padding: '0.5rem 0.5rem 0.5rem 0', color: TEXT_MID }}>
+                    {project.poNumber || '—'}
+                  </td>
+                  <td style={{ padding: '0.5rem', color: NAVY, fontWeight: 500 }}>
                     {title}
                   </td>
                   <td style={{ padding: '0.5rem', color: TEXT_MID }}>

@@ -34,7 +34,7 @@ interface DataTableProps<T> {
   searchKeys?: string[];
   pageSize?: number;
   actions?: (row: T) => ReactNode;
-  renderExpandedRow?: (row: T) => ReactNode;
+  renderExpandedRow?: (row: T, searchQuery: string) => ReactNode;
   /** Custom filter that replaces default searchKeys matching. Return true to include the row. */
   filterRow?: (row: T, query: string) => boolean;
   /** Optional content rendered on the right side of the search bar row */
@@ -381,7 +381,7 @@ export default function DataTable<T extends object>({
                               }}
                             >
                               <div style={{ overflow: 'hidden' }}>
-                                {renderExpandedRow(row)}
+                                {renderExpandedRow(row, search.trim().toLowerCase())}
                               </div>
                             </div>
                           </td>
