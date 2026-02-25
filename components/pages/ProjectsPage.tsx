@@ -324,7 +324,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
     const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
-    const searchMatch = !searchQuery || project.po_number?.toLowerCase().includes(searchQuery.toLowerCase());
+    const q = searchQuery.toLowerCase();
+    const searchMatch = !searchQuery || [project.title, project.po_number].some((v) => v?.toLowerCase().includes(q));
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch && searchMatch;
   }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, searchQuery, locale]);
 
@@ -455,10 +456,10 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             type="text"
             value={searchQuery}
             onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-            placeholder={t('filter.searchPO')}
-            aria-label={t('filter.searchPO')}
+            placeholder={t('filter.search')}
+            aria-label={t('filter.search')}
             className="rounded-lg text-sm px-3 py-2 border-0 outline-none"
-            style={{ backgroundColor: CARD, color: TEXT, boxShadow: neu(3), width: '140px' }}
+            style={{ backgroundColor: CARD, color: TEXT, boxShadow: neu(3), width: '180px' }}
           />
           <SelectDropdown
             value={activeCategory}

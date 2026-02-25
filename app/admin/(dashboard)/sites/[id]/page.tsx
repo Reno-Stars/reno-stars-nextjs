@@ -14,11 +14,12 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows, allSiteRows] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
     db.select().from(siteImagePairs).where(eq(siteImagePairs.siteId, id)).orderBy(siteImagePairs.displayOrder) as Promise<DbSiteImagePair[]>,
+    db.select({ id: projectSites.id, titleEn: projectSites.titleEn, titleZh: projectSites.titleZh }).from(projectSites),
   ]);
 
   const site = rows[0];
@@ -60,7 +61,7 @@ export default async function EditSitePage({ params }: PageProps) {
   return (
     <div>
       <AdminPageHeader titleKey="sites.editSite" viewHref={`/en/projects/${site.slug}`} />
-      <SiteDetailClient site={siteData} projects={projectsWithDetails} cities={cities} />
+      <SiteDetailClient site={siteData} projects={projectsWithDetails} cities={cities} allSites={allSiteRows} />
     </div>
   );
 }

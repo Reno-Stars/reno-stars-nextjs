@@ -1,16 +1,18 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useMemo, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import HouseStack from '@/components/admin/HouseStack';
 import SiteForm from '@/components/admin/SiteForm';
 import ProjectForm from '@/components/admin/ProjectForm';
 import { updateSite } from '@/app/actions/admin/sites';
-import { createProject, updateProject, deleteProject, reorderProjectsInSite } from '@/app/actions/admin/projects';
+import { createProject, updateProject, deleteProject, reorderProjectsInSite, moveProjectToSite } from '@/app/actions/admin/projects';
+import MoveProjectDialog from '@/components/admin/MoveProjectDialog';
 import { generateBlogFromProject, generateBlogFromSite } from '@/app/actions/admin/generate-blog';
 import { CARD, NAVY, GOLD, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { useToast } from '@/components/admin/ToastProvider';
 import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
 
 interface City {
@@ -130,20 +132,30 @@ interface SiteData {
   }[];
 }
 
+interface SiteOption {
+  id: string;
+  titleEn: string;
+  titleZh: string;
+}
+
 interface Props {
   site: SiteData;
   projects: ProjectWithDetails[];
   cities: City[];
+  allSites: SiteOption[];
 }
 
-export default function SiteDetailClient({ site, projects, cities }: Props) {
+export default function SiteDetailClient({ site, projects, cities, allSites }: Props) {
   const t = useAdminTranslations();
   const { locale } = useAdminLocale();
+  const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [isBlogPending, startBlogTransition] = useTransition();
   const [blogMessage, setBlogMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [moveProjectId, setMoveProjectId] = useState<string | null>(null);
+  const [isMovePending, startMoveTransition] = useTransition();
 
   // Pre-select project or new-project form from URL params (e.g. ?project=<id> or ?new)
   const projectParam = searchParams.get('project');
@@ -268,6 +280,36 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
     });
   };
 
+  // Move project to another site
+  const handleMoveProject = (targetSiteId: string) => {
+    if (!moveProjectId) return;
+    startMoveTransition(async () => {
+      const result = await moveProjectToSite(moveProjectId, targetSiteId);
+      if (result.success) {
+        // If the moved project was selected, switch to site view
+        if (selected === moveProjectId) {
+          setSelected('site');
+        }
+        setMoveProjectId(null);
+        toast(t.sites.moveProjectSuccess, 'success');
+        router.refresh();
+      } else {
+        toast(result.error || t.common.unexpectedError, 'error');
+      }
+    });
+  };
+
+  // Site options for move dialog (exclude current site)
+  const moveSiteOptions = useMemo(
+    () => allSites
+      .filter((s) => s.id !== site.id)
+      .map((s) => ({
+        id: s.id,
+        label: locale === 'zh' ? s.titleZh : s.titleEn,
+      })),
+    [allSites, site.id, locale]
+  );
+
   // Get panel title
   const getPanelTitle = () => {
     if (selected === 'site') return t.sites.siteDetails;
@@ -303,6 +345,7 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
           selectedId={selected}
           onSelect={setSelected}
           onDeleteProject={handleDeleteProject}
+          onMoveProject={setMoveProjectId}
           onReorderProjects={handleReorderProjects}
         />
       </div>
@@ -416,6 +459,15 @@ export default function SiteDetailClient({ site, projects, cities }: Props) {
           />
         )}
       </div>
+
+      {/* Move Project Dialog */}
+      <MoveProjectDialog
+        open={moveProjectId !== null}
+        siteOptions={moveSiteOptions}
+        onConfirm={handleMoveProject}
+        onCancel={() => setMoveProjectId(null)}
+        loading={isMovePending}
+      />
     </div>
   );
 }

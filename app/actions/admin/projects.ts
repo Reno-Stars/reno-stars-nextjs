@@ -437,6 +437,53 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
   }
 }
 
+export async function moveProjectToSite(
+  projectId: string,
+  targetSiteId: string
+): Promise<{ success?: boolean; error?: string }> {
+  await requireAuth();
+  if (!isValidUUID(projectId)) return { error: 'Invalid project ID.' };
+  if (!isValidUUID(targetSiteId)) return { error: 'Invalid target site ID.' };
+
+  try {
+    // Verify project exists and get current siteId
+    const [project] = await db
+      .select({ id: projects.id, siteId: projects.siteId })
+      .from(projects)
+      .where(eq(projects.id, projectId))
+      .limit(1);
+    if (!project) return { error: 'Project not found.' };
+    if (project.siteId === targetSiteId) return { error: 'Project is already in this site.' };
+
+    // Verify target site exists
+    const [targetSite] = await db
+      .select({ id: sitesTable.id })
+      .from(sitesTable)
+      .where(eq(sitesTable.id, targetSiteId))
+      .limit(1);
+    if (!targetSite) return { error: 'Target site not found.' };
+
+    // Place at end of target site
+    const [maxRow] = await db
+      .select({ max: sql<number>`coalesce(max(${projects.displayOrderInSite}), -1)` })
+      .from(projects)
+      .where(eq(projects.siteId, targetSiteId));
+    const newOrder = (maxRow?.max ?? -1) + 1;
+
+    await db
+      .update(projects)
+      .set({ siteId: targetSiteId, displayOrderInSite: newOrder, updatedAt: new Date() })
+      .where(eq(projects.id, projectId));
+
+    revalidatePath('/admin/sites');
+    revalidatePath('/', 'layout');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to move project:', error);
+    return { error: 'Failed to move project.' };
+  }
+}
+
 export async function reorderProjectsInSite(
   siteId: string,
   projectIds: string[]

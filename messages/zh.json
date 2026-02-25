@@ -276,7 +276,7 @@
     "previousPage": "转到上一页",
     "nextPage": "转到下一页",
     "showingProjects": "显示第 {start}-{end} 个，共 {total} 个项目",
-    "searchPO": "搜索 PO #"
+    "search": "搜索项目..."
   },
   "category": {
     "wholeHouse": "全屋"

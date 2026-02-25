@@ -528,6 +528,13 @@ const zh: AdminMessages = {
     generatingBlog: '生成中...',
     blogGenerated: '博客草稿已创建，正在跳转到编辑器...',
     blogGenerateFailed: '生成博客文章失败',
+    moveProject: '移动到工地',
+    moveProjectTitle: '移动项目',
+    moveProjectMessage: '请选择此项目的目标工地。',
+    moveProjectConfirm: '移动',
+    moveProjectSuccess: '项目已成功移动。',
+    selectDestinationSite: '选择目标工地...',
+    noOtherSites: '没有其他可用工地。',
     tooltips: {
       slug: 'URL友好标识符，用于页面网址（如 /projects/oak-street-house）。仅使用小写字母、数字和连字符。',
       title: '工地的显示名称，显示在卡片和页面标题上。请提供英文和中文两个版本。',

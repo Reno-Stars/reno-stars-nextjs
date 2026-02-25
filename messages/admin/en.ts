@@ -526,6 +526,13 @@ const en = {
     generatingBlog: 'Generating...',
     blogGenerated: 'Blog draft created! Redirecting to editor...',
     blogGenerateFailed: 'Failed to generate blog post',
+    moveProject: 'Move to Site',
+    moveProjectTitle: 'Move Project',
+    moveProjectMessage: 'Select a destination site for this project.',
+    moveProjectConfirm: 'Move',
+    moveProjectSuccess: 'Project moved successfully.',
+    selectDestinationSite: 'Select destination site...',
+    noOtherSites: 'No other sites available.',
     tooltips: {
       slug: 'URL-friendly identifier. Used in the page URL (e.g., /projects/oak-street-house). Use lowercase letters, numbers, and hyphens only.',
       title: 'The display name for this site. Shown on cards and page headers. Provide both English and Chinese versions.',
