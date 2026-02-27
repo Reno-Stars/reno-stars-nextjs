@@ -437,7 +437,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     </span>
                   </div>
                 )}
-                {site.aggregated.totalDuration && (
+                {site.duration && (
                   <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <Calendar className="w-4 h-4" style={{ color: GOLD }} />
@@ -446,11 +446,11 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {site.aggregated.totalDuration}
+                      {site.duration}
                     </span>
                   </div>
                 )}
-                {site.aggregated.totalBudget && (
+                {site.budget_range && (
                   <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4" style={{ color: GOLD }} />
@@ -459,7 +459,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                       </span>
                     </div>
                     <span className="text-base font-semibold" style={{ color: TEXT }}>
-                      {site.aggregated.totalBudget}
+                      {site.budget_range}
                     </span>
                   </div>
                 )}

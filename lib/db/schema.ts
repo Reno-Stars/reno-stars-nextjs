@@ -168,6 +168,11 @@ export const projectSites = pgTable(
     seoKeywordsEn: text('seo_keywords_en'),
     seoKeywordsZh: text('seo_keywords_zh'),
 
+    // Budget and duration (site-level, independent from child projects)
+    budgetRange: varchar('budget_range', { length: 50 }),
+    durationEn: varchar('duration_en', { length: 100 }),
+    durationZh: varchar('duration_zh', { length: 100 }),
+
     // Internal tracking
     poNumber: varchar('po_number', { length: 50 }),
 

@@ -97,6 +97,10 @@ export interface Site {
   focus_keyword?: Localized<string>;
   /** Additional SEO keywords (comma-separated) */
   seo_keywords?: Localized<string>;
+  /** Budget range for the whole site (e.g., "$80,000 - $120,000") */
+  budget_range?: string;
+  /** Duration for the whole site */
+  duration?: Localized<string>;
   /** Internal purchase order number for sales tracking */
   po_number?: string;
   /** Whether to show this site as a project in listings */
@@ -125,12 +129,9 @@ export interface SiteWithProjects extends Site {
 
 /**
  * Aggregated data for a site combining all its projects.
+ * Budget and duration are site-level fields, not aggregated from projects.
  */
 export interface SiteAggregated {
-  /** Combined budget from all projects */
-  totalBudget?: string;
-  /** Combined timeline from all projects */
-  totalDuration?: Localized<string>;
   /** Merged unique service scopes from all projects */
   allServiceScopes: Localized<string[]>;
   /** All images from all projects with project attribution */
@@ -429,6 +430,8 @@ export interface LocalizedSite {
   location_city?: string;
   hero_image?: string;
   badge?: string;
+  budget_range?: string;
+  duration?: string;
   show_as_project: boolean;
   featured: boolean;
   /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
@@ -448,8 +451,6 @@ export interface LocalizedSiteImage {
 
 /** Localized aggregated data for a site */
 export interface LocalizedSiteAggregated {
-  totalBudget?: string;
-  totalDuration?: string;
   allServiceScopes: string[];
   allImages: LocalizedSiteImage[];
   allExternalProducts: { url: string; image_url?: string; label: string }[];

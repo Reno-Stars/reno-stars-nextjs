@@ -22,7 +22,7 @@ import {
   partners as partnersTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import { calculateCombinedBudget, aggregateDurations, mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
+import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
 import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
 
 // ============================================================================
@@ -450,6 +450,11 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
       row.seoKeywordsEn || row.seoKeywordsZh
         ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
         : undefined,
+    budget_range: row.budgetRange ?? undefined,
+    duration:
+      row.durationEn || row.durationZh
+        ? { en: row.durationEn ?? '', zh: row.durationZh ?? '' }
+        : undefined,
     po_number: row.poNumber ?? undefined,
     show_as_project: row.showAsProject,
     featured: row.featured,
@@ -520,10 +525,8 @@ export const getSiteBySlugFromDb = cache(
 
     const site = mapDbSiteToSite(row, siteImagePairRows);
 
-    // Build aggregated data
+    // Build aggregated data (budget/duration come from site itself, not summed from projects)
     const aggregated: SiteWithProjects['aggregated'] = {
-      totalBudget: calculateCombinedBudget(projects),
-      totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects, site),
       allExternalProducts: collectAllExternalProducts(projects),
@@ -590,8 +593,6 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
     const projects = projectsBySite.get(row.id) ?? [];
 
     const aggregated: SiteWithProjects['aggregated'] = {
-      totalBudget: calculateCombinedBudget(projects),
-      totalDuration: aggregateDurations(projects),
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects, site),
       allExternalProducts: collectAllExternalProducts(projects),

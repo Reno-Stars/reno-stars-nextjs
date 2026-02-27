@@ -612,6 +612,8 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
     location_city: site.location_city,
     hero_image: site.hero_image,
     badge: site.badge?.[locale],
+    budget_range: site.budget_range,
+    duration: site.duration?.[locale],
     show_as_project: site.show_as_project,
     featured: site.featured,
     images: site.images?.map((img) => ({
@@ -653,8 +655,6 @@ export function getLocalizedSiteWithProjects(
   }));
 
   const aggregated: LocalizedSiteAggregated = {
-    totalBudget: site.aggregated.totalBudget,
-    totalDuration: site.aggregated.totalDuration?.[locale],
     allServiceScopes: site.aggregated.allServiceScopes[locale],
     allImages,
     allExternalProducts: site.aggregated.allExternalProducts.map((ep) => ({

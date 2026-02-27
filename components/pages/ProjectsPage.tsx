@@ -120,10 +120,10 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           po_number: site.po_number,
           isSiteProject: true,
           projectCount: site.project_count ?? site.projects?.length ?? 0,
-          // Site-specific aggregated data
+          // Site-specific data
           childAreas: site.projects?.map((p) => p.category[locale]) ?? [],
-          totalBudget: site.aggregated?.totalBudget,
-          totalDuration: site.aggregated?.totalDuration?.[locale],
+          totalBudget: site.budget_range,
+          totalDuration: site.duration?.[locale],
           allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
           allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
             url: ep.url,

@@ -42,6 +42,9 @@ interface SiteFormProps {
     descriptionZh: string;
     locationCity: string;
     heroImageUrl: string;
+    budgetRange?: string;
+    durationEn?: string;
+    durationZh?: string;
     badgeEn: string;
     badgeZh: string;
     poNumber?: string;
@@ -268,6 +271,12 @@ export default function SiteForm({
               ))}
             </select>
           </FormField>
+
+          <FormField label={t.sites.budgetRange} htmlFor="budgetRange" tooltip={t.sites.tooltips.budgetRange}>
+            <input id="budgetRange" name="budgetRange" defaultValue={initialData?.budgetRange ?? ''} style={fieldStyle} placeholder="$80,000 - $120,000" />
+          </FormField>
+
+          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.sites.duration} defaultValueEn={initialData?.durationEn ?? ''} defaultValueZh={initialData?.durationZh ?? ''} tooltip={t.sites.tooltips.duration} />
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} disabled={!editing} />
 
