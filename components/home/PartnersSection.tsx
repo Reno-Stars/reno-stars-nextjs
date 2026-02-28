@@ -69,7 +69,7 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
           aria-roledescription="carousel"
           aria-label={t.title}
         >
-          <div className="partners-track flex items-center gap-8 w-max px-4 py-4">
+          <div className="partners-track flex items-center gap-8 w-max py-4">
             {/* Render twice for seamless loop */}
             {[0, 1].map((pass) =>
               visiblePartners.map((partner, i) => (
