@@ -62,6 +62,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
         { href: '/admin/sites', label: t.nav.sites },
         { href: '/admin/services', label: t.nav.services },
         { href: '/admin/service-areas', label: t.nav.serviceAreas },
+        { href: '/admin/batch-upload', label: t.batchUpload.navLabel },
       ],
       defaultExpanded: true,
     },

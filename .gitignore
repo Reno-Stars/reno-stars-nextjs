@@ -53,3 +53,7 @@ Thumbs.db
 
 # Drizzle
 drizzle/
+.env*.local
+
+# Test data (binary fixtures)
+test-data/

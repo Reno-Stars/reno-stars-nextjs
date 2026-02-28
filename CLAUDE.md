@@ -107,6 +107,11 @@ lib/
     gallery-categories.ts # Shared gallery category constants
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, STANDALONE_SITE_SLUG, mappings)
     translations.ts       # Admin translation hooks
+    s3.ts                 # Shared S3 client singleton, S3_BUCKET constant, MIME_TO_EXT map
+  batch/
+    types.ts              # Batch upload types (ParsedSite, ParsedProject, ExtractedImage, etc.)
+    zip-parser.ts         # Async ZIP parsing: folder structure detection, image pairing, service type detection
+    batch-processor.ts    # Main pipeline: extract → upload → AI metadata → save → blog
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   email.ts                # Resend email notifications for contact form
   storage.ts              # getAssetUrl() — rewrites URLs for local MinIO
@@ -193,6 +198,7 @@ Key patterns:
 - `contact_submissions` — CRM leads with rate limiting
 - `company_info`, `showroom_info`, `about_sections` — singleton config
 - `partners` — partner logos with bilingual names, optional website URL, active/hidden-visually states
+- `batch_upload_jobs` — tracks batch ZIP upload processing (jsonb columns for options, created IDs, errors; `batch_job_status` enum)
 - `testimonials` (deprecated — replaced by Google Reviews API), `gallery_items`, `trust_badges`, `social_links`, `faqs`
 
 ### Image Pair Tables
@@ -222,7 +228,9 @@ Both `project_image_pairs` and `site_image_pairs` use a paired before/after stru
 - **BilingualTextarea** (`components/admin/BilingualTextarea.tsx`): Dual-mode (controlled/uncontrolled) bilingual textarea with EN/ZH flag labels. Supports `valueEn`/`onChangeEn`/`valueZh`/`onChangeZh` for controlled mode (used by ProjectForm and SiteForm for AI-populated description fields) and `defaultValueEn`/`defaultValueZh` for uncontrolled mode. Accepts `disabled` and `rows` props.
 - **ToastProvider** (`components/admin/ToastProvider.tsx`): Context-based toast notification system with three types: `'success'` (green), `'error'` (red), `'warning'` (gold). Uses `TOAST_COLORS` map for styling. Auto-dismisses after 4s. Catches unhandled server action / network errors globally via `unhandledrejection` listener.
 - **useFormToast** (`components/admin/useFormToast.ts`): Hook that watches `useActionState` state changes and fires toasts. Shows success message on `state.success`, error on `state.error`, and a bilingual warning toast on `state.renamedSlug` (when `ensureUniqueSlug()` adjusts a slug). Accepts optional `options.slugRenameLabel` for i18n; callers pass `t.common.slugRenamed`.
-- **Upload action** (`app/actions/admin/upload.ts`): S3 upload server action. Accepts optional `customKey` from FormData for slug-based naming; falls back to timestamp-random naming. `customKey` is sanitized server-side (`/[a-z0-9-]/` only, max 200 chars).
+- **Upload action** (`app/actions/admin/upload.ts`): S3 upload server action. Uses shared `getS3Client()` from `lib/admin/s3.ts` (cached singleton). Accepts optional `customKey` from FormData for slug-based naming; falls back to timestamp-random naming. `customKey` is sanitized server-side (`/[a-z0-9-]/` only, max 200 chars).
+- **S3 client** (`lib/admin/s3.ts`): Shared S3 client singleton with lazy initialization (caches `S3Client` or `null`). Exports `getS3Client()`, `S3_BUCKET` constant, and `MIME_TO_EXT` map. Used by upload action, batch upload API route, and batch processor.
+- **Batch upload** (`app/admin/(dashboard)/batch-upload/`): ZIP file upload that auto-creates sites, projects, image pairs, and blog posts. Client polls job status every 2s. Processing runs via `after()` from `next/server` to survive Vercel response send. Pipeline: extract ZIP (async `fflate`) → upload images to S3 (batches of 3, per-site slug prefix) → generate AI metadata (site/project descriptions + alt text in parallel batches of 5) → save to DB (with orphan cleanup for failed sites) → optional blog generation. Uses `batch_upload_jobs` table with jsonb columns for type-safe progress tracking. `BatchUploadClient.tsx` has 3-phase UI (upload → processing → results) with step indicators, progress bar, and error details.
 - **House Stack UI**: Unified site/project management. Visual metaphor: roof = site, floors = project layers. Supports drag-and-drop reordering, keyboard navigation (Alt+Up/Down), and inline delete confirmation. Supports `?project=<id>` for deep-linking to a project's edit form, and `?new` for pre-selecting the new project form.
 - **ProductLink component** (`components/ProductLink.tsx`): Shared component for external product links with hover image preview. Supports `size` prop ('sm' for modal, 'md' for detail page). Used in ProjectModal, SiteDetailPage, and BlogPostPage.
 - **ProjectModal** (`components/ProjectModal.tsx`): Image-pairs gallery with click-to-toggle before/after. Uses `imagePairs[]`/`activePairIndex`/`showBefore` state model. Supports touch swipe, keyboard navigation (ArrowLeft/ArrowRight), slide animation (dual-key strategy: wrapper `key={activePairIndex}` for slide, Image `key` includes `showBefore` for swap). Navigation arrows hidden on mobile (`hidden sm:flex`), visible on desktop hover. Thumbnails show split before/after preview per pair. Falls back to `imagesToPairs()` for legacy flat images.

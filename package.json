@@ -37,6 +37,7 @@
     "@aws-sdk/client-s3": "^3.982.0",
     "@neondatabase/serverless": "^0.10.4",
     "drizzle-orm": "^0.36.4",
+    "fflate": "^0.8.2",
     "html-to-image": "^1.11.13",
     "isomorphic-dompurify": "3.0.0-rc.2",
     "jspdf": "^4.1.0",

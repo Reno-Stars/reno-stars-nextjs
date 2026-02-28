@@ -65,6 +65,16 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `faqs` | Frequently asked questions | `id`, composite index on `(isActive, displayOrder)` |
 | `partners` | Partner logos (homepage carousel) | `id`, composite index on `(isActive, displayOrder)` |
 
+### Batch Upload Tables
+
+| Table | Purpose | Key Columns |
+|-------|---------|-------------|
+| `batch_upload_jobs` | Tracks ZIP upload processing jobs | `status` (enum), `options` (jsonb), `created_site_ids`/`created_project_ids`/`created_blog_post_ids`/`errors` (jsonb arrays), `total_images`/`processed_images` (progress) |
+
+The `batch_job_status` enum tracks processing progress: `pending` → `extracting` → `uploading` → `generating` → `saving` → `generating_blog` → `completed` | `failed` | `partial`.
+
+JSON columns use Drizzle `jsonb` with `$type<>()` for TypeScript inference (no manual `JSON.parse`/`JSON.stringify`). Exported types: `BatchJobStatus`, `BatchJobOptions`, `DbBatchUploadJob`.
+
 ### Enums
 
 ```sql
@@ -72,6 +82,7 @@ service_type: kitchen | bathroom | whole-house | basement | cabinet | commercial
 contact_status: new | contacted | converted | rejected
 social_platform: facebook | instagram | youtube | linkedin | twitter | xiaohongshu | wechat | whatsapp
 gallery_category: kitchen | bathroom | whole-house | commercial
+batch_job_status: pending | extracting | uploading | generating | saving | generating_blog | completed | failed | partial
 ```
 
 ### Bilingual Pattern

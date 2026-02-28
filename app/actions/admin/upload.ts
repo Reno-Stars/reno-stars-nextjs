@@ -1,38 +1,11 @@
 'use server';
 
 import { requireAuth } from '@/lib/admin/auth';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { getS3Client, MIME_TO_EXT } from '@/lib/admin/s3';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'];
-
-const MIME_TO_EXT: Record<string, string> = {
-  'image/jpeg': 'jpg',
-  'image/png': 'png',
-  'image/webp': 'webp',
-  'image/svg+xml': 'svg',
-  'image/gif': 'gif',
-};
-
-function getS3Client() {
-  const endpoint = process.env.S3_ENDPOINT;
-  const accessKey = process.env.S3_ACCESS_KEY;
-  const secretKey = process.env.S3_SECRET_KEY;
-
-  if (!endpoint || !accessKey || !secretKey) {
-    return null;
-  }
-
-  return new S3Client({
-    endpoint,
-    region: 'auto',
-    credentials: {
-      accessKeyId: accessKey,
-      secretAccessKey: secretKey,
-    },
-    forcePathStyle: true,
-  });
-}
 
 export async function uploadImage(
   _prevState: { url?: string; error?: string },

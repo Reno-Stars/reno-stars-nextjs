@@ -72,10 +72,15 @@ lib/
     gallery-categories.ts # Shared gallery category constants
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, STANDALONE_SITE_SLUG, mappings)
     translations.ts       # Admin translation hooks
+    s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
     content-optimizer.ts  # AI functions for blog, project, alt text generation
     blog-generator.ts     # AI blog generation from project/site data (GPT-4o)
+  batch/                  # Batch upload processing
+    types.ts              # ZIP parsing types (ParsedSite, ParsedProject, etc.)
+    zip-parser.ts         # Async ZIP extraction + folder structure parsing
+    batch-processor.ts    # Main pipeline: extract → upload → AI metadata → save → blog
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   analytics.ts            # GA4 event tracking (disabled in development)
   email.ts                # Resend email notifications for contact form
@@ -382,9 +387,57 @@ useEffect(() => {
 }, []);
 ```
 
+## Batch Upload
+
+Admin feature for bulk-creating sites, projects, image pairs, and blog posts from a ZIP file of renovation images.
+
+### Architecture
+
+```
+BatchUploadClient (React)  ──POST──►  api/route.ts (upload ZIP to S3 temp)
+        │                                      │
+        │                               Creates job row in batch_upload_jobs
+        │
+        ├──POST──►  api/[jobId]/process/route.ts
+        │           Uses after() to run processBatchUpload() beyond response
+        │
+        └──GET (poll 2s)──►  api/[jobId]/route.ts (returns job status)
+```
+
+### Processing Pipeline (`lib/batch/batch-processor.ts`)
+
+1. **Extract** — Downloads ZIP from S3 temp, parses asynchronously via `fflate` (`lib/batch/zip-parser.ts`)
+2. **Upload** — Uploads all images to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
+3. **Generate** — AI metadata generation: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for all after-images (batches of 5)
+4. **Save** — Inserts sites, projects, and image pairs into DB with deduplicated slugs. Orphaned sites (0 successful projects) are cleaned up
+5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site
+
+### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
+
+- **Nested**: Top-level folder = site, subfolders = projects. `before-N.jpg` / `after-N.jpg` auto-paired by number
+- **Flat**: All images at root = single project, auto-wrapped in a site
+- **Hero images**: `hero.jpg` at folder root becomes the hero image
+- **Notes files**: `notes.txt`, `description.txt`, `readme.txt` etc. provide AI context for metadata generation
+- **Service type detection**: Folder names matched against `SERVICE_TYPE_ALIASES` (e.g., "Kitchen" → `kitchen`, "Bathroom" → `bathroom`)
+
+### Job Status Tracking
+
+Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`.
+
+### Client UI (`BatchUploadClient.tsx`)
+
+Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons).
+
 ## Image Upload
 
 The admin panel supports direct image upload to S3-compatible storage (R2 in production, MinIO locally).
+
+### S3 Client (`lib/admin/s3.ts`)
+
+Shared S3 client singleton with lazy initialization. Exports:
+- `getS3Client()` — Returns a cached `S3Client` or `null` if credentials are missing. Uses `undefined` sentinel to distinguish "not yet initialized" from "missing credentials".
+- `S3_BUCKET` — Default bucket name (`process.env.S3_BUCKET || 'reno-stars'`).
+- `MIME_TO_EXT` — MIME type → file extension map for image uploads.
 
 ### Upload Action (`app/actions/admin/upload.ts`)
 

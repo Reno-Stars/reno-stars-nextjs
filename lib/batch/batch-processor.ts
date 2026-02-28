@@ -1,0 +1,712 @@
+import {
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
+import { db } from '@/lib/db';
+import {
+  batchUploadJobs,
+  projectSites,
+  projects,
+  projectImagePairs,
+} from '@/lib/db/schema';
+import type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
+import { eq } from 'drizzle-orm';
+import { getS3Client, S3_BUCKET } from '@/lib/admin/s3';
+import {
+  optimizeSiteDescription,
+  optimizeProjectDescription,
+  generateAltText,
+} from '@/lib/ai/content-optimizer';
+import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
+import { generateBlogFromSite } from '@/app/actions/admin/generate-blog';
+import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
+import { SERVICE_TYPE_TO_CATEGORY } from '@/lib/admin/constants';
+import type { ServiceTypeKey } from '@/lib/admin/constants';
+import { parseZip } from './zip-parser';
+import type {
+  ParsedZipStructure,
+  ParsedProject,
+  ExtractedImage,
+} from './types';
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/** Max concurrent S3 uploads */
+const UPLOAD_BATCH_SIZE = 3;
+
+/** Max concurrent alt text AI calls */
+const ALT_TEXT_BATCH_SIZE = 5;
+
+// ============================================================================
+// JOB STATUS HELPERS
+// ============================================================================
+
+async function updateJob(
+  jobId: string,
+  data: Partial<{
+    status: BatchJobStatus;
+    currentStepLabel: string;
+    processedImages: number;
+    totalImages: number;
+    createdSiteIds: string[];
+    createdProjectIds: string[];
+    createdBlogPostIds: string[];
+    errors: string[];
+    startedAt: Date;
+    completedAt: Date;
+  }>
+) {
+  await db.update(batchUploadJobs).set(data).where(eq(batchUploadJobs.id, jobId));
+}
+
+// ============================================================================
+// S3 UPLOAD
+// ============================================================================
+
+async function uploadImageToS3(
+  image: ExtractedImage,
+  keyPrefix: string
+): Promise<string> {
+  const client = getS3Client();
+  if (!client) throw new Error('S3 not configured');
+
+  const publicUrl = process.env.S3_PUBLIC_URL;
+  if (!publicUrl) throw new Error('S3_PUBLIC_URL not configured');
+
+  const ext = image.path.split('.').pop()?.toLowerCase() || 'jpg';
+  const ts = Date.now().toString(36);
+  const key = `uploads/admin/${keyPrefix}-${ts}.${ext}`;
+
+  await client.send(
+    new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: key,
+      Body: image.data,
+      ContentType: image.mimeType,
+    })
+  );
+
+  return `${publicUrl}/${key}`;
+}
+
+/**
+ * Upload images in batches to avoid overwhelming S3.
+ * Returns a map of ExtractedImage → uploaded URL.
+ */
+async function uploadImagesInBatches(
+  images: ExtractedImage[],
+  slugPrefix: string,
+  jobId: string,
+  startCount: number,
+  totalImages: number,
+  errors: string[]
+): Promise<Map<ExtractedImage, string>> {
+  const urlMap = new Map<ExtractedImage, string>();
+  let processed = startCount;
+
+  for (let i = 0; i < images.length; i += UPLOAD_BATCH_SIZE) {
+    const batch = images.slice(i, i + UPLOAD_BATCH_SIZE);
+    const results = await Promise.allSettled(
+      batch.map((img, batchIdx) => {
+        const idx = i + batchIdx;
+        const basename = img.path.split('/').pop()?.replace(/\.[^.]+$/, '') || `img-${idx}`;
+        const safeBasename = basename.replace(/[^a-z0-9-]/gi, '-').toLowerCase();
+        return uploadImageToS3(img, `${slugPrefix}-${safeBasename}`);
+      })
+    );
+
+    for (let j = 0; j < results.length; j++) {
+      const result = results[j];
+      if (result.status === 'fulfilled') {
+        urlMap.set(batch[j], result.value);
+      } else {
+        errors.push(`Upload failed: ${batch[j].path} - ${result.reason}`);
+      }
+      processed++;
+    }
+
+    await updateJob(jobId, {
+      processedImages: processed,
+      currentStepLabel: `Uploading image ${processed} of ${totalImages}...`,
+    });
+  }
+
+  return urlMap;
+}
+
+// ============================================================================
+// AI METADATA GENERATION
+// ============================================================================
+
+async function generateSiteMetadata(
+  folderName: string,
+  notes: string | null
+): Promise<SiteDescription | null> {
+  try {
+    const prompt = notes
+      ? `Whole house renovation project: ${folderName}.\n\nProject details:\n${notes}`
+      : `Whole house renovation project: ${folderName}. This is a renovation site.`;
+    return await optimizeSiteDescription(prompt);
+  } catch (error) {
+    console.error('AI site metadata failed:', error);
+    return null;
+  }
+}
+
+async function generateProjectMetadata(
+  folderName: string,
+  serviceType: ServiceTypeKey,
+  notes: string | null
+): Promise<ProjectDescription | null> {
+  try {
+    const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+    const prompt = notes
+      ? `${category.en} renovation project: ${folderName}.\n\nProject details:\n${notes}`
+      : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
+    return await optimizeProjectDescription(prompt);
+  } catch (error) {
+    console.error('AI project metadata failed:', error);
+    return null;
+  }
+}
+
+/**
+ * Generate alt text for multiple image URLs in parallel batches.
+ * Returns a map of URL → { altEn, altZh }.
+ */
+async function generateAltTextsInBatches(
+  imageUrls: string[]
+): Promise<Map<string, { altEn: string; altZh: string }>> {
+  const altMap = new Map<string, { altEn: string; altZh: string }>();
+  const fallback = { altEn: 'Renovation project image', altZh: '装修项目图片' };
+
+  for (let i = 0; i < imageUrls.length; i += ALT_TEXT_BATCH_SIZE) {
+    const batch = imageUrls.slice(i, i + ALT_TEXT_BATCH_SIZE);
+    const results = await Promise.allSettled(
+      batch.map((url) => generateAltText({ url }))
+    );
+
+    for (let j = 0; j < results.length; j++) {
+      const result = results[j];
+      if (result.status === 'fulfilled') {
+        altMap.set(batch[j], { altEn: result.value.altEn, altZh: result.value.altZh });
+      } else {
+        altMap.set(batch[j], fallback);
+      }
+    }
+  }
+
+  return altMap;
+}
+
+// ============================================================================
+// FALLBACK METADATA
+// ============================================================================
+
+function fallbackSiteData(folderName: string) {
+  const slug = formatSlug(folderName);
+  return {
+    slug,
+    titleEn: folderName,
+    titleZh: folderName,
+    descriptionEn: `Whole house renovation project at ${folderName}.`,
+    descriptionZh: `${folderName}全屋装修项目。`,
+    locationCity: '',
+    budgetRange: '',
+    durationEn: '',
+    durationZh: '',
+    badgeEn: 'Whole House',
+    badgeZh: '全屋装修',
+    excerptEn: `Whole house renovation at ${folderName}.`,
+    excerptZh: `${folderName}全屋装修。`,
+    metaTitleEn: `${folderName} Renovation | Reno Stars`,
+    metaTitleZh: `${folderName}装修 | Reno Stars`,
+    metaDescriptionEn: `View the whole house renovation project at ${folderName}.`,
+    metaDescriptionZh: `查看${folderName}全屋装修项目。`,
+    focusKeywordEn: `${folderName.toLowerCase()} renovation`,
+    focusKeywordZh: `${folderName}装修`,
+    seoKeywordsEn: 'renovation, whole house, remodeling',
+    seoKeywordsZh: '装修, 全屋, 翻新',
+  };
+}
+
+function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
+  const slug = formatSlug(folderName);
+  const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+  return {
+    slug,
+    titleEn: `${folderName} ${category.en} Renovation`,
+    titleZh: `${folderName}${category.zh}装修`,
+    descriptionEn: `${category.en} renovation project.`,
+    descriptionZh: `${category.zh}装修项目。`,
+    locationCity: '',
+    challengeEn: '',
+    challengeZh: '',
+    solutionEn: '',
+    solutionZh: '',
+    badgeEn: category.en,
+    badgeZh: category.zh,
+    metaTitleEn: `${folderName} ${category.en} | Reno Stars`,
+    metaTitleZh: `${folderName}${category.zh} | Reno Stars`,
+    metaDescriptionEn: `${category.en} renovation project at ${folderName}.`,
+    metaDescriptionZh: `${folderName}${category.zh}装修项目。`,
+    focusKeywordEn: `${category.en.toLowerCase()} renovation`,
+    focusKeywordZh: `${category.zh}装修`,
+    seoKeywordsEn: `${category.en.toLowerCase()}, renovation`,
+    seoKeywordsZh: `${category.zh}, 装修`,
+  };
+}
+
+// ============================================================================
+// DB HELPERS
+// ============================================================================
+
+async function getExistingSlugs(
+  table: 'sites' | 'projects'
+): Promise<string[]> {
+  if (table === 'sites') {
+    const rows = await db.select({ slug: projectSites.slug }).from(projectSites);
+    return rows.map((r: { slug: string }) => r.slug);
+  }
+  const rows = await db.select({ slug: projects.slug }).from(projects);
+  return rows.map((r: { slug: string }) => r.slug);
+}
+
+/** Delete orphaned site (no child projects) on failure */
+async function cleanupOrphanedSite(siteId: string): Promise<void> {
+  try {
+    const childProjects = await db
+      .select({ id: projects.id })
+      .from(projects)
+      .where(eq(projects.siteId, siteId))
+      .limit(1);
+    if (childProjects.length === 0) {
+      await db.delete(projectSites).where(eq(projectSites.id, siteId));
+    }
+  } catch {
+    // Non-critical cleanup
+  }
+}
+
+// ============================================================================
+// MAIN PROCESSOR
+// ============================================================================
+
+export async function processBatchUpload(jobId: string): Promise<void> {
+  const errors: string[] = [];
+  const createdSiteIds: string[] = [];
+  const createdProjectIds: string[] = [];
+  const createdBlogPostIds: string[] = [];
+
+  try {
+    // ---- STEP 1: Fetch job ----
+    const [job] = await db
+      .select()
+      .from(batchUploadJobs)
+      .where(eq(batchUploadJobs.id, jobId))
+      .limit(1);
+
+    if (!job) throw new Error('Job not found');
+    if (job.status !== 'pending') throw new Error(`Job already in status: ${job.status}`);
+
+    const options: BatchJobOptions = job.options ?? { generateBlog: false };
+
+    // ---- STEP 2: Extract ZIP from S3 temp ----
+    await updateJob(jobId, {
+      status: 'extracting',
+      currentStepLabel: 'Extracting ZIP file...',
+      startedAt: new Date(),
+    });
+
+    const client = getS3Client();
+    if (!client) throw new Error('S3 not configured');
+
+    const zipObj = await client.send(
+      new GetObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
+    );
+    if (!zipObj.Body) throw new Error('Failed to download ZIP from S3');
+    const zipBuffer = new Uint8Array(await zipObj.Body.transformToByteArray());
+
+    // Parse ZIP (async, non-blocking)
+    let parsed: ParsedZipStructure;
+    try {
+      parsed = await parseZip(zipBuffer);
+    } catch (error) {
+      throw new Error(
+        `ZIP extraction failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+
+    if (parsed.sites.length === 0) {
+      throw new Error('No image files found in the ZIP archive.');
+    }
+
+    await updateJob(jobId, {
+      totalImages: parsed.totalImages,
+      currentStepLabel: `Found ${parsed.totalImages} images in ${parsed.sites.length} site(s)`,
+    });
+
+    // ---- STEP 3: Upload images to S3 (per-site slug prefix) ----
+    await updateJob(jobId, {
+      status: 'uploading',
+      currentStepLabel: 'Uploading images...',
+    });
+
+    // Upload images per site with site-specific slug prefixes
+    const urlMap = new Map<ExtractedImage, string>();
+    let uploadedCount = 0;
+
+    for (const site of parsed.sites) {
+      const siteSlugPrefix = formatSlug(site.folderName || 'batch');
+      const siteImages: ExtractedImage[] = [];
+
+      if (site.heroImage) siteImages.push(site.heroImage);
+      for (const project of site.projects) {
+        if (project.heroImage) siteImages.push(project.heroImage);
+        for (const pair of project.imagePairs) {
+          if (pair.before) siteImages.push(pair.before);
+          if (pair.after) siteImages.push(pair.after);
+        }
+      }
+
+      const siteUrls = await uploadImagesInBatches(
+        siteImages,
+        siteSlugPrefix,
+        jobId,
+        uploadedCount,
+        parsed.totalImages,
+        errors
+      );
+
+      for (const [img, url] of siteUrls) {
+        urlMap.set(img, url);
+      }
+      uploadedCount += siteImages.length;
+    }
+
+    // ---- STEP 4: AI metadata generation ----
+    await updateJob(jobId, {
+      status: 'generating',
+      currentStepLabel: 'Generating metadata with AI...',
+    });
+
+    // Pre-generate AI metadata for all sites and projects
+    const siteMetadataMap = new Map<string, SiteDescription | null>();
+    const projectMetadataMap = new Map<string, ProjectDescription | null>();
+
+    for (const parsedSite of parsed.sites) {
+      const siteMeta = await generateSiteMetadata(parsedSite.folderName, parsedSite.notes);
+      siteMetadataMap.set(parsedSite.folderName, siteMeta);
+
+      for (const parsedProject of parsedSite.projects) {
+        const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
+        const projMeta = await generateProjectMetadata(
+          parsedProject.folderName,
+          parsedProject.serviceType,
+          parsedProject.notes
+        );
+        projectMetadataMap.set(projectKey, projMeta);
+      }
+
+      await updateJob(jobId, {
+        currentStepLabel: `Generated metadata for: ${parsedSite.folderName}`,
+      });
+    }
+
+    // Pre-generate alt text for all after images (parallel batched)
+    const afterImageUrls: string[] = [];
+    for (const site of parsed.sites) {
+      for (const project of site.projects) {
+        for (const pair of project.imagePairs) {
+          const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
+          if (url) afterImageUrls.push(url);
+        }
+      }
+    }
+
+    const altTextMap = await generateAltTextsInBatches(afterImageUrls);
+
+    // ---- STEP 5: Save to DB ----
+    await updateJob(jobId, {
+      status: 'saving',
+      currentStepLabel: 'Saving to database...',
+    });
+
+    const existingSiteSlugs = await getExistingSlugs('sites');
+    const existingProjectSlugs = await getExistingSlugs('projects');
+
+    for (const parsedSite of parsed.sites) {
+      let insertedSiteId: string | null = null;
+      try {
+        // Use pre-generated AI metadata
+        const aiSite = siteMetadataMap.get(parsedSite.folderName);
+        const siteData = aiSite ?? fallbackSiteData(parsedSite.folderName);
+
+        const siteSlug = ensureUniqueSlug(
+          formatSlug(siteData.slug || parsedSite.folderName),
+          existingSiteSlugs
+        );
+        existingSiteSlugs.push(siteSlug);
+
+        const heroUrl = parsedSite.heroImage
+          ? urlMap.get(parsedSite.heroImage) ?? null
+          : null;
+
+        const [insertedSite] = await db
+          .insert(projectSites)
+          .values({
+            slug: siteSlug,
+            titleEn: siteData.titleEn,
+            titleZh: siteData.titleZh,
+            descriptionEn: siteData.descriptionEn,
+            descriptionZh: siteData.descriptionZh,
+            locationCity: siteData.locationCity || null,
+            heroImageUrl: heroUrl,
+            badgeEn: siteData.badgeEn || null,
+            badgeZh: siteData.badgeZh || null,
+            excerptEn: siteData.excerptEn || null,
+            excerptZh: siteData.excerptZh || null,
+            metaTitleEn: siteData.metaTitleEn || null,
+            metaTitleZh: siteData.metaTitleZh || null,
+            metaDescriptionEn: siteData.metaDescriptionEn || null,
+            metaDescriptionZh: siteData.metaDescriptionZh || null,
+            focusKeywordEn: siteData.focusKeywordEn || null,
+            focusKeywordZh: siteData.focusKeywordZh || null,
+            seoKeywordsEn: siteData.seoKeywordsEn || null,
+            seoKeywordsZh: siteData.seoKeywordsZh || null,
+            budgetRange: siteData.budgetRange || null,
+            durationEn: siteData.durationEn || null,
+            durationZh: siteData.durationZh || null,
+            showAsProject: true,
+            featured: false,
+            isPublished: false,
+          })
+          .returning({ id: projectSites.id });
+
+        const siteId = insertedSite.id;
+        insertedSiteId = siteId;
+        createdSiteIds.push(siteId);
+
+        await updateJob(jobId, {
+          currentStepLabel: `Created site: ${siteData.titleEn}`,
+          createdSiteIds: [...createdSiteIds],
+        });
+
+        // Process projects under this site
+        let projectsCreatedForSite = 0;
+        for (let pIdx = 0; pIdx < parsedSite.projects.length; pIdx++) {
+          const parsedProject = parsedSite.projects[pIdx];
+          try {
+            const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
+            const aiProject = projectMetadataMap.get(projectKey);
+            await saveProject(
+              parsedProject,
+              aiProject ?? null,
+              siteId,
+              pIdx,
+              urlMap,
+              altTextMap,
+              existingProjectSlugs,
+              createdProjectIds,
+              errors,
+              jobId
+            );
+            projectsCreatedForSite++;
+          } catch (error) {
+            errors.push(
+              `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+            );
+          }
+        }
+
+        // Clean up orphaned site if no projects were created
+        if (projectsCreatedForSite === 0 && insertedSiteId) {
+          await cleanupOrphanedSite(insertedSiteId);
+          createdSiteIds.pop();
+          errors.push(`Site "${parsedSite.folderName}" removed: all child projects failed.`);
+        }
+      } catch (error) {
+        errors.push(
+          `Site "${parsedSite.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
+        // Clean up orphaned site on failure
+        if (insertedSiteId) {
+          await cleanupOrphanedSite(insertedSiteId);
+          const idx = createdSiteIds.indexOf(insertedSiteId);
+          if (idx !== -1) createdSiteIds.splice(idx, 1);
+        }
+      }
+    }
+
+    // ---- STEP 6: Blog generation (optional) ----
+    if (options.generateBlog && createdSiteIds.length > 0) {
+      await updateJob(jobId, {
+        status: 'generating_blog',
+        currentStepLabel: 'Generating blog posts...',
+      });
+
+      for (const siteId of createdSiteIds) {
+        try {
+          const result = await generateBlogFromSite(siteId);
+          if (result.blogPostId) {
+            createdBlogPostIds.push(result.blogPostId);
+          } else if (result.error) {
+            errors.push(`Blog generation for site ${siteId}: ${result.error}`);
+          }
+        } catch (error) {
+          errors.push(
+            `Blog generation failed for site ${siteId}: ${error instanceof Error ? error.message : 'Unknown error'}`
+          );
+        }
+      }
+    }
+
+    // ---- DONE ----
+    const hasErrors = errors.length > 0;
+    const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
+
+    await updateJob(jobId, {
+      status: hasErrors && hasCreations ? 'partial' : hasErrors ? 'failed' : 'completed',
+      currentStepLabel: hasErrors
+        ? `Completed with ${errors.length} error(s)`
+        : 'Completed successfully',
+      completedAt: new Date(),
+      createdSiteIds: [...createdSiteIds],
+      createdProjectIds: [...createdProjectIds],
+      createdBlogPostIds: [...createdBlogPostIds],
+      errors: [...errors],
+    });
+
+    // Clean up temp ZIP (non-critical)
+    try {
+      await client.send(
+        new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
+      );
+    } catch {
+      // Non-critical cleanup
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    errors.push(message);
+    await updateJob(jobId, {
+      status: 'failed',
+      currentStepLabel: `Failed: ${message}`,
+      completedAt: new Date(),
+      errors: [...errors],
+      createdSiteIds: [...createdSiteIds],
+      createdProjectIds: [...createdProjectIds],
+      createdBlogPostIds: [...createdBlogPostIds],
+    });
+  }
+}
+
+// ============================================================================
+// PROJECT SAVE (DB insertion with pre-generated metadata)
+// ============================================================================
+
+async function saveProject(
+  parsedProject: ParsedProject,
+  aiProject: ProjectDescription | null,
+  siteId: string,
+  displayOrder: number,
+  urlMap: Map<ExtractedImage, string>,
+  altTextMap: Map<string, { altEn: string; altZh: string }>,
+  existingProjectSlugs: string[],
+  createdProjectIds: string[],
+  errors: string[],
+  jobId: string
+): Promise<void> {
+  const projectData = aiProject ?? fallbackProjectData(
+    parsedProject.folderName,
+    parsedProject.serviceType
+  );
+
+  const projectSlug = ensureUniqueSlug(
+    formatSlug(projectData.slug || parsedProject.folderName),
+    existingProjectSlugs
+  );
+  existingProjectSlugs.push(projectSlug);
+
+  const heroUrl = parsedProject.heroImage
+    ? urlMap.get(parsedProject.heroImage) ?? null
+    : null;
+
+  const category = SERVICE_TYPE_TO_CATEGORY[parsedProject.serviceType];
+
+  const [insertedProject] = await db
+    .insert(projects)
+    .values({
+      slug: projectSlug,
+      titleEn: projectData.titleEn,
+      titleZh: projectData.titleZh,
+      descriptionEn: projectData.descriptionEn,
+      descriptionZh: projectData.descriptionZh,
+      serviceType: parsedProject.serviceType,
+      categoryEn: category.en,
+      categoryZh: category.zh,
+      locationCity: projectData.locationCity || null,
+      heroImageUrl: heroUrl,
+      challengeEn: projectData.challengeEn || null,
+      challengeZh: projectData.challengeZh || null,
+      solutionEn: projectData.solutionEn || null,
+      solutionZh: projectData.solutionZh || null,
+      badgeEn: projectData.badgeEn || null,
+      badgeZh: projectData.badgeZh || null,
+      metaTitleEn: projectData.metaTitleEn || null,
+      metaTitleZh: projectData.metaTitleZh || null,
+      metaDescriptionEn: projectData.metaDescriptionEn || null,
+      metaDescriptionZh: projectData.metaDescriptionZh || null,
+      focusKeywordEn: projectData.focusKeywordEn || null,
+      focusKeywordZh: projectData.focusKeywordZh || null,
+      seoKeywordsEn: projectData.seoKeywordsEn || null,
+      seoKeywordsZh: projectData.seoKeywordsZh || null,
+      siteId,
+      displayOrderInSite: displayOrder,
+      featured: false,
+      isPublished: false,
+    })
+    .returning({ id: projects.id });
+
+  createdProjectIds.push(insertedProject.id);
+
+  await updateJob(jobId, {
+    currentStepLabel: `Created project: ${projectData.titleEn}`,
+    createdProjectIds: [...createdProjectIds],
+  });
+
+  // Insert image pairs with pre-generated alt text
+  for (let pairIdx = 0; pairIdx < parsedProject.imagePairs.length; pairIdx++) {
+    const pair = parsedProject.imagePairs[pairIdx];
+    const beforeUrl = pair.before ? urlMap.get(pair.before) ?? null : null;
+    const afterUrl = pair.after ? urlMap.get(pair.after) ?? null : null;
+
+    // Skip pairs where both images failed upload
+    if (!beforeUrl && !afterUrl) continue;
+
+    // Look up pre-generated alt text
+    const altImageUrl = afterUrl || beforeUrl;
+    const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
+    const altEn = alt?.altEn || 'Renovation project image';
+    const altZh = alt?.altZh || '装修项目图片';
+
+    try {
+      await db.insert(projectImagePairs).values({
+        projectId: insertedProject.id,
+        beforeImageUrl: beforeUrl,
+        beforeAltTextEn: beforeUrl ? `${projectData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
+        beforeAltTextZh: beforeUrl ? `${projectData.titleZh} - 装修前 ${pairIdx + 1}` : null,
+        afterImageUrl: afterUrl,
+        afterAltTextEn: afterUrl ? altEn : null,
+        afterAltTextZh: afterUrl ? altZh : null,
+        displayOrder: pairIdx,
+      });
+    } catch (error) {
+      errors.push(
+        `Image pair ${pairIdx} for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  }
+}

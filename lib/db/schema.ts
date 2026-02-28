@@ -10,6 +10,7 @@ import {
   index,
   uniqueIndex,
   check,
+  jsonb,
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
@@ -825,3 +826,55 @@ export const partners = pgTable(
 
 export type DbPartner = typeof partners.$inferSelect;
 export type NewDbPartner = typeof partners.$inferInsert;
+
+// ============================================================================
+// BATCH UPLOAD JOBS
+// ============================================================================
+
+/** Status values for batch upload processing jobs */
+export const BATCH_JOB_STATUSES = [
+  'pending',
+  'extracting',
+  'uploading',
+  'generating',
+  'saving',
+  'generating_blog',
+  'completed',
+  'failed',
+  'partial',
+] as const;
+
+export type BatchJobStatus = (typeof BATCH_JOB_STATUSES)[number];
+
+export const batchJobStatusEnum = pgEnum('batch_job_status', BATCH_JOB_STATUSES);
+
+/** JSON shape stored in the options column */
+export interface BatchJobOptions {
+  generateBlog: boolean;
+}
+
+/** Tracks batch ZIP upload processing jobs */
+export const batchUploadJobs = pgTable(
+  'batch_upload_jobs',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    status: batchJobStatusEnum('status').default('pending').notNull(),
+    fileName: varchar('file_name', { length: 255 }).notNull(),
+    fileSizeBytes: integer('file_size_bytes').notNull(),
+    options: jsonb('options').$type<BatchJobOptions>(),
+    totalImages: integer('total_images').default(0).notNull(),
+    processedImages: integer('processed_images').default(0).notNull(),
+    currentStepLabel: varchar('current_step_label', { length: 200 }),
+    createdSiteIds: jsonb('created_site_ids').$type<string[]>().default([]),
+    createdProjectIds: jsonb('created_project_ids').$type<string[]>().default([]),
+    createdBlogPostIds: jsonb('created_blog_post_ids').$type<string[]>().default([]),
+    errors: jsonb('errors').$type<string[]>().default([]),
+    startedAt: timestamp('started_at'),
+    completedAt: timestamp('completed_at'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [index('batch_upload_jobs_status_idx').on(table.status)]
+);
+
+export type DbBatchUploadJob = typeof batchUploadJobs.$inferSelect;
+export type NewDbBatchUploadJob = typeof batchUploadJobs.$inferInsert;
