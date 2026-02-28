@@ -528,8 +528,8 @@
   "wholeHouse": {
     "projectOverview": "Project Overview",
     "includedAreas": "Included Areas",
-    "totalBudget": "Combined Budget",
-    "totalDuration": "Total Timeline",
+    "totalBudget": "Budget",
+    "totalDuration": "Timeline",
     "allServiceScopes": "All Services Included",
     "viewAreaProject": "View {area} Project",
     "viewAreaDetails": "View Details",

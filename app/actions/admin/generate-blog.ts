@@ -285,6 +285,9 @@ export async function generateBlogFromSite(
         descriptionZh: site.descriptionZh,
         locationCity: site.locationCity,
         heroImageUrl: site.heroImageUrl,
+        budgetRange: site.budgetRange,
+        durationEn: site.durationEn,
+        durationZh: site.durationZh,
       },
       projectDataArray
     );

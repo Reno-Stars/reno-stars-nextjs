@@ -54,6 +54,9 @@ const SiteDescriptionSchema = z.object({
   titleEn: z.string(),
   titleZh: z.string(),
   locationCity: z.string(),
+  budgetRange: z.string(),
+  durationEn: z.string(),
+  durationZh: z.string(),
   descriptionEn: z.string(),
   descriptionZh: z.string(),
   badgeEn: z.string(),
@@ -219,6 +222,8 @@ Field guidelines:
 - slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "west-vancouver-whole-house-renovation"). No consecutive hyphens.
 - titleEn/titleZh: Short, descriptive title for the site (e.g., "West Vancouver Whole House Renovation" / "西温哥华全屋装修")
 - locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
+- budgetRange: Estimated budget range for the entire site (e.g., "$80,000 - $120,000"). Use USD format. Leave empty string if no budget is mentioned.
+- durationEn/durationZh: Estimated timeline for the entire project (e.g., "12 weeks" / "12周", "3 months" / "3个月"). Leave empty string if no duration is mentioned.
 - description: 2-3 sentences about the overall renovation scope and transformation of the property (50-150 words)
 - badge: Short highlight text for a badge/tag (2-5 words, e.g., "Whole House" / "全屋装修")
 - excerpt: 1-2 sentences summarizing the site for listings (100-200 characters)
@@ -236,6 +241,9 @@ Response format:
   "titleEn": "English Site Title",
   "titleZh": "中文工地标题",
   "locationCity": "West Vancouver",
+  "budgetRange": "$80,000 - $120,000",
+  "durationEn": "12 weeks",
+  "durationZh": "12周",
   "descriptionEn": "English site description",
   "descriptionZh": "中文工地描述",
   "badgeEn": "Badge text",

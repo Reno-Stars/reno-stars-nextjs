@@ -39,6 +39,9 @@ export interface SiteDataForBlog {
   descriptionZh: string;
   locationCity: string | null;
   heroImageUrl: string | null;
+  budgetRange: string | null;
+  durationEn: string | null;
+  durationZh: string | null;
 }
 
 // ============================================================================
@@ -230,6 +233,8 @@ export async function generateBlogFromSiteData(
     `Description (ZH): ${site.descriptionZh}`,
   ];
   if (site.locationCity) contextParts.push(`Location: ${site.locationCity}`);
+  if (site.budgetRange) contextParts.push(`Overall Budget: ${site.budgetRange}`);
+  if (site.durationEn) contextParts.push(`Overall Duration: ${site.durationEn} / ${site.durationZh ?? site.durationEn}`);
   if (site.heroImageUrl) contextParts.push(`Site Hero Image: ${site.heroImageUrl}`);
   contextParts.push(`\nThis whole-house renovation includes ${projects.length} project areas:`);
 

@@ -117,6 +117,9 @@ export default function SiteForm({
   const [titleZh, setTitleZh] = useState(initialData?.titleZh ?? '');
   const [descriptionEn, setDescriptionEn] = useState(initialData?.descriptionEn ?? '');
   const [descriptionZh, setDescriptionZh] = useState(initialData?.descriptionZh ?? '');
+  const [budgetRange, setBudgetRange] = useState(initialData?.budgetRange ?? '');
+  const [durationEn, setDurationEn] = useState(initialData?.durationEn ?? '');
+  const [durationZh, setDurationZh] = useState(initialData?.durationZh ?? '');
   const [badgeEn, setBadgeEn] = useState(initialData?.badgeEn ?? '');
   const [badgeZh, setBadgeZh] = useState(initialData?.badgeZh ?? '');
   const [excerptEn, setExcerptEn] = useState(initialData?.excerptEn ?? '');
@@ -139,6 +142,9 @@ export default function SiteForm({
     setTitleZh(initialData?.titleZh ?? '');
     setDescriptionEn(initialData?.descriptionEn ?? '');
     setDescriptionZh(initialData?.descriptionZh ?? '');
+    setBudgetRange(initialData?.budgetRange ?? '');
+    setDurationEn(initialData?.durationEn ?? '');
+    setDurationZh(initialData?.durationZh ?? '');
     setBadgeEn(initialData?.badgeEn ?? '');
     setBadgeZh(initialData?.badgeZh ?? '');
     setExcerptEn(initialData?.excerptEn ?? '');
@@ -163,6 +169,9 @@ export default function SiteForm({
       const match = cities.find((c) => c.nameEn.toLowerCase() === data.locationCity.toLowerCase());
       if (match) setSelectedCity(match.nameEn);
     }
+    setBudgetRange(data.budgetRange);
+    setDurationEn(data.durationEn);
+    setDurationZh(data.durationZh);
     setDescriptionEn(data.descriptionEn);
     setDescriptionZh(data.descriptionZh);
     setBadgeEn(data.badgeEn);
@@ -273,10 +282,10 @@ export default function SiteForm({
           </FormField>
 
           <FormField label={t.sites.budgetRange} htmlFor="budgetRange" tooltip={t.sites.tooltips.budgetRange}>
-            <input id="budgetRange" name="budgetRange" defaultValue={initialData?.budgetRange ?? ''} style={fieldStyle} placeholder="$80,000 - $120,000" />
+            <input id="budgetRange" name="budgetRange" value={budgetRange} onChange={(e) => setBudgetRange(e.target.value)} style={fieldStyle} placeholder="$80,000 - $120,000" />
           </FormField>
 
-          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.sites.duration} defaultValueEn={initialData?.durationEn ?? ''} defaultValueZh={initialData?.durationZh ?? ''} tooltip={t.sites.tooltips.duration} />
+          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.sites.duration} valueEn={durationEn} onChangeEn={setDurationEn} valueZh={durationZh} onChangeZh={setDurationZh} tooltip={t.sites.tooltips.duration} />
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} disabled={!editing} />
 
