@@ -405,9 +405,31 @@ export default function BatchUploadClient() {
     before-1.jpg / after-1.jpg
   hero.jpg                     <- Site hero image`}
               </pre>
-              <p style={{ marginTop: '0.75rem', marginBottom: 0 }}>
+              <p style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }}>
                 {bt.folderStructureHelp}
               </p>
+              <div
+                style={{
+                  borderTop: `1px solid rgba(27,54,93,0.1)`,
+                  paddingTop: '0.75rem',
+                }}
+              >
+                <strong style={{ display: 'block', marginBottom: '0.25rem' }}>
+                  {bt.notesHelpTitle}
+                </strong>
+                <p style={{ margin: '0 0 0.5rem' }}>
+                  {bt.notesHelpBody}
+                </p>
+                <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '0.75rem', whiteSpace: 'pre-wrap', backgroundColor: 'rgba(27,54,93,0.05)', borderRadius: 6, padding: '0.625rem' }}>
+{`Location: Richmond, BC
+Budget: $45,000
+Timeline: 6 weeks
+Style: Modern minimalist with shaker cabinets
+Materials: Quartz countertops, porcelain tile
+Challenges: Load-bearing wall removal
+Features: Kitchen island with waterfall edge`}
+                </pre>
+              </div>
             </div>
           )}
 
