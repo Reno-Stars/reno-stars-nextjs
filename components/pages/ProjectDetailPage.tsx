@@ -13,6 +13,7 @@ import ProjectModal from '@/components/ProjectModal';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import { useDragScroll } from '@/hooks/useDragScroll';
+import { useFullscreenModal } from '@/hooks/useFullscreenModal';
 import {
   NAVY, GOLD, GOLD_PALE, NAVY_90, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
@@ -117,14 +118,32 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
   }, [goToNext, goToPrev]);
 
   // Fullscreen handlers
-  const openFullscreen = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFullscreen(true);
-  }, []);
-
   const closeFullscreen = useCallback(() => {
     setIsFullscreen(false);
   }, []);
+
+  const fullscreenPrev = useCallback(() => {
+    setActivePairIndex((prev) => (prev > 0 ? prev - 1 : imagePairs.length - 1));
+    setShowBefore(false);
+  }, [imagePairs.length]);
+
+  const fullscreenNext = useCallback(() => {
+    setActivePairIndex((prev) => (prev < imagePairs.length - 1 ? prev + 1 : 0));
+    setShowBefore(false);
+  }, [imagePairs.length]);
+
+  const { overlayRef, captureTrigger } = useFullscreenModal({
+    isOpen: isFullscreen,
+    onClose: closeFullscreen,
+    onPrev: imagePairs.length > 1 ? fullscreenPrev : undefined,
+    onNext: imagePairs.length > 1 ? fullscreenNext : undefined,
+  });
+
+  const openFullscreen = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    captureTrigger(e);
+    setIsFullscreen(true);
+  }, [captureTrigger]);
 
   // Drag to scroll for thumbnail strips with elastic bounce
   const {
@@ -511,6 +530,10 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       {/* Fullscreen Image Overlay */}
       {isFullscreen && displayImage && (
         <div
+          ref={overlayRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={localizedProject.title}
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
           onClick={closeFullscreen}
         >
@@ -541,11 +564,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           {/* Previous arrow */}
           {imagePairs.length > 1 && (
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActivePairIndex((prev) => (prev > 0 ? prev - 1 : imagePairs.length - 1));
-                setShowBefore(false);
-              }}
+              onClick={(e) => { e.stopPropagation(); fullscreenPrev(); }}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.previousImage')}
             >
@@ -556,11 +575,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           {/* Next arrow */}
           {imagePairs.length > 1 && (
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActivePairIndex((prev) => (prev < imagePairs.length - 1 ? prev + 1 : 0));
-                setShowBefore(false);
-              }}
+              onClick={(e) => { e.stopPropagation(); fullscreenNext(); }}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer hidden sm:block"
               aria-label={t('projects.nextImage')}
             >

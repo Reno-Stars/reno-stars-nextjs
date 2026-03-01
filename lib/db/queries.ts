@@ -412,6 +412,15 @@ export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt
   return rows;
 }
 
+/** Fetch all published site slugs with dates (for sitemap). */
+export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
+  const rows = await db
+    .select({ slug: sitesTable.slug, updatedAt: sitesTable.updatedAt })
+    .from(sitesTable)
+    .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)));
+  return rows;
+}
+
 // ============================================================================
 // SITE QUERIES
 // ============================================================================

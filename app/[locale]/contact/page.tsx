@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -60,6 +60,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <ContactPageSchema company={company} areaNames={areaNames} />
       <ContactPage locale={locale as Locale} company={company} areaNames={areaNames} />
     </>
   );

@@ -514,7 +514,8 @@
     "loading": "加载中...",
     "error": "发生错误",
     "notFound": "页面未找到",
-    "backToHome": "返回首页"
+    "backToHome": "返回首页",
+    "tryAgain": "重试"
   },
   "homeFaq": {
     "title": "常见问题",

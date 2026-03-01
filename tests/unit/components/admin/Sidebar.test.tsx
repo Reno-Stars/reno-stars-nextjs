@@ -27,12 +27,16 @@ vi.mock('@/lib/admin/translations', () => ({
       showroom: 'Showroom',
       socialLinks: 'Social Links',
       about: 'About',
+      partners: 'Partners',
       groups: {
         portfolio: 'Portfolio',
         content: 'Content',
         crm: 'CRM',
         settings: 'Settings',
       },
+    },
+    batchUpload: {
+      navLabel: 'Batch Upload',
     },
   }),
 }));

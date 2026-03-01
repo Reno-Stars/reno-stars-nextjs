@@ -191,6 +191,7 @@ export const projectSites = pgTable(
     uniqueIndex('project_sites_slug_idx').on(table.slug),
     index('project_sites_show_as_project_idx').on(table.showAsProject),
     index('project_sites_featured_idx').on(table.featured),
+    index('project_sites_published_show_idx').on(table.isPublished, table.showAsProject),
   ]
 );
 
@@ -332,6 +333,7 @@ export const projects = pgTable(
     index('projects_location_city_idx').on(table.locationCity),
     index('projects_featured_idx').on(table.featured),
     index('projects_site_id_idx').on(table.siteId),
+    index('projects_is_published_idx').on(table.isPublished),
   ]
 );
 
@@ -495,6 +497,7 @@ export const blogPosts = pgTable(
     uniqueIndex('blog_posts_slug_idx').on(table.slug),
     index('blog_posts_published_at_idx').on(table.publishedAt),
     index('blog_posts_project_id_idx').on(table.projectId),
+    index('blog_posts_is_published_idx').on(table.isPublished),
   ]
 );
 

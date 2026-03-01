@@ -3,7 +3,7 @@ import { locales } from '@/i18n/config';
 import { serviceTypeToCategory } from '@/lib/data/services';
 import { CATEGORY_SLUGS } from '@/lib/data/projects';
 import { getBaseUrl } from '@/lib/utils';
-import { getProjectSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import type { ServiceType } from '@/lib/types';
 
 const BASE_URL = getBaseUrl();
@@ -11,14 +11,17 @@ const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, blogPostRows, serviceAreas] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas] = await Promise.all([
     getProjectSlugsFromDb(),
+    getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+  const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const blogDateMap = new Map(blogPostRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const projectSlugs = projectRows.map(r => r.slug);
+  const siteSlugs = siteRows.map(r => r.slug);
   const blogPostSlugs = blogPostRows.map(r => r.slug);
 
   const entries: MetadataRoute.Sitemap = [];
@@ -121,6 +124,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: projectDateMap.get(slug) ?? now,
+        changeFrequency: 'monthly',
+        priority: 0.6,
+        alternates: {
+          languages: {
+            en: `${BASE_URL}/en/projects/${slug}/`,
+            zh: `${BASE_URL}/zh/projects/${slug}/`,
+            'x-default': `${BASE_URL}/en/projects/${slug}/`,
+          },
+        },
+      });
+    }
+  }
+
+  // Site pages (whole-house projects displayed as /projects/{site-slug}/)
+  const projectSlugSet = new Set(projectSlugs);
+  for (const slug of siteSlugs.filter(s => !projectSlugSet.has(s))) {
+    for (const locale of locales) {
+      entries.push({
+        url: `${BASE_URL}/${locale}/projects/${slug}/`,
+        lastModified: siteDateMap.get(slug) ?? now,
         changeFrequency: 'monthly',
         priority: 0.6,
         alternates: {

@@ -8,3 +8,4 @@ export { default as ArticleSchema } from './ArticleSchema';
 export { default as ReviewSchema } from './ReviewSchema';
 export { default as WebSiteSchema } from './WebSiteSchema';
 export { default as HowToSchema } from './HowToSchema';
+export { default as ContactPageSchema } from './ContactPageSchema';

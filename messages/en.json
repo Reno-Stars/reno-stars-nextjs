@@ -514,7 +514,8 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "notFound": "Page not found",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "tryAgain": "Try Again"
   },
   "homeFaq": {
     "title": "Frequently Asked Questions",
