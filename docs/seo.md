@@ -2,13 +2,14 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps), while static pages use the current date. Includes:
+Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps), while static pages use the current date. Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design, process, areas)
 - All service detail pages
 - Service × location combination pages (e.g., `/en/services/kitchen/vancouver/`)
 - Project category pages
 - Individual project pages
+- Site pages (whole-house projects displayed as `/projects/{site-slug}/`, deduplicated against project slugs)
 - Blog post pages
 - Service area pages
 
@@ -30,6 +31,7 @@ Components in `components/structured-data/`:
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 | `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
+| `ContactPageSchema` | ContactPage + ContactPoint | Contact page (HomeAndConstructionBusiness with phone, email, languages, areas served) |
 
 ## OpenGraph Locale Alternates
 

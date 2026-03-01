@@ -120,6 +120,18 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 
 All seed operations use `onConflictDoNothing` for idempotency.
 
+### Performance Indexes
+
+Key indexes beyond unique constraints:
+
+| Index | Table | Columns | Purpose |
+|-------|-------|---------|---------|
+| `project_sites_published_show_idx` | `project_sites` | `(isPublished, showAsProject)` | Public site queries |
+| `projects_is_published_idx` | `projects` | `(isPublished)` | Public project queries |
+| `blog_posts_is_published_idx` | `blog_posts` | `(isPublished)` | Public blog queries |
+| `faqs_active_order_idx` | `faqs` | `(isActive, displayOrder)` | Active FAQ ordering |
+| `partners_active_order_idx` | `partners` | `(isActive, displayOrder)` | Active partner ordering |
+
 ### Blog Crawler (`scripts/seed-blog.ts`)
 
 Crawls the old WordPress site for real blog content:
@@ -152,7 +164,8 @@ const services = await getServicesFromDb();             // Service[]
 const about = await getAboutSectionsFromDb();           // AboutSections
 const projects = await getProjectsFromDb();             // Project[]
 const project = await getProjectBySlugFromDb('slug');   // Project | null
-const slugs = await getProjectSlugsFromDb();            // string[]
+const slugs = await getProjectSlugsFromDb();            // { slug, updatedAt }[]
+const siteSlugs = await getSiteSlugsFromDb();           // { slug, updatedAt }[] (published, showAsProject=true)
 const areas = await getServiceAreasFromDb();            // ServiceArea[]
 const posts = await getBlogPostsFromDb();               // BlogPost[]
 const post = await getBlogPostBySlugFromDb('slug');     // BlogPost | null (includes related_project if linked)
