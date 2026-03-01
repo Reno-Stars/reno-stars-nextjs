@@ -426,7 +426,7 @@ Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog 
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons).
+Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a "Download Example ZIP" link (`public/example-batch-upload.zip`) next to the folder structure help toggle.
 
 ## Image Upload
 

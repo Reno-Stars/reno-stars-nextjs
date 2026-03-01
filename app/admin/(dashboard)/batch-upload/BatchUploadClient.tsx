@@ -331,27 +331,56 @@ export default function BatchUploadClient() {
           </label>
 
           {/* Help section */}
-          <button
-            type="button"
-            onClick={() => setShowHelp((prev) => !prev)}
+          <div
             style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: INFO,
-              fontSize: '0.8125rem',
-              padding: 0,
-              marginBottom: showHelp ? '0.75rem' : '1.5rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.25rem',
+              gap: '1rem',
+              marginBottom: showHelp ? '0.75rem' : '1.5rem',
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-            {bt.folderStructureTitle}
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowHelp((prev) => !prev)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: INFO,
+                fontSize: '0.8125rem',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              {bt.folderStructureTitle}
+            </button>
+            <a
+              href="/example-batch-upload.zip"
+              download
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                color: GOLD,
+                fontSize: '0.8125rem',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget).style.textDecoration = 'underline'; }}
+              onMouseLeave={(e) => { (e.currentTarget).style.textDecoration = 'none'; }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              {bt.downloadExample}
+            </a>
+          </div>
 
           {showHelp && (
             <div

@@ -655,6 +655,7 @@ const zh: AdminMessages = {
     errorTooLarge: '文件过大，最大支持 100 MB。',
     errorS3NotConfigured: 'S3 存储未配置。',
     errorUploadFailed: '上传失败。',
+    downloadExample: '下载示例ZIP',
   },
 };
 

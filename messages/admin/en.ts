@@ -653,6 +653,7 @@ const en = {
     errorTooLarge: 'File too large. Maximum size is 100 MB.',
     errorS3NotConfigured: 'S3 storage is not configured.',
     errorUploadFailed: 'Upload failed.',
+    downloadExample: 'Download Example ZIP',
   },
 };
 
