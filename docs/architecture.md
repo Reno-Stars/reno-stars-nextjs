@@ -78,6 +78,7 @@ lib/
     openai.ts             # OpenAI client initialization (lazy loading)
     content-optimizer.ts  # AI functions for blog, project, alt text generation
     blog-generator.ts     # AI blog generation from project/site data (GPT-4o)
+    social-post-generator.ts # AI social post generation for 3 platforms (GPT-4o)
   batch/                  # Batch upload processing
     types.ts              # ZIP parsing types (ParsedSite, ParsedProject, etc.)
     zip-parser.ts         # Async ZIP extraction + folder structure parsing
@@ -162,7 +163,11 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getPartnersFromDb()` | `Partner[]` | Active partners, ordered by `displayOrder` |
 | `getSitesAsProjectsFromDb()` | `SiteWithProjects[]` | Sites with aggregated data for "Whole House" display |
 
-Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllPartnersAdmin()`, `getAllSitesAdmin()`.
+Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllPartnersAdmin()`, `getAllSitesAdmin()`, `getAllSocialMediaPostsAdmin()`, `getSocialMediaPostByIdAdmin()`.
+
+#### Shared Helpers
+
+`groupBy<T, K>(arr, keyFn)` — Groups array items by a key field into a `Map<K, T[]>`. Exported for reuse by server actions (e.g., grouping project relations by `projectId` in social post generation).
 
 #### Query Helpers (`lib/db/helpers.ts`)
 
@@ -263,7 +268,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 
 - **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
 - **Homepage sections** (`components/home/`): 14 section components extracted from HomePage for code-splitting. 10 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, PartnersSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar). TestimonialsSection uses CSS `@keyframes` marquee for infinite horizontal scroll with pause-on-hover. PartnersSection uses CSS `@keyframes` for infinite logo carousel with pause-on-hover/focus and `prefers-reduced-motion` support. FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
-- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 12 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, WebSiteSchema (with `SearchAction` for sitelinks search), ServiceSchema, ProjectSchema (`WebPage` with `mainEntity: Service`), ArticleSchema (with `ImageObject` including width/height), BreadcrumbSchema, FAQSchema, ReviewSchema, HowToSchema (process page, 5-step renovation workflow with tools and total time), ContactPageSchema (`ContactPage` with `HomeAndConstructionBusiness` + `ContactPoint`). Shared `parseAddress()` utility in `parse-address.ts` used by both `LocalBusinessSchema` and `ContactPageSchema`. Rating data comes from Google Reviews API (`googleRating`/`googleReviewCount` props) — no longer stored in the Company model. `aggregateRating` is conditionally rendered only when Google data is available. ReviewSchema emits individual reviews only (aggregate rating handled globally by LocalBusinessSchema in the layout).
+- **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 13 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, WebSiteSchema (with `SearchAction` for sitelinks search), ServiceSchema, ProjectSchema (`WebPage` with `mainEntity: Service`), ProjectCategorySchema (`ItemList` with positioned project links), ArticleSchema (with `ImageObject` including width/height), BreadcrumbSchema, FAQSchema, ReviewSchema, HowToSchema (process page, 5-step renovation workflow with tools and total time), ContactPageSchema (`ContactPage` with `HomeAndConstructionBusiness` + `ContactPoint`). Shared `parseAddress()` utility in `parse-address.ts` used by both `LocalBusinessSchema` and `ContactPageSchema`. Rating data comes from Google Reviews API (`googleRating`/`googleReviewCount` props) — no longer stored in the Company model. `aggregateRating` is conditionally rendered only when Google data is available. ReviewSchema emits individual reviews only (aggregate rating handled globally by LocalBusinessSchema in the layout).
 - **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.
 - **Footer**: 5-column grid (Brand & Social, Quick Links, Services, Contact, Why Us) + full-width Service Areas bar with 14 city links. Receives `company`, `socialLinks`, `services`, `areas` as props from layout. Custom SVG icons for Xiaohongshu, WeChat, WhatsApp.
 - **ContactForm**: Reusable form component with `large` prop for accessibility (larger text/inputs for elderly users). Tracks success timeout via `useRef` with cleanup on unmount. Surfaces server error messages.
@@ -283,12 +288,14 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 
 ## Accessibility
 
+- **Skip to content**: Layout includes a skip link (`<a href="#main-content">`) with `sr-only` / `focus:not-sr-only` styling. Bilingual ("Skip to main content" / "跳到主要内容"). `<main id="main-content">` wraps page content.
 - **Elderly-friendly text**: The `ContactForm` component supports a `large` prop that increases input text to `text-lg` with larger padding (`py-3.5` / `py-4`) for better readability. Used on the homepage contact section.
 - **Hero text scaling**: Hero titles use responsive scaling up to `lg:text-6xl` for desktop readability.
 - **Heading hierarchy**: All pages maintain valid H1 → H2 → H3 structure. Use `sr-only` for structurally required but visually redundant headings.
 - **Lightbox accessibility**: Image lightbox includes `aria-live="polite"` counter, keyboard-accessible open/close handlers via `useCallback`.
 - **Fullscreen modal accessibility**: `ProjectDetailPage` and `SiteDetailPage` fullscreen image overlays use `useFullscreenModal` hook for `role="dialog"`, `aria-modal="true"`, scroll lock, focus trap, Escape/Arrow key navigation, and return focus to the trigger element on close.
-- **Navbar focus trap**: Mobile menu implements focus trap with Escape key close and Tab cycling.
+- **Navbar focus trap**: Mobile menu implements focus trap with Escape key close and Tab cycling. Areas dropdown closes on Escape key.
+- **Reduced motion**: `@media (prefers-reduced-motion: reduce)` overrides for `modalFadeIn` (globals.css) and `admin-spin` (admin-responsive.css) keyframes.
 - **Functional updater pattern**: Toggle state setters use `setX((prev) => !prev)` to prevent stale closures in event handlers.
 
 ## Database Connection
@@ -319,6 +326,7 @@ export const AI_CONFIG = {
   maxTokensShort: 1024,               // Short text translations
   maxTokensProjectDescription: 2048,  // Project descriptions + SEO (16 fields)
   maxTokensAltText: 256,              // Image alt text
+  maxTokensSocialPost: 4096,          // Social post generation (3 platforms x bilingual)
   fetchTimeoutMs: 60000,
 };
 ```
@@ -344,6 +352,21 @@ All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for re
 
 `BlogGeneration` includes: bilingual title, content (semantic HTML), excerpt, SEO meta fields, focus/SEO keywords, reading time, and slug.
 
+### Social Post Generation (`lib/ai/social-post-generator.ts`)
+
+| Function | Purpose | Returns |
+|----------|---------|---------|
+| `generateSocialPostsFromBlog(blog)` | Generate from blog post data | `SocialPostGeneration` (zod-validated) |
+| `generateSocialPostsFromProject(project)` | Generate from project data | `SocialPostGeneration` (zod-validated) |
+| `generateSocialPostsFromSite(site, projects)` | Generate from site + children | `SocialPostGeneration` (zod-validated) |
+
+`SocialPostGeneration` includes: bilingual campaign title, Instagram captions + hashtags (EN/ZH), Facebook captions + hashtags (EN/ZH), Xiaohongshu captions (ZH primary, EN secondary) + topic tags. All 13 string fields validated with `.min(1)` to reject empty AI responses. Reuses `ProjectDataForBlog` / `SiteDataForBlog` types from `blog-generator.ts`.
+
+Platform-specific formatting rules in system prompt:
+- **Instagram**: max 2200 chars, up to 30 hashtags, emoji-rich, visual CTA
+- **Facebook**: narrative format, 3-5 hashtags, professional tone, CTA
+- **Xiaohongshu**: Chinese-first, heavy emojis, `#topic tags#` format, conversational
+
 ### Server Actions
 
 **`app/actions/admin/optimize-content.ts`** — Content optimization actions (require admin auth):
@@ -355,6 +378,16 @@ All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for re
 **`app/actions/admin/generate-blog.ts`** — Blog generation actions (require admin auth):
 - `generateBlogFromProject(projectId)` — Generate draft blog from single project
 - `generateBlogFromSite(siteId)` — Generate draft blog from site + all child projects
+
+**`app/actions/admin/social-posts.ts`** — Social media post CRUD + AI generation (require admin auth):
+- `createSocialMediaPost(prevState, formData)` — Validate, insert, redirect to list
+- `updateSocialMediaPost(id, prevState, formData)` — Validate, update with `publishedAt` preservation
+- `deleteSocialMediaPost(id)` — Delete with `.returning()` verification
+- `updateSocialPostStatus(id, status)` — Inline status toggle from list page
+- `generateSocialPostFromBlog(blogPostId)` — Fetch blog, call AI, return content
+- `generateSocialPostFromProject(projectId)` — Fetch project + relations, call AI, return content
+- `generateSocialPostFromSite(siteId)` — Fetch site + children with `groupBy()`, call AI, return content
+- `getSourceImages(sourceType, sourceId)` — Fetch available images from source (hero + image pairs + child project images)
 
 Blog generation actions fetch project data with relations (image pairs, scopes, products), call GPT-4o, validate response with Zod, and insert an unpublished draft blog post. Safety measures include:
 - **SEO field truncation**: `truncateField()` ensures metaTitle, metaDescription, and focusKeyword fit DB column max lengths (`SEO_META_TITLE_MAX=70`, `SEO_META_DESCRIPTION_MAX=155`, `SEO_FOCUS_KEYWORD_MAX=50`)

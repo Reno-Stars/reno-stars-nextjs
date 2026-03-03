@@ -17,7 +17,7 @@ export const SH_DARK = '#c4bbb0';
 export const SH_LIGHT = '#faf5ee';
 export const TEXT = '#1B365D';
 export const TEXT_MID = 'rgba(27,54,93,0.7)';
-export const TEXT_MUTED = 'rgba(27,54,93,0.5)';
+export const TEXT_MUTED = 'rgba(27,54,93,0.6)';
 
 export const SUCCESS = '#16a34a';
 export const SUCCESS_BG = 'rgba(34, 197, 94, 0.1)';

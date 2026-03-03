@@ -61,7 +61,7 @@ export default function Navbar({ company, areas }: NavbarProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen, closeMenu]);
 
-  // Close areas dropdown on click outside (desktop)
+  // Close areas dropdown on click outside or Escape key (desktop)
   useEffect(() => {
     if (!isAreasOpen || isMenuOpen) return;
     const handleClick = (e: MouseEvent) => {
@@ -69,8 +69,15 @@ export default function Navbar({ company, areas }: NavbarProps) {
         setIsAreasOpen(false);
       }
     };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsAreasOpen(false);
+    };
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isAreasOpen, isMenuOpen]);
 
   const navLinks = useMemo(() => [

@@ -65,6 +65,20 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `faqs` | Frequently asked questions | `id`, composite index on `(isActive, displayOrder)` |
 | `partners` | Partner logos (homepage carousel) | `id`, composite index on `(isActive, displayOrder)` |
 
+### Social Media Posts
+
+| Table | Purpose | Key Columns |
+|-------|---------|-------------|
+| `social_media_posts` | Social media campaign content for 3 platforms | `status` (enum), `selected_image_urls` (jsonb), 3 nullable source FKs with CHECK constraint |
+
+The `social_post_status` enum tracks post readiness: `draft` → `ready` → `published`.
+
+Each row represents a campaign with content for all 3 platforms (Instagram, Facebook, Xiaohongshu). Three nullable FKs (`blog_post_id`, `project_id`, `site_id`) with a CHECK constraint ensuring at most one is non-null. All FKs use `onDelete: 'set null'`. `selected_image_urls` is a `jsonb` column typed as `string[]` via Drizzle `$type<>()`.
+
+Indexes: `status`, `blog_post_id`, `project_id`, `site_id`, `scheduled_at`, `created_at`.
+
+Exported types: `DbSocialMediaPost`, `NewDbSocialMediaPost`.
+
 ### Batch Upload Tables
 
 | Table | Purpose | Key Columns |
@@ -82,6 +96,7 @@ service_type: kitchen | bathroom | whole-house | basement | cabinet | commercial
 contact_status: new | contacted | converted | rejected
 social_platform: facebook | instagram | youtube | linkedin | twitter | xiaohongshu | wechat | whatsapp
 gallery_category: kitchen | bathroom | whole-house | commercial
+social_post_status: draft | ready | published
 batch_job_status: pending | extracting | uploading | generating | saving | generating_blog | completed | failed | partial
 ```
 
@@ -131,6 +146,12 @@ Key indexes beyond unique constraints:
 | `blog_posts_is_published_idx` | `blog_posts` | `(isPublished)` | Public blog queries |
 | `faqs_active_order_idx` | `faqs` | `(isActive, displayOrder)` | Active FAQ ordering |
 | `partners_active_order_idx` | `partners` | `(isActive, displayOrder)` | Active partner ordering |
+| `social_media_posts_status_idx` | `social_media_posts` | `(status)` | Status filtering |
+| `social_media_posts_created_at_idx` | `social_media_posts` | `(created_at)` | Sort by creation date |
+| `social_media_posts_blog_post_id_idx` | `social_media_posts` | `(blog_post_id)` | Source FK lookup |
+| `social_media_posts_project_id_idx` | `social_media_posts` | `(project_id)` | Source FK lookup |
+| `social_media_posts_site_id_idx` | `social_media_posts` | `(site_id)` | Source FK lookup |
+| `social_media_posts_scheduled_at_idx` | `social_media_posts` | `(scheduled_at)` | Scheduling queries |
 
 ### Blog Crawler (`scripts/seed-blog.ts`)
 
@@ -212,6 +233,8 @@ import {
   getAllFaqsAdmin,          // DbFaq[] — includes inactive
   getAllPartnersAdmin,      // DbPartner[] — includes inactive
   getAllSitesAdmin,         // DbSite[] with siteImages — includes unpublished
+  getAllSocialMediaPostsAdmin,  // DbSocialMediaPost[] — ordered by createdAt desc
+  getSocialMediaPostByIdAdmin,  // DbSocialMediaPost | undefined — single post lookup
 } from '@/lib/db/queries';
 ```
 

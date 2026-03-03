@@ -14,6 +14,7 @@ import {
   Share2,
   ShieldCheck,
   Handshake,
+  Megaphone,
   Mail,
   BellRing,
   Building2,
@@ -34,6 +35,7 @@ interface DashboardStats {
   socialLinks: number;
   badges: number;
   partners: number;
+  socialPosts: number;
 }
 
 interface CardDef {
@@ -157,6 +159,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
       title: t.dashboard.groupContent,
       cards: [
         { label: t.dashboard.blogPosts, value: stats.blogPosts, href: '/admin/blog', icon: FileText, accent: INFO },
+        { label: t.dashboard.socialPosts, value: stats.socialPosts, href: '/admin/social-posts', icon: Megaphone, accent: INFO },
         { label: t.dashboard.gallery, value: stats.gallery, href: '/admin/gallery', icon: Images, accent: INFO },
         { label: t.dashboard.faqs, value: stats.faqs, href: '/admin/faqs', icon: CircleHelp, accent: INFO },
         { label: t.dashboard.socialLinks, value: stats.socialLinks, href: '/admin/social-links', icon: Share2, accent: INFO },

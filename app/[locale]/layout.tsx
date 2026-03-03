@@ -10,6 +10,7 @@ import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAr
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { images } from '@/lib/data';
 import { ASSET_ORIGIN } from '@/lib/storage';
+import { NAVY } from '@/lib/theme';
 
 // Revalidate layout data every hour (ISR)
 export const revalidate = 3600;
@@ -65,6 +66,13 @@ export default async function LocaleLayout({
             googleRating={googleReviews.rating}
             googleReviewCount={googleReviews.userRatingCount}
           />
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
+            style={{ backgroundColor: NAVY, color: '#fff' }}
+          >
+            {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
+          </a>
           <Navbar company={company} areas={areas} />
           <main id="main-content">
             {children}

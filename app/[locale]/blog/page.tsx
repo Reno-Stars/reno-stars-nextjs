@@ -67,8 +67,16 @@ export default async function Page({ params, searchParams }: PageProps) {
     { name: t('blog'), url: `/${locale}/blog/` },
   ];
 
+  const baseUrl = getBaseUrl();
+
   return (
     <>
+      {currentPage > 1 && (
+        <link rel="prev" href={`${baseUrl}/${locale}/blog/${currentPage === 2 ? '' : `?page=${currentPage - 1}`}`} />
+      )}
+      {currentPage < paginatedPosts.totalPages && (
+        <link rel="next" href={`${baseUrl}/${locale}/blog/?page=${currentPage + 1}`} />
+      )}
       <BreadcrumbSchema items={breadcrumbs} />
       <BlogPage
         locale={locale as Locale}

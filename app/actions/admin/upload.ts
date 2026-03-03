@@ -51,15 +51,19 @@ export async function uploadImage(
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  await client.send(
-    new PutObjectCommand({
-      Bucket: bucket,
-      Key: key,
-      Body: buffer,
-      ContentType: file.type,
-    })
-  );
-
-  const url = `${publicUrl}/${key}`;
-  return { url };
+  try {
+    await client.send(
+      new PutObjectCommand({
+        Bucket: bucket,
+        Key: key,
+        Body: buffer,
+        ContentType: file.type,
+      })
+    );
+    const url = `${publicUrl}/${key}`;
+    return { url };
+  } catch (error) {
+    console.error('S3 upload failed:', error);
+    return { error: 'Image upload failed. Please try again.' };
+  }
 }

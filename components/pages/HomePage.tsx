@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, GooglePlaceRating } from '@/lib/types';
 import { SURFACE } from '@/lib/theme';
@@ -12,10 +13,12 @@ import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TrustBadgesSection from '@/components/home/TrustBadgesSection';
 import PartnersSection from '@/components/home/PartnersSection';
-import FaqSection from '@/components/home/FaqSection';
 import BlogSection from '@/components/home/BlogSection';
 import ShowroomSection from '@/components/home/ShowroomSection';
-import ContactSection from '@/components/home/ContactSection';
+
+// Below-fold client components — lazy-load JS
+const FaqSection = dynamic(() => import('@/components/home/FaqSection'));
+const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
 
 // Pre-localized types (computed server-side)
 interface LocalizedArea { slug: string; name: string }

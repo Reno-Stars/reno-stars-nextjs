@@ -31,7 +31,12 @@ Components in `components/structured-data/`:
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 | `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
+| `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
 | `ContactPageSchema` | ContactPage + ContactPoint | Contact page (HomeAndConstructionBusiness with phone, email, languages, areas served) |
+
+## Pagination Links
+
+Blog listing pages include `<link rel="prev">` and `<link rel="next">` for paginated results. These help search engines discover and index all pages of the blog archive efficiently.
 
 ## OpenGraph Locale Alternates
 

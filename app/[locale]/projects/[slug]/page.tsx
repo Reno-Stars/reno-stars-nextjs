@@ -6,7 +6,7 @@ import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocaliz
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema } from '@/components/structured-data';
 import { serviceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
@@ -181,9 +181,16 @@ export default async function Page({ params }: PageProps) {
       { name: categoryName || slug, url: `/${locale}/projects/${slug}/` },
     ];
 
+    const categoryProjects = allProjects.filter((p) => p.service_type === slug);
+
     return (
       <>
         <BreadcrumbSchema items={breadcrumbs} />
+        <ProjectCategorySchema
+          categoryName={categoryName}
+          locale={locale as Locale}
+          projects={categoryProjects}
+        />
         <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} />
       </>
     );

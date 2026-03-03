@@ -94,6 +94,12 @@ fieldset:disabled select {
   to { transform: rotate(360deg); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  @keyframes admin-spin {
+    to { transform: none; }
+  }
+}
+
 /* Confirm dialog button focus styles */
 .confirm-dialog-btn {
   outline: none;

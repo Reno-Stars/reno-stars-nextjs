@@ -881,3 +881,101 @@ export const batchUploadJobs = pgTable(
 
 export type DbBatchUploadJob = typeof batchUploadJobs.$inferSelect;
 export type NewDbBatchUploadJob = typeof batchUploadJobs.$inferInsert;
+
+// ============================================================================
+// SOCIAL MEDIA POSTS
+// ============================================================================
+
+/** Status values for social media post campaigns */
+export const socialPostStatusEnum = pgEnum('social_post_status', [
+  'draft',
+  'ready',
+  'published',
+]);
+
+/**
+ * Social media post campaigns — one row = one campaign with content for all 3 platforms
+ * (Instagram, Facebook, Xiaohongshu). Optional source linking via nullable FKs.
+ */
+export const socialMediaPosts = pgTable(
+  'social_media_posts',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    // Campaign label
+    titleEn: varchar('title_en', { length: 200 }).notNull(),
+    titleZh: varchar('title_zh', { length: 200 }).notNull(),
+
+    // Instagram
+    instagramCaptionEn: text('instagram_caption_en'),
+    instagramCaptionZh: text('instagram_caption_zh'),
+    instagramHashtagsEn: text('instagram_hashtags_en'),
+    instagramHashtagsZh: text('instagram_hashtags_zh'),
+
+    // Facebook
+    facebookCaptionEn: text('facebook_caption_en'),
+    facebookCaptionZh: text('facebook_caption_zh'),
+    facebookHashtagsEn: text('facebook_hashtags_en'),
+    facebookHashtagsZh: text('facebook_hashtags_zh'),
+
+    // Xiaohongshu (Chinese-first platform)
+    xiaohongshuCaptionZh: text('xiaohongshu_caption_zh'),
+    xiaohongshuCaptionEn: text('xiaohongshu_caption_en'),
+    xiaohongshuTopicTagsZh: text('xiaohongshu_topic_tags_zh'),
+
+    // Selected images from source
+    selectedImageUrls: jsonb('selected_image_urls').$type<string[]>().default([]),
+
+    // Source linking — at most one FK can be non-null
+    blogPostId: uuid('blog_post_id').references(() => blogPosts.id, { onDelete: 'set null' }),
+    projectId: uuid('project_id').references(() => projects.id, { onDelete: 'set null' }),
+    siteId: uuid('site_id').references(() => projectSites.id, { onDelete: 'set null' }),
+
+    // Status & scheduling
+    status: socialPostStatusEnum('status').default('draft').notNull(),
+    scheduledAt: timestamp('scheduled_at'),
+    publishedAt: timestamp('published_at'),
+
+    // Internal notes
+    notes: text('notes'),
+
+    // Timestamps
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('social_media_posts_status_idx').on(table.status),
+    index('social_media_posts_blog_post_id_idx').on(table.blogPostId),
+    index('social_media_posts_project_id_idx').on(table.projectId),
+    index('social_media_posts_site_id_idx').on(table.siteId),
+    index('social_media_posts_scheduled_at_idx').on(table.scheduledAt),
+    index('social_media_posts_created_at_idx').on(table.createdAt),
+    // At most one source FK can be non-null
+    check(
+      'social_media_posts_single_source',
+      sql`(
+        (CASE WHEN ${table.blogPostId} IS NOT NULL THEN 1 ELSE 0 END) +
+        (CASE WHEN ${table.projectId} IS NOT NULL THEN 1 ELSE 0 END) +
+        (CASE WHEN ${table.siteId} IS NOT NULL THEN 1 ELSE 0 END)
+      ) <= 1`
+    ),
+  ]
+);
+
+export const socialMediaPostsRelations = relations(socialMediaPosts, ({ one }) => ({
+  blogPost: one(blogPosts, {
+    fields: [socialMediaPosts.blogPostId],
+    references: [blogPosts.id],
+  }),
+  project: one(projects, {
+    fields: [socialMediaPosts.projectId],
+    references: [projects.id],
+  }),
+  site: one(projectSites, {
+    fields: [socialMediaPosts.siteId],
+    references: [projectSites.id],
+  }),
+}));
+
+export type DbSocialMediaPost = typeof socialMediaPosts.$inferSelect;
+export type NewDbSocialMediaPost = typeof socialMediaPosts.$inferInsert;

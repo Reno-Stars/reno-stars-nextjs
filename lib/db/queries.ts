@@ -20,6 +20,7 @@ import {
   showroomInfo as showroomInfoTable,
   faqs as faqsTable,
   partners as partnersTable,
+  socialMediaPosts as socialMediaPostsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
@@ -35,7 +36,7 @@ function sortByDisplayOrder<T extends { displayOrder: number }>(arr: T[]): T[] {
 }
 
 /** Helper to group array items by a key field into a Map */
-function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T) => K): Map<K, T[]> {
+export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T) => K): Map<K, T[]> {
   const map = new Map<K, T[]>();
   for (const item of arr) {
     const key = keyFn(item);
@@ -474,17 +475,6 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
       : undefined,
   };
 }
-
-/** Fetch all published sites (listing only — omits site images for performance). */
-export const getSitesFromDb = cache(async (): Promise<Site[]> => {
-  const rows = await db
-    .select()
-    .from(sitesTable)
-    .where(eq(sitesTable.isPublished, true))
-    .orderBy(desc(sitesTable.createdAt));
-
-  return rows.map(mapDbSiteToSite);
-});
 
 /** Fetch projects for a given site ID. */
 export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]> => {
@@ -1095,4 +1085,35 @@ export const getPartnersFromDb = cache(async (): Promise<Partner[]> => {
 /** Fetch all partners (admin — includes inactive). */
 export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$inferSelect)[]> {
   return db.select().from(partnersTable).orderBy(asc(partnersTable.displayOrder));
+}
+
+// ============================================================================
+// SOCIAL MEDIA POST QUERIES (ADMIN)
+// ============================================================================
+
+/** Fetch all social media posts (admin). */
+export async function getAllSocialMediaPostsAdmin() {
+  return db.select().from(socialMediaPostsTable).orderBy(desc(socialMediaPostsTable.createdAt));
+}
+
+/** Fetch a single social media post by ID (admin). */
+export async function getSocialMediaPostByIdAdmin(id: string) {
+  const rows = await db.select().from(socialMediaPostsTable).where(eq(socialMediaPostsTable.id, id)).limit(1);
+  return rows[0] ?? null;
+}
+
+/** Fetch source options (blog posts, projects, sites) for social post form dropdowns. */
+export async function getSocialPostSourceOptions() {
+  const [blogRows, projectRows, siteRows] = await Promise.all([
+    db.select({ id: blogPostsTable.id, titleEn: blogPostsTable.titleEn, titleZh: blogPostsTable.titleZh })
+      .from(blogPostsTable)
+      .orderBy(desc(blogPostsTable.createdAt)),
+    db.select({ id: projectsTable.id, titleEn: projectsTable.titleEn, titleZh: projectsTable.titleZh })
+      .from(projectsTable)
+      .orderBy(desc(projectsTable.createdAt)),
+    db.select({ id: sitesTable.id, titleEn: sitesTable.titleEn, titleZh: sitesTable.titleZh })
+      .from(sitesTable)
+      .orderBy(desc(sitesTable.createdAt)),
+  ]);
+  return { blogRows, projectRows, siteRows };
 }
