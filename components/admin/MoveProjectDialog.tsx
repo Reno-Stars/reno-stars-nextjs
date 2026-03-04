@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef, useId } from 'react';
-import { CARD, NAVY, GOLD, TEXT_MID, neu } from '@/lib/theme';
+import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, neu, neuIn } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import SearchableSelect, { type SearchableSelectOption } from './SearchableSelect';
 
@@ -99,36 +99,81 @@ export default function MoveProjectDialog({
       aria-describedby={descId}
       style={{
         border: 'none',
-        borderRadius: '12px',
+        borderRadius: '14px',
         padding: 0,
-        maxWidth: '400px',
+        maxWidth: '420px',
         width: '90%',
-        boxShadow: neu(10),
+        boxShadow: neu(12),
         backgroundColor: CARD,
         position: 'fixed',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         margin: 0,
+        overflow: 'visible',
       }}
       onClose={handleCancel}
+      data-move-dialog=""
     >
-      <div style={{ padding: '1.5rem' }}>
-        <h3
-          id={titleId}
-          style={{ color: NAVY, fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.5rem' }}
-        >
-          {t.sites.moveProjectTitle}
-        </h3>
+      {/* Backdrop styling — scoped to this dialog via data attribute */}
+      <style>{`dialog[data-move-dialog][open]::backdrop { background: rgba(27,54,93,0.35); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }`}</style>
+
+      {/* Header accent bar */}
+      <div
+        style={{
+          height: '4px',
+          background: `linear-gradient(90deg, ${GOLD}, ${NAVY})`,
+          borderRadius: '14px 14px 0 0',
+        }}
+      />
+
+      <div style={{ padding: '1.75rem' }}>
+        {/* Title with icon */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '0.5rem' }}>
+          <div
+            style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '8px',
+              backgroundColor: SURFACE,
+              boxShadow: neuIn(3),
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h6v6" />
+              <path d="M10 14L21 3" />
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            </svg>
+          </div>
+          <h3
+            id={titleId}
+            style={{ color: NAVY, fontSize: '1.125rem', fontWeight: 700, margin: 0 }}
+          >
+            {t.sites.moveProjectTitle}
+          </h3>
+        </div>
+
         <p
           id={descId}
-          style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1rem' }}
+          style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1.25rem', lineHeight: 1.5 }}
         >
           {t.sites.moveProjectMessage}
         </p>
 
         {hasOptions ? (
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div
+            style={{
+              marginBottom: '1.75rem',
+              padding: '0.75rem',
+              backgroundColor: SURFACE,
+              borderRadius: '10px',
+              boxShadow: neuIn(3),
+            }}
+          >
             <SearchableSelect
               name="targetSiteId"
               options={siteOptions}
@@ -138,7 +183,7 @@ export default function MoveProjectDialog({
             />
           </div>
         ) : (
-          <p style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+          <p style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1.75rem', fontStyle: 'italic' }}>
             {t.sites.noOtherSites}
           </p>
         )}
@@ -150,13 +195,15 @@ export default function MoveProjectDialog({
             onClick={handleCancel}
             className="confirm-dialog-btn"
             style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              border: 'none',
+              padding: '0.5rem 1.125rem',
+              borderRadius: '8px',
+              border: `1.5px solid rgba(27,54,93,0.2)`,
               backgroundColor: 'transparent',
               color: TEXT_MID,
               cursor: 'pointer',
               fontSize: '0.875rem',
+              fontWeight: 500,
+              transition: 'border-color 0.15s',
             }}
           >
             {t.common.cancel}
@@ -167,8 +214,8 @@ export default function MoveProjectDialog({
             disabled={!selectedSiteId || loading || !hasOptions}
             className="confirm-dialog-btn"
             style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
+              padding: '0.5rem 1.125rem',
+              borderRadius: '8px',
               border: 'none',
               backgroundColor: GOLD,
               color: '#fff',
@@ -176,6 +223,7 @@ export default function MoveProjectDialog({
               fontSize: '0.875rem',
               fontWeight: 600,
               opacity: !selectedSiteId || loading || !hasOptions ? 0.5 : 1,
+              transition: 'opacity 0.15s',
             }}
           >
             {loading ? t.common.processing : t.sites.moveProjectConfirm}

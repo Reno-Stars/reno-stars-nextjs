@@ -7,6 +7,8 @@ import { inputStyle, readOnlyStyle } from './shared-styles';
 export interface SearchableSelectOption {
   id: string;
   label: string;
+  /** Extra text to match during search (not displayed) */
+  searchText?: string;
 }
 
 /** Get background color for dropdown option based on state */
@@ -97,7 +99,10 @@ export default function SearchableSelect({
   const filteredOptions = useMemo(() => {
     if (!search.trim()) return options;
     const searchLower = search.toLowerCase();
-    return options.filter((o) => o.label.toLowerCase().includes(searchLower));
+    return options.filter((o) =>
+      o.label.toLowerCase().includes(searchLower) ||
+      (o.searchText && o.searchText.toLowerCase().includes(searchLower))
+    );
   }, [options, search]);
 
   // Close dropdown when clicking outside

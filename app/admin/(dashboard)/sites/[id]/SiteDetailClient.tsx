@@ -136,6 +136,7 @@ interface SiteOption {
   id: string;
   titleEn: string;
   titleZh: string;
+  poNumber: string | null;
 }
 
 interface Props {
@@ -306,6 +307,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
       .map((s) => ({
         id: s.id,
         label: locale === 'zh' ? s.titleZh : s.titleEn,
+        searchText: s.poNumber ?? undefined,
       })),
     [allSites, site.id, locale]
   );
@@ -345,7 +347,6 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
           selectedId={selected}
           onSelect={setSelected}
           onDeleteProject={handleDeleteProject}
-          onMoveProject={setMoveProjectId}
           onReorderProjects={handleReorderProjects}
         />
       </div>
@@ -380,7 +381,36 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
           >
             {getPanelTitle()}
           </h2>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {selectedProject && (
+              <button
+                type="button"
+                onClick={() => setMoveProjectId(selectedProject!.id)}
+                disabled={isPending || isMovePending}
+                style={{
+                  padding: '0.375rem 0.75rem',
+                  fontSize: '0.8125rem',
+                  fontWeight: 500,
+                  color: NAVY,
+                  backgroundColor: 'transparent',
+                  border: `1.5px solid ${NAVY}`,
+                  borderRadius: '6px',
+                  cursor: isPending || isMovePending ? 'not-allowed' : 'pointer',
+                  opacity: isPending || isMovePending ? 0.6 : 1,
+                  whiteSpace: 'nowrap',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.375rem',
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h6v6" />
+                  <path d="M10 14L21 3" />
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                </svg>
+                {t.sites.moveProject}
+              </button>
+            )}
             {selected !== 'new' && !(selected === 'site' && projects.length === 0) && (
               <button
                 type="button"

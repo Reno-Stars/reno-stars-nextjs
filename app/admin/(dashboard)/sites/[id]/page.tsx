@@ -19,7 +19,7 @@ export default async function EditSitePage({ params }: PageProps) {
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
     db.select().from(siteImagePairs).where(eq(siteImagePairs.siteId, id)).orderBy(siteImagePairs.displayOrder) as Promise<DbSiteImagePair[]>,
-    db.select({ id: projectSites.id, titleEn: projectSites.titleEn, titleZh: projectSites.titleZh }).from(projectSites),
+    db.select({ id: projectSites.id, titleEn: projectSites.titleEn, titleZh: projectSites.titleZh, poNumber: projectSites.poNumber }).from(projectSites),
   ]);
 
   const site = rows[0];

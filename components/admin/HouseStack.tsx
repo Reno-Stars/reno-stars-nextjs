@@ -21,7 +21,6 @@ interface HouseStackProps {
   selectedId: string | 'site' | 'new';
   onSelect: (id: string | 'site' | 'new') => void;
   onDeleteProject?: (id: string) => void;
-  onMoveProject?: (id: string) => void;
   onReorderProjects?: (projectIds: string[]) => void;
 }
 
@@ -69,7 +68,6 @@ export default function HouseStack({
   selectedId,
   onSelect,
   onDeleteProject,
-  onMoveProject,
   onReorderProjects,
 }: HouseStackProps) {
   const t = useAdminTranslations();
@@ -161,11 +159,6 @@ export default function HouseStack({
   const siteTitle = locale === 'zh' ? site.titleZh : site.titleEn;
   const isRoofHovered = hoveredId === 'site';
   const isRoofSelected = selectedId === 'site';
-
-  const handleMoveClick = useCallback((e: React.MouseEvent, projectId: string) => {
-    e.stopPropagation();
-    onMoveProject?.(projectId);
-  }, [onMoveProject]);
 
   const handleDeleteClick = useCallback((e: React.MouseEvent, projectId: string) => {
     e.stopPropagation();
@@ -389,7 +382,7 @@ export default function HouseStack({
                       </div>
                     </div>
 
-                    {isHovered && (onDeleteProject || onMoveProject) && (
+                    {isHovered && onDeleteProject && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginLeft: '0.375rem' }}>
                         {isConfirmingDelete ? (
                           <>
@@ -425,71 +418,34 @@ export default function HouseStack({
                             </button>
                           </>
                         ) : (
-                          <>
-                            {onMoveProject && (
-                              <button
-                                type="button"
-                                onClick={(e) => handleMoveClick(e, project.id)}
-                                aria-label={t.sites.moveProject}
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  padding: 0,
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  color: isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID,
-                                  backgroundColor: 'transparent',
-                                  border: 'none',
-                                  borderRadius: '3px',
-                                  cursor: 'pointer',
-                                  transition: 'color 0.15s',
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.color = isSelected ? '#fff' : GOLD;
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.color = isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID;
-                                }}
-                              >
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M15 3h6v6" />
-                                  <path d="M10 14L21 3" />
-                                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                                </svg>
-                              </button>
-                            )}
-                            {onDeleteProject && (
-                              <button
-                                type="button"
-                                onClick={(e) => handleDeleteClick(e, project.id)}
-                                aria-label={t.sites.deleteProject}
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  padding: 0,
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  fontSize: '0.875rem',
-                                  color: isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID,
-                                  backgroundColor: 'transparent',
-                                  border: 'none',
-                                  borderRadius: '3px',
-                                  cursor: 'pointer',
-                                  transition: 'color 0.15s',
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.color = isSelected ? '#fff' : ERROR;
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.color = isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID;
-                                }}
-                              >
-                                ×
-                              </button>
-                            )}
-                          </>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteClick(e, project.id)}
+                            aria-label={t.sites.deleteProject}
+                            style={{
+                              width: '18px',
+                              height: '18px',
+                              padding: 0,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '0.875rem',
+                              color: isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID,
+                              backgroundColor: 'transparent',
+                              border: 'none',
+                              borderRadius: '3px',
+                              cursor: 'pointer',
+                              transition: 'color 0.15s',
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = isSelected ? '#fff' : ERROR;
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = isSelected ? 'rgba(255,255,255,0.6)' : TEXT_MID;
+                            }}
+                          >
+                            ×
+                          </button>
                         )}
                       </div>
                     )}
