@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
-import type { Company, Project, SiteWithProjects, DisplayProject } from '@/lib/types';
+import type { Company, Project, SiteWithProjects, DisplayProject, LocalizedImagePair } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
 import { getCategoriesLocalized } from '@/lib/data';
 import SelectDropdown from '@/components/SelectDropdown';
@@ -83,27 +83,54 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         // Add hero image first
         allImages.push({ src: heroImage, alt: siteTitle });
 
-        // Add site's own image pairs (if any), skip duplicates
-        // Transform bilingual pairs to localized format for the helper
-        const localizedSitePairs = site.image_pairs?.map((pair) => ({
-          afterImage: pair.afterImage ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] } : null,
-          beforeImage: pair.beforeImage ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] } : null,
-        }));
-        collectImagesFromPairs(localizedSitePairs, allImages, siteTitle);
+        // Build proper image_pairs for the modal (preserves before/after pairing)
+        const combinedImagePairs: LocalizedImagePair[] = [];
 
-        // Add all images from child projects (aggregated)
-        if (site.aggregated?.allImages) {
-          site.aggregated.allImages.forEach((img) => {
-            // Skip duplicates (hero image might be in allImages too)
-            if (!allImages.some((existing) => existing.src === img.src)) {
-              allImages.push({
-                src: img.src,
-                alt: img.alt[locale],
-                is_before: img.is_before,
-              });
-            }
-          });
+        // Add site's own image pairs
+        if (site.image_pairs && site.image_pairs.length > 0) {
+          for (const pair of site.image_pairs) {
+            combinedImagePairs.push({
+              beforeImage: pair.beforeImage
+                ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+                : undefined,
+              afterImage: pair.afterImage
+                ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+                : undefined,
+              title: pair.title?.[locale],
+              caption: pair.caption?.[locale],
+              photographerCredit: pair.photographerCredit,
+              keywords: pair.keywords,
+            });
+          }
         }
+
+        // Add child projects' image pairs
+        if (site.projects) {
+          for (const proj of site.projects) {
+            if (proj.image_pairs && proj.image_pairs.length > 0) {
+              for (const pair of proj.image_pairs) {
+                combinedImagePairs.push({
+                  beforeImage: pair.beforeImage
+                    ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+                    : undefined,
+                  afterImage: pair.afterImage
+                    ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+                    : undefined,
+                  title: pair.title?.[locale],
+                  caption: pair.caption?.[locale],
+                  photographerCredit: pair.photographerCredit,
+                  keywords: pair.keywords,
+                });
+              }
+            }
+          }
+        }
+
+        // Also build flat images for legacy compatibility
+        collectImagesFromPairs(combinedImagePairs.map((p) => ({
+          afterImage: p.afterImage ?? null,
+          beforeImage: p.beforeImage ?? null,
+        })), allImages, siteTitle);
 
         acc.push({
           id: site.id,
@@ -115,6 +142,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           location_city: site.location_city || '',
           hero_image: heroImage,
           images: allImages,
+          image_pairs: combinedImagePairs,
           featured: site.featured,
           badge: site.badge?.[locale],
           po_number: site.po_number,
