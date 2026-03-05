@@ -444,16 +444,23 @@ BatchUploadClient (React)  ──POST──►  api/route.ts (upload ZIP to S3 t
 ### Processing Pipeline (`lib/batch/batch-processor.ts`)
 
 1. **Extract** — Downloads ZIP from S3 temp, parses asynchronously via `fflate` (`lib/batch/zip-parser.ts`)
-2. **Upload** — Uploads all images to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
-3. **Generate** — AI metadata generation: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for all after-images (batches of 5)
-4. **Save** — Inserts sites, projects, and image pairs into DB with deduplicated slugs. Orphaned sites (0 successful projects) are cleaned up
+2. **Upload** — Uploads all images (site hero, site image pairs, project heroes, project image pairs) to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
+3. **Generate** — AI metadata generation: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for all site-level and project-level images (batches of 5)
+4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, and project image pairs (`project_image_pairs`) into DB with deduplicated slugs. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
 5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 
-- **Nested**: Top-level folder = site, subfolders = projects. `before-N.jpg` / `after-N.jpg` auto-paired by number
-- **Flat**: All images at root = single project, auto-wrapped in a site
-- **Hero images**: `hero.jpg` at folder root becomes the hero image
+Supports three layouts:
+
+- **Nested**: Top-level folder = site, subfolders = projects. Root-level images in the site folder become site-level image pairs (`site_image_pairs`), not a separate project. Subfolders become projects with their own `project_image_pairs`
+- **Single-folder**: Top-level folder with no subfolders = single project wrapped in a site. Pairs belong to the project only (site `imagePairs` is empty to prevent duplication)
+- **Flat**: All images at root (no folders) = single project, auto-wrapped in a site
+
+Image naming conventions:
+- **Hero images**: `hero.jpg` at any folder level becomes the hero image for that entity
+- **Before/after pairs**: `before-1.jpg` / `after-1.jpg` or `Before 1.jpg` / `After 1.jpg` auto-paired by number (accepts hyphen or space separator, case-insensitive)
+- **Standalone images**: Files without `hero`/`before`/`after` naming become after-only pairs
 - **Notes files**: `notes.txt`, `description.txt`, `readme.txt` etc. provide AI context for metadata generation
 - **Service type detection**: Folder names matched against `SERVICE_TYPE_ALIASES` (e.g., "Kitchen" → `kitchen`, "Bathroom" → `bathroom`)
 

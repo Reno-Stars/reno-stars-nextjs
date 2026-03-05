@@ -40,6 +40,8 @@ export interface ParsedSite {
   folderName: string;
   /** Hero image if present at site root */
   heroImage: ExtractedImage | null;
+  /** Site-level before/after image pairs (root images not in any subfolder) */
+  imagePairs: ImagePairEntry[];
   /** Child projects (subfolders) */
   projects: ParsedProject[];
   /** Free-text notes from notes.txt / description.txt for AI context */

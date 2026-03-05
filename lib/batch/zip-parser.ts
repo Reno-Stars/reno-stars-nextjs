@@ -114,9 +114,9 @@ function pairImages(images: ExtractedImage[]): {
       continue;
     }
 
-    // Match before-N / after-N patterns
-    const beforeMatch = nameWithoutExt.match(/^before(?:-(\d+))?$/);
-    const afterMatch = nameWithoutExt.match(/^after(?:-(\d+))?$/);
+    // Match before-N / after-N patterns (accept hyphen or space as separator)
+    const beforeMatch = nameWithoutExt.match(/^before(?:[- ](\d+))?$/);
+    const afterMatch = nameWithoutExt.match(/^after(?:[- ](\d+))?$/);
 
     if (beforeMatch) {
       const idx = beforeMatch[1] ? parseInt(beforeMatch[1], 10) : 0;
@@ -241,6 +241,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     const site: ParsedSite = {
       folderName: 'Uploaded Project',
       heroImage,
+      imagePairs: [],
       notes: rootNotes,
       projects: pairs.length > 0 ? [{
         folderName: 'Uploaded Project',
@@ -291,6 +292,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     const siteNotes = notesMap.get(topLevel) ?? null;
 
     // If there are subfolders, each subfolder is a project
+    // Root-level images become site-level image pairs (not a project)
     if (subFolders && subFolders.size > 0) {
       for (const [subName, subImages] of subFolders) {
         const leafName = subName.split('/').pop()!;
@@ -307,17 +309,6 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
           });
         }
       }
-
-      // Root-level paired images (non-hero) become a project too
-      if (rootPairs.length > 0) {
-        projects.push({
-          folderName: topLevel,
-          serviceType: DEFAULT_SERVICE_TYPE,
-          heroImage: null,
-          imagePairs: rootPairs,
-          notes: siteNotes,
-        });
-      }
     } else {
       // No subfolders → the top-level folder itself is a single project
       if (rootPairs.length > 0) {
@@ -331,10 +322,15 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
       }
     }
 
-    if (projects.length > 0 || siteHero) {
+    // Site-level image pairs only for nested layouts (root images alongside subfolders).
+    // For single-folder layouts (no subfolders), pairs belong to the project only.
+    const hasSubfolders = subFolders && subFolders.size > 0;
+
+    if (projects.length > 0 || siteHero || rootPairs.length > 0) {
       sites.push({
         folderName: topLevel,
         heroImage: siteHero,
+        imagePairs: hasSubfolders ? rootPairs : [],
         projects,
         notes: siteNotes,
       });

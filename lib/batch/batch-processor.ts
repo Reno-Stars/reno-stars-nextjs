@@ -7,6 +7,7 @@ import { db } from '@/lib/db';
 import {
   batchUploadJobs,
   projectSites,
+  siteImagePairs,
   projects,
   projectImagePairs,
 } from '@/lib/db/schema';
@@ -275,7 +276,7 @@ async function getExistingSlugs(
   return rows.map((r: { slug: string }) => r.slug);
 }
 
-/** Delete orphaned site (no child projects) on failure */
+/** Delete orphaned site (no child projects or site image pairs) on failure */
 async function cleanupOrphanedSite(siteId: string): Promise<void> {
   try {
     const childProjects = await db
@@ -283,9 +284,16 @@ async function cleanupOrphanedSite(siteId: string): Promise<void> {
       .from(projects)
       .where(eq(projects.siteId, siteId))
       .limit(1);
-    if (childProjects.length === 0) {
-      await db.delete(projectSites).where(eq(projectSites.id, siteId));
-    }
+    if (childProjects.length > 0) return;
+
+    const childPairs = await db
+      .select({ id: siteImagePairs.id })
+      .from(siteImagePairs)
+      .where(eq(siteImagePairs.siteId, siteId))
+      .limit(1);
+    if (childPairs.length > 0) return;
+
+    await db.delete(projectSites).where(eq(projectSites.id, siteId));
   } catch {
     // Non-critical cleanup
   }
@@ -364,6 +372,11 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       const siteImages: ExtractedImage[] = [];
 
       if (site.heroImage) siteImages.push(site.heroImage);
+      // Site-level image pairs
+      for (const pair of site.imagePairs) {
+        if (pair.before) siteImages.push(pair.before);
+        if (pair.after) siteImages.push(pair.after);
+      }
       for (const project of site.projects) {
         if (project.heroImage) siteImages.push(project.heroImage);
         for (const pair of project.imagePairs) {
@@ -419,6 +432,11 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     // Pre-generate alt text for all after images (parallel batched)
     const afterImageUrls: string[] = [];
     for (const site of parsed.sites) {
+      // Site-level image pairs
+      for (const pair of site.imagePairs) {
+        const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
+        if (url) afterImageUrls.push(url);
+      }
       for (const project of site.projects) {
         for (const pair of project.imagePairs) {
           const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
@@ -495,6 +513,38 @@ export async function processBatchUpload(jobId: string): Promise<void> {
           createdSiteIds: [...createdSiteIds],
         });
 
+        // Insert site-level image pairs
+        let siteImagePairsCreated = 0;
+        for (let pairIdx = 0; pairIdx < parsedSite.imagePairs.length; pairIdx++) {
+          const pair = parsedSite.imagePairs[pairIdx];
+          const beforeUrl = pair.before ? urlMap.get(pair.before) ?? null : null;
+          const afterUrl = pair.after ? urlMap.get(pair.after) ?? null : null;
+          if (!beforeUrl && !afterUrl) continue;
+
+          const altImageUrl = afterUrl || beforeUrl;
+          const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
+          const altEn = alt?.altEn || 'Renovation project image';
+          const altZh = alt?.altZh || '装修项目图片';
+
+          try {
+            await db.insert(siteImagePairs).values({
+              siteId,
+              beforeImageUrl: beforeUrl,
+              beforeAltTextEn: beforeUrl ? `${siteData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
+              beforeAltTextZh: beforeUrl ? `${siteData.titleZh} - 装修前 ${pairIdx + 1}` : null,
+              afterImageUrl: afterUrl,
+              afterAltTextEn: afterUrl ? altEn : null,
+              afterAltTextZh: afterUrl ? altZh : null,
+              displayOrder: pairIdx,
+            });
+            siteImagePairsCreated++;
+          } catch (error) {
+            errors.push(
+              `Site image pair ${pairIdx} for "${parsedSite.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
+            );
+          }
+        }
+
         // Process projects under this site
         let projectsCreatedForSite = 0;
         for (let pIdx = 0; pIdx < parsedSite.projects.length; pIdx++) {
@@ -522,8 +572,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
           }
         }
 
-        // Clean up orphaned site if no projects were created
-        if (projectsCreatedForSite === 0 && insertedSiteId) {
+        // Clean up orphaned site if no projects and no site image pairs were created
+        if (projectsCreatedForSite === 0 && siteImagePairsCreated === 0 && insertedSiteId) {
           await cleanupOrphanedSite(insertedSiteId);
           createdSiteIds.pop();
           errors.push(`Site "${parsedSite.folderName}" removed: all child projects failed.`);
