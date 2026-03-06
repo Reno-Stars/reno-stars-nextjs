@@ -341,10 +341,12 @@ export default function ImagePairEditor({
               />
             </div>
 
-            {/* SEO metadata toggle */}
-            <button
-              type="button"
+            {/* SEO metadata toggle — uses <div> to stay clickable inside <fieldset disabled> */}
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => toggleExpanded(pair.id)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleExpanded(pair.id); } }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -359,7 +361,7 @@ export default function ImagePairEditor({
             >
               {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               {isExpanded ? t.imagePairs.collapseMetadata : t.imagePairs.expandMetadata}
-            </button>
+            </div>
 
             {/* SEO metadata fields (collapsible) */}
             {isExpanded && (
@@ -449,11 +451,13 @@ export default function ImagePairEditor({
         );
       })}
 
-      {/* Show All / Show Less toggle */}
+      {/* Show All / Show Less toggle — uses <div> to stay clickable inside <fieldset disabled> */}
       {pairs.length > COLLAPSE_THRESHOLD && (
-        <button
-          type="button"
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => setShowAllPairs((prev) => !prev)}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAllPairs((prev) => !prev); } }}
           style={{
             color: NAVY,
             background: 'none',
@@ -472,7 +476,7 @@ export default function ImagePairEditor({
           {showAllPairs
             ? t.common.showLess
             : t.common.showAll.replace('{count}', String(pairs.length))}
-        </button>
+        </div>
       )}
 
       {/* Add pair button */}
