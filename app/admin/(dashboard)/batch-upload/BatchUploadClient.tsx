@@ -719,7 +719,9 @@ Features: Kitchen island with waterfall edge`}
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             {job.createdSiteIds.length > 0 && (
               <Link
-                href="/admin/sites"
+                href={job.createdSiteIds.length === 1
+                  ? `/admin/sites/${job.createdSiteIds[0]}`
+                  : '/admin/sites'}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
