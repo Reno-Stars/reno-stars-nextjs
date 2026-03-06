@@ -631,7 +631,7 @@ const zh: AdminMessages = {
     uploadButton: '上传并处理',
     uploading: '正在上传ZIP文件...',
     folderStructureTitle: '预期文件夹结构',
-    folderStructureHelp: '顶级文件夹 = 工地名称，子文件夹 = 项目。命名为 before-1.jpg/after-1.jpg 的图片会自动配对。文件夹根目录的 hero.jpg 将成为主图。',
+    folderStructureHelp: '顶级文件夹 = 工地名称，子文件夹 = 项目。根目录图片将成为工地级别的图片对。命名为 before-1/after-1（横杠或空格）的图片会自动配对。其他名称的图片成为单张展示图。hero.jpg 在任何层级都会成为主图。',
     notesHelpTitle: 'notes.txt 应包含的内容：',
     notesHelpBody: 'AI使用 notes.txt 生成标题、描述、SEO元数据和博客内容。提供的细节越多，输出效果越好。建议包含：地点/城市、预算范围、工期、使用材料、设计风格、遇到的挑战、特色亮点。支持中文或英文书写——AI会同时生成两种语言。',
     processing: '处理中...',

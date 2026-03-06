@@ -629,7 +629,7 @@ const en = {
     uploadButton: 'Upload & Process',
     uploading: 'Uploading ZIP file...',
     folderStructureTitle: 'Expected Folder Structure',
-    folderStructureHelp: 'Top-level folder = Site name, Subfolders = Projects. Images named before-1.jpg/after-1.jpg are auto-paired. hero.jpg at folder root becomes the hero image.',
+    folderStructureHelp: 'Top-level folder = Site name, Subfolders = Projects. Root-level images become site-level pairs. Images named before-1/after-1 (hyphen or space) are auto-paired. Unmatched names become standalone images. hero.jpg at any level becomes the hero image.',
     notesHelpTitle: 'What to include in notes.txt:',
     notesHelpBody: 'The AI uses notes.txt to generate titles, descriptions, SEO metadata, and blog content. The more detail you provide, the better the output. Useful fields: location/city, budget range, duration/timeline, materials used, design style, challenges faced, special features. You can write in English or Chinese — the AI will generate both.',
     processing: 'Processing...',
