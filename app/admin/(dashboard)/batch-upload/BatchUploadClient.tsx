@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import {
   SURFACE,
   SURFACE_ALT,
@@ -62,6 +63,7 @@ function getStepIndex(status: BatchJobStatus): number {
 
 export default function BatchUploadClient() {
   const t = useAdminTranslations();
+  const { locale } = useAdminLocale();
   const bt = t.batchUpload;
 
   const [phase, setPhase] = useState<Phase>('upload');
@@ -360,7 +362,7 @@ export default function BatchUploadClient() {
               {bt.folderStructureTitle}
             </button>
             <a
-              href="/example-batch-upload.zip"
+              href={`/example-batch-upload-${locale}.zip`}
               download
               style={{
                 display: 'inline-flex',

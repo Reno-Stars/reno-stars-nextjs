@@ -1,6 +1,7 @@
 /**
- * Generates public/example-batch-upload.zip with realistic folder structure,
- * comprehensive notes.txt templates, and placeholder images.
+ * Generates bilingual example ZIP files for batch upload:
+ *   - public/example-batch-upload-en.zip (English templates)
+ *   - public/example-batch-upload-zh.zip (Chinese templates)
  *
  * Run: npx tsx scripts/build-example-zip.ts
  */
@@ -9,7 +10,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 // ---------------------------------------------------------------------------
-// Tiny 1x1 JPEG placeholder (valid JPEG, ~285 bytes)
+// Tiny 1x1 JPEG placeholder (valid JPEG)
 // ---------------------------------------------------------------------------
 const PLACEHOLDER_JPG = new Uint8Array([
   0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01,
@@ -46,10 +47,10 @@ const PLACEHOLDER_JPG = new Uint8Array([
 const enc = new TextEncoder();
 
 // ---------------------------------------------------------------------------
-// Notes templates
+// Notes templates — English
 // ---------------------------------------------------------------------------
 
-const SITE_NOTES = `=== SITE INFORMATION (fill in what you know) ===
+const SITE_NOTES_EN = `=== SITE INFORMATION (fill in what you know) ===
 
 Location: [City, Province — e.g. Richmond, BC]
 PO Number: [Sales/work order number — e.g. PO-8171]
@@ -85,7 +86,7 @@ Solution: [e.g. Full panel upgrade to 200A with AFCI breakers]
 [Any other details: permit info, special client requests, awards, etc.]
 `;
 
-const KITCHEN_NOTES = `=== KITCHEN PROJECT DETAILS ===
+const KITCHEN_NOTES_EN = `=== KITCHEN PROJECT DETAILS ===
 
 Project Type: Kitchen
 Budget: [e.g. $35,000 - $45,000]
@@ -130,7 +131,7 @@ Faucet: [e.g. Matte black pull-down sprayer]
 [e.g. Needed structural beam to remove load-bearing wall; asbestos abatement in old flooring]
 `;
 
-const BATHROOM_NOTES = `=== BATHROOM PROJECT DETAILS ===
+const BATHROOM_NOTES_EN = `=== BATHROOM PROJECT DETAILS ===
 
 Project Type: Bathroom
 Budget: [e.g. $18,000 - $25,000]
@@ -166,7 +167,7 @@ Lighting: [e.g. LED mirror with built-in defogger]
 [e.g. Discovered water damage behind old tile — replaced subfloor and sister joists]
 `;
 
-const BASEMENT_NOTES = `=== BASEMENT PROJECT DETAILS ===
+const BASEMENT_NOTES_EN = `=== BASEMENT PROJECT DETAILS ===
 
 Project Type: Basement
 Budget: [e.g. $30,000 - $40,000]
@@ -201,56 +202,230 @@ Bathroom: [e.g. 3-piece with 32" shower stall, pedestal sink]
 `;
 
 // ---------------------------------------------------------------------------
-// Build ZIP structure
+// Notes templates — Chinese
 // ---------------------------------------------------------------------------
 
-const root = 'Richmond Whole House';
+const SITE_NOTES_ZH = `=== 工地信息（请填写您知道的内容）===
 
-const files: Record<string, Uint8Array> = {
-  // Site root
-  [`${root}/hero.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/notes.txt`]: enc.encode(SITE_NOTES),
-  // Site-level before/after pairs (space separator — common from macOS/Windows)
-  [`${root}/Before 1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/After 1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Before 2.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/After 2.jpg`]: PLACEHOLDER_JPG,
-  // Site-level standalone image (no before/after naming)
-  [`${root}/exterior.jpg`]: PLACEHOLDER_JPG,
+地点: [城市、省份 — 例如：列治文, BC]
+PO编号: [销售/工单编号 — 例如：PO-8171]
+客户类型: [年轻家庭 / 退休夫妇 / 投资者 / 商业租户]
+物业类型: [独立屋 / 联排别墅 / 公寓 / 商业空间]
+房龄: [例如：1990年代平层 / 2005年联排 / 1970年代错层]
+总预算: [例如：$85,000 - $120,000]
+总工期: [例如：8-10周]
 
-  // Kitchen project
-  [`${root}/Kitchen/notes.txt`]: enc.encode(KITCHEN_NOTES),
-  [`${root}/Kitchen/before-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Kitchen/after-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Kitchen/before-2.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Kitchen/after-2.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Kitchen/before-3.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Kitchen/after-3.jpg`]: PLACEHOLDER_JPG,
+=== 项目概述 ===
 
-  // Bathroom project
-  [`${root}/Bathroom/notes.txt`]: enc.encode(BATHROOM_NOTES),
-  [`${root}/Bathroom/before-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Bathroom/after-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Bathroom/before-2.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Bathroom/after-2.jpg`]: PLACEHOLDER_JPG,
+范围: [简要总结 — 例如：主层全面翻新加2个卫生间]
+设计风格: [例如：现代简约 / 过渡风格 / 现代农舍风]
+色彩方案: [例如：白色和暖灰色搭配金色点缀]
 
-  // Basement project (with project-level hero)
-  [`${root}/Basement/hero.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Basement/notes.txt`]: enc.encode(BASEMENT_NOTES),
-  [`${root}/Basement/before-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Basement/after-1.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Basement/before-2.jpg`]: PLACEHOLDER_JPG,
-  [`${root}/Basement/after-2.jpg`]: PLACEHOLDER_JPG,
-};
+=== 重点亮点（用于营销）===
+
+- [例如：厨房-客厅开放式改造]
+- [例如：全屋定制木作]
+- [例如：卫生间地暖系统]
+- [例如：智能家居集成]
+
+=== 挑战与解决方案 ===
+
+挑战: [例如：厨房和客厅之间的承重墙]
+方案: [例如：安装LVL梁配隐藏式钢柱]
+
+挑战: [例如：老旧电路不符合规范]
+方案: [例如：升级至200A配电箱，加装AFCI断路器]
+
+=== 其他备注 ===
+
+[其他细节：许可证信息、客户特殊要求、获奖情况等]
+`;
+
+const KITCHEN_NOTES_ZH = `=== 厨房项目详情 ===
+
+项目类型: 厨房
+预算: [例如：$35,000 - $45,000]
+工期: [例如：4周]
+
+=== 施工范围 ===
+
+- [例如：全面拆除翻新 — 拆至骨架]
+- [例如：拆墙打通开放式空间]
+- [例如：全新橱柜、台面、后挡板、地板]
+- [例如：水槽和洗碗机管道重新布局]
+- [例如：新增射灯和橱柜下LED灯带]
+- [例如：全套电器安装]
+
+=== 材料与饰面 ===
+
+橱柜: [例如：Shaker风格、缓冲闭合、白色哑光]
+台面: [例如：卡拉卡塔石英石, 3cm厚, 岛台瀑布边]
+后挡板: [例如：人字形地铁砖, 哑光白]
+地板: [例如：工程实木地板, 欧洲白橡木]
+五金: [例如：拉丝金色把手和旋钮]
+水槽: [例如：台下式单槽不锈钢]
+水龙头: [例如：哑光黑色抽拉式]
+
+=== 电器 ===
+
+- [例如：36寸电磁灶 — Bosch]
+- [例如：嵌入式烤箱 — KitchenAid]
+- [例如：法式对开门冰箱 — Samsung]
+- [例如：嵌入式洗碗机 — Bosch]
+- [例如：油烟机 — Zephyr 600 CFM]
+
+=== 设计亮点 ===
+
+- [例如：可坐4人的厨房岛台]
+- [例如：步入式储藏室配定制搁架]
+- [例如：灶台上方注水龙头]
+- [例如：油烟机旁开放式搁架]
+
+=== 挑战 ===
+
+[例如：拆除承重墙需安装结构梁；旧地板含石棉需专业清除]
+`;
+
+const BATHROOM_NOTES_ZH = `=== 卫生间项目详情 ===
+
+项目类型: 卫生间
+预算: [例如：$18,000 - $25,000]
+工期: [例如：2-3周]
+
+=== 施工范围 ===
+
+- [例如：主卧套间卫生间全面翻新]
+- [例如：浴缸/淋浴组合改为无框玻璃步入式淋浴]
+- [例如：全新浴室柜、马桶、淋浴、瓷砖、灯具]
+- [例如：加装地暖系统]
+- [例如：Schluter-KERDI防水膜防水处理]
+
+=== 材料与饰面 ===
+
+浴室柜: [例如：48寸悬挂式, 胡桃木配白色石英石台面]
+马桶: [例如：壁挂式双冲水 — TOTO]
+淋浴: [例如：无框玻璃围挡, 顶喷+手持花洒]
+墙砖: [例如：大板瓷砖, 24x48, 哑光灰]
+地砖: [例如：六角马赛克, 卡拉拉大理石纹]
+五金: [例如：全套哑光黑色龙头五金]
+灯具: [例如：LED防雾镜]
+
+=== 设计亮点 ===
+
+- [例如：无门槛淋浴入口（无障碍设计）]
+- [例如：嵌入式壁龛配LED灯带]
+- [例如：电热毛巾架]
+- [例如：定制镜柜]
+
+=== 挑战 ===
+
+[例如：拆除旧瓷砖后发现水损 — 更换地板基层并加固托梁]
+`;
+
+const BASEMENT_NOTES_ZH = `=== 地下室项目详情 ===
+
+项目类型: 地下室
+预算: [例如：$30,000 - $40,000]
+工期: [例如：4-5周]
+
+=== 施工范围 ===
+
+- [例如：未完成的混凝土空间全面装修]
+- [例如：框架、保温、石膏板、地板、照明]
+- [例如：新增三件套卫生间]
+- [例如：打造家庭影院区域（含隔音处理）]
+- [例如：安装逃生窗（卧室合规要求）]
+
+=== 材料与饰面 ===
+
+地板: [例如：SPC石塑地板配防潮层]
+墙面: [例如：石膏板 + R-20保温棉 + 防潮层]
+天花板: [例如：悬挂式吸音板（便于维修管线）]
+照明: [例如：4寸超薄LED射灯配调光器]
+卫生间: [例如：三件套，32寸淋浴间，立柱盆]
+
+=== 设计亮点 ===
+
+- [例如：嵌入式娱乐中心（隐藏走线）]
+- [例如：家庭办公角落配定制书桌]
+- [例如：湿吧台配迷你冰箱和石英石台面]
+- [例如：储物间配定制搁架]
+
+=== 挑战 ===
+
+[例如：层高较低需精心规划布局；污水泵重新定位以配合卫生间排水]
+`;
 
 // ---------------------------------------------------------------------------
-// Generate ZIP
+// Build ZIP for a given locale
 // ---------------------------------------------------------------------------
 
-const zipData = zipSync(files, { level: 6 });
-const outPath = path.join(process.cwd(), 'public', 'example-batch-upload.zip');
-fs.writeFileSync(outPath, zipData);
+function buildZip(notes: {
+  site: string;
+  kitchen: string;
+  bathroom: string;
+  basement: string;
+}): Uint8Array {
+  const root = 'Richmond Whole House';
 
-console.log(`Created ${outPath}`);
-console.log(`  Files: ${Object.keys(files).length}`);
-console.log(`  Size: ${(zipData.length / 1024).toFixed(1)} KB`);
+  const files: Record<string, Uint8Array> = {
+    // Site root
+    [`${root}/hero.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/notes.txt`]: enc.encode(notes.site),
+    [`${root}/Before 1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/After 1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Before 2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/After 2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/exterior.jpg`]: PLACEHOLDER_JPG,
+
+    // Kitchen
+    [`${root}/Kitchen/notes.txt`]: enc.encode(notes.kitchen),
+    [`${root}/Kitchen/before-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Kitchen/after-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Kitchen/before-2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Kitchen/after-2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Kitchen/before-3.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Kitchen/after-3.jpg`]: PLACEHOLDER_JPG,
+
+    // Bathroom
+    [`${root}/Bathroom/notes.txt`]: enc.encode(notes.bathroom),
+    [`${root}/Bathroom/before-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Bathroom/after-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Bathroom/before-2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Bathroom/after-2.jpg`]: PLACEHOLDER_JPG,
+
+    // Basement (with project-level hero)
+    [`${root}/Basement/hero.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Basement/notes.txt`]: enc.encode(notes.basement),
+    [`${root}/Basement/before-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Basement/after-1.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Basement/before-2.jpg`]: PLACEHOLDER_JPG,
+    [`${root}/Basement/after-2.jpg`]: PLACEHOLDER_JPG,
+  };
+
+  return zipSync(files, { level: 6 });
+}
+
+// ---------------------------------------------------------------------------
+// Generate both ZIPs
+// ---------------------------------------------------------------------------
+
+const outDir = path.join(process.cwd(), 'public');
+
+const enZip = buildZip({
+  site: SITE_NOTES_EN,
+  kitchen: KITCHEN_NOTES_EN,
+  bathroom: BATHROOM_NOTES_EN,
+  basement: BASEMENT_NOTES_EN,
+});
+fs.writeFileSync(path.join(outDir, 'example-batch-upload-en.zip'), enZip);
+console.log(`Created example-batch-upload-en.zip (${(enZip.length / 1024).toFixed(1)} KB)`);
+
+const zhZip = buildZip({
+  site: SITE_NOTES_ZH,
+  kitchen: KITCHEN_NOTES_ZH,
+  bathroom: BATHROOM_NOTES_ZH,
+  basement: BASEMENT_NOTES_ZH,
+});
+fs.writeFileSync(path.join(outDir, 'example-batch-upload-zh.zip'), zhZip);
+console.log(`Created example-batch-upload-zh.zip (${(zhZip.length / 1024).toFixed(1)} KB)`);
