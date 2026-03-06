@@ -401,12 +401,15 @@ export default function BatchUploadClient() {
   hero.jpg                       <- Site hero image
   notes.txt                      <- AI context (see template)
   products.txt                   <- External product links
-  Before 1.jpg / After 1.jpg     <- Site-level pairs
-  Before 2.jpg / After 2.jpg
+  product-1.jpg                  <- Image for 1st product
+  product-3.jpg                  <- Image for 3rd (skip 2nd)
+  before-1.jpg / after-1.jpg     <- Site-level pairs
+  before-2.jpg / after-2.jpg
   exterior.jpg                   <- Standalone site image
   Kitchen/                       <- Project (auto-detected)
     notes.txt                    <- AI context (see template)
     products.txt                 <- External product links
+    product-1.jpg                <- Image for 1st product
     before-1.jpg / after-1.jpg   <- Project pairs
     before-2.jpg / after-2.jpg
   Bathroom/
@@ -432,17 +435,7 @@ export default function BatchUploadClient() {
                   {bt.notesHelpBody}
                 </p>
                 <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '0.75rem', whiteSpace: 'pre-wrap', backgroundColor: 'rgba(27,54,93,0.05)', borderRadius: 6, padding: '0.625rem' }}>
-{`Location: Richmond, BC
-PO Number: PO-8171
-Client Type: Young family
-Property Type: 1990s single-family home
-Total Budget: $85,000 - $120,000
-Total Duration: 8-10 weeks
-Design Style: Modern minimalist
-Materials: Quartz countertops, porcelain tile, engineered hardwood
-Challenges: Load-bearing wall removal, outdated electrical
-Features: Kitchen island with waterfall edge, heated bathroom floors
-(Download the example ZIP for full templates)`}
+{bt.notesExample}
                 </pre>
                 <strong style={{ display: 'block', marginTop: '0.75rem', marginBottom: '0.25rem' }}>
                   {bt.productsHelpTitle}

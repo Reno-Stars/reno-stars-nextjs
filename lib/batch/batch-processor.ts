@@ -263,6 +263,58 @@ export function parseProductsFile(text: string): ParsedExternalProduct[] {
 }
 
 // ============================================================================
+// EXTERNAL PRODUCTS DB INSERTION
+// ============================================================================
+
+/**
+ * Insert external products parsed from products.txt into the database.
+ * Matches product-N images (1-based) to Nth product entry by index.
+ */
+async function insertExternalProducts(opts: {
+  table: typeof siteExternalProducts | typeof projectExternalProducts;
+  fkColumn: 'siteId' | 'projectId';
+  fkValue: string;
+  productsText: string | null;
+  productImages: Map<number, ExtractedImage>;
+  urlMap: Map<ExtractedImage, string>;
+  errors: string[];
+  label: string;
+}): Promise<void> {
+  const { table, fkColumn, fkValue, productsText, productImages, urlMap, errors, label } = opts;
+
+  // Warn if product images exist but no products.txt to reference them
+  if (productImages.size > 0 && !productsText) {
+    errors.push(`"${label}": ${productImages.size} product image(s) found but no products.txt — images will not be used`);
+  }
+
+  if (!productsText) return;
+
+  const products = parseProductsFile(productsText);
+  if (products.length === 0) return;
+
+  try {
+    await db.insert(table).values(
+      products.map((ep, idx) => {
+        const productImg = productImages.get(idx + 1);
+        const productImgUrl = productImg ? urlMap.get(productImg) ?? null : null;
+        return {
+          [fkColumn]: fkValue,
+          url: ep.url,
+          imageUrl: productImgUrl ?? ep.imageUrl,
+          labelEn: ep.labelEn,
+          labelZh: ep.labelZh,
+          displayOrder: idx,
+        };
+      })
+    );
+  } catch (error) {
+    errors.push(
+      `External products for "${label}": ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
+  }
+}
+
+// ============================================================================
 // FALLBACK METADATA
 // ============================================================================
 
@@ -439,11 +491,19 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         if (pair.before) siteImages.push(pair.before);
         if (pair.after) siteImages.push(pair.after);
       }
+      // Site-level product images
+      for (const img of site.productImages.values()) {
+        siteImages.push(img);
+      }
       for (const project of site.projects) {
         if (project.heroImage) siteImages.push(project.heroImage);
         for (const pair of project.imagePairs) {
           if (pair.before) siteImages.push(pair.before);
           if (pair.after) siteImages.push(pair.after);
+        }
+        // Project-level product images
+        for (const img of project.productImages.values()) {
+          siteImages.push(img);
         }
       }
 
@@ -608,27 +668,16 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         }
 
         // Insert site-level external products from products.txt
-        if (parsedSite.productsText) {
-          const siteProducts = parseProductsFile(parsedSite.productsText);
-          if (siteProducts.length > 0) {
-            try {
-              await db.insert(siteExternalProducts).values(
-                siteProducts.map((ep, idx) => ({
-                  siteId,
-                  url: ep.url,
-                  imageUrl: ep.imageUrl,
-                  labelEn: ep.labelEn,
-                  labelZh: ep.labelZh,
-                  displayOrder: idx,
-                }))
-              );
-            } catch (error) {
-              errors.push(
-                `Site external products for "${parsedSite.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
-              );
-            }
-          }
-        }
+        await insertExternalProducts({
+          table: siteExternalProducts,
+          fkColumn: 'siteId',
+          fkValue: siteId,
+          productsText: parsedSite.productsText,
+          productImages: parsedSite.productImages,
+          urlMap,
+          errors,
+          label: parsedSite.folderName,
+        });
 
         // Process projects under this site
         let projectsCreatedForSite = 0;
@@ -834,27 +883,16 @@ async function saveProject(
   }
 
   // Insert external products from products.txt
-  if (parsedProject.productsText) {
-    const products = parseProductsFile(parsedProject.productsText);
-    if (products.length > 0) {
-      try {
-        await db.insert(projectExternalProducts).values(
-          products.map((ep, idx) => ({
-            projectId: insertedProject.id,
-            url: ep.url,
-            imageUrl: ep.imageUrl,
-            labelEn: ep.labelEn,
-            labelZh: ep.labelZh,
-            displayOrder: idx,
-          }))
-        );
-      } catch (error) {
-        errors.push(
-          `External products for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
-        );
-      }
-    }
-  }
+  await insertExternalProducts({
+    table: projectExternalProducts,
+    fkColumn: 'projectId',
+    fkValue: insertedProject.id,
+    productsText: parsedProject.productsText,
+    productImages: parsedProject.productImages,
+    urlMap,
+    errors,
+    label: parsedProject.folderName,
+  });
 
   // Insert image pairs with pre-generated alt text
   for (let pairIdx = 0; pairIdx < parsedProject.imagePairs.length; pairIdx++) {

@@ -34,6 +34,8 @@ export interface ParsedProject {
   notes: string | null;
   /** Raw products.txt content for external product links */
   productsText: string | null;
+  /** Product images (product-1.jpg, product-2.jpg, ...) keyed by 1-based index */
+  productImages: Map<number, ExtractedImage>;
 }
 
 /** A parsed site (top-level folder) from the ZIP */
@@ -50,6 +52,8 @@ export interface ParsedSite {
   notes: string | null;
   /** Raw products.txt content for site-level external product links */
   productsText: string | null;
+  /** Product images (product-1.jpg, product-2.jpg, ...) keyed by 1-based index */
+  productImages: Map<number, ExtractedImage>;
 }
 
 /** The complete parsed structure of a ZIP file */

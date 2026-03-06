@@ -26,6 +26,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `projects` | Portfolio entries (includes `po_number` for sales tracking) | `slug` |
 | `project_image_pairs` | Before/after image pairs per project | `(projectId, displayOrder)` |
 | `project_scopes` | Scope items per project | `(projectId, displayOrder)` |
+| `site_external_products` | External product links per site | `(siteId, displayOrder)` |
 | `project_external_products` | External product links per project | `(projectId, displayOrder)` |
 | `blog_posts` | Blog articles (optional project link) | `slug` |
 | `contact_submissions` | CRM leads | `id` (auto) |

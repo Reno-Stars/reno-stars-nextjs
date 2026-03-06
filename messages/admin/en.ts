@@ -632,6 +632,7 @@ const en = {
     folderStructureHelp: 'Top-level folder = Site name, Subfolders = Projects. Root-level images become site-level pairs. Images named before-1/after-1 (hyphen or space) are auto-paired. Unmatched names become standalone images. hero.jpg at any level becomes the hero image. Default service scopes are auto-generated based on project type.',
     notesHelpTitle: 'What to include in notes.txt:',
     notesHelpBody: 'The AI uses notes.txt to generate titles, descriptions, SEO metadata, and blog content. The more detail you provide, the better the output. Useful fields: location/city, budget range, duration/timeline, materials used, design style, challenges faced, special features. You can write in English or Chinese — the AI will generate both.',
+    notesExample: 'Location: Richmond, BC\nPO Number: PO-8171\nClient Type: Young family\nProperty Type: 1990s single-family home\nTotal Budget: $85,000 - $120,000\nTotal Duration: 8-10 weeks\nDesign Style: Modern minimalist\nMaterials: Quartz countertops, porcelain tile, engineered hardwood\nChallenges: Load-bearing wall removal, outdated electrical\nFeatures: Kitchen island with waterfall edge, heated bathroom floors\n(Download the example ZIP for full templates)',
     productsHelpTitle: 'External products (products.txt):',
     productsHelpBody: 'One product per line: URL | Label EN | Label ZH. Lines starting with # are comments. Example:\nhttps://homedepot.com/tile | Porcelain Tile | 瓷砖\nhttps://ikea.com/vanity | Bathroom Vanity | 浴室柜',
     processing: 'Processing...',

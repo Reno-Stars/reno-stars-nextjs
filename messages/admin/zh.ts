@@ -634,6 +634,7 @@ const zh: AdminMessages = {
     folderStructureHelp: '顶级文件夹 = 工地名称，子文件夹 = 项目。根目录图片将成为工地级别的图片对。命名为 before-1/after-1（横杠或空格）的图片会自动配对。其他名称的图片成为单张展示图。hero.jpg 在任何层级都会成为主图。会根据项目类型自动生成默认服务范围。',
     notesHelpTitle: 'notes.txt 应包含的内容：',
     notesHelpBody: 'AI使用 notes.txt 生成标题、描述、SEO元数据和博客内容。提供的细节越多，输出效果越好。建议包含：地点/城市、预算范围、工期、使用材料、设计风格、遇到的挑战、特色亮点。支持中文或英文书写——AI会同时生成两种语言。',
+    notesExample: '地点：列治文，BC\nPO编号：PO-8171\n客户类型：年轻家庭\n房屋类型：1990年代独立屋\n总预算：$85,000 - $120,000\n总工期：8-10周\n设计风格：现代简约\n材料：石英台面、瓷砖、工程硬木地板\n挑战：承重墙拆除、老旧电路改造\n亮点：带瀑布边的厨房岛台、卫生间地暖\n（下载示例ZIP查看完整模板）',
     productsHelpTitle: '外部产品链接 (products.txt)：',
     productsHelpBody: '每行一个产品：链接 | 英文标签 | 中文标签。以 # 开头的行为注释。示例：\nhttps://homedepot.com/tile | Porcelain Tile | 瓷砖\nhttps://ikea.com/vanity | Bathroom Vanity | 浴室柜',
     processing: '处理中...',

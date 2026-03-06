@@ -101,18 +101,21 @@ export function detectServiceType(folderName: string): ServiceTypeKey {
 // ============================================================================
 
 /**
- * Matches before/after images by numeric suffix.
+ * Matches before/after images by numeric suffix and extracts product images.
  * - "before-1.jpg" / "after-1.jpg" → pair index 1
  * - "before.jpg" / "after.jpg" → pair index 0
+ * - "product-1.jpg" → product image for 1st products.txt entry
  * - Unmatched images → after-only pairs
  */
 function pairImages(images: ExtractedImage[]): {
   pairs: ImagePairEntry[];
   heroImage: ExtractedImage | null;
+  productImages: Map<number, ExtractedImage>;
 } {
   let heroImage: ExtractedImage | null = null;
   const beforeMap = new Map<number, ExtractedImage>();
   const afterMap = new Map<number, ExtractedImage>();
+  const productImages = new Map<number, ExtractedImage>();
   const unpaired: ExtractedImage[] = [];
 
   for (const img of images) {
@@ -122,6 +125,16 @@ function pairImages(images: ExtractedImage[]): {
     // Check for hero image
     if (nameWithoutExt === 'hero') {
       heroImage = img;
+      continue;
+    }
+
+    // Match product-N pattern (1-based index, accept hyphen or space)
+    const productMatch = nameWithoutExt.match(/^product[- ](\d+)$/);
+    if (productMatch) {
+      const productIdx = parseInt(productMatch[1], 10);
+      if (productIdx >= 1) {
+        productImages.set(productIdx, img);
+      }
       continue;
     }
 
@@ -159,7 +172,7 @@ function pairImages(images: ExtractedImage[]): {
     pairs.push({ index: nextIndex++, before: null, after: img });
   }
 
-  return { pairs, heroImage };
+  return { pairs, heroImage, productImages };
 }
 
 // ============================================================================
@@ -260,13 +273,15 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     const images = tree.get('')!;
     const rootNotes = notesMap.get('') ?? null;
     const rootProducts = productsMap.get('') ?? null;
-    const { pairs, heroImage } = pairImages(images);
+    const { pairs, heroImage, productImages } = pairImages(images);
+    // Flat layout: site is a synthetic wrapper — project owns products
     const site: ParsedSite = {
       folderName: 'Uploaded Project',
       heroImage,
       imagePairs: [],
       notes: rootNotes,
-      productsText: rootProducts,
+      productsText: null,
+      productImages: new Map(),
       projects: pairs.length > 0 ? [{
         folderName: 'Uploaded Project',
         serviceType: DEFAULT_SERVICE_TYPE,
@@ -274,6 +289,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         imagePairs: pairs,
         notes: rootNotes,
         productsText: rootProducts,
+        productImages,
       }] : [],
     };
     return { sites: [site], totalImages };
@@ -309,7 +325,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     const rootImages = topLevelImages.get(topLevel) ?? [];
 
     // Parse root-level images of this top folder for hero
-    const { pairs: rootPairs, heroImage: siteHero } = pairImages(rootImages);
+    const { pairs: rootPairs, heroImage: siteHero, productImages: siteProductImages } = pairImages(rootImages);
 
     const projects: ParsedProject[] = [];
 
@@ -327,7 +343,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         const subFolderPath = `${topLevel}/${subName}`;
         const projectNotes = notesMap.get(subFolderPath) ?? null;
         const projectProducts = productsMap.get(subFolderPath) ?? null;
-        const { pairs, heroImage: projectHero } = pairImages(subImages);
+        const { pairs, heroImage: projectHero, productImages: projectProductImages } = pairImages(subImages);
         if (pairs.length > 0 || projectHero) {
           projects.push({
             folderName: leafName,
@@ -336,6 +352,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
             imagePairs: pairs,
             notes: projectNotes,
             productsText: projectProducts,
+            productImages: projectProductImages,
           });
         }
       }
@@ -349,6 +366,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
           imagePairs: rootPairs,
           notes: siteNotes,
           productsText: siteProducts,
+          productImages: siteProductImages, // Same images since single-folder
         });
       }
     }
@@ -357,6 +375,8 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     // For single-folder layouts (no subfolders), pairs belong to the project only.
     const hasSubfolders = subFolders && subFolders.size > 0;
 
+    // For single-folder layouts, project owns products; site is a synthetic wrapper
+    const isSingleFolder = !hasSubfolders;
     if (projects.length > 0 || siteHero || rootPairs.length > 0) {
       sites.push({
         folderName: topLevel,
@@ -364,7 +384,8 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         imagePairs: hasSubfolders ? rootPairs : [],
         projects,
         notes: siteNotes,
-        productsText: siteProducts,
+        productsText: isSingleFolder ? null : siteProducts,
+        productImages: isSingleFolder ? new Map() : siteProductImages,
       });
     }
   }

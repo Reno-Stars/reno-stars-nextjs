@@ -444,9 +444,9 @@ BatchUploadClient (React)  ──POST──►  api/route.ts (upload ZIP to S3 t
 ### Processing Pipeline (`lib/batch/batch-processor.ts`)
 
 1. **Extract** — Downloads ZIP from S3 temp, parses asynchronously via `fflate` (`lib/batch/zip-parser.ts`)
-2. **Upload** — Uploads all images (site hero, site image pairs, project heroes, project image pairs) to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
+2. **Upload** — Uploads all images (site hero, site image pairs, project heroes, project image pairs, product images) to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
 3. **Generate** — AI metadata generation: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for all site-level and project-level images (batches of 5)
-4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, and project image pairs (`project_image_pairs`) into DB with deduplicated slugs. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
+4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
 5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
@@ -460,8 +460,10 @@ Supports three layouts:
 Image naming conventions:
 - **Hero images**: `hero.jpg` at any folder level becomes the hero image for that entity
 - **Before/after pairs**: `before-1.jpg` / `after-1.jpg` or `Before 1.jpg` / `After 1.jpg` auto-paired by number (accepts hyphen or space separator, case-insensitive)
-- **Standalone images**: Files without `hero`/`before`/`after` naming become after-only pairs
-- **Notes files**: `notes.txt`, `description.txt`, `readme.txt` etc. provide AI context for metadata generation
+- **Standalone images**: Files without `hero`/`before`/`after`/`product` naming become after-only pairs
+- **Product images**: `product-N.jpg` (1-based) matched to Nth entry in `products.txt`. Sparse indices supported (e.g., `product-1.jpg` and `product-3.jpg` — product 2 gets no image). Warning logged when product images exist but no `products.txt` is found
+- **Products files**: `products.txt`, `links.txt`, `external.txt` — one product per line: `URL | Label EN | Label ZH`. Lines starting with `#` are comments
+- **Notes files**: `notes.txt`, `description.txt`, `readme.txt`, `info.txt`, `readme.md`, etc. provide AI context for metadata generation
 - **Service type detection**: Folder names matched against `SERVICE_TYPE_ALIASES` (e.g., "Kitchen" → `kitchen`, "Bathroom" → `bathroom`)
 
 ### Job Status Tracking
@@ -470,7 +472,7 @@ Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog 
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a "Download Example ZIP" link (`public/example-batch-upload.zip`) next to the folder structure help toggle.
+Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a locale-aware "Download Example ZIP" link (`public/example-batch-upload-{locale}.zip`) next to the folder structure help toggle. Help section content (notes.txt example, products.txt example) is fully bilingual via admin translation keys.
 
 ## Image Upload
 
