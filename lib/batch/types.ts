@@ -32,6 +32,8 @@ export interface ParsedProject {
   imagePairs: ImagePairEntry[];
   /** Free-text notes from notes.txt / description.txt for AI context */
   notes: string | null;
+  /** Raw products.txt content for external product links */
+  productsText: string | null;
 }
 
 /** A parsed site (top-level folder) from the ZIP */
@@ -46,6 +48,8 @@ export interface ParsedSite {
   projects: ParsedProject[];
   /** Free-text notes from notes.txt / description.txt for AI context */
   notes: string | null;
+  /** Raw products.txt content for site-level external product links */
+  productsText: string | null;
 }
 
 /** The complete parsed structure of a ZIP file */

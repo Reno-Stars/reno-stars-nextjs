@@ -3,11 +3,28 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, siteImagePairs, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
+import { projectSites, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { eq, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+
+const MAX_EXTERNAL_PRODUCTS = 50;
+
+function parseExternalProducts(formData: FormData) {
+  const products: { url: string; imageUrl: string | null; labelEn: string; labelZh: string; displayOrder: number }[] = [];
+  let i = 0;
+  while (formData.has(`siteExternalProducts[${i}].url`) && i < MAX_EXTERNAL_PRODUCTS) {
+    const url = getString(formData, `siteExternalProducts[${i}].url`).trim();
+    const labelEn = getString(formData, `siteExternalProducts[${i}].labelEn`).trim();
+    if (!url || !labelEn) { i++; continue; }
+    const labelZh = getString(formData, `siteExternalProducts[${i}].labelZh`).trim() || labelEn;
+    const imageUrl = getString(formData, `siteExternalProducts[${i}].imageUrl`).trim() || null;
+    products.push({ url, imageUrl, labelEn, labelZh, displayOrder: i });
+    i++;
+  }
+  return products;
+}
 
 function getSiteData(formData: FormData) {
   return {
@@ -83,7 +100,18 @@ export async function createSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Insert site, then image pairs with rollback on failure
+    // Parse external products
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+    }
+
+    // Insert site, then child records with rollback on failure
     const [inserted] = await db.insert(projectSites).values({
       ...data,
       publishedAt: data.isPublished ? new Date() : null,
@@ -95,10 +123,15 @@ export async function createSite(
           pairData.map((pair) => ({ ...pair, siteId: inserted.id }))
         );
       }
-    } catch (pairError) {
+      if (epData.length > 0) {
+        await db.insert(siteExternalProducts).values(
+          epData.map((ep) => ({ ...ep, siteId: inserted.id }))
+        );
+      }
+    } catch (childError) {
       // Clean up orphaned site record
       await db.delete(projectSites).where(eq(projectSites.id, inserted.id));
-      throw pairError;
+      throw childError;
     }
 
     revalidatePath('/admin/sites');
@@ -159,8 +192,22 @@ export async function updateSite(
       return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
     }
 
-    // Fetch existing image pair IDs before modification
-    const existingPairs = await db.select({ id: siteImagePairs.id }).from(siteImagePairs).where(eq(siteImagePairs.siteId, id));
+    // Parse external products
+    const epData = parseExternalProducts(formData);
+    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
+    if (invalidEpUrl) {
+      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
+    }
+    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+    if (invalidEpImgUrl) {
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+    }
+
+    // Fetch existing child record IDs before modification
+    const [existingPairs, existingEps] = await Promise.all([
+      db.select({ id: siteImagePairs.id }).from(siteImagePairs).where(eq(siteImagePairs.siteId, id)),
+      db.select({ id: siteExternalProducts.id }).from(siteExternalProducts).where(eq(siteExternalProducts.siteId, id)),
+    ]);
 
     // Update site
     const updated = await db
@@ -173,18 +220,25 @@ export async function updateSite(
       return { error: 'Site not found.' };
     }
 
-    // Insert new image pairs first (old data still exists as fallback if insert fails)
+    // Insert new child records first (old data still exists as fallback if insert fails)
     if (pairData.length > 0) {
       await db.insert(siteImagePairs).values(
         pairData.map((pair) => ({ ...pair, siteId: id }))
       );
     }
-
-    // Delete old image pairs (new data already safely inserted)
-    const oldPairIds = existingPairs.map((r: { id: string }) => r.id);
-    if (oldPairIds.length > 0) {
-      await db.delete(siteImagePairs).where(inArray(siteImagePairs.id, oldPairIds));
+    if (epData.length > 0) {
+      await db.insert(siteExternalProducts).values(
+        epData.map((ep) => ({ ...ep, siteId: id }))
+      );
     }
+
+    // Delete old child records (new data already safely inserted)
+    const oldPairIds = existingPairs.map((r: { id: string }) => r.id);
+    const oldEpIds = existingEps.map((r: { id: string }) => r.id);
+    await Promise.all([
+      oldPairIds.length > 0 ? db.delete(siteImagePairs).where(inArray(siteImagePairs.id, oldPairIds)) : Promise.resolve(),
+      oldEpIds.length > 0 ? db.delete(siteExternalProducts).where(inArray(siteExternalProducts.id, oldEpIds)) : Promise.resolve(),
+    ]);
 
     revalidatePath('/admin/sites');
     revalidatePath('/', 'layout');

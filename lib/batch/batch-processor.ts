@@ -8,8 +8,11 @@ import {
   batchUploadJobs,
   projectSites,
   siteImagePairs,
+  siteExternalProducts,
   projects,
   projectImagePairs,
+  projectScopes,
+  projectExternalProducts,
 } from '@/lib/db/schema';
 import type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -22,7 +25,7 @@ import {
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
 import { generateBlogFromSite } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
-import { SERVICE_TYPE_TO_CATEGORY } from '@/lib/admin/constants';
+import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
 import { parseZip } from './zip-parser';
 import type {
@@ -204,6 +207,62 @@ async function generateAltTextsInBatches(
 }
 
 // ============================================================================
+// EXTERNAL PRODUCTS PARSING
+// ============================================================================
+
+interface ParsedExternalProduct {
+  url: string;
+  imageUrl: string | null;
+  labelEn: string;
+  labelZh: string;
+}
+
+/**
+ * Validate a URL using the same logic as admin form validation.
+ * Returns true for valid http/https URLs.
+ */
+export function isValidProductUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Parse a products.txt file into external product entries.
+ * Format: one product per line, pipe-separated:
+ *   URL | Label EN | Label ZH (optional)
+ * Lines starting with # are comments. Blank lines are skipped.
+ */
+export function parseProductsFile(text: string): ParsedExternalProduct[] {
+  const products: ParsedExternalProduct[] = [];
+  for (const rawLine of text.split('\n')) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+    // Split on first two pipes only (URL may contain pipes in query strings)
+    const firstPipe = line.indexOf('|');
+    const url = (firstPipe === -1 ? line : line.slice(0, firstPipe)).trim();
+    if (!url || !isValidProductUrl(url)) continue;
+    let labelEn = '';
+    let labelZh = '';
+    if (firstPipe !== -1) {
+      const rest = line.slice(firstPipe + 1);
+      const secondPipe = rest.indexOf('|');
+      labelEn = (secondPipe === -1 ? rest : rest.slice(0, secondPipe)).trim();
+      if (secondPipe !== -1) {
+        labelZh = rest.slice(secondPipe + 1).trim();
+      }
+    }
+    if (!labelEn) labelEn = url.split('/').pop()?.replace(/[-_]/g, ' ') || 'Product';
+    if (!labelZh) labelZh = labelEn;
+    products.push({ url, imageUrl: null, labelEn, labelZh });
+  }
+  return products;
+}
+
+// ============================================================================
 // FALLBACK METADATA
 // ============================================================================
 
@@ -250,6 +309,8 @@ function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
     solutionZh: '',
     badgeEn: category.en,
     badgeZh: category.zh,
+    excerptEn: `${category.en} renovation at ${folderName}.`,
+    excerptZh: `${folderName}${category.zh}装修。`,
     metaTitleEn: `${folderName} ${category.en} | Reno Stars`,
     metaTitleZh: `${folderName}${category.zh} | Reno Stars`,
     metaDescriptionEn: `${category.en} renovation project at ${folderName}.`,
@@ -276,7 +337,8 @@ async function getExistingSlugs(
   return rows.map((r: { slug: string }) => r.slug);
 }
 
-/** Delete orphaned site (no child projects or site image pairs) on failure */
+/** Delete orphaned site (no child projects or site image pairs) on failure.
+ * Note: siteExternalProducts are not checked separately — they CASCADE delete with the site. */
 async function cleanupOrphanedSite(siteId: string): Promise<void> {
   try {
     const childProjects = await db
@@ -545,6 +607,29 @@ export async function processBatchUpload(jobId: string): Promise<void> {
           }
         }
 
+        // Insert site-level external products from products.txt
+        if (parsedSite.productsText) {
+          const siteProducts = parseProductsFile(parsedSite.productsText);
+          if (siteProducts.length > 0) {
+            try {
+              await db.insert(siteExternalProducts).values(
+                siteProducts.map((ep, idx) => ({
+                  siteId,
+                  url: ep.url,
+                  imageUrl: ep.imageUrl,
+                  labelEn: ep.labelEn,
+                  labelZh: ep.labelZh,
+                  displayOrder: idx,
+                }))
+              );
+            } catch (error) {
+              errors.push(
+                `Site external products for "${parsedSite.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
+              );
+            }
+          }
+        }
+
         // Process projects under this site
         let projectsCreatedForSite = 0;
         for (let pIdx = 0; pIdx < parsedSite.projects.length; pIdx++) {
@@ -705,6 +790,8 @@ async function saveProject(
       solutionZh: projectData.solutionZh || null,
       badgeEn: projectData.badgeEn || null,
       badgeZh: projectData.badgeZh || null,
+      excerptEn: ('excerptEn' in projectData ? projectData.excerptEn : null) || null,
+      excerptZh: ('excerptZh' in projectData ? projectData.excerptZh : null) || null,
       metaTitleEn: projectData.metaTitleEn || null,
       metaTitleZh: projectData.metaTitleZh || null,
       metaDescriptionEn: projectData.metaDescriptionEn || null,
@@ -726,6 +813,48 @@ async function saveProject(
     currentStepLabel: `Created project: ${projectData.titleEn}`,
     createdProjectIds: [...createdProjectIds],
   });
+
+  // Insert default service scopes
+  const defaultScopes = DEFAULT_SCOPES[parsedProject.serviceType] ?? [];
+  if (defaultScopes.length > 0) {
+    try {
+      await db.insert(projectScopes).values(
+        defaultScopes.map((scope, idx) => ({
+          projectId: insertedProject.id,
+          scopeEn: scope.en,
+          scopeZh: scope.zh,
+          displayOrder: idx,
+        }))
+      );
+    } catch (error) {
+      errors.push(
+        `Scopes for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  }
+
+  // Insert external products from products.txt
+  if (parsedProject.productsText) {
+    const products = parseProductsFile(parsedProject.productsText);
+    if (products.length > 0) {
+      try {
+        await db.insert(projectExternalProducts).values(
+          products.map((ep, idx) => ({
+            projectId: insertedProject.id,
+            url: ep.url,
+            imageUrl: ep.imageUrl,
+            labelEn: ep.labelEn,
+            labelZh: ep.labelZh,
+            displayOrder: idx,
+          }))
+        );
+      } catch (error) {
+        errors.push(
+          `External products for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
+      }
+    }
+  }
 
   // Insert image pairs with pre-generated alt text
   for (let pairIdx = 0; pairIdx < parsedProject.imagePairs.length; pairIdx++) {

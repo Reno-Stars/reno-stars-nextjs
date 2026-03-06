@@ -50,8 +50,19 @@ const NOTES_FILENAMES = new Set([
   'readme.md',
 ]);
 
+/** Recognized filenames for external product links */
+const PRODUCTS_FILENAMES = new Set([
+  'products.txt',
+  'links.txt',
+  'external.txt',
+]);
+
 function isNotesFile(filename: string): boolean {
   return NOTES_FILENAMES.has(filename.toLowerCase());
+}
+
+function isProductsFile(filename: string): boolean {
+  return PRODUCTS_FILENAMES.has(filename.toLowerCase());
 }
 
 // ============================================================================
@@ -183,8 +194,9 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
   // Paths from fflate look like: "FolderA/SubFolder/file.jpg"
   const tree = new Map<string, ExtractedImage[]>();
 
-  // Collect notes/description text files per folder
+  // Collect notes/description text files and products files per folder
   const notesMap = new Map<string, string>();
+  const productsMap = new Map<string, string>();
   const textDecoder = new TextDecoder('utf-8');
 
   for (const [path, data] of Object.entries(files)) {
@@ -200,11 +212,21 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     if (isNotesFile(filename)) {
       try {
         const text = textDecoder.decode(data).trim();
-        if (text.length > 0) {
-          // First notes file found per folder wins
-          if (!notesMap.has(folder)) {
-            notesMap.set(folder, text);
-          }
+        if (text.length > 0 && !notesMap.has(folder)) {
+          notesMap.set(folder, text);
+        }
+      } catch {
+        // Skip files that can't be decoded as UTF-8
+      }
+      continue;
+    }
+
+    // Check for products.txt files
+    if (isProductsFile(filename)) {
+      try {
+        const text = textDecoder.decode(data).trim();
+        if (text.length > 0 && !productsMap.has(folder)) {
+          productsMap.set(folder, text);
         }
       } catch {
         // Skip files that can't be decoded as UTF-8
@@ -237,18 +259,21 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
   if (folders.length === 1 && folders[0] === '') {
     const images = tree.get('')!;
     const rootNotes = notesMap.get('') ?? null;
+    const rootProducts = productsMap.get('') ?? null;
     const { pairs, heroImage } = pairImages(images);
     const site: ParsedSite = {
       folderName: 'Uploaded Project',
       heroImage,
       imagePairs: [],
       notes: rootNotes,
+      productsText: rootProducts,
       projects: pairs.length > 0 ? [{
         folderName: 'Uploaded Project',
         serviceType: DEFAULT_SERVICE_TYPE,
         heroImage: null,
         imagePairs: pairs,
         notes: rootNotes,
+        productsText: rootProducts,
       }] : [],
     };
     return { sites: [site], totalImages };
@@ -291,6 +316,9 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     // Resolve notes for this top-level folder
     const siteNotes = notesMap.get(topLevel) ?? null;
 
+    // Resolve products text for this top-level folder
+    const siteProducts = productsMap.get(topLevel) ?? null;
+
     // If there are subfolders, each subfolder is a project
     // Root-level images become site-level image pairs (not a project)
     if (subFolders && subFolders.size > 0) {
@@ -298,6 +326,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         const leafName = subName.split('/').pop()!;
         const subFolderPath = `${topLevel}/${subName}`;
         const projectNotes = notesMap.get(subFolderPath) ?? null;
+        const projectProducts = productsMap.get(subFolderPath) ?? null;
         const { pairs, heroImage: projectHero } = pairImages(subImages);
         if (pairs.length > 0 || projectHero) {
           projects.push({
@@ -306,6 +335,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
             heroImage: projectHero,
             imagePairs: pairs,
             notes: projectNotes,
+            productsText: projectProducts,
           });
         }
       }
@@ -318,6 +348,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
           heroImage: null,
           imagePairs: rootPairs,
           notes: siteNotes,
+          productsText: siteProducts,
         });
       }
     }
@@ -333,6 +364,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         imagePairs: hasSubfolders ? rootPairs : [],
         projects,
         notes: siteNotes,
+        productsText: siteProducts,
       });
     }
   }

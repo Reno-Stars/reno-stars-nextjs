@@ -400,11 +400,13 @@ export default function BatchUploadClient() {
 {`Richmond Whole House/            <- Site name
   hero.jpg                       <- Site hero image
   notes.txt                      <- AI context (see template)
+  products.txt                   <- External product links
   Before 1.jpg / After 1.jpg     <- Site-level pairs
   Before 2.jpg / After 2.jpg
   exterior.jpg                   <- Standalone site image
   Kitchen/                       <- Project (auto-detected)
     notes.txt                    <- AI context (see template)
+    products.txt                 <- External product links
     before-1.jpg / after-1.jpg   <- Project pairs
     before-2.jpg / after-2.jpg
   Bathroom/
@@ -441,6 +443,12 @@ Materials: Quartz countertops, porcelain tile, engineered hardwood
 Challenges: Load-bearing wall removal, outdated electrical
 Features: Kitchen island with waterfall edge, heated bathroom floors
 (Download the example ZIP for full templates)`}
+                </pre>
+                <strong style={{ display: 'block', marginTop: '0.75rem', marginBottom: '0.25rem' }}>
+                  {bt.productsHelpTitle}
+                </strong>
+                <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '0.75rem', whiteSpace: 'pre-wrap', backgroundColor: 'rgba(27,54,93,0.05)', borderRadius: 6, padding: '0.625rem' }}>
+{bt.productsHelpBody}
                 </pre>
               </div>
             </div>

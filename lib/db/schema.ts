@@ -198,6 +198,7 @@ export const projectSites = pgTable(
 export const projectSitesRelations = relations(projectSites, ({ many }) => ({
   projects: many(projects),
   imagePairs: many(siteImagePairs),
+  externalProducts: many(siteExternalProducts),
 }));
 
 // ============================================================================
@@ -244,6 +245,35 @@ export const siteImagePairs = pgTable(
 export const siteImagePairsRelations = relations(siteImagePairs, ({ one }) => ({
   site: one(projectSites, {
     fields: [siteImagePairs.siteId],
+    references: [projectSites.id],
+  }),
+}));
+
+// ============================================================================
+// SITE EXTERNAL PRODUCTS
+// ============================================================================
+
+/** External product links (tiles, countertops, fixtures, etc.) for sites */
+export const siteExternalProducts = pgTable(
+  'site_external_products',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    siteId: uuid('site_id')
+      .references(() => projectSites.id, { onDelete: 'cascade' })
+      .notNull(),
+    url: varchar('url', { length: 500 }).notNull(),
+    imageUrl: varchar('image_url', { length: 500 }),
+    labelEn: varchar('label_en', { length: 200 }).notNull(),
+    labelZh: varchar('label_zh', { length: 200 }).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [index('site_external_products_site_id_idx').on(table.siteId)]
+);
+
+export const siteExternalProductsRelations = relations(siteExternalProducts, ({ one }) => ({
+  site: one(projectSites, {
+    fields: [siteExternalProducts.siteId],
     references: [projectSites.id],
   }),
 }));
@@ -758,6 +788,8 @@ export type NewDbSite = typeof projectSites.$inferInsert;
 
 export type DbSiteImagePair = typeof siteImagePairs.$inferSelect;
 export type NewDbSiteImagePair = typeof siteImagePairs.$inferInsert;
+export type DbSiteExternalProduct = typeof siteExternalProducts.$inferSelect;
+export type NewDbSiteExternalProduct = typeof siteExternalProducts.$inferInsert;
 
 export type DbProject = typeof projects.$inferSelect;
 export type NewDbProject = typeof projects.$inferInsert;

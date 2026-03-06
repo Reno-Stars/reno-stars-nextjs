@@ -20,8 +20,6 @@ function createMockProject(overrides: Partial<Project> = {}): Project {
     hero_image: '/test.jpg',
     images: [],
     featured: false,
-    is_whole_house: false,
-    child_display_order: 0,
     ...overrides,
   };
 }
@@ -237,5 +235,45 @@ describe('collectAllExternalProducts', () => {
   it('should return empty array for empty project array', () => {
     const result = collectAllExternalProducts([]);
     expect(result).toHaveLength(0);
+  });
+
+  it('should prepend site-level external products before project products', () => {
+    const projects = [
+      createMockProject({
+        external_products: [
+          { url: 'https://example.com/project-product', label: { en: 'Project Product', zh: '项目产品' } },
+        ],
+      }),
+    ];
+    const site: Partial<Site> = {
+      title: { en: 'Test Site', zh: '测试工地' },
+      external_products: [
+        { url: 'https://example.com/site-product', label: { en: 'Site Product', zh: '工地产品' } },
+      ],
+    };
+    const result = collectAllExternalProducts(projects, site as Site);
+    expect(result).toHaveLength(2);
+    expect(result[0].url).toBe('https://example.com/site-product');
+    expect(result[1].url).toBe('https://example.com/project-product');
+  });
+
+  it('should deduplicate between site and project external products', () => {
+    const projects = [
+      createMockProject({
+        external_products: [
+          { url: 'https://example.com/shared', label: { en: 'Project Label', zh: '项目标签' } },
+        ],
+      }),
+    ];
+    const site: Partial<Site> = {
+      title: { en: 'Test Site', zh: '测试工地' },
+      external_products: [
+        { url: 'https://example.com/shared', label: { en: 'Site Label', zh: '工地标签' } },
+      ],
+    };
+    const result = collectAllExternalProducts(projects, site as Site);
+    expect(result).toHaveLength(1);
+    // Site-level product comes first (wins dedup)
+    expect(result[0].label).toEqual({ en: 'Site Label', zh: '工地标签' });
   });
 });

@@ -345,6 +345,7 @@ export default function ImagePairEditor({
             <div
               role="button"
               tabIndex={0}
+              aria-expanded={isExpanded}
               onClick={() => toggleExpanded(pair.id)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleExpanded(pair.id); } }}
               style={{
@@ -456,6 +457,8 @@ export default function ImagePairEditor({
         <div
           role="button"
           tabIndex={0}
+          aria-expanded={showAllPairs}
+          aria-label={showAllPairs ? t.common.showLess : t.common.showAll.replace('{count}', String(pairs.length))}
           onClick={() => setShowAllPairs((prev) => !prev)}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAllPairs((prev) => !prev); } }}
           style={{

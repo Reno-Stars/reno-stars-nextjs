@@ -8,6 +8,7 @@ import {
   aboutSections as aboutSectionsTable,
   projectSites as sitesTable,
   siteImagePairs as siteImagePairsTable,
+  siteExternalProducts as siteExternalProductsTable,
   projects as projectsTable,
   projectImagePairs as projectImagePairsTable,
   projectScopes as projectScopesTable,
@@ -427,8 +428,9 @@ export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: D
 // ============================================================================
 
 type DbSiteRow = typeof sitesTable.$inferSelect;
+type DbSiteExternalProductRow = typeof siteExternalProductsTable.$inferSelect;
 
-function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[]): Site {
+function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[], siteExternalProductRows?: DbSiteExternalProductRow[]): Site {
   return {
     id: row.id,
     slug: row.slug,
@@ -473,6 +475,13 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     image_pairs: siteImagePairRows && siteImagePairRows.length > 0
       ? sortByDisplayOrder(siteImagePairRows).map(mapDbImagePairRowToImagePair)
       : undefined,
+    external_products: siteExternalProductRows && siteExternalProductRows.length > 0
+      ? sortByDisplayOrder(siteExternalProductRows).map((ep) => ({
+          url: ep.url,
+          image_url: ep.imageUrl ?? undefined,
+          label: { en: ep.labelEn, zh: ep.labelZh },
+        }))
+      : undefined,
   };
 }
 
@@ -516,19 +525,20 @@ export const getSiteBySlugFromDb = cache(
     const row = rows[0];
     if (!row) return null;
 
-    // Fetch site image pairs and projects in parallel
-    const [siteImagePairRows, projects] = await Promise.all([
+    // Fetch site image pairs, external products, and projects in parallel
+    const [siteImagePairRows, siteEpRows, projects] = await Promise.all([
       db.select().from(siteImagePairsTable).where(eq(siteImagePairsTable.siteId, row.id)) as Promise<DbSiteImagePairRow[]>,
+      db.select().from(siteExternalProductsTable).where(eq(siteExternalProductsTable.siteId, row.id)) as Promise<DbSiteExternalProductRow[]>,
       getProjectsOfSite(row.id),
     ]);
 
-    const site = mapDbSiteToSite(row, siteImagePairRows);
+    const site = mapDbSiteToSite(row, siteImagePairRows, siteEpRows);
 
     // Build aggregated data (budget/duration come from site itself, not summed from projects)
     const aggregated: SiteWithProjects['aggregated'] = {
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects, site),
-      allExternalProducts: collectAllExternalProducts(projects),
+      allExternalProducts: collectAllExternalProducts(projects, site),
     };
 
     return {
@@ -550,9 +560,10 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
   const siteIds = rows.map((r: DbSiteRow) => r.id);
   if (siteIds.length === 0) return [];
 
-  // Fetch all site image pairs and all projects for these sites in parallel (avoids N+1)
-  const [allSiteImagePairs, allProjects] = await Promise.all([
+  // Fetch all site image pairs, site external products, and all projects for these sites in parallel (avoids N+1)
+  const [allSiteImagePairs, allSiteExternalProducts, allProjects] = await Promise.all([
     db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds)) as Promise<DbSiteImagePairRow[]>,
+    db.select().from(siteExternalProductsTable).where(inArray(siteExternalProductsTable.siteId, siteIds)) as Promise<DbSiteExternalProductRow[]>,
     db
       .select()
       .from(projectsTable)
@@ -569,6 +580,7 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
   const scopesByProject = groupBy(allScopes, (s: DbScopeRow) => s.projectId);
   const epByProject = groupBy(allExternalProducts, (ep: DbExternalProductRow) => ep.projectId);
   const siteImagePairsBySite = groupBy(allSiteImagePairs, (ip: DbSiteImagePairRow) => ip.siteId);
+  const siteEpBySite = groupBy(allSiteExternalProducts, (ep: DbSiteExternalProductRow) => ep.siteId);
 
   // Group projects by siteId for efficient lookup
   const projectsBySite = new Map<string, Project[]>();
@@ -588,13 +600,14 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
   const results: SiteWithProjects[] = [];
   for (const row of rows) {
     const rowImagePairs = siteImagePairsBySite.get(row.id) ?? [];
-    const site = mapDbSiteToSite(row, rowImagePairs);
+    const rowEps = siteEpBySite.get(row.id) ?? [];
+    const site = mapDbSiteToSite(row, rowImagePairs, rowEps);
     const projects = projectsBySite.get(row.id) ?? [];
 
     const aggregated: SiteWithProjects['aggregated'] = {
       allServiceScopes: mergeServiceScopes(projects),
       allImages: collectAllImages(projects, site),
-      allExternalProducts: collectAllExternalProducts(projects),
+      allExternalProducts: collectAllExternalProducts(projects, site),
     };
 
     results.push({
@@ -946,19 +959,24 @@ export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)
 }
 
 /** Fetch all sites (admin — includes unpublished). */
-export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect & { siteImagePairs: DbSiteImagePairRow[] })[]> {
+export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelect & { siteImagePairs: DbSiteImagePairRow[]; siteExternalProducts: DbSiteExternalProductRow[] })[]> {
   const rows: DbSiteRow[] = await db.select().from(sitesTable).orderBy(desc(sitesTable.createdAt));
   const siteIds = rows.map((r: DbSiteRow) => r.id);
-  const allImagePairs: DbSiteImagePairRow[] = siteIds.length > 0
-    ? await db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds))
-    : [];
+  const [allImagePairs, allExternalProducts]: [DbSiteImagePairRow[], DbSiteExternalProductRow[]] = siteIds.length > 0
+    ? await Promise.all([
+        db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds)),
+        db.select().from(siteExternalProductsTable).where(inArray(siteExternalProductsTable.siteId, siteIds)),
+      ])
+    : [[], []];
 
-  // Pre-group image pairs by siteId for O(1) lookup
+  // Pre-group by siteId for O(1) lookup
   const imagePairsBySite = groupBy(allImagePairs, (ip: DbSiteImagePairRow) => ip.siteId);
+  const epBySite = groupBy(allExternalProducts, (ep: DbSiteExternalProductRow) => ep.siteId);
 
   return rows.map((row: DbSiteRow) => ({
     ...row,
     siteImagePairs: sortByDisplayOrder(imagePairsBySite.get(row.id) ?? []),
+    siteExternalProducts: sortByDisplayOrder(epBySite.get(row.id) ?? []),
   }));
 }
 

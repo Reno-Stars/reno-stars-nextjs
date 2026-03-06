@@ -15,12 +15,20 @@ import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import SubmitButton from './SubmitButton';
 import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
-import { CARD, NAVY, SURFACE, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
+import { CARD, NAVY, GOLD, SURFACE, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 import EditModeToggle from './EditModeToggle';
 import { useSaveWarning } from '@/hooks/useSaveWarning';
 import { useBeforeUnload } from '@/hooks/useBeforeUnload';
+
+interface ExternalProductEntry {
+  id: string;
+  url: string;
+  imageUrl: string;
+  labelEn: string;
+  labelZh: string;
+}
 
 interface City {
   nameEn: string;
@@ -62,6 +70,7 @@ interface SiteFormProps {
     featured: boolean;
     isPublished: boolean;
     imagePairs?: Omit<ImagePairEntry, 'id'>[];
+    externalProducts?: Omit<ExternalProductEntry, 'id'>[];
   };
   submitLabel?: string;
 }
@@ -111,6 +120,12 @@ export default function SiteForm({
   const [siteImagePairs, setSiteImagePairs] = useState<ImagePairEntry[]>(
     initialData?.imagePairs?.map((p) => ({ ...p, id: crypto.randomUUID() })) ?? []
   );
+  const [externalProducts, setExternalProducts] = useState<ExternalProductEntry[]>(
+    initialData?.externalProducts?.map((ep) => ({ ...ep, id: crypto.randomUUID() })) ?? []
+  );
+
+  const COLLAPSE_THRESHOLD = 3;
+  const [showAllProducts, setShowAllProducts] = useState(false);
 
   // State for AI-generated text fields
   const [titleEn, setTitleEn] = useState(initialData?.titleEn ?? '');
@@ -299,6 +314,71 @@ export default function SiteForm({
             tooltip={t.imagePairs?.tooltips?.title}
             slug={slug}
           />
+
+          {/* External Products */}
+          <div style={{ marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.5rem' }}>
+              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.8125rem' }}>
+                {t.projects.externalProducts}
+              </span>
+              <Tooltip content={t.projects.tooltips.externalProducts} />
+            </div>
+            {/* Hidden inputs for ALL products (form submission) */}
+            {externalProducts.map((ep, idx) => (
+              <div key={`hidden-ep-${ep.id}`}>
+                <input type="hidden" name={`siteExternalProducts[${idx}].url`} value={ep.url} />
+                <input type="hidden" name={`siteExternalProducts[${idx}].imageUrl`} value={ep.imageUrl} />
+                <input type="hidden" name={`siteExternalProducts[${idx}].labelEn`} value={ep.labelEn} />
+                <input type="hidden" name={`siteExternalProducts[${idx}].labelZh`} value={ep.labelZh} />
+              </div>
+            ))}
+            {/* Visible product cards */}
+            {(showAllProducts ? externalProducts : externalProducts.slice(0, COLLAPSE_THRESHOLD)).map((ep, idx) => (
+              <div key={ep.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.375rem' }}>
+                <input value={ep.url} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], url: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productUrl} aria-label={`Product ${idx + 1} URL`} style={{ ...fieldStyle, marginBottom: '0.375rem' }} />
+                <ImageUrlInput
+                  name={`site-product-image-${ep.id}`}
+                  label={t.projects.productImageUrl}
+                  value={ep.imageUrl}
+                  onChange={(newUrl) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], imageUrl: newUrl }; setExternalProducts(n); }}
+                  slug={slug}
+                  imageRole={`product-${externalProducts.indexOf(ep) + 1}`}
+                  disabled={!editing}
+                  hideLabel
+                  placeholder={t.projects.productImageUrl}
+                />
+                <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="English">🇺🇸</span> {t.projects.productLabelEn}
+                    </label>
+                    <input value={ep.labelEn} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], labelEn: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelEn} aria-label={`Product ${idx + 1} label (English)`} style={fieldStyle} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.6875rem', color: 'rgba(27,54,93,0.5)', marginBottom: '0.125rem', display: 'block' }}>
+                      <span role="img" aria-label="Chinese">🇨🇳</span> {t.projects.productLabelZh}
+                    </label>
+                    <input value={ep.labelZh} onChange={(e) => { const n = [...externalProducts]; const realIdx = externalProducts.indexOf(ep); n[realIdx] = { ...n[realIdx], labelZh: e.target.value }; setExternalProducts(n); }} placeholder={t.projects.productLabelZh} aria-label={`Product ${idx + 1} label (Chinese)`} style={fieldStyle} />
+                  </div>
+                </div>
+                {editing && (
+                  <button type="button" onClick={() => setExternalProducts(externalProducts.filter((p) => p.id !== ep.id))} aria-label={`Remove product ${idx + 1}`} style={{ color: ERROR, background: 'none', border: `1px solid ${ERROR}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}>
+                    {t.common.remove}
+                  </button>
+                )}
+              </div>
+            ))}
+            {externalProducts.length > COLLAPSE_THRESHOLD && (
+              <button type="button" onClick={() => setShowAllProducts((prev) => !prev)} style={{ color: NAVY, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.25rem 0', marginBottom: '0.25rem' }}>
+                {showAllProducts ? t.common.showLess : t.common.showAll.replace('{count}', String(externalProducts.length))}
+              </button>
+            )}
+            {editing && (
+              <button type="button" onClick={() => setExternalProducts([...externalProducts, { id: crypto.randomUUID(), url: '', imageUrl: '', labelEn: '', labelZh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
+                {t.projects.addExternalProduct}
+              </button>
+            )}
+          </div>
 
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.sites.badge} valueEn={badgeEn} onChangeEn={setBadgeEn} valueZh={badgeZh} onChangeZh={setBadgeZh} tooltip={t.sites.tooltips.badge} />
 

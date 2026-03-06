@@ -115,6 +115,8 @@ export interface Site {
   images?: { src: string; alt: Localized<string>; is_before?: boolean }[];
   /** Before/after image pairs with SEO metadata */
   image_pairs?: ImagePair[];
+  /** External product links (site-level) */
+  external_products?: { url: string; image_url?: string; label: Localized<string> }[];
 }
 
 /**

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, siteImagePairs, type DbSite, type DbSiteImagePair } from '@/lib/db/schema';
+import { projectSites, siteImagePairs, siteExternalProducts, type DbSite, type DbSiteImagePair, type DbSiteExternalProduct } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
@@ -14,11 +14,12 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows, allSiteRows] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows, siteEpRows, allSiteRows] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
     db.select().from(siteImagePairs).where(eq(siteImagePairs.siteId, id)).orderBy(siteImagePairs.displayOrder) as Promise<DbSiteImagePair[]>,
+    db.select().from(siteExternalProducts).where(eq(siteExternalProducts.siteId, id)).orderBy(siteExternalProducts.displayOrder) as Promise<DbSiteExternalProduct[]>,
     db.select({ id: projectSites.id, titleEn: projectSites.titleEn, titleZh: projectSites.titleZh, poNumber: projectSites.poNumber }).from(projectSites),
   ]);
 
@@ -59,6 +60,12 @@ export default async function EditSitePage({ params }: PageProps) {
     featured: site.featured,
     isPublished: site.isPublished,
     imagePairs: siteImagePairRows.map(mapDbImagePairToForm),
+    externalProducts: siteEpRows.map((ep) => ({
+      url: ep.url,
+      imageUrl: ep.imageUrl ?? '',
+      labelEn: ep.labelEn,
+      labelZh: ep.labelZh,
+    })),
   };
 
   return (

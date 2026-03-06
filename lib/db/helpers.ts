@@ -119,21 +119,28 @@ export function collectAllImages(projects: Project[], site?: Site): SiteWithProj
 }
 
 /**
- * Collect all external products from projects, deduped by URL.
+ * Collect all external products from site + projects, deduped by URL.
+ * Site-level products appear first, then project-level products.
  */
-export function collectAllExternalProducts(projects: Project[]): SiteWithProjects['aggregated']['allExternalProducts'] {
+export function collectAllExternalProducts(projects: Project[], site?: Site): SiteWithProjects['aggregated']['allExternalProducts'] {
   const seen = new Set<string>();
   const products: SiteWithProjects['aggregated']['allExternalProducts'] = [];
+  // Site-level products first
+  if (site?.external_products) {
+    for (const ep of site.external_products) {
+      if (!seen.has(ep.url)) {
+        seen.add(ep.url);
+        products.push({ url: ep.url, image_url: ep.image_url, label: ep.label });
+      }
+    }
+  }
+  // Then project-level products
   for (const project of projects) {
     if (project.external_products) {
       for (const ep of project.external_products) {
         if (!seen.has(ep.url)) {
           seen.add(ep.url);
-          products.push({
-            url: ep.url,
-            image_url: ep.image_url,
-            label: ep.label,
-          });
+          products.push({ url: ep.url, image_url: ep.image_url, label: ep.label });
         }
       }
     }
