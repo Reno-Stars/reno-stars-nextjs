@@ -56,6 +56,14 @@ export interface ParsedSite {
   productImages: Map<number, ExtractedImage>;
 }
 
+/** A product entry parsed from products.txt */
+export interface ParsedExternalProduct {
+  url: string;
+  imageUrl: string | null;
+  labelEn: string;
+  labelZh: string;
+}
+
 /** The complete parsed structure of a ZIP file */
 export interface ParsedZipStructure {
   sites: ParsedSite[];

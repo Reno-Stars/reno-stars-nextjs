@@ -31,6 +31,7 @@ import { parseZip } from './zip-parser';
 import type {
   ParsedZipStructure,
   ParsedProject,
+  ParsedExternalProduct,
   ExtractedImage,
 } from './types';
 
@@ -43,6 +44,9 @@ const UPLOAD_BATCH_SIZE = 3;
 
 /** Max concurrent alt text AI calls */
 const ALT_TEXT_BATCH_SIZE = 5;
+
+/** Fallback alt text when AI generation fails */
+const FALLBACK_ALT = { en: 'Renovation project image', zh: '装修项目图片' } as const;
 
 // ============================================================================
 // JOB STATUS HELPERS
@@ -100,14 +104,15 @@ async function uploadImageToS3(
  * Upload images in batches to avoid overwhelming S3.
  * Returns a map of ExtractedImage → uploaded URL.
  */
-async function uploadImagesInBatches(
-  images: ExtractedImage[],
-  slugPrefix: string,
-  jobId: string,
-  startCount: number,
-  totalImages: number,
-  errors: string[]
-): Promise<Map<ExtractedImage, string>> {
+async function uploadImagesInBatches(opts: {
+  images: ExtractedImage[];
+  slugPrefix: string;
+  jobId: string;
+  startCount: number;
+  totalImages: number;
+  errors: string[];
+}): Promise<Map<ExtractedImage, string>> {
+  const { images, slugPrefix, jobId, startCount, totalImages, errors } = opts;
   const urlMap = new Map<ExtractedImage, string>();
   let processed = startCount;
 
@@ -185,7 +190,7 @@ async function generateAltTextsInBatches(
   imageUrls: string[]
 ): Promise<Map<string, { altEn: string; altZh: string }>> {
   const altMap = new Map<string, { altEn: string; altZh: string }>();
-  const fallback = { altEn: 'Renovation project image', altZh: '装修项目图片' };
+  const fallback = { altEn: FALLBACK_ALT.en, altZh: FALLBACK_ALT.zh };
 
   for (let i = 0; i < imageUrls.length; i += ALT_TEXT_BATCH_SIZE) {
     const batch = imageUrls.slice(i, i + ALT_TEXT_BATCH_SIZE);
@@ -209,13 +214,6 @@ async function generateAltTextsInBatches(
 // ============================================================================
 // EXTERNAL PRODUCTS PARSING
 // ============================================================================
-
-interface ParsedExternalProduct {
-  url: string;
-  imageUrl: string | null;
-  labelEn: string;
-  labelZh: string;
-}
 
 /**
  * Validate a URL using the same logic as admin form validation.
@@ -507,14 +505,14 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         }
       }
 
-      const siteUrls = await uploadImagesInBatches(
-        siteImages,
-        siteSlugPrefix,
+      const siteUrls = await uploadImagesInBatches({
+        images: siteImages,
+        slugPrefix: siteSlugPrefix,
         jobId,
-        uploadedCount,
-        parsed.totalImages,
-        errors
-      );
+        startCount: uploadedCount,
+        totalImages: parsed.totalImages,
+        errors,
+      });
 
       for (const [img, url] of siteUrls) {
         urlMap.set(img, url);
@@ -645,8 +643,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
 
           const altImageUrl = afterUrl || beforeUrl;
           const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
-          const altEn = alt?.altEn || 'Renovation project image';
-          const altZh = alt?.altZh || '装修项目图片';
+          const altEn = alt?.altEn || FALLBACK_ALT.en;
+          const altZh = alt?.altZh || FALLBACK_ALT.zh;
 
           try {
             await db.insert(siteImagePairs).values({
@@ -686,18 +684,18 @@ export async function processBatchUpload(jobId: string): Promise<void> {
           try {
             const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
             const aiProject = projectMetadataMap.get(projectKey);
-            await saveProject(
+            await saveProject({
               parsedProject,
-              aiProject ?? null,
+              aiProject: aiProject ?? null,
               siteId,
-              pIdx,
+              displayOrder: pIdx,
               urlMap,
               altTextMap,
               existingProjectSlugs,
               createdProjectIds,
               errors,
-              jobId
-            );
+              jobId,
+            });
             projectsCreatedForSite++;
           } catch (error) {
             errors.push(
@@ -791,18 +789,23 @@ export async function processBatchUpload(jobId: string): Promise<void> {
 // PROJECT SAVE (DB insertion with pre-generated metadata)
 // ============================================================================
 
-async function saveProject(
-  parsedProject: ParsedProject,
-  aiProject: ProjectDescription | null,
-  siteId: string,
-  displayOrder: number,
-  urlMap: Map<ExtractedImage, string>,
-  altTextMap: Map<string, { altEn: string; altZh: string }>,
-  existingProjectSlugs: string[],
-  createdProjectIds: string[],
-  errors: string[],
-  jobId: string
-): Promise<void> {
+async function saveProject(opts: {
+  parsedProject: ParsedProject;
+  aiProject: ProjectDescription | null;
+  siteId: string;
+  displayOrder: number;
+  urlMap: Map<ExtractedImage, string>;
+  altTextMap: Map<string, { altEn: string; altZh: string }>;
+  existingProjectSlugs: string[];
+  createdProjectIds: string[];
+  errors: string[];
+  jobId: string;
+}): Promise<void> {
+  const {
+    parsedProject, aiProject, siteId, displayOrder,
+    urlMap, altTextMap, existingProjectSlugs,
+    createdProjectIds, errors, jobId,
+  } = opts;
   const projectData = aiProject ?? fallbackProjectData(
     parsedProject.folderName,
     parsedProject.serviceType
@@ -906,8 +909,8 @@ async function saveProject(
     // Look up pre-generated alt text
     const altImageUrl = afterUrl || beforeUrl;
     const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
-    const altEn = alt?.altEn || 'Renovation project image';
-    const altZh = alt?.altZh || '装修项目图片';
+    const altEn = alt?.altEn || FALLBACK_ALT.en;
+    const altZh = alt?.altZh || FALLBACK_ALT.zh;
 
     try {
       await db.insert(projectImagePairs).values({

@@ -23,7 +23,6 @@ export async function POST(
   // Use after() to run processing after the response is sent.
   // This ensures the function lifetime extends beyond the response on Vercel.
   after(async () => {
-    console.log(`[batch] after() triggered for job ${jobId}`);
     try {
       await processBatchUpload(jobId);
     } catch (error) {
