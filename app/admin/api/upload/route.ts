@@ -8,7 +8,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 const PRESIGN_EXPIRY_SECONDS = 600; // 10 minutes
 
 /**
- * POST /api/admin/upload
+ * POST /admin/api/upload
  * Returns a presigned S3 PUT URL so the client can upload directly to S3,
  * bypassing Vercel's body size limit.
  *

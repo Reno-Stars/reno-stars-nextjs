@@ -30,7 +30,7 @@ export async function uploadImageDirect({
 
   try {
     // Step 1: Get presigned URL from our API
-    const presignRes = await fetch('/api/admin/upload', {
+    const presignRes = await fetch('/admin/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
