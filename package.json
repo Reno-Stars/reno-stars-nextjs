@@ -34,7 +34,8 @@
     "dev:services": "docker compose up -d && pnpm db:push && pnpm db:seed && pnpm db:seed:projects && pnpm db:seed:blog && pnpm storage:seed"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.982.0",
+    "@aws-sdk/client-s3": "^3.1005.0",
+    "@aws-sdk/s3-request-presigner": "^3.1005.0",
     "@neondatabase/serverless": "^0.10.4",
     "drizzle-orm": "^0.36.4",
     "fflate": "^0.8.2",

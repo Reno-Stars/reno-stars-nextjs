@@ -118,7 +118,7 @@ export default function BatchUploadClient() {
       setError(bt.errorZipOnly);
       return;
     }
-    if (f.size > 100 * 1024 * 1024) {
+    if (f.size > 1024 * 1024 * 1024) {
       setError(bt.errorTooLarge);
       return;
     }
@@ -144,24 +144,36 @@ export default function BatchUploadClient() {
     setError(null);
 
     try {
-      // Step 1: Upload ZIP
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('generateBlog', generateBlog.toString());
-
-      const uploadRes = await fetch('/admin/batch-upload/api', {
+      // Step 1: Get presigned URL from server
+      const initRes = await fetch('/admin/batch-upload/api', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          fileSize: file.size,
+          generateBlog,
+        }),
       });
 
-      if (!uploadRes.ok) {
-        const data = await uploadRes.json();
+      if (!initRes.ok) {
+        const data = await initRes.json();
         throw new Error(data.error || bt.errorUploadFailed);
       }
 
-      const { jobId } = await uploadRes.json();
+      const { jobId, presignedUrl } = await initRes.json();
 
-      // Step 2: Trigger processing
+      // Step 2: Upload ZIP directly to S3 via presigned URL (bypasses proxy)
+      const s3Res = await fetch(presignedUrl, {
+        method: 'PUT',
+        body: file,
+        headers: { 'Content-Type': 'application/zip' },
+      });
+
+      if (!s3Res.ok) {
+        throw new Error(`${bt.errorUploadFailed} (S3 ${s3Res.status})`);
+      }
+
+      // Step 3: Trigger processing
       const processRes = await fetch(`/admin/batch-upload/api/${jobId}/process`, {
         method: 'POST',
       });
@@ -171,7 +183,7 @@ export default function BatchUploadClient() {
         throw new Error(data.error || bt.errorUploadFailed);
       }
 
-      // Step 3: Start polling
+      // Step 4: Start polling
       if (!mountedRef.current) return;
       setPhase('processing');
       setJob({

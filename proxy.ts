@@ -9,6 +9,13 @@ const intlMiddleware = createMiddleware(routing);
 
 const isDev = process.env.NODE_ENV === 'development';
 
+// S3 endpoint origin for presigned URL uploads (e.g., R2, MinIO)
+const S3_ORIGIN = (() => {
+  const ep = process.env.S3_ENDPOINT;
+  if (!ep) return '';
+  try { return new URL(ep).origin; } catch { return ''; }
+})();
+
 // Security headers with environment-aware CSP
 const securityHeaders: Record<string, string> = {
   'X-DNS-Prefetch-Control': 'on',
@@ -35,8 +42,8 @@ const securityHeaders: Record<string, string> = {
     `img-src 'self' data: blob: https: ${ASSET_ORIGIN}`,
     "font-src 'self' data:",
     isDev
-      ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN} https://www.google-analytics.com https://www.googletagmanager.com`
-      : `connect-src 'self' ${ASSET_ORIGIN} https://www.google-analytics.com https://www.googletagmanager.com`,
+      ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://www.google-analytics.com https://www.googletagmanager.com`
+      : `connect-src 'self' ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://www.google-analytics.com https://www.googletagmanager.com`,
     `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
     "object-src 'none'",
     "frame-ancestors 'self'",
