@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect, useId } from 'react';
 import { ChevronDown, ChevronUp, X, Upload } from 'lucide-react';
 import Tooltip from './Tooltip';
 import { inputStyle, readOnlyStyle } from './shared-styles';
-import { uploadImage } from '@/app/actions/admin/upload';
+import { uploadImageDirect } from '@/lib/admin/upload-client';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, ERROR, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -129,19 +129,18 @@ export default function ImagePairEditor({
       setUploadError('');
 
       try {
-        const fd = new FormData();
-        fd.set('file', file);
-
         // Build custom S3 key based on slug.  Include a short timestamp so each
         // upload produces a unique URL (avoids browser-cache stale-image issues).
-        if (slug) {
-          const idx = pairsRef.current.findIndex((p) => p.id === pairId);
-          const sideLabel = side === 'before' ? 'before-renovation' : 'after-renovation';
-          const ts = Date.now().toString(36);
-          fd.set('customKey', `${slug}-${sideLabel}-${idx + 1}-${ts}`);
-        }
+        const customKey = slug
+          ? (() => {
+              const idx = pairsRef.current.findIndex((p) => p.id === pairId);
+              const sideLabel = side === 'before' ? 'before-renovation' : 'after-renovation';
+              const ts = Date.now().toString(36);
+              return `${slug}-${sideLabel}-${idx + 1}-${ts}`;
+            })()
+          : undefined;
 
-        const result = await uploadImage({}, fd);
+        const result = await uploadImageDirect({ file, customKey });
 
         if (result.error || !result.url) {
           setUploadError(result.error ?? t.upload.failed);

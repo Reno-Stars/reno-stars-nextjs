@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { uploadImage } from '@/app/actions/admin/upload';
+import { uploadImageDirect } from '@/lib/admin/upload-client';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -70,17 +70,11 @@ export default function ImageUrlInput({
     setUploading(true);
     setUploadError('');
 
-    const formData = new FormData();
-    formData.set('file', file);
-    if (slug) {
-      // Include a short timestamp suffix so each upload produces a unique S3 key/URL.
-      // Without this, re-uploading the same file type overwrites the same key and
-      // the browser serves the cached old image (identical URL).
-      const ts = Date.now().toString(36);
-      formData.set('customKey', `${slug}-${imageRole}-${ts}`);
-    }
+    const customKey = slug
+      ? `${slug}-${imageRole}-${Date.now().toString(36)}`
+      : undefined;
 
-    const result = await uploadImage({}, formData);
+    const result = await uploadImageDirect({ file, customKey });
 
     if (result.error) {
       setUploadError(result.error);

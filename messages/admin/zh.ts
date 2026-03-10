@@ -88,7 +88,7 @@ const zh: AdminMessages = {
     uploadImageFor: '上传图片：',
     uploading: '上传中...',
     clickOrDrag: '点击或拖拽上传图片',
-    formatHint: 'JPEG、PNG、WebP、SVG、GIF — 最大 5 MB',
+    formatHint: 'JPEG、PNG、WebP、SVG、GIF — 最大 50 MB',
     notImage: '已跳过 {count} 个文件（非图片）',
     failed: '上传失败',
     partialSuccess: '已上传 {success} 张图片，失败 {fail} 张（{error}）',

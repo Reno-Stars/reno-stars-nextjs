@@ -86,7 +86,7 @@ const en = {
     uploadImageFor: 'Upload image for',
     uploading: 'Uploading...',
     clickOrDrag: 'Click or drag & drop to upload image',
-    formatHint: 'JPEG, PNG, WebP, SVG, GIF — max 5 MB',
+    formatHint: 'JPEG, PNG, WebP, SVG, GIF — max 50 MB',
     notImage: '{count} file(s) skipped (not an image)',
     failed: 'Upload failed',
     partialSuccess: 'Uploaded {success} image(s). Failed: {fail} ({error})',

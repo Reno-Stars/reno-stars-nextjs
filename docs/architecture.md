@@ -74,6 +74,8 @@ lib/
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, STANDALONE_SITE_SLUG, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
+    upload-constants.ts   # Shared upload limits (MAX_IMAGE_SIZE, ALLOWED_IMAGE_TYPES)
+    upload-client.ts      # Client-side presigned S3 URL upload helper
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
     content-optimizer.ts  # AI functions for blog, project, alt text generation
@@ -476,7 +478,28 @@ Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indic
 
 ## Image Upload
 
-The admin panel supports direct image upload to S3-compatible storage (R2 in production, MinIO locally).
+All admin image uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit.
+
+### Architecture
+
+```
+Browser                        API Route                       S3
+  │                              │                              │
+  │  POST /api/admin/upload      │                              │
+  │  {fileName,fileSize,type}    │                              │
+  ├─────────────────────────────►│  validate auth + metadata    │
+  │                              │  generate S3 key             │
+  │                              │  getSignedUrl(PutObject)     │
+  │  {presignedUrl, publicUrl}   │                              │
+  │◄─────────────────────────────┤                              │
+  │                              │                              │
+  │  PUT presignedUrl            │                              │
+  │  body: file                  │                              │
+  ├──────────────────────────────┼─────────────────────────────►│
+  │                              │                              │
+  │  200 OK                      │                              │
+  │◄─────────────────────────────┼──────────────────────────────┤
+```
 
 ### S3 Client (`lib/admin/s3.ts`)
 
@@ -485,13 +508,32 @@ Shared S3 client singleton with lazy initialization. Exports:
 - `S3_BUCKET` — Default bucket name (`process.env.S3_BUCKET || 'reno-stars'`).
 - `MIME_TO_EXT` — MIME type → file extension map for image uploads.
 
-### Upload Action (`app/actions/admin/upload.ts`)
+### Upload Constants (`lib/admin/upload-constants.ts`)
 
-Server action behind `requireAuth()`. Accepts a `file` and optional `customKey` via FormData:
+Shared validation constants used by both the API route and client-side helper:
+- `MAX_IMAGE_SIZE` — 50 MB (in bytes).
+- `MAX_IMAGE_SIZE_LABEL` — Human-readable `'50 MB'` string for error messages.
+- `ALLOWED_IMAGE_TYPES` — `Set` of allowed MIME types (JPEG, PNG, WebP, SVG, GIF).
 
+### Presign API Route (`app/api/admin/upload/route.ts`)
+
+`POST /api/admin/upload` — auth-protected route that returns a presigned S3 PUT URL.
+
+**Request:** `{ fileName: string, fileSize: number, contentType: string, customKey?: string }`
+**Response:** `{ presignedUrl: string, publicUrl: string }`
+
+- **Validation**: Max 50 MB, allowed types: JPEG, PNG, WebP, SVG, GIF. Client-reported `fileSize` is enforced server-side via `ContentLength` condition on the presigned URL — S3 rejects uploads that don't match the declared size.
 - **Custom key**: If `customKey` is provided, the S3 key becomes `uploads/admin/{customKey}.{ext}`. Sanitized to `/[a-z0-9-]/` only and capped at 200 chars.
 - **Fallback**: Without `customKey`, uses `uploads/admin/{timestamp}-{random8}.{ext}`.
-- **Validation**: Max 5 MB, allowed types: JPEG, PNG, WebP, SVG, GIF.
+- **Expiry**: Presigned URLs expire after 10 minutes (`PRESIGN_EXPIRY_SECONDS = 600`).
+
+### Client Helper (`lib/admin/upload-client.ts`)
+
+`uploadImageDirect({ file, customKey })` — two-step client-side upload:
+1. Requests a presigned URL from `POST /api/admin/upload`.
+2. PUTs the file directly to S3 via the presigned URL.
+
+Includes client-side early validation (size + MIME type) to avoid unnecessary round-trips.
 
 ### SEO-Friendly Naming
 
