@@ -214,12 +214,14 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
   const textDecoder = new TextDecoder('utf-8');
 
   for (const [path, data] of Object.entries(files)) {
-    // Skip directories (end with /) and __MACOSX entries
+    // Skip directories, __MACOSX entries, and macOS resource fork files (._prefix)
     if (path.endsWith('/') || path.includes('__MACOSX')) continue;
 
     const normalizedPath = path.replace(/\\/g, '/');
     const parts = normalizedPath.split('/');
     const filename = parts.pop()!;
+
+    if (filename.startsWith('._')) continue;
     const folder = parts.join('/');
 
     // Check for notes/description files
