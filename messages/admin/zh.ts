@@ -523,6 +523,7 @@ const zh: AdminMessages = {
     newStandaloneProject: '新建独立项目',
     tabSites: '所有工地',
     tabStandalone: '独立项目',
+    tabWholeHouse: '全屋装修',
     noProjects: '暂无项目',
     deleteProject: '删除项目',
     deleteProjectConfirm: '确定删除此项目？',

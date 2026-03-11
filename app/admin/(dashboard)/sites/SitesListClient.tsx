@@ -60,7 +60,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
   const [isPending, startTransition] = useTransition();
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'sites' | 'standalone'>('sites');
+  const [activeTab, setActiveTab] = useState<'sites' | 'wholehouse' | 'standalone'>('sites');
   const { toast } = useToast();
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
@@ -166,6 +166,21 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
     return (projectsBySite[row.id] ?? []).some((p) => matchesProject(p, query));
   }, [projectsBySite]);
 
+  const siteActions = useCallback((row: SiteRow) => (
+    <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+      <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
+        {t.common.edit}
+      </Link>
+      <button
+        type="button"
+        onClick={() => setDeleteId(row.id)}
+        style={{ background: 'none', border: 'none', color: ERROR, cursor: 'pointer', fontSize: '0.8125rem' }}
+      >
+        {t.common.delete}
+      </button>
+    </div>
+  ), [t]);
+
   // Standalone projects: all projects from sites NOT shown as whole-house
   const standaloneProjects = useMemo<StandaloneProjectRow[]>(() => {
     const nonWholeSiteIds = new Set(sites.filter((s) => !s.showAsProject).map((s) => s.id));
@@ -187,6 +202,9 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
     }
     return rows;
   }, [sites, projectsBySite]);
+
+  // Whole house sites: sites with showAsProject === true
+  const wholeHouseSites = useMemo(() => sites.filter((s) => s.showAsProject), [sites]);
 
   const standaloneColumns: Column<StandaloneProjectRow>[] = useMemo(() => [
     { key: 'poNumber', header: t.projects.poNumber, sortable: true },
@@ -326,6 +344,19 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
         <button
           type="button"
           role="tab"
+          aria-selected={activeTab === 'wholehouse'}
+          aria-controls="tabpanel-wholehouse"
+          onClick={() => setActiveTab('wholehouse')}
+          style={activeTab === 'wholehouse' ? activeTabStyle : inactiveTabStyle}
+        >
+          {t.sites.tabWholeHouse}
+          <span style={{ marginLeft: '0.375rem', fontSize: '0.75rem', color: TEXT_MUTED }}>
+            ({wholeHouseSites.length})
+          </span>
+        </button>
+        <button
+          type="button"
+          role="tab"
           aria-selected={activeTab === 'standalone'}
           aria-controls="tabpanel-standalone"
           onClick={() => setActiveTab('standalone')}
@@ -346,26 +377,27 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
             data={sites}
             getRowKey={(row) => row.id}
             filterRow={filterRow}
-            actions={(row) => (
-              <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-                <Link href={`/admin/sites/${row.id}`} style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}>
-                  {t.common.edit}
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setDeleteId(row.id)}
-                  style={{ background: 'none', border: 'none', color: ERROR, cursor: 'pointer', fontSize: '0.8125rem' }}
-                >
-                  {t.common.delete}
-                </button>
-              </div>
-            )}
+            actions={siteActions}
             renderExpandedRow={renderExpandedRow}
           />
         </div>
       )}
 
-      {/* Tab 2: Flat list of standalone projects (parent site not shown as whole house) */}
+      {/* Tab 2: Whole house sites only */}
+      {activeTab === 'wholehouse' && (
+        <div id="tabpanel-wholehouse" role="tabpanel">
+          <DataTable
+            columns={columns}
+            data={wholeHouseSites}
+            getRowKey={(row) => row.id}
+            filterRow={filterRow}
+            actions={siteActions}
+            renderExpandedRow={renderExpandedRow}
+          />
+        </div>
+      )}
+
+      {/* Tab 3: Flat list of standalone projects (parent site not shown as whole house) */}
       {activeTab === 'standalone' && (
         <div id="tabpanel-standalone" role="tabpanel">
           <DataTable

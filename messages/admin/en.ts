@@ -521,6 +521,7 @@ const en = {
     newStandaloneProject: 'New Standalone Project',
     tabSites: 'All Sites',
     tabStandalone: 'Standalone Projects',
+    tabWholeHouse: 'Whole House',
     noProjects: 'No projects yet',
     deleteProject: 'Delete Project',
     deleteProjectConfirm: 'Delete this project?',
