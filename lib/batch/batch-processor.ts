@@ -25,7 +25,8 @@ import {
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
 import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
-import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES, STANDALONE_SITE_SLUG } from '@/lib/admin/constants';
+import { ensureStandaloneSite } from '@/lib/db/queries';
+import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
 import { parseZip, parseZipStandalone } from './zip-parser';
 import type {
@@ -903,18 +904,8 @@ async function processStandaloneMode(opts: {
 }): Promise<void> {
   const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds } = opts;
 
-  // Find the standalone site container
-  const [standaloneSite] = await db
-    .select({ id: projectSites.id })
-    .from(projectSites)
-    .where(eq(projectSites.slug, STANDALONE_SITE_SLUG))
-    .limit(1);
-
-  if (!standaloneSite) {
-    throw new Error(`Standalone site container "${STANDALONE_SITE_SLUG}" not found. Please seed the database first.`);
-  }
-
-  const standaloneSiteId = standaloneSite.id;
+  // Find or create the standalone site container
+  const standaloneSiteId = await ensureStandaloneSite();
 
   // Get current max display order for the standalone site
   const [maxRow] = await db

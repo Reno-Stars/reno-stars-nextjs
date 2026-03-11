@@ -980,6 +980,35 @@ export async function getAllSitesAdmin(): Promise<(typeof sitesTable.$inferSelec
   }));
 }
 
+/** Find or create the standalone projects container site. Returns its ID. */
+export async function ensureStandaloneSite(): Promise<string> {
+  const { STANDALONE_SITE_SLUG } = await import('@/lib/admin/constants');
+
+  const [existing] = await db
+    .select({ id: sitesTable.id })
+    .from(sitesTable)
+    .where(eq(sitesTable.slug, STANDALONE_SITE_SLUG))
+    .limit(1);
+
+  if (existing) return existing.id;
+
+  const [created] = await db
+    .insert(sitesTable)
+    .values({
+      slug: STANDALONE_SITE_SLUG,
+      titleEn: 'Individual Projects',
+      titleZh: '独立项目',
+      descriptionEn: 'Container for standalone renovation projects.',
+      descriptionZh: '独立装修项目的容器。',
+      showAsProject: false,
+      featured: false,
+      isPublished: false,
+    })
+    .returning({ id: sitesTable.id });
+
+  return created.id;
+}
+
 export interface ProjectSummary {
   id: string;
   slug: string;

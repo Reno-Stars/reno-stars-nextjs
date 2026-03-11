@@ -167,6 +167,8 @@ Cached async functions fetch data from the database and return the same TypeScri
 
 Admin-only (uncached) query functions: `getAllProjectsAdmin()`, `getAllServicesAdmin()`, `getAllBlogPostsAdmin()`, `getAllContactsAdmin()`, `getAllSocialLinksAdmin()`, `getAllServiceAreasAdmin()`, `getAllGalleryItemsAdmin()`, `getAllTrustBadgesAdmin()`, `getAllFaqsAdmin()`, `getAllPartnersAdmin()`, `getAllSitesAdmin()`, `getAllSocialMediaPostsAdmin()`, `getSocialMediaPostByIdAdmin()`.
 
+`ensureStandaloneSite()` — Shared find-or-create function for the standalone projects container site (`STANDALONE_SITE_SLUG`). Returns the site ID, auto-creating the container if it doesn't exist (unpublished, `showAsProject: false`). Used by the admin sites page (guarantees "New Standalone Project" button works on fresh databases) and the batch processor's standalone mode.
+
 #### Shared Helpers
 
 `groupBy<T, K>(arr, keyFn)` — Groups array items by a key field into a `Map<K, T[]>`. Exported for reuse by server actions (e.g., grouping project relations by `projectId` in social post generation).
@@ -458,14 +460,14 @@ Branches early based on `options.mode` to avoid dual-nullable patterns:
 1. **Extract** — Downloads ZIP, parses via `parseZipStandalone()` (flattens subfolders into top-level projects)
 2. **Upload** — Same image upload pipeline with per-project slug prefixes
 3. **Generate** — `optimizeProjectDescription()` per project, alt text for after images
-4. **Save** — Looks up the standalone site container (`STANDALONE_SITE_SLUG`), queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
+4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
 5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
 
 Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`. AI extracts all metadata fields including PO number, budget, duration from freeform notes (no hard regex extraction).
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 
-Shared `extractFilesFromZip()` builds a file tree, notes map, and products map from the ZIP buffer. Two public parsers consume this:
+Shared `extractFilesFromZip()` builds a file tree, notes map, and products map from the ZIP buffer. Filters out `__MACOSX` folders and macOS resource fork artifacts (`._` prefixed files). Two public parsers consume this:
 
 **`parseZip()` (sites mode)** — supports three layouts:
 
