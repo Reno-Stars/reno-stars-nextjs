@@ -182,6 +182,9 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
     </div>
   ), [t]);
 
+  // Filter out the standalone container — it's a placeholder, not a real site
+  const visibleSites = useMemo(() => sites.filter((s) => s.id !== standaloneSiteId), [sites, standaloneSiteId]);
+
   // Standalone projects: all projects from sites NOT shown as whole-house
   const standaloneProjects = useMemo<StandaloneProjectRow[]>(() => {
     const nonWholeSiteIds = new Set(sites.filter((s) => !s.showAsProject).map((s) => s.id));
@@ -205,9 +208,6 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
     rows.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     return rows;
   }, [sites, projectsBySite]);
-
-  // Filter out the standalone container — it's a placeholder, not a real site
-  const visibleSites = useMemo(() => sites.filter((s) => s.id !== standaloneSiteId), [sites, standaloneSiteId]);
 
   // Whole house sites: sites with showAsProject === true
   const wholeHouseSites = useMemo(() => visibleSites.filter((s) => s.showAsProject), [visibleSites]);
