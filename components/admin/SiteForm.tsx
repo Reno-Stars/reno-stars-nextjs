@@ -148,6 +148,7 @@ export default function SiteForm({
   const [focusKeywordZh, setFocusKeywordZh] = useState(initialData?.focusKeywordZh ?? '');
   const [seoKeywordsEn, setSeoKeywordsEn] = useState(initialData?.seoKeywordsEn ?? '');
   const [seoKeywordsZh, setSeoKeywordsZh] = useState(initialData?.seoKeywordsZh ?? '');
+  const [poNumber, setPoNumber] = useState(initialData?.poNumber ?? '');
 
   // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
@@ -172,6 +173,7 @@ export default function SiteForm({
     setFocusKeywordZh(initialData?.focusKeywordZh ?? '');
     setSeoKeywordsEn(initialData?.seoKeywordsEn ?? '');
     setSeoKeywordsZh(initialData?.seoKeywordsZh ?? '');
+    setPoNumber(initialData?.poNumber ?? '');
   }, [initialData]);
 
   // Callback for AI site generator
@@ -201,6 +203,7 @@ export default function SiteForm({
     setFocusKeywordZh(data.focusKeywordZh);
     setSeoKeywordsEn(data.seoKeywordsEn);
     setSeoKeywordsZh(data.seoKeywordsZh);
+    if (data.poNumber) setPoNumber(data.poNumber);
   }, [cities]);
 
   // Pre-save warning
@@ -272,7 +275,7 @@ export default function SiteForm({
           </FormField>
 
           <FormField label={t.sites.poNumber} htmlFor="poNumber" tooltip={t.sites.tooltips.poNumber}>
-            <input id="poNumber" name="poNumber" defaultValue={initialData?.poNumber ?? ''} style={fieldStyle} placeholder="PO-12345" />
+            <input id="poNumber" name="poNumber" value={poNumber} onChange={(e) => setPoNumber(e.target.value)} style={fieldStyle} placeholder="PO-12345" />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.sites.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.sites.tooltips.title} />

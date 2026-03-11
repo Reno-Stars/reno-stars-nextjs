@@ -23,6 +23,7 @@ interface StandaloneProjectRow {
   serviceType: string;
   isPublished: boolean;
   poNumber: string | null;
+  createdAt: Date;
 }
 
 interface SiteRow {
@@ -197,9 +198,11 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
           serviceType: p.serviceType,
           isPublished: p.isPublished,
           poNumber: p.poNumber,
+          createdAt: p.createdAt,
         });
       }
     }
+    rows.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
     return rows;
   }, [sites, projectsBySite]);
 

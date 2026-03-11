@@ -30,6 +30,10 @@ const ProjectDescriptionSchema = z.object({
   titleEn: z.string(),
   titleZh: z.string(),
   locationCity: z.string(),
+  poNumber: z.string(),
+  budgetRange: z.string(),
+  durationEn: z.string(),
+  durationZh: z.string(),
   descriptionEn: z.string(),
   descriptionZh: z.string(),
   challengeEn: z.string(),
@@ -38,6 +42,8 @@ const ProjectDescriptionSchema = z.object({
   solutionZh: z.string(),
   badgeEn: z.string(),
   badgeZh: z.string(),
+  excerptEn: z.string(),
+  excerptZh: z.string(),
   metaTitleEn: z.string(),
   metaTitleZh: z.string(),
   metaDescriptionEn: z.string(),
@@ -54,6 +60,7 @@ const SiteDescriptionSchema = z.object({
   titleEn: z.string(),
   titleZh: z.string(),
   locationCity: z.string(),
+  poNumber: z.string(),
   budgetRange: z.string(),
   durationEn: z.string(),
   durationZh: z.string(),
@@ -172,10 +179,14 @@ Field guidelines:
 - slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "modern-kitchen-renovation-vancouver"). No consecutive hyphens.
 - titleEn/titleZh: Short, descriptive title for the project (e.g., "Modern Kitchen Renovation" / "现代厨房翻新")
 - locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
+- poNumber: PO number / purchase order / reference number if mentioned in the notes (e.g., "PO-2024-9203", "PO 12345"). Extract the value as-is (max 50 characters). Leave empty string if not mentioned.
+- budgetRange: Exact budget or range if mentioned in the notes (e.g., "$22,000" or "$15,000 - $25,000"). Use the value from the notes as-is. Leave empty string if no budget is mentioned.
+- durationEn/durationZh: Project timeline if mentioned in the notes (e.g., "3 weeks" / "3周"). Use the value from the notes. Leave empty string if no duration is mentioned.
 - description: 2-3 sentences about the project scope and transformation (50-150 words)
 - challenge: 1-2 sentences about the main challenges faced (30-80 words)
 - solution: 1-2 sentences about how challenges were addressed (30-80 words)
 - badge: Short highlight text for a badge/tag (2-5 words, e.g., "Award Winner" / "获奖作品")
+- excerpt: 1-2 sentences summarizing the project for listings (100-200 characters)
 - metaTitle: SEO title under 60 characters, include primary keyword
 - metaDescription: SEO description under 155 characters, compelling and keyword-rich
 - focusKeyword: Primary keyword/phrase for this project (e.g., "modern kitchen renovation")
@@ -190,6 +201,10 @@ Response format:
   "titleEn": "English Project Title",
   "titleZh": "中文项目标题",
   "locationCity": "Vancouver",
+  "poNumber": "PO-2024-9203",
+  "budgetRange": "$22,000",
+  "durationEn": "3 weeks",
+  "durationZh": "3周",
   "descriptionEn": "English project description",
   "descriptionZh": "中文项目描述",
   "challengeEn": "English challenge description",
@@ -198,6 +213,8 @@ Response format:
   "solutionZh": "中文解决方案",
   "badgeEn": "Badge text",
   "badgeZh": "标签文字",
+  "excerptEn": "English excerpt 100-200 chars",
+  "excerptZh": "中文摘要100-200字符",
   "metaTitleEn": "SEO Title | Reno Stars",
   "metaTitleZh": "SEO标题 | Reno Stars",
   "metaDescriptionEn": "Compelling SEO description under 155 chars",
@@ -222,6 +239,7 @@ Field guidelines:
 - slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "west-vancouver-whole-house-renovation"). No consecutive hyphens.
 - titleEn/titleZh: Short, descriptive title for the site (e.g., "West Vancouver Whole House Renovation" / "西温哥华全屋装修")
 - locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
+- poNumber: PO number / purchase order / reference number if mentioned in the notes (e.g., "PO-2024-9203", "PO 12345"). Extract the value as-is (max 50 characters). Leave empty string if not mentioned.
 - budgetRange: Estimated budget range for the entire site (e.g., "$80,000 - $120,000"). Use USD format. Leave empty string if no budget is mentioned.
 - durationEn/durationZh: Estimated timeline for the entire project (e.g., "12 weeks" / "12周", "3 months" / "3个月"). Leave empty string if no duration is mentioned.
 - description: 2-3 sentences about the overall renovation scope and transformation of the property (50-150 words)
@@ -241,6 +259,7 @@ Response format:
   "titleEn": "English Site Title",
   "titleZh": "中文工地标题",
   "locationCity": "West Vancouver",
+  "poNumber": "PO-2024-9203",
   "budgetRange": "$80,000 - $120,000",
   "durationEn": "12 weeks",
   "durationZh": "12周",

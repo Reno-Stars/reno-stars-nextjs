@@ -22,6 +22,7 @@ import {
   neu,
 } from '@/lib/theme';
 import type { BatchJobStatus } from '@/lib/db/schema';
+import type { BatchUploadMode } from '@/lib/batch/types';
 
 interface JobData {
   id: string;
@@ -58,6 +59,24 @@ function getStepIndex(status: BatchJobStatus): number {
 }
 
 // ============================================================================
+// SHARED STYLES
+// ============================================================================
+
+const actionLinkStyle: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  padding: '0.75rem 1.5rem',
+  backgroundColor: NAVY,
+  color: '#fff',
+  border: 'none',
+  borderRadius: 8,
+  fontSize: '0.875rem',
+  fontWeight: 600,
+  textDecoration: 'none',
+};
+
+// ============================================================================
 // COMPONENT
 // ============================================================================
 
@@ -66,6 +85,7 @@ export default function BatchUploadClient() {
   const { locale } = useAdminLocale();
   const bt = t.batchUpload;
 
+  const [mode, setMode] = useState<BatchUploadMode>('sites');
   const [phase, setPhase] = useState<Phase>('upload');
   const [dragActive, setDragActive] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -152,6 +172,7 @@ export default function BatchUploadClient() {
           fileName: file.name,
           fileSize: file.size,
           generateBlog,
+          mode,
         }),
       });
 
@@ -207,7 +228,7 @@ export default function BatchUploadClient() {
     } finally {
       if (mountedRef.current) setUploading(false);
     }
-  }, [file, generateBlog, startPolling, bt]);
+  }, [file, generateBlog, mode, startPolling, bt]);
 
   // ---- Reset ----
   const handleReset = useCallback(() => {
@@ -217,13 +238,64 @@ export default function BatchUploadClient() {
     setError(null);
     setShowErrors(false);
     setGenerateBlog(false);
+    setShowHelp(false);
   }, []);
 
   // ---- Render ----
   return (
     <div style={{ maxWidth: 700, margin: '0 auto' }}>
+      {/* MODE TABS */}
+      <div
+        role="tablist"
+        style={{
+          display: 'flex',
+          gap: 0,
+          marginBottom: '1.5rem',
+          borderBottom: `2px solid ${SURFACE_ALT}`,
+        }}
+      >
+        {(['sites', 'standalone'] as const).map((tab) => {
+          const isActive = mode === tab;
+          const label = tab === 'sites' ? bt.tabSites : bt.tabStandalone;
+          return (
+            <button
+              key={tab}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls="batch-upload-panel"
+              onClick={() => {
+                if (mode !== tab) {
+                  setMode(tab);
+                  setFile(null);
+                  setError(null);
+                  setShowHelp(false);
+                }
+              }}
+              disabled={phase !== 'upload'}
+              style={{
+                padding: '0.625rem 1.25rem',
+                background: 'none',
+                border: 'none',
+                borderBottom: `2px solid ${isActive ? GOLD : 'transparent'}`,
+                marginBottom: -2,
+                color: isActive ? GOLD : TEXT_MID,
+                fontWeight: isActive ? 600 : 400,
+                fontSize: '0.9375rem',
+                cursor: phase !== 'upload' ? 'default' : 'pointer',
+                opacity: phase !== 'upload' ? 0.5 : 1,
+                transition: 'color 0.2s, border-color 0.2s',
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div id="batch-upload-panel" role="tabpanel">
       <p style={{ color: TEXT_MID, marginBottom: '1.5rem', fontSize: '0.9375rem' }}>
-        {bt.description}
+        {mode === 'standalone' ? bt.descriptionStandalone : bt.description}
       </p>
 
       {/* PHASE: UPLOAD */}
@@ -340,7 +412,7 @@ export default function BatchUploadClient() {
             />
             <span>{bt.generateBlog}</span>
             <span style={{ color: TEXT_MUTED, fontSize: '0.75rem' }}>
-              ({bt.generateBlogHelp})
+              ({mode === 'standalone' ? bt.generateBlogHelpStandalone : bt.generateBlogHelp})
             </span>
           </label>
 
@@ -374,7 +446,10 @@ export default function BatchUploadClient() {
               {bt.folderStructureTitle}
             </button>
             <a
-              href={`/example-batch-upload-${locale}.zip`}
+              href={mode === 'standalone'
+                ? `/example-batch-upload-standalone-${locale}.zip`
+                : `/example-batch-upload-${locale}.zip`
+              }
               download
               style={{
                 display: 'inline-flex',
@@ -409,7 +484,21 @@ export default function BatchUploadClient() {
               }}
             >
               <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '0.75rem', whiteSpace: 'pre-wrap' }}>
-{`Richmond Whole House/            <- Site name
+{mode === 'standalone'
+? `Kitchen Renovation/              <- Project (auto-detected)
+  hero.jpg                       <- Hero image
+  notes.txt                      <- AI context (see template)
+  products.txt                   <- External product links
+  product-1.jpg                  <- Image for 1st product
+  before-1.jpg / after-1.jpg     <- Image pairs
+  before-2.jpg / after-2.jpg
+Bathroom Remodel/
+  hero.jpg
+  notes.txt
+  before-1.jpg / after-1.jpg
+Basement/
+  before-1.jpg / after-1.jpg`
+: `Richmond Whole House/            <- Site name
   hero.jpg                       <- Site hero image
   notes.txt                      <- AI context (see template)
   products.txt                   <- External product links
@@ -432,7 +521,7 @@ export default function BatchUploadClient() {
     before-1.jpg / after-1.jpg`}
               </pre>
               <p style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }}>
-                {bt.folderStructureHelp}
+                {mode === 'standalone' ? bt.folderStructureHelpStandalone : bt.folderStructureHelp}
               </p>
               <div
                 style={{
@@ -674,12 +763,14 @@ export default function BatchUploadClient() {
 
           {/* Summary cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
-            <SummaryCard
-              label={bt.sitesCreated.replace('{count}', String(job.createdSiteIds.length))}
-              count={job.createdSiteIds.length}
-              color={NAVY}
-              bgColor={SURFACE_ALT}
-            />
+            {mode === 'sites' && (
+              <SummaryCard
+                label={bt.sitesCreated.replace('{count}', String(job.createdSiteIds.length))}
+                count={job.createdSiteIds.length}
+                color={NAVY}
+                bgColor={SURFACE_ALT}
+              />
+            )}
             <SummaryCard
               label={bt.projectsCreated.replace('{count}', String(job.createdProjectIds.length))}
               count={job.createdProjectIds.length}
@@ -731,8 +822,8 @@ export default function BatchUploadClient() {
                     listStyle: 'disc',
                   }}
                 >
-                  {job.errors.map((err, i) => (
-                    <li key={i} style={{ marginBottom: '0.25rem' }}>
+                  {job.errors.map((err, idx) => (
+                    <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
                       {err}
                     </li>
                   ))}
@@ -743,24 +834,17 @@ export default function BatchUploadClient() {
 
           {/* Action buttons */}
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            {job.createdSiteIds.length > 0 && (
+            {mode === 'standalone' && job.createdProjectIds.length > 0 && (
+              <Link href="/admin/sites" style={actionLinkStyle}>
+                {bt.reviewProjects}
+              </Link>
+            )}
+            {mode === 'sites' && job.createdSiteIds.length > 0 && (
               <Link
                 href={job.createdSiteIds.length === 1
                   ? `/admin/sites/${job.createdSiteIds[0]}`
                   : '/admin/sites'}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  backgroundColor: NAVY,
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 8,
-                  fontSize: '0.875rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                }}
+                style={actionLinkStyle}
               >
                 {bt.reviewSites}
               </Link>
@@ -784,6 +868,7 @@ export default function BatchUploadClient() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

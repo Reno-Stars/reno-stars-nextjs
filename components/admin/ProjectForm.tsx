@@ -76,6 +76,8 @@ interface ProjectFormProps {
     solutionZh: string;
     badgeEn: string;
     badgeZh: string;
+    excerptEn: string;
+    excerptZh: string;
     poNumber?: string;
     metaTitleEn: string;
     metaTitleZh: string;
@@ -149,6 +151,14 @@ export default function ProjectForm({
   const [focusKeywordZh, setFocusKeywordZh] = useState(initialData?.focusKeywordZh ?? '');
   const [seoKeywordsEn, setSeoKeywordsEn] = useState(initialData?.seoKeywordsEn ?? '');
   const [seoKeywordsZh, setSeoKeywordsZh] = useState(initialData?.seoKeywordsZh ?? '');
+  // Fields that AI can also populate
+  const [poNumber, setPoNumber] = useState(initialData?.poNumber ?? '');
+  const [budgetMin, setBudgetMin] = useState(initialData?.budgetMin ?? '');
+  const [budgetMax, setBudgetMax] = useState(initialData?.budgetMax ?? '');
+  const [durationEn, setDurationEn] = useState(initialData?.durationEn ?? '');
+  const [durationZh, setDurationZh] = useState(initialData?.durationZh ?? '');
+  const [excerptEn, setExcerptEn] = useState(initialData?.excerptEn ?? '');
+  const [excerptZh, setExcerptZh] = useState(initialData?.excerptZh ?? '');
 
   // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
@@ -175,6 +185,13 @@ export default function ProjectForm({
     setFocusKeywordZh(initialData?.focusKeywordZh ?? '');
     setSeoKeywordsEn(initialData?.seoKeywordsEn ?? '');
     setSeoKeywordsZh(initialData?.seoKeywordsZh ?? '');
+    setPoNumber(initialData?.poNumber ?? '');
+    setBudgetMin(initialData?.budgetMin ?? '');
+    setBudgetMax(initialData?.budgetMax ?? '');
+    setDurationEn(initialData?.durationEn ?? '');
+    setDurationZh(initialData?.durationZh ?? '');
+    setExcerptEn(initialData?.excerptEn ?? '');
+    setExcerptZh(initialData?.excerptZh ?? '');
   }, [initialData]);
 
   // Callback for AI project generator
@@ -195,6 +212,21 @@ export default function ProjectForm({
     setSolutionZh(data.solutionZh);
     setBadgeEn(data.badgeEn);
     setBadgeZh(data.badgeZh);
+    if (data.excerptEn) setExcerptEn(data.excerptEn);
+    if (data.excerptZh) setExcerptZh(data.excerptZh);
+    if (data.durationEn) setDurationEn(data.durationEn);
+    if (data.durationZh) setDurationZh(data.durationZh);
+    // Parse AI budget string (e.g., "$22,000" or "$15,000 - $25,000") into min/max
+    if (data.budgetRange) {
+      const nums = data.budgetRange.match(/[\d,]+/g)?.map((s) => s.replace(/,/g, '')) ?? [];
+      if (nums.length >= 2) {
+        setBudgetMin(nums[0]);
+        setBudgetMax(nums[1]);
+      } else if (nums.length === 1) {
+        setBudgetMin(nums[0]);
+        setBudgetMax(nums[0]);
+      }
+    }
     setMetaTitleEn(data.metaTitleEn);
     setMetaTitleZh(data.metaTitleZh);
     setMetaDescriptionEn(data.metaDescriptionEn);
@@ -203,6 +235,7 @@ export default function ProjectForm({
     setFocusKeywordZh(data.focusKeywordZh);
     setSeoKeywordsEn(data.seoKeywordsEn);
     setSeoKeywordsZh(data.seoKeywordsZh);
+    if (data.poNumber) setPoNumber(data.poNumber);
   }, [cities]);
 
   // Convert sites to SearchableSelect options format
@@ -250,6 +283,7 @@ export default function ProjectForm({
     if (!fd.get('metaDescriptionEn') && !fd.get('metaDescriptionZh')) missing.push(t.projects.metaDescription);
     if (!fd.get('focusKeywordEn') && !fd.get('focusKeywordZh')) missing.push(t.projects.focusKeyword);
     if (!fd.get('seoKeywordsEn') && !fd.get('seoKeywordsZh')) missing.push(t.projects.seoKeywords);
+    if (!fd.get('excerptEn') && !fd.get('excerptZh')) missing.push(t.projects.excerpt);
 
     requestSave(fd, missing);
   }, [imagePairs.length, requestSave, t]);
@@ -300,7 +334,7 @@ export default function ProjectForm({
           </FormField>
 
           <FormField label={t.projects.poNumber} htmlFor="poNumber" tooltip={t.projects.tooltips.poNumber}>
-            <input id="poNumber" name="poNumber" defaultValue={initialData?.poNumber ?? ''} style={fieldStyle} placeholder="PO-12345" />
+            <input id="poNumber" name="poNumber" value={poNumber} onChange={(e) => setPoNumber(e.target.value)} style={fieldStyle} placeholder="PO-12345" />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.projects.titleLabel} valueEn={titleEn} onChangeEn={setTitleEn} valueZh={titleZh} onChangeZh={setTitleZh} required tooltip={t.projects.tooltips.title} />
@@ -337,7 +371,8 @@ export default function ProjectForm({
                   type="number"
                   min="0"
                   step="1000"
-                  defaultValue={initialData?.budgetMin ?? ''}
+                  value={budgetMin}
+                  onChange={(e) => setBudgetMin(e.target.value)}
                   style={{ ...fieldStyle, paddingLeft: '1.5rem' }}
                   placeholder="15000"
                 />
@@ -351,7 +386,8 @@ export default function ProjectForm({
                   type="number"
                   min="0"
                   step="1000"
-                  defaultValue={initialData?.budgetMax ?? ''}
+                  value={budgetMax}
+                  onChange={(e) => setBudgetMax(e.target.value)}
                   style={{ ...fieldStyle, paddingLeft: '1.5rem' }}
                   placeholder="25000"
                 />
@@ -359,7 +395,7 @@ export default function ProjectForm({
             </div>
           </FormField>
 
-          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} defaultValueEn={initialData?.durationEn} defaultValueZh={initialData?.durationZh} tooltip={t.projects.tooltips.duration} />
+          <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.projects.duration} valueEn={durationEn} onChangeEn={setDurationEn} valueZh={durationZh} onChangeZh={setDurationZh} tooltip={t.projects.tooltips.duration} />
 
           <FormField label={t.projects.spaceType} htmlFor="spaceType" tooltip={t.projects.tooltips.spaceType}>
             <select id="spaceType" name="spaceType" value={selectedSpaceType} onChange={(e) => setSelectedSpaceType(e.target.value)} style={fieldStyle}>
@@ -429,6 +465,18 @@ export default function ProjectForm({
               valueZh={seoKeywordsZh}
               onChangeZh={setSeoKeywordsZh}
               tooltip={t.projects.tooltips.seoKeywords}
+            />
+            <BilingualTextarea
+              nameEn="excerptEn"
+              nameZh="excerptZh"
+              label={t.projects.excerpt}
+              valueEn={excerptEn}
+              onChangeEn={setExcerptEn}
+              valueZh={excerptZh}
+              onChangeZh={setExcerptZh}
+              rows={2}
+              tooltip={t.projects.tooltips.excerpt}
+              disabled={!editing}
             />
           </div>
 

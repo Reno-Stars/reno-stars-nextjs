@@ -19,10 +19,11 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { fileName, fileSize, generateBlog } = body as {
+    const { fileName, fileSize, generateBlog, mode } = body as {
       fileName: unknown;
       fileSize: unknown;
       generateBlog: unknown;
+      mode: unknown;
     };
 
     if (typeof fileName !== 'string' || !fileName || typeof fileSize !== 'number' || fileSize === 0) {
@@ -58,7 +59,10 @@ export async function POST(request: NextRequest) {
       .values({
         fileName,
         fileSizeBytes: fileSize,
-        options: { generateBlog: !!generateBlog },
+        options: {
+          generateBlog: !!generateBlog,
+          mode: mode === 'standalone' ? 'standalone' : 'sites',
+        },
         status: 'pending',
       })
       .returning({ id: batchUploadJobs.id });

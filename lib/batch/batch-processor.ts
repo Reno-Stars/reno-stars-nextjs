@@ -15,7 +15,7 @@ import {
   projectExternalProducts,
 } from '@/lib/db/schema';
 import type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { getS3Client, S3_BUCKET } from '@/lib/admin/s3';
 import {
   optimizeSiteDescription,
@@ -23,13 +23,14 @@ import {
   generateAltText,
 } from '@/lib/ai/content-optimizer';
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
-import { generateBlogFromSite } from '@/app/actions/admin/generate-blog';
+import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
-import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES } from '@/lib/admin/constants';
+import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES, STANDALONE_SITE_SLUG } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
-import { parseZip } from './zip-parser';
+import { parseZip, parseZipStandalone } from './zip-parser';
 import type {
   ParsedZipStructure,
+  ParsedStandaloneStructure,
   ParsedProject,
   ParsedExternalProduct,
   ExtractedImage,
@@ -325,6 +326,7 @@ function fallbackSiteData(folderName: string) {
     descriptionEn: `Whole house renovation project at ${folderName}.`,
     descriptionZh: `${folderName}全屋装修项目。`,
     locationCity: '',
+    poNumber: '',
     budgetRange: '',
     durationEn: '',
     durationZh: '',
@@ -353,6 +355,10 @@ function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
     descriptionEn: `${category.en} renovation project.`,
     descriptionZh: `${category.zh}装修项目。`,
     locationCity: '',
+    poNumber: '',
+    budgetRange: '',
+    durationEn: '',
+    durationZh: '',
     challengeEn: '',
     challengeZh: '',
     solutionEn: '',
@@ -412,6 +418,112 @@ async function cleanupOrphanedSite(siteId: string): Promise<void> {
 }
 
 // ============================================================================
+// SHARED PIPELINE HELPERS
+// ============================================================================
+
+/** Collect all images from a parsed project for upload. */
+function collectProjectImages(project: ParsedProject): ExtractedImage[] {
+  const images: ExtractedImage[] = [];
+  if (project.heroImage) images.push(project.heroImage);
+  for (const pair of project.imagePairs) {
+    if (pair.before) images.push(pair.before);
+    if (pair.after) images.push(pair.after);
+  }
+  for (const img of project.productImages.values()) {
+    images.push(img);
+  }
+  return images;
+}
+
+/** Collect after-image URLs from project image pairs for alt text generation. */
+function collectAfterImageUrls(
+  projectList: ParsedProject[],
+  urlMap: Map<ExtractedImage, string>
+): string[] {
+  const urls: string[] = [];
+  for (const project of projectList) {
+    for (const pair of project.imagePairs) {
+      const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
+      if (url) urls.push(url);
+    }
+  }
+  return urls;
+}
+
+/** Generate blog posts for a list of entity IDs using the given generator function. */
+async function generateBlogsForEntities(opts: {
+  ids: string[];
+  generator: (id: string) => Promise<{ blogPostId?: string; error?: string }>;
+  entityLabel: string;
+  jobId: string;
+  errors: string[];
+  createdBlogPostIds: string[];
+}): Promise<void> {
+  const { ids, generator, entityLabel, jobId, errors, createdBlogPostIds } = opts;
+
+  await updateJob(jobId, {
+    status: 'generating_blog',
+    currentStepLabel: 'Generating blog posts...',
+  });
+
+  for (const id of ids) {
+    try {
+      const result = await generator(id);
+      if (result.blogPostId) {
+        createdBlogPostIds.push(result.blogPostId);
+      } else if (result.error) {
+        errors.push(`Blog generation for ${entityLabel} ${id}: ${result.error}`);
+      }
+    } catch (error) {
+      errors.push(
+        `Blog generation failed for ${entityLabel} ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  }
+}
+
+/** Delete the temp ZIP from S3 (non-critical). */
+async function cleanupTempZip(jobId: string): Promise<void> {
+  try {
+    const client = getS3Client();
+    if (client) {
+      await client.send(
+        new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
+      );
+    }
+  } catch {
+    // Non-critical cleanup
+  }
+}
+
+/** Finalize a batch job: set terminal status, timestamps, and clean up temp ZIP. */
+async function finalizeJob(opts: {
+  jobId: string;
+  errors: string[];
+  createdSiteIds: string[];
+  createdProjectIds: string[];
+  createdBlogPostIds: string[];
+}): Promise<void> {
+  const { jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds } = opts;
+  const hasErrors = errors.length > 0;
+  const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
+
+  await updateJob(jobId, {
+    status: hasErrors && hasCreations ? 'partial' : hasErrors ? 'failed' : 'completed',
+    currentStepLabel: hasErrors
+      ? `Completed with ${errors.length} error(s)`
+      : 'Completed successfully',
+    completedAt: new Date(),
+    createdSiteIds: [...createdSiteIds],
+    createdProjectIds: [...createdProjectIds],
+    createdBlogPostIds: [...createdBlogPostIds],
+    errors: [...errors],
+  });
+
+  await cleanupTempZip(jobId);
+}
+
+// ============================================================================
 // MAIN PROCESSOR
 // ============================================================================
 
@@ -432,7 +544,11 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     if (!job) throw new Error('Job not found');
     if (job.status !== 'pending') throw new Error(`Job already in status: ${job.status}`);
 
-    const options: BatchJobOptions = job.options ?? { generateBlog: false };
+    const options: BatchJobOptions = {
+      generateBlog: false,
+      mode: 'sites',
+      ...job.options,
+    };
 
     // ---- STEP 2: Extract ZIP from S3 temp ----
     await updateJob(jobId, {
@@ -450,7 +566,40 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     if (!zipObj.Body) throw new Error('Failed to download ZIP from S3');
     const zipBuffer = new Uint8Array(await zipObj.Body.transformToByteArray());
 
-    // Parse ZIP (async, non-blocking)
+    // Parse ZIP based on mode — branch early to avoid dual-nullable pattern
+    if (options.mode === 'standalone') {
+      let parsedStandalone: ParsedStandaloneStructure;
+      try {
+        parsedStandalone = await parseZipStandalone(zipBuffer);
+      } catch (error) {
+        throw new Error(
+          `ZIP extraction failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
+      }
+
+      if (parsedStandalone.projects.length === 0) {
+        throw new Error('No image files found in the ZIP archive.');
+      }
+
+      await updateJob(jobId, {
+        totalImages: parsedStandalone.totalImages,
+        currentStepLabel: `Found ${parsedStandalone.totalImages} images in ${parsedStandalone.projects.length} project(s)`,
+      });
+
+      await processStandaloneMode({
+        parsedStandalone,
+        jobId,
+        options,
+        errors,
+        createdProjectIds,
+        createdBlogPostIds,
+      });
+
+      await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
+      return;
+    }
+
+    // Sites mode
     let parsed: ParsedZipStructure;
     try {
       parsed = await parseZip(zipBuffer);
@@ -494,15 +643,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         siteImages.push(img);
       }
       for (const project of site.projects) {
-        if (project.heroImage) siteImages.push(project.heroImage);
-        for (const pair of project.imagePairs) {
-          if (pair.before) siteImages.push(pair.before);
-          if (pair.after) siteImages.push(pair.after);
-        }
-        // Project-level product images
-        for (const img of project.productImages.values()) {
-          siteImages.push(img);
-        }
+        siteImages.push(...collectProjectImages(project));
       }
 
       const siteUrls = await uploadImagesInBatches({
@@ -557,12 +698,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
         if (url) afterImageUrls.push(url);
       }
-      for (const project of site.projects) {
-        for (const pair of project.imagePairs) {
-          const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
-          if (url) afterImageUrls.push(url);
-        }
-      }
+      afterImageUrls.push(...collectAfterImageUrls(site.projects, urlMap));
     }
 
     const altTextMap = await generateAltTextsInBatches(afterImageUrls);
@@ -618,6 +754,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             budgetRange: siteData.budgetRange || null,
             durationEn: siteData.durationEn || null,
             durationZh: siteData.durationZh || null,
+            poNumber: siteData.poNumber || null,
             showAsProject: true,
             featured: false,
             isPublished: false,
@@ -725,51 +862,18 @@ export async function processBatchUpload(jobId: string): Promise<void> {
 
     // ---- STEP 6: Blog generation (optional) ----
     if (options.generateBlog && createdSiteIds.length > 0) {
-      await updateJob(jobId, {
-        status: 'generating_blog',
-        currentStepLabel: 'Generating blog posts...',
+      await generateBlogsForEntities({
+        ids: createdSiteIds,
+        generator: generateBlogFromSite,
+        entityLabel: 'site',
+        jobId,
+        errors,
+        createdBlogPostIds,
       });
-
-      for (const siteId of createdSiteIds) {
-        try {
-          const result = await generateBlogFromSite(siteId);
-          if (result.blogPostId) {
-            createdBlogPostIds.push(result.blogPostId);
-          } else if (result.error) {
-            errors.push(`Blog generation for site ${siteId}: ${result.error}`);
-          }
-        } catch (error) {
-          errors.push(
-            `Blog generation failed for site ${siteId}: ${error instanceof Error ? error.message : 'Unknown error'}`
-          );
-        }
-      }
     }
 
     // ---- DONE ----
-    const hasErrors = errors.length > 0;
-    const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
-
-    await updateJob(jobId, {
-      status: hasErrors && hasCreations ? 'partial' : hasErrors ? 'failed' : 'completed',
-      currentStepLabel: hasErrors
-        ? `Completed with ${errors.length} error(s)`
-        : 'Completed successfully',
-      completedAt: new Date(),
-      createdSiteIds: [...createdSiteIds],
-      createdProjectIds: [...createdProjectIds],
-      createdBlogPostIds: [...createdBlogPostIds],
-      errors: [...errors],
-    });
-
-    // Clean up temp ZIP (non-critical)
-    try {
-      await client.send(
-        new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
-      );
-    } catch {
-      // Non-critical cleanup
-    }
+    await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     errors.push(message);
@@ -781,6 +885,136 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       createdSiteIds: [...createdSiteIds],
       createdProjectIds: [...createdProjectIds],
       createdBlogPostIds: [...createdBlogPostIds],
+    });
+  }
+}
+
+// ============================================================================
+// STANDALONE MODE PROCESSOR
+// ============================================================================
+
+async function processStandaloneMode(opts: {
+  parsedStandalone: ParsedStandaloneStructure;
+  jobId: string;
+  options: BatchJobOptions;
+  errors: string[];
+  createdProjectIds: string[];
+  createdBlogPostIds: string[];
+}): Promise<void> {
+  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds } = opts;
+
+  // Find the standalone site container
+  const [standaloneSite] = await db
+    .select({ id: projectSites.id })
+    .from(projectSites)
+    .where(eq(projectSites.slug, STANDALONE_SITE_SLUG))
+    .limit(1);
+
+  if (!standaloneSite) {
+    throw new Error(`Standalone site container "${STANDALONE_SITE_SLUG}" not found. Please seed the database first.`);
+  }
+
+  const standaloneSiteId = standaloneSite.id;
+
+  // Get current max display order for the standalone site
+  const [maxRow] = await db
+    .select({ max: sql<number>`coalesce(max(${projects.displayOrderInSite}), -1)` })
+    .from(projects)
+    .where(eq(projects.siteId, standaloneSiteId));
+  let nextDisplayOrder = Number(maxRow?.max ?? -1) + 1;
+
+  // ---- Upload images ----
+  await updateJob(jobId, {
+    status: 'uploading',
+    currentStepLabel: 'Uploading images...',
+  });
+
+  const urlMap = new Map<ExtractedImage, string>();
+  let uploadedCount = 0;
+
+  for (const project of parsedStandalone.projects) {
+    const slugPrefix = formatSlug(project.folderName || 'batch');
+    const projectImages = collectProjectImages(project);
+
+    const projectUrls = await uploadImagesInBatches({
+      images: projectImages,
+      slugPrefix,
+      jobId,
+      startCount: uploadedCount,
+      totalImages: parsedStandalone.totalImages,
+      errors,
+    });
+
+    for (const [img, url] of projectUrls) {
+      urlMap.set(img, url);
+    }
+    uploadedCount += projectImages.length;
+  }
+
+  // ---- AI metadata generation ----
+  await updateJob(jobId, {
+    status: 'generating',
+    currentStepLabel: 'Generating metadata with AI...',
+  });
+
+  const projectMetadataMap = new Map<string, ProjectDescription | null>();
+
+  for (const parsedProject of parsedStandalone.projects) {
+    const projMeta = await generateProjectMetadata(
+      parsedProject.folderName,
+      parsedProject.serviceType,
+      parsedProject.notes
+    );
+    projectMetadataMap.set(parsedProject.folderName, projMeta);
+
+    await updateJob(jobId, {
+      currentStepLabel: `Generated metadata for: ${parsedProject.folderName}`,
+    });
+  }
+
+  // Pre-generate alt text for after images
+  const afterImageUrls = collectAfterImageUrls(parsedStandalone.projects, urlMap);
+  const altTextMap = await generateAltTextsInBatches(afterImageUrls);
+
+  // ---- Save to DB ----
+  await updateJob(jobId, {
+    status: 'saving',
+    currentStepLabel: 'Saving to database...',
+  });
+
+  const existingProjectSlugs = await getExistingSlugs('projects');
+
+  for (const parsedProject of parsedStandalone.projects) {
+    try {
+      const aiProject = projectMetadataMap.get(parsedProject.folderName);
+      await saveProject({
+        parsedProject,
+        aiProject: aiProject ?? null,
+        siteId: standaloneSiteId,
+        displayOrder: nextDisplayOrder++,
+        urlMap,
+        altTextMap,
+        existingProjectSlugs,
+        createdProjectIds,
+        errors,
+        jobId,
+      });
+    } catch (error) {
+      errors.push(
+        `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  }
+
+  // ---- Blog generation (optional) ----
+  if (options.generateBlog && createdProjectIds.length > 0) {
+    await generateBlogsForEntities({
+      ids: createdProjectIds,
+      generator: generateBlogFromProject,
+      entityLabel: 'project',
+      jobId,
+      errors,
+      createdBlogPostIds,
     });
   }
 }
@@ -835,6 +1069,9 @@ async function saveProject(opts: {
       categoryEn: category.en,
       categoryZh: category.zh,
       locationCity: projectData.locationCity || null,
+      budgetRange: projectData.budgetRange || null,
+      durationEn: projectData.durationEn || null,
+      durationZh: projectData.durationZh || null,
       heroImageUrl: heroUrl,
       challengeEn: projectData.challengeEn || null,
       challengeZh: projectData.challengeZh || null,
@@ -842,8 +1079,8 @@ async function saveProject(opts: {
       solutionZh: projectData.solutionZh || null,
       badgeEn: projectData.badgeEn || null,
       badgeZh: projectData.badgeZh || null,
-      excerptEn: ('excerptEn' in projectData ? projectData.excerptEn : null) || null,
-      excerptZh: ('excerptZh' in projectData ? projectData.excerptZh : null) || null,
+      excerptEn: projectData.excerptEn || null,
+      excerptZh: projectData.excerptZh || null,
       metaTitleEn: projectData.metaTitleEn || null,
       metaTitleZh: projectData.metaTitleZh || null,
       metaDescriptionEn: projectData.metaDescriptionEn || null,
@@ -852,6 +1089,7 @@ async function saveProject(opts: {
       focusKeywordZh: projectData.focusKeywordZh || null,
       seoKeywordsEn: projectData.seoKeywordsEn || null,
       seoKeywordsZh: projectData.seoKeywordsZh || null,
+      poNumber: projectData.poNumber || null,
       siteId,
       displayOrderInSite: displayOrder,
       featured: false,

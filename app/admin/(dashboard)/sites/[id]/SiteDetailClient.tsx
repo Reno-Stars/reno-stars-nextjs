@@ -73,6 +73,8 @@ interface ProjectWithDetails {
   solutionZh: string | null;
   badgeEn: string | null;
   badgeZh: string | null;
+  excerptEn: string | null;
+  excerptZh: string | null;
   poNumber: string | null;
   metaTitleEn: string | null;
   metaTitleZh: string | null;
@@ -238,6 +240,8 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
       solutionZh: project.solutionZh ?? '',
       badgeEn: project.badgeEn ?? '',
       badgeZh: project.badgeZh ?? '',
+      excerptEn: project.excerptEn ?? '',
+      excerptZh: project.excerptZh ?? '',
       poNumber: project.poNumber ?? '',
       metaTitleEn: project.metaTitleEn ?? '',
       metaTitleZh: project.metaTitleZh ?? '',

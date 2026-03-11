@@ -339,8 +339,8 @@ export const AI_CONFIG = {
 |----------|---------|---------|
 | `optimizeContent(rawContent)` | Blog content optimization | `OptimizedContent` (contentEn/Zh, excerptEn/Zh, SEO fields) |
 | `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
-| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, SEO fields, locationCity) |
-| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, SEO fields, locationCity) |
+| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
+| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
 All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for reuse by form components via `Omit<T, 'detectedLanguage'>`.
@@ -404,8 +404,8 @@ Blog generation actions fetch project data with relations (image pairs, scopes, 
 |-----------|-------|
 | `AIContentEditor` | Blog post form — paste content, AI cleans up and translates |
 | `AIFieldGenerator<T>` | Generic AI generator — notes textarea + generate button (used by wrappers below) |
-| `AIProjectGenerator` | Project form — thin wrapper, generates slug, title, description, challenge, solution, badge, SEO |
-| `AISiteGenerator` | Site form — thin wrapper, generates slug, title, description, badge, excerpt, SEO |
+| `AIProjectGenerator` | Project form — thin wrapper, generates slug, title, description, challenge, solution, badge, excerpt, PO number, budget, duration, SEO |
+| `AISiteGenerator` | Site form — thin wrapper, generates slug, title, description, badge, excerpt, PO number, budget, duration, SEO |
 
 `AIProjectGenerator` and `AISiteGenerator` use exported `ProjectDescription` / `SiteDescription` types from `content-optimizer.ts` via `Omit<T, 'detectedLanguage'>` for their callback signatures, eliminating inline type duplication. Project/site description fields use `BilingualTextarea` in controlled mode (formerly `AIBilingualTextarea` with inline AI button, removed in favor of the top-level "AI Generate All" feature).
 
@@ -428,7 +428,7 @@ useEffect(() => {
 
 ## Batch Upload
 
-Admin feature for bulk-creating sites, projects, image pairs, and blog posts from a ZIP file of renovation images.
+Admin feature for bulk-creating sites, projects, image pairs, and blog posts from a ZIP file of renovation images. Supports two modes: **Sites** (whole-house with site containers) and **Standalone** (individual projects under the standalone site container).
 
 ### Architecture
 
@@ -445,19 +445,35 @@ BatchUploadClient (React)  ──POST──►  api/route.ts (upload ZIP to S3 t
 
 ### Processing Pipeline (`lib/batch/batch-processor.ts`)
 
-1. **Extract** — Downloads ZIP from S3 temp, parses asynchronously via `fflate` (`lib/batch/zip-parser.ts`)
-2. **Upload** — Uploads all images (site hero, site image pairs, project heroes, project image pairs, product images) to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes
-3. **Generate** — AI metadata generation: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for all site-level and project-level images (batches of 5)
+Branches early based on `options.mode` to avoid dual-nullable patterns:
+
+**Sites mode** (default):
+1. **Extract** — Downloads ZIP from S3 temp, parses via `parseZip()` (async `fflate`)
+2. **Upload** — Uploads all images to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
+3. **Generate** — AI metadata: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for after images (batches of 5). Uses shared `collectAfterImageUrls()` helper
 4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
-5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site
+5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site via shared `generateBlogsForEntities()` helper
+
+**Standalone mode**:
+1. **Extract** — Downloads ZIP, parses via `parseZipStandalone()` (flattens subfolders into top-level projects)
+2. **Upload** — Same image upload pipeline with per-project slug prefixes
+3. **Generate** — `optimizeProjectDescription()` per project, alt text for after images
+4. **Save** — Looks up the standalone site container (`STANDALONE_SITE_SLUG`), queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
+5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
+
+Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`. AI extracts all metadata fields including PO number, budget, duration from freeform notes (no hard regex extraction).
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 
-Supports three layouts:
+Shared `extractFilesFromZip()` builds a file tree, notes map, and products map from the ZIP buffer. Two public parsers consume this:
+
+**`parseZip()` (sites mode)** — supports three layouts:
 
 - **Nested**: Top-level folder = site, subfolders = projects. Root-level images in the site folder become site-level image pairs (`site_image_pairs`), not a separate project. Subfolders become projects with their own `project_image_pairs`
 - **Single-folder**: Top-level folder with no subfolders = single project wrapped in a site. Pairs belong to the project only (site `imagePairs` is empty to prevent duplication)
 - **Flat**: All images at root (no folders) = single project, auto-wrapped in a site
+
+**`parseZipStandalone()` (standalone mode)** — each top-level folder = one standalone project (no site wrapper). Subfolders are flattened into their parent top-level folder. Flat root images = single project. Notes/products from subfolders are intentionally ignored — only the top-level folder's text files are used
 
 Image naming conventions:
 - **Hero images**: `hero.jpg` at any folder level becomes the hero image for that entity
@@ -470,11 +486,11 @@ Image naming conventions:
 
 ### Job Status Tracking
 
-Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`.
+Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors) and `BatchJobOptions` (generateBlog, mode). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`.
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a locale-aware "Download Example ZIP" link (`public/example-batch-upload-{locale}.zip`) next to the folder structure help toggle. Help section content (notes.txt example, products.txt example) is fully bilingual via admin translation keys.
+Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
 
 ## Image Upload
 

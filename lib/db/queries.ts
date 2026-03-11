@@ -990,6 +990,7 @@ export interface ProjectSummary {
   isPublished: boolean;
   displayOrderInSite: number;
   poNumber: string | null;
+  createdAt: Date;
 }
 
 /** Fetch all projects grouped by siteId for the sites list (admin). Lightweight — no images/scopes. */
@@ -1005,6 +1006,7 @@ export async function getAllProjectsBySiteAdmin(): Promise<Record<string, Projec
       isPublished: projectsTable.isPublished,
       displayOrderInSite: projectsTable.displayOrderInSite,
       poNumber: projectsTable.poNumber,
+      createdAt: projectsTable.createdAt,
     })
     .from(projectsTable)
     .orderBy(asc(projectsTable.displayOrderInSite));

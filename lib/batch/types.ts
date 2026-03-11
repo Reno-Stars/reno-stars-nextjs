@@ -3,6 +3,9 @@ import type { ServiceTypeKey } from '@/lib/admin/constants';
 // Re-export schema types used by batch processing
 export type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
 
+/** Upload mode: sites (whole house) or standalone (individual projects) */
+export type BatchUploadMode = 'sites' | 'standalone';
+
 /** A single image file extracted from the ZIP */
 export interface ExtractedImage {
   /** Relative path within the ZIP (e.g., "Kitchen/before-1.jpg") */
@@ -67,6 +70,13 @@ export interface ParsedExternalProduct {
 /** The complete parsed structure of a ZIP file */
 export interface ParsedZipStructure {
   sites: ParsedSite[];
+  /** Total number of image files found */
+  totalImages: number;
+}
+
+/** Parsed structure for standalone projects mode (no sites) */
+export interface ParsedStandaloneStructure {
+  projects: ParsedProject[];
   /** Total number of image files found */
   totalImages: number;
 }

@@ -5,6 +5,7 @@ import type {
   ImagePairEntry,
   ParsedProject,
   ParsedSite,
+  ParsedStandaloneStructure,
   ParsedZipStructure,
 } from './types';
 
@@ -189,25 +190,25 @@ function unzipAsync(data: Uint8Array): Promise<Record<string, Uint8Array>> {
 }
 
 // ============================================================================
-// ZIP PARSING
+// SHARED FILE EXTRACTION
 // ============================================================================
 
+interface ZipExtraction {
+  tree: Map<string, ExtractedImage[]>;
+  notesMap: Map<string, string>;
+  productsMap: Map<string, string>;
+  totalImages: number;
+}
+
 /**
- * Parses a ZIP file buffer into a structured site/project/image tree.
- *
- * Supports two layouts:
- * 1. Nested: top-level folder = site, subfolders = projects
- * 2. Flat: all images at root = single project, auto-wrapped in a site
+ * Extracts and categorizes all files from a ZIP buffer.
+ * Shared by both parseZip (sites mode) and parseZipStandalone.
  */
-export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructure> {
+async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction> {
   const files = await unzipAsync(zipBuffer);
   let totalImages = 0;
 
-  // Organize files into a tree: { folderPath: ExtractedImage[] }
-  // Paths from fflate look like: "FolderA/SubFolder/file.jpg"
   const tree = new Map<string, ExtractedImage[]>();
-
-  // Collect notes/description text files and products files per folder
   const notesMap = new Map<string, string>();
   const productsMap = new Map<string, string>();
   const textDecoder = new TextDecoder('utf-8');
@@ -260,6 +261,23 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     if (!tree.has(folder)) tree.set(folder, []);
     tree.get(folder)!.push(img);
   }
+
+  return { tree, notesMap, productsMap, totalImages };
+}
+
+// ============================================================================
+// ZIP PARSING (SITES MODE)
+// ============================================================================
+
+/**
+ * Parses a ZIP file buffer into a structured site/project/image tree.
+ *
+ * Supports two layouts:
+ * 1. Nested: top-level folder = site, subfolders = projects
+ * 2. Flat: all images at root = single project, auto-wrapped in a site
+ */
+export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructure> {
+  const { tree, notesMap, productsMap, totalImages } = await extractFilesFromZip(zipBuffer);
 
   if (totalImages === 0) {
     return { sites: [], totalImages: 0 };
@@ -391,4 +409,89 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
   }
 
   return { sites, totalImages };
+}
+
+// ============================================================================
+// ZIP PARSING (STANDALONE PROJECTS MODE)
+// ============================================================================
+
+/**
+ * Parses a ZIP file for standalone projects mode.
+ * Each top-level folder = one standalone project (no site wrapper).
+ * Flat images at root = single project.
+ */
+export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedStandaloneStructure> {
+  const { tree, notesMap, productsMap, totalImages } = await extractFilesFromZip(zipBuffer);
+
+  if (totalImages === 0) {
+    return { projects: [], totalImages: 0 };
+  }
+
+  const projectsResult: ParsedProject[] = [];
+
+  // Collect all images per top-level folder (flatten subfolders into parent).
+  // Notes/products from subfolders are intentionally ignored — only the
+  // top-level folder's text files are used for standalone projects.
+  const topLevelImages = new Map<string, ExtractedImage[]>();
+  const topLevelNotes = new Map<string, string>();
+  const topLevelProducts = new Map<string, string>();
+
+  for (const [folder, images] of tree) {
+    if (folder === '') {
+      // Root-level images
+      if (!topLevelImages.has('')) topLevelImages.set('', []);
+      topLevelImages.get('')!.push(...images);
+    } else {
+      const topLevel = folder.split('/')[0];
+      if (!topLevelImages.has(topLevel)) topLevelImages.set(topLevel, []);
+      topLevelImages.get(topLevel)!.push(...images);
+    }
+  }
+
+  // Collect notes/products for top-level folders
+  for (const [folder, text] of notesMap) {
+    const topLevel = folder === '' ? '' : folder.split('/')[0];
+    if (!topLevelNotes.has(topLevel)) topLevelNotes.set(topLevel, text);
+  }
+  for (const [folder, text] of productsMap) {
+    const topLevel = folder === '' ? '' : folder.split('/')[0];
+    if (!topLevelProducts.has(topLevel)) topLevelProducts.set(topLevel, text);
+  }
+
+  // Flat root case: all images at root = single project
+  if (topLevelImages.size === 1 && topLevelImages.has('')) {
+    const images = topLevelImages.get('')!;
+    const { pairs, heroImage, productImages } = pairImages(images);
+    if (pairs.length > 0 || heroImage) {
+      projectsResult.push({
+        folderName: 'Uploaded Project',
+        serviceType: DEFAULT_SERVICE_TYPE,
+        heroImage,
+        imagePairs: pairs,
+        notes: topLevelNotes.get('') ?? null,
+        productsText: topLevelProducts.get('') ?? null,
+        productImages,
+      });
+    }
+    return { projects: projectsResult, totalImages };
+  }
+
+  // Each top-level folder = one standalone project
+  for (const [topLevel, images] of topLevelImages) {
+    if (topLevel === '') continue; // skip stray root images
+    const { pairs, heroImage, productImages } = pairImages(images);
+    if (pairs.length > 0 || heroImage) {
+      projectsResult.push({
+        folderName: topLevel,
+        serviceType: detectServiceType(topLevel),
+        heroImage,
+        imagePairs: pairs,
+        notes: topLevelNotes.get(topLevel) ?? null,
+        productsText: topLevelProducts.get(topLevel) ?? null,
+        productImages,
+      });
+    }
+  }
+
+  return { projects: projectsResult, totalImages };
 }

@@ -886,6 +886,8 @@ export const batchJobStatusEnum = pgEnum('batch_job_status', BATCH_JOB_STATUSES)
 /** JSON shape stored in the options column */
 export interface BatchJobOptions {
   generateBlog: boolean;
+  /** Upload mode. Pre-existing jobs without this field default to 'sites'. */
+  mode: 'sites' | 'standalone';
 }
 
 /** Tracks batch ZIP upload processing jobs */
