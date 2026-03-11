@@ -206,8 +206,11 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
     return rows;
   }, [sites, projectsBySite]);
 
+  // Filter out the standalone container — it's a placeholder, not a real site
+  const visibleSites = useMemo(() => sites.filter((s) => s.id !== standaloneSiteId), [sites, standaloneSiteId]);
+
   // Whole house sites: sites with showAsProject === true
-  const wholeHouseSites = useMemo(() => sites.filter((s) => s.showAsProject), [sites]);
+  const wholeHouseSites = useMemo(() => visibleSites.filter((s) => s.showAsProject), [visibleSites]);
 
   const standaloneColumns: Column<StandaloneProjectRow>[] = useMemo(() => [
     { key: 'poNumber', header: t.projects.poNumber, sortable: true },
@@ -377,7 +380,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
         <div id="tabpanel-sites" role="tabpanel">
           <DataTable
             columns={columns}
-            data={sites}
+            data={visibleSites}
             getRowKey={(row) => row.id}
             filterRow={filterRow}
             actions={siteActions}
