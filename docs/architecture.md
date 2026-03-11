@@ -341,7 +341,7 @@ export const AI_CONFIG = {
 |----------|---------|---------|
 | `optimizeContent(rawContent)` | Blog content optimization | `OptimizedContent` (contentEn/Zh, excerptEn/Zh, SEO fields) |
 | `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
-| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
+| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (serviceType, slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
 | `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
@@ -463,7 +463,7 @@ Branches early based on `options.mode` to avoid dual-nullable patterns:
 4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
 5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
 
-Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`. AI extracts all metadata fields including PO number, budget, duration from freeform notes (no hard regex extraction).
+Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`. AI extracts all metadata fields including service type, PO number, budget, duration from freeform notes (no hard regex extraction). AI-detected service type overrides folder-name heuristic (`detectServiceType()`) when available. Standalone mode prompt omits folder-detected service type when notes exist to avoid biasing the AI.
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 

@@ -174,8 +174,11 @@ async function generateProjectMetadata(
 ): Promise<ProjectDescription | null> {
   try {
     const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+    // When notes exist, let AI detect the service type from the notes content
+    // (folder names like "3787-burnaby" don't indicate the service type).
+    // Only include the folder-detected service type when there are no notes.
     const prompt = notes
-      ? `${category.en} renovation project: ${folderName}.\n\nProject details:\n${notes}`
+      ? `Renovation project: ${folderName}.\n\nProject details:\n${notes}`
       : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
     return await optimizeProjectDescription(prompt);
   } catch (error) {
@@ -350,6 +353,7 @@ function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
   const slug = formatSlug(folderName);
   const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
   return {
+    serviceType,
     slug,
     titleEn: `${folderName} ${category.en} Renovation`,
     titleZh: `${folderName}${category.zh}装修`,
@@ -1046,7 +1050,9 @@ async function saveProject(opts: {
     ? urlMap.get(parsedProject.heroImage) ?? null
     : null;
 
-  const category = SERVICE_TYPE_TO_CATEGORY[parsedProject.serviceType];
+  // Prefer AI-detected service type over folder-name heuristic
+  const serviceType = aiProject?.serviceType ?? parsedProject.serviceType;
+  const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
 
   const [insertedProject] = await db
     .insert(projects)
@@ -1056,7 +1062,7 @@ async function saveProject(opts: {
       titleZh: projectData.titleZh,
       descriptionEn: projectData.descriptionEn,
       descriptionZh: projectData.descriptionZh,
-      serviceType: parsedProject.serviceType,
+      serviceType,
       categoryEn: category.en,
       categoryZh: category.zh,
       locationCity: projectData.locationCity || null,

@@ -26,6 +26,7 @@ const BilingualTextSchema = z.object({
 });
 
 const ProjectDescriptionSchema = z.object({
+  serviceType: z.enum(['kitchen', 'bathroom', 'basement', 'cabinet', 'commercial']).default('kitchen'),
   slug: z.string(),
   titleEn: z.string(),
   titleZh: z.string(),
@@ -176,8 +177,9 @@ CRITICAL REQUIREMENTS:
 4. SEO fields should be optimized for search engines
 
 Field guidelines:
-- slug: URL-friendly slug using only lowercase letters, numbers, and hyphens (e.g., "modern-kitchen-renovation-vancouver"). No consecutive hyphens.
-- titleEn/titleZh: Short, descriptive title for the project (e.g., "Modern Kitchen Renovation" / "现代厨房翻新")
+- serviceType: Detect the renovation type from the notes. Must be one of: "kitchen", "bathroom", "basement", "cabinet", "commercial". Infer from the scope of work described (e.g., 卫生间/浴室/shower/bath → "bathroom", 厨房/kitchen → "kitchen", 地下室/basement → "basement", 橱柜/cabinet → "cabinet", 办公室/商业/office/store → "commercial"). Default to "kitchen" only if truly unclear.
+- slug: URL-friendly slug using only lowercase letters, numbers, and hyphens. No consecutive hyphens. Make it descriptive and specific — include key details like scope, style, or distinguishing features from the notes (e.g., "dual-bathroom-brushed-gold-renovation-burnaby", "open-concept-kitchen-quartz-countertop-surrey", "luxury-basement-suite-conversion-vancouver"). Avoid generic slugs like "kitchen-renovation" or "bathroom-renovation".
+- titleEn/titleZh: Descriptive title that reflects the specific scope from the notes (e.g., "Dual Bathroom Renovation with Brushed Gold Fixtures" / "双卫生间翻新 — 拉丝金水件"). Must match the detected serviceType. Avoid generic titles like "Kitchen Renovation".
 - locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
 - poNumber: PO number / purchase order / reference number if mentioned in the notes (e.g., "PO-2024-9203", "PO 12345"). Extract the value as-is (max 50 characters). Leave empty string if not mentioned.
 - budgetRange: Exact budget or range if mentioned in the notes (e.g., "$22,000" or "$15,000 - $25,000"). Use the value from the notes as-is. Leave empty string if no budget is mentioned.
@@ -197,6 +199,7 @@ Return ONLY valid JSON, no markdown.
 Response format:
 {
   "detectedLanguage": "en" or "zh",
+  "serviceType": "kitchen" or "bathroom" or "basement" or "cabinet" or "commercial",
   "slug": "url-friendly-slug",
   "titleEn": "English Project Title",
   "titleZh": "中文项目标题",

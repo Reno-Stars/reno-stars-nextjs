@@ -236,6 +236,7 @@ export default function ProjectForm({
     setSeoKeywordsEn(data.seoKeywordsEn);
     setSeoKeywordsZh(data.seoKeywordsZh);
     if (data.poNumber) setPoNumber(data.poNumber);
+    if (data.serviceType) setSelectedServiceType(data.serviceType);
   }, [cities]);
 
   // Convert sites to SearchableSelect options format
