@@ -6,8 +6,16 @@ import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react';
 import { Link } from '@/navigation';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml, { type IOptions } from 'sanitize-html';
 import type { Company, BlogPost } from '@/lib/types';
+
+const BLOG_SANITIZE_OPTIONS: IOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    img: ['src', 'alt', 'width', 'height', 'loading'],
+  },
+};
 import { getLocalizedBlogPost } from '@/lib/data';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
@@ -87,9 +95,9 @@ export default function BlogPostPage({ locale, post, company }: BlogPostPageProp
               </p>
             )}
 
-            <div className="prose prose-lg max-w-none" style={{ color: TEXT_MID }}>
+            <div className="prose prose-lg max-w-none prose-img:rounded-xl prose-img:my-6 blog-content">
               {localizedPost.content ? (
-                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedPost.content) }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedPost.content, BLOG_SANITIZE_OPTIONS) }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}

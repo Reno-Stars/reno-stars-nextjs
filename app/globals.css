@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-gold: #C8922A;
@@ -37,6 +38,17 @@
 }
 .category-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(27, 54, 93, 0.35);
+}
+
+/* Blog prose — neumorphic theme overrides (colors from lib/theme.ts) */
+.blog-content {
+  --tw-prose-body: rgba(27, 54, 93, 0.7);   /* TEXT_MID */
+  --tw-prose-headings: #1B365D;              /* TEXT / NAVY */
+  --tw-prose-links: #C8922A;                 /* GOLD */
+  --tw-prose-bold: #1B365D;                  /* TEXT / NAVY */
+  --tw-prose-bullets: #C8922A;               /* GOLD */
+  --tw-prose-counters: #C8922A;              /* GOLD */
+  --tw-prose-hr: #DED6CC;                    /* SURFACE_ALT */
 }
 
 /* Modal animation */
