@@ -322,14 +322,13 @@ The admin panel includes AI-powered content generation using OpenAI's GPT-4 mode
 
 ```typescript
 export const AI_CONFIG = {
-  model: 'gpt-4o-mini',              // Default for short text, alt text
+  model: 'gpt-4o-mini',              // Default for short text
   modelContent: 'gpt-4o',             // Higher quality for blog content
   temperature: 0.3,
   maxTokensContent: 8192,             // Blog article optimization
   maxTokensBlogGeneration: 16384,     // Blog generation (bilingual 800-1200 words x2 + SEO in JSON)
   maxTokensShort: 1024,               // Short text translations
   maxTokensProjectDescription: 2048,  // Project descriptions + SEO (16 fields)
-  maxTokensAltText: 256,              // Image alt text
   maxTokensSocialPost: 4096,          // Social post generation (3 platforms x bilingual)
   fetchTimeoutMs: 60000,
 };
@@ -451,15 +450,15 @@ Branches early based on `options.mode` to avoid dual-nullable patterns:
 
 **Sites mode** (default):
 1. **Extract** — Downloads ZIP from S3 temp, parses via `parseZip()` (async `fflate`)
-2. **Upload** — Uploads all images to S3 in batches of 3 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
-3. **Generate** — AI metadata: `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity, `generateAltTextsInBatches()` for after images (batches of 5). Uses shared `collectAfterImageUrls()` helper
+2. **Upload** — Uploads all images to S3 in parallel batches of 15 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
+3. **Generate** — AI metadata in parallel batches of 10 (`AI_METADATA_BATCH_SIZE`): `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity. No alt text generation — uses `FALLBACK_ALT` directly for all image pairs
 4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
 5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site via shared `generateBlogsForEntities()` helper
 
 **Standalone mode**:
 1. **Extract** — Downloads ZIP, parses via `parseZipStandalone()` (flattens subfolders into top-level projects)
 2. **Upload** — Same image upload pipeline with per-project slug prefixes
-3. **Generate** — `optimizeProjectDescription()` per project, alt text for after images
+3. **Generate** — `optimizeProjectDescription()` per project in parallel batches of 10
 4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
 5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
 
@@ -488,11 +487,11 @@ Image naming conventions:
 
 ### Job Status Tracking
 
-Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors) and `BatchJobOptions` (generateBlog, mode). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`.
+Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors) and `BatchJobOptions` (generateBlog, mode). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`. GET endpoint includes stale job detection: `STALE_PROCESSING_MS` (2 minutes) marks stuck processing jobs as `partial` (if any creations exist) or `failed`; `STALE_PENDING_MS` (30 minutes) catches abandoned pending jobs. Stale jobs receive `__TIMEOUT_*__` error markers that the client resolves into bilingual display text via `resolveErrorLabel()` helper (maps `__TIMEOUT_PARTIAL__`, `__TIMEOUT_FAILED__`, `__TIMEOUT_STEP__:{status}` to translation keys).
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
+Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). ZIP upload uses `fetch()` PUT to presigned S3 URL (not XHR, for R2 compatibility). Polling starts immediately after job creation (before S3 upload completes) so the UI always transitions to results; on S3 upload failure the client returns to upload phase, but if only the process trigger fails polling continues. All API response types are validated at runtime (no `as` type casts). Error list uses `resolveErrorLabel()` to map `__TIMEOUT_*__` markers into bilingual display text. Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
 
 ## Image Upload
 
@@ -521,7 +520,7 @@ Browser                        API Route                       S3
 
 ### S3 Client (`lib/admin/s3.ts`)
 
-Shared S3 client singleton with lazy initialization. Exports:
+Shared S3 client singleton with lazy initialization. Configured with `requestChecksumCalculation: 'WHEN_REQUIRED'` to disable AWS SDK v3 automatic CRC32 checksums (R2 rejects them as unsigned headers on presigned URLs). Exports:
 - `getS3Client()` — Returns a cached `S3Client` or `null` if credentials are missing. Uses `undefined` sentinel to distinguish "not yet initialized" from "missing credentials".
 - `S3_BUCKET` — Default bucket name (`process.env.S3_BUCKET || 'reno-stars'`).
 - `MIME_TO_EXT` — MIME type → file extension map for image uploads.
