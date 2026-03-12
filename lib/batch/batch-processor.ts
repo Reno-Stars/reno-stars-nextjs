@@ -20,7 +20,6 @@ import { getS3Client, S3_BUCKET } from '@/lib/admin/s3';
 import {
   optimizeSiteDescription,
   optimizeProjectDescription,
-  generateAltText,
 } from '@/lib/ai/content-optimizer';
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
 import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
@@ -41,11 +40,11 @@ import type {
 // CONSTANTS
 // ============================================================================
 
-/** Max concurrent S3 uploads */
-const UPLOAD_BATCH_SIZE = 3;
+/** Max concurrent S3 uploads per batch */
+const UPLOAD_BATCH_SIZE = 15;
 
-/** Max concurrent alt text AI calls */
-const ALT_TEXT_BATCH_SIZE = 5;
+/** Max concurrent AI metadata calls */
+const AI_METADATA_BATCH_SIZE = 10;
 
 /** Fallback alt text when AI generation fails */
 const FALLBACK_ALT = { en: 'Renovation project image', zh: '装修项目图片' } as const;
@@ -103,10 +102,10 @@ async function uploadImageToS3(
 }
 
 /**
- * Upload images in batches to avoid overwhelming S3.
+ * Upload images to S3 in parallel batches (max UPLOAD_BATCH_SIZE concurrent).
  * Returns a map of ExtractedImage → uploaded URL.
  */
-async function uploadImagesInBatches(opts: {
+async function uploadAllImages(opts: {
   images: ExtractedImage[];
   slugPrefix: string;
   jobId: string;
@@ -136,9 +135,9 @@ async function uploadImagesInBatches(opts: {
       } else {
         errors.push(`Upload failed: ${batch[j].path} - ${result.reason}`);
       }
-      processed++;
     }
 
+    processed += batch.length;
     await updateJob(jobId, {
       processedImages: processed,
       currentStepLabel: `Uploading image ${processed} of ${totalImages}...`,
@@ -185,35 +184,6 @@ async function generateProjectMetadata(
     console.error('AI project metadata failed:', error);
     return null;
   }
-}
-
-/**
- * Generate alt text for multiple image URLs in parallel batches.
- * Returns a map of URL → { altEn, altZh }.
- */
-async function generateAltTextsInBatches(
-  imageUrls: string[]
-): Promise<Map<string, { altEn: string; altZh: string }>> {
-  const altMap = new Map<string, { altEn: string; altZh: string }>();
-  const fallback = { altEn: FALLBACK_ALT.en, altZh: FALLBACK_ALT.zh };
-
-  for (let i = 0; i < imageUrls.length; i += ALT_TEXT_BATCH_SIZE) {
-    const batch = imageUrls.slice(i, i + ALT_TEXT_BATCH_SIZE);
-    const results = await Promise.allSettled(
-      batch.map((url) => generateAltText({ url }))
-    );
-
-    for (let j = 0; j < results.length; j++) {
-      const result = results[j];
-      if (result.status === 'fulfilled') {
-        altMap.set(batch[j], { altEn: result.value.altEn, altZh: result.value.altZh });
-      } else {
-        altMap.set(batch[j], fallback);
-      }
-    }
-  }
-
-  return altMap;
 }
 
 // ============================================================================
@@ -440,21 +410,6 @@ function collectProjectImages(project: ParsedProject): ExtractedImage[] {
   return images;
 }
 
-/** Collect after-image URLs from project image pairs for alt text generation. */
-function collectAfterImageUrls(
-  projectList: ParsedProject[],
-  urlMap: Map<ExtractedImage, string>
-): string[] {
-  const urls: string[] = [];
-  for (const project of projectList) {
-    for (const pair of project.imagePairs) {
-      const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
-      if (url) urls.push(url);
-    }
-  }
-  return urls;
-}
-
 /** Generate blog posts for a list of entity IDs using the given generator function. */
 async function generateBlogsForEntities(opts: {
   ids: string[];
@@ -651,7 +606,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         siteImages.push(...collectProjectImages(project));
       }
 
-      const siteUrls = await uploadImagesInBatches({
+      const siteUrls = await uploadAllImages({
         images: siteImages,
         slugPrefix: siteSlugPrefix,
         jobId,
@@ -672,41 +627,37 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       currentStepLabel: 'Generating metadata with AI...',
     });
 
-    // Pre-generate AI metadata for all sites and projects
+    // Pre-generate AI metadata for all sites and projects (parallel batches)
     const siteMetadataMap = new Map<string, SiteDescription | null>();
     const projectMetadataMap = new Map<string, ProjectDescription | null>();
 
-    for (const parsedSite of parsed.sites) {
-      const siteMeta = await generateSiteMetadata(parsedSite.folderName, parsedSite.notes);
-      siteMetadataMap.set(parsedSite.folderName, siteMeta);
+    // Collect tasks with typed results stored directly into their target maps
+    const aiTasks: { fn: () => Promise<void> }[] = [];
 
+    for (const parsedSite of parsed.sites) {
+      const siteKey = parsedSite.folderName;
+      aiTasks.push({
+        fn: async () => {
+          siteMetadataMap.set(siteKey, await generateSiteMetadata(parsedSite.folderName, parsedSite.notes));
+        },
+      });
       for (const parsedProject of parsedSite.projects) {
         const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
-        const projMeta = await generateProjectMetadata(
-          parsedProject.folderName,
-          parsedProject.serviceType,
-          parsedProject.notes
-        );
-        projectMetadataMap.set(projectKey, projMeta);
+        aiTasks.push({
+          fn: async () => {
+            projectMetadataMap.set(projectKey, await generateProjectMetadata(parsedProject.folderName, parsedProject.serviceType, parsedProject.notes));
+          },
+        });
       }
+    }
 
+    for (let i = 0; i < aiTasks.length; i += AI_METADATA_BATCH_SIZE) {
+      const batch = aiTasks.slice(i, i + AI_METADATA_BATCH_SIZE);
+      await Promise.allSettled(batch.map((t) => t.fn()));
       await updateJob(jobId, {
-        currentStepLabel: `Generated metadata for: ${parsedSite.folderName}`,
+        currentStepLabel: `Generated metadata ${Math.min(i + AI_METADATA_BATCH_SIZE, aiTasks.length)} of ${aiTasks.length}...`,
       });
     }
-
-    // Pre-generate alt text for all after images (parallel batched)
-    const afterImageUrls: string[] = [];
-    for (const site of parsed.sites) {
-      // Site-level image pairs
-      for (const pair of site.imagePairs) {
-        const url = pair.after ? urlMap.get(pair.after) : pair.before ? urlMap.get(pair.before) : undefined;
-        if (url) afterImageUrls.push(url);
-      }
-      afterImageUrls.push(...collectAfterImageUrls(site.projects, urlMap));
-    }
-
-    const altTextMap = await generateAltTextsInBatches(afterImageUrls);
 
     // ---- STEP 5: Save to DB ----
     await updateJob(jobId, {
@@ -783,11 +734,6 @@ export async function processBatchUpload(jobId: string): Promise<void> {
           const afterUrl = pair.after ? urlMap.get(pair.after) ?? null : null;
           if (!beforeUrl && !afterUrl) continue;
 
-          const altImageUrl = afterUrl || beforeUrl;
-          const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
-          const altEn = alt?.altEn || FALLBACK_ALT.en;
-          const altZh = alt?.altZh || FALLBACK_ALT.zh;
-
           try {
             await db.insert(siteImagePairs).values({
               siteId,
@@ -795,8 +741,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
               beforeAltTextEn: beforeUrl ? `${siteData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
               beforeAltTextZh: beforeUrl ? `${siteData.titleZh} - 装修前 ${pairIdx + 1}` : null,
               afterImageUrl: afterUrl,
-              afterAltTextEn: afterUrl ? altEn : null,
-              afterAltTextZh: afterUrl ? altZh : null,
+              afterAltTextEn: afterUrl ? FALLBACK_ALT.en : null,
+              afterAltTextZh: afterUrl ? FALLBACK_ALT.zh : null,
               displayOrder: pairIdx,
             });
             siteImagePairsCreated++;
@@ -832,7 +778,6 @@ export async function processBatchUpload(jobId: string): Promise<void> {
               siteId,
               displayOrder: pIdx,
               urlMap,
-              altTextMap,
               existingProjectSlugs,
               createdProjectIds,
               errors,
@@ -931,7 +876,7 @@ async function processStandaloneMode(opts: {
     const slugPrefix = formatSlug(project.folderName || 'batch');
     const projectImages = collectProjectImages(project);
 
-    const projectUrls = await uploadImagesInBatches({
+    const projectUrls = await uploadAllImages({
       images: projectImages,
       slugPrefix,
       jobId,
@@ -946,7 +891,7 @@ async function processStandaloneMode(opts: {
     uploadedCount += projectImages.length;
   }
 
-  // ---- AI metadata generation ----
+  // ---- AI metadata generation (parallel) ----
   await updateJob(jobId, {
     status: 'generating',
     currentStepLabel: 'Generating metadata with AI...',
@@ -954,22 +899,19 @@ async function processStandaloneMode(opts: {
 
   const projectMetadataMap = new Map<string, ProjectDescription | null>();
 
-  for (const parsedProject of parsedStandalone.projects) {
-    const projMeta = await generateProjectMetadata(
-      parsedProject.folderName,
-      parsedProject.serviceType,
-      parsedProject.notes
+  for (let i = 0; i < parsedStandalone.projects.length; i += AI_METADATA_BATCH_SIZE) {
+    const batch = parsedStandalone.projects.slice(i, i + AI_METADATA_BATCH_SIZE);
+    const results = await Promise.allSettled(
+      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes))
     );
-    projectMetadataMap.set(parsedProject.folderName, projMeta);
-
+    for (let j = 0; j < results.length; j++) {
+      const r = results[j];
+      projectMetadataMap.set(batch[j].folderName, r.status === 'fulfilled' ? r.value : null);
+    }
     await updateJob(jobId, {
-      currentStepLabel: `Generated metadata for: ${parsedProject.folderName}`,
+      currentStepLabel: `Generated metadata ${Math.min(i + AI_METADATA_BATCH_SIZE, parsedStandalone.projects.length)} of ${parsedStandalone.projects.length}...`,
     });
   }
-
-  // Pre-generate alt text for after images
-  const afterImageUrls = collectAfterImageUrls(parsedStandalone.projects, urlMap);
-  const altTextMap = await generateAltTextsInBatches(afterImageUrls);
 
   // ---- Save to DB ----
   await updateJob(jobId, {
@@ -988,7 +930,6 @@ async function processStandaloneMode(opts: {
         siteId: standaloneSiteId,
         displayOrder: nextDisplayOrder++,
         urlMap,
-        altTextMap,
         existingProjectSlugs,
         createdProjectIds,
         errors,
@@ -1024,7 +965,6 @@ async function saveProject(opts: {
   siteId: string;
   displayOrder: number;
   urlMap: Map<ExtractedImage, string>;
-  altTextMap: Map<string, { altEn: string; altZh: string }>;
   existingProjectSlugs: string[];
   createdProjectIds: string[];
   errors: string[];
@@ -1032,7 +972,7 @@ async function saveProject(opts: {
 }): Promise<void> {
   const {
     parsedProject, aiProject, siteId, displayOrder,
-    urlMap, altTextMap, existingProjectSlugs,
+    urlMap, existingProjectSlugs,
     createdProjectIds, errors, jobId,
   } = opts;
   const projectData = aiProject ?? fallbackProjectData(
@@ -1141,12 +1081,6 @@ async function saveProject(opts: {
     // Skip pairs where both images failed upload
     if (!beforeUrl && !afterUrl) continue;
 
-    // Look up pre-generated alt text
-    const altImageUrl = afterUrl || beforeUrl;
-    const alt = altImageUrl ? altTextMap.get(altImageUrl) : null;
-    const altEn = alt?.altEn || FALLBACK_ALT.en;
-    const altZh = alt?.altZh || FALLBACK_ALT.zh;
-
     try {
       await db.insert(projectImagePairs).values({
         projectId: insertedProject.id,
@@ -1154,8 +1088,8 @@ async function saveProject(opts: {
         beforeAltTextEn: beforeUrl ? `${projectData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
         beforeAltTextZh: beforeUrl ? `${projectData.titleZh} - 装修前 ${pairIdx + 1}` : null,
         afterImageUrl: afterUrl,
-        afterAltTextEn: afterUrl ? altEn : null,
-        afterAltTextZh: afterUrl ? altZh : null,
+        afterAltTextEn: afterUrl ? FALLBACK_ALT.en : null,
+        afterAltTextZh: afterUrl ? FALLBACK_ALT.zh : null,
         displayOrder: pairIdx,
       });
     } catch (error) {

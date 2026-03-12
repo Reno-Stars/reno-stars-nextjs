@@ -67,7 +67,9 @@ export async function POST(request: NextRequest) {
       })
       .returning({ id: batchUploadJobs.id });
 
-    // Generate presigned URL for direct S3 upload
+    // Generate presigned URL for direct browser-to-S3 upload.
+    // Do NOT include ContentLength — browsers set Content-Length automatically
+    // and including it in the signature causes a mismatch.
     const presignedUrl = await getSignedUrl(
       client,
       new PutObjectCommand({

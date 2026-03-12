@@ -58,6 +58,26 @@ function getStepIndex(status: BatchJobStatus): number {
   return idx === -1 ? 0 : idx;
 }
 
+/** Resolve `__TIMEOUT_*__` markers from the server into bilingual display text. */
+function resolveErrorLabel(
+  err: string,
+  bt: Record<string, string>
+): string {
+  if (err === '__TIMEOUT_PARTIAL__') return bt.timeoutPartial;
+  if (err === '__TIMEOUT_FAILED__') return bt.timeoutFailed;
+  if (err.startsWith('__TIMEOUT_STEP__:')) {
+    const step = err.split(':')[1];
+    const stepMap: Record<string, string | undefined> = {
+      uploading: bt.timeoutStepUploading,
+      generating: bt.timeoutStepGenerating,
+      saving: bt.timeoutStepSaving,
+      generating_blog: bt.timeoutStepBlogging,
+    };
+    return stepMap[step] ?? '';
+  }
+  return err;
+}
+
 // ============================================================================
 // SHARED STYLES
 // ============================================================================
@@ -163,6 +183,8 @@ export default function BatchUploadClient() {
     setUploading(true);
     setError(null);
 
+    let s3UploadOk = false;
+
     try {
       // Step 1: Get presigned URL from server
       const initRes = await fetch('/admin/batch-upload/api', {
@@ -181,34 +203,19 @@ export default function BatchUploadClient() {
         throw new Error(data.error || bt.errorUploadFailed);
       }
 
-      const { jobId, presignedUrl } = await initRes.json();
-
-      // Step 2: Upload ZIP directly to S3 via presigned URL (bypasses proxy)
-      const s3Res = await fetch(presignedUrl, {
-        method: 'PUT',
-        body: file,
-        headers: { 'Content-Type': 'application/zip' },
-      });
-
-      if (!s3Res.ok) {
-        throw new Error(`${bt.errorUploadFailed} (S3 ${s3Res.status})`);
+      const initData: Record<string, unknown> = await initRes.json();
+      if (typeof initData.jobId !== 'string' || typeof initData.presignedUrl !== 'string') {
+        throw new Error(bt.errorUploadFailed);
       }
+      const validJobId = initData.jobId;
+      const presignedUrl = initData.presignedUrl;
 
-      // Step 3: Trigger processing
-      const processRes = await fetch(`/admin/batch-upload/api/${jobId}/process`, {
-        method: 'POST',
-      });
-
-      if (!processRes.ok) {
-        const data = await processRes.json();
-        throw new Error(data.error || bt.errorUploadFailed);
-      }
-
-      // Step 4: Start polling
+      // Step 2: Switch to processing phase and start polling early.
+      // Polling picks up server-side status even if subsequent client steps fail.
       if (!mountedRef.current) return;
       setPhase('processing');
       setJob({
-        id: jobId,
+        id: validJobId,
         status: 'pending',
         fileName: file.name,
         totalImages: 0,
@@ -221,10 +228,45 @@ export default function BatchUploadClient() {
         startedAt: null,
         completedAt: null,
       });
-      startPolling(jobId);
+      startPolling(validJobId);
+
+      // Step 3: Upload ZIP directly to S3 via presigned URL (bypasses proxy)
+      // Uses fetch() which is proven to work with R2 presigned URLs
+      // (same approach as image uploads in upload-client.ts).
+      const uploadRes = await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/zip' },
+        body: file,
+      });
+
+      if (!uploadRes.ok) {
+        throw new Error(`${bt.errorUploadFailed} (S3 ${uploadRes.status})`);
+      }
+      s3UploadOk = true;
+
+      // Step 4: Trigger processing
+      const processRes = await fetch(`/admin/batch-upload/api/${validJobId}/process`, {
+        method: 'POST',
+      });
+
+      if (!processRes.ok) {
+        const data = await processRes.json();
+        throw new Error(data.error || bt.errorUploadFailed);
+      }
     } catch (err) {
       if (!mountedRef.current) return;
-      setError(err instanceof Error ? err.message : bt.errorUploadFailed);
+      const msg = err instanceof Error ? err.message : bt.errorUploadFailed;
+
+      if (!s3UploadOk) {
+        // S3 upload failed — file is not on the server, processing can't work.
+        // Stop polling and return to upload phase so user can retry.
+        if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+        setPhase('upload');
+        setJob(null);
+      }
+      // If s3UploadOk but process trigger failed, keep polling —
+      // the file is on S3 and stale detection will handle it.
+      setError(msg);
     } finally {
       if (mountedRef.current) setUploading(false);
     }
@@ -607,11 +649,48 @@ Basement/
             {bt.processing}
           </h3>
 
+          {/* S3 upload indicator (shown while job is still pending, before server processing starts) */}
+          {uploading && job.status === 'pending' && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div
+                className="admin-spin"
+                style={{
+                  width: 16,
+                  height: 16,
+                  border: `2px solid ${GOLD}`,
+                  borderTopColor: 'transparent',
+                  borderRadius: '50%',
+                  animation: 'admin-spin 0.8s linear infinite',
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ color: TEXT, fontWeight: 600, fontSize: '0.875rem' }}>
+                {bt.uploading}
+              </span>
+            </div>
+          )}
+
+          {/* Error during upload (non-fatal — polling continues) */}
+          {error && (
+            <div
+              style={{
+                backgroundColor: ERROR_BG,
+                color: ERROR,
+                padding: '0.75rem 1rem',
+                borderRadius: 8,
+                fontSize: '0.8125rem',
+                marginBottom: '1rem',
+              }}
+            >
+              {error}
+            </div>
+          )}
+
           {/* Step indicators */}
           <div style={{ marginBottom: '1.5rem' }}>
             {STEPS.map((step, idx) => {
               const currentIdx = getStepIndex(job.status);
-              const isActive = idx === currentIdx;
+              const isActive = idx === currentIdx && !uploading;
               const isDone = idx < currentIdx;
               const stepLabel = bt[step.labelKey as keyof typeof bt] as string;
 
@@ -822,11 +901,15 @@ Basement/
                     listStyle: 'disc',
                   }}
                 >
-                  {job.errors.map((err, idx) => (
-                    <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
-                      {err}
-                    </li>
-                  ))}
+                  {job.errors.map((err, idx) => {
+                    const label = resolveErrorLabel(err, bt);
+                    if (!label) return null;
+                    return (
+                      <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
+                        {label}
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>

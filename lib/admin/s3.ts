@@ -33,6 +33,11 @@ export function getS3Client(): S3Client | null {
       secretAccessKey: secretKey,
     },
     forcePathStyle: true,
+    // Disable automatic checksums on presigned URLs. SDK v3.600+ defaults to
+    // "WHEN_SUPPORTED" which embeds CRC32 in presigned URLs. Browsers can't
+    // compute CRC32, so the checksum mismatches and R2/S3 resets the connection.
+    requestChecksumCalculation: 'WHEN_REQUIRED',
+    responseChecksumValidation: 'WHEN_REQUIRED',
   });
 
   return cachedClient;

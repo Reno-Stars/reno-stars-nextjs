@@ -3,7 +3,7 @@ import { after } from 'next/server';
 import { validateSession, isValidUUID } from '@/lib/admin/auth';
 import { processBatchUpload } from '@/lib/batch/batch-processor';
 
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 export async function POST(
   _request: NextRequest,
