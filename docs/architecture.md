@@ -434,15 +434,28 @@ Admin feature for bulk-creating sites, projects, image pairs, and blog posts fro
 ### Architecture
 
 ```
-BatchUploadClient (React)  ──POST──►  api/route.ts (upload ZIP to S3 temp)
+BatchUploadClient (React)  ──POST──►  api/route.ts (create job row)
         │                                      │
-        │                               Creates job row in batch_upload_jobs
+        │                               Returns { jobId }
+        │
+        ├──POST──►  api/[jobId]/upload/route.ts  (init S3 multipart upload)
+        │           Returns { uploadId }
+        │
+        ├──PUT ×N──►  api/[jobId]/upload/?uploadId=...&partNumber=N
+        │           Uploads 10 MB chunks, returns { etag } per part
+        │           Per-chunk retry (3 attempts, 1s/2s backoff)
+        │
+        ├──PATCH──►  api/[jobId]/upload/  (complete multipart upload)
+        │           Body: { uploadId, parts: [{ partNumber, etag }] }
+        │           Aborts multipart upload on failure
         │
         ├──POST──►  api/[jobId]/process/route.ts
         │           Uses after() to run processBatchUpload() beyond response
         │
         └──GET (poll 2s)──►  api/[jobId]/route.ts (returns job status)
 ```
+
+ZIP upload uses **chunked multipart upload through a server proxy** (not presigned URLs). This bypasses R2 CORS restrictions — R2's CORS rules only apply to the public bucket URL, not the S3 API endpoint used for presigned URLs. Each 10 MB chunk (`CHUNK_SIZE`) is uploaded via the Next.js route handler which forwards it to S3/R2 server-to-server, keeping server memory usage low. Shared `batchZipKey()` helper (`lib/batch/types.ts`) generates the S3 key for temp ZIP files.
 
 ### Processing Pipeline (`lib/batch/batch-processor.ts`)
 
@@ -491,7 +504,7 @@ Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog 
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). ZIP upload uses `fetch()` PUT to presigned S3 URL (not XHR, for R2 compatibility). Polling starts immediately after job creation (before S3 upload completes) so the UI always transitions to results; on S3 upload failure the client returns to upload phase, but if only the process trigger fails polling continues. All API response types are validated at runtime (no `as` type casts). Error list uses `resolveErrorLabel()` to map `__TIMEOUT_*__` markers into bilingual display text. Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
+Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). ZIP upload uses **chunked multipart upload** through a server proxy (`api/[jobId]/upload/`): file is split into 10 MB chunks (`CHUNK_SIZE`), each uploaded sequentially with per-chunk retry (3 attempts, backoff). Progress bar shows chunks completed / total. Uses `AbortController` for cancellation. Polling starts immediately after job creation (before S3 upload completes) so the UI always transitions to results; on S3 upload failure the client returns to upload phase, but if only the process trigger fails polling continues. Error list uses `resolveErrorLabel()` to map `__TIMEOUT_*__` markers into bilingual display text. Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
 
 ## Image Upload
 

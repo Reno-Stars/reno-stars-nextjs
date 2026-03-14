@@ -656,6 +656,7 @@ const en = {
     blogsCreated: '{count} blog post(s) created',
     errorsTitle: 'Errors',
     errorsCount: '{count} error(s)',
+    warningsCount: '{count} warning(s)',
     showErrors: 'Show errors',
     hideErrors: 'Hide errors',
     reviewSites: 'Review Sites',

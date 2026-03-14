@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/admin/auth';
-import { getS3Client, S3_BUCKET } from '@/lib/admin/s3';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getS3Client } from '@/lib/admin/s3';
 import { db } from '@/lib/db';
 import { batchUploadJobs } from '@/lib/db/schema';
+import { MAX_ZIP_SIZE } from '@/lib/batch/types';
 
 export const maxDuration = 60;
-
-const MAX_ZIP_SIZE = 1024 * 1024 * 1024; // 1 GB
-const PRESIGN_EXPIRY_SECONDS = 1800; // 30 minutes
 
 export async function POST(request: NextRequest) {
   const isAuth = await validateSession();
@@ -67,20 +63,7 @@ export async function POST(request: NextRequest) {
       })
       .returning({ id: batchUploadJobs.id });
 
-    // Generate presigned URL for direct browser-to-S3 upload.
-    // Do NOT include ContentLength — browsers set Content-Length automatically
-    // and including it in the signature causes a mismatch.
-    const presignedUrl = await getSignedUrl(
-      client,
-      new PutObjectCommand({
-        Bucket: S3_BUCKET,
-        Key: `temp/batch/${job.id}.zip`,
-        ContentType: 'application/zip',
-      }),
-      { expiresIn: PRESIGN_EXPIRY_SECONDS }
-    );
-
-    return NextResponse.json({ jobId: job.id, presignedUrl });
+    return NextResponse.json({ jobId: job.id });
   } catch (error) {
     console.error('Batch upload error:', error);
     return NextResponse.json(

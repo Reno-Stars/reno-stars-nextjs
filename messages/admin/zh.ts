@@ -658,6 +658,7 @@ const zh: AdminMessages = {
     blogsCreated: '已创建 {count} 篇博客文章',
     errorsTitle: '错误',
     errorsCount: '{count} 个错误',
+    warningsCount: '{count} 个警告',
     showErrors: '显示错误',
     hideErrors: '隐藏错误',
     reviewSites: '查看工地',

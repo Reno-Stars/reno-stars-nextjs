@@ -22,6 +22,7 @@ import {
   neu,
 } from '@/lib/theme';
 import type { BatchJobStatus } from '@/lib/db/schema';
+import { MAX_ZIP_SIZE } from '@/lib/batch/types';
 import type { BatchUploadMode } from '@/lib/batch/types';
 
 interface JobData {
@@ -40,6 +41,10 @@ interface JobData {
 }
 
 type Phase = 'upload' | 'processing' | 'results';
+
+/** Multipart upload chunk size. S3/R2 minimum is 5 MB for non-final parts. */
+const CHUNK_SIZE = 10 * 1024 * 1024; // 10 MB
+const CHUNK_MAX_RETRIES = 3;
 
 // ============================================================================
 // STEP PROGRESS
@@ -111,6 +116,7 @@ export default function BatchUploadClient() {
   const [file, setFile] = useState<File | null>(null);
   const [generateBlog, setGenerateBlog] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [s3Progress, setS3Progress] = useState(0); // 0–100
   const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<JobData | null>(null);
   const [showErrors, setShowErrors] = useState(false);
@@ -118,26 +124,33 @@ export default function BatchUploadClient() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
   const mountedRef = useRef(true);
+  const pollFailCountRef = useRef(0);
 
   useEffect(() => {
     return () => {
       mountedRef.current = false;
       if (pollRef.current) clearInterval(pollRef.current);
+      if (abortRef.current) abortRef.current.abort();
     };
   }, []);
 
   // ---- Polling ----
+  const MAX_POLL_FAILURES = 10;
+
   const startPolling = useCallback((jobId: string) => {
     if (pollRef.current) clearInterval(pollRef.current);
+    pollFailCountRef.current = 0;
 
     pollRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`/admin/batch-upload/api/${jobId}`);
+        const res = await fetch(`/admin/batch-upload/api/${jobId}/`);
         if (!res.ok) return;
         const data: JobData = await res.json();
         if (!mountedRef.current) return;
 
+        pollFailCountRef.current = 0;
         setJob(data);
 
         // Stop polling on terminal states
@@ -147,10 +160,14 @@ export default function BatchUploadClient() {
           setPhase('results');
         }
       } catch {
-        // Silently retry on network errors
+        pollFailCountRef.current++;
+        if (pollFailCountRef.current >= MAX_POLL_FAILURES) {
+          if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+          if (mountedRef.current) setError(bt.errorUploadFailed);
+        }
       }
     }, 2000);
-  }, []);
+  }, [bt]);
 
   // ---- File handling ----
   const handleFile = useCallback((f: File) => {
@@ -158,7 +175,7 @@ export default function BatchUploadClient() {
       setError(bt.errorZipOnly);
       return;
     }
-    if (f.size > 1024 * 1024 * 1024) {
+    if (f.size > MAX_ZIP_SIZE) {
       setError(bt.errorTooLarge);
       return;
     }
@@ -186,8 +203,10 @@ export default function BatchUploadClient() {
     let s3UploadOk = false;
 
     try {
-      // Step 1: Get presigned URL from server
-      const initRes = await fetch('/admin/batch-upload/api', {
+      // Step 1: Create job on server
+      const initController = new AbortController();
+      const initTimeout = setTimeout(() => initController.abort(), 30_000);
+      const initRes = await fetch('/admin/batch-upload/api/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -196,7 +215,9 @@ export default function BatchUploadClient() {
           generateBlog,
           mode,
         }),
+        signal: initController.signal,
       });
+      clearTimeout(initTimeout);
 
       if (!initRes.ok) {
         const data = await initRes.json();
@@ -204,11 +225,10 @@ export default function BatchUploadClient() {
       }
 
       const initData: Record<string, unknown> = await initRes.json();
-      if (typeof initData.jobId !== 'string' || typeof initData.presignedUrl !== 'string') {
+      if (typeof initData.jobId !== 'string') {
         throw new Error(bt.errorUploadFailed);
       }
       const validJobId = initData.jobId;
-      const presignedUrl = initData.presignedUrl;
 
       // Step 2: Switch to processing phase and start polling early.
       // Polling picks up server-side status even if subsequent client steps fail.
@@ -230,22 +250,84 @@ export default function BatchUploadClient() {
       });
       startPolling(validJobId);
 
-      // Step 3: Upload ZIP directly to S3 via presigned URL (bypasses proxy)
-      // Uses fetch() which is proven to work with R2 presigned URLs
-      // (same approach as image uploads in upload-client.ts).
-      const uploadRes = await fetch(presignedUrl, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/zip' },
-        body: file,
-      });
+      // Step 3: Chunked upload to S3 via server proxy (avoids CORS on S3/R2).
+      // Uses S3 multipart upload — each chunk is CHUNK_SIZE so the server never
+      // buffers the full file in memory, and we stay within timeout limits.
+      const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+      setS3Progress(0);
 
-      if (!uploadRes.ok) {
-        throw new Error(`${bt.errorUploadFailed} (S3 ${uploadRes.status})`);
+      const abort = new AbortController();
+      abortRef.current = abort;
+
+      // 3a: Init multipart upload
+      const initUploadRes = await fetch(
+        `/admin/batch-upload/api/${validJobId}/upload/`,
+        { method: 'POST', signal: abort.signal }
+      );
+      if (!initUploadRes.ok) {
+        const data = await initUploadRes.json();
+        throw new Error(data.error || bt.errorUploadFailed);
       }
+      const { uploadId } = (await initUploadRes.json()) as { uploadId: string };
+
+      // 3b: Upload each chunk (with per-chunk retry)
+      const parts: { partNumber: number; etag: string }[] = [];
+      for (let i = 0; i < totalChunks; i++) {
+        if (abort.signal.aborted) throw new Error(bt.errorUploadFailed);
+
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
+        const chunk = file.slice(start, end);
+        const partNumber = i + 1;
+
+        let etag: string | undefined;
+        for (let attempt = 0; attempt < CHUNK_MAX_RETRIES; attempt++) {
+          try {
+            const partRes = await fetch(
+              `/admin/batch-upload/api/${validJobId}/upload/?uploadId=${encodeURIComponent(uploadId)}&partNumber=${partNumber}`,
+              { method: 'PUT', body: chunk, signal: abort.signal }
+            );
+            if (!partRes.ok) {
+              const data = await partRes.json();
+              throw new Error(data.error || `Part ${partNumber} failed`);
+            }
+            const partData = (await partRes.json()) as { etag: string };
+            etag = partData.etag;
+            break;
+          } catch (err) {
+            if (abort.signal.aborted) throw err;
+            if (attempt === CHUNK_MAX_RETRIES - 1) throw err;
+            // Wait before retry: 1s, 2s
+            await new Promise((r) => setTimeout(r, (attempt + 1) * 1000));
+          }
+        }
+        parts.push({ partNumber, etag: etag! });
+
+        if (mountedRef.current) {
+          setS3Progress(Math.round((partNumber / totalChunks) * 100));
+        }
+      }
+
+      // 3c: Complete multipart upload
+      const completeRes = await fetch(
+        `/admin/batch-upload/api/${validJobId}/upload/`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uploadId, parts }),
+          signal: abort.signal,
+        }
+      );
+      if (!completeRes.ok) {
+        const data = await completeRes.json();
+        throw new Error(data.error || bt.errorUploadFailed);
+      }
+
+      abortRef.current = null;
       s3UploadOk = true;
 
       // Step 4: Trigger processing
-      const processRes = await fetch(`/admin/batch-upload/api/${validJobId}/process`, {
+      const processRes = await fetch(`/admin/batch-upload/api/${validJobId}/process/`, {
         method: 'POST',
       });
 
@@ -278,9 +360,11 @@ export default function BatchUploadClient() {
     setFile(null);
     setJob(null);
     setError(null);
+    setS3Progress(0);
     setShowErrors(false);
     setGenerateBlog(false);
     setShowHelp(false);
+    if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
   }, []);
 
   // ---- Render ----
@@ -624,13 +708,15 @@ Basement/
               transition: 'background-color 0.2s',
             }}
             onMouseEnter={(e) => {
-              if (file && !uploading) (e.target as HTMLButtonElement).style.backgroundColor = GOLD_HOVER;
+              if (file && !uploading) e.currentTarget.style.backgroundColor = GOLD_HOVER;
             }}
             onMouseLeave={(e) => {
-              if (file && !uploading) (e.target as HTMLButtonElement).style.backgroundColor = GOLD;
+              if (file && !uploading) e.currentTarget.style.backgroundColor = GOLD;
             }}
           >
-            {uploading ? bt.uploading : bt.uploadButton}
+            {uploading
+              ? (s3Progress > 0 ? `${bt.uploading} ${s3Progress}%` : bt.uploading)
+              : bt.uploadButton}
           </button>
         </div>
       )}
@@ -649,24 +735,40 @@ Basement/
             {bt.processing}
           </h3>
 
-          {/* S3 upload indicator (shown while job is still pending, before server processing starts) */}
+          {/* S3 upload indicator with progress (shown while job is still pending) */}
           {uploading && job.status === 'pending' && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-              <div
-                className="admin-spin"
-                style={{
-                  width: 16,
-                  height: 16,
-                  border: `2px solid ${GOLD}`,
-                  borderTopColor: 'transparent',
-                  borderRadius: '50%',
-                  animation: 'admin-spin 0.8s linear infinite',
-                  flexShrink: 0,
-                }}
-              />
-              <span style={{ color: TEXT, fontWeight: 600, fontSize: '0.875rem' }}>
-                {bt.uploading}
-              </span>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <div
+                  className="admin-spin"
+                  style={{
+                    width: 16,
+                    height: 16,
+                    border: `2px solid ${GOLD}`,
+                    borderTopColor: 'transparent',
+                    borderRadius: '50%',
+                    animation: 'admin-spin 0.8s linear infinite',
+                    flexShrink: 0,
+                  }}
+                />
+                <span style={{ color: TEXT, fontWeight: 600, fontSize: '0.875rem' }}>
+                  {bt.uploading}
+                </span>
+                <span style={{ color: TEXT_MUTED, fontSize: '0.8125rem', marginLeft: 'auto' }}>
+                  {s3Progress}%
+                </span>
+              </div>
+              <div style={{ height: 6, backgroundColor: SURFACE_ALT, borderRadius: 3, overflow: 'hidden' }}>
+                <div
+                  style={{
+                    height: '100%',
+                    width: `${s3Progress}%`,
+                    backgroundColor: GOLD,
+                    borderRadius: 3,
+                    transition: 'width 0.3s ease',
+                  }}
+                />
+              </div>
             </div>
           )}
 
@@ -692,7 +794,7 @@ Basement/
               const currentIdx = getStepIndex(job.status);
               const isActive = idx === currentIdx && !uploading;
               const isDone = idx < currentIdx;
-              const stepLabel = bt[step.labelKey as keyof typeof bt] as string;
+              const stepLabel = (bt as Record<string, string>)[step.labelKey] ?? step.key;
 
               return (
                 <div
@@ -866,53 +968,14 @@ Basement/
             )}
           </div>
 
-          {/* Errors */}
+          {/* Errors / Warnings */}
           {job.errors.length > 0 && (
-            <div style={{ marginBottom: '1.5rem' }}>
-              <button
-                type="button"
-                onClick={() => setShowErrors((prev) => !prev)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: ERROR,
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  padding: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.25rem',
-                }}
-              >
-                {bt.errorsCount.replace('{count}', String(job.errors.length))}
-                {' '}
-                ({showErrors ? bt.hideErrors : bt.showErrors})
-              </button>
-              {showErrors && (
-                <ul
-                  style={{
-                    backgroundColor: ERROR_BG,
-                    borderRadius: 8,
-                    padding: '1rem 1rem 1rem 2rem',
-                    marginTop: '0.5rem',
-                    fontSize: '0.8125rem',
-                    color: TEXT,
-                    listStyle: 'disc',
-                  }}
-                >
-                  {job.errors.map((err, idx) => {
-                    const label = resolveErrorLabel(err, bt);
-                    if (!label) return null;
-                    return (
-                      <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
-                        {label}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
+            <ErrorWarningSection
+              job={job}
+              bt={bt}
+              showErrors={showErrors}
+              onToggleErrors={() => setShowErrors((prev) => !prev)}
+            />
           )}
 
           {/* Action buttons */}
@@ -959,6 +1022,74 @@ Basement/
 // ============================================================================
 // HELPER COMPONENTS
 // ============================================================================
+
+function ErrorWarningSection({
+  job,
+  bt,
+  showErrors,
+  onToggleErrors,
+}: {
+  job: JobData;
+  bt: Record<string, string>;
+  showErrors: boolean;
+  onToggleErrors: () => void;
+}) {
+  const isWarning = job.status === 'completed';
+  const toggleColor = isWarning ? GOLD : ERROR;
+  const listBg = isWarning ? GOLD_PALE : ERROR_BG;
+  const label = isWarning
+    ? bt.warningsCount?.replace('{count}', String(job.errors.length))
+      ?? `${job.errors.length} warning(s)`
+    : bt.errorsCount.replace('{count}', String(job.errors.length));
+
+  return (
+    <div style={{ marginBottom: '1.5rem' }}>
+      <button
+        type="button"
+        onClick={onToggleErrors}
+        style={{
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          color: toggleColor,
+          fontSize: '0.875rem',
+          fontWeight: 500,
+          padding: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.25rem',
+        }}
+      >
+        {label}
+        {' '}
+        ({showErrors ? bt.hideErrors : bt.showErrors})
+      </button>
+      {showErrors && (
+        <ul
+          style={{
+            backgroundColor: listBg,
+            borderRadius: 8,
+            padding: '1rem 1rem 1rem 2rem',
+            marginTop: '0.5rem',
+            fontSize: '0.8125rem',
+            color: TEXT,
+            listStyle: 'disc',
+          }}
+        >
+          {job.errors.map((err, idx) => {
+            const resolved = resolveErrorLabel(err, bt);
+            if (!resolved) return null;
+            return (
+              <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
+                {resolved}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 function SummaryCard({
   label,

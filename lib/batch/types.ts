@@ -3,8 +3,25 @@ import type { ServiceTypeKey } from '@/lib/admin/constants';
 // Re-export schema types used by batch processing
 export type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
 
+/** Maximum ZIP file size (1 GB). Shared between client validation and server. */
+export const MAX_ZIP_SIZE = 1024 * 1024 * 1024;
+
+/** S3 key for a batch job's temp ZIP file. */
+export function batchZipKey(jobId: string): string {
+  return `temp/batch/${jobId}.zip`;
+}
+
 /** Upload mode: sites (whole house) or standalone (individual projects) */
 export type BatchUploadMode = 'sites' | 'standalone';
+
+/** Severity of a batch processing error */
+export type BatchErrorSeverity = 'critical' | 'warning';
+
+/** A structured batch processing error with severity classification */
+export interface BatchError {
+  message: string;
+  severity: BatchErrorSeverity;
+}
 
 /** A single image file extracted from the ZIP */
 export interface ExtractedImage {

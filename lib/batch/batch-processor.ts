@@ -28,12 +28,14 @@ import { ensureStandaloneSite } from '@/lib/db/queries';
 import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
 import { parseZip, parseZipStandalone } from './zip-parser';
-import type {
-  ParsedZipStructure,
-  ParsedStandaloneStructure,
-  ParsedProject,
-  ParsedExternalProduct,
-  ExtractedImage,
+import {
+  batchZipKey,
+  type ParsedZipStructure,
+  type ParsedStandaloneStructure,
+  type ParsedProject,
+  type ParsedExternalProduct,
+  type ExtractedImage,
+  type BatchError,
 } from './types';
 
 // ============================================================================
@@ -75,30 +77,47 @@ async function updateJob(
 // S3 UPLOAD
 // ============================================================================
 
+/** Total attempts per image upload (1 initial + retries) */
+const UPLOAD_MAX_ATTEMPTS = 3;
+const UPLOAD_RETRY_BASE_MS = 500;
+
 async function uploadImageToS3(
   image: ExtractedImage,
-  keyPrefix: string
+  keyPrefix: string,
+  client: import('@aws-sdk/client-s3').S3Client,
+  publicUrl: string
 ): Promise<string> {
-  const client = getS3Client();
-  if (!client) throw new Error('S3 not configured');
-
-  const publicUrl = process.env.S3_PUBLIC_URL;
-  if (!publicUrl) throw new Error('S3_PUBLIC_URL not configured');
-
   const ext = image.path.split('.').pop()?.toLowerCase() || 'jpg';
   const ts = Date.now().toString(36);
   const key = `uploads/admin/${keyPrefix}-${ts}.${ext}`;
 
-  await client.send(
-    new PutObjectCommand({
-      Bucket: S3_BUCKET,
-      Key: key,
-      Body: image.data,
-      ContentType: image.mimeType,
-    })
-  );
+  const command = new PutObjectCommand({
+    Bucket: S3_BUCKET,
+    Key: key,
+    Body: image.data,
+    ContentType: image.mimeType,
+  });
 
-  return `${publicUrl}/${key}`;
+  for (let attempt = 0; attempt < UPLOAD_MAX_ATTEMPTS; attempt++) {
+    try {
+      await client.send(command);
+      return `${publicUrl}/${key}`;
+    } catch (err) {
+      if (attempt === UPLOAD_MAX_ATTEMPTS - 1) throw err;
+      // Retry on transient SSL/network errors
+      const msg = err instanceof Error ? err.message : '';
+      const isTransient =
+        msg.includes('ssl') ||
+        msg.includes('SSL') ||
+        msg.includes('ECONNRESET') ||
+        msg.includes('socket hang up') ||
+        msg.includes('ETIMEDOUT');
+      if (!isTransient) throw err;
+      await new Promise((r) => setTimeout(r, UPLOAD_RETRY_BASE_MS * 2 ** attempt));
+    }
+  }
+
+  throw new Error('Unreachable');
 }
 
 /**
@@ -111,9 +130,11 @@ async function uploadAllImages(opts: {
   jobId: string;
   startCount: number;
   totalImages: number;
-  errors: string[];
+  errors: BatchError[];
+  s3Client: import('@aws-sdk/client-s3').S3Client;
+  s3PublicUrl: string;
 }): Promise<Map<ExtractedImage, string>> {
-  const { images, slugPrefix, jobId, startCount, totalImages, errors } = opts;
+  const { images, slugPrefix, jobId, startCount, totalImages, errors, s3Client, s3PublicUrl } = opts;
   const urlMap = new Map<ExtractedImage, string>();
   let processed = startCount;
 
@@ -124,7 +145,7 @@ async function uploadAllImages(opts: {
         const idx = i + batchIdx;
         const basename = img.path.split('/').pop()?.replace(/\.[^.]+$/, '') || `img-${idx}`;
         const safeBasename = basename.replace(/[^a-z0-9-]/gi, '-').toLowerCase();
-        return uploadImageToS3(img, `${slugPrefix}-${safeBasename}`);
+        return uploadImageToS3(img, `${slugPrefix}-${safeBasename}`, s3Client, s3PublicUrl);
       })
     );
 
@@ -133,15 +154,12 @@ async function uploadAllImages(opts: {
       if (result.status === 'fulfilled') {
         urlMap.set(batch[j], result.value);
       } else {
-        errors.push(`Upload failed: ${batch[j].path} - ${result.reason}`);
+        errors.push({ message: `Upload failed: ${batch[j].path} - ${result.reason}`, severity: 'warning' });
       }
     }
 
     processed += batch.length;
-    await updateJob(jobId, {
-      processedImages: processed,
-      currentStepLabel: `Uploading image ${processed} of ${totalImages}...`,
-    });
+    await updateJob(jobId, { processedImages: processed });
   }
 
   return urlMap;
@@ -160,8 +178,7 @@ async function generateSiteMetadata(
       ? `Whole house renovation project: ${folderName}.\n\nProject details:\n${notes}`
       : `Whole house renovation project: ${folderName}. This is a renovation site.`;
     return await optimizeSiteDescription(prompt);
-  } catch (error) {
-    console.error('AI site metadata failed:', error);
+  } catch {
     return null;
   }
 }
@@ -180,8 +197,7 @@ async function generateProjectMetadata(
       ? `Renovation project: ${folderName}.\n\nProject details:\n${notes}`
       : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
     return await optimizeProjectDescription(prompt);
-  } catch (error) {
-    console.error('AI project metadata failed:', error);
+  } catch {
     return null;
   }
 }
@@ -250,14 +266,14 @@ async function insertExternalProducts(opts: {
   productsText: string | null;
   productImages: Map<number, ExtractedImage>;
   urlMap: Map<ExtractedImage, string>;
-  errors: string[];
+  errors: BatchError[];
   label: string;
 }): Promise<void> {
   const { table, fkColumn, fkValue, productsText, productImages, urlMap, errors, label } = opts;
 
   // Warn if product images exist but no products.txt to reference them
   if (productImages.size > 0 && !productsText) {
-    errors.push(`"${label}": ${productImages.size} product image(s) found but no products.txt — images will not be used`);
+    errors.push({ message: `"${label}": ${productImages.size} product image(s) found but no products.txt — images will not be used`, severity: 'warning' });
   }
 
   if (!productsText) return;
@@ -281,9 +297,10 @@ async function insertExternalProducts(opts: {
       })
     );
   } catch (error) {
-    errors.push(
-      `External products for "${label}": ${error instanceof Error ? error.message : 'Unknown error'}`
-    );
+    errors.push({
+      message: `External products for "${label}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+      severity: 'warning',
+    });
   }
 }
 
@@ -291,65 +308,53 @@ async function insertExternalProducts(opts: {
 // FALLBACK METADATA
 // ============================================================================
 
-function fallbackSiteData(folderName: string) {
-  const slug = formatSlug(folderName);
+/** Build shared fallback SEO fields from a name and bilingual type labels. */
+function buildFallbackSeo(name: string, typeEn: string, typeZh: string) {
   return {
-    slug,
+    slug: formatSlug(name),
+    locationCity: '',
+    poNumber: '',
+    budgetRange: '',
+    durationEn: '',
+    durationZh: '',
+    badgeEn: typeEn,
+    badgeZh: typeZh,
+    excerptEn: `${typeEn} renovation at ${name}.`,
+    excerptZh: `${name}${typeZh}装修。`,
+    metaTitleEn: `${name} ${typeEn} | Reno Stars`,
+    metaTitleZh: `${name}${typeZh} | Reno Stars`,
+    metaDescriptionEn: `${typeEn} renovation project at ${name}.`,
+    metaDescriptionZh: `${name}${typeZh}装修项目。`,
+    focusKeywordEn: `${typeEn.toLowerCase()} renovation`,
+    focusKeywordZh: `${typeZh}装修`,
+    seoKeywordsEn: `${typeEn.toLowerCase()}, renovation`,
+    seoKeywordsZh: `${typeZh}, 装修`,
+  };
+}
+
+function fallbackSiteData(folderName: string) {
+  return {
+    ...buildFallbackSeo(folderName, 'Whole House', '全屋'),
     titleEn: folderName,
     titleZh: folderName,
     descriptionEn: `Whole house renovation project at ${folderName}.`,
     descriptionZh: `${folderName}全屋装修项目。`,
-    locationCity: '',
-    poNumber: '',
-    budgetRange: '',
-    durationEn: '',
-    durationZh: '',
-    badgeEn: 'Whole House',
-    badgeZh: '全屋装修',
-    excerptEn: `Whole house renovation at ${folderName}.`,
-    excerptZh: `${folderName}全屋装修。`,
-    metaTitleEn: `${folderName} Renovation | Reno Stars`,
-    metaTitleZh: `${folderName}装修 | Reno Stars`,
-    metaDescriptionEn: `View the whole house renovation project at ${folderName}.`,
-    metaDescriptionZh: `查看${folderName}全屋装修项目。`,
-    focusKeywordEn: `${folderName.toLowerCase()} renovation`,
-    focusKeywordZh: `${folderName}装修`,
-    seoKeywordsEn: 'renovation, whole house, remodeling',
-    seoKeywordsZh: '装修, 全屋, 翻新',
   };
 }
 
 function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
-  const slug = formatSlug(folderName);
   const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
   return {
+    ...buildFallbackSeo(folderName, category.en, category.zh),
     serviceType,
-    slug,
     titleEn: `${folderName} ${category.en} Renovation`,
     titleZh: `${folderName}${category.zh}装修`,
     descriptionEn: `${category.en} renovation project.`,
     descriptionZh: `${category.zh}装修项目。`,
-    locationCity: '',
-    poNumber: '',
-    budgetRange: '',
-    durationEn: '',
-    durationZh: '',
     challengeEn: '',
     challengeZh: '',
     solutionEn: '',
     solutionZh: '',
-    badgeEn: category.en,
-    badgeZh: category.zh,
-    excerptEn: `${category.en} renovation at ${folderName}.`,
-    excerptZh: `${folderName}${category.zh}装修。`,
-    metaTitleEn: `${folderName} ${category.en} | Reno Stars`,
-    metaTitleZh: `${folderName}${category.zh} | Reno Stars`,
-    metaDescriptionEn: `${category.en} renovation project at ${folderName}.`,
-    metaDescriptionZh: `${folderName}${category.zh}装修项目。`,
-    focusKeywordEn: `${category.en.toLowerCase()} renovation`,
-    focusKeywordZh: `${category.zh}装修`,
-    seoKeywordsEn: `${category.en.toLowerCase()}, renovation`,
-    seoKeywordsZh: `${category.zh}, 装修`,
   };
 }
 
@@ -416,15 +421,12 @@ async function generateBlogsForEntities(opts: {
   generator: (id: string) => Promise<{ blogPostId?: string; error?: string }>;
   entityLabel: string;
   jobId: string;
-  errors: string[];
+  errors: BatchError[];
   createdBlogPostIds: string[];
 }): Promise<void> {
   const { ids, generator, entityLabel, jobId, errors, createdBlogPostIds } = opts;
 
-  await updateJob(jobId, {
-    status: 'generating_blog',
-    currentStepLabel: 'Generating blog posts...',
-  });
+  await updateJob(jobId, { status: 'generating_blog' });
 
   for (const id of ids) {
     try {
@@ -432,12 +434,13 @@ async function generateBlogsForEntities(opts: {
       if (result.blogPostId) {
         createdBlogPostIds.push(result.blogPostId);
       } else if (result.error) {
-        errors.push(`Blog generation for ${entityLabel} ${id}: ${result.error}`);
+        errors.push({ message: `Blog generation for ${entityLabel} ${id}: ${result.error}`, severity: 'warning' });
       }
     } catch (error) {
-      errors.push(
-        `Blog generation failed for ${entityLabel} ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
+      errors.push({
+        message: `Blog generation failed for ${entityLabel} ${id}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        severity: 'warning',
+      });
     }
   }
 }
@@ -448,7 +451,7 @@ async function cleanupTempZip(jobId: string): Promise<void> {
     const client = getS3Client();
     if (client) {
       await client.send(
-        new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
+        new DeleteObjectCommand({ Bucket: S3_BUCKET, Key: batchZipKey(jobId) })
       );
     }
   } catch {
@@ -459,25 +462,22 @@ async function cleanupTempZip(jobId: string): Promise<void> {
 /** Finalize a batch job: set terminal status, timestamps, and clean up temp ZIP. */
 async function finalizeJob(opts: {
   jobId: string;
-  errors: string[];
+  errors: BatchError[];
   createdSiteIds: string[];
   createdProjectIds: string[];
   createdBlogPostIds: string[];
 }): Promise<void> {
   const { jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds } = opts;
-  const hasErrors = errors.length > 0;
   const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
+  const hasCriticalErrors = errors.some((e) => e.severity === 'critical');
 
   await updateJob(jobId, {
-    status: hasErrors && hasCreations ? 'partial' : hasErrors ? 'failed' : 'completed',
-    currentStepLabel: hasErrors
-      ? `Completed with ${errors.length} error(s)`
-      : 'Completed successfully',
+    status: hasCriticalErrors && hasCreations ? 'partial' : hasCriticalErrors ? 'failed' : 'completed',
     completedAt: new Date(),
     createdSiteIds: [...createdSiteIds],
     createdProjectIds: [...createdProjectIds],
     createdBlogPostIds: [...createdBlogPostIds],
-    errors: [...errors],
+    errors: errors.map((e) => e.message),
   });
 
   await cleanupTempZip(jobId);
@@ -488,7 +488,7 @@ async function finalizeJob(opts: {
 // ============================================================================
 
 export async function processBatchUpload(jobId: string): Promise<void> {
-  const errors: string[] = [];
+  const errors: BatchError[] = [];
   const createdSiteIds: string[] = [];
   const createdProjectIds: string[] = [];
   const createdBlogPostIds: string[] = [];
@@ -510,18 +510,20 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       ...job.options,
     };
 
+    // ---- Validate S3 upfront ----
+    const client = getS3Client();
+    if (!client) throw new Error('S3 not configured');
+    const s3PublicUrl = process.env.S3_PUBLIC_URL;
+    if (!s3PublicUrl) throw new Error('S3_PUBLIC_URL not configured');
+
     // ---- STEP 2: Extract ZIP from S3 temp ----
     await updateJob(jobId, {
       status: 'extracting',
-      currentStepLabel: 'Extracting ZIP file...',
       startedAt: new Date(),
     });
 
-    const client = getS3Client();
-    if (!client) throw new Error('S3 not configured');
-
     const zipObj = await client.send(
-      new GetObjectCommand({ Bucket: S3_BUCKET, Key: `temp/batch/${jobId}.zip` })
+      new GetObjectCommand({ Bucket: S3_BUCKET, Key: batchZipKey(jobId) })
     );
     if (!zipObj.Body) throw new Error('Failed to download ZIP from S3');
     const zipBuffer = new Uint8Array(await zipObj.Body.transformToByteArray());
@@ -541,10 +543,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         throw new Error('No image files found in the ZIP archive.');
       }
 
-      await updateJob(jobId, {
-        totalImages: parsedStandalone.totalImages,
-        currentStepLabel: `Found ${parsedStandalone.totalImages} images in ${parsedStandalone.projects.length} project(s)`,
-      });
+      await updateJob(jobId, { totalImages: parsedStandalone.totalImages });
 
       await processStandaloneMode({
         parsedStandalone,
@@ -553,6 +552,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         errors,
         createdProjectIds,
         createdBlogPostIds,
+        s3Client: client,
+        s3PublicUrl,
       });
 
       await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
@@ -573,16 +574,10 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       throw new Error('No image files found in the ZIP archive.');
     }
 
-    await updateJob(jobId, {
-      totalImages: parsed.totalImages,
-      currentStepLabel: `Found ${parsed.totalImages} images in ${parsed.sites.length} site(s)`,
-    });
+    await updateJob(jobId, { totalImages: parsed.totalImages });
 
     // ---- STEP 3: Upload images to S3 (per-site slug prefix) ----
-    await updateJob(jobId, {
-      status: 'uploading',
-      currentStepLabel: 'Uploading images...',
-    });
+    await updateJob(jobId, { status: 'uploading' });
 
     // Upload images per site with site-specific slug prefixes
     const urlMap = new Map<ExtractedImage, string>();
@@ -613,6 +608,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         startCount: uploadedCount,
         totalImages: parsed.totalImages,
         errors,
+        s3Client: client,
+        s3PublicUrl,
       });
 
       for (const [img, url] of siteUrls) {
@@ -622,48 +619,34 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     }
 
     // ---- STEP 4: AI metadata generation ----
-    await updateJob(jobId, {
-      status: 'generating',
-      currentStepLabel: 'Generating metadata with AI...',
-    });
+    await updateJob(jobId, { status: 'generating' });
 
     // Pre-generate AI metadata for all sites and projects (parallel batches)
     const siteMetadataMap = new Map<string, SiteDescription | null>();
     const projectMetadataMap = new Map<string, ProjectDescription | null>();
 
-    // Collect tasks with typed results stored directly into their target maps
-    const aiTasks: { fn: () => Promise<void> }[] = [];
+    const aiTasks: (() => Promise<void>)[] = [];
 
     for (const parsedSite of parsed.sites) {
       const siteKey = parsedSite.folderName;
-      aiTasks.push({
-        fn: async () => {
-          siteMetadataMap.set(siteKey, await generateSiteMetadata(parsedSite.folderName, parsedSite.notes));
-        },
+      aiTasks.push(async () => {
+        siteMetadataMap.set(siteKey, await generateSiteMetadata(parsedSite.folderName, parsedSite.notes));
       });
       for (const parsedProject of parsedSite.projects) {
         const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
-        aiTasks.push({
-          fn: async () => {
-            projectMetadataMap.set(projectKey, await generateProjectMetadata(parsedProject.folderName, parsedProject.serviceType, parsedProject.notes));
-          },
+        aiTasks.push(async () => {
+          projectMetadataMap.set(projectKey, await generateProjectMetadata(parsedProject.folderName, parsedProject.serviceType, parsedProject.notes));
         });
       }
     }
 
     for (let i = 0; i < aiTasks.length; i += AI_METADATA_BATCH_SIZE) {
       const batch = aiTasks.slice(i, i + AI_METADATA_BATCH_SIZE);
-      await Promise.allSettled(batch.map((t) => t.fn()));
-      await updateJob(jobId, {
-        currentStepLabel: `Generated metadata ${Math.min(i + AI_METADATA_BATCH_SIZE, aiTasks.length)} of ${aiTasks.length}...`,
-      });
+      await Promise.allSettled(batch.map((fn) => fn()));
     }
 
     // ---- STEP 5: Save to DB ----
-    await updateJob(jobId, {
-      status: 'saving',
-      currentStepLabel: 'Saving to database...',
-    });
+    await updateJob(jobId, { status: 'saving' });
 
     const existingSiteSlugs = await getExistingSlugs('sites');
     const existingProjectSlugs = await getExistingSlugs('projects');
@@ -721,10 +704,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         insertedSiteId = siteId;
         createdSiteIds.push(siteId);
 
-        await updateJob(jobId, {
-          currentStepLabel: `Created site: ${siteData.titleEn}`,
-          createdSiteIds: [...createdSiteIds],
-        });
+        await updateJob(jobId, { createdSiteIds: [...createdSiteIds] });
 
         // Insert site-level image pairs
         let siteImagePairsCreated = 0;
@@ -747,9 +727,10 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             });
             siteImagePairsCreated++;
           } catch (error) {
-            errors.push(
-              `Site image pair ${pairIdx} for "${parsedSite.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
-            );
+            errors.push({
+              message: `Site image pair ${pairIdx} for "${parsedSite.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+              severity: 'warning',
+            });
           }
         }
 
@@ -785,22 +766,25 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             });
             projectsCreatedForSite++;
           } catch (error) {
-            errors.push(
-              `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-            );
+            errors.push({
+              message: `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              severity: 'critical',
+            });
           }
         }
 
         // Clean up orphaned site if no projects and no site image pairs were created
         if (projectsCreatedForSite === 0 && siteImagePairsCreated === 0 && insertedSiteId) {
           await cleanupOrphanedSite(insertedSiteId);
-          createdSiteIds.pop();
-          errors.push(`Site "${parsedSite.folderName}" removed: all child projects failed.`);
+          const popIdx = createdSiteIds.indexOf(insertedSiteId);
+          if (popIdx !== -1) createdSiteIds.splice(popIdx, 1);
+          errors.push({ message: `Site "${parsedSite.folderName}" removed: all child projects failed.`, severity: 'critical' });
         }
       } catch (error) {
-        errors.push(
-          `Site "${parsedSite.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-        );
+        errors.push({
+          message: `Site "${parsedSite.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          severity: 'critical',
+        });
         // Clean up orphaned site on failure
         if (insertedSiteId) {
           await cleanupOrphanedSite(insertedSiteId);
@@ -826,12 +810,11 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    errors.push(message);
+    errors.push({ message, severity: 'critical' });
     await updateJob(jobId, {
       status: 'failed',
-      currentStepLabel: `Failed: ${message}`,
       completedAt: new Date(),
-      errors: [...errors],
+      errors: errors.map((e) => e.message),
       createdSiteIds: [...createdSiteIds],
       createdProjectIds: [...createdProjectIds],
       createdBlogPostIds: [...createdBlogPostIds],
@@ -847,11 +830,13 @@ async function processStandaloneMode(opts: {
   parsedStandalone: ParsedStandaloneStructure;
   jobId: string;
   options: BatchJobOptions;
-  errors: string[];
+  errors: BatchError[];
   createdProjectIds: string[];
   createdBlogPostIds: string[];
+  s3Client: import('@aws-sdk/client-s3').S3Client;
+  s3PublicUrl: string;
 }): Promise<void> {
-  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds } = opts;
+  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds, s3Client, s3PublicUrl } = opts;
 
   // Find or create the standalone site container
   const standaloneSiteId = await ensureStandaloneSite();
@@ -864,10 +849,7 @@ async function processStandaloneMode(opts: {
   let nextDisplayOrder = Number(maxRow?.max ?? -1) + 1;
 
   // ---- Upload images ----
-  await updateJob(jobId, {
-    status: 'uploading',
-    currentStepLabel: 'Uploading images...',
-  });
+  await updateJob(jobId, { status: 'uploading' });
 
   const urlMap = new Map<ExtractedImage, string>();
   let uploadedCount = 0;
@@ -883,6 +865,8 @@ async function processStandaloneMode(opts: {
       startCount: uploadedCount,
       totalImages: parsedStandalone.totalImages,
       errors,
+      s3Client,
+      s3PublicUrl,
     });
 
     for (const [img, url] of projectUrls) {
@@ -892,10 +876,7 @@ async function processStandaloneMode(opts: {
   }
 
   // ---- AI metadata generation (parallel) ----
-  await updateJob(jobId, {
-    status: 'generating',
-    currentStepLabel: 'Generating metadata with AI...',
-  });
+  await updateJob(jobId, { status: 'generating' });
 
   const projectMetadataMap = new Map<string, ProjectDescription | null>();
 
@@ -908,16 +889,10 @@ async function processStandaloneMode(opts: {
       const r = results[j];
       projectMetadataMap.set(batch[j].folderName, r.status === 'fulfilled' ? r.value : null);
     }
-    await updateJob(jobId, {
-      currentStepLabel: `Generated metadata ${Math.min(i + AI_METADATA_BATCH_SIZE, parsedStandalone.projects.length)} of ${parsedStandalone.projects.length}...`,
-    });
   }
 
   // ---- Save to DB ----
-  await updateJob(jobId, {
-    status: 'saving',
-    currentStepLabel: 'Saving to database...',
-  });
+  await updateJob(jobId, { status: 'saving' });
 
   const existingProjectSlugs = await getExistingSlugs('projects');
 
@@ -936,9 +911,10 @@ async function processStandaloneMode(opts: {
         jobId,
       });
     } catch (error) {
-      errors.push(
-        `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
+      errors.push({
+        message: `Project "${parsedProject.folderName}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        severity: 'critical',
+      });
     }
   }
 
@@ -967,7 +943,7 @@ async function saveProject(opts: {
   urlMap: Map<ExtractedImage, string>;
   existingProjectSlugs: string[];
   createdProjectIds: string[];
-  errors: string[];
+  errors: BatchError[];
   jobId: string;
 }): Promise<void> {
   const {
@@ -1036,10 +1012,7 @@ async function saveProject(opts: {
 
   createdProjectIds.push(insertedProject.id);
 
-  await updateJob(jobId, {
-    currentStepLabel: `Created project: ${projectData.titleEn}`,
-    createdProjectIds: [...createdProjectIds],
-  });
+  await updateJob(jobId, { createdProjectIds: [...createdProjectIds] });
 
   // Insert default service scopes
   const defaultScopes = DEFAULT_SCOPES[parsedProject.serviceType] ?? [];
@@ -1054,9 +1027,10 @@ async function saveProject(opts: {
         }))
       );
     } catch (error) {
-      errors.push(
-        `Scopes for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
+      errors.push({
+        message: `Scopes for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+        severity: 'warning',
+      });
     }
   }
 
@@ -1093,9 +1067,10 @@ async function saveProject(opts: {
         displayOrder: pairIdx,
       });
     } catch (error) {
-      errors.push(
-        `Image pair ${pairIdx} for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
+      errors.push({
+        message: `Image pair ${pairIdx} for "${parsedProject.folderName}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+        severity: 'warning',
+      });
     }
   }
 }
