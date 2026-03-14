@@ -53,6 +53,7 @@ const ProjectDescriptionSchema = z.object({
   focusKeywordZh: z.string(),
   seoKeywordsEn: z.string(),
   seoKeywordsZh: z.string(),
+  selectedScopes: z.array(z.string()).default([]),
   detectedLanguage: z.enum(['en', 'zh']),
 });
 
@@ -193,6 +194,7 @@ Field guidelines:
 - metaDescription: SEO description under 155 characters, compelling and keyword-rich
 - focusKeyword: Primary keyword/phrase for this project (e.g., "modern kitchen renovation")
 - seoKeywords: 3-5 comma-separated keywords related to the project
+- selectedScopes: Select ALL service scopes that apply to this project from the AVAILABLE_SCOPES list provided in the user message. Return the English name of each selected scope. Only select scopes from the provided list — do NOT invent new ones. Select generously — include every scope that is relevant based on the notes.
 
 Return ONLY valid JSON, no markdown.
 
@@ -225,7 +227,8 @@ Response format:
   "focusKeywordEn": "primary keyword",
   "focusKeywordZh": "主要关键词",
   "seoKeywordsEn": "keyword1, keyword2, keyword3",
-  "seoKeywordsZh": "关键词1, 关键词2, 关键词3"
+  "seoKeywordsZh": "关键词1, 关键词2, 关键词3",
+  "selectedScopes": ["Scope Name 1", "Scope Name 2"]
 }`;
 
 const SITE_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
@@ -368,14 +371,24 @@ export async function optimizeShortText(rawText: string): Promise<BilingualText>
  * - Detects source language
  * - Generates description, challenge, solution, and badge in both languages
  */
-export async function optimizeProjectDescription(rawNotes: string): Promise<ProjectDescription> {
+export async function optimizeProjectDescription(
+  rawNotes: string,
+  availableScopes?: { en: string; zh: string }[],
+): Promise<ProjectDescription> {
   const client = getOpenAIClient();
+
+  // Append available scopes to the user message so AI can select from them
+  let userMessage = rawNotes;
+  if (availableScopes && availableScopes.length > 0) {
+    const scopeList = availableScopes.map((s) => s.en).join(', ');
+    userMessage += `\n\nAVAILABLE_SCOPES: [${scopeList}]`;
+  }
 
   const response = await client.chat.completions.create({
     model: AI_CONFIG.model,
     messages: [
       { role: 'system', content: PROJECT_DESCRIPTION_PROMPT },
-      { role: 'user', content: rawNotes },
+      { role: 'user', content: userMessage },
     ],
     temperature: AI_CONFIG.temperature,
     max_tokens: AI_CONFIG.maxTokensProjectDescription,

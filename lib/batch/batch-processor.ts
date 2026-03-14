@@ -25,7 +25,7 @@ import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optim
 import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
 import { ensureStandaloneSite } from '@/lib/db/queries';
-import { SERVICE_TYPE_TO_CATEGORY, DEFAULT_SCOPES } from '@/lib/admin/constants';
+import { SERVICE_TYPE_TO_CATEGORY, SERVICE_SCOPES } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
 import { parseZip, parseZipStandalone } from './zip-parser';
 import {
@@ -196,7 +196,9 @@ async function generateProjectMetadata(
     const prompt = notes
       ? `Renovation project: ${folderName}.\n\nProject details:\n${notes}`
       : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
-    return await optimizeProjectDescription(prompt);
+    // Pass all scopes for the detected service type so AI can select relevant ones
+    const scopes = SERVICE_SCOPES[serviceType] ?? [];
+    return await optimizeProjectDescription(prompt, scopes);
   } catch {
     return null;
   }
@@ -1014,12 +1016,17 @@ async function saveProject(opts: {
 
   await updateJob(jobId, { createdProjectIds: [...createdProjectIds] });
 
-  // Insert default service scopes
-  const defaultScopes = DEFAULT_SCOPES[parsedProject.serviceType] ?? [];
-  if (defaultScopes.length > 0) {
+  // Insert service scopes — use AI-selected scopes if available, else all scopes for the type
+  const allScopes = SERVICE_SCOPES[parsedProject.serviceType] ?? [];
+  const aiSelected = aiProject?.selectedScopes ?? [];
+  const scopesToInsert = aiSelected.length > 0
+    ? allScopes.filter((s) => aiSelected.includes(s.en))
+    : allScopes;
+
+  if (scopesToInsert.length > 0) {
     try {
       await db.insert(projectScopes).values(
-        defaultScopes.map((scope, idx) => ({
+        scopesToInsert.map((scope, idx) => ({
           projectId: insertedProject.id,
           scopeEn: scope.en,
           scopeZh: scope.zh,
