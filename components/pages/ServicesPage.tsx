@@ -9,7 +9,7 @@ import type { Company, Service } from '@/lib/types';
 import { getLocalizedService } from '@/lib/data/services';
 import {
   GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT,
-  CARD, TEXT, TEXT_MID, neu,
+  CARD, NAVY, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
 interface ServicesPageProps {
@@ -63,9 +63,27 @@ export default function ServicesPage({ locale: _locale, company, services }: Ser
                   <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
                     {service.title}
                   </h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: TEXT_MID }}>
+                  <p className="text-sm leading-relaxed mb-3" style={{ color: TEXT_MID }}>
                     {service.description}
                   </p>
+                  {service.tags && service.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {service.tags.slice(0, 10).map((tag, index) => (
+                        <span
+                          key={`${tag}-${index}`}
+                          className="px-2 py-0.5 rounded-md text-xs font-medium"
+                          style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                      {service.tags.length > 10 && (
+                        <span className="px-2 py-0.5 text-xs" style={{ color: TEXT_MID }}>
+                          +{service.tags.length - 10}
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="flex items-center gap-1 text-sm font-semibold" style={{ color: GOLD }}>
                     {t('cta.exploreService', { service: service.title })} <ChevronRight className="w-4 h-4" />
                   </div>
