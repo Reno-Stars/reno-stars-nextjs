@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from './openai';
+import { formatGlossaryForPrompt } from './glossary';
 
 // ============================================================================
 // Types for project/site data passed to the generator (#8: exported)
@@ -122,7 +123,8 @@ Response format:
   "seoKeywordsZh": "关键词1, 关键词2, 关键词3",
   "readingTimeMinutes": 5,
   "slug": "project-slug-case-study"
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 // ============================================================================
 // Helpers

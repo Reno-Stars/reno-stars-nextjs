@@ -78,6 +78,7 @@ lib/
     upload-client.ts      # Client-side presigned S3 URL upload helper
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
+    glossary.ts           # EN→ZH translation glossary injected into all AI prompts
     content-optimizer.ts  # AI functions for blog, project, alt text generation
     blog-generator.ts     # AI blog generation from project/site data (GPT-4o)
     social-post-generator.ts # AI social post generation for 3 platforms (GPT-4o)
@@ -333,6 +334,10 @@ export const AI_CONFIG = {
   fetchTimeoutMs: 60000,
 };
 ```
+
+### Translation Glossary (`lib/ai/glossary.ts`)
+
+A modular EN→ZH glossary injected into all 6 AI prompts to ensure domain-specific terms are translated correctly (e.g., "Delta" the city → "三角洲", not a phonetic transliteration). Terms are organized by category (locations, cabinet-styles, etc.) and serialized into a compact prompt block via `formatGlossaryForPrompt()`. The result is computed once at module load and cached. To add terms, append entries to the appropriate category in the `GLOSSARY` object — all AI prompts pick them up automatically.
 
 ### Functions (`lib/ai/content-optimizer.ts`)
 

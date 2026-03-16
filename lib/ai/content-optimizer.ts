@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from './openai';
+import { formatGlossaryForPrompt } from './glossary';
 
 // Zod schemas for response validation
 const OptimizedContentSchema = z.object({
@@ -147,7 +148,8 @@ Response format:
   "seoKeywordsEn": "keyword1, keyword2, keyword3",
   "seoKeywordsZh": "关键词1, 关键词2, 关键词3",
   "readingTimeMinutes": 5
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 const SHORT_TEXT_PROMPT = `You are a professional bilingual (English/Chinese) content editor for a renovation company website.
 
@@ -165,7 +167,8 @@ Response format:
   "detectedLanguage": "en" or "zh",
   "textEn": "improved English text",
   "textZh": "improved Chinese text"
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 const PROJECT_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
 
@@ -229,7 +232,8 @@ Response format:
   "seoKeywordsEn": "keyword1, keyword2, keyword3",
   "seoKeywordsZh": "关键词1, 关键词2, 关键词3",
   "selectedScopes": ["Scope Name 1", "Scope Name 2"]
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 const SITE_DESCRIPTION_PROMPT = `You are a professional bilingual content editor and SEO specialist for a renovation company website.
 
@@ -283,7 +287,8 @@ Response format:
   "focusKeywordZh": "主要关键词",
   "seoKeywordsEn": "keyword1, keyword2, keyword3",
   "seoKeywordsZh": "关键词1, 关键词2, 关键词3"
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 const ALT_TEXT_PROMPT = `You are an image description specialist for a renovation company website.
 Generate concise, descriptive alt text for the provided image.
@@ -297,7 +302,8 @@ Return a JSON object with both English and Chinese alt text:
 {
   "altEn": "English alt text",
   "altZh": "Chinese alt text"
-}`;
+}
+${formatGlossaryForPrompt()}`;
 
 /**
  * Optimize blog content using GPT-4
