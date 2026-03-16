@@ -12,7 +12,9 @@ function thenableArray(arr: unknown[]) {
 vi.mock('@/lib/db', () => ({
   db: {
     insert: vi.fn().mockReturnValue({
-      values: vi.fn().mockResolvedValue(undefined),
+      values: vi.fn().mockReturnValue({
+        returning: vi.fn().mockResolvedValue([{ id: 'test-id' }]),
+      }),
     }),
     select: vi.fn().mockImplementation(() => ({
       from: vi.fn().mockImplementation(() => thenableArray([{ value: 0 }])),
@@ -34,6 +36,7 @@ vi.mock('@/lib/db', () => ({
 
 vi.mock('@/lib/db/schema', () => ({
   services: { slug: 'slug', id: 'id' },
+  serviceTags: { id: 'id', serviceId: 'serviceId' },
   projects: { serviceId: 'serviceId' },
   contactSubmissions: { preferredServiceId: 'preferredServiceId' },
 }));
@@ -131,6 +134,44 @@ describe('Service Actions', () => {
       expect(result.error).toBe('Display order must be a non-negative number.');
     });
 
+    it('should reject tags exceeding length limit', async () => {
+      const fd = makeFormData();
+      fd.set('tags[0].en', 'a'.repeat(201));
+      fd.set('tags[0].zh', 'Valid');
+      const result = await createService({}, fd);
+      expect(result.error).toMatch(/exceeds 200 characters/);
+    });
+
+    it('should reject ZH tags exceeding length limit', async () => {
+      const fd = makeFormData();
+      fd.set('tags[0].en', 'Valid');
+      fd.set('tags[0].zh', 'z'.repeat(201));
+      const result = await createService({}, fd);
+      expect(result.error).toMatch(/exceeds 200 characters/);
+    });
+
+    it('should accept valid tags', async () => {
+      const { redirect } = await import('next/navigation');
+      const fd = makeFormData();
+      fd.set('tags[0].en', 'Floor Installation');
+      fd.set('tags[0].zh', '地板安装');
+      fd.set('tags[1].en', 'Plumbing');
+      fd.set('tags[1].zh', '管道');
+      await createService({}, fd);
+      expect(redirect).toHaveBeenCalledWith('/admin/services');
+    });
+
+    it('should skip empty EN tags', async () => {
+      const { redirect } = await import('next/navigation');
+      const fd = makeFormData();
+      fd.set('tags[0].en', '');
+      fd.set('tags[0].zh', 'Chinese only');
+      fd.set('tags[1].en', 'Valid');
+      fd.set('tags[1].zh', '有效');
+      await createService({}, fd);
+      expect(redirect).toHaveBeenCalledWith('/admin/services');
+    });
+
     it('should redirect on success', async () => {
       const { redirect } = await import('next/navigation');
       await createService({}, makeFormData());
@@ -174,6 +215,14 @@ describe('Service Actions', () => {
     it('should reject invalid image URL', async () => {
       const result = await updateService(VALID_UUID, {}, makeFormData({ imageUrl: 'not-a-url' }));
       expect(result.error).toBe('Image URL is not a valid URL.');
+    });
+
+    it('should reject tags exceeding length limit', async () => {
+      const fd = makeFormData();
+      fd.set('tags[0].en', 'a'.repeat(201));
+      fd.set('tags[0].zh', 'Valid');
+      const result = await updateService(VALID_UUID, {}, fd);
+      expect(result.error).toMatch(/exceeds 200 characters/);
     });
 
     it('should update with valid data', async () => {

@@ -20,6 +20,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | Table | Purpose | Unique Key |
 |-------|---------|------------|
 | `services` | Renovation service types | `slug` |
+| `service_tags` | Sub-service tags per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_areas` | Geographic coverage | `slug` |
 | `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
 | `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
@@ -142,6 +143,7 @@ Key indexes beyond unique constraints:
 
 | Index | Table | Columns | Purpose |
 |-------|-------|---------|---------|
+| `service_tags_service_id_idx` | `service_tags` | `(service_id)` | Tag lookup by service |
 | `project_sites_published_show_idx` | `project_sites` | `(isPublished, showAsProject)` | Public site queries |
 | `projects_is_published_idx` | `projects` | `(isPublished)` | Public project queries |
 | `blog_posts_is_published_idx` | `blog_posts` | `(isPublished)` | Public blog queries |
@@ -224,7 +226,7 @@ Uncached query functions for the admin dashboard (return raw DB rows with explic
 ```typescript
 import {
   getAllProjectsAdmin,      // DbProject[] with images/scopes
-  getAllServicesAdmin,      // DbService[]
+  getAllServicesAdmin,      // DbService[] (with tags)
   getAllBlogPostsAdmin,     // DbBlogPost[]
   getAllContactsAdmin,      // DbContactSubmission[]
   getAllSocialLinksAdmin,   // DbSocialLink[] — includes inactive

@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { services } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { services, serviceTags } from '@/lib/db/schema';
+import type { DbServiceTag } from '@/lib/db/schema';
+import { eq, asc } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
 import ServiceForm from '../ServiceForm';
 import { updateService } from '@/app/actions/admin/services';
@@ -15,8 +16,11 @@ export default async function EditServicePage({ params }: PageProps) {
   const { id } = await params;
   if (!isValidUUID(id)) notFound();
 
-  const rows = await db.select().from(services).where(eq(services.id, id)).limit(1);
-  const service = rows[0];
+  const [serviceRows, tagRows] = await Promise.all([
+    db.select().from(services).where(eq(services.id, id)).limit(1),
+    db.select().from(serviceTags).where(eq(serviceTags.serviceId, id)).orderBy(asc(serviceTags.displayOrder)),
+  ]);
+  const service = serviceRows[0];
   if (!service) notFound();
 
   return (
@@ -35,6 +39,7 @@ export default async function EditServicePage({ params }: PageProps) {
           iconUrl: service.iconUrl,
           imageUrl: service.imageUrl,
           displayOrder: service.displayOrder,
+          tags: tagRows.map((t: DbServiceTag) => ({ id: t.id, en: t.tagEn, zh: t.tagZh })),
         }}
       />
     </div>

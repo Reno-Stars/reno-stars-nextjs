@@ -336,6 +336,10 @@ const en = {
     displayOrder: 'Display Order',
     landingPreview: 'Landing Page Preview',
     exploreService: 'Explore {service}',
+    tags: 'Service Tags',
+    tagPlaceholderEn: 'Tag in English',
+    tagPlaceholderZh: 'Tag in Chinese',
+    addTag: '+ Add Tag',
   },
   socialLinks: {
     title: 'Social Links',

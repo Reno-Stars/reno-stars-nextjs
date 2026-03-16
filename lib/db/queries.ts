@@ -5,6 +5,7 @@ import {
   companyInfo,
   socialLinks as socialLinksTable,
   services as servicesTable,
+  serviceTags as serviceTagsTable,
   aboutSections as aboutSectionsTable,
   projectSites as sitesTable,
   siteImagePairs as siteImagePairsTable,
@@ -112,17 +113,30 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
     .from(servicesTable)
     .orderBy(asc(servicesTable.displayOrder));
 
-  return rows.map((row: typeof servicesTable.$inferSelect) => ({
-    slug: row.slug as ServiceType,
-    title: { en: row.titleEn, zh: row.titleZh },
-    description: { en: row.descriptionEn, zh: row.descriptionZh },
-    long_description:
-      row.longDescriptionEn && row.longDescriptionZh
-        ? { en: row.longDescriptionEn, zh: row.longDescriptionZh }
+  // Batch-fetch all tags for all services
+  const serviceIds = rows.map((r: typeof servicesTable.$inferSelect) => r.id);
+  const allTags = serviceIds.length > 0
+    ? await db.select().from(serviceTagsTable).where(inArray(serviceTagsTable.serviceId, serviceIds))
+    : [];
+  const tagsByService = groupBy(allTags, (t: typeof serviceTagsTable.$inferSelect) => t.serviceId);
+
+  return rows.map((row: typeof servicesTable.$inferSelect) => {
+    const tags = sortByDisplayOrder(tagsByService.get(row.id) ?? []);
+    return {
+      slug: row.slug as ServiceType,
+      title: { en: row.titleEn, zh: row.titleZh },
+      description: { en: row.descriptionEn, zh: row.descriptionZh },
+      long_description:
+        row.longDescriptionEn && row.longDescriptionZh
+          ? { en: row.longDescriptionEn, zh: row.longDescriptionZh }
+          : undefined,
+      icon: row.iconUrl ? getAssetUrl(row.iconUrl) : undefined,
+      image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
+      tags: tags.length > 0
+        ? { en: tags.map((t) => t.tagEn), zh: tags.map((t) => t.tagZh) }
         : undefined,
-    icon: row.iconUrl ? getAssetUrl(row.iconUrl) : undefined,
-    image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
-  }));
+    };
+  });
 });
 
 /**
@@ -915,9 +929,18 @@ export async function getAllSocialLinksAdmin(): Promise<(typeof socialLinksTable
   return db.select().from(socialLinksTable).orderBy(asc(socialLinksTable.displayOrder));
 }
 
-/** Fetch all services (admin — includes all fields). */
+/** Fetch all services (admin — includes all fields + tags). */
 export async function getAllServicesAdmin() {
-  return db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
+  const rows = await db.select().from(servicesTable).orderBy(asc(servicesTable.displayOrder));
+  const serviceIds = rows.map((r: typeof servicesTable.$inferSelect) => r.id);
+  const allTags = serviceIds.length > 0
+    ? await db.select().from(serviceTagsTable).where(inArray(serviceTagsTable.serviceId, serviceIds))
+    : [];
+  const tagsByService = groupBy(allTags, (t: typeof serviceTagsTable.$inferSelect) => t.serviceId);
+  return rows.map((row: typeof servicesTable.$inferSelect) => ({
+    ...row,
+    tags: sortByDisplayOrder(tagsByService.get(row.id) ?? []),
+  }));
 }
 
 /** Fetch all blog posts (admin — includes unpublished). */

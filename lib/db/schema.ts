@@ -99,6 +99,33 @@ export const services = pgTable(
 
 export const servicesRelations = relations(services, ({ many }) => ({
   projects: many(projects),
+  tags: many(serviceTags),
+}));
+
+// ============================================================================
+// SERVICE TAGS
+// ============================================================================
+
+/** Sub-service tags (e.g., "Floor Installation", "Cooking Equipment") */
+export const serviceTags = pgTable(
+  'service_tags',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    serviceId: uuid('service_id')
+      .references(() => services.id, { onDelete: 'cascade' })
+      .notNull(),
+    tagEn: varchar('tag_en', { length: 200 }).notNull(),
+    tagZh: varchar('tag_zh', { length: 200 }).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+  },
+  (table) => [index('service_tags_service_id_idx').on(table.serviceId)]
+);
+
+export const serviceTagsRelations = relations(serviceTags, ({ one }) => ({
+  service: one(services, {
+    fields: [serviceTags.serviceId],
+    references: [services.id],
+  }),
 }));
 
 // ============================================================================
@@ -783,6 +810,9 @@ export const socialLinks = pgTable(
 
 export type DbService = typeof services.$inferSelect;
 export type NewDbService = typeof services.$inferInsert;
+
+export type DbServiceTag = typeof serviceTags.$inferSelect;
+export type NewDbServiceTag = typeof serviceTags.$inferInsert;
 
 export type DbServiceArea = typeof serviceAreas.$inferSelect;
 export type NewDbServiceArea = typeof serviceAreas.$inferInsert;

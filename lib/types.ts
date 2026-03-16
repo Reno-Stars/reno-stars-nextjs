@@ -236,6 +236,8 @@ export interface Service {
   icon?: string;
   /** Service showcase image URL */
   image?: string;
+  /** Sub-service tags (e.g., "Floor Installation", "Cooking Equipment") */
+  tags?: Localized<string[]>;
 }
 
 /**
@@ -490,6 +492,7 @@ export interface LocalizedService {
   long_description?: string;
   icon?: string;
   image?: string;
+  tags?: string[];
 }
 
 /** A service area with content resolved to a single locale */

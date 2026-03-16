@@ -8,6 +8,7 @@ export function getLocalizedService(service: Service, locale: Locale): Localized
     long_description: service.long_description?.[locale],
     icon: service.icon,
     image: service.image,
+    tags: service.tags?.[locale],
   };
 }
 

@@ -11,8 +11,14 @@ import FormAlerts from '@/components/admin/FormAlerts';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
-import { CARD, neu } from '@/lib/theme';
+import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+
+interface TagEntry {
+  id: string;
+  en: string;
+  zh: string;
+}
 
 interface ServiceFormProps {
   action: (
@@ -30,15 +36,23 @@ interface ServiceFormProps {
     iconUrl: string | null;
     imageUrl: string | null;
     displayOrder: number;
+    tags?: { id: string; en: string; zh: string }[];
   };
   isNew?: boolean;
 }
+
+const COLLAPSE_THRESHOLD = 3;
 
 export default function ServiceForm({ action, initialData, isNew = false }: ServiceFormProps) {
   const t = useAdminTranslations();
   const [editing, setEditing] = useState(isNew);
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.services.saved);
+
+  const [tags, setTags] = useState<TagEntry[]>(
+    initialData?.tags?.map((tag) => ({ ...tag })) ?? []
+  );
+  const [showAllTags, setShowAllTags] = useState(false);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -54,6 +68,22 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
     imageUrl: '',
     displayOrder: 0,
   };
+
+  const addTag = () => {
+    setTags((prev) => [...prev, { id: crypto.randomUUID(), en: '', zh: '' }]);
+  };
+
+  const removeTag = (id: string) => {
+    setTags((prev) => prev.filter((tag) => tag.id !== id));
+  };
+
+  const updateTag = (id: string, field: 'en' | 'zh', value: string) => {
+    setTags((prev) => prev.map((tag) => (tag.id === id ? { ...tag, [field]: value } : tag)));
+  };
+
+  const visibleTags = showAllTags || tags.length <= COLLAPSE_THRESHOLD
+    ? tags
+    : tags.slice(0, COLLAPSE_THRESHOLD);
 
   return (
     <form action={formAction}>
@@ -89,6 +119,82 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
 
           <FormField label={t.services.displayOrder} htmlFor="displayOrder">
             <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
+          </FormField>
+
+          {/* Service Tags */}
+          <FormField label={t.services.tags}>
+            <div className="space-y-2">
+              {visibleTags.map((tag, idx) => (
+                <div key={tag.id} className="flex items-center gap-2">
+                  <input
+                    name={`tags[${idx}].en`}
+                    type="hidden"
+                    value={tag.en}
+                  />
+                  <input
+                    name={`tags[${idx}].zh`}
+                    type="hidden"
+                    value={tag.zh}
+                  />
+                  <input
+                    type="text"
+                    value={tag.en}
+                    onChange={(e) => updateTag(tag.id, 'en', e.target.value)}
+                    placeholder={t.services.tagPlaceholderEn}
+                    aria-label={t.services.tagPlaceholderEn}
+                    style={fieldStyle}
+                    className="flex-1"
+                  />
+                  <input
+                    type="text"
+                    value={tag.zh}
+                    onChange={(e) => updateTag(tag.id, 'zh', e.target.value)}
+                    placeholder={t.services.tagPlaceholderZh}
+                    aria-label={t.services.tagPlaceholderZh}
+                    style={fieldStyle}
+                    className="flex-1"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeTag(tag.id)}
+                    className="shrink-0 text-red-500 hover:text-red-700 p-1"
+                    aria-label={t.common.remove}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+              {/* Render hidden inputs for collapsed tags so they are submitted */}
+              {!showAllTags && tags.length > COLLAPSE_THRESHOLD &&
+                tags.slice(COLLAPSE_THRESHOLD).map((tag, i) => (
+                  <span key={tag.id}>
+                    <input type="hidden" name={`tags[${COLLAPSE_THRESHOLD + i}].en`} value={tag.en} />
+                    <input type="hidden" name={`tags[${COLLAPSE_THRESHOLD + i}].zh`} value={tag.zh} />
+                  </span>
+                ))
+              }
+              {tags.length > COLLAPSE_THRESHOLD && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllTags(!showAllTags)}
+                  className="text-sm font-medium"
+                  style={{ color: NAVY }}
+                >
+                  {showAllTags
+                    ? t.common.showLess
+                    : t.common.showAll.replace('{count}', String(tags.length))
+                  }
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={addTag}
+                className="text-sm font-medium"
+                style={{ color: NAVY }}
+              >
+                {t.services.addTag}
+              </button>
+            </div>
           </FormField>
 
           {editing && (

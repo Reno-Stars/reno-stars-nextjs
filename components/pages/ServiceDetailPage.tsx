@@ -82,6 +82,28 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         </div>
       </section>
 
+      {/* Service Tags */}
+      {localizedService.tags && localizedService.tags.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
+              {t('section.whatWeDo')}
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {localizedService.tags.map((tag, index) => (
+                <span
+                  key={`${tag}-${index}`}
+                  className="px-4 py-2 rounded-xl text-sm font-medium"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Benefits */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">

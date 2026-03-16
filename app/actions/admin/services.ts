@@ -3,11 +3,36 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { services, projects, contactSubmissions } from '@/lib/db/schema';
-import { eq, count } from 'drizzle-orm';
+import { services, serviceTags, projects, contactSubmissions } from '@/lib/db/schema';
+import { eq, count, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+
+const MAX_TAGS = 50;
+const MAX_TAG_LENGTH = 200;
+
+function parseTags(formData: FormData) {
+  const tags: { tagEn: string; tagZh: string; displayOrder: number }[] = [];
+  let i = 0;
+  while (formData.has(`tags[${i}].en`) && i < MAX_TAGS) {
+    const en = getString(formData, `tags[${i}].en`).trim();
+    const zh = getString(formData, `tags[${i}].zh`).trim();
+    if (en) {
+      tags.push({ tagEn: en, tagZh: zh || en, displayOrder: i });
+    }
+    i++;
+  }
+  return tags;
+}
+
+function validateTags(tags: { tagEn: string; tagZh: string }[]): string | null {
+  for (const tag of tags) {
+    if (tag.tagEn.length > MAX_TAG_LENGTH) return `Tag EN "${tag.tagEn.slice(0, 30)}..." exceeds ${MAX_TAG_LENGTH} characters.`;
+    if (tag.tagZh.length > MAX_TAG_LENGTH) return `Tag ZH "${tag.tagZh.slice(0, 30)}..." exceeds ${MAX_TAG_LENGTH} characters.`;
+  }
+  return null;
+}
 
 export async function createService(
   _prevState: { success?: boolean; error?: string },
@@ -43,10 +68,14 @@ export async function createService(
       return { error: 'Display order must be a non-negative number.' };
     }
 
+    const tagData = parseTags(formData);
+    const tagError = validateTags(tagData);
+    if (tagError) return { error: tagError };
+
     const existingSlugs = await db.select({ slug: services.slug }).from(services);
     const uniqueSlug = ensureUniqueSlug(slug, existingSlugs.map((r: { slug: string }) => r.slug));
 
-    await db.insert(services).values({
+    const [inserted] = await db.insert(services).values({
       slug: uniqueSlug,
       titleEn,
       titleZh,
@@ -57,7 +86,14 @@ export async function createService(
       iconUrl,
       imageUrl,
       displayOrder,
-    });
+    }).returning({ id: services.id });
+
+    // Insert tags (already parsed and validated above)
+    if (tagData.length > 0) {
+      await db.insert(serviceTags).values(
+        tagData.map((tag) => ({ ...tag, serviceId: inserted.id }))
+      );
+    }
 
     revalidatePath('/admin/services');
     revalidatePath('/', 'layout');
@@ -166,9 +202,27 @@ export async function updateService(
     }, MAX_TEXT_LENGTH);
     if (textError) return { error: textError };
 
+    const tagData = parseTags(formData);
+    const tagError = validateTags(tagData);
+    if (tagError) return { error: tagError };
+
     const updated = await db.update(services).set(data).where(eq(services.id, id)).returning({ id: services.id });
     if (updated.length === 0) {
       return { error: 'Service not found.' };
+    }
+
+    // Insert-before-delete pattern for tags (Neon doesn't support interactive transactions)
+    const existingTags = await db.select({ id: serviceTags.id }).from(serviceTags).where(eq(serviceTags.serviceId, id));
+
+    if (tagData.length > 0) {
+      await db.insert(serviceTags).values(
+        tagData.map((tag) => ({ ...tag, serviceId: id }))
+      );
+    }
+
+    const oldTagIds = existingTags.map((r: { id: string }) => r.id);
+    if (oldTagIds.length > 0) {
+      await db.delete(serviceTags).where(inArray(serviceTags.id, oldTagIds));
     }
 
     revalidatePath('/admin/services');

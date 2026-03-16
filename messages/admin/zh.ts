@@ -338,6 +338,10 @@ const zh: AdminMessages = {
     displayOrder: '显示顺序',
     landingPreview: '落地页预览',
     exploreService: '探索{service}',
+    tags: '服务标签',
+    tagPlaceholderEn: '英文标签',
+    tagPlaceholderZh: '中文标签',
+    addTag: '+ 添加标签',
   },
   socialLinks: {
     title: '社交链接',
