@@ -37,6 +37,7 @@ const ProjectDescriptionSchema = z.object({
   budgetRange: z.string(),
   durationEn: z.string(),
   durationZh: z.string(),
+  spaceTypeEn: z.enum(SPACE_TYPES.map((st) => st.en) as [string, ...string[]]).default('House'),
   descriptionEn: z.string(),
   descriptionZh: z.string(),
   challengeEn: z.string(),
@@ -190,6 +191,7 @@ Field guidelines:
 - poNumber: PO number / purchase order / reference number if mentioned in the notes (e.g., "PO-2024-9203", "PO 12345"). Extract the value as-is (max 50 characters). Leave empty string if not mentioned.
 - budgetRange: Exact budget or range if mentioned in the notes (e.g., "$22,000" or "$15,000 - $25,000"). Use the value from the notes as-is. Leave empty string if no budget is mentioned.
 - durationEn/durationZh: Project timeline if mentioned in the notes (e.g., "3 weeks" / "3周"). Use the value from the notes. Leave empty string if no duration is mentioned.
+- spaceTypeEn: Detect the type of space from the notes. Must be one of: "Condo", "House", "Townhouse", "Apartment", "Commercial". Infer from context (e.g., condo/公寓 → "Condo", house/独立屋/别墅 → "House", townhouse/联排 → "Townhouse", apartment/公寓楼 → "Apartment", office/store/商业 → "Commercial"). Default to "House" if truly unclear.
 - description: 2-3 sentences about the project scope and transformation (50-150 words)
 - challenge: 1-2 sentences about the main challenges faced (30-80 words)
 - solution: 1-2 sentences about how challenges were addressed (30-80 words)
@@ -215,6 +217,7 @@ Response format:
   "budgetRange": "$22,000",
   "durationEn": "3 weeks",
   "durationZh": "3周",
+  "spaceTypeEn": "House",
   "descriptionEn": "English project description",
   "descriptionZh": "中文项目描述",
   "challengeEn": "English challenge description",

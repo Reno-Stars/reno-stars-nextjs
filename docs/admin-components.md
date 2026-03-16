@@ -44,9 +44,11 @@ API route validates auth, file metadata (max 50 MB, JPEG/PNG/WebP/SVG/GIF). `cus
 
 ZIP upload uses chunked multipart upload through a server proxy (`api/[jobId]/upload/`), bypassing R2 CORS. File split into 10 MB chunks with per-chunk retry (3 attempts). Processing via `after()` from `next/server`. Client polls for status.
 
-**Sites mode pipeline:** `parseZip()` → upload images (batches of 15) → AI metadata (batches of 10) → save to DB → optional blog generation → cleanup.
+**Sites mode pipeline:** `parseZip()` → upload images (batches of 15) → AI metadata (batches of 10) → save to DB → optional blog generation → cleanup. AI generates `SiteDescription` (with space type) for root folders and `ProjectDescription` (with space type) for sub-folder projects.
 
-**Standalone mode pipeline:** `parseZipStandalone()` → upload → AI metadata → find/create standalone site → save projects → optional blog → cleanup.
+**Standalone mode pipeline:** `parseZipStandalone()` → upload → AI metadata → find/create standalone site → save projects → optional blog → cleanup. AI generates `ProjectDescription` (with space type) for each root folder.
+
+**Folder name handling in AI prompts:** Root-level folder names (e.g., "1171-van") are excluded from AI prompts when `notes.txt` exists, since they are often internal codes. Sub-folder names (e.g., "Kitchen", "Bathroom") are always included as useful context for service type detection. Without notes, the folder name is used as the only context.
 
 **ZIP structure:**
 - Sites mode: nested (top folder = site, subfolders = projects), single-folder, or flat layout
@@ -60,7 +62,7 @@ ZIP upload uses chunked multipart upload through a server proxy (`api/[jobId]/up
 ## AI Features
 
 - **AIContentEditor**: Tabbed blog content editor (paste/EN/ZH tabs), AI optimization via GPT-4o, DOMPurify for preview, zod validation.
-- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, space type (sites only), and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms.
+- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, space type, and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms.
 - **AI blog generation** (`lib/ai/blog-generator.ts`): Generates bilingual case study blog posts from project/site data via GPT-4o. Validates with Zod, truncates SEO fields, sanitizes/deduplicates slugs. Triggered from admin site detail page.
 - **AI social posts** (`lib/ai/social-post-generator.ts`): Bilingual content for Instagram, Facebook, Xiaohongshu. WAI-ARIA Tabs for platform switching. Image picker from source entity. `StatusCell` uses optimistic state with error rollback.
 

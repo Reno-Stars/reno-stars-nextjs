@@ -174,8 +174,10 @@ async function generateSiteMetadata(
   notes: string | null
 ): Promise<SiteDescription | null> {
   try {
+    // When notes exist, rely on notes content for all details. Folder names
+    // can be internal codes and should NOT influence the AI output.
     const prompt = notes
-      ? `Whole house renovation project: ${folderName}.\n\nProject details:\n${notes}`
+      ? `Whole house renovation project.\n\nProject details:\n${notes}`
       : `Whole house renovation project: ${folderName}. This is a renovation site.`;
     return await optimizeSiteDescription(prompt);
   } catch {
@@ -186,15 +188,17 @@ async function generateSiteMetadata(
 async function generateProjectMetadata(
   folderName: string,
   serviceType: ServiceTypeKey,
-  notes: string | null
+  notes: string | null,
+  /** Skip folder name in prompt — root folders can be internal codes like "1171-van" */
+  skipFolderName = false
 ): Promise<ProjectDescription | null> {
   try {
     const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
-    // When notes exist, let AI detect the service type from the notes content
-    // (folder names like "3787-burnaby" don't indicate the service type).
-    // Only include the folder-detected service type when there are no notes.
+    // When notes exist and skipFolderName is set, rely only on notes content.
+    // Sub-folder names like "Kitchen" are still useful context so we keep them.
+    const folderContext = skipFolderName ? '' : `: ${folderName}`;
     const prompt = notes
-      ? `Renovation project: ${folderName}.\n\nProject details:\n${notes}`
+      ? `Renovation project${folderContext}.\n\nProject details:\n${notes}`
       : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
     // Pass all scopes for the detected service type so AI can select relevant ones
     const scopes = SERVICE_SCOPES[serviceType] ?? [];
@@ -358,6 +362,7 @@ function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
     challengeZh: '',
     solutionEn: '',
     solutionZh: '',
+    spaceTypeEn: 'House' as const,
   };
 }
 
@@ -697,7 +702,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             durationEn: siteData.durationEn || null,
             durationZh: siteData.durationZh || null,
             spaceTypeEn: siteData.spaceTypeEn || null,
-            spaceTypeZh: (siteData.spaceTypeEn && SPACE_TYPE_TO_ZH[siteData.spaceTypeEn]) || siteData.spaceTypeEn || null,
+            spaceTypeZh: (siteData.spaceTypeEn && SPACE_TYPE_TO_ZH[siteData.spaceTypeEn]) || null,
             poNumber: siteData.poNumber || null,
             showAsProject: true,
             featured: false,
@@ -888,7 +893,7 @@ async function processStandaloneMode(opts: {
   for (let i = 0; i < parsedStandalone.projects.length; i += AI_METADATA_BATCH_SIZE) {
     const batch = parsedStandalone.projects.slice(i, i + AI_METADATA_BATCH_SIZE);
     const results = await Promise.allSettled(
-      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes))
+      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes, true))
     );
     for (let j = 0; j < results.length; j++) {
       const r = results[j];
@@ -990,6 +995,8 @@ async function saveProject(opts: {
       budgetRange: projectData.budgetRange || null,
       durationEn: projectData.durationEn || null,
       durationZh: projectData.durationZh || null,
+      spaceTypeEn: projectData.spaceTypeEn || null,
+      spaceTypeZh: (projectData.spaceTypeEn && SPACE_TYPE_TO_ZH[projectData.spaceTypeEn]) || null,
       heroImageUrl: heroUrl,
       challengeEn: projectData.challengeEn || null,
       challengeZh: projectData.challengeZh || null,
