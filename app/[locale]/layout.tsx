@@ -77,7 +77,7 @@ export default async function LocaleLayout({
           <main id="main-content">
             {children}
           </main>
-          <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} />
+          <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} googleRating={googleReviews.rating} />
         </NextIntlClientProvider>
       </body>
     </html>

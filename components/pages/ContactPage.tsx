@@ -16,9 +16,10 @@ interface ContactPageProps {
   locale: Locale;
   company: Company;
   areaNames: string[];
+  googleRating?: number;
 }
 
-export default function ContactPage({ locale: _locale, company, areaNames }: ContactPageProps) {
+export default function ContactPage({ locale: _locale, company, areaNames, googleRating }: ContactPageProps) {
   const t = useTranslations();
   const router = useRouter();
 
@@ -78,12 +79,12 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
               className="flex items-center gap-2 px-4 py-2 rounded-full"
               style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
               role="img"
-              aria-label={`5/5 ${t('stats.rating')}`}
+              aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}
             >
               {[0, 1, 2, 3, 4].map((i) => (
                 <Star key={i} className="w-4 h-4" style={{ fill: GOLD, color: GOLD }} />
               ))}
-              <span className="text-base font-medium text-white/90">{t('stats.rating')}</span>
+              <span className="text-base font-medium text-white/90">{googleRating ? `${googleRating} ${t('stats.rating')}` : t('stats.rating')}</span>
             </div>
           </div>
         </div>
@@ -138,9 +139,9 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
                   borderLeft: `4px solid ${GOLD}`,
                 }}
               >
-                <h2 className="text-lg font-bold mb-1" style={{ color: TEXT }}>
+                <p className="text-lg font-bold mb-1" style={{ color: TEXT }}>
                   {t('cta.requestConsultation')}
-                </h2>
+                </p>
                 <p className="text-base" style={{ color: TEXT_MID }}>
                   {t('serviceBenefits.freeConsultation')}
                 </p>

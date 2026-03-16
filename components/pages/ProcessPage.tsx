@@ -24,6 +24,7 @@ import {
 interface ProcessPageProps {
   company: Company;
   locale: Locale;
+  googleRating?: number;
 }
 
 interface StepData {
@@ -256,14 +257,14 @@ function HouseSvg({ className }: { className?: string }) {
   );
 }
 
-export default function ProcessPage({ company, locale }: ProcessPageProps) {
+export default function ProcessPage({ company, locale, googleRating }: ProcessPageProps) {
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
     { value: t('process.hero.projectsCount'), label: t('stats.projectsCompleted') },
-    { icon: Star, rating: true, label: t('process.hero.googleReviews') },
-  ], [company, t]);
+    { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
+  ], [company, t, googleRating]);
 
   const steps: StepData[] = useMemo(() => [
     { number: '01', titleKey: 'process.step1.title', subtitleKey: 'process.step1.subtitle', pointsKey: 'process.step1.points', tagsKey: 'process.step1.tags', ...stepColors[0] },
@@ -275,9 +276,9 @@ export default function ProcessPage({ company, locale }: ProcessPageProps) {
 
   const footerStats = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
-    { icon: Star, rating: true, label: t('process.footer.googleRating') },
+    { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
     { value: company.warranty, label: t('process.footer.warrantyService') },
-  ], [company, t]);
+  ], [company, t, googleRating]);
 
   const posterRef = useRef<HTMLDivElement>(null);
   const statusTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);

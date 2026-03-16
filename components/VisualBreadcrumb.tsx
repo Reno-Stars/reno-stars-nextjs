@@ -1,6 +1,5 @@
-import { Fragment } from 'react';
-import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
+import { ChevronRight } from 'lucide-react';
 import { SURFACE_ALT, TEXT, TEXT_MID, TEXT_MUTED } from '@/lib/theme';
 
 interface BreadcrumbItem {
@@ -36,33 +35,31 @@ export default function VisualBreadcrumb({
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           return (
-            <Fragment key={item.label}>
+            <li
+              key={item.label}
+              className={`flex items-center gap-2 ${isLast && isDark ? 'text-white' : ''} ${item.className || ''}`.trim()}
+              {...(isLast ? { 'aria-current': 'page' as const } : {})}
+              style={isLast && !isDark ? { color: TEXT } : undefined}
+            >
               {i > 0 && (
-                <li aria-hidden="true">
-                  <ChevronRight
-                    className={`w-4 h-4 ${isDark ? 'text-white/40' : ''}`}
-                    style={isDark ? undefined : { color: TEXT_MUTED }}
-                  />
-                </li>
+                <ChevronRight
+                  aria-hidden="true"
+                  className={`w-4 h-4 ${isDark ? 'text-white/40' : ''}`}
+                  style={isDark ? undefined : { color: TEXT_MUTED }}
+                />
               )}
-              <li
-                {...(isLast ? { 'aria-current': 'page' as const } : {})}
-                className={`${isLast && isDark ? 'text-white' : ''} ${item.className || ''}`.trim() || undefined}
-                style={isLast && !isDark ? { color: TEXT } : undefined}
-              >
-                {item.href && !isLast ? (
-                  <Link
-                    href={item.href}
-                    className={isDark ? 'text-white/60 hover:text-white transition-colors' : 'hover:underline'}
-                    style={isDark ? undefined : { color: TEXT_MID }}
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  item.label
-                )}
-              </li>
-            </Fragment>
+              {item.href && !isLast ? (
+                <Link
+                  href={item.href}
+                  className={isDark ? 'text-white/60 hover:text-white transition-colors' : 'hover:underline'}
+                  style={isDark ? undefined : { color: TEXT_MID }}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                item.label
+              )}
+            </li>
           );
         })}
       </ol>

@@ -112,12 +112,16 @@ export default function TestimonialsSection({ googleReviews, locale, translation
       </div>
       <div className="reviews-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
         <div className="reviews-track flex gap-5 w-max px-4 py-4">
-          {/* Render twice for seamless loop */}
-          {[0, 1].map((pass) =>
-            reviews.map((review, i) => (
-              <ReviewCard key={`${pass}-${i}`} review={review} locale={locale} />
-            ))
-          )}
+          {/* First pass: real content for SEO & screen readers */}
+          {reviews.map((review, i) => (
+            <ReviewCard key={`0-${i}`} review={review} locale={locale} />
+          ))}
+          {/* Second pass: duplicate for seamless carousel loop, hidden from crawlers & assistive tech */}
+          <div className="contents" aria-hidden="true" inert={true as unknown as boolean}>
+            {reviews.map((review, i) => (
+              <ReviewCard key={`1-${i}`} review={review} locale={locale} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -11,6 +11,7 @@ import LazyVideo from '@/components/LazyVideo';
 
 interface HeroSectionProps {
   company: Company;
+  googleRating?: number;
   translations: {
     transformYourSpace: string;
     professionalExcellenceDesc: string;
@@ -22,7 +23,7 @@ interface HeroSectionProps {
   };
 }
 
-export default function HeroSection({ company, translations: t }: HeroSectionProps) {
+export default function HeroSection({ company, googleRating, translations: t }: HeroSectionProps) {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden min-h-[70vh] flex items-center">
       {/* Poster image shown immediately for fast LCP */}
@@ -76,11 +77,11 @@ export default function HeroSection({ company, translations: t }: HeroSectionPro
               {t.liabilityCoverage}
             </span>
             {/* Star rating */}
-            <span className="text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`5/5 ${t.rating}`}>
+            <span className="text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>
               {[0, 1, 2, 3, 4].map((i) => (
                 <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
               ))}
-              <span>{t.rating}</span>
+              <span>{googleRating ? `${googleRating} ${t.rating}` : t.rating}</span>
             </span>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structure
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -48,10 +49,11 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, company] = await Promise.all([
+  const [nav, t, company, googleReviews] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'process' }),
     getCompanyFromDb(),
+    getGoogleReviews(),
   ]);
 
   const breadcrumbs = [
@@ -83,7 +85,7 @@ export default async function Page({ params }: PageProps) {
         description={t('whyMatters.description')}
         steps={howToSteps}
       />
-      <ProcessPage company={company} locale={locale as Locale} />
+      <ProcessPage company={company} locale={locale as Locale} googleRating={googleReviews.rating} />
     </>
   );
 }

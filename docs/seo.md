@@ -72,6 +72,8 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 - Blog post cards wrapped in `<article>` elements
 - Navbar dropdown uses `role="menu"` / `role="menuitem"`
 - Decorative elements (video, star icons) have `aria-hidden="true"`
+- Carousel duplicate passes (testimonials, partners) use `aria-hidden="true"` + `inert` to hide from crawlers and screen readers while preserving seamless loop animation
+- Breadcrumb chevron separators are `aria-hidden` icons inside `<li>` elements (not separate `<li>` items) so crawlers see exactly N list items for N breadcrumbs
 - CTA links use descriptive text (e.g., "Explore Kitchen Renovation" instead of generic "Learn More")
 - Hero background image has descriptive alt text for SEO despite being decorative (crawlers index alt text)
 

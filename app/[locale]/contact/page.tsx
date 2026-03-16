@@ -6,6 +6,7 @@ import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-dat
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -54,14 +55,14 @@ export default async function Page({ params }: PageProps) {
     { name: t('contact'), url: `/${locale}/contact/` },
   ];
 
-  const [company, areas] = await Promise.all([getCompanyFromDb(), getServiceAreasFromDb()]);
+  const [company, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
   const areaNames = areas.map((a) => a.name[locale as Locale]);
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <ContactPageSchema company={company} areaNames={areaNames} />
-      <ContactPage locale={locale as Locale} company={company} areaNames={areaNames} />
+      <ContactPage locale={locale as Locale} company={company} areaNames={areaNames} googleRating={googleReviews.rating} />
     </>
   );
 }

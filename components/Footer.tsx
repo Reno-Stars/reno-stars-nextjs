@@ -52,9 +52,10 @@ interface FooterProps {
   socialLinks: SocialLink[];
   services: Service[];
   areas: ServiceArea[];
+  googleRating?: number;
 }
 
-export default function Footer({ company, socialLinks, services, areas }: FooterProps) {
+export default function Footer({ company, socialLinks, services, areas, googleRating }: FooterProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const [wechatModalOpen, setWechatModalOpen] = useState(false);
@@ -197,11 +198,11 @@ export default function Footer({ company, socialLinks, services, areas }: Footer
                 <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
                 <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
               </div>
-              <div className="flex items-center gap-1.5" role="img" aria-label={`5/5 ${t('stats.rating')}`}>
+              <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>
                 {[0, 1, 2, 3, 4].map((i) => (
                   <Star key={i} className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} />
                 ))}
-                <span className="text-sm text-white/70 ml-0.5">{t('stats.rating')}</span>
+                <span className="text-sm text-white/70 ml-0.5">{googleRating ? `${googleRating} ${t('stats.rating')}` : t('stats.rating')}</span>
               </div>
             </div>
           </div>

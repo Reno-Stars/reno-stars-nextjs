@@ -95,7 +95,7 @@ export default function HomePage({
 }: HomePageProps) {
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
-      <HeroSection company={company} translations={t.hero} />
+      <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
       <ServiceAreasBar areas={areas} label={t.serviceAreas} />
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />

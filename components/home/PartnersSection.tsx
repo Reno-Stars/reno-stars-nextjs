@@ -70,12 +70,16 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
           aria-label={t.title}
         >
           <div className="partners-track flex items-center gap-8 w-max py-4">
-            {/* Render twice for seamless loop */}
-            {[0, 1].map((pass) =>
-              visiblePartners.map((partner, i) => (
-                <PartnerLogo key={`${pass}-${i}`} partner={partner} />
-              ))
-            )}
+            {/* First pass: real content for SEO & screen readers */}
+            {visiblePartners.map((partner, i) => (
+              <PartnerLogo key={`0-${i}`} partner={partner} />
+            ))}
+            {/* Second pass: duplicate for seamless carousel loop, hidden from crawlers & assistive tech */}
+            <div className="contents" aria-hidden="true" inert={true as unknown as boolean}>
+              {visiblePartners.map((partner, i) => (
+                <PartnerLogo key={`1-${i}`} partner={partner} />
+              ))}
+            </div>
           </div>
         </div>
       )}
