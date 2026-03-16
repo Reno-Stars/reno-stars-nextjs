@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from './openai';
 import { formatGlossaryForPrompt } from './glossary';
+import { SPACE_TYPES } from '@/lib/admin/constants';
 
 // Zod schemas for response validation
 const OptimizedContentSchema = z.object({
@@ -67,6 +68,7 @@ const SiteDescriptionSchema = z.object({
   budgetRange: z.string(),
   durationEn: z.string(),
   durationZh: z.string(),
+  spaceTypeEn: z.enum(SPACE_TYPES.map((st) => st.en) as [string, ...string[]]).default('House'),
   descriptionEn: z.string(),
   descriptionZh: z.string(),
   badgeEn: z.string(),
@@ -252,6 +254,7 @@ Field guidelines:
 - poNumber: PO number / purchase order / reference number if mentioned in the notes (e.g., "PO-2024-9203", "PO 12345"). Extract the value as-is (max 50 characters). Leave empty string if not mentioned.
 - budgetRange: Estimated budget range for the entire site (e.g., "$80,000 - $120,000"). Use USD format. Leave empty string if no budget is mentioned.
 - durationEn/durationZh: Estimated timeline for the entire project (e.g., "12 weeks" / "12周", "3 months" / "3个月"). Leave empty string if no duration is mentioned.
+- spaceTypeEn: Detect the type of space from the notes. Must be one of: "Condo", "House", "Townhouse", "Apartment", "Commercial". Infer from context (e.g., condo/公寓 → "Condo", house/独立屋/别墅 → "House", townhouse/联排 → "Townhouse", apartment/公寓楼 → "Apartment", office/store/商业 → "Commercial"). Default to "House" if truly unclear.
 - description: 2-3 sentences about the overall renovation scope and transformation of the property (50-150 words)
 - badge: Short highlight text for a badge/tag (2-5 words, e.g., "Whole House" / "全屋装修")
 - excerpt: 1-2 sentences summarizing the site for listings (100-200 characters)
@@ -273,6 +276,7 @@ Response format:
   "budgetRange": "$80,000 - $120,000",
   "durationEn": "12 weeks",
   "durationZh": "12周",
+  "spaceTypeEn": "House",
   "descriptionEn": "English site description",
   "descriptionZh": "中文工地描述",
   "badgeEn": "Badge text",

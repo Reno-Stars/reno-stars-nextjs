@@ -25,7 +25,7 @@ import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optim
 import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
 import { ensureStandaloneSite } from '@/lib/db/queries';
-import { SERVICE_TYPE_TO_CATEGORY, SERVICE_SCOPES } from '@/lib/admin/constants';
+import { SERVICE_TYPE_TO_CATEGORY, SERVICE_SCOPES, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import type { ServiceTypeKey } from '@/lib/admin/constants';
 import { parseZip, parseZipStandalone } from './zip-parser';
 import {
@@ -341,6 +341,7 @@ function fallbackSiteData(folderName: string) {
     titleZh: folderName,
     descriptionEn: `Whole house renovation project at ${folderName}.`,
     descriptionZh: `${folderName}全屋装修项目。`,
+    spaceTypeEn: 'House' as const,
   };
 }
 
@@ -695,6 +696,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             budgetRange: siteData.budgetRange || null,
             durationEn: siteData.durationEn || null,
             durationZh: siteData.durationZh || null,
+            spaceTypeEn: siteData.spaceTypeEn || null,
+            spaceTypeZh: (siteData.spaceTypeEn && SPACE_TYPE_TO_ZH[siteData.spaceTypeEn]) || siteData.spaceTypeEn || null,
             poNumber: siteData.poNumber || null,
             showAsProject: true,
             featured: false,

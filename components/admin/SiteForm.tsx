@@ -193,6 +193,7 @@ export default function SiteForm({
     setBudgetRange(data.budgetRange);
     setDurationEn(data.durationEn);
     setDurationZh(data.durationZh);
+    if (data.spaceTypeEn) setSpaceTypeEn(data.spaceTypeEn);
     setDescriptionEn(data.descriptionEn);
     setDescriptionZh(data.descriptionZh);
     setBadgeEn(data.badgeEn);
