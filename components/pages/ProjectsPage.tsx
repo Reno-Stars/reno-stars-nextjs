@@ -463,7 +463,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                         {category[locale]}
                       </span>
                       <span className="text-sm text-white/90 block">
-                        {categoryProjects.length} {t('filter.projects')}
+                        {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}
                       </span>
                       {isActive && (
                         <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD }} />
@@ -526,7 +526,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           )}
 
           <span className="ml-auto text-sm" style={{ color: TEXT_MID }}>
-            {t('filter.showing')} {filteredProjects.length} {t('filter.projects')}
+            {t('filter.showing')} {filteredProjects.length} {t('filter.projects', { count: filteredProjects.length })}
           </span>
         </div>
       </section>

@@ -147,7 +147,7 @@ Cached async functions fetch data from the database and return the same TypeScri
 
 | Function | Returns | Notes |
 |----------|---------|-------|
-| `getCompanyFromDb()` | `Company` | Computes `yearsExperience` from `foundingYear` |
+| `getCompanyFromDb()` | `Company` | Computes `yearsExperience` from `foundingYear` (rounds up to nearest 5 via `Math.ceil`) |
 | `getSocialLinksFromDb()` | `SocialLink[]` | Filters `isActive`, orders by `displayOrder` |
 | `getServicesFromDb()` | `Service[]` | Orders by `displayOrder`, applies `getAssetUrl()` to `iconUrl` and `imageUrl` |
 | `getAboutSectionsFromDb()` | `AboutSections` | Replaces `{yearsExperience}` placeholder |

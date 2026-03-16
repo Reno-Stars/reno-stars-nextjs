@@ -92,7 +92,7 @@ Components using this pattern: `ProjectModal`, `ProjectDetailPage`, `SiteDetailP
 
 ## Meta Description Lengths
 
-Static meta descriptions in `messages/en.json` and `messages/zh.json` target 120-160 characters (optimal for SERP display). All descriptions are bilingual.
+Static meta descriptions in `messages/en.json` and `messages/zh.json` target 120-160 characters (optimal for SERP display). All descriptions are bilingual. Meta descriptions that mention years of experience use `{years}` placeholder (resolved from `getCompanyFromDb().yearsExperience` at render time) to stay accurate as the company ages. Affected pages: home, benefits, service+location.
 
 Dynamic descriptions (blog posts, project pages) are truncated via `truncateMetaDescription()` in `lib/utils.ts` (max 155 chars, word-boundary truncation with ellipsis).
 

@@ -62,9 +62,9 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
   if (!row) throw new Error('Company info not found in database');
 
   const foundingYear = row.foundingYear ?? 1997;
-  // Round years to nearest 5 for cleaner display (e.g., 27 -> 25, 28 -> 30)
+  // Round years up to nearest 5 for cleaner display (e.g., 27 -> 30, 31 -> 35)
   const rawYears = new Date().getFullYear() - foundingYear;
-  const yearsExperience = String(Math.round(rawYears / 5) * 5);
+  const yearsExperience = String(Math.ceil(rawYears / 5) * 5);
 
   return {
     name: row.name,

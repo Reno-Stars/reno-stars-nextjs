@@ -32,17 +32,21 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'metadata.home' });
+  const [t, company] = await Promise.all([
+    getTranslations({ locale, namespace: 'metadata.home' }),
+    getCompanyFromDb(),
+  ]);
+  const years = { years: company.yearsExperience };
 
   const baseUrl = getBaseUrl();
 
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('description', years),
     alternates: buildAlternates('/', locale),
     openGraph: {
       title: t('title'),
-      description: t('description'),
+      description: t('description', years),
       url: `${baseUrl}/${locale}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
@@ -53,7 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
-      description: t('description'),
+      description: t('description', years),
       images: [{ url: siteImages.hero, alt: t('title') }],
     },
   };

@@ -103,7 +103,7 @@ export default function ContactPage({ locale: _locale, company, areaNames }: Con
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5" style={{ color: GOLD }} />
             <span className="text-base font-medium" style={{ color: TEXT_MID }}>
-              {t('label.businessHours')}
+              {t('label.businessHoursShort')}
             </span>
           </div>
         </div>

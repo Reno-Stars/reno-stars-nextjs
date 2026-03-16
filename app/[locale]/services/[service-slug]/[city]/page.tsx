@@ -46,9 +46,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedArea = getLocalizedArea(area, locale as Locale);
   const baseUrl = getBaseUrl();
 
-  const t = await getTranslations({ locale, namespace: 'metadata.serviceLocation' });
-  const title = t('title', { service: localizedService.title, area: localizedArea.name });
-  const description = t('description', { service: localizedService.title, area: localizedArea.name });
+  const [t, company] = await Promise.all([
+    getTranslations({ locale, namespace: 'metadata.serviceLocation' }),
+    getCompanyFromDb(),
+  ]);
+  const tParams = { service: localizedService.title, area: localizedArea.name, years: company.yearsExperience };
+  const title = t('title', tParams);
+  const description = t('description', tParams);
   const ogImage = service.image || siteImages.hero;
 
   return {

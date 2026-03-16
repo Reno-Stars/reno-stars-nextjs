@@ -53,6 +53,7 @@ export default function AreaPage({ locale, area, company, services }: AreaPagePr
         <div className="max-w-7xl mx-auto">
           <VisualBreadcrumb items={[
             { href: '/', label: t('nav.home') },
+            { href: '/areas', label: t('nav.areas') },
             { label: localizedArea.name },
           ]} />
           <div className="flex items-center gap-3 mb-4">

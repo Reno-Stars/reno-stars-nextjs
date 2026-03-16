@@ -195,6 +195,7 @@
     "new": "新",
     "new2": "新",
     "businessHours": "营业时间",
+    "businessHoursShort": "周一至五 8–18时，周六 9–16时",
     "businessHoursDetail": "周一至周五：上午8:00 - 下午6:00\n周六：上午9:00 - 下午4:00\n周日：休息",
     "featured": "精选"
   },
@@ -266,7 +267,7 @@
     "budget": "预算",
     "allBudgets": "所有预算",
     "showing": "显示",
-    "projects": "个项目",
+    "projects": "{count, plural, one {个项目} other {个项目}}",
     "clearAll": "清除筛选",
     "browseByCategory": "按类别浏览",
     "noProjectsMatch": "没有符合筛选条件的项目。",
@@ -358,7 +359,7 @@
     "title": "为什么选择Reno Stars",
     "subtitle": "与我们专业装修团队合作的优势",
     "experience": {
-      "title": "27年以上经验",
+      "title": "{years}年以上经验",
       "description": "数十年的综合经验，在低陆平原地区提供优质装修服务。"
     },
     "warranty": {
@@ -459,7 +460,7 @@
   "metadata": {
     "home": {
       "title": "Reno Stars | 温哥华装修承包商",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。27年以上经验、500万保险、Google五星好评。"
+      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、500万保险、Google五星好评。"
     },
     "services": {
       "title": "装修服务 | Reno Stars 温哥华",
@@ -479,7 +480,7 @@
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 温哥华装修承包商",
-      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。27年以上经验、500万美元保险、3年质保、Google五星好评。"
+      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、500万美元保险、3年质保、Google五星好评。"
     },
     "design": {
       "title": "装修设计灵感 | Reno Stars 温哥华",
@@ -491,7 +492,7 @@
     },
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
-      "description": "{area}专业{service}服务。拥有27年以上经验和五星好评的值得信赖的本地承包商。联系Reno Stars获取免费报价。"
+      "description": "{area}专业{service}服务。拥有{years}年以上经验和五星好评的值得信赖的本地承包商。联系Reno Stars获取免费报价。"
     },
     "areas": {
       "title": "服务区域 | Reno Stars 温哥华",
@@ -546,7 +547,7 @@
   "process": {
     "hero": {
       "title": "装修服务流程 — 5 步走",
-      "subtitle": "Renovation Service Workflow — 5 Steps",
+      "subtitle": "从咨询到完工",
       "projectsCount": "500+",
       "googleReviews": "Google 评价"
     },

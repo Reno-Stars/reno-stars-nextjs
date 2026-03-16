@@ -195,6 +195,7 @@
     "new": "NEW",
     "new2": "New",
     "businessHours": "Business Hours",
+    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
     "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
     "featured": "Featured"
   },
@@ -266,7 +267,7 @@
     "budget": "Budget",
     "allBudgets": "All Budgets",
     "showing": "Showing",
-    "projects": "projects",
+    "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Clear Filters",
     "browseByCategory": "Browse by Category",
     "noProjectsMatch": "No projects match your filters.",
@@ -358,7 +359,7 @@
     "title": "Why Choose Reno Stars",
     "subtitle": "The benefits of working with our professional renovation team",
     "experience": {
-      "title": "27+ Years Experience",
+      "title": "{years}+ Years Experience",
       "description": "Decades of combined experience delivering quality renovations across the Lower Mainland."
     },
     "warranty": {
@@ -459,7 +460,7 @@
   "metadata": {
     "home": {
       "title": "Reno Stars | Vancouver Renovation Contractor",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. 27+ years experience, $5M coverage, 5-star Google rating."
+      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M coverage, 5-star Google rating."
     },
     "services": {
       "title": "Renovation Services | Reno Stars Vancouver",
@@ -479,7 +480,7 @@
     },
     "benefits": {
       "title": "Why Choose Reno Stars | Vancouver Renovation Contractor",
-      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. 27+ years experience, $5M coverage, 3-year warranty, 5-star Google rating."
+      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. {years}+ years experience, $5M coverage, 3-year warranty, 5-star Google rating."
     },
     "design": {
       "title": "Renovation Design Inspiration | Reno Stars Vancouver",
@@ -491,7 +492,7 @@
     },
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
-      "description": "Professional {service} services in {area}. Trusted local contractor with 27+ years experience and 5-star reviews. Contact Reno Stars for a free quote."
+      "description": "Professional {service} services in {area}. Trusted local contractor with {years}+ years experience and 5-star reviews. Contact Reno Stars for a free quote."
     },
     "areas": {
       "title": "Service Areas | Reno Stars Vancouver",
@@ -546,7 +547,7 @@
   "process": {
     "hero": {
       "title": "Renovation Service Workflow — 5 Steps",
-      "subtitle": "Renovation Service Workflow — 5 Steps",
+      "subtitle": "From consultation to completion",
       "projectsCount": "500+",
       "googleReviews": "Google Reviews"
     },
