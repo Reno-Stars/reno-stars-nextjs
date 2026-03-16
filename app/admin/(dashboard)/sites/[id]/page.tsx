@@ -43,6 +43,7 @@ export default async function EditSitePage({ params }: PageProps) {
     budgetRange: site.budgetRange ?? '',
     durationEn: site.durationEn ?? '',
     durationZh: site.durationZh ?? '',
+    spaceTypeEn: site.spaceTypeEn ?? '',
     badgeEn: site.badgeEn ?? '',
     badgeZh: site.badgeZh ?? '',
     poNumber: site.poNumber ?? '',

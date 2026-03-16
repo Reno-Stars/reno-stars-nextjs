@@ -101,6 +101,8 @@ export interface Site {
   budget_range?: string;
   /** Duration for the whole site */
   duration?: Localized<string>;
+  /** Type of space (e.g., Condo, House, Townhouse) */
+  space_type?: Localized<string>;
   /** Internal purchase order number for sales tracking */
   po_number?: string;
   /** Whether to show this site as a project in listings */
@@ -434,6 +436,7 @@ export interface LocalizedSite {
   badge?: string;
   budget_range?: string;
   duration?: string;
+  space_type?: string;
   show_as_project: boolean;
   featured: boolean;
   /** @deprecated Use image_pairs instead. Will be removed in v2.0. */

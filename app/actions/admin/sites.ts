@@ -8,6 +8,7 @@ import { eq, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 
 const MAX_EXTERNAL_PRODUCTS = 50;
 
@@ -27,6 +28,7 @@ function parseExternalProducts(formData: FormData) {
 }
 
 function getSiteData(formData: FormData) {
+  const spaceTypeEn = getString(formData, 'spaceType').trim() || null;
   return {
     slug: getString(formData, 'slug').trim(),
     titleEn: getString(formData, 'titleEn').trim(),
@@ -38,6 +40,8 @@ function getSiteData(formData: FormData) {
     budgetRange: getString(formData, 'budgetRange') || null,
     durationEn: getString(formData, 'durationEn') || null,
     durationZh: getString(formData, 'durationZh') || null,
+    spaceTypeEn,
+    spaceTypeZh: (spaceTypeEn && SPACE_TYPE_TO_ZH[spaceTypeEn]) || spaceTypeEn,
     badgeEn: getString(formData, 'badgeEn') || null,
     badgeZh: getString(formData, 'badgeZh') || null,
     excerptEn: getString(formData, 'excerptEn') || null,

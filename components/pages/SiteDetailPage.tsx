@@ -469,6 +469,19 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     </span>
                   </div>
                 )}
+                {site.space_type && (
+                  <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Home className="w-4 h-4" style={{ color: GOLD }} />
+                      <span className="text-sm uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
+                        {t('modal.spaceType')}
+                      </span>
+                    </div>
+                    <span className="text-base font-semibold" style={{ color: TEXT }}>
+                      {site.space_type}
+                    </span>
+                  </div>
+                )}
                 {site.budget_range && (
                   <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">

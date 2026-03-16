@@ -160,7 +160,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     { icon: MapPin, label: t('modal.location'), value: project.location_city },
     { icon: Tag, label: t('modal.category'), value: project.category },
     { icon: DollarSign, label: t('modal.budget'), value: isSite ? project.totalBudget : project.budget_range },
-    { icon: Home, label: t('modal.spaceType'), value: isSite ? undefined : project.space_type },
+    { icon: Home, label: t('modal.spaceType'), value: project.space_type },
     { icon: Clock, label: t('modal.duration'), value: isSite ? project.totalDuration : project.duration },
   ];
 

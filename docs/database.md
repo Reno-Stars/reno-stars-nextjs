@@ -21,7 +21,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 |-------|---------|------------|
 | `services` | Renovation service types | `slug` |
 | `service_areas` | Geographic coverage | `slug` |
-| `project_sites` | Site containers for projects (includes `po_number` for sales tracking) | `slug` |
+| `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
 | `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
 | `projects` | Portfolio entries (includes `po_number` for sales tracking) | `slug` |
 | `project_image_pairs` | Before/after image pairs per project | `(projectId, displayOrder)` |

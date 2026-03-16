@@ -614,6 +614,7 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
     badge: site.badge?.[locale],
     budget_range: site.budget_range,
     duration: site.duration?.[locale],
+    space_type: site.space_type?.[locale],
     show_as_project: site.show_as_project,
     featured: site.featured,
     images: site.images?.map((img) => ({

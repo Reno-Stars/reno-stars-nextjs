@@ -15,6 +15,7 @@ import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import SubmitButton from './SubmitButton';
 import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
+import { SPACE_TYPES } from '@/lib/admin/constants';
 import { CARD, NAVY, GOLD, SURFACE, neu, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
@@ -53,6 +54,7 @@ interface SiteFormProps {
     budgetRange?: string;
     durationEn?: string;
     durationZh?: string;
+    spaceTypeEn?: string;
     badgeEn: string;
     badgeZh: string;
     poNumber?: string;
@@ -135,6 +137,7 @@ export default function SiteForm({
   const [budgetRange, setBudgetRange] = useState(initialData?.budgetRange ?? '');
   const [durationEn, setDurationEn] = useState(initialData?.durationEn ?? '');
   const [durationZh, setDurationZh] = useState(initialData?.durationZh ?? '');
+  const [spaceTypeEn, setSpaceTypeEn] = useState(initialData?.spaceTypeEn ?? '');
   const [badgeEn, setBadgeEn] = useState(initialData?.badgeEn ?? '');
   const [badgeZh, setBadgeZh] = useState(initialData?.badgeZh ?? '');
   const [excerptEn, setExcerptEn] = useState(initialData?.excerptEn ?? '');
@@ -161,6 +164,7 @@ export default function SiteForm({
     setBudgetRange(initialData?.budgetRange ?? '');
     setDurationEn(initialData?.durationEn ?? '');
     setDurationZh(initialData?.durationZh ?? '');
+    setSpaceTypeEn(initialData?.spaceTypeEn ?? '');
     setBadgeEn(initialData?.badgeEn ?? '');
     setBadgeZh(initialData?.badgeZh ?? '');
     setExcerptEn(initialData?.excerptEn ?? '');
@@ -304,6 +308,23 @@ export default function SiteForm({
           </FormField>
 
           <BilingualInput nameEn="durationEn" nameZh="durationZh" label={t.sites.duration} valueEn={durationEn} onChangeEn={setDurationEn} valueZh={durationZh} onChangeZh={setDurationZh} tooltip={t.sites.tooltips.duration} />
+
+          <FormField label={t.sites.spaceType} htmlFor="spaceType" tooltip={t.sites.tooltips.spaceType}>
+            <select
+              id="spaceType"
+              name="spaceType"
+              value={spaceTypeEn}
+              onChange={(e) => setSpaceTypeEn(e.target.value)}
+              style={fieldStyle}
+            >
+              <option value="">{t.sites.selectSpaceType}</option>
+              {SPACE_TYPES.map((st) => (
+                <option key={st.en} value={st.en}>
+                  {locale === 'zh' ? st.zh : st.en}
+                </option>
+              ))}
+            </select>
+          </FormField>
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} disabled={!editing} />
 

@@ -174,6 +174,10 @@ export const projectSites = pgTable(
     durationEn: varchar('duration_en', { length: 100 }),
     durationZh: varchar('duration_zh', { length: 100 }),
 
+    // Space type (e.g., Condo, House, Townhouse)
+    spaceTypeEn: varchar('space_type_en', { length: 100 }),
+    spaceTypeZh: varchar('space_type_zh', { length: 100 }),
+
     // Internal tracking
     poNumber: varchar('po_number', { length: 50 }),
 

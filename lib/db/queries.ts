@@ -266,8 +266,8 @@ function mapDbProjectToProject(
         ? { en: row.durationEn, zh: row.durationZh }
         : undefined,
     space_type:
-      row.spaceTypeEn && row.spaceTypeZh
-        ? { en: row.spaceTypeEn, zh: row.spaceTypeZh }
+      row.spaceTypeEn || row.spaceTypeZh
+        ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
         : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
     images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
@@ -466,6 +466,10 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     duration:
       row.durationEn || row.durationZh
         ? { en: row.durationEn ?? '', zh: row.durationZh ?? '' }
+        : undefined,
+    space_type:
+      row.spaceTypeEn || row.spaceTypeZh
+        ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
         : undefined,
     po_number: row.poNumber ?? undefined,
     show_as_project: row.showAsProject,

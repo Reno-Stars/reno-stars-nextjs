@@ -104,6 +104,7 @@ interface SiteData {
   heroImageUrl: string;
   badgeEn: string;
   badgeZh: string;
+  spaceTypeEn?: string;
   poNumber?: string;
   excerptEn?: string;
   excerptZh?: string;

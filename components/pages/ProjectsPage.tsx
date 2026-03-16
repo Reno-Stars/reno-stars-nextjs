@@ -145,6 +145,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           image_pairs: combinedImagePairs,
           featured: site.featured,
           badge: site.badge?.[locale],
+          space_type: site.space_type?.[locale],
           po_number: site.po_number,
           isSiteProject: true,
           projectCount: site.project_count ?? site.projects?.length ?? 0,
@@ -220,9 +221,12 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     return Array.from(locs).filter(Boolean).sort() as string[];
   }, [rawProjects, sitesAsProjects]);
   const spaceTypes = useMemo(() => {
-    const types = new Set(rawProjects.map((p) => p.space_type?.en).filter((v): v is string => !!v));
+    const types = new Set([
+      ...rawProjects.map((p) => p.space_type?.en).filter((v): v is string => !!v),
+      ...sitesAsProjects.map((s) => s.space_type?.en).filter((v): v is string => !!v),
+    ]);
     return Array.from(types).sort();
-  }, [rawProjects]);
+  }, [rawProjects, sitesAsProjects]);
   const budgetRanges = useMemo(() => {
     const ranges = new Set(rawProjects.map((p) => p.budget_range).filter((r): r is string => !!r));
     return Array.from(ranges).sort((a, b) => {
@@ -328,11 +332,12 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const spaceTypeOptions = useMemo(() => [
     { value: 'All', label: t('filter.allSpaceTypes') },
     ...spaceTypes.map((st) => {
-      const match = rawProjects.find((p) => p.space_type?.en === st);
-      const label = match?.space_type?.[locale] ?? st;
+      const matchProject = rawProjects.find((p) => p.space_type?.en === st);
+      const matchSite = sitesAsProjects.find((s) => s.space_type?.en === st);
+      const label = matchProject?.space_type?.[locale] ?? matchSite?.space_type?.[locale] ?? st;
       return { value: st, label };
     }),
-  ], [spaceTypes, rawProjects, locale, t]);
+  ], [spaceTypes, rawProjects, sitesAsProjects, locale, t]);
 
   const budgetOptions = useMemo(() => [
     { value: 'All', label: t('filter.allBudgets') },
@@ -341,9 +346,10 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
 
   const localizedSpaceType = useMemo(() => {
     if (spaceTypeFilter === 'All') return null;
-    const match = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
-    return match?.space_type?.[locale] ?? null;
-  }, [spaceTypeFilter, locale, rawProjects]);
+    const matchProject = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
+    const matchSite = sitesAsProjects.find((s) => s.space_type?.en === spaceTypeFilter);
+    return matchProject?.space_type?.[locale] ?? matchSite?.space_type?.[locale] ?? null;
+  }, [spaceTypeFilter, locale, rawProjects, sitesAsProjects]);
 
   const filteredProjects = useMemo(() => allProjects.filter((project) => {
     const categoryMatch = activeCategory === 'All' || project.category === (
