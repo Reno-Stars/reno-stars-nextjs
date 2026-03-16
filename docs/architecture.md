@@ -346,7 +346,7 @@ A modular EN→ZH glossary injected into all 6 AI prompts to ensure domain-speci
 | `optimizeContent(rawContent)` | Blog content optimization | `OptimizedContent` (contentEn/Zh, excerptEn/Zh, SEO fields) |
 | `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
 | `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (serviceType, slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
-| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
+| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, spaceTypeEn, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
 All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for reuse by form components via `Omit<T, 'detectedLanguage'>`.
@@ -411,7 +411,7 @@ Blog generation actions fetch project data with relations (image pairs, scopes, 
 | `AIContentEditor` | Blog post form — paste content, AI cleans up and translates |
 | `AIFieldGenerator<T>` | Generic AI generator — notes textarea + generate button (used by wrappers below) |
 | `AIProjectGenerator` | Project form — thin wrapper, generates slug, title, description, challenge, solution, badge, excerpt, PO number, budget, duration, SEO |
-| `AISiteGenerator` | Site form — thin wrapper, generates slug, title, description, badge, excerpt, PO number, budget, duration, SEO |
+| `AISiteGenerator` | Site form — thin wrapper, generates slug, title, description, badge, excerpt, PO number, budget, duration, space type, SEO |
 
 `AIProjectGenerator` and `AISiteGenerator` use exported `ProjectDescription` / `SiteDescription` types from `content-optimizer.ts` via `Omit<T, 'detectedLanguage'>` for their callback signatures, eliminating inline type duplication. Project/site description fields use `BilingualTextarea` in controlled mode (formerly `AIBilingualTextarea` with inline AI button, removed in favor of the top-level "AI Generate All" feature).
 
@@ -470,7 +470,7 @@ Branches early based on `options.mode` to avoid dual-nullable patterns:
 1. **Extract** — Downloads ZIP from S3 temp, parses via `parseZip()` (async `fflate`)
 2. **Upload** — Uploads all images to S3 in parallel batches of 15 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
 3. **Generate** — AI metadata in parallel batches of 10 (`AI_METADATA_BATCH_SIZE`): `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity. No alt text generation — uses `FALLBACK_ALT` directly for all image pairs
-4. **Save** — Inserts sites, site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
+4. **Save** — Inserts sites (including AI-detected `spaceTypeEn`/`spaceTypeZh` via `SPACE_TYPE_TO_ZH`), site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
 5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site via shared `generateBlogsForEntities()` helper
 
 **Standalone mode**:

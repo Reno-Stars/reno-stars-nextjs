@@ -60,7 +60,7 @@ ZIP upload uses chunked multipart upload through a server proxy (`api/[jobId]/up
 ## AI Features
 
 - **AIContentEditor**: Tabbed blog content editor (paste/EN/ZH tabs), AI optimization via GPT-4o, DOMPurify for preview, zod validation.
-- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms.
+- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, space type (sites only), and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms.
 - **AI blog generation** (`lib/ai/blog-generator.ts`): Generates bilingual case study blog posts from project/site data via GPT-4o. Validates with Zod, truncates SEO fields, sanitizes/deduplicates slugs. Triggered from admin site detail page.
 - **AI social posts** (`lib/ai/social-post-generator.ts`): Bilingual content for Instagram, Facebook, Xiaohongshu. WAI-ARIA Tabs for platform switching. Image picker from source entity. `StatusCell` uses optimistic state with error rollback.
 
