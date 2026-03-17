@@ -17,7 +17,7 @@ export default async function LocaleNotFound() {
           <span className="block text-2xl font-semibold">{t('notFound')}</span>
         </h1>
         <p className="mb-8" style={{ color: TEXT_MID }}>
-          {t('error')}
+          {t('notFoundDescription')}
         </p>
         <Link
           href="/"

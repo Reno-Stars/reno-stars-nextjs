@@ -131,6 +131,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
         {/* Error alert - inline */}
         {errorMessage && (
           <div
+            id="form-error"
             className={`p-4 rounded-xl font-medium ${large ? 'text-base' : 'text-sm'}`}
             style={{ backgroundColor: ERROR_BG, color: ERROR }}
             role="alert"
@@ -154,6 +155,8 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
               placeholder={t(f.placeholderKey)}
               required={f.required}
               disabled={isPending}
+              aria-required={f.required || undefined}
+              aria-describedby={errorMessage ? 'form-error' : undefined}
             />
           </div>
         ))}
@@ -172,6 +175,8 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
           placeholder={t('form.messagePlaceholder')}
           required
           disabled={isPending}
+          aria-required="true"
+          aria-describedby={errorMessage ? 'form-error' : undefined}
         />
       </div>
       <button

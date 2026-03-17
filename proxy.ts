@@ -46,6 +46,7 @@ const securityHeaders: Record<string, string> = {
       : `connect-src 'self' ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://www.google-analytics.com https://www.googletagmanager.com`,
     `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
     "object-src 'none'",
+    "frame-src 'self' https://www.google.com",
     "frame-ancestors 'self'",
     "base-uri 'self'",
     "form-action 'self'",

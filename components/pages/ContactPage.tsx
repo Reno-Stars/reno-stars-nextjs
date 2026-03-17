@@ -12,6 +12,10 @@ import {
   CARD, TEXT, TEXT_MID, GOLD, neu,
 } from '@/lib/theme';
 
+/** Free Google Maps embed pinned to the Reno Stars business listing (no API key needed). */
+const MAP_EMBED_URL =
+  'https://www.google.com/maps?q=Reno+Stars+Local+Renovation+Company,+21300+Gordon+Way+unit+188,+Richmond,+BC&output=embed';
+
 interface ContactPageProps {
   locale: Locale;
   company: Company;
@@ -202,6 +206,20 @@ export default function ContactPage({ locale: _locale, company, areaNames, googl
                     </span>
                   ))}
                 </div>
+              </div>
+
+              {/* Map */}
+              <div className="rounded-xl overflow-hidden mb-6" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+                <iframe
+                  src={MAP_EMBED_URL}
+                  width="100%"
+                  height="250"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={t('footer.mapLocation')}
+                />
               </div>
 
               {/* Why Contact Us */}

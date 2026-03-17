@@ -2,7 +2,7 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps), while static pages use the current date. Includes:
+Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
 
 - Static pages (home, services, projects, blog, contact, benefits, design, process, areas)
 - All service detail pages
@@ -234,7 +234,7 @@ Uses Next.js App Router file convention with the real Reno Stars logo (R+house i
 ## Security Headers
 
 Added via `proxy.ts` on all responses:
-- `Content-Security-Policy` (environment-aware: allows unsafe-eval in dev; whitelists Google Analytics and Tag Manager in `script-src` and `connect-src`)
+- `Content-Security-Policy` (environment-aware: allows unsafe-eval in dev; whitelists Google Analytics and Tag Manager in `script-src` and `connect-src`; `frame-src` allows `google.com` for Maps embed)
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: SAMEORIGIN`
 - `Referrer-Policy: strict-origin-when-cross-origin`

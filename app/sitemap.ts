@@ -5,6 +5,9 @@ import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getS
 
 const BASE_URL = getBaseUrl();
 
+/** Fixed date for static pages — avoids misleading "updated" signals on every deploy */
+const STATIC_LAST_MODIFIED = '2026-03-17';
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
   const [projectRows, siteRows, blogPostRows, serviceAreas, serviceTypeMap, categorySlugs] = await Promise.all([
@@ -43,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${page.path}/`,
-        lastModified: now,
+        lastModified: STATIC_LAST_MODIFIED,
         changeFrequency: page.changeFrequency,
         priority: page.priority,
         alternates: {
