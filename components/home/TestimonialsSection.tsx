@@ -91,11 +91,10 @@ export default function TestimonialsSection({ googleReviews, locale, translation
   const MIN_TRACK_WIDTH = 2000;
   const CARD_WIDTH = 340;
   const repeatCount = Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (reviews.length * CARD_WIDTH)));
-  const expandedReviews = Array.from({ length: repeatCount }, () => reviews).flat();
 
-  // Duration scales with expanded set so speed feels consistent
+  // Duration scales with the full first half (repeatCount sets) so speed feels consistent
   const SECONDS_PER_CARD = 6;
-  const duration = expandedReviews.length * SECONDS_PER_CARD;
+  const duration = reviews.length * repeatCount * SECONDS_PER_CARD;
 
   return (
     <section id="testimonials" aria-labelledby="testimonials-title" className="py-14" style={{ backgroundColor: SURFACE }}>
@@ -121,15 +120,17 @@ export default function TestimonialsSection({ googleReviews, locale, translation
       </div>
       <div className="reviews-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
         <div className="reviews-track flex gap-5 w-max px-4 py-4">
-          {/* First half: crawlable content, expanded to fill viewport */}
-          {expandedReviews.map((review, i) => (
+          {/* Semantic: each review rendered once, crawlable + accessible */}
+          {reviews.map((review, i) => (
             <ReviewCard key={`0-${i}`} review={review} locale={locale} />
           ))}
-          {/* Second half: seamless loop duplicate, hidden from assistive tech */}
+          {/* Decorative: padding to fill viewport + loop duplicate, hidden from parsers & assistive tech */}
           <div className="contents" aria-hidden="true" inert>
-            {expandedReviews.map((review, i) => (
-              <ReviewCard key={`1-${i}`} review={review} locale={locale} />
-            ))}
+            {Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
+              reviews.map((review, i) => (
+                <ReviewCard key={`${s + 1}-${i}`} review={review} locale={locale} />
+              ))
+            )}
           </div>
         </div>
       </div>

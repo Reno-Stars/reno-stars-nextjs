@@ -33,11 +33,10 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
   const repeatCount = visiblePartners.length > 0
     ? Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (visiblePartners.length * LOGO_WIDTH)))
     : 1;
-  const expandedPartners = Array.from({ length: repeatCount }, () => visiblePartners).flat();
 
-  // Duration scales with expanded set so speed feels consistent
+  // Duration scales with the full first half (repeatCount sets) so speed feels consistent
   const SECONDS_PER_CARD = 4;
-  const duration = expandedPartners.length * SECONDS_PER_CARD;
+  const duration = visiblePartners.length * repeatCount * SECONDS_PER_CARD;
 
   return (
     <section
@@ -74,15 +73,17 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       {visiblePartners.length > 0 && (
         <div className="partners-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
           <div className="partners-track flex items-center gap-8 w-max py-4">
-            {/* First half: crawlable content, expanded to fill viewport */}
-            {expandedPartners.map((partner, i) => (
+            {/* Semantic: each partner rendered once, crawlable + accessible */}
+            {visiblePartners.map((partner, i) => (
               <PartnerLogo key={`0-${i}`} partner={partner} />
             ))}
-            {/* Second half: seamless loop duplicate, hidden from assistive tech */}
+            {/* Decorative: padding to fill viewport + loop duplicate, hidden from parsers & assistive tech */}
             <div className="contents" aria-hidden="true" inert>
-              {expandedPartners.map((partner, i) => (
-                <PartnerLogo key={`1-${i}`} partner={partner} />
-              ))}
+              {Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
+                visiblePartners.map((partner, i) => (
+                  <PartnerLogo key={`${s + 1}-${i}`} partner={partner} />
+                ))
+              )}
             </div>
           </div>
         </div>
