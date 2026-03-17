@@ -23,8 +23,9 @@ function getRelativeTime(publishTime: string, locale: string): string {
   if (!publishTime) return '';
   const timestamp = new Date(publishTime).getTime();
   if (isNaN(timestamp)) return '';
+  const MS_PER_DAY = 86_400_000;
   const diff = Date.now() - timestamp;
-  const days = Math.floor(diff / 86400000);
+  const days = Math.floor(diff / MS_PER_DAY);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
   const intlLocale = INTL_LOCALE_MAP[locale] || 'en-US';
@@ -84,9 +85,17 @@ export default function TestimonialsSection({ googleReviews, locale, translation
   const reviews = googleReviews.reviews;
   if (reviews.length === 0) return null;
 
-  // Duration scales with number of cards so speed feels consistent
+  // Repeat items so one "set" always fills the viewport (prevents visible duplicates).
+  // CARD_WIDTH uses the sm:w-80 (320px) breakpoint + gap-5 (20px). On narrower screens
+  // cards are w-72 (288px) but mobile viewports are far below MIN_TRACK_WIDTH anyway.
+  const MIN_TRACK_WIDTH = 2000;
+  const CARD_WIDTH = 340;
+  const repeatCount = Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (reviews.length * CARD_WIDTH)));
+  const expandedReviews = Array.from({ length: repeatCount }, () => reviews).flat();
+
+  // Duration scales with expanded set so speed feels consistent
   const SECONDS_PER_CARD = 6;
-  const duration = reviews.length * SECONDS_PER_CARD;
+  const duration = expandedReviews.length * SECONDS_PER_CARD;
 
   return (
     <section id="testimonials" aria-labelledby="testimonials-title" className="py-14" style={{ backgroundColor: SURFACE }}>
@@ -112,13 +121,13 @@ export default function TestimonialsSection({ googleReviews, locale, translation
       </div>
       <div className="reviews-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
         <div className="reviews-track flex gap-5 w-max px-4 py-4">
-          {/* First pass: real content for SEO & screen readers */}
-          {reviews.map((review, i) => (
+          {/* First half: crawlable content, expanded to fill viewport */}
+          {expandedReviews.map((review, i) => (
             <ReviewCard key={`0-${i}`} review={review} locale={locale} />
           ))}
-          {/* Second pass: duplicate for seamless carousel loop, hidden from crawlers & assistive tech */}
-          <div className="contents" aria-hidden="true" inert={true as unknown as boolean}>
-            {reviews.map((review, i) => (
+          {/* Second half: seamless loop duplicate, hidden from assistive tech */}
+          <div className="contents" aria-hidden="true" inert>
+            {expandedReviews.map((review, i) => (
               <ReviewCard key={`1-${i}`} review={review} locale={locale} />
             ))}
           </div>

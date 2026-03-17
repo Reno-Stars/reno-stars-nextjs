@@ -26,9 +26,18 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
   // Hidden partners for SEO (sr-only)
   const hiddenPartners = partners.filter((p) => p.isHiddenVisually);
 
-  // Duration scales with number of cards so speed feels consistent
+  // Repeat items so one "set" always fills the viewport (prevents visible duplicates).
+  // LOGO_WIDTH = 160px card + gap-8 (32px).
+  const MIN_TRACK_WIDTH = 2000;
+  const LOGO_WIDTH = 192;
+  const repeatCount = visiblePartners.length > 0
+    ? Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (visiblePartners.length * LOGO_WIDTH)))
+    : 1;
+  const expandedPartners = Array.from({ length: repeatCount }, () => visiblePartners).flat();
+
+  // Duration scales with expanded set so speed feels consistent
   const SECONDS_PER_CARD = 4;
-  const duration = visiblePartners.length * SECONDS_PER_CARD;
+  const duration = expandedPartners.length * SECONDS_PER_CARD;
 
   return (
     <section
@@ -63,20 +72,15 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       </div>
 
       {visiblePartners.length > 0 && (
-        <div
-          className="partners-scroll overflow-hidden"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={t.title}
-        >
+        <div className="partners-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
           <div className="partners-track flex items-center gap-8 w-max py-4">
-            {/* First pass: real content for SEO & screen readers */}
-            {visiblePartners.map((partner, i) => (
+            {/* First half: crawlable content, expanded to fill viewport */}
+            {expandedPartners.map((partner, i) => (
               <PartnerLogo key={`0-${i}`} partner={partner} />
             ))}
-            {/* Second pass: duplicate for seamless carousel loop, hidden from crawlers & assistive tech */}
-            <div className="contents" aria-hidden="true" inert={true as unknown as boolean}>
-              {visiblePartners.map((partner, i) => (
+            {/* Second half: seamless loop duplicate, hidden from assistive tech */}
+            <div className="contents" aria-hidden="true" inert>
+              {expandedPartners.map((partner, i) => (
                 <PartnerLogo key={`1-${i}`} partner={partner} />
               ))}
             </div>
