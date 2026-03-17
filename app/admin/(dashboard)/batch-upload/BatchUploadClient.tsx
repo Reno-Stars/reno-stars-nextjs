@@ -271,7 +271,6 @@ export default function BatchUploadClient() {
       const { uploadId } = (await initUploadRes.json()) as { uploadId: string };
 
       // 3b: Upload each chunk via presigned URL (direct to S3, bypasses Vercel body limit)
-      const parts: { partNumber: number; etag: string }[] = [];
       for (let i = 0; i < totalChunks; i++) {
         if (abort.signal.aborted) throw new Error(bt.errorUploadFailed);
 
@@ -281,7 +280,6 @@ export default function BatchUploadClient() {
         const chunkSize = end - start;
         const partNumber = i + 1;
 
-        let etag: string | undefined;
         for (let attempt = 0; attempt < CHUNK_MAX_RETRIES; attempt++) {
           try {
             // Step A: Get presigned URL from our API (tiny request, no file data)
@@ -304,10 +302,6 @@ export default function BatchUploadClient() {
             if (!s3Res.ok) {
               throw new Error(`Part ${partNumber} upload failed (${s3Res.status})`);
             }
-
-            // S3 returns ETag in response header
-            etag = s3Res.headers.get('etag') ?? undefined;
-            if (!etag) throw new Error(`No ETag returned for part ${partNumber}`);
             break;
           } catch (err) {
             if (abort.signal.aborted) throw err;
@@ -316,20 +310,19 @@ export default function BatchUploadClient() {
             await new Promise((r) => setTimeout(r, (attempt + 1) * 1000));
           }
         }
-        parts.push({ partNumber, etag: etag! });
 
         if (mountedRef.current) {
           setS3Progress(Math.round((partNumber / totalChunks) * 100));
         }
       }
 
-      // 3c: Complete multipart upload
+      // 3c: Complete multipart upload (server retrieves ETags via ListPartsCommand)
       const completeRes = await fetch(
         `/admin/batch-upload/api/${validJobId}/upload/`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ uploadId, parts }),
+          body: JSON.stringify({ uploadId, totalParts: totalChunks }),
           signal: abort.signal,
         }
       );

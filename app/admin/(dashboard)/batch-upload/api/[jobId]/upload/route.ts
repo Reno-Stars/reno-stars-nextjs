@@ -6,6 +6,7 @@ import {
   UploadPartCommand,
   CompleteMultipartUploadCommand,
   AbortMultipartUploadCommand,
+  ListPartsCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { db } from '@/lib/db';
@@ -143,7 +144,10 @@ export async function PUT(
 
 /**
  * PATCH — Complete multipart upload.
- * Body JSON: { uploadId, parts: [{ partNumber, etag }] }
+ * Body JSON: { uploadId, totalParts }
+ *
+ * ETags are retrieved server-side via ListPartsCommand because browsers
+ * cannot read the ETag header from cross-origin S3 responses (CORS).
  */
 export async function PATCH(
   request: NextRequest,
@@ -156,34 +160,22 @@ export async function PATCH(
 
   const { jobId } = await params;
 
-  // Parse body once — used for both complete and abort-on-failure.
   let uploadId: string | undefined;
-  let parts: { partNumber: number; etag: string }[] | undefined;
+  let totalParts: number | undefined;
 
   try {
     const body = (await request.json()) as {
       uploadId: unknown;
-      parts: unknown;
+      totalParts: unknown;
     };
     if (typeof body.uploadId === 'string') uploadId = body.uploadId;
-    if (Array.isArray(body.parts)) parts = body.parts;
+    if (typeof body.totalParts === 'number') totalParts = body.totalParts;
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body.' }, { status: 400 });
   }
 
-  if (!uploadId || !parts || parts.length === 0) {
-    return NextResponse.json({ error: 'Invalid completion request.' }, { status: 400 });
-  }
-
-  // Validate each part has the required shape
-  const validParts = parts.every(
-    (p): p is { partNumber: number; etag: string } =>
-      typeof p === 'object' && p !== null &&
-      typeof p.partNumber === 'number' && p.partNumber >= 1 &&
-      typeof p.etag === 'string' && p.etag.length > 0
-  );
-  if (!validParts) {
-    return NextResponse.json({ error: 'Invalid part entries.' }, { status: 400 });
+  if (!uploadId || !totalParts || totalParts < 1) {
+    return NextResponse.json({ error: 'Missing uploadId or totalParts.' }, { status: 400 });
   }
 
   try {
@@ -197,15 +189,35 @@ export async function PATCH(
       return NextResponse.json({ error: 'S3 not configured.' }, { status: 500 });
     }
 
+    const key = batchZipKey(jobId);
+
+    // Retrieve all uploaded parts with their ETags from S3.
+    // ListPartsCommand returns up to 1000 parts per call (sufficient for ≤10 GB files).
+    const { Parts: s3Parts } = await client.send(
+      new ListPartsCommand({
+        Bucket: S3_BUCKET,
+        Key: key,
+        UploadId: uploadId,
+        MaxParts: 1000,
+      })
+    );
+
+    if (!s3Parts || s3Parts.length !== totalParts) {
+      return NextResponse.json(
+        { error: `Expected ${totalParts} parts but found ${s3Parts?.length ?? 0} on S3.` },
+        { status: 400 }
+      );
+    }
+
     await client.send(
       new CompleteMultipartUploadCommand({
         Bucket: S3_BUCKET,
-        Key: batchZipKey(jobId),
+        Key: key,
         UploadId: uploadId,
         MultipartUpload: {
-          Parts: parts
-            .sort((a, b) => a.partNumber - b.partNumber)
-            .map((p) => ({ PartNumber: p.partNumber, ETag: p.etag })),
+          Parts: s3Parts
+            .sort((a, b) => (a.PartNumber ?? 0) - (b.PartNumber ?? 0))
+            .map((p) => ({ PartNumber: p.PartNumber, ETag: p.ETag })),
         },
       })
     );
