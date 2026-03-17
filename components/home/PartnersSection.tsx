@@ -58,14 +58,10 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
           trackClassName="flex items-center gap-8 w-max py-4"
           duration={duration}
           label={t.title}
-          clones={Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
-            visiblePartners.map((partner, i) => (
-              <PartnerLogo key={`${s + 1}-${i}`} partner={partner} />
-            ))
-          )}
+          repeatCount={repeatCount}
         >
           {visiblePartners.map((partner, i) => (
-            <PartnerLogo key={`0-${i}`} partner={partner} />
+            <PartnerLogo key={i} partner={partner} />
           ))}
         </Marquee>
       )}

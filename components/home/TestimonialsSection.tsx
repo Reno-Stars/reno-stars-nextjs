@@ -107,14 +107,10 @@ export default function TestimonialsSection({ googleReviews, locale, translation
         trackClassName="flex gap-5 w-max px-4 py-4"
         duration={duration}
         label={t.title}
-        clones={Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
-          reviews.map((review, i) => (
-            <ReviewCard key={`${s + 1}-${i}`} review={review} locale={locale} />
-          ))
-        )}
+        repeatCount={repeatCount}
       >
         {reviews.map((review, i) => (
-          <ReviewCard key={`0-${i}`} review={review} locale={locale} />
+          <ReviewCard key={i} review={review} locale={locale} />
         ))}
       </Marquee>
     </section>
