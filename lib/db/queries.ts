@@ -172,16 +172,17 @@ export async function getServiceTypeToCategory(): Promise<Record<string, { en: s
 /**
  * Get localized category list for project filtering.
  * Includes "All" and "Whole House" (for Sites), plus all service types from DB.
+ * Each category includes a `serviceType` matching the service_type field on projects.
  */
-export async function getCategoriesLocalized(): Promise<{ en: string; zh: string }[]> {
+export async function getCategoriesLocalized(): Promise<{ serviceType: string; en: string; zh: string }[]> {
   const serviceTypeToCategory = await getServiceTypeToCategory();
   const otherCategories = Object.entries(serviceTypeToCategory)
     .filter(([key]) => key !== 'whole-house')
-    .map(([, value]) => value);
+    .map(([key, value]) => ({ serviceType: key, ...value }));
 
   return [
-    { en: 'All', zh: '全部' },
-    WHOLE_HOUSE_CATEGORY,
+    { serviceType: 'All', en: 'All', zh: '全部' },
+    { serviceType: 'whole-house', ...WHOLE_HOUSE_CATEGORY },
     ...otherCategories,
   ];
 }

@@ -57,12 +57,19 @@ function collectImagesFromPairs(
 
 const PROJECTS_PER_PAGE = 12;
 
+/** Check if a project matches a given service type category */
+function matchesCategory(project: DisplayProject, serviceType: string): boolean {
+  return serviceType === 'whole-house'
+    ? project.isSiteProject === true || project.service_type === 'whole-house'
+    : project.service_type === serviceType;
+}
+
 interface ProjectsPageProps {
   locale: Locale;
   company: Company;
   projects: Project[];
   sitesAsProjects?: SiteWithProjects[];
-  categories: { en: string; zh: string }[];
+  categories: { serviceType: string; en: string; zh: string }[];
 }
 
 export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories }: ProjectsPageProps) {
@@ -305,8 +312,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const neuShadow4 = useMemo(() => neu(4), []);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
-  const handleCategoryClick = useCallback((categoryEn: string) => {
-    setActiveCategory(categoryEn);
+  const handleCategoryClick = useCallback((serviceType: string) => {
+    setActiveCategory(serviceType);
     setCurrentPage(1);
     projectsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
@@ -321,7 +328,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   }, []);
 
   const categoryOptions = useMemo(() => categories.map((c) => ({
-    value: c.en,
+    value: c.serviceType,
     label: c[locale],
   })), [categories, locale]);
 
@@ -353,16 +360,14 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   }, [spaceTypeFilter, locale, rawProjects, sitesAsProjects]);
 
   const filteredProjects = useMemo(() => allProjects.filter((project) => {
-    const categoryMatch = activeCategory === 'All' || project.category === (
-      categories.find((c) => c.en === activeCategory)?.[locale] ?? activeCategory
-    );
+    const categoryMatch = activeCategory === 'All' || matchesCategory(project, activeCategory);
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
     const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
     const q = searchQuery.toLowerCase();
     const searchMatch = !searchQuery || [project.title, project.po_number].some((v) => v?.toLowerCase().includes(q));
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch && searchMatch;
-  }), [allProjects, categories, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, searchQuery, locale]);
+  }), [allProjects, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, searchQuery]);
 
   const handleCategoryChange = useCallback((v: string) => { setActiveCategory(v); setCurrentPage(1); }, []);
   const handleLocationChange = useCallback((v: string) => { setLocationFilter(v); setCurrentPage(1); }, []);
@@ -435,17 +440,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             onMouseUp={handleDragEnd}
             onMouseMove={handleDragMove}
           >
-            {categories.filter((c) => c.en !== 'All' && allProjects.some((p) => p.category === c[locale])).map((category) => {
-              const categoryProjects = allProjects.filter(
-                (p) => p.category === category[locale]
-              );
+            {categories.filter((c) => c.serviceType !== 'All' && allProjects.some((p) => matchesCategory(p, c.serviceType))).map((category) => {
+              const categoryProjects = allProjects.filter((p) => matchesCategory(p, category.serviceType));
               const firstProject = categoryProjects[0];
-              const isActive = activeCategory === category.en;
+              const isActive = activeCategory === category.serviceType;
 
               return (
                 <button
-                  key={category.en}
-                  onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.en); }}
+                  key={category.serviceType}
+                  onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.serviceType); }}
                   className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat w-[180px] sm:w-[220px]"
                   style={{
                     boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neuShadow4,
