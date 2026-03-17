@@ -299,12 +299,10 @@ export default function BatchUploadClient() {
             const s3Res = await fetch(presignedUrl, {
               method: 'PUT',
               body: chunk,
-              headers: { 'Content-Length': String(chunkSize) },
               signal: abort.signal,
             });
             if (!s3Res.ok) {
-              const errText = await s3Res.text();
-              throw new Error(`S3 part ${partNumber} failed: ${s3Res.status} ${errText.slice(0, 200)}`);
+              throw new Error(`Part ${partNumber} upload failed (${s3Res.status})`);
             }
 
             // S3 returns ETag in response header
