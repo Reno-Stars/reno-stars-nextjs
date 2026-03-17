@@ -192,7 +192,7 @@ export async function PATCH(
     const key = batchZipKey(jobId);
 
     // Retrieve all uploaded parts with their ETags from S3.
-    // ListPartsCommand returns up to 1000 parts per call (sufficient for ≤10 GB files).
+    // Max 1000 parts per call; with 10 MB chunks and 1 GB max ZIP, we need at most ~100.
     const { Parts: s3Parts } = await client.send(
       new ListPartsCommand({
         Bucket: S3_BUCKET,

@@ -42,7 +42,7 @@ API route validates auth, file metadata (max 50 MB, JPEG/PNG/WebP/SVG/GIF). `cus
 - **Sites** (whole-house with site containers)
 - **Standalone** (individual projects under `STANDALONE_SITE_SLUG`)
 
-ZIP upload uses chunked multipart upload through a server proxy (`api/[jobId]/upload/`), bypassing R2 CORS. File split into 10 MB chunks with per-chunk retry (3 attempts). Processing via `after()` from `next/server`. Client polls for status.
+ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`). The API route generates presigned URLs and the client uploads 10 MB chunks directly to S3, bypassing Vercel's 4.5 MB body size limit. Per-chunk retry (3 attempts). On completion, the server retrieves ETags via `ListPartsCommand` (browsers can't read ETag from cross-origin S3 responses due to CORS). Processing via `after()` from `next/server`. Client polls for status.
 
 **Sites mode pipeline:** `parseZip()` → upload images (batches of 15) → AI metadata (batches of 10) → save to DB → optional blog generation → cleanup. AI generates `SiteDescription` (with space type) for root folders and `ProjectDescription` (with space type) for sub-folder projects.
 
