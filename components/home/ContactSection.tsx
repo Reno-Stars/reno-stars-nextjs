@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import type { Company } from '@/lib/types';
+import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
 import { GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 
@@ -15,6 +16,7 @@ interface ContactSectionProps {
     phone: string;
     email: string;
     serviceAreas: string;
+    mapTitle: string;
   };
 }
 
@@ -49,6 +51,20 @@ export default function ContactSection({ company, areasText, translations: t }: 
                 </div>
               </div>
             ))}
+
+            {/* Map */}
+            <div className="rounded-xl overflow-hidden" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <iframe
+                src={MAP_EMBED_URL}
+                width="100%"
+                height="200"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={t.mapTitle}
+              />
+            </div>
           </div>
 
           <div className="rounded-2xl p-6 lg:p-8 h-fit" style={{ boxShadow: neu(6), backgroundColor: CARD }}>

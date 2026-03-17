@@ -35,6 +35,9 @@ export default function Marquee({ trackId, repeatCount, duration }: MarqueeProps
     clonesWrapper.inert = true;
 
     const nodes = Array.from(track.children);
+    // The track scrolls from 0 to -50%, so we need a second identical half.
+    // repeatCount items already fill the viewport; double them minus the
+    // original set (which is already in the DOM) gives the clone count.
     const totalCloneSets = repeatCount * 2 - 1;
     for (let s = 0; s < totalCloneSets; s++) {
       for (const node of nodes) {

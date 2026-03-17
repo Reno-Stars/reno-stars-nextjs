@@ -4,26 +4,21 @@ import { useMemo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle } from 'lucide-react';
 import { useRouter } from '@/navigation';
-import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
+import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
 import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, GOLD, neu,
 } from '@/lib/theme';
 
-/** Free Google Maps embed pinned to the Reno Stars business listing (no API key needed). */
-const MAP_EMBED_URL =
-  'https://www.google.com/maps?q=Reno+Stars+Local+Renovation+Company,+21300+Gordon+Way+unit+188,+Richmond,+BC&output=embed';
-
 interface ContactPageProps {
-  locale: Locale;
   company: Company;
   areaNames: string[];
   googleRating?: number;
 }
 
-export default function ContactPage({ locale: _locale, company, areaNames, googleRating }: ContactPageProps) {
+export default function ContactPage({ company, areaNames, googleRating }: ContactPageProps) {
   const t = useTranslations();
   const router = useRouter();
 

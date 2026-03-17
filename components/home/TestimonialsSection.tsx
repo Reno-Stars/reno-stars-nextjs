@@ -4,6 +4,7 @@ import type { GoogleReview, GooglePlaceRating } from '@/lib/types';
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import GoogleAvatar from './GoogleAvatar';
 import Marquee from './Marquee';
+import { computeMarqueeParams } from './marquee-utils';
 
 interface TestimonialsSectionProps {
   googleReviews: GooglePlaceRating;
@@ -86,16 +87,8 @@ export default function TestimonialsSection({ googleReviews, locale, translation
   const reviews = googleReviews.reviews;
   if (reviews.length === 0) return null;
 
-  // Repeat items so one "set" always fills the viewport (prevents visible duplicates).
-  // CARD_WIDTH uses the sm:w-80 (320px) breakpoint + gap-5 (20px). On narrower screens
-  // cards are w-72 (288px) but mobile viewports are far below MIN_TRACK_WIDTH anyway.
-  const MIN_TRACK_WIDTH = 2000;
-  const CARD_WIDTH = 340;
-  const repeatCount = Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (reviews.length * CARD_WIDTH)));
-
-  // Duration scales with the full first half (repeatCount sets) so speed feels consistent
-  const SECONDS_PER_CARD = 6;
-  const duration = reviews.length * repeatCount * SECONDS_PER_CARD;
+  // CARD_WIDTH = sm:w-80 (320px) + gap-5 (20px)
+  const { repeatCount, duration } = computeMarqueeParams(reviews.length, 340, 6);
 
   return (
     <section id="testimonials" aria-labelledby="testimonials-title" className="py-14" style={{ backgroundColor: SURFACE }}>
@@ -110,8 +103,8 @@ export default function TestimonialsSection({ googleReviews, locale, translation
         aria-label={t.title}
       >
         <div id="testimonials-track" className="flex gap-5 w-max px-4 py-4">
-          {reviews.map((review, i) => (
-            <ReviewCard key={i} review={review} locale={locale} />
+          {reviews.map((review) => (
+            <ReviewCard key={review.authorUri} review={review} locale={locale} />
           ))}
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 import Marquee from './Marquee';
+import { computeMarqueeParams } from './marquee-utils';
 
 interface LocalizedPartner {
   name: string;
@@ -27,17 +28,8 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
   // Hidden partners for SEO (sr-only)
   const hiddenPartners = partners.filter((p) => p.isHiddenVisually);
 
-  // Repeat items so one "set" always fills the viewport (prevents visible duplicates).
-  // LOGO_WIDTH = 160px card + gap-8 (32px).
-  const MIN_TRACK_WIDTH = 2000;
-  const LOGO_WIDTH = 192;
-  const repeatCount = visiblePartners.length > 0
-    ? Math.max(1, Math.ceil(MIN_TRACK_WIDTH / (visiblePartners.length * LOGO_WIDTH)))
-    : 1;
-
-  // Duration scales with the full first half (repeatCount sets) so speed feels consistent
-  const SECONDS_PER_CARD = 4;
-  const duration = visiblePartners.length * repeatCount * SECONDS_PER_CARD;
+  // LOGO_WIDTH = 160px card + gap-8 (32px)
+  const { repeatCount, duration } = computeMarqueeParams(visiblePartners.length, 192, 4);
 
   return (
     <section
@@ -62,8 +54,8 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
             aria-label={t.title}
           >
             <div id="partners-track" className="flex items-center gap-8 w-max py-4">
-              {visiblePartners.map((partner, i) => (
-                <PartnerLogo key={i} partner={partner} />
+              {visiblePartners.map((partner) => (
+                <PartnerLogo key={partner.name} partner={partner} />
               ))}
             </div>
           </div>

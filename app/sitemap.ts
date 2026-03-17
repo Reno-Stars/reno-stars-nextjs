@@ -65,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/services/${slug}/`,
-        lastModified: now,
+        lastModified: STATIC_LAST_MODIFIED,
         changeFrequency: 'monthly',
         priority: 0.8,
         alternates: {
@@ -85,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const locale of locales) {
         entries.push({
           url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
-          lastModified: now,
+          lastModified: STATIC_LAST_MODIFIED,
           changeFrequency: 'monthly',
           priority: 0.7,
           alternates: {
@@ -105,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${category}/`,
-        lastModified: now,
+        lastModified: STATIC_LAST_MODIFIED,
         changeFrequency: 'weekly',
         priority: 0.8,
         alternates: {
@@ -183,7 +183,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/areas/${area.slug}/`,
-        lastModified: now,
+        lastModified: STATIC_LAST_MODIFIED,
         changeFrequency: 'monthly',
         priority: 0.7,
         alternates: {

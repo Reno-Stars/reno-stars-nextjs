@@ -89,7 +89,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-          onClick={handleCloseModal}
+          onMouseDown={(e) => { if (e.target === e.currentTarget) handleCloseModal(); }}
           role="dialog"
           aria-modal="true"
           aria-labelledby="success-modal-title"
@@ -101,7 +101,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
               boxShadow: neu(12),
               animation: 'modalFadeIn 0.3s ease-out',
             }}
-            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <button
               type="button"
@@ -156,7 +156,6 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
               required={f.required}
               disabled={isPending}
               aria-required={f.required || undefined}
-              aria-describedby={errorMessage ? 'form-error' : undefined}
             />
           </div>
         ))}
@@ -176,7 +175,6 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
           required
           disabled={isPending}
           aria-required="true"
-          aria-describedby={errorMessage ? 'form-error' : undefined}
         />
       </div>
       <button

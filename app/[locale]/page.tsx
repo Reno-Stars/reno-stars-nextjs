@@ -137,6 +137,7 @@ export default async function Page({ params }: PageProps) {
       phone: t('label.phone'),
       email: t('label.email'),
       serviceAreas: t('section.serviceAreas'),
+      mapTitle: t('footer.mapLocation'),
     },
   };
 

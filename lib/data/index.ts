@@ -64,6 +64,10 @@ export const video = {
 /** WorkSafe BC logo for trust badges (hero, stats, footer) */
 export const WORKSAFE_BC_LOGO = '/worksafe-bc-logo.jpg';
 
+/** Free Google Maps embed pinned to the Reno Stars business listing (no API key needed). */
+export const MAP_EMBED_URL =
+  'https://www.google.com/maps?q=Reno+Stars+Local+Renovation+Company,+21300+Gordon+Way+unit+188,+Richmond,+BC&output=embed';
+
 export const images = {
   hero: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg"),
   bathroom: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg"),

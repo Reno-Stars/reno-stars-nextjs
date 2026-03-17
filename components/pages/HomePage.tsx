@@ -72,6 +72,7 @@ interface HomePageProps {
       phone: string;
       email: string;
       serviceAreas: string;
+      mapTitle: string;
     };
   };
 }
