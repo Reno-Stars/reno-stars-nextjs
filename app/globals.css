@@ -51,6 +51,12 @@
   --tw-prose-hr: #DED6CC;                    /* SURFACE_ALT */
 }
 
+/* Marquee infinite-scroll (used by Marquee client component) */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 /* Modal animation */
 @keyframes modalFadeIn {
   from {

@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/config';
 import type { GoogleReview, GooglePlaceRating } from '@/lib/types';
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import GoogleAvatar from './GoogleAvatar';
+import Marquee from './Marquee';
 
 interface TestimonialsSectionProps {
   googleReviews: GooglePlaceRating;
@@ -98,42 +99,24 @@ export default function TestimonialsSection({ googleReviews, locale, translation
 
   return (
     <section id="testimonials" aria-labelledby="testimonials-title" className="py-14" style={{ backgroundColor: SURFACE }}>
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scroll-reviews {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .reviews-track {
-          animation: scroll-reviews ${duration}s linear infinite;
-        }
-        .reviews-scroll:hover .reviews-track,
-        .reviews-scroll:focus-within .reviews-track {
-          animation-play-state: paused;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .reviews-track { animation: none; }
-        }
-      `}} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <h2 id="testimonials-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
         <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
       </div>
-      <div className="reviews-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
-        <div className="reviews-track flex gap-5 w-max px-4 py-4">
-          {/* Semantic: each review rendered once, crawlable + accessible */}
-          {reviews.map((review, i) => (
-            <ReviewCard key={`0-${i}`} review={review} locale={locale} />
-          ))}
-          {/* Decorative: padding to fill viewport + loop duplicate, hidden from parsers & assistive tech */}
-          <div className="contents" aria-hidden="true" inert>
-            {Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
-              reviews.map((review, i) => (
-                <ReviewCard key={`${s + 1}-${i}`} review={review} locale={locale} />
-              ))
-            )}
-          </div>
-        </div>
-      </div>
+      <Marquee
+        trackClassName="flex gap-5 w-max px-4 py-4"
+        duration={duration}
+        label={t.title}
+        clones={Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
+          reviews.map((review, i) => (
+            <ReviewCard key={`${s + 1}-${i}`} review={review} locale={locale} />
+          ))
+        )}
+      >
+        {reviews.map((review, i) => (
+          <ReviewCard key={`0-${i}`} review={review} locale={locale} />
+        ))}
+      </Marquee>
     </section>
   );
 }

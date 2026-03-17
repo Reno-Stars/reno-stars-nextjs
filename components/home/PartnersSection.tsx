@@ -1,4 +1,5 @@
 import { SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import Marquee from './Marquee';
 
 interface LocalizedPartner {
   name: string;
@@ -45,24 +46,6 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       className="py-14"
       style={{ backgroundColor: SURFACE }}
     >
-      {/* Duration is computed from partners.length (trusted server data), safe to inject */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes scroll-partners {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .partners-track {
-          animation: scroll-partners ${duration}s linear infinite;
-        }
-        .partners-scroll:hover .partners-track,
-        .partners-scroll:focus-within .partners-track {
-          animation-play-state: paused;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .partners-track { animation: none; }
-        }
-      `}} />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <h2 id="partners-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>
           {t.title}
@@ -71,22 +54,20 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       </div>
 
       {visiblePartners.length > 0 && (
-        <div className="partners-scroll overflow-hidden" role="region" aria-roledescription="carousel" aria-label={t.title}>
-          <div className="partners-track flex items-center gap-8 w-max py-4">
-            {/* Semantic: each partner rendered once, crawlable + accessible */}
-            {visiblePartners.map((partner, i) => (
-              <PartnerLogo key={`0-${i}`} partner={partner} />
-            ))}
-            {/* Decorative: padding to fill viewport + loop duplicate, hidden from parsers & assistive tech */}
-            <div className="contents" aria-hidden="true" inert>
-              {Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
-                visiblePartners.map((partner, i) => (
-                  <PartnerLogo key={`${s + 1}-${i}`} partner={partner} />
-                ))
-              )}
-            </div>
-          </div>
-        </div>
+        <Marquee
+          trackClassName="flex items-center gap-8 w-max py-4"
+          duration={duration}
+          label={t.title}
+          clones={Array.from({ length: repeatCount * 2 - 1 }, (_, s) =>
+            visiblePartners.map((partner, i) => (
+              <PartnerLogo key={`${s + 1}-${i}`} partner={partner} />
+            ))
+          )}
+        >
+          {visiblePartners.map((partner, i) => (
+            <PartnerLogo key={`0-${i}`} partner={partner} />
+          ))}
+        </Marquee>
       )}
 
       {/* Hidden partners for SEO - screen reader only */}
