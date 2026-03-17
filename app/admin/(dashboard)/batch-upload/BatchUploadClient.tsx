@@ -250,9 +250,9 @@ export default function BatchUploadClient() {
       });
       startPolling(validJobId);
 
-      // Step 3: Chunked upload to S3 via server proxy (avoids CORS on S3/R2).
-      // Uses S3 multipart upload — each chunk is CHUNK_SIZE so the server never
-      // buffers the full file in memory, and we stay within timeout limits.
+      // Step 3: Chunked upload directly to S3 via presigned URLs.
+      // The server generates presigned URLs (tiny requests within Vercel limits),
+      // and the client PUTs chunk data directly to S3, bypassing the 4.5 MB limit.
       const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
       setS3Progress(0);
 
@@ -270,7 +270,7 @@ export default function BatchUploadClient() {
       }
       const { uploadId } = (await initUploadRes.json()) as { uploadId: string };
 
-      // 3b: Upload each chunk (with per-chunk retry)
+      // 3b: Upload each chunk via presigned URL (direct to S3, bypasses Vercel body limit)
       const parts: { partNumber: number; etag: string }[] = [];
       for (let i = 0; i < totalChunks; i++) {
         if (abort.signal.aborted) throw new Error(bt.errorUploadFailed);
@@ -278,21 +278,38 @@ export default function BatchUploadClient() {
         const start = i * CHUNK_SIZE;
         const end = Math.min(start + CHUNK_SIZE, file.size);
         const chunk = file.slice(start, end);
+        const chunkSize = end - start;
         const partNumber = i + 1;
 
         let etag: string | undefined;
         for (let attempt = 0; attempt < CHUNK_MAX_RETRIES; attempt++) {
           try {
-            const partRes = await fetch(
-              `/admin/batch-upload/api/${validJobId}/upload/?uploadId=${encodeURIComponent(uploadId)}&partNumber=${partNumber}`,
-              { method: 'PUT', body: chunk, signal: abort.signal }
+            // Step A: Get presigned URL from our API (tiny request, no file data)
+            const presignRes = await fetch(
+              `/admin/batch-upload/api/${validJobId}/upload/?uploadId=${encodeURIComponent(uploadId)}&partNumber=${partNumber}&contentLength=${chunkSize}`,
+              { method: 'PUT', signal: abort.signal }
             );
-            if (!partRes.ok) {
-              const data = await partRes.json();
-              throw new Error(data.error || `Part ${partNumber} failed`);
+            if (!presignRes.ok) {
+              const data = await presignRes.json();
+              throw new Error(data.error || `Part ${partNumber} presign failed`);
             }
-            const partData = (await partRes.json()) as { etag: string };
-            etag = partData.etag;
+            const { presignedUrl } = (await presignRes.json()) as { presignedUrl: string };
+
+            // Step B: PUT chunk directly to S3 via presigned URL
+            const s3Res = await fetch(presignedUrl, {
+              method: 'PUT',
+              body: chunk,
+              headers: { 'Content-Length': String(chunkSize) },
+              signal: abort.signal,
+            });
+            if (!s3Res.ok) {
+              const errText = await s3Res.text();
+              throw new Error(`S3 part ${partNumber} failed: ${s3Res.status} ${errText.slice(0, 200)}`);
+            }
+
+            // S3 returns ETag in response header
+            etag = s3Res.headers.get('etag') ?? undefined;
+            if (!etag) throw new Error(`No ETag returned for part ${partNumber}`);
             break;
           } catch (err) {
             if (abort.signal.aborted) throw err;

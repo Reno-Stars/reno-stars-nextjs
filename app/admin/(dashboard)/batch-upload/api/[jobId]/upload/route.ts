@@ -7,6 +7,7 @@ import {
   CompleteMultipartUploadCommand,
   AbortMultipartUploadCommand,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { db } from '@/lib/db';
 import { batchUploadJobs } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -76,10 +77,12 @@ export async function POST(
 }
 
 /**
- * PUT — Upload a single part.
- * Query params: ?uploadId=...&partNumber=...
- * Body: raw chunk data.
- * Returns { etag }.
+ * PUT — Get a presigned URL for uploading a single part directly to S3.
+ * Query params: ?uploadId=...&partNumber=...&contentLength=...
+ * Returns { presignedUrl }.
+ *
+ * The client then PUTs the chunk body directly to S3 via the presigned URL,
+ * bypassing Vercel's 4.5 MB body size limit.
  */
 export async function PUT(
   request: NextRequest,
@@ -94,9 +97,10 @@ export async function PUT(
   const { searchParams } = new URL(request.url);
   const uploadId = searchParams.get('uploadId');
   const partNumberStr = searchParams.get('partNumber');
+  const contentLengthStr = searchParams.get('contentLength');
 
-  if (!uploadId || !partNumberStr) {
-    return NextResponse.json({ error: 'Missing uploadId or partNumber.' }, { status: 400 });
+  if (!uploadId || !partNumberStr || !contentLengthStr) {
+    return NextResponse.json({ error: 'Missing uploadId, partNumber, or contentLength.' }, { status: 400 });
   }
 
   const partNumber = parseInt(partNumberStr, 10);
@@ -104,34 +108,34 @@ export async function PUT(
     return NextResponse.json({ error: 'Invalid partNumber.' }, { status: 400 });
   }
 
+  const contentLength = parseInt(contentLengthStr, 10);
+  if (isNaN(contentLength) || contentLength < 1) {
+    return NextResponse.json({ error: 'Invalid contentLength.' }, { status: 400 });
+  }
+
   try {
-    // Skip DB verification per-chunk — job was verified on POST (init) and
-    // will be verified again on PATCH (complete). Avoids ~100 DB queries for 1 GB.
     const client = getS3Client();
     if (!client) {
       return NextResponse.json({ error: 'S3 not configured.' }, { status: 500 });
     }
 
-    const body = await request.arrayBuffer();
-    if (body.byteLength === 0) {
-      return NextResponse.json({ error: 'Empty chunk.' }, { status: 400 });
-    }
-
-    const { ETag } = await client.send(
+    const presignedUrl = await getSignedUrl(
+      client,
       new UploadPartCommand({
         Bucket: S3_BUCKET,
         Key: batchZipKey(jobId),
         UploadId: uploadId,
         PartNumber: partNumber,
-        Body: new Uint8Array(body),
-      })
+        ContentLength: contentLength,
+      }),
+      { expiresIn: 600 } // 10 minutes
     );
 
-    return NextResponse.json({ etag: ETag });
+    return NextResponse.json({ presignedUrl });
   } catch (error) {
-    console.error(`Part ${partNumber} upload error:`, error);
+    console.error(`Part ${partNumber} presign error:`, error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Part upload failed.' },
+      { error: error instanceof Error ? error.message : 'Presign failed.' },
       { status: 500 }
     );
   }
