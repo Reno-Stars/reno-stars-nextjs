@@ -153,6 +153,62 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: st
   return map;
 });
 
+const WHOLE_HOUSE_CATEGORY = { en: 'Whole House', zh: '全屋' };
+
+/**
+ * Get the service type → category name mapping from the DB.
+ * Replaces the old hardcoded `serviceTypeToCategory`.
+ * Includes 'whole-house' for Sites displayed as projects.
+ */
+export async function getServiceTypeToCategory(): Promise<Record<string, { en: string; zh: string }>> {
+  const map = await getServiceTypeMap();
+  // Ensure whole-house is always present (for Sites displayed as projects)
+  if (!map['whole-house']) {
+    map['whole-house'] = WHOLE_HOUSE_CATEGORY;
+  }
+  return map;
+}
+
+/**
+ * Get the inverse mapping: category name → service slug.
+ */
+export async function getCategoryToServiceType(): Promise<Record<string, string>> {
+  const map = await getServiceTypeToCategory();
+  const inverse: Record<string, string> = {};
+  for (const [slug, { en, zh }] of Object.entries(map)) {
+    inverse[en] = slug;
+    inverse[zh] = slug;
+  }
+  return inverse;
+}
+
+/**
+ * Get localized category list for project filtering.
+ * Includes "All" and "Whole House" (for Sites), plus all service types from DB.
+ */
+export async function getCategoriesLocalized(): Promise<{ en: string; zh: string }[]> {
+  const serviceTypeToCategory = await getServiceTypeToCategory();
+  const otherCategories = Object.entries(serviceTypeToCategory)
+    .filter(([key]) => key !== 'whole-house')
+    .map(([, value]) => value);
+
+  return [
+    { en: 'All', zh: '全部' },
+    WHOLE_HOUSE_CATEGORY,
+    ...otherCategories,
+  ];
+}
+
+/**
+ * Get category slugs for routing (excludes "All").
+ */
+export async function getCategorySlugs(): Promise<string[]> {
+  const categories = await getCategoriesLocalized();
+  return categories
+    .filter((c) => c.en !== 'All')
+    .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
+}
+
 /**
  * Fetch about sections from DB, mapped to `AboutSections`.
  * The `{yearsExperience}` placeholder in ourJourney is replaced with the

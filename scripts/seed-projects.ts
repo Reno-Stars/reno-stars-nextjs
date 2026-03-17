@@ -845,7 +845,7 @@ function pairImages(images: CrawledImage[]): ImagePairData[] {
 // ============================================================================
 
 const CrawlerEnrichmentSchema = z.object({
-  serviceType: z.string().default('kitchen'),
+  serviceType: z.string().nullable().default(null),
   budgetRange: z.string(),
   durationEn: z.string(),
   durationZh: z.string(),
@@ -924,7 +924,7 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
       messages: [
         {
           role: 'system',
-          content: `You are a renovation project metadata generator. Given crawled project data, produce structured JSON with improved bilingual (EN/ZH) content and metadata. Service types: ${SERVICE_TYPES.join(', ')}. Output JSON only, no markdown.`,
+          content: `You are a renovation project metadata generator. Given crawled project data, produce structured JSON with improved bilingual (EN/ZH) content and metadata. Available service types: ${SERVICE_TYPES.join(', ')}. Pick the most accurate match or use null if none fit. Output JSON only, no markdown.`,
         },
         {
           role: 'user',
@@ -937,7 +937,7 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
             imageCount: crawled.images.length,
             inferredServiceType: crawled.inferredServiceType,
             wpCategories: crawled.wpCategories,
-            instruction: 'Generate: serviceType (from enum), budgetRange ($X,000-$Y,000), durationEn/Zh, spaceTypeEn/Zh, challengeEn/Zh, solutionEn/Zh, scopes (3-7 bilingual), badgeEn/Zh (2-3 words or empty), improved titleEn/Zh, descriptionEn/Zh, locationCity (BC city), SEO fields (metaTitleEn/Zh max 70 chars, metaDescriptionEn/Zh max 155 chars, focusKeywordEn/Zh max 50 chars, seoKeywordsEn/Zh comma-separated).',
+            instruction: 'Generate: serviceType (pick best match from available types, or null if none fit), budgetRange ($X,000-$Y,000), durationEn/Zh, spaceTypeEn/Zh, challengeEn/Zh, solutionEn/Zh, scopes (3-7 bilingual), badgeEn/Zh (2-3 words or empty), improved titleEn/Zh, descriptionEn/Zh, locationCity (BC city), SEO fields (metaTitleEn/Zh max 70 chars, metaDescriptionEn/Zh max 155 chars, focusKeywordEn/Zh max 50 chars, seoKeywordsEn/Zh comma-separated).',
           }),
         },
       ],
@@ -956,9 +956,13 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
       titleZh: s(parsed.titleZh),
       descriptionEn: s(parsed.descriptionEn),
       descriptionZh: s(parsed.descriptionZh),
-      serviceType: parsed.serviceType,
-      categoryEn: (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { en: parsed.serviceType }).en,
-      categoryZh: (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { zh: parsed.serviceType }).zh,
+      serviceType: parsed.serviceType ?? crawled.inferredServiceType,
+      categoryEn: parsed.serviceType
+        ? (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { en: parsed.serviceType }).en
+        : (SERVICE_TYPE_TO_CATEGORY[crawled.inferredServiceType] ?? { en: crawled.inferredServiceType }).en,
+      categoryZh: parsed.serviceType
+        ? (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { zh: parsed.serviceType }).zh
+        : (SERVICE_TYPE_TO_CATEGORY[crawled.inferredServiceType] ?? { zh: crawled.inferredServiceType }).zh,
       locationCity: parsed.locationCity,
       budgetRange: parsed.budgetRange,
       durationEn: s(parsed.durationEn),

@@ -25,7 +25,7 @@ interface ProjectCategoryPageProps {
 export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories: categoriesProp }: ProjectCategoryPageProps) {
   const t = useTranslations();
   const allProjects = useMemo(() => projects.map((p) => getLocalizedProject(p, locale)), [projects, locale]);
-  const categories = categoriesProp ?? [];
+  const categories = useMemo(() => categoriesProp ?? [], [categoriesProp]);
 
   // Find the category from slug
   const categoryData = categories.find(

@@ -5,8 +5,7 @@ import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
-import { getCategoriesLocalized } from '@/lib/data/projects';
+import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;

@@ -1,6 +1,6 @@
 import type { Project, ServiceType, Locale, LocalizedProject, LocalizedImagePair, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
-import { WHOLE_HOUSE_CATEGORY, getServiceTypeToCategory } from './services';
+
 
 export const projects: Project[] = [
   {
@@ -686,19 +686,8 @@ export function getCategories(locale: Locale): string[] {
   return ['All', ...Array.from(categories)];
 }
 
-export async function getCategoriesLocalized(): Promise<{ en: string; zh: string }[]> {
-  const serviceTypeToCategory = await getServiceTypeToCategory();
-  // Exclude 'whole-house' from serviceTypeToCategory since we add it explicitly first
-  const otherCategories = Object.entries(serviceTypeToCategory)
-    .filter(([key]) => key !== 'whole-house')
-    .map(([, value]) => value);
-
-  return [
-    { en: 'All', zh: '全部' },
-    WHOLE_HOUSE_CATEGORY, // Sites displayed as projects - first after "All"
-    ...otherCategories,
-  ];
-}
+// getCategoriesLocalized and getCategorySlugs moved to lib/db/queries.ts
+// to avoid pulling DB imports into client component bundles.
 
 /**
  * Convert a flat legacy images array into before/after image pairs.
@@ -727,13 +716,6 @@ export function imagesToPairs(images: { src: string; alt: string; is_before?: bo
   return pairs;
 }
 
-// Category slugs for routing (excludes 'All')
-export async function getCategorySlugs(): Promise<string[]> {
-  const categories = await getCategoriesLocalized();
-  return categories
-    .filter((c) => c.en !== 'All')
-    .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
-}
 
 // Get unique locations for filtering
 export function getProjectLocations(): string[] {

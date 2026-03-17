@@ -2,15 +2,14 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getCategoriesLocalized, getCategorySlugs, getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
+import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema } from '@/components/structured-data';
-import { getServiceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {

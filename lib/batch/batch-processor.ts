@@ -359,7 +359,7 @@ function fallbackProjectData(
   const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
   return {
     ...buildFallbackSeo(folderName, category.en, category.zh),
-    serviceType,
+    serviceType: serviceTypeMap[serviceType] ? serviceType : null,
     titleEn: `${folderName} ${category.en} Renovation`,
     titleZh: `${folderName}${category.zh}装修`,
     descriptionEn: `${category.en} renovation project.`,
@@ -991,9 +991,14 @@ async function saveProject(opts: {
     ? urlMap.get(parsedProject.heroImage) ?? null
     : null;
 
-  // Prefer AI-detected service type over folder-name heuristic
-  const serviceType = aiProject?.serviceType ?? parsedProject.serviceType;
-  const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
+  // Prefer AI-detected service type over folder-name heuristic.
+  // If AI explicitly returned null (no match), respect that.
+  const serviceType = aiProject
+    ? (aiProject.serviceType || null)
+    : parsedProject.serviceType;
+  const category = serviceType
+    ? (serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType })
+    : null;
 
   const [insertedProject] = await db
     .insert(projects)
@@ -1003,9 +1008,9 @@ async function saveProject(opts: {
       titleZh: projectData.titleZh,
       descriptionEn: projectData.descriptionEn,
       descriptionZh: projectData.descriptionZh,
-      serviceType,
-      categoryEn: category.en,
-      categoryZh: category.zh,
+      serviceType: serviceType || null,
+      categoryEn: category?.en ?? null,
+      categoryZh: category?.zh ?? null,
       locationCity: projectData.locationCity || null,
       budgetRange: projectData.budgetRange || null,
       durationEn: projectData.durationEn || null,

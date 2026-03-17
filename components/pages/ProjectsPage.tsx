@@ -213,7 +213,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     return [...featured, ...nonFeatured];
   }, [sitesAsDisplayProjects, projectsAsDisplay]);
 
-  const categories = categoriesProp ?? [];
+  const categories = useMemo(() => categoriesProp ?? [], [categoriesProp]);
   const locations = useMemo(() => {
     const locs = new Set([
       ...rawProjects.map((p) => p.location_city),

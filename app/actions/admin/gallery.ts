@@ -32,7 +32,7 @@ async function parseGalleryFormData(formData: FormData, defaultDisplayOrder = '0
   if (!isValidUrl(imageUrl)) return { error: 'Invalid image URL format.' };
 
   // Category is optional (nullable). If provided, validate against services DB slugs.
-  let category: string | null = categoryRaw || null;
+  const category: string | null = categoryRaw || null;
   if (category) {
     const services = await getServicesFromDb();
     const validSlugs = services.map((s) => s.slug);

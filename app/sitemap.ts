@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
-import { getServiceTypeToCategory, getCategorySlugs } from '@/lib/data';
 import { getBaseUrl } from '@/lib/utils';
-import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs } from '@/lib/db/queries';
 
 const BASE_URL = getBaseUrl();
 
