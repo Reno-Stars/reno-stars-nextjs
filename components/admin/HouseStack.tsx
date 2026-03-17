@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, ERROR, neu } from '@/lib/theme';
+import { slugToLabel } from '@/lib/utils';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { useAdminLocale } from './AdminLocaleProvider';
 import DragHandle from './DragHandle';
@@ -368,7 +369,7 @@ export default function HouseStack({
                           marginTop: '1px',
                         }}
                       >
-                        {project.serviceType ? project.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : '—'}
+                        {project.serviceType ? slugToLabel(project.serviceType) : '—'}
                         {!project.isPublished && (
                           <span
                             style={{

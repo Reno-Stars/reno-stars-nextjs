@@ -19,13 +19,13 @@ interface ProjectCategoryPageProps {
   categorySlug: string;
   company: Company;
   projects: Project[];
-  categories?: { en: string; zh: string }[];
+  categories: { en: string; zh: string }[];
 }
 
-export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories: categoriesProp }: ProjectCategoryPageProps) {
+export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories }: ProjectCategoryPageProps) {
   const t = useTranslations();
   const allProjects = useMemo(() => projects.map((p) => getLocalizedProject(p, locale)), [projects, locale]);
-  const categories = useMemo(() => categoriesProp ?? [], [categoriesProp]);
+
 
   // Find the category from slug
   const categoryData = categories.find(

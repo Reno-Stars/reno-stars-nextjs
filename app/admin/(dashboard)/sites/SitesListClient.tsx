@@ -12,6 +12,7 @@ import ToggleButton from '@/components/admin/ToggleButton';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
 import { CARD, GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
 import type { ProjectSummary } from '@/lib/db/queries';
+import { slugToLabel } from '@/lib/utils';
 
 // Flat project row for the standalone tab
 interface StandaloneProjectRow {
@@ -221,9 +222,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
       header: t.projects.serviceType,
       sortable: true,
       render: (row: StandaloneProjectRow) => {
-        const label = row.serviceType
-          ? row.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
-          : '—';
+        const label = row.serviceType ? slugToLabel(row.serviceType) : '—';
         return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>{label}</span>;
       },
     },
@@ -273,9 +272,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
           <tbody>
             {siteProjects.map((project) => {
               const title = locale === 'zh' ? project.titleZh : project.titleEn;
-              const serviceLabel = project.serviceType
-                ? project.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
-                : '—';
+              const serviceLabel = project.serviceType ? slugToLabel(project.serviceType) : '—';
               return (
                 <tr key={project.id} style={{ borderBottom: '1px solid rgba(27,54,93,0.06)' }}>
                   <td style={{ padding: '0.5rem 0.5rem 0.5rem 0', color: TEXT_MID }}>

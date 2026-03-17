@@ -876,7 +876,7 @@ const CrawlerEnrichmentSchema = z.object({
 function buildPlaceholderEnrichment(crawled: CrawledProject): EnrichedProject {
   const serviceType: string = crawled.inferredServiceType === 'whole-house'
     ? 'kitchen' : crawled.inferredServiceType;
-  const cat = SERVICE_TYPE_TO_CATEGORY[serviceType];
+  const cat = SERVICE_TYPE_TO_CATEGORY[serviceType] ?? { en: serviceType, zh: serviceType };
   const city = inferLocationCity(crawled.titleEn, crawled.descriptionEn);
   const imagePairs = pairImages(crawled.images);
 

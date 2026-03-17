@@ -166,7 +166,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
   const relatedProjects = useMemo(() => {
     return allProjects
-      .filter((p) => p.slug !== project.slug && p.service_type === project.service_type)
+      .filter((p) => p.slug !== project.slug && p.service_type != null && p.service_type === project.service_type)
       .map((p) => getLocalizedProject(p, locale))
       .slice(0, 3);
   }, [allProjects, project.slug, project.service_type, locale]);

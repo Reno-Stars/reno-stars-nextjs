@@ -62,10 +62,10 @@ interface ProjectsPageProps {
   company: Company;
   projects: Project[];
   sitesAsProjects?: SiteWithProjects[];
-  categories?: { en: string; zh: string }[];
+  categories: { en: string; zh: string }[];
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories: categoriesProp }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories }: ProjectsPageProps) {
   const t = useTranslations();
 
   // Convert sites to display format (as "Whole House" projects)
@@ -213,7 +213,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     return [...featured, ...nonFeatured];
   }, [sitesAsDisplayProjects, projectsAsDisplay]);
 
-  const categories = useMemo(() => categoriesProp ?? [], [categoriesProp]);
+
   const locations = useMemo(() => {
     const locs = new Set([
       ...rawProjects.map((p) => p.location_city),
