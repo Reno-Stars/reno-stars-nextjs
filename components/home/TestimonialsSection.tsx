@@ -103,16 +103,19 @@ export default function TestimonialsSection({ googleReviews, locale, translation
         <h2 id="testimonials-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
         <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
       </div>
-      <Marquee
-        trackClassName="flex gap-5 w-max px-4 py-4"
-        duration={duration}
-        label={t.title}
-        repeatCount={repeatCount}
+      <div
+        className="overflow-hidden"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={t.title}
       >
-        {reviews.map((review, i) => (
-          <ReviewCard key={i} review={review} locale={locale} />
-        ))}
-      </Marquee>
+        <div id="testimonials-track" className="flex gap-5 w-max px-4 py-4">
+          {reviews.map((review, i) => (
+            <ReviewCard key={i} review={review} locale={locale} />
+          ))}
+        </div>
+      </div>
+      <Marquee trackId="testimonials-track" repeatCount={repeatCount} duration={duration} />
     </section>
   );
 }

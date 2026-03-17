@@ -1,80 +1,81 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
+import { useEffect } from 'react';
 
 interface MarqueeProps {
-  /** Semantic items — rendered once, always in SSR output for crawlers */
-  children: ReactNode;
-  /** How many times to clone the children for seamless looping (via DOM cloneNode) */
+  /** ID of the track element containing semantic items */
+  trackId: string;
+  /** How many clone sets for seamless looping (via DOM cloneNode) */
   repeatCount: number;
-  /** Tailwind classes for the scrolling track (flex, gap, etc.) */
-  trackClassName: string;
   /** Total animation duration in seconds */
   duration: number;
-  /** Accessible label for the carousel region */
-  label: string;
 }
 
-export default function Marquee({ children, repeatCount, trackClassName, duration, label }: MarqueeProps) {
-  const [ready, setReady] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const semanticRef = useRef<HTMLDivElement>(null);
-  const clonesRef = useRef<HTMLDivElement>(null);
-
+/**
+ * Renderless client component that activates a marquee animation on an
+ * existing server-rendered track element. Clones the track's children via
+ * DOM cloneNode so no React elements cross the client boundary — the RSC
+ * payload contains only primitive props (string + numbers).
+ */
+export default function Marquee({ trackId, repeatCount, duration }: MarqueeProps) {
   useEffect(() => {
+    const track = document.getElementById(trackId);
+    if (!track) return;
+    const container = track.parentElement;
+    if (!container) return;
+
+    // Respect reduced-motion preference
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => { setReady(!mql.matches); };
-    update();
-    mql.addEventListener('change', update);
-    return () => { mql.removeEventListener('change', update); };
-  }, []);
+    if (mql.matches) return;
 
-  // Clone semantic children into the clones container via DOM cloneNode.
-  // This avoids serializing clone data in the RSC hydration payload.
-  useEffect(() => {
-    const semantic = semanticRef.current;
-    const container = clonesRef.current;
-    if (!ready || !semantic || !container) return;
+    // Clone semantic children into an aria-hidden container
+    const clonesWrapper = document.createElement('div');
+    clonesWrapper.className = 'contents';
+    clonesWrapper.setAttribute('aria-hidden', 'true');
+    clonesWrapper.inert = true;
 
-    // Total clone sets needed: repeatCount * 2 - 1
-    // (repeatCount sets fill the first half, repeatCount - 1 sets fill the loop duplicate)
+    const nodes = Array.from(track.children);
     const totalCloneSets = repeatCount * 2 - 1;
-    const nodes = Array.from(semantic.children);
     for (let s = 0; s < totalCloneSets; s++) {
       for (const node of nodes) {
-        container.appendChild(node.cloneNode(true));
+        clonesWrapper.appendChild(node.cloneNode(true));
       }
     }
+    track.appendChild(clonesWrapper);
 
-    return () => { container.replaceChildren(); };
-  }, [ready, repeatCount]);
+    // Start animation
+    track.style.animation = `marquee-scroll ${duration}s linear infinite`;
 
-  const pause = useCallback(() => { trackRef.current?.style.setProperty('animation-play-state', 'paused'); }, []);
-  const resume = useCallback(() => { trackRef.current?.style.setProperty('animation-play-state', 'running'); }, []);
+    // Hover/focus pause
+    const pause = () => { track.style.animationPlayState = 'paused'; };
+    const resume = () => { track.style.animationPlayState = 'running'; };
+    container.addEventListener('mouseenter', pause);
+    container.addEventListener('mouseleave', resume);
+    container.addEventListener('focusin', pause);
+    container.addEventListener('focusout', resume);
 
-  return (
-    <div
-      className="overflow-hidden"
-      role="region"
-      aria-roledescription="carousel"
-      aria-label={label}
-      onMouseEnter={pause}
-      onMouseLeave={resume}
-      onFocus={pause}
-      onBlur={resume}
-    >
-      <div
-        ref={trackRef}
-        className={trackClassName}
-        style={ready ? { animation: `marquee-scroll ${duration}s linear infinite` } : undefined}
-      >
-        <div ref={semanticRef} className="contents">
-          {children}
-        </div>
-        {ready && (
-          <div ref={clonesRef} className="contents" aria-hidden="true" inert />
-        )}
-      </div>
-    </div>
-  );
+    // Live reduced-motion listener
+    const handleMotionChange = () => {
+      if (mql.matches) {
+        track.style.animation = '';
+        clonesWrapper.remove();
+      } else {
+        track.appendChild(clonesWrapper);
+        track.style.animation = `marquee-scroll ${duration}s linear infinite`;
+      }
+    };
+    mql.addEventListener('change', handleMotionChange);
+
+    return () => {
+      track.style.animation = '';
+      clonesWrapper.remove();
+      container.removeEventListener('mouseenter', pause);
+      container.removeEventListener('mouseleave', resume);
+      container.removeEventListener('focusin', pause);
+      container.removeEventListener('focusout', resume);
+      mql.removeEventListener('change', handleMotionChange);
+    };
+  }, [trackId, repeatCount, duration]);
+
+  return null;
 }

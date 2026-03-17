@@ -54,16 +54,21 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
       </div>
 
       {visiblePartners.length > 0 && (
-        <Marquee
-          trackClassName="flex items-center gap-8 w-max py-4"
-          duration={duration}
-          label={t.title}
-          repeatCount={repeatCount}
-        >
-          {visiblePartners.map((partner, i) => (
-            <PartnerLogo key={i} partner={partner} />
-          ))}
-        </Marquee>
+        <>
+          <div
+            className="overflow-hidden"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={t.title}
+          >
+            <div id="partners-track" className="flex items-center gap-8 w-max py-4">
+              {visiblePartners.map((partner, i) => (
+                <PartnerLogo key={i} partner={partner} />
+              ))}
+            </div>
+          </div>
+          <Marquee trackId="partners-track" repeatCount={repeatCount} duration={duration} />
+        </>
       )}
 
       {/* Hidden partners for SEO - screen reader only */}
