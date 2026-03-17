@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getLocalizedService, serviceTypeToCategory } from '@/lib/data/services';
+import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
@@ -14,14 +14,13 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
-const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
-
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const services = await getServicesFromDb();
   const params: { locale: string; 'service-slug': string }[] = [];
 
   for (const locale of locales) {
-    for (const slug of SERVICE_SLUGS) {
-      params.push({ locale, 'service-slug': slug });
+    for (const service of services) {
+      params.push({ locale, 'service-slug': service.slug });
     }
   }
 

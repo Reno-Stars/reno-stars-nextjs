@@ -94,13 +94,13 @@ JSON columns use Drizzle `jsonb` with `$type<>()` for TypeScript inference (no m
 ### Enums
 
 ```sql
-service_type: kitchen | bathroom | whole-house | basement | cabinet | commercial
 contact_status: new | contacted | converted | rejected
 social_platform: facebook | instagram | youtube | linkedin | twitter | xiaohongshu | wechat | whatsapp
-gallery_category: kitchen | bathroom | whole-house | commercial
 social_post_status: draft | ready | published
 batch_job_status: pending | extracting | uploading | generating | saving | generating_blog | completed | failed | partial
 ```
+
+> **Removed enums:** `service_type` and `gallery_category` enums were replaced with `varchar` columns. Service types and gallery categories are now validated against `services.slug` values at the application layer, making them fully dynamic (adding a service in admin automatically makes it available as a project service type and gallery category).
 
 ### Bilingual Pattern
 
@@ -217,7 +217,7 @@ collectAllExternalProducts(projects: Project[]): ExternalProduct[]
 
 > **Note:** Homepage testimonials are no longer fetched from the database. They use `getGoogleReviews()` from `lib/google-reviews.ts` (Google Places API with 24h caching). The `testimonials` table is deprecated and will be dropped in a future migration.
 
-These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are capitalized in the query layer (`'whole-house'` → `'Whole House'`).
+These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are stored as service slugs and capitalized in the query layer via `slugToLabel()` (`'whole-house'` → `'Whole House'`). Null categories display as `'Uncategorized'`.
 
 ### Admin Queries
 

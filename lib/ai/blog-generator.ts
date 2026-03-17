@@ -12,7 +12,7 @@ export interface ProjectDataForBlog {
   titleZh: string;
   descriptionEn: string;
   descriptionZh: string;
-  serviceType: string;
+  serviceType: string | null;
   locationCity: string | null;
   budgetRange: string | null;
   durationEn: string | null;

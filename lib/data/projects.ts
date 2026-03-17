@@ -1,6 +1,6 @@
 import type { Project, ServiceType, Locale, LocalizedProject, LocalizedImagePair, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
-import { serviceTypeToCategory, WHOLE_HOUSE_CATEGORY } from './services';
+import { WHOLE_HOUSE_CATEGORY, getServiceTypeToCategory } from './services';
 
 export const projects: Project[] = [
   {
@@ -686,7 +686,8 @@ export function getCategories(locale: Locale): string[] {
   return ['All', ...Array.from(categories)];
 }
 
-export function getCategoriesLocalized(): { en: string; zh: string }[] {
+export async function getCategoriesLocalized(): Promise<{ en: string; zh: string }[]> {
+  const serviceTypeToCategory = await getServiceTypeToCategory();
   // Exclude 'whole-house' from serviceTypeToCategory since we add it explicitly first
   const otherCategories = Object.entries(serviceTypeToCategory)
     .filter(([key]) => key !== 'whole-house')
@@ -727,9 +728,12 @@ export function imagesToPairs(images: { src: string; alt: string; is_before?: bo
 }
 
 // Category slugs for routing (excludes 'All')
-export const CATEGORY_SLUGS = getCategoriesLocalized()
-  .filter((c) => c.en !== 'All')
-  .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
+export async function getCategorySlugs(): Promise<string[]> {
+  const categories = await getCategoriesLocalized();
+  return categories
+    .filter((c) => c.en !== 'All')
+    .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
+}
 
 // Get unique locations for filtering
 export function getProjectLocations(): string[] {

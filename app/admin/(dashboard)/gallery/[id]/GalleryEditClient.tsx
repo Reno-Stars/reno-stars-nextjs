@@ -8,6 +8,7 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import { deleteGalleryItem } from '@/app/actions/admin/gallery';
 import { CARD, ERROR, neu, TEXT_MID } from '@/lib/theme';
+import type { GalleryCategoryOption } from '@/lib/admin/gallery-categories';
 
 interface GalleryEditClientProps {
   id: string;
@@ -15,6 +16,7 @@ interface GalleryEditClientProps {
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
+  categoryOptions: GalleryCategoryOption[];
   initialData: {
     imageUrl: string;
     titleEn: string;
@@ -25,7 +27,7 @@ interface GalleryEditClientProps {
   };
 }
 
-export default function GalleryEditClient({ id, action, initialData }: GalleryEditClientProps) {
+export default function GalleryEditClient({ id, action, categoryOptions, initialData }: GalleryEditClientProps) {
   const router = useRouter();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -47,7 +49,7 @@ export default function GalleryEditClient({ id, action, initialData }: GalleryEd
 
   return (
     <>
-      <GalleryItemForm action={action} initialData={initialData} />
+      <GalleryItemForm action={action} categoryOptions={categoryOptions} initialData={initialData} />
 
       {/* Delete Button */}
       <div

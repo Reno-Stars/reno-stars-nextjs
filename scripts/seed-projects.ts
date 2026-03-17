@@ -30,12 +30,8 @@ import {
 } from '../lib/db/schema';
 import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from '../lib/ai/openai';
-import {
-  STANDALONE_SITE_SLUG,
-  SERVICE_TYPE_TO_CATEGORY,
-  SERVICE_TYPES,
-  type ServiceTypeKey,
-} from '../lib/admin/constants';
+import { STANDALONE_SITE_SLUG } from '../lib/admin/constants';
+import { getServiceTypeMap } from '../lib/db/queries';
 
 // ============================================================================
 // CLI FLAGS
@@ -55,10 +51,14 @@ const CONCURRENCY = 3;
 const FETCH_TIMEOUT = 30_000;
 const PAIR_BATCH = 5;
 
+/** Service type → category map, populated from DB at startup */
+let SERVICE_TYPE_TO_CATEGORY: Record<string, { en: string; zh: string }> = {};
+let SERVICE_TYPES: string[] = [];
+
 /** Category listing pages on the old WP site (Elementor) — may contain projects not in REST API.
  * NOTE: The site was restructured — old /vancouver-renovation-projects/* URLs return 404.
  * The current category pages live under /projects/*. We also keep the legacy main page as fallback. */
-const CATEGORY_PAGES: { url: string; inferredServiceType: ServiceTypeKey | 'whole-house' }[] = [
+const CATEGORY_PAGES: { url: string; inferredServiceType: string | 'whole-house' }[] = [
   // Current category pages
   { url: `${WP_BASE}/projects/kitchen/`, inferredServiceType: 'kitchen' },
   { url: `${WP_BASE}/projects/bathroom/`, inferredServiceType: 'bathroom' },
@@ -70,7 +70,7 @@ const CATEGORY_PAGES: { url: string; inferredServiceType: ServiceTypeKey | 'whol
 ];
 
 /** WP category term ID → service type (discovered by inspecting WP REST API responses) */
-const WP_CATEGORY_MAP: Record<number, ServiceTypeKey | 'whole-house'> = {
+const WP_CATEGORY_MAP: Record<number, string | 'whole-house'> = {
   20: 'kitchen',
   22: 'bathroom',
   23: 'basement',
@@ -133,7 +133,7 @@ interface DiscoveredProject {
   source: 'rest-api' | 'elementor';
   wpCategories: number[];
   wpData?: WPProjectResponse;
-  inferredServiceType?: ServiceTypeKey | 'whole-house';
+  inferredServiceType?: string | 'whole-house';
 }
 
 interface CrawledImage {
@@ -150,7 +150,7 @@ interface CrawledProject {
   descriptionZh: string;
   heroImageUrl: string;
   images: CrawledImage[];
-  inferredServiceType: ServiceTypeKey | 'whole-house';
+  inferredServiceType: string | 'whole-house';
   wpCategories: number[];
   isWholeHouse: boolean;
 }
@@ -172,7 +172,7 @@ interface EnrichedProject {
   titleZh: string;
   descriptionEn: string;
   descriptionZh: string;
-  serviceType: ServiceTypeKey;
+  serviceType: string;
   categoryEn: string;
   categoryZh: string;
   locationCity: string;
@@ -427,8 +427,8 @@ function classifyImageRole(url: string): 'before' | 'after' | 'unknown' {
 function inferServiceType(
   wpCategories: number[],
   title: string,
-  fallback?: ServiceTypeKey | 'whole-house',
-): ServiceTypeKey | 'whole-house' {
+  fallback?: string | 'whole-house',
+): string | 'whole-house' {
   // Try WP categories first
   for (const catId of wpCategories) {
     const mapped = WP_CATEGORY_MAP[catId];
@@ -599,7 +599,7 @@ async function discoverProjects(): Promise<Map<string, DiscoveredProject>> {
         const res = await crawlFetch(url);
         if (!res.ok) return [];
         const html = await res.text();
-        const found: { slug: string; href: string; inferredServiceType: ServiceTypeKey | 'whole-house' }[] = [];
+        const found: { slug: string; href: string; inferredServiceType: string | 'whole-house' }[] = [];
         const linkRe = /<a[^>]*href="([^"]*)"[^>]*>/gi;
         let lm;
         while ((lm = linkRe.exec(html)) !== null) {
@@ -845,7 +845,7 @@ function pairImages(images: CrawledImage[]): ImagePairData[] {
 // ============================================================================
 
 const CrawlerEnrichmentSchema = z.object({
-  serviceType: z.enum(SERVICE_TYPES),
+  serviceType: z.string().default('kitchen'),
   budgetRange: z.string(),
   durationEn: z.string(),
   durationZh: z.string(),
@@ -874,7 +874,7 @@ const CrawlerEnrichmentSchema = z.object({
 });
 
 function buildPlaceholderEnrichment(crawled: CrawledProject): EnrichedProject {
-  const serviceType: ServiceTypeKey = crawled.inferredServiceType === 'whole-house'
+  const serviceType: string = crawled.inferredServiceType === 'whole-house'
     ? 'kitchen' : crawled.inferredServiceType;
   const cat = SERVICE_TYPE_TO_CATEGORY[serviceType];
   const city = inferLocationCity(crawled.titleEn, crawled.descriptionEn);
@@ -957,8 +957,8 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
       descriptionEn: s(parsed.descriptionEn),
       descriptionZh: s(parsed.descriptionZh),
       serviceType: parsed.serviceType,
-      categoryEn: SERVICE_TYPE_TO_CATEGORY[parsed.serviceType].en,
-      categoryZh: SERVICE_TYPE_TO_CATEGORY[parsed.serviceType].zh,
+      categoryEn: (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { en: parsed.serviceType }).en,
+      categoryZh: (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { zh: parsed.serviceType }).zh,
       locationCity: parsed.locationCity,
       budgetRange: parsed.budgetRange,
       durationEn: s(parsed.durationEn),
@@ -1270,6 +1270,10 @@ async function main() {
   if (DRY_RUN) console.log('  Mode: DRY RUN (no DB changes)');
   if (SKIP_AI) console.log('  Mode: SKIP AI (placeholder metadata)');
   console.log('');
+
+  // Load service type map from DB
+  SERVICE_TYPE_TO_CATEGORY = await getServiceTypeMap();
+  SERVICE_TYPES = Object.keys(SERVICE_TYPE_TO_CATEGORY);
 
   // 1. Discover
   const discovered = await discoverProjects();

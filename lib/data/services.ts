@@ -1,4 +1,5 @@
-import type { Service, ServiceType, Locale, LocalizedService } from '../types';
+import type { Service, Locale, LocalizedService } from '../types';
+import { getServiceTypeMap } from '../db/queries';
 
 export function getLocalizedService(service: Service, locale: Locale): LocalizedService {
   return {
@@ -12,25 +13,32 @@ export function getLocalizedService(service: Service, locale: Locale): Localized
   };
 }
 
-// Map service types to category names.
-// 'whole-house' kept for DB compatibility but hidden from admin forms (Sites represent whole-house now).
-export const serviceTypeToCategory: Record<ServiceType, { en: string; zh: string }> = {
-  kitchen: { en: 'Kitchen', zh: '厨房' },
-  bathroom: { en: 'Bathroom', zh: '卫浴' },
-  'whole-house': { en: 'Whole House', zh: '全屋' },
-  basement: { en: 'Basement', zh: '地下室' },
-  cabinet: { en: 'Cabinet', zh: '橱柜' },
-  commercial: { en: 'Commercial', zh: '商业' },
-};
-
 // Whole House category (for Sites displayed as projects in listings)
-export const WHOLE_HOUSE_CATEGORY = serviceTypeToCategory['whole-house'];
+export const WHOLE_HOUSE_CATEGORY = { en: 'Whole House', zh: '全屋' };
 
-// Derived inverse mapping — kept in sync with serviceTypeToCategory automatically
-export const categoryToServiceType: Record<string, ServiceType> = Object.entries(
-  serviceTypeToCategory
-).reduce((acc, [serviceType, { en, zh }]) => {
-  acc[en] = serviceType as ServiceType;
-  acc[zh] = serviceType as ServiceType;
-  return acc;
-}, {} as Record<string, ServiceType>);
+/**
+ * Get the service type → category name mapping from the DB.
+ * Replaces the old hardcoded `serviceTypeToCategory`.
+ * Includes 'whole-house' for Sites displayed as projects.
+ */
+export async function getServiceTypeToCategory(): Promise<Record<string, { en: string; zh: string }>> {
+  const map = await getServiceTypeMap();
+  // Ensure whole-house is always present (for Sites displayed as projects)
+  if (!map['whole-house']) {
+    map['whole-house'] = WHOLE_HOUSE_CATEGORY;
+  }
+  return map;
+}
+
+/**
+ * Get the inverse mapping: category name → service slug.
+ */
+export async function getCategoryToServiceType(): Promise<Record<string, string>> {
+  const map = await getServiceTypeToCategory();
+  const inverse: Record<string, string> = {};
+  for (const [slug, { en, zh }] of Object.entries(map)) {
+    inverse[en] = slug;
+    inverse[zh] = slug;
+  }
+  return inverse;
+}

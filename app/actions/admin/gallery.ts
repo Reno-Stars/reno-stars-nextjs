@@ -9,31 +9,38 @@ import { galleryItems } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidUrl, validateTextLengths, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
-import { GALLERY_CATEGORIES, type GalleryCategory } from '@/lib/admin/gallery-categories';
+import { getServicesFromDb } from '@/lib/db/queries';
 
 interface GalleryItemData {
   imageUrl: string;
   titleEn: string | null;
   titleZh: string | null;
-  category: GalleryCategory;
+  category: string | null;
   displayOrder: number;
   isPublished: boolean;
 }
 
-function parseGalleryFormData(formData: FormData, defaultDisplayOrder = '0'): { data?: GalleryItemData; error?: string } {
+async function parseGalleryFormData(formData: FormData, defaultDisplayOrder = '0'): Promise<{ data?: GalleryItemData; error?: string }> {
   const imageUrl = getString(formData, 'imageUrl').trim();
   const titleEn = getString(formData, 'titleEn') || null;
   const titleZh = getString(formData, 'titleZh') || null;
-  const categoryRaw = getString(formData, 'category');
+  const categoryRaw = getString(formData, 'category').trim();
   const displayOrder = parseInt(getString(formData, 'displayOrder') || defaultDisplayOrder, 10);
   const isPublished = formData.get('isPublished') === 'on';
 
   if (!imageUrl) return { error: 'Image URL is required.' };
   if (!isValidUrl(imageUrl)) return { error: 'Invalid image URL format.' };
-  if (!GALLERY_CATEGORIES.includes(categoryRaw as GalleryCategory)) {
-    return { error: 'Invalid category.' };
+
+  // Category is optional (nullable). If provided, validate against services DB slugs.
+  let category: string | null = categoryRaw || null;
+  if (category) {
+    const services = await getServicesFromDb();
+    const validSlugs = services.map((s) => s.slug);
+    if (!validSlugs.includes(category)) {
+      return { error: 'Invalid category.' };
+    }
   }
-  const category = categoryRaw as GalleryCategory;
+
   const titleError = validateTextLengths({ titleEn, titleZh }, MAX_SHORT_TEXT_LENGTH);
   if (titleError) return { error: titleError };
   if (!Number.isFinite(displayOrder) || displayOrder < 0) {
@@ -49,7 +56,7 @@ export async function createGalleryItem(
 ): Promise<{ success?: boolean; error?: string }> {
   await requireAuth();
   try {
-    const result = parseGalleryFormData(formData, '0');
+    const result = await parseGalleryFormData(formData, '0');
     if (result.error || !result.data) return { error: result.error ?? 'Invalid data.' };
 
     await db.insert(galleryItems).values(result.data);
@@ -72,7 +79,7 @@ export async function updateGalleryItem(
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid gallery item ID.' };
   try {
-    const result = parseGalleryFormData(formData);
+    const result = await parseGalleryFormData(formData);
     if (result.error || !result.data) return { error: result.error ?? 'Invalid data.' };
 
     const updated = await db.update(galleryItems).set(result.data).where(eq(galleryItems.id, id)).returning({ id: galleryItems.id });

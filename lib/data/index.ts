@@ -48,11 +48,11 @@ export interface LocalizedAboutSections {
 
 // Re-export from other data files.
 // Named exports only to avoid ambiguity with db/schema exports (e.g. `services`).
-export { getLocalizedService, serviceTypeToCategory, categoryToServiceType } from './services';
+export { getLocalizedService, WHOLE_HOUSE_CATEGORY, getServiceTypeToCategory, getCategoryToServiceType } from './services';
 export {
   projects, getProjects, getProjectBySlug, getLocalizedProject, getAllProjectsLocalized,
   getProjectsByServiceType, getProjectsByLocation, getFeaturedProjects, getProjectSlugs,
-  getCategories, getCategoriesLocalized, CATEGORY_SLUGS, getProjectLocations,
+  getCategories, getCategoriesLocalized, getCategorySlugs, getProjectLocations,
   getProjectSpaceTypes, getProjectBudgetRanges,
 } from './projects';
 export { getLocalizedArea } from './areas';

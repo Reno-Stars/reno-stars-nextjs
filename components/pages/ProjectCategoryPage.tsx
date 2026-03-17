@@ -6,7 +6,7 @@ import { Link } from '@/navigation';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject } from '@/lib/types';
-import { getLocalizedProject, getCategoriesLocalized } from '@/lib/data/projects';
+import { getLocalizedProject } from '@/lib/data/projects';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -19,12 +19,13 @@ interface ProjectCategoryPageProps {
   categorySlug: string;
   company: Company;
   projects: Project[];
+  categories?: { en: string; zh: string }[];
 }
 
-export default function ProjectCategoryPage({ locale, categorySlug, company, projects }: ProjectCategoryPageProps) {
+export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories: categoriesProp }: ProjectCategoryPageProps) {
   const t = useTranslations();
   const allProjects = useMemo(() => projects.map((p) => getLocalizedProject(p, locale)), [projects, locale]);
-  const categories = useMemo(() => getCategoriesLocalized(), []);
+  const categories = categoriesProp ?? [];
 
   // Find the category from slug
   const categoryData = categories.find(

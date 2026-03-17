@@ -33,16 +33,6 @@ export const SEO_FOCUS_KEYWORD_MAX = 50;
 // ENUMS
 // ============================================================================
 
-/** Available service types for renovation projects */
-export const serviceTypeEnum = pgEnum('service_type', [
-  'kitchen',
-  'bathroom',
-  'whole-house',
-  'basement',
-  'cabinet',
-  'commercial',
-]);
-
 /** Status tracking for contact form submissions */
 export const contactStatusEnum = pgEnum('contact_status', [
   'new',
@@ -61,14 +51,6 @@ export const socialPlatformEnum = pgEnum('social_platform', [
   'xiaohongshu',
   'wechat',
   'whatsapp',
-]);
-
-/** Gallery categories matching service types */
-export const galleryCategoryEnum = pgEnum('gallery_category', [
-  'kitchen',
-  'bathroom',
-  'whole-house',
-  'commercial',
 ]);
 
 // ============================================================================
@@ -334,7 +316,7 @@ export const projects = pgTable(
     serviceId: uuid('service_id').references(() => services.id, {
       onDelete: 'set null',
     }),
-    serviceType: serviceTypeEnum('service_type').notNull(),
+    serviceType: varchar('service_type', { length: 50 }),
     categoryEn: varchar('category_en', { length: 100 }),
     categoryZh: varchar('category_zh', { length: 100 }),
 
@@ -620,7 +602,7 @@ export const galleryItems = pgTable(
     imageUrl: varchar('image_url', { length: 500 }).notNull(),
     titleEn: varchar('title_en', { length: 200 }),
     titleZh: varchar('title_zh', { length: 200 }),
-    category: galleryCategoryEnum('category').notNull(),
+    category: varchar('category', { length: 50 }),
     projectId: uuid('project_id').references(() => projects.id, {
       onDelete: 'set null',
     }),

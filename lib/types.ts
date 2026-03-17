@@ -56,16 +56,8 @@ export interface LocalizedImagePair {
   keywords?: string;
 }
 
-/** Available service types for renovation projects.
- * 'whole-house' is kept for DB compatibility but hidden from admin forms —
- * whole-house renovations are now represented by Sites, not individual projects. */
-export type ServiceType =
-  | 'kitchen'
-  | 'bathroom'
-  | 'whole-house'
-  | 'basement'
-  | 'cabinet'
-  | 'commercial';
+/** Available service types for renovation projects (DB-driven via `services` table). */
+export type ServiceType = string;
 
 /**
  * A project site entity that groups multiple renovation projects.
@@ -172,8 +164,8 @@ export interface Project {
   project_story?: Localized<string>;
   /** Brief summary for listings */
   excerpt?: Localized<string>;
-  /** Type of renovation service */
-  service_type: ServiceType;
+  /** Type of renovation service (null if not assigned) */
+  service_type?: ServiceType;
   /** Display category name */
   category: Localized<string>;
   /** City where project is located */
@@ -224,8 +216,8 @@ export interface Project {
  * A renovation service offering.
  */
 export interface Service {
-  /** Service type identifier */
-  slug: ServiceType;
+  /** Service slug identifier */
+  slug: string;
   /** Service name */
   title: Localized<string>;
   /** Short service description */

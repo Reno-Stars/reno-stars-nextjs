@@ -43,6 +43,15 @@ vi.mock('@/lib/admin/auth', () => ({
   }),
 }));
 
+vi.mock('@/lib/db/queries', () => ({
+  getServicesFromDb: vi.fn().mockResolvedValue([
+    { slug: 'kitchen', title: { en: 'Kitchen', zh: '厨房' } },
+    { slug: 'bathroom', title: { en: 'Bathroom', zh: '浴室' } },
+    { slug: 'whole-house', title: { en: 'Whole House', zh: '全屋' } },
+    { slug: 'commercial', title: { en: 'Commercial', zh: '商业' } },
+  ]),
+}));
+
 vi.mock('next/cache', () => ({
   revalidatePath: vi.fn(),
 }));
@@ -104,6 +113,17 @@ describe('Gallery Actions', () => {
 
       const result = await createGalleryItem({}, formData);
       expect(result.error).toBe('Display order must be a non-negative number.');
+    });
+
+    it('should accept empty category (nullable)', async () => {
+      const { redirect } = await import('next/navigation');
+      const formData = new FormData();
+      formData.set('imageUrl', 'https://example.com/image.jpg');
+      formData.set('category', '');
+      formData.set('displayOrder', '0');
+
+      await createGalleryItem({}, formData);
+      expect(redirect).toHaveBeenCalledWith('/admin/gallery');
     });
 
     it('should accept valid relative path URLs', async () => {

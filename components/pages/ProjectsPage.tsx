@@ -7,7 +7,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, SiteWithProjects, DisplayProject, LocalizedImagePair } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
-import { getCategoriesLocalized } from '@/lib/data';
+// categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
@@ -62,9 +62,10 @@ interface ProjectsPageProps {
   company: Company;
   projects: Project[];
   sitesAsProjects?: SiteWithProjects[];
+  categories?: { en: string; zh: string }[];
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [] }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories: categoriesProp }: ProjectsPageProps) {
   const t = useTranslations();
 
   // Convert sites to display format (as "Whole House" projects)
@@ -212,7 +213,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     return [...featured, ...nonFeatured];
   }, [sitesAsDisplayProjects, projectsAsDisplay]);
 
-  const categories = useMemo(() => getCategoriesLocalized(), []);
+  const categories = categoriesProp ?? [];
   const locations = useMemo(() => {
     const locs = new Set([
       ...rawProjects.map((p) => p.location_city),

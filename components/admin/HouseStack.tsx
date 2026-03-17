@@ -10,7 +10,7 @@ interface ProjectLayer {
   id: string;
   titleEn: string;
   titleZh: string;
-  serviceType: string;
+  serviceType: string | null;
   isPublished: boolean;
   displayOrderInSite: number;
 }
@@ -368,7 +368,7 @@ export default function HouseStack({
                           marginTop: '1px',
                         }}
                       >
-                        {(project.serviceType in t.projects.serviceTypes ? t.projects.serviceTypes[project.serviceType as keyof typeof t.projects.serviceTypes] : project.serviceType)}
+                        {project.serviceType ? project.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) : '—'}
                         {!project.isPublished && (
                           <span
                             style={{

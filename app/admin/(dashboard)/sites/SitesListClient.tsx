@@ -20,7 +20,7 @@ interface StandaloneProjectRow {
   siteId: string;
   titleEn: string;
   titleZh: string;
-  serviceType: string;
+  serviceType: string | null;
   isPublished: boolean;
   poNumber: string | null;
   createdAt: Date;
@@ -53,7 +53,7 @@ function matchesProject(p: ProjectSummary | StandaloneProjectRow, query: string)
   return p.titleEn.toLowerCase().includes(query) ||
     p.titleZh.toLowerCase().includes(query) ||
     p.slug.toLowerCase().includes(query) ||
-    p.serviceType.toLowerCase().includes(query) ||
+    (p.serviceType != null && p.serviceType.toLowerCase().includes(query)) ||
     (p.poNumber != null && p.poNumber.toLowerCase().includes(query));
 }
 
@@ -221,9 +221,9 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
       header: t.projects.serviceType,
       sortable: true,
       render: (row: StandaloneProjectRow) => {
-        const label = row.serviceType in t.projects.serviceTypes
-          ? t.projects.serviceTypes[row.serviceType as keyof typeof t.projects.serviceTypes]
-          : row.serviceType;
+        const label = row.serviceType
+          ? row.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+          : '—';
         return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>{label}</span>;
       },
     },
@@ -273,9 +273,9 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
           <tbody>
             {siteProjects.map((project) => {
               const title = locale === 'zh' ? project.titleZh : project.titleEn;
-              const serviceLabel = project.serviceType in t.projects.serviceTypes
-                ? t.projects.serviceTypes[project.serviceType as keyof typeof t.projects.serviceTypes]
-                : project.serviceType;
+              const serviceLabel = project.serviceType
+                ? project.serviceType.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+                : '—';
               return (
                 <tr key={project.id} style={{ borderBottom: '1px solid rgba(27,54,93,0.06)' }}>
                   <td style={{ padding: '0.5rem 0.5rem 0.5rem 0', color: TEXT_MID }}>

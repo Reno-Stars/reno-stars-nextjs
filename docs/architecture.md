@@ -70,7 +70,7 @@ lib/
   admin/                  # Admin utilities
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation + image pair parsing (getString, isValidUrl, parseImagePairs, etc.)
-    gallery-categories.ts # Shared gallery category constants
+    gallery-categories.ts # Async gallery category options fetched from services DB
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map

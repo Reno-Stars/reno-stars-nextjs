@@ -15,7 +15,7 @@ import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
 import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
-import { SPACE_TYPES, SERVICE_TYPES } from '@/lib/admin/constants';
+import { SPACE_TYPES } from '@/lib/admin/constants';
 import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -36,6 +36,12 @@ interface ExternalProductEntry {
   imageUrl: string;
   labelEn: string;
   labelZh: string;
+}
+
+interface ServiceOption {
+  slug: string;
+  titleEn: string;
+  titleZh: string;
 }
 
 interface SiteOption {
@@ -94,6 +100,8 @@ interface ProjectFormProps {
     scopes: Omit<ScopeEntry, 'id'>[];
     externalProducts?: Omit<ExternalProductEntry, 'id'>[];
   };
+  /** Available service types from the DB */
+  services?: ServiceOption[];
   /** Available sites to link this project to (required when not using fixedSiteId) */
   sites?: SiteOption[];
   /** Available cities for location selection */
@@ -108,6 +116,7 @@ interface ProjectFormProps {
 export default function ProjectForm({
   action,
   initialData,
+  services = [],
   sites = [],
   cities = [],
   submitLabel,
@@ -345,8 +354,10 @@ export default function ProjectForm({
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
               <select id="serviceType" name="serviceType" value={selectedServiceType} onChange={(e) => setSelectedServiceType(e.target.value)} style={fieldStyle}>
-                {SERVICE_TYPES.map((key) => (
-                  <option key={key} value={key}>{t.projects.serviceTypes[key]}</option>
+                {services.map((svc) => (
+                  <option key={svc.slug} value={svc.slug}>
+                    {locale === 'zh' ? svc.titleZh : svc.titleEn}
+                  </option>
                 ))}
               </select>
             </FormField>

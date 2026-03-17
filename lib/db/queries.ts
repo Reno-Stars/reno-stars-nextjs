@@ -25,8 +25,9 @@ import {
   socialMediaPosts as socialMediaPostsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
+import { slugToLabel } from '../utils';
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
-import type { Company, SocialLink, Service, AboutSections, ServiceType, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
+import type { Company, SocialLink, Service, AboutSections, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
 
 // ============================================================================
 // HELPERS
@@ -123,7 +124,7 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
   return rows.map((row: typeof servicesTable.$inferSelect) => {
     const tags = sortByDisplayOrder(tagsByService.get(row.id) ?? []);
     return {
-      slug: row.slug as ServiceType,
+      slug: row.slug,
       title: { en: row.titleEn, zh: row.titleZh },
       description: { en: row.descriptionEn, zh: row.descriptionZh },
       long_description:
@@ -137,6 +138,19 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
         : undefined,
     };
   });
+});
+
+/**
+ * Fetch a slug → { en, zh } title map from the services table.
+ * Used as the dynamic replacement for the old hardcoded serviceTypeToCategory.
+ */
+export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: string; zh: string }>> => {
+  const services = await getServicesFromDb();
+  const map: Record<string, { en: string; zh: string }> = {};
+  for (const s of services) {
+    map[s.slug] = { en: s.title.en, zh: s.title.zh };
+  }
+  return map;
 });
 
 /**
@@ -268,7 +282,7 @@ function mapDbProjectToProject(
       row.excerptEn && row.excerptZh
         ? { en: row.excerptEn, zh: row.excerptZh }
         : undefined,
-    service_type: row.serviceType as ServiceType,
+    service_type: row.serviceType ?? undefined,
     category: {
       en: row.categoryEn ?? '',
       zh: row.categoryZh ?? '',
@@ -848,7 +862,7 @@ export const getGalleryItemsFromDb = cache(async (): Promise<GalleryItem[]> => {
   return rows.map((row: typeof galleryItemsTable.$inferSelect) => ({
     image: getAssetUrl(row.imageUrl),
     title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
-    category: row.category.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+    category: row.category ? slugToLabel(row.category) : 'Uncategorized',
   }));
 });
 

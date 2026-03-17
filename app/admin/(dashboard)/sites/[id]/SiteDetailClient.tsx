@@ -57,7 +57,7 @@ interface ProjectWithDetails {
   titleZh: string;
   descriptionEn: string;
   descriptionZh: string;
-  serviceType: string;
+  serviceType: string | null;
   categoryEn: string | null;
   categoryZh: string | null;
   locationCity: string | null;
@@ -142,14 +142,21 @@ interface SiteOption {
   poNumber: string | null;
 }
 
+interface ServiceOption {
+  slug: string;
+  titleEn: string;
+  titleZh: string;
+}
+
 interface Props {
   site: SiteData;
   projects: ProjectWithDetails[];
   cities: City[];
   allSites: SiteOption[];
+  services: ServiceOption[];
 }
 
-export default function SiteDetailClient({ site, projects, cities, allSites }: Props) {
+export default function SiteDetailClient({ site, projects, cities, allSites, services }: Props) {
   const t = useAdminTranslations();
   const { locale } = useAdminLocale();
   const { toast } = useToast();
@@ -226,7 +233,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
       titleZh: project.titleZh,
       descriptionEn: project.descriptionEn,
       descriptionZh: project.descriptionZh,
-      serviceType: project.serviceType,
+      serviceType: project.serviceType ?? '',
       locationCity: project.locationCity ?? '',
       budgetMin: budget.min,
       budgetMax: budget.max,
@@ -476,6 +483,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
           <ProjectForm
             action={createProject}
             cities={cities}
+            services={services}
             hideSiteSelector
             fixedSiteId={site.id}
             submitLabel={t.projects.createProject}
@@ -488,6 +496,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites }: P
             action={updateProject.bind(null, selectedProject.id)}
             initialData={getProjectFormData(selectedProject)}
             cities={cities}
+            services={services}
             hideSiteSelector
             fixedSiteId={site.id}
             submitLabel={t.projects.updateProject}

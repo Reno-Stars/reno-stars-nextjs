@@ -103,6 +103,15 @@ export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+/**
+ * Converts a kebab-case slug to a title-case label.
+ * @example slugToLabel('whole-house') // 'Whole House'
+ * @example slugToLabel('kitchen') // 'Kitchen'
+ */
+export function slugToLabel(slug: string): string {
+  return slug.split('-').map(capitalize).join(' ');
+}
+
 // ============================================================================
 // NUMBER UTILITIES
 // ============================================================================

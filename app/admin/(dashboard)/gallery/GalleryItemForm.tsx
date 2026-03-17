@@ -10,7 +10,7 @@ import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
-import { GALLERY_CATEGORY_OPTIONS } from '@/lib/admin/gallery-categories';
+import type { GalleryCategoryOption } from '@/lib/admin/gallery-categories';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface GalleryItemFormProps {
@@ -18,6 +18,7 @@ interface GalleryItemFormProps {
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
+  categoryOptions: GalleryCategoryOption[];
   initialData?: {
     imageUrl: string;
     titleEn: string;
@@ -29,10 +30,10 @@ interface GalleryItemFormProps {
   isNew?: boolean;
 }
 
-export default function GalleryItemForm({ action, initialData, isNew = false }: GalleryItemFormProps) {
+export default function GalleryItemForm({ action, categoryOptions, initialData, isNew = false }: GalleryItemFormProps) {
   const t = useAdminTranslations();
   const [editing, setEditing] = useState(isNew);
-  const [selectedCategory, setSelectedCategory] = useState(initialData?.category ?? 'kitchen');
+  const [selectedCategory, setSelectedCategory] = useState(initialData?.category ?? categoryOptions[0]?.value ?? '');
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.gallery.saved);
 
@@ -49,7 +50,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
     imageUrl: '',
     titleEn: '',
     titleZh: '',
-    category: 'kitchen',
+    category: categoryOptions[0]?.value ?? '',
     displayOrder: 0,
     isPublished: true,
   };
@@ -91,7 +92,7 @@ export default function GalleryItemForm({ action, initialData, isNew = false }: 
                 required
                 style={fieldStyle}
               >
-                {GALLERY_CATEGORY_OPTIONS.map((cat) => (
+                {categoryOptions.map((cat) => (
                   <option key={cat.value} value={cat.value}>
                     {cat.label}
                   </option>

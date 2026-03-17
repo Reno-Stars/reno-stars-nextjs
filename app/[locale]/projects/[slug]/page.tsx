@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import { getCategoriesLocalized, CATEGORY_SLUGS, getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
+import { getCategoriesLocalized, getCategorySlugs, getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema } from '@/components/structured-data';
-import { serviceTypeToCategory } from '@/lib/data/services';
+import { getServiceTypeToCategory } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
@@ -18,9 +18,10 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const [projects, sites] = await Promise.all([
+  const [projects, sites, categorySlugs] = await Promise.all([
     getProjectsFromDb(),
     getSitesAsProjectsFromDb(),
+    getCategorySlugs(),
   ]);
   const projectParams = projects.flatMap((p) =>
     locales.map((locale) => ({ locale, slug: p.slug }))
@@ -28,18 +29,19 @@ export async function generateStaticParams() {
   const siteParams = sites.flatMap((s) =>
     locales.map((locale) => ({ locale, slug: s.slug }))
   );
-  const categoryParams = CATEGORY_SLUGS.flatMap((slug) =>
+  const categoryParams = categorySlugs.flatMap((slug) =>
     locales.map((locale) => ({ locale, slug }))
   );
   return [...categoryParams, ...projectParams, ...siteParams];
 }
 
-function isCategory(slug: string): boolean {
-  return CATEGORY_SLUGS.includes(slug);
+async function isCategory(slug: string): Promise<boolean> {
+  const categorySlugs = await getCategorySlugs();
+  return categorySlugs.includes(slug);
 }
 
-function findCategoryBySlug(slug: string) {
-  const categories = getCategoriesLocalized();
+async function findCategoryBySlug(slug: string) {
+  const categories = await getCategoriesLocalized();
   return categories.find((c) => c.en.toLowerCase().replace(/\s+/g, '-') === slug) ?? null;
 }
 
@@ -48,8 +50,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
 
   // Check if it's a category page
-  if (isCategory(slug)) {
-    const categoryData = findCategoryBySlug(slug);
+  if (await isCategory(slug)) {
+    const categoryData = await findCategoryBySlug(slug);
 
     if (!categoryData) {
       return { title: 'Category Not Found', robots: { index: false, follow: false } };
@@ -162,16 +164,18 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const [t, company, allProjects, googleReviews] = await Promise.all([
+  const [t, company, allProjects, googleReviews, serviceTypeMap, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
     getGoogleReviews(),
+    getServiceTypeToCategory(),
+    getCategoriesLocalized(),
   ]);
 
   // Check if it's a category page
-  if (isCategory(slug)) {
-    const categoryData = findCategoryBySlug(slug);
+  if (await isCategory(slug)) {
+    const categoryData = await findCategoryBySlug(slug);
     if (!categoryData) notFound();
     const categoryName = categoryData[locale as Locale];
 
@@ -191,7 +195,7 @@ export default async function Page({ params }: PageProps) {
           locale={locale as Locale}
           projects={categoryProjects}
         />
-        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} />
+        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} categories={categories} />
       </>
     );
   }
@@ -201,7 +205,7 @@ export default async function Page({ params }: PageProps) {
 
   if (project) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
-    const serviceTypeName = serviceTypeToCategory[project.service_type]?.[locale as Locale] || project.service_type;
+    const serviceTypeName = (project.service_type && serviceTypeMap[project.service_type]?.[locale as Locale]) || project.service_type || '';
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },

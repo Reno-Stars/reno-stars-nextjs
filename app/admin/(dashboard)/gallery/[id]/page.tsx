@@ -6,6 +6,7 @@ import { isValidUUID } from '@/lib/admin/auth';
 import GalleryEditClient from './GalleryEditClient';
 import { updateGalleryItem } from '@/app/actions/admin/gallery';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import { getGalleryCategoryOptions } from '@/lib/admin/gallery-categories';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -14,7 +15,12 @@ interface PageProps {
 export default async function EditGalleryItemPage({ params }: PageProps) {
   const { id } = await params;
   if (!isValidUUID(id)) notFound();
-  const rows = await db.select().from(galleryItems).where(eq(galleryItems.id, id)).limit(1);
+
+  const [rows, categoryOptions] = await Promise.all([
+    db.select().from(galleryItems).where(eq(galleryItems.id, id)).limit(1),
+    getGalleryCategoryOptions(),
+  ]);
+
   const item = rows[0];
   if (!item) notFound();
 
@@ -26,11 +32,12 @@ export default async function EditGalleryItemPage({ params }: PageProps) {
       <GalleryEditClient
         id={id}
         action={boundAction}
+        categoryOptions={categoryOptions}
         initialData={{
           imageUrl: item.imageUrl,
           titleEn: item.titleEn ?? '',
           titleZh: item.titleZh ?? '',
-          category: item.category,
+          category: item.category ?? '',
           displayOrder: item.displayOrder,
           isPublished: item.isPublished,
         }}

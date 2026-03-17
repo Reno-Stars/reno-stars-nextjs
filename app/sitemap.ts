@@ -1,21 +1,20 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
-import { serviceTypeToCategory } from '@/lib/data/services';
-import { CATEGORY_SLUGS } from '@/lib/data/projects';
+import { getServiceTypeToCategory, getCategorySlugs } from '@/lib/data';
 import { getBaseUrl } from '@/lib/utils';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
-import type { ServiceType } from '@/lib/types';
 
 const BASE_URL = getBaseUrl();
-const SERVICE_SLUGS = Object.keys(serviceTypeToCategory) as ServiceType[];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, serviceTypeMap, categorySlugs] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
+    getServiceTypeToCategory(),
+    getCategorySlugs(),
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
@@ -23,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projectSlugs = projectRows.map(r => r.slug);
   const siteSlugs = siteRows.map(r => r.slug);
   const blogPostSlugs = blogPostRows.map(r => r.slug);
+  const serviceSlugs = Object.keys(serviceTypeMap);
 
   const entries: MetadataRoute.Sitemap = [];
 
@@ -59,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Service pages
-  for (const slug of SERVICE_SLUGS) {
+  for (const slug of serviceSlugs) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/services/${slug}/`,
@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Service + Location combination pages
-  for (const slug of SERVICE_SLUGS) {
+  for (const slug of serviceSlugs) {
     for (const area of serviceAreas) {
       for (const locale of locales) {
         entries.push({
@@ -99,7 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Project category pages
-  for (const category of CATEGORY_SLUGS) {
+  for (const category of categorySlugs) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${category}/`,
@@ -118,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Individual project pages
-  const categorySet = new Set(CATEGORY_SLUGS);
+  const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
     for (const locale of locales) {
       entries.push({

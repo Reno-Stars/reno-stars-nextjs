@@ -183,14 +183,6 @@ const en = {
     linkedSite: 'Project Site',
     selectSite: 'Select a site...',
     displayOrderInSite: 'Display Order in Site',
-    serviceTypes: {
-      kitchen: 'Kitchen',
-      bathroom: 'Bathroom',
-      'whole-house': 'Whole House',
-      basement: 'Basement',
-      cabinet: 'Cabinet',
-      commercial: 'Commercial',
-    },
     tooltips: {
       slug: 'URL-friendly identifier for this project. Used in the page URL. Use lowercase letters, numbers, and hyphens only.',
       title: 'The display name for this project. Shown on cards and page headers.',

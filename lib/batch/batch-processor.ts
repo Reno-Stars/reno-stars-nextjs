@@ -25,8 +25,8 @@ import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optim
 import { generateBlogFromSite, generateBlogFromProject } from '@/app/actions/admin/generate-blog';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
 import { ensureStandaloneSite } from '@/lib/db/queries';
-import { SERVICE_TYPE_TO_CATEGORY, SERVICE_SCOPES, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
-import type { ServiceTypeKey } from '@/lib/admin/constants';
+import { SERVICE_SCOPES, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
+import { getServiceTypeMap } from '@/lib/db/queries';
 import { parseZip, parseZipStandalone } from './zip-parser';
 import {
   batchZipKey,
@@ -187,13 +187,14 @@ async function generateSiteMetadata(
 
 async function generateProjectMetadata(
   folderName: string,
-  serviceType: ServiceTypeKey,
+  serviceType: string,
   notes: string | null,
+  serviceTypeMap: Record<string, { en: string; zh: string }>,
   /** Skip folder name in prompt — root folders can be internal codes like "1171-van" */
   skipFolderName = false
 ): Promise<ProjectDescription | null> {
   try {
-    const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+    const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
     // When notes exist and skipFolderName is set, rely only on notes content.
     // Sub-folder names like "Kitchen" are still useful context so we keep them.
     const folderContext = skipFolderName ? '' : `: ${folderName}`;
@@ -202,7 +203,8 @@ async function generateProjectMetadata(
       : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
     // Pass all scopes for the detected service type so AI can select relevant ones
     const scopes = SERVICE_SCOPES[serviceType] ?? [];
-    return await optimizeProjectDescription(prompt, scopes);
+    const availableTypes = Object.keys(serviceTypeMap);
+    return await optimizeProjectDescription(prompt, scopes, availableTypes);
   } catch {
     return null;
   }
@@ -349,8 +351,12 @@ function fallbackSiteData(folderName: string) {
   };
 }
 
-function fallbackProjectData(folderName: string, serviceType: ServiceTypeKey) {
-  const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+function fallbackProjectData(
+  folderName: string,
+  serviceType: string,
+  serviceTypeMap: Record<string, { en: string; zh: string }>
+) {
+  const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
   return {
     ...buildFallbackSeo(folderName, category.en, category.zh),
     serviceType,
@@ -518,6 +524,9 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       ...job.options,
     };
 
+    // ---- Fetch service type map from DB ----
+    const serviceTypeMap = await getServiceTypeMap();
+
     // ---- Validate S3 upfront ----
     const client = getS3Client();
     if (!client) throw new Error('S3 not configured');
@@ -562,6 +571,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         createdBlogPostIds,
         s3Client: client,
         s3PublicUrl,
+        serviceTypeMap,
       });
 
       await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
@@ -643,7 +653,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
       for (const parsedProject of parsedSite.projects) {
         const projectKey = `${parsedSite.folderName}/${parsedProject.folderName}`;
         aiTasks.push(async () => {
-          projectMetadataMap.set(projectKey, await generateProjectMetadata(parsedProject.folderName, parsedProject.serviceType, parsedProject.notes));
+          projectMetadataMap.set(projectKey, await generateProjectMetadata(parsedProject.folderName, parsedProject.serviceType, parsedProject.notes, serviceTypeMap));
         });
       }
     }
@@ -773,6 +783,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
               createdProjectIds,
               errors,
               jobId,
+              serviceTypeMap,
             });
             projectsCreatedForSite++;
           } catch (error) {
@@ -845,8 +856,9 @@ async function processStandaloneMode(opts: {
   createdBlogPostIds: string[];
   s3Client: import('@aws-sdk/client-s3').S3Client;
   s3PublicUrl: string;
+  serviceTypeMap: Record<string, { en: string; zh: string }>;
 }): Promise<void> {
-  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds, s3Client, s3PublicUrl } = opts;
+  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds, s3Client, s3PublicUrl, serviceTypeMap } = opts;
 
   // Find or create the standalone site container
   const standaloneSiteId = await ensureStandaloneSite();
@@ -893,7 +905,7 @@ async function processStandaloneMode(opts: {
   for (let i = 0; i < parsedStandalone.projects.length; i += AI_METADATA_BATCH_SIZE) {
     const batch = parsedStandalone.projects.slice(i, i + AI_METADATA_BATCH_SIZE);
     const results = await Promise.allSettled(
-      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes, true))
+      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes, serviceTypeMap, true))
     );
     for (let j = 0; j < results.length; j++) {
       const r = results[j];
@@ -919,6 +931,7 @@ async function processStandaloneMode(opts: {
         createdProjectIds,
         errors,
         jobId,
+        serviceTypeMap,
       });
     } catch (error) {
       errors.push({
@@ -955,15 +968,17 @@ async function saveProject(opts: {
   createdProjectIds: string[];
   errors: BatchError[];
   jobId: string;
+  serviceTypeMap: Record<string, { en: string; zh: string }>;
 }): Promise<void> {
   const {
     parsedProject, aiProject, siteId, displayOrder,
     urlMap, existingProjectSlugs,
-    createdProjectIds, errors, jobId,
+    createdProjectIds, errors, jobId, serviceTypeMap,
   } = opts;
   const projectData = aiProject ?? fallbackProjectData(
     parsedProject.folderName,
-    parsedProject.serviceType
+    parsedProject.serviceType,
+    serviceTypeMap
   );
 
   const projectSlug = ensureUniqueSlug(
@@ -978,7 +993,7 @@ async function saveProject(opts: {
 
   // Prefer AI-detected service type over folder-name heuristic
   const serviceType = aiProject?.serviceType ?? parsedProject.serviceType;
-  const category = SERVICE_TYPE_TO_CATEGORY[serviceType];
+  const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
 
   const [insertedProject] = await db
     .insert(projects)

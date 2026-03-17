@@ -4,7 +4,7 @@ import { projectSites, siteImagePairs, siteExternalProducts, type DbSite, type D
 import { eq } from 'drizzle-orm';
 import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { getAllServiceAreasAdmin, getProjectsWithDetailsBySite } from '@/lib/db/queries';
+import { getAllServiceAreasAdmin, getProjectsWithDetailsBySite, getServicesFromDb } from '@/lib/db/queries';
 import { mapDbImagePairToForm } from '@/lib/admin/form-utils';
 
 interface PageProps {
@@ -14,13 +14,14 @@ interface PageProps {
 export default async function EditSitePage({ params }: PageProps) {
   const { id } = await params;
 
-  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows, siteEpRows, allSiteRows] = await Promise.all([
+  const [rows, serviceAreas, projectsWithDetails, siteImagePairRows, siteEpRows, allSiteRows, dbServices] = await Promise.all([
     db.select().from(projectSites).where(eq(projectSites.id, id)).limit(1) as Promise<DbSite[]>,
     getAllServiceAreasAdmin(),
     getProjectsWithDetailsBySite(id),
     db.select().from(siteImagePairs).where(eq(siteImagePairs.siteId, id)).orderBy(siteImagePairs.displayOrder) as Promise<DbSiteImagePair[]>,
     db.select().from(siteExternalProducts).where(eq(siteExternalProducts.siteId, id)).orderBy(siteExternalProducts.displayOrder) as Promise<DbSiteExternalProduct[]>,
     db.select({ id: projectSites.id, titleEn: projectSites.titleEn, titleZh: projectSites.titleZh, poNumber: projectSites.poNumber }).from(projectSites),
+    getServicesFromDb(),
   ]);
 
   const site = rows[0];
@@ -72,7 +73,13 @@ export default async function EditSitePage({ params }: PageProps) {
   return (
     <div>
       <AdminPageHeader titleKey="sites.editSite" viewHref={`/en/projects/${site.slug}`} />
-      <SiteDetailClient site={siteData} projects={projectsWithDetails} cities={cities} allSites={allSiteRows} />
+      <SiteDetailClient
+        site={siteData}
+        projects={projectsWithDetails}
+        cities={cities}
+        allSites={allSiteRows}
+        services={dbServices.map((s) => ({ slug: s.slug, titleEn: s.title.en, titleZh: s.title.zh }))}
+      />
     </div>
   );
 }

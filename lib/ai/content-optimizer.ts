@@ -28,7 +28,7 @@ const BilingualTextSchema = z.object({
 });
 
 const ProjectDescriptionSchema = z.object({
-  serviceType: z.enum(['kitchen', 'bathroom', 'basement', 'cabinet', 'commercial']).default('kitchen'),
+  serviceType: z.string().default('kitchen'),
   slug: z.string(),
   titleEn: z.string(),
   titleZh: z.string(),
@@ -184,7 +184,7 @@ CRITICAL REQUIREMENTS:
 4. SEO fields should be optimized for search engines
 
 Field guidelines:
-- serviceType: Detect the renovation type from the notes. Must be one of: "kitchen", "bathroom", "basement", "cabinet", "commercial". Infer from the scope of work described (e.g., 卫生间/浴室/shower/bath → "bathroom", 厨房/kitchen → "kitchen", 地下室/basement → "basement", 橱柜/cabinet → "cabinet", 办公室/商业/office/store → "commercial"). Default to "kitchen" only if truly unclear.
+- serviceType: Detect the renovation type from the notes. Use the service type slug that best matches (e.g., "kitchen", "bathroom", "basement", "cabinet", "commercial"). Infer from the scope of work described (e.g., 卫生间/浴室/shower/bath → "bathroom", 厨房/kitchen → "kitchen", 地下室/basement → "basement", 橱柜/cabinet → "cabinet", 办公室/商业/office/store → "commercial"). If AVAILABLE_SERVICE_TYPES are provided, choose from that list. Default to "kitchen" only if truly unclear.
 - slug: URL-friendly slug using only lowercase letters, numbers, and hyphens. No consecutive hyphens. Make it descriptive and specific — include key details like scope, style, or distinguishing features from the notes (e.g., "dual-bathroom-brushed-gold-renovation-burnaby", "open-concept-kitchen-quartz-countertop-surrey", "luxury-basement-suite-conversion-vancouver"). Avoid generic slugs like "kitchen-renovation" or "bathroom-renovation".
 - titleEn/titleZh: Descriptive title that reflects the specific scope from the notes (e.g., "Dual Bathroom Renovation with Brushed Gold Fixtures" / "双卫生间翻新 — 拉丝金水件"). Must match the detected serviceType. Avoid generic titles like "Kitchen Renovation".
 - locationCity: The city/area name if mentioned in the notes (e.g., "Vancouver", "West Vancouver", "North Vancouver"). Use English name. Leave empty string if no location is mentioned.
@@ -208,7 +208,7 @@ Return ONLY valid JSON, no markdown.
 Response format:
 {
   "detectedLanguage": "en" or "zh",
-  "serviceType": "kitchen" or "bathroom" or "basement" or "cabinet" or "commercial",
+  "serviceType": "kitchen",
   "slug": "url-friendly-slug",
   "titleEn": "English Project Title",
   "titleZh": "中文项目标题",
@@ -387,11 +387,15 @@ export async function optimizeShortText(rawText: string): Promise<BilingualText>
 export async function optimizeProjectDescription(
   rawNotes: string,
   availableScopes?: { en: string; zh: string }[],
+  availableServiceTypes?: string[],
 ): Promise<ProjectDescription> {
   const client = getOpenAIClient();
 
-  // Append available scopes to the user message so AI can select from them
+  // Append available scopes and service types to the user message
   let userMessage = rawNotes;
+  if (availableServiceTypes && availableServiceTypes.length > 0) {
+    userMessage += `\n\nAVAILABLE_SERVICE_TYPES: [${availableServiceTypes.join(', ')}]`;
+  }
   if (availableScopes && availableScopes.length > 0) {
     const scopeList = availableScopes.map((s) => s.en).join(', ');
     userMessage += `\n\nAVAILABLE_SCOPES: [${scopeList}]`;

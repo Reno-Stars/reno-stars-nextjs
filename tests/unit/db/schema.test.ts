@@ -15,25 +15,12 @@ import {
   trustBadges,
   socialLinks,
   faqs,
-  serviceTypeEnum,
   contactStatusEnum,
   socialPlatformEnum,
-  galleryCategoryEnum,
 } from '@/lib/db/schema';
 
 describe('Database Schema', () => {
   describe('Enums', () => {
-    it('should have correct service types', () => {
-      const enumValues = serviceTypeEnum.enumValues;
-      expect(enumValues).toContain('kitchen');
-      expect(enumValues).toContain('bathroom');
-      expect(enumValues).toContain('whole-house');
-      expect(enumValues).toContain('basement');
-      expect(enumValues).toContain('cabinet');
-      expect(enumValues).toContain('commercial');
-      expect(enumValues).toHaveLength(6);
-    });
-
     it('should have correct contact statuses', () => {
       const enumValues = contactStatusEnum.enumValues;
       expect(enumValues).toContain('new');
@@ -54,15 +41,6 @@ describe('Database Schema', () => {
       expect(enumValues).toContain('wechat');
       expect(enumValues).toContain('whatsapp');
       expect(enumValues).toHaveLength(8);
-    });
-
-    it('should have correct gallery categories', () => {
-      const enumValues = galleryCategoryEnum.enumValues;
-      expect(enumValues).toContain('kitchen');
-      expect(enumValues).toContain('bathroom');
-      expect(enumValues).toContain('whole-house');
-      expect(enumValues).toContain('commercial');
-      expect(enumValues).toHaveLength(4);
     });
   });
 

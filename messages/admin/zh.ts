@@ -185,14 +185,6 @@ const zh: AdminMessages = {
     linkedSite: '项目工地',
     selectSite: '选择工地...',
     displayOrderInSite: '工地中的显示顺序',
-    serviceTypes: {
-      kitchen: '厨房',
-      bathroom: '浴室',
-      'whole-house': '全屋',
-      basement: '地下室',
-      cabinet: '橱柜',
-      commercial: '商业',
-    },
     tooltips: {
       slug: '项目的URL友好标识符，用于页面网址。仅使用小写字母、数字和连字符。',
       title: '项目的显示名称，显示在卡片和页面标题上。',

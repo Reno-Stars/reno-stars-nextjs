@@ -1,5 +1,4 @@
 import { unzip } from 'fflate';
-import type { ServiceTypeKey } from '@/lib/admin/constants';
 import type {
   ExtractedImage,
   ImagePairEntry,
@@ -70,7 +69,7 @@ function isProductsFile(filename: string): boolean {
 // SERVICE TYPE DETECTION
 // ============================================================================
 
-const SERVICE_TYPE_ALIASES: Record<string, ServiceTypeKey> = {
+const SERVICE_TYPE_ALIASES: Record<string, string> = {
   kitchen: 'kitchen',
   bath: 'bathroom',
   bathroom: 'bathroom',
@@ -84,9 +83,9 @@ const SERVICE_TYPE_ALIASES: Record<string, ServiceTypeKey> = {
   store: 'commercial',
 };
 
-const DEFAULT_SERVICE_TYPE: ServiceTypeKey = 'kitchen';
+const DEFAULT_SERVICE_TYPE: string = 'kitchen';
 
-export function detectServiceType(folderName: string): ServiceTypeKey {
+export function detectServiceType(folderName: string): string {
   const lower = folderName.toLowerCase().trim();
   // Try exact match first
   if (SERVICE_TYPE_ALIASES[lower]) return SERVICE_TYPE_ALIASES[lower];

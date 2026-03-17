@@ -13,6 +13,7 @@ import ToggleButton from '@/components/admin/ToggleButton';
 import { toggleGalleryItemPublished, deleteGalleryItem, reorderGalleryItems } from '@/app/actions/admin/gallery';
 import { GOLD, TEXT_MID, CARD, NAVY, ERROR, neu, SURFACE_ALT, TEXT_MUTED } from '@/lib/theme';
 import { getAssetUrl } from '@/lib/storage';
+import { slugToLabel } from '@/lib/utils';
 import { useDragReorder } from '@/hooks/useDragReorder';
 
 interface GalleryRow {
@@ -20,7 +21,7 @@ interface GalleryRow {
   imageUrl: string;
   titleEn: string | null;
   titleZh: string | null;
-  category: string;
+  category: string | null;
   displayOrder: number;
   isPublished: boolean;
 }
@@ -228,7 +229,9 @@ export default function GalleryListClient({ items }: Props) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex items-end pointer-events-none">
                     <div className="p-3 text-white">
                       {title && <h3 className="text-sm font-bold">{title}</h3>}
-                      <p className="text-xs text-white/80">{item.category}</p>
+                      <p className="text-xs text-white/80">
+                        {item.category ? slugToLabel(item.category) : ''}
+                      </p>
                     </div>
                   </div>
                   {/* Order badge */}

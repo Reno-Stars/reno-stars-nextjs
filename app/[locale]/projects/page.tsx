@@ -6,6 +6,7 @@ import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb } from '@/lib/db/queries';
+import { getCategoriesLocalized } from '@/lib/data/projects';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -48,11 +49,12 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, company, projects, sitesAsProjects] = await Promise.all([
+  const [t, company, projects, sitesAsProjects, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
     getSitesAsProjectsFromDb(),
+    getCategoriesLocalized(),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -62,7 +64,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} />
+      <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} />
     </>
   );
 }

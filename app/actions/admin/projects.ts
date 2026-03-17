@@ -18,7 +18,7 @@ import { eq, and, inArray, sql } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
-import { SERVICE_TYPES, SERVICE_TYPE_TO_CATEGORY, SPACE_TYPE_TO_ZH, ServiceTypeKey } from '@/lib/admin/constants';
+import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
@@ -69,10 +69,7 @@ function getProjectData(formData: FormData) {
   const serviceType = getString(formData, 'serviceType');
   const siteId = getString(formData, 'siteId').trim();
   const displayOrderInSiteStr = getString(formData, 'displayOrderInSite').trim();
-  // Auto-derive category from service type
-  const category = (serviceType in SERVICE_TYPE_TO_CATEGORY
-    ? SERVICE_TYPE_TO_CATEGORY[serviceType as ServiceTypeKey]
-    : { en: serviceType, zh: serviceType });
+  // Category will be derived from DB lookup during insert/update
   // Budget min/max to range string
   const budgetMin = getString(formData, 'budgetMin').trim();
   const budgetMax = getString(formData, 'budgetMax').trim();
@@ -85,9 +82,9 @@ function getProjectData(formData: FormData) {
     titleZh: getString(formData, 'titleZh').trim(),
     descriptionEn: getString(formData, 'descriptionEn').trim(),
     descriptionZh: getString(formData, 'descriptionZh').trim(),
-    serviceType: serviceType as typeof projects.$inferInsert['serviceType'],
-    categoryEn: category.en,
-    categoryZh: category.zh,
+    serviceType,
+    categoryEn: '', // Will be derived from service DB lookup
+    categoryZh: '', // Will be derived from service DB lookup
     locationCity: getString(formData, 'locationCity') || null,
     budgetRange: formatBudgetRange(budgetMin, budgetMax),
     durationEn: getString(formData, 'durationEn') || null,
@@ -135,9 +132,6 @@ export async function createProject(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
-    if (!(SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
-      return { error: 'Invalid service type.' };
-    }
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
       return { error: 'Hero image URL is not a valid URL.' };
     }
@@ -173,14 +167,20 @@ export async function createProject(
       return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
     }
 
-    // Look up serviceId
-    const svcRows = await db
-      .select({ id: servicesTable.id })
-      .from(servicesTable)
-      .where(eq(servicesTable.slug, data.serviceType as string))
-      .limit(1);
-    if (!svcRows[0]) {
-      return { error: `Service type "${data.serviceType}" not found in database.` };
+    // Look up serviceId and derive category from DB (serviceType may be empty)
+    let serviceId: string | null = null;
+    if (data.serviceType) {
+      const svcRows = await db
+        .select({ id: servicesTable.id, titleEn: servicesTable.titleEn, titleZh: servicesTable.titleZh })
+        .from(servicesTable)
+        .where(eq(servicesTable.slug, data.serviceType))
+        .limit(1);
+      if (!svcRows[0]) {
+        return { error: `Service type "${data.serviceType}" not found in database.` };
+      }
+      serviceId = svcRows[0].id;
+      data.categoryEn = svcRows[0].titleEn;
+      data.categoryZh = svcRows[0].titleZh;
     }
 
     // Site is required - validate it exists
@@ -211,7 +211,8 @@ export async function createProject(
       .insert(projects)
       .values({
         ...data,
-        serviceId: svcRows[0].id,
+        serviceType: data.serviceType || null,
+        serviceId,
         publishedAt: data.isPublished ? new Date() : null,
       })
       .returning({ id: projects.id });
@@ -262,9 +263,6 @@ export async function updateProject(
     if (!isValidSlug(data.slug)) {
       return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
     }
-    if (!(SERVICE_TYPES as readonly string[]).includes(data.serviceType as string)) {
-      return { error: 'Invalid service type.' };
-    }
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
       return { error: 'Hero image URL is not a valid URL.' };
     }
@@ -300,13 +298,20 @@ export async function updateProject(
       return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
     }
 
-    const svcRows = await db
-      .select({ id: servicesTable.id })
-      .from(servicesTable)
-      .where(eq(servicesTable.slug, data.serviceType as string))
-      .limit(1);
-    if (!svcRows[0]) {
-      return { error: `Service type "${data.serviceType}" not found in database.` };
+    // Look up serviceId and derive category from DB (serviceType may be empty)
+    let updateServiceId: string | null = null;
+    if (data.serviceType) {
+      const svcRows = await db
+        .select({ id: servicesTable.id, titleEn: servicesTable.titleEn, titleZh: servicesTable.titleZh })
+        .from(servicesTable)
+        .where(eq(servicesTable.slug, data.serviceType as string))
+        .limit(1);
+      if (!svcRows[0]) {
+        return { error: `Service type "${data.serviceType}" not found in database.` };
+      }
+      updateServiceId = svcRows[0].id;
+      data.categoryEn = svcRows[0].titleEn;
+      data.categoryZh = svcRows[0].titleZh;
     }
 
     // Site is required - validate it exists
@@ -342,7 +347,7 @@ export async function updateProject(
     // Update project
     await db
       .update(projects)
-      .set({ ...data, serviceId: svcRows[0].id })
+      .set({ ...data, serviceType: data.serviceType || null, serviceId: updateServiceId })
       .where(eq(projects.id, id));
 
     // Insert new related data first (old data still exists as fallback if insert fails)

@@ -1,5 +1,3 @@
-import type { ServiceTypeKey } from '@/lib/admin/constants';
-
 // Re-export schema types used by batch processing
 export type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
 
@@ -44,8 +42,8 @@ export interface ImagePairEntry {
 export interface ParsedProject {
   /** Folder name (e.g., "Kitchen") */
   folderName: string;
-  /** Auto-detected service type */
-  serviceType: ServiceTypeKey;
+  /** Auto-detected service type (slug) */
+  serviceType: string;
   /** Hero image if present at project level */
   heroImage: ExtractedImage | null;
   /** Paired before/after images sorted by index */

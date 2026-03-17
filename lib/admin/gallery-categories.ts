@@ -1,18 +1,15 @@
-/** Valid gallery categories matching the database enum */
-export const GALLERY_CATEGORIES = ['kitchen', 'bathroom', 'whole-house', 'commercial'] as const;
+import { getServicesFromDb } from '@/lib/db/queries';
 
-export type GalleryCategory = (typeof GALLERY_CATEGORIES)[number];
-
-/** Converts a category slug to a display label (e.g., 'whole-house' -> 'Whole House') */
-function formatCategoryLabel(category: string): string {
-  return category
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+export interface GalleryCategoryOption {
+  value: string;
+  label: string;
 }
 
-/** Category options for form dropdowns - derived from GALLERY_CATEGORIES */
-export const GALLERY_CATEGORY_OPTIONS = GALLERY_CATEGORIES.map((category) => ({
-  value: category,
-  label: formatCategoryLabel(category),
-}));
+/** Fetch gallery category options from the services table. */
+export async function getGalleryCategoryOptions(): Promise<GalleryCategoryOption[]> {
+  const services = await getServicesFromDb();
+  return services.map((s) => ({
+    value: s.slug,
+    label: s.title.en,
+  }));
+}
