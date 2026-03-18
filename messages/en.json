@@ -21,7 +21,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "Switch to Chinese",
-    "blogAndNews": "Blog & News"
+    "blogAndNews": "Blog & News",
+    "toggleAreas": "Toggle areas menu"
   },
   "cta": {
     "getQuote": "Get Quote",

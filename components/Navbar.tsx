@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Link, useRouter, usePathname } from '@/navigation';
+import { Link, usePathname } from '@/navigation';
 import type { Company, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { neu, SURFACE, SH_DARK, TEXT } from '@/lib/theme';
@@ -19,7 +19,6 @@ const LINK_CLASS = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer tr
 export default function Navbar({ company, areas }: NavbarProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
-  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAreasOpen, setIsAreasOpen] = useState(false);
@@ -32,11 +31,6 @@ export default function Navbar({ company, areas }: NavbarProps) {
     setIsAreasOpen(false);
     toggleRef.current?.focus();
   }, []);
-
-  const switchLocale = useCallback(() => {
-    const newLocale = locale === 'en' ? 'zh' : 'en';
-    router.replace(pathname, { locale: newLocale });
-  }, [locale, router, pathname]);
 
   // Focus trap for mobile menu
   useEffect(() => {
@@ -108,21 +102,28 @@ export default function Navbar({ company, areas }: NavbarProps) {
             ))}
 
             {/* Areas dropdown */}
-            <div ref={areasRef} className="relative">
+            <div ref={areasRef} className="relative flex items-center">
+              <Link
+                href={'/areas' as '/'}
+                className="px-3 py-2 pr-1 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5"
+                style={{ color: TEXT }}
+              >
+                {t('nav.areas')}
+              </Link>
               <button
                 onClick={() => setIsAreasOpen((prev) => !prev)}
-                className={`${LINK_CLASS} flex items-center gap-1`}
+                className="p-2 rounded cursor-pointer transition-colors duration-200 hover:bg-black/5"
                 style={{ color: TEXT }}
                 aria-expanded={isAreasOpen}
                 aria-haspopup="true"
+                aria-label={t('nav.toggleAreas')}
               >
-                {t('nav.areas')}
                 <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
               </button>
               {isAreasOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 mt-1 w-56 max-h-[70vh] overflow-y-auto rounded-xl py-2 shadow-lg border"
+                  className="absolute right-0 top-full mt-1 w-56 max-h-[70vh] overflow-y-auto rounded-xl py-2 shadow-lg border"
                   style={{ backgroundColor: SURFACE, borderColor: `${TEXT}15` }}
                 >
                   {areas.map((area) => (
@@ -142,14 +143,15 @@ export default function Navbar({ company, areas }: NavbarProps) {
             </div>
 
             <div className="w-px h-5 mx-2" style={{ backgroundColor: `${TEXT}20` }} />
-            <button
-              onClick={switchLocale}
+            <Link
+              href={pathname || '/'}
+              locale={locale === 'en' ? 'zh' : 'en'}
               className="px-3 py-2 text-sm font-semibold rounded-lg cursor-pointer transition-all duration-200"
               style={{ boxShadow: neu(3), color: TEXT }}
               aria-label={t('nav.switchLanguage')}
             >
               {locale === 'en' ? '中文' : 'EN'}
-            </button>
+            </Link>
           </div>
 
           {/* Mobile toggle */}
@@ -179,16 +181,26 @@ export default function Navbar({ company, areas }: NavbarProps) {
             ))}
 
             {/* Areas expandable */}
-            <button
-              onClick={() => setIsAreasOpen((prev) => !prev)}
-              className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center justify-between"
-              style={{ color: TEXT }}
-              aria-expanded={isAreasOpen}
-              aria-controls="mobile-areas"
-            >
-              {t('nav.areas')}
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
-            </button>
+            <div className="flex items-center justify-between py-2.5 px-3 rounded-lg">
+              <Link
+                href={'/areas' as '/'}
+                onClick={closeMenu}
+                className="text-base font-medium cursor-pointer"
+                style={{ color: TEXT }}
+              >
+                {t('nav.areas')}
+              </Link>
+              <button
+                onClick={() => setIsAreasOpen((prev) => !prev)}
+                className="p-2 -mr-2 rounded cursor-pointer transition-colors duration-200 hover:bg-black/5"
+                style={{ color: TEXT }}
+                aria-expanded={isAreasOpen}
+                aria-controls="mobile-areas"
+                aria-label={t('nav.toggleAreas')}
+              >
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
             {isAreasOpen && (
               <div id="mobile-areas" className="pl-4 space-y-0.5">
                 {areas.map((area) => (
@@ -205,10 +217,10 @@ export default function Navbar({ company, areas }: NavbarProps) {
               </div>
             )}
 
-            <button onClick={() => { switchLocale(); closeMenu(); }}
+            <Link href={pathname || '/'} locale={locale === 'en' ? 'zh' : 'en'} onClick={closeMenu}
               className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center gap-2" style={{ color: TEXT }}>
               <Globe className="w-4 h-4" /> {locale === 'en' ? '中文' : 'English'}
-            </button>
+            </Link>
           </div>
         )}
       </div>

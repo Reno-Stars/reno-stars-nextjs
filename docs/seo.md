@@ -70,7 +70,8 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 ## Semantic HTML
 
 - Blog post cards wrapped in `<article>` elements
-- Navbar dropdown uses `role="menu"` / `role="menuitem"`
+- Navbar "Areas" uses a crawlable `<Link href="/areas">` for the label + a `<button>` chevron for the dropdown toggle; dropdown items use `role="menu"` / `role="menuitem"`
+- Navbar language switcher uses `<Link locale={otherLocale}>` (crawlable anchor) instead of a JS-only button
 - Decorative elements (video, star icons) have `aria-hidden="true"`
 - Carousel duplicate passes (testimonials, partners) use `aria-hidden="true"` + `inert` to hide from crawlers and screen readers while preserving seamless loop animation
 - Breadcrumb chevron separators are `aria-hidden` icons inside `<li>` elements (not separate `<li>` items) so crawlers see exactly N list items for N breadcrumbs

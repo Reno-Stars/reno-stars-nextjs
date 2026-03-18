@@ -21,7 +21,8 @@
     "openMenu": "打开菜单",
     "closeMenu": "关闭菜单",
     "switchLanguage": "Switch to English",
-    "blogAndNews": "博客与资讯"
+    "blogAndNews": "博客与资讯",
+    "toggleAreas": "展开区域菜单"
   },
   "cta": {
     "getQuote": "获取报价",
