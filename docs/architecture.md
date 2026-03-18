@@ -333,6 +333,8 @@ export const AI_CONFIG = {
   maxTokensBlogGeneration: 16384,     // Blog generation (bilingual 800-1200 words x2 + SEO in JSON)
   maxTokensShort: 1024,               // Short text translations
   maxTokensProjectDescription: 2048,  // Project descriptions + SEO (16 fields)
+  maxTokensAltText: 256,              // Alt text generation
+  maxTokensReview: 512,               // AI output review (lightweight)
   maxTokensSocialPost: 4096,          // Social post generation (3 platforms x bilingual)
   fetchTimeoutMs: 60000,
 };
@@ -348,11 +350,31 @@ A modular EN→ZH glossary injected into all 6 AI prompts to ensure domain-speci
 |----------|---------|---------|
 | `optimizeContent(rawContent)` | Blog content optimization | `OptimizedContent` (contentEn/Zh, excerptEn/Zh, SEO fields) |
 | `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
-| `optimizeProjectDescription(rawNotes)` | Project description + SEO generation | `ProjectDescription` (serviceType, slug, titleEn/Zh, descriptionEn/Zh, challengeEn/Zh, solutionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, SEO fields, locationCity) |
+| `optimizeProjectDescription(rawNotes, scopes?, types?)` | Project description + SEO generation with hybrid validation | `ProjectDescription & { corrections?: string[] }` |
+| `validateProjectDescription(result, scopes?, types?)` | Programmatic fix of invalid scopes, serviceType, slug-title divergence | `{ corrected: ProjectDescription; corrections: string[] }` |
+| `reviewProjectDescription(prompt, output)` | Lightweight AI review for semantic accuracy (non-fatal) | `{ corrections; messages } \| null` |
 | `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, spaceTypeEn, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
 All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for reuse by form components via `Omit<T, 'detectedLanguage'>`.
+
+### AI Output Review (Hybrid Validation)
+
+`optimizeProjectDescription()` includes a two-layer validation pipeline that runs after the initial Zod parse:
+
+1. **Programmatic validation** (`validateProjectDescription`) — always runs:
+   - Filters `selectedScopes` to only entries in the provided scope list; falls back to all scopes if every AI selection was invalid
+   - Sets `serviceType` to `null` if not in the allowed list
+   - Regenerates slug from title if slug and title share fewer than `MIN_SLUG_TITLE_OVERLAP` (2) significant words
+
+2. **AI review** (`reviewProjectDescription`) — runs after programmatic validation:
+   - Cheap second AI call (`gpt-4o-mini`, `temperature: 0.1`, 512 max tokens)
+   - Checks title accuracy, serviceType correctness, scope relevance, and slug match vs. original notes
+   - Returns only fields to correct (partial JSON), or `null` if everything looks good
+   - Review corrections are re-validated (serviceType checked against allowed list, slug sanitized, scopes re-filtered)
+   - Non-fatal — failures are caught and logged as warnings
+
+Both batch upload and admin form AI generate benefit automatically since validation is inside `optimizeProjectDescription()`. The batch processor's existing scope filter at save time remains as a redundant safety net.
 
 ### Blog Generation (`lib/ai/blog-generator.ts`)
 
