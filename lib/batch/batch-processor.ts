@@ -48,9 +48,6 @@ const UPLOAD_BATCH_SIZE = 15;
 /** Max concurrent AI metadata calls */
 const AI_METADATA_BATCH_SIZE = 10;
 
-/** Fallback alt text when AI generation fails */
-const FALLBACK_ALT = { en: 'Renovation project image', zh: '装修项目图片' } as const;
-
 // ============================================================================
 // JOB STATUS HELPERS
 // ============================================================================
@@ -191,16 +188,20 @@ async function generateProjectMetadata(
   notes: string | null,
   serviceTypeMap: Record<string, { en: string; zh: string }>,
   /** Skip folder name in prompt — root folders can be internal codes like "1171-van" */
-  skipFolderName = false
+  skipFolderName = false,
+  /** ZIP filename hint (e.g., "2828-van") for PO number / location context */
+  zipBaseName?: string
 ): Promise<ProjectDescription | null> {
   try {
     const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
     // When notes exist and skipFolderName is set, rely only on notes content.
     // Sub-folder names like "Kitchen" are still useful context so we keep them.
     const folderContext = skipFolderName ? '' : `: ${folderName}`;
+    // Build context hint from zip filename (PO number)
+    const hintsBlock = zipBaseName ? `\nReference/PO number: ${zipBaseName}\n` : '';
     const prompt = notes
-      ? `Renovation project${folderContext}.\n\nProject details:\n${notes}`
-      : `${category.en} renovation project: ${folderName}. Service type: ${category.en}.`;
+      ? `Renovation project${folderContext}.${hintsBlock}\nProject details:\n${notes}`
+      : `${category.en} renovation project${folderContext}.${hintsBlock}\nService type: ${category.en}.`;
     // Pass all scopes for the detected service type so AI can select relevant ones
     const scopes = SERVICE_SCOPES[serviceType] ?? [];
     const availableTypes = Object.keys(serviceTypeMap);
@@ -312,58 +313,87 @@ async function insertExternalProducts(opts: {
   }
 }
 
+/** Push a warning about unsupported image formats (HEIC, TIFF, etc.) that were skipped. */
+export function pushSkippedFilesWarning(skippedFiles: string[], errors: BatchError[]): void {
+  if (skippedFiles.length === 0) return;
+  const MAX_LISTED = 10;
+  const listed = skippedFiles.slice(0, MAX_LISTED).map((f) => f.split('/').pop()).join(', ');
+  const suffix = skippedFiles.length > MAX_LISTED ? ` and ${skippedFiles.length - MAX_LISTED} more` : '';
+  errors.push({
+    message: `${skippedFiles.length} unsupported image(s) skipped (HEIC/TIFF not supported by browsers): ${listed}${suffix}`,
+    severity: 'warning',
+  });
+}
+
 // ============================================================================
 // FALLBACK METADATA
 // ============================================================================
 
-/** Build shared fallback SEO fields from a name and bilingual type labels. */
-function buildFallbackSeo(name: string, typeEn: string, typeZh: string) {
+/**
+ * Ensure the label includes an action word (Renovation/装修).
+ * DB service labels already contain it (e.g., "Kitchen Renovation", "厨房装修"),
+ * but synthetic labels (e.g., "Whole House", "全屋") do not.
+ */
+export function ensureActionSuffix(label: string, zh = false): string {
+  if (zh) return /装修|翻新|改造/.test(label) ? label : `${label}装修`;
+  return /\b(renovation|refacing|remodel)\b/i.test(label) ? label : `${label} Renovation`;
+}
+
+/**
+ * Build shared fallback SEO fields.
+ * Callers must pass pre-computed `fullEn`/`fullZh` (via `ensureActionSuffix`)
+ * so the suffix logic runs once per call site instead of being duplicated.
+ */
+function buildFallbackSeo(fullEn: string, fullZh: string) {
   return {
-    slug: formatSlug(name),
+    slug: formatSlug(fullEn),
     locationCity: '',
     poNumber: '',
     budgetRange: '',
     durationEn: '',
     durationZh: '',
-    badgeEn: typeEn,
-    badgeZh: typeZh,
-    excerptEn: `${typeEn} renovation at ${name}.`,
-    excerptZh: `${name}${typeZh}装修。`,
-    metaTitleEn: `${name} ${typeEn} | Reno Stars`,
-    metaTitleZh: `${name}${typeZh} | Reno Stars`,
-    metaDescriptionEn: `${typeEn} renovation project at ${name}.`,
-    metaDescriptionZh: `${name}${typeZh}装修项目。`,
-    focusKeywordEn: `${typeEn.toLowerCase()} renovation`,
-    focusKeywordZh: `${typeZh}装修`,
-    seoKeywordsEn: `${typeEn.toLowerCase()}, renovation`,
-    seoKeywordsZh: `${typeZh}, 装修`,
+    badgeEn: fullEn,
+    badgeZh: fullZh,
+    excerptEn: `${fullEn} project.`,
+    excerptZh: `${fullZh}项目。`,
+    metaTitleEn: `${fullEn} | Reno Stars`,
+    metaTitleZh: `${fullZh} | Reno Stars`,
+    metaDescriptionEn: `${fullEn} project.`,
+    metaDescriptionZh: `${fullZh}项目。`,
+    focusKeywordEn: fullEn.toLowerCase(),
+    focusKeywordZh: fullZh,
+    seoKeywordsEn: `${fullEn.toLowerCase()}, renovation`,
+    seoKeywordsZh: `${fullZh}, 装修`,
   };
 }
 
 function fallbackSiteData(folderName: string) {
+  const fullEn = ensureActionSuffix('Whole House');
+  const fullZh = ensureActionSuffix('全屋', true);
   return {
-    ...buildFallbackSeo(folderName, 'Whole House', '全屋'),
+    ...buildFallbackSeo(fullEn, fullZh),
     titleEn: folderName,
     titleZh: folderName,
-    descriptionEn: `Whole house renovation project at ${folderName}.`,
-    descriptionZh: `${folderName}全屋装修项目。`,
+    descriptionEn: `Whole house renovation project.`,
+    descriptionZh: `全屋装修项目。`,
     spaceTypeEn: 'House' as const,
   };
 }
 
 function fallbackProjectData(
-  folderName: string,
   serviceType: string,
   serviceTypeMap: Record<string, { en: string; zh: string }>
 ) {
   const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
+  const fullEn = ensureActionSuffix(category.en);
+  const fullZh = ensureActionSuffix(category.zh, true);
   return {
-    ...buildFallbackSeo(folderName, category.en, category.zh),
+    ...buildFallbackSeo(fullEn, fullZh),
     serviceType: serviceTypeMap[serviceType] ? serviceType : null,
-    titleEn: `${folderName} ${category.en} Renovation`,
-    titleZh: `${folderName}${category.zh}装修`,
-    descriptionEn: `${category.en} renovation project.`,
-    descriptionZh: `${category.zh}装修项目。`,
+    titleEn: fullEn,
+    titleZh: fullZh,
+    descriptionEn: `${fullEn} project.`,
+    descriptionZh: `${fullZh}项目。`,
     challengeEn: '',
     challengeZh: '',
     solutionEn: '',
@@ -560,6 +590,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         throw new Error('No image files found in the ZIP archive.');
       }
 
+      pushSkippedFilesWarning(parsedStandalone.skippedFiles, errors);
+
       await updateJob(jobId, { totalImages: parsedStandalone.totalImages });
 
       await processStandaloneMode({
@@ -572,6 +604,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
         s3Client: client,
         s3PublicUrl,
         serviceTypeMap,
+        zipFileName: job.fileName,
       });
 
       await finalizeJob({ jobId, errors, createdSiteIds, createdProjectIds, createdBlogPostIds });
@@ -591,6 +624,8 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     if (parsed.sites.length === 0) {
       throw new Error('No image files found in the ZIP archive.');
     }
+
+    pushSkippedFilesWarning(parsed.skippedFiles, errors);
 
     await updateJob(jobId, { totalImages: parsed.totalImages });
 
@@ -738,11 +773,11 @@ export async function processBatchUpload(jobId: string): Promise<void> {
             await db.insert(siteImagePairs).values({
               siteId,
               beforeImageUrl: beforeUrl,
-              beforeAltTextEn: beforeUrl ? `${siteData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
-              beforeAltTextZh: beforeUrl ? `${siteData.titleZh} - 装修前 ${pairIdx + 1}` : null,
+              beforeAltTextEn: beforeUrl ? `${siteData.titleEn} - Before ${pairIdx + 1}` : null,
+              beforeAltTextZh: beforeUrl ? `${siteData.titleZh} - 改造前 ${pairIdx + 1}` : null,
               afterImageUrl: afterUrl,
-              afterAltTextEn: afterUrl ? FALLBACK_ALT.en : null,
-              afterAltTextZh: afterUrl ? FALLBACK_ALT.zh : null,
+              afterAltTextEn: afterUrl ? `${siteData.titleEn} - After ${pairIdx + 1}` : null,
+              afterAltTextZh: afterUrl ? `${siteData.titleZh} - 改造后 ${pairIdx + 1}` : null,
               displayOrder: pairIdx,
             });
             siteImagePairsCreated++;
@@ -857,8 +892,16 @@ async function processStandaloneMode(opts: {
   s3Client: import('@aws-sdk/client-s3').S3Client;
   s3PublicUrl: string;
   serviceTypeMap: Record<string, { en: string; zh: string }>;
+  zipFileName: string;
 }): Promise<void> {
-  const { parsedStandalone, jobId, options, errors, createdProjectIds, createdBlogPostIds, s3Client, s3PublicUrl, serviceTypeMap } = opts;
+  const {
+    parsedStandalone, jobId, options, errors,
+    createdProjectIds, createdBlogPostIds,
+    s3Client, s3PublicUrl, serviceTypeMap, zipFileName,
+  } = opts;
+
+  // Extract base name from ZIP filename (e.g., "2828-van.zip" → "2828-van") for PO/context
+  const zipBaseName = zipFileName.replace(/\.zip$/i, '');
 
   // Find or create the standalone site container
   const standaloneSiteId = await ensureStandaloneSite();
@@ -901,11 +944,14 @@ async function processStandaloneMode(opts: {
   await updateJob(jobId, { status: 'generating' });
 
   const projectMetadataMap = new Map<string, ProjectDescription | null>();
+  // Only pass zip name as context to AI when a single project exists in the zip.
+  // Multi-project zips should derive identity per folder, not share the zip name.
+  const aiZipHint = parsedStandalone.projects.length === 1 ? zipBaseName : undefined;
 
   for (let i = 0; i < parsedStandalone.projects.length; i += AI_METADATA_BATCH_SIZE) {
     const batch = parsedStandalone.projects.slice(i, i + AI_METADATA_BATCH_SIZE);
     const results = await Promise.allSettled(
-      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes, serviceTypeMap, true))
+      batch.map((p) => generateProjectMetadata(p.folderName, p.serviceType, p.notes, serviceTypeMap, true, aiZipHint))
     );
     for (let j = 0; j < results.length; j++) {
       const r = results[j];
@@ -932,6 +978,7 @@ async function processStandaloneMode(opts: {
         errors,
         jobId,
         serviceTypeMap,
+        zipBaseName: aiZipHint,
       });
     } catch (error) {
       errors.push({
@@ -969,16 +1016,18 @@ async function saveProject(opts: {
   errors: BatchError[];
   jobId: string;
   serviceTypeMap: Record<string, { en: string; zh: string }>;
+  /** ZIP base name (e.g., "2828-van") used as fallback PO number */
+  zipBaseName?: string;
 }): Promise<void> {
   const {
     parsedProject, aiProject, siteId, displayOrder,
     urlMap, existingProjectSlugs,
-    createdProjectIds, errors, jobId, serviceTypeMap,
+    createdProjectIds, errors, jobId, serviceTypeMap, zipBaseName,
   } = opts;
+
   const projectData = aiProject ?? fallbackProjectData(
-    parsedProject.folderName,
     parsedProject.serviceType,
-    serviceTypeMap
+    serviceTypeMap,
   );
 
   const projectSlug = ensureUniqueSlug(
@@ -1034,7 +1083,7 @@ async function saveProject(opts: {
       focusKeywordZh: projectData.focusKeywordZh || null,
       seoKeywordsEn: projectData.seoKeywordsEn || null,
       seoKeywordsZh: projectData.seoKeywordsZh || null,
-      poNumber: projectData.poNumber || null,
+      poNumber: projectData.poNumber || zipBaseName || null,
       siteId,
       displayOrderInSite: displayOrder,
       featured: false,
@@ -1096,11 +1145,11 @@ async function saveProject(opts: {
       await db.insert(projectImagePairs).values({
         projectId: insertedProject.id,
         beforeImageUrl: beforeUrl,
-        beforeAltTextEn: beforeUrl ? `${projectData.titleEn} - Before Renovation ${pairIdx + 1}` : null,
-        beforeAltTextZh: beforeUrl ? `${projectData.titleZh} - 装修前 ${pairIdx + 1}` : null,
+        beforeAltTextEn: beforeUrl ? `${projectData.titleEn} - Before ${pairIdx + 1}` : null,
+        beforeAltTextZh: beforeUrl ? `${projectData.titleZh} - 改造前 ${pairIdx + 1}` : null,
         afterImageUrl: afterUrl,
-        afterAltTextEn: afterUrl ? FALLBACK_ALT.en : null,
-        afterAltTextZh: afterUrl ? FALLBACK_ALT.zh : null,
+        afterAltTextEn: afterUrl ? `${projectData.titleEn} - After ${pairIdx + 1}` : null,
+        afterAltTextZh: afterUrl ? `${projectData.titleZh} - 改造后 ${pairIdx + 1}` : null,
         displayOrder: pairIdx,
       });
     } catch (error) {

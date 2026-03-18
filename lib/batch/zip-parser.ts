@@ -22,6 +22,9 @@ const EXT_TO_MIME: Record<string, string> = {
 
 const IMAGE_EXTENSIONS = new Set(Object.keys(EXT_TO_MIME));
 
+/** Image formats that browsers cannot render natively */
+const UNSUPPORTED_IMAGE_EXTENSIONS = new Set(['heic', 'heif', 'tiff', 'tif', 'bmp', 'raw']);
+
 function getExtension(filename: string): string {
   const dot = filename.lastIndexOf('.');
   return dot === -1 ? '' : filename.slice(dot + 1).toLowerCase();
@@ -29,6 +32,10 @@ function getExtension(filename: string): string {
 
 function isImageFile(filename: string): boolean {
   return IMAGE_EXTENSIONS.has(getExtension(filename));
+}
+
+function isUnsupportedImageFile(filename: string): boolean {
+  return UNSUPPORTED_IMAGE_EXTENSIONS.has(getExtension(filename));
 }
 
 function getMimeType(filename: string): string {
@@ -197,6 +204,8 @@ interface ZipExtraction {
   notesMap: Map<string, string>;
   productsMap: Map<string, string>;
   totalImages: number;
+  /** Filenames of unsupported image formats (HEIC, TIFF, etc.) that were skipped */
+  skippedFiles: string[];
 }
 
 /**
@@ -210,6 +219,7 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
   const tree = new Map<string, ExtractedImage[]>();
   const notesMap = new Map<string, string>();
   const productsMap = new Map<string, string>();
+  const skippedFiles: string[] = [];
   const textDecoder = new TextDecoder('utf-8');
 
   for (const [path, data] of Object.entries(files)) {
@@ -249,6 +259,12 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
       continue;
     }
 
+    // Track unsupported image formats (HEIC, TIFF, etc.)
+    if (isUnsupportedImageFile(filename)) {
+      skippedFiles.push(normalizedPath);
+      continue;
+    }
+
     if (!isImageFile(filename)) continue;
 
     totalImages++;
@@ -263,7 +279,7 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
     tree.get(folder)!.push(img);
   }
 
-  return { tree, notesMap, productsMap, totalImages };
+  return { tree, notesMap, productsMap, totalImages, skippedFiles };
 }
 
 // ============================================================================
@@ -278,10 +294,10 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
  * 2. Flat: all images at root = single project, auto-wrapped in a site
  */
 export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructure> {
-  const { tree, notesMap, productsMap, totalImages } = await extractFilesFromZip(zipBuffer);
+  const { tree, notesMap, productsMap, totalImages, skippedFiles } = await extractFilesFromZip(zipBuffer);
 
   if (totalImages === 0) {
-    return { sites: [], totalImages: 0 };
+    return { sites: [], totalImages: 0, skippedFiles };
   }
 
   // Analyze the folder structure to determine if nested or flat
@@ -311,7 +327,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         productImages,
       }] : [],
     };
-    return { sites: [site], totalImages };
+    return { sites: [site], totalImages, skippedFiles };
   }
 
   // Determine nesting depth
@@ -409,7 +425,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
     }
   }
 
-  return { sites, totalImages };
+  return { sites, totalImages, skippedFiles };
 }
 
 // ============================================================================
@@ -422,10 +438,10 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
  * Flat images at root = single project.
  */
 export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedStandaloneStructure> {
-  const { tree, notesMap, productsMap, totalImages } = await extractFilesFromZip(zipBuffer);
+  const { tree, notesMap, productsMap, totalImages, skippedFiles } = await extractFilesFromZip(zipBuffer);
 
   if (totalImages === 0) {
-    return { projects: [], totalImages: 0 };
+    return { projects: [], totalImages: 0, skippedFiles };
   }
 
   const projectsResult: ParsedProject[] = [];
@@ -474,7 +490,7 @@ export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedS
         productImages,
       });
     }
-    return { projects: projectsResult, totalImages };
+    return { projects: projectsResult, totalImages, skippedFiles };
   }
 
   // Each top-level folder = one standalone project
@@ -494,5 +510,5 @@ export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedS
     }
   }
 
-  return { projects: projectsResult, totalImages };
+  return { projects: projectsResult, totalImages, skippedFiles };
 }

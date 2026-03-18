@@ -474,22 +474,22 @@ Branches early based on `options.mode` to avoid dual-nullable patterns:
 **Sites mode** (default):
 1. **Extract** — Downloads ZIP from S3 temp, parses via `parseZip()` (async `fflate`)
 2. **Upload** — Uploads all images to S3 in parallel batches of 15 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
-3. **Generate** — AI metadata in parallel batches of 10 (`AI_METADATA_BATCH_SIZE`): `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity. No alt text generation — uses `FALLBACK_ALT` directly for all image pairs
+3. **Generate** — AI metadata in parallel batches of 10 (`AI_METADATA_BATCH_SIZE`): `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity. Site image pair alt text uses contextual titles (e.g., "Kitchen Renovation - Before 1")
 4. **Save** — Inserts sites (including AI-detected `spaceTypeEn`/`spaceTypeZh` via `SPACE_TYPE_TO_ZH`), site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
 5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site via shared `generateBlogsForEntities()` helper
 
 **Standalone mode**:
 1. **Extract** — Downloads ZIP, parses via `parseZipStandalone()` (flattens subfolders into top-level projects)
 2. **Upload** — Same image upload pipeline with per-project slug prefixes
-3. **Generate** — `optimizeProjectDescription()` per project in parallel batches of 10
-4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function
+3. **Generate** — `optimizeProjectDescription()` per project in parallel batches of 10. For single-project ZIPs, the ZIP filename (e.g., "2828-van") is passed as a `Reference/PO number` hint to the AI prompt
+4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function. Single-project ZIP base name also used as fallback PO number
 5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
 
-Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`. AI extracts all metadata fields including service type, PO number, budget, duration from freeform notes (no hard regex extraction). AI-detected service type overrides folder-name heuristic (`detectServiceType()`) when available. Standalone mode prompt omits folder-detected service type when notes exist to avoid biasing the AI.
+Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`, `pushSkippedFilesWarning()`, `ensureActionSuffix()`. AI extracts all metadata fields including service type, PO number, budget, duration from freeform notes (no hard regex extraction). AI-detected service type overrides folder-name heuristic (`detectServiceType()`) when available. Standalone mode prompt omits folder-detected service type when notes exist to avoid biasing the AI. Fallback metadata uses `ensureActionSuffix()` to guarantee labels include action words (Renovation/装修) and `buildFallbackSeo()` for consistent SEO fields.
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 
-Shared `extractFilesFromZip()` builds a file tree, notes map, and products map from the ZIP buffer. Filters out `__MACOSX` folders and macOS resource fork artifacts (`._` prefixed files). Two public parsers consume this:
+Shared `extractFilesFromZip()` builds a file tree, notes map, and products map from the ZIP buffer. Filters out `__MACOSX` folders and macOS resource fork artifacts (`._` prefixed files). Detects unsupported image formats (HEIC, HEIF, TIFF, BMP, RAW) via `isUnsupportedImageFile()` and tracks them in a `skippedFiles` array surfaced as warnings. Two public parsers consume this:
 
 **`parseZip()` (sites mode)** — supports three layouts:
 

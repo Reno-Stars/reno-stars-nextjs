@@ -48,7 +48,9 @@ ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`).
 
 **Standalone mode pipeline:** `parseZipStandalone()` → upload → AI metadata → find/create standalone site → save projects → optional blog → cleanup. AI generates `ProjectDescription` (with space type) for each root folder.
 
-**Folder name handling in AI prompts:** Root-level folder names (e.g., "1171-van") are excluded from AI prompts when `notes.txt` exists, since they are often internal codes. Sub-folder names (e.g., "Kitchen", "Bathroom") are always included as useful context for service type detection. Without notes, the folder name is used as the only context.
+**Folder name handling in AI prompts:** Root-level folder names (e.g., "1171-van") are excluded from AI prompts when `notes.txt` exists, since they are often internal codes. Sub-folder names (e.g., "Kitchen", "Bathroom") are always included as useful context for service type detection. Without notes, the folder name is used as the only context. In standalone mode, the ZIP filename is passed as a `Reference/PO number` hint for single-project ZIPs.
+
+**Unsupported image formats:** HEIC, HEIF, TIFF, BMP, and RAW files are detected during ZIP parsing and tracked in a `skippedFiles` array. A warning is surfaced in the job results listing up to 10 skipped filenames (with "and N more" for overflow).
 
 **ZIP structure:**
 - Sites mode: nested (top folder = site, subfolders = projects), single-folder, or flat layout

@@ -87,6 +87,8 @@ export interface ParsedZipStructure {
   sites: ParsedSite[];
   /** Total number of image files found */
   totalImages: number;
+  /** Filenames of unsupported image formats (HEIC, TIFF, etc.) that were skipped */
+  skippedFiles: string[];
 }
 
 /** Parsed structure for standalone projects mode (no sites) */
@@ -94,4 +96,6 @@ export interface ParsedStandaloneStructure {
   projects: ParsedProject[];
   /** Total number of image files found */
   totalImages: number;
+  /** Filenames of unsupported image formats (HEIC, TIFF, etc.) that were skipped */
+  skippedFiles: string[];
 }
