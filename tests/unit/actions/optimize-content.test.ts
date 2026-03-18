@@ -5,6 +5,14 @@ vi.mock('@/lib/admin/auth', () => ({
   requireAuth: vi.fn(),
 }));
 
+// Mock DB queries
+vi.mock('@/lib/db/queries', () => ({
+  getServiceTypeMap: vi.fn().mockResolvedValue({
+    kitchen: { en: 'Kitchen', zh: '厨房' },
+    bathroom: { en: 'Bathroom', zh: '卫生间' },
+  }),
+}));
+
 // Mock AI functions
 vi.mock('@/lib/ai/openai', () => ({
   fetchWithTimeout: vi.fn(),

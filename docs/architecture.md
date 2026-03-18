@@ -352,7 +352,7 @@ A modular EN→ZH glossary injected into all 6 AI prompts to ensure domain-speci
 | `optimizeShortText(rawText)` | Short text translation | `BilingualText` (textEn, textZh, detectedLanguage) |
 | `optimizeProjectDescription(rawNotes, scopes?, types?)` | Project description + SEO generation with hybrid validation | `ProjectDescription & { corrections?: string[] }` |
 | `validateProjectDescription(result, scopes?, types?)` | Programmatic fix of invalid scopes, serviceType, slug-title divergence | `{ corrected: ProjectDescription; corrections: string[] }` |
-| `reviewProjectDescription(prompt, output)` | Lightweight AI review for semantic accuracy (non-fatal) | `{ corrections; messages } \| null` |
+| `reviewProjectDescription(prompt, output, types?)` | Lightweight AI review for semantic accuracy (non-fatal) | `{ corrections; messages } \| null` |
 | `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, spaceTypeEn, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
@@ -374,7 +374,7 @@ All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for re
    - Review corrections are re-validated (serviceType checked against allowed list, slug sanitized, scopes re-filtered)
    - Non-fatal — failures are caught and logged as warnings
 
-Both batch upload and admin form AI generate benefit automatically since validation is inside `optimizeProjectDescription()`. The batch processor's existing scope filter at save time remains as a redundant safety net.
+Both batch upload and admin form AI generate pass `availableServiceTypes` from the DB (`getServiceTypeMap()`) and all scopes to `optimizeProjectDescription()`. The review prompt's valid service type list is built dynamically via `buildReviewPrompt(availableServiceTypes)`. The batch processor's existing scope filter at save time remains as a redundant safety net.
 
 ### Blog Generation (`lib/ai/blog-generator.ts`)
 
@@ -528,7 +528,7 @@ Image naming conventions:
 - **Product images**: `product-N.jpg` (1-based) matched to Nth entry in `products.txt`. Sparse indices supported (e.g., `product-1.jpg` and `product-3.jpg` — product 2 gets no image). Warning logged when product images exist but no `products.txt` is found
 - **Products files**: `products.txt`, `links.txt`, `external.txt` — one product per line: `URL | Label EN | Label ZH`. Lines starting with `#` are comments
 - **Notes files**: `notes.txt`, `description.txt`, `readme.txt`, `info.txt`, `readme.md`, etc. provide AI context for metadata generation
-- **Service type detection**: Folder names matched against `SERVICE_TYPE_ALIASES` (e.g., "Kitchen" → `kitchen`, "Bathroom" → `bathroom`)
+- **Service type detection**: `detectServiceType(folderName, validTypes?)` matches folder names against `SERVICE_TYPE_ALIASES` (e.g., "Kitchen" → `kitchen`, "Bathroom" → `bathroom`). Returns `null` (not a hardcoded default) when no match is found. Accepts optional `validTypes: Set<string>` from the DB to validate alias targets. Batch processor passes `validServiceTypes` built from `getServiceTypeMap()`
 
 ### Job Status Tracking
 

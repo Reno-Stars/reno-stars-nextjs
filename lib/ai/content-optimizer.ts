@@ -457,12 +457,16 @@ export function validateProjectDescription(
   return { corrected, corrections };
 }
 
-const REVIEW_PROMPT = `You are a quality reviewer for AI-generated renovation project metadata.
+function buildReviewPrompt(availableServiceTypes?: string[]): string {
+  const validValues = availableServiceTypes && availableServiceTypes.length > 0
+    ? availableServiceTypes.join(', ')
+    : 'bathroom, kitchen, basement, cabinet, commercial';
+  return `You are a quality reviewer for AI-generated renovation project metadata.
 
 Given the ORIGINAL project notes and the GENERATED metadata, check for errors:
 
 1. TITLE: Does it accurately describe what's in the notes? Flag if it describes a different type of work.
-2. SERVICE_TYPE: Is it correct based on the notes? Valid values: bathroom, kitchen, basement, cabinet, commercial, or null.
+2. SERVICE_TYPE: Is it correct based on the notes? Valid values: ${validValues}, or null.
 3. SELECTED_SCOPES: Are they reasonable for the described work? Only flag scopes that clearly don't apply.
 4. SLUG: Does it match the title and project content?
 
@@ -472,6 +476,7 @@ Only include fields you want to change — omitted fields keep their current val
 Example corrections:
 {"serviceType": "bathroom", "titleEn": "Better Title", "titleZh": "更好的标题"}
 or {} if no corrections needed.`;
+}
 
 /** Partial schema for review corrections — all fields optional */
 const ReviewCorrectionsSchema = z.object({
@@ -493,6 +498,7 @@ type ReviewCorrections = z.infer<typeof ReviewCorrectionsSchema>;
 export async function reviewProjectDescription(
   originalPrompt: string,
   generatedOutput: ProjectDescription,
+  availableServiceTypes?: string[],
 ): Promise<{ corrections: ReviewCorrections; messages: string[] } | null> {
   try {
     const client = getOpenAIClient();
@@ -516,7 +522,7 @@ export async function reviewProjectDescription(
     const response = await client.chat.completions.create({
       model: AI_CONFIG.model,
       messages: [
-        { role: 'system', content: REVIEW_PROMPT },
+        { role: 'system', content: buildReviewPrompt(availableServiceTypes) },
         { role: 'user', content: reviewInput },
       ],
       temperature: 0.1,
@@ -596,7 +602,7 @@ export async function optimizeProjectDescription(
   allCorrections.push(...corrections);
 
   // Step 2: AI review — non-fatal, applies corrections on top
-  const review = await reviewProjectDescription(rawNotes, result);
+  const review = await reviewProjectDescription(rawNotes, result, availableServiceTypes);
   if (review) {
     const reviewData = review.corrections;
     // Apply review corrections to the result

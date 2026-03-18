@@ -128,7 +128,7 @@ export default function ProjectForm({
   const isEdit = !!initialData;
   const [editing, setEditing] = useState(!isEdit);
   const [slug, setSlug] = useState(initialData?.slug ?? '');
-  const [selectedServiceType, setSelectedServiceType] = useState(initialData?.serviceType ?? services[0]?.slug ?? '');
+  const [selectedServiceType, setSelectedServiceType] = useState(initialData?.serviceType ?? '');
   const [selectedLocationCity, setSelectedLocationCity] = useState(initialData?.locationCity ?? '');
   const [selectedSpaceType, setSelectedSpaceType] = useState(initialData?.spaceTypeEn ?? '');
   const [selectedSiteId, setSelectedSiteId] = useState(initialData?.siteId ?? '');
@@ -172,7 +172,7 @@ export default function ProjectForm({
   // Sync state when initialData changes (after save + revalidation)
   useEffect(() => {
     setSlug(initialData?.slug ?? '');
-    setSelectedServiceType(initialData?.serviceType ?? services[0]?.slug ?? '');
+    setSelectedServiceType(initialData?.serviceType ?? '');
     setSelectedLocationCity(initialData?.locationCity ?? '');
     setSelectedSpaceType(initialData?.spaceTypeEn ?? '');
     setSelectedSiteId(initialData?.siteId ?? '');
@@ -354,6 +354,7 @@ export default function ProjectForm({
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.projects.serviceType} htmlFor="serviceType" tooltip={t.projects.tooltips.serviceType}>
               <select id="serviceType" name="serviceType" value={selectedServiceType} onChange={(e) => setSelectedServiceType(e.target.value)} style={fieldStyle}>
+                <option value="">{t.projects.selectServiceType}</option>
                 {services.map((svc) => (
                   <option key={svc.slug} value={svc.slug}>
                     {locale === 'zh' ? svc.titleZh : svc.titleEn}

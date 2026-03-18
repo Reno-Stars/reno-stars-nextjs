@@ -76,6 +76,9 @@ function isProductsFile(filename: string): boolean {
 // SERVICE TYPE DETECTION
 // ============================================================================
 
+/** Keyword aliases → canonical service type slug.
+ * Alias targets are validated against DB service types at runtime;
+ * unrecognized targets are skipped. */
 const SERVICE_TYPE_ALIASES: Record<string, string> = {
   kitchen: 'kitchen',
   bath: 'bathroom',
@@ -90,17 +93,24 @@ const SERVICE_TYPE_ALIASES: Record<string, string> = {
   store: 'commercial',
 };
 
-const DEFAULT_SERVICE_TYPE: string = 'kitchen';
-
-export function detectServiceType(folderName: string): string {
+/**
+ * Detect service type from a folder name using keyword aliases.
+ * If `validTypes` is provided, only returns types that exist in the DB.
+ * Returns null when no match is found (instead of hardcoding a default).
+ */
+export function detectServiceType(
+  folderName: string,
+  validTypes?: Set<string>,
+): string | null {
   const lower = folderName.toLowerCase().trim();
   // Try exact match first
-  if (SERVICE_TYPE_ALIASES[lower]) return SERVICE_TYPE_ALIASES[lower];
+  const exact = SERVICE_TYPE_ALIASES[lower];
+  if (exact && (!validTypes || validTypes.has(exact))) return exact;
   // Try partial match (folder name contains a keyword)
   for (const [alias, type] of Object.entries(SERVICE_TYPE_ALIASES)) {
-    if (lower.includes(alias)) return type;
+    if (lower.includes(alias) && (!validTypes || validTypes.has(type))) return type;
   }
-  return DEFAULT_SERVICE_TYPE;
+  return null;
 }
 
 // ============================================================================
@@ -293,7 +303,7 @@ async function extractFilesFromZip(zipBuffer: Uint8Array): Promise<ZipExtraction
  * 1. Nested: top-level folder = site, subfolders = projects
  * 2. Flat: all images at root = single project, auto-wrapped in a site
  */
-export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructure> {
+export async function parseZip(zipBuffer: Uint8Array, validServiceTypes?: Set<string>): Promise<ParsedZipStructure> {
   const { tree, notesMap, productsMap, totalImages, skippedFiles } = await extractFilesFromZip(zipBuffer);
 
   if (totalImages === 0) {
@@ -319,7 +329,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
       productImages: new Map(),
       projects: pairs.length > 0 ? [{
         folderName: 'Uploaded Project',
-        serviceType: DEFAULT_SERVICE_TYPE,
+        serviceType: null,
         heroImage: null,
         imagePairs: pairs,
         notes: rootNotes,
@@ -382,7 +392,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
         if (pairs.length > 0 || projectHero) {
           projects.push({
             folderName: leafName,
-            serviceType: detectServiceType(leafName),
+            serviceType: detectServiceType(leafName, validServiceTypes),
             heroImage: projectHero,
             imagePairs: pairs,
             notes: projectNotes,
@@ -396,7 +406,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
       if (rootPairs.length > 0) {
         projects.push({
           folderName: topLevel,
-          serviceType: detectServiceType(topLevel),
+          serviceType: detectServiceType(topLevel, validServiceTypes),
           heroImage: null,
           imagePairs: rootPairs,
           notes: siteNotes,
@@ -437,7 +447,7 @@ export async function parseZip(zipBuffer: Uint8Array): Promise<ParsedZipStructur
  * Each top-level folder = one standalone project (no site wrapper).
  * Flat images at root = single project.
  */
-export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedStandaloneStructure> {
+export async function parseZipStandalone(zipBuffer: Uint8Array, validServiceTypes?: Set<string>): Promise<ParsedStandaloneStructure> {
   const { tree, notesMap, productsMap, totalImages, skippedFiles } = await extractFilesFromZip(zipBuffer);
 
   if (totalImages === 0) {
@@ -482,7 +492,7 @@ export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedS
     if (pairs.length > 0 || heroImage) {
       projectsResult.push({
         folderName: 'Uploaded Project',
-        serviceType: DEFAULT_SERVICE_TYPE,
+        serviceType: null,
         heroImage,
         imagePairs: pairs,
         notes: topLevelNotes.get('') ?? null,
@@ -500,7 +510,7 @@ export async function parseZipStandalone(zipBuffer: Uint8Array): Promise<ParsedS
     if (pairs.length > 0 || heroImage) {
       projectsResult.push({
         folderName: topLevel,
-        serviceType: detectServiceType(topLevel),
+        serviceType: detectServiceType(topLevel, validServiceTypes),
         heroImage,
         imagePairs: pairs,
         notes: topLevelNotes.get(topLevel) ?? null,

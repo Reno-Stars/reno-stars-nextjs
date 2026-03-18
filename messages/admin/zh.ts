@@ -147,6 +147,7 @@ const zh: AdminMessages = {
     titleLabel: '标题',
     description: '描述',
     serviceType: '服务类型',
+    selectServiceType: '选择服务类型...',
     locationCity: '所在城市',
     category: '分类',
     budgetRange: '预算范围',

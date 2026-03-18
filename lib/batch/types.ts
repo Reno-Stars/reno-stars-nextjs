@@ -42,8 +42,8 @@ export interface ImagePairEntry {
 export interface ParsedProject {
   /** Folder name (e.g., "Kitchen") */
   folderName: string;
-  /** Auto-detected service type (slug) */
-  serviceType: string;
+  /** Auto-detected service type (slug), null if not detectable from folder name */
+  serviceType: string | null;
   /** Hero image if present at project level */
   heroImage: ExtractedImage | null;
   /** Paired before/after images sorted by index */

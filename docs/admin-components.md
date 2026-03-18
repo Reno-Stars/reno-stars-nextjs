@@ -66,7 +66,7 @@ ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`).
 ## AI Features
 
 - **AIContentEditor**: Tabbed blog content editor (paste/EN/ZH tabs), AI optimization via GPT-4o, DOMPurify for preview, zod validation.
-- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, space type, and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms. Output is validated by a hybrid pipeline (programmatic scope/serviceType/slug checks + lightweight AI review) inside `optimizeProjectDescription()` — see architecture doc for details.
+- **AIFieldGenerator\<T\>**: Generic component (notes textarea + generate button). `AIProjectGenerator` and `AISiteGenerator` are thin wrappers. Generates service type, slug, titles, descriptions, badges, excerpts, PO number, budget, duration, space type, and SEO metadata from freeform notes. Slugs are descriptive. Positioned at top of forms. The admin action (`optimizeProjectDescriptionAction`) loads available service types from DB via `getServiceTypeMap()` and passes all deduplicated scopes (`ALL_SCOPES`) to `optimizeProjectDescription()`. Output is validated by a hybrid pipeline (programmatic scope/serviceType/slug checks + lightweight AI review with dynamic valid-types prompt) inside `optimizeProjectDescription()` — see architecture doc for details.
 - **AI blog generation** (`lib/ai/blog-generator.ts`): Generates bilingual case study blog posts from project/site data via GPT-4o. Validates with Zod, truncates SEO fields, sanitizes/deduplicates slugs. Triggered from admin site detail page.
 - **AI social posts** (`lib/ai/social-post-generator.ts`): Bilingual content for Instagram, Facebook, Xiaohongshu. WAI-ARIA Tabs for platform switching. Image picker from source entity. `StatusCell` uses optimistic state with error rollback.
 
@@ -98,6 +98,7 @@ Unified site/project management. Roof = site, floors = project layers. Drag-and-
 - **Landing page previews**: FAQs, Services, Areas, Badges, Gallery, Partners, About pages include homepage-mirroring preview sections.
 - **CompanyForm sections**: 4 labeled groups (Business Info, Location, Legal, Marketing).
 - **Slug validation**: `isValidSlug()` rejects consecutive hyphens. Regex: `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
+- **Nullable select dropdowns**: Service type, location city, and space type dropdowns include an empty `<option value="">` placeholder. Server actions convert empty strings to `null` before DB insert. Service types come from the `services` DB table, not hardcoded lists.
 
 ## Custom Hooks
 

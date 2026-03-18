@@ -145,6 +145,7 @@ const en = {
     titleLabel: 'Title',
     description: 'Description',
     serviceType: 'Service Type',
+    selectServiceType: 'Select service type...',
     locationCity: 'Location City',
     category: 'Category',
     budgetRange: 'Budget Range',

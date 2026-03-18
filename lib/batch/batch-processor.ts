@@ -185,7 +185,7 @@ async function generateSiteMetadata(
 
 async function generateProjectMetadata(
   folderName: string,
-  serviceType: string,
+  serviceType: string | null,
   notes: string | null,
   serviceTypeMap: Record<string, { en: string; zh: string }>,
   /** Skip folder name in prompt — root folders can be internal codes like "1171-van" */
@@ -194,7 +194,7 @@ async function generateProjectMetadata(
   zipBaseName?: string
 ): Promise<ProjectDescription | null> {
   try {
-    const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
+    const category = serviceType ? (serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType }) : null;
     // When notes exist and skipFolderName is set, rely only on notes content.
     // Sub-folder names like "Kitchen" are still useful context so we keep them.
     const folderContext = skipFolderName ? '' : `: ${folderName}`;
@@ -202,9 +202,9 @@ async function generateProjectMetadata(
     const hintsBlock = zipBaseName ? `\nReference/PO number: ${zipBaseName}\n` : '';
     const prompt = notes
       ? `Renovation project${folderContext}.${hintsBlock}\nProject details:\n${notes}`
-      : `${category.en} renovation project${folderContext}.${hintsBlock}\nService type: ${category.en}.`;
+      : `${category ? category.en : 'Renovation'} project${folderContext}.${hintsBlock}${category ? `\nService type: ${category.en}.` : ''}`;
     // Pass all scopes for the detected service type so AI can select relevant ones
-    const scopes = SERVICE_SCOPES[serviceType] ?? [];
+    const scopes = serviceType ? (SERVICE_SCOPES[serviceType] ?? []) : [];
     const availableTypes = Object.keys(serviceTypeMap);
     const result = await optimizeProjectDescription(prompt, scopes, availableTypes);
     if (result.corrections && result.corrections.length > 0) {
@@ -387,15 +387,16 @@ function fallbackSiteData(folderName: string) {
 }
 
 function fallbackProjectData(
-  serviceType: string,
+  serviceType: string | null,
   serviceTypeMap: Record<string, { en: string; zh: string }>
 ) {
-  const category = serviceTypeMap[serviceType] ?? { en: serviceType, zh: serviceType };
+  const validType = serviceType && serviceTypeMap[serviceType] ? serviceType : null;
+  const category = validType ? serviceTypeMap[validType] : { en: 'Renovation', zh: '装修' };
   const fullEn = ensureActionSuffix(category.en);
   const fullZh = ensureActionSuffix(category.zh, true);
   return {
     ...buildFallbackSeo(fullEn, fullZh),
-    serviceType: serviceTypeMap[serviceType] ? serviceType : null,
+    serviceType: validType,
     titleEn: fullEn,
     titleZh: fullZh,
     descriptionEn: `${fullEn} project.`,
@@ -562,6 +563,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
 
     // ---- Fetch service type map from DB ----
     const serviceTypeMap = await getServiceTypeMap();
+    const validServiceTypes = new Set(Object.keys(serviceTypeMap));
 
     // ---- Validate S3 upfront ----
     const client = getS3Client();
@@ -585,7 +587,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     if (options.mode === 'standalone') {
       let parsedStandalone: ParsedStandaloneStructure;
       try {
-        parsedStandalone = await parseZipStandalone(zipBuffer);
+        parsedStandalone = await parseZipStandalone(zipBuffer, validServiceTypes);
       } catch (error) {
         throw new Error(
           `ZIP extraction failed: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -620,7 +622,7 @@ export async function processBatchUpload(jobId: string): Promise<void> {
     // Sites mode
     let parsed: ParsedZipStructure;
     try {
-      parsed = await parseZip(zipBuffer);
+      parsed = await parseZip(zipBuffer, validServiceTypes);
     } catch (error) {
       throw new Error(
         `ZIP extraction failed: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -1102,7 +1104,8 @@ async function saveProject(opts: {
   await updateJob(jobId, { createdProjectIds: [...createdProjectIds] });
 
   // Insert service scopes — use AI-selected scopes if available, else all scopes for the type
-  const allScopes = SERVICE_SCOPES[parsedProject.serviceType] ?? [];
+  const resolvedType = serviceType ?? parsedProject.serviceType;
+  const allScopes = resolvedType ? (SERVICE_SCOPES[resolvedType] ?? []) : [];
   const aiSelected = aiProject?.selectedScopes ?? [];
   const scopesToInsert = aiSelected.length > 0
     ? allScopes.filter((s) => aiSelected.includes(s.en))
