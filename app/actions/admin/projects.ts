@@ -209,7 +209,7 @@ export async function createProject(
       .where(eq(projects.siteId, data.siteId));
     data.displayOrderInSite = (maxRow?.max ?? -1) + 1;
 
-    let inserted: { id: string };
+    let inserted: { id: string } | undefined;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         [inserted] = await db
@@ -223,13 +223,15 @@ export async function createProject(
           .returning({ id: projects.id });
         break;
       } catch (err) {
-        const isUniqueViolation = err instanceof Error && err.message.includes('unique');
+        const code = (err as { code?: string })?.code;
+        const isUniqueViolation = code === '23505';
         if (!isUniqueViolation || attempt === 2) throw err;
         // Re-fetch slugs and retry from the original base slug
         const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
         data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug));
       }
     }
+    if (!inserted) throw new Error('Failed to insert project after retries');
 
     // Insert image pairs
     if (pairData.length > 0) {
@@ -368,7 +370,8 @@ export async function updateProject(
           .where(eq(projects.id, id));
         break;
       } catch (err) {
-        const isUniqueViolation = err instanceof Error && err.message.includes('unique');
+        const code = (err as { code?: string })?.code;
+        const isUniqueViolation = code === '23505';
         if (!isUniqueViolation || attempt === 2) throw err;
         const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
         data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug), currentSlug);
