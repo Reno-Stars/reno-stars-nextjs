@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { serviceAreas, contactSubmissions } from '@/lib/db/schema';
+import { serviceAreas, contactSubmissions, faqs } from '@/lib/db/schema';
 import { eq, count } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
@@ -34,6 +34,20 @@ export async function createServiceArea(
       return { error: 'Display order must be a non-negative number.' };
     }
 
+    const contentEn = getString(formData, 'contentEn') || null;
+    const contentZh = getString(formData, 'contentZh') || null;
+    const highlightsEn = getString(formData, 'highlightsEn') || null;
+    const highlightsZh = getString(formData, 'highlightsZh') || null;
+    const metaTitleEn = getString(formData, 'metaTitleEn') || null;
+    const metaTitleZh = getString(formData, 'metaTitleZh') || null;
+    const metaDescriptionEn = getString(formData, 'metaDescriptionEn') || null;
+    const metaDescriptionZh = getString(formData, 'metaDescriptionZh') || null;
+
+    const metaTitleError = validateTextLengths({ metaTitleEn, metaTitleZh }, 120);
+    if (metaTitleError) return { error: metaTitleError };
+    const metaDescError = validateTextLengths({ metaDescriptionEn, metaDescriptionZh }, 320);
+    if (metaDescError) return { error: metaDescError };
+
     const existingSlugs = await db.select({ slug: serviceAreas.slug }).from(serviceAreas);
     const uniqueSlug = ensureUniqueSlug(slug, existingSlugs.map((r: { slug: string }) => r.slug));
 
@@ -43,6 +57,14 @@ export async function createServiceArea(
       nameZh,
       descriptionEn,
       descriptionZh,
+      contentEn,
+      contentZh,
+      highlightsEn,
+      highlightsZh,
+      metaTitleEn,
+      metaTitleZh,
+      metaDescriptionEn,
+      metaDescriptionZh,
       displayOrder,
       isActive,
     });
@@ -61,12 +83,15 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid service area ID.' };
   try {
-    const [{ value: refCount }] = await db
-      .select({ value: count() })
-      .from(contactSubmissions)
-      .where(eq(contactSubmissions.preferredAreaId, id));
-    if (refCount > 0) {
-      return { error: `Cannot delete: ${refCount} contact(s) reference this area.` };
+    const [[{ value: contactRefCount }], [{ value: faqRefCount }]] = await Promise.all([
+      db.select({ value: count() }).from(contactSubmissions).where(eq(contactSubmissions.preferredAreaId, id)),
+      db.select({ value: count() }).from(faqs).where(eq(faqs.serviceAreaId, id)),
+    ]);
+    if (contactRefCount > 0) {
+      return { error: `Cannot delete: ${contactRefCount} contact(s) reference this area.` };
+    }
+    if (faqRefCount > 0) {
+      return { error: `Cannot delete: ${faqRefCount} FAQ(s) are assigned to this area. Reassign them first.` };
     }
 
     const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
@@ -121,6 +146,14 @@ export async function updateServiceArea(
       nameZh: getString(formData, 'nameZh').trim(),
       descriptionEn: getString(formData, 'descriptionEn') || null,
       descriptionZh: getString(formData, 'descriptionZh') || null,
+      contentEn: getString(formData, 'contentEn') || null,
+      contentZh: getString(formData, 'contentZh') || null,
+      highlightsEn: getString(formData, 'highlightsEn') || null,
+      highlightsZh: getString(formData, 'highlightsZh') || null,
+      metaTitleEn: getString(formData, 'metaTitleEn') || null,
+      metaTitleZh: getString(formData, 'metaTitleZh') || null,
+      metaDescriptionEn: getString(formData, 'metaDescriptionEn') || null,
+      metaDescriptionZh: getString(formData, 'metaDescriptionZh') || null,
       displayOrder: parseInt(getString(formData, 'displayOrder'), 10),
       isActive: formData.get('isActive') === 'on',
       updatedAt: new Date(),
@@ -131,6 +164,10 @@ export async function updateServiceArea(
     if (nameError) return { error: nameError };
     const descError = validateTextLengths({ descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh }, MAX_TEXT_LENGTH);
     if (descError) return { error: descError };
+    const metaTitleError = validateTextLengths({ metaTitleEn: data.metaTitleEn, metaTitleZh: data.metaTitleZh }, 120);
+    if (metaTitleError) return { error: metaTitleError };
+    const metaDescError = validateTextLengths({ metaDescriptionEn: data.metaDescriptionEn, metaDescriptionZh: data.metaDescriptionZh }, 320);
+    if (metaDescError) return { error: metaDescError };
     if (!Number.isFinite(data.displayOrder) || data.displayOrder < 0) {
       return { error: 'Display order must be a non-negative number.' };
     }

@@ -236,12 +236,22 @@ export interface Service {
  * A geographic service area.
  */
 export interface ServiceArea {
+  /** Unique identifier (UUID) */
+  id: string;
   /** URL-friendly area identifier */
   slug: string;
   /** Area name */
   name: Localized<string>;
   /** Area description */
   description?: Localized<string>;
+  /** Rich unique intro copy per area (multiple paragraphs) */
+  content?: Localized<string>;
+  /** Custom area benefits (replaces hardcoded areaBenefits when present) */
+  highlights?: Localized<string[]>;
+  /** Custom SEO meta title per area */
+  metaTitle?: Localized<string>;
+  /** Custom SEO meta description per area */
+  metaDescription?: Localized<string>;
 }
 
 /**
@@ -489,9 +499,14 @@ export interface LocalizedService {
 
 /** A service area with content resolved to a single locale */
 export interface LocalizedArea {
+  id: string;
   slug: string;
   name: string;
   description?: string;
+  content?: string;
+  highlights?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 /**

@@ -330,7 +330,9 @@
     "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
     "serviceInArea": "{service} in {area}",
     "servicesInArea": "Our Services in {area}",
-    "readyToStartRenovation": "Ready to Start Your {area} Renovation?"
+    "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
+    "faqTitle": "Frequently Asked Questions About {area} Renovations",
+    "aboutArea": "About {area}"
   },
   "blog": {
     "title": "Renovation Blog",

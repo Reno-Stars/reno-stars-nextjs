@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc, desc, and, inArray, count } from 'drizzle-orm';
+import { eq, asc, desc, and, inArray, count, isNull, sql } from 'drizzle-orm';
 import { db } from './index';
 import {
   companyInfo,
@@ -711,6 +711,13 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
 // SERVICE AREA QUERIES
 // ============================================================================
 
+/** Parse newline-separated text into a string array, filtering empty lines. */
+function parseNewlineList(text: string | null): string[] | undefined {
+  if (!text) return undefined;
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  return lines.length > 0 ? lines : undefined;
+}
+
 /** Fetch active service areas ordered by display_order. */
 export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
   const rows = await db
@@ -719,14 +726,36 @@ export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
     .where(eq(serviceAreasTable.isActive, true))
     .orderBy(asc(serviceAreasTable.displayOrder));
 
-  return rows.map((row: typeof serviceAreasTable.$inferSelect) => ({
-    slug: row.slug,
-    name: { en: row.nameEn, zh: row.nameZh },
-    description:
-      row.descriptionEn && row.descriptionZh
-        ? { en: row.descriptionEn, zh: row.descriptionZh }
-        : undefined,
-  }));
+  return rows.map((row: typeof serviceAreasTable.$inferSelect) => {
+    const highlightsEn = parseNewlineList(row.highlightsEn);
+    const highlightsZh = parseNewlineList(row.highlightsZh);
+
+    return {
+      id: row.id,
+      slug: row.slug,
+      name: { en: row.nameEn, zh: row.nameZh },
+      description:
+        row.descriptionEn && row.descriptionZh
+          ? { en: row.descriptionEn, zh: row.descriptionZh }
+          : undefined,
+      content:
+        row.contentEn || row.contentZh
+          ? { en: row.contentEn ?? '', zh: row.contentZh ?? '' }
+          : undefined,
+      highlights:
+        highlightsEn || highlightsZh
+          ? { en: highlightsEn ?? [], zh: highlightsZh ?? [] }
+          : undefined,
+      metaTitle:
+        row.metaTitleEn || row.metaTitleZh
+          ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
+          : undefined,
+      metaDescription:
+        row.metaDescriptionEn || row.metaDescriptionZh
+          ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
+          : undefined,
+    };
+  });
 });
 
 // ============================================================================
@@ -960,29 +989,76 @@ export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
 // FAQ QUERIES
 // ============================================================================
 
-/**
- * Fetch active FAQs ordered by display_order.
- * Replaces `{yearsExperience}` placeholder with computed value from company info.
- */
-export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
-  const rows = await db
-    .select()
-    .from(faqsTable)
-    .where(eq(faqsTable.isActive, true))
-    .orderBy(asc(faqsTable.displayOrder));
-
-  // Get years experience for placeholder replacement
+/** Map raw FAQ rows to Faq[], replacing {yearsExperience} placeholders. */
+async function mapFaqRows(rows: (typeof faqsTable.$inferSelect)[]): Promise<Faq[]> {
+  if (rows.length === 0) return [];
   const company = await getCompanyFromDb();
-  const yearsExperience = company.yearsExperience;
-
   const replaceYears = (text: string) =>
-    text.replace(/\{yearsExperience\}/g, yearsExperience);
-
-  return rows.map((row: typeof faqsTable.$inferSelect) => ({
+    text.replace(/\{yearsExperience\}/g, company.yearsExperience);
+  return rows.map((row) => ({
     id: row.id,
     question: { en: row.questionEn, zh: row.questionZh },
     answer: { en: replaceYears(row.answerEn), zh: replaceYears(row.answerZh) },
   }));
+}
+
+/** Fetch active global FAQs (no area scope) ordered by display_order. */
+export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
+  const rows = await db
+    .select()
+    .from(faqsTable)
+    .where(and(eq(faqsTable.isActive, true), isNull(faqsTable.serviceAreaId)))
+    .orderBy(asc(faqsTable.displayOrder));
+  return mapFaqRows(rows);
+});
+
+/** Fetch active FAQs for a specific service area, ordered by display_order. */
+export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> => {
+  const rows = await db
+    .select()
+    .from(faqsTable)
+    .where(and(eq(faqsTable.isActive, true), eq(faqsTable.serviceAreaId, areaId)))
+    .orderBy(asc(faqsTable.displayOrder));
+  return mapFaqRows(rows);
+});
+
+// ============================================================================
+// AREA PROJECT QUERIES
+// ============================================================================
+
+/**
+ * Fetch published projects where locationCity matches the given city name (case-insensitive).
+ * Returns up to 6 Project[] for area pages. Queries the projects table directly so it captures
+ * projects inside any site (including individual-projects with showAsProject=false).
+ */
+export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<Project[]> => {
+  const matchingRows: DbProjectRow[] = await db
+    .select()
+    .from(projectsTable)
+    .where(and(
+      eq(projectsTable.isPublished, true),
+      sql`LOWER(${projectsTable.locationCity}) = LOWER(${cityName})`
+    ))
+    .orderBy(desc(projectsTable.createdAt))
+    .limit(6);
+
+  if (matchingRows.length === 0) return [];
+
+  const ids = matchingRows.map((r: DbProjectRow) => r.id);
+  const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
+
+  const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
+  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+
+  return matchingRows.map((row: DbProjectRow) =>
+    mapDbProjectToProject(
+      row,
+      scopesByProject.get(row.id) ?? [],
+      epByProject.get(row.id) ?? [],
+      imagePairsByProject.get(row.id) ?? []
+    )
+  );
 });
 
 // ============================================================================

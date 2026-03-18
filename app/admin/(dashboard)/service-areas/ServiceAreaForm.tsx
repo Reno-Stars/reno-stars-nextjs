@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
 import BilingualTextarea from '@/components/admin/BilingualTextarea';
+import BilingualInput from '@/components/admin/BilingualInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
 import { inputStyle, readOnlyStyle } from '@/components/admin/shared-styles';
 import SubmitButton from '@/components/admin/SubmitButton';
-import { CARD, NAVY, neu } from '@/lib/theme';
+import { CARD, NAVY, TEXT_MID, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
 interface ServiceAreaFormProps {
@@ -23,6 +24,14 @@ interface ServiceAreaFormProps {
     nameZh: string;
     descriptionEn: string;
     descriptionZh: string;
+    contentEn: string;
+    contentZh: string;
+    highlightsEn: string;
+    highlightsZh: string;
+    metaTitleEn: string;
+    metaTitleZh: string;
+    metaDescriptionEn: string;
+    metaDescriptionZh: string;
     displayOrder: number;
     isActive: boolean;
   };
@@ -43,6 +52,14 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
     nameZh: '',
     descriptionEn: '',
     descriptionZh: '',
+    contentEn: '',
+    contentZh: '',
+    highlightsEn: '',
+    highlightsZh: '',
+    metaTitleEn: '',
+    metaTitleZh: '',
+    metaDescriptionEn: '',
+    metaDescriptionZh: '',
     displayOrder: 0,
     isActive: true,
   };
@@ -87,6 +104,52 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
             defaultValueEn={defaults.descriptionEn}
             defaultValueZh={defaults.descriptionZh}
             rows={4}
+          />
+
+          <BilingualTextarea
+            nameEn="contentEn"
+            nameZh="contentZh"
+            label={t.serviceAreas.contentLabel}
+            defaultValueEn={defaults.contentEn}
+            defaultValueZh={defaults.contentZh}
+            rows={8}
+            tooltip={t.serviceAreas.contentHelp}
+          />
+
+          <BilingualTextarea
+            nameEn="highlightsEn"
+            nameZh="highlightsZh"
+            label={t.serviceAreas.highlightsLabel}
+            defaultValueEn={defaults.highlightsEn}
+            defaultValueZh={defaults.highlightsZh}
+            rows={5}
+            tooltip={t.serviceAreas.highlightsHelp}
+          />
+
+          {/* SEO Settings */}
+          <div style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>
+            <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: NAVY }}>{t.serviceAreas.seoSettings}</h3>
+            <p style={{ fontSize: '0.75rem', color: TEXT_MID, marginTop: '0.25rem' }}>
+              {t.serviceAreas.seoHelp}
+            </p>
+          </div>
+
+          <BilingualInput
+            nameEn="metaTitleEn"
+            nameZh="metaTitleZh"
+            label={t.serviceAreas.metaTitleLabel}
+            defaultValueEn={defaults.metaTitleEn}
+            defaultValueZh={defaults.metaTitleZh}
+            maxLength={120}
+          />
+
+          <BilingualInput
+            nameEn="metaDescriptionEn"
+            nameZh="metaDescriptionZh"
+            label={t.serviceAreas.metaDescriptionLabel}
+            defaultValueEn={defaults.metaDescriptionEn}
+            defaultValueZh={defaults.metaDescriptionZh}
+            maxLength={320}
           />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>

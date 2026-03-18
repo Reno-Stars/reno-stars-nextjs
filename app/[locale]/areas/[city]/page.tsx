@@ -4,11 +4,11 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
-import { BreadcrumbSchema, LocalBusinessAreaSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -41,8 +41,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
 
   const t = await getTranslations({ locale, namespace: 'metadata.area' });
-  const title = t('title', { area: localizedArea.name });
-  const description = localizedArea.description || t('description', { area: localizedArea.name });
+
+  // Use custom meta title/description when available, fallback to generated
+  const title = localizedArea.metaTitle || t('title', { area: localizedArea.name });
+  const description = localizedArea.metaDescription || localizedArea.description || t('description', { area: localizedArea.name });
 
   return {
     title,
@@ -71,18 +73,23 @@ export default async function Page({ params }: PageProps) {
   const { locale, city } = await params;
   setRequestLocale(locale);
 
-  const [areas, company, services, googleReviews] = await Promise.all([
-    getServiceAreasFromDb(),
-    getCompanyFromDb(),
-    getServicesFromDb(),
-    getGoogleReviews(),
-  ]);
-
+  // Resolve area first so we can fire all dependent queries in a single Promise.all.
+  const areas = await getServiceAreasFromDb();
   const area = areas.find((a) => a.slug === city);
 
   if (!area) {
     notFound();
   }
+
+  // Note: getProjectsByAreaFromDb matches projects.locationCity against the area's English name.
+  // This coupling works because project locationCity values use city names (e.g. "Burnaby").
+  const [company, services, googleReviews, areaFaqs, areaProjects] = await Promise.all([
+    getCompanyFromDb(),
+    getServicesFromDb(),
+    getGoogleReviews(),
+    getFaqsByAreaFromDb(area.id),
+    getProjectsByAreaFromDb(area.name.en),
+  ]);
 
   const localizedArea = getLocalizedArea(area, locale as Locale);
 
@@ -96,6 +103,12 @@ export default async function Page({ params }: PageProps) {
   const localizedServices = services.map((s) => getLocalizedService(s, locale as Locale));
   const serviceNames = localizedServices.map((s) => s.title);
 
+  // Build localized FAQ data for structured data
+  const localizedFaqs = areaFaqs.map((faq) => ({
+    question: faq.question[locale as Locale],
+    answer: faq.answer[locale as Locale],
+  }));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
@@ -108,7 +121,15 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />
-      <AreaPage locale={locale as Locale} area={area} company={company} services={localizedServices} />
+      {localizedFaqs.length > 0 && <FAQSchema faqs={localizedFaqs} />}
+      <AreaPage
+        locale={locale as Locale}
+        area={area}
+        company={company}
+        services={localizedServices}
+        faqs={areaFaqs}
+        areaProjects={areaProjects}
+      />
     </>
   );
 }

@@ -8,6 +8,13 @@ import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 
+function parseServiceAreaId(formData: FormData): string | null {
+  const raw = getString(formData, 'serviceAreaId').trim();
+  if (!raw) return null;
+  if (!isValidUUID(raw)) return null;
+  return raw;
+}
+
 export async function createFaq(
   _prevState: { success?: boolean; error?: string },
   formData: FormData
@@ -29,8 +36,10 @@ export async function createFaq(
       return { error: 'Display order must be a non-negative number.' };
     }
 
+    const serviceAreaId = parseServiceAreaId(formData);
+
     await db.insert(faqs).values({
-      questionEn, questionZh, answerEn, answerZh, displayOrder, isActive,
+      questionEn, questionZh, answerEn, answerZh, serviceAreaId, displayOrder, isActive,
     });
 
     revalidatePath('/admin/faqs');
@@ -94,8 +103,10 @@ export async function updateFaq(
       return { error: 'Display order must be a non-negative number.' };
     }
 
+    const serviceAreaId = parseServiceAreaId(formData);
+
     const updated = await db.update(faqs).set({
-      questionEn, questionZh, answerEn, answerZh, displayOrder, isActive,
+      questionEn, questionZh, answerEn, answerZh, serviceAreaId, displayOrder, isActive,
       updatedAt: new Date(),
     }).where(eq(faqs.id, id)).returning({ id: faqs.id });
     if (updated.length === 0) return { error: 'FAQ not found.' };

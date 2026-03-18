@@ -11,6 +11,7 @@ import ToggleButton from '@/components/admin/ToggleButton';
 import { useDragReorder } from '@/hooks/useDragReorder';
 import { toggleFaqActive, deleteFaq, reorderFaqs } from '@/app/actions/admin/faqs';
 import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, ERROR, neu } from '@/lib/theme';
+import type { AreaOption } from '@/lib/admin/constants';
 
 interface FaqRow {
   id: string;
@@ -18,15 +19,17 @@ interface FaqRow {
   questionZh: string;
   answerEn: string;
   answerZh: string;
+  serviceAreaId: string | null;
   displayOrder: number;
   isActive: boolean;
 }
 
 interface Props {
   faqs: FaqRow[];
+  serviceAreas: AreaOption[];
 }
 
-export default function FaqsListClient({ faqs }: Props) {
+export default function FaqsListClient({ faqs, serviceAreas }: Props) {
   const [isPending, startTransition] = useTransition();
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -47,6 +50,12 @@ export default function FaqsListClient({ faqs }: Props) {
     onSuccess: () => toast(t.common.savedSuccessfully, 'success'),
     onError: (err) => toast(err, 'error'),
   });
+
+  const areaMap = useMemo(() => {
+    const m = new Map<string, AreaOption>();
+    for (const a of serviceAreas) m.set(a.id, a);
+    return m;
+  }, [serviceAreas]);
 
   const displayData = useMemo(
     () => localOrder ?? [...faqs].sort((a, b) => a.displayOrder - b.displayOrder),
@@ -75,6 +84,16 @@ export default function FaqsListClient({ faqs }: Props) {
           </span>
         ),
       },
+      {
+        key: 'serviceAreaId',
+        header: t.faqs.serviceArea,
+        render: (row: FaqRow) => {
+          if (!row.serviceAreaId) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>{t.faqs.globalFaq}</span>;
+          const area = areaMap.get(row.serviceAreaId);
+          if (!area) return <span style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>—</span>;
+          return <span style={{ fontSize: '0.8125rem' }}>{locale === 'zh' ? area.nameZh : area.nameEn}</span>;
+        },
+      },
       { key: 'displayOrder', header: t.faqs.displayOrder },
       {
         key: 'isActive',
@@ -96,7 +115,7 @@ export default function FaqsListClient({ faqs }: Props) {
         ),
       },
     ];
-  }, [locale, pendingId, toast, t]);
+  }, [locale, pendingId, toast, t, areaMap]);
 
   const activeFaqs = useMemo(
     () => displayData

@@ -14,7 +14,7 @@ interface FaqSectionProps {
   faqs: FaqItem[];
   translations: {
     title: string;
-    subtitle: string;
+    subtitle?: string;
   };
 }
 
@@ -32,7 +32,7 @@ export default function FaqSection({ faqs, translations: t }: FaqSectionProps) {
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
           <h2 id="faq-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
-          <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
+          {t.subtitle && <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>}
         </div>
         <div className="space-y-3">
           {faqs.map((faq) => {

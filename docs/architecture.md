@@ -66,12 +66,12 @@ lib/
     index.ts              # Images, video constants, type re-exports, localization helpers
     projects.ts           # Project localization helpers, category slugs
     services.ts           # Service type mappings and localization helpers
-    areas.ts              # Area localization helper (getLocalizedArea)
+    areas.ts              # Area localization helper (getLocalizedArea — includes content, highlights, meta fields)
   admin/                  # Admin utilities
     auth.ts               # Session cookie auth (24h TTL)
     form-utils.ts         # Form validation + image pair parsing (getString, isValidUrl, parseImagePairs, etc.)
     gallery-categories.ts # Async gallery category options fetched from services DB
-    constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, mappings)
+    constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, AreaOption, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
     upload-constants.ts   # Shared upload limits (MAX_IMAGE_SIZE, ALLOWED_IMAGE_TYPES)
@@ -108,6 +108,8 @@ scripts/
   seed-storage.ts         # MinIO asset seeder
   seed-projects.ts        # Import static projects into DB
   seed-blog.ts            # WordPress blog crawler (EN via REST API, ZH via HTML crawling)
+  seed-area-content.ts    # Seed area rich content, highlights, meta, and area-specific FAQs
+  fix-area-seo.ts         # Fix area SEO: meta lengths, brand name, AI writing tells
 
 hooks/
   useDragReorder.ts       # Reusable drag-and-drop reordering with optimistic UI
@@ -155,14 +157,16 @@ Cached async functions fetch data from the database and return the same TypeScri
 | `getProjectBySlugFromDb(slug)` | `Project \| null` | Single project lookup by slug |
 | `getProjectSlugsFromDb()` | `{ slug, updatedAt }[]` | Published project slugs + dates for sitemap |
 | `getSiteSlugsFromDb()` | `{ slug, updatedAt }[]` | Published site slugs (showAsProject=true) + dates for sitemap |
-| `getServiceAreasFromDb()` | `ServiceArea[]` | Active areas, ordered by `displayOrder` |
+| `getServiceAreasFromDb()` | `ServiceArea[]` | Active areas with content, highlights, meta fields; ordered by `displayOrder` |
 | `getBlogPostsFromDb()` | `BlogPost[]` | Published posts, ordered by `publishedAt desc` |
 | `getBlogPostBySlugFromDb(slug)` | `BlogPost \| null` | Single post lookup, includes related project if linked |
 | `getBlogPostSlugsFromDb()` | `{ slug, updatedAt }[]` | Published slugs + dates for sitemap (uncached) |
 | `getGalleryItemsFromDb()` | `GalleryItem[]` | Published items, `getAssetUrl()` applied to images |
 | `getTrustBadgesFromDb()` | `{ en: string; zh: string }[]` | Active badges, ordered by `displayOrder` |
 | `getShowroomFromDb()` | `Showroom` | Singleton row |
-| `getFaqsFromDb()` | `Faq[]` | Active FAQs, replaces `{yearsExperience}` placeholder |
+| `getFaqsFromDb()` | `Faq[]` | Active global FAQs (no area scope), replaces `{yearsExperience}` placeholder |
+| `getFaqsByAreaFromDb(areaId)` | `Faq[]` | Active FAQs for a specific service area |
+| `getProjectsByAreaFromDb(cityName)` | `Project[]` | Up to 6 published projects matching city (case-insensitive) |
 | `getPartnersFromDb()` | `Partner[]` | Active partners, ordered by `displayOrder` |
 | `getSitesAsProjectsFromDb()` | `SiteWithProjects[]` | Sites with aggregated data for "Whole House" display |
 
@@ -271,8 +275,8 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 
 ## Component Patterns
 
-- **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer.
-- **Homepage sections** (`components/home/`): 15 section components extracted from HomePage for code-splitting. 10 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, PartnersSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar), 1 is a shared Client component (Marquee), 1 is a shared utility module (marquee-utils). TestimonialsSection and PartnersSection use the `<Marquee>` client component for infinite horizontal scroll. ContactSection includes a Google Maps embed (using shared `MAP_EMBED_URL` from `lib/data`). FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
+- **Page components** (`components/pages/`): One per route. All are `'use client'` components. Receive `locale`, `company`, and page-specific data as props. Do **not** render Navbar or Footer. `AreaPage` receives area-specific FAQs, DB-sourced projects, and renders unique content/highlights when available from the database.
+- **Homepage sections** (`components/home/`): 15 section components extracted from HomePage for code-splitting. 10 are Server Components (HeroSection, ServiceAreasBar, TestimonialsSection, ServicesSection, StatsSection, AboutSection, TrustBadgesSection, PartnersSection, BlogSection, ShowroomSection), 3 are Client Components (GallerySection, FaqSection, ContactSection), 1 is a Client utility (GoogleAvatar), 1 is a shared Client component (Marquee), 1 is a shared utility module (marquee-utils). TestimonialsSection and PartnersSection use the `<Marquee>` client component for infinite horizontal scroll. ContactSection includes a Google Maps embed (using shared `MAP_EMBED_URL` from `lib/data`). FaqSection uses CSS Grid accordion animation (`grid-template-rows: 0fr` → `1fr`); `subtitle` prop is optional (omitted on area pages). Below-fold sections are loaded via `next/dynamic` with skeleton fallbacks.
 - **Marquee** (`components/home/Marquee.tsx`): Renderless client component for infinite-scroll carousels used by TestimonialsSection and PartnersSection. Accepts `trackId` (string), `repeatCount` (number), and `duration` (number) as props — only primitives cross the client boundary, so the RSC payload contains no React elements. The parent server component renders semantic items into a track element with `id={trackId}`, then `<Marquee>` activates the animation client-side. Clones are created via DOM `cloneNode(true)` in a `useEffect` — appends `repeatCount * 2 - 1` clone sets into an `aria-hidden` + `inert` wrapper (the track scrolls from 0 to -50%, so it needs a second identical half). Animation uses `marquee-scroll` keyframes from `globals.css`. Respects `prefers-reduced-motion` with a live `matchMedia` listener — clones and animation are removed if the user toggles the setting. Hover and focus pause via container event listeners. Full cleanup on unmount (animation, clones, listeners). Shared `computeMarqueeParams()` in `marquee-utils.ts` (plain module, no `'use client'`) calculates `repeatCount` and `duration` from item count, item width, and seconds-per-item to ensure one set fills ≥2000px.
 - **Structured data** (`components/structured-data/`): JSON-LD schema injected via `<script type="application/ld+json">`. Used in server page route files. Schema components accept `company` as a prop. Includes 13 schemas: LocalBusinessSchema, LocalBusinessAreaSchema, WebSiteSchema (with `SearchAction` for sitelinks search), ServiceSchema, ProjectSchema (`WebPage` with `mainEntity: Service`), ProjectCategorySchema (`ItemList` with positioned project links), ArticleSchema (with `ImageObject` including width/height), BreadcrumbSchema, FAQSchema, ReviewSchema, HowToSchema (process page, 5-step renovation workflow with tools and total time), ContactPageSchema (`ContactPage` with `HomeAndConstructionBusiness` + `ContactPoint`). Shared `parseAddress()` utility in `parse-address.ts` used by both `LocalBusinessSchema` and `ContactPageSchema`. Rating data comes from Google Reviews API (`googleRating`/`googleReviewCount` props) — no longer stored in the Company model. `aggregateRating` is conditionally rendered only when Google data is available. ReviewSchema emits individual reviews only (aggregate rating handled globally by LocalBusinessSchema in the layout).
 - **Navbar**: Unified navigation with 7 links (Home, Services, Projects, Design, Benefits, Contact, Blog & News) + Areas dropdown (14 cities). Receives `company` and `areas` as props from layout. Uses `useMemo` for link arrays, `useCallback` for locale switching, focus trap for mobile menu. Logo uses `priority` for faster LCP. Toggle state setters use functional updater form.

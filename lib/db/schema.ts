@@ -124,6 +124,21 @@ export const serviceAreas = pgTable(
     nameZh: varchar('name_zh', { length: 100 }).notNull(),
     descriptionEn: text('description_en'),
     descriptionZh: text('description_zh'),
+
+    // Rich unique intro copy per area (multiple paragraphs)
+    contentEn: text('content_en'),
+    contentZh: text('content_zh'),
+
+    // Newline-separated custom benefits (replaces hardcoded areaBenefits when present)
+    highlightsEn: text('highlights_en'),
+    highlightsZh: text('highlights_zh'),
+
+    // Custom SEO meta title/description per area
+    metaTitleEn: varchar('meta_title_en', { length: 120 }),
+    metaTitleZh: varchar('meta_title_zh', { length: 120 }),
+    metaDescriptionEn: varchar('meta_description_en', { length: 320 }),
+    metaDescriptionZh: varchar('meta_description_zh', { length: 320 }),
+
     isActive: boolean('is_active').default(true).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -759,12 +774,17 @@ export const faqs = pgTable(
     questionZh: varchar('question_zh', { length: 500 }).notNull(),
     answerEn: text('answer_en').notNull(),
     answerZh: text('answer_zh').notNull(),
+    /** null = global FAQ, non-null = area-specific FAQ */
+    serviceAreaId: uuid('service_area_id').references(() => serviceAreas.id, { onDelete: 'set null' }),
     displayOrder: integer('display_order').default(0).notNull(),
     isActive: boolean('is_active').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },
-  (table) => [index('faqs_active_order_idx').on(table.isActive, table.displayOrder)]
+  (table) => [
+    index('faqs_active_order_idx').on(table.isActive, table.displayOrder),
+    index('faqs_service_area_id_idx').on(table.serviceAreaId),
+  ]
 );
 
 // ============================================================================

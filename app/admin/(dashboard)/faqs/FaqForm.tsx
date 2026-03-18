@@ -10,6 +10,7 @@ import { inputStyle, readOnlyStyle, textareaStyle, readOnlyTextareaStyle } from 
 import SubmitButton from '@/components/admin/SubmitButton';
 import { CARD, NAVY, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import type { AreaOption } from '@/lib/admin/constants';
 
 interface FaqFormProps {
   action: (
@@ -21,13 +22,15 @@ interface FaqFormProps {
     questionZh: string;
     answerEn: string;
     answerZh: string;
+    serviceAreaId: string | null;
     displayOrder: number;
     isActive: boolean;
   };
+  serviceAreas?: AreaOption[];
   isNew?: boolean;
 }
 
-export default function FaqForm({ action, initialData, isNew = false }: FaqFormProps) {
+export default function FaqForm({ action, initialData, serviceAreas = [], isNew = false }: FaqFormProps) {
   const t = useAdminTranslations();
   const [editing, setEditing] = useState(isNew);
   const [state, formAction, isPending] = useActionState(action, {});
@@ -41,6 +44,7 @@ export default function FaqForm({ action, initialData, isNew = false }: FaqFormP
     questionZh: '',
     answerEn: '',
     answerZh: '',
+    serviceAreaId: null,
     displayOrder: 0,
     isActive: true,
   };
@@ -74,6 +78,19 @@ export default function FaqForm({ action, initialData, isNew = false }: FaqFormP
           <FormField label={`${t.faqs.answer} (ZH)`} htmlFor="answerZh">
             <textarea id="answerZh" name="answerZh" rows={4} defaultValue={defaults.answerZh} required style={taStyle} />
           </FormField>
+
+          {serviceAreas.length > 0 && (
+            <FormField label={t.faqs.serviceArea} htmlFor="serviceAreaId">
+              <select id="serviceAreaId" name="serviceAreaId" defaultValue={defaults.serviceAreaId ?? ''} style={fieldStyle}>
+                <option value="">{t.faqs.globalFaq}</option>
+                {serviceAreas.map((area) => (
+                  <option key={area.id} value={area.id}>
+                    {area.nameEn} / {area.nameZh}
+                  </option>
+                ))}
+              </select>
+            </FormField>
+          )}
 
           <FormField label={t.faqs.displayOrder} htmlFor="displayOrder">
             <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={{ ...fieldStyle, maxWidth: '150px' }} />

@@ -21,6 +21,13 @@ export const SPACE_TYPE_TO_ZH: Record<string, string> = Object.fromEntries(
   SPACE_TYPES.map(({ en, zh }) => [en, zh])
 );
 
+/** Lightweight service area option for admin dropdowns */
+export interface AreaOption {
+  id: string;
+  nameEn: string;
+  nameZh: string;
+}
+
 /** All available service scopes per service type slug, loaded from JSON. */
 export const SERVICE_SCOPES: Record<string, { en: string; zh: string }[]> =
   scopesData as Record<string, { en: string; zh: string }[]>;

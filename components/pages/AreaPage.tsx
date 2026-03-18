@@ -1,19 +1,18 @@
 'use client';
 
 import { useMemo } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { ChevronRight, MapPin } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import {
-  getLocalizedArea,
-  getAllProjectsLocalized,
-} from '@/lib/data';
-import type { Company, LocalizedService, ServiceArea } from '@/lib/types';
+import { getLocalizedArea } from '@/lib/data/areas';
+import { getLocalizedProject } from '@/lib/data/projects';
+import type { Company, Faq, LocalizedService, Project, ServiceArea } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
-import RelatedProjectsSection from '@/components/RelatedProjectsSection';
+import FaqSection from '@/components/home/FaqSection';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
@@ -24,27 +23,46 @@ interface AreaPageProps {
   area: ServiceArea;
   company: Company;
   services: LocalizedService[];
+  faqs: Faq[];
+  areaProjects: Project[];
 }
 
-export default function AreaPage({ locale, area, company, services }: AreaPageProps) {
+export default function AreaPage({ locale, area, company, services, faqs, areaProjects }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
 
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
-  const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
-  const cityProjects = useMemo(() => allProjects.filter(
-    (p) => p.location_city.toLowerCase() === localizedArea.name.toLowerCase() ||
-           p.location_city.toLowerCase() === area.name.en.toLowerCase()
-  ).slice(0, 6), [allProjects, localizedArea.name, area.name.en]);
 
-  const benefits = [
-    t('areaBenefits.localTeam'),
-    t('areaBenefits.quickResponse'),
-    t('areaBenefits.buildingCodes'),
-    t('areaBenefits.supplierRelationships'),
-    t('areaBenefits.freeOnsite'),
-    t('areaBenefits.competitivePricing'),
-  ];
+  // Localize FAQs for the FaqSection component
+  const localizedFaqs = useMemo(
+    () => faqs.map((faq) => ({
+      id: faq.id,
+      question: faq.question[locale],
+      answer: faq.answer[locale],
+    })),
+    [faqs, locale],
+  );
+
+  // Localize area projects for display
+  const localizedProjects = useMemo(
+    () => areaProjects.map((p) => getLocalizedProject(p, locale)),
+    [areaProjects, locale],
+  );
+
+  // Use custom highlights when present, fallback to hardcoded i18n benefits
+  const benefits = useMemo(() => {
+    if (localizedArea.highlights && localizedArea.highlights.length > 0) {
+      return localizedArea.highlights;
+    }
+    return [
+      t('areaBenefits.localTeam'),
+      t('areaBenefits.quickResponse'),
+      t('areaBenefits.buildingCodes'),
+      t('areaBenefits.supplierRelationships'),
+      t('areaBenefits.freeOnsite'),
+      t('areaBenefits.competitivePricing'),
+    ];
+  }, [localizedArea.highlights, t]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -69,8 +87,22 @@ export default function AreaPage({ locale, area, company, services }: AreaPagePr
         </div>
       </section>
 
+      {/* Unique Content */}
+      {localizedArea.content && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-3xl mx-auto space-y-4">
+            <h2 className="sr-only">{t('areas.aboutArea', { area: localizedArea.name })}</h2>
+            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
+              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Services */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: localizedArea.content ? SURFACE_ALT : SURFACE }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
             {t('areas.servicesInArea', { area: localizedArea.name })}
@@ -98,6 +130,16 @@ export default function AreaPage({ locale, area, company, services }: AreaPagePr
         </div>
       </section>
 
+      {/* Area-specific FAQs */}
+      {localizedFaqs.length > 0 && (
+        <FaqSection
+          faqs={localizedFaqs}
+          translations={{
+            title: t('areas.faqTitle', { area: localizedArea.name }),
+          }}
+        />
+      )}
+
       {/* Why Choose Us */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto">
@@ -108,11 +150,61 @@ export default function AreaPage({ locale, area, company, services }: AreaPagePr
         </div>
       </section>
 
-      <RelatedProjectsSection
-        heading={t('areas.viewProjects', { city: localizedArea.name })}
-        projects={cityProjects}
-        bg={SURFACE}
-      />
+      {/* Related Projects from DB */}
+      {localizedProjects.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>
+                  {t('areas.viewProjects', { city: localizedArea.name })}
+                </h2>
+                <p className="text-sm" style={{ color: TEXT_MID }}>
+                  {t('projects.subtitle')}
+                </p>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:flex items-center gap-1 text-sm font-semibold"
+                style={{ color: GOLD }}
+              >
+                {t('cta.viewAllProjects')} <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {localizedProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="rounded-xl overflow-hidden group"
+                  style={{ boxShadow: neu(4), backgroundColor: CARD }}
+                >
+                  {project.hero_image && (
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      <Image
+                        src={project.hero_image}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
+                      {project.title}
+                    </h3>
+                    <p className="text-sm line-clamp-2" style={{ color: TEXT_MID }}>
+                      {project.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection
         heading={t('areas.readyToStartRenovation', { area: localizedArea.name })}

@@ -28,7 +28,7 @@ Components in `components/structured-data/`:
 | `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
 | `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
-| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service) |
+| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service), Area pages (area-specific FAQs) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 | `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
@@ -180,7 +180,7 @@ All pages include `width: 1200`, `height: 630`, and `alt` text on their OpenGrap
 | Service detail | `service.image` (fallback: hero) | Localized service title |
 | Service + location | `service.image` (fallback: hero) | Combined service+area title |
 | Project category | Hero image | Localized category name |
-| Area detail | Hero image | Localized area name |
+| Area detail | Hero image | Localized area name (custom metaTitle when available) |
 | Hub pages | Hero image | Page title from translations |
 
 ## SEO Metadata from Database
@@ -196,6 +196,17 @@ Project and blog post pages use dedicated SEO fields from the database when avai
 Project meta descriptions use a three-tier fallback: dedicated SEO field → excerpt → full description. Excerpts are typically more concise and SERP-optimized than full descriptions.
 
 Blog posts additionally include `og:article:published_time` and `og:article:modified_time` from `published_at` and `updated_at` timestamps.
+
+### Area Page SEO Metadata
+
+Area pages (`/[locale]/areas/[city]/`) support custom SEO metadata from the database with automatic fallbacks:
+
+| Field | Source | Fallback |
+|-------|--------|----------|
+| `title` | `area.metaTitle[locale]` | `t('metadata.area.title', { area: name })` |
+| `description` | `area.metaDescription[locale]` | `area.description[locale]` → `t('metadata.area.description', { area: name })` |
+
+Area pages also render `FAQSchema` structured data when area-specific FAQs exist in the database.
 
 ## Twitter Cards
 

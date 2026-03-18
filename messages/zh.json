@@ -330,7 +330,9 @@
     "readyToStartIn": "准备在{area}开始您的{service}项目？",
     "serviceInArea": "{area}{service}",
     "servicesInArea": "我们在{area}的服务",
-    "readyToStartRenovation": "准备开始您的{area}装修项目？"
+    "readyToStartRenovation": "准备开始您的{area}装修项目？",
+    "faqTitle": "{area}装修常见问题",
+    "aboutArea": "关于{area}"
   },
   "blog": {
     "title": "装修博客",

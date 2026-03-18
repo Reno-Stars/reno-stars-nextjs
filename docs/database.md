@@ -21,7 +21,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 |-------|---------|------------|
 | `services` | Renovation service types | `slug` |
 | `service_tags` | Sub-service tags per service (bilingual) | `(serviceId, displayOrder)` |
-| `service_areas` | Geographic coverage | `slug` |
+| `service_areas` | Geographic coverage (includes rich content, highlights, SEO meta) | `slug` |
 | `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
 | `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
 | `projects` | Portfolio entries (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
@@ -64,7 +64,7 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `gallery_items` | Gallery images | `id`, `image_url` (unique index) |
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
-| `faqs` | Frequently asked questions | `id`, composite index on `(isActive, displayOrder)` |
+| `faqs` | Frequently asked questions (global or area-specific) | `id`, composite index on `(isActive, displayOrder)`, index on `serviceAreaId` |
 | `partners` | Partner logos (homepage carousel) | `id`, composite index on `(isActive, displayOrder)` |
 
 ### Social Media Posts
@@ -148,6 +148,7 @@ Key indexes beyond unique constraints:
 | `projects_is_published_idx` | `projects` | `(isPublished)` | Public project queries |
 | `blog_posts_is_published_idx` | `blog_posts` | `(isPublished)` | Public blog queries |
 | `faqs_active_order_idx` | `faqs` | `(isActive, displayOrder)` | Active FAQ ordering |
+| `faqs_service_area_id_idx` | `faqs` | `(serviceAreaId)` | Area-specific FAQ lookup |
 | `partners_active_order_idx` | `partners` | `(isActive, displayOrder)` | Active partner ordering |
 | `social_media_posts_status_idx` | `social_media_posts` | `(status)` | Status filtering |
 | `social_media_posts_created_at_idx` | `social_media_posts` | `(created_at)` | Sort by creation date |
@@ -197,7 +198,9 @@ const postSlugs = await getBlogPostSlugsFromDb();       // string[]
 const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
 const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
 const showroom = await getShowroomFromDb();             // Showroom
-const faqs = await getFaqsFromDb();                      // Faq[] (replaces {yearsExperience} placeholder)
+const faqs = await getFaqsFromDb();                      // Faq[] (global only, replaces {yearsExperience} placeholder)
+const areaFaqs = await getFaqsByAreaFromDb(areaId);      // Faq[] (area-specific FAQs)
+const areaProjects = await getProjectsByAreaFromDb(city); // Project[] (up to 6, case-insensitive city match)
 const partners = await getPartnersFromDb();             // Partner[] (active, ordered)
 const sites = await getSitesAsProjectsFromDb();         // SiteWithProjects[] (with aggregated data)
 ```
