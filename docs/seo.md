@@ -70,6 +70,7 @@ Where an `<h2>` is structurally required for valid heading hierarchy (H1 → H2 
 ## Semantic HTML
 
 - Blog post cards wrapped in `<article>` elements
+- Project cards render as `<Link href="/projects/{slug}">` (crawlable `<a>`) with `e.preventDefault()` + modal onClick for JS users; crawlers see real links to project detail pages
 - Navbar "Areas" uses a crawlable `<Link href="/areas">` for the label + a `<button>` chevron for the dropdown toggle; dropdown items use `role="menu"` / `role="menuitem"`
 - Navbar language switcher uses `<Link locale={otherLocale}>` (crawlable anchor) instead of a JS-only button
 - Decorative elements (video, star icons) have `aria-hidden="true"`

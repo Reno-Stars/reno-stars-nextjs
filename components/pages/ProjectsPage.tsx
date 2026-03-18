@@ -566,6 +566,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                     project={project}
                     showDescription
                     showChevron
+                    href={`/projects/${project.slug}`}
                     onClick={handleCardClick}
                     isSiteProject={project.isSiteProject}
                     projectCount={project.projectCount}

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ChevronRight, Layers } from 'lucide-react';
+import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
 import { GOLD, NAVY, CARD, TEXT, TEXT_MID, TEXT_MUTED, SH_DARK, neu } from '@/lib/theme';
 
@@ -11,6 +12,8 @@ interface ProjectCardProps {
   showDescription?: boolean;
   /** Show a chevron arrow in the footer */
   showChevron?: boolean;
+  /** Crawlable link to the project detail page */
+  href?: string;
   /** Called when the card is clicked (opens modal) */
   onClick?: (project: LocalizedProject) => void;
   /** Whether this card represents a whole-house site project */
@@ -24,11 +27,9 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({
-  project, showDescription, showChevron, onClick,
+  project, showDescription, showChevron, href, onClick,
   isSiteProject, projectCount, areasCountLabel, siteBadgeLabel,
 }: ProjectCardProps) {
-  // Render as <article> when used inside a Link (no onClick), <button> otherwise
-  const Tag = onClick ? 'button' : 'article';
 
   const cardContent = (
     <>
@@ -95,13 +96,33 @@ export default function ProjectCard({
     ? { boxShadow: `${NEU5}, 4px 8px 0 -2px ${CARD}, 4px 8px 4px -2px ${SH_DARK}` }
     : { boxShadow: NEU5 };
 
+  const className = "block rounded-2xl overflow-hidden group text-left cursor-pointer w-full";
+  const style = { ...stackedStyle, backgroundColor: CARD };
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        onClick={onClick ? (e: React.MouseEvent) => { e.preventDefault(); onClick(project); } : undefined}
+        className={className}
+        style={style}
+      >
+        {cardContent}
+      </Link>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <button type="button" onClick={() => onClick(project)} className={className} style={style}>
+        {cardContent}
+      </button>
+    );
+  }
+
   return (
-    <Tag
-      {...(onClick ? { type: 'button' as const, onClick: () => onClick(project) } : {})}
-      className="rounded-2xl overflow-hidden group text-left cursor-pointer w-full"
-      style={{ ...stackedStyle, backgroundColor: CARD }}
-    >
+    <article className={className} style={style}>
       {cardContent}
-    </Tag>
+    </article>
   );
 }
