@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { getOpenAIClient, parseJsonResponse, AI_CONFIG } from './openai';
 import { formatGlossaryForPrompt } from './glossary';
 import { SPACE_TYPES } from '@/lib/admin/constants';
+import { formatSlug } from '@/lib/utils';
 
 // Zod schemas for response validation
 const OptimizedContentSchema = z.object({
@@ -379,16 +380,184 @@ export async function optimizeShortText(rawText: string): Promise<BilingualText>
   return result;
 }
 
+/** Words to ignore when comparing slug-title consistency */
+const SLUG_STOP_WORDS = new Set([
+  'a', 'an', 'the', 'and', 'or', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by',
+  'renovation', 'project', 'reno', 'stars',
+]);
+
+/** Minimum number of significant words shared between slug and title to consider them consistent */
+const MIN_SLUG_TITLE_OVERLAP = 2;
+
+/**
+ * Programmatic validation of AI-generated project descriptions.
+ * Deterministically fixes invalid scopes, service types, and slug-title divergence.
+ */
+export function validateProjectDescription(
+  result: ProjectDescription,
+  availableScopes?: { en: string; zh: string }[],
+  availableServiceTypes?: string[],
+): { corrected: ProjectDescription; corrections: string[] } {
+  const corrections: string[] = [];
+  const corrected = { ...result, selectedScopes: [...result.selectedScopes] };
+
+  // 1. ServiceType enforcement
+  if (availableServiceTypes && availableServiceTypes.length > 0 && corrected.serviceType) {
+    if (!availableServiceTypes.includes(corrected.serviceType)) {
+      corrections.push(
+        `serviceType "${corrected.serviceType}" not in allowed list [${availableServiceTypes.join(', ')}] → set to null`
+      );
+      corrected.serviceType = null;
+    }
+  }
+
+  // 2. Scope enforcement — filter to only valid entries
+  if (availableScopes && availableScopes.length > 0 && corrected.selectedScopes.length > 0) {
+    const validScopeNames = new Set(availableScopes.map((s) => s.en));
+    const filtered: string[] = [];
+    const removed: string[] = [];
+    for (const scope of corrected.selectedScopes) {
+      (validScopeNames.has(scope) ? filtered : removed).push(scope);
+    }
+
+    if (removed.length > 0) {
+      corrections.push(
+        `Removed invalid scopes: [${removed.join(', ')}]`
+      );
+    }
+
+    if (filtered.length === 0) {
+      // All AI-selected scopes were invalid — fallback to all scopes for this type
+      corrected.selectedScopes = availableScopes.map((s) => s.en);
+      corrections.push(
+        `All AI scopes were invalid — falling back to all ${availableScopes.length} available scopes`
+      );
+    } else {
+      corrected.selectedScopes = filtered;
+    }
+  }
+
+  // 3. Slug-title consistency check
+  const titleWords = corrected.titleEn
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !SLUG_STOP_WORDS.has(w));
+  const slugWords = new Set(corrected.slug.split('-').filter((w) => w.length > 2 && !SLUG_STOP_WORDS.has(w)));
+  const sharedWords = titleWords.filter((w) => slugWords.has(w));
+
+  if (titleWords.length > 0 && sharedWords.length < MIN_SLUG_TITLE_OVERLAP) {
+    const newSlug = formatSlug(corrected.titleEn);
+    corrections.push(
+      `Slug "${corrected.slug}" diverged from title "${corrected.titleEn}" (shared: ${sharedWords.length}) → regenerated to "${newSlug}"`
+    );
+    corrected.slug = newSlug;
+  }
+
+  return { corrected, corrections };
+}
+
+const REVIEW_PROMPT = `You are a quality reviewer for AI-generated renovation project metadata.
+
+Given the ORIGINAL project notes and the GENERATED metadata, check for errors:
+
+1. TITLE: Does it accurately describe what's in the notes? Flag if it describes a different type of work.
+2. SERVICE_TYPE: Is it correct based on the notes? Valid values: bathroom, kitchen, basement, cabinet, commercial, or null.
+3. SELECTED_SCOPES: Are they reasonable for the described work? Only flag scopes that clearly don't apply.
+4. SLUG: Does it match the title and project content?
+
+Return ONLY a valid JSON object with fields that need correction. Return {} if everything looks correct.
+Only include fields you want to change — omitted fields keep their current value.
+
+Example corrections:
+{"serviceType": "bathroom", "titleEn": "Better Title", "titleZh": "更好的标题"}
+or {} if no corrections needed.`;
+
+/** Partial schema for review corrections — all fields optional */
+const ReviewCorrectionsSchema = z.object({
+  serviceType: z.string().nullable().optional(),
+  slug: z.string().optional(),
+  titleEn: z.string().optional(),
+  titleZh: z.string().optional(),
+  selectedScopes: z.array(z.string()).optional(),
+});
+
+type ReviewCorrections = z.infer<typeof ReviewCorrectionsSchema>;
+
+/**
+ * Lightweight AI review of generated project description.
+ * Uses a cheap, focused prompt to check semantic accuracy.
+ * Non-fatal — returns null on failure.
+ */
+
+export async function reviewProjectDescription(
+  originalPrompt: string,
+  generatedOutput: ProjectDescription,
+): Promise<{ corrections: ReviewCorrections; messages: string[] } | null> {
+  try {
+    const client = getOpenAIClient();
+
+    // Note: we send the raw notes (not the enriched userMessage with AVAILABLE_SCOPES)
+    // because the reviewer checks semantic accuracy, not scope list membership.
+    const reviewInput = [
+      'ORIGINAL NOTES:',
+      originalPrompt,
+      '',
+      'GENERATED METADATA:',
+      JSON.stringify({
+        serviceType: generatedOutput.serviceType,
+        titleEn: generatedOutput.titleEn,
+        titleZh: generatedOutput.titleZh,
+        slug: generatedOutput.slug,
+        selectedScopes: generatedOutput.selectedScopes,
+      }),
+    ].join('\n');
+
+    const response = await client.chat.completions.create({
+      model: AI_CONFIG.model,
+      messages: [
+        { role: 'system', content: REVIEW_PROMPT },
+        { role: 'user', content: reviewInput },
+      ],
+      temperature: 0.1,
+      max_tokens: AI_CONFIG.maxTokensReview,
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) return null;
+
+    const parsed = parseJsonResponse<unknown>(content);
+    const corrections = ReviewCorrectionsSchema.parse(parsed);
+
+    // Check if any field was actually provided
+    const messages: string[] = [];
+    for (const key of Object.keys(corrections) as (keyof ReviewCorrections)[]) {
+      if (corrections[key] !== undefined) {
+        messages.push(`AI review corrected ${key}`);
+      }
+    }
+
+    if (messages.length === 0) return null;
+    return { corrections, messages };
+  } catch (error) {
+    console.warn('[AI Review] Review failed (non-fatal):', error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
 /**
  * Optimize project description fields using GPT-4
  * - Detects source language
  * - Generates description, challenge, solution, and badge in both languages
+ * - Applies programmatic validation and optional AI review
+ *
+ * Returns the validated result plus a `corrections` array for logging.
  */
 export async function optimizeProjectDescription(
   rawNotes: string,
   availableScopes?: { en: string; zh: string }[],
   availableServiceTypes?: string[],
-): Promise<ProjectDescription> {
+): Promise<ProjectDescription & { corrections?: string[] }> {
   const client = getOpenAIClient();
 
   // Append available scopes and service types to the user message
@@ -417,8 +586,50 @@ export async function optimizeProjectDescription(
   }
 
   const parsed = parseJsonResponse<unknown>(content);
-  const result = ProjectDescriptionSchema.parse(parsed);
-  return result;
+  let result = ProjectDescriptionSchema.parse(parsed);
+
+  const allCorrections: string[] = [];
+
+  // Step 1: Programmatic validation — always runs
+  const { corrected, corrections } = validateProjectDescription(result, availableScopes, availableServiceTypes);
+  result = corrected;
+  allCorrections.push(...corrections);
+
+  // Step 2: AI review — non-fatal, applies corrections on top
+  const review = await reviewProjectDescription(rawNotes, result);
+  if (review) {
+    const reviewData = review.corrections;
+    // Apply review corrections to the result
+    if (reviewData.serviceType !== undefined) {
+      result.serviceType = reviewData.serviceType;
+      // Re-validate serviceType against allowed list
+      if (availableServiceTypes && availableServiceTypes.length > 0 && result.serviceType) {
+        if (!availableServiceTypes.includes(result.serviceType)) {
+          allCorrections.push(
+            `AI review serviceType "${result.serviceType}" not in allowed list → set to null`
+          );
+          result.serviceType = null;
+        }
+      }
+    }
+    if (reviewData.slug !== undefined) result.slug = formatSlug(reviewData.slug);
+    if (reviewData.titleEn !== undefined) result.titleEn = reviewData.titleEn;
+    if (reviewData.titleZh !== undefined) result.titleZh = reviewData.titleZh;
+    if (reviewData.selectedScopes !== undefined) {
+      result.selectedScopes = reviewData.selectedScopes;
+      // Re-validate scopes after AI review changes them
+      const revalidated = validateProjectDescription(result, availableScopes, availableServiceTypes);
+      result = revalidated.corrected;
+      allCorrections.push(...revalidated.corrections);
+    }
+    allCorrections.push(...review.messages);
+  }
+
+  if (allCorrections.length > 0) {
+    console.log('[AI Validation]', allCorrections.join(' | '));
+  }
+
+  return { ...result, corrections: allCorrections.length > 0 ? allCorrections : undefined };
 }
 
 /**

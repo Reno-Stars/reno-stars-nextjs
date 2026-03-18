@@ -13,6 +13,7 @@ export const AI_CONFIG = {
   // Project descriptions need more tokens for 16 fields (content + SEO)
   maxTokensProjectDescription: 2048,
   maxTokensAltText: 256,
+  maxTokensReview: 512,
   maxTokensSocialPost: 4096,
   fetchTimeoutMs: 60000,
 } as const;

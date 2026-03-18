@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
+import { validateProjectDescription } from '@/lib/ai/content-optimizer';
+import type { ProjectDescription } from '@/lib/ai/content-optimizer';
 
 // Test the schema validation logic separately since OpenAI calls require complex mocking
 
@@ -216,5 +218,188 @@ describe('ProjectDescriptionSchema', () => {
     const result = ProjectDescriptionSchema.parse(validData);
     expect(result.badgeEn).toBe('');
     expect(result.badgeZh).toBe('');
+  });
+});
+
+// ============================================================================
+// validateProjectDescription tests
+// ============================================================================
+
+describe('validateProjectDescription', () => {
+  const makeResult = (overrides: Partial<ProjectDescription> = {}): ProjectDescription => ({
+    serviceType: 'kitchen',
+    slug: 'modern-kitchen-renovation-vancouver',
+    titleEn: 'Modern Kitchen Renovation in Vancouver',
+    titleZh: '温哥华现代厨房翻新',
+    locationCity: 'Vancouver',
+    poNumber: '',
+    budgetRange: '$25,000',
+    durationEn: '4 weeks',
+    durationZh: '4周',
+    spaceTypeEn: 'House',
+    descriptionEn: 'A modern kitchen renovation.',
+    descriptionZh: '现代厨房翻新。',
+    challengeEn: 'Limited space.',
+    challengeZh: '空间有限。',
+    solutionEn: 'Open concept.',
+    solutionZh: '开放式设计。',
+    badgeEn: 'Featured',
+    badgeZh: '精选',
+    excerptEn: 'Modern kitchen renovation.',
+    excerptZh: '现代厨房翻新。',
+    metaTitleEn: 'Modern Kitchen Renovation | Reno Stars',
+    metaTitleZh: '现代厨房翻新 | Reno Stars',
+    metaDescriptionEn: 'Complete kitchen transformation.',
+    metaDescriptionZh: '完整厨房改造。',
+    focusKeywordEn: 'kitchen renovation',
+    focusKeywordZh: '厨房翻新',
+    seoKeywordsEn: 'kitchen, renovation',
+    seoKeywordsZh: '厨房, 翻新',
+    selectedScopes: ['Prefab Cabinet', 'Flooring'],
+    detectedLanguage: 'en',
+    ...overrides,
+  });
+
+  const bathroomScopes = [
+    { en: 'Prefab Vanity', zh: '成品洗手柜' },
+    { en: 'All Wall Tile', zh: '全墙砖' },
+    { en: 'Plumbing Work', zh: '水管工程' },
+  ];
+
+  const kitchenScopes = [
+    { en: 'Prefab Cabinet', zh: '成品柜' },
+    { en: 'Flooring', zh: '地面工程' },
+    { en: 'Painting', zh: '油漆' },
+  ];
+
+  const serviceTypes = ['kitchen', 'bathroom', 'basement', 'cabinet', 'commercial'];
+
+  describe('serviceType enforcement', () => {
+    it('passes through valid serviceType', () => {
+      const result = makeResult({ serviceType: 'kitchen' });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.serviceType).toBe('kitchen');
+      expect(corrections).toHaveLength(0);
+    });
+
+    it('sets invalid serviceType to null', () => {
+      const result = makeResult({ serviceType: 'plumbing' });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.serviceType).toBeNull();
+      expect(corrections).toHaveLength(1);
+      expect(corrections[0]).toContain('plumbing');
+    });
+
+    it('keeps null serviceType as null', () => {
+      const result = makeResult({ serviceType: null });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.serviceType).toBeNull();
+      expect(corrections).toHaveLength(0);
+    });
+
+    it('skips check when no availableServiceTypes provided', () => {
+      const result = makeResult({ serviceType: 'plumbing' });
+      const { corrected, corrections } = validateProjectDescription(result);
+      expect(corrected.serviceType).toBe('plumbing');
+      expect(corrections).toHaveLength(0);
+    });
+  });
+
+  describe('scope enforcement', () => {
+    it('keeps valid scopes', () => {
+      const result = makeResult({ selectedScopes: ['Prefab Cabinet', 'Flooring'] });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.selectedScopes).toEqual(['Prefab Cabinet', 'Flooring']);
+      expect(corrections).toHaveLength(0);
+    });
+
+    it('filters out invalid scopes', () => {
+      const result = makeResult({ selectedScopes: ['Prefab Cabinet', 'Backsplash Tile', 'Flooring'] });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.selectedScopes).toEqual(['Prefab Cabinet', 'Flooring']);
+      expect(corrections).toHaveLength(1);
+      expect(corrections[0]).toContain('Backsplash Tile');
+    });
+
+    it('falls back to all scopes when all AI scopes are invalid', () => {
+      const result = makeResult({ selectedScopes: ['Backsplash Tile', 'Crown Molding'] });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.selectedScopes).toEqual(['Prefab Cabinet', 'Flooring', 'Painting']);
+      expect(corrections).toHaveLength(2); // removed + fallback
+      expect(corrections[0]).toContain('Backsplash Tile');
+      expect(corrections[1]).toContain('falling back');
+    });
+
+    it('skips check when no availableScopes provided', () => {
+      const result = makeResult({ selectedScopes: ['Anything'] });
+      const { corrected, corrections } = validateProjectDescription(result);
+      expect(corrected.selectedScopes).toEqual(['Anything']);
+      expect(corrections).toHaveLength(0);
+    });
+
+    it('skips check when selectedScopes is empty', () => {
+      const result = makeResult({ selectedScopes: [] });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.selectedScopes).toEqual([]);
+      expect(corrections).toHaveLength(0);
+    });
+  });
+
+  describe('slug-title consistency', () => {
+    it('keeps slug when it matches title', () => {
+      const result = makeResult({
+        titleEn: 'Modern Kitchen Renovation in Vancouver',
+        slug: 'modern-kitchen-renovation-vancouver',
+      });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.slug).toBe('modern-kitchen-renovation-vancouver');
+      expect(corrections.filter((c) => c.includes('Slug'))).toHaveLength(0);
+    });
+
+    it('regenerates slug when it diverges from title', () => {
+      const result = makeResult({
+        titleEn: 'Luxury Bathroom Spa Retreat',
+        slug: 'compact-kitchen-makeover-2024',
+      });
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.slug).toBe('luxury-bathroom-spa-retreat');
+      expect(corrections.some((c) => c.includes('Slug'))).toBe(true);
+    });
+
+    it('keeps slug when title has few significant words but they match', () => {
+      const result = makeResult({
+        titleEn: 'Basement Suite',
+        slug: 'basement-suite-conversion',
+      });
+      // "basement" and "suite" are shared — 2 words match
+      const { corrected, corrections } = validateProjectDescription(result, kitchenScopes, serviceTypes);
+      expect(corrected.slug).toBe('basement-suite-conversion');
+      expect(corrections.filter((c) => c.includes('Slug'))).toHaveLength(0);
+    });
+  });
+
+  describe('does not mutate input', () => {
+    it('returns a new object without modifying the original', () => {
+      const original = makeResult({ selectedScopes: ['Backsplash Tile', 'Flooring'] });
+      const originalScopes = [...original.selectedScopes];
+      validateProjectDescription(original, kitchenScopes, serviceTypes);
+      expect(original.selectedScopes).toEqual(originalScopes);
+    });
+  });
+
+  describe('multiple corrections combined', () => {
+    it('fixes serviceType, scopes, and slug all at once', () => {
+      const result = makeResult({
+        serviceType: 'plumbing',
+        selectedScopes: ['Backsplash Tile'],
+        titleEn: 'Full Bathroom Renovation with Heated Floors',
+        slug: 'random-unrelated-slug-here',
+      });
+      const { corrected, corrections } = validateProjectDescription(result, bathroomScopes, serviceTypes);
+      expect(corrected.serviceType).toBeNull();
+      expect(corrected.selectedScopes).toEqual(['Prefab Vanity', 'All Wall Tile', 'Plumbing Work']);
+      expect(corrected.slug).toBe('full-bathroom-renovation-with-heated-floors');
+      expect(corrections.length).toBeGreaterThanOrEqual(3);
+    });
   });
 });

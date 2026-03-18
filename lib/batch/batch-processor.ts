@@ -205,7 +205,11 @@ async function generateProjectMetadata(
     // Pass all scopes for the detected service type so AI can select relevant ones
     const scopes = SERVICE_SCOPES[serviceType] ?? [];
     const availableTypes = Object.keys(serviceTypeMap);
-    return await optimizeProjectDescription(prompt, scopes, availableTypes);
+    const result = await optimizeProjectDescription(prompt, scopes, availableTypes);
+    if (result.corrections && result.corrections.length > 0) {
+      console.log(`[Batch AI] Corrections for "${folderName}":`, result.corrections.join(' | '));
+    }
+    return result;
   } catch {
     return null;
   }
