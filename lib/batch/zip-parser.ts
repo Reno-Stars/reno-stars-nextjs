@@ -132,7 +132,7 @@ function pairImages(images: ExtractedImage[]): {
     const productMatch = nameWithoutExt.match(/^product[- ](\d+)$/);
     if (productMatch) {
       const productIdx = parseInt(productMatch[1], 10);
-      if (productIdx >= 1) {
+      if (productIdx >= 1 && productIdx <= 999) {
         productImages.set(productIdx, img);
       }
       continue;
@@ -144,10 +144,10 @@ function pairImages(images: ExtractedImage[]): {
 
     if (beforeMatch) {
       const idx = beforeMatch[1] ? parseInt(beforeMatch[1], 10) : 0;
-      beforeMap.set(idx, img);
+      if (idx >= 0 && idx <= 999) beforeMap.set(idx, img);
     } else if (afterMatch) {
       const idx = afterMatch[1] ? parseInt(afterMatch[1], 10) : 0;
-      afterMap.set(idx, img);
+      if (idx >= 0 && idx <= 999) afterMap.set(idx, img);
     } else {
       // Unpaired image → treat as after-only
       unpaired.push(img);

@@ -243,6 +243,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div
                 className={`relative overflow-hidden rounded-xl aspect-[16/10] mb-4 group${hasBothImages ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neuIn(4), backgroundColor: SURFACE_ALT }}
+                role={hasBothImages ? 'button' : undefined}
+                aria-label={hasBothImages ? `Toggle to ${showBefore ? 'after' : 'before'} photo` : undefined}
                 onClick={handleImageClick}
               >
                 {/* Animated image wrapper — key only changes on pair navigation, not before/after toggle */}

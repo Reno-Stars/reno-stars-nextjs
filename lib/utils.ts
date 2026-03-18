@@ -59,6 +59,10 @@ export function ensureUniqueSlug(
   while (taken.has(`${slug}-${suffix}`) && suffix < MAX_SUFFIX) {
     suffix++;
   }
+  // Fallback to timestamp if max retries exhausted (prevents silent collision)
+  if (suffix >= MAX_SUFFIX) {
+    return `${slug}-${Date.now()}`;
+  }
   return `${slug}-${suffix}`;
 }
 
@@ -340,7 +344,12 @@ export function buildUrl(
   base: string,
   params: Record<string, string | number | boolean | undefined>
 ): string {
-  const url = new URL(base);
+  let url: URL;
+  try {
+    url = new URL(base);
+  } catch {
+    return base;
+  }
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined) {
       url.searchParams.set(key, String(value));

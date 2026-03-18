@@ -71,7 +71,7 @@ export async function POST(
   } catch (error) {
     console.error('Multipart init error:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Upload init failed.' },
+      { error: 'Failed to initialize upload. Please try again.' },
       { status: 500 }
     );
   }
@@ -136,7 +136,7 @@ export async function PUT(
   } catch (error) {
     console.error(`Part ${partNumber} presign error:`, error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Presign failed.' },
+      { error: 'Failed to generate upload URL. Please try again.' },
       { status: 500 }
     );
   }
@@ -243,7 +243,7 @@ export async function PATCH(
     }
 
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Upload completion failed.' },
+      { error: 'Failed to complete upload. Please try again.' },
       { status: 500 }
     );
   }

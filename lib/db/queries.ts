@@ -61,7 +61,14 @@ export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T)
 export const getCompanyFromDb = cache(async (): Promise<Company> => {
   const rows = await db.select().from(companyInfo).limit(1);
   const row = rows[0];
-  if (!row) throw new Error('Company info not found in database');
+  if (!row) {
+    // Return sensible defaults instead of crashing the app/build
+    return {
+      name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
+      logo: '', quoteUrl: '/contact/', yearsExperience: '30', foundingYear: 1997,
+      teamSize: 0, warranty: '', liabilityCoverage: '', geo: { latitude: 0, longitude: 0 },
+    };
+  }
 
   const foundingYear = row.foundingYear ?? 1997;
   // Round years up to nearest 5 for cleaner display (e.g., 27 -> 30, 31 -> 35)
@@ -205,7 +212,10 @@ export async function getCategorySlugs(): Promise<string[]> {
 export const getAboutSectionsFromDb = cache(async (): Promise<AboutSections> => {
   const rows = await db.select().from(aboutSectionsTable).limit(1);
   const row = rows[0];
-  if (!row) throw new Error('About sections not found in database');
+  if (!row) {
+    const empty = { en: '', zh: '' };
+    return { ourJourney: empty, whatWeOffer: empty, ourValues: empty, whyChooseUs: empty, letsBuildTogether: empty };
+  }
 
   // Compute years for placeholder replacement — reuse cached getCompanyFromDb
   const company = await getCompanyFromDb();
@@ -813,30 +823,25 @@ export const getBlogPostBySlugFromDb = cache(
     const row = rows[0];
     if (!row) return null;
 
-    // Fetch related project and external products if projectId is set
+    // Fetch related project and external products in parallel if projectId is set
     let relatedProject: BlogRelatedProject | undefined;
     if (row.projectId) {
-      const projectRows = await db
-        .select()
-        .from(projectsTable)
-        .where(eq(projectsTable.id, row.projectId))
-        .limit(1);
+      const [projectRows, externalProducts] = await Promise.all([
+        db.select().from(projectsTable).where(eq(projectsTable.id, row.projectId)).limit(1),
+        db.select().from(projectExternalProductsTable)
+          .where(eq(projectExternalProductsTable.projectId, row.projectId))
+          .orderBy(asc(projectExternalProductsTable.displayOrder)),
+      ]);
 
       const project = projectRows[0];
       if (project) {
-        const externalProducts: DbExternalProductRow[] = await db
-          .select()
-          .from(projectExternalProductsTable)
-          .where(eq(projectExternalProductsTable.projectId, project.id))
-          .orderBy(asc(projectExternalProductsTable.displayOrder));
-
         relatedProject = {
           slug: project.slug,
           title: { en: project.titleEn, zh: project.titleZh },
           hero_image: project.heroImageUrl ? getAssetUrl(project.heroImageUrl) : undefined,
           external_products:
             externalProducts.length > 0
-              ? externalProducts.map((ep) => ({
+              ? externalProducts.map((ep: DbExternalProductRow) => ({
                   url: ep.url,
                   image_url: ep.imageUrl ? getAssetUrl(ep.imageUrl) : undefined,
                   label: { en: ep.labelEn, zh: ep.labelZh },
@@ -936,7 +941,9 @@ export const getTrustBadgesFromDb = cache(async (): Promise<{ en: string; zh: st
 export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
   const rows = await db.select().from(showroomInfoTable).limit(1);
   const row = rows[0];
-  if (!row) throw new Error('Showroom info not found in database');
+  if (!row) {
+    return { address: '', appointmentText: { en: '', zh: '' }, phone: '', email: '' };
+  }
 
   return {
     address: row.address ?? '',

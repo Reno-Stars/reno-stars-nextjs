@@ -21,8 +21,8 @@ function getEmailConfig() {
   const from = process.env.EMAIL_FROM || 'Contact Form <onboarding@resend.dev>';
   const to = process.env.EMAIL_TO || 'info@reno-stars.com';
 
-  // Warn once in development if using fallback values
-  if (process.env.NODE_ENV === 'development' && !emailConfigWarningsLogged) {
+  // Warn once if using fallback values (the Resend test sender won't deliver in production)
+  if (!emailConfigWarningsLogged) {
     emailConfigWarningsLogged = true;
     if (!process.env.EMAIL_FROM) {
       console.warn('EMAIL_FROM not set, using default: onboarding@resend.dev');

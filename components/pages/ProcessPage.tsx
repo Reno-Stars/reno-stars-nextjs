@@ -316,8 +316,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
       setDownloadStatus('success');
       statusTimerRef.current = setTimeout(() => setDownloadStatus('idle'), 3000);
-    } catch (error) {
-      console.error('PNG generation failed:', error);
+    } catch {
       setDownloadStatus('error');
       statusTimerRef.current = setTimeout(() => setDownloadStatus('idle'), 3000);
     } finally {
@@ -354,8 +353,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
       setPdfDownloadStatus('success');
       pdfStatusTimerRef.current = setTimeout(() => setPdfDownloadStatus('idle'), 3000);
-    } catch (error) {
-      console.error('PDF generation failed:', error);
+    } catch {
       setPdfDownloadStatus('error');
       pdfStatusTimerRef.current = setTimeout(() => setPdfDownloadStatus('idle'), 3000);
     } finally {

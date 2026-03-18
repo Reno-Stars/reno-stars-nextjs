@@ -197,8 +197,10 @@ export async function createProject(
     }
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
+    // Retry on unique constraint violation (race condition between check and insert)
+    const baseSlug = data.slug; // preserve original slug for retries
     const allSlugs = await db.select({ slug: projects.slug }).from(projects);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+    data.slug = ensureUniqueSlug(baseSlug, allSlugs.map((r: { slug: string }) => r.slug));
 
     // Place new project at the end of the site's project list
     const [maxRow] = await db
@@ -207,15 +209,27 @@ export async function createProject(
       .where(eq(projects.siteId, data.siteId));
     data.displayOrderInSite = (maxRow?.max ?? -1) + 1;
 
-    const [inserted] = await db
-      .insert(projects)
-      .values({
-        ...data,
-        serviceType: data.serviceType || null,
-        serviceId,
-        publishedAt: data.isPublished ? new Date() : null,
-      })
-      .returning({ id: projects.id });
+    let inserted: { id: string };
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        [inserted] = await db
+          .insert(projects)
+          .values({
+            ...data,
+            serviceType: data.serviceType || null,
+            serviceId,
+            publishedAt: data.isPublished ? new Date() : null,
+          })
+          .returning({ id: projects.id });
+        break;
+      } catch (err) {
+        const isUniqueViolation = err instanceof Error && err.message.includes('unique');
+        if (!isUniqueViolation || attempt === 2) throw err;
+        // Re-fetch slugs and retry from the original base slug
+        const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
+        data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug));
+      }
+    }
 
     // Insert image pairs
     if (pairData.length > 0) {
@@ -328,12 +342,13 @@ export async function updateProject(
     }
 
     // Ensure slug is unique (exclude current project's own slug)
-    const submittedSlug = data.slug;
+    // Retry on unique constraint violation (race condition between check and update)
+    const baseSlug = data.slug; // preserve original slug for retries
     const currentProject = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
     const currentSlug = currentProject[0]?.slug;
     const allSlugs = await db.select({ slug: projects.slug }).from(projects);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
-    const renamedSlug = data.slug !== submittedSlug ? data.slug : undefined;
+    data.slug = ensureUniqueSlug(baseSlug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    let renamedSlug = data.slug !== baseSlug ? data.slug : undefined;
 
     const scopeData = parseScopes(formData);
 
@@ -344,11 +359,22 @@ export async function updateProject(
       db.select({ id: projectExternalProducts.id }).from(projectExternalProducts).where(eq(projectExternalProducts.projectId, id)),
     ]);
 
-    // Update project
-    await db
-      .update(projects)
-      .set({ ...data, serviceType: data.serviceType || null, serviceId: updateServiceId })
-      .where(eq(projects.id, id));
+    // Update project (retry on unique slug violation)
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        await db
+          .update(projects)
+          .set({ ...data, serviceType: data.serviceType || null, serviceId: updateServiceId })
+          .where(eq(projects.id, id));
+        break;
+      } catch (err) {
+        const isUniqueViolation = err instanceof Error && err.message.includes('unique');
+        if (!isUniqueViolation || attempt === 2) throw err;
+        const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
+        data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+        renamedSlug = data.slug !== baseSlug ? data.slug : undefined;
+      }
+    }
 
     // Insert new related data first (old data still exists as fallback if insert fails)
     if (pairData.length > 0) {

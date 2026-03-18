@@ -372,6 +372,7 @@ export const projects = pgTable(
   },
   (table) => [
     uniqueIndex('projects_slug_idx').on(table.slug),
+    index('projects_service_id_idx').on(table.serviceId),
     index('projects_service_type_idx').on(table.serviceType),
     index('projects_location_city_idx').on(table.locationCity),
     index('projects_featured_idx').on(table.featured),
@@ -578,6 +579,7 @@ export const testimonials = pgTable(
   },
   (table) => [
     index('testimonials_featured_idx').on(table.isFeatured),
+    index('testimonials_project_id_idx').on(table.projectId),
     // Rating must be between 1 and 5
     check('rating_range', sql`${table.rating} >= 1 AND ${table.rating} <= 5`),
   ]
