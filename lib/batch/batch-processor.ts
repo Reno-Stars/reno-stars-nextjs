@@ -177,7 +177,8 @@ async function generateSiteMetadata(
       ? `Whole house renovation project.\n\nProject details:\n${notes}`
       : `Whole house renovation project: ${folderName}. This is a renovation site.`;
     return await optimizeSiteDescription(prompt);
-  } catch {
+  } catch (error) {
+    console.error(`[Batch AI] generateSiteMetadata FAILED for "${folderName}":`, error instanceof Error ? error.message : error);
     return null;
   }
 }
@@ -207,10 +208,11 @@ async function generateProjectMetadata(
     const availableTypes = Object.keys(serviceTypeMap);
     const result = await optimizeProjectDescription(prompt, scopes, availableTypes);
     if (result.corrections && result.corrections.length > 0) {
-      console.log(`[Batch AI] Corrections for "${folderName}":`, result.corrections.join(' | '));
+      console.warn(`[Batch AI] Corrections for "${folderName}":`, result.corrections.join(' | '));
     }
     return result;
-  } catch {
+  } catch (error) {
+    console.error(`[Batch AI] generateProjectMetadata failed for "${folderName}":`, error instanceof Error ? error.message : error);
     return null;
   }
 }

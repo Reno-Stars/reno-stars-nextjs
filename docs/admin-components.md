@@ -59,6 +59,8 @@ ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`).
 - `hero.jpg` → hero image; `product-N.jpg` → matched to `products.txt`
 - Products files: `URL | Label EN | Label ZH` with `#` comments
 
+**AI schema resilience:** `ProjectDescriptionSchema` and `SiteDescriptionSchema` use `.default('')` for all non-critical fields (SEO, badge, excerpt, etc.). Core fields (`slug`, `titleEn/Zh`, `descriptionEn/Zh`) remain required. This prevents ZodError when GPT-4o-mini omits optional fields from the JSON response. AI metadata failures are logged via `console.error` in `generateProjectMetadata()` / `generateSiteMetadata()`.
+
 **Stale detection:** `STALE_PROCESSING_MS` (2 min), `STALE_PENDING_MS` (30 min). Timeout errors use `__TIMEOUT_*__` markers resolved client-side.
 
 ## AI Features
