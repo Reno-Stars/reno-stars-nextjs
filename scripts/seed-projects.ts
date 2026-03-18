@@ -1283,7 +1283,8 @@ async function main() {
   const discovered = await discoverProjects();
   if (discovered.size === 0) {
     console.log('No projects discovered. Is the WordPress site accessible?');
-    process.exit(1);
+    console.log('Skipping project seeding (external site unreachable).');
+    process.exit(0);
   }
 
   // 2. Crawl
@@ -1294,7 +1295,8 @@ async function main() {
 
   if (crawled.length === 0) {
     console.log('No projects crawled successfully. Check network connectivity.');
-    process.exit(1);
+    console.log('Skipping project seeding.');
+    process.exit(0);
   }
 
   // 3. Enrich
