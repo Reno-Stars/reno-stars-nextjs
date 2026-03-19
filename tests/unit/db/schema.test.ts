@@ -7,7 +7,7 @@ import {
   projectScopes,
   blogPosts,
   testimonials,
-  galleryItems,
+  designs,
   contactSubmissions,
   companyInfo,
   showroomInfo,
@@ -159,12 +159,11 @@ describe('Database Schema', () => {
     });
   });
 
-  describe('Gallery Items Table', () => {
+  describe('Designs Table', () => {
     it('should have required columns', () => {
-      const columns = Object.keys(galleryItems);
+      const columns = Object.keys(designs);
       expect(columns).toContain('id');
       expect(columns).toContain('imageUrl');
-      expect(columns).toContain('category');
       expect(columns).toContain('isPublished');
     });
   });

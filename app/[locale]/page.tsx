@@ -9,7 +9,7 @@ import {
   getCompanyFromDb,
   getServicesFromDb,
   getAboutSectionsFromDb,
-  getGalleryItemsFromDb,
+  getProjectsFromDb,
   getTrustBadgesFromDb,
   getFaqsFromDb,
   getBlogPostsFromDb,
@@ -69,13 +69,13 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Fetch all data in parallel
-  const [t, company, services, googleReviews, aboutSections, gallery, trustBadges, faqs, blogPosts, showroom, areas, partners] = await Promise.all([
+  const [t, company, services, googleReviews, aboutSections, allProjects, trustBadges, faqs, blogPosts, showroom, areas, partners] = await Promise.all([
     getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
     getGoogleReviews(),
     getAboutSectionsFromDb(),
-    getGalleryItemsFromDb(),
+    getProjectsFromDb(),
     getTrustBadgesFromDb(),
     getFaqsFromDb(),
     getBlogPostsFromDb(),
@@ -86,7 +86,19 @@ export default async function Page({ params }: PageProps) {
 
   // Pre-compute localized data server-side
   const localizedAreas = areas.map((a) => ({ slug: a.slug, name: a.name[locale] }));
-  const localizedGallery = gallery.map((g) => ({ image: g.image, title: g.title[locale], category: g.category }));
+
+  // Homepage gallery: featured projects first, then recent, up to 12
+  const sortedProjects = [...allProjects].sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return 0; // keep original order (by createdAt desc) within each group
+  });
+  const galleryProjects = sortedProjects.filter((p) => p.hero_image).slice(0, 12).map((p) => ({
+    image: p.hero_image,
+    title: p.title[locale],
+    category: p.category[locale],
+    href: `/projects/${p.slug}` as string,
+  }));
   const localizedBadges = trustBadges.map((b) => b[locale]);
   const localizedFaqs = faqs.map((f) => ({ id: f.id, question: f.question[locale], answer: f.answer[locale] }));
   const localizedBlogPosts = blogPosts.slice(0, 5).map((p) => ({ slug: p.slug, title: p.title[locale] }));
@@ -151,7 +163,7 @@ export default async function Page({ params }: PageProps) {
         company={company}
         services={services}
         googleReviews={googleReviews}
-        gallery={localizedGallery}
+        gallery={galleryProjects}
         trustBadges={localizedBadges}
         partners={localizedPartners}
         faqs={localizedFaqs}

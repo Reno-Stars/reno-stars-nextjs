@@ -292,7 +292,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       onClick={(e) => { e.stopPropagation(); handlePrevPair(); }}
                       className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hidden sm:flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100 cursor-pointer hover:scale-110 z-20"
                       style={{ backgroundColor: 'rgba(255,255,255,0.9)', boxShadow: neu(3), color: TEXT }}
-                      aria-label={t('gallery.previous')}
+                      aria-label={t('lightbox.previous')}
                     >
                       <ChevronLeft className="w-6 h-6" />
                     </button>
@@ -300,7 +300,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       onClick={(e) => { e.stopPropagation(); handleNextPair(); }}
                       className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hidden sm:flex items-center justify-center transition-all sm:opacity-0 sm:group-hover:opacity-100 cursor-pointer hover:scale-110 z-20"
                       style={{ backgroundColor: 'rgba(255,255,255,0.9)', boxShadow: neu(3), color: TEXT }}
-                      aria-label={t('gallery.next')}
+                      aria-label={t('lightbox.next')}
                     >
                       <ChevronRight className="w-6 h-6" />
                     </button>

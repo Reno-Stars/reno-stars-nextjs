@@ -5,7 +5,7 @@ import DesignPage from '@/components/pages/DesignPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getGalleryItemsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getDesignsFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -54,12 +54,12 @@ export default async function Page({ params }: PageProps) {
     { name: t('design'), url: `/${locale}/design/` },
   ];
 
-  const [company, gallery] = await Promise.all([getCompanyFromDb(), getGalleryItemsFromDb()]);
+  const [company, designs] = await Promise.all([getCompanyFromDb(), getDesignsFromDb()]);
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <DesignPage locale={locale as Locale} company={company} gallery={gallery} />
+      <DesignPage locale={locale as Locale} company={company} designs={designs} />
     </>
   );
 }

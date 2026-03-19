@@ -15,7 +15,7 @@ vi.mock('@/lib/admin/translations', () => ({
       services: 'Services',
       serviceAreas: 'Service Areas',
       blogPosts: 'Blog Posts',
-      gallery: 'Gallery',
+      designs: 'Designs',
       faqs: 'FAQs',
       socialLinks: 'Social Links',
       trustBadges: 'Trust Badges',
@@ -33,7 +33,7 @@ describe('DashboardClient', () => {
     newContacts: 0,
     blogPosts: 15,
     faqs: 8,
-    gallery: 42,
+    designs: 42,
     areas: 12,
     socialLinks: 5,
     badges: 3,
@@ -64,7 +64,7 @@ describe('DashboardClient', () => {
     expect(screen.getByText('10')).toBeInTheDocument(); // projects
     expect(screen.getByText('6')).toBeInTheDocument(); // services
     expect(screen.getByText('15')).toBeInTheDocument(); // blogPosts
-    expect(screen.getByText('42')).toBeInTheDocument(); // gallery
+    expect(screen.getByText('42')).toBeInTheDocument(); // designs
     expect(screen.getByText('25')).toBeInTheDocument(); // contacts
   });
 
@@ -108,7 +108,7 @@ describe('DashboardClient', () => {
     render(<DashboardClient stats={defaultStats} />);
 
     expect(screen.getByText('Blog Posts')).toBeInTheDocument();
-    expect(screen.getByText('Gallery')).toBeInTheDocument();
+    expect(screen.getByText('Designs')).toBeInTheDocument();
     expect(screen.getByText('FAQs')).toBeInTheDocument();
     expect(screen.getByText('Social Links')).toBeInTheDocument();
     expect(screen.getByText('Trust Badges')).toBeInTheDocument();

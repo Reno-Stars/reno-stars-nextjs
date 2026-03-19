@@ -61,7 +61,7 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `showroom_info` | Singleton showroom data | `id` |
 | `about_sections` | Singleton about-page content | `id` |
 | `testimonials` | ~~Customer reviews~~ (deprecated — replaced by Google Reviews API) | `id` |
-| `gallery_items` | Gallery images | `id`, `image_url` (unique index) |
+| `designs` | Design rendering images (3D models, design concepts) | `id`, `image_url` (unique index) |
 | `trust_badges` | Achievement badges | `badgeEn` |
 | `social_links` | Social media profiles | `platform` |
 | `faqs` | Frequently asked questions (global or area-specific) | `id`, composite index on `(isActive, displayOrder)`, index on `serviceAreaId` |
@@ -132,7 +132,7 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 - Showroom info, trust badges
 - 5 social links (Xiaohongshu, WeChat, Instagram, Facebook, WhatsApp)
 - About sections (bilingual, with `{yearsExperience}` placeholder in `ourJourney`)
-- 6 gallery items (uses `onConflictDoNothing` on `imageUrl` unique index)
+- 37 design renderings from reno-stars.com original design page (uses `onConflictDoNothing` on `imageUrl` unique index)
 - 5 FAQs with bilingual content (uses `{yearsExperience}` placeholder in answers)
 
 All seed operations use `onConflictDoNothing` for idempotency.
@@ -178,7 +178,7 @@ import {
   getAboutSectionsFromDb,
   getProjectsFromDb, getProjectBySlugFromDb, getProjectSlugsFromDb,
   getServiceAreasFromDb, getBlogPostsFromDb, getBlogPostBySlugFromDb,
-  getBlogPostSlugsFromDb, getGalleryItemsFromDb, getTrustBadgesFromDb,
+  getBlogPostSlugsFromDb, getDesignsFromDb, getTrustBadgesFromDb,
   getShowroomFromDb,
 } from '@/lib/db/queries';
 
@@ -195,7 +195,7 @@ const areas = await getServiceAreasFromDb();            // ServiceArea[]
 const posts = await getBlogPostsFromDb();               // BlogPost[]
 const post = await getBlogPostBySlugFromDb('slug');     // BlogPost | null (includes related_project if linked)
 const postSlugs = await getBlogPostSlugsFromDb();       // string[]
-const gallery = await getGalleryItemsFromDb();          // GalleryItem[]
+const designs = await getDesignsFromDb();                // DesignItem[]
 const badges = await getTrustBadgesFromDb();            // { en: string; zh: string }[]
 const showroom = await getShowroomFromDb();             // Showroom
 const faqs = await getFaqsFromDb();                      // Faq[] (global only, replaces {yearsExperience} placeholder)
@@ -220,7 +220,7 @@ collectAllExternalProducts(projects: Project[]): ExternalProduct[]
 
 > **Note:** Homepage testimonials are no longer fetched from the database. They use `getGoogleReviews()` from `lib/google-reviews.ts` (Google Places API with 24h caching). The `testimonials` table is deprecated and will be dropped in a future migration.
 
-These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components. Gallery categories are stored as service slugs and capitalized in the query layer via `slugToLabel()` (`'whole-house'` → `'Whole House'`). Null categories display as `'Uncategorized'`.
+These functions return the same TypeScript types as the former static data exports, making the migration transparent to consuming components.
 
 ### Admin Queries
 
@@ -234,7 +234,7 @@ import {
   getAllContactsAdmin,      // DbContactSubmission[]
   getAllSocialLinksAdmin,   // DbSocialLink[] — includes inactive
   getAllServiceAreasAdmin,  // DbServiceArea[] — includes inactive
-  getAllGalleryItemsAdmin,  // DbGalleryItem[] — includes unpublished
+  getAllDesignsAdmin,       // DbDesign[] — includes unpublished
   getAllTrustBadgesAdmin,   // DbTrustBadge[] — includes inactive
   getAllFaqsAdmin,          // DbFaq[] — includes inactive
   getAllPartnersAdmin,      // DbPartner[] — includes inactive

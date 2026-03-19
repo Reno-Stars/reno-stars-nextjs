@@ -328,15 +328,13 @@ export interface BlogPost {
 }
 
 /**
- * A gallery image item.
+ * A design gallery image item (3D renderings, design concepts).
  */
-export interface GalleryItem {
+export interface DesignItem {
   /** Image URL */
   image: string;
   /** Image title */
   title: Localized<string>;
-  /** Gallery category (Kitchen, Bathroom, etc.) */
-  category: string;
 }
 
 /**

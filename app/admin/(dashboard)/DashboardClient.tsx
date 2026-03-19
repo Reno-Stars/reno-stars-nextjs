@@ -30,7 +30,7 @@ interface DashboardStats {
   newContacts: number;
   blogPosts: number;
   faqs: number;
-  gallery: number;
+  designs: number;
   areas: number;
   socialLinks: number;
   badges: number;
@@ -160,7 +160,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
       cards: [
         { label: t.dashboard.blogPosts, value: stats.blogPosts, href: '/admin/blog', icon: FileText, accent: INFO },
         { label: t.dashboard.socialPosts, value: stats.socialPosts, href: '/admin/social-posts', icon: Megaphone, accent: INFO },
-        { label: t.dashboard.gallery, value: stats.gallery, href: '/admin/gallery', icon: Images, accent: INFO },
+        { label: t.dashboard.designs, value: stats.designs, href: '/admin/designs', icon: Images, accent: INFO },
         { label: t.dashboard.faqs, value: stats.faqs, href: '/admin/faqs', icon: CircleHelp, accent: INFO },
         { label: t.dashboard.socialLinks, value: stats.socialLinks, href: '/admin/social-links', icon: Share2, accent: INFO },
         { label: t.dashboard.trustBadges, value: stats.badges, href: '/admin/trust-badges', icon: ShieldCheck, accent: INFO },

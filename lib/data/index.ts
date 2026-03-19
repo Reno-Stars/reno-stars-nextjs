@@ -3,14 +3,13 @@ import { getAssetUrl } from '../storage';
 
 // Re-export types
 export type {
-  Locale, Localized, Company, Showroom, AboutSections, GalleryItem, GoogleReview, GooglePlaceRating, BlogPost, SocialLink,
+  Locale, Localized, Company, Showroom, AboutSections, DesignItem, GoogleReview, GooglePlaceRating, BlogPost, SocialLink,
   LocalizedProject, LocalizedService, LocalizedArea,
 } from '../types';
 
-export interface LocalizedGalleryItem {
+export interface LocalizedDesignItem {
   image: string;
   title: string;
-  category: string;
 }
 
 /** Localized related project info for blog posts */

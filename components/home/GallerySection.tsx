@@ -1,10 +1,10 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
-import TetrisGallery from '@/components/TetrisGallery';
+import TetrisGallery, { type TetrisGalleryItem } from '@/components/TetrisGallery';
 import { GOLD, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface GallerySectionProps {
-  gallery: { image: string; title: string; category: string }[];
+  gallery: TetrisGalleryItem[];
   translations: {
     title: string;
     subtitle: string;

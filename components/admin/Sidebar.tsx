@@ -72,7 +72,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
       items: [
         { href: '/admin/blog', label: t.nav.blog },
         { href: '/admin/social-posts', label: t.nav.socialPosts },
-        { href: '/admin/gallery', label: t.nav.gallery },
+        { href: '/admin/designs', label: t.nav.designs },
         { href: '/admin/faqs', label: t.nav.faqs },
         { href: '/admin/trust-badges', label: t.nav.trustBadges },
         { href: '/admin/partners', label: t.nav.partners },

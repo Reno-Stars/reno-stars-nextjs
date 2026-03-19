@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, GooglePlaceRating } from '@/lib/types';
+import type { TetrisGalleryItem } from '@/components/TetrisGallery';
 import { SURFACE } from '@/lib/theme';
 
 // Server components - no client JS needed
@@ -20,7 +21,6 @@ const FaqSection = dynamic(() => import('@/components/home/FaqSection'));
 const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
 
 // Pre-localized types (computed server-side)
-interface LocalizedGalleryItem { image: string; title: string; category: string }
 interface LocalizedBlogPost { slug: string; title: string }
 interface LocalizedShowroom { address: string; appointmentText: string; phone: string }
 interface LocalizedFaq { id: string; question: string; answer: string }
@@ -33,7 +33,7 @@ interface HomePageProps {
   company: Company;
   services: Service[];
   googleReviews: GooglePlaceRating;
-  gallery: LocalizedGalleryItem[];
+  gallery: TetrisGalleryItem[];
   trustBadges: string[];
   partners: LocalizedPartner[];
   faqs: LocalizedFaq[];

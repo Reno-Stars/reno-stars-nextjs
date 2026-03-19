@@ -2,8 +2,9 @@
 
 import { CSSProperties, KeyboardEvent } from 'react';
 import Image from 'next/image';
+import { Link } from '@/navigation';
 
-const layouts = [
+export const tetrisLayouts = [
   { col: 'col-span-2', aspect: 'aspect-[2/1]' },
   { col: '', aspect: 'aspect-square' },
   { col: '', aspect: 'aspect-square' },
@@ -18,23 +19,24 @@ const layouts = [
   { col: '', aspect: 'aspect-square' },
 ];
 
-interface LocalizedGalleryItem {
+export interface TetrisGalleryItem {
   image: string;
   title: string;
-  category: string;
+  category?: string;
+  href?: string;
 }
 
 interface TetrisGalleryProps {
-  items: LocalizedGalleryItem[];
+  items: TetrisGalleryItem[];
   cardClassName?: string;
   cardStyle?: CSSProperties;
   imageClassName?: string;
   overlayClassName?: string;
-  onItemClick?: (item: LocalizedGalleryItem, index: number) => void;
+  onItemClick?: (item: TetrisGalleryItem, index: number) => void;
 }
 
 export default function TetrisGallery({ items, cardClassName = '', cardStyle = {}, imageClassName = '', overlayClassName = '', onItemClick }: TetrisGalleryProps) {
-  const handleKeyDown = (e: KeyboardEvent, item: LocalizedGalleryItem, index: number) => {
+  const handleKeyDown = (e: KeyboardEvent, item: TetrisGalleryItem, index: number) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onItemClick?.(item, index);
@@ -44,27 +46,18 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" role="list" aria-label="Project gallery">
       {items.map((item, index) => {
-        const layout = layouts[index % layouts.length];
+        const layout = tetrisLayouts[index % tetrisLayouts.length];
         const altText = item.title || item.category || 'Renovation project showcase';
-        // col-span-2 items are twice as wide, need larger images
         const isWide = layout.col === 'col-span-2';
         const sizes = isWide
           ? '(max-width: 768px) 100vw, 50vw'
           : '(max-width: 768px) 50vw, 25vw';
 
         const isInteractive = !!onItemClick;
+        const hasLink = !!item.href;
 
-        return (
-          <div
-            key={`${item.image}-${item.title}`}
-            className={`${layout.col} ${layout.aspect} overflow-hidden relative group ${cardClassName} ${isInteractive ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`}
-            style={cardStyle}
-            role="listitem"
-            tabIndex={isInteractive ? 0 : undefined}
-            onClick={isInteractive ? () => onItemClick(item, index) : undefined}
-            onKeyDown={isInteractive ? (e) => handleKeyDown(e, item, index) : undefined}
-            aria-label={altText}
-          >
+        const content = (
+          <>
             <Image
               src={item.image}
               alt={altText}
@@ -81,6 +74,38 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
                 </div>
               </div>
             )}
+          </>
+        );
+
+        const className = `${layout.col} ${layout.aspect} overflow-hidden relative group ${cardClassName} ${(isInteractive || hasLink) ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`;
+
+        if (hasLink) {
+          return (
+            <Link
+              key={`${item.image}-${item.title}`}
+              href={item.href!}
+              className={className}
+              style={cardStyle}
+              role="listitem"
+              aria-label={altText}
+            >
+              {content}
+            </Link>
+          );
+        }
+
+        return (
+          <div
+            key={`${item.image}-${item.title}`}
+            className={className}
+            style={cardStyle}
+            role="listitem"
+            tabIndex={isInteractive ? 0 : undefined}
+            onClick={isInteractive ? () => onItemClick?.(item, index) : undefined}
+            onKeyDown={isInteractive ? (e) => handleKeyDown(e, item, index) : undefined}
+            aria-label={altText}
+          >
+            {content}
           </div>
         );
       })}

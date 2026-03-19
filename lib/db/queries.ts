@@ -17,7 +17,7 @@ import {
   blogPosts as blogPostsTable,
   contactSubmissions as contactSubmissionsTable,
   serviceAreas as serviceAreasTable,
-  galleryItems as galleryItemsTable,
+  designs as designsTable,
   trustBadges as trustBadgesTable,
   showroomInfo as showroomInfoTable,
   faqs as faqsTable,
@@ -25,9 +25,9 @@ import {
   socialMediaPosts as socialMediaPostsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
-import { slugToLabel } from '../utils';
+
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
-import type { Company, SocialLink, Service, AboutSections, Project, ServiceArea, BlogPost, BlogRelatedProject, GalleryItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
+import type { Company, SocialLink, Service, AboutSections, Project, ServiceArea, BlogPost, BlogRelatedProject, DesignItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
 
 // ============================================================================
 // HELPERS
@@ -930,21 +930,20 @@ export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedA
 }
 
 // ============================================================================
-// GALLERY QUERIES
+// DESIGN QUERIES
 // ============================================================================
 
-/** Fetch published gallery items ordered by display_order. */
-export const getGalleryItemsFromDb = cache(async (): Promise<GalleryItem[]> => {
+/** Fetch published design items ordered by display_order. */
+export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
   const rows = await db
     .select()
-    .from(galleryItemsTable)
-    .where(eq(galleryItemsTable.isPublished, true))
-    .orderBy(asc(galleryItemsTable.displayOrder));
+    .from(designsTable)
+    .where(eq(designsTable.isPublished, true))
+    .orderBy(asc(designsTable.displayOrder));
 
-  return rows.map((row: typeof galleryItemsTable.$inferSelect) => ({
+  return rows.map((row: typeof designsTable.$inferSelect) => ({
     image: getAssetUrl(row.imageUrl),
     title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
-    category: row.category ? slugToLabel(row.category) : 'Uncategorized',
   }));
 });
 
@@ -1103,9 +1102,9 @@ export async function getAllServiceAreasAdmin(): Promise<(typeof serviceAreasTab
   return db.select().from(serviceAreasTable).orderBy(asc(serviceAreasTable.displayOrder));
 }
 
-/** Fetch all gallery items (admin — includes unpublished). */
-export async function getAllGalleryItemsAdmin(): Promise<(typeof galleryItemsTable.$inferSelect)[]> {
-  return db.select().from(galleryItemsTable).orderBy(asc(galleryItemsTable.displayOrder));
+/** Fetch all design items (admin — includes unpublished). */
+export async function getAllDesignsAdmin(): Promise<(typeof designsTable.$inferSelect)[]> {
+  return db.select().from(designsTable).orderBy(asc(designsTable.displayOrder));
 }
 
 /** Fetch all trust badges (admin — includes inactive). */

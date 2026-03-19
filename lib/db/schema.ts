@@ -608,37 +608,25 @@ export const testimonialsRelations = relations(testimonials, ({ one }) => ({
 }));
 
 // ============================================================================
-// GALLERY ITEMS
+// DESIGNS
 // ============================================================================
 
-/** Portfolio gallery images */
-export const galleryItems = pgTable(
-  'gallery_items',
+/** Design rendering images (3D models, design concepts) */
+export const designs = pgTable(
+  'designs',
   {
     id: uuid('id').defaultRandom().primaryKey(),
     imageUrl: varchar('image_url', { length: 500 }).notNull(),
     titleEn: varchar('title_en', { length: 200 }),
     titleZh: varchar('title_zh', { length: 200 }),
-    category: varchar('category', { length: 50 }),
-    projectId: uuid('project_id').references(() => projects.id, {
-      onDelete: 'set null',
-    }),
     displayOrder: integer('display_order').default(0).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (table) => [
-    index('gallery_items_category_idx').on(table.category),
-    uniqueIndex('gallery_items_image_url_idx').on(table.imageUrl),
+    uniqueIndex('designs_image_url_idx').on(table.imageUrl),
   ]
 );
-
-export const galleryItemsRelations = relations(galleryItems, ({ one }) => ({
-  project: one(projects, {
-    fields: [galleryItems.projectId],
-    references: [projects.id],
-  }),
-}));
 
 // ============================================================================
 // CONTACT SUBMISSIONS
@@ -846,8 +834,8 @@ export type NewDbBlogPost = typeof blogPosts.$inferInsert;
 export type DbTestimonial = typeof testimonials.$inferSelect;
 export type NewDbTestimonial = typeof testimonials.$inferInsert;
 
-export type DbGalleryItem = typeof galleryItems.$inferSelect;
-export type NewDbGalleryItem = typeof galleryItems.$inferInsert;
+export type DbDesign = typeof designs.$inferSelect;
+export type NewDbDesign = typeof designs.$inferInsert;
 
 export type DbContactSubmission = typeof contactSubmissions.$inferSelect;
 export type NewDbContactSubmission = typeof contactSubmissions.$inferInsert;

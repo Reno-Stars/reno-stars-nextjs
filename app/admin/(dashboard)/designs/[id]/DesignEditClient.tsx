@@ -2,32 +2,29 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import GalleryItemForm from '../GalleryItemForm';
+import DesignItemForm from '../DesignItemForm';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
-import { deleteGalleryItem } from '@/app/actions/admin/gallery';
+import { deleteDesignItem } from '@/app/actions/admin/designs';
 import { CARD, ERROR, neu, TEXT_MID } from '@/lib/theme';
-import type { GalleryCategoryOption } from '@/lib/admin/gallery-categories';
 
-interface GalleryEditClientProps {
+interface DesignEditClientProps {
   id: string;
   action: (
     prevState: { success?: boolean; error?: string },
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
-  categoryOptions: GalleryCategoryOption[];
   initialData: {
     imageUrl: string;
     titleEn: string;
     titleZh: string;
-    category: string;
     displayOrder: number;
     isPublished: boolean;
   };
 }
 
-export default function GalleryEditClient({ id, action, categoryOptions, initialData }: GalleryEditClientProps) {
+export default function DesignEditClient({ id, action, initialData }: DesignEditClientProps) {
   const router = useRouter();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -36,12 +33,12 @@ export default function GalleryEditClient({ id, action, categoryOptions, initial
 
   const handleDelete = () => {
     startTransition(async () => {
-      const result = await deleteGalleryItem(id);
+      const result = await deleteDesignItem(id);
       if (result.error) {
         toast(result.error, 'error');
       } else {
-        toast(t.gallery.deleted, 'success');
-        router.push('/admin/gallery');
+        toast(t.designs.deleted, 'success');
+        router.push('/admin/designs');
       }
       setShowDeleteDialog(false);
     });
@@ -49,9 +46,8 @@ export default function GalleryEditClient({ id, action, categoryOptions, initial
 
   return (
     <>
-      <GalleryItemForm action={action} categoryOptions={categoryOptions} initialData={initialData} />
+      <DesignItemForm action={action} initialData={initialData} />
 
-      {/* Delete Button */}
       <div
         style={{
           backgroundColor: CARD,
@@ -66,7 +62,7 @@ export default function GalleryEditClient({ id, action, categoryOptions, initial
           {t.common.delete}
         </h3>
         <p style={{ color: TEXT_MID, fontSize: '0.875rem', marginBottom: '1rem' }}>
-          {t.gallery.deleteMessage}
+          {t.designs.deleteMessage}
         </p>
         <button
           type="button"
@@ -91,14 +87,14 @@ export default function GalleryEditClient({ id, action, categoryOptions, initial
             e.currentTarget.style.filter = 'brightness(1)';
           }}
         >
-          {t.gallery.deleteGalleryItem}
+          {t.designs.deleteDesignItem}
         </button>
       </div>
 
       <ConfirmDialog
         open={showDeleteDialog}
-        title={t.gallery.deleteGalleryItem}
-        message={t.gallery.deleteMessage}
+        title={t.designs.deleteDesignItem}
+        message={t.designs.deleteMessage}
         onConfirm={handleDelete}
         onCancel={() => setShowDeleteDialog(false)}
         loading={isPending}

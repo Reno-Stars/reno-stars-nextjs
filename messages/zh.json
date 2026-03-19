@@ -123,6 +123,17 @@
     "letsBuildTogether": "携手共建",
     "ourPromise": "我们的承诺"
   },
+  "design": {
+    "seoTitle": "专业装修设计与3D效果图",
+    "seoParagraph1": "在Reno Stars，每一次装修都始于精细的设计阶段。我们的设计师团队创建逼真的3D效果图，让您在施工开始前就能直观感受最终效果。从厨房布局、浴室改造到全屋翻新，我们以精湛工艺和创意将您的愿景变为现实。",
+    "seoParagraph2": "浏览我们的室内设计作品集，涵盖厨房、浴室、客厅及商业空间。每幅效果图都体现了我们将现代美学与实用功能完美融合的承诺——为温哥华及大温地区的住宅和商业客户量身定制。",
+    "designFeature1Title": "3D可视化",
+    "designFeature1Desc": "逼真的效果图让您在施工前就能看到每个细节——材质、灯光和空间布局。",
+    "designFeature2Title": "量身定制",
+    "designFeature2Desc": "每个设计方案都根据您的空间、生活方式和预算量身打造，绝非千篇一律。",
+    "designFeature3Title": "从设计到施工",
+    "designFeature3Desc": "我们的团队负责从概念到完工的全过程，确保最终成果与设计愿景一致。"
+  },
   "stats": {
     "yearsExperience": "年经验",
     "teamMembers": "团队成员",
@@ -253,9 +264,12 @@
     "close": "关闭",
     "viewDetails": "查看完整详情"
   },
-  "gallery": {
+  "lightbox": {
     "previous": "上一张",
     "next": "下一张",
+    "close": "关闭"
+  },
+  "gallery": {
     "beforeShort": "前",
     "afterShort": "后"
   },

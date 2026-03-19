@@ -10,24 +10,22 @@ import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
-import { toggleGalleryItemPublished, deleteGalleryItem, reorderGalleryItems } from '@/app/actions/admin/gallery';
+import { toggleDesignItemPublished, deleteDesignItem, reorderDesignItems } from '@/app/actions/admin/designs';
 import { GOLD, TEXT_MID, CARD, NAVY, ERROR, neu, SURFACE_ALT, TEXT_MUTED } from '@/lib/theme';
 import { getAssetUrl } from '@/lib/storage';
-import { slugToLabel } from '@/lib/utils';
 import { useDragReorder } from '@/hooks/useDragReorder';
 
-interface GalleryRow {
+interface DesignRow {
   id: string;
   imageUrl: string;
   titleEn: string | null;
   titleZh: string | null;
-  category: string | null;
   displayOrder: number;
   isPublished: boolean;
 }
 
 interface Props {
-  items: GalleryRow[];
+  items: DesignRow[];
 }
 
 // Tetris layout pattern matching frontend TetrisGallery.tsx
@@ -46,7 +44,7 @@ const layouts = [
   { col: '', aspect: 'aspect-square' },
 ];
 
-export default function GalleryListClient({ items }: Props) {
+export default function DesignsListClient({ items }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -56,7 +54,6 @@ export default function GalleryListClient({ items }: Props) {
   const { locale } = useAdminLocale();
   const t = useAdminTranslations();
 
-  // Drag and drop reordering
   const {
     draggedId,
     dragOverId,
@@ -73,7 +70,7 @@ export default function GalleryListClient({ items }: Props) {
     getId: (item) => item.id,
     getDisplayOrder: (item) => item.displayOrder,
     isIncluded: (item) => item.isPublished,
-    onReorder: reorderGalleryItems,
+    onReorder: reorderDesignItems,
     onSuccess: () => toast(t.common.savedSuccessfully, 'success'),
     onError: (error) => toast(error, 'error'),
   });
@@ -82,7 +79,6 @@ export default function GalleryListClient({ items }: Props) {
     setFailedImages((prev) => new Set(prev).add(id));
   }, []);
 
-  // Filter published items for preview grid
   const publishedItems = useMemo(() => {
     const source = localOrder ?? items;
     return source.filter((item) => item.isPublished).sort((a, b) => a.displayOrder - b.displayOrder);
@@ -91,26 +87,26 @@ export default function GalleryListClient({ items }: Props) {
   const handleDelete = () => {
     if (!deleteId) return;
     startTransition(async () => {
-      const result = await deleteGalleryItem(deleteId);
+      const result = await deleteDesignItem(deleteId);
       if (result.error) toast(result.error, 'error');
-      else toast(t.gallery.deleted, 'success');
+      else toast(t.designs.deleted, 'success');
       setDeleteId(null);
     });
   };
 
   const handleItemClick = useCallback((e: React.MouseEvent, id: string) => {
     if (shouldNavigate(e)) {
-      router.push(`/admin/gallery/${id}`);
+      router.push(`/admin/designs/${id}`);
     }
   }, [router, shouldNavigate]);
 
-  const columns: Column<GalleryRow>[] = useMemo(() => {
-    const getT = (row: GalleryRow) => locale === 'zh' ? row.titleZh : row.titleEn;
+  const columns: Column<DesignRow>[] = useMemo(() => {
+    const getT = (row: DesignRow) => locale === 'zh' ? row.titleZh : row.titleEn;
     return [
       {
         key: 'imageUrl',
-        header: t.gallery.image,
-        render: (row: GalleryRow) => (
+        header: t.designs.image,
+        render: (row: DesignRow) => (
           <span title={row.imageUrl} style={{ fontSize: '0.8125rem' }}>
             {row.imageUrl.length > 35 ? '...' + row.imageUrl.slice(-35) : row.imageUrl}
           </span>
@@ -118,15 +114,14 @@ export default function GalleryListClient({ items }: Props) {
       },
       {
         key: locale === 'zh' ? 'titleZh' : 'titleEn',
-        header: locale === 'zh' ? t.gallery.titleZh : t.gallery.titleEn,
+        header: locale === 'zh' ? t.designs.titleZh : t.designs.titleEn,
         sortable: true,
       },
-      { key: 'category', header: t.gallery.categoryLabel, sortable: true },
-      { key: 'displayOrder', header: t.gallery.displayOrder, sortable: true },
+      { key: 'displayOrder', header: t.designs.displayOrder, sortable: true },
       {
         key: 'isPublished',
-        header: t.gallery.published,
-        render: (row: GalleryRow) => (
+        header: t.designs.published,
+        render: (row: DesignRow) => (
           <ToggleButton
             isActive={row.isPublished}
             isPending={pendingId === row.id}
@@ -134,7 +129,7 @@ export default function GalleryListClient({ items }: Props) {
             onClick={() => {
               setPendingId(row.id);
               startTransition(async () => {
-                const result = await toggleGalleryItemPublished(row.id, row.isPublished);
+                const result = await toggleDesignItemPublished(row.id, row.isPublished);
                 if (result.error) toast(result.error, 'error');
                 setPendingId(null);
               });
@@ -147,7 +142,7 @@ export default function GalleryListClient({ items }: Props) {
 
   return (
     <>
-      {/* Gallery Preview - Tetris Layout matching frontend */}
+      {/* Design Preview - Tetris Layout */}
       <div
         style={{
           backgroundColor: SURFACE_ALT,
@@ -159,11 +154,11 @@ export default function GalleryListClient({ items }: Props) {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
           <h2 style={{ color: NAVY, fontSize: '1rem', fontWeight: 600, margin: 0 }}>
-            {t.common.preview} ({publishedItems.length} {t.gallery.published.toLowerCase()})
+            {t.common.preview} ({publishedItems.length} {t.designs.published.toLowerCase()})
           </h2>
           {publishedItems.length > 1 && (
             <span style={{ color: TEXT_MID, fontSize: '0.75rem' }}>
-              {isReordering ? t.common.saving : t.gallery.dragToReorder}
+              {isReordering ? t.common.saving : t.designs.dragToReorder}
             </span>
           )}
         </div>
@@ -174,7 +169,7 @@ export default function GalleryListClient({ items }: Props) {
             {publishedItems.map((item, index) => {
               const layout = layouts[index % layouts.length];
               const title = locale === 'zh' ? item.titleZh : item.titleEn;
-              const altText = title || item.category || `Gallery image ${index + 1}`;
+              const altText = title || `Design image ${index + 1}`;
 
               const hasFailed = failedImages.has(item.id);
               const isDragging = draggedId === item.id;
@@ -195,7 +190,7 @@ export default function GalleryListClient({ items }: Props) {
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      router.push(`/admin/gallery/${item.id}`);
+                      router.push(`/admin/designs/${item.id}`);
                     }
                   }}
                   className={`${layout.col} ${layout.aspect} overflow-hidden relative group rounded-xl cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500`}
@@ -205,7 +200,7 @@ export default function GalleryListClient({ items }: Props) {
                     transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
                     transition: 'transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease',
                   }}
-                  aria-label={`${t.common.edit} ${altText}. ${t.gallery.dragToReorder}`}
+                  aria-label={`${t.common.edit} ${altText}. ${t.designs.dragToReorder}`}
                 >
                   {hasFailed ? (
                     <div
@@ -229,26 +224,20 @@ export default function GalleryListClient({ items }: Props) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex items-end pointer-events-none">
                     <div className="p-3 text-white">
                       {title && <h3 className="text-sm font-bold">{title}</h3>}
-                      <p className="text-xs text-white/80">
-                        {item.category ? slugToLabel(item.category) : ''}
-                      </p>
                     </div>
                   </div>
-                  {/* Order badge */}
                   <div
                     className="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium"
                     style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff' }}
                   >
                     #{index + 1}
                   </div>
-                  {/* Edit indicator - visible on hover and focus */}
                   <div
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 px-2 py-1 rounded text-xs font-medium pointer-events-none"
                     style={{ backgroundColor: GOLD, color: '#fff' }}
                   >
                     {t.common.edit}
                   </div>
-                  {/* Drag indicator */}
                   <div
                     className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-70 transition-opacity duration-300 pointer-events-none"
                     style={{ color: '#fff' }}
@@ -268,10 +257,10 @@ export default function GalleryListClient({ items }: Props) {
           columns={columns}
           data={items}
           getRowKey={(row) => row.id}
-          searchKeys={['titleEn', 'titleZh', 'category']}
+          searchKeys={['titleEn', 'titleZh']}
           headerAction={
             <Link
-              href="/admin/gallery/new"
+              href="/admin/designs/new"
               style={{
                 padding: '0.5rem 1rem',
                 borderRadius: '8px',
@@ -283,13 +272,13 @@ export default function GalleryListClient({ items }: Props) {
                 whiteSpace: 'nowrap',
               }}
             >
-              {t.gallery.addGalleryItem}
+              {t.designs.addDesignItem}
             </Link>
           }
           actions={(row) => (
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <Link
-                href={`/admin/gallery/${row.id}`}
+                href={`/admin/designs/${row.id}`}
                 style={{ color: GOLD, fontSize: '0.8125rem', textDecoration: 'none' }}
               >
                 {t.common.edit}
@@ -314,8 +303,8 @@ export default function GalleryListClient({ items }: Props) {
       </div>
       <ConfirmDialog
         open={!!deleteId}
-        title={t.gallery.deleteGalleryItem}
-        message={t.gallery.deleteMessage}
+        title={t.designs.deleteDesignItem}
+        message={t.designs.deleteMessage}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
         loading={isPending}
