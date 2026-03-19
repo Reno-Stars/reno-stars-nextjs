@@ -5,6 +5,7 @@ import { useActionState } from 'react';
 import { updateCompanyInfo } from '@/app/actions/admin/company';
 import FormField from '@/components/admin/FormField';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
+import VideoUrlInput from '@/components/admin/VideoUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
@@ -128,6 +129,8 @@ export default function CompanyForm({ company }: CompanyFormProps) {
           </div>
 
           <ImageUrlInput name="logoUrl" label={t.company.logoUrl} defaultValue={company.logoUrl ?? ''} disabled={!editing} />
+          <VideoUrlInput name="heroVideoUrl" label={t.company.heroVideoUrl} defaultValue={company.heroVideoUrl ?? ''} disabled={!editing} />
+          <ImageUrlInput name="heroImageUrl" label={t.company.heroImageUrl} defaultValue={company.heroImageUrl ?? ''} disabled={!editing} />
 
           {editing && (
             <button

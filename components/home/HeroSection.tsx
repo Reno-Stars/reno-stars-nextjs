@@ -24,11 +24,14 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ company, googleRating, translations: t }: HeroSectionProps) {
+  const posterSrc = company.heroImageUrl || images.hero;
+  const videoSrc = company.heroVideoUrl || video.hero;
+
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden min-h-[70vh] flex items-center">
       {/* Poster image shown immediately for fast LCP */}
       <Image
-        src={images.hero}
+        src={posterSrc}
         alt="Vancouver home renovation showcase featuring modern kitchen and bathroom remodeling by Reno Stars"
         fill
         priority
@@ -38,8 +41,8 @@ export default function HeroSection({ company, googleRating, translations: t }: 
       />
       {/* Video loads lazily on desktop only, fades in over the image */}
       <LazyVideo
-        src={video.hero}
-        poster={images.hero}
+        src={videoSrc}
+        poster={posterSrc}
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />

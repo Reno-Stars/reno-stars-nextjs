@@ -365,6 +365,10 @@ export interface Company {
   warranty: string;
   /** Liability insurance coverage */
   liabilityCoverage: string;
+  /** Hero video URL (admin-managed, optional) */
+  heroVideoUrl: string;
+  /** Hero poster image URL (admin-managed, optional) */
+  heroImageUrl: string;
   /** Geographic coordinates for structured data */
   geo: { latitude: number; longitude: number };
 }

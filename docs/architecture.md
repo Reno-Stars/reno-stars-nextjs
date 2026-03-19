@@ -74,8 +74,8 @@ lib/
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, AreaOption, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
-    upload-constants.ts   # Shared upload limits (MAX_IMAGE_SIZE, ALLOWED_IMAGE_TYPES)
-    upload-client.ts      # Client-side presigned S3 URL upload helper
+    upload-constants.ts   # Shared upload limits (image: 50 MB, video: 1 GB) and allowed MIME types
+    upload-client.ts      # Client-side presigned S3 URL upload helpers (image + video)
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
     glossary.ts           # EN→ZH translation glossary injected into all AI prompts
@@ -542,9 +542,9 @@ Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog 
 
 Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). ZIP upload uses **S3 multipart upload with presigned URLs** (`api/[jobId]/upload/`): file is split into 10 MB chunks (`CHUNK_SIZE`), for each chunk the client fetches a presigned URL from the API then uploads directly to S3, with per-chunk retry (3 attempts, backoff). Progress bar shows chunks completed / total. Uses `AbortController` for cancellation. Polling starts immediately after job creation (before S3 upload completes) so the UI always transitions to results; on S3 upload failure the client returns to upload phase, but if only the process trigger fails polling continues. Error list uses `resolveErrorLabel()` to map `__TIMEOUT_*__` markers into bilingual display text. Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
 
-## Image Upload
+## Media Upload (Images & Video)
 
-All admin image uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit.
+All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB).
 
 ### Architecture
 
@@ -572,34 +572,37 @@ Browser                        API Route                       S3
 Shared S3 client singleton with lazy initialization. Configured with `requestChecksumCalculation: 'WHEN_REQUIRED'` to disable AWS SDK v3 automatic CRC32 checksums (R2 rejects them as unsigned headers on presigned URLs). Exports:
 - `getS3Client()` — Returns a cached `S3Client` or `null` if credentials are missing. Uses `undefined` sentinel to distinguish "not yet initialized" from "missing credentials".
 - `S3_BUCKET` — Default bucket name (`process.env.S3_BUCKET || 'reno-stars'`).
-- `MIME_TO_EXT` — MIME type → file extension map for image uploads.
+- `MIME_TO_EXT` — MIME type → file extension map for image and video uploads.
+- `deleteS3Object(publicUrl)` — Extracts S3 key from a public URL via `extractKeyFromUrl()` and deletes the object. Silently ignores failures (object already deleted, external URL, missing S3 config). Used by company action to clean up replaced uploads.
 
 ### Upload Constants (`lib/admin/upload-constants.ts`)
 
-Shared validation constants used by both the API route and client-side helper:
-- `MAX_IMAGE_SIZE` — 50 MB (in bytes).
-- `MAX_IMAGE_SIZE_LABEL` — Human-readable `'50 MB'` string for error messages.
-- `ALLOWED_IMAGE_TYPES` — `Set` of allowed MIME types (JPEG, PNG, WebP, SVG, GIF).
+Shared validation constants used by both the API route and client-side helpers:
+- `MAX_IMAGE_SIZE` / `MAX_IMAGE_SIZE_LABEL` — 50 MB limit for images.
+- `MAX_VIDEO_SIZE` / `MAX_VIDEO_SIZE_LABEL` — 1 GB limit for video.
+- `ALLOWED_IMAGE_TYPES` — `Set` of allowed image MIME types (JPEG, PNG, WebP, SVG, GIF).
+- `ALLOWED_VIDEO_TYPES` — `Set` of allowed video MIME types (MP4, WebM, QuickTime/MOV).
+- `ALLOWED_MEDIA_TYPES` — Combined `Set` of all allowed image + video types.
 
-### Presign API Route (`app/api/admin/upload/route.ts`)
+### Presign API Route (`app/admin/api/upload/route.ts`)
 
-`POST /api/admin/upload` — auth-protected route that returns a presigned S3 PUT URL.
+`POST /admin/api/upload` — auth-protected route that returns a presigned S3 PUT URL.
 
 **Request:** `{ fileName: string, fileSize: number, contentType: string, customKey?: string }`
 **Response:** `{ presignedUrl: string, publicUrl: string }`
 
-- **Validation**: Max 50 MB, allowed types: JPEG, PNG, WebP, SVG, GIF. Client-reported `fileSize` is enforced server-side via `ContentLength` condition on the presigned URL — S3 rejects uploads that don't match the declared size.
+- **Validation**: File size validated server-side (50 MB for images, 1 GB for video). Allowed types: JPEG, PNG, WebP, SVG, GIF, MP4, WebM, MOV. `ContentLength` is intentionally omitted from the presigned URL to avoid signature mismatches on R2 for large browser uploads.
 - **Custom key**: If `customKey` is provided, the S3 key becomes `uploads/admin/{customKey}.{ext}`. Sanitized to `/[a-z0-9-]/` only and capped at 200 chars.
 - **Fallback**: Without `customKey`, uses `uploads/admin/{timestamp}-{random8}.{ext}`.
-- **Expiry**: Presigned URLs expire after 10 minutes (`PRESIGN_EXPIRY_SECONDS = 600`).
+- **Expiry**: 10 minutes for images (`PRESIGN_EXPIRY_SECONDS`), 60 minutes for video (`VIDEO_PRESIGN_EXPIRY_SECONDS`).
 
 ### Client Helper (`lib/admin/upload-client.ts`)
 
-`uploadImageDirect({ file, customKey })` — two-step client-side upload:
-1. Requests a presigned URL from `POST /api/admin/upload`.
-2. PUTs the file directly to S3 via the presigned URL.
+Shared `uploadDirect()` helper with two public wrappers:
+- `uploadImageDirect({ file, customKey })` — images (50 MB, JPEG/PNG/WebP/SVG/GIF)
+- `uploadVideoDirect({ file, customKey })` — video (1 GB, MP4/WebM/MOV)
 
-Includes client-side early validation (size + MIME type) to avoid unnecessary round-trips.
+Two-step upload: (1) request presigned URL from `POST /admin/api/upload`, (2) PUT file directly to S3. Includes client-side early validation (size + MIME type), `AbortController` with 30-minute timeout (`UPLOAD_TIMEOUT_MS`), and dev-only error logging.
 
 ### SEO-Friendly Naming
 
@@ -608,6 +611,7 @@ When a slug is available in the form, image components pass a `customKey` to pro
 | Component | Key Format | Example |
 |-----------|------------|---------|
 | `ImageUrlInput` | `{slug}-{imageRole}-{ts}` | `richmond-kitchen-hero-m3x7k2f.webp` |
+| `VideoUrlInput` | `{slug}-{imageRole}-{ts}` | `company-hero-video-m3x7k2f.mp4` |
 | `ImagePairEditor` (before) | `{slug}-before-renovation-{index}-{ts}` | `richmond-kitchen-before-renovation-1-m3x7k2f.jpg` |
 | `ImagePairEditor` (after) | `{slug}-after-renovation-{index}-{ts}` | `richmond-kitchen-after-renovation-1-m3x7k2f.jpg` |
 

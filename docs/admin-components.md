@@ -13,6 +13,7 @@
 
 - **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata. Shows first 3 pairs (`COLLAPSE_THRESHOLD = 3`) with "Show All (N)" toggle; hidden form inputs always render for ALL pairs. Drag-and-drop upload with gold spinner. Accepts optional `slug` prop for SEO-friendly naming. Uses `pairsRef` pattern for async upload gap. Shared `parseImagePairs()` in `lib/admin/form-utils.ts`.
 - **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview. SEO-friendly naming (`{slug}-{imageRole}-{ts}.{ext}`). Detached file picker to bypass `<fieldset disabled>`.
+- **VideoUrlInput** (`components/admin/VideoUrlInput.tsx`): Same pattern as ImageUrlInput but for video files. Accepts MP4/WebM/MOV (max 1 GB). Shows `<video controls>` preview. Uses `uploadVideoDirect()`. Used by CompanyForm for hero video.
 - **BilingualInput** (`components/admin/BilingualInput.tsx`): Dual-mode bilingual text input with EN/ZH flag labels. Optional `maxLength` with color-coded counter (gray < 80%, gold 80-100%, red at limit). SEO field limits: metaTitle=70, metaDescription=155, focusKeyword=50.
 - **BilingualTextarea** (`components/admin/BilingualTextarea.tsx`): Dual-mode bilingual textarea. Controlled mode (`valueEn`/`onChangeEn`) for AI-populated fields, uncontrolled mode (`defaultValueEn`/`defaultValueZh`).
 - **SearchableSelect**: Type-to-filter dropdown with keyboard navigation and ARIA — used for related project in BlogPostForm and linked site in ProjectForm.
@@ -23,16 +24,16 @@
 - **ToastProvider**: Context-based toasts: `'success'` (green), `'error'` (red), `'warning'` (gold). Auto-dismisses 4s. Global `unhandledrejection` listener.
 - **useFormToast**: Watches `useActionState` state changes → fires toasts. Shows bilingual warning on `state.renamedSlug`.
 
-## Image Upload (Presigned S3 URL Flow)
+## Media Upload (Presigned S3 URL Flow)
 
 All admin uploads use presigned S3 URLs to bypass Vercel body size limit:
-1. Client calls `uploadImageDirect()` (`lib/admin/upload-client.ts`)
-2. Requests presigned PUT URL from `POST /api/admin/upload`
+1. Client calls `uploadImageDirect()` or `uploadVideoDirect()` (`lib/admin/upload-client.ts`)
+2. Requests presigned PUT URL from `POST /admin/api/upload`
 3. Uploads directly from browser to S3
 
-API route validates auth, file metadata (max 50 MB, JPEG/PNG/WebP/SVG/GIF). `customKey` sanitized server-side. Presigned URLs expire after 10 minutes.
+API route validates auth, file metadata. Images: max 50 MB, JPEG/PNG/WebP/SVG/GIF. Video: max 1 GB, MP4/WebM/MOV. `customKey` sanitized server-side. Presigned URLs expire after 10 minutes (images) or 60 minutes (video). `ContentLength` is omitted from presigned URLs to avoid R2 signature mismatches.
 
-**S3 client** (`lib/admin/s3.ts`): Singleton with `requestChecksumCalculation: 'WHEN_REQUIRED'` (R2 rejects CRC32 on presigned URLs). Shared constants in `lib/admin/upload-constants.ts`.
+**S3 client** (`lib/admin/s3.ts`): Singleton with `requestChecksumCalculation: 'WHEN_REQUIRED'` (R2 rejects CRC32 on presigned URLs). Exports `deleteS3Object(publicUrl)` for cleaning up replaced uploads. Shared constants in `lib/admin/upload-constants.ts`.
 
 ## Batch Upload
 
@@ -96,7 +97,7 @@ Unified site/project management. Roof = site, floors = project layers. Drag-and-
 - **Collapsible list sections**: First 3 items shown, "Show All (N)" toggle. Hidden inputs always render.
 - **List page pattern**: Edit (`GOLD`) + Delete (`ERROR`) actions, `ConfirmDialog` via `deleteId` state.
 - **Landing page previews**: FAQs, Services, Areas, Badges, Gallery, Partners, About pages include homepage-mirroring preview sections.
-- **CompanyForm sections**: 4 labeled groups (Business Info, Location, Legal, Marketing).
+- **CompanyForm sections**: 4 labeled groups (Business Info, Location, Legal, Marketing). Includes `VideoUrlInput` for hero video and `ImageUrlInput` for hero poster image below the logo field. Save action deletes replaced S3 objects via `deleteS3Object()` (fire-and-forget).
 - **Slug validation**: `isValidSlug()` rejects consecutive hyphens. Regex: `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
 - **Nullable select dropdowns**: Service type, location city, and space type dropdowns include an empty `<option value="">` placeholder. Server actions convert empty strings to `null` before DB insert. Service types come from the `services` DB table, not hardcoded lists.
 

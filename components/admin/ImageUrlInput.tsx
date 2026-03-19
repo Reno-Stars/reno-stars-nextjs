@@ -70,19 +70,24 @@ export default function ImageUrlInput({
     setUploading(true);
     setUploadError('');
 
-    const customKey = slug
-      ? `${slug}-${imageRole}-${Date.now().toString(36)}`
-      : undefined;
+    try {
+      const customKey = slug
+        ? `${slug}-${imageRole}-${Date.now().toString(36)}`
+        : undefined;
 
-    const result = await uploadImageDirect({ file, customKey });
+      const result = await uploadImageDirect({ file, customKey });
 
-    if (result.error) {
-      setUploadError(result.error);
-    } else if (result.url) {
-      setUrl(result.url);
+      if (result.error) {
+        setUploadError(result.error);
+      } else if (result.url) {
+        setUrl(result.url);
+      }
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error('Image upload error:', err);
+      setUploadError('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
     }
-
-    setUploading(false);
   }, [slug, imageRole, setUrl]);
 
   // Open a detached file picker — immune to <fieldset disabled>

@@ -66,7 +66,9 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
     return {
       name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
       logo: '', quoteUrl: '/contact/', yearsExperience: '30', foundingYear: 1997,
-      teamSize: 0, warranty: '', liabilityCoverage: '', geo: { latitude: 0, longitude: 0 },
+      teamSize: 0, warranty: '', liabilityCoverage: '',
+      heroVideoUrl: '', heroImageUrl: '',
+      geo: { latitude: 0, longitude: 0 },
     };
   }
 
@@ -88,6 +90,8 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
     teamSize: row.teamSize ?? 0,
     warranty: row.warranty ?? '',
     liabilityCoverage: row.liabilityCoverage ?? '',
+    heroVideoUrl: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : '',
+    heroImageUrl: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : '',
     geo: {
       latitude: row.geoLatitude ? Number(row.geoLatitude) : 0,
       longitude: row.geoLongitude ? Number(row.geoLongitude) : 0,
