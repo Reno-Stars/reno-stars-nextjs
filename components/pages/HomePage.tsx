@@ -5,7 +5,6 @@ import { SURFACE } from '@/lib/theme';
 
 // Server components - no client JS needed
 import HeroSection from '@/components/home/HeroSection';
-import ServiceAreasBar from '@/components/home/ServiceAreasBar';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import GallerySection from '@/components/home/GallerySection';
 import ServicesSection from '@/components/home/ServicesSection';
@@ -21,7 +20,6 @@ const FaqSection = dynamic(() => import('@/components/home/FaqSection'));
 const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
 
 // Pre-localized types (computed server-side)
-interface LocalizedArea { slug: string; name: string }
 interface LocalizedGalleryItem { image: string; title: string; category: string }
 interface LocalizedBlogPost { slug: string; title: string }
 interface LocalizedShowroom { address: string; appointmentText: string; phone: string }
@@ -41,7 +39,6 @@ interface HomePageProps {
   faqs: LocalizedFaq[];
   blogPosts: LocalizedBlogPost[];
   showroom: LocalizedShowroom;
-  areas: LocalizedArea[];
   areasText: string;
   aboutItems: AboutItem[];
   stats: Stat[];
@@ -55,7 +52,6 @@ interface HomePageProps {
       liabilityCoverage: string;
       rating: string;
     };
-    serviceAreas: string;
     testimonials: { title: string; subtitle: string };
     gallery: { title: string; subtitle: string; projectsLink: string };
     services: { title: string; subtitle: string };
@@ -88,7 +84,6 @@ export default function HomePage({
   faqs,
   blogPosts,
   showroom,
-  areas,
   areasText,
   aboutItems,
   stats,
@@ -97,7 +92,6 @@ export default function HomePage({
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
-      <ServiceAreasBar areas={areas} label={t.serviceAreas} />
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />
       <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />

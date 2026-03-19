@@ -48,7 +48,7 @@ pnpm test:e2e             # Playwright headless
 - **Neumorphic design:** Warm beige (#E8E2DA), navy (#1B365D), gold (#C8922A). `GOLD_ICON_FILTER` in `lib/theme.ts`.
 - **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3` on collision.
 - **Insert-before-delete pattern:** CRUD actions insert new related records before deleting old ones (Neon doesn't support interactive transactions).
-- **Homepage section order:** Hero → Service Areas → Gallery → Services → Testimonials → Stats → About → Trust Badges → Partners → FAQ → Blog → Showroom CTA → Contact
+- **Homepage section order:** Hero → Gallery → Services → Testimonials → Stats → About → Trust Badges → Partners → FAQ → Blog → Showroom CTA → Contact
 - **Heading hierarchy:** H1 (page title) → H2 (sections) → H3 (items). Use `sr-only` H2 where needed.
 - **Performance:** `useMemo`/`useCallback` for derived data. `Promise.all` for parallel queries. `next/dynamic` for below-fold sections. No Suspense on SEO-critical pages.
 

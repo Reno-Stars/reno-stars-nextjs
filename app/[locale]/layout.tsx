@@ -73,7 +73,7 @@ export default async function LocaleLayout({
           >
             {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
           </a>
-          <Navbar company={company} areas={areas} />
+          <Navbar company={company} />
           <main id="main-content">
             {children}
           </main>

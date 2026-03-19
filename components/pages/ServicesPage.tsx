@@ -2,11 +2,12 @@
 
 import { useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MapPin } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service } from '@/lib/types';
+import type { Company, Service, ServiceArea } from '@/lib/types';
 import { getLocalizedService } from '@/lib/data/services';
+import { getLocalizedArea } from '@/lib/data/areas';
 import {
   GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT,
   CARD, NAVY, TEXT, TEXT_MID, neu,
@@ -16,14 +17,19 @@ interface ServicesPageProps {
   locale: Locale;
   company: Company;
   services: Service[];
+  areas: ServiceArea[];
 }
 
-export default function ServicesPage({ locale: _locale, company, services }: ServicesPageProps) {
+export default function ServicesPage({ locale: _locale, company, services, areas }: ServicesPageProps) {
   const t = useTranslations();
   const currentLocale = useLocale() as Locale;
   const localizedServices = useMemo(
     () => services.map((s) => getLocalizedService(s, currentLocale)),
     [services, currentLocale],
+  );
+  const localizedAreas = useMemo(
+    () => areas.map((a) => getLocalizedArea(a, currentLocale)),
+    [areas, currentLocale],
   );
 
   return (
@@ -94,8 +100,45 @@ export default function ServicesPage({ locale: _locale, company, services }: Ser
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Service Areas */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3" style={{ color: TEXT }}>
+            {t('areas.title')}
+          </h2>
+          <p className="text-base text-center mb-10 max-w-2xl mx-auto" style={{ color: TEXT_MID }}>
+            {t('areas.subtitle')}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {localizedAreas.map((area) => (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="rounded-xl p-6 group transition-transform hover:-translate-y-0.5"
+                style={{ boxShadow: neu(4), backgroundColor: CARD }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <MapPin className="w-5 h-5 shrink-0" style={{ color: GOLD }} />
+                  <h3 className="font-bold text-lg group-hover:text-gold transition-colors" style={{ color: TEXT }}>
+                    {area.name}
+                  </h3>
+                </div>
+                {area.description && (
+                  <p className="text-sm mb-4 line-clamp-2" style={{ color: TEXT_MID }}>
+                    {area.description}
+                  </p>
+                )}
+                <span className="text-sm font-semibold flex items-center gap-1" style={{ color: GOLD }}>
+                  {t('areas.viewProjects', { city: area.name })} <ChevronRight className="w-4 h-4" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
             {t('projects.readyToStart2')}

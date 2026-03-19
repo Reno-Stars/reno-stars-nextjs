@@ -1,34 +1,30 @@
 'use client';
 
 import Image from 'next/image';
-import { Menu, X, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/navigation';
-import type { Company, ServiceArea } from '@/lib/types';
+import type { Company } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { neu, SURFACE, SH_DARK, TEXT } from '@/lib/theme';
 
 interface NavbarProps {
   company: Company;
-  areas: ServiceArea[];
 }
 
 const LINK_CLASS = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
 
-export default function Navbar({ company, areas }: NavbarProps) {
+export default function Navbar({ company }: NavbarProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAreasOpen, setIsAreasOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const areasRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
-    setIsAreasOpen(false);
     toggleRef.current?.focus();
   }, []);
 
@@ -54,25 +50,6 @@ export default function Navbar({ company, areas }: NavbarProps) {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen, closeMenu]);
-
-  // Close areas dropdown on click outside or Escape key (desktop)
-  useEffect(() => {
-    if (!isAreasOpen || isMenuOpen) return;
-    const handleClick = (e: MouseEvent) => {
-      if (areasRef.current && !areasRef.current.contains(e.target as Node)) {
-        setIsAreasOpen(false);
-      }
-    };
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsAreasOpen(false);
-    };
-    document.addEventListener('mousedown', handleClick);
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isAreasOpen, isMenuOpen]);
 
   const navLinks = useMemo(() => [
     { href: '/', label: t('nav.home') },
@@ -100,47 +77,6 @@ export default function Navbar({ company, areas }: NavbarProps) {
                 {item.label}
               </Link>
             ))}
-
-            {/* Areas dropdown */}
-            <div ref={areasRef} className="relative flex items-center">
-              <Link
-                href={'/areas' as '/'}
-                className="px-3 py-2 pr-1 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5"
-                style={{ color: TEXT }}
-              >
-                {t('nav.areas')}
-              </Link>
-              <button
-                onClick={() => setIsAreasOpen((prev) => !prev)}
-                className="p-2 rounded cursor-pointer transition-colors duration-200 hover:bg-black/5"
-                style={{ color: TEXT }}
-                aria-expanded={isAreasOpen}
-                aria-haspopup="true"
-                aria-label={t('nav.toggleAreas')}
-              >
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {isAreasOpen && (
-                <div
-                  role="menu"
-                  className="absolute right-0 top-full mt-1 w-56 max-h-[70vh] overflow-y-auto rounded-xl py-2 shadow-lg border"
-                  style={{ backgroundColor: SURFACE, borderColor: `${TEXT}15` }}
-                >
-                  {areas.map((area) => (
-                    <Link
-                      key={area.slug}
-                      role="menuitem"
-                      href={`/areas/${area.slug}` as '/'}
-                      onClick={() => setIsAreasOpen(false)}
-                      className="block px-4 py-2.5 text-base transition-colors duration-150 hover:bg-black/5"
-                      style={{ color: TEXT }}
-                    >
-                      {area.name[locale]}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
 
             <div className="w-px h-5 mx-2" style={{ backgroundColor: `${TEXT}20` }} />
             <Link
@@ -179,43 +115,6 @@ export default function Navbar({ company, areas }: NavbarProps) {
                 {item.label}
               </Link>
             ))}
-
-            {/* Areas expandable */}
-            <div className="flex items-center justify-between py-2.5 px-3 rounded-lg">
-              <Link
-                href={'/areas' as '/'}
-                onClick={closeMenu}
-                className="text-base font-medium cursor-pointer"
-                style={{ color: TEXT }}
-              >
-                {t('nav.areas')}
-              </Link>
-              <button
-                onClick={() => setIsAreasOpen((prev) => !prev)}
-                className="p-2 -mr-2 rounded cursor-pointer transition-colors duration-200 hover:bg-black/5"
-                style={{ color: TEXT }}
-                aria-expanded={isAreasOpen}
-                aria-controls="mobile-areas"
-                aria-label={t('nav.toggleAreas')}
-              >
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isAreasOpen ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
-            {isAreasOpen && (
-              <div id="mobile-areas" className="pl-4 space-y-0.5">
-                {areas.map((area) => (
-                  <Link
-                    key={area.slug}
-                    href={`/areas/${area.slug}` as '/'}
-                    onClick={closeMenu}
-                    className="block py-2.5 px-3 text-base cursor-pointer rounded-lg hover:bg-black/5"
-                    style={{ color: TEXT }}
-                  >
-                    {area.name[locale]}
-                  </Link>
-                ))}
-              </div>
-            )}
 
             <Link href={pathname || '/'} locale={locale === 'en' ? 'zh' : 'en'} onClick={closeMenu}
               className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center gap-2" style={{ color: TEXT }}>

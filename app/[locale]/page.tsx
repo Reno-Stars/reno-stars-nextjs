@@ -120,7 +120,6 @@ export default async function Page({ params }: PageProps) {
       liabilityCoverage: t('stats.liabilityCoverage'),
       rating: t('stats.rating'),
     },
-    serviceAreas: t('section.serviceAreas'),
     testimonials: { title: t('section.whatOurClientsSay'), subtitle: t('section.testimonialsSubtitle') },
     gallery: { title: t('section.ourPortfolio'), subtitle: t('section.gallerySubtitle2'), projectsLink: t('nav.projects') },
     services: { title: t('section.ourServices'), subtitle: t('section.servicesSubtitle') },
@@ -158,7 +157,6 @@ export default async function Page({ params }: PageProps) {
         faqs={localizedFaqs}
         blogPosts={localizedBlogPosts}
         showroom={localizedShowroom}
-        areas={localizedAreas}
         areasText={areasText}
         aboutItems={aboutItems}
         stats={stats}

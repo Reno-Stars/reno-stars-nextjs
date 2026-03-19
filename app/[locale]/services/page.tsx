@@ -5,7 +5,7 @@ import ServicesPage from '@/components/pages/ServicesPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getServicesFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -48,9 +48,10 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [company, services] = await Promise.all([
+  const [company, services, areas] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
+    getServiceAreasFromDb(),
   ]);
 
   const t = await getTranslations({ locale, namespace: 'nav' });
@@ -62,7 +63,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ServicesPage locale={locale as Locale} company={company} services={services} />
+      <ServicesPage locale={locale as Locale} company={company} services={services} areas={areas} />
     </>
   );
 }
