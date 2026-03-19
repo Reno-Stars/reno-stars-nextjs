@@ -3,54 +3,22 @@
  *
  * Usage: pnpm reviews:cache
  *
- * This fetches live reviews from the Google Places API and writes them to
- * lib/google-reviews-cache.json. Run before deploys or periodically in CI
- * to ensure the fallback cache stays fresh.
+ * This fetches live reviews from the Google Places API, translates them
+ * to Chinese using OpenAI, and writes the result to google-reviews-cache.json.
+ * Run before deploys or periodically in CI to ensure the cache stays fresh.
  *
  * Requires GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID env vars.
+ * Optional: OPENAI_API_KEY for Chinese translation (skipped if not set).
  */
 
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import type { GoogleReview, GooglePlaceRating } from '../lib/types';
+import type { RawReview } from '../lib/google-reviews';
+import { mapReview } from '../lib/google-reviews';
+import { AI_CONFIG, parseJsonResponse } from '../lib/ai/openai';
 
-interface RawReview {
-  authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
-  rating?: number;
-  text?: { text?: string; languageCode?: string };
-  originalText?: { text?: string; languageCode?: string };
-  publishTime?: string;
-  relativePublishTimeDescription?: string;
-}
-
-interface GoogleReview {
-  authorName: string;
-  authorUri: string;
-  authorPhotoUri: string;
-  rating: number;
-  text: string;
-  languageCode: string;
-  publishTime: string;
-  relativePublishTime: string;
-}
-
-interface GooglePlaceRating {
-  rating: number;
-  userRatingCount: number;
-  reviews: GoogleReview[];
-}
-
-function mapReview(r: RawReview): GoogleReview {
-  return {
-    authorName: r.authorAttribution?.displayName ?? '',
-    authorUri: r.authorAttribution?.uri ?? '',
-    authorPhotoUri: r.authorAttribution?.photoUri ?? '',
-    rating: r.rating ?? 0,
-    text: r.text?.text ?? r.originalText?.text ?? '',
-    languageCode: r.text?.languageCode ?? r.originalText?.languageCode ?? 'en',
-    publishTime: r.publishTime ?? '',
-    relativePublishTime: r.relativePublishTimeDescription ?? '',
-  };
-}
+const CACHE_PATH = join(process.cwd(), 'google-reviews-cache.json');
 
 async function fetchReviews(
   placeId: string,
@@ -71,6 +39,83 @@ async function fetchReviews(
     throw new Error(`Places API ${sort} request failed: ${res.status} ${res.statusText}`);
   }
   return res.json();
+}
+
+/**
+ * Translate review texts to Chinese using OpenAI.
+ * Sends all reviews in a single batch request for efficiency.
+ */
+async function translateReviews(reviews: GoogleReview[]): Promise<void> {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (!openaiKey) {
+    console.warn('[translate] OPENAI_API_KEY not set, skipping Chinese translation.');
+    return;
+  }
+
+  // Load existing cache to reuse translations for unchanged reviews
+  const existingTranslations = new Map<string, string>();
+  if (existsSync(CACHE_PATH)) {
+    try {
+      const cached = JSON.parse(readFileSync(CACHE_PATH, 'utf-8')) as GooglePlaceRating;
+      for (const r of cached.reviews ?? []) {
+        if (r.textZh) {
+          existingTranslations.set(r.text, r.textZh);
+        }
+      }
+    } catch { /* ignore parse errors */ }
+  }
+
+  // Only translate reviews that don't already have a cached translation
+  const needsTranslation = reviews.filter((r) => !existingTranslations.has(r.text));
+
+  // Apply existing translations
+  for (const r of reviews) {
+    const cached = existingTranslations.get(r.text);
+    if (cached) r.textZh = cached;
+  }
+
+  if (needsTranslation.length === 0) {
+    console.log('[translate] All reviews already have cached translations.');
+    return;
+  }
+
+  console.log(`[translate] Translating ${needsTranslation.length} review(s) to Chinese...`);
+
+  const { default: OpenAI } = await import('openai');
+  const client = new OpenAI({ apiKey: openaiKey });
+
+  // Batch all texts into a single API call
+  const textsToTranslate = needsTranslation.map((r, i) => `[${i}] ${r.text}`).join('\n---\n');
+
+  const response = await client.chat.completions.create({
+    model: AI_CONFIG.model,
+    temperature: AI_CONFIG.temperature,
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a professional translator. Translate the following customer reviews from English to Simplified Chinese. ' +
+          'Keep the tone natural and conversational. Preserve any proper nouns (company names, person names). ' +
+          'Return a JSON array of translated strings in the same order. Only return the JSON array, no other text.',
+      },
+      { role: 'user', content: textsToTranslate },
+    ],
+  });
+
+  const content = response.choices[0]?.message?.content?.trim() ?? '';
+  try {
+    const translations = parseJsonResponse<string[]>(content);
+    if (translations.length !== needsTranslation.length) {
+      console.warn(`[translate] Expected ${needsTranslation.length} translations, got ${translations.length}`);
+    }
+    for (let i = 0; i < Math.min(translations.length, needsTranslation.length); i++) {
+      needsTranslation[i].textZh = translations[i];
+    }
+    console.log(`[translate] Successfully translated ${Math.min(translations.length, needsTranslation.length)} review(s).`);
+  } catch (err) {
+    console.error('[translate] Failed to parse translation response:', err);
+    console.error('[translate] Raw response:', content.slice(0, 200));
+  }
 }
 
 async function main() {
@@ -102,17 +147,19 @@ async function main() {
 
   const fiveStarReviews = allReviews.filter((r) => r.rating === 5);
 
+  // Translate reviews to Chinese
+  await translateReviews(fiveStarReviews);
+
   const result: GooglePlaceRating = {
     rating: relevant.rating ?? 0,
     userRatingCount: relevant.userRatingCount ?? 0,
     reviews: fiveStarReviews,
   };
 
-  const outPath = join(process.cwd(), 'lib/google-reviews-cache.json');
-  writeFileSync(outPath, JSON.stringify(result, null, 2) + '\n');
+  writeFileSync(CACHE_PATH, JSON.stringify(result, null, 2) + '\n');
 
   console.log(`Cached ${fiveStarReviews.length} five-star reviews (${allReviews.length} total, ${result.rating}/5 rating, ${result.userRatingCount} total reviews).`);
-  console.log(`Written to ${outPath}`);
+  console.log(`Written to ${CACHE_PATH}`);
 }
 
 main().catch((err) => {

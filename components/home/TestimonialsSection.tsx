@@ -60,7 +60,7 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
           ))}
         </div>
         <p className="text-sm leading-relaxed italic mb-4 line-clamp-5 flex-1" style={{ color: TEXT_MID }}>
-          &ldquo;{review.text}&rdquo;
+          &ldquo;{locale === 'zh' && review.textZh ? review.textZh : review.text}&rdquo;
         </p>
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-3 min-w-0">

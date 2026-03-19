@@ -7,8 +7,9 @@ const REVALIDATE_24H = 86400;
 const CACHE_PATH = join(process.cwd(), 'google-reviews-cache.json');
 
 const EMPTY_RESULT: GooglePlaceRating = { rating: 0, userRatingCount: 0, reviews: [] } as const satisfies GooglePlaceRating;
+const FALLBACK_DATA = fallbackCache as GooglePlaceRating;
 
-interface RawReview {
+export interface RawReview {
   authorAttribution?: { displayName?: string; uri?: string; photoUri?: string };
   rating?: number;
   text?: { text?: string; languageCode?: string };
@@ -17,7 +18,7 @@ interface RawReview {
   relativePublishTimeDescription?: string;
 }
 
-function mapReview(r: RawReview): GoogleReview {
+export function mapReview(r: RawReview): GoogleReview {
   return {
     authorName: r.authorAttribution?.displayName ?? '',
     authorUri: r.authorAttribution?.uri ?? '',
@@ -64,7 +65,7 @@ function updateCache(data: GooglePlaceRating): void {
 
 /** Return fallback cache if it has reviews. */
 function getFallback(): GooglePlaceRating {
-  const data = fallbackCache as GooglePlaceRating;
+  const data = FALLBACK_DATA;
   if (data.reviews?.length > 0) {
     console.warn('[getGoogleReviews] Using fallback cache');
     return data;
@@ -109,6 +110,21 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
     // If API returned no usable reviews, fall back to cache
     if (fiveStarReviews.length === 0 && relevant.rating === 0) {
       return getFallback();
+    }
+
+    // Merge cached Chinese translations into fresh reviews
+    const cachedTranslations = new Map<string, string>();
+    for (const r of FALLBACK_DATA.reviews ?? []) {
+      if (r.textZh) {
+        const key = r.authorUri || r.authorName;
+        if (key) cachedTranslations.set(key, r.textZh);
+      }
+    }
+    for (const r of fiveStarReviews) {
+      const key = r.authorUri || r.authorName;
+      if (key && cachedTranslations.has(key)) {
+        r.textZh = cachedTranslations.get(key);
+      }
     }
 
     const result: GooglePlaceRating = {
