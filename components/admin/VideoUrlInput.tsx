@@ -228,7 +228,6 @@ export default function VideoUrlInput({
             maxWidth: '300px',
           }}
         >
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             src={getAssetUrl(url)}
             controls

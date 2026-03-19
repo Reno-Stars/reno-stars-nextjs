@@ -632,7 +632,7 @@ export async function optimizeProjectDescription(
   }
 
   if (allCorrections.length > 0) {
-    console.log('[AI Validation]', allCorrections.join(' | '));
+    console.warn('[AI Validation]', allCorrections.join(' | '));
   }
 
   return { ...result, corrections: allCorrections.length > 0 ? allCorrections : undefined };

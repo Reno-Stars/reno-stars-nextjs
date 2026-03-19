@@ -131,7 +131,7 @@ async function uploadAllImages(opts: {
   s3Client: import('@aws-sdk/client-s3').S3Client;
   s3PublicUrl: string;
 }): Promise<Map<ExtractedImage, string>> {
-  const { images, slugPrefix, jobId, startCount, totalImages, errors, s3Client, s3PublicUrl } = opts;
+  const { images, slugPrefix, jobId, startCount, errors, s3Client, s3PublicUrl } = opts;
   const urlMap = new Map<ExtractedImage, string>();
   let processed = startCount;
 
