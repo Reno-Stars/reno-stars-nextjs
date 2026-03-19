@@ -1189,6 +1189,7 @@ export interface ProjectSummary {
   titleZh: string;
   serviceType: string;
   isPublished: boolean;
+  featured: boolean;
   displayOrderInSite: number;
   poNumber: string | null;
   createdAt: Date;
@@ -1205,6 +1206,7 @@ export async function getAllProjectsBySiteAdmin(): Promise<Record<string, Projec
       titleZh: projectsTable.titleZh,
       serviceType: projectsTable.serviceType,
       isPublished: projectsTable.isPublished,
+      featured: projectsTable.featured,
       displayOrderInSite: projectsTable.displayOrderInSite,
       poNumber: projectsTable.poNumber,
       createdAt: projectsTable.createdAt,

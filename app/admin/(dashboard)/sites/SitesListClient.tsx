@@ -10,6 +10,7 @@ import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
 import ToggleButton from '@/components/admin/ToggleButton';
 import { deleteSite, toggleSiteFeatured, toggleSitePublished, toggleSiteShowAsProject } from '@/app/actions/admin/sites';
+import { toggleProjectFeatured, toggleProjectPublished } from '@/app/actions/admin/projects';
 import { CARD, GOLD, TEXT_MID, TEXT_MUTED, NAVY, SUCCESS, ERROR } from '@/lib/theme';
 import type { ProjectSummary } from '@/lib/db/queries';
 import { slugToLabel } from '@/lib/utils';
@@ -23,6 +24,7 @@ interface StandaloneProjectRow {
   titleZh: string;
   serviceType: string | null;
   isPublished: boolean;
+  featured: boolean;
   poNumber: string | null;
   createdAt: Date;
 }
@@ -201,6 +203,7 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
           titleZh: p.titleZh,
           serviceType: p.serviceType,
           isPublished: p.isPublished,
+          featured: p.featured,
           poNumber: p.poNumber,
           createdAt: p.createdAt,
         });
@@ -227,15 +230,49 @@ export default function SitesListClient({ sites, projectsBySite, standaloneSiteI
       },
     },
     {
-      key: 'isPublished',
-      header: t.sites.published,
+      key: 'featured',
+      header: t.projects.featured,
       render: (row: StandaloneProjectRow) => (
-        <span style={{ color: row.isPublished ? SUCCESS : ERROR, fontSize: '0.8125rem' }}>
-          {row.isPublished ? t.common.yes : t.common.no}
+        <span onClick={(e) => e.stopPropagation()}>
+          <ToggleButton
+            isActive={row.featured}
+            isPending={pendingId === `feat-proj-${row.id}`}
+            ariaLabel={`Toggle featured for ${locale === 'zh' ? row.titleZh : row.titleEn}`}
+            onClick={() => {
+              setPendingId(`feat-proj-${row.id}`);
+              startTransition(async () => {
+                const result = await toggleProjectFeatured(row.id, row.featured);
+                if (result.error) toast(result.error, 'error');
+                setPendingId(null);
+              });
+            }}
+          />
         </span>
       ),
     },
-  ], [locale, t]);
+    {
+      key: 'isPublished',
+      header: t.sites.published,
+      render: (row: StandaloneProjectRow) => (
+        <span onClick={(e) => e.stopPropagation()}>
+          <ToggleButton
+            isActive={row.isPublished}
+            isPending={pendingId === `pub-proj-${row.id}`}
+            ariaLabel={`Toggle published for ${locale === 'zh' ? row.titleZh : row.titleEn}`}
+            onClick={() => {
+              setPendingId(`pub-proj-${row.id}`);
+              startTransition(async () => {
+                const result = await toggleProjectPublished(row.id, row.isPublished);
+                if (result.error) toast(result.error, 'error');
+                setPendingId(null);
+              });
+            }}
+          />
+        </span>
+      ),
+    },
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- toast is stable (useCallback with [] deps)
+  ], [locale, t, pendingId]);
 
   const filterStandaloneRow = useCallback((row: StandaloneProjectRow, query: string) => {
     return matchesProject(row, query);
