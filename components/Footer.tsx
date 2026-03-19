@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Phone, Mail, MapPin, Facebook, Instagram, Star } from 'lucide-react';
-import { useMemo, useState, useCallback, type SVGProps } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
 import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
@@ -46,6 +46,78 @@ const socialIcons: Partial<Record<string, IconComponent>> = {
 };
 
 export const wechatId = 'RenoStars';
+
+const STAGGER_DELAY_MS = 80;
+
+function SocialIcons({ socialLinks, toggleWechatModal, wechatId: wcId, t }: {
+  socialLinks: SocialLink[];
+  toggleWechatModal: () => void;
+  wechatId: string;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    // Respect reduced-motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const activeSocials = socialLinks.filter((s) => socialIcons[s.platform]);
+
+  return (
+    <div ref={containerRef} className="flex flex-wrap gap-2">
+      {activeSocials.map((social, i) => {
+        const Icon = socialIcons[social.platform]!;
+        const animStyle: React.CSSProperties = {
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.8)',
+          transition: `opacity 0.4s ease-out ${i * STAGGER_DELAY_MS}ms, transform 0.4s ease-out ${i * STAGGER_DELAY_MS}ms`,
+        };
+        const className = 'w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group';
+        if (social.platform === 'wechat') {
+          return (
+            <button
+              key={social.label}
+              type="button"
+              onClick={toggleWechatModal}
+              className={`${className} cursor-pointer`}
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)', ...animStyle }}
+              title={t('footer.wechatId', { id: wcId })}
+              aria-label={social.label}
+            >
+              <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
+            </button>
+          );
+        }
+        return (
+          <a
+            key={social.label}
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={className}
+            style={{ backgroundColor: 'rgba(255,255,255,0.08)', ...animStyle }}
+            aria-label={social.label}
+          >
+            <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
+          </a>
+        );
+      })}
+    </div>
+  );
+}
 
 interface FooterProps {
   company: Company;
@@ -94,40 +166,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
               className="h-9 w-auto object-contain rounded bg-white/95 px-2 py-1 mb-3"
             />
             <p className="text-sm text-white/80 mb-4">{company.tagline}</p>
-            <div className="flex flex-wrap gap-2">
-              {socialLinks.map((social) => {
-                const Icon = socialIcons[social.platform];
-                if (!Icon) return null;
-                if (social.platform === 'wechat') {
-                  return (
-                    <button
-                      key={social.label}
-                      type="button"
-                      onClick={toggleWechatModal}
-                      className="w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer group"
-                      style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
-                      title={t('footer.wechatId', { id: wechatId })}
-                      aria-label={social.label}
-                    >
-                      <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
-                    </button>
-                  );
-                }
-                return (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 group"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
-                    aria-label={social.label}
-                  >
-                    <Icon className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true" />
-                  </a>
-                );
-              })}
-            </div>
+            <SocialIcons socialLinks={socialLinks} toggleWechatModal={toggleWechatModal} wechatId={wechatId} t={t} />
           </div>
 
           {/* Quick Links */}
