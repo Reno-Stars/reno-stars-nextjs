@@ -51,6 +51,7 @@ export const socialPlatformEnum = pgEnum('social_platform', [
   'xiaohongshu',
   'wechat',
   'whatsapp',
+  'linktree',
 ]);
 
 // ============================================================================
@@ -684,11 +685,7 @@ export const companyInfo = pgTable('company_info', {
   address: text('address'),
   logoUrl: varchar('logo_url', { length: 500 }),
   quoteUrl: varchar('quote_url', { length: 500 }),
-  yearsExperience: varchar('years_experience', { length: 10 }),
-  foundingYear: integer('founding_year'),
-  teamSize: integer('team_size'),
-  warranty: varchar('warranty', { length: 50 }),
-  liabilityCoverage: varchar('liability_coverage', { length: 50 }),
+  // foundingYear, teamSize, warranty, liabilityCoverage moved to lib/company-config.ts
   // rating, reviewCount, ratingSource removed - now fetched from Google Reviews API
   heroVideoUrl: varchar('hero_video_url', { length: 500 }),
   heroImageUrl: varchar('hero_image_url', { length: 500 }),

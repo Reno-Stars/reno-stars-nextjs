@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { eq, asc, desc, and, inArray, count, isNull, sql } from 'drizzle-orm';
 import { db } from './index';
+import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
   companyInfo,
   socialLinks as socialLinksTable,
@@ -56,26 +57,26 @@ export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T)
 
 /**
  * Fetch company info from DB and map to the `Company` type.
- * `yearsExperience` is computed from `foundingYear` so it stays current.
+ * Stats (yearsExperience, teamSize, warranty, liabilityCoverage) come from
+ * `lib/company-config.ts`, not the database.
  */
 export const getCompanyFromDb = cache(async (): Promise<Company> => {
   const rows = await db.select().from(companyInfo).limit(1);
   const row = rows[0];
+
+  const { foundingYear, teamSize, projectsCompleted, liabilityCoverage } = COMPANY_STATS;
+  const yearsExperience = getYearsExperience();
+
   if (!row) {
     // Return sensible defaults instead of crashing the app/build
     return {
       name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
-      logo: '', quoteUrl: '/contact/', yearsExperience: '30', foundingYear: 1997,
-      teamSize: 0, warranty: '', liabilityCoverage: '',
+      logo: '', quoteUrl: '/contact/',
+      yearsExperience, foundingYear, teamSize, projectsCompleted, liabilityCoverage,
       heroVideoUrl: '', heroImageUrl: '',
       geo: { latitude: 0, longitude: 0 },
     };
   }
-
-  const foundingYear = row.foundingYear ?? 1997;
-  // Round years up to nearest 5 for cleaner display (e.g., 27 -> 30, 31 -> 35)
-  const rawYears = new Date().getFullYear() - foundingYear;
-  const yearsExperience = String(Math.ceil(rawYears / 5) * 5);
 
   return {
     name: row.name,
@@ -87,9 +88,9 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
     quoteUrl: row.quoteUrl ?? '/contact/',
     yearsExperience,
     foundingYear,
-    teamSize: row.teamSize ?? 0,
-    warranty: row.warranty ?? '',
-    liabilityCoverage: row.liabilityCoverage ?? '',
+    teamSize,
+    projectsCompleted,
+    liabilityCoverage,
     heroVideoUrl: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : '',
     heroImageUrl: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : '',
     geo: {

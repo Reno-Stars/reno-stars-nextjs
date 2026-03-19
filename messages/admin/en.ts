@@ -422,10 +422,6 @@ const en = {
     description: 'Description',
     tagline: 'Tagline',
     quoteUrl: 'Quote URL',
-    foundingYear: 'Founding Year',
-    teamSize: 'Team Size',
-    warranty: 'Warranty',
-    liabilityCoverage: 'Liability Coverage',
     rating: 'Rating',
     reviewCount: 'Review Count',
     ratingSource: 'Rating Source',
@@ -433,7 +429,6 @@ const en = {
     geoLongitude: 'Geo Longitude',
     sectionBusiness: 'Business Info',
     sectionLocation: 'Location',
-    sectionLegal: 'Legal',
     sectionMarketing: 'Marketing',
   },
   showroom: {

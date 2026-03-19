@@ -8,12 +8,6 @@ import { requireAuth } from '@/lib/admin/auth';
 import { getString } from '@/lib/admin/form-utils';
 import { deleteS3Object } from '@/lib/admin/s3';
 
-function parseIntOrNull(value: string | null): number | null {
-  if (!value) return null;
-  const parsed = parseInt(value, 10);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
 export async function updateCompanyInfo(
   _prevState: { success?: boolean; error?: string },
   formData: FormData
@@ -31,10 +25,6 @@ export async function updateCompanyInfo(
       heroVideoUrl: getString(formData, 'heroVideoUrl'),
       heroImageUrl: getString(formData, 'heroImageUrl'),
       quoteUrl: getString(formData, 'quoteUrl'),
-      foundingYear: parseIntOrNull(getString(formData, 'foundingYear')),
-      teamSize: parseIntOrNull(getString(formData, 'teamSize')),
-      warranty: getString(formData, 'warranty'),
-      liabilityCoverage: getString(formData, 'liabilityCoverage'),
       geoLatitude: getString(formData, 'geoLatitude'),
       geoLongitude: getString(formData, 'geoLongitude'),
       updatedAt: new Date(),

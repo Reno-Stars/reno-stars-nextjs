@@ -424,10 +424,6 @@ const zh: AdminMessages = {
     description: '描述',
     tagline: '标语',
     quoteUrl: '报价 URL',
-    foundingYear: '成立年份',
-    teamSize: '团队规模',
-    warranty: '保修',
-    liabilityCoverage: '责任险',
     rating: '评分',
     reviewCount: '评价数量',
     ratingSource: '评分来源',
@@ -435,7 +431,6 @@ const zh: AdminMessages = {
     geoLongitude: '经度',
     sectionBusiness: '企业信息',
     sectionLocation: '位置信息',
-    sectionLegal: '法律信息',
     sectionMarketing: '营销信息',
   },
   showroom: {

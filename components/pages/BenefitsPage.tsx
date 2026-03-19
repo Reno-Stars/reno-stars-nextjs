@@ -43,7 +43,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
 
   const benefitStats = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: company.warranty, label: t('stats.warranty') },
+    { value: t('stats.warrantyValue'), label: t('stats.warranty') },
   ], [company, t]);
 
   return (
@@ -83,7 +83,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
                     {t(benefit.titleKey)}
                   </h3>
                   <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
-                    {t(benefit.descKey)}
+                    {t(benefit.descKey, { teamSize: company.teamSize })}
                   </p>
                 </div>
               );

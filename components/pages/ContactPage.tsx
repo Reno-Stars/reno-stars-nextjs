@@ -35,7 +35,7 @@ export default function ContactPage({ company, areaNames, googleRating }: Contac
 
   const heroBadges = useMemo(() => [
     { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
-    { label: company.warranty },
+    { label: t('stats.warrantyValue') },
   ], [company, t]);
 
   const whyContactUs = useMemo(() => [
@@ -45,7 +45,7 @@ export default function ContactPage({ company, areaNames, googleRating }: Contac
   ], [t]);
 
   const stats = useMemo(() => [
-    { value: '500+', label: t('stats.projectsDone') },
+    { value: company.projectsCompleted, label: t('stats.projectsDone') },
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
     { value: '100%', label: t('stats.satisfaction') },
     { value: '24/7', label: t('stats.support') },

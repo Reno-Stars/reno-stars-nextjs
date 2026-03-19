@@ -90,23 +90,6 @@ export default function CompanyForm({ company }: CompanyFormProps) {
             </div>
           </div>
 
-          {/* Legal */}
-          <div style={{ marginBottom: '1.25rem' }}>
-            <div style={sectionHeaderStyle}>
-              {t.company.sectionLegal}
-            </div>
-            <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem' }}>
-              <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-                <FormField label={t.company.warranty} htmlFor="warranty">
-                  <input id="warranty" name="warranty" defaultValue={company.warranty ?? ''} style={fieldStyle} />
-                </FormField>
-                <FormField label={t.company.liabilityCoverage} htmlFor="liabilityCoverage">
-                  <input id="liabilityCoverage" name="liabilityCoverage" defaultValue={company.liabilityCoverage ?? ''} style={fieldStyle} />
-                </FormField>
-              </div>
-            </div>
-          </div>
-
           {/* Marketing */}
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={sectionHeaderStyle}>
@@ -116,13 +99,6 @@ export default function CompanyForm({ company }: CompanyFormProps) {
               <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
                 <FormField label={t.company.quoteUrl} htmlFor="quoteUrl">
                   <input id="quoteUrl" name="quoteUrl" defaultValue={company.quoteUrl ?? ''} style={fieldStyle} />
-                </FormField>
-                <div aria-hidden="true" />
-                <FormField label={t.company.foundingYear} htmlFor="foundingYear">
-                  <input id="foundingYear" name="foundingYear" type="number" defaultValue={company.foundingYear ?? ''} style={fieldStyle} />
-                </FormField>
-                <FormField label={t.company.teamSize} htmlFor="teamSize">
-                  <input id="teamSize" name="teamSize" type="number" defaultValue={company.teamSize ?? ''} style={fieldStyle} />
                 </FormField>
               </div>
             </div>

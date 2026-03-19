@@ -355,15 +355,15 @@ export interface Company {
   logo: string;
   /** Quote request form URL */
   quoteUrl: string;
-  /** Years of experience */
+  /** Years of experience (computed from foundingYear in config) */
   yearsExperience: string;
   /** Year company was founded */
   foundingYear: number;
   /** Number of team members */
   teamSize: number;
-  /** Warranty period */
-  warranty: string;
-  /** Liability insurance coverage */
+  /** Projects completed count (e.g. "700+") */
+  projectsCompleted: string;
+  /** Liability insurance coverage dollar amount (e.g. "$5M") */
   liabilityCoverage: string;
   /** Hero video URL (admin-managed, optional) */
   heroVideoUrl: string;
@@ -518,7 +518,7 @@ export interface LocalizedArea {
  */
 export interface SocialLink {
   /** Social platform name */
-  platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter' | 'xiaohongshu' | 'wechat' | 'whatsapp';
+  platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter' | 'xiaohongshu' | 'wechat' | 'whatsapp' | 'linktree';
   /** Profile URL */
   url: string;
   /** Display label */

@@ -37,12 +37,21 @@ function WhatsAppIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+function LinktreeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="m13.73635 5.85251 4.00467-4.11665 2.3248 2.3808-4.20064 4.00466h5.9085v3.30473h-5.9365l4.22865 4.10766-2.3248 2.3338L12.0005 12.099l-5.74052 5.76852-2.3248-2.3248 4.22864-4.10766h-5.9375V8.12132h5.9085L3.93417 4.11666l2.3248-2.3808 4.00468 4.11665V0h3.4727zm-3.4727 10.30614h3.4727V24h-3.4727z" />
+    </svg>
+  );
+}
+
 const socialIcons: Partial<Record<string, IconComponent>> = {
   facebook: Facebook,
   instagram: Instagram,
   xiaohongshu: XiaohongshuIcon,
   wechat: WechatIcon,
   whatsapp: WhatsAppIcon,
+  linktree: LinktreeIcon,
 };
 
 export const wechatId = 'RenoStars';
@@ -147,8 +156,8 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
   const whyUsStats = useMemo(() => [
     { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
-    { key: 'team', val: String(company.teamSize), lbl: t('stats.expertTeamMembers') },
-    { key: 'warranty', val: company.warranty, lbl: t('stats.warranty') },
+    { key: 'projects', val: company.projectsCompleted, lbl: t('stats.projectsCompleted') },
+    { key: 'warranty', val: t('stats.warrantyValue'), lbl: t('stats.warranty') },
   ], [company, t]);
 
   return (
@@ -220,6 +229,10 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: GOLD }} />
                 <span>{company.address}</span>
               </p>
+            </div>
+            <div className="mt-4">
+              <p className="text-xs text-white/50 mb-1.5">{t('footer.scanToConnect')}</p>
+              <Image src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} className="rounded bg-white p-1" />
             </div>
           </div>
 

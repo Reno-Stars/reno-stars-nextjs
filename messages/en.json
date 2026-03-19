@@ -17,7 +17,7 @@
     "areas": "Areas",
     "design": "Design",
     "benefits": "Benefits",
-    "process": "Process",
+    "process": "How It Works",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "Switch to Chinese",
@@ -140,8 +140,9 @@
     "expertTeamMembers": "Expert Team Members",
     "expertTeam": "Expert Team",
     "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "Active WCB Coverage",
+    "liabilityCoverage": "WCB Liability Coverage",
     "warranty": "Warranty",
+    "warrantyValue": "Up to 3 Years",
     "projectsCompleted": "Projects Completed",
     "projectsDone": "Projects Done",
     "happyClients": "Happy Clients",
@@ -193,7 +194,8 @@
     "freeEstimates": "Free Estimates",
     "mapLocation": "Map Location",
     "wechatId": "WeChat ID: {id}",
-    "quickLinks": "Quick Links"
+    "quickLinks": "Quick Links",
+    "scanToConnect": "Scan to Connect"
   },
   "label": {
     "phone": "Phone",
@@ -393,7 +395,7 @@
     },
     "team": {
       "title": "Expert Team",
-      "description": "17 skilled professionals dedicated to bringing your vision to life."
+      "description": "{teamSize} skilled professionals dedicated to bringing your vision to life."
     },
     "service": {
       "title": "Full-Service Solutions",
@@ -566,7 +568,6 @@
     "hero": {
       "title": "Renovation Service Workflow — 5 Steps",
       "subtitle": "From consultation to completion",
-      "projectsCount": "500+",
       "googleReviews": "Google Reviews"
     },
     "downloadPoster": "Download PNG",

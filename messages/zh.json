@@ -140,8 +140,9 @@
     "expertTeamMembers": "专业团队成员",
     "expertTeam": "专业团队",
     "expertCraftsmen": "资深工匠",
-    "liabilityCoverage": "WorkSafe BC 保障",
+    "liabilityCoverage": "WCB 责任保障",
     "warranty": "质保期",
+    "warrantyValue": "长达3年",
     "projectsCompleted": "已完成项目",
     "projectsDone": "已完成项目",
     "happyClients": "满意客户",
@@ -193,7 +194,8 @@
     "freeEstimates": "免费估价",
     "mapLocation": "地图位置",
     "wechatId": "微信号: {id}",
-    "quickLinks": "快捷链接"
+    "quickLinks": "快捷链接",
+    "scanToConnect": "扫码联系我们"
   },
   "label": {
     "phone": "电话",
@@ -393,7 +395,7 @@
     },
     "team": {
       "title": "专业团队",
-      "description": "17位技术精湛的专业人员致力于将您的愿景变为现实。"
+      "description": "{teamSize}位技术精湛的专业人员致力于将您的愿景变为现实。"
     },
     "service": {
       "title": "全方位服务",
@@ -566,7 +568,6 @@
     "hero": {
       "title": "装修服务流程 — 5 步走",
       "subtitle": "从咨询到完工",
-      "projectsCount": "500+",
       "googleReviews": "Google 评价"
     },
     "downloadPoster": "下载 PNG",

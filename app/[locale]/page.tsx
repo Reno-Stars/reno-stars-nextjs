@@ -1,10 +1,10 @@
-import { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import HomePage from '@/components/pages/HomePage';
-import { BreadcrumbSchema, ReviewSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
-import { images as siteImages, WORKSAFE_BC_LOGO } from '@/lib/data';
+import { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
+import HomePage from "@/components/pages/HomePage";
+import { BreadcrumbSchema, ReviewSchema } from "@/components/structured-data";
+import { getBaseUrl, buildAlternates, SITE_NAME } from "@/lib/utils";
+import { images as siteImages, WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
   getCompanyFromDb,
   getServicesFromDb,
@@ -16,8 +16,8 @@ import {
   getShowroomFromDb,
   getServiceAreasFromDb,
   getPartnersFromDb,
-} from '@/lib/db/queries';
-import { getGoogleReviews } from '@/lib/google-reviews';
+} from "@/lib/db/queries";
+import { getGoogleReviews } from "@/lib/google-reviews";
 
 // Revalidate homepage every hour (ISR) - serves cached HTML instantly
 export const revalidate = 3600;
@@ -30,10 +30,12 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const [t, company] = await Promise.all([
-    getTranslations({ locale, namespace: 'metadata.home' }),
+    getTranslations({ locale, namespace: "metadata.home" }),
     getCompanyFromDb(),
   ]);
   const years = { years: company.yearsExperience };
@@ -41,24 +43,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
 
   return {
-    title: t('title'),
-    description: t('description', years),
-    alternates: buildAlternates('/', locale),
+    title: t("title"),
+    description: t("description", years),
+    alternates: buildAlternates("/", locale),
     openGraph: {
-      title: t('title'),
-      description: t('description', years),
+      title: t("title"),
+      description: t("description", years),
       url: `${baseUrl}/${locale}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
-      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
-      type: 'website',
-      images: [{ url: siteImages.hero, width: 1200, height: 630, alt: t('title') }],
+      alternateLocale: locale === "en" ? ["zh_CN"] : ["en_US"],
+      type: "website",
+      images: [
+        { url: siteImages.hero, width: 1200, height: 630, alt: t("title") },
+      ],
     },
     twitter: {
-      card: 'summary_large_image',
-      title: t('title'),
-      description: t('description', years),
-      images: [{ url: siteImages.hero, alt: t('title') }],
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description", years),
+      images: [{ url: siteImages.hero, alt: t("title") }],
     },
   };
 }
@@ -69,7 +73,20 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Fetch all data in parallel
-  const [t, company, services, googleReviews, aboutSections, allProjects, trustBadges, faqs, blogPosts, showroom, areas, partners] = await Promise.all([
+  const [
+    t,
+    company,
+    services,
+    googleReviews,
+    aboutSections,
+    allProjects,
+    trustBadges,
+    faqs,
+    blogPosts,
+    showroom,
+    areas,
+    partners,
+  ] = await Promise.all([
     getTranslations({ locale }),
     getCompanyFromDb(),
     getServicesFromDb(),
@@ -85,7 +102,10 @@ export default async function Page({ params }: PageProps) {
   ]);
 
   // Pre-compute localized data server-side
-  const localizedAreas = areas.map((a) => ({ slug: a.slug, name: a.name[locale] }));
+  const localizedAreas = areas.map((a) => ({
+    slug: a.slug,
+    name: a.name[locale],
+  }));
 
   // Homepage gallery: featured projects first, then recent, up to 12
   const sortedProjects = [...allProjects].sort((a, b) => {
@@ -93,71 +113,126 @@ export default async function Page({ params }: PageProps) {
     if (!a.featured && b.featured) return 1;
     return 0; // keep original order (by createdAt desc) within each group
   });
-  const galleryProjects = sortedProjects.filter((p) => p.hero_image).slice(0, 12).map((p) => ({
-    image: p.hero_image,
-    title: p.title[locale],
-    category: p.category[locale],
-    href: `/projects/${p.slug}` as string,
-  }));
+  const galleryProjects = sortedProjects
+    .filter((p) => p.hero_image)
+    .slice(0, 12)
+    .map((p) => ({
+      image: p.hero_image,
+      title: p.title[locale],
+      category: p.category[locale],
+      href: `/projects/${p.slug}` as string,
+    }));
   const localizedBadges = trustBadges.map((b) => b[locale]);
-  const localizedFaqs = faqs.map((f) => ({ id: f.id, question: f.question[locale], answer: f.answer[locale] }));
-  const localizedBlogPosts = blogPosts.slice(0, 5).map((p) => ({ slug: p.slug, title: p.title[locale] }));
-  const localizedShowroom = { address: showroom.address, appointmentText: showroom.appointmentText[locale], phone: showroom.phone };
-  const localizedPartners = partners.map((p) => ({ name: p.name[locale], logo: p.logo, url: p.url, isHiddenVisually: p.isHiddenVisually }));
-  const areasText = localizedAreas.slice(0, 8).map((a) => a.name).join(', ') + '…';
+  const localizedFaqs = faqs.map((f) => ({
+    id: f.id,
+    question: f.question[locale],
+    answer: f.answer[locale],
+  }));
+  const localizedBlogPosts = blogPosts
+    .slice(0, 5)
+    .map((p) => ({ slug: p.slug, title: p.title[locale] }));
+  const localizedShowroom = {
+    address: showroom.address,
+    appointmentText: showroom.appointmentText[locale],
+    phone: showroom.phone,
+  };
+  const localizedPartners = partners.map((p) => ({
+    name: p.name[locale],
+    logo: p.logo,
+    url: p.url,
+    isHiddenVisually: p.isHiddenVisually,
+  }));
+  const areasText =
+    localizedAreas
+      .slice(0, 8)
+      .map((a) => a.name)
+      .join(", ") + "…";
 
   const aboutItems = [
-    { title: t('about.ourJourney'), text: aboutSections.ourJourney[locale] },
-    { title: t('about.whatWeOffer'), text: aboutSections.whatWeOffer[locale] },
-    { title: t('about.ourValues'), text: aboutSections.ourValues[locale] },
-    { title: t('about.whyChooseUs'), text: aboutSections.whyChooseUs[locale] },
-    { title: t('about.letsBuildTogether'), text: aboutSections.letsBuildTogether[locale] },
+    { title: t("about.ourJourney"), text: aboutSections.ourJourney[locale] },
+    { title: t("about.whatWeOffer"), text: aboutSections.whatWeOffer[locale] },
+    { title: t("about.ourValues"), text: aboutSections.ourValues[locale] },
+    { title: t("about.whyChooseUs"), text: aboutSections.whyChooseUs[locale] },
+    {
+      title: t("about.letsBuildTogether"),
+      text: aboutSections.letsBuildTogether[locale],
+    },
   ];
 
   const stats = [
-    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: String(company.teamSize), label: t('stats.expertTeamMembers') },
-    { value: company.warranty, label: t('stats.warranty') },
-    { value: '', label: t('stats.liabilityCoverage'), image: WORKSAFE_BC_LOGO },
+    { value: `${company.yearsExperience}+`, label: t("stats.yearsExperience") },
+    { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
+    { value: t("stats.warrantyValue"), label: t("stats.warranty") },
+    {
+      value: company.liabilityCoverage,
+      label: t("stats.liabilityCoverage"),
+      image: WORKSAFE_BC_LOGO,
+    },
   ];
 
   // All translations computed server-side
   const translations = {
     hero: {
-      transformYourSpace: t('hero.transformYourSpace'),
-      professionalExcellenceDesc: t('hero.professionalExcellenceDesc', { experience: company.yearsExperience, coverage: company.liabilityCoverage }),
-      getFreeQuote: t('cta.getFreeQuote'),
-      callNow: t('cta.callNow'),
-      yearsExperience: t('stats.yearsExperience'),
-      liabilityCoverage: t('stats.liabilityCoverage'),
-      rating: t('stats.rating'),
+      transformYourSpace: t("hero.transformYourSpace"),
+      professionalExcellenceDesc: t("hero.professionalExcellenceDesc", {
+        experience: company.yearsExperience,
+        coverage: company.liabilityCoverage,
+      }),
+      getFreeQuote: t("cta.getFreeQuote"),
+      callNow: t("cta.callNow"),
+      yearsExperience: t("stats.yearsExperience"),
+      liabilityCoverage: t("stats.liabilityCoverage"),
+      rating: t("stats.rating"),
     },
-    testimonials: { title: t('section.whatOurClientsSay'), subtitle: t('section.testimonialsSubtitle') },
-    gallery: { title: t('section.ourPortfolio'), subtitle: t('section.gallerySubtitle2'), projectsLink: t('nav.projects') },
-    services: { title: t('section.ourServices'), subtitle: t('section.servicesSubtitle') },
-    stats: { srTitle: t('stats.srStats') },
-    about: { title: t('section.aboutUs'), subtitle: t('section.aboutSubtitle') },
-    trustBadges: { srTitle: t('stats.srTrustBadges') },
-    partners: { title: t('homePartners.title'), subtitle: t('homePartners.subtitle'), srTitle: t('homePartners.srTitle') },
-    faq: { title: t('homeFaq.title'), subtitle: t('homeFaq.subtitle') },
-    blog: { title: t('section.blogTips'), subtitle: t('section.blogSubtitle') },
-    showroom: { title: t('section.visitShowroom'), bookAppointment: t('cta.bookAppointment') },
+    testimonials: {
+      title: t("section.whatOurClientsSay"),
+      subtitle: t("section.testimonialsSubtitle"),
+    },
+    gallery: {
+      title: t("section.ourPortfolio"),
+      subtitle: t("section.gallerySubtitle2"),
+      projectsLink: t("nav.projects"),
+    },
+    services: {
+      title: t("section.ourServices"),
+      subtitle: t("section.servicesSubtitle"),
+    },
+    stats: { srTitle: t("stats.srStats") },
+    about: {
+      title: t("section.aboutUs"),
+      subtitle: t("section.aboutSubtitle"),
+    },
+    trustBadges: { srTitle: t("stats.srTrustBadges") },
+    partners: {
+      title: t("homePartners.title"),
+      subtitle: t("homePartners.subtitle"),
+      srTitle: t("homePartners.srTitle"),
+    },
+    faq: { title: t("homeFaq.title"), subtitle: t("homeFaq.subtitle") },
+    blog: { title: t("section.blogTips"), subtitle: t("section.blogSubtitle") },
+    showroom: {
+      title: t("section.visitShowroom"),
+      bookAppointment: t("cta.bookAppointment"),
+    },
     contact: {
-      title: t('section.getInTouch'),
-      subtitle: t('section.contactSubtitle'),
-      phone: t('label.phone'),
-      email: t('label.email'),
-      serviceAreas: t('section.serviceAreas'),
-      mapTitle: t('footer.mapLocation'),
+      title: t("section.getInTouch"),
+      subtitle: t("section.contactSubtitle"),
+      phone: t("label.phone"),
+      email: t("label.email"),
+      serviceAreas: t("section.serviceAreas"),
+      mapTitle: t("footer.mapLocation"),
     },
   };
 
-  const breadcrumbs = [{ name: t('nav.home'), url: `/${locale}/` }];
+  const breadcrumbs = [{ name: t("nav.home"), url: `/${locale}/` }];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ReviewSchema company={company} googleReviews={googleReviews} />
+      <ReviewSchema
+        company={company}
+        googleReviews={googleReviews}
+      />
       <HomePage
         locale={locale}
         company={company}

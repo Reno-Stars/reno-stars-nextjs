@@ -262,7 +262,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
   const trustBadges = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: t('process.hero.projectsCount'), label: t('stats.projectsCompleted') },
+    { value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
   ], [company, t, googleRating]);
 
@@ -277,7 +277,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   const footerStats = useMemo(() => [
     { value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
     { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
-    { value: company.warranty, label: t('process.footer.warrantyService') },
+    { value: t('stats.warrantyValue'), label: t('process.footer.warrantyService') },
   ], [company, t, googleRating]);
 
   const posterRef = useRef<HTMLDivElement>(null);
