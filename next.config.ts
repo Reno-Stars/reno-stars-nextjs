@@ -51,10 +51,16 @@ const nextConfig: NextConfig = {
         hostname: 'lh3.googleusercontent.com',
         pathname: '/a/**',
       },
-      // Cloudflare R2 public bucket for production assets
+      // Cloudflare R2 public buckets for production assets
       {
         protocol: 'https',
         hostname: 'pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev',
+        pathname: '/**',
+      },
+      // Old R2 bucket (retained during migration until all DB URLs are rewritten)
+      {
+        protocol: 'https',
+        hostname: 'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
         pathname: '/**',
       },
       ...storagePatterns,
@@ -540,9 +546,26 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/process',
+        destination: '/en/process',
+        permanent: true,
+      },
+      {
         source: '/areas/:path*',
         destination: '/en/areas/:path*',
         permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    // Proxy legacy WordPress upload paths to R2 storage.
+    // Safety net for direct requests to /wp-content/uploads/* after domain migration.
+    const storage = process.env.NEXT_PUBLIC_STORAGE_PROVIDER;
+    if (!storage) return [];
+    return [
+      {
+        source: '/wp-content/uploads/:path*',
+        destination: `${storage.replace(/\/+$/, '')}/uploads/:path*`,
       },
     ];
   },
