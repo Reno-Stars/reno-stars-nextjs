@@ -57,3 +57,7 @@ drizzle/
 
 # Test data (binary fixtures)
 test-data/
+
+# Migration
+temp.txt
+.migration-backup/

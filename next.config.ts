@@ -54,7 +54,7 @@ const nextConfig: NextConfig = {
       // Cloudflare R2 public bucket for production assets
       {
         protocol: 'https',
-        hostname: 'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
+        hostname: 'pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev',
         pathname: '/**',
       },
       ...storagePatterns,
