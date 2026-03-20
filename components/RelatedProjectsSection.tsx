@@ -13,12 +13,14 @@ interface RelatedProjectsSectionProps {
   heading: string;
   projects: LocalizedProject[];
   bg?: string;
+  categorySlug?: string;
 }
 
 export default function RelatedProjectsSection({
   heading,
   projects,
   bg = SURFACE_ALT,
+  categorySlug,
 }: RelatedProjectsSectionProps) {
   const t = useTranslations();
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
@@ -42,7 +44,7 @@ export default function RelatedProjectsSection({
             </p>
           </div>
           <Link
-            href="/projects"
+            href={categorySlug ? `/projects/${categorySlug}` : '/projects'}
             className="hidden md:flex items-center gap-1 text-sm font-semibold"
             style={{ color: GOLD }}
           >

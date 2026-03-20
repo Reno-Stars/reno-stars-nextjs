@@ -117,6 +117,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
       <RelatedProjectsSection
         heading={t('section.ourProjects')}
         projects={relatedProjects}
+        categorySlug={serviceSlug}
       />
 
       {/* Areas We Serve */}

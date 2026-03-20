@@ -24,12 +24,14 @@ interface ProjectDetailPageProps {
   project: Project;
   allProjects: Project[];
   company: Company;
+  serviceType?: string | null;
+  serviceTypeName?: string;
 }
 
 /** Minimum swipe distance in pixels to trigger navigation */
 const SWIPE_THRESHOLD = 50;
 
-export default function ProjectDetailPage({ locale, project, allProjects, company }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({ locale, project, allProjects, company, serviceType, serviceTypeName }: ProjectDetailPageProps) {
   const t = useTranslations();
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
 
@@ -176,6 +178,9 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       <VisualBreadcrumb variant="light" items={[
         { href: '/', label: t('nav.home') },
         { href: '/projects', label: t('nav.projects') },
+        ...(serviceType && serviceTypeName
+          ? [{ href: `/projects/${serviceType}`, label: serviceTypeName }]
+          : []),
         { label: localizedProject.title },
       ]} />
 
@@ -510,9 +515,20 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       {relatedProjects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
-              {t('projects.relatedProjects')}
-            </h2>
+            <div className="flex items-end justify-between mb-8">
+              <h2 className="text-2xl font-bold" style={{ color: TEXT }}>
+                {t('projects.relatedProjects')}
+              </h2>
+              {serviceType && (
+                <Link
+                  href={`/projects/${serviceType}`}
+                  className="hidden md:flex items-center gap-1 text-sm font-semibold"
+                  style={{ color: GOLD }}
+                >
+                  {t('cta.viewAllProjects')} <ChevronRight className="w-4 h-4" />
+                </Link>
+              )}
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedProjects.map((rp) => (
                 <ProjectCard key={rp.slug} project={rp} onClick={handleCardClick} />
