@@ -56,7 +56,9 @@ export async function updateCompanyInfo(
     if (old.logoUrl && data.logoUrl !== old.logoUrl) cleanups.push(deleteS3Object(old.logoUrl));
     if (old.heroVideoUrl && data.heroVideoUrl !== old.heroVideoUrl) cleanups.push(deleteS3Object(old.heroVideoUrl));
     if (old.heroImageUrl && data.heroImageUrl !== old.heroImageUrl) cleanups.push(deleteS3Object(old.heroImageUrl));
-    if (cleanups.length > 0) void Promise.all(cleanups).catch(() => {});
+    if (cleanups.length > 0) void Promise.all(cleanups).catch((err) => {
+      console.error('S3 cleanup failed:', err);
+    });
 
     revalidatePath('/', 'layout');
     return { success: true };

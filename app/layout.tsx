@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
+  authors: [{ name: 'Reno Stars' }],
   // icons auto-detected from app/icon.png and app/apple-icon.png (file convention)
   twitter: {
     card: 'summary_large_image',

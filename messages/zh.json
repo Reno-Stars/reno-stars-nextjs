@@ -132,7 +132,8 @@
     "designFeature2Title": "量身定制",
     "designFeature2Desc": "每个设计方案都根据您的空间、生活方式和预算量身打造，绝非千篇一律。",
     "designFeature3Title": "从设计到施工",
-    "designFeature3Desc": "我们的团队负责从概念到完工的全过程，确保最终成果与设计愿景一致。"
+    "designFeature3Desc": "我们的团队负责从概念到完工的全过程，确保最终成果与设计愿景一致。",
+    "noDesigns": "设计画廊即将上线，请稍后再来查看。"
   },
   "stats": {
     "yearsExperience": "年经验",
@@ -568,7 +569,8 @@
     "hero": {
       "title": "装修服务流程 — 5 步走",
       "subtitle": "从咨询到完工",
-      "googleReviews": "Google 评价"
+      "googleReviews": "Google 评价",
+      "stepLabel": "第{stepNum}步"
     },
     "downloadPoster": "下载 PNG",
     "downloadPdf": "下载 PDF",

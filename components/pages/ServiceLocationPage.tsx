@@ -99,6 +99,7 @@ export default function ServiceLocationPage({ locale, serviceSlug, citySlug: _ci
       <RelatedProjectsSection
         heading={t('areas.areaProjects', { area: localizedArea.name })}
         projects={relatedProjects}
+        categorySlug={serviceSlug}
       />
 
       <CTASection

@@ -26,6 +26,7 @@ import {
   socialMediaPosts as socialMediaPostsTable,
 } from './schema';
 import { getAssetUrl } from '../storage';
+import { WHOLE_HOUSE_CATEGORY } from '../data/services';
 
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
 import type { Company, SocialLink, Service, AboutSections, Project, ServiceArea, BlogPost, BlogRelatedProject, DesignItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
@@ -165,28 +166,26 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: st
   return map;
 });
 
-import { WHOLE_HOUSE_CATEGORY } from '../data/services';
-
 /**
  * Get the service type → category name mapping from the DB.
  * Replaces the old hardcoded `serviceTypeToCategory`.
  * Includes 'whole-house' for Sites displayed as projects.
  */
-export async function getServiceTypeToCategory(): Promise<Record<string, { en: string; zh: string }>> {
+export const getServiceTypeToCategory = cache(async (): Promise<Record<string, { en: string; zh: string }>> => {
   const map = { ...await getServiceTypeMap() };
   // Ensure whole-house is always present (for Sites displayed as projects)
   if (!map['whole-house']) {
     map['whole-house'] = WHOLE_HOUSE_CATEGORY;
   }
   return map;
-}
+});
 
 /**
  * Get localized category list for project filtering.
  * Includes "All" and "Whole House" (for Sites), plus all service types from DB.
  * Each category includes a `serviceType` matching the service_type field on projects.
  */
-export async function getCategoriesLocalized(): Promise<{ serviceType: string; en: string; zh: string }[]> {
+export const getCategoriesLocalized = cache(async (): Promise<{ serviceType: string; en: string; zh: string }[]> => {
   const serviceTypeToCategory = await getServiceTypeToCategory();
   const otherCategories = Object.entries(serviceTypeToCategory)
     .filter(([key]) => key !== 'whole-house')
@@ -197,17 +196,17 @@ export async function getCategoriesLocalized(): Promise<{ serviceType: string; e
     { serviceType: 'whole-house', ...WHOLE_HOUSE_CATEGORY },
     ...otherCategories,
   ];
-}
+});
 
 /**
  * Get category slugs for routing (excludes "All").
  */
-export async function getCategorySlugs(): Promise<string[]> {
+export const getCategorySlugs = cache(async (): Promise<string[]> => {
   const categories = await getCategoriesLocalized();
   return categories
     .filter((c) => c.en !== 'All')
     .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
-}
+});
 
 /**
  * Fetch about sections from DB, mapped to `AboutSections`.

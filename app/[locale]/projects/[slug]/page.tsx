@@ -209,6 +209,9 @@ export default async function Page({ params }: PageProps) {
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
       { name: t('projects'), url: `/${locale}/projects/` },
+      ...(project.service_type && serviceTypeName
+        ? [{ name: serviceTypeName, url: `/${locale}/projects/${project.service_type}/` }]
+        : []),
       { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
     ];
 
@@ -227,7 +230,7 @@ export default async function Page({ params }: PageProps) {
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
         />
-        <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} />
+        <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
       </>
     );
   }

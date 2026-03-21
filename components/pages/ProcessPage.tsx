@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
@@ -13,13 +14,12 @@ import {
 import type { Company } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import {
-  NAVY, NAVY_MID, NAVY_PALE, GOLD, SURFACE, CARD, TEXT, TEXT_MID, SH_DARK, neu,
+  NAVY, NAVY_MID, NAVY_PALE, GOLD, SURFACE, SURFACE_LIGHT, SURFACE_DARK, CARD, TEXT, TEXT_MID, SH_DARK, neu,
   SUCCESS, ERROR,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
-  ILLUS_SKIN, ILLUS_SKIN_DARK, ILLUS_SKY, ILLUS_WOOD, ILLUS_YELLOW,
-  ILLUS_GRAY_DARK, ILLUS_GRAY_MID, ILLUS_GRAY_LIGHT, ILLUS_GRAY_PALE,
 } from '@/lib/theme';
+import { stepIllustrations, TreeSvg, HouseSvg } from '@/components/illustrations/process';
 
 interface ProcessPageProps {
   company: Company;
@@ -31,8 +31,6 @@ interface StepData {
   number: string;
   titleKey: string;
   subtitleKey: string;
-  pointsKey: string;
-  tagsKey: string;
   color: string;
   lightColor: string;
 }
@@ -57,6 +55,18 @@ const stepIcons: Record<string, LucideIcon> = {
   support: HeartHandshake,
 };
 
+const STEP_COUNT = 5;
+
+// Road SVG constants
+const ROAD_VIEWBOX_HEIGHT = 2400;
+const ROAD_VIEWBOX_WIDTH = 1000;
+/** How early (0–1) the animation starts before the section fully enters */
+const SCROLL_LEAD = 0.3;
+/** Fraction of viewport height at which a card starts revealing (measured from top) */
+const CARD_REVEAL_VIEWPORT = 0.85;
+/** SVG path data for the winding road (shared by border, surface, and dashed line) */
+const ROAD_PATH_D = `M 700 0 C 700 150, 300 200, 300 400 C 300 600, 700 650, 700 850 C 700 1050, 300 1100, 300 1300 C 300 1500, 700 1550, 700 1750 C 700 1950, 300 2000, 300 2200 L 300 ${ROAD_VIEWBOX_HEIGHT}`;
+
 // Step colors matching the zigzag infographic style
 const stepColors = [
   { color: STEP_TEAL, lightColor: STEP_TEAL_LIGHT },
@@ -66,218 +76,30 @@ const stepColors = [
   { color: NAVY, lightColor: NAVY_PALE },
 ];
 
-// SVG Illustrations for each step
-function PhoneIllustration() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
-      {/* Person with phone */}
-      <circle cx="60" cy="30" r="18" fill={ILLUS_SKIN} />
-      <path d="M42 55 Q60 45 78 55 L78 85 Q60 95 42 85 Z" fill={STEP_TEAL} />
-      {/* Phone */}
-      <rect x="72" y="35" width="18" height="30" rx="3" fill={ILLUS_GRAY_DARK} />
-      <rect x="74" y="38" width="14" height="22" rx="1" fill={ILLUS_SKY} />
-      {/* Chat bubbles */}
-      <rect x="20" y="20" width="22" height="14" rx="4" fill={STEP_ORANGE} />
-      <polygon points="30,34 35,34 32,40" fill={STEP_ORANGE} />
-      <circle cx="26" cy="27" r="2" fill="white" />
-      <circle cx="31" cy="27" r="2" fill="white" />
-      <circle cx="36" cy="27" r="2" fill="white" />
-      {/* Computer */}
-      <rect x="8" y="60" width="28" height="20" rx="2" fill={ILLUS_GRAY_DARK} />
-      <rect x="10" y="62" width="24" height="14" fill={ILLUS_SKY} />
-      <rect x="16" y="80" width="16" height="3" fill={ILLUS_GRAY_MID} />
-      <rect x="12" y="83" width="24" height="2" fill={ILLUS_GRAY_LIGHT} />
-    </svg>
-  );
-}
-
-function MeasureIllustration() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
-      {/* House outline with measurements */}
-      <path d="M60 15 L100 45 L100 95 L20 95 L20 45 Z" fill="none" stroke={STEP_ORANGE} strokeWidth="2" strokeDasharray="4,2" />
-      <path d="M60 15 L20 45" fill="none" stroke={STEP_ORANGE} strokeWidth="2" />
-      <path d="M60 15 L100 45" fill="none" stroke={STEP_ORANGE} strokeWidth="2" />
-      {/* Measurement lines */}
-      <line x1="15" y1="45" x2="15" y2="95" stroke={STEP_TEAL} strokeWidth="2" />
-      <line x1="10" y1="45" x2="20" y2="45" stroke={STEP_TEAL} strokeWidth="2" />
-      <line x1="10" y1="95" x2="20" y2="95" stroke={STEP_TEAL} strokeWidth="2" />
-      <text x="8" y="72" fill={STEP_TEAL} fontSize="8" fontWeight="bold">3.5m</text>
-      {/* Ruler */}
-      <rect x="70" y="70" width="40" height="8" fill={ILLUS_YELLOW} stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="75" y1="70" x2="75" y2="78" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="80" y1="70" x2="80" y2="75" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="85" y1="70" x2="85" y2="78" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="90" y1="70" x2="90" y2="75" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="95" y1="70" x2="95" y2="78" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      {/* Clipboard */}
-      <rect x="30" y="55" width="25" height="35" rx="2" fill={ILLUS_WOOD} />
-      <rect x="33" y="60" width="19" height="27" fill="white" />
-      <rect x="38" y="50" width="9" height="8" rx="1" fill={ILLUS_GRAY_MID} />
-      <line x1="36" y1="67" x2="49" y2="67" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="36" y1="73" x2="49" y2="73" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="36" y1="79" x2="45" y2="79" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      {/* Person */}
-      <circle cx="85" cy="45" r="10" fill={ILLUS_SKIN} />
-      <path d="M75 58 Q85 52 95 58 L95 70 L75 70 Z" fill={STEP_ORANGE} />
-    </svg>
-  );
-}
-
-function ContractIllustration() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
-      {/* Contract document */}
-      <rect x="35" y="20" width="50" height="65" rx="3" fill="white" stroke={ILLUS_GRAY_DARK} strokeWidth="2" />
-      <text x="60" y="35" textAnchor="middle" fill={ILLUS_GRAY_DARK} fontSize="7" fontWeight="bold">CONTRACT</text>
-      <line x1="42" y1="45" x2="78" y2="45" stroke={ILLUS_GRAY_PALE} strokeWidth="1" />
-      <line x1="42" y1="52" x2="78" y2="52" stroke={ILLUS_GRAY_PALE} strokeWidth="1" />
-      <line x1="42" y1="59" x2="78" y2="59" stroke={ILLUS_GRAY_PALE} strokeWidth="1" />
-      <line x1="42" y1="66" x2="65" y2="66" stroke={ILLUS_GRAY_PALE} strokeWidth="1" />
-      {/* Signature */}
-      <path d="M50 73 Q55 68 60 73 Q65 78 70 73" fill="none" stroke={NAVY} strokeWidth="2" />
-      {/* Handshake */}
-      <ellipse cx="60" cy="100" rx="25" ry="12" fill={STEP_GREEN} opacity="0.3" />
-      <path d="M40 95 L50 90 L55 95 L50 100 Z" fill={ILLUS_SKIN} />
-      <path d="M80 95 L70 90 L65 95 L70 100 Z" fill={ILLUS_SKIN_DARK} />
-      <path d="M50 95 L70 95" stroke={ILLUS_GRAY_DARK} strokeWidth="2" />
-      {/* Checkmark */}
-      <circle cx="90" cy="35" r="12" fill={STEP_GREEN} />
-      <path d="M84 35 L88 39 L96 31" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      {/* Pen */}
-      <rect x="15" y="50" width="6" height="35" rx="1" fill={NAVY} transform="rotate(-30 18 67)" />
-      <polygon points="15,82 18,90 21,82" fill={ILLUS_YELLOW} transform="rotate(-30 18 86)" />
-    </svg>
-  );
-}
-
-function ConstructionIllustration() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
-      {/* House under construction */}
-      <path d="M60 20 L95 45 L95 90 L25 90 L25 45 Z" fill="#FFF3E0" stroke={ILLUS_WOOD} strokeWidth="2" />
-      <path d="M60 20 L25 45" fill="none" stroke={ILLUS_WOOD} strokeWidth="3" />
-      <path d="M60 20 L95 45" fill="none" stroke={ILLUS_WOOD} strokeWidth="3" />
-      {/* Scaffolding */}
-      <line x1="100" y1="40" x2="100" y2="90" stroke={ILLUS_GRAY_MID} strokeWidth="2" />
-      <line x1="110" y1="40" x2="110" y2="90" stroke={ILLUS_GRAY_MID} strokeWidth="2" />
-      <line x1="100" y1="50" x2="110" y2="50" stroke={ILLUS_GRAY_MID} strokeWidth="2" />
-      <line x1="100" y1="65" x2="110" y2="65" stroke={ILLUS_GRAY_MID} strokeWidth="2" />
-      <line x1="100" y1="80" x2="110" y2="80" stroke={ILLUS_GRAY_MID} strokeWidth="2" />
-      {/* Window */}
-      <rect x="40" y="55" width="15" height="20" fill={ILLUS_SKY} stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="47.5" y1="55" x2="47.5" y2="75" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <line x1="40" y1="65" x2="55" y2="65" stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      {/* Door */}
-      <rect x="62" y="60" width="18" height="30" fill={ILLUS_WOOD} stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <circle cx="76" cy="75" r="2" fill={ILLUS_YELLOW} />
-      {/* Worker with hardhat */}
-      <circle cx="20" cy="60" r="8" fill={ILLUS_SKIN} />
-      <ellipse cx="20" cy="55" rx="10" ry="5" fill={ILLUS_YELLOW} />
-      <rect x="15" y="68" width="10" height="20" fill={STEP_ORANGE} />
-      {/* Tools */}
-      <rect x="8" y="75" width="4" height="18" fill={ILLUS_WOOD} />
-      <rect x="5" y="72" width="10" height="5" fill={ILLUS_GRAY_MID} />
-      {/* Bricks */}
-      <rect x="70" y="45" width="8" height="4" fill={STEP_RED} />
-      <rect x="79" y="45" width="8" height="4" fill={STEP_RED} />
-      <rect x="74" y="50" width="8" height="4" fill={STEP_RED} />
-    </svg>
-  );
-}
-
-function KeyIllustration() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden="true">
-      {/* Completed house */}
-      <path d="M60 25 L95 50 L95 90 L25 90 L25 50 Z" fill="#E8F5E9" stroke={STEP_GREEN} strokeWidth="2" />
-      <path d="M60 25 L25 50" fill="none" stroke={STEP_GREEN} strokeWidth="3" />
-      <path d="M60 25 L95 50" fill="none" stroke={STEP_GREEN} strokeWidth="3" />
-      {/* Chimney */}
-      <rect x="75" y="30" width="10" height="15" fill={ILLUS_WOOD} />
-      {/* Window with curtains */}
-      <rect x="35" y="55" width="18" height="20" fill={ILLUS_SKY} stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <path d="M35 55 Q39 65 35 75" fill={STEP_ORANGE} opacity="0.5" />
-      <path d="M53 55 Q49 65 53 75" fill={STEP_ORANGE} opacity="0.5" />
-      {/* Door */}
-      <rect x="62" y="60" width="18" height="30" fill={ILLUS_WOOD} stroke={ILLUS_GRAY_DARK} strokeWidth="1" />
-      <circle cx="76" cy="75" r="2" fill={ILLUS_YELLOW} />
-      {/* Welcome mat */}
-      <rect x="60" y="88" width="22" height="4" fill={STEP_GREEN} />
-      {/* Large key */}
-      <g transform="translate(10, 40) rotate(-30)">
-        <circle cx="15" cy="15" r="12" fill="none" stroke={ILLUS_YELLOW} strokeWidth="4" />
-        <rect x="23" y="12" width="35" height="6" fill={ILLUS_YELLOW} />
-        <rect x="45" y="18" width="3" height="8" fill={ILLUS_YELLOW} />
-        <rect x="52" y="18" width="3" height="6" fill={ILLUS_YELLOW} />
-      </g>
-      {/* Sparkles */}
-      <g fill={ILLUS_YELLOW}>
-        <polygon points="100,30 102,35 107,35 103,38 105,43 100,40 95,43 97,38 93,35 98,35" />
-        <polygon points="15,80 16,83 19,83 17,85 18,88 15,86 12,88 13,85 11,83 14,83" transform="scale(0.7) translate(10,20)" />
-      </g>
-      {/* Checkmark badge */}
-      <circle cx="95" cy="25" r="10" fill={STEP_GREEN} />
-      <path d="M90 25 L93 28 L100 21" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 // Local path used instead of next/image for html-to-image PNG export compatibility
 const LOGO_PATH = '/logo.png';
-
-const stepIllustrations = [
-  PhoneIllustration,
-  MeasureIllustration,
-  ContractIllustration,
-  ConstructionIllustration,
-  KeyIllustration,
-];
-
-// Decorative elements
-function TreeSvg({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 40 60" className={className} aria-hidden="true">
-      <polygon points="20,5 35,25 28,25 38,40 25,40 25,55 15,55 15,40 2,40 12,25 5,25" fill={STEP_TEAL} />
-      <rect x="15" y="48" width="10" height="12" fill={ILLUS_WOOD} />
-    </svg>
-  );
-}
-
-function HouseSvg({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 50 50" className={className} aria-hidden="true">
-      <path d="M25 5 L45 22 L45 45 L5 45 L5 22 Z" fill="#FFE4C4" stroke={ILLUS_WOOD} strokeWidth="1.5" />
-      <path d="M25 5 L5 22" stroke={ILLUS_WOOD} strokeWidth="2" />
-      <path d="M25 5 L45 22" stroke={ILLUS_WOOD} strokeWidth="2" />
-      <rect x="20" y="28" width="10" height="17" fill={ILLUS_WOOD} />
-      <rect x="10" y="25" width="8" height="8" fill={ILLUS_SKY} />
-      <rect x="32" y="25" width="8" height="8" fill={ILLUS_SKY} />
-    </svg>
-  );
-}
 
 export default function ProcessPage({ company, locale, googleRating }: ProcessPageProps) {
   const t = useTranslations();
 
   const trustBadges = useMemo(() => [
-    { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
-    { value: company.projectsCompleted, label: t('stats.projectsCompleted') },
-    { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
+    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
+    { type: 'stat' as const, value: String(company.projectsCompleted), label: t('stats.projectsCompleted') },
+    { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.hero.googleReviews')}` : t('process.hero.googleReviews') },
   ], [company, t, googleRating]);
 
   const steps: StepData[] = useMemo(() => [
-    { number: '01', titleKey: 'process.step1.title', subtitleKey: 'process.step1.subtitle', pointsKey: 'process.step1.points', tagsKey: 'process.step1.tags', ...stepColors[0] },
-    { number: '02', titleKey: 'process.step2.title', subtitleKey: 'process.step2.subtitle', pointsKey: 'process.step2.points', tagsKey: 'process.step2.tags', ...stepColors[1] },
-    { number: '03', titleKey: 'process.step3.title', subtitleKey: 'process.step3.subtitle', pointsKey: 'process.step3.points', tagsKey: 'process.step3.tags', ...stepColors[2] },
-    { number: '04', titleKey: 'process.step4.title', subtitleKey: 'process.step4.subtitle', pointsKey: 'process.step4.points', tagsKey: 'process.step4.tags', ...stepColors[3] },
-    { number: '05', titleKey: 'process.step5.title', subtitleKey: 'process.step5.subtitle', pointsKey: 'process.step5.points', tagsKey: 'process.step5.tags', ...stepColors[4] },
+    { number: '01', titleKey: 'process.step1.title', subtitleKey: 'process.step1.subtitle', ...stepColors[0] },
+    { number: '02', titleKey: 'process.step2.title', subtitleKey: 'process.step2.subtitle', ...stepColors[1] },
+    { number: '03', titleKey: 'process.step3.title', subtitleKey: 'process.step3.subtitle', ...stepColors[2] },
+    { number: '04', titleKey: 'process.step4.title', subtitleKey: 'process.step4.subtitle', ...stepColors[3] },
+    { number: '05', titleKey: 'process.step5.title', subtitleKey: 'process.step5.subtitle', ...stepColors[4] },
   ], []);
 
   const footerStats = useMemo(() => [
-    { value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
-    { icon: Star, rating: true, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
-    { value: t('stats.warrantyValue'), label: t('process.footer.warrantyService') },
+    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
+    { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
+    { type: 'stat' as const, value: t('stats.warrantyValue'), label: t('process.footer.warrantyService') },
   ], [company, t, googleRating]);
 
   const posterRef = useRef<HTMLDivElement>(null);
@@ -287,6 +109,74 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   const [downloadStatus, setDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isPdfDownloading, setIsPdfDownloading] = useState(false);
   const [pdfDownloadStatus, setPdfDownloadStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isCapturing, setIsCapturing] = useState(false);
+
+  // Road scroll animation state
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const roadBorderRef = useRef<SVGPathElement>(null);
+  const roadSurfaceRef = useRef<SVGPathElement>(null);
+  const clipRectRef = useRef<SVGRectElement>(null);
+  const rafIdRef = useRef<number>(0);
+  const stepCardRefs = useRef<(HTMLDivElement | null)[]>(Array(STEP_COUNT).fill(null));
+  const [visibleSteps, setVisibleSteps] = useState<boolean[]>(() => Array(STEP_COUNT).fill(false));
+
+  useEffect(() => {
+    const section = stepsRef.current;
+    if (!section) return;
+
+    // Get total path length once the SVG is mounted
+    const pathEl = roadSurfaceRef.current;
+    const totalLength = pathEl?.getTotalLength() ?? 0;
+
+    // Set initial dasharray/offset on border and surface paths
+    [roadBorderRef.current, roadSurfaceRef.current].forEach(p => {
+      if (p) {
+        p.style.strokeDasharray = `${totalLength}`;
+        p.style.strokeDashoffset = `${totalLength}`;
+      }
+    });
+
+    const updateRoad = () => {
+      const rect = section.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const progress = Math.min(1, Math.max(0,
+        (windowH - rect.top) / (rect.height + windowH * SCROLL_LEAD),
+      ));
+
+      // Update road stroke dash offset for border and surface
+      const offset = totalLength * (1 - progress);
+      [roadBorderRef.current, roadSurfaceRef.current].forEach(p => {
+        if (p) p.style.strokeDashoffset = `${offset}`;
+      });
+      // Dashed line: update clipPath rect height to reveal proportionally
+      if (clipRectRef.current) {
+        clipRectRef.current.setAttribute('height', `${Math.round(ROAD_VIEWBOX_HEIGHT * progress)}`);
+      }
+
+      // Determine which cards to reveal based on their viewport position
+      const newVisible = stepCardRefs.current.map(cardEl => {
+        if (!cardEl) return false;
+        const cardRect = cardEl.getBoundingClientRect();
+        return cardRect.top < windowH * CARD_REVEAL_VIEWPORT;
+      });
+      setVisibleSteps(prev => {
+        if (prev.every((v, i) => v === newVisible[i])) return prev;
+        return newVisible;
+      });
+    };
+
+    const handleScroll = () => {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = requestAnimationFrame(updateRoad);
+    };
+
+    handleScroll(); // initial check
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafIdRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -295,9 +185,42 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
     };
   }, []);
 
-  const capturePoster = useCallback(() => {
-    if (!posterRef.current) return Promise.reject(new Error('Poster ref not available'));
-    return toPng(posterRef.current, { pixelRatio: 2, backgroundColor: SURFACE });
+  const capturePoster = useCallback(async () => {
+    if (!posterRef.current) throw new Error('Poster ref not available');
+
+    // Force all elements visible synchronously
+    flushSync(() => setIsCapturing(true));
+
+    // Force road SVG fully drawn
+    [roadBorderRef.current, roadSurfaceRef.current].forEach(p => {
+      if (p) p.style.strokeDashoffset = '0';
+    });
+    if (clipRectRef.current) {
+      clipRectRef.current.setAttribute('height', `${ROAD_VIEWBOX_HEIGHT}`);
+    }
+
+    // Lock all block containers to their computed pixel widths.
+    // html-to-image renders in an SVG foreignObject where block elements
+    // may not inherit full parent width, causing centering to break.
+    const lockedEls: { el: HTMLElement; prev: string }[] = [];
+    posterRef.current.querySelectorAll<HTMLElement>('section, [class*="max-w-"], [class*="flex-col"], [class*="flex-row"]').forEach(el => {
+      lockedEls.push({ el, prev: el.style.width });
+      el.style.width = `${el.offsetWidth}px`;
+    });
+
+    // Allow one paint frame for styles to apply
+    await new Promise(r => requestAnimationFrame(r));
+    try {
+      return await toPng(posterRef.current, { pixelRatio: 2, backgroundColor: SURFACE });
+    } finally {
+      // Restore original widths
+      lockedEls.forEach(({ el, prev }) => { el.style.width = prev; });
+      flushSync(() => setIsCapturing(false));
+      // Restore road to current scroll position (only if still mounted)
+      if (stepsRef.current) {
+        window.dispatchEvent(new Event('scroll'));
+      }
+    }
   }, []);
 
   // PNG download
@@ -363,7 +286,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
   return (
     <>
-      <div ref={posterRef} className="min-h-screen relative overflow-hidden" style={{ backgroundColor: SURFACE }}>
+      <div ref={posterRef} className={`min-h-screen relative overflow-hidden${isCapturing ? ' poster-capturing' : ''}`} style={{ backgroundColor: SURFACE }}>
         {/* Decorative background elements - hidden on mobile */}
         <div className="hidden sm:block absolute inset-0 pointer-events-none overflow-hidden">
           <TreeSvg className="absolute top-[15%] left-[5%] w-12 h-16 opacity-20" />
@@ -376,92 +299,185 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
           <TreeSvg className="absolute top-[85%] right-[10%] w-12 h-16 opacity-20" />
         </div>
 
+        {/* Hero Section Animations */}
+      <style>{`
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes heroGlow {
+          0%, 100% { opacity: 0.06; transform: translate(-50%, -50%) scale(1); }
+          50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.08); }
+        }
+        @keyframes heroFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes heroStar {
+          0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+          50% { opacity: 0.6; transform: scale(1.15) rotate(8deg); }
+        }
+        @keyframes heroDividerGrow {
+          from { width: 0; }
+          to { width: 100%; }
+        }
+        .hero-fade-up { animation: heroFadeUp 0.8s ease-out both; }
+        .hero-fade-up-1 { animation: heroFadeUp 0.8s ease-out 0.1s both; }
+        .hero-fade-up-2 { animation: heroFadeUp 0.8s ease-out 0.3s both; }
+        .hero-fade-up-3 { animation: heroFadeUp 0.8s ease-out 0.5s both; }
+        .hero-fade-up-4 { animation: heroFadeUp 0.8s ease-out 0.7s both; }
+        .hero-fade-up-5 { animation: heroFadeUp 0.8s ease-out 0.9s both; }
+        .hero-glow { animation: heroGlow 6s ease-in-out infinite; }
+        .hero-float { animation: heroFloat 4s ease-in-out infinite; }
+        .hero-float-delay { animation: heroFloat 5s ease-in-out 1s infinite; }
+        .hero-star-pulse { animation: heroStar 3s ease-in-out infinite; }
+        .hero-star-pulse-delay { animation: heroStar 4s ease-in-out 1.5s infinite; }
+        .hero-divider-line {
+          animation: heroDividerGrow 1s ease-out 0.6s both;
+          overflow: hidden;
+        }
+        .poster-capturing [data-hero-animated="entrance"] {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .poster-capturing [data-hero-animated="decorative"] {
+          animation: none !important;
+        }
+      `}</style>
+
         {/* Hero Section */}
       <section
-        className="py-12 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 relative"
+        className="py-14 sm:py-18 lg:py-22 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
+          background: `linear-gradient(160deg, ${SURFACE_LIGHT} 0%, ${SURFACE} 40%, ${SURFACE_DARK} 100%)`,
         }}
       >
-        {/* Tool icons decoration - hidden on mobile */}
-        <div className="hidden sm:block absolute top-4 left-8 opacity-30" aria-hidden="true">
-          <svg viewBox="0 0 60 60" className="w-16 h-16">
-            <path d="M30 5 L35 20 L50 20 L38 30 L42 45 L30 35 L18 45 L22 30 L10 20 L25 20 Z" fill={GOLD} />
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          {/* Warm radial glow behind content */}
+          <div
+            className="absolute top-1/2 left-1/2 w-[900px] h-[600px] rounded-full hero-glow" data-hero-animated="decorative"
+            style={{ background: `radial-gradient(ellipse, rgba(200,146,42,0.1) 0%, transparent 70%)` }}
+          />
+          {/* Subtle grid pattern */}
+          <svg className="absolute inset-0 w-full h-full opacity-[0.04]">
+            <defs>
+              <pattern id="heroGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke={NAVY} strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#heroGrid)" />
+          </svg>
+          {/* Diagonal gold accent lines */}
+          <div
+            className="hidden sm:block absolute -top-10 -left-10 w-[600px] h-[1px] origin-top-left rotate-[25deg] opacity-20"
+            style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }}
+          />
+          <div
+            className="hidden sm:block absolute -bottom-10 -right-10 w-[500px] h-[1px] origin-bottom-right rotate-[25deg] opacity-15"
+            style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)` }}
+          />
+        </div>
+
+        {/* Floating decorative stars */}
+        <div className="hidden sm:block absolute top-8 left-10 hero-star-pulse" data-hero-animated="decorative" aria-hidden="true">
+          <svg viewBox="0 0 60 60" className="w-12 h-12">
+            <path d="M30 8 L33 22 L47 22 L36 30 L40 44 L30 36 L20 44 L24 30 L13 22 L27 22 Z" fill={GOLD} opacity="0.5" />
           </svg>
         </div>
-        <div className="hidden sm:block absolute bottom-4 right-8 opacity-20" aria-hidden="true">
-          <svg viewBox="0 0 60 60" className="w-20 h-20">
-            <rect x="10" y="25" width="8" height="30" fill={ILLUS_GRAY_PALE} />
-            <rect x="5" y="20" width="18" height="10" fill={ILLUS_GRAY_LIGHT} />
-            <rect x="35" y="15" width="5" height="40" fill={ILLUS_WOOD} />
-            <polygon points="37.5,10 30,20 45,20" fill={ILLUS_GRAY_MID} />
+        <div className="hidden sm:block absolute top-12 right-12 hero-star-pulse-delay" data-hero-animated="decorative" aria-hidden="true">
+          <svg viewBox="0 0 40 40" className="w-8 h-8">
+            <path d="M20 4 L22 14 L32 14 L24 20 L27 30 L20 24 L13 30 L16 20 L8 14 L18 14 Z" fill={GOLD} opacity="0.4" />
+          </svg>
+        </div>
+        <div className="hidden lg:block absolute bottom-16 left-16 hero-float-delay" data-hero-animated="decorative" aria-hidden="true">
+          <svg viewBox="0 0 30 30" className="w-6 h-6">
+            <path d="M15 3 L16.5 10 L24 10 L18 14.5 L20 22 L15 17.5 L10 22 L12 14.5 L6 10 L13.5 10 Z" fill={GOLD} opacity="0.3" />
+          </svg>
+        </div>
+        <div className="hidden lg:block absolute bottom-20 right-20 hero-float" data-hero-animated="decorative" aria-hidden="true">
+          <svg viewBox="0 0 60 60" className="w-14 h-14 opacity-15">
+            <rect x="10" y="25" width="8" height="30" fill={NAVY} />
+            <rect x="5" y="20" width="18" height="10" fill={NAVY} opacity="0.7" />
+            <rect x="35" y="15" width="5" height="40" fill={GOLD} opacity="0.5" />
+            <polygon points="37.5,10 30,20 45,20" fill={NAVY} opacity="0.5" />
           </svg>
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Brand Logo - using local path for PNG export compatibility */}
-          <div className="mb-6">
+          {/* Brand Logo - full color on warm background */}
+          <div className="mb-8 hero-fade-up-1" data-hero-animated="entrance">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={LOGO_PATH}
               alt={company.name}
               width={2227}
               height={300}
-              className="w-3/4 sm:w-2/3 h-auto mx-auto brightness-0 invert"
+              className="w-3/4 sm:w-2/3 md:w-1/2 h-auto mx-auto"
+              style={{ filter: 'drop-shadow(0 4px 12px rgba(27,54,93,0.15))' }}
             />
           </div>
 
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <svg viewBox="0 0 40 40" className="w-8 h-8 sm:w-10 sm:h-10 hidden sm:block" aria-hidden="true">
-              <rect x="5" y="20" width="6" height="18" fill={GOLD} />
-              <rect x="2" y="16" width="12" height="6" fill={ILLUS_GRAY_LIGHT} />
-              <rect x="22" y="12" width="4" height="26" fill={ILLUS_WOOD} />
-              <polygon points="24,8 18,16 30,16" fill={ILLUS_GRAY_MID} />
+          {/* Decorative divider */}
+          <div className="flex items-center justify-center gap-3 mb-6 hero-fade-up-2" data-hero-animated="entrance" aria-hidden="true">
+            <div className="h-px w-12 sm:w-20 hero-divider-line" data-hero-animated="entrance" style={{ background: `linear-gradient(90deg, transparent, ${GOLD})` }} />
+            <svg viewBox="0 0 20 20" className="w-4 h-4 hero-float" data-hero-animated="decorative" style={{ fill: GOLD }}>
+              <path d="M10 2 L11.5 7.5 L17 7.5 L12.5 11 L14 16.5 L10 13 L6 16.5 L7.5 11 L3 7.5 L8.5 7.5 Z" />
             </svg>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              {t('process.hero.title')}
-            </h1>
+            <div className="h-px w-12 sm:w-20 hero-divider-line" data-hero-animated="entrance" style={{ background: `linear-gradient(90deg, ${GOLD}, transparent)` }} />
           </div>
-          <p className="text-sm sm:text-lg md:text-xl text-white/70 mb-6 sm:mb-8 uppercase tracking-wider sm:tracking-widest">
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 hero-fade-up-3" data-hero-animated="entrance" style={{ color: NAVY }}>
+            {t('process.hero.title')}
+          </h1>
+          <p className="text-sm sm:text-lg md:text-xl mb-8 sm:mb-10 uppercase tracking-wider sm:tracking-widest hero-fade-up-4" data-hero-animated="entrance" style={{ color: TEXT_MID }}>
             {t('process.hero.subtitle')}
           </p>
 
           {/* Trust Badges - stacked on mobile, flex on larger screens */}
-          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3 sm:gap-4 md:gap-5">
-            {trustBadges.map((badge) => (
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-3 sm:gap-4 md:gap-5 hero-fade-up-5" data-hero-animated="entrance">
+            {trustBadges.map((badge, idx) => (
               <div
                 key={badge.label}
-                className="flex items-center justify-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full"
-                style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
+                className="flex items-center justify-center gap-3 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full border transition-all duration-300 hover:scale-105 hover:shadow-md"
+                style={{
+                  backgroundColor: 'rgba(27,54,93,0.06)',
+                  borderColor: 'rgba(27,54,93,0.12)',
+                  animationDelay: `${1.1 + idx * 0.15}s`,
+                }}
               >
-                {badge.rating ? (
+                {badge.type === 'rating' ? (
                   <div className="flex items-center gap-2">
                     <div className="flex gap-0.5 sm:gap-1">
                       {[0, 1, 2, 3, 4].map((i) => (
                         <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ fill: GOLD, color: GOLD }} />
                       ))}
                     </div>
-                    <span className="text-white/80 text-sm sm:text-base">{badge.label}</span>
+                    <span className="text-sm sm:text-base" style={{ color: TEXT_MID }}>{badge.label}</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-base sm:text-lg md:text-xl" style={{ color: GOLD }}>{badge.value}</span>
-                    <span className="text-white/80 text-sm sm:text-base">{badge.label}</span>
+                    <span className="text-sm sm:text-base" style={{ color: TEXT_MID }}>{badge.label}</span>
                   </div>
                 )}
               </div>
             ))}
           </div>
         </div>
+
+        {/* Bottom decorative border */}
+        <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`, opacity: 0.3 }} />
       </section>
 
       {/* Steps Section */}
-      <section className="py-10 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 relative">
+      <section ref={stepsRef} className="py-10 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-6xl mx-auto relative">
-          {/* Winding Road Path - Full width, more visible */}
+          {/* Winding Road Path - scroll-animated */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
-            viewBox="0 0 1000 2400"
+            viewBox={`0 0 ${ROAD_VIEWBOX_WIDTH} ${ROAD_VIEWBOX_HEIGHT}`}
             preserveAspectRatio="xMidYMin slice"
             aria-hidden="true"
           >
@@ -474,117 +490,56 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
                 <stop offset="80%" stopColor={NAVY} />
                 <stop offset="100%" stopColor={NAVY} />
               </linearGradient>
+              <clipPath id="roadRevealClip">
+                <rect ref={clipRectRef} x="0" y="0" width={ROAD_VIEWBOX_WIDTH} height="0" />
+              </clipPath>
             </defs>
 
             {/* Road edge/border - outer glow effect */}
-            <path
-              d="M 700 0
-                 C 700 150, 300 200, 300 400
-                 C 300 600, 700 650, 700 850
-                 C 700 1050, 300 1100, 300 1300
-                 C 300 1500, 700 1550, 700 1750
-                 C 700 1950, 300 2000, 300 2200
-                 L 300 2400"
-              fill="none"
-              stroke={SH_DARK}
-              strokeWidth="50"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path ref={roadBorderRef} d={ROAD_PATH_D} fill="none" stroke={SH_DARK} strokeWidth="50" strokeLinecap="round" strokeLinejoin="round" />
 
             {/* Main road surface */}
-            <path
-              d="M 700 0
-                 C 700 150, 300 200, 300 400
-                 C 300 600, 700 650, 700 850
-                 C 700 1050, 300 1100, 300 1300
-                 C 300 1500, 700 1550, 700 1750
-                 C 700 1950, 300 2000, 300 2200
-                 L 300 2400"
-              fill="none"
-              stroke="url(#roadGradient)"
-              strokeWidth="36"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.85"
-            />
+            <path ref={roadSurfaceRef} d={ROAD_PATH_D} fill="none" stroke="url(#roadGradient)" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
 
-            {/* White center dashed line */}
-            <path
-              d="M 700 0
-                 C 700 150, 300 200, 300 400
-                 C 300 600, 700 650, 700 850
-                 C 700 1050, 300 1100, 300 1300
-                 C 300 1500, 700 1550, 700 1750
-                 C 700 1950, 300 2000, 300 2200
-                 L 300 2400"
-              fill="none"
-              stroke="white"
-              strokeWidth="6"
-              strokeDasharray="30,20"
-              strokeLinecap="round"
-              opacity="0.9"
-            />
+            {/* White center dashed line - revealed by clipPath */}
+            <path clipPath="url(#roadRevealClip)" d={ROAD_PATH_D} fill="none" stroke="white" strokeWidth="6" strokeDasharray="30,20" strokeLinecap="round" opacity="0.9" />
 
-            {/* Step number circles on the road */}
-            <circle cx="700" cy="100" r="35" fill={STEP_TEAL} stroke="white" strokeWidth="4" />
-            <text x="700" y="112" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">1</text>
-
-            <circle cx="300" cy="500" r="35" fill={STEP_ORANGE} stroke="white" strokeWidth="4" />
-            <text x="300" y="512" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">2</text>
-
-            <circle cx="700" cy="950" r="35" fill={STEP_GREEN} stroke="white" strokeWidth="4" />
-            <text x="700" y="962" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">3</text>
-
-            <circle cx="300" cy="1400" r="35" fill={STEP_RED} stroke="white" strokeWidth="4" />
-            <text x="300" y="1412" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">4</text>
-
-            <circle cx="700" cy="1850" r="35" fill={NAVY} stroke="white" strokeWidth="4" />
-            <text x="700" y="1862" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">5</text>
           </svg>
 
-          <div className="relative z-10 space-y-6 sm:space-y-8 lg:space-y-12">
+          <div className="relative z-10 flex flex-col items-center gap-6 sm:gap-8 lg:gap-12">
             {steps.map((step, index) => {
               const isEven = index % 2 === 0;
               const stepNum = index + 1;
               const points = t.raw(`process.step${stepNum}.points`) as string[];
               const tags = t.raw(`process.step${stepNum}.tags`) as { icon: string; label: string }[];
               const Illustration = stepIllustrations[index];
+              const isVisible = isCapturing || visibleSteps[index];
 
               return (
                 <div
                   key={step.number}
-                  className={`relative lg:flex lg:items-center lg:gap-6 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                  ref={el => { stepCardRefs.current[index] = el; }}
+                  className={`relative w-full lg:flex lg:items-center lg:gap-8 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                  style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible
+                      ? 'translateY(0) scale(1)'
+                      : 'translateY(40px) scale(0.95)',
+                    transition: isCapturing ? 'none' : 'opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.2, 0.64, 1)',
+                  }}
                 >
-                  {/* Large Step Number - Background watermark */}
-                  <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 ${isEven ? 'right-[5%]' : 'left-[5%]'} z-0`}>
-                    <span
-                      className="text-[140px] font-bold leading-none select-none"
-                      style={{ color: step.color, opacity: 0.08 }}
-                    >
-                      {step.number}
-                    </span>
-                  </div>
-
-                  {/* Illustration Card */}
-                  <div className={`lg:w-[30%] mb-4 lg:mb-0 ${isEven ? 'lg:ml-[5%]' : 'lg:mr-[5%]'}`}>
+                  {/* Illustration Column */}
+                  <div className={`lg:w-[22%] mb-4 lg:mb-0 shrink-0 flex justify-center ${isEven ? 'lg:justify-end' : 'lg:justify-start'}`}>
                     <div
-                      className="rounded-2xl p-4 sm:p-5 aspect-square max-w-[140px] sm:max-w-[180px] mx-auto relative"
+                      className="rounded-2xl p-4 sm:p-5 aspect-square max-w-[120px] sm:max-w-[140px] lg:max-w-[160px] relative"
                       style={{ backgroundColor: step.lightColor, boxShadow: neu(4) }}
                     >
                       <Illustration />
-                      {/* Step number badge on illustration - mobile & tablet */}
-                      <div
-                        className="lg:hidden absolute -top-2 -left-2 sm:-top-3 sm:-left-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg"
-                        style={{ backgroundColor: step.color }}
-                      >
-                        {stepNum}
-                      </div>
                     </div>
                   </div>
 
                   {/* Content Card */}
-                  <div className={`lg:w-[55%] relative z-10 ${isEven ? 'lg:pr-[10%]' : 'lg:pl-[10%]'}`}>
+                  <div className="lg:w-[78%]">
                     <div
                       className="rounded-2xl p-5 sm:p-6 lg:p-8 relative overflow-hidden"
                       style={{ boxShadow: neu(6), backgroundColor: CARD }}
@@ -596,19 +551,13 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
                       />
 
                       {/* Step Label */}
-                      <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                      <div className="mb-3 sm:mb-4">
                         <div
-                          className="px-3 sm:px-4 py-1.5 rounded-full text-sm sm:text-base font-semibold"
+                          className="inline-block px-3 sm:px-4 py-1.5 rounded-full text-sm sm:text-base font-semibold"
                           style={{ backgroundColor: step.color, color: 'white' }}
                         >
-                          STEP {stepNum}
+                          {t('process.hero.stepLabel', { stepNum })}
                         </div>
-                        <span
-                          className="text-2xl sm:text-3xl font-bold lg:hidden"
-                          style={{ color: step.color, opacity: 0.4 }}
-                        >
-                          {step.number}
-                        </span>
                       </div>
 
                       {/* Title */}
@@ -621,8 +570,8 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
                       {/* Points */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-2 sm:gap-y-2.5 mb-4 sm:mb-5">
-                        {points.map((point, i) => (
-                          <div key={i} className="flex items-start gap-2 sm:gap-2.5">
+                        {points.map((point) => (
+                          <div key={point} className="flex items-start gap-2 sm:gap-2.5">
                             <span className="mt-0.5 text-base sm:text-lg" style={{ color: step.color }}>•</span>
                             <span className="text-base sm:text-lg leading-relaxed" style={{ color: TEXT_MID }}>{point}</span>
                           </div>
@@ -631,11 +580,11 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2 sm:gap-2.5">
-                        {tags.map((tag, i) => {
+                        {tags.map((tag) => {
                           const Icon = stepIcons[tag.icon] || CheckSquare;
                           return (
                             <div
-                              key={i}
+                              key={tag.icon}
                               className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base"
                               style={{ backgroundColor: step.lightColor }}
                             >
@@ -647,13 +596,37 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
                       </div>
                     </div>
                   </div>
+
+                  {/* Step number circle - centered below card */}
+                  <div className="absolute -bottom-5 sm:-bottom-6 left-1/2 -translate-x-1/2 z-20">
+                    <div
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl"
+                      style={{
+                        backgroundColor: step.color,
+                        border: '3px solid white',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'scale(1)' : 'scale(0)',
+                        transition: isCapturing ? 'none' : 'opacity 0.5s ease-out 0.2s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s',
+                      }}
+                    >
+                      {stepNum}
+                    </div>
+                  </div>
                 </div>
               );
             })}
           </div>
 
           {/* Tagline */}
-          <div className="text-center mt-8 sm:mt-12 relative z-10">
+          <div
+            className="text-center mt-8 sm:mt-12 relative z-10"
+            style={{
+              opacity: (isCapturing || visibleSteps.at(-1)) ? 1 : 0,
+              transform: (isCapturing || visibleSteps.at(-1)) ? 'translateY(0)' : 'translateY(20px)',
+              transition: isCapturing ? 'none' : 'opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s',
+            }}
+          >
             <div className="inline-flex items-center gap-3 px-5 sm:px-8 py-3 sm:py-4 rounded-full" style={{ backgroundColor: CARD, boxShadow: neu(4) }}>
               <Star className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: GOLD }} />
               <p className="text-base sm:text-xl md:text-2xl font-medium" style={{ color: TEXT }}>
@@ -760,7 +733,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
               {footerStats.map((stat) => (
                 <div key={stat.label} className="flex items-center justify-between md:justify-end gap-4">
                   <span className="text-white/70 text-sm sm:text-base md:text-lg">{stat.label}</span>
-                  {stat.rating ? (
+                  {stat.type === 'rating' ? (
                     <div className="flex gap-0.5 sm:gap-1">
                       {[0, 1, 2, 3, 4].map((i) => (
                         <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ fill: GOLD, color: GOLD }} />
