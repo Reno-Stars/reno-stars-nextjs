@@ -568,7 +568,8 @@
     "hero": {
       "title": "Renovation Service Workflow — 5 Steps",
       "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews"
+      "googleReviews": "Google Reviews",
+      "stepLabel": "STEP {stepNum}"
     },
     "downloadPoster": "Download PNG",
     "downloadPdf": "Download PDF",

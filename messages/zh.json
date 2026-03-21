@@ -568,7 +568,8 @@
     "hero": {
       "title": "装修服务流程 — 5 步走",
       "subtitle": "从咨询到完工",
-      "googleReviews": "Google 评价"
+      "googleReviews": "Google 评价",
+      "stepLabel": "第{stepNum}步"
     },
     "downloadPoster": "下载 PNG",
     "downloadPdf": "下载 PDF",

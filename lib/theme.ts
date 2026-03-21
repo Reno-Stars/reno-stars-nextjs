@@ -11,6 +11,8 @@ export const GOLD_PALE = 'rgba(200,146,42,0.12)';
 /** CSS filter to tint black SVG icons to GOLD (#C8922A) */
 export const GOLD_ICON_FILTER = 'invert(56%) sepia(72%) saturate(467%) hue-rotate(6deg) brightness(90%) contrast(87%)';
 export const SURFACE = '#E8E2DA';
+export const SURFACE_LIGHT = '#f5f0e8';
+export const SURFACE_DARK = '#e0d6c8';
 export const SURFACE_ALT = '#DED6CC';
 export const CARD = '#EDE8E1';
 export const SH_DARK = '#c4bbb0';
