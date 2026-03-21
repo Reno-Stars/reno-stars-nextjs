@@ -7,7 +7,7 @@ import { Link } from '@/navigation';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
-import type { Company, BlogPost } from '@/lib/types';
+import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -16,7 +16,7 @@ const BLOG_SANITIZE_OPTIONS: IOptions = {
     img: ['src', 'alt', 'width', 'height', 'loading'],
   },
 };
-import { getLocalizedBlogPost } from '@/lib/data';
+import { getLocalizedBlogPost, getLocalizedService, getLocalizedArea } from '@/lib/data';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
@@ -27,11 +27,15 @@ interface BlogPostPageProps {
   locale: Locale;
   post: BlogPost;
   company: Company;
+  services?: Service[];
+  areas?: ServiceArea[];
 }
 
-export default function BlogPostPage({ locale, post, company }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
   const t = useTranslations();
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
+  const localizedServices = useMemo(() => services.map((s) => getLocalizedService(s, locale)), [services, locale]);
+  const localizedAreas = useMemo(() => areas.map((a) => getLocalizedArea(a, locale)), [areas, locale]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -192,6 +196,52 @@ export default function BlogPostPage({ locale, post, company }: BlogPostPageProp
           </div>
         </div>
       </article>
+
+      {/* Related Services */}
+      {localizedServices.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('blog.relatedServices')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {localizedServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}`}
+                  className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {s.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Related Areas */}
+      {localizedAreas.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('blog.relatedAreas')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {localizedAreas.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/areas/${a.slug}`}
+                  className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {a.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>

@@ -50,7 +50,7 @@
   "hero": {
     "whereRenovationStarts": "装修\n从这里\n开始",
     "yearsOfExcellence": "年卓越经验",
-    "transformYourSpace": "焕新您的空间",
+    "transformYourSpace": "温哥华专业家居装修",
     "renovationRemodeling": "装修与改造",
     "thoughtfulSpaces": "用心打造，精心设计",
     "premiumRenovations": "高端装修",
@@ -349,7 +349,14 @@
     "servicesInArea": "我们在{area}的服务",
     "readyToStartRenovation": "准备开始您的{area}装修项目？",
     "faqTitle": "{area}装修常见问题",
-    "aboutArea": "关于{area}"
+    "aboutArea": "关于{area}",
+    "aboutService": "关于{area}的{service}",
+    "areaServiceContent": "{area}{service}服务详情",
+    "otherAreasForService": "其他地区的{service}",
+    "otherServicesInArea": "{area}的其他服务",
+    "serviceFaqTitle": "关于{area}{service}的常见问题",
+    "learnOurProcess": "了解我们的5步装修流程",
+    "processLinkText": "了解我们的工作方式"
   },
   "blog": {
     "title": "装修博客",
@@ -366,7 +373,9 @@
     "next": "下一页",
     "previousPage": "转到上一页",
     "nextPage": "转到下一页",
-    "showingPosts": "显示第 {start}-{end} 篇，共 {total} 篇文章"
+    "showingPosts": "显示第 {start}-{end} 篇，共 {total} 篇文章",
+    "relatedServices": "相关服务",
+    "relatedAreas": "您所在地区的装修服务"
   },
   "contact": {
     "title": "联系我们",
@@ -479,15 +488,15 @@
   },
   "metadata": {
     "home": {
-      "title": "Reno Stars | 温哥华装修承包商",
+      "title": "温哥华装修承包商 | 厨房、卫浴装修 | Reno Stars",
       "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、500万保险、Google五星好评。"
     },
     "services": {
-      "title": "装修服务 | Reno Stars 温哥华",
+      "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
       "description": "温哥华厨房、卫浴、全屋、地下室及商业装修服务。值得信赖的本地承包商，免费报价。"
     },
     "projects": {
-      "title": "我们的装修项目 | 作品集 | Reno Stars 温哥华",
+      "title": "装修作品集 | 改造前后对比 | Reno Stars 温哥华",
       "description": "探索我们在温哥华及低陆平原地区的精彩装修项目作品集。厨房、卫浴和全屋改造。"
     },
     "contact": {
@@ -495,7 +504,7 @@
       "description": "联系Reno Stars咨询您的装修项目。获取温哥华及低陆平原地区厨房、卫浴或全屋装修的免费报价。"
     },
     "blog": {
-      "title": "装修博客 | 技巧与创意 | Reno Stars 温哥华",
+      "title": "装修技巧与费用指南 | 温哥华 | Reno Stars 博客",
       "description": "专业的装修技巧、设计趋势和实用家居改善创意。阅读温哥华装修案例分析、改造前后对比和Reno Stars的专业建议。"
     },
     "benefits": {
@@ -512,6 +521,7 @@
     },
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
+      "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
       "description": "{area}专业{service}服务。拥有{years}年以上经验和五星好评的值得信赖的本地承包商。联系Reno Stars获取免费报价。"
     },
     "areas": {
@@ -519,7 +529,7 @@
       "description": "Reno Stars 服务温哥华及低陆平原地区。了解我们的装修服务区域，获取免费报价。"
     },
     "area": {
-      "title": "{area}装修服务 | Reno Stars",
+      "title": "{area}装修承包商 | 厨房、卫浴装修 | Reno Stars",
       "description": "{area}专业装修服务。厨房、浴室、全屋装修。联系我们获取免费报价。"
     },
     "thankYou": {

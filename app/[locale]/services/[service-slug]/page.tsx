@@ -42,12 +42,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = service.image || siteImages.hero;
 
+  const vancouver = locale === 'zh' ? '温哥华' : 'Vancouver';
+  const title = `${localizedService.title} | ${SITE_NAME} ${vancouver}`;
+
   return {
-    title: `${localizedService.title} | ${SITE_NAME}`,
+    title,
     description,
     alternates: buildAlternates(`/services/${serviceSlug}/`, locale),
     openGraph: {
-      title: `${localizedService.title} | ${SITE_NAME}`,
+      title,
       description,
       url: `${baseUrl}/${locale}/services/${serviceSlug}/`,
       siteName: SITE_NAME,
@@ -58,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${localizedService.title} | ${SITE_NAME}`,
+      title,
       description,
       images: [{ url: ogImage, alt: localizedService.title }],
     },

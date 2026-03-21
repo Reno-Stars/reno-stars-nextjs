@@ -3,21 +3,29 @@
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { MapPin } from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
+import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
-import type { Company, Service, ServiceType, ServiceArea } from '@/lib/types';
+import type { Company, Service, ServiceType, ServiceArea, Project, LocalizedService as LocalizedServiceType } from '@/lib/types';
 import {
   getLocalizedService,
   getLocalizedArea,
-  getAllProjectsLocalized,
+  getLocalizedProject,
 } from '@/lib/data';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
+import FaqSection from '@/components/home/FaqSection';
 import {
-  NAVY, GOLD, SURFACE, TEXT,
+  NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
+
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
 
 interface ServiceLocationPageProps {
   locale: Locale;
@@ -26,19 +34,45 @@ interface ServiceLocationPageProps {
   company: Company;
   service: Service;
   area: ServiceArea;
+  services?: Service[];
+  areas?: ServiceArea[];
+  faqs?: FaqItem[];
+  areaProjects?: Project[];
 }
 
-export default function ServiceLocationPage({ locale, serviceSlug, citySlug: _citySlug, company, service, area }: ServiceLocationPageProps) {
+export default function ServiceLocationPage({
+  locale, serviceSlug, citySlug, company, service, area,
+  services = [], areas = [], faqs = [], areaProjects = [],
+}: ServiceLocationPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
-  const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
 
-  // Filter projects by both service type and location
-  const relatedProjects = useMemo(() => allProjects
-    .filter((p) => p.service_type === serviceSlug || p.location_city.toLowerCase() === localizedArea.name.toLowerCase())
-    .slice(0, 3), [allProjects, serviceSlug, localizedArea.name]);
+  // Localize and filter projects: prefer area-specific, then service-type matches
+  const relatedProjects = useMemo(() => {
+    const localized = areaProjects.map((p) => getLocalizedProject(p, locale));
+    // Prioritize projects matching the service type
+    const serviceMatch = localized.filter((p) => p.service_type === serviceSlug);
+    const others = localized.filter((p) => p.service_type !== serviceSlug);
+    return [...serviceMatch, ...others].slice(0, 3);
+  }, [areaProjects, locale, serviceSlug]);
+
+  // Other areas offering the same service (exclude current), pre-localized
+  const otherAreas = useMemo(
+    () => areas
+      .filter((a) => a.slug !== area.slug)
+      .map((a) => ({ slug: a.slug, name: getLocalizedArea(a, locale).name })),
+    [areas, area.slug, locale],
+  );
+
+  // Other services available in this area (exclude current)
+  const otherServices: LocalizedServiceType[] = useMemo(
+    () => services
+      .filter((s) => s.slug !== serviceSlug)
+      .map((s) => getLocalizedService(s, locale)),
+    [services, serviceSlug, locale],
+  );
 
   const title = t('areas.serviceInArea', { service: localizedService.title, area: localizedArea.name });
 
@@ -86,13 +120,67 @@ export default function ServiceLocationPage({ locale, serviceSlug, citySlug: _ci
         </div>
       </section>
 
+      {/* Service Description */}
+      {localizedService.long_description && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-3xl mx-auto space-y-4">
+            <h2 className="sr-only">
+              {t('areas.aboutService', { service: localizedService.title, area: localizedArea.name })}
+            </h2>
+            {localizedService.long_description.split('\n\n').filter(Boolean).map((paragraph, i) => (
+              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Area Content */}
+      {localizedArea.content && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-3xl mx-auto space-y-4">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('areas.areaServiceContent', { service: localizedService.title, area: localizedArea.name })}
+            </h2>
+            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
+              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Service Tags */}
+      {localizedService.tags && localizedService.tags.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
+              {t('section.whatWeDo')}
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {localizedService.tags.map((tag, index) => (
+                <span
+                  key={`${tag}-${index}`}
+                  className="px-4 py-2 rounded-xl text-sm font-medium"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Why Choose Us */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
             {t('areas.whyChooseArea', { area: localizedArea.name })}
           </h2>
-          <BenefitList benefits={benefits} />
+          <BenefitList benefits={(localizedArea.highlights?.length ?? 0) > 0 ? localizedArea.highlights! : benefits} />
         </div>
       </section>
 
@@ -102,10 +190,80 @@ export default function ServiceLocationPage({ locale, serviceSlug, citySlug: _ci
         categorySlug={serviceSlug}
       />
 
+      {/* FAQ Section */}
+      {faqs.length > 0 && (
+        <FaqSection
+          faqs={faqs}
+          translations={{ title: t('areas.serviceFaqTitle', { service: localizedService.title, area: localizedArea.name }) }}
+        />
+      )}
+
+      {/* Process Link */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-lg font-medium mb-3" style={{ color: TEXT }}>
+            {t('areas.learnOurProcess')}
+          </p>
+          <Link
+            href="/process"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('areas.processLinkText')} <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Other Areas for Same Service */}
+      {otherAreas.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('areas.otherAreasForService', { service: localizedService.title })}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {otherAreas.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/services/${serviceSlug}/${a.slug}`}
+                  className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {a.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Other Services in Same Area */}
+      {otherServices.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('areas.otherServicesInArea', { area: localizedArea.name })}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {otherServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}/${citySlug}`}
+                  className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {s.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <CTASection
         heading={t('areas.readyToStartIn', { area: localizedArea.name, service: localizedService.title })}
         subtitle={t('projects.ctaSubtitle7', { years: company.yearsExperience })}
-        bg={SURFACE}
+        bg={SURFACE_ALT}
         phone={company.phone}
       />
     </div>

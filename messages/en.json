@@ -50,7 +50,7 @@
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
     "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Transform Your Space",
+    "transformYourSpace": "Vancouver Home Renovation Experts",
     "renovationRemodeling": "Renovation & Remodeling",
     "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
     "premiumRenovations": "Premium Renovations",
@@ -349,7 +349,14 @@
     "servicesInArea": "Our Services in {area}",
     "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
     "faqTitle": "Frequently Asked Questions About {area} Renovations",
-    "aboutArea": "About {area}"
+    "aboutArea": "About {area}",
+    "aboutService": "About {service} in {area}",
+    "areaServiceContent": "{service} Services in {area}",
+    "otherAreasForService": "{service} in Other Areas",
+    "otherServicesInArea": "Other Services in {area}",
+    "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
+    "learnOurProcess": "Learn About Our 5-Step Renovation Process",
+    "processLinkText": "See How We Work"
   },
   "blog": {
     "title": "Renovation Blog",
@@ -366,7 +373,9 @@
     "next": "Next",
     "previousPage": "Go to previous page",
     "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts"
+    "showingPosts": "Showing {start}-{end} of {total} posts",
+    "relatedServices": "Related Services",
+    "relatedAreas": "Renovation in Your Area"
   },
   "contact": {
     "title": "Contact Us",
@@ -479,15 +488,15 @@
   },
   "metadata": {
     "home": {
-      "title": "Reno Stars | Vancouver Renovation Contractor",
+      "title": "Vancouver Renovation Contractor | Kitchen & Bathroom | Reno Stars",
       "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M coverage, 5-star Google rating."
     },
     "services": {
-      "title": "Renovation Services | Reno Stars Vancouver",
+      "title": "Kitchen, Bathroom & Whole House Renovation Services | Reno Stars Vancouver",
       "description": "Kitchen, bathroom, whole house, basement & commercial renovation services in Vancouver. Free quotes from a trusted local contractor."
     },
     "projects": {
-      "title": "Our Renovation Projects | Portfolio | Reno Stars Vancouver",
+      "title": "Renovation Portfolio | Before & After Projects | Reno Stars Vancouver",
       "description": "Explore our portfolio of stunning renovation projects across Vancouver and the Lower Mainland. Kitchen, bathroom, and whole house transformations."
     },
     "contact": {
@@ -495,7 +504,7 @@
       "description": "Contact Reno Stars for your renovation project. Get a free quote for kitchen, bathroom, or whole house renovations in Vancouver and the Lower Mainland."
     },
     "blog": {
-      "title": "Renovation Blog | Tips & Ideas | Reno Stars Vancouver",
+      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
       "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
     },
     "benefits": {
@@ -512,6 +521,7 @@
     },
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
+      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
       "description": "Professional {service} services in {area}. Trusted local contractor with {years}+ years experience and 5-star reviews. Contact Reno Stars for a free quote."
     },
     "areas": {
@@ -519,7 +529,7 @@
       "description": "Reno Stars serves communities across Vancouver and the Lower Mainland. Explore our renovation service areas and get a free quote."
     },
     "area": {
-      "title": "Renovation Services in {area} | Reno Stars",
+      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
       "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
     },
     "thankYou": {
