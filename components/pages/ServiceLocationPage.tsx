@@ -136,6 +136,22 @@ export default function ServiceLocationPage({
         </section>
       )}
 
+      {/* Area Content */}
+      {localizedArea.content && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-3xl mx-auto space-y-4">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('areas.areaServiceContent', { service: localizedService.title, area: localizedArea.name })}
+            </h2>
+            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
+              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Service Tags */}
       {localizedService.tags && localizedService.tags.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
@@ -164,7 +180,7 @@ export default function ServiceLocationPage({
           <h2 className="text-2xl font-bold mb-8" style={{ color: TEXT }}>
             {t('areas.whyChooseArea', { area: localizedArea.name })}
           </h2>
-          <BenefitList benefits={benefits} />
+          <BenefitList benefits={(localizedArea.highlights?.length ?? 0) > 0 ? localizedArea.highlights! : benefits} />
         </div>
       </section>
 

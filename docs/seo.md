@@ -94,6 +94,15 @@ Translation keys `projects.beforeLabel` and `projects.afterLabel` are used for i
 
 Components using this pattern: `ProjectModal`, `ProjectDetailPage`, `SiteDetailPage`.
 
+## Service+Location Meta Title Differentiation
+
+Service+location pages (e.g., `/en/services/kitchen/vancouver/`) use a two-tier meta title strategy for better SERP CTR:
+
+1. **With tagline** — When the service has tags, the first 2 are joined with " & " and appended: `"Kitchen Renovation in Vancouver – Custom Cabinets & Countertops | Reno Stars"`. Only used when the total title is ≤ 60 characters (Google's truncation threshold).
+2. **Fallback** — Standard template: `"Kitchen Renovation in Vancouver | Reno Stars"`.
+
+This differentiates titles across services (each service has unique tags) while keeping them within Google's display limit. Implemented in `generateMetadata()` in `app/[locale]/services/[service-slug]/[city]/page.tsx`. Translation keys: `metadata.serviceLocation.title` (fallback) and `metadata.serviceLocation.titleWithTagline` (with tagline).
+
 ## Meta Description Lengths
 
 Static meta descriptions in `messages/en.json` and `messages/zh.json` target 120-160 characters (optimal for SERP display). All descriptions are bilingual. Meta descriptions that mention years of experience use `{years}` placeholder (resolved from `getCompanyFromDb().yearsExperience` at render time) to stay accurate as the company ages. Affected pages: home, benefits, service+location.

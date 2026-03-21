@@ -50,7 +50,7 @@
   "hero": {
     "whereRenovationStarts": "装修\n从这里\n开始",
     "yearsOfExcellence": "年卓越经验",
-    "transformYourSpace": "焕新您的空间",
+    "transformYourSpace": "温哥华专业家居装修",
     "renovationRemodeling": "装修与改造",
     "thoughtfulSpaces": "用心打造，精心设计",
     "premiumRenovations": "高端装修",
@@ -351,6 +351,7 @@
     "faqTitle": "{area}装修常见问题",
     "aboutArea": "关于{area}",
     "aboutService": "关于{area}的{service}",
+    "areaServiceContent": "{area}{service}服务详情",
     "otherAreasForService": "其他地区的{service}",
     "otherServicesInArea": "{area}的其他服务",
     "serviceFaqTitle": "关于{area}{service}的常见问题",
@@ -520,6 +521,7 @@
     },
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
+      "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
       "description": "{area}专业{service}服务。拥有{years}年以上经验和五星好评的值得信赖的本地承包商。联系Reno Stars获取免费报价。"
     },
     "areas": {

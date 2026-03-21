@@ -48,8 +48,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     getTranslations({ locale, namespace: 'metadata.serviceLocation' }),
     getCompanyFromDb(),
   ]);
-  const tParams = { service: localizedService.title, area: localizedArea.name, years: company.yearsExperience };
-  const title = t('title', tParams);
+  const tagline = localizedService.tags?.slice(0, 2).join(' & ') ?? '';
+  const tParams = { service: localizedService.title, area: localizedArea.name, years: company.yearsExperience, tagline };
+  // Use tagline variant only if it fits within ~60 chars (Google truncation limit)
+  const titleWithTagline = tagline ? t('titleWithTagline', tParams) : '';
+  const title = titleWithTagline && titleWithTagline.length <= 60
+    ? titleWithTagline
+    : t('title', tParams);
   const description = t('description', tParams);
   const ogImage = service.image || siteImages.hero;
 

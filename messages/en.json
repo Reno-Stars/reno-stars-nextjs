@@ -50,7 +50,7 @@
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
     "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Transform Your Space",
+    "transformYourSpace": "Vancouver Home Renovation Experts",
     "renovationRemodeling": "Renovation & Remodeling",
     "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
     "premiumRenovations": "Premium Renovations",
@@ -351,6 +351,7 @@
     "faqTitle": "Frequently Asked Questions About {area} Renovations",
     "aboutArea": "About {area}",
     "aboutService": "About {service} in {area}",
+    "areaServiceContent": "{service} Services in {area}",
     "otherAreasForService": "{service} in Other Areas",
     "otherServicesInArea": "Other Services in {area}",
     "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
@@ -520,6 +521,7 @@
     },
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
+      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
       "description": "Professional {service} services in {area}. Trusted local contractor with {years}+ years experience and 5-star reviews. Contact Reno Stars for a free quote."
     },
     "areas": {
