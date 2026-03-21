@@ -367,7 +367,7 @@ async function seed() {
 
   // Seed Design Items (idempotent via unique constraint on image_url)
   // 57 images uploaded to R2 under uploads/designs/
-  const R2 = 'https://pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev';
+  const R2 = process.env.S3_PUBLIC_URL || 'https://pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev';
   await db
     .insert(designs)
     .values([
