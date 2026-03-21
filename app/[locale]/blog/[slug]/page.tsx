@@ -7,7 +7,7 @@ import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -79,9 +79,11 @@ export default async function Page({ params }: PageProps) {
 
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
 
-  const [t, company] = await Promise.all([
+  const [t, company, services, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
+    getServicesFromDb(),
+    getServiceAreasFromDb(),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -102,7 +104,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/blog/${slug}/`}
         image={post.featured_image}
       />
-      <BlogPostPage locale={locale as Locale} post={post} company={company} />
+      <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />
     </>
   );
 }

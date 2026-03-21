@@ -5,9 +5,9 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
-import { BreadcrumbSchema, ServiceSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 
@@ -91,10 +91,23 @@ export default async function Page({ params }: PageProps) {
   if (!service || !area) {
     notFound();
   }
+
+  const [areaProjects, t, faqT] = await Promise.all([
+    getProjectsByAreaFromDb(area.name.en),
+    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'faq' }),
+  ]);
+
   const localizedService = getLocalizedService(service, locale as Locale);
   const localizedArea = getLocalizedArea(area, locale as Locale);
 
-  const t = await getTranslations({ locale, namespace: 'nav' });
+  // Build FAQs for this service type (same pattern as service detail page)
+  const faqs = [
+    { id: `${serviceSlug}-1`, question: faqT(`${serviceSlug}.q1`), answer: faqT(`${serviceSlug}.a1`) },
+    { id: `${serviceSlug}-2`, question: faqT(`${serviceSlug}.q2`), answer: faqT(`${serviceSlug}.a2`) },
+    { id: `${serviceSlug}-3`, question: faqT(`${serviceSlug}.q3`), answer: faqT(`${serviceSlug}.a3`) },
+  ];
+
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('services'), url: `/${locale}/services/` },
@@ -115,6 +128,7 @@ export default async function Page({ params }: PageProps) {
         location={localizedArea.name}
         url={`/${locale}/services/${serviceSlug}/${city}/`}
       />
+      <FAQSchema faqs={faqs} />
       <ServiceLocationPage
         locale={locale as Locale}
         serviceSlug={serviceSlug as ServiceType}
@@ -122,6 +136,10 @@ export default async function Page({ params }: PageProps) {
         company={company}
         service={service}
         area={area}
+        services={services}
+        areas={areas}
+        faqs={faqs}
+        areaProjects={areaProjects}
       />
     </>
   );

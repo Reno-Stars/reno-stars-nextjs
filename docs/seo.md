@@ -28,7 +28,7 @@ Components in `components/structured-data/`:
 | `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
 | `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
-| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service), Area pages (area-specific FAQs) |
+| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service), Service+location pages (3 Q&A per service), Area pages (area-specific FAQs) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 | `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
@@ -268,6 +268,15 @@ Blog post pages render the featured image (`post.featured_image`) above the H1 t
 ## Service Area Internal Links
 
 Service detail pages include an "Areas We Serve" section with a responsive grid of links to service+location pages (e.g., `/services/kitchen/vancouver/`). This creates internal links that improve crawlability and keyword targeting for location-based searches. Areas are fetched from the database and passed as an optional prop to `ServiceDetailPage`.
+
+## Service+Location Page Cross-Links
+
+`ServiceLocationPage` (e.g., `/services/kitchen/vancouver/`) includes two cross-linking sections that create a dense internal link network for location-based SEO:
+
+- **"Other Areas for Same Service"** — Grid of links to the same service in other cities (e.g., "Kitchen Renovation in Richmond", "Kitchen Renovation in Burnaby"). Excludes the current area.
+- **"Other Services in Same Area"** — Grid of links to other services in the same city (e.g., "Bathroom Renovation in Vancouver", "Basement Renovation in Vancouver"). Excludes the current service.
+
+These cross-links also appear in blog posts via "Related Services" and "Related Areas" sections, strengthening the content silo between blog content and service/area pages.
 
 ## Performance & SEO Balance
 
