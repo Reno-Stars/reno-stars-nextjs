@@ -20,11 +20,25 @@ interface DesignPageProps {
 export default function DesignPage({ locale, company, designs }: DesignPageProps) {
   const t = useTranslations();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
 
-  const localizedDesigns = useMemo(
+  const allLocalizedDesigns = useMemo(
     () => designs.map((d) => ({ image: d.image, title: d.title[locale] })),
     [designs, locale],
   );
+
+  const localizedDesigns = useMemo(
+    () => allLocalizedDesigns.filter((d) => !failedImages.has(d.image)),
+    [allLocalizedDesigns, failedImages],
+  );
+
+  const handleImageError = useCallback((src: string) => {
+    setFailedImages((prev) => {
+      const next = new Set(prev);
+      next.add(src);
+      return next;
+    });
+  }, []);
 
   // Lightbox handlers
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -53,7 +67,15 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
     };
   }, [lightboxIndex, closeLightbox, goToPrev, goToNext]);
 
-  const currentItem = lightboxIndex !== null ? localizedDesigns[lightboxIndex] : null;
+  // Close lightbox if the current image gets filtered out
+  const currentItem = lightboxIndex !== null && lightboxIndex < localizedDesigns.length
+    ? localizedDesigns[lightboxIndex] : null;
+
+  useEffect(() => {
+    if (lightboxIndex !== null && lightboxIndex >= localizedDesigns.length) {
+      setLightboxIndex(null);
+    }
+  }, [lightboxIndex, localizedDesigns.length]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -94,6 +116,11 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="sr-only">{t('section.designInspirations')}</h2>
+          {localizedDesigns.length === 0 ? (
+            <p className="text-center py-20" style={{ color: TEXT_MUTED }}>
+              {t('design.noDesigns')}
+            </p>
+          ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" role="list" aria-label={t('section.designInspirations')}>
             {localizedDesigns.map((item, index) => {
               const layout = tetrisLayouts[index % tetrisLayouts.length];
@@ -119,6 +146,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
                       sizes={sizes}
                       loading="lazy"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      onError={() => handleImageError(item.image)}
                     />
                     {item.title && (
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex items-end" aria-hidden="true">
@@ -132,6 +160,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
               );
             })}
           </div>
+          )}
         </div>
       </section>
 

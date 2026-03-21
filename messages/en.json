@@ -132,7 +132,8 @@
     "designFeature2Title": "Tailored to You",
     "designFeature2Desc": "Every design is customized to your space, lifestyle, and budget. No cookie-cutter solutions.",
     "designFeature3Title": "Design to Build",
-    "designFeature3Desc": "Our team handles the full journey from concept to completion, ensuring the final result matches the vision."
+    "designFeature3Desc": "Our team handles the full journey from concept to completion, ensuring the final result matches the vision.",
+    "noDesigns": "Design gallery coming soon. Please check back later."
   },
   "stats": {
     "yearsExperience": "Years Experience",
