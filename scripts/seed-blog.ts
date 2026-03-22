@@ -56,7 +56,9 @@ function cleanContent(html: string): string {
     .trim();
 }
 
-/** Decode URL-encoded slug characters and sanitize invalid characters. */
+/** Decode URL-encoded slug characters and sanitize invalid characters.
+ *  Also strips standalone year segments (e.g. "-2024-") from slugs to prevent
+ *  slug/title year mismatches when titles are updated for freshness. */
 function decodeSlug(slug: string): string {
   try {
     let decoded = decodeURIComponent(slug);
@@ -64,6 +66,7 @@ function decodeSlug(slug: string): string {
     decoded = decoded
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, '-') // Replace any non-alphanumeric/hyphen chars with hyphen
+      .replace(/-(20\d{2})-/g, '-') // Strip standalone year segments (e.g. -2024-)
       .replace(/-+/g, '-')          // Collapse multiple consecutive hyphens
       .replace(/(^-|-$)/g, '');     // Remove leading/trailing hyphens
     return decoded;

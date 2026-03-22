@@ -198,18 +198,29 @@ export default function ServiceLocationPage({
         />
       )}
 
-      {/* Process Link */}
+      {/* Contextual Links */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-lg font-medium mb-3" style={{ color: TEXT }}>
-            {t('areas.learnOurProcess')}
-          </p>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
           <Link
             href="/process"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
             {t('areas.processLinkText')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('areas.blogLinkText')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href={`/services/${serviceSlug}`}
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('areas.serviceLinkText', { service: localizedService.title })} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

@@ -1,0 +1,503 @@
+What I audited
+
+I reviewed the English homepage, Chinese homepage, blog index, a blog article, the projects hub, a whole-house project page, and multiple city/service pages. I also noted redirect behavior and how the root domain responded to crawling.
+
+Executive summary for the SEO team
+
+The biggest SEO issues are:
+
+Programmatic pages are indexable, but many appear too templated and too similar.
+
+There are visible content-quality bugs on project pages.
+
+The Chinese version has major localization / trust / international SEO problems.
+
+Service-area pages are locally targeted, but much of the content is generic or semi-generic.
+
+Information consistency is weak across templates, which can hurt E-E-A-T and conversion.
+
+Crawl/indexation behavior should be validated because the root domain returned a bot-verification screen in this audit.
+
+High-priority findings
+1) Programmatic SEO footprint is obvious, and some pages are too thin to justify separate indexation
+
+The service-area pages follow a clear template: city breadcrumb, city H1, generic service explanation, localized paragraph, FAQ block, “other areas,” “other services,” and CTA/footer. You can see that pattern on pages like “Kitchen Renovation in Richmond,” “Bathroom Renovation in North Vancouver,” “Whole House Renovation in North Vancouver,” and “Kitchen Renovation in Port Coquitlam.”
+
+That is not automatically bad. The problem is that many of these pages look only lightly differentiated:
+
+the service intro is generic,
+
+the FAQ blocks are repeated,
+
+the CTAs and footer blocks are identical,
+
+local uniqueness is often one or two paragraphs,
+
+some pages use region-mismatched FAQ wording.
+
+A strong example is the Richmond kitchen page: it targets Richmond, but one of its FAQs asks, “What is the average cost of a kitchen renovation in Vancouver?” and another answer says Reno Stars ensures the renovation meets “Vancouver building codes,” even though the page is specifically for Richmond.
+
+Likewise, the Port Coquitlam kitchen page repeats the same Vancouver-oriented FAQ framing, including “average cost of a kitchen renovation in Vancouver” and “Vancouver building codes.”
+
+Why this matters: these pages may be crawlable and keyword-relevant, but Google can still treat them as low-value doorway-like variations if city-level differentiation is too shallow.
+
+Recommendation:
+
+Keep only city/service pages that have enough unique value to deserve indexing.
+
+Add substantial local uniqueness per city:
+
+neighborhood-specific considerations,
+
+permit/inspection notes by municipality,
+
+housing stock differences,
+
+local before/after case studies,
+
+city-specific pricing bands,
+
+city-specific testimonials,
+
+city-specific FAQs,
+
+map/service-area proof and nearby projects.
+
+For thinner combinations, consider consolidating or noindexing until upgraded.
+
+2) There are visible templating/content bugs on project pages, and this is a major quality signal problem
+
+On the “Vancouver Whole House Renovation” page, one included area is rendered as:
+
+“Bathroom Bathroom Renovation Renovation”
+
+followed by “Bathroom Renovation renovation project.”
+
+That is not a minor typo. It strongly suggests a broken content model or template binding. On project/gallery pages, these issues can damage:
+
+index quality,
+
+user trust,
+
+snippet quality,
+
+and Google’s assessment of overall site quality.
+
+There are similar signs elsewhere:
+
+homepage project list contains awkward or duplicated labels like “Bathroom Bathroom Renovation Renovation.”
+
+some search-result snippets also expose repetitive project-title structures and compressed formatting, which makes the site feel auto-generated rather than editorially controlled.
+
+Recommendation:
+
+Treat this as a release-blocker for SEO.
+
+Run a full crawl to catch:
+
+duplicated taxonomy names,
+
+malformed project titles,
+
+missing/empty fields,
+
+repeated service scope strings,
+
+broken alt text,
+
+placeholder labels,
+
+duplicated “before” assets or captions.
+
+Add schema/content validation in the CMS or build pipeline so bad field merges cannot publish.
+
+3) Multilingual SEO is currently a serious weakness, especially on the Chinese version
+
+The Chinese homepage has multiple problems at once:
+
+a) English title/meta-style messaging on a Chinese URL
+
+The Chinese page is presented with an English title in the audit and includes English promotional copy within the body, such as:
+“Experienced Home Remodeling Contractors in Vancouver...” while the surrounding page is Chinese.
+
+b) Mixed-language body content
+
+The Chinese page contains English reviews and English UI fragments mixed with Chinese content.
+
+c) Machine-translation / broken-Chinese quality
+
+Parts of the Chinese copy read like low-quality machine translation, for example:
+“在Reno的星星，我们提供全面的温哥华的翻修方案经理的每一个细节...” and “你的空间应该得到什么，但最好的。”
+
+d) Inconsistent business facts between languages
+
+The English homepage says:
+
+“over 30 years of experience,”
+
+“700+ projects completed,”
+
+“a team of 100+ professionals,”
+
+“$5M liability coverage,”
+
+“3-year warranty.”
+
+But the Chinese page shows different numbers in the visible content:
+
+“超过 27 年的综合经验”
+
+“17 名技术娴熟的团队成员”
+
+This is a trust issue, not just a translation issue.
+
+e) Translation plugin footprint is visible
+
+The blog article and Chinese page visibly reference TranslatePress / language-switch artifacts.
+
+Why this matters: if both languages are indexable, poor localization can hurt brand trust, conversion, and international relevance signals. In some cases, it can also create duplicate/near-duplicate content problems or weak language targeting.
+
+Recommendation:
+
+Do a full bilingual QA pass before expanding Chinese indexation.
+
+Decide whether Chinese pages should be:
+
+fully localized and indexed, or
+
+partially deindexed until professionally rewritten.
+
+Align all company facts across languages from one source of truth.
+
+Verify hreflang, canonicals, sitemap language pairs, and indexation rules.
+
+Remove machine-translated pages from index until they are human-edited.
+
+4) The blog exists, but its architecture is weak for non-brand organic growth
+
+The blog index has only 7 articles, all shown as published on Mar 12, 2026, and nearly all of them are case-study style posts.
+
+The blog article sample also shows a slug/title mismatch:
+
+URL slug says “kitchen-renovation-costs-in-vancouver-2024-guide”
+
+H1 says “Kitchen Renovation Costs in Vancouver (2025 Guide)”
+
+That creates freshness ambiguity and weakens editorial trust.
+
+The blog currently appears to skew toward project storytelling rather than full-funnel search intent. The case studies are useful, but they do not replace high-intent articles like:
+
+kitchen renovation cost Vancouver,
+
+bathroom renovation cost Vancouver,
+
+permit requirements by city,
+
+condo renovation strata rules,
+
+timeline by renovation type,
+
+ROI guides,
+
+kitchen cabinet refacing vs replacement,
+
+basement legal-suite renovation considerations.
+
+Recommendation:
+Split blog/content into at least three clusters:
+
+Commercial intent: cost, quote, service comparisons, timelines.
+
+Local intent: city-specific permit/strata/planning guides.
+
+Trust intent: case studies, process explainers, materials, workmanship, warranty.
+
+Also fix:
+
+publish-date integrity,
+
+slug/title year consistency,
+
+author/reviewer/editor fields if possible,
+
+internal links from articles to service/city/project pages.
+
+5) Homepage positioning is strong for users, but broad for SEO
+
+The homepage is clearly optimized around “Vancouver Home Renovation Experts” with service categories, trust signals, reviews, showroom, and service areas.
+
+That is good for conversion, but the homepage is also trying to do a lot:
+
+broad company positioning,
+
+all services,
+
+all cities,
+
+all social proof,
+
+all FAQs,
+
+all contact paths,
+
+project portfolio,
+
+blog teasers.
+
+The result is that the homepage is strong as a brand page, but it should not carry the ranking burden for every service + city keyword.
+
+Recommendation:
+Use the homepage for brand + primary market positioning only:
+
+“Vancouver renovation contractor”
+
+“kitchen, bathroom, full-home renovation”
+
+“Lower Mainland”
+
+strong proof and CTA
+
+Then let dedicated pages rank for:
+
+service intent,
+
+city-service intent,
+
+cost intent,
+
+case-study intent,
+
+design inspiration intent.
+
+6) Internal linking is present, but still looks template-driven instead of topic-driven
+
+There is internal linking between services, projects, blog, other areas, and other services. That is a positive baseline.
+
+But a lot of it is structural rather than strategic:
+
+footer-wide links,
+
+“other areas,”
+
+“other services,”
+
+“view all projects.”
+
+What is still missing is stronger contextual internal linking:
+
+from city/service pages to matching case studies in that city,
+
+from cost guides to exact service pages,
+
+from project pages to the relevant city/service landing page,
+
+from service pages to process, FAQ, warranty, materials, and blog resources.
+
+Recommendation:
+Create internal-link blocks based on intent:
+
+“Related projects in Richmond”
+
+“Cost guide for this service”
+
+“Permit notes for this city”
+
+“Our process for this renovation type”
+
+“Similar kitchen renovations in Vancouver”
+
+That builds topical depth better than just sitewide navigation.
+
+7) E-E-A-T and trust signals are good, but consistency issues are undermining them
+
+The site has many strong trust elements:
+
+30+ years experience,
+
+700+ projects,
+
+warranty,
+
+$5M liability coverage,
+
+WCB mention,
+
+client reviews,
+
+showroom address,
+
+service-area coverage,
+
+partner brands.
+
+Those are useful.
+
+But the trust package becomes weaker when:
+
+multilingual claims do not match,
+
+templating bugs are visible,
+
+year labels are inconsistent,
+
+translation quality is poor,
+
+some pages look mass-generated.
+
+Recommendation:
+Centralize all trust facts into one structured content source:
+
+years experience,
+
+number of projects,
+
+warranty terms,
+
+team size,
+
+insurance,
+
+certifications,
+
+showroom address,
+
+review-platform references.
+
+Then render them everywhere from the same data source.
+
+8) Crawl/indexation needs technical validation because the root domain behavior is unusual
+
+When I opened the bare root domain, it returned a “Verifying that you are not a robot...” screen. But the language subdirectory /en/ was accessible and rendered normally.
+
+This does not prove Googlebot is blocked, but it is enough to justify technical validation. If WAF/bot protection behaves inconsistently by path, user-agent, or region, it can affect crawling, rendering, or canonical discovery.
+
+I also observed URL normalization/redirect behavior:
+
+/en/ resolved to https://www.reno-stars.com/en/
+
+the blog URL path /en/vancouver-renovation-blog/ redirected to /en/blog/
+
+Redirects themselves are fine, but they should be checked at scale.
+
+Recommendation for technical team:
+
+test with Google Search Console URL Inspection,
+
+verify Googlebot is not challenged by the WAF,
+
+validate canonicals on all indexable templates,
+
+validate hreflang tags,
+
+verify XML sitemaps include only canonical, indexable URLs,
+
+check for mixed www/non-www references,
+
+check that language versions self-canonicalize correctly,
+
+confirm robots/meta robots by template.
+
+I could not directly confirm robots.txt, sitemap XML contents, or page-source canonicals in this pass, so that part should be confirmed with a crawler or direct server-side inspection.
+
+Medium-priority findings
+9) Some city pages are stronger than others, but many still need more unique local substance
+
+A few city pages do include useful local references:
+
+Richmond mentions code/inspection familiarity,
+
+Vancouver cabinet refacing mentions strata and heritage homes,
+
+North Vancouver mentions coastal/rainy climate and neighborhoods.
+
+That is a good direction.
+
+But to compete locally, each city page should add more evidence that Reno Stars truly operates there:
+
+2–4 project cards from that city,
+
+city-specific testimonial,
+
+municipality-specific FAQ,
+
+local permit/process content,
+
+embedded service-area map or radius,
+
+local material/structural constraints,
+
+city-specific before/after gallery.
+
+Without that, pages can still look generated for coverage rather than built from real local experience.
+
+10) Project pages have useful structured content, but not enough narrative uniqueness
+
+The project pages do include fields such as:
+
+location,
+
+timeline,
+
+space type,
+
+budget,
+
+included areas,
+
+challenge,
+
+solution,
+
+service scope.
+
+That is a good content model. The issue is that the prose is often brief and formulaic.
+
+Recommendation:
+For every project, expand with:
+
+homeowner goals,
+
+starting condition,
+
+constraints,
+
+materials selected and why,
+
+scope changes,
+
+approvals/permits/strata notes,
+
+craftsmanship details,
+
+outcome metrics,
+
+related service/city links.
+
+This helps both SEO and conversion.
+
+11) Brand/search snippet hygiene needs cleanup
+
+The blog article slug/H1 year mismatch is one example of snippet hygiene problems.
+
+Other possible snippet concerns visible in crawled text:
+
+title/body mismatches across languages,
+
+repetitive phrasing,
+
+odd compressed text in project snippets,
+
+some pages leading with generic lines like “Professional renovation services in Richmond” or “Renovations in North Vancouver.”
+
+Those are serviceable, but not strong CTR copy.
+
+Recommendation:
+Rewrite titles/meta descriptions and intro copy by template:
+
+service pages: include city + service + differentiator,
+
+project pages: include city + style/scope + outcome,
+
+articles: include year only when maintained annually,
+
+Chinese pages: native-language snippet copy only.

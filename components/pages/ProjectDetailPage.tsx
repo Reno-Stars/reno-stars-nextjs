@@ -8,6 +8,7 @@ import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject, LocalizedImagePair } from '@/lib/types';
 import { getLocalizedProject, imagesToPairs } from '@/lib/data/projects';
+import { formatSlug } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
@@ -506,6 +507,30 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                   {t('cta.callNow')}
                 </a>
               </div>
+
+              {/* Contextual internal links */}
+              {serviceType && serviceTypeName && (
+                <div className="flex flex-wrap gap-2 mt-6">
+                  <Link
+                    href={`/services/${serviceType}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
+                    style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                  >
+                    {t('projects.aboutService', { service: serviceTypeName })}
+                    <ChevronRight className="w-3 h-3" />
+                  </Link>
+                  {localizedProject.location_city && (
+                    <Link
+                      href={`/services/${serviceType}/${formatSlug(localizedProject.location_city)}`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:brightness-95"
+                      style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                    >
+                      {t('projects.serviceInCity', { service: serviceTypeName, city: localizedProject.location_city })}
+                      <ChevronRight className="w-3 h-3" />
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

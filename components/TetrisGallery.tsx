@@ -70,7 +70,7 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
               <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 flex items-end ${overlayClassName}`} aria-hidden="true">
                 <div className="p-2 sm:p-4 text-white">
                   {item.title && <h3 className="text-sm sm:text-lg font-bold">{item.title}</h3>}
-                  {item.category && <p className="text-sm text-white/80">{item.category}</p>}
+                  {item.category && item.category !== item.title && <p className="text-sm text-white/80">{item.category}</p>}
                 </div>
               </div>
             )}

@@ -84,7 +84,10 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
 }
 
 export default function TestimonialsSection({ googleReviews, locale, translations: t }: TestimonialsSectionProps) {
-  const reviews = googleReviews.reviews;
+  // On Chinese locale, only show reviews that have Chinese translations
+  const reviews = locale === 'zh'
+    ? googleReviews.reviews.filter((r) => r.textZh)
+    : googleReviews.reviews;
   if (reviews.length === 0) return null;
 
   // CARD_WIDTH = sm:w-80 (320px) + gap-5 (20px)

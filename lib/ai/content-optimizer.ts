@@ -193,9 +193,9 @@ Field guidelines:
 - budgetRange: Exact budget or range if mentioned in the notes (e.g., "$22,000" or "$15,000 - $25,000"). Use the value from the notes as-is. Leave empty string if no budget is mentioned.
 - durationEn/durationZh: Project timeline if mentioned in the notes (e.g., "3 weeks" / "3周"). Use the value from the notes. Leave empty string if no duration is mentioned.
 - spaceTypeEn: Detect the type of space from the notes. Must be one of: "Condo", "House", "Townhouse", "Apartment", "Commercial". Infer from context (e.g., condo/公寓 → "Condo", house/独立屋/别墅 → "House", townhouse/联排 → "Townhouse", apartment/公寓楼 → "Apartment", office/store/商业 → "Commercial"). Default to "House" if truly unclear.
-- description: 2-3 sentences about the project scope and transformation (50-150 words)
-- challenge: 1-2 sentences about the main challenges faced (30-80 words)
-- solution: 1-2 sentences about how challenges were addressed (30-80 words)
+- description: 3-5 sentences about the project scope, homeowner goals, materials selected, and the transformation outcome (80-200 words). Include specific details: what the starting condition was, what materials or finishes were chosen and why, what the homeowner wanted to achieve, and the final result. Avoid generic phrases like "complete renovation" — be specific about what was done.
+- challenge: 2-3 sentences about the main challenges faced (50-120 words). Include constraints like layout limitations, structural issues, permit requirements, strata rules, budget constraints, timeline pressure, or existing condition problems. Be specific to this project.
+- solution: 2-3 sentences about how challenges were addressed (50-120 words). Include specific techniques, materials, design decisions, or trade coordination that resolved the challenges. Mention craftsmanship details where relevant.
 - badge: Short highlight text for a badge/tag (2-5 words, e.g., "Award Winner" / "获奖作品")
 - excerpt: 1-2 sentences summarizing the project for listings (100-200 characters)
 - metaTitle: SEO title under 60 characters, include primary keyword

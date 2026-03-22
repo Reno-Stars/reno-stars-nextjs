@@ -229,6 +229,9 @@ export default async function Page({ params }: PageProps) {
           url={`/${locale}/projects/${slug}/`}
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
+          duration={localizedProject.duration}
+          budgetRange={project.budget_range}
+          spaceType={localizedProject.space_type}
         />
         <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
       </>
