@@ -503,6 +503,78 @@ const areaFaqs: AreaFaq[] = [
     answerZh: '我们推荐防潮材料，如瓷砖、石英台面和船用级饰面，能承受北温哥华多雨的气候并使用数十年。',
     displayOrder: 0,
   },
+  // Coquitlam
+  {
+    areaSlug: 'coquitlam',
+    questionEn: 'Do you renovate homes in Coquitlam\'s newer developments?',
+    questionZh: '你们为高贵林新开发区的房屋做装修吗？',
+    answerEn: 'Yes, we work on both newer builds in Burke Mountain and Partington Creek as well as established homes in Maillardville and Austin Heights. We understand the building styles and common upgrade needs in each neighbourhood.',
+    answerZh: '是的，我们为Burke Mountain和Partington Creek的新建房屋以及Maillardville和Austin Heights的成熟社区房屋提供装修服务。我们了解每个社区的建筑风格和常见升级需求。',
+    displayOrder: 0,
+  },
+  // New Westminster
+  {
+    areaSlug: 'new-westminster',
+    questionEn: 'Can you renovate heritage homes in New Westminster?',
+    questionZh: '你们能装修新西敏的历史遗产房屋吗？',
+    answerEn: 'Yes, we have experience with heritage home renovations in Queens Park and other historic neighbourhoods. We work within heritage conservation guidelines while modernizing interiors to meet current building codes.',
+    answerZh: '是的，我们在Queens Park和其他历史街区有遗产房屋装修经验。我们在遵守遗产保护指南的同时将室内现代化，使其符合当前建筑规范。',
+    displayOrder: 0,
+  },
+  // Delta
+  {
+    areaSlug: 'delta',
+    questionEn: 'Do you serve all areas of Delta including Ladner and Tsawwassen?',
+    questionZh: '你们服务Delta的所有地区包括Ladner和Tsawwassen吗？',
+    answerEn: 'Yes, we serve North Delta, Ladner, and Tsawwassen. Many homes in Delta were built in the 1970s-90s and benefit from kitchen and bathroom updates, basement finishing, and energy-efficiency upgrades.',
+    answerZh: '是的，我们服务North Delta、Ladner和Tsawwassen。Delta许多房屋建于1970至1990年代，适合进行厨房和浴室更新、地下室装修以及节能升级。',
+    displayOrder: 0,
+  },
+  // Langley
+  {
+    areaSlug: 'langley',
+    questionEn: 'Do you work on rural properties in Langley?',
+    questionZh: '你们为兰里的农村房产做装修吗？',
+    answerEn: 'Yes, we serve both the City of Langley and the Township of Langley, including rural acreages. We handle unique requirements like larger-scale projects, well water systems, and septic considerations.',
+    answerZh: '是的，我们服务兰里市和兰里区，包括农村大面积地产。我们处理大型项目、井水系统和化粪池等特殊需求。',
+    displayOrder: 0,
+  },
+  // Port Moody
+  {
+    areaSlug: 'port-moody',
+    questionEn: 'Do you renovate condos in Port Moody\'s Inlet area?',
+    questionZh: '你们为满地宝Inlet地区的公寓做装修吗？',
+    answerEn: 'Yes, we frequently renovate condos near Inlet Centre and along Clarke Street. We coordinate with strata councils on approved work hours, noise bylaws, and elevator bookings for material delivery.',
+    answerZh: '是的，我们经常为Inlet Centre附近和Clarke Street沿线的公寓做装修。我们与物业委员会协调施工时间、噪音规定和材料运送的电梯预约。',
+    displayOrder: 0,
+  },
+  // Maple Ridge
+  {
+    areaSlug: 'maple-ridge',
+    questionEn: 'What types of homes do you renovate in Maple Ridge?',
+    questionZh: '你们在枫树岭装修什么类型的房屋？',
+    answerEn: 'We renovate single-family homes, townhouses, and acreage properties in Maple Ridge. Common projects include kitchen upgrades, basement suites, and whole-house renovations in the older Haney and Hammond neighbourhoods.',
+    answerZh: '我们在枫树岭装修独立屋、联排别墅和大面积地产。常见项目包括厨房升级、地下室套房，以及Haney和Hammond老社区的全屋装修。',
+    displayOrder: 0,
+  },
+  // White Rock
+  {
+    areaSlug: 'white-rock',
+    questionEn: 'Do you handle renovations near the White Rock waterfront?',
+    questionZh: '你们处理白石镇海滨附近的装修吗？',
+    answerEn: 'Yes, we work on waterfront and hillside properties in White Rock. These homes often require moisture-resistant materials and careful structural work due to the coastal environment and sloped lots.',
+    answerZh: '是的，我们为白石镇的海滨和山坡房产提供装修服务。由于沿海环境和倾斜地块，这些房屋通常需要防潮材料和仔细的结构施工。',
+    displayOrder: 0,
+  },
+  // Port Coquitlam
+  {
+    areaSlug: 'port-coquitlam',
+    questionEn: 'Do you handle permits with the City of Port Coquitlam?',
+    questionZh: '你们处理高贵林港市的许可证吗？',
+    answerEn: 'Yes, we manage the full permit process with the City of Port Coquitlam, including building permit applications, inspections, and ensuring work meets Port Coquitlam\'s municipal building codes.',
+    answerZh: '是的，我们管理高贵林港市完整的许可证流程，包括建筑许可申请、检查，并确保工程符合高贵林港市的市政建筑规范。',
+    displayOrder: 0,
+  },
 ];
 
 // ---------------------------------------------------------------------------

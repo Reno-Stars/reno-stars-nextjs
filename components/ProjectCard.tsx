@@ -42,7 +42,7 @@ export default function ProjectCard({
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <figcaption className="sr-only">{project.title}</figcaption>
-        {project.badge && (
+        {project.badge && project.badge !== project.title && (
           <span
             className="absolute top-3 left-3 px-2 py-1 rounded-md text-xs font-semibold text-white"
             style={{ backgroundColor: GOLD }}

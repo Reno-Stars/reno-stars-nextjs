@@ -816,12 +816,14 @@ function AreaDetailCard({
         <div className={`${!hasMultipleImages && cardImages.length === 1 ? 'lg:col-span-3' : ''} p-6 lg:p-8 flex flex-col`}>
           <div className="flex items-start justify-between mb-4">
             <div>
-              <span
-                className="inline-block px-3 py-1 rounded-full text-xs font-medium mb-2"
-                style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-              >
-                {project.category}
-              </span>
+              {project.category && project.category !== project.title && (
+                <span
+                  className="inline-block px-3 py-1 rounded-full text-xs font-medium mb-2"
+                  style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                >
+                  {project.category}
+                </span>
+              )}
               <h3 className="text-xl font-bold" style={{ color: TEXT }}>
                 {project.title}
               </h3>

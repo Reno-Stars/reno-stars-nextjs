@@ -91,11 +91,12 @@ export default async function Page({ params }: PageProps) {
     { name: localizedService.title, url: `/${locale}/services/${serviceSlug}/` },
   ];
 
-  // Build FAQs for this service type
+  // Build FAQs for this service type (general page defaults to Vancouver)
+  const faqParams = { area: locale === 'zh' ? '温哥华' : 'Vancouver' };
   const faqs = [
-    { question: faqT(`${serviceSlug}.q1`), answer: faqT(`${serviceSlug}.a1`) },
-    { question: faqT(`${serviceSlug}.q2`), answer: faqT(`${serviceSlug}.a2`) },
-    { question: faqT(`${serviceSlug}.q3`), answer: faqT(`${serviceSlug}.a3`) },
+    { question: faqT(`${serviceSlug}.q1`, faqParams), answer: faqT(`${serviceSlug}.a1`, faqParams) },
+    { question: faqT(`${serviceSlug}.q2`, faqParams), answer: faqT(`${serviceSlug}.a2`, faqParams) },
+    { question: faqT(`${serviceSlug}.q3`, faqParams), answer: faqT(`${serviceSlug}.a3`, faqParams) },
   ];
 
   return (

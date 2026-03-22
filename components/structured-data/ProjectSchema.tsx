@@ -12,6 +12,9 @@ interface ProjectSchemaProps {
   url: string;
   googleRating?: number;
   googleReviewCount?: number;
+  duration?: string;
+  budgetRange?: string;
+  spaceType?: string;
 }
 
 export default function ProjectSchema({
@@ -25,6 +28,9 @@ export default function ProjectSchema({
   url,
   googleRating,
   googleReviewCount,
+  duration,
+  budgetRange,
+  spaceType,
 }: ProjectSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const allImages = [image, ...images].filter(Boolean);
@@ -73,7 +79,26 @@ export default function ProjectSchema({
       ...(allImages.length > 0 && {
         image: allImages[0],
       }),
+      ...(budgetRange && {
+        offers: {
+          '@type': 'Offer',
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'CAD',
+            name: budgetRange,
+          },
+        },
+      }),
     },
+    ...(duration && {
+      timeRequired: duration,
+    }),
+    ...(spaceType && {
+      about: {
+        '@type': 'Thing',
+        name: spaceType,
+      },
+    }),
   };
 
   return (

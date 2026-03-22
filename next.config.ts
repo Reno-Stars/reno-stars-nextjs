@@ -39,6 +39,7 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
+    unoptimized: true, // NOTE: Bypasses Vercel image optimization (402 quota exceeded). Images served directly from R2.
     dangerouslyAllowLocalIP: allowLocalIP,
     remotePatterns: [
       {
