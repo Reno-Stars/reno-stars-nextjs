@@ -637,7 +637,7 @@ export async function optimizeProjectDescription(
     userMessage += `\n\nAVAILABLE_SERVICE_TYPES: [${availableServiceTypes.join(', ')}]`;
   }
   if (availableScopes && availableScopes.length > 0) {
-    const scopeList = availableScopes.map((s) => s.en).join(', ');
+    const scopeList = availableScopes.map((s) => `${s.en} (${s.zh})`).join(', ');
     userMessage += `\n\nAVAILABLE_SCOPES: [${scopeList}]`;
   }
 
