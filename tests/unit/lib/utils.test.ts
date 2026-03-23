@@ -40,7 +40,7 @@ describe('Environment Utilities', () => {
 
     it('should return fallback when env is not set', () => {
       delete process.env.NEXT_PUBLIC_BASE_URL;
-      expect(getBaseUrl()).toBe('https://reno-stars.com');
+      expect(getBaseUrl()).toBe('https://www.reno-stars.com');
     });
   });
 });
