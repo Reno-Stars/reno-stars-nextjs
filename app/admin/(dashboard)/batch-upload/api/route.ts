@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/admin/auth';
-import { getS3Client } from '@/lib/admin/s3';
 import { db } from '@/lib/db';
 import { batchUploadJobs } from '@/lib/db/schema';
 import { MAX_ZIP_SIZE } from '@/lib/batch/types';
 
-export const maxDuration = 60;
+export const maxDuration = 15;
 
 export async function POST(request: NextRequest) {
   const isAuth = await validateSession();
@@ -15,11 +14,12 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { fileName, fileSize, generateBlog, mode } = body as {
+    const { fileName, fileSize, generateBlog, mode, totalImages } = body as {
       fileName: unknown;
       fileSize: unknown;
       generateBlog: unknown;
       mode: unknown;
+      totalImages: unknown;
     };
 
     if (typeof fileName !== 'string' || !fileName || typeof fileSize !== 'number' || fileSize === 0) {
@@ -40,26 +40,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check S3 before creating a DB row to avoid orphans
-    const client = getS3Client();
-    if (!client) {
-      return NextResponse.json(
-        { error: 'S3 storage is not configured.' },
-        { status: 500 }
-      );
-    }
-
-    // Create job row
+    // Create job row (client-orchestrated: no S3 check needed)
     const [job] = await db
       .insert(batchUploadJobs)
       .values({
         fileName,
         fileSizeBytes: fileSize,
+        totalImages: typeof totalImages === 'number' ? totalImages : 0,
         options: {
           generateBlog: !!generateBlog,
           mode: mode === 'standalone' ? 'standalone' : 'sites',
         },
         status: 'pending',
+        startedAt: new Date(),
       })
       .returning({ id: batchUploadJobs.id });
 

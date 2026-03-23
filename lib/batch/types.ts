@@ -1,13 +1,11 @@
 // Re-export schema types used by batch processing
-export type { BatchJobStatus, BatchJobOptions } from '@/lib/db/schema';
+export type { BatchJobStatus } from '@/lib/db/schema';
 
 /** Maximum ZIP file size (1 GB). Shared between client validation and server. */
 export const MAX_ZIP_SIZE = 1024 * 1024 * 1024;
 
-/** S3 key for a batch job's temp ZIP file. */
-export function batchZipKey(jobId: string): string {
-  return `temp/batch/${jobId}.zip`;
-}
+/** Max images per presign batch request. Shared between client and server. */
+export const PRESIGN_BATCH_SIZE = 20;
 
 /** Upload mode: sites (whole house) or standalone (individual projects) */
 export type BatchUploadMode = 'sites' | 'standalone';
@@ -98,4 +96,63 @@ export interface ParsedStandaloneStructure {
   totalImages: number;
   /** Filenames of unsupported image formats (HEIC, TIFF, etc.) that were skipped */
   skippedFiles: string[];
+}
+
+// ============================================================================
+// CLIENT-SIDE MANIFEST TYPES (used by client-orchestrated batch upload)
+// ============================================================================
+
+/** A single image in the client manifest (JSON-serializable, no binary data) */
+export interface ClientImage {
+  /** Relative path within the ZIP */
+  path: string;
+  /** MIME type inferred from extension */
+  mimeType: string;
+  /** File size in bytes */
+  size: number;
+  /** Pre-generated S3 key for upload */
+  s3Key: string;
+  /** Public URL after successful upload (set by client) */
+  uploadedUrl?: string;
+}
+
+/** A paired set of before/after client images */
+export interface ClientImagePair {
+  index: number;
+  before: ClientImage | null;
+  after: ClientImage | null;
+}
+
+/** A project in the client manifest */
+export interface ClientProject {
+  folderName: string;
+  serviceType: string | null;
+  heroImage: ClientImage | null;
+  imagePairs: ClientImagePair[];
+  notes: string | null;
+  productsText: string | null;
+  /** Product images keyed by 1-based index (serialized as entries) */
+  productImageEntries: [number, ClientImage][];
+}
+
+/** A site in the client manifest */
+export interface ClientSite {
+  folderName: string;
+  heroImage: ClientImage | null;
+  imagePairs: ClientImagePair[];
+  projects: ClientProject[];
+  notes: string | null;
+  productsText: string | null;
+  productImageEntries: [number, ClientImage][];
+}
+
+/** The complete client manifest returned by extractZipInBrowser() */
+export interface ClientManifest {
+  mode: BatchUploadMode;
+  sites: ClientSite[];
+  projects: ClientProject[];
+  totalImages: number;
+  skippedFiles: string[];
+  /** All images that need uploading (flat list for batched presigning) */
+  allImages: ClientImage[];
 }

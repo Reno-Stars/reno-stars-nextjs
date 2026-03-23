@@ -84,9 +84,10 @@ lib/
     blog-generator.ts     # AI blog generation from project/site data (GPT-4o)
     social-post-generator.ts # AI social post generation for 3 platforms (GPT-4o)
   batch/                  # Batch upload processing
-    types.ts              # ZIP parsing types (ParsedSite, ParsedProject, etc.)
-    zip-parser.ts         # Async ZIP extraction + folder structure parsing
-    batch-processor.ts    # Main pipeline: extract → upload → AI metadata → save → blog
+    types.ts              # ZIP parsing types + client manifest types + shared constants
+    zip-parser.ts         # Async ZIP extraction + folder structure parsing (browser-compatible, fflate)
+    client-zip-extractor.ts  # Client-side ZIP extraction — returns ClientManifest + imageDataMap
+    batch-processor.ts    # Server helpers: AI metadata, fallback data, DB save, slug management
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   analytics.ts            # GA4 event tracking (disabled in development)
   email.ts                # Resend email notifications for contact form
@@ -466,55 +467,65 @@ useEffect(() => {
 
 ## Batch Upload
 
-Admin feature for bulk-creating sites, projects, image pairs, and blog posts from a ZIP file of renovation images. Supports two modes: **Sites** (whole-house with site containers) and **Standalone** (individual projects under the standalone site container).
+Admin feature for bulk-creating sites, projects, image pairs, and blog posts from a ZIP file of renovation images. Supports two modes: **Sites** (whole-house with site containers) and **Standalone** (individual projects under the standalone site container). Uses a **client-orchestrated** architecture where the browser handles ZIP extraction and image uploads, calling small server endpoints for AI/DB/blog work. No single server call exceeds ~15s, avoiding Vercel timeout issues.
 
 ### Architecture
 
 ```
-BatchUploadClient (React)  ──POST──►  api/route.ts (create job row)
-        │                                      │
-        │                               Returns { jobId }
-        │
-        ├──POST──►  api/[jobId]/upload/route.ts  (init S3 multipart upload)
-        │           Returns { uploadId }
-        │
-        ├──PUT ×N──►  api/[jobId]/upload/?uploadId=...&partNumber=N&contentLength=SIZE
-        │           Returns { presignedUrl } (no chunk data in request)
-        │    └──PUT ×N──►  S3 presigned URL (client uploads 10 MB chunk directly)
-        │           Per-chunk retry (3 attempts, 1s/2s backoff)
-        │
-        ├──PATCH──►  api/[jobId]/upload/  (complete multipart upload)
-        │           Body: { uploadId, totalParts }
-        │           Server retrieves ETags via ListPartsCommand
-        │           Aborts multipart upload on failure
-        │
-        ├──POST──►  api/[jobId]/process/route.ts
-        │           Uses after() to run processBatchUpload() beyond response
-        │
-        └──GET (poll 2s)──►  api/[jobId]/route.ts (returns job status)
+BatchUploadClient (React)
+  │
+  │  1. Extract ZIP in browser (fflate)
+  │     extractZipInBrowser() → ClientManifest + imageDataMap
+  │
+  ├──POST──►  api/route.ts (create job row, returns { jobId })
+  │
+  │  2. Upload images to S3 (batches of PRESIGN_BATCH_SIZE=20)
+  ├──POST──►  api/[jobId]/presign-batch/ (get presigned URLs)
+  │    └──PUT ×N──►  S3 presigned URLs (browser uploads directly)
+  │           Per-image retry (3 attempts, 1s/2s/3s backoff)
+  │
+  │  3. Generate AI metadata (per entity, sequential)
+  ├──POST──►  api/[jobId]/generate-metadata/ (returns SiteDescription | ProjectDescription)
+  │
+  │  4. Save to DB (per site or batches of SAVE_BATCH_SIZE=5 projects)
+  ├──POST──►  api/[jobId]/save-site/ (site + child projects)
+  │   or
+  ├──POST──►  api/[jobId]/save-standalone-projects/ (up to 20 projects)
+  │
+  │  5. Generate blog posts (optional, per entity)
+  ├──POST──►  api/[jobId]/generate-blog/
+  │
+  ├──PATCH──►  api/[jobId]/ (progress updates for polling compatibility)
+  └──GET──►  api/[jobId]/ (job status for external polling)
 ```
 
-ZIP upload uses **S3 multipart upload with presigned URLs**. The API route generates presigned URLs for each 10 MB chunk and the client uploads directly to S3, bypassing Vercel's 4.5 MB serverless body size limit. On completion, the server retrieves ETags via `ListPartsCommand` (browsers can't read ETag from cross-origin S3 responses due to CORS restrictions). Shared `batchZipKey()` helper (`lib/batch/types.ts`) generates the S3 key for temp ZIP files.
+### Client-Side Extraction (`lib/batch/client-zip-extractor.ts`)
 
-### Processing Pipeline (`lib/batch/batch-processor.ts`)
+Runs in the browser. Takes a `File`, calls `parseZip()` or `parseZipStandalone()` from `zip-parser.ts` (browser-compatible, uses `fflate`). Returns:
+- `ClientManifest` — JSON-serializable structure with pre-generated S3 keys (timestamp + random + counter)
+- `imageDataMap` — `Map<string, Uint8Array>` for upload, cleared after upload phase completes
 
-Branches early based on `options.mode` to avoid dual-nullable patterns:
+### Pipeline Phases (`BatchUploadClient.tsx`)
 
-**Sites mode** (default):
-1. **Extract** — Downloads ZIP from S3 temp, parses via `parseZip()` (async `fflate`)
-2. **Upload** — Uploads all images to S3 in parallel batches of 15 (`UPLOAD_BATCH_SIZE`), per-site slug prefixes. Uses shared `collectProjectImages()` helper
-3. **Generate** — AI metadata in parallel batches of 10 (`AI_METADATA_BATCH_SIZE`): `optimizeSiteDescription()` + `optimizeProjectDescription()` per entity. Site image pair alt text uses contextual titles (e.g., "Kitchen Renovation - Before 1")
-4. **Save** — Inserts sites (including AI-detected `spaceTypeEn`/`spaceTypeZh` via `SPACE_TYPE_TO_ZH`), site image pairs (`site_image_pairs`), projects, project image pairs (`project_image_pairs`), and external products (with matched product images) into DB with deduplicated slugs. Uses shared `insertExternalProducts()` helper for both site-level and project-level products. Orphaned sites (0 successful projects AND 0 successful site image pairs) are cleaned up. `cleanupOrphanedSite()` checks both child projects and `site_image_pairs` before deleting
-5. **Blog** (optional) — Calls `generateBlogFromSite()` for each created site via shared `generateBlogsForEntities()` helper
+`handleSubmit` orchestrates calls to extracted phase functions sharing state via `PipelineCtx` interface:
 
-**Standalone mode**:
-1. **Extract** — Downloads ZIP, parses via `parseZipStandalone()` (flattens subfolders into top-level projects)
-2. **Upload** — Same image upload pipeline with per-project slug prefixes
-3. **Generate** — `optimizeProjectDescription()` per project in parallel batches of 10. For single-project ZIPs, the ZIP filename (e.g., "2828-van") is passed as a `Reference/PO number` hint to the AI prompt
-4. **Save** — Finds or creates the standalone site container via `ensureStandaloneSite()`, queries `max(display_order_in_site)`, and inserts projects with sequential display order. Uses shared `saveProject()` function. Single-project ZIP base name also used as fallback PO number
-5. **Blog** (optional) — Calls `generateBlogFromProject()` for each created project
+- `uploadImages(ctx, imageDataMap)` — Presign + upload in batches of 20. Tracks only successful uploads for progress accuracy. Uses `new Uint8Array(data)` for Blob creation (TS 5.7 compatibility)
+- `generateMetadata(ctx, zipBaseName)` — Sequential AI calls per entity. Returns `Map<string, metadata>` keyed by `site:name` or `project:site/name`
+- `saveEntities(ctx, metadataResults, zipBaseName)` — DB save per site (sites mode) or in batches of 5 (standalone mode). Uses `isSaveError()` type guard for runtime validation of server error responses
+- `generateBlogs(ctx)` — Optional blog generation per created entity
 
-Shared helpers: `collectProjectImages()`, `collectAfterImageUrls()`, `generateBlogsForEntities()`, `finalizeJob()`, `cleanupTempZip()`, `pushSkippedFilesWarning()`, `ensureActionSuffix()`. AI extracts all metadata fields including service type, PO number, budget, duration from freeform notes (no hard regex extraction). AI-detected service type overrides folder-name heuristic (`detectServiceType()`) when available. Standalone mode prompt omits folder-detected service type when notes exist to avoid biasing the AI. Fallback metadata uses `ensureActionSuffix()` to guarantee labels include action words (Renovation/装修) and `buildFallbackSeo()` for consistent SEO fields.
+Guarded setters (`guardedSetPercent`, `guardedSetLabel`) prevent React state updates after unmount. Fire-and-forget `patchJob()` updates server for polling compatibility.
+
+### Server Helpers (`lib/batch/batch-processor.ts`)
+
+Exports used by the new API routes:
+- `generateSiteMetadata()`, `generateProjectMetadata()` — AI metadata with fallback on failure
+- `fallbackSiteData()`, `fallbackProjectData()` — Deterministic fallback when AI fails. Uses `ensureActionSuffix()` for action words (Renovation/装修) and `buildFallbackSeo()` for consistent SEO fields
+- `saveProjectFromUrls()` — Save project from pre-uploaded URLs (batched image pair inserts, external products via `parseProductsFile()`, service scopes)
+- `getExistingSlugs()`, `cleanupOrphanedSite()` — Slug dedup and orphan cleanup
+- `updateJob()` — Job status persistence
+
+AI extracts all metadata fields including service type, PO number, budget, duration from freeform notes (no hard regex extraction). AI-detected service type overrides folder-name heuristic when available. Standalone mode prompt omits folder-detected service type when notes exist to avoid biasing the AI.
 
 ### ZIP Structure Detection (`lib/batch/zip-parser.ts`)
 
@@ -539,11 +550,17 @@ Image naming conventions:
 
 ### Job Status Tracking
 
-Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors) and `BatchJobOptions` (generateBlog, mode). Client polls every 2 seconds via GET endpoint. Terminal states: `completed`, `failed`, `partial`. GET endpoint includes stale job detection: `STALE_PROCESSING_MS` (2 minutes) marks stuck processing jobs as `partial` (if any creations exist) or `failed`; `STALE_PENDING_MS` (30 minutes) catches abandoned pending jobs. Stale jobs receive `__TIMEOUT_*__` error markers that the client resolves into bilingual display text via `resolveErrorLabel()` helper (maps `__TIMEOUT_PARTIAL__`, `__TIMEOUT_FAILED__`, `__TIMEOUT_STEP__:{status}` to translation keys).
+Uses `batch_upload_jobs` table with jsonb columns for arrays (site/project/blog IDs, errors). In the client-orchestrated flow, progress is driven by the client via `PATCH` requests. Terminal states: `completed`, `failed`, `partial`. GET endpoint includes stale job detection: `STALE_PROCESSING_MS` (15 minutes) marks stuck processing jobs as `partial` (if any creations exist) or `failed`; `STALE_PENDING_MS` (30 minutes) catches abandoned pending jobs. Stale status is persisted to DB on detection (fire-and-forget) to prevent repeated recomputation. Stale jobs receive `__TIMEOUT_*__` error markers that the client resolves into bilingual display text via `resolveErrorLabel()` helper.
 
 ### Client UI (`BatchUploadClient.tsx`)
 
-Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). ZIP upload uses **S3 multipart upload with presigned URLs** (`api/[jobId]/upload/`): file is split into 10 MB chunks (`CHUNK_SIZE`), for each chunk the client fetches a presigned URL from the API then uploads directly to S3, with per-chunk retry (3 attempts, backoff). Progress bar shows chunks completed / total. Uses `AbortController` for cancellation. Polling starts immediately after job creation (before S3 upload completes) so the UI always transitions to results; on S3 upload failure the client returns to upload phase, but if only the process trigger fails polling continues. Error list uses `resolveErrorLabel()` to map `__TIMEOUT_*__` markers into bilingual display text. Upload phase includes a locale-aware "Download Example ZIP" link (mode-specific: `example-batch-upload-{locale}.zip` or `example-batch-upload-standalone-{locale}.zip`) next to the folder structure help toggle. Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
+Tab bar at top for mode selection (Sites / Standalone Projects), disabled during processing. Three-phase UI: Upload (drag-and-drop zone + options) → Processing (step indicators + progress bar) → Results (summary cards + error list + action buttons). Processing phase shows 5 step indicators (Extracting, Uploading, Generating, Saving, Blog) with per-step progress percentage. Uses `AbortController` for cancellation with guarded state setters for mount safety. Upload phase includes an accessible drop zone (`role="button"`, `tabIndex`, `onKeyDown`), locale-aware "Download Example ZIP" link, and collapsible help section (`aria-expanded`/`aria-controls`). Help section content (folder structure, notes.txt example, products.txt example) adapts to selected mode, fully bilingual via admin translation keys. Results phase conditionally shows Sites summary card (sites mode only) and mode-appropriate review links.
+
+### Shared Constants (`lib/batch/types.ts`)
+
+- `MAX_ZIP_SIZE = 1 GB` — Client-side file size validation
+- `PRESIGN_BATCH_SIZE = 20` — Max images per presign request (shared between client and server)
+- Client manifest types: `ClientImage`, `ClientImagePair`, `ClientProject`, `ClientSite`, `ClientManifest`
 
 ## Media Upload (Images & Video)
 
