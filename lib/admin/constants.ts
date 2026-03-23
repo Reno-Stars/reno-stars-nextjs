@@ -46,3 +46,8 @@ export const ALL_SCOPES: { en: string; zh: string }[] = (() => {
 export const SCOPE_EN_TO_ZH: ReadonlyMap<string, string> = new Map(
   ALL_SCOPES.map((s) => [s.en, s.zh])
 );
+
+/** ZH→EN reverse lookup for all scopes (handles AI returning Chinese names). */
+export const SCOPE_ZH_TO_EN: ReadonlyMap<string, string> = new Map(
+  ALL_SCOPES.map((s) => [s.zh, s.en])
+);
