@@ -11,11 +11,10 @@ interface GlossaryTerm {
 
 const GLOSSARY: Record<string, GlossaryTerm[]> = {
   locations: [
-    { en: 'Delta', zh: '三角洲' },
+    { en: "Delta", zh: "三角洲" },
+    { en: "Coquitlam", zh: "高贵林" },
   ],
-  'cabinet-styles': [
-    { en: 'white shaker', zh: '白色shaker style柜子' },
-  ],
+  "cabinet-styles": [{ en: "white shaker", zh: "白色shaker style柜子" }],
 };
 
 /**
@@ -38,7 +37,7 @@ function buildGlossaryPrompt(): string {
 
   return `
 TRANSLATION GLOSSARY — When you encounter these terms, use the exact Chinese translations below:
-${lines.join('\n')}`;
+${lines.join("\n")}`;
 }
 
 const glossaryPromptCache = buildGlossaryPrompt();
