@@ -551,9 +551,9 @@ export default function ProjectForm({
               </div>
             ))}
             {scopes.length > COLLAPSE_THRESHOLD && (
-              <button type="button" onClick={() => setShowAllScopes((prev) => !prev)} style={{ color: NAVY, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.25rem 0', marginBottom: '0.25rem' }}>
+              <span role="button" tabIndex={0} onClick={() => setShowAllScopes((prev) => !prev)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowAllScopes((prev) => !prev); } }} style={{ color: NAVY, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600, padding: '0.25rem 0', marginBottom: '0.25rem', display: 'inline-block' }}>
                 {showAllScopes ? t.common.showLess : t.common.showAll.replace('{count}', String(scopes.length))}
-              </button>
+              </span>
             )}
             {editing && (
               <button type="button" onClick={() => setScopes([...scopes, { id: crypto.randomUUID(), en: '', zh: '' }])} style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600 }}>
