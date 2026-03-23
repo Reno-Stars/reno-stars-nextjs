@@ -16,7 +16,7 @@ import {
 } from '@/lib/ai/content-optimizer';
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
-import { SERVICE_SCOPES, ALL_SCOPES, SCOPE_EN_TO_ZH, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
+import { SERVICE_SCOPES, ALL_SCOPES, SCOPE_EN_TO_ZH, SCOPE_ZH_TO_EN, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import type {
   ParsedExternalProduct,
   BatchError,
@@ -381,9 +381,14 @@ export async function saveProjectFromUrls(opts: {
   let scopesToInsert: { en: string; zh: string }[];
   if (aiSelected.length > 0) {
     // Use shared lookup so AI-selected names resolve across all service types
+    // Supports both EN names and ZH names (AI may return either from Chinese notes)
     scopesToInsert = aiSelected
-      .filter((name) => SCOPE_EN_TO_ZH.has(name))
-      .map((name) => ({ en: name, zh: SCOPE_EN_TO_ZH.get(name)! }));
+      .map((name) => {
+        if (SCOPE_EN_TO_ZH.has(name)) return { en: name, zh: SCOPE_EN_TO_ZH.get(name)! };
+        if (SCOPE_ZH_TO_EN.has(name)) { const en = SCOPE_ZH_TO_EN.get(name)!; return { en, zh: SCOPE_EN_TO_ZH.get(en)! }; }
+        return null;
+      })
+      .filter((s): s is { en: string; zh: string } => s !== null);
     // If all AI-selected names were invalid, fall back to all scopes for this type
     if (scopesToInsert.length === 0) scopesToInsert = typeScopes;
   } else {

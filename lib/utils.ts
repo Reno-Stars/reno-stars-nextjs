@@ -330,6 +330,19 @@ export function buildAlternates(path: string, locale: string): {
   };
 }
 
+/**
+ * Builds the URL for a dynamic OG image via the /api/og endpoint.
+ * @param title - Main heading text for the OG image
+ * @param subtitle - Optional secondary text
+ * @returns Absolute URL to the OG image endpoint
+ */
+export function buildOgImageUrl(title: string, subtitle?: string): string {
+  const baseUrl = getBaseUrl();
+  const params = new URLSearchParams({ title });
+  if (subtitle) params.set('subtitle', subtitle);
+  return `${baseUrl}/api/og?${params.toString()}`;
+}
+
 // ============================================================================
 // URL UTILITIES
 // ============================================================================

@@ -54,6 +54,8 @@ export default async function LocaleLayout({
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
         {/* Preload hero image for faster LCP */}
         <link rel="preload" as="image" href={images.hero} fetchPriority="high" />
+        {/* RSS feed discovery */}
+        <link rel="alternate" type="application/rss+xml" title={locale === 'zh' ? 'Reno Stars 博客 RSS' : 'Reno Stars Blog RSS'} href={`/${locale}/feed.xml/`} />
         <GoogleAnalytics />
       </head>
       <body className="antialiased" suppressHydrationWarning>

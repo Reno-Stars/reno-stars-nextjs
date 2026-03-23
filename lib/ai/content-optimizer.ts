@@ -202,7 +202,7 @@ Field guidelines:
 - metaDescription: SEO description under 155 characters, compelling and keyword-rich
 - focusKeyword: Primary keyword/phrase for this project (e.g., "modern kitchen renovation")
 - seoKeywords: 3-5 comma-separated keywords related to the project
-- selectedScopes: Select ALL service scopes that apply to this project from the AVAILABLE_SCOPES list provided in the user message. Return the English name of each selected scope. Only select scopes from the provided list — do NOT invent new ones. Select generously — include every scope that is relevant based on the notes.
+- selectedScopes: Select ALL service scopes that apply to this project from the AVAILABLE_SCOPES list provided in the user message. Return the English name of each selected scope. Only select scopes from the provided list — do NOT invent new ones. Select generously — include every scope that is relevant based on the notes. IMPORTANT: When notes are in Chinese, fuzzy-match Chinese terms against the parenthetical Chinese names in AVAILABLE_SCOPES. For example, if notes say "地板工程", match it to "Flooring (地面工程)" because 地板/地面 both refer to floors. Similarly, "全屋油漆" should match "Painting (油漆)" because 全屋油漆 includes 油漆. Always return the English name, not the Chinese name.
 
 Return ONLY valid JSON, no markdown.
 
@@ -473,29 +473,52 @@ export function validateProjectDescription(
     }
   }
 
-  // 2. Scope enforcement — filter to only valid entries
+  // 2. Scope enforcement — filter to only valid entries (supports ZH→EN auto-translate)
   if (availableScopes && availableScopes.length > 0 && corrected.selectedScopes.length > 0) {
     const validScopeNames = new Set(availableScopes.map((s) => s.en));
+    const zhToEn = new Map(availableScopes.map((s) => [s.zh, s.en]));
     const filtered: string[] = [];
     const removed: string[] = [];
+    const translated: string[] = [];
     for (const scope of corrected.selectedScopes) {
-      (validScopeNames.has(scope) ? filtered : removed).push(scope);
+      if (validScopeNames.has(scope)) {
+        filtered.push(scope);
+      } else if (zhToEn.has(scope)) {
+        const enName = zhToEn.get(scope)!;
+        filtered.push(enName);
+        translated.push(`${scope} → ${enName}`);
+      } else {
+        removed.push(scope);
+      }
     }
 
+    // Deduplicate (AI may return both EN and ZH name for the same scope)
+    const seen = new Set<string>();
+    const deduped = filtered.filter((s) => {
+      if (seen.has(s)) return false;
+      seen.add(s);
+      return true;
+    });
+
+    if (translated.length > 0) {
+      corrections.push(
+        `Auto-translated Chinese scope names: [${translated.join(', ')}]`
+      );
+    }
     if (removed.length > 0) {
       corrections.push(
         `Removed invalid scopes: [${removed.join(', ')}]`
       );
     }
 
-    if (filtered.length === 0) {
+    if (deduped.length === 0) {
       // All AI-selected scopes were invalid — fallback to all scopes for this type
       corrected.selectedScopes = availableScopes.map((s) => s.en);
       corrections.push(
         `All AI scopes were invalid — falling back to all ${availableScopes.length} available scopes`
       );
     } else {
-      corrected.selectedScopes = filtered;
+      corrected.selectedScopes = deduped;
     }
   }
 
