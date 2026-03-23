@@ -37,17 +37,20 @@ API route validates auth, file metadata. Images: max 50 MB, JPEG/PNG/WebP/SVG/GI
 
 ## Batch Upload
 
-`app/admin/(dashboard)/batch-upload/`: ZIP upload that auto-creates sites, projects, image pairs, external products, and blog posts.
+`app/admin/(dashboard)/batch-upload/`: ZIP upload that auto-creates sites, projects, image pairs, external products, and blog posts. Uses a **client-orchestrated** architecture where the browser handles ZIP extraction and image uploads, calling small server endpoints for AI metadata, DB saves, and blog generation. No single server call exceeds ~15s, avoiding Vercel timeout issues.
 
 **Two modes:**
 - **Sites** (whole-house with site containers)
 - **Standalone** (individual projects under `STANDALONE_SITE_SLUG`)
 
-ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`). The API route generates presigned URLs and the client uploads 10 MB chunks directly to S3, bypassing Vercel's 4.5 MB body size limit. Per-chunk retry (3 attempts). On completion, the server retrieves ETags via `ListPartsCommand` (browsers can't read ETag from cross-origin S3 responses due to CORS). Processing via `after()` from `next/server`. Client polls for status.
+**Client-orchestrated pipeline:**
+1. **Extract** — Browser extracts ZIP via `extractZipInBrowser()` (`client-zip-extractor.ts`), producing a `ClientManifest` + `imageDataMap`
+2. **Upload** — Browser uploads images directly to S3 via presigned URLs (`presign-batch/` endpoint, batches of 20). Per-image retry (3 attempts). S3 keys generated client-side with timestamp + random component
+3. **Generate** — Browser calls `generate-metadata/` per entity for AI metadata (`SiteDescription` or `ProjectDescription`). Failures use fallback metadata
+4. **Save** — Browser calls `save-site/` (sites mode) or `save-standalone-projects/` (standalone mode, batches of 5) to persist to DB
+5. **Blog** (optional) — Browser calls `generate-blog/` per entity
 
-**Sites mode pipeline:** `parseZip()` → upload images (batches of 15) → AI metadata (batches of 10) → save to DB → optional blog generation → cleanup. AI generates `SiteDescription` (with space type) for root folders and `ProjectDescription` (with space type) for sub-folder projects.
-
-**Standalone mode pipeline:** `parseZipStandalone()` → upload → AI metadata → find/create standalone site → save projects → optional blog → cleanup. AI generates `ProjectDescription` (with space type) for each root folder.
+**Pipeline phase decomposition** (`BatchUploadClient.tsx`): `handleSubmit` orchestrates calls to extracted phase functions (`uploadImages()`, `generateMetadata()`, `saveEntities()`, `generateBlogs()`) sharing state via `PipelineCtx` interface. Guarded React state setters prevent updates after unmount. Fire-and-forget `patchJob()` updates server for polling compatibility.
 
 **Folder name handling in AI prompts:** Root-level folder names (e.g., "1171-van") are excluded from AI prompts when `notes.txt` exists, since they are often internal codes. Sub-folder names (e.g., "Kitchen", "Bathroom") are always included as useful context for service type detection. Without notes, the folder name is used as the only context. In standalone mode, the ZIP filename is passed as a `Reference/PO number` hint for single-project ZIPs.
 
@@ -62,7 +65,15 @@ ZIP upload uses S3 multipart upload with presigned URLs (`api/[jobId]/upload/`).
 
 **AI schema resilience:** `ProjectDescriptionSchema` and `SiteDescriptionSchema` use `.default('')` for all non-critical fields (SEO, badge, excerpt, etc.). Core fields (`slug`, `titleEn/Zh`, `descriptionEn/Zh`) remain required. This prevents ZodError when GPT-4o-mini omits optional fields from the JSON response. AI metadata failures are logged via `console.error` in `generateProjectMetadata()` / `generateSiteMetadata()`.
 
-**Stale detection:** `STALE_PROCESSING_MS` (2 min), `STALE_PENDING_MS` (30 min). Timeout errors use `__TIMEOUT_*__` markers resolved client-side.
+**Stale detection:** `STALE_PROCESSING_MS` (15 min), `STALE_PENDING_MS` (30 min). Stale status is persisted to DB on detection. Timeout errors use `__TIMEOUT_*__` markers resolved client-side.
+
+**API endpoints** (`api/[jobId]/`):
+- `presign-batch/` — Batch presigned S3 URLs (up to `PRESIGN_BATCH_SIZE=20`). S3 key validation: character allowlist regex, prefix check, extension check
+- `generate-metadata/` — Per-entity AI metadata. Validates `folderName` type/length
+- `save-site/` — Save site + child projects. Validates project item shapes. Batched image pair inserts
+- `save-standalone-projects/` — Save standalone projects (max 20 items). Uses `ensureStandaloneSite()`
+- `generate-blog/` — Per-entity blog generation
+- `PATCH [jobId]/` — Client-driven progress updates. Validates numeric fields, dates, UUID arrays
 
 ## AI Features
 

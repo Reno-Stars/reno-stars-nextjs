@@ -683,7 +683,6 @@ const zh: AdminMessages = {
     noImages: 'ZIP文件中未找到图片文件。',
     errorZipOnly: '仅接受 .zip 文件。',
     errorTooLarge: '文件过大，最大支持 1 GB。',
-    errorS3NotConfigured: 'S3 存储未配置。',
     errorUploadFailed: '上传失败。',
     downloadExample: '下载示例ZIP',
   },

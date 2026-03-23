@@ -681,7 +681,6 @@ const en = {
     noImages: 'No image files found in the ZIP archive.',
     errorZipOnly: 'Only .zip files are accepted.',
     errorTooLarge: 'File too large. Maximum size is 1 GB.',
-    errorS3NotConfigured: 'S3 storage is not configured.',
     errorUploadFailed: 'Upload failed.',
     downloadExample: 'Download Example ZIP',
   },

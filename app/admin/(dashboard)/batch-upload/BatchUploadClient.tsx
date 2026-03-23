@@ -22,8 +22,10 @@ import {
   neu,
 } from '@/lib/theme';
 import type { BatchJobStatus } from '@/lib/db/schema';
-import { MAX_ZIP_SIZE } from '@/lib/batch/types';
-import type { BatchUploadMode } from '@/lib/batch/types';
+import { MAX_ZIP_SIZE, PRESIGN_BATCH_SIZE } from '@/lib/batch/types';
+import type { BatchUploadMode, ClientManifest, ClientProject } from '@/lib/batch/types';
+import { extractZipInBrowser, type ExtractResult } from '@/lib/batch/client-zip-extractor';
+import type { SaveProjectInput } from '@/lib/batch/batch-processor';
 
 interface JobData {
   id: string;
@@ -42,9 +44,35 @@ interface JobData {
 
 type Phase = 'upload' | 'processing' | 'results';
 
-/** Multipart upload chunk size. S3/R2 minimum is 5 MB for non-final parts. */
-const CHUNK_SIZE = 10 * 1024 * 1024; // 10 MB
-const CHUNK_MAX_RETRIES = 3;
+/** Entity metadata task for AI generation */
+interface MetadataTask {
+  entityType: 'site' | 'project';
+  folderName: string;
+  serviceType?: string | null;
+  notes?: string | null;
+  skipFolderName?: boolean;
+  zipBaseName?: string;
+}
+
+/** MetadataTask with a unique key for result storage */
+interface MetadataTaskKeyed extends MetadataTask {
+  metadataKey: string;
+}
+
+/** Max retries per image upload */
+const UPLOAD_MAX_RETRIES = 3;
+
+/** Max standalone projects saved per request */
+const SAVE_BATCH_SIZE = 5;
+
+/** Type guard for structured errors returned by save endpoints */
+function isSaveError(v: unknown): v is { message: string; severity: 'critical' | 'warning' } {
+  return (
+    typeof v === 'object' && v !== null &&
+    typeof (v as Record<string, unknown>).message === 'string' &&
+    ((v as Record<string, unknown>).severity === 'critical' || (v as Record<string, unknown>).severity === 'warning')
+  );
+}
 
 // ============================================================================
 // STEP PROGRESS
@@ -61,26 +89,6 @@ const STEPS: { key: BatchJobStatus; labelKey: string }[] = [
 function getStepIndex(status: BatchJobStatus): number {
   const idx = STEPS.findIndex((s) => s.key === status);
   return idx === -1 ? 0 : idx;
-}
-
-/** Resolve `__TIMEOUT_*__` markers from the server into bilingual display text. */
-function resolveErrorLabel(
-  err: string,
-  bt: Record<string, string>
-): string {
-  if (err === '__TIMEOUT_PARTIAL__') return bt.timeoutPartial;
-  if (err === '__TIMEOUT_FAILED__') return bt.timeoutFailed;
-  if (err.startsWith('__TIMEOUT_STEP__:')) {
-    const step = err.split(':')[1];
-    const stepMap: Record<string, string | undefined> = {
-      uploading: bt.timeoutStepUploading,
-      generating: bt.timeoutStepGenerating,
-      saving: bt.timeoutStepSaving,
-      generating_blog: bt.timeoutStepBlogging,
-    };
-    return stepMap[step] ?? '';
-  }
-  return err;
 }
 
 // ============================================================================
@@ -102,6 +110,342 @@ const actionLinkStyle: React.CSSProperties = {
 };
 
 // ============================================================================
+// HELPERS
+// ============================================================================
+
+/** Convert ClientProject to SaveProjectInput (resolve uploaded URLs) */
+function toSaveProjectInput(cp: ClientProject): SaveProjectInput {
+  const productImageUrls: Record<number, string> = {};
+  for (const [idx, img] of cp.productImageEntries) {
+    if (img.uploadedUrl) productImageUrls[idx] = img.uploadedUrl;
+  }
+  return {
+    folderName: cp.folderName,
+    serviceType: cp.serviceType,
+    heroImageUrl: cp.heroImage?.uploadedUrl ?? null,
+    imagePairs: cp.imagePairs.map((p) => ({
+      index: p.index,
+      beforeUrl: p.before?.uploadedUrl ?? null,
+      afterUrl: p.after?.uploadedUrl ?? null,
+    })),
+    notes: cp.notes,
+    productsText: cp.productsText,
+    productImageUrls,
+  };
+}
+
+/** Fire-and-forget job status update to server for polling compatibility */
+async function patchJob(jobId: string, data: Record<string, unknown>) {
+  try {
+    await fetch(`/admin/batch-upload/api/${jobId}/`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch {
+    // Non-critical — progress display is client-driven
+  }
+}
+
+// ============================================================================
+// PIPELINE PHASE FUNCTIONS
+// ============================================================================
+
+/** Shared context passed to each pipeline phase */
+interface PipelineCtx {
+  jobId: string;
+  manifest: ClientManifest;
+  mode: BatchUploadMode;
+  abort: AbortController;
+  addError: (msg: string, critical?: boolean) => void;
+  createdSiteIds: string[];
+  createdProjectIds: string[];
+  createdBlogPostIds: string[];
+  setProgressPercent: (pct: number) => void;
+  setProgressLabel: (label: string) => void;
+  bt: Record<string, string>;
+}
+
+/** Phase 2: Upload images to S3 via presigned URLs */
+async function uploadImages(
+  ctx: PipelineCtx,
+  imageDataMap: Map<string, Uint8Array>,
+) {
+  const { jobId, manifest, abort, addError, setProgressPercent, setProgressLabel, bt } = ctx;
+  const allImages = manifest.allImages;
+  let uploadedCount = 0;
+
+  for (let i = 0; i < allImages.length; i += PRESIGN_BATCH_SIZE) {
+    if (abort.signal.aborted) throw new Error('Aborted');
+
+    const batch = allImages.slice(i, i + PRESIGN_BATCH_SIZE);
+
+    const presignRes = await fetch(`/admin/batch-upload/api/${jobId}/presign-batch/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: batch.map((img) => ({ s3Key: img.s3Key, contentType: img.mimeType })),
+      }),
+      signal: abort.signal,
+    });
+
+    if (!presignRes.ok) {
+      throw new Error('Failed to get presigned URLs');
+    }
+
+    const { results: presignResults } = await presignRes.json() as {
+      results: { s3Key: string; presignedUrl: string; publicUrl: string }[];
+    };
+
+    const uploadPromises = batch.map(async (img, batchIdx) => {
+      const presign = presignResults[batchIdx];
+      const data = imageDataMap.get(img.s3Key);
+      if (!data) {
+        addError(`Missing data for ${img.path}`);
+        return false;
+      }
+
+      for (let attempt = 0; attempt < UPLOAD_MAX_RETRIES; attempt++) {
+        try {
+          const blob = new Blob([new Uint8Array(data)], { type: img.mimeType });
+          const s3Res = await fetch(presign.presignedUrl, {
+            method: 'PUT',
+            body: blob,
+            headers: { 'Content-Type': img.mimeType },
+            signal: abort.signal,
+          });
+          if (!s3Res.ok) throw new Error(`Upload failed (${s3Res.status})`);
+          img.uploadedUrl = presign.publicUrl;
+          return true;
+        } catch (err) {
+          if (abort.signal.aborted) throw err;
+          if (attempt === UPLOAD_MAX_RETRIES - 1) {
+            addError(`Upload failed: ${img.path}`);
+          } else {
+            await new Promise((r) => setTimeout(r, (attempt + 1) * 1000));
+          }
+        }
+      }
+      return false;
+    });
+
+    const results = await Promise.allSettled(uploadPromises);
+    const successCount = results.filter((r) => r.status === 'fulfilled' && r.value === true).length;
+    uploadedCount += successCount;
+
+    setProgressPercent(Math.round((uploadedCount / allImages.length) * 100));
+    setProgressLabel(
+      bt.progressLabel
+        .replace('{processed}', String(uploadedCount))
+        .replace('{total}', String(allImages.length)),
+    );
+    await patchJob(jobId, { processedImages: uploadedCount });
+  }
+
+  imageDataMap.clear();
+}
+
+/** Phase 3: Generate AI metadata for all entities */
+async function generateMetadata(
+  ctx: PipelineCtx,
+  zipBaseName: string,
+): Promise<Map<string, Record<string, unknown>>> {
+  const { jobId, manifest, mode, abort, addError, setProgressPercent } = ctx;
+  const metadataResults = new Map<string, Record<string, unknown>>();
+  const tasks: MetadataTaskKeyed[] = [];
+
+  if (mode === 'sites') {
+    for (const site of manifest.sites) {
+      tasks.push({ entityType: 'site', folderName: site.folderName, notes: site.notes, metadataKey: `site:${site.folderName}` });
+      for (const proj of site.projects) {
+        tasks.push({
+          entityType: 'project', folderName: proj.folderName, serviceType: proj.serviceType,
+          notes: proj.notes, metadataKey: `project:${site.folderName}/${proj.folderName}`,
+        });
+      }
+    }
+  } else {
+    const singleProject = manifest.projects.length === 1;
+    for (const proj of manifest.projects) {
+      tasks.push({
+        entityType: 'project', folderName: proj.folderName, serviceType: proj.serviceType,
+        notes: proj.notes, skipFolderName: true,
+        zipBaseName: singleProject ? zipBaseName : undefined,
+        metadataKey: `project:${proj.folderName}`,
+      });
+    }
+  }
+
+  for (let i = 0; i < tasks.length; i++) {
+    if (abort.signal.aborted) throw new Error('Aborted');
+    const task = tasks[i];
+
+    try {
+      const res = await fetch(`/admin/batch-upload/api/${jobId}/generate-metadata/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          entityType: task.entityType, folderName: task.folderName,
+          serviceType: task.serviceType, notes: task.notes,
+          skipFolderName: task.skipFolderName, zipBaseName: task.zipBaseName,
+        }),
+        signal: abort.signal,
+      });
+
+      if (res.ok) {
+        const { metadata } = await res.json();
+        metadataResults.set(task.metadataKey, metadata);
+      } else {
+        addError(`AI metadata failed for ${task.folderName} (using fallback)`);
+      }
+    } catch (err) {
+      if (abort.signal.aborted) throw err;
+      addError(`AI metadata error for ${task.folderName} (using fallback)`);
+    }
+
+    setProgressPercent(Math.round(((i + 1) / tasks.length) * 100));
+  }
+
+  return metadataResults;
+}
+
+/** Consume save endpoint errors with runtime validation */
+function consumeSaveErrors(result: Record<string, unknown>, addError: (msg: string, critical?: boolean) => void) {
+  if (Array.isArray(result.errors)) {
+    for (const e of result.errors) {
+      if (isSaveError(e)) {
+        addError(e.message, e.severity === 'critical');
+      } else if (typeof e === 'string') {
+        addError(e);
+      }
+    }
+  }
+}
+
+/** Phase 4: Save entities to DB */
+async function saveEntities(
+  ctx: PipelineCtx,
+  metadataResults: Map<string, Record<string, unknown>>,
+  zipBaseName: string,
+) {
+  const { jobId, manifest, mode, abort, addError, createdSiteIds, createdProjectIds, setProgressPercent } = ctx;
+
+  if (mode === 'sites') {
+    for (let sIdx = 0; sIdx < manifest.sites.length; sIdx++) {
+      if (abort.signal.aborted) throw new Error('Aborted');
+      const site = manifest.sites[sIdx];
+
+      const siteProductImageUrls: Record<number, string> = {};
+      for (const [idx, img] of site.productImageEntries) {
+        if (img.uploadedUrl) siteProductImageUrls[idx] = img.uploadedUrl;
+      }
+
+      const saveBody = {
+        site: {
+          folderName: site.folderName,
+          heroImageUrl: site.heroImage?.uploadedUrl ?? null,
+          imagePairs: site.imagePairs.map((p) => ({
+            index: p.index,
+            beforeUrl: p.before?.uploadedUrl ?? null,
+            afterUrl: p.after?.uploadedUrl ?? null,
+          })),
+          productsText: site.productsText,
+          productImageUrls: siteProductImageUrls,
+          aiMetadata: metadataResults.get(`site:${site.folderName}`) ?? null,
+        },
+        projects: site.projects.map((proj) => ({
+          project: toSaveProjectInput(proj),
+          aiMetadata: metadataResults.get(`project:${site.folderName}/${proj.folderName}`) ?? null,
+        })),
+        zipBaseName,
+      };
+
+      try {
+        const res = await fetch(`/admin/batch-upload/api/${jobId}/save-site/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(saveBody),
+          signal: abort.signal,
+        });
+        const result = await res.json();
+        if (result.siteId) createdSiteIds.push(result.siteId);
+        if (result.projectIds) createdProjectIds.push(...result.projectIds);
+        consumeSaveErrors(result, addError);
+      } catch (err) {
+        if (abort.signal.aborted) throw err;
+        addError(`Failed to save site "${site.folderName}"`, true);
+      }
+
+      setProgressPercent(Math.round(((sIdx + 1) / manifest.sites.length) * 100));
+    }
+  } else {
+    for (let i = 0; i < manifest.projects.length; i += SAVE_BATCH_SIZE) {
+      if (abort.signal.aborted) throw new Error('Aborted');
+      const batch = manifest.projects.slice(i, i + SAVE_BATCH_SIZE);
+      const singleProject = manifest.projects.length === 1;
+
+      try {
+        const res = await fetch(`/admin/batch-upload/api/${jobId}/save-standalone-projects/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: batch.map((proj) => ({
+              project: toSaveProjectInput(proj),
+              aiMetadata: metadataResults.get(`project:${proj.folderName}`) ?? null,
+            })),
+            zipBaseName: singleProject ? zipBaseName : undefined,
+          }),
+          signal: abort.signal,
+        });
+        const result = await res.json();
+        if (result.projectIds) createdProjectIds.push(...result.projectIds);
+        consumeSaveErrors(result, addError);
+      } catch (err) {
+        if (abort.signal.aborted) throw err;
+        addError(`Failed to save projects batch starting at ${batch[0].folderName}`, true);
+      }
+
+      setProgressPercent(Math.round(Math.min(i + SAVE_BATCH_SIZE, manifest.projects.length) / manifest.projects.length * 100));
+    }
+  }
+}
+
+/** Phase 5: Generate blog posts (optional) */
+async function generateBlogs(ctx: PipelineCtx) {
+  const { jobId, mode, abort, addError, createdSiteIds, createdProjectIds, createdBlogPostIds, setProgressPercent } = ctx;
+
+  const blogEntities = mode === 'sites'
+    ? createdSiteIds.map((id) => ({ entityType: 'site' as const, entityId: id }))
+    : createdProjectIds.map((id) => ({ entityType: 'project' as const, entityId: id }));
+
+  for (let i = 0; i < blogEntities.length; i++) {
+    if (abort.signal.aborted) throw new Error('Aborted');
+    const entity = blogEntities[i];
+
+    try {
+      const res = await fetch(`/admin/batch-upload/api/${jobId}/generate-blog/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entity),
+        signal: abort.signal,
+      });
+
+      if (res.ok) {
+        const { blogPostId } = await res.json();
+        if (blogPostId) createdBlogPostIds.push(blogPostId);
+      } else {
+        addError(`Blog generation failed for ${entity.entityType} ${entity.entityId}`);
+      }
+    } catch (err) {
+      if (abort.signal.aborted) throw err;
+      addError(`Blog generation error for ${entity.entityType} ${entity.entityId}`);
+    }
+
+    setProgressPercent(Math.round(((i + 1) / blogEntities.length) * 100));
+  }
+}
+
+// ============================================================================
 // COMPONENT
 // ============================================================================
 
@@ -116,58 +460,26 @@ export default function BatchUploadClient() {
   const [file, setFile] = useState<File | null>(null);
   const [generateBlog, setGenerateBlog] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [s3Progress, setS3Progress] = useState(0); // 0–100
   const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<JobData | null>(null);
   const [showErrors, setShowErrors] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
+  // Client-orchestrated progress
+  const [currentStep, setCurrentStep] = useState<BatchJobStatus>('pending');
+  const [progressLabel, setProgressLabel] = useState('');
+  const [progressPercent, setProgressPercent] = useState(0);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const mountedRef = useRef(true);
-  const pollFailCountRef = useRef(0);
 
   useEffect(() => {
     return () => {
       mountedRef.current = false;
-      if (pollRef.current) clearInterval(pollRef.current);
       if (abortRef.current) abortRef.current.abort();
     };
   }, []);
-
-  // ---- Polling ----
-  const MAX_POLL_FAILURES = 10;
-
-  const startPolling = useCallback((jobId: string) => {
-    if (pollRef.current) clearInterval(pollRef.current);
-    pollFailCountRef.current = 0;
-
-    pollRef.current = setInterval(async () => {
-      try {
-        const res = await fetch(`/admin/batch-upload/api/${jobId}/`);
-        if (!res.ok) return;
-        const data: JobData = await res.json();
-        if (!mountedRef.current) return;
-
-        pollFailCountRef.current = 0;
-        setJob(data);
-
-        // Stop polling on terminal states
-        if (['completed', 'failed', 'partial'].includes(data.status)) {
-          if (pollRef.current) clearInterval(pollRef.current);
-          pollRef.current = null;
-          setPhase('results');
-        }
-      } catch {
-        pollFailCountRef.current++;
-        if (pollFailCountRef.current >= MAX_POLL_FAILURES) {
-          if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
-          if (mountedRef.current) setError(bt.errorUploadFailed);
-        }
-      }
-    }, 2000);
-  }, [bt]);
 
   // ---- File handling ----
   const handleFile = useCallback((f: File) => {
@@ -194,173 +506,175 @@ export default function BatchUploadClient() {
     [handleFile]
   );
 
-  // ---- Upload & Process ----
+  // ---- Client-orchestrated pipeline ----
   const handleSubmit = useCallback(async () => {
     if (!file) return;
     setUploading(true);
     setError(null);
+    setCurrentStep('extracting');
+    setProgressLabel('');
+    setProgressPercent(0);
 
-    let s3UploadOk = false;
+    const abort = new AbortController();
+    abortRef.current = abort;
+
+    const collectedErrors: string[] = [];
+    let criticalErrorCount = 0;
+    const createdSiteIds: string[] = [];
+    const createdProjectIds: string[] = [];
+    const createdBlogPostIds: string[] = [];
+    let jobId = '';
+
+    function addError(msg: string, critical = false) {
+      collectedErrors.push(msg);
+      if (critical) criticalErrorCount++;
+    }
+
+    // Guarded setters — only update React state if component is still mounted
+    const guardedSetPercent = (pct: number) => { if (mountedRef.current) setProgressPercent(pct); };
+    const guardedSetLabel = (label: string) => { if (mountedRef.current) setProgressLabel(label); };
 
     try {
-      // Step 1: Create job on server
-      const initController = new AbortController();
-      const initTimeout = setTimeout(() => initController.abort(), 30_000);
+      // ---- Phase 1: Extract ZIP in browser ----
+      if (!mountedRef.current) return;
+      setPhase('processing');
+      setCurrentStep('extracting');
+
+      let extractResult: ExtractResult;
+      try {
+        extractResult = await extractZipInBrowser(file, mode);
+      } catch (err) {
+        throw new Error(err instanceof Error ? err.message : 'ZIP extraction failed');
+      }
+
+      const { manifest, imageDataMap } = extractResult;
+
+      if (manifest.totalImages === 0) {
+        throw new Error(bt.noImages);
+      }
+
+      if (manifest.skippedFiles.length > 0) {
+        const MAX_LISTED = 10;
+        const listed = manifest.skippedFiles.slice(0, MAX_LISTED).map((entry) => entry.split('/').pop()).join(', ');
+        const suffix = manifest.skippedFiles.length > MAX_LISTED ? ` and ${manifest.skippedFiles.length - MAX_LISTED} more` : '';
+        addError(`${manifest.skippedFiles.length} unsupported image(s) skipped: ${listed}${suffix}`);
+      }
+
+      // ---- Create job on server ----
       const initRes = await fetch('/admin/batch-upload/api/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fileName: file.name,
-          fileSize: file.size,
-          generateBlog,
-          mode,
+          fileName: file.name, fileSize: file.size,
+          generateBlog, mode, totalImages: manifest.totalImages,
         }),
-        signal: initController.signal,
+        signal: abort.signal,
       });
-      clearTimeout(initTimeout);
-
       if (!initRes.ok) {
         const data = await initRes.json();
         throw new Error(data.error || bt.errorUploadFailed);
       }
+      jobId = (await initRes.json()).jobId;
 
-      const initData: Record<string, unknown> = await initRes.json();
-      if (typeof initData.jobId !== 'string') {
-        throw new Error(bt.errorUploadFailed);
-      }
-      const validJobId = initData.jobId;
-
-      // Step 2: Switch to processing phase and start polling early.
-      // Polling picks up server-side status even if subsequent client steps fail.
       if (!mountedRef.current) return;
-      setPhase('processing');
       setJob({
-        id: validJobId,
-        status: 'pending',
-        fileName: file.name,
-        totalImages: 0,
-        processedImages: 0,
-        currentStepLabel: null,
-        createdSiteIds: [],
-        createdProjectIds: [],
-        createdBlogPostIds: [],
-        errors: [],
-        startedAt: null,
-        completedAt: null,
-      });
-      startPolling(validJobId);
-
-      // Step 3: Chunked upload directly to S3 via presigned URLs.
-      // The server generates presigned URLs (tiny requests within Vercel limits),
-      // and the client PUTs chunk data directly to S3, bypassing the 4.5 MB limit.
-      const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
-      setS3Progress(0);
-
-      const abort = new AbortController();
-      abortRef.current = abort;
-
-      // 3a: Init multipart upload
-      const initUploadRes = await fetch(
-        `/admin/batch-upload/api/${validJobId}/upload/`,
-        { method: 'POST', signal: abort.signal }
-      );
-      if (!initUploadRes.ok) {
-        const data = await initUploadRes.json();
-        throw new Error(data.error || bt.errorUploadFailed);
-      }
-      const { uploadId } = (await initUploadRes.json()) as { uploadId: string };
-
-      // 3b: Upload each chunk via presigned URL (direct to S3, bypasses Vercel body limit)
-      for (let i = 0; i < totalChunks; i++) {
-        if (abort.signal.aborted) throw new Error(bt.errorUploadFailed);
-
-        const start = i * CHUNK_SIZE;
-        const end = Math.min(start + CHUNK_SIZE, file.size);
-        const chunk = file.slice(start, end);
-        const chunkSize = end - start;
-        const partNumber = i + 1;
-
-        for (let attempt = 0; attempt < CHUNK_MAX_RETRIES; attempt++) {
-          try {
-            // Step A: Get presigned URL from our API (tiny request, no file data)
-            const presignRes = await fetch(
-              `/admin/batch-upload/api/${validJobId}/upload/?uploadId=${encodeURIComponent(uploadId)}&partNumber=${partNumber}&contentLength=${chunkSize}`,
-              { method: 'PUT', signal: abort.signal }
-            );
-            if (!presignRes.ok) {
-              const data = await presignRes.json();
-              throw new Error(data.error || `Part ${partNumber} presign failed`);
-            }
-            const { presignedUrl } = (await presignRes.json()) as { presignedUrl: string };
-
-            // Step B: PUT chunk directly to S3 via presigned URL
-            const s3Res = await fetch(presignedUrl, {
-              method: 'PUT',
-              body: chunk,
-              signal: abort.signal,
-            });
-            if (!s3Res.ok) {
-              throw new Error(`Part ${partNumber} upload failed (${s3Res.status})`);
-            }
-            break;
-          } catch (err) {
-            if (abort.signal.aborted) throw err;
-            if (attempt === CHUNK_MAX_RETRIES - 1) throw err;
-            // Wait before retry: 1s, 2s
-            await new Promise((r) => setTimeout(r, (attempt + 1) * 1000));
-          }
-        }
-
-        if (mountedRef.current) {
-          setS3Progress(Math.round((partNumber / totalChunks) * 100));
-        }
-      }
-
-      // 3c: Complete multipart upload (server retrieves ETags via ListPartsCommand)
-      const completeRes = await fetch(
-        `/admin/batch-upload/api/${validJobId}/upload/`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ uploadId, totalParts: totalChunks }),
-          signal: abort.signal,
-        }
-      );
-      if (!completeRes.ok) {
-        const data = await completeRes.json();
-        throw new Error(data.error || bt.errorUploadFailed);
-      }
-
-      abortRef.current = null;
-      s3UploadOk = true;
-
-      // Step 4: Trigger processing
-      const processRes = await fetch(`/admin/batch-upload/api/${validJobId}/process/`, {
-        method: 'POST',
+        id: jobId, status: 'extracting', fileName: file.name,
+        totalImages: manifest.totalImages, processedImages: 0,
+        currentStepLabel: null, createdSiteIds: [], createdProjectIds: [],
+        createdBlogPostIds: [], errors: [],
+        startedAt: new Date().toISOString(), completedAt: null,
       });
 
-      if (!processRes.ok) {
-        const data = await processRes.json();
-        throw new Error(data.error || bt.errorUploadFailed);
+      const ctx: PipelineCtx = {
+        jobId, manifest, mode, abort, addError,
+        createdSiteIds, createdProjectIds, createdBlogPostIds,
+        setProgressPercent: guardedSetPercent, setProgressLabel: guardedSetLabel, bt,
+      };
+
+      const zipBaseName = file.name.replace(/\.zip$/i, '');
+
+      // ---- Phase 2: Upload images ----
+      if (!mountedRef.current) return;
+      setCurrentStep('uploading');
+      await patchJob(jobId, { status: 'uploading' });
+      await uploadImages(ctx, imageDataMap);
+
+      // ---- Phase 3: Generate AI metadata ----
+      if (!mountedRef.current) return;
+      setCurrentStep('generating');
+      setProgressPercent(0);
+      setProgressLabel('');
+      await patchJob(jobId, { status: 'generating' });
+      const metadataResults = await generateMetadata(ctx, zipBaseName);
+
+      // ---- Phase 4: Save to DB ----
+      if (!mountedRef.current) return;
+      setCurrentStep('saving');
+      setProgressPercent(0);
+      setProgressLabel('');
+      await patchJob(jobId, { status: 'saving' });
+      await saveEntities(ctx, metadataResults, zipBaseName);
+      await patchJob(jobId, { createdSiteIds, createdProjectIds });
+
+      // ---- Phase 5: Generate blog posts (optional) ----
+      if (generateBlog) {
+        if (!mountedRef.current) return;
+        setCurrentStep('generating_blog');
+        setProgressPercent(0);
+        await patchJob(jobId, { status: 'generating_blog' });
+        await generateBlogs(ctx);
+      }
+
+      // ---- Done ----
+      const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
+      const finalStatus: BatchJobStatus = criticalErrorCount > 0 && hasCreations
+        ? 'partial'
+        : criticalErrorCount > 0 && !hasCreations
+        ? 'failed'
+        : 'completed';
+
+      await patchJob(jobId, {
+        status: finalStatus, completedAt: new Date().toISOString(),
+        createdSiteIds, createdProjectIds, createdBlogPostIds, errors: collectedErrors,
+      });
+
+      if (mountedRef.current) {
+        setJob({
+          id: jobId, status: finalStatus, fileName: file.name,
+          totalImages: manifest.totalImages, processedImages: manifest.totalImages,
+          currentStepLabel: null, createdSiteIds, createdProjectIds,
+          createdBlogPostIds, errors: collectedErrors,
+          startedAt: new Date().toISOString(), completedAt: new Date().toISOString(),
+        });
+        setPhase('results');
       }
     } catch (err) {
       if (!mountedRef.current) return;
       const msg = err instanceof Error ? err.message : bt.errorUploadFailed;
 
-      if (!s3UploadOk) {
-        // S3 upload failed — file is not on the server, processing can't work.
-        // Stop polling and return to upload phase so user can retry.
-        if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
+      if (jobId) {
+        const hasCreations = createdSiteIds.length > 0 || createdProjectIds.length > 0;
+        addError(msg, true);
+        await patchJob(jobId, {
+          status: hasCreations ? 'partial' : 'failed',
+          completedAt: new Date().toISOString(),
+          createdSiteIds, createdProjectIds, createdBlogPostIds, errors: collectedErrors,
+        });
+        setJob((prev) => prev ? {
+          ...prev, status: hasCreations ? 'partial' : 'failed',
+          createdSiteIds, createdProjectIds, createdBlogPostIds,
+          errors: collectedErrors, completedAt: new Date().toISOString(),
+        } : null);
+        setPhase('results');
+      } else {
         setPhase('upload');
-        setJob(null);
+        setError(msg);
       }
-      // If s3UploadOk but process trigger failed, keep polling —
-      // the file is on S3 and stale detection will handle it.
-      setError(msg);
     } finally {
       if (mountedRef.current) setUploading(false);
+      abortRef.current = null;
     }
-  }, [file, generateBlog, mode, startPolling, bt]);
+  }, [file, generateBlog, mode, bt]);
 
   // ---- Reset ----
   const handleReset = useCallback(() => {
@@ -368,10 +682,12 @@ export default function BatchUploadClient() {
     setFile(null);
     setJob(null);
     setError(null);
-    setS3Progress(0);
     setShowErrors(false);
     setGenerateBlog(false);
     setShowHelp(false);
+    setCurrentStep('pending');
+    setProgressLabel('');
+    setProgressPercent(0);
     if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
   }, []);
 
@@ -444,10 +760,13 @@ export default function BatchUploadClient() {
         >
           {/* Drop zone */}
           <div
+            role="button"
+            tabIndex={0}
             onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
             onDragLeave={() => setDragActive(false)}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
             style={{
               border: `2px dashed ${dragActive ? GOLD : TEXT_MUTED}`,
               borderRadius: 8,
@@ -510,6 +829,7 @@ export default function BatchUploadClient() {
               </div>
               <button
                 type="button"
+                aria-label="Remove file"
                 onClick={(e) => { e.stopPropagation(); setFile(null); }}
                 style={{
                   background: 'none',
@@ -561,6 +881,8 @@ export default function BatchUploadClient() {
           >
             <button
               type="button"
+              aria-expanded={showHelp}
+              aria-controls="batch-help-section"
               onClick={() => setShowHelp((prev) => !prev)}
               style={{
                 background: 'none',
@@ -607,6 +929,7 @@ export default function BatchUploadClient() {
 
           {showHelp && (
             <div
+              id="batch-help-section"
               style={{
                 backgroundColor: INFO_BG,
                 borderRadius: 8,
@@ -722,15 +1045,13 @@ Basement/
               if (file && !uploading) e.currentTarget.style.backgroundColor = GOLD;
             }}
           >
-            {uploading
-              ? (s3Progress > 0 ? `${bt.uploading} ${s3Progress}%` : bt.uploading)
-              : bt.uploadButton}
+            {uploading ? bt.uploading : bt.uploadButton}
           </button>
         </div>
       )}
 
       {/* PHASE: PROCESSING */}
-      {phase === 'processing' && job && (
+      {phase === 'processing' && (
         <div
           style={{
             background: SURFACE,
@@ -743,65 +1064,14 @@ Basement/
             {bt.processing}
           </h3>
 
-          {/* S3 upload indicator with progress (shown while job is still pending) */}
-          {uploading && job.status === 'pending' && (
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                <div
-                  className="admin-spin"
-                  style={{
-                    width: 16,
-                    height: 16,
-                    border: `2px solid ${GOLD}`,
-                    borderTopColor: 'transparent',
-                    borderRadius: '50%',
-                    animation: 'admin-spin 0.8s linear infinite',
-                    flexShrink: 0,
-                  }}
-                />
-                <span style={{ color: TEXT, fontWeight: 600, fontSize: '0.875rem' }}>
-                  {bt.uploading}
-                </span>
-                <span style={{ color: TEXT_MUTED, fontSize: '0.8125rem', marginLeft: 'auto' }}>
-                  {s3Progress}%
-                </span>
-              </div>
-              <div style={{ height: 6, backgroundColor: SURFACE_ALT, borderRadius: 3, overflow: 'hidden' }}>
-                <div
-                  style={{
-                    height: '100%',
-                    width: `${s3Progress}%`,
-                    backgroundColor: GOLD,
-                    borderRadius: 3,
-                    transition: 'width 0.3s ease',
-                  }}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Error during upload (non-fatal — polling continues) */}
-          {error && (
-            <div
-              style={{
-                backgroundColor: ERROR_BG,
-                color: ERROR,
-                padding: '0.75rem 1rem',
-                borderRadius: 8,
-                fontSize: '0.8125rem',
-                marginBottom: '1rem',
-              }}
-            >
-              {error}
-            </div>
-          )}
-
           {/* Step indicators */}
           <div style={{ marginBottom: '1.5rem' }}>
             {STEPS.map((step, idx) => {
-              const currentIdx = getStepIndex(job.status);
-              const isActive = idx === currentIdx && !uploading;
+              const currentIdx = getStepIndex(currentStep);
+              const isActive = idx === currentIdx;
               const isDone = idx < currentIdx;
+              // Skip blog step indicator if not generating blog
+              if (step.key === 'generating_blog' && !generateBlog) return null;
               const stepLabel = (bt as Record<string, string>)[step.labelKey] ?? step.key;
 
               return (
@@ -815,7 +1085,6 @@ Basement/
                     opacity: isDone || isActive ? 1 : 0.4,
                   }}
                 >
-                  {/* Status icon */}
                   <div
                     style={{
                       width: 24,
@@ -850,13 +1119,18 @@ Basement/
                   <span style={{ color: isActive ? TEXT : TEXT_MID, fontWeight: isActive ? 600 : 400, fontSize: '0.875rem' }}>
                     {stepLabel}
                   </span>
+                  {isActive && progressPercent > 0 && (
+                    <span style={{ color: TEXT_MUTED, fontSize: '0.8125rem', marginLeft: 'auto' }}>
+                      {progressPercent}%
+                    </span>
+                  )}
                 </div>
               );
             })}
           </div>
 
-          {/* Progress bar (for uploading step) */}
-          {job.status === 'uploading' && job.totalImages > 0 && (
+          {/* Progress bar (shown for active step with progress) */}
+          {progressPercent > 0 && (
             <div style={{ marginBottom: '1rem' }}>
               <div
                 style={{
@@ -869,26 +1143,19 @@ Basement/
                 <div
                   style={{
                     height: '100%',
-                    width: `${Math.round((job.processedImages / job.totalImages) * 100)}%`,
+                    width: `${progressPercent}%`,
                     backgroundColor: GOLD,
                     borderRadius: 4,
                     transition: 'width 0.3s ease',
                   }}
                 />
               </div>
-              <p style={{ color: TEXT_MUTED, fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                {bt.progressLabel
-                  .replace('{processed}', String(job.processedImages))
-                  .replace('{total}', String(job.totalImages))}
-              </p>
+              {progressLabel && (
+                <p style={{ color: TEXT_MUTED, fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                  {progressLabel}
+                </p>
+              )}
             </div>
-          )}
-
-          {/* Current step label */}
-          {job.currentStepLabel && (
-            <p style={{ color: TEXT_MID, fontSize: '0.8125rem', fontStyle: 'italic' }}>
-              {job.currentStepLabel}
-            </p>
           )}
         </div>
       )}
@@ -1046,8 +1313,7 @@ function ErrorWarningSection({
   const toggleColor = isWarning ? GOLD : ERROR;
   const listBg = isWarning ? GOLD_PALE : ERROR_BG;
   const label = isWarning
-    ? bt.warningsCount?.replace('{count}', String(job.errors.length))
-      ?? `${job.errors.length} warning(s)`
+    ? bt.warningsCount.replace('{count}', String(job.errors.length))
     : bt.errorsCount.replace('{count}', String(job.errors.length));
 
   return (
@@ -1084,15 +1350,11 @@ function ErrorWarningSection({
             listStyle: 'disc',
           }}
         >
-          {job.errors.map((err, idx) => {
-            const resolved = resolveErrorLabel(err, bt);
-            if (!resolved) return null;
-            return (
-              <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
-                {resolved}
-              </li>
-            );
-          })}
+          {job.errors.map((err, idx) => (
+            <li key={`${idx}-${err}`} style={{ marginBottom: '0.25rem' }}>
+              {err}
+            </li>
+          ))}
         </ul>
       )}
     </div>
