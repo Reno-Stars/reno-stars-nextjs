@@ -389,6 +389,68 @@ const SLUG_STOP_WORDS = new Set([
 /** Minimum number of significant words shared between slug and title to consider them consistent */
 const MIN_SLUG_TITLE_OVERLAP = 2;
 
+/** Truncate text to maxLen, breaking at the last word/sentence boundary. */
+function truncateAtWord(text: string, maxLen: number): string {
+  if (text.length <= maxLen) return text;
+  const truncated = text.slice(0, maxLen);
+  // Prefer breaking at sentence end (.!?) within the last 40 chars
+  const sentenceEnd = truncated.search(/[.!?。！？][^.!?。！？]*$/);
+  if (sentenceEnd >= maxLen - 40) return truncated.slice(0, sentenceEnd + 1).trim();
+  // Otherwise break at last space
+  const lastSpace = truncated.lastIndexOf(' ');
+  return lastSpace > maxLen * 0.6 ? truncated.slice(0, lastSpace).trim() : truncated.trim();
+}
+
+/**
+ * Fill missing bilingual SEO fields by deriving from title/description.
+ * Mutates the object and returns a list of corrections made.
+ */
+function fillMissingSeoFields(
+  data: {
+    titleEn: string; titleZh: string;
+    descriptionEn: string; descriptionZh: string;
+    metaTitleEn: string; metaTitleZh: string;
+    metaDescriptionEn: string; metaDescriptionZh: string;
+    focusKeywordEn: string; focusKeywordZh: string;
+    seoKeywordsEn: string; seoKeywordsZh: string;
+  },
+): string[] {
+  const fixes: string[] = [];
+  if (!data.metaTitleEn && data.titleEn) {
+    data.metaTitleEn = `${data.titleEn} | Reno Stars`;
+    fixes.push('metaTitleEn was empty → derived from titleEn');
+  }
+  if (!data.metaTitleZh && data.titleZh) {
+    data.metaTitleZh = `${data.titleZh} | Reno Stars`;
+    fixes.push('metaTitleZh was empty → derived from titleZh');
+  }
+  if (!data.metaDescriptionEn && data.descriptionEn) {
+    data.metaDescriptionEn = truncateAtWord(data.descriptionEn, 155);
+    fixes.push('metaDescriptionEn was empty → derived from descriptionEn');
+  }
+  if (!data.metaDescriptionZh && data.descriptionZh) {
+    data.metaDescriptionZh = truncateAtWord(data.descriptionZh, 155);
+    fixes.push('metaDescriptionZh was empty → derived from descriptionZh');
+  }
+  if (!data.focusKeywordEn && data.titleEn) {
+    data.focusKeywordEn = data.titleEn.toLowerCase();
+    fixes.push('focusKeywordEn was empty → derived from titleEn');
+  }
+  if (!data.focusKeywordZh && data.titleZh) {
+    data.focusKeywordZh = data.titleZh;
+    fixes.push('focusKeywordZh was empty → derived from titleZh');
+  }
+  if (!data.seoKeywordsEn && data.focusKeywordEn) {
+    data.seoKeywordsEn = `${data.focusKeywordEn}, renovation`;
+    fixes.push('seoKeywordsEn was empty → derived from focusKeywordEn');
+  }
+  if (!data.seoKeywordsZh && data.focusKeywordZh) {
+    data.seoKeywordsZh = `${data.focusKeywordZh}, 装修`;
+    fixes.push('seoKeywordsZh was empty → derived from focusKeywordZh');
+  }
+  return fixes;
+}
+
 /**
  * Programmatic validation of AI-generated project descriptions.
  * Deterministically fixes invalid scopes, service types, and slug-title divergence.
@@ -453,6 +515,9 @@ export function validateProjectDescription(
     );
     corrected.slug = newSlug;
   }
+
+  // 4. Cross-language SEO fallback — derive missing EN/ZH from title/description
+  corrections.push(...fillMissingSeoFields(corrected));
 
   return { corrected, corrections };
 }
@@ -663,6 +728,10 @@ export async function optimizeSiteDescription(rawNotes: string): Promise<SiteDes
 
   const parsed = parseJsonResponse<unknown>(content);
   const result = SiteDescriptionSchema.parse(parsed);
+
+  // Fill any missing SEO fields
+  fillMissingSeoFields(result);
+
   return result;
 }
 

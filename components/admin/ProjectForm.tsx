@@ -15,7 +15,7 @@ import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
 import SubmitButton from './SubmitButton';
 import { inputStyle, readOnlyStyle } from './shared-styles';
-import { SPACE_TYPES } from '@/lib/admin/constants';
+import { SPACE_TYPES, SCOPE_EN_TO_ZH } from '@/lib/admin/constants';
 import { SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -246,6 +246,13 @@ export default function ProjectForm({
     setSeoKeywordsZh(data.seoKeywordsZh);
     if (data.poNumber) setPoNumber(data.poNumber);
     if (data.serviceType) setSelectedServiceType(data.serviceType);
+    // Apply AI-selected service scopes
+    if (data.selectedScopes && data.selectedScopes.length > 0) {
+      const matched = data.selectedScopes
+        .filter((name) => SCOPE_EN_TO_ZH.has(name))
+        .map((name) => ({ id: crypto.randomUUID(), en: name, zh: SCOPE_EN_TO_ZH.get(name)! }));
+      if (matched.length > 0) setScopes(matched);
+    }
   }, [cities]);
 
   // Convert sites to SearchableSelect options format

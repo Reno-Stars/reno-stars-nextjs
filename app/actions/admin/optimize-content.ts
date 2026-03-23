@@ -13,21 +13,11 @@ import {
   type ProjectDescription,
   type SiteDescription,
 } from '@/lib/ai/content-optimizer';
-import { SERVICE_SCOPES } from '@/lib/admin/constants';
+import { ALL_SCOPES } from '@/lib/admin/constants';
 import { getServiceTypeMap } from '@/lib/db/queries';
 
 const MAX_CONTENT_LENGTH = 100_000;
 const MAX_SHORT_TEXT_LENGTH = 5_000;
-
-/** All unique scopes across all service types (deduplicated by EN name, computed once). */
-const ALL_SCOPES: { en: string; zh: string }[] = (() => {
-  const seen = new Set<string>();
-  return Object.values(SERVICE_SCOPES).flat().filter((s) => {
-    if (seen.has(s.en)) return false;
-    seen.add(s.en);
-    return true;
-  });
-})();
 
 export interface OptimizeResult {
   success: true;

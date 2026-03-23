@@ -361,7 +361,7 @@ A modular EN→ZH glossary injected into all 6 AI prompts to ensure domain-speci
 | `optimizeProjectDescription(rawNotes, scopes?, types?)` | Project description + SEO generation with hybrid validation | `ProjectDescription & { corrections?: string[] }` |
 | `validateProjectDescription(result, scopes?, types?)` | Programmatic fix of invalid scopes, serviceType, slug-title divergence | `{ corrected: ProjectDescription; corrections: string[] }` |
 | `reviewProjectDescription(prompt, output, types?)` | Lightweight AI review for semantic accuracy (non-fatal) | `{ corrections; messages } \| null` |
-| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, spaceTypeEn, SEO fields, locationCity) |
+| `optimizeSiteDescription(rawNotes)` | Site description + SEO generation (includes `fillMissingSeoFields` fallback) | `SiteDescription` (slug, titleEn/Zh, descriptionEn/Zh, badgeEn/Zh, excerptEn/Zh, poNumber, budgetRange, durationEn/Zh, spaceTypeEn, SEO fields, locationCity) |
 | `generateAltText(image)` | Image alt text via vision | `AltTextResult` (altEn, altZh, isFallback?) |
 
 All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for reuse by form components via `Omit<T, 'detectedLanguage'>`.
@@ -374,6 +374,7 @@ All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for re
    - Filters `selectedScopes` to only entries in the provided scope list; falls back to all scopes if every AI selection was invalid
    - Sets `serviceType` to `null` if not in the allowed list
    - Regenerates slug from title if slug and title share fewer than `MIN_SLUG_TITLE_OVERLAP` (2) significant words
+   - Fills missing bilingual SEO fields (`fillMissingSeoFields`): derives metaTitle from title, metaDescription from description (truncated at word boundary via `truncateAtWord`), focusKeyword from title, seoKeywords from focusKeyword
 
 2. **AI review** (`reviewProjectDescription`) — runs after programmatic validation:
    - Cheap second AI call (`gpt-4o-mini`, `temperature: 0.1`, 512 max tokens)
@@ -382,7 +383,7 @@ All return types are Zod-inferred (`z.infer<typeof Schema>`) and exported for re
    - Review corrections are re-validated (serviceType checked against allowed list, slug sanitized, scopes re-filtered)
    - Non-fatal — failures are caught and logged as warnings
 
-Both batch upload and admin form AI generate pass `availableServiceTypes` from the DB (`getServiceTypeMap()`) and all scopes to `optimizeProjectDescription()`. The review prompt's valid service type list is built dynamically via `buildReviewPrompt(availableServiceTypes)`. The batch processor's existing scope filter at save time remains as a redundant safety net.
+Both batch upload and admin form AI generate pass `availableServiceTypes` from the DB (`getServiceTypeMap()`) and all scopes to `optimizeProjectDescription()`. The review prompt's valid service type list is built dynamically via `buildReviewPrompt(availableServiceTypes)`. Batch upload passes type-specific scopes when `serviceType` is known, or `ALL_SCOPES` (deduplicated) when unknown. The save step resolves AI-selected scope names via the shared `SCOPE_EN_TO_ZH` lookup across all service types, falling back to type-specific scopes if all AI names were invalid. `fillMissingSeoFields()` also runs on site descriptions via `optimizeSiteDescription()`.
 
 ### Blog Generation (`lib/ai/blog-generator.ts`)
 
@@ -521,7 +522,7 @@ Guarded setters (`guardedSetPercent`, `guardedSetLabel`) prevent React state upd
 Exports used by the new API routes:
 - `generateSiteMetadata()`, `generateProjectMetadata()` — AI metadata with fallback on failure
 - `fallbackSiteData()`, `fallbackProjectData()` — Deterministic fallback when AI fails. Uses `ensureActionSuffix()` for action words (Renovation/装修) and `buildFallbackSeo()` for consistent SEO fields
-- `saveProjectFromUrls()` — Save project from pre-uploaded URLs (batched image pair inserts, external products via `parseProductsFile()`, service scopes)
+- `saveProjectFromUrls()` — Save project from pre-uploaded URLs (batched image pair inserts, external products via `parseProductsFile()`, service scopes resolved via `SCOPE_EN_TO_ZH` across all types)
 - `getExistingSlugs()`, `cleanupOrphanedSite()` — Slug dedup and orphan cleanup
 - `updateJob()` — Job status persistence
 
