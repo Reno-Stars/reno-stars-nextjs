@@ -81,6 +81,7 @@
     "contact": "联系方式",
     "getInTouch": "联系我们",
     "ourProjects": "我们的工程",
+    "projectsH1": "温哥华装修作品集",
     "whoWeAre": "关于我们",
     "whatWeDo": "服务内容",
     "resources": "相关资源",
@@ -363,7 +364,7 @@
     "serviceLinkText": "了解{service}详情"
   },
   "blog": {
-    "title": "装修博客",
+    "title": "温哥华装修技巧与指南",
     "subtitle": "装修项目的技巧、趋势和见解",
     "readMore": "阅读更多",
     "publishedOn": "发布于",

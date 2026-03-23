@@ -77,6 +77,16 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.next());
   }
 
+  // Redirect double-locale paths: /en/en/..., /zh/en/..., etc.
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length >= 2
+    && locales.includes(segments[0] as Locale)
+    && locales.includes(segments[1] as Locale)) {
+    const corrected = '/' + segments[0] + '/' + segments.slice(2).join('/');
+    const target = new URL(corrected + (pathname.endsWith('/') && !corrected.endsWith('/') ? '/' : ''), request.url);
+    return addSecurityHeaders(NextResponse.redirect(target, 301));
+  }
+
   // All other routes — next-intl locale middleware + security headers
   const response = addSecurityHeaders(intlMiddleware(request));
 

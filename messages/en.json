@@ -81,6 +81,7 @@
     "contact": "Contact",
     "getInTouch": "Get In Touch",
     "ourProjects": "Our Projects",
+    "projectsH1": "Vancouver Renovation Portfolio",
     "whoWeAre": "Who We Are",
     "whatWeDo": "What We Do",
     "resources": "Resources",
@@ -363,7 +364,7 @@
     "serviceLinkText": "All About {service}"
   },
   "blog": {
-    "title": "Renovation Blog",
+    "title": "Vancouver Renovation Tips & Guides",
     "subtitle": "Tips, trends, and insights for your renovation project",
     "readMore": "Read More",
     "publishedOn": "Published on",

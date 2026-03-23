@@ -417,7 +417,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
       <section className="py-10 sm:py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-            {t('section.ourProjects')}
+            {t('section.projectsH1')}
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
             {t('projects.subtitle')}
