@@ -16,7 +16,7 @@ import {
 } from '@/lib/ai/content-optimizer';
 import type { SiteDescription, ProjectDescription } from '@/lib/ai/content-optimizer';
 import { ensureUniqueSlug, formatSlug } from '@/lib/utils';
-import { SERVICE_SCOPES, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
+import { SERVICE_SCOPES, ALL_SCOPES, SCOPE_EN_TO_ZH, SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import type {
   ParsedExternalProduct,
   BatchError,
@@ -85,8 +85,10 @@ export async function generateProjectMetadata(
     const prompt = notes
       ? `Renovation project${folderContext}.${hintsBlock}\nProject details:\n${notes}`
       : `${category ? category.en : 'Renovation'} project${folderContext}.${hintsBlock}${category ? `\nService type: ${category.en}.` : ''}`;
-    // Pass all scopes for the detected service type so AI can select relevant ones
-    const scopes = serviceType ? (SERVICE_SCOPES[serviceType] ?? []) : [];
+    // Pass scopes for the service type, or ALL (deduplicated) scopes if type unknown
+    const scopes = serviceType
+      ? (SERVICE_SCOPES[serviceType] ?? [])
+      : ALL_SCOPES;
     const availableTypes = Object.keys(serviceTypeMap);
     const result = await optimizeProjectDescription(prompt, scopes, availableTypes);
     if (result.corrections && result.corrections.length > 0) {
@@ -373,11 +375,20 @@ export async function saveProjectFromUrls(opts: {
 
   // Insert service scopes
   const resolvedType = serviceType ?? project.serviceType;
-  const allScopes = resolvedType ? (SERVICE_SCOPES[resolvedType] ?? []) : [];
+  const typeScopes = resolvedType ? (SERVICE_SCOPES[resolvedType] ?? []) : [];
   const aiSelected = aiProject?.selectedScopes ?? [];
-  const scopesToInsert = aiSelected.length > 0
-    ? allScopes.filter((s) => aiSelected.includes(s.en))
-    : allScopes;
+
+  let scopesToInsert: { en: string; zh: string }[];
+  if (aiSelected.length > 0) {
+    // Use shared lookup so AI-selected names resolve across all service types
+    scopesToInsert = aiSelected
+      .filter((name) => SCOPE_EN_TO_ZH.has(name))
+      .map((name) => ({ en: name, zh: SCOPE_EN_TO_ZH.get(name)! }));
+    // If all AI-selected names were invalid, fall back to all scopes for this type
+    if (scopesToInsert.length === 0) scopesToInsert = typeScopes;
+  } else {
+    scopesToInsert = typeScopes;
+  }
 
   if (scopesToInsert.length > 0) {
     try {

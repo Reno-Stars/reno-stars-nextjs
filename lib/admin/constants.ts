@@ -31,3 +31,18 @@ export interface AreaOption {
 /** All available service scopes per service type slug, loaded from JSON. */
 export const SERVICE_SCOPES: Record<string, { en: string; zh: string }[]> =
   scopesData as Record<string, { en: string; zh: string }[]>;
+
+/** All unique scopes across all service types (deduplicated by EN name). */
+export const ALL_SCOPES: { en: string; zh: string }[] = (() => {
+  const seen = new Set<string>();
+  return Object.values(SERVICE_SCOPES).flat().filter((s) => {
+    if (seen.has(s.en)) return false;
+    seen.add(s.en);
+    return true;
+  });
+})();
+
+/** EN→ZH lookup for all scopes across all service types. */
+export const SCOPE_EN_TO_ZH: ReadonlyMap<string, string> = new Map(
+  ALL_SCOPES.map((s) => [s.en, s.zh])
+);

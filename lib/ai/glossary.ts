@@ -13,6 +13,7 @@ const GLOSSARY: Record<string, GlossaryTerm[]> = {
   locations: [
     { en: "Delta", zh: "三角洲" },
     { en: "Coquitlam", zh: "高贵林" },
+    { en: "Surrey", zh: "素里" },
   ],
   "cabinet-styles": [{ en: "white shaker", zh: "白色shaker style柜子" }],
 };
