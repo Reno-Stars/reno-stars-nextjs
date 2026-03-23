@@ -23,7 +23,7 @@ import {
 } from '@/lib/theme';
 import type { BatchJobStatus } from '@/lib/db/schema';
 import { MAX_ZIP_SIZE, PRESIGN_BATCH_SIZE } from '@/lib/batch/types';
-import type { BatchUploadMode, ClientManifest, ClientImage, ClientProject, ClientSite } from '@/lib/batch/types';
+import type { BatchUploadMode, ClientManifest, ClientProject } from '@/lib/batch/types';
 import { extractZipInBrowser, type ExtractResult } from '@/lib/batch/client-zip-extractor';
 import type { SaveProjectInput } from '@/lib/batch/batch-processor';
 

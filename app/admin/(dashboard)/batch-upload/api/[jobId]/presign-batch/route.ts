@@ -20,7 +20,7 @@ const ALLOWED_CONTENT_TYPES = new Set([
 const ALLOWED_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif']);
 
 /** Only allow safe characters in S3 keys (alphanumeric, hyphens, dots, slashes) */
-const S3_KEY_PATTERN = /^uploads\/admin\/[a-z0-9._\-\/]+$/i;
+const S3_KEY_PATTERN = /^uploads\/admin\/[a-z0-9._\-/]+$/i;
 
 /** Validate that an S3 key is safe (no path traversal, correct prefix, allowed chars, image extension) */
 function isValidS3Key(key: string): boolean {
