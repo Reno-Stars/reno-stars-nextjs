@@ -51,6 +51,15 @@ openGraph: {
 
 This is set in all 16 `generateMetadata()` functions across all page routes.
 
+## RSS Feed
+
+Bilingual RSS 2.0 feeds generated in `app/[locale]/feed.xml/route.ts`:
+
+- `/en/feed.xml/` — English blog posts
+- `/zh/feed.xml/` — Chinese blog posts
+
+Each feed includes localized titles, descriptions, publication dates, and an Atom self-link. ISR with 1-hour revalidation. RSS discovery `<link>` tag is in `app/[locale]/layout.tsx`.
+
 ## robots.txt
 
 Generated in `app/robots.ts`. Allows all crawlers, references the sitemap. Disallows:
@@ -178,11 +187,31 @@ Next.js `<Image>` component configured for two remote patterns:
 
 ## OpenGraph Images
 
-All pages include `width: 1200`, `height: 630`, and `alt` text on their OpenGraph images. Twitter card images also include `alt` text. Pages use page-specific images where available:
+All pages include `width: 1200`, `height: 630`, and `alt` text on their OpenGraph images. Twitter card images also include `alt` text.
+
+### Dynamic OG Image Generation
+
+Hub pages use a dynamic OG image endpoint at `app/api/og/route.tsx` (edge function) that generates branded 1200×630 images with:
+- Navy (#1B365D) background, gold (#C8922A) accent bar
+- "RENO STARS" brand element, page title, optional subtitle
+- Inter font (bold + regular) from jsDelivr CDN (pinned `@5.1.1`)
+- Graceful fallback if font CDN is unavailable
+
+The `buildOgImageUrl(title, subtitle?)` helper in `lib/utils.ts` constructs the URL with query params.
+
+### OG Image Sources by Page Type
 
 | Page Type | OG Image Source | Alt Text Source |
 |-----------|-----------------|-----------------|
-| Homepage | Hero image | Page title (`metadata.home.title`) |
+| Homepage | Dynamic OG (`/api/og`) | Page title (`metadata.home.title`) |
+| Blog listing | Dynamic OG (`/api/og`) | Page title |
+| Projects listing | Dynamic OG (`/api/og`) | Page title |
+| Services hub | Dynamic OG (`/api/og`) | Page title |
+| Areas hub | Dynamic OG (`/api/og`) | Page title |
+| Benefits | Dynamic OG (`/api/og`) | Page title |
+| Design | Dynamic OG (`/api/og`) | Page title |
+| Process | Dynamic OG (`/api/og`) | Page title |
+| Contact | Dynamic OG (`/api/og`) | Page title |
 | Blog posts | `post.featured_image` (fallback: hero) | Localized post title |
 | Projects | `project.hero_image` | Localized project title |
 | Sites (whole house) | `site.hero_image` (fallback: hero) | Localized site title |
@@ -190,7 +219,6 @@ All pages include `width: 1200`, `height: 630`, and `alt` text on their OpenGrap
 | Service + location | `service.image` (fallback: hero) | Combined service+area title |
 | Project category | Hero image | Localized category name |
 | Area detail | Hero image | Localized area name (custom metaTitle when available) |
-| Hub pages | Hero image | Page title from translations |
 
 ## SEO Metadata from Database
 

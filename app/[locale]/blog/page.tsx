@@ -3,8 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
-import { images as siteImages } from '@/lib/data';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
 interface PageProps {
@@ -26,6 +25,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   const pageParam = currentPage > 1 ? `?page=${currentPage}` : '';
 
   const title = currentPage > 1 ? `${t('title')} - Page ${currentPage}` : t('title');
+  const ogImage = buildOgImageUrl(t('title'));
 
   return {
     title,
@@ -39,13 +39,13 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
       type: 'website',
-      images: [{ url: siteImages.hero, width: 1200, height: 630, alt: title }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: t('description'),
-      images: [{ url: siteImages.hero, alt: title }],
+      images: [{ url: ogImage, alt: title }],
     },
   };
 }

@@ -3,8 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
 import HomePage from "@/components/pages/HomePage";
 import { BreadcrumbSchema, ReviewSchema } from "@/components/structured-data";
-import { getBaseUrl, buildAlternates, SITE_NAME } from "@/lib/utils";
-import { images as siteImages, WORKSAFE_BC_LOGO } from "@/lib/data";
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from "@/lib/utils";
+import { WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
   getCompanyFromDb,
   getServicesFromDb,
@@ -41,6 +41,7 @@ export async function generateMetadata({
   const years = { years: company.yearsExperience };
 
   const baseUrl = getBaseUrl();
+  const ogImage = buildOgImageUrl(t("title"), t("description", years));
 
   return {
     title: t("title"),
@@ -55,14 +56,14 @@ export async function generateMetadata({
       alternateLocale: locale === "en" ? ["zh_CN"] : ["en_US"],
       type: "website",
       images: [
-        { url: siteImages.hero, width: 1200, height: 630, alt: t("title") },
+        { url: ogImage, width: 1200, height: 630, alt: t("title") },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description", years),
-      images: [{ url: siteImages.hero, alt: t("title") }],
+      images: [{ url: ogImage, alt: t("title") }],
     },
   };
 }

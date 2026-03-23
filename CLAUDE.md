@@ -51,6 +51,8 @@ pnpm test:e2e             # Playwright headless
 - **Homepage section order:** Hero → Gallery → Services → Testimonials → Stats → About → Trust Badges → Partners → FAQ → Blog → Showroom CTA → Contact
 - **Heading hierarchy:** H1 (page title) → H2 (sections) → H3 (items). Use `sr-only` H2 where needed.
 - **Performance:** `useMemo`/`useCallback` for derived data. `Promise.all` for parallel queries. `next/dynamic` for below-fold sections. No Suspense on SEO-critical pages.
+- **Dynamic OG images:** `app/api/og/route.tsx` edge function generates branded 1200×630 images. `buildOgImageUrl()` in `lib/utils.ts` constructs the URL.
+- **RSS feed:** `app/[locale]/feed.xml/route.ts` generates bilingual RSS 2.0 feeds with ISR.
 
 ## Environment Variables
 

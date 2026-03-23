@@ -31,6 +31,7 @@ app/                      # Next.js App Router
     benefits/             # Benefits page
     design/               # Design showcase
     process/              # 5-step renovation workflow page
+    feed.xml/             # RSS feed route (bilingual, ISR)
   admin/                  # Admin dashboard (auth-protected)
     (auth)/               # Login page
     (dashboard)/          # CRUD pages (projects, blog, etc.)
@@ -39,6 +40,8 @@ app/                      # Next.js App Router
   not-found.tsx           # Root 404 (fallback, no <html>/<body>)
   sitemap.ts              # Dynamic async sitemap (DB + static data)
   robots.ts               # robots.txt
+  api/
+    og/route.tsx          # Dynamic OG image generation (edge, branded 1200×630)
   actions/                # Server Actions
     contact.ts            # Contact form submission
     admin/                # Admin CRUD actions (projects, blog, etc.)
