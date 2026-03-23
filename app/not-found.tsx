@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { NAVY, GOLD, SURFACE, TEXT_MID } from '@/lib/theme';
+import { SITE_NAME } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: `Page Not Found | ${SITE_NAME}`,
+};
 
 /**
  * Detects the preferred locale from request headers.
