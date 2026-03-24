@@ -295,7 +295,7 @@ describe('Metadata Utilities', () => {
     const originalEnv = process.env.NEXT_PUBLIC_BASE_URL;
 
     beforeEach(() => {
-      process.env.NEXT_PUBLIC_BASE_URL = 'https://reno-stars.com';
+      process.env.NEXT_PUBLIC_BASE_URL = 'https://www.reno-stars.com';
     });
 
     afterEach(() => {
