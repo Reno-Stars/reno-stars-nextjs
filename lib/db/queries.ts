@@ -95,8 +95,8 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
     heroVideoUrl: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : '',
     heroImageUrl: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : '',
     geo: {
-      latitude: row.geoLatitude ? Number(row.geoLatitude) : 0,
-      longitude: row.geoLongitude ? Number(row.geoLongitude) : 0,
+      latitude: parseFloat(row.geoLatitude ?? '') || 0,
+      longitude: parseFloat(row.geoLongitude ?? '') || 0,
     },
   };
 });

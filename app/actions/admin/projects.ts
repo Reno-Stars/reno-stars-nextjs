@@ -14,7 +14,7 @@ import {
   SEO_META_DESCRIPTION_MAX,
   SEO_FOCUS_KEYWORD_MAX,
 } from '@/lib/db/schema';
-import { eq, and, inArray, sql } from 'drizzle-orm';
+import { eq, and, inArray, sql, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -150,11 +150,11 @@ export async function createProject(
     const pairData = parseImagePairs(formData, 'imagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
     }
     const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
     if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
     }
 
     const epData = parseExternalProducts(formData);
@@ -164,7 +164,7 @@ export async function createProject(
     }
     const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
     if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Look up serviceId and derive category from DB (serviceType may be empty)
@@ -199,8 +199,8 @@ export async function createProject(
     // Ensure slug is unique (append -2, -3, etc. if collision)
     // Retry on unique constraint violation (race condition between check and insert)
     const baseSlug = data.slug; // preserve original slug for retries
-    const allSlugs = await db.select({ slug: projects.slug }).from(projects);
-    data.slug = ensureUniqueSlug(baseSlug, allSlugs.map((r: { slug: string }) => r.slug));
+    const conflictingSlugs = await db.select({ slug: projects.slug }).from(projects).where(like(projects.slug, `${baseSlug}%`));
+    data.slug = ensureUniqueSlug(baseSlug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
     // Place new project at the end of the site's project list
     const [maxRow] = await db
@@ -297,11 +297,11 @@ export async function updateProject(
     const pairData = parseImagePairs(formData, 'imagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
     }
     const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
     if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
     }
 
     const epData = parseExternalProducts(formData);
@@ -311,7 +311,7 @@ export async function updateProject(
     }
     const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
     if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Look up serviceId and derive category from DB (serviceType may be empty)
@@ -348,8 +348,8 @@ export async function updateProject(
     const baseSlug = data.slug; // preserve original slug for retries
     const currentProject = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
     const currentSlug = currentProject[0]?.slug;
-    const allSlugs = await db.select({ slug: projects.slug }).from(projects);
-    data.slug = ensureUniqueSlug(baseSlug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    const conflictingSlugs = await db.select({ slug: projects.slug }).from(projects).where(like(projects.slug, `${baseSlug}%`));
+    data.slug = ensureUniqueSlug(baseSlug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
     let renamedSlug = data.slug !== baseSlug ? data.slug : undefined;
 
     const scopeData = parseScopes(formData);

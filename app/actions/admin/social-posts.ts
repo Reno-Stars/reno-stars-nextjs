@@ -56,11 +56,12 @@ function getSocialPostData(formData: FormData) {
     try {
       const parsed = JSON.parse(selectedImagesRaw);
       const validated = selectedImageUrlsSchema.safeParse(parsed);
-      if (validated.success) {
-        selectedImageUrls = validated.data;
+      if (!validated.success) {
+        return { error: 'Invalid image selection. Please re-select images and try again.' };
       }
+      selectedImageUrls = validated.data;
     } catch {
-      // Ignore parse errors — fallback to empty array
+      return { error: 'Invalid image selection. Please re-select images and try again.' };
     }
   }
 
