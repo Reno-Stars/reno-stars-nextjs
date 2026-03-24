@@ -22,7 +22,8 @@
     "closeMenu": "Close menu",
     "switchLanguage": "Switch to Chinese",
     "blogAndNews": "Blog & News",
-    "toggleAreas": "Toggle areas menu"
+    "toggleAreas": "Toggle areas menu",
+    "showroom": "Showroom"
   },
   "cta": {
     "getQuote": "Get Quote",
@@ -520,6 +521,9 @@
       "title": "{category} Renovation Projects | Reno Stars Vancouver",
       "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
     },
+    "projectDetail": {
+      "titleWithLocation": "{title} in {city} | Reno Stars"
+    },
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
       "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
@@ -540,6 +544,10 @@
     "process": {
       "title": "Renovation Process — 5 Steps | Reno Stars Vancouver",
       "description": "Learn about our streamlined 5-step renovation process. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+    },
+    "showroom": {
+      "title": "Visit Our Showroom | Reno Stars Vancouver",
+      "description": "Visit the Reno Stars showroom in Richmond, BC. See materials, explore designs, and book a free consultation for your renovation project."
     }
   },
   "common": {
@@ -553,6 +561,54 @@
   "homeFaq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Common questions about our renovation services"
+  },
+  "showroomPage": {
+    "heroTitle": "Visit Our Showroom",
+    "heroSubtitle": "Experience renovation materials, designs, and finishes firsthand",
+    "addressTitle": "Location & Hours",
+    "phoneTitle": "Phone",
+    "emailTitle": "Email",
+    "hoursTitle": "Hours",
+    "hoursValue": "By Appointment",
+    "mapTitle": "Find Us",
+    "ctaTitle": "Ready to Start Your Project?",
+    "ctaDescription": "Book a free consultation at our showroom. Our design team will help you explore options and plan your renovation.",
+    "bookConsultation": "Book a Free Consultation",
+    "callUs": "Or call us at",
+    "faq1q": "Do I need an appointment to visit the showroom?",
+    "faq1a": "Walk-ins are welcome, but we recommend booking an appointment so our design team can dedicate time to discuss your project in detail.",
+    "faq2q": "What can I see at the Reno Stars showroom?",
+    "faq2a": "Our showroom features material samples, cabinet displays, countertop options, tile selections, and design inspiration for kitchen, bathroom, and whole house renovations.",
+    "faq3q": "Is there parking available at the showroom?",
+    "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
+    "faq4q": "Can I bring my renovation plans to the showroom?",
+    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit."
+  },
+  "homeFaqs": {
+    "q1": "How much does a home renovation cost in Vancouver?",
+    "a1": "Renovation costs vary by scope: kitchen renovations typically range from $25,000–$80,000, bathrooms from $15,000–$40,000, and whole house renovations from $100,000+. We provide free detailed quotes for every project.",
+    "q2": "How long does a typical renovation take?",
+    "a2": "Timelines depend on the project scope: kitchen renovations take 4–8 weeks, bathrooms 2–4 weeks, and whole house renovations 3–6 months. We provide a detailed schedule before work begins.",
+    "q3": "Do you offer a warranty on renovation work?",
+    "a3": "Yes, all our renovation projects come with a 3-year workmanship warranty. We also carry $5M liability insurance for your peace of mind.",
+    "q4": "What areas do you serve in Metro Vancouver?",
+    "a4": "We serve all communities across Metro Vancouver including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Langley, and more."
+  },
+  "projectsFaqs": {
+    "q1": "How do I get started with a renovation project?",
+    "a1": "Start with a free consultation — contact us online or visit our showroom. We'll discuss your vision, assess the space, and provide a detailed quote and timeline.",
+    "q2": "Can I see examples of your past work?",
+    "a2": "Yes! Browse our portfolio above to see before-and-after photos of completed kitchen, bathroom, and whole house renovation projects across Metro Vancouver.",
+    "q3": "Do you handle permits and inspections?",
+    "a3": "Yes, we manage all necessary permits and coordinate inspections as part of our full-service renovation process, so you don't have to worry about any of the paperwork."
+  },
+  "designFaqs": {
+    "q1": "What does the design consultation include?",
+    "a1": "Our design consultation includes a discussion of your vision, space assessment, material recommendations, 3D visualization when applicable, and a detailed project plan with timeline and budget estimate.",
+    "q2": "Do you offer 3D renderings of renovation designs?",
+    "a2": "Yes, we provide 3D visualizations for many projects so you can see exactly how your renovated space will look before any work begins.",
+    "q3": "How much does a design consultation cost?",
+    "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
   },
   "homePartners": {
     "title": "Our Partners",

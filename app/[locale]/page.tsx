@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
 import HomePage from "@/components/pages/HomePage";
-import { BreadcrumbSchema, ReviewSchema } from "@/components/structured-data";
+import { BreadcrumbSchema, ReviewSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from "@/lib/utils";
 import { WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
@@ -228,9 +228,20 @@ export default async function Page({ params }: PageProps) {
 
   const breadcrumbs = [{ name: t("nav.home"), url: `/${locale}/` }];
 
+  // FAQ schema: use DB FAQs if available, fall back to static translations
+  const faqSchemaItems = localizedFaqs.length > 0
+    ? localizedFaqs.map((f) => ({ question: f.question, answer: f.answer }))
+    : [
+        { question: t("homeFaqs.q1"), answer: t("homeFaqs.a1") },
+        { question: t("homeFaqs.q2"), answer: t("homeFaqs.a2") },
+        { question: t("homeFaqs.q3"), answer: t("homeFaqs.a3") },
+        { question: t("homeFaqs.q4"), answer: t("homeFaqs.a4") },
+      ];
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <FAQSchema faqs={faqSchemaItems} />
       <ReviewSchema
         company={company}
         googleReviews={googleReviews}

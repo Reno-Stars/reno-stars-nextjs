@@ -39,6 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/contact', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/process', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/areas', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: '/showroom', priority: 0.7, changeFrequency: 'monthly' as const },
   ];
 
   // Add static pages for each locale

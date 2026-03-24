@@ -91,8 +91,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (project) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
-    // Use dedicated SEO fields, fallback to title/description if not set
-    const metaTitle = project.meta_title?.[locale as Locale] || `${localizedProject.title} | ${SITE_NAME}`;
+    // Use dedicated SEO fields, fallback to location-enriched title if city exists
+    const fallbackTitle = project.location_city
+      ? (locale === 'zh'
+        ? `${project.location_city}${localizedProject.title} | Reno Stars`
+        : `${localizedProject.title} in ${project.location_city} | Reno Stars`)
+      : `${localizedProject.title} | ${SITE_NAME}`;
+    const metaTitle = project.meta_title?.[locale as Locale] || fallbackTitle;
     const metaDescription = project.meta_description?.[locale as Locale]
       || truncateMetaDescription(project.excerpt?.[locale as Locale] || localizedProject.description);
 
@@ -124,8 +129,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteData = await getSiteBySlugFromDb(slug);
 
   if (siteData) {
-    // Use dedicated SEO fields, fallback to title/description if not set
-    const metaTitle = siteData.meta_title?.[locale as Locale] ?? `${siteData.title[locale as Locale]} | ${SITE_NAME}`;
+    // Use dedicated SEO fields, fallback to location-enriched title if city exists
+    const siteFallbackTitle = siteData.location_city
+      ? (locale === 'zh'
+        ? `${siteData.location_city}${siteData.title[locale as Locale]} | Reno Stars`
+        : `${siteData.title[locale as Locale]} in ${siteData.location_city} | Reno Stars`)
+      : `${siteData.title[locale as Locale]} | ${SITE_NAME}`;
+    const metaTitle = siteData.meta_title?.[locale as Locale] ?? siteFallbackTitle;
     const metaDescription = siteData.meta_description?.[locale as Locale] ?? truncateMetaDescription(siteData.description[locale as Locale]);
 
     return {

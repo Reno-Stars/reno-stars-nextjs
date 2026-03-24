@@ -82,9 +82,19 @@ export default function ProjectCard({
           </p>
         )}
         <div className="flex items-center justify-between">
-          <span className="text-xs" style={{ color: TEXT_MUTED }}>
-            {project.location_city} • {project.category}
-          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {project.location_city && (
+              <span
+                className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium"
+                style={{ backgroundColor: `${NAVY}12`, color: NAVY }}
+              >
+                {project.location_city}
+              </span>
+            )}
+            <span className="text-xs" style={{ color: TEXT_MUTED }}>
+              {project.category}
+            </span>
+          </div>
           {showChevron && <ChevronRight className="w-4 h-4" style={{ color: GOLD }} />}
         </div>
       </div>

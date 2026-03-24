@@ -572,6 +572,11 @@ const nextConfig: NextConfig = {
         destination: '/en/areas/:path*',
         permanent: true,
       },
+      {
+        source: '/showroom',
+        destination: '/en/showroom/',
+        permanent: true,
+      },
       // Old WP service page slugs (non-localized, 1 fewer redirect hop)
       { source: '/kitchen-renovation', destination: '/en/services/kitchen/', permanent: true },
       { source: '/bathroom-remodel', destination: '/en/services/bathroom/', permanent: true },

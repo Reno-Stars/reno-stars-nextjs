@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ProjectsPage from '@/components/pages/ProjectsPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 
@@ -48,8 +48,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, company, projects, sitesAsProjects, categories] = await Promise.all([
+  const [t, faqT, company, projects, sitesAsProjects, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'projectsFaqs' }),
     getCompanyFromDb(),
     getProjectsFromDb(),
     getSitesAsProjectsFromDb(),
@@ -60,9 +61,16 @@ export default async function Page({ params }: PageProps) {
     { name: t('projects'), url: `/${locale}/projects/` },
   ];
 
+  const faqs = [
+    { question: faqT('q1'), answer: faqT('a1') },
+    { question: faqT('q2'), answer: faqT('a2') },
+    { question: faqT('q3'), answer: faqT('a3') },
+  ];
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <FAQSchema faqs={faqs} />
       <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} />
     </>
   );

@@ -54,7 +54,7 @@ export default function ShowroomSection({
           {showroom.address} <br /> {showroom.phone}
         </p>
         <Link
-          href="/contact"
+          href="/showroom"
           className="inline-block px-6 sm:px-8 py-3.5 rounded-xl text-base font-semibold cursor-pointer text-white transition-all duration-200 hover:brightness-110"
           style={{
             backgroundColor: GOLD,

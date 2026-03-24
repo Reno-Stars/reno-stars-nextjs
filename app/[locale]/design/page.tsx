@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import DesignPage from '@/components/pages/DesignPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb, getDesignsFromDb } from '@/lib/db/queries';
 
@@ -48,17 +48,28 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: 'nav' });
+  const [nav, faqT, company, designs] = await Promise.all([
+    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'designFaqs' }),
+    getCompanyFromDb(),
+    getDesignsFromDb(),
+  ]);
+
   const breadcrumbs = [
-    { name: t('home'), url: `/${locale}/` },
-    { name: t('design'), url: `/${locale}/design/` },
+    { name: nav('home'), url: `/${locale}/` },
+    { name: nav('design'), url: `/${locale}/design/` },
   ];
 
-  const [company, designs] = await Promise.all([getCompanyFromDb(), getDesignsFromDb()]);
+  const faqs = [
+    { question: faqT('q1'), answer: faqT('a1') },
+    { question: faqT('q2'), answer: faqT('a2') },
+    { question: faqT('q3'), answer: faqT('a3') },
+  ];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <FAQSchema faqs={faqs} />
       <DesignPage locale={locale as Locale} company={company} designs={designs} />
     </>
   );
