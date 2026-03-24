@@ -47,9 +47,11 @@ export default function HeroSection({ company, googleRating, translations: t }: 
   const [current, setCurrent] = useState(0);
   const [visible, setVisible] = useState(true);
   const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const currentRef = useRef(0);
 
   const goTo = useCallback((index: number) => {
     if (fadeTimer.current) clearTimeout(fadeTimer.current);
+    currentRef.current = index;
     setVisible(false);
     fadeTimer.current = setTimeout(() => {
       setCurrent(index);
@@ -62,15 +64,15 @@ export default function HeroSection({ company, googleRating, translations: t }: 
 
   useEffect(() => {
     const timer = setInterval(() => {
-      goTo((current + 1) % slides.length);
+      goTo((currentRef.current + 1) % slides.length);
     }, SLIDE_DURATION);
     return () => clearInterval(timer);
-  }, [current, goTo, slides.length]);
+  }, [goTo, slides.length]);
 
   const slide = slides[current];
 
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden min-h-[70vh] flex items-center">
+    <section aria-label={t.transformYourSpace} className="relative overflow-hidden min-h-[70vh] flex items-center">
       {/* Poster image shown immediately for fast LCP */}
       <Image
         src={posterSrc}
@@ -93,6 +95,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         <div className="max-w-2xl space-y-5">
           {/* Slide content — fades in/out on switch */}
           <div
+            aria-live="polite"
             className="space-y-4 transition-opacity duration-300"
             style={{ opacity: visible ? 1 : 0 }}
           >
@@ -102,7 +105,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
                 <slide.icon className="w-4 h-4" />
               </span>
             )}
-            <h1 id="hero-title" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
               {slide.title}
             </h1>
             <p className="text-base lg:text-lg leading-relaxed text-white/80">

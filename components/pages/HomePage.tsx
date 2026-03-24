@@ -51,6 +51,8 @@ interface HomePageProps {
       yearsExperience: string;
       liabilityCoverage: string;
       rating: string;
+      realEstateTitle: string;
+      realEstateDesc: string;
     };
     testimonials: { title: string; subtitle: string };
     gallery: { title: string; subtitle: string; projectsLink: string };
