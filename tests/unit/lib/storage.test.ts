@@ -37,7 +37,7 @@ describe('lib/storage', () => {
   describe('PROD_ORIGIN', () => {
     it('should export the production origin', async () => {
       const { PROD_ORIGIN } = await loadStorageModule();
-      expect(PROD_ORIGIN).toBe('https://reno-stars.com');
+      expect(PROD_ORIGIN).toBe('https://www.reno-stars.com');
     });
   });
 
@@ -55,7 +55,7 @@ describe('lib/storage', () => {
 
       it('should return WP URLs unchanged', async () => {
         const { getAssetUrl } = await loadStorageModule();
-        const wpUrl = 'https://reno-stars.com/wp-content/uploads/2025/04/foo.jpg';
+        const wpUrl = 'https://www.reno-stars.com/wp-content/uploads/2025/04/foo.jpg';
         expect(getAssetUrl(wpUrl)).toBe(wpUrl);
       });
     });
@@ -65,7 +65,7 @@ describe('lib/storage', () => {
 
       it('should rewrite WordPress upload URLs to storage origin', async () => {
         const { getAssetUrl } = await loadStorageModule(r2Url);
-        const wpUrl = 'https://reno-stars.com/wp-content/uploads/2025/04/kitchen.jpg';
+        const wpUrl = 'https://www.reno-stars.com/wp-content/uploads/2025/04/kitchen.jpg';
         expect(getAssetUrl(wpUrl)).toBe('https://pub-abc123.r2.dev/uploads/2025/04/kitchen.jpg');
       });
 
@@ -91,7 +91,7 @@ describe('lib/storage', () => {
 
       it('should rewrite WordPress upload URLs to MinIO', async () => {
         const { getAssetUrl } = await loadStorageModule(minioUrl);
-        const wpUrl = 'https://reno-stars.com/wp-content/uploads/2025/04/bath.jpg';
+        const wpUrl = 'https://www.reno-stars.com/wp-content/uploads/2025/04/bath.jpg';
         expect(getAssetUrl(wpUrl)).toBe('http://localhost:9000/reno-stars/uploads/2025/04/bath.jpg');
       });
 

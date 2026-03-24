@@ -1,4 +1,4 @@
-export const PROD_ORIGIN = 'https://reno-stars.com';
+export const PROD_ORIGIN = 'https://www.reno-stars.com';
 const STORAGE_ORIGIN = process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
 const WP_UPLOADS_PREFIX = '/wp-content/uploads/';
 
@@ -12,7 +12,7 @@ const isLocalStorage = STORAGE_ORIGIN.includes('localhost') ||
  *
  * When NEXT_PUBLIC_STORAGE_PROVIDER is set (local or production), rewrites
  * WordPress URLs like:
- *   https://reno-stars.com/wp-content/uploads/2025/04/foo.jpg
+ *   https://www.reno-stars.com/wp-content/uploads/2025/04/foo.jpg
  * to storage URLs like:
  *   http://localhost:9000/reno-stars/uploads/2025/04/foo.jpg  (MinIO)
  *   https://pub-xxx.r2.dev/uploads/2025/04/foo.jpg            (R2)

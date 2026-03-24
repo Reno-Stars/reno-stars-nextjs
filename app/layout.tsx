@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
   authors: [{ name: 'Reno Stars' }],
+  verification: {
+    google: 'FuaUhlygBAgGgvbRm4saQDfrnX9EBkdo98ZSQU3B4Oo',
+  },
   // icons auto-detected from app/icon.png and app/apple-icon.png (file convention)
   twitter: {
     card: 'summary_large_image',

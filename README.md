@@ -2,6 +2,7 @@
 
 Bilingual (English / Chinese) website for [Reno Stars](https://reno-stars.com), a Vancouver-area renovation company. Built with Next.js 16, React 19, and Tailwind CSS 4.
 
+
 ## Tech Stack
 
 - **Next.js 16** (App Router, Turbopack)

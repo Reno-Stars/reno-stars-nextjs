@@ -26,6 +26,7 @@
     "db:seed:projects": "tsx scripts/seed-projects.ts",
     "db:seed:sites": "dotenv -e .env.local -- tsx scripts/seed-sites.ts",
     "db:seed:blog": "tsx scripts/seed-blog.ts",
+    "db:seo": "dotenv -e .env.local -- tsx scripts/seo-enrich.ts",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:reset": "docker compose down -v && docker compose up -d",

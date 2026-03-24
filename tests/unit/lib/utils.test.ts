@@ -308,21 +308,21 @@ describe('Metadata Utilities', () => {
 
     it('should build canonical and hreflang alternates', () => {
       const result = buildAlternates('/projects/', 'en');
-      expect(result.canonical).toBe('https://reno-stars.com/en/projects/');
-      expect(result.languages.en).toBe('https://reno-stars.com/en/projects/');
-      expect(result.languages.zh).toBe('https://reno-stars.com/zh/projects/');
-      expect(result.languages['x-default']).toBe('https://reno-stars.com/en/projects/');
+      expect(result.canonical).toBe('https://www.reno-stars.com/en/projects/');
+      expect(result.languages.en).toBe('https://www.reno-stars.com/en/projects/');
+      expect(result.languages.zh).toBe('https://www.reno-stars.com/zh/projects/');
+      expect(result.languages['x-default']).toBe('https://www.reno-stars.com/en/projects/');
     });
 
     it('should use current locale for canonical', () => {
       const result = buildAlternates('/contact/', 'zh');
-      expect(result.canonical).toBe('https://reno-stars.com/zh/contact/');
+      expect(result.canonical).toBe('https://www.reno-stars.com/zh/contact/');
     });
 
     it('should handle root path', () => {
       const result = buildAlternates('/', 'en');
-      expect(result.canonical).toBe('https://reno-stars.com/en/');
-      expect(result.languages.zh).toBe('https://reno-stars.com/zh/');
+      expect(result.canonical).toBe('https://www.reno-stars.com/en/');
+      expect(result.languages.zh).toBe('https://www.reno-stars.com/zh/');
     });
   });
 });
