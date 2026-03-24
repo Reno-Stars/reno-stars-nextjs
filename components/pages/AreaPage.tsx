@@ -87,6 +87,62 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
         </div>
       </section>
 
+      {/* Related Projects from DB */}
+      {localizedProjects.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-end justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>
+                  {t('areas.viewProjects', { city: localizedArea.name })}
+                </h2>
+                <p className="text-sm" style={{ color: TEXT_MID }}>
+                  {t('projects.subtitle')}
+                </p>
+              </div>
+              <Link
+                href="/projects"
+                className="hidden md:flex items-center gap-1 text-sm font-semibold"
+                style={{ color: GOLD }}
+              >
+                {t('cta.viewAllProjects')} <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {localizedProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="rounded-xl overflow-hidden group"
+                  style={{ boxShadow: neu(4), backgroundColor: CARD }}
+                >
+                  {project.hero_image && (
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      <Image
+                        src={project.hero_image}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
+                      {project.title}
+                    </h3>
+                    <p className="text-sm line-clamp-2" style={{ color: TEXT_MID }}>
+                      {project.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Unique Content */}
       {localizedArea.content && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
@@ -149,62 +205,6 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
           <BenefitList benefits={benefits} />
         </div>
       </section>
-
-      {/* Related Projects from DB */}
-      {localizedProjects.length > 0 && (
-        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-1" style={{ color: TEXT }}>
-                  {t('areas.viewProjects', { city: localizedArea.name })}
-                </h2>
-                <p className="text-sm" style={{ color: TEXT_MID }}>
-                  {t('projects.subtitle')}
-                </p>
-              </div>
-              <Link
-                href="/projects"
-                className="hidden md:flex items-center gap-1 text-sm font-semibold"
-                style={{ color: GOLD }}
-              >
-                {t('cta.viewAllProjects')} <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {localizedProjects.map((project) => (
-                <Link
-                  key={project.slug}
-                  href={`/projects/${project.slug}`}
-                  className="rounded-xl overflow-hidden group"
-                  style={{ boxShadow: neu(4), backgroundColor: CARD }}
-                >
-                  {project.hero_image && (
-                    <div className="aspect-[4/3] overflow-hidden relative">
-                      <Image
-                        src={project.hero_image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className="font-bold mb-1 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
-                      {project.title}
-                    </h3>
-                    <p className="text-sm line-clamp-2" style={{ color: TEXT_MID }}>
-                      {project.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Contextual Internal Links */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
