@@ -3,14 +3,14 @@
 import { useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ChevronRight, ChevronLeft, Calendar, BookOpen } from 'lucide-react';
+import { ArrowRight, ChevronRight, ChevronLeft, Calendar, BookOpen } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, BlogPost } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE,
-  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, SURFACE_ALT,
 } from '@/lib/theme';
 
 interface BlogPageProps {
@@ -251,6 +251,33 @@ export default function BlogPage({
               )}
             </>
           )}
+        </div>
+      </section>
+
+      {/* Internal Cross-Links */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('cta.viewAllServices')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('cta.viewAllProjects')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/process"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('areas.processLinkText')} <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
