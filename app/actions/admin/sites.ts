@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
-import { eq, inArray } from 'drizzle-orm';
+import { eq, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -90,18 +90,18 @@ export async function createSite(
     if (seoError) return { error: seoError };
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
-    const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+    const conflictingSlugs = await db.select({ slug: projectSites.slug }).from(projectSites).where(like(projectSites.slug, `${data.slug}%`));
+    data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
     // Parse image pairs
     const pairData = parseImagePairs(formData, 'siteImagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
     }
     const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
     if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Parse external products
@@ -112,7 +112,7 @@ export async function createSite(
     }
     const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
     if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Insert site, then child records with rollback on failure
@@ -181,19 +181,19 @@ export async function updateSite(
     const submittedSlug = data.slug;
     const currentSite = await db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1);
     const currentSlug = currentSite[0]?.slug;
-    const allSlugs = await db.select({ slug: projectSites.slug }).from(projectSites);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    const conflictingSlugs = await db.select({ slug: projectSites.slug }).from(projectSites).where(like(projectSites.slug, `${data.slug}%`));
+    data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
     const renamedSlug = data.slug !== submittedSlug ? data.slug : undefined;
 
     // Parse image pairs
     const pairData = parseImagePairs(formData, 'siteImagePairs');
     const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
     if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl!.slice(0, 60)}` };
+      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
     }
     const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
     if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl!.slice(0, 60)}` };
+      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Parse external products
@@ -204,7 +204,7 @@ export async function updateSite(
     }
     const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
     if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl!.slice(0, 60)}` };
+      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
     }
 
     // Fetch existing child record IDs before modification

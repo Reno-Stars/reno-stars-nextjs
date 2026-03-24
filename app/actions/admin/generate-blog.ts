@@ -14,7 +14,7 @@ import {
   SEO_FOCUS_KEYWORD_MAX,
 } from '@/lib/db/schema';
 import type { DbProjectImagePair, DbProjectScope, DbProjectExternalProduct, DbProject } from '@/lib/db/schema';
-import { eq, asc, inArray } from 'drizzle-orm';
+import { eq, asc, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { ensureUniqueSlug } from '@/lib/utils';
 import {
@@ -45,11 +45,9 @@ async function insertBlogDraft(
   projectId: string
 ): Promise<string> {
   // Ensure unique slug
-  const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-  const slug = ensureUniqueSlug(
-    sanitizeSlug(generated.slug),
-    allSlugs.map((r: { slug: string }) => r.slug)
-  );
+  const baseSlug = sanitizeSlug(generated.slug);
+  const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${baseSlug}%`));
+  const slug = ensureUniqueSlug(baseSlug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
   const inserted = await db
     .insert(blogPosts)

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { serviceAreas, contactSubmissions, faqs } from '@/lib/db/schema';
-import { eq, count } from 'drizzle-orm';
+import { eq, count, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -48,8 +48,8 @@ export async function createServiceArea(
     const metaDescError = validateTextLengths({ metaDescriptionEn, metaDescriptionZh }, 320);
     if (metaDescError) return { error: metaDescError };
 
-    const existingSlugs = await db.select({ slug: serviceAreas.slug }).from(serviceAreas);
-    const uniqueSlug = ensureUniqueSlug(slug, existingSlugs.map((r: { slug: string }) => r.slug));
+    const conflictingSlugs = await db.select({ slug: serviceAreas.slug }).from(serviceAreas).where(like(serviceAreas.slug, `${slug}%`));
+    const uniqueSlug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
     await db.insert(serviceAreas).values({
       slug: uniqueSlug,

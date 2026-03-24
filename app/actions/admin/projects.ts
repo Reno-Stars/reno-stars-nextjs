@@ -226,8 +226,8 @@ export async function createProject(
         const code = (err as { code?: string })?.code;
         const isUniqueViolation = code === '23505';
         if (!isUniqueViolation || attempt === 2) throw err;
-        // Re-fetch slugs and retry from the original base slug
-        const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
+        // Re-fetch conflicting slugs and retry from the original base slug
+        const freshSlugs = await db.select({ slug: projects.slug }).from(projects).where(like(projects.slug, `${baseSlug}%`));
         data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug));
       }
     }
@@ -373,7 +373,7 @@ export async function updateProject(
         const code = (err as { code?: string })?.code;
         const isUniqueViolation = code === '23505';
         if (!isUniqueViolation || attempt === 2) throw err;
-        const freshSlugs = await db.select({ slug: projects.slug }).from(projects);
+        const freshSlugs = await db.select({ slug: projects.slug }).from(projects).where(like(projects.slug, `${baseSlug}%`));
         data.slug = ensureUniqueSlug(baseSlug, freshSlugs.map((r: { slug: string }) => r.slug), currentSlug);
         renamedSlug = data.slug !== baseSlug ? data.slug : undefined;
       }

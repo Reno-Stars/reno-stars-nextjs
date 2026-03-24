@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -81,8 +81,8 @@ export async function createBlogPost(
     if (textError) return { error: textError };
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
-    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug));
+    const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
+    data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
@@ -128,8 +128,8 @@ export async function updateBlogPost(
     // Ensure slug is unique (exclude current post's own slug)
     const currentPost = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const currentSlug = currentPost[0]?.slug;
-    const allSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts);
-    data.slug = ensureUniqueSlug(data.slug, allSlugs.map((r: { slug: string }) => r.slug), currentSlug);
+    const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
+    data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
     const updated = await db.update(blogPosts).set(data).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
     if (updated.length === 0) {

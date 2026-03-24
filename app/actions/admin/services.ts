@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { services, serviceTags, projects, contactSubmissions } from '@/lib/db/schema';
-import { eq, count, inArray } from 'drizzle-orm';
+import { eq, count, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
@@ -72,8 +72,8 @@ export async function createService(
     const tagError = validateTags(tagData);
     if (tagError) return { error: tagError };
 
-    const existingSlugs = await db.select({ slug: services.slug }).from(services);
-    const uniqueSlug = ensureUniqueSlug(slug, existingSlugs.map((r: { slug: string }) => r.slug));
+    const conflictingSlugs = await db.select({ slug: services.slug }).from(services).where(like(services.slug, `${slug}%`));
+    const uniqueSlug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
     const [inserted] = await db.insert(services).values({
       slug: uniqueSlug,

@@ -46,9 +46,9 @@ export function verifyToken(token: string): boolean {
   const timestamp = parseInt(parts[0], 10);
   if (isNaN(timestamp)) return false;
 
-  // Check expiry
+  // Check expiry — also reject future timestamps (they would pass the age check)
   const now = Math.floor(Date.now() / 1000);
-  if (now - timestamp > SESSION_MAX_AGE) return false;
+  if (timestamp > now || now - timestamp > SESSION_MAX_AGE) return false;
 
   // Verify HMAC
   const expected = signToken(timestamp);
