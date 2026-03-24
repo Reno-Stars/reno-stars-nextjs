@@ -59,7 +59,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       },
     }),
     description:
-      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} liability coverage.`,
+      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} WCB liability coverage and up to 3 years warranty.`,
     foundingDate: String(company.foundingYear),
     numberOfEmployees: company.teamSize,
     slogan: company.tagline,

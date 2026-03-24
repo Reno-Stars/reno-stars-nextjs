@@ -58,9 +58,9 @@
     "toLuxury": "臻于奢华",
     "buildingBetterSpaces": "打造更美好的空间",
     "professionalExcellence": "专业卓越的装修服务",
-    "professionalExcellenceDesc": "凭借超过{experience}年的经验和{coverage}责任保险，我们为温哥华及低陆平原地区提供卓越的装修服务。",
-    "realEstateTitle": "一站式服务：装修 + 房产经纪摄影",
-    "realEstateDesc": "从专业装修到房产经纪摄影，我们与专业经纪人合作，为您提供真正的一站式服务，让您的房子以最佳状态呈现。"
+    "professionalExcellenceDesc": "凭借超过{experience}年的经验及至多三年五百万 WCB责任保险，我们为温哥华及低陆平原地区提供卓越的装修服务。",
+    "realEstateTitle": "一站式服务：装修 + 房产经纪 + 摄影",
+    "realEstateDesc": "从专业装修到房产经纪与摄影服务，我们与专业经纪人合作，为您提供真正的一站式服务，让您的房子以最佳状态呈现。"
   },
   "section": {
     "serviceAreas": "服务区域",
@@ -144,9 +144,8 @@
     "expertTeamMembers": "专业团队成员",
     "expertTeam": "专业团队",
     "expertCraftsmen": "资深工匠",
-    "liabilityCoverage": "WCB 责任保障",
-    "warranty": "质保期",
-    "warrantyValue": "长达3年",
+    "liabilityCoverage": "至多三年 WCB责任保险",
+    "fullCoverage": "至多三年五百万 WCB责任保险",
     "projectsCompleted": "已完成项目",
     "projectsDone": "已完成项目",
     "happyClients": "满意客户",
@@ -398,13 +397,9 @@
       "title": "{years}年以上经验",
       "description": "数十年的综合经验，在低陆平原地区提供优质装修服务。"
     },
-    "warranty": {
-      "title": "3年质保",
-      "description": "我们以全面的质保为所有装修工程提供保障。"
-    },
     "coverage": {
-      "title": "500万美元责任保险",
-      "description": "每个项目都有完整的保险覆盖，让您安心无忧。"
+      "title": "至多三年五百万 WCB责任保险",
+      "description": "至多三年五百万 WCB责任保险全面保障，让您安心无忧。"
     },
     "rating": {
       "title": "Google 五星好评",
@@ -422,8 +417,7 @@
   "serviceBenefits": {
     "freeConsultation": "免费咨询和报价",
     "licensedInsured": "持证和保险专业人员",
-    "warranty": "{warranty}工艺保修",
-    "coverage": "{coverage}责任保险",
+    "coverageAndWarranty": "至多三年五百万 WCB责任保险",
     "experience": "{years}年以上经验",
     "rating": "Google 五星好评"
   },
@@ -496,7 +490,7 @@
   "metadata": {
     "home": {
       "title": "温哥华装修承包商 | 厨房、卫浴装修 | Reno Stars",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、500万保险、Google五星好评。"
+      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、至多三年五百万 WCB责任保险、Google五星好评。"
     },
     "services": {
       "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
@@ -516,7 +510,7 @@
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 温哥华装修承包商",
-      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、500万美元保险、3年质保、Google五星好评。"
+      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、至多三年五百万 WCB责任保险、Google五星好评。"
     },
     "design": {
       "title": "装修设计灵感 | Reno Stars 温哥华",
@@ -529,7 +523,7 @@
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
       "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
-      "description": "Reno Stars{area}专业{service}。{years}年以上经验、500万保险、3年质保。查看本地项目，立即获取免费报价。"
+      "description": "Reno Stars{area}专业{service}。{years}年以上经验、至多三年五百万 WCB责任保险。查看本地项目，立即获取免费报价。"
     },
     "areas": {
       "title": "服务区域 | Reno Stars 温哥华",

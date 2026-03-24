@@ -163,7 +163,6 @@ export default async function Page({ params }: PageProps) {
   const stats = [
     { value: `${company.yearsExperience}+`, label: t("stats.yearsExperience") },
     { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
-    { value: t("stats.warrantyValue"), label: t("stats.warranty") },
     {
       value: company.liabilityCoverage,
       label: t("stats.liabilityCoverage"),
@@ -182,7 +181,7 @@ export default async function Page({ params }: PageProps) {
       getFreeQuote: t("cta.getFreeQuote"),
       callNow: t("cta.callNow"),
       yearsExperience: t("stats.yearsExperience"),
-      liabilityCoverage: t("stats.liabilityCoverage"),
+      liabilityCoverage: t("stats.fullCoverage"),
       rating: t("stats.rating"),
       realEstateTitle: t("hero.realEstateTitle"),
       realEstateDesc: t("hero.realEstateDesc"),

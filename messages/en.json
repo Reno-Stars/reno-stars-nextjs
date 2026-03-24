@@ -58,9 +58,9 @@
     "toLuxury": "To Luxury",
     "buildingBetterSpaces": "Building Better Spaces",
     "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "With over {experience} years of experience and {coverage} liability coverage, we deliver exceptional renovation services across Vancouver and the Lower Mainland.",
-    "realEstateTitle": "One-Stop Service: Renovation & Real Estate Photography",
-    "realEstateDesc": "From complete home renovation to professional real estate photography — we partner with trusted agents to deliver everything under one roof."
+    "professionalExcellenceDesc": "With over {experience} years of experience, {coverage} WCB liability coverage, and up to 3 years warranty, we deliver exceptional renovation services across Vancouver and the Lower Mainland.",
+    "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
+    "realEstateDesc": "From complete home renovation to real estate agents and professional photography — we partner with trusted professionals to deliver everything under one roof."
   },
   "section": {
     "serviceAreas": "Service Areas",
@@ -144,9 +144,8 @@
     "expertTeamMembers": "Expert Team Members",
     "expertTeam": "Expert Team",
     "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "WCB Liability Coverage",
-    "warranty": "Warranty",
-    "warrantyValue": "Up to 3 Years",
+    "liabilityCoverage": "WCB Coverage · Up to 3 Years Warranty",
+    "fullCoverage": "$5M WCB Coverage · Up to 3 Years Warranty",
     "projectsCompleted": "Projects Completed",
     "projectsDone": "Projects Done",
     "happyClients": "Happy Clients",
@@ -398,13 +397,9 @@
       "title": "{years}+ Years Experience",
       "description": "Decades of combined experience delivering quality renovations across the Lower Mainland."
     },
-    "warranty": {
-      "title": "3-Year Warranty",
-      "description": "We stand behind our work with a comprehensive warranty on all renovations."
-    },
     "coverage": {
-      "title": "$5M Liability Coverage",
-      "description": "Full insurance coverage for your peace of mind during every project."
+      "title": "$5M WCB Coverage · Up to 3 Years Warranty",
+      "description": "Full $5M WCB liability insurance and up to 3 years warranty on workmanship for your peace of mind."
     },
     "rating": {
       "title": "5-Star Google Rating",
@@ -422,8 +417,7 @@
   "serviceBenefits": {
     "freeConsultation": "Free consultation and quote",
     "licensedInsured": "Licensed and insured professionals",
-    "warranty": "{warranty} warranty on workmanship",
-    "coverage": "{coverage} liability coverage",
+    "coverageAndWarranty": "$5M WCB liability coverage with up to 3 years warranty on workmanship",
     "experience": "{years}+ years of experience",
     "rating": "5-star Google rating"
   },
@@ -496,7 +490,7 @@
   "metadata": {
     "home": {
       "title": "Vancouver Renovation Contractor | Kitchen & Bathroom | Reno Stars",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M coverage, 5-star Google rating."
+      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
     },
     "services": {
       "title": "Kitchen, Bathroom & Whole House Renovation Services | Reno Stars Vancouver",
@@ -516,7 +510,7 @@
     },
     "benefits": {
       "title": "Why Choose Reno Stars | Vancouver Renovation Contractor",
-      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. {years}+ years experience, $5M coverage, 3-year warranty, 5-star Google rating."
+      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. {years}+ years experience, $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
     },
     "design": {
       "title": "Renovation Design Inspiration | Reno Stars Vancouver",
@@ -529,7 +523,7 @@
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
       "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M coverage, 3-year warranty. View local projects and get a free quote today."
+      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
     },
     "areas": {
       "title": "Service Areas | Reno Stars Vancouver",

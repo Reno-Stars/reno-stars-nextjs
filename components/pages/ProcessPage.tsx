@@ -99,7 +99,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
   const footerStats = useMemo(() => [
     { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('process.footer.yearsIndustry') },
     { type: 'rating' as const, label: googleRating ? `${googleRating} ${t('process.footer.googleRating')}` : t('process.footer.googleRating') },
-    { type: 'stat' as const, value: t('stats.warrantyValue'), label: t('process.footer.warrantyService') },
+    { type: 'stat' as const, value: t('stats.fullCoverage'), label: t('process.footer.warrantyService') },
   ], [company, t, googleRating]);
 
   const posterRef = useRef<HTMLDivElement>(null);

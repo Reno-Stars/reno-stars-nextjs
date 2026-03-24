@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { Shield, Award, Users, Wrench, Clock, ShieldCheck, Star } from 'lucide-react';
+import { Award, Users, Wrench, Clock, ShieldCheck, Star } from 'lucide-react';
 import type { Company } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import BenefitList from '@/components/BenefitList';
@@ -11,7 +11,6 @@ import {
   CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT,
   STEP_ORANGE, STEP_ORANGE_LIGHT,
-  STEP_GREEN, STEP_GREEN_LIGHT,
   STEP_RED, STEP_RED_LIGHT,
 } from '@/lib/theme';
 
@@ -34,13 +33,6 @@ const BENEFITS = [
     descKey: 'benefits.coverage.description',
     accent: STEP_ORANGE,
     accentLight: STEP_ORANGE_LIGHT,
-  },
-  {
-    icon: Shield,
-    titleKey: 'benefits.warranty.title',
-    descKey: 'benefits.warranty.description',
-    accent: STEP_GREEN,
-    accentLight: STEP_GREEN_LIGHT,
   },
   {
     icon: Award,
@@ -79,13 +71,11 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
     { value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
     { value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { value: '100%', label: t('stats.satisfactionRate') },
-    { value: t('stats.warrantyValue'), label: t('stats.warranty') },
   ], [company, t]);
 
   const serviceBenefits = useMemo(() => [
     t('serviceBenefits.experience', { years: company.yearsExperience }),
-    t('serviceBenefits.coverage', { coverage: company.liabilityCoverage }),
-    t('serviceBenefits.warranty', { warranty: t('stats.warrantyValue') }),
+    t('serviceBenefits.coverageAndWarranty'),
     t('serviceBenefits.rating'),
     t('serviceBenefits.licensedInsured'),
     t('serviceBenefits.freeConsultation'),

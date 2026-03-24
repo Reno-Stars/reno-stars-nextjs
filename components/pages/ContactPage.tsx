@@ -35,7 +35,7 @@ export default function ContactPage({ company, areaNames, googleRating }: Contac
 
   const heroBadges = useMemo(() => [
     { label: `${company.yearsExperience}+ ${t('stats.yearsExperience')}` },
-    { label: t('stats.warrantyValue') },
+    { label: t('stats.fullCoverage') },
   ], [company, t]);
 
   const whyContactUs = useMemo(() => [

@@ -64,7 +64,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const faqs = [
-    { question: t('warranty.title'), answer: t('warranty.description') },
+    { question: t('coverage.title'), answer: t('coverage.description') },
     { question: t('rating.title'), answer: t('rating.description') },
     { question: t('team.title'), answer: t('team.description') },
     { question: t('service.title'), answer: t('service.description') },

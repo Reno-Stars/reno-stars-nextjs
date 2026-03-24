@@ -33,8 +33,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
   const benefits = [
     t('serviceBenefits.freeConsultation'),
     t('serviceBenefits.licensedInsured'),
-    t('serviceBenefits.warranty', { warranty: t('stats.warrantyValue') }),
-    t('serviceBenefits.coverage', { coverage: company.liabilityCoverage }),
+    t('serviceBenefits.coverageAndWarranty'),
     t('serviceBenefits.experience', { years: company.yearsExperience }),
     t('serviceBenefits.rating'),
   ];

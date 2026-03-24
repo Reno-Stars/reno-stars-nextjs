@@ -157,7 +157,6 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
   const whyUsStats = useMemo(() => [
     { key: 'years', val: `${company.yearsExperience}+`, lbl: t('stats.yearsExperience') },
     { key: 'projects', val: company.projectsCompleted, lbl: t('stats.projectsCompleted') },
-    { key: 'warranty', val: t('stats.warrantyValue'), lbl: t('stats.warranty') },
   ], [company, t]);
 
   return (
@@ -248,7 +247,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
               ))}
               <div className="flex items-center gap-1.5">
                 <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
-                <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
+                <span className="text-sm text-white/70">{t('stats.fullCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>
                 {[0, 1, 2, 3, 4].map((i) => (
