@@ -60,7 +60,8 @@ function getSocialPostData(formData: FormData) {
         return { error: 'Invalid image selection. Please re-select images and try again.' };
       }
       selectedImageUrls = validated.data;
-    } catch {
+    } catch (err) {
+      console.error('Failed to parse selectedImageUrls JSON:', err);
       return { error: 'Invalid image selection. Please re-select images and try again.' };
     }
   }

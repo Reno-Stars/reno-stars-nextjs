@@ -34,6 +34,20 @@ export async function updateCompanyInfo(
       return { error: 'Company name is required.' };
     }
 
+    // Validate geographic coordinates — must be numeric and within valid ranges
+    if (data.geoLatitude) {
+      const lat = parseFloat(data.geoLatitude);
+      if (isNaN(lat) || lat < -90 || lat > 90) {
+        return { error: 'Latitude must be a number between -90 and 90.' };
+      }
+    }
+    if (data.geoLongitude) {
+      const lng = parseFloat(data.geoLongitude);
+      if (isNaN(lng) || lng < -180 || lng > 180) {
+        return { error: 'Longitude must be a number between -180 and 180.' };
+      }
+    }
+
     // Get the singleton row (need old URLs for cleanup)
     const rows = await db
       .select({
