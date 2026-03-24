@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import { Shield, Star, Camera } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -31,7 +31,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
   const posterSrc = company.heroImageUrl || images.hero;
   const videoSrc = company.heroVideoUrl || video.hero;
 
-  const slides = [
+  const slides = useMemo(() => [
     {
       title: t.transformYourSpace,
       description: t.professionalExcellenceDesc,
@@ -42,18 +42,23 @@ export default function HeroSection({ company, googleRating, translations: t }: 
       description: t.realEstateDesc,
       icon: Camera,
     },
-  ];
+  ], [t]);
 
   const [current, setCurrent] = useState(0);
   const [visible, setVisible] = useState(true);
+  const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback((index: number) => {
+    if (fadeTimer.current) clearTimeout(fadeTimer.current);
     setVisible(false);
-    setTimeout(() => {
+    fadeTimer.current = setTimeout(() => {
       setCurrent(index);
       setVisible(true);
     }, 300);
   }, []);
+
+  // Clear any pending fade timeout on unmount
+  useEffect(() => () => { if (fadeTimer.current) clearTimeout(fadeTimer.current); }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -92,7 +97,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             style={{ opacity: visible ? 1 : 0 }}
           >
             {slide.icon && (
-              <span className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full border border-white/20 text-white/80 backdrop-blur-sm"
+              <span aria-hidden="true" className="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full border border-white/20 text-white/80 backdrop-blur-sm"
                 style={{ borderColor: `${GOLD}55`, color: GOLD }}>
                 <slide.icon className="w-4 h-4" />
               </span>
@@ -143,7 +148,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
                 key={i}
                 role="tab"
                 aria-selected={i === current}
-                aria-label={`Slide ${i + 1}`}
+                aria-label={slides[i].title}
                 onClick={() => goTo(i)}
                 className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
                 style={{
