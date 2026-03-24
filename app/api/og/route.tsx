@@ -34,8 +34,8 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = request.nextUrl;
 
-  const title = searchParams.get('title') || 'Reno Stars';
-  const subtitle = searchParams.get('subtitle') || '';
+  const title = (searchParams.get('title') || 'Reno Stars').slice(0, 100);
+  const subtitle = (searchParams.get('subtitle') || '').slice(0, 150);
 
   return new ImageResponse(
     (

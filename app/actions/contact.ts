@@ -110,10 +110,11 @@ const MAX_LENGTHS = {
 } as const;
 
 /**
- * Strips HTML tags from a string to prevent stored XSS.
+ * Strips HTML tags and control characters from a string.
+ * Newlines are removed to prevent email header injection via the subject line.
  */
 function stripHtml(text: string): string {
-  return text.replace(/<[^>]*>/g, '');
+  return text.replace(/<[^>]*>/g, '').replace(/[\r\n\t]/g, ' ');
 }
 
 /**

@@ -52,7 +52,11 @@ export function getS3Client(): S3Client | null {
  */
 function extractKeyFromUrl(url: string): string | null {
   const publicBase = process.env.S3_PUBLIC_URL;
-  if (!publicBase || !url.startsWith(publicBase)) return null;
+  if (!publicBase) return null;
+  if (!url.startsWith(publicBase)) {
+    console.warn('[s3] deleteS3Object: URL does not match S3_PUBLIC_URL, skipping deletion:', url.slice(0, 80));
+    return null;
+  }
   // Strip the base URL + trailing slash
   return url.slice(publicBase.length).replace(/^\//, '');
 }
