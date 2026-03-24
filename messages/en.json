@@ -58,7 +58,9 @@
     "toLuxury": "To Luxury",
     "buildingBetterSpaces": "Building Better Spaces",
     "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "With over {experience} years of experience and {coverage} liability coverage, we deliver exceptional renovation services across Vancouver and the Lower Mainland."
+    "professionalExcellenceDesc": "With over {experience} years of experience and {coverage} liability coverage, we deliver exceptional renovation services across Vancouver and the Lower Mainland.",
+    "realEstateTitle": "One-Stop Service: Renovation & Real Estate Photography",
+    "realEstateDesc": "From complete home renovation to professional real estate photography — we partner with trusted agents to deliver everything under one roof."
   },
   "section": {
     "serviceAreas": "Service Areas",

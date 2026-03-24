@@ -184,6 +184,8 @@ export default async function Page({ params }: PageProps) {
       yearsExperience: t("stats.yearsExperience"),
       liabilityCoverage: t("stats.liabilityCoverage"),
       rating: t("stats.rating"),
+      realEstateTitle: t("hero.realEstateTitle"),
+      realEstateDesc: t("hero.realEstateDesc"),
     },
     testimonials: {
       title: t("section.whatOurClientsSay"),

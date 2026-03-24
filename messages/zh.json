@@ -58,7 +58,9 @@
     "toLuxury": "臻于奢华",
     "buildingBetterSpaces": "打造更美好的空间",
     "professionalExcellence": "专业卓越的装修服务",
-    "professionalExcellenceDesc": "凭借超过{experience}年的经验和{coverage}责任保险，我们为温哥华及低陆平原地区提供卓越的装修服务。"
+    "professionalExcellenceDesc": "凭借超过{experience}年的经验和{coverage}责任保险，我们为温哥华及低陆平原地区提供卓越的装修服务。",
+    "realEstateTitle": "一站式服务：装修 + 房产经纪摄影",
+    "realEstateDesc": "从专业装修到房产经纪摄影，我们与专业经纪人合作，为您提供真正的一站式服务，让您的房子以最佳状态呈现。"
   },
   "section": {
     "serviceAreas": "服务区域",
