@@ -30,7 +30,6 @@ const GUIDES = [
     descKey: 'guides.index.bathroom.description',
     accent: STEP_ORANGE,
     accentLight: STEP_ORANGE_LIGHT,
-    comingSoon: true,
   },
   {
     slug: 'whole-house-renovation-cost-vancouver',

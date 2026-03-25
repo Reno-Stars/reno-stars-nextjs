@@ -1102,6 +1102,29 @@ export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuidePr
   return rows;
 });
 
+
+export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+  const rows = await db
+    .select({
+      titleEn: projectsTable.titleEn,
+      titleZh: projectsTable.titleZh,
+      locationCity: projectsTable.locationCity,
+      budgetRange: projectsTable.budgetRange,
+      durationEn: projectsTable.durationEn,
+      durationZh: projectsTable.durationZh,
+      spaceTypeEn: projectsTable.spaceTypeEn,
+      slug: projectsTable.slug,
+    })
+    .from(projectsTable)
+    .where(and(
+      eq(projectsTable.isPublished, true),
+      eq(projectsTable.serviceType, 'bathroom')
+    ))
+    .orderBy(desc(projectsTable.createdAt));
+
+  return rows;
+});
+
 // ============================================================================
 // ADMIN-ONLY QUERIES
 // ============================================================================
