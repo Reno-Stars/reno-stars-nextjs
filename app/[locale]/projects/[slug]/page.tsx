@@ -16,6 +16,8 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   const [projects, sites, categorySlugs] = await Promise.all([
     getProjectsFromDb(),

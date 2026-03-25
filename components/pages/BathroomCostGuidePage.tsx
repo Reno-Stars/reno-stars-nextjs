@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import {
-  DollarSign, Clock, TrendingUp, CheckCircle, AlertTriangle, ArrowRight,
-  Droplets,
+  DollarSign, Clock, Home, TrendingUp, CheckCircle, AlertTriangle, ArrowRight,
+  Droplets, ShowerHead, Wrench,
 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { KitchenGuideProject } from '@/lib/db/queries';
@@ -65,7 +65,7 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
 
   const costTiers = [
     { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$14,000 – $20,000' },
-    { key: 'midRange', icon: Droplets, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$20,000 – $35,000' },
+    { key: 'midRange', icon: Droplets, ShowerHead, Wrench, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$20,000 – $35,000' },
     { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$40,000 – $60,000+' },
   ];
 

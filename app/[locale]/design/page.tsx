@@ -10,6 +10,8 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }

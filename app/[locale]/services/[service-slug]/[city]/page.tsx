@@ -15,6 +15,8 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];

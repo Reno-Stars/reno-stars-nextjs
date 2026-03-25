@@ -13,6 +13,8 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
   const params: { locale: string; slug: string }[] = [];
