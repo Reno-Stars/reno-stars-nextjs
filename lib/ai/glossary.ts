@@ -14,6 +14,7 @@ const GLOSSARY: Record<string, GlossaryTerm[]> = {
     { en: "Delta", zh: "三角洲" },
     { en: "Coquitlam", zh: "高贵林" },
     { en: "Surrey", zh: "素里" },
+    { en: "Maple Ridge", zh: "枫叶岭" },
   ],
   "cabinet-styles": [{ en: "white shaker", zh: "白色shaker style柜子" }],
 };
