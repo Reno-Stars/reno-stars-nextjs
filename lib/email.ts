@@ -77,32 +77,19 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
     ].join('\n');
 
     const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1B365D; border-bottom: 2px solid #C8922A; padding-bottom: 10px;">
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #1B365D; border-bottom: 2px solid #C8922A; padding-bottom: 10px; margin-top: 0;">
           New Contact Form Submission
         </h2>
 
-        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #1B365D; width: 100px;">Name:</td>
-            <td style="padding: 8px 0;">${escapeHtml(name)}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #1B365D;">Email:</td>
-            <td style="padding: 8px 0;">
-              ${email ? `<a href="mailto:${escapeHtml(email)}" style="color: #C8922A;">${escapeHtml(email)}</a>` : '<em style="color: #888;">Not provided</em>'}
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; font-weight: bold; color: #1B365D;">Phone:</td>
-            <td style="padding: 8px 0;">
-              <a href="tel:${escapeHtml(phone)}" style="color: #C8922A;">${escapeHtml(phone)}</a>
-            </td>
-          </tr>
-        </table>
+        <div style="background-color: #f0ede8; padding: 16px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #C8922A;">
+          <p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">Name:</strong> ${escapeHtml(name)}</p>
+          <p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">Email:</strong> ${email ? `<a href="mailto:${escapeHtml(email)}" style="color: #C8922A;">${escapeHtml(email)}</a>` : '<em style="color: #888;">Not provided</em>'}</p>
+          <p style="margin: 0;"><strong style="color: #1B365D;">Phone:</strong> <a href="tel:${escapeHtml(phone)}" style="color: #C8922A;">${escapeHtml(phone)}</a></p>
+        </div>
 
-        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1B365D; margin-top: 0;">Message:</h3>
+        <div style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 0 0 8px 0; font-weight: bold; color: #1B365D;">Message:</p>
           <p style="white-space: pre-wrap; margin: 0;">${escapeHtml(message)}</p>
         </div>
 
