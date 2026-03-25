@@ -23,7 +23,8 @@
     "switchLanguage": "Switch to Chinese",
     "blogAndNews": "Blog & News",
     "toggleAreas": "Toggle areas menu",
-    "showroom": "Showroom"
+    "showroom": "Showroom",
+    "guides": "Guides"
   },
   "cta": {
     "getQuote": "Get Quote",
@@ -548,6 +549,14 @@
     "showroom": {
       "title": "Visit Our Showroom | Reno Stars Vancouver",
       "description": "Visit the Reno Stars showroom in Richmond, BC. See materials, explore designs, and book a free consultation for your renovation project."
+    },
+    "guides": {
+      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
+      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "kitchenCost": {
+        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $20,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+      }
     }
   },
   "common": {
@@ -658,10 +667,22 @@
         "Functional requirements communication"
       ],
       "tags": [
-        { "icon": "phone", "label": "Phone" },
-        { "icon": "email", "label": "Email" },
-        { "icon": "wechat", "label": "WeChat" },
-        { "icon": "sms", "label": "SMS" }
+        {
+          "icon": "phone",
+          "label": "Phone"
+        },
+        {
+          "icon": "email",
+          "label": "Email"
+        },
+        {
+          "icon": "wechat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
       ],
       "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
     },
@@ -676,9 +697,18 @@
         "Provide clear quotation based on material selection and craftsmanship"
       ],
       "tags": [
-        { "icon": "ruler", "label": "Precise Measurement" },
-        { "icon": "quote", "label": "Transparent Quote" },
-        { "icon": "site", "label": "Site Visit" }
+        {
+          "icon": "ruler",
+          "label": "Precise Measurement"
+        },
+        {
+          "icon": "quote",
+          "label": "Transparent Quote"
+        },
+        {
+          "icon": "site",
+          "label": "Site Visit"
+        }
       ],
       "faqAnswer": "Our team conducts professional on-site measurements to ensure accuracy. We discuss your functional needs in detail and provide a transparent, itemized quotation based on your material selections and project scope."
     },
@@ -695,9 +725,18 @@
         "Establish project team: Project Manager, Engineer, Coordinator"
       ],
       "tags": [
-        { "icon": "contract", "label": "Contract" },
-        { "icon": "meeting", "label": "Consultation" },
-        { "icon": "team", "label": "Project Team" }
+        {
+          "icon": "contract",
+          "label": "Contract"
+        },
+        {
+          "icon": "meeting",
+          "label": "Consultation"
+        },
+        {
+          "icon": "team",
+          "label": "Project Team"
+        }
       ],
       "faqAnswer": "After finalizing your design, we invite you to our showroom to review material samples and sign the contract. We establish a dedicated project team and coordinate all scheduling for materials and installation."
     },
@@ -713,9 +752,18 @@
         "Quick response to issues and resolution"
       ],
       "tags": [
-        { "icon": "management", "label": "Unified Management" },
-        { "icon": "progress", "label": "Progress Tracking" },
-        { "icon": "response", "label": "Quick Response" }
+        {
+          "icon": "management",
+          "label": "Unified Management"
+        },
+        {
+          "icon": "progress",
+          "label": "Progress Tracking"
+        },
+        {
+          "icon": "response",
+          "label": "Quick Response"
+        }
       ],
       "faqAnswer": "Our project team handles all aspects of construction management. You won't need to coordinate with individual workers—we manage quality control, progress tracking, and handle any issues that arise."
     },
@@ -729,9 +777,18 @@
         "Ongoing upgrade and maintenance support"
       ],
       "tags": [
-        { "icon": "inspection", "label": "Strict Inspection" },
-        { "icon": "warranty", "label": "Warranty Service" },
-        { "icon": "support", "label": "Ongoing Support" }
+        {
+          "icon": "inspection",
+          "label": "Strict Inspection"
+        },
+        {
+          "icon": "warranty",
+          "label": "Warranty Service"
+        },
+        {
+          "icon": "support",
+          "label": "Ongoing Support"
+        }
       ],
       "faqAnswer": "Upon completion, we conduct a thorough final inspection with you to ensure everything meets your expectations. We provide warranty service and ongoing maintenance support for your peace of mind."
     },
@@ -749,6 +806,129 @@
       "scanWeChat": "Scan to add WeChat for consultation",
       "scanWhatsApp": "Scan to chat on WhatsApp",
       "website": "reno-stars.com"
+    }
+  },
+  "guides": {
+    "index": {
+      "hero": {
+        "title": "Renovation Cost Guides",
+        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork — just real data."
+      },
+      "kitchen": {
+        "title": "Kitchen Renovation Cost",
+        "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+      },
+      "bathroom": {
+        "title": "Bathroom Renovation Cost",
+        "description": "What to expect for a bathroom renovation in the Greater Vancouver area, with real project pricing."
+      },
+      "wholeHouse": {
+        "title": "Whole House Renovation Cost",
+        "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+      },
+      "comingSoon": "Coming Soon",
+      "readGuide": "Read Guide",
+      "cta": {
+        "heading": "Ready to Start Your Renovation?",
+        "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+      }
+    },
+    "kitchenCost": {
+      "breadcrumb": "Kitchen Renovation Cost",
+      "hero": {
+        "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
+        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects — not industry estimates."
+      },
+      "stats": {
+        "avgCost": "Average Cost",
+        "range": "Price Range",
+        "projects": "Projects Completed",
+        "timeline": "Typical Timeline",
+        "timelineValue": "3–6 weeks"
+      },
+      "tiers": {
+        "title": "Kitchen Renovation Cost by Tier",
+        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "budget": {
+          "title": "Budget-Friendly",
+          "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+        },
+        "midRange": {
+          "title": "Mid-Range",
+          "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+        },
+        "highEnd": {
+          "title": "High-End",
+          "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+        }
+      },
+      "factors": {
+        "title": "What Affects Your Kitchen Renovation Cost?",
+        "subtitle": "Six key factors that determine your final price",
+        "cabinetry": {
+          "title": "Cabinetry (30–40% of budget)",
+          "description": "The biggest cost driver. Stock cabinets start around /linear foot, while custom options can exceed /linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+        },
+        "countertops": {
+          "title": "Countertops (10–15% of budget)",
+          "description": "Laminate starts at /sq ft, quartz runs –150/sq ft, and natural stone can exceed /sq ft. Waterfall island edges add –2,000 to the total."
+        },
+        "layout": {
+          "title": "Layout Changes",
+          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add ,000–15,000 depending on structural requirements and permits."
+        },
+        "appliances": {
+          "title": "Appliances",
+          "description": "Budget-friendly packages start at ,000–5,000. Mid-range brands like Bosch or KitchenAid run ,000–15,000. Premium brands like Sub-Zero or Wolf can exceed ,000."
+        },
+        "plumbing": {
+          "title": "Plumbing & Electrical",
+          "description": "Relocating plumbing or adding circuits adds ,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+        },
+        "permits": {
+          "title": "Permits & Inspections",
+          "description": "City of Vancouver building permits for kitchen renovations typically cost –1,000. Required when changing plumbing, electrical, gas, or structural elements."
+        }
+      },
+      "realProjects": {
+        "title": "Real Kitchen Renovation Projects",
+        "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+      },
+      "tips": {
+        "title": "Money-Saving Tips for Your Kitchen Renovation",
+        "tip1": {
+          "title": "Keep the Existing Layout",
+          "description": "Avoiding plumbing and gas line relocations can save ,000–15,000. Work with your existing kitchen footprint where possible."
+        },
+        "tip2": {
+          "title": "Choose Quartz Over Natural Stone",
+          "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+        },
+        "tip3": {
+          "title": "Semi-Custom Cabinets",
+          "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+        },
+        "tip4": {
+          "title": "Plan During Off-Season",
+          "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+        }
+      },
+      "cta": {
+        "heading": "Get Your Free Kitchen Renovation Quote",
+        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours — no obligation."
+      },
+      "faq": {
+        "q1": "How much does a kitchen renovation cost in Vancouver?",
+        "a1": "Kitchen renovation costs in Vancouver typically range from $20,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $20,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
+        "q2": "How long does a kitchen renovation take in Vancouver?",
+        "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
+        "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
+        "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
+        "q4": "What is the best countertop material for a kitchen renovation?",
+        "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
+        "q5": "Can I renovate my kitchen while living in my home?",
+        "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+      }
     }
   }
 }

@@ -1065,6 +1065,44 @@ export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<P
 });
 
 // ============================================================================
+// GUIDE PAGE QUERIES
+// ============================================================================
+
+/** Lightweight kitchen project data for the cost guide page. */
+export interface KitchenGuideProject {
+  titleEn: string;
+  titleZh: string;
+  locationCity: string;
+  budgetRange: string | null;
+  durationEn: string | null;
+  durationZh: string | null;
+  spaceTypeEn: string | null;
+  slug: string;
+}
+
+export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+  const rows = await db
+    .select({
+      titleEn: projectsTable.titleEn,
+      titleZh: projectsTable.titleZh,
+      locationCity: projectsTable.locationCity,
+      budgetRange: projectsTable.budgetRange,
+      durationEn: projectsTable.durationEn,
+      durationZh: projectsTable.durationZh,
+      spaceTypeEn: projectsTable.spaceTypeEn,
+      slug: projectsTable.slug,
+    })
+    .from(projectsTable)
+    .where(and(
+      eq(projectsTable.isPublished, true),
+      eq(projectsTable.serviceType, 'kitchen')
+    ))
+    .orderBy(desc(projectsTable.createdAt));
+
+  return rows;
+});
+
+// ============================================================================
 // ADMIN-ONLY QUERIES
 // ============================================================================
 
