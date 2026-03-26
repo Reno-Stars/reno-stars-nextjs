@@ -108,14 +108,9 @@ export default async function Page({ params }: PageProps) {
     name: a.name[locale],
   }));
 
-  // Homepage gallery: featured projects first, then recent, up to 12
-  const sortedProjects = [...allProjects].sort((a, b) => {
-    if (a.featured && !b.featured) return -1;
-    if (!a.featured && b.featured) return 1;
-    return 0; // keep original order (by createdAt desc) within each group
-  });
-  const galleryProjects = sortedProjects
-    .filter((p) => p.hero_image)
+  // Homepage gallery: only featured projects with hero images, up to 12
+  const galleryProjects = allProjects
+    .filter((p) => p.featured && p.hero_image)
     .slice(0, 12)
     .map((p) => ({
       image: p.hero_image,
