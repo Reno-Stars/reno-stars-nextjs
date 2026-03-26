@@ -45,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/guides', priority: 0.8, changeFrequency: 'weekly' as const },
     { path: '/guides/kitchen-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
     { path: '/guides/bathroom-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: '/guides/whole-house-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
   ];
 
   // Add static pages for each locale

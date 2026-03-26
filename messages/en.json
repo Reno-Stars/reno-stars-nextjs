@@ -561,6 +561,10 @@
       "bathroomCost": {
         "title": "Bathroom Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does a bathroom renovation cost in Vancouver? Real pricing from $14,000 to $60,000 based on 19 completed projects. Accurate cost breakdowns by tier."
+      },
+      "wholeHouseCost": {
+        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a whole house renovation cost in Vancouver? Real pricing from $23,000 to $31,000 based on 4 completed projects. Full cost breakdown for complete home renovations."
       }
     },
     "about": {
@@ -1037,6 +1041,131 @@
         "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
         "q5": "Should I renovate multiple bathrooms at the same time?",
         "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+      }
+    },
+    "wholeHouseCost": {
+      "breadcrumb": "Whole House Renovation Cost",
+      "hero": {
+        "title": "Whole House Renovation Cost in Vancouver BC (2026)",
+        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations — every number comes from actual projects."
+      },
+      "stats": {
+        "avgCost": "Average Cost",
+        "range": "Price Range",
+        "projects": "Projects Completed",
+        "timeline": "Typical Timeline",
+        "timelineValue": "3–8 weeks"
+      },
+      "tiers": {
+        "title": "Whole House Renovation Cost by Tier",
+        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "budget": {
+          "title": "Cosmetic Refresh",
+          "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+        },
+        "midRange": {
+          "title": "Comprehensive Renovation",
+          "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+        },
+        "highEnd": {
+          "title": "Premium Transformation",
+          "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+        }
+      },
+      "factors": {
+        "title": "What Affects Your Whole House Renovation Cost?",
+        "subtitle": "Six key factors that determine your final price",
+        "scope": {
+          "title": "Scope & Square Footage",
+          "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+        },
+        "kitchen": {
+          "title": "Kitchen (30–40% of total budget)",
+          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $20,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+        },
+        "bathrooms": {
+          "title": "Bathrooms (15–25% of total budget)",
+          "description": "Each bathroom renovation adds $14,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+        },
+        "flooring": {
+          "title": "Flooring (10–15% of total budget)",
+          "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+        },
+        "structural": {
+          "title": "Structural Changes",
+          "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+        },
+        "permits": {
+          "title": "Permits & Professional Fees",
+          "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+        }
+      },
+      "realProjects": {
+        "title": "Real Whole House Renovation Projects",
+        "subtitle": "Browse {count} completed whole-house projects with actual budgets and timelines"
+      },
+      "included": {
+        "title": "What's Typically Included in a Whole House Renovation",
+        "subtitle": "A comprehensive renovation touches every room and system",
+        "item1": {
+          "title": "Kitchen Renovation",
+          "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+        },
+        "item2": {
+          "title": "Bathroom Remodels",
+          "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+        },
+        "item3": {
+          "title": "Flooring Throughout",
+          "description": "New flooring in all living spaces — hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+        },
+        "item4": {
+          "title": "Paint & Trim",
+          "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+        },
+        "item5": {
+          "title": "Electrical & Lighting",
+          "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+        },
+        "item6": {
+          "title": "Doors & Hardware",
+          "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+        }
+      },
+      "tips": {
+        "title": "Money-Saving Tips for Whole House Renovations",
+        "tip1": {
+          "title": "Prioritize and Phase Your Work",
+          "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+        },
+        "tip2": {
+          "title": "Keep Plumbing Where It Is",
+          "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+        },
+        "tip3": {
+          "title": "Choose Materials Strategically",
+          "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+        },
+        "tip4": {
+          "title": "Bundle for Better Pricing",
+          "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+        }
+      },
+      "faq": {
+        "q1": "How much does a whole house renovation cost in Vancouver?",
+        "a1": "Whole house renovation costs in Vancouver typically range from $23,000 to $150,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $23,000–$35,000, comprehensive renovations with new kitchen and bathrooms run $40,000–$80,000, and premium transformations with structural changes can exceed $85,000.",
+        "q2": "How long does a whole house renovation take?",
+        "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
+        "q3": "Can I live in my home during a whole house renovation?",
+        "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
+        "q4": "What gives the best return on investment for a whole house renovation?",
+        "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
+        "q5": "Do I need permits for a whole house renovation in Vancouver?",
+        "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+      },
+      "cta": {
+        "heading": "Ready to Transform Your Entire Home?",
+        "subtitle": "Get a free consultation and detailed quote for your whole house renovation. We'll walk through every room and create a plan that fits your budget."
       }
     }
   },

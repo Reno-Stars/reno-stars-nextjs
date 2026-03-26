@@ -6,7 +6,7 @@ import { DollarSign, Bath, Home, ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu,
+  NAVY, GOLD, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
 } from '@/lib/theme';
 
@@ -38,7 +38,6 @@ const GUIDES = [
     descKey: 'guides.index.wholeHouse.description',
     accent: NAVY,
     accentLight: '#E8EBF0',
-    comingSoon: true,
   },
 ];
 
@@ -71,7 +70,7 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
                 style={{
                   backgroundColor: CARD,
                   ...neu,
-                  opacity: guide.comingSoon ? 0.7 : 1,
+                  
                 }}
               >
                 <div
@@ -86,22 +85,12 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
                 <p className="text-sm mb-4" style={{ color: TEXT_MID }}>
                   {t(guide.descKey)}
                 </p>
-                {guide.comingSoon ? (
-                  <span
-                    className="inline-block text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ backgroundColor: GOLD_PALE, color: GOLD }}
-                  >
-                    {t('guides.index.comingSoon')}
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: GOLD }}>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: GOLD }}>
                     {t('guides.index.readGuide')} <ArrowRight size={16} />
                   </span>
-                )}
               </div>
             );
 
-            if (guide.comingSoon) return <div key={guide.slug}>{card}</div>;
             return (
               <Link key={guide.slug} href={`/guides/${guide.slug}` as '/guides/kitchen-renovation-cost-vancouver'}>
                 {card}
