@@ -110,7 +110,7 @@ interface ReviewsPageProps {
 
 export default function ReviewsPage({ locale, company, googleReviews }: ReviewsPageProps) {
   const t = useTranslations("reviewsPage");
-  const tCta = useTranslations("cta");
+  // CTA uses section-specific translations
 
   const reviews = useMemo(() => {
     return locale === "zh"
@@ -216,7 +216,7 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
       </section>
 
       {/* Contact CTA */}
-      <CTASection heading={tCta("title")} subtitle={tCta("subtitle")} phone={company.phone} />
+      <CTASection heading={t("ctaHeading")} subtitle={t("ctaSubtitle")} phone={company.phone} />
     </main>
   );
 }
