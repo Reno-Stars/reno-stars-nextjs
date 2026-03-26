@@ -2,9 +2,9 @@
 
 ## Sitemap
 
-Generated in `app/sitemap.ts` as an async function. Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
+Generated in `app/sitemap.ts` as an async function with `revalidate = 3600` (1-hour ISR). Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
 
-- Static pages (home, services, projects, blog, contact, benefits, design, process, areas)
+- Static pages (home, services, projects, blog, contact, benefits, design, process, areas, about, showroom, guides, reviews)
 - All service detail pages
 - Service × location combination pages (e.g., `/en/services/kitchen/vancouver/`)
 - Project category pages
@@ -33,6 +33,7 @@ Components in `components/structured-data/`:
 | `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
 | `ContactPageSchema` | ContactPage + ContactPoint | Contact page (HomeAndConstructionBusiness with phone, email, languages, areas served) |
+| `OrganizationSchema` | HomeAndConstructionBusiness | About page (company info, area served, offer catalog; accepts optional `socialLinks`/`areas` props) |
 
 ## Pagination Links
 
@@ -49,7 +50,7 @@ openGraph: {
 }
 ```
 
-This is set in all 16 `generateMetadata()` functions across all page routes.
+This is set in all 22 `generateMetadata()` functions across all page routes.
 
 ## RSS Feed
 
@@ -149,6 +150,7 @@ Keywords appear first in the URL; numeric suffix only appended when necessary to
 - `/features-benefits` → `/benefits`
 - `/vancouver-renovation-blog` → `/blog`
 - `/renovation_article/:slug` → `/blog/:slug`
+- `/about-us` → `/about`
 
 ### 5. Old Category Paths
 - `/vancouver-renovation-projects/kitchen` → `/projects/kitchen`
@@ -212,6 +214,11 @@ The `buildOgImageUrl(title, subtitle?)` helper in `lib/utils.ts` constructs the 
 | Design | Dynamic OG (`/api/og`) | Page title |
 | Process | Dynamic OG (`/api/og`) | Page title |
 | Contact | Dynamic OG (`/api/og`) | Page title |
+| About | Dynamic OG (`/api/og`) | Page title |
+| Showroom | Dynamic OG (`/api/og`) | Page title |
+| Guides hub | Dynamic OG (`/api/og`) | Page title |
+| Guide pages | Dynamic OG (`/api/og`) | Page title |
+| Reviews | Dynamic OG (`/api/og`) | Page title |
 | Blog posts | `post.featured_image` (fallback: hero) | Localized post title |
 | Projects | `project.hero_image` | Localized project title |
 | Sites (whole house) | `site.hero_image` (fallback: hero) | Localized site title |

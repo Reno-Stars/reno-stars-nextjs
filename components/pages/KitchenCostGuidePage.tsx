@@ -40,7 +40,8 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
       .filter((b): b is [number, number] => b !== null);
 
     if (budgets.length === 0) {
-      return { min: 20000, max: 72000, avg: 30000, count: projects.length };
+      // Fallback estimates based on Metro Vancouver kitchen renovation market (2024-2025)
+      return { min: 20_000, max: 72_000, avg: 30_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
@@ -94,7 +95,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
               { label: t('stats.projects'), value: String(stats.count) },
               { label: t('stats.timeline'), value: t('stats.timelineValue') },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, ...neu }}>
+              <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <div className="text-lg md:text-xl font-bold" style={{ color: GOLD }}>{stat.value}</div>
                 <div className="text-xs mt-1" style={{ color: TEXT_MUTED }}>{stat.label}</div>
               </div>
@@ -111,7 +112,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
             {costTiers.map((tier) => {
               const Icon = tier.icon;
               return (
-                <div key={tier.key} className="rounded-2xl p-6" style={{ backgroundColor: CARD, ...neu }}>
+                <div key={tier.key} className="rounded-2xl p-6" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: tier.accentLight }}>
                     <Icon size={20} style={{ color: tier.accent }} />
                   </div>
@@ -133,7 +134,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
             {costFactors.map((factor) => {
               const Icon = factor.icon;
               return (
-                <div key={factor.key} className="rounded-xl p-5 flex gap-4" style={{ backgroundColor: CARD, ...neu }}>
+                <div key={factor.key} className="rounded-xl p-5 flex gap-4" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                   <div className="flex-shrink-0 mt-1"><Icon size={20} style={{ color: GOLD }} /></div>
                   <div>
                     <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`factors.${factor.key}.title`)}</h3>
@@ -160,7 +161,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
                       key={project.slug}
                       href={`/projects/${project.slug}`}
                       className="rounded-xl p-4 flex flex-wrap items-center gap-3 transition-transform hover:scale-[1.01]"
-                      style={{ backgroundColor: CARD, ...neu }}
+                      style={{ backgroundColor: CARD, boxShadow: neu() }}
                     >
                       <span className="font-semibold flex-1 min-w-[200px]" style={{ color: TEXT }}>
                         {locale === 'zh' ? project.titleZh : project.titleEn}
@@ -175,9 +176,9 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
                           <Clock size={14} /> {locale === 'zh' ? project.durationZh : project.durationEn}
                         </span>
                       )}
-                      {project.spaceTypeEn && (
+                      {(locale === 'zh' ? project.spaceTypeZh : project.spaceTypeEn) && (
                         <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: NAVY_PALE, color: NAVY }}>
-                          {project.spaceTypeEn}
+                          {locale === 'zh' ? project.spaceTypeZh : project.spaceTypeEn}
                         </span>
                       )}
                       <ArrowRight size={16} style={{ color: GOLD }} />
@@ -195,7 +196,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>{t('tips.title')}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {(['tip1', 'tip2', 'tip3', 'tip4'] as const).map((key) => (
-              <div key={key} className="rounded-xl p-5" style={{ backgroundColor: CARD, ...neu }}>
+              <div key={key} className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <h3 className="font-bold mb-2" style={{ color: TEXT }}>{t(`tips.${key}.title`)}</h3>
                 <p className="text-sm" style={{ color: TEXT_MID }}>{t(`tips.${key}.description`)}</p>
               </div>

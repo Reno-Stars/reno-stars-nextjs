@@ -116,7 +116,7 @@ export default async function Page({ params }: PageProps) {
       image: p.hero_image,
       title: p.title[locale],
       category: p.category[locale],
-      href: `/projects/${p.slug}` as string,
+      href: `/projects/${p.slug}`,
     }));
   const localizedBadges = trustBadges.map((b) => b[locale]);
   const localizedFaqs = faqs.map((f) => ({

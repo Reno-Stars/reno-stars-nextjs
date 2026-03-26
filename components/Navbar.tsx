@@ -74,11 +74,14 @@ export default function Navbar({ company }: NavbarProps) {
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-0.5">
-            {navLinks.map((item) => (
-              <Link key={item.href} href={item.href as '/'} className={LINK_CLASS} style={{ color: TEXT }}>
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link key={item.href} href={item.href as '/'} className={LINK_CLASS} style={{ color: TEXT }} {...(isActive && { 'aria-current': 'page' as const })}>
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <div className="w-px h-5 mx-2" style={{ backgroundColor: `${TEXT}20` }} />
             <Link
@@ -111,12 +114,16 @@ export default function Navbar({ company }: NavbarProps) {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div ref={menuRef} id="mobile-menu" className="lg:hidden pb-3 space-y-1 border-t" style={{ borderColor: `${TEXT}10` }}>
-            {navLinks.map((item) => (
-              <Link key={item.href} href={item.href as '/'} onClick={closeMenu}
-                className="block py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}>
-                {item.label}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link key={item.href} href={item.href as '/'} onClick={closeMenu}
+                  className="block py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}
+                  {...(isActive && { 'aria-current': 'page' as const })}>
+                  {item.label}
+                </Link>
+              );
+            })}
 
             <Link href={pathname || '/'} locale={locale === 'en' ? 'zh' : 'en'} onClick={closeMenu}
               className="w-full text-left py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg flex items-center gap-2" style={{ color: TEXT }}>

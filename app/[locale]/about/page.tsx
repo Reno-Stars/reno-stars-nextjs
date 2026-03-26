@@ -2,10 +2,9 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import AboutPage from '@/components/pages/AboutPage';
-import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
-import { OrganizationSchema } from '@/components/structured-data/OrganizationSchema';
+import { BreadcrumbSchema, FAQSchema, OrganizationSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getAboutSectionsFromDb, getCompanyFromDb, getTrustBadgesFromDb } from '@/lib/db/queries';
+import { getAboutSectionsFromDb, getCompanyFromDb, getTrustBadgesFromDb, getSocialLinksFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -51,12 +50,14 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, about, company, badges] = await Promise.all([
+  const [nav, t, about, company, badges, socialLinks, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'aboutPage' }),
     getAboutSectionsFromDb(),
     getCompanyFromDb(),
     getTrustBadgesFromDb(),
+    getSocialLinksFromDb(),
+    getServiceAreasFromDb(),
   ]);
 
   const breadcrumbs = [
@@ -64,19 +65,17 @@ export default async function Page({ params }: PageProps) {
     { name: nav('about'), url: `/${locale}/about/` },
   ];
 
-  const faqs = [
-    { question: t('faq.q1'), answer: t('faq.a1') },
-    { question: t('faq.q2'), answer: t('faq.a2') },
-    { question: t('faq.q3'), answer: t('faq.a3') },
-    { question: t('faq.q4'), answer: t('faq.a4') },
-    { question: t('faq.q5'), answer: t('faq.a5') },
-  ];
+  const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
+  const faqs = ABOUT_FAQ_KEYS.map((i) => ({
+    question: t(`faq.q${i}`),
+    answer: t(`faq.a${i}`),
+  }));
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <OrganizationSchema company={company} />
+      <OrganizationSchema company={company} socialLinks={socialLinks} areas={areas} />
       <AboutPage
         locale={locale as Locale}
         about={about}

@@ -1,18 +1,27 @@
 import { getBaseUrl } from '@/lib/utils';
-import type { Company } from '@/lib/types';
+import { parseAddress } from './parse-address';
+import type { Company, SocialLink, ServiceArea } from '@/lib/types';
 
 interface OrganizationSchemaProps {
   company: Company;
+  socialLinks?: SocialLink[];
+  areas?: ServiceArea[];
 }
 
-export function OrganizationSchema({ company }: OrganizationSchemaProps) {
+export default function OrganizationSchema({ company, socialLinks, areas }: OrganizationSchemaProps) {
   const baseUrl = getBaseUrl();
+  const addressParts = parseAddress(company.address);
+
+  const sameAs = socialLinks
+    ?.map((link) => link.url)
+    .filter((url) => url !== '#');
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
     name: company.name,
-    description: company.tagline,
+    description:
+      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} WCB liability coverage and up to 3 years warranty.`,
     url: baseUrl,
     logo: company.logo,
     image: company.logo,
@@ -20,10 +29,10 @@ export function OrganizationSchema({ company }: OrganizationSchemaProps) {
     email: company.email,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '21300 Gordon Way, Unit 188',
-      addressLocality: 'Richmond',
-      addressRegion: 'BC',
-      postalCode: 'V6W 1M2',
+      streetAddress: addressParts.streetAddress,
+      addressLocality: addressParts.locality,
+      addressRegion: addressParts.region,
+      postalCode: addressParts.postalCode,
       addressCountry: 'CA',
     },
     geo: {
@@ -36,19 +45,13 @@ export function OrganizationSchema({ company }: OrganizationSchemaProps) {
       '@type': 'QuantitativeValue',
       value: company.teamSize,
     },
-    areaServed: [
-      { '@type': 'City', name: 'Vancouver' },
-      { '@type': 'City', name: 'Richmond' },
-      { '@type': 'City', name: 'Burnaby' },
-      { '@type': 'City', name: 'Surrey' },
-      { '@type': 'City', name: 'Coquitlam' },
-      { '@type': 'City', name: 'North Vancouver' },
-      { '@type': 'City', name: 'West Vancouver' },
-      { '@type': 'City', name: 'Delta' },
-      { '@type': 'City', name: 'Langley' },
-      { '@type': 'City', name: 'New Westminster' },
-    ],
-    sameAs: [],
+    ...(areas && areas.length > 0 && {
+      areaServed: areas.map((area) => ({
+        '@type': 'City',
+        name: area.name.en,
+      })),
+    }),
+    ...(sameAs && sameAs.length > 0 && { sameAs }),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Renovation Services',
@@ -64,7 +67,7 @@ export function OrganizationSchema({ company }: OrganizationSchemaProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 }

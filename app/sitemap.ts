@@ -3,6 +3,8 @@ import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs } from '@/lib/db/queries';
 
+export const revalidate = 3600;
+
 const BASE_URL = getBaseUrl();
 
 /** Fixed date for static pages — avoids misleading "updated" signals on every deploy */

@@ -1077,6 +1077,7 @@ export interface KitchenGuideProject {
   durationEn: string | null;
   durationZh: string | null;
   spaceTypeEn: string | null;
+  spaceTypeZh: string | null;
   slug: string;
 }
 
@@ -1090,6 +1091,7 @@ export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuidePr
       durationEn: projectsTable.durationEn,
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
+      spaceTypeZh: projectsTable.spaceTypeZh,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
@@ -1113,6 +1115,7 @@ export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideP
       durationEn: projectsTable.durationEn,
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
+      spaceTypeZh: projectsTable.spaceTypeZh,
       slug: projectsTable.slug,
     })
     .from(projectsTable)

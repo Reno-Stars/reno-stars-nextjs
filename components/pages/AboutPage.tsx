@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import {
@@ -15,6 +16,28 @@ import {
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
 
+const VALUES = [
+  { key: 'integrity', icon: Shield, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT },
+  { key: 'quality', icon: Award, accent: GOLD, accentLight: GOLD_PALE },
+  { key: 'transparency', icon: Target, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT },
+  { key: 'satisfaction', icon: Heart, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT },
+] as const;
+
+const SERVICES = [
+  { key: 'kitchen', icon: CheckCircle },
+  { key: 'bathroom', icon: CheckCircle },
+  { key: 'wholeHouse', icon: CheckCircle },
+  { key: 'commercial', icon: CheckCircle },
+] as const;
+
+const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
+
+const SERVICE_AREA_CITIES = [
+  'Vancouver', 'Richmond', 'Burnaby', 'Surrey', 'Coquitlam',
+  'North Vancouver', 'West Vancouver', 'Delta', 'Langley',
+  'Maple Ridge', 'New Westminster', 'Port Moody',
+] as const;
+
 interface AboutPageProps {
   locale: Locale;
   about: AboutSections;
@@ -24,28 +47,14 @@ interface AboutPageProps {
 
 export default function AboutPage({ locale, about, company, badges }: AboutPageProps) {
   const t = useTranslations('aboutPage');
-  const l = (obj: { en: string; zh: string }) => obj[locale] || obj.en;
+  const localize = (obj: { en: string; zh: string }) => obj[locale] ?? obj.en;
 
-  const values = [
-    { key: 'integrity', icon: Shield, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT },
-    { key: 'quality', icon: Award, accent: GOLD, accentLight: GOLD_PALE },
-    { key: 'transparency', icon: Target, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT },
-    { key: 'satisfaction', icon: Heart, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT },
-  ];
-
-  const stats = [
+  const stats = useMemo(() => [
     { value: company.yearsExperience + '+', labelKey: 'stats.years', icon: Clock },
     { value: company.projectsCompleted, labelKey: 'stats.projects', icon: Building2 },
     { value: company.teamSize + '+', labelKey: 'stats.team', icon: Users },
     { value: company.liabilityCoverage, labelKey: 'stats.insurance', icon: Shield },
-  ];
-
-  const services = [
-    { key: 'kitchen', icon: CheckCircle },
-    { key: 'bathroom', icon: CheckCircle },
-    { key: 'wholeHouse', icon: CheckCircle },
-    { key: 'commercial', icon: CheckCircle },
-  ];
+  ], [company]);
 
   return (
     <main>
@@ -74,7 +83,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
           </div>
           <div className="rounded-xl p-6 md:p-8" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
             <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>
-              {l(about.ourJourney)}
+              {localize(about.ourJourney)}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
               {stats.map(({ value, labelKey, icon: Icon }) => (
@@ -98,9 +107,9 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('offer.title')}</h2>
           </div>
-          <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: TEXT }}>{l(about.whatWeOffer)}</p>
+          <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: TEXT }}>{localize(about.whatWeOffer)}</p>
           <div className="grid sm:grid-cols-2 gap-4">
-            {services.map(({ key, icon: Icon }) => (
+            {SERVICES.map(({ key, icon: Icon }) => (
               <div key={key} className="flex items-start gap-3 p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                 <Icon size={20} className="mt-0.5 flex-shrink-0" style={{ color: STEP_GREEN }} />
                 <div>
@@ -127,9 +136,9 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('values.title')}</h2>
           </div>
-          <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: TEXT }}>{l(about.ourValues)}</p>
+          <p className="text-base md:text-lg leading-relaxed mb-8" style={{ color: TEXT }}>{localize(about.ourValues)}</p>
           <div className="grid sm:grid-cols-2 gap-4">
-            {values.map(({ key, icon: Icon, accent, accentLight }) => (
+            {VALUES.map(({ key, icon: Icon, accent, accentLight }) => (
               <div key={key} className="p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: accentLight }}>
@@ -154,13 +163,13 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('whyUs.title')}</h2>
           </div>
           <div className="rounded-xl p-6 md:p-8" style={{ boxShadow: neu(), backgroundColor: CARD }}>
-            <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>{l(about.whyChooseUs)}</p>
+            <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>{localize(about.whyChooseUs)}</p>
             {badges.length > 0 && (
               <div className="grid sm:grid-cols-3 gap-3 mt-6">
-                {badges.map((badge, i) => (
-                  <div key={i} className="flex items-center gap-2 p-3 rounded-lg text-sm font-medium" style={{ backgroundColor: GOLD_PALE, color: NAVY }}>
+                {badges.map((badge) => (
+                  <div key={badge.en} className="flex items-center gap-2 p-3 rounded-lg text-sm font-medium" style={{ backgroundColor: GOLD_PALE, color: NAVY }}>
                     <Award size={16} className="flex-shrink-0" style={{ color: GOLD }} />
-                    {l(badge)}
+                    {localize(badge)}
                   </div>
                 ))}
               </div>
@@ -180,9 +189,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
           </div>
           <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>{t('areas.description')}</p>
           <div className="flex flex-wrap gap-2">
-            {['Vancouver', 'Richmond', 'Burnaby', 'Surrey', 'Coquitlam',
-              'North Vancouver', 'West Vancouver', 'Delta', 'Langley',
-              'Maple Ridge', 'New Westminster', 'Port Moody'].map((city) => (
+            {SERVICE_AREA_CITIES.map((city) => (
               <Link key={city} href="/areas" className="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:opacity-80" style={{ boxShadow: neu(), backgroundColor: SURFACE, color: NAVY }}>
                 {city}
               </Link>
@@ -196,7 +203,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" style={{ color: NAVY }}>{t('faq.title')}</h2>
           <div className="space-y-4">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {ABOUT_FAQ_KEYS.map((i) => (
               <details key={i} className="group rounded-xl overflow-hidden" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                 <summary className="cursor-pointer p-5 font-semibold flex justify-between items-center list-none" style={{ color: NAVY }}>
                   {t(`faq.q${i}`)}
@@ -213,7 +220,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{t('cta.title')}</h2>
-          <p className="text-base mb-8" style={{ color: 'rgba(255,255,255,0.8)' }}>{l(about.letsBuildTogether)}</p>
+          <p className="text-base mb-8" style={{ color: 'rgba(255,255,255,0.8)' }}>{localize(about.letsBuildTogether)}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors" style={{ backgroundColor: GOLD, color: '#fff' }}>
               {t('cta.getQuote')} <ArrowRight size={16} />

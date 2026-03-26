@@ -58,11 +58,12 @@ export const wechatId = 'RenoStars';
 
 const STAGGER_DELAY_MS = 80;
 
-function SocialIcons({ socialLinks, toggleWechatModal, wechatId: wcId, t }: {
+function SocialIcons({ socialLinks, toggleWechatModal, wechatId: wcId, t, wechatTriggerRef }: {
   socialLinks: SocialLink[];
   toggleWechatModal: () => void;
   wechatId: string;
   t: ReturnType<typeof useTranslations>;
+  wechatTriggerRef?: React.RefObject<HTMLButtonElement | null>;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -99,6 +100,7 @@ function SocialIcons({ socialLinks, toggleWechatModal, wechatId: wcId, t }: {
           return (
             <button
               key={social.label}
+              ref={wechatTriggerRef}
               type="button"
               onClick={toggleWechatModal}
               className={`${className} cursor-pointer`}
@@ -128,6 +130,59 @@ function SocialIcons({ socialLinks, toggleWechatModal, wechatId: wcId, t }: {
   );
 }
 
+function WechatModal({ onClose }: { onClose: () => void }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const closeBtn = modalRef.current?.querySelector<HTMLElement>('button');
+    closeBtn?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { e.preventDefault(); onClose(); }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="WeChat QR Code"
+    >
+      <div
+        ref={modalRef}
+        className="relative bg-white rounded-2xl p-6 mx-4 max-w-sm w-full shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500 hover:text-gray-700"
+          aria-label="Close"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+        <div className="text-center">
+          <h3 className="text-lg font-semibold mb-1" style={{ color: NAVY }}>WeChat</h3>
+          <p className="text-sm text-gray-500 mb-4">ID: {wechatId}</p>
+          <Image
+            src="/wechat-qr.png"
+            alt="WeChat QR Code"
+            width={300}
+            height={300}
+            className="mx-auto rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 interface FooterProps {
   company: Company;
   socialLinks: SocialLink[];
@@ -140,6 +195,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const [wechatModalOpen, setWechatModalOpen] = useState(false);
+  const wechatTriggerRef = useRef<HTMLButtonElement>(null);
   const toggleWechatModal = useCallback(() => setWechatModalOpen((prev) => !prev), []);
   const localizedServices = useMemo(() => services.map((s) => ({ slug: s.slug, title: s.title[locale] })), [services, locale]);
 
@@ -177,12 +233,12 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
               className="h-9 w-auto object-contain rounded bg-white/95 px-2 py-1 mb-3"
             />
             <p className="text-sm text-white/80 mb-4">{company.tagline}</p>
-            <SocialIcons socialLinks={socialLinks} toggleWechatModal={toggleWechatModal} wechatId={wechatId} t={t} />
+            <SocialIcons socialLinks={socialLinks} toggleWechatModal={toggleWechatModal} wechatId={wechatId} t={t} wechatTriggerRef={wechatTriggerRef} />
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">{t('footer.quickLinks')}</h4>
+            <h2 className="text-white font-semibold text-sm mb-4">{t('footer.quickLinks')}</h2>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -196,7 +252,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
           {/* Services */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">{t('nav.services')}</h4>
+            <h2 className="text-white font-semibold text-sm mb-4">{t('nav.services')}</h2>
             <ul className="space-y-2">
               {localizedServices.map((service) => (
                 <li key={service.slug}>
@@ -210,7 +266,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">{t('label.contact')}</h4>
+            <h2 className="text-white font-semibold text-sm mb-4">{t('label.contact')}</h2>
             <div className="space-y-3">
               <a
                 href={`tel:${company.phone}`}
@@ -240,7 +296,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
           {/* Quick Stats */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-4">{t('section.whyUs')}</h4>
+            <h2 className="text-white font-semibold text-sm mb-4">{t('section.whyUs')}</h2>
             <div className="space-y-2">
               {whyUsStats.map((stat) => (
                 <div key={stat.key} className="flex items-center gap-2">
@@ -264,9 +320,9 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
         {/* Service Areas */}
         <div className="py-6 mb-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-          <h4 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>
+          <h2 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>
             {t('section.serviceAreas')}
-          </h4>
+          </h2>
           <div className="flex flex-wrap gap-x-2 gap-y-2 lg:gap-x-3">
             {areas.map((area) => (
               <Link
@@ -289,40 +345,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
 
       {/* WeChat QR Code Modal */}
       {wechatModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-          onClick={toggleWechatModal}
-          role="dialog"
-          aria-modal="true"
-          aria-label="WeChat QR Code"
-        >
-          <div
-            className="relative bg-white rounded-2xl p-6 mx-4 max-w-sm w-full shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={toggleWechatModal}
-              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500 hover:text-gray-700"
-              aria-label="Close"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-            <div className="text-center">
-              <h3 className="text-lg font-semibold mb-1" style={{ color: NAVY }}>WeChat</h3>
-              <p className="text-sm text-gray-500 mb-4">ID: {wechatId}</p>
-              <Image
-                src="/wechat-qr.png"
-                alt="WeChat QR Code"
-                width={300}
-                height={300}
-                className="mx-auto rounded-lg"
-              />
-            </div>
-          </div>
-        </div>
+        <WechatModal onClose={() => { setWechatModalOpen(false); wechatTriggerRef.current?.focus(); }} />
       )}
     </footer>
   );
