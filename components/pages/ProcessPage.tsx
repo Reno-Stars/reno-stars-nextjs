@@ -699,32 +699,21 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
               </a>
             </div>
 
-            {/* Center: QR Code - WeChat for Chinese, WhatsApp for English */}
+            {/* Center: Linktree QR Code */}
             {/* Using <img> instead of next/image for PDF/PNG export compatibility */}
             <div className="flex flex-col items-center order-1 md:order-2">
               <div className="bg-white p-4 rounded-xl mb-3">
-                {locale === 'zh' ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src="/wechat-qr.png"
-                    alt="WeChat QR Code"
-                    width={140}
-                    height={140}
-                    className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
-                  />
-                ) : (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src="/whatsapp-qr.png"
-                    alt="WhatsApp QR Code"
-                    width={140}
-                    height={140}
-                    className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
-                  />
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/reno-stars-qr.png"
+                  alt="Reno Stars Linktree QR Code"
+                  width={140}
+                  height={140}
+                  className="w-32 h-32 sm:w-36 sm:h-36 object-contain"
+                />
               </div>
               <p className="text-sm sm:text-base md:text-lg text-white/70">
-                {locale === 'zh' ? t('process.footer.scanWeChat') : t('process.footer.scanWhatsApp')}
+                {t('process.footer.scanLinktree')}
               </p>
             </div>
 

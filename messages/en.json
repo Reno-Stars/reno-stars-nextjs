@@ -662,7 +662,7 @@
       "title": "Initial Consultation",
       "subtitle": "Discovery",
       "points": [
-        "Initial contact via phone, email, WeChat, or SMS",
+        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
         "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
         "Style preference confirmation",
         "Material budget and positioning",
@@ -807,8 +807,7 @@
       "yearsIndustry": "Years Industry Experience",
       "googleRating": "Google",
       "warrantyService": "Warranty Service",
-      "scanWeChat": "Scan to add WeChat for consultation",
-      "scanWhatsApp": "Scan to chat on WhatsApp",
+      "scanLinktree": "Scan to connect with us",
       "website": "reno-stars.com"
     }
   },

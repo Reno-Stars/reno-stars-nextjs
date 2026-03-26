@@ -662,7 +662,7 @@
       "title": "前期沟通",
       "subtitle": "Discovery",
       "points": [
-        "客户初步联系（电话 / 邮件 / 微信 / 短信）",
+        "客户初步联系（电话 / 邮件 / Whatsapp / 微信 / 短信）",
         "确认翻新区域（厨房 / 客厅 / 洗手间 / 全屋）",
         "风格偏好确认",
         "材料预算与定位",
@@ -807,8 +807,7 @@
       "yearsIndustry": "年行业经验",
       "googleRating": "Google",
       "warrantyService": "质保服务",
-      "scanWeChat": "扫码添加微信咨询",
-      "scanWhatsApp": "扫码通过 WhatsApp 联系",
+      "scanLinktree": "扫码联系我们",
       "website": "reno-stars.com"
     }
   },
