@@ -202,16 +202,10 @@ describe('next.config.ts redirects', () => {
   });
 
   describe('9d. Old about pages', () => {
-    it('should redirect /about-us to homepage', () => {
+    it('should redirect /about-us to about page', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/about-us');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/');
-    });
-
-    it('should redirect /about to homepage', () => {
-      const r = findRedirect(redirects, '/:locale(en|zh)/about');
-      expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/');
+      expect(r!.destination).toBe('/:locale/about');
     });
   });
 
@@ -249,7 +243,7 @@ describe('next.config.ts redirects', () => {
     it('should redirect non-localized about-us', () => {
       const r = findRedirect(redirects, '/about-us');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/');
+      expect(r!.destination).toBe('/en/about/');
     });
   });
 

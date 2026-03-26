@@ -522,12 +522,11 @@ const nextConfig: NextConfig = {
       { source: '/:locale(en|zh)/commercial-renovation', destination: '/:locale/services/commercial', permanent: true },
       { source: '/:locale(en|zh)/cabinet-refacing', destination: '/:locale/services/cabinet', permanent: true },
       { source: '/:locale(en|zh)/basement-renovation', destination: '/:locale/services/basement', permanent: true },
+      // 9d. Old WP about-us page → about page (now a real route)
+      { source: '/:locale(en|zh)/about-us', destination: '/:locale/about', permanent: true },
 
       // ================================================================
-      // 9d. Old WP about page → homepage
       // ================================================================
-      { source: '/:locale(en|zh)/about-us', destination: '/:locale/', permanent: true },
-      { source: '/:locale(en|zh)/about', destination: '/:locale/', permanent: true },
 
       // ================================================================
       // 10. Non-localized paths → default locale (EN)
@@ -584,9 +583,8 @@ const nextConfig: NextConfig = {
       { source: '/commercial-renovation', destination: '/en/services/commercial/', permanent: true },
       { source: '/cabinet-refacing', destination: '/en/services/cabinet/', permanent: true },
       { source: '/basement-renovation', destination: '/en/services/basement/', permanent: true },
-      // Old WP about page (non-localized)
-      { source: '/about-us', destination: '/en/', permanent: true },
-      { source: '/about', destination: '/en/', permanent: true },
+      // Old about-us (non-localized)
+      { source: '/about-us', destination: '/en/about/', permanent: true },
     ];
   },
   async rewrites() {
