@@ -1,13 +1,19 @@
 'use client';
 
-import { useState, useTransition, useEffect } from 'react';
+import { useState, useTransition, useEffect, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import DataTable, { type Column } from '@/components/admin/DataTable';
 import StatusBadge from '@/components/admin/StatusBadge';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import { useToast } from '@/components/admin/ToastProvider';
 import { useAdminTranslations } from '@/lib/admin/translations';
-import { updateContactStatus, updateContactNotes, deleteContact } from '@/app/actions/admin/contacts';
+import {
+  updateContactStatus,
+  updateContactNotes,
+  deleteContact,
+  batchDeleteContacts,
+  batchUpdateContactStatus,
+} from '@/app/actions/admin/contacts';
 import { CARD, NAVY, TEXT_MID, GOLD, ERROR, neuIn, neu } from '@/lib/theme';
 import { truncate } from '@/lib/utils';
 import { CONTACT_STATUSES, type ContactStatus } from '@/lib/admin/form-utils';
@@ -35,14 +41,105 @@ export default function ContactsListClient({ contacts }: Props) {
   const [statusFilter, setStatusFilter] = useState<string>(
     initialStatus && CONTACT_STATUSES.includes(initialStatus as ContactStatus) ? initialStatus : 'all'
   );
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showBatchDeleteConfirm, setShowBatchDeleteConfirm] = useState(false);
+  const [isBatchDeleting, setIsBatchDeleting] = useState(false);
+  const [batchStatusTarget, setBatchStatusTarget] = useState<ContactStatus | ''>('');
   const { toast } = useToast();
   const t = useAdminTranslations();
 
-  const filtered = statusFilter === 'all'
-    ? contacts
-    : contacts.filter((c) => c.status === statusFilter);
+  const filtered = useMemo(
+    () => statusFilter === 'all' ? contacts : contacts.filter((c) => c.status === statusFilter),
+    [contacts, statusFilter],
+  );
+
+  const filteredIds = useMemo(() => new Set(filtered.map((c) => c.id)), [filtered]);
+
+  // Synchronously prune selection to only include IDs in current filter
+  const effectiveSelectedIds = useMemo(() => {
+    const next = new Set<string>();
+    for (const id of selectedIds) {
+      if (filteredIds.has(id)) next.add(id);
+    }
+    return next;
+  }, [selectedIds, filteredIds]);
+
+  // Sync state when contacts disappear (after delete/update)
+  useEffect(() => {
+    setSelectedIds((prev) => {
+      const next = new Set<string>();
+      for (const id of prev) {
+        if (filteredIds.has(id)) next.add(id);
+      }
+      return next.size === prev.size ? prev : next;
+    });
+  }, [filteredIds]);
+
+  const allSelected = filtered.length > 0 && filtered.every((c) => effectiveSelectedIds.has(c.id));
+
+  const toggleSelect = useCallback((id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const toggleSelectAll = useCallback(() => {
+    if (allSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filtered.map((c) => c.id)));
+    }
+  }, [allSelected, filtered]);
+
+  const handleBatchDelete = () => {
+    const ids = [...effectiveSelectedIds];
+    setIsBatchDeleting(true);
+    startTransition(async () => {
+      const result = await batchDeleteContacts(ids);
+      setIsBatchDeleting(false);
+      if (result.error) {
+        toast(result.error, 'error');
+      } else {
+        toast(t.contacts.batchDeleted.replace('{count}', String(result.deleted ?? ids.length)));
+        setSelectedIds(new Set());
+        setShowBatchDeleteConfirm(false);
+      }
+    });
+  };
+
+  const handleBatchStatusChange = (status: ContactStatus) => {
+    const ids = [...effectiveSelectedIds];
+    startTransition(async () => {
+      const result = await batchUpdateContactStatus(ids, status);
+      if (result.error) {
+        toast(result.error, 'error');
+      } else {
+        toast(t.contacts.batchStatusUpdated.replace('{count}', String(result.updated ?? ids.length)));
+        setSelectedIds(new Set());
+      }
+      setBatchStatusTarget('');
+    });
+  };
 
   const columns: Column<ContactRow>[] = [
+    {
+      key: '_select',
+      header: '',
+      width: '2.5rem',
+      render: (row) => (
+        <input
+          type="checkbox"
+          checked={effectiveSelectedIds.has(row.id)}
+          onChange={() => toggleSelect(row.id)}
+          onClick={(e) => e.stopPropagation()}
+          aria-label={`Select ${row.name}`}
+          style={{ cursor: 'pointer', accentColor: GOLD }}
+        />
+      ),
+    },
     { key: 'name', header: t.contacts.name, sortable: true },
     { key: 'email', header: t.contacts.email, sortable: true },
     { key: 'phone', header: t.contacts.phone },
@@ -114,7 +211,8 @@ export default function ContactsListClient({ contacts }: Props) {
 
   return (
     <div>
-      <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem' }}>
+      {/* Status filter bar */}
+      <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
         {['all', ...CONTACT_STATUSES].map((s) => (
           <button
             key={s}
@@ -138,11 +236,102 @@ export default function ContactsListClient({ contacts }: Props) {
         ))}
       </div>
 
+      {/* Batch action bar */}
+      {effectiveSelectedIds.size > 0 && (
+        <div
+          style={{
+            marginBottom: '1rem',
+            display: 'flex',
+            gap: '0.75rem',
+            alignItems: 'center',
+            padding: '0.625rem 1rem',
+            borderRadius: '8px',
+            backgroundColor: CARD,
+            boxShadow: neu(4),
+          }}
+        >
+          <span style={{ fontSize: '0.8125rem', color: NAVY, fontWeight: 600 }}>
+            {t.contacts.selected.replace('{count}', String(effectiveSelectedIds.size))}
+          </span>
+          <button
+            type="button"
+            onClick={toggleSelectAll}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: GOLD,
+              cursor: 'pointer',
+              fontSize: '0.8125rem',
+              fontWeight: 500,
+              padding: '0.25rem 0.5rem',
+            }}
+          >
+            {allSelected ? t.contacts.deselectAll : t.contacts.selectAll}
+          </button>
+          <div style={{ flex: 1 }} />
+          {/* Batch status change */}
+          <select
+            aria-label={t.contacts.batchUpdateStatus}
+            value={batchStatusTarget}
+            onChange={(e) => {
+              const val = e.target.value as ContactStatus;
+              if (val) handleBatchStatusChange(val);
+            }}
+            style={{
+              padding: '0.3rem 0.5rem',
+              borderRadius: '6px',
+              border: 'none',
+              boxShadow: neuIn(2),
+              backgroundColor: CARD,
+              color: NAVY,
+              fontSize: '0.75rem',
+              outline: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            <option value="">{t.contacts.batchUpdateStatus}</option>
+            {CONTACT_STATUSES.map((s) => (
+              <option key={s} value={s}>{t.status[s as keyof typeof t.status]}</option>
+            ))}
+          </select>
+          {/* Batch delete */}
+          <button
+            type="button"
+            onClick={() => setShowBatchDeleteConfirm(true)}
+            style={{
+              padding: '0.375rem 0.75rem',
+              borderRadius: '6px',
+              border: 'none',
+              backgroundColor: ERROR,
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: '0.8125rem',
+              fontWeight: 600,
+            }}
+          >
+            {t.contacts.batchDelete}
+          </button>
+        </div>
+      )}
+
       <DataTable
         columns={columns}
         data={filtered}
         getRowKey={(row) => row.id}
         searchKeys={['name', 'email', 'phone', 'message']}
+        headerAction={
+          filtered.length > 0 ? (
+            <label style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', cursor: 'pointer', fontSize: '0.8125rem', color: TEXT_MID }}>
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={toggleSelectAll}
+                style={{ accentColor: GOLD, cursor: 'pointer' }}
+              />
+              {t.contacts.selectAll}
+            </label>
+          ) : undefined
+        }
         actions={(row) => (
           <button
             type="button"
@@ -161,6 +350,17 @@ export default function ContactsListClient({ contacts }: Props) {
           onClose={() => setExpandedId(null)}
         />
       )}
+
+      <ConfirmDialog
+        open={showBatchDeleteConfirm}
+        title={t.contacts.batchDelete}
+        message={t.contacts.batchDeleteMessage.replace('{count}', String(effectiveSelectedIds.size))}
+        items={contacts.filter((c) => effectiveSelectedIds.has(c.id)).map((c) => c.name)}
+        confirmLabel={t.common.delete}
+        loading={isBatchDeleting}
+        onCancel={() => setShowBatchDeleteConfirm(false)}
+        onConfirm={handleBatchDelete}
+      />
     </div>
   );
 }

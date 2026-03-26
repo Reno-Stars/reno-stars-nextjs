@@ -107,6 +107,7 @@ Unified site/project management. Roof = site, floors = project layers. Drag-and-
 - **Pre-save warnings**: `ProjectForm`, `SiteForm`, `BlogPostForm` check empty optional fields → `ConfirmDialog` with `variant="warning"`.
 - **Collapsible list sections**: First 3 items shown, "Show All (N)" toggle. Hidden inputs always render.
 - **List page pattern**: Edit (`GOLD`) + Delete (`ERROR`) actions, `ConfirmDialog` via `deleteId` state.
+- **Batch operations** (Contacts): Checkbox column + "Select All" in `DataTable.headerAction`. Batch action bar appears on selection with count, select/deselect toggle, status dropdown, and delete button. `effectiveSelectedIds` (synchronous `useMemo`) prunes selection against current filter to prevent stale IDs. `ConfirmDialog` lists item names via `items` prop. Server actions use `inArray()` with `MAX_BATCH_SIZE = 100` and full UUID validation.
 - **Landing page previews**: FAQs, Services, Areas, Badges, Designs, Partners, About pages include homepage-mirroring preview sections.
 - **CompanyForm sections**: 4 labeled groups (Business Info, Location, Legal, Marketing). Includes `VideoUrlInput` for hero video and `ImageUrlInput` for hero poster image below the logo field. Save action deletes replaced S3 objects via `deleteS3Object()` (fire-and-forget).
 - **Slug validation**: `isValidSlug()` rejects consecutive hyphens. Regex: `/^[a-z0-9]+(-[a-z0-9]+)*$/`.
