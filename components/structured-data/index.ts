@@ -10,3 +10,4 @@ export { default as WebSiteSchema } from './WebSiteSchema';
 export { default as HowToSchema } from './HowToSchema';
 export { default as ContactPageSchema } from './ContactPageSchema';
 export { default as ProjectCategorySchema } from './ProjectCategorySchema';
+export { OrganizationSchema } from './OrganizationSchema';
