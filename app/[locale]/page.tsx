@@ -223,15 +223,7 @@ export default async function Page({ params }: PageProps) {
 
   const breadcrumbs = [{ name: t("nav.home"), url: `/${locale}/` }];
 
-  // FAQ schema: use DB FAQs if available, fall back to static translations
-  const faqSchemaItems = localizedFaqs.length > 0
-    ? localizedFaqs.map((f) => ({ question: f.question, answer: f.answer }))
-    : [
-        { question: t("homeFaqs.q1"), answer: t("homeFaqs.a1") },
-        { question: t("homeFaqs.q2"), answer: t("homeFaqs.a2") },
-        { question: t("homeFaqs.q3"), answer: t("homeFaqs.a3") },
-        { question: t("homeFaqs.q4"), answer: t("homeFaqs.a4") },
-      ];
+  const faqSchemaItems = localizedFaqs.map((f) => ({ question: f.question, answer: f.answer }));
 
   return (
     <>

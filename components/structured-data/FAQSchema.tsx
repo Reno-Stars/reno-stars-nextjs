@@ -7,7 +7,9 @@ interface FAQSchemaProps {
   faqs: FAQ[];
 }
 
-export default function FAQSchema({ faqs }: FAQSchemaProps): React.ReactElement {
+export default function FAQSchema({ faqs }: FAQSchemaProps): React.ReactElement | null {
+  if (faqs.length === 0) return null;
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',

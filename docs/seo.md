@@ -28,7 +28,7 @@ Components in `components/structured-data/`:
 | `ProjectSchema` | WebPage + Service (mainEntity) | Project detail pages (nested `HomeAndConstructionBusiness` provider with `aggregateRating` from Google Reviews) |
 | `ArticleSchema` | Article | Blog post pages (includes `image` as `ImageObject` with width/height) |
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
-| `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service), Service+location pages (3 Q&A per service), Area pages (area-specific FAQs) |
+| `FAQSchema` | FAQPage | Homepage (DB global FAQs), Benefits, Projects, Design, Showroom, Workflow, Reviews, About, Cost guide pages, Service detail pages (3 Q&A per service), Service+location pages (3 Q&A per service), Area pages (area-specific DB FAQs). Returns `null` when faqs array is empty. |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
 | `HowToSchema` | HowTo | Workflow page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
