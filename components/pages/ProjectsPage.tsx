@@ -669,7 +669,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             {t('cta.viewAllServices')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/process"
+            href="/workflow"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >

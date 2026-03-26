@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: t('title'),
     description: t('description'),
-    alternates: buildAlternates('/process/', locale),
+    alternates: buildAlternates('/workflow/', locale),
     openGraph: {
       title: t('title'),
       description: t('description'),
-      url: `${baseUrl}/${locale}/process/`,
+      url: `${baseUrl}/${locale}/workflow/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
@@ -60,7 +60,7 @@ export default async function Page({ params }: PageProps) {
 
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
-    { name: nav('process'), url: `/${locale}/process/` },
+    { name: nav('process'), url: `/${locale}/workflow/` },
   ];
 
   // FAQs based on the 5 steps

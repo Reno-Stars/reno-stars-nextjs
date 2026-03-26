@@ -20,7 +20,7 @@ function enParagraphs(city: string, svc: string): string[] {
       `\n\nThis ${city} kitchen renovation showcases our commitment to creating functional, beautiful cooking spaces. Our team selected premium materials including quartz countertops, solid wood cabinetry, and high-end appliances to deliver a kitchen combining modern aesthetics with everyday practicality.`,
       `\n\nThe renovation involved comprehensive planning from our experienced project managers who coordinated every aspect from demolition through final installation. We optimized the kitchen layout for improved workflow, ensuring the cooking triangle allows effortless meal preparation.`,
       `\n\nKey features include custom cabinetry with soft-close hinges and pull-out organizers, under-cabinet LED lighting, and a durable tile backsplash. Premium quartz countertops offer superior stain resistance and luxurious appearance that endures for years.`,
-      `\n\nAs one of Vancouver's most trusted kitchen renovation contractors, Reno Stars brings over a decade of experience to every project. Our comprehensive warranty and $5M liability coverage give homeowners peace of mind. Contact us for a free consultation for your ${city} kitchen renovation.`,
+      `\n\nAs one of Vancouver's most trusted kitchen renovation contractors, Reno Stars brings over a decade of experience to every project. Our comprehensive warranty and up to $5M liability coverage give homeowners peace of mind. Contact us for a free consultation for your ${city} kitchen renovation.`,
     ],
     bathroom: [
       `\n\nThis ${city} bathroom renovation demonstrates our expertise in transforming outdated bathrooms into spa-inspired retreats. Our design team selected premium fixtures, luxurious tile work, and modern vanities creating a serene atmosphere for daily relaxation.`,
@@ -39,7 +39,7 @@ function enParagraphs(city: string, svc: string): string[] {
     `\n\nThis ${city} renovation project reflects Reno Stars' dedication to quality craftsmanship and thoughtful design. Our team worked closely with the homeowner to understand their vision, lifestyle needs, and budget, creating a plan maximizing functionality and aesthetic appeal.`,
     `\n\nThe project involved careful material selection, with our design consultants guiding options for flooring, fixtures, lighting, and finishes. We source from trusted suppliers across the Lower Mainland, ensuring premium quality with competitive pricing.`,
     `\n\nOur unified project management means homeowners never coordinate directly with individual trades. A dedicated project manager oversees scheduling, material delivery, and quality control, providing regular progress updates throughout.`,
-    `\n\nReno Stars proudly serves ${city} with professional renovation services backed by over a decade of experience, $5M liability coverage, and a 3-year warranty. Schedule your free consultation today.`,
+    `\n\nReno Stars proudly serves ${city} with professional renovation services backed by over a decade of experience, up to $5M liability coverage, and a 3-year warranty. Schedule your free consultation today.`,
   ];
 }
 
@@ -49,7 +49,7 @@ function zhParagraphs(city: string, svc: string): string[] {
       `\n\n这个${city}厨房装修项目展现了我们打造功能与美观兼备的烹饪空间的专业实力。团队精选石英石台面、实木橱柜和高端不锈钢电器，将现代美学与日常实用性完美结合。`,
       `\n\n装修过程由经验丰富的项目经理全程把控，从拆除到安装精心协调每个环节。我们特别注重优化厨房动线，确保水槽、灶台和冰箱之间形成高效工作三角。`,
       `\n\n亮点包括配备缓冲铰链的定制橱柜、柜下LED灯带、精美瓷砖背板。台面采用优质石英石，抗污性能卓越、外观奢华、经久耐用。`,
-      `\n\n作为温哥华最值得信赖的厨房装修承包商，Reno Stars带来十余年经验。全面质保和500万元责任保险让业主安心无忧。立即联系获取${city}厨房装修免费咨询。`,
+      `\n\n作为温哥华最值得信赖的厨房装修承包商，Reno Stars带来十余年经验。全面质保和至多500万元责任保险让业主安心无忧。立即联系获取${city}厨房装修免费咨询。`,
     ],
     bathroom: [
       `\n\n这个${city}卫浴装修项目展示了我们将浴室改造成水疗级空间的专业能力。设计团队精选优质洁具、豪华瓷砖和现代浴室柜，营造宁静舒适的放松氛围。`,
@@ -68,7 +68,7 @@ function zhParagraphs(city: string, svc: string): string[] {
     `\n\n这个${city}装修项目体现了Reno Stars对精湛工艺的追求。团队与业主深入沟通，了解愿景、需求和预算，制定兼顾功能与美观的方案。`,
     `\n\n项目涉及细致选材，设计顾问提供地板、洁具、照明等方案。从低陆平原可靠供应商采购，确保品质与价格兼优。`,
     `\n\n统一项目管理模式下业主无需直接对接各工种。专属经理负责进度、材料和质检，定期汇报施工进展。`,
-    `\n\nReno Stars以十余年经验、500万保险和3年质保为${city}社区提供专业装修。立即预约免费咨询。`,
+    `\n\nReno Stars以十余年经验、至多500万保险和3年质保为${city}社区提供专业装修。立即预约免费咨询。`,
   ];
 }
 

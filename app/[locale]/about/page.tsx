@@ -5,6 +5,7 @@ import AboutPage from '@/components/pages/AboutPage';
 import { BreadcrumbSchema, FAQSchema, OrganizationSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getAboutSectionsFromDb, getCompanyFromDb, getTrustBadgesFromDb, getSocialLinksFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getYearsExperience } from '@/lib/company-config';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -21,15 +22,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: 'metadata.about' });
 
   const baseUrl = getBaseUrl();
-  const ogImage = buildOgImageUrl(t('title'), t('description'));
+  const years = { years: getYearsExperience() };
+  const ogImage = buildOgImageUrl(t('title'), t('description', years));
 
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('description', years),
     alternates: buildAlternates('/about/', locale),
     openGraph: {
       title: t('title'),
-      description: t('description'),
+      description: t('description', years),
       url: `${baseUrl}/${locale}/about/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
@@ -40,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
-      description: t('description'),
+      description: t('description', years),
       images: [{ url: ogImage, alt: t('title') }],
     },
   };

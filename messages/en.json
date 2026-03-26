@@ -17,7 +17,7 @@
     "areas": "Areas",
     "design": "Design",
     "benefits": "Benefits",
-    "process": "How It Works",
+    "process": "Workflow",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "Switch to Chinese",
@@ -148,7 +148,7 @@
     "expertTeam": "Expert Team",
     "expertCraftsmen": "Expert Craftsmen",
     "liabilityCoverage": "WCB Coverage · Up to 3 Years Warranty",
-    "fullCoverage": "$5M WCB Coverage · Up to 3 Years Warranty",
+    "fullCoverage": "Up to $5M WCB Coverage · Up to 3 Years Warranty",
     "projectsCompleted": "Projects Completed",
     "projectsDone": "Projects Done",
     "happyClients": "Happy Clients",
@@ -401,8 +401,8 @@
       "description": "Decades of combined experience delivering quality renovations across the Lower Mainland."
     },
     "coverage": {
-      "title": "$5M WCB Coverage · Up to 3 Years Warranty",
-      "description": "Full $5M WCB liability insurance and up to 3 years warranty on workmanship for your peace of mind."
+      "title": "Up to $5M WCB Coverage · Up to 3 Years Warranty",
+      "description": "Up to $5M WCB liability insurance and up to 3 years warranty on workmanship for your peace of mind."
     },
     "rating": {
       "title": "5-Star Google Rating",
@@ -420,7 +420,7 @@
   "serviceBenefits": {
     "freeConsultation": "Free consultation and quote",
     "licensedInsured": "Licensed and insured professionals",
-    "coverageAndWarranty": "$5M WCB liability coverage with up to 3 years warranty on workmanship",
+    "coverageAndWarranty": "Up to $5M WCB liability coverage with up to 3 years warranty on workmanship",
     "experience": "{years}+ years of experience",
     "rating": "5-star Google rating"
   },
@@ -493,7 +493,7 @@
   "metadata": {
     "home": {
       "title": "Vancouver Renovation Contractor | Kitchen & Bathroom | Reno Stars",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
+      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, up to $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
     },
     "services": {
       "title": "Kitchen, Bathroom & Whole House Renovation Services | Reno Stars Vancouver",
@@ -513,7 +513,7 @@
     },
     "benefits": {
       "title": "Why Choose Reno Stars | Vancouver Renovation Contractor",
-      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. {years}+ years experience, $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
+      "description": "Discover why Reno Stars is Vancouver's most trusted renovation contractor. {years}+ years experience, up to $5M WCB coverage, up to 3 years warranty, 5-star Google rating."
     },
     "design": {
       "title": "Renovation Design Inspiration | Reno Stars Vancouver",
@@ -529,7 +529,7 @@
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
       "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, up to $5M WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
     },
     "areas": {
       "title": "Service Areas | Reno Stars Vancouver",
@@ -544,8 +544,8 @@
       "description": "Your message has been received. We will get back to you shortly."
     },
     "process": {
-      "title": "Renovation Process — 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation process. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "Renovation Workflow — 5 Steps | Reno Stars Vancouver",
+      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
     },
     "showroom": {
       "title": "Visit Our Showroom | Reno Stars Vancouver",
@@ -569,7 +569,7 @@
     },
     "about": {
       "title": "About Reno Stars | Vancouver Renovation Company",
-      "description": "Learn about Reno Stars — Vancouver's trusted renovation contractor with 15+ years experience, $5M insurance, and a team of 100+ professionals dedicated to quality craftsmanship."
+      "description": "Learn about Reno Stars — Vancouver's trusted renovation contractor with {years}+ years experience, up to $5M insurance, and a team of 100+ professionals dedicated to quality craftsmanship."
     },
     "reviews": {
       "title": "Customer Reviews & Testimonials | Reno Stars Vancouver",
@@ -616,7 +616,7 @@
     "q2": "How long does a typical renovation take?",
     "a2": "Timelines depend on the project scope: kitchen renovations take 4–8 weeks, bathrooms 2–4 weeks, and whole house renovations 3–6 months. We provide a detailed schedule before work begins.",
     "q3": "Do you offer a warranty on renovation work?",
-    "a3": "Yes, all our renovation projects come with a 3-year workmanship warranty. We also carry $5M liability insurance for your peace of mind.",
+    "a3": "Yes, all our renovation projects come with a 3-year workmanship warranty. We also carry up to $5M liability insurance for your peace of mind.",
     "q4": "What areas do you serve in Metro Vancouver?",
     "a4": "We serve all communities across Metro Vancouver including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Langley, and more."
   },
@@ -680,8 +680,7 @@
         "Style preference confirmation",
         "Material budget and positioning",
         "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)",
-        "Functional requirements communication"
+        "Obtain floor plans and site photos (if available)"
       ],
       "tags": [
         {
@@ -693,6 +692,10 @@
           "label": "Email"
         },
         {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
           "icon": "wechat",
           "label": "WeChat"
         },
@@ -701,17 +704,16 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
     },
     "step2": {
-      "title": "On-Site Measurement & Quote",
-      "subtitle": "On-Site Measure & Quote",
+      "title": "Tailored Assessment & Quote",
+      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
       "points": [
-        "Professional on-site measurement for precise dimensions",
-        "Ensure design plans match actual space",
-        "Define scope of work, content, and payment milestones",
-        "In-depth communication on usage habits and functional needs",
-        "Provide clear quotation based on material selection and craftsmanship"
+        "Professional on-site measurement for precise dimensions (if needed)",
+        "A comprehensive design proposal illustrating your future space",
+        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
+        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
       ],
       "tags": [
         {
@@ -720,26 +722,26 @@
         },
         {
           "icon": "quote",
-          "label": "Transparent Quote"
+          "label": "Transparent Pricing"
         },
         {
           "icon": "site",
-          "label": "Site Visit"
+          "label": "Design Proposal"
         }
       ],
-      "faqAnswer": "Our team conducts professional on-site measurements to ensure accuracy. We discuss your functional needs in detail and provide a transparent, itemized quotation based on your material selections and project scope."
+      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
     },
     "step3": {
       "title": "Confirmation & Contract",
-      "subtitle": "Confirm & Contract",
+      "subtitle": "Finalizing Details & Project Initiation",
       "points": [
-        "Invite clients to company/showroom for in-person consultation",
+        "Invite clients to showroom for in-person consultation",
         "Address questions and optimize design details",
-        "Confirm project start date",
-        "Coordinate material procurement, ordering, delivery, and installation schedule",
         "Confirm design proposal and material samples",
+        "Finalize the payment schedule and assist with delivery scheduling",
         "Sign construction contract and collect deposit",
-        "Establish project team: Project Manager, Engineer, Coordinator"
+        "Secure the project start date",
+        "Establish project team: Project Manager, Construction Manager, Coordinator"
       ],
       "tags": [
         {
@@ -755,18 +757,18 @@
           "label": "Project Team"
         }
       ],
-      "faqAnswer": "After finalizing your design, we invite you to our showroom to review material samples and sign the contract. We establish a dedicated project team and coordinate all scheduling for materials and installation."
+      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
     },
     "step4": {
       "title": "Execution & Management",
-      "subtitle": "Execution & Management",
+      "subtitle": "Fully Coordinated & Easy Communication",
       "points": [
-        "Unified project team management",
-        "Coordinated construction progress",
-        "Material delivery and on-site coordination",
+        "A unified project team managing all aspects of your project",
         "No direct interaction with workers needed",
-        "Unified construction quality control",
-        "Quick response to issues and resolution"
+        "Coordinated construction progress to ensure efficiency and consistency",
+        "Assistance with delivery scheduling and on-site coordination",
+        "Consistent quality control throughout the entire construction process",
+        "Fast response and efficient resolution of any issues"
       ],
       "tags": [
         {
@@ -782,16 +784,15 @@
           "label": "Quick Response"
         }
       ],
-      "faqAnswer": "Our project team handles all aspects of construction management. You won't need to coordinate with individual workers—we manage quality control, progress tracking, and handle any issues that arise."
+      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly—we coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
     },
     "step5": {
-      "title": "Handover & Aftercare",
-      "subtitle": "Handover & Aftercare",
+      "title": "Walkthrough & Aftercare",
+      "subtitle": "Final Checks & Lasting Support",
       "points": [
-        "Final inspection to ensure results meet expectations",
-        "Project handover confirmation",
-        "Warranty service provided",
-        "Ongoing upgrade and maintenance support"
+        "Final walkthrough to confirm all work meets expectations",
+        "New home handover",
+        "Ongoing support for maintenance during warranty period"
       ],
       "tags": [
         {
@@ -807,7 +808,7 @@
           "label": "Ongoing Support"
         }
       ],
-      "faqAnswer": "Upon completion, we conduct a thorough final inspection with you to ensure everything meets your expectations. We provide warranty service and ongoing maintenance support for your peace of mind."
+      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
     },
     "tagline": "Making renovation truly achievable",
     "whyMatters": {
@@ -1236,9 +1237,9 @@
     "faq": {
       "title": "Frequently Asked Questions",
       "q1": "How long has Reno Stars been in business?",
-      "a1": "Reno Stars has over 15 years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
+      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
       "q2": "Are you licensed and insured?",
-      "a2": "Yes, we are fully licensed and carry $5 million in liability coverage. We also provide up to a 3-year warranty on our work, giving you complete peace of mind throughout your renovation journey.",
+      "a2": "Yes, we are fully licensed and carry up to $5 million in liability coverage. We also provide up to a 3-year warranty on our work, giving you complete peace of mind throughout your renovation journey.",
       "q3": "What areas do you serve?",
       "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
       "q4": "How do I get started with a renovation project?",

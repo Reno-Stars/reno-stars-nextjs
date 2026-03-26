@@ -7,7 +7,7 @@ import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
 import {
   Phone, Mail, MapPin, Globe, Star, CheckSquare, Download, Loader2, Check, AlertCircle,
-  MessageCircle, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
+  MessageCircle, MessageSquare, Clipboard, Ruler, FileText, Eye, Handshake, PenTool,
   Users, Settings, ClipboardCheck, HeartHandshake, Shield, Headphones,
   type LucideIcon,
 } from 'lucide-react';
@@ -38,6 +38,7 @@ interface StepData {
 const stepIcons: Record<string, LucideIcon> = {
   phone: Phone,
   email: Mail,
+  whatsapp: MessageSquare,
   wechat: MessageCircle,
   sms: Clipboard,
   ruler: Ruler,
@@ -233,7 +234,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
       const dataUrl = await capturePoster();
 
       const link = document.createElement('a');
-      link.download = 'reno-stars-process-poster.png';
+      link.download = 'reno-stars-workflow-poster.png';
       link.href = dataUrl;
       link.click();
 
@@ -272,7 +273,7 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
         format: [imgWidth, imgHeight],
       });
       pdf.addImage(dataUrl, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save('reno-stars-process-poster.pdf');
+      pdf.save('reno-stars-workflow-poster.pdf');
 
       setPdfDownloadStatus('success');
       pdfStatusTimerRef.current = setTimeout(() => setPdfDownloadStatus('idle'), 3000);
@@ -570,9 +571,9 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
 
                       {/* Points */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-2 sm:gap-y-2.5 mb-4 sm:mb-5">
-                        {points.map((point) => (
+                        {points.map((point, pointIdx) => (
                           <div key={point} className="flex items-start gap-2 sm:gap-2.5">
-                            <span className="mt-0.5 text-base sm:text-lg" style={{ color: step.color }}>•</span>
+                            <span className="mt-0.5 text-base sm:text-lg font-semibold shrink-0" style={{ color: step.color }}>{pointIdx + 1}.</span>
                             <span className="text-base sm:text-lg leading-relaxed" style={{ color: TEXT_MID }}>{point}</span>
                           </div>
                         ))}
@@ -718,12 +719,12 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
             </div>
 
             {/* Right: Stats */}
-            <div className="space-y-3 sm:space-y-4 order-3">
+            <div className="space-y-4 sm:space-y-5 order-3">
               {footerStats.map((stat) => (
-                <div key={stat.label} className="flex items-center justify-between md:justify-end gap-4">
-                  <span className="text-white/70 text-sm sm:text-base md:text-lg">{stat.label}</span>
+                <div key={stat.label} className="text-center md:text-right">
+                  <span className="block text-white/70 text-sm sm:text-base mb-1">{stat.label}</span>
                   {stat.type === 'rating' ? (
-                    <div className="flex gap-0.5 sm:gap-1">
+                    <div className="flex gap-0.5 sm:gap-1 justify-center md:justify-end">
                       {[0, 1, 2, 3, 4].map((i) => (
                         <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ fill: GOLD, color: GOLD }} />
                       ))}

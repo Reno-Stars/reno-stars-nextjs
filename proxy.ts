@@ -87,6 +87,13 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.redirect(target, 301));
   }
 
+  // Redirect old /process route to /workflow
+  if (/\/process(\/|$)/.test(pathname)) {
+    const newPath = pathname.replaceAll('/process', '/workflow');
+    const target = new URL(newPath, request.url);
+    return addSecurityHeaders(NextResponse.redirect(target, 301));
+  }
+
   // All other routes — next-intl locale middleware + security headers
   const response = addSecurityHeaders(intlMiddleware(request));
 

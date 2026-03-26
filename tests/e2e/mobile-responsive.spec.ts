@@ -9,7 +9,7 @@ const PAGES = [
   { path: '/en', label: 'Homepage' },
   { path: '/en/projects', label: 'Projects' },
   { path: '/en/contact', label: 'Contact' },
-  { path: '/en/process', label: 'Process' },
+  { path: '/en/workflow', label: 'Workflow' },
   { path: '/en/blog', label: 'Blog' },
 ];
 

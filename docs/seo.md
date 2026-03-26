@@ -4,7 +4,7 @@
 
 Generated in `app/sitemap.ts` as an async function with `revalidate = 3600` (1-hour ISR). Service slugs use static `serviceTypeToCategory` mapping. Project slugs, site slugs, blog post slugs, and service areas are all fetched from the database via `getProjectSlugsFromDb()`, `getSiteSlugsFromDb()`, `getBlogPostSlugsFromDb()`, and `getServiceAreasFromDb()`. Individual project, site, and blog post entries use actual `updated_at` timestamps from the database for `lastModified` (via date maps). Static pages, service pages, service+location combo pages, category pages, and area pages all use a fixed `STATIC_LAST_MODIFIED` date constant (not `new Date()`) to avoid misleading "updated" signals on every deploy — update this constant when making significant content changes. Includes:
 
-- Static pages (home, services, projects, blog, contact, benefits, design, process, areas, about, showroom, guides, reviews)
+- Static pages (home, services, projects, blog, contact, benefits, design, workflow, areas, about, showroom, guides, reviews)
 - All service detail pages
 - Service × location combination pages (e.g., `/en/services/kitchen/vancouver/`)
 - Project category pages
@@ -30,7 +30,7 @@ Components in `components/structured-data/`:
 | `BreadcrumbSchema` | BreadcrumbList | All pages with breadcrumbs |
 | `FAQSchema` | FAQPage | Benefits page, Service detail pages (3 Q&A per service), Service+location pages (3 Q&A per service), Area pages (area-specific FAQs) |
 | `ReviewSchema` | HomeAndConstructionBusiness + Review | Homepage (individual Google Reviews only, no aggregate — handled by layout) |
-| `HowToSchema` | HowTo | Process page (5-step renovation workflow with tools and total time) |
+| `HowToSchema` | HowTo | Workflow page (5-step renovation workflow with tools and total time) |
 | `ProjectCategorySchema` | ItemList | Project category pages (positioned list of projects with URLs) |
 | `ContactPageSchema` | ContactPage + ContactPoint | Contact page (HomeAndConstructionBusiness with phone, email, languages, areas served) |
 | `OrganizationSchema` | HomeAndConstructionBusiness | About page (company info, area served, offer catalog; accepts optional `socialLinks`/`areas` props) |
@@ -166,7 +166,10 @@ High-impression WordPress URLs mapped to closest matching new project or categor
 - `/richmond-kitchen-remodel-bathroom-renovation-project` → `/projects/richmond-kitchen-remodel-bath`
 - `/home-renovation-in-langley-kitchen-bathroom-basement` → `/projects/stunning-home-renovation-langley`
 
-### 8. Non-localized Fallbacks
+### 8. Route Renames (via `proxy.ts`)
+- `/process` → `/workflow` (301, handled in proxy before i18n routing)
+
+### 9. Non-localized Fallbacks
 Root-level paths without locale redirect to `/en/`:
 - `/projects/:path*` → `/en/projects/:path*`
 - `/services/:path*` → `/en/services/:path*`
@@ -212,7 +215,7 @@ The `buildOgImageUrl(title, subtitle?)` helper in `lib/utils.ts` constructs the 
 | Areas hub | Dynamic OG (`/api/og`) | Page title |
 | Benefits | Dynamic OG (`/api/og`) | Page title |
 | Design | Dynamic OG (`/api/og`) | Page title |
-| Process | Dynamic OG (`/api/og`) | Page title |
+| Workflow | Dynamic OG (`/api/og`) | Page title |
 | Contact | Dynamic OG (`/api/og`) | Page title |
 | About | Dynamic OG (`/api/og`) | Page title |
 | Showroom | Dynamic OG (`/api/og`) | Page title |

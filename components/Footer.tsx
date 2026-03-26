@@ -204,7 +204,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/services', label: t('nav.services') },
     { href: '/projects', label: t('nav.projects') },
     { href: '/about', label: t('nav.about') },
-    { href: '/process', label: t('nav.process') },
+    { href: '/workflow', label: t('nav.process') },
     { href: '/design', label: t('nav.design') },
     { href: '/benefits', label: t('nav.benefits') },
     { href: '/reviews', label: t('nav.reviews') },

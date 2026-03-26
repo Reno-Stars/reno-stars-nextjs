@@ -209,7 +209,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
                   {t(`faq.q${i}`)}
                   <span className="text-lg transition-transform group-open:rotate-45" style={{ color: GOLD }}>+</span>
                 </summary>
-                <div className="px-5 pb-5 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${i}`)}</div>
+                <div className="px-5 pb-5 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${i}`, { years: company.yearsExperience })}</div>
               </details>
             ))}
           </div>

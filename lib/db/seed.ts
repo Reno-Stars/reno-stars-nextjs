@@ -352,8 +352,8 @@ async function seed() {
       whatWeOfferZh: '从厨房和浴室装修到全屋改造，我们提供端到端的装修服务，包括设计咨询、项目管理和专业施工。',
       ourValuesEn: 'Integrity, quality, and client satisfaction drive everything we do. We believe in transparent communication, fair pricing, and standing behind our work with a comprehensive warranty.',
       ourValuesZh: '诚信、品质和客户满意是我们一切工作的驱动力。我们坚持透明沟通、公平定价，并以全面的保修为我们的工作提供保障。',
-      whyChooseUsEn: `Licensed, WorkSafe BC insured, and backed by a 3-year warranty. Our 5-star Google rating and dedicated team of ${COMPANY_STATS.teamSize} professionals ensure your project is in expert hands.`,
-      whyChooseUsZh: `持证经营，拥有WorkSafe BC保障和3年保修。我们的Google五星好评和${COMPANY_STATS.teamSize}人专业团队确保您的项目由专家负责。`,
+      whyChooseUsEn: `Licensed, insured with ${COMPANY_STATS.liabilityCoverage} WCB liability coverage, and backed by up to a 3-year warranty. Our 5-star Google rating and dedicated team of ${COMPANY_STATS.teamSize}+ professionals ensure your project is in expert hands.`,
+      whyChooseUsZh: `持证经营，拥有至多${COMPANY_STATS.liabilityCoverage.replace('Up to ', '')}WCB责任保险和长达3年保修。我们的Google五星好评和${COMPANY_STATS.teamSize}人专业团队确保您的项目由专家负责。`,
       letsBuildTogetherEn: 'Your dream home is just a conversation away. Whether you\'re planning a minor update or a major transformation, we\'d love to bring your vision to life.',
       letsBuildTogetherZh: '您的梦想之家只需一次对话。无论您是计划小幅更新还是大规模改造，我们都乐意将您的愿景变为现实。',
     });
@@ -447,7 +447,7 @@ async function seed() {
         questionEn: 'Why choose Reno Stars?',
         questionZh: '为什么要选择 Reno Stars？',
         answerEn: `Reno Stars is committed to delivering high-quality craftsmanship with over ${getYearsExperience()} years of combined experience. We are WorkSafe BC insured with ${COMPANY_STATS.liabilityCoverage} liability coverage, offer up to 3 years warranty on all work, transparent pricing, and ${COMPANY_STATS.projectsCompleted} successfully completed projects. Our 5-star Google rating reflects our commitment to customer satisfaction.`,
-        answerZh: `Reno Stars 始终致力于提供高品质的工艺，拥有超过${getYearsExperience()}年的综合经验。我们拥有WorkSafe BC ${COMPANY_STATS.liabilityCoverage}责任保障、所有工程长达3年质保、透明定价，已成功完成${COMPANY_STATS.projectsCompleted}项目。我们的Google五星好评反映了我们对客户满意度的承诺。`,
+        answerZh: `Reno Stars 始终致力于提供高品质的工艺，拥有超过${getYearsExperience()}年的综合经验。我们拥有WorkSafe BC至多${COMPANY_STATS.liabilityCoverage.replace('Up to ', '')}责任保障、所有工程长达3年质保、透明定价，已成功完成${COMPANY_STATS.projectsCompleted}项目。我们的Google五星好评反映了我们对客户满意度的承诺。`,
         displayOrder: 2,
       },
       {

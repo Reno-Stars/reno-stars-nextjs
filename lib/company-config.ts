@@ -7,11 +7,11 @@
  * The values here are used as template parameters or as raw data.
  */
 export const COMPANY_STATS = {
-  foundingYear: 1997,
+  foundingYear: 2007,
   teamSize: 17,
-  projectsCompleted: '700+',
-  /** Dollar amount only — full label comes from translations */
-  liabilityCoverage: '$5M',
+  projectsCompleted: "700+",
+  /** Dollar amount with "Up to" qualifier — full label comes from translations */
+  liabilityCoverage: "Up to $5M",
 } as const;
 
 /** Years of experience rounded up to nearest 5 for cleaner display */

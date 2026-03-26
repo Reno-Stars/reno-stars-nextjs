@@ -210,7 +210,7 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
           <Link
-            href="/process"
+            href="/workflow"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
