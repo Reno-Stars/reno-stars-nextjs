@@ -59,6 +59,7 @@ export default function Navbar({ company }: NavbarProps) {
     { href: '/design', label: t('nav.design') },
     { href: '/benefits', label: t('nav.benefits') },
     { href: '/process', label: t('nav.process') },
+    { href: '/reviews', label: t('nav.reviews') },
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
   ], [t]);
