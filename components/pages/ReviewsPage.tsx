@@ -118,7 +118,7 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
       : googleReviews.reviews;
   }, [locale, googleReviews.reviews]);
 
-  const googleReviewUrl = "https://www.google.com/maps/place/?q=place_id:ChIJpwp4vkp0hlQRjT5YhM_r6xQ";
+  const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJT0f2zbHhhVQRhHrIAuFh0y4";
 
   return (
     <main id="main-content" className="min-h-screen" style={{ backgroundColor: SURFACE }}>
