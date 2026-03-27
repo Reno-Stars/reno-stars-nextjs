@@ -24,9 +24,7 @@ async function goToServiceEdit(page: Page, rowIndex: number) {
 /** Enable editing, submit, and wait for success toast */
 async function submitAndWaitForSuccess(page: Page) {
   await page.click('button[type="submit"]');
-  // updateService returns { success: true }, useFormToast shows a success toast
-  // Wait for the toast or for the edit mode to toggle back
-  await page.waitForTimeout(2000);
+  await page.getByRole('alert').getByText('Service saved.').waitFor({ timeout: 10000 });
 }
 
 test.describe('Admin Service Slug Editing', () => {
@@ -83,9 +81,6 @@ test.describe('Admin Service Slug Editing', () => {
     await page.locator('button', { hasText: /^Edit$/ }).click();
     await page.locator('input[name="slug"]').fill('INVALID SLUG!');
     await page.click('button[type="submit"]');
-
-    // Wait for error response
-    await page.waitForTimeout(2000);
 
     // Should still be on the edit page
     await expect(page).toHaveURL(/\/admin\/services\/[0-9a-f-]+/);

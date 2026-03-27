@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { uploadVideoDirect } from '@/lib/admin/upload-client';
+import { compressVideo, formatBytes } from '@/lib/admin/video-compress';
 import { getAssetUrl } from '@/lib/storage';
 import { CARD, NAVY, GOLD, TEXT_MID, ERROR, neuIn, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -33,6 +34,14 @@ export default function VideoUrlInput({
   const [videoError, setVideoError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [compressing, setCompressing] = useState(false);
+  const [compressionProgress, setCompressionProgress] = useState(0);
+  const [compressionInfo, setCompressionInfo] = useState('');
+
+  const mountedRef = useRef(true);
+  useEffect(() => () => { mountedRef.current = false; }, []);
+
+  const busy = compressing || uploading;
 
   useEffect(() => {
     setUrl(defaultValue);
@@ -43,15 +52,57 @@ export default function VideoUrlInput({
   }, [url]);
 
   const handleUpload = useCallback(async (file: File) => {
-    setUploading(true);
     setUploadError('');
+    setCompressionInfo('');
+    setCompressionProgress(0);
 
+    // --- Compression step ---
+    setCompressing(true);
+    let fileToUpload = file;
+    try {
+      const result = await compressVideo(
+        file,
+        (pct) => { if (mountedRef.current) setCompressionProgress(pct); },
+        () => { if (mountedRef.current) setCompressionProgress(-1); },
+      );
+
+      if (!mountedRef.current) return;
+
+      if (result.skipped) {
+        setCompressionInfo(t.upload.compressionSkipped);
+      } else {
+        const percent = Math.round(
+          ((result.originalSize - result.compressedSize) / result.originalSize) * 100,
+        );
+        setCompressionInfo(
+          t.upload.compressionDone
+            .replace('{original}', formatBytes(result.originalSize))
+            .replace('{compressed}', formatBytes(result.compressedSize))
+            .replace('{percent}', String(percent)),
+        );
+        fileToUpload = result.file;
+      }
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') console.error('Video compression error:', err);
+      if (!mountedRef.current) return;
+      // Compression failed — upload original
+      setCompressionInfo(t.upload.compressionSkipped);
+    } finally {
+      if (mountedRef.current) setCompressing(false);
+    }
+
+    if (!mountedRef.current) return;
+
+    // --- Upload step ---
+    setUploading(true);
     try {
       const customKey = slug
         ? `${slug}-${imageRole}-${Date.now().toString(36)}`
         : undefined;
 
-      const result = await uploadVideoDirect({ file, customKey });
+      const result = await uploadVideoDirect({ file: fileToUpload, customKey });
+
+      if (!mountedRef.current) return;
 
       if (result.error) {
         setUploadError(result.error);
@@ -60,11 +111,12 @@ export default function VideoUrlInput({
       }
     } catch (err) {
       if (process.env.NODE_ENV === 'development') console.error('Video upload error:', err);
-      setUploadError('Upload failed. Please try again.');
+      if (!mountedRef.current) return;
+      setUploadError(t.upload.failed);
     } finally {
-      setUploading(false);
+      if (mountedRef.current) setUploading(false);
     }
-  }, [slug, imageRole]);
+  }, [slug, imageRole, t.upload.compressionSkipped, t.upload.compressionDone, t.upload.failed]);
 
   const openFilePicker = useCallback(() => {
     const input = document.createElement('input');
@@ -88,6 +140,15 @@ export default function VideoUrlInput({
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
   }, []);
+
+  // Status text shown in the upload area
+  const statusText = compressing
+    ? compressionProgress < 0
+      ? t.upload.loadingFfmpeg
+      : t.upload.compressing.replace('{percent}', String(compressionProgress))
+    : uploading
+      ? t.upload.uploading
+      : null;
 
   return (
     <div style={{ marginBottom: '1rem' }}>
@@ -186,28 +247,66 @@ export default function VideoUrlInput({
         tabIndex={0}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        onKeyDown={(e) => { if (!uploading && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openFilePicker(); } }}
+        onKeyDown={(e) => { if (!busy && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openFilePicker(); } }}
         style={{
           width: '100%',
           marginTop: '0.5rem',
           padding: '0.75rem',
           borderRadius: '8px',
-          border: `2px dashed ${uploading ? GOLD : '#ccc'}`,
+          border: `2px dashed ${busy ? GOLD : '#ccc'}`,
           backgroundColor: CARD,
           textAlign: 'center',
-          cursor: uploading ? 'wait' : 'pointer',
-          opacity: uploading ? 0.6 : 1,
+          cursor: busy ? 'wait' : 'pointer',
+          opacity: busy ? 0.6 : 1,
         }}
-        onClick={() => !uploading && openFilePicker()}
+        onClick={() => !busy && openFilePicker()}
         aria-label={`${t.upload.uploadVideoFor} ${label}`}
-        aria-disabled={uploading}
+        aria-disabled={busy}
       >
-        <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
-          {uploading ? t.upload.uploading : t.upload.clickOrDragVideo}
-        </div>
-        <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
-          {t.upload.videoFormatHint}
-        </div>
+        {statusText ? (
+          <>
+            <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
+              {statusText}
+            </div>
+            {/* Progress bar during compression */}
+            {compressing && compressionProgress >= 0 && (
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  height: '4px',
+                  borderRadius: '2px',
+                  backgroundColor: '#e0e0e0',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    height: '100%',
+                    width: `${compressionProgress}%`,
+                    backgroundColor: GOLD,
+                    borderRadius: '2px',
+                    transition: 'width 0.3s ease',
+                  }}
+                />
+              </div>
+            )}
+            {/* Show compression result once done, while uploading */}
+            {!compressing && compressionInfo && (
+              <div style={{ color: GOLD, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
+                {compressionInfo}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div style={{ color: TEXT_MID, fontSize: '0.8125rem' }}>
+              {t.upload.clickOrDragVideo}
+            </div>
+            <div style={{ color: TEXT_MID, fontSize: '0.6875rem', marginTop: '0.25rem' }}>
+              {compressionInfo || t.upload.videoFormatHint}
+            </div>
+          </>
+        )}
       </div>
       }
 

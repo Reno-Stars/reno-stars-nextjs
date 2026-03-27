@@ -13,7 +13,7 @@
 
 - **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata. Shows first 3 pairs (`COLLAPSE_THRESHOLD = 3`) with "Show All (N)" toggle; hidden form inputs always render for ALL pairs. Drag-and-drop upload with gold spinner. Accepts optional `slug` prop for SEO-friendly naming. Uses `pairsRef` pattern for async upload gap. Shared `parseImagePairs()` in `lib/admin/form-utils.ts`.
 - **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview. SEO-friendly naming (`{slug}-{imageRole}-{ts}.{ext}`). Detached file picker to bypass `<fieldset disabled>`.
-- **VideoUrlInput** (`components/admin/VideoUrlInput.tsx`): Same pattern as ImageUrlInput but for video files. Accepts MP4/WebM/MOV (max 1 GB). Shows `<video controls>` preview. Uses `uploadVideoDirect()`. Used by CompanyForm for hero video.
+- **VideoUrlInput** (`components/admin/VideoUrlInput.tsx`): Same pattern as ImageUrlInput but for video files. Accepts MP4/WebM/MOV (max 1 GB). Shows `<video controls>` preview. Uses `uploadVideoDirect()`. Used by CompanyForm for hero video. **Client-side compression** via ffmpeg.wasm automatically optimizes videos before upload — see "Video Compression" section below.
 - **BilingualInput** (`components/admin/BilingualInput.tsx`): Dual-mode bilingual text input with EN/ZH flag labels. Optional `maxLength` with color-coded counter (gray < 80%, gold 80-100%, red at limit). SEO field limits: metaTitle=70, metaDescription=155, focusKeyword=50.
 - **BilingualTextarea** (`components/admin/BilingualTextarea.tsx`): Dual-mode bilingual textarea. Controlled mode (`valueEn`/`onChangeEn`) for AI-populated fields, uncontrolled mode (`defaultValueEn`/`defaultValueZh`).
 - **SearchableSelect**: Type-to-filter dropdown with keyboard navigation and ARIA — used for related project in BlogPostForm and linked site in ProjectForm.
@@ -34,6 +34,30 @@ All admin uploads use presigned S3 URLs to bypass Vercel body size limit:
 API route validates auth, file metadata. Images: max 50 MB, JPEG/PNG/WebP/SVG/GIF. Video: max 1 GB, MP4/WebM/MOV. `customKey` sanitized server-side. Presigned URLs expire after 10 minutes (images) or 60 minutes (video). `ContentLength` is omitted from presigned URLs to avoid R2 signature mismatches.
 
 **S3 client** (`lib/admin/s3.ts`): Singleton with `requestChecksumCalculation: 'WHEN_REQUIRED'` (R2 rejects CRC32 on presigned URLs). Exports `deleteS3Object(publicUrl)` for cleaning up replaced uploads. Shared constants in `lib/admin/upload-constants.ts`.
+
+## Video Compression
+
+`VideoUrlInput` automatically compresses videos client-side before upload using ffmpeg.wasm (`lib/admin/video-compress.ts`). This reduces upload size and bandwidth for phone/camera recordings without any user action.
+
+**Architecture:**
+- Uses `@ffmpeg/ffmpeg` (JS wrapper) + `@ffmpeg/core` WASM binary loaded at runtime from jsdelivr CDN (UMD build, ~31 MB)
+- Single-threaded mode — avoids COOP/COEP headers that would break GA, Google Ads, and external fonts
+- Singleton FFmpeg instance with `loadingPromise` guard against concurrent initialization. On load failure, the promise is cleared so the next call retries fresh
+
+**Compression settings:** `-c:v libx264 -preset fast -crf 18 -c:a aac -b:a 192k -movflags +faststart -pix_fmt yuv420p` (near-lossless H.264, preserves original resolution/framerate)
+
+**Flow:** file selected → `compressVideo()` → `uploadVideoDirect(compressedFile)`. UI shows progress bar during compression, size comparison text after, then upload spinner.
+
+**Smart skip logic:**
+- Files > `MAX_COMPRESSIBLE_VIDEO_SIZE` (500 MB, defined in `upload-constants.ts`) skip compression to prevent browser OOM
+- If compressed output ≥ original size, the original file is uploaded instead
+- If compression throws (corrupt file, unsupported codec), the original is uploaded as fallback
+
+**Cleanup:** WASM virtual filesystem files are cleaned up in a `finally` block using unique timestamped filenames (`input_{uid}.ext`, `output_{uid}.mp4`), ensuring no leaks even on encoding failure.
+
+**Progress tracking:** Parses ffmpeg log events for `Duration:` and `time=` timestamps (more reliable than the built-in progress event). Component guards all `setState` calls with a `mountedRef` to prevent updates after unmount.
+
+**Translation keys** (`messages/admin/en.ts` + `zh.ts`): `upload.compressing` (with `{percent}` placeholder), `upload.compressionDone`, `upload.compressionSkipped`, `upload.loadingFfmpeg`.
 
 ## Batch Upload
 

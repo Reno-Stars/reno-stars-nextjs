@@ -7,6 +7,9 @@ export const MAX_IMAGE_SIZE_LABEL = '50 MB';
 /** Maximum video upload size in bytes (1 GB). */
 export const MAX_VIDEO_SIZE = 1024 * 1024 * 1024;
 
+/** Maximum video size for client-side compression (500 MB). Larger files skip compression to avoid browser OOM. */
+export const MAX_COMPRESSIBLE_VIDEO_SIZE = 500 * 1024 * 1024;
+
 /** Human-readable max video size label. */
 export const MAX_VIDEO_SIZE_LABEL = '1 GB';
 

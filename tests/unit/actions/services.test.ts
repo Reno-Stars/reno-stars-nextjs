@@ -234,5 +234,33 @@ describe('Service Actions', () => {
       const result = await updateService(VALID_UUID, {}, makeFormData());
       expect(result.success).toBe(true);
     });
+
+    it('should call ensureUniqueSlug with current slug for collision handling', async () => {
+      const { ensureUniqueSlug } = await import('@/lib/utils');
+      const { db } = await import('@/lib/db');
+
+      // Mock select().from() to return current slug, then conflicting slugs
+      const selectMock = vi.mocked(db.select);
+      let callCount = 0;
+      selectMock.mockImplementation(() => ({
+        from: vi.fn().mockImplementation(() => {
+          callCount++;
+          if (callCount === 1) {
+            // First call: fetch current service's slug
+            return thenableChain([{ slug: 'existing-slug' }]);
+          }
+          // Second call: fetch conflicting slugs
+          return thenableChain([{ slug: 'existing-slug' }, { slug: 'existing-slug-2' }]);
+        }),
+      }) as ReturnType<typeof db.select>);
+
+      await updateService(VALID_UUID, {}, makeFormData({ slug: 'existing-slug' }));
+
+      expect(ensureUniqueSlug).toHaveBeenCalledWith(
+        'existing-slug',
+        ['existing-slug', 'existing-slug-2'],
+        'existing-slug'
+      );
+    });
   });
 });

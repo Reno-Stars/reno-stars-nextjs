@@ -82,8 +82,9 @@ lib/
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, AreaOption, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
-    upload-constants.ts   # Shared upload limits (image: 50 MB, video: 1 GB) and allowed MIME types
+    upload-constants.ts   # Shared upload limits (image: 50 MB, video: 1 GB, compressible: 500 MB) and allowed MIME types
     upload-client.ts      # Client-side presigned S3 URL upload helpers (image + video)
+    video-compress.ts     # Client-side video compression via ffmpeg.wasm (CRF 18 H.264, singleton)
   ai/                     # AI content optimization
     openai.ts             # OpenAI client initialization (lazy loading)
     glossary.ts           # EN→ZH translation glossary injected into all AI prompts
@@ -577,7 +578,7 @@ Tab bar at top for mode selection (Sites / Standalone Projects), disabled during
 
 ## Media Upload (Images & Video)
 
-All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB).
+All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB). Video files are automatically compressed client-side via ffmpeg.wasm before upload — see `docs/admin-components.md` "Video Compression" section for details.
 
 ### Architecture
 
@@ -613,6 +614,7 @@ Shared S3 client singleton with lazy initialization. Configured with `requestChe
 Shared validation constants used by both the API route and client-side helpers:
 - `MAX_IMAGE_SIZE` / `MAX_IMAGE_SIZE_LABEL` — 50 MB limit for images.
 - `MAX_VIDEO_SIZE` / `MAX_VIDEO_SIZE_LABEL` — 1 GB limit for video.
+- `MAX_COMPRESSIBLE_VIDEO_SIZE` — 500 MB. Videos larger than this skip client-side compression to avoid browser OOM.
 - `ALLOWED_IMAGE_TYPES` — `Set` of allowed image MIME types (JPEG, PNG, WebP, SVG, GIF).
 - `ALLOWED_VIDEO_TYPES` — `Set` of allowed video MIME types (MP4, WebM, QuickTime/MOV).
 - `ALLOWED_MEDIA_TYPES` — Combined `Set` of all allowed image + video types.
