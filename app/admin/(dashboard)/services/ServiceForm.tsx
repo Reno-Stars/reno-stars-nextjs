@@ -130,11 +130,7 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
 
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.services.slug} htmlFor="slug">
-            {isNew ? (
-              <input id="slug" name="slug" defaultValue={defaults.slug} required style={fieldStyle} placeholder={t.services.slugPlaceholder} />
-            ) : (
-              <input id="slug" value={defaults.slug} readOnly style={readOnlyStyle} />
-            )}
+            <input id="slug" name="slug" defaultValue={defaults.slug} required style={fieldStyle} placeholder={t.services.slugPlaceholder} />
           </FormField>
 
           <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.services.nameLabel} defaultValueEn={defaults.titleEn} defaultValueZh={defaults.titleZh} required />

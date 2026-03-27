@@ -203,7 +203,12 @@ export async function updateService(
   if (!isValidUUID(id)) return { error: 'Invalid service ID.' };
 
   try {
+    const slug = getString(formData, 'slug').trim().toLowerCase();
+    if (!slug) return { error: 'Slug is required.' };
+    if (!isValidSlug(slug)) return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
+
     const data = {
+      slug,
       titleEn: getString(formData, 'titleEn').trim(),
       titleZh: getString(formData, 'titleZh').trim(),
       descriptionEn: getString(formData, 'descriptionEn').trim(),
@@ -244,6 +249,12 @@ export async function updateService(
     const benefitData = parseBenefits(formData);
     const benefitError = validateBenefits(benefitData);
     if (benefitError) return { error: benefitError };
+
+    // Ensure slug is unique (exclude current service's own slug)
+    const currentService = await db.select({ slug: services.slug }).from(services).where(eq(services.id, id)).limit(1);
+    const currentSlug = currentService[0]?.slug;
+    const conflictingSlugs = await db.select({ slug: services.slug }).from(services).where(like(services.slug, `${slug}%`));
+    data.slug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
     const updated = await db.update(services).set(data).where(eq(services.id, id)).returning({ id: services.id });
     if (updated.length === 0) {
