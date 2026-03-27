@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
-import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedImagePair } from '@/lib/types';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
@@ -44,7 +44,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
     // Add site-level image pairs
     if (site.image_pairs) {
       for (const pair of site.image_pairs) {
-        if (pair.beforeImage || pair.afterImage) {
+        if (pair.beforeImage || pair.afterImage || pair.beforeVideo || pair.afterVideo) {
           pairs.push({
             ...pair,
             projectSlug: SITE_IMAGE_SLUG,
@@ -58,7 +58,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
     for (const project of site.projects) {
       if (project.image_pairs) {
         for (const pair of project.image_pairs) {
-          if (pair.beforeImage || pair.afterImage) {
+          if (pair.beforeImage || pair.afterImage || pair.beforeVideo || pair.afterVideo) {
             pairs.push({
               ...pair,
               projectSlug: project.slug,
@@ -107,12 +107,19 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   }, [site.slug]);
 
   const currentPair = filteredPairs[activePairIndex];
-  const hasBothImages = !!(currentPair?.beforeImage && currentPair?.afterImage);
+  const hasBefore = !!(currentPair?.beforeImage || currentPair?.beforeVideo);
+  const hasAfter = !!(currentPair?.afterImage || currentPair?.afterVideo);
+  const hasBothImages = hasBefore && hasAfter;
 
   // Current display image
   const displayImage = showBefore && currentPair?.beforeImage
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
+
+  // Current display video (if the active side has a video)
+  const displayVideo = showBefore
+    ? currentPair?.beforeVideo
+    : currentPair?.afterVideo;
 
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -224,6 +231,18 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
           <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Gallery - Image Pairs */}
             <div className="col-span-2">
+              {/* Hero video (site walkthrough) */}
+              {site.hero_video && (
+                <div className="mb-4 rounded-2xl overflow-hidden" style={{ boxShadow: neu(6) }}>
+                  <video
+                    src={site.hero_video}
+                    poster={site.hero_image || undefined}
+                    controls
+                    playsInline
+                    className="w-full aspect-video object-contain bg-black"
+                  />
+                </div>
+              )}
               {/* Main Image */}
               <div
                 className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
@@ -232,7 +251,24 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
               >
-                {displayImage ? (
+                {displayVideo ? (
+                  <>
+                    <video
+                      key={displayVideo}
+                      src={displayVideo}
+                      poster={displayImage?.src}
+                      controls
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+                    <BeforeAfterBadge
+                      isBefore={showBefore && hasBothImages}
+                      t={t}
+                      showClickTip={hasBothImages}
+                      hasPair={hasBothImages}
+                    />
+                  </>
+                ) : displayImage ? (
                   <>
                     <OptimizedImage
                       src={displayImage.src}
@@ -307,12 +343,15 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     onPointerMove={handlePointerMove}
                   >
                     <div className="flex gap-1.5 p-3">
-                      {filteredPairs.map((pair, idx) => (
+                      {filteredPairs.map((pair, idx) => {
+                        const hasBothSides = (pair.beforeImage || pair.beforeVideo) && (pair.afterImage || pair.afterVideo);
+                        const thumbImage = pair.afterImage || pair.beforeImage;
+                        return (
                         <button
                           key={`${pair.projectSlug}-${idx}`}
                           onClick={(e) => handleThumbClick(e, idx)}
                           className={`relative rounded-lg overflow-hidden shrink-0 transition-all duration-200 h-[30px] sm:h-[60px] ${
-                            pair.beforeImage && pair.afterImage ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
+                            hasBothSides ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
                           } ${idx === activePairIndex ? 'opacity-85 sm:opacity-100' : 'opacity-50 sm:opacity-75'}`}
                           aria-label={`${t('projects.viewImage')} ${idx + 1} / ${filteredPairs.length}`}
                           aria-pressed={idx === activePairIndex}
@@ -356,12 +395,12 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                                 </span>
                               </div>
                             </div>
-                          ) : (
+                          ) : thumbImage ? (
                             // Single image (before or after only)
                             <div className="relative w-full h-full">
                               <OptimizedImage
-                                src={(pair.afterImage || pair.beforeImage)!.src}
-                                alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
+                                src={thumbImage.src}
+                                alt={thumbImage.alt || site.title}
                                 fill
                                 sizes="60px"
                                 className="object-cover"
@@ -375,15 +414,21 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                                 </span>
                               )}
                             </div>
+                          ) : (
+                            // Video-only pair (no image thumbnails available)
+                            <div className="relative w-full h-full flex items-center justify-center" style={{ backgroundColor: NAVY_90 }}>
+                              <Video className="w-4 h-4 sm:w-6 sm:h-6 text-white/80" />
+                            </div>
                           )}
                         </button>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
 
                 {/* Fullscreen button - bottom right */}
-                {displayImage && (
+                {(displayImage || displayVideo) && (
                   <button
                     onClick={openFullscreen}
                     className="absolute bottom-3 right-3 z-40 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer"
@@ -584,7 +629,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
       )}
 
       {/* Fullscreen Image Overlay */}
-      {isFullscreen && displayImage && (
+      {isFullscreen && (displayImage || displayVideo) && (
         <div
           ref={overlayRef}
           role="dialog"
@@ -651,14 +696,25 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <OptimizedImage
-              src={displayImage.src}
-              alt={displayImage.alt || site.title}
-              fill
-              sizes="90vw"
-              className="object-contain"
-              priority
-            />
+            {displayVideo ? (
+              <video
+                key={displayVideo}
+                src={displayVideo}
+                poster={displayImage?.src}
+                controls
+                playsInline
+                className="absolute inset-0 w-full h-full object-contain"
+              />
+            ) : displayImage ? (
+              <OptimizedImage
+                src={displayImage.src}
+                alt={displayImage.alt || site.title}
+                fill
+                sizes="90vw"
+                className="object-contain"
+                priority
+              />
+            ) : null}
           </div>
 
           {/* Thumbnail strip in fullscreen with horizontal scroll */}
@@ -673,7 +729,10 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               onPointerMove={handlePointerMove}
             >
               <div className="flex gap-2 p-4">
-                {filteredPairs.map((pair, idx) => (
+                {filteredPairs.map((pair, idx) => {
+                  const fsHasBothSides = (pair.beforeImage || pair.beforeVideo) && (pair.afterImage || pair.afterVideo);
+                  const fsThumbImage = pair.afterImage || pair.beforeImage;
+                  return (
                   <button
                     key={`fs-${pair.projectSlug}-${idx}`}
                     onClick={(e) => handleThumbClick(e, idx)}
@@ -681,7 +740,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     aria-label={`${t('projects.viewImage')} ${idx + 1} / ${filteredPairs.length}`}
                     aria-pressed={idx === activePairIndex}
                     style={{
-                      width: pair.beforeImage && pair.afterImage ? '100px' : '70px',
+                      width: fsHasBothSides ? '100px' : '70px',
                       height: '70px',
                       outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
                       outlineOffset: '2px',
@@ -710,19 +769,24 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                           />
                         </div>
                       </div>
-                    ) : (
+                    ) : fsThumbImage ? (
                       <div className="relative w-full h-full">
                         <OptimizedImage
-                          src={(pair.afterImage || pair.beforeImage)!.src}
-                          alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
+                          src={fsThumbImage.src}
+                          alt={fsThumbImage.alt || site.title}
                           fill
                           sizes="70px"
                           className="object-cover"
                         />
                       </div>
+                    ) : (
+                      <div className="relative w-full h-full flex items-center justify-center" style={{ backgroundColor: NAVY_90 }}>
+                        <Video className="w-6 h-6 text-white/80" />
+                      </div>
                     )}
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

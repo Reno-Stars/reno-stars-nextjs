@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
-import { MapPin, Calendar, DollarSign, Layers, ExternalLink, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Calendar, DollarSign, Layers, ExternalLink, ZoomIn, X, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject, LocalizedImagePair } from '@/lib/types';
@@ -57,12 +57,20 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
   }, [project.slug]);
 
   const currentPair = imagePairs[activePairIndex];
-  const hasBothImages = !!(currentPair?.beforeImage && currentPair?.afterImage);
+  const hasBefore = !!(currentPair?.beforeImage || currentPair?.beforeVideo);
+  const hasAfter = !!(currentPair?.afterImage || currentPair?.afterVideo);
+  const hasBothImages = hasBefore && hasAfter;
 
   // Current display image (show after first, before when toggled)
   const displayImage = showBefore && currentPair?.beforeImage
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
+
+  // Current display video (if the active side has a video)
+  const displayVideo = showBefore
+    ? currentPair?.beforeVideo
+    : currentPair?.afterVideo;
+
 
   // Toggle before/after on click
   const handleImageClick = useCallback(() => {
@@ -181,6 +189,18 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Gallery - Image Pairs with Before/After Toggle */}
             <div className="lg:col-span-2">
+              {/* Hero video (project walkthrough) */}
+              {localizedProject.hero_video && (
+                <div className="mb-4 rounded-2xl overflow-hidden" style={{ boxShadow: neu(6) }}>
+                  <video
+                    src={localizedProject.hero_video}
+                    poster={localizedProject.hero_image || undefined}
+                    controls
+                    playsInline
+                    className="w-full aspect-video object-contain bg-black"
+                  />
+                </div>
+              )}
               {/* Main Image */}
               <div
                 className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
@@ -189,7 +209,24 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
               >
-                {displayImage ? (
+                {displayVideo ? (
+                  <>
+                    <video
+                      key={displayVideo}
+                      src={displayVideo}
+                      poster={displayImage?.src}
+                      controls
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+                    <BeforeAfterBadge
+                      isBefore={showBefore && hasBothImages}
+                      t={t}
+                      showClickTip={hasBothImages}
+                      hasPair={hasBothImages}
+                    />
+                  </>
+                ) : displayImage ? (
                   <>
                     <OptimizedImage
                       src={displayImage.src}
@@ -255,12 +292,15 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                     onPointerMove={handlePointerMove}
                   >
                     <div className="flex gap-1.5 p-3">
-                      {imagePairs.map((pair, idx) => (
+                      {imagePairs.map((pair, idx) => {
+                        const hasBothSides = (pair.beforeImage || pair.beforeVideo) && (pair.afterImage || pair.afterVideo);
+                        const thumbImage = pair.afterImage || pair.beforeImage;
+                        return (
                         <button
-                          key={`${pair.afterImage?.src || pair.beforeImage?.src || idx}-${idx}`}
+                          key={`${thumbImage?.src || pair.afterVideo || pair.beforeVideo || idx}-${idx}`}
                           onClick={(e) => handleThumbClick(e, idx)}
                           className={`relative rounded-lg overflow-hidden shrink-0 transition-all duration-200 h-[30px] sm:h-[60px] ${
-                            pair.beforeImage && pair.afterImage ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
+                            hasBothSides ? 'w-[45px] sm:w-[90px]' : 'w-[30px] sm:w-[60px]'
                           } ${idx === activePairIndex ? 'opacity-85 sm:opacity-100' : 'opacity-50 sm:opacity-75'}`}
                           aria-label={`${t('projects.viewImage')} ${idx + 1} / ${imagePairs.length}`}
                           aria-pressed={idx === activePairIndex}
@@ -304,12 +344,12 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                                 </span>
                               </div>
                             </div>
-                          ) : (
+                          ) : thumbImage ? (
                             // Single image (before or after only)
                             <div className="relative w-full h-full">
                               <OptimizedImage
-                                src={(pair.afterImage || pair.beforeImage)!.src}
-                                alt={(pair.afterImage || pair.beforeImage)!.alt || localizedProject.title}
+                                src={thumbImage.src}
+                                alt={thumbImage.alt || localizedProject.title}
                                 fill
                                 sizes="60px"
                                 className="object-cover"
@@ -323,15 +363,21 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                                 </span>
                               )}
                             </div>
+                          ) : (
+                            // Video-only pair (no image thumbnails available)
+                            <div className="relative w-full h-full flex items-center justify-center" style={{ backgroundColor: NAVY_90 }}>
+                              <Video className="w-4 h-4 sm:w-6 sm:h-6 text-white/80" />
+                            </div>
                           )}
                         </button>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
 
                 {/* Fullscreen button - bottom right */}
-                {displayImage && (
+                {(displayImage || displayVideo) && (
                   <button
                     onClick={openFullscreen}
                     className="absolute bottom-3 right-3 z-40 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer"
@@ -554,7 +600,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       )}
 
       {/* Fullscreen Image Overlay */}
-      {isFullscreen && displayImage && (
+      {isFullscreen && (displayImage || displayVideo) && (
         <div
           ref={overlayRef}
           role="dialog"
@@ -621,14 +667,25 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <OptimizedImage
-              src={displayImage.src}
-              alt={displayImage.alt || localizedProject.title}
-              fill
-              sizes="90vw"
-              className="object-contain"
-              priority
-            />
+            {displayVideo ? (
+              <video
+                key={displayVideo}
+                src={displayVideo}
+                poster={displayImage?.src}
+                controls
+                playsInline
+                className="absolute inset-0 w-full h-full object-contain"
+              />
+            ) : displayImage ? (
+              <OptimizedImage
+                src={displayImage.src}
+                alt={displayImage.alt || localizedProject.title}
+                fill
+                sizes="90vw"
+                className="object-contain"
+                priority
+              />
+            ) : null}
           </div>
 
           {/* Thumbnail strip in fullscreen with horizontal scroll */}
@@ -643,15 +700,18 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
               onPointerMove={handlePointerMove}
             >
               <div className="flex gap-2 p-4">
-                {imagePairs.map((pair, idx) => (
+                {imagePairs.map((pair, idx) => {
+                  const fsHasBothSides = (pair.beforeImage || pair.beforeVideo) && (pair.afterImage || pair.afterVideo);
+                  const fsThumbImage = pair.afterImage || pair.beforeImage;
+                  return (
                   <button
-                    key={`fs-${pair.afterImage?.src || pair.beforeImage?.src || idx}-${idx}`}
+                    key={`fs-${fsThumbImage?.src || pair.afterVideo || pair.beforeVideo || idx}-${idx}`}
                     onClick={(e) => handleThumbClick(e, idx)}
                     className="relative rounded-lg overflow-hidden shrink-0 transition-all duration-200"
                     aria-label={`${t('projects.viewImage')} ${idx + 1} / ${imagePairs.length}`}
                     aria-pressed={idx === activePairIndex}
                     style={{
-                      width: pair.beforeImage && pair.afterImage ? '100px' : '70px',
+                      width: fsHasBothSides ? '100px' : '70px',
                       height: '70px',
                       outline: idx === activePairIndex ? '2px solid white' : '1px solid rgba(255,255,255,0.5)',
                       outlineOffset: '2px',
@@ -680,19 +740,24 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                           />
                         </div>
                       </div>
-                    ) : (
+                    ) : fsThumbImage ? (
                       <div className="relative w-full h-full">
                         <OptimizedImage
-                          src={(pair.afterImage || pair.beforeImage)!.src}
-                          alt={(pair.afterImage || pair.beforeImage)!.alt || localizedProject.title}
+                          src={fsThumbImage.src}
+                          alt={fsThumbImage.alt || localizedProject.title}
                           fill
                           sizes="70px"
                           className="object-cover"
                         />
                       </div>
+                    ) : (
+                      <div className="relative w-full h-full flex items-center justify-center" style={{ backgroundColor: NAVY_90 }}>
+                        <Video className="w-6 h-6 text-white/80" />
+                      </div>
                     )}
                   </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

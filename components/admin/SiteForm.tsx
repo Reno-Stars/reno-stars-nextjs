@@ -9,6 +9,7 @@ import BilingualInput from './BilingualInput';
 import ConfirmDialog from './ConfirmDialog';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import VideoUrlInput from './VideoUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
 import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
@@ -51,6 +52,7 @@ interface SiteFormProps {
     descriptionZh: string;
     locationCity: string;
     heroImageUrl: string;
+    heroVideoUrl?: string;
     budgetRange?: string;
     durationEn?: string;
     durationZh?: string;
@@ -328,6 +330,7 @@ export default function SiteForm({
           </FormField>
 
           <ImageUrlInput name="heroImageUrl" label={t.sites.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.sites.tooltips.heroImage} slug={slug} disabled={!editing} />
+          <VideoUrlInput name="heroVideoUrl" label={t.sites.heroVideoUrl} defaultValue={initialData?.heroVideoUrl ?? ''} slug={slug} disabled={!editing} />
 
           {/* Site Image Pairs */}
           <ImagePairEditor

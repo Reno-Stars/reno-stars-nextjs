@@ -11,9 +11,9 @@
 
 ## Admin Form Components
 
-- **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata. Shows first 3 pairs (`COLLAPSE_THRESHOLD = 3`) with "Show All (N)" toggle; hidden form inputs always render for ALL pairs. Drag-and-drop upload with gold spinner. Accepts optional `slug` prop for SEO-friendly naming. Uses `pairsRef` pattern for async upload gap. Shared `parseImagePairs()` in `lib/admin/form-utils.ts`.
+- **ImagePairEditor** (`components/admin/ImagePairEditor.tsx`): Visual editor for before/after image pairs with collapsible SEO metadata. Shows first 3 pairs (`COLLAPSE_THRESHOLD = 3`) with "Show All (N)" toggle; hidden form inputs always render for ALL pairs. Drag-and-drop upload with gold spinner. Accepts optional `slug` prop for SEO-friendly naming. Uses `pairsRef` pattern for async upload gap. Shared `parseImagePairs()` in `lib/admin/form-utils.ts`. Each pair includes optional `beforeVideoUrl`/`afterVideoUrl` fields rendered via compact `VideoUrlInput` components below the image zones.
 - **ImageUrlInput** (`components/admin/ImageUrlInput.tsx`): URL input with drag-and-drop upload, image preview. SEO-friendly naming (`{slug}-{imageRole}-{ts}.{ext}`). Detached file picker to bypass `<fieldset disabled>`.
-- **VideoUrlInput** (`components/admin/VideoUrlInput.tsx`): Same pattern as ImageUrlInput but for video files. Accepts MP4/WebM/MOV (max 1 GB). Shows `<video controls>` preview. Uses `uploadVideoDirect()`. Used by CompanyForm for hero video. **Client-side compression** via ffmpeg.wasm automatically optimizes videos before upload — see "Video Compression" section below.
+- **VideoUrlInput** (`components/admin/VideoUrlInput.tsx`): Same pattern as ImageUrlInput but for video files. Accepts MP4/WebM/MOV (max 1 GB). Shows `<video controls>` preview. Uses `uploadVideoDirect()`. Supports `onChange` callback for controlled mode and `compact` prop for smaller UI when embedded inside other editors (e.g., ImagePairEditor). Used by CompanyForm (hero video), ProjectForm (hero video), SiteForm (hero video), and ImagePairEditor (before/after video per pair). **Client-side compression** via ffmpeg.wasm automatically optimizes videos before upload — see "Video Compression" section below.
 - **BilingualInput** (`components/admin/BilingualInput.tsx`): Dual-mode bilingual text input with EN/ZH flag labels. Optional `maxLength` with color-coded counter (gray < 80%, gold 80-100%, red at limit). SEO field limits: metaTitle=70, metaDescription=155, focusKeyword=50.
 - **BilingualTextarea** (`components/admin/BilingualTextarea.tsx`): Dual-mode bilingual textarea. Controlled mode (`valueEn`/`onChangeEn`) for AI-populated fields, uncontrolled mode (`defaultValueEn`/`defaultValueZh`).
 - **SearchableSelect**: Type-to-filter dropdown with keyboard navigation and ARIA — used for related project in BlogPostForm and linked site in ProjectForm.
@@ -149,7 +149,7 @@ Unified site/project management. Roof = site, floors = project layers. Drag-and-
 ## Public Components
 
 - **ProductLink**: External product links with hover image preview. `size` prop ('sm'/'md').
-- **ProjectModal**: Image-pairs gallery with click-to-toggle before/after. Touch swipe, keyboard nav, slide animation.
+- **ProjectModal**: Image-pairs gallery with click-to-toggle before/after. Touch swipe, keyboard nav, slide animation. Supports video per pair side (renders `<video controls>` when video exists). Video-only pairs show a `Video` icon placeholder in thumbnails.
 - **DisplayProject type** (`lib/types.ts`): Extended project for display. Represents regular projects or sites as "Whole House" with aggregated data.
 - **ContactForm**: Reusable with optional `large` prop for elderly users. Server error via `result.message`.
 - **Structured data**: Added in server page route files, not client components. Rating from Google Reviews API. 13 schema types. Shared `parseAddress()` utility.

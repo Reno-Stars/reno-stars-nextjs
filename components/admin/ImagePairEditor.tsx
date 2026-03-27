@@ -6,6 +6,7 @@ import Tooltip from './Tooltip';
 import { inputStyle, readOnlyStyle } from './shared-styles';
 import { uploadImageDirect } from '@/lib/admin/upload-client';
 import { getAssetUrl } from '@/lib/storage';
+import VideoUrlInput from './VideoUrlInput';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, ERROR, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
 
@@ -14,9 +15,11 @@ export interface ImagePairEntry {
   beforeUrl: string;
   beforeAltEn: string;
   beforeAltZh: string;
+  beforeVideoUrl: string;
   afterUrl: string;
   afterAltEn: string;
   afterAltZh: string;
+  afterVideoUrl: string;
   titleEn: string;
   titleZh: string;
   captionEn: string;
@@ -109,9 +112,11 @@ export default function ImagePairEditor({
       beforeUrl: '',
       beforeAltEn: '',
       beforeAltZh: '',
+      beforeVideoUrl: '',
       afterUrl: '',
       afterAltEn: '',
       afterAltZh: '',
+      afterVideoUrl: '',
       titleEn: '',
       titleZh: '',
       captionEn: '',
@@ -250,9 +255,11 @@ export default function ImagePairEditor({
           <input type="hidden" name={`${namePrefix}[${idx}].beforeUrl`} value={pair.beforeUrl} />
           <input type="hidden" name={`${namePrefix}[${idx}].beforeAltEn`} value={pair.beforeAltEn} />
           <input type="hidden" name={`${namePrefix}[${idx}].beforeAltZh`} value={pair.beforeAltZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].beforeVideoUrl`} value={pair.beforeVideoUrl} />
           <input type="hidden" name={`${namePrefix}[${idx}].afterUrl`} value={pair.afterUrl} />
           <input type="hidden" name={`${namePrefix}[${idx}].afterAltEn`} value={pair.afterAltEn} />
           <input type="hidden" name={`${namePrefix}[${idx}].afterAltZh`} value={pair.afterAltZh} />
+          <input type="hidden" name={`${namePrefix}[${idx}].afterVideoUrl`} value={pair.afterVideoUrl} />
           <input type="hidden" name={`${namePrefix}[${idx}].titleEn`} value={pair.titleEn} />
           <input type="hidden" name={`${namePrefix}[${idx}].titleZh`} value={pair.titleZh} />
           <input type="hidden" name={`${namePrefix}[${idx}].captionEn`} value={pair.captionEn} />
@@ -337,6 +344,30 @@ export default function ImagePairEditor({
                 clearLabel={t.imagePairs.clearAfter}
                 fieldStyle={fieldStyle}
                 t={t}
+              />
+            </div>
+
+            {/* Video URL fields */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
+              <VideoUrlInput
+                name={`${namePrefix}[${idx}].beforeVideoUrl-input`}
+                label={t.imagePairs.beforeVideoUrl}
+                defaultValue={pair.beforeVideoUrl}
+                onChange={(url) => updatePair(pair.id, 'beforeVideoUrl', url)}
+                slug={slug}
+                imageRole={`before-video-${idx + 1}`}
+                disabled={!editing}
+                compact
+              />
+              <VideoUrlInput
+                name={`${namePrefix}[${idx}].afterVideoUrl-input`}
+                label={t.imagePairs.afterVideoUrl}
+                defaultValue={pair.afterVideoUrl}
+                onChange={(url) => updatePair(pair.id, 'afterVideoUrl', url)}
+                slug={slug}
+                imageRole={`after-video-${idx + 1}`}
+                disabled={!editing}
+                compact
               />
             </div>
 

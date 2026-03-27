@@ -204,6 +204,7 @@ export const projectSites = pgTable(
 
     // Media
     heroImageUrl: varchar('hero_image_url', { length: 500 }),
+    heroVideoUrl: varchar('hero_video_url', { length: 500 }),
 
     // Badge (e.g., "New", "Featured")
     badgeEn: varchar('badge_en', { length: 50 }),
@@ -278,10 +279,14 @@ export const siteImagePairs = pgTable(
     beforeImageUrl: varchar('before_image_url', { length: 500 }),
     beforeAltTextEn: varchar('before_alt_text_en', { length: 255 }),
     beforeAltTextZh: varchar('before_alt_text_zh', { length: 255 }),
+    // Before video (optional)
+    beforeVideoUrl: varchar('before_video_url', { length: 500 }),
     // After image (optional)
     afterImageUrl: varchar('after_image_url', { length: 500 }),
     afterAltTextEn: varchar('after_alt_text_en', { length: 255 }),
     afterAltTextZh: varchar('after_alt_text_zh', { length: 255 }),
+    // After video (optional)
+    afterVideoUrl: varchar('after_video_url', { length: 500 }),
     // SEO metadata
     titleEn: varchar('title_en', { length: 200 }),
     titleZh: varchar('title_zh', { length: 200 }),
@@ -295,8 +300,8 @@ export const siteImagePairs = pgTable(
   },
   (table) => [
     index('site_image_pairs_site_id_idx').on(table.siteId),
-    // Constraint: at least one image URL required
-    check('site_at_least_one_image', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL`),
+    // Constraint: at least one media URL required (image or video)
+    check('site_at_least_one_media', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL OR ${table.beforeVideoUrl} IS NOT NULL OR ${table.afterVideoUrl} IS NOT NULL`),
   ]
 );
 
@@ -375,6 +380,7 @@ export const projects = pgTable(
 
     // Media
     heroImageUrl: varchar('hero_image_url', { length: 500 }),
+    heroVideoUrl: varchar('hero_video_url', { length: 500 }),
 
     // Challenge and solution
     challengeEn: text('challenge_en'),
@@ -459,10 +465,14 @@ export const projectImagePairs = pgTable(
     beforeImageUrl: varchar('before_image_url', { length: 500 }),
     beforeAltTextEn: varchar('before_alt_text_en', { length: 255 }),
     beforeAltTextZh: varchar('before_alt_text_zh', { length: 255 }),
+    // Before video (optional)
+    beforeVideoUrl: varchar('before_video_url', { length: 500 }),
     // After image (optional)
     afterImageUrl: varchar('after_image_url', { length: 500 }),
     afterAltTextEn: varchar('after_alt_text_en', { length: 255 }),
     afterAltTextZh: varchar('after_alt_text_zh', { length: 255 }),
+    // After video (optional)
+    afterVideoUrl: varchar('after_video_url', { length: 500 }),
     // SEO metadata
     titleEn: varchar('title_en', { length: 200 }),
     titleZh: varchar('title_zh', { length: 200 }),
@@ -476,8 +486,8 @@ export const projectImagePairs = pgTable(
   },
   (table) => [
     index('project_image_pairs_project_id_idx').on(table.projectId),
-    // Constraint: at least one image URL required
-    check('at_least_one_image', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL`),
+    // Constraint: at least one media URL required (image or video)
+    check('at_least_one_media', sql`${table.beforeImageUrl} IS NOT NULL OR ${table.afterImageUrl} IS NOT NULL OR ${table.beforeVideoUrl} IS NOT NULL OR ${table.afterVideoUrl} IS NOT NULL`),
   ]
 );
 

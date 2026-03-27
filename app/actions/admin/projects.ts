@@ -16,7 +16,7 @@ import {
 } from '@/lib/db/schema';
 import { eq, and, inArray, sql, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 
@@ -92,6 +92,7 @@ function getProjectData(formData: FormData) {
     spaceTypeEn: spaceTypeEn || null,
     spaceTypeZh: spaceTypeZh || null,
     heroImageUrl: getString(formData, 'heroImageUrl') || null,
+    heroVideoUrl: getString(formData, 'heroVideoUrl') || null,
     challengeEn: getString(formData, 'challengeEn') || null,
     challengeZh: getString(formData, 'challengeZh') || null,
     solutionEn: getString(formData, 'solutionEn') || null,
@@ -135,6 +136,9 @@ export async function createProject(
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
       return { error: 'Hero image URL is not a valid URL.' };
     }
+    if (data.heroVideoUrl && !isValidUrl(data.heroVideoUrl)) {
+      return { error: 'Hero video URL is not a valid URL.' };
+    }
     const textError = validateTextLengths({
       descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh,
       challengeEn: data.challengeEn, challengeZh: data.challengeZh,
@@ -146,26 +150,14 @@ export async function createProject(
       || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
     if (seoError) return { error: seoError };
 
-    // Parse image pairs
+    // Parse and validate image pairs
     const pairData = parseImagePairs(formData, 'imagePairs');
-    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
-    if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
-    }
-    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
-    if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
-    }
+    const pairError = validatePairUrls(pairData);
+    if (pairError) return { error: pairError };
 
     const epData = parseExternalProducts(formData);
-    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
-    if (invalidEpUrl) {
-      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
-    }
-    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
-    if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
-    }
+    const epError = validateExternalProductUrls(epData);
+    if (epError) return { error: epError };
 
     // Look up serviceId and derive category from DB (serviceType may be empty)
     let serviceId: string | null = null;
@@ -282,6 +274,9 @@ export async function updateProject(
     if (data.heroImageUrl && !isValidUrl(data.heroImageUrl)) {
       return { error: 'Hero image URL is not a valid URL.' };
     }
+    if (data.heroVideoUrl && !isValidUrl(data.heroVideoUrl)) {
+      return { error: 'Hero video URL is not a valid URL.' };
+    }
     const textError = validateTextLengths({
       descriptionEn: data.descriptionEn, descriptionZh: data.descriptionZh,
       challengeEn: data.challengeEn, challengeZh: data.challengeZh,
@@ -293,26 +288,14 @@ export async function updateProject(
       || validateTextLengths({ focusKeywordEn: data.focusKeywordEn, focusKeywordZh: data.focusKeywordZh }, SEO_FOCUS_KEYWORD_MAX);
     if (seoError) return { error: seoError };
 
-    // Parse image pairs
+    // Parse and validate image pairs
     const pairData = parseImagePairs(formData, 'imagePairs');
-    const invalidPairBeforeUrl = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
-    if (invalidPairBeforeUrl) {
-      return { error: `Before image URL is not valid: ${invalidPairBeforeUrl.beforeImageUrl?.slice(0, 60) ?? ''}` };
-    }
-    const invalidPairAfterUrl = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
-    if (invalidPairAfterUrl) {
-      return { error: `After image URL is not valid: ${invalidPairAfterUrl.afterImageUrl?.slice(0, 60) ?? ''}` };
-    }
+    const pairError = validatePairUrls(pairData);
+    if (pairError) return { error: pairError };
 
     const epData = parseExternalProducts(formData);
-    const invalidEpUrl = epData.find((ep) => !isValidUrl(ep.url));
-    if (invalidEpUrl) {
-      return { error: `External product URL is not valid: ${invalidEpUrl.url.slice(0, 60)}` };
-    }
-    const invalidEpImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
-    if (invalidEpImgUrl) {
-      return { error: `External product image URL is not valid: ${invalidEpImgUrl.imageUrl?.slice(0, 60) ?? ''}` };
-    }
+    const epError = validateExternalProductUrls(epData);
+    if (epError) return { error: epError };
 
     // Look up serviceId and derive category from DB (serviceType may be empty)
     let updateServiceId: string | null = null;

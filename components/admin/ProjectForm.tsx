@@ -9,6 +9,7 @@ import type { ProjectDescription } from '@/lib/ai/content-optimizer';
 import ConfirmDialog from './ConfirmDialog';
 import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
+import VideoUrlInput from './VideoUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
 import Tooltip from './Tooltip';
 import SearchableSelect from './SearchableSelect';
@@ -76,6 +77,7 @@ interface ProjectFormProps {
     spaceTypeEn: string;
     spaceTypeZh: string;
     heroImageUrl: string;
+    heroVideoUrl?: string;
     challengeEn: string;
     challengeZh: string;
     solutionEn: string;
@@ -429,6 +431,7 @@ export default function ProjectForm({
           </FormField>
 
           <ImageUrlInput name="heroImageUrl" label={t.projects.heroImageUrl} defaultValue={initialData?.heroImageUrl ?? ''} tooltip={t.projects.tooltips.heroImage} slug={slug} disabled={!editing} />
+          <VideoUrlInput name="heroVideoUrl" label={t.projects.heroVideoUrl} defaultValue={initialData?.heroVideoUrl ?? ''} slug={slug} disabled={!editing} />
 
           <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} valueEn={challengeEn} onChangeEn={setChallengeEn} valueZh={challengeZh} onChangeZh={setChallengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
           <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} valueEn={solutionEn} onChangeEn={setSolutionEn} valueZh={solutionZh} onChangeZh={setSolutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />

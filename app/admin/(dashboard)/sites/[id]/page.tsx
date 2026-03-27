@@ -41,6 +41,7 @@ export default async function EditSitePage({ params }: PageProps) {
     descriptionZh: site.descriptionZh,
     locationCity: site.locationCity ?? '',
     heroImageUrl: site.heroImageUrl ?? '',
+    heroVideoUrl: site.heroVideoUrl ?? '',
     budgetRange: site.budgetRange ?? '',
     durationEn: site.durationEn ?? '',
     durationZh: site.durationZh ?? '',

@@ -61,14 +61,40 @@ export function validateTextLengths(
   return null;
 }
 
+/** Validate parsed image pair URLs (images and videos). Returns error message or null. */
+export function validatePairUrls(pairData: ParsedImagePair[]): string | null {
+  const invalidBefore = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
+  if (invalidBefore) return `Before image URL is not valid: ${invalidBefore.beforeImageUrl?.slice(0, 60) ?? ''}`;
+  const invalidAfter = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
+  if (invalidAfter) return `After image URL is not valid: ${invalidAfter.afterImageUrl?.slice(0, 60) ?? ''}`;
+  const invalidBeforeVideo = pairData.find((p) => p.beforeVideoUrl && !isValidUrl(p.beforeVideoUrl));
+  if (invalidBeforeVideo) return `Before video URL is not valid: ${invalidBeforeVideo.beforeVideoUrl?.slice(0, 60) ?? ''}`;
+  const invalidAfterVideo = pairData.find((p) => p.afterVideoUrl && !isValidUrl(p.afterVideoUrl));
+  if (invalidAfterVideo) return `After video URL is not valid: ${invalidAfterVideo.afterVideoUrl?.slice(0, 60) ?? ''}`;
+  return null;
+}
+
+/** Validate external product URLs. Returns error message or null. */
+export function validateExternalProductUrls(
+  epData: { url: string; imageUrl: string | null }[]
+): string | null {
+  const invalidUrl = epData.find((ep) => !isValidUrl(ep.url));
+  if (invalidUrl) return `External product URL is not valid: ${invalidUrl.url.slice(0, 60)}`;
+  const invalidImgUrl = epData.find((ep) => ep.imageUrl && !isValidUrl(ep.imageUrl));
+  if (invalidImgUrl) return `External product image URL is not valid: ${invalidImgUrl.imageUrl?.slice(0, 60) ?? ''}`;
+  return null;
+}
+
 /** Database image pair row shape (from schema) */
 export interface DbImagePairRow {
   beforeImageUrl: string | null;
   beforeAltTextEn: string | null;
   beforeAltTextZh: string | null;
+  beforeVideoUrl: string | null;
   afterImageUrl: string | null;
   afterAltTextEn: string | null;
   afterAltTextZh: string | null;
+  afterVideoUrl: string | null;
   titleEn: string | null;
   titleZh: string | null;
   captionEn: string | null;
@@ -82,9 +108,11 @@ export interface FormImagePair {
   beforeUrl: string;
   beforeAltEn: string;
   beforeAltZh: string;
+  beforeVideoUrl: string;
   afterUrl: string;
   afterAltEn: string;
   afterAltZh: string;
+  afterVideoUrl: string;
   titleEn: string;
   titleZh: string;
   captionEn: string;
@@ -99,9 +127,11 @@ export function mapDbImagePairToForm(p: DbImagePairRow): FormImagePair {
     beforeUrl: p.beforeImageUrl ?? '',
     beforeAltEn: p.beforeAltTextEn ?? '',
     beforeAltZh: p.beforeAltTextZh ?? '',
+    beforeVideoUrl: p.beforeVideoUrl ?? '',
     afterUrl: p.afterImageUrl ?? '',
     afterAltEn: p.afterAltTextEn ?? '',
     afterAltZh: p.afterAltTextZh ?? '',
+    afterVideoUrl: p.afterVideoUrl ?? '',
     titleEn: p.titleEn ?? '',
     titleZh: p.titleZh ?? '',
     captionEn: p.captionEn ?? '',
@@ -116,9 +146,11 @@ export interface ParsedImagePair {
   beforeImageUrl: string | null;
   beforeAltTextEn: string | null;
   beforeAltTextZh: string | null;
+  beforeVideoUrl: string | null;
   afterImageUrl: string | null;
   afterAltTextEn: string | null;
   afterAltTextZh: string | null;
+  afterVideoUrl: string | null;
   titleEn: string | null;
   titleZh: string | null;
   captionEn: string | null;
@@ -144,15 +176,19 @@ export function parseImagePairs(
   while (formData.has(`${prefix}[${i}].id`) && i < maxPairs) {
     const beforeUrl = getString(formData, `${prefix}[${i}].beforeUrl`).trim();
     const afterUrl = getString(formData, `${prefix}[${i}].afterUrl`).trim();
-    // Skip pairs with no images
-    if (!beforeUrl && !afterUrl) { i++; continue; }
+    const beforeVideoUrl = getString(formData, `${prefix}[${i}].beforeVideoUrl`).trim();
+    const afterVideoUrl = getString(formData, `${prefix}[${i}].afterVideoUrl`).trim();
+    // Skip pairs with no images and no videos
+    if (!beforeUrl && !afterUrl && !beforeVideoUrl && !afterVideoUrl) { i++; continue; }
     pairs.push({
       beforeImageUrl: beforeUrl || null,
       beforeAltTextEn: getString(formData, `${prefix}[${i}].beforeAltEn`) || null,
       beforeAltTextZh: getString(formData, `${prefix}[${i}].beforeAltZh`) || null,
+      beforeVideoUrl: beforeVideoUrl || null,
       afterImageUrl: afterUrl || null,
       afterAltTextEn: getString(formData, `${prefix}[${i}].afterAltEn`) || null,
       afterAltTextZh: getString(formData, `${prefix}[${i}].afterAltZh`) || null,
+      afterVideoUrl: afterVideoUrl || null,
       titleEn: getString(formData, `${prefix}[${i}].titleEn`) || null,
       titleZh: getString(formData, `${prefix}[${i}].titleZh`) || null,
       captionEn: getString(formData, `${prefix}[${i}].captionEn`) || null,

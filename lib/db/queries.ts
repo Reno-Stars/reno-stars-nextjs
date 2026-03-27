@@ -279,9 +279,11 @@ interface DbImagePairBase {
   beforeImageUrl: string | null;
   beforeAltTextEn: string | null;
   beforeAltTextZh: string | null;
+  beforeVideoUrl: string | null;
   afterImageUrl: string | null;
   afterAltTextEn: string | null;
   afterAltTextZh: string | null;
+  afterVideoUrl: string | null;
   titleEn: string | null;
   titleZh: string | null;
   captionEn: string | null;
@@ -312,6 +314,14 @@ function mapDbImagePairRowToImagePair(row: DbImagePairBase): ImagePair {
         zh: row.afterAltTextZh ?? '',
       },
     };
+  }
+
+  if (row.beforeVideoUrl) {
+    pair.beforeVideo = getAssetUrl(row.beforeVideoUrl);
+  }
+
+  if (row.afterVideoUrl) {
+    pair.afterVideo = getAssetUrl(row.afterVideoUrl);
   }
 
   if (row.titleEn || row.titleZh) {
@@ -368,6 +378,7 @@ function mapDbProjectToProject(
         ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
         : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
+    hero_video: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : undefined,
     images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
     image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairRowToImagePair),
     service_scope:
@@ -536,6 +547,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     description: { en: row.descriptionEn, zh: row.descriptionZh },
     location_city: row.locationCity ?? undefined,
     hero_image: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : undefined,
+    hero_video: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : undefined,
     badge:
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }

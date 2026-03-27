@@ -24,9 +24,11 @@ interface ProjectImagePair {
   beforeImageUrl: string | null;
   beforeAltTextEn: string | null;
   beforeAltTextZh: string | null;
+  beforeVideoUrl: string | null;
   afterImageUrl: string | null;
   afterAltTextEn: string | null;
   afterAltTextZh: string | null;
+  afterVideoUrl: string | null;
   titleEn: string | null;
   titleZh: string | null;
   captionEn: string | null;
@@ -67,6 +69,7 @@ interface ProjectWithDetails {
   spaceTypeEn: string | null;
   spaceTypeZh: string | null;
   heroImageUrl: string | null;
+  heroVideoUrl: string | null;
   challengeEn: string | null;
   challengeZh: string | null;
   solutionEn: string | null;
@@ -102,6 +105,7 @@ interface SiteData {
   descriptionZh: string;
   locationCity: string;
   heroImageUrl: string;
+  heroVideoUrl?: string;
   badgeEn: string;
   badgeZh: string;
   spaceTypeEn?: string;
@@ -123,9 +127,11 @@ interface SiteData {
     beforeUrl: string;
     beforeAltEn: string;
     beforeAltZh: string;
+    beforeVideoUrl: string;
     afterUrl: string;
     afterAltEn: string;
     afterAltZh: string;
+    afterVideoUrl: string;
     titleEn: string;
     titleZh: string;
     captionEn: string;
@@ -242,6 +248,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites, ser
       spaceTypeEn: project.spaceTypeEn ?? '',
       spaceTypeZh: project.spaceTypeZh ?? '',
       heroImageUrl: project.heroImageUrl ?? '',
+      heroVideoUrl: project.heroVideoUrl ?? '',
       challengeEn: project.challengeEn ?? '',
       challengeZh: project.challengeZh ?? '',
       solutionEn: project.solutionEn ?? '',

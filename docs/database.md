@@ -23,9 +23,9 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 | `service_tags` | Sub-service tags per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_benefits` | "Why Us" benefits per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_areas` | Geographic coverage (includes rich content, highlights, SEO meta) | `slug` |
-| `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
+| `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type, `hero_video_url` for video) | `slug` |
 | `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
-| `projects` | Portfolio entries (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
+| `projects` | Portfolio entries (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type, `hero_video_url` for video) | `slug` |
 | `project_image_pairs` | Before/after image pairs per project | `(projectId, displayOrder)` |
 | `project_scopes` | Scope items per project | `(projectId, displayOrder)` |
 | `site_external_products` | External product links per site | `(siteId, displayOrder)` |
@@ -41,10 +41,12 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 |--------|------|-------------|
 | `id` | UUID | Primary key |
 | `project_id` / `site_id` | UUID | FK (cascade delete) |
-| `before_image_url` | VARCHAR(500) | Before image URL (optional if after exists) |
+| `before_image_url` | VARCHAR(500) | Before image URL (optional) |
 | `before_alt_text_en` / `_zh` | VARCHAR(255) | Bilingual alt text for before image |
-| `after_image_url` | VARCHAR(500) | After image URL (optional if before exists) |
+| `before_video_url` | VARCHAR(500) | Before video URL (optional) |
+| `after_image_url` | VARCHAR(500) | After image URL (optional) |
 | `after_alt_text_en` / `_zh` | VARCHAR(255) | Bilingual alt text for after image |
+| `after_video_url` | VARCHAR(500) | After video URL (optional) |
 | `title_en` / `_zh` | VARCHAR(200) | Bilingual title for SEO |
 | `caption_en` / `_zh` | TEXT | Bilingual caption |
 | `photographer_credit` | VARCHAR(100) | Photographer attribution |
@@ -52,7 +54,7 @@ Both `project_image_pairs` and `site_image_pairs` share the same structure with 
 | `display_order` | INTEGER | Sort order |
 | `created_at` | TIMESTAMP | Creation timestamp |
 
-**Constraint:** At least one of `before_image_url` or `after_image_url` must be non-null (CHECK constraint).
+**Constraint (`at_least_one_media`):** At least one of `before_image_url`, `after_image_url`, `before_video_url`, or `after_video_url` must be non-null. Pairs can contain images, videos, or both.
 
 ### Reference Tables
 

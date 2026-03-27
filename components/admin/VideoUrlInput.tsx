@@ -16,6 +16,10 @@ interface VideoUrlInputProps {
   slug?: string;
   imageRole?: string;
   disabled?: boolean;
+  /** Controlled mode: called when URL changes (upload or manual edit) */
+  onChange?: (url: string) => void;
+  /** Compact mode: smaller UI for embedding inside other editors */
+  compact?: boolean;
 }
 
 export default function VideoUrlInput({
@@ -27,6 +31,8 @@ export default function VideoUrlInput({
   slug,
   imageRole = 'hero-video',
   disabled = false,
+  onChange: onChangeProp,
+  compact = false,
 }: VideoUrlInputProps) {
   const t = useAdminTranslations();
   const [url, setUrl] = useState(defaultValue);
@@ -49,7 +55,8 @@ export default function VideoUrlInput({
 
   useEffect(() => {
     setVideoError(false);
-  }, [url]);
+    onChangeProp?.(url);
+  }, [url]); // eslint-disable-line react-hooks/exhaustive-deps -- only fire on url change
 
   const handleUpload = useCallback(async (file: File) => {
     setUploadError('');
@@ -151,14 +158,14 @@ export default function VideoUrlInput({
       : null;
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.375rem' }}>
+    <div style={{ marginBottom: compact ? '0.25rem' : '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: compact ? '0.25rem' : '0.375rem' }}>
         <label
           htmlFor={name}
           style={{
-            color: NAVY,
+            color: compact ? 'rgba(27,54,93,0.5)' : NAVY,
             fontWeight: 600,
-            fontSize: '0.8125rem',
+            fontSize: compact ? '0.6875rem' : '0.8125rem',
           }}
         >
           {label}
@@ -320,11 +327,11 @@ export default function VideoUrlInput({
       {url && !videoError && (
         <div
           style={{
-            marginTop: '0.5rem',
-            borderRadius: '8px',
+            marginTop: compact ? '0.25rem' : '0.5rem',
+            borderRadius: compact ? '4px' : '8px',
             overflow: 'hidden',
             boxShadow: neu(3),
-            maxWidth: '300px',
+            maxWidth: compact ? '200px' : '300px',
           }}
         >
           <video

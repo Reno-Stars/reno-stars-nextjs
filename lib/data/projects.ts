@@ -567,6 +567,7 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     duration: project.duration?.[locale],
     space_type: project.space_type?.[locale],
     hero_image: project.hero_image,
+    hero_video: project.hero_video,
     images: project.images.map((img) => ({
       src: img.src,
       alt: img.alt[locale],
@@ -579,6 +580,8 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
       afterImage: pair.afterImage
         ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
         : undefined,
+      beforeVideo: pair.beforeVideo,
+      afterVideo: pair.afterVideo,
       title: pair.title?.[locale],
       caption: pair.caption?.[locale],
       photographerCredit: pair.photographerCredit,
@@ -611,6 +614,7 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
     description: site.description[locale],
     location_city: site.location_city,
     hero_image: site.hero_image,
+    hero_video: site.hero_video,
     badge: site.badge?.[locale],
     budget_range: site.budget_range,
     duration: site.duration?.[locale],
@@ -629,6 +633,8 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
       afterImage: pair.afterImage
         ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
         : undefined,
+      beforeVideo: pair.beforeVideo,
+      afterVideo: pair.afterVideo,
       title: pair.title?.[locale],
       caption: pair.caption?.[locale],
       photographerCredit: pair.photographerCredit,

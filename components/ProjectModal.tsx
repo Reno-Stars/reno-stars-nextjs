@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
-import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import type { DisplayProject, LocalizedImagePair } from '@/lib/types';
@@ -46,10 +46,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   }, [project]);
 
   const currentPair = imagePairs[activePairIndex];
-  const hasBothImages = !!(currentPair?.beforeImage && currentPair?.afterImage);
+  const hasBefore = !!(currentPair?.beforeImage || currentPair?.beforeVideo);
+  const hasAfter = !!(currentPair?.afterImage || currentPair?.afterVideo);
+  const hasBothImages = hasBefore && hasAfter;
   const displayImage = showBefore && currentPair?.beforeImage
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
+
+  // Current display video (if the active side has a video)
+  const displayVideo = showBefore
+    ? currentPair?.beforeVideo
+    : currentPair?.afterVideo;
 
   // Store length in ref for stable callbacks
   const pairsLengthRef = useRef(imagePairs.length);
@@ -247,8 +254,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 aria-label={hasBothImages ? `Toggle to ${showBefore ? 'after' : 'before'} photo` : undefined}
                 onClick={handleImageClick}
               >
-                {/* Animated image wrapper — key only changes on pair navigation, not before/after toggle */}
-                {displayImage && (
+                {/* Animated image/video wrapper — key only changes on pair navigation, not before/after toggle */}
+                {(displayVideo || displayImage) && (
                   <div
                     key={activePairIndex}
                     className="absolute inset-0"
@@ -259,14 +266,25 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     }}
                     onAnimationEnd={() => setSlideDirection(null)}
                   >
-                    <OptimizedImage
-                      key={`${activePairIndex}-${showBefore}`}
-                      src={displayImage.src}
-                      alt={displayImage.alt || `${project.title} - renovation project photo`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                      className="object-contain"
-                    />
+                    {displayVideo ? (
+                      <video
+                        key={`${activePairIndex}-${showBefore}-video`}
+                        src={displayVideo}
+                        poster={displayImage?.src}
+                        controls
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-contain"
+                      />
+                    ) : displayImage ? (
+                      <OptimizedImage
+                        key={`${activePairIndex}-${showBefore}`}
+                        src={displayImage.src}
+                        alt={displayImage.alt || `${project.title} - renovation project photo`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        className="object-contain"
+                      />
+                    ) : null}
                   </div>
                 )}
                 {/* Touch swipe overlay */}
@@ -320,12 +338,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               {imagePairs.length > 1 && (
                 <div className="mb-4 -mx-2">
                   <div className="flex gap-2 overflow-x-auto py-1 px-2" role="group" aria-label="Image thumbnails">
-                    {imagePairs.map((pair, idx) => (
+                    {imagePairs.map((pair, idx) => {
+                      const hasBothSides = (pair.beforeImage || pair.beforeVideo) && (pair.afterImage || pair.afterVideo);
+                      const thumbImage = pair.afterImage || pair.beforeImage;
+                      return (
                       <button
-                        key={`${(pair.afterImage || pair.beforeImage)?.src}-${idx}`}
+                        key={`${thumbImage?.src || pair.afterVideo || pair.beforeVideo || idx}-${idx}`}
                         onClick={() => { setActivePairIndex(idx); setShowBefore(false); }}
                         className={`relative rounded-lg overflow-hidden shrink-0 transition-all duration-200 cursor-pointer h-[30px] sm:h-[48px] ${
-                          pair.beforeImage && pair.afterImage ? 'w-[45px] sm:w-[72px]' : 'w-[30px] sm:w-[48px]'
+                          hasBothSides ? 'w-[45px] sm:w-[72px]' : 'w-[30px] sm:w-[48px]'
                         }`}
                         style={{
                           boxShadow: idx === activePairIndex ? `0 0 0 2px ${GOLD}` : neu(2),
@@ -368,11 +389,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                               </span>
                             </div>
                           </div>
-                        ) : (
+                        ) : thumbImage ? (
                           <div className="relative w-full h-full">
                             <OptimizedImage
-                              src={(pair.afterImage || pair.beforeImage)!.src}
-                              alt={(pair.afterImage || pair.beforeImage)!.alt || project.title}
+                              src={thumbImage.src}
+                              alt={thumbImage.alt || project.title}
                               fill
                               sizes="48px"
                               className="object-cover"
@@ -386,9 +407,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                               </span>
                             )}
                           </div>
+                        ) : (
+                          // Video-only pair (no image thumbnails available)
+                          <div className="relative w-full h-full flex items-center justify-center" style={{ backgroundColor: NAVY_90 }}>
+                            <Video className="w-3 h-3 sm:w-5 sm:h-5 text-white/80" />
+                          </div>
                         )}
                       </button>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}

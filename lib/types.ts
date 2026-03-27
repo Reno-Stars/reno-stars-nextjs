@@ -34,6 +34,10 @@ export interface ImagePair {
   beforeImage?: ImageWithAlt;
   /** After image (optional if beforeImage exists) */
   afterImage?: ImageWithAlt;
+  /** Before video URL (optional) */
+  beforeVideo?: string;
+  /** After video URL (optional) */
+  afterVideo?: string;
   /** Pair title for SEO */
   title?: Localized<string>;
   /** Pair caption/description */
@@ -50,6 +54,8 @@ export interface ImagePair {
 export interface LocalizedImagePair {
   beforeImage?: LocalizedImageWithAlt;
   afterImage?: LocalizedImageWithAlt;
+  beforeVideo?: string;
+  afterVideo?: string;
   title?: string;
   caption?: string;
   photographerCredit?: string;
@@ -77,6 +83,8 @@ export interface Site {
   location_city?: string;
   /** Primary display image URL */
   hero_image?: string;
+  /** Hero video URL (optional) */
+  hero_video?: string;
   /** Optional badge text (e.g., "New", "Featured") */
   badge?: Localized<string>;
   /** Short excerpt for listings/previews */
@@ -182,6 +190,8 @@ export interface Project {
   image_pairs?: ImagePair[];
   /** Primary display image URL */
   hero_image: string;
+  /** Hero video URL (optional) */
+  hero_video?: string;
   /** List of work scope items */
   service_scope?: Localized<string[]>;
   /** Problem statement */
@@ -424,6 +434,7 @@ export interface LocalizedProject {
   duration?: string;
   space_type?: string;
   hero_image: string;
+  hero_video?: string;
   /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images: { src: string; alt: string; is_before?: boolean }[];
   /** Before/after image pairs with localized SEO metadata */
@@ -447,6 +458,7 @@ export interface LocalizedSite {
   description: string;
   location_city?: string;
   hero_image?: string;
+  hero_video?: string;
   badge?: string;
   budget_range?: string;
   duration?: string;
