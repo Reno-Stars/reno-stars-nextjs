@@ -2,12 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
-import { DollarSign, Bath, Home, ArrowRight } from 'lucide-react';
+import { DollarSign, Bath, Home, ArrowDownToLine, ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu,
-  STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
+  STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT, STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
 
 interface GuidesIndexPageProps {
@@ -39,6 +39,14 @@ const GUIDES = [
     accent: NAVY,
     accentLight: '#E8EBF0',
   },
+  {
+    slug: 'basement-renovation-cost-vancouver',
+    icon: ArrowDownToLine,
+    titleKey: 'guides.index.basement.title',
+    descKey: 'guides.index.basement.description',
+    accent: STEP_GREEN,
+    accentLight: STEP_GREEN_LIGHT,
+  },
 ];
 
 export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProps) {
@@ -60,7 +68,7 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
 
       {/* Guide Cards */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {GUIDES.map((guide) => {
             const Icon = guide.icon;
             const card = (
