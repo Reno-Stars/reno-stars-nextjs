@@ -230,6 +230,8 @@ export interface Service {
   image?: string;
   /** Sub-service tags (e.g., "Floor Installation", "Cooking Equipment") */
   tags?: Localized<string[]>;
+  /** Per-service "Why Us" benefits (overrides hardcoded defaults when present) */
+  benefits?: Localized<string[]>;
 }
 
 /**
@@ -499,6 +501,7 @@ export interface LocalizedService {
   icon?: string;
   image?: string;
   tags?: string[];
+  benefits?: string[];
 }
 
 /** A service area with content resolved to a single locale */

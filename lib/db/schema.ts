@@ -83,6 +83,7 @@ export const services = pgTable(
 export const servicesRelations = relations(services, ({ many }) => ({
   projects: many(projects),
   tags: many(serviceTags),
+  benefits: many(serviceBenefits),
 }));
 
 // ============================================================================
@@ -107,6 +108,32 @@ export const serviceTags = pgTable(
 export const serviceTagsRelations = relations(serviceTags, ({ one }) => ({
   service: one(services, {
     fields: [serviceTags.serviceId],
+    references: [services.id],
+  }),
+}));
+
+// ============================================================================
+// SERVICE BENEFITS
+// ============================================================================
+
+/** Per-service "Why Us" benefit items (e.g., "Free Consultation", "Licensed & Insured") */
+export const serviceBenefits = pgTable(
+  'service_benefits',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    serviceId: uuid('service_id')
+      .references(() => services.id, { onDelete: 'cascade' })
+      .notNull(),
+    benefitEn: varchar('benefit_en', { length: 200 }).notNull(),
+    benefitZh: varchar('benefit_zh', { length: 200 }).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+  },
+  (table) => [index('service_benefits_service_id_idx').on(table.serviceId)]
+);
+
+export const serviceBenefitsRelations = relations(serviceBenefits, ({ one }) => ({
+  service: one(services, {
+    fields: [serviceBenefits.serviceId],
     references: [services.id],
   }),
 }));
@@ -804,6 +831,9 @@ export type NewDbService = typeof services.$inferInsert;
 
 export type DbServiceTag = typeof serviceTags.$inferSelect;
 export type NewDbServiceTag = typeof serviceTags.$inferInsert;
+
+export type DbServiceBenefit = typeof serviceBenefits.$inferSelect;
+export type NewDbServiceBenefit = typeof serviceBenefits.$inferInsert;
 
 export type DbServiceArea = typeof serviceAreas.$inferSelect;
 export type NewDbServiceArea = typeof serviceAreas.$inferInsert;

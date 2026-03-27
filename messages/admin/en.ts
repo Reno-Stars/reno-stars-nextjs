@@ -346,6 +346,10 @@ const en = {
     tagPlaceholderEn: 'Tag in English',
     tagPlaceholderZh: 'Tag in Chinese',
     addTag: '+ Add Tag',
+    benefits: 'Benefits (Why Us)',
+    benefitPlaceholderEn: 'Benefit in English',
+    benefitPlaceholderZh: 'Benefit in Chinese',
+    addBenefit: '+ Add Benefit',
   },
   socialLinks: {
     title: 'Social Links',

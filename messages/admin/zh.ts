@@ -348,6 +348,10 @@ const zh: AdminMessages = {
     tagPlaceholderEn: '英文标签',
     tagPlaceholderZh: '中文标签',
     addTag: '+ 添加标签',
+    benefits: '优势 (为什么选择我们)',
+    benefitPlaceholderEn: '英文优势',
+    benefitPlaceholderZh: '中文优势',
+    addBenefit: '+ 添加优势',
   },
   socialLinks: {
     title: '社交链接',

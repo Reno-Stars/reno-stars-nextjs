@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { services, serviceTags } from '@/lib/db/schema';
-import type { DbServiceTag } from '@/lib/db/schema';
+import { services, serviceTags, serviceBenefits } from '@/lib/db/schema';
+import type { DbServiceTag, DbServiceBenefit } from '@/lib/db/schema';
 import { eq, asc } from 'drizzle-orm';
 import { isValidUUID } from '@/lib/admin/auth';
 import ServiceForm from '../ServiceForm';
@@ -16,9 +16,10 @@ export default async function EditServicePage({ params }: PageProps) {
   const { id } = await params;
   if (!isValidUUID(id)) notFound();
 
-  const [serviceRows, tagRows] = await Promise.all([
+  const [serviceRows, tagRows, benefitRows] = await Promise.all([
     db.select().from(services).where(eq(services.id, id)).limit(1),
     db.select().from(serviceTags).where(eq(serviceTags.serviceId, id)).orderBy(asc(serviceTags.displayOrder)),
+    db.select().from(serviceBenefits).where(eq(serviceBenefits.serviceId, id)).orderBy(asc(serviceBenefits.displayOrder)),
   ]);
   const service = serviceRows[0];
   if (!service) notFound();
@@ -40,6 +41,7 @@ export default async function EditServicePage({ params }: PageProps) {
           imageUrl: service.imageUrl,
           displayOrder: service.displayOrder,
           tags: tagRows.map((t: DbServiceTag) => ({ id: t.id, en: t.tagEn, zh: t.tagZh })),
+          benefits: benefitRows.map((b: DbServiceBenefit) => ({ id: b.id, en: b.benefitEn, zh: b.benefitZh })),
         }}
       />
     </div>

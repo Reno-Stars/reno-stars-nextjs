@@ -21,6 +21,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 |-------|---------|------------|
 | `services` | Renovation service types | `slug` |
 | `service_tags` | Sub-service tags per service (bilingual) | `(serviceId, displayOrder)` |
+| `service_benefits` | "Why Us" benefits per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_areas` | Geographic coverage (includes rich content, highlights, SEO meta) | `slug` |
 | `project_sites` | Site containers for projects (includes `po_number` for sales tracking, `space_type_en`/`_zh` for space type) | `slug` |
 | `site_image_pairs` | Before/after image pairs per site | `(siteId, displayOrder)` |
@@ -144,6 +145,7 @@ Key indexes beyond unique constraints:
 | Index | Table | Columns | Purpose |
 |-------|-------|---------|---------|
 | `service_tags_service_id_idx` | `service_tags` | `(service_id)` | Tag lookup by service |
+| `service_benefits_service_id_idx` | `service_benefits` | `(service_id)` | Benefit lookup by service |
 | `project_sites_published_show_idx` | `project_sites` | `(isPublished, showAsProject)` | Public site queries |
 | `projects_is_published_idx` | `projects` | `(isPublished)` | Public project queries |
 | `blog_posts_is_published_idx` | `blog_posts` | `(isPublished)` | Public blog queries |

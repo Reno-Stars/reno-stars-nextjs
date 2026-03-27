@@ -20,6 +20,12 @@ interface TagEntry {
   zh: string;
 }
 
+interface BenefitEntry {
+  id: string;
+  en: string;
+  zh: string;
+}
+
 interface ServiceFormProps {
   action: (
     prevState: { success?: boolean; error?: string },
@@ -37,6 +43,7 @@ interface ServiceFormProps {
     imageUrl: string | null;
     displayOrder: number;
     tags?: { id: string; en: string; zh: string }[];
+    benefits?: { id: string; en: string; zh: string }[];
   };
   isNew?: boolean;
 }
@@ -53,6 +60,11 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
     initialData?.tags?.map((tag) => ({ ...tag })) ?? []
   );
   const [showAllTags, setShowAllTags] = useState(false);
+
+  const [benefits, setBenefits] = useState<BenefitEntry[]>(
+    initialData?.benefits?.map((b) => ({ ...b })) ?? []
+  );
+  const [showAllBenefits, setShowAllBenefits] = useState(false);
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
@@ -84,6 +96,22 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
   const visibleTags = showAllTags || tags.length <= COLLAPSE_THRESHOLD
     ? tags
     : tags.slice(0, COLLAPSE_THRESHOLD);
+
+  const addBenefit = () => {
+    setBenefits((prev) => [...prev, { id: crypto.randomUUID(), en: '', zh: '' }]);
+  };
+
+  const removeBenefit = (id: string) => {
+    setBenefits((prev) => prev.filter((b) => b.id !== id));
+  };
+
+  const updateBenefit = (id: string, field: 'en' | 'zh', value: string) => {
+    setBenefits((prev) => prev.map((b) => (b.id === id ? { ...b, [field]: value } : b)));
+  };
+
+  const visibleBenefits = showAllBenefits || benefits.length <= COLLAPSE_THRESHOLD
+    ? benefits
+    : benefits.slice(0, COLLAPSE_THRESHOLD);
 
   return (
     <form action={formAction}>
@@ -193,6 +221,82 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
                 style={{ color: NAVY }}
               >
                 {t.services.addTag}
+              </button>
+            </div>
+          </FormField>
+
+          {/* Benefits (Why Us) */}
+          <FormField label={t.services.benefits}>
+            <div className="space-y-2">
+              {visibleBenefits.map((b, idx) => (
+                <div key={b.id} className="flex items-center gap-2">
+                  <input
+                    name={`benefits[${idx}].en`}
+                    type="hidden"
+                    value={b.en}
+                  />
+                  <input
+                    name={`benefits[${idx}].zh`}
+                    type="hidden"
+                    value={b.zh}
+                  />
+                  <input
+                    type="text"
+                    value={b.en}
+                    onChange={(e) => updateBenefit(b.id, 'en', e.target.value)}
+                    placeholder={t.services.benefitPlaceholderEn}
+                    aria-label={t.services.benefitPlaceholderEn}
+                    style={fieldStyle}
+                    className="flex-1"
+                  />
+                  <input
+                    type="text"
+                    value={b.zh}
+                    onChange={(e) => updateBenefit(b.id, 'zh', e.target.value)}
+                    placeholder={t.services.benefitPlaceholderZh}
+                    aria-label={t.services.benefitPlaceholderZh}
+                    style={fieldStyle}
+                    className="flex-1"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeBenefit(b.id)}
+                    className="shrink-0 text-red-500 hover:text-red-700 p-1"
+                    aria-label={t.common.remove}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+              {/* Render hidden inputs for collapsed benefits so they are submitted */}
+              {!showAllBenefits && benefits.length > COLLAPSE_THRESHOLD &&
+                benefits.slice(COLLAPSE_THRESHOLD).map((b, i) => (
+                  <span key={b.id}>
+                    <input type="hidden" name={`benefits[${COLLAPSE_THRESHOLD + i}].en`} value={b.en} />
+                    <input type="hidden" name={`benefits[${COLLAPSE_THRESHOLD + i}].zh`} value={b.zh} />
+                  </span>
+                ))
+              }
+              {benefits.length > COLLAPSE_THRESHOLD && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllBenefits(!showAllBenefits)}
+                  className="text-sm font-medium"
+                  style={{ color: NAVY }}
+                >
+                  {showAllBenefits
+                    ? t.common.showLess
+                    : t.common.showAll.replace('{count}', String(benefits.length))
+                  }
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={addBenefit}
+                className="text-sm font-medium"
+                style={{ color: NAVY }}
+              >
+                {t.services.addBenefit}
               </button>
             </div>
           </FormField>

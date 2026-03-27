@@ -30,13 +30,15 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
   const relatedProjects = useMemo(() => allProjects.filter((p) => p.service_type === serviceSlug).slice(0, 3), [allProjects, serviceSlug]);
-  const benefits = [
-    t('serviceBenefits.freeConsultation'),
-    t('serviceBenefits.licensedInsured'),
-    t('serviceBenefits.coverageAndWarranty'),
-    t('serviceBenefits.experience', { years: company.yearsExperience }),
-    t('serviceBenefits.rating'),
-  ];
+  const benefits = localizedService.benefits && localizedService.benefits.length > 0
+    ? localizedService.benefits
+    : [
+        t('serviceBenefits.freeConsultation'),
+        t('serviceBenefits.licensedInsured'),
+        t('serviceBenefits.coverageAndWarranty'),
+        t('serviceBenefits.experience', { years: company.yearsExperience }),
+        t('serviceBenefits.rating'),
+      ];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>

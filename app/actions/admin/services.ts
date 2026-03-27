@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { services, serviceTags, projects, contactSubmissions } from '@/lib/db/schema';
+import { services, serviceTags, serviceBenefits, projects, contactSubmissions } from '@/lib/db/schema';
 import { eq, count, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
@@ -11,6 +11,8 @@ import { ensureUniqueSlug } from '@/lib/utils';
 
 const MAX_TAGS = 50;
 const MAX_TAG_LENGTH = 200;
+const MAX_BENEFITS = 20;
+const MAX_BENEFIT_LENGTH = 200;
 
 function parseTags(formData: FormData) {
   const tags: { tagEn: string; tagZh: string; displayOrder: number }[] = [];
@@ -30,6 +32,28 @@ function validateTags(tags: { tagEn: string; tagZh: string }[]): string | null {
   for (const tag of tags) {
     if (tag.tagEn.length > MAX_TAG_LENGTH) return `Tag EN "${tag.tagEn.slice(0, 30)}..." exceeds ${MAX_TAG_LENGTH} characters.`;
     if (tag.tagZh.length > MAX_TAG_LENGTH) return `Tag ZH "${tag.tagZh.slice(0, 30)}..." exceeds ${MAX_TAG_LENGTH} characters.`;
+  }
+  return null;
+}
+
+function parseBenefits(formData: FormData) {
+  const benefits: { benefitEn: string; benefitZh: string; displayOrder: number }[] = [];
+  let i = 0;
+  while (formData.has(`benefits[${i}].en`) && i < MAX_BENEFITS) {
+    const en = getString(formData, `benefits[${i}].en`).trim();
+    const zh = getString(formData, `benefits[${i}].zh`).trim();
+    if (en) {
+      benefits.push({ benefitEn: en, benefitZh: zh || en, displayOrder: i });
+    }
+    i++;
+  }
+  return benefits;
+}
+
+function validateBenefits(benefits: { benefitEn: string; benefitZh: string }[]): string | null {
+  for (const b of benefits) {
+    if (b.benefitEn.length > MAX_BENEFIT_LENGTH) return `Benefit EN "${b.benefitEn.slice(0, 30)}..." exceeds ${MAX_BENEFIT_LENGTH} characters.`;
+    if (b.benefitZh.length > MAX_BENEFIT_LENGTH) return `Benefit ZH "${b.benefitZh.slice(0, 30)}..." exceeds ${MAX_BENEFIT_LENGTH} characters.`;
   }
   return null;
 }
@@ -72,6 +96,10 @@ export async function createService(
     const tagError = validateTags(tagData);
     if (tagError) return { error: tagError };
 
+    const benefitData = parseBenefits(formData);
+    const benefitError = validateBenefits(benefitData);
+    if (benefitError) return { error: benefitError };
+
     const conflictingSlugs = await db.select({ slug: services.slug }).from(services).where(like(services.slug, `${slug}%`));
     const uniqueSlug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
@@ -92,6 +120,13 @@ export async function createService(
     if (tagData.length > 0) {
       await db.insert(serviceTags).values(
         tagData.map((tag) => ({ ...tag, serviceId: inserted.id }))
+      );
+    }
+
+    // Insert benefits
+    if (benefitData.length > 0) {
+      await db.insert(serviceBenefits).values(
+        benefitData.map((b) => ({ ...b, serviceId: inserted.id }))
       );
     }
 
@@ -206,6 +241,10 @@ export async function updateService(
     const tagError = validateTags(tagData);
     if (tagError) return { error: tagError };
 
+    const benefitData = parseBenefits(formData);
+    const benefitError = validateBenefits(benefitData);
+    if (benefitError) return { error: benefitError };
+
     const updated = await db.update(services).set(data).where(eq(services.id, id)).returning({ id: services.id });
     if (updated.length === 0) {
       return { error: 'Service not found.' };
@@ -223,6 +262,20 @@ export async function updateService(
     const oldTagIds = existingTags.map((r: { id: string }) => r.id);
     if (oldTagIds.length > 0) {
       await db.delete(serviceTags).where(inArray(serviceTags.id, oldTagIds));
+    }
+
+    // Insert-before-delete pattern for benefits
+    const existingBenefits = await db.select({ id: serviceBenefits.id }).from(serviceBenefits).where(eq(serviceBenefits.serviceId, id));
+
+    if (benefitData.length > 0) {
+      await db.insert(serviceBenefits).values(
+        benefitData.map((b) => ({ ...b, serviceId: id }))
+      );
+    }
+
+    const oldBenefitIds = existingBenefits.map((r: { id: string }) => r.id);
+    if (oldBenefitIds.length > 0) {
+      await db.delete(serviceBenefits).where(inArray(serviceBenefits.id, oldBenefitIds));
     }
 
     revalidatePath('/admin/services');

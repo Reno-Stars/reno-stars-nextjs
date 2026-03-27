@@ -160,7 +160,7 @@ Cached async functions fetch data from the database and return the same TypeScri
 |----------|---------|-------|
 | `getCompanyFromDb()` | `Company` | Computes `yearsExperience` from `foundingYear` (rounds up to nearest 5 via `Math.ceil`) |
 | `getSocialLinksFromDb()` | `SocialLink[]` | Filters `isActive`, orders by `displayOrder` |
-| `getServicesFromDb()` | `Service[]` | Orders by `displayOrder`, applies `getAssetUrl()`, batch-fetches tags via `groupBy()` |
+| `getServicesFromDb()` | `Service[]` | Orders by `displayOrder`, applies `getAssetUrl()`, batch-fetches tags and benefits via `groupBy()` |
 | `getAboutSectionsFromDb()` | `AboutSections` | Replaces `{yearsExperience}` placeholder |
 | `getProjectsFromDb()` | `Project[]` | Published projects with images and scopes |
 | `getProjectBySlugFromDb(slug)` | `Project \| null` | Single project lookup by slug |
@@ -309,6 +309,7 @@ Shadow utilities: `neu(size)` for raised elements, `neuIn(size)` for pressed/ins
 - **PO Number search**: The public projects page includes a text search input that filters by `po_number` — an internal field not visually displayed to customers but searchable by sales staff for quick project lookup. Both projects and sites carry `po_number` through the full data pipeline (DB → queries → types → localization → display).
 - **Service icons**: Service icons are stored as image URLs (`iconUrl` column) pointing to SVG files in `public/icons/services/`. Frontend components render them as `<img>` tags with `GOLD_ICON_FILTER` CSS filter for gold tinting. Admin uses `ImageUrlInput` for upload. The old `iconName` column (Lucide component names) is retained but unused.
 - **Service tags**: Each service has bilingual sub-service tags (e.g., "Floor Installation" / "地板安装") stored in the `service_tags` table. Tags are batch-fetched in `getServicesFromDb()` and `getAllServicesAdmin()` using the `groupBy()` + `sortByDisplayOrder()` pattern. Admin ServiceForm provides add/remove UI with collapse threshold. Public `ServiceDetailPage` renders tags as a neumorphic tag cloud between Hero and Benefits sections. Insert-before-delete pattern used for tag updates (same Neon constraint as image pairs).
+- **Service benefits**: Each service has bilingual "Why Us" benefits stored in the `service_benefits` table (same one-to-many pattern as tags). Benefits are batch-fetched alongside tags in `getServicesFromDb()` using `groupBy()`. Admin ServiceForm provides a collapsible "Benefits (Why Us)" section with add/remove UI (same pattern as tags, `COLLAPSE_THRESHOLD = 3`). Public `ServiceDetailPage` uses DB benefits when available, falling back to hardcoded `serviceBenefits.*` translation keys when empty. Insert-before-delete pattern used for benefit updates.
 - **Admin locale switching**: `AdminLocaleProvider` provides client-side locale + sidebar state context for admin panel. TopBar displays EN/ZH switcher buttons (gold highlight for active), hamburger menu (mobile only), and logout button with `ConfirmDialog` confirmation. Preference persists in localStorage (`admin_locale` key) with try/catch for private browsing mode. All list clients show bilingual content (titleEn/titleZh, questionEn/questionZh, etc.) based on selected locale. Uses `useAdminLocale()` hook which returns `{ locale, setLocale, sidebarOpen, setSidebarOpen }`. Does not affect SEO (admin is auth-protected).
 - **Admin landing page previews**: Several admin pages include a "Landing Page Preview" below the main content, mirroring the homepage component layout. Uses `SURFACE_ALT` container with neumorphic cards. Switches with admin locale. Pages with previews: FAQs (expandable accordion), Services (icon cards), Service Areas (card grid + footer bar), Trust Badges (star cards), Designs (drag-to-reorder grid), Partners (drag-to-reorder logos), About (responsive card grid with gold dividers and 3-line text clamp). Translation key pattern: `t.{entity}.landingPreview`.
 
@@ -705,7 +706,7 @@ Admin update actions that modify related records (image pairs, scopes, external 
 2. Insert new records first (old data remains as fallback if insert fails)
 3. Delete old records by ID after successful insert
 
-This prevents data loss on partial failure. Used by `updateProject()`, `updateSite()`, and `updateService()` (for tags).
+This prevents data loss on partial failure. Used by `updateProject()`, `updateSite()`, and `updateService()` (for tags and benefits).
 
 ```typescript
 // 1. Fetch existing IDs

@@ -7,6 +7,7 @@ import {
   socialLinks as socialLinksTable,
   services as servicesTable,
   serviceTags as serviceTagsTable,
+  serviceBenefits as serviceBenefitsTable,
   aboutSections as aboutSectionsTable,
   projectSites as sitesTable,
   siteImagePairs as siteImagePairsTable,
@@ -127,15 +128,20 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
     .from(servicesTable)
     .orderBy(asc(servicesTable.displayOrder));
 
-  // Batch-fetch all tags for all services
+  // Batch-fetch all tags and benefits for all services
   const serviceIds = rows.map((r: typeof servicesTable.$inferSelect) => r.id);
-  const allTags = serviceIds.length > 0
-    ? await db.select().from(serviceTagsTable).where(inArray(serviceTagsTable.serviceId, serviceIds))
-    : [];
+  const [allTags, allBenefits] = serviceIds.length > 0
+    ? await Promise.all([
+        db.select().from(serviceTagsTable).where(inArray(serviceTagsTable.serviceId, serviceIds)),
+        db.select().from(serviceBenefitsTable).where(inArray(serviceBenefitsTable.serviceId, serviceIds)),
+      ])
+    : [[], []];
   const tagsByService = groupBy(allTags, (t: typeof serviceTagsTable.$inferSelect) => t.serviceId);
+  const benefitsByService = groupBy(allBenefits, (b: typeof serviceBenefitsTable.$inferSelect) => b.serviceId);
 
   return rows.map((row: typeof servicesTable.$inferSelect) => {
     const tags = sortByDisplayOrder(tagsByService.get(row.id) ?? []);
+    const benefits = sortByDisplayOrder(benefitsByService.get(row.id) ?? []);
     return {
       slug: row.slug,
       title: { en: row.titleEn, zh: row.titleZh },
@@ -148,6 +154,9 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
       image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
       tags: tags.length > 0
         ? { en: tags.map((t) => t.tagEn), zh: tags.map((t) => t.tagZh) }
+        : undefined,
+      benefits: benefits.length > 0
+        ? { en: benefits.map((b) => b.benefitEn), zh: benefits.map((b) => b.benefitZh) }
         : undefined,
     };
   });

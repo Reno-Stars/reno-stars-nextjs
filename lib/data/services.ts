@@ -9,6 +9,7 @@ export function getLocalizedService(service: Service, locale: Locale): Localized
     icon: service.icon,
     image: service.image,
     tags: service.tags?.[locale],
+    benefits: service.benefits?.[locale],
   };
 }
 
