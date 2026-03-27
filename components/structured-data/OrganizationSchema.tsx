@@ -21,7 +21,7 @@ export default function OrganizationSchema({ company, socialLinks, areas }: Orga
     '@type': 'HomeAndConstructionBusiness',
     name: company.name,
     description:
-      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} WCB liability coverage and up to 3 years warranty.`,
+      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} third-party liability insurance and up to 3 years warranty.`,
     url: baseUrl,
     logo: company.logo,
     image: company.logo,
