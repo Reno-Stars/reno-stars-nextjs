@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import GoogleAdsConversion from '@/components/GoogleAdsConversion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -59,7 +60,9 @@ export default async function LocaleLayout({
         <GoogleAnalytics />
       </head>
       <body className="antialiased" suppressHydrationWarning>
+        <GoogleAdsConversion />
         <NextIntlClientProvider messages={messages}>
+
           <WebSiteSchema />
           <LocalBusinessSchema
             company={company}
