@@ -1,12 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Helper: create a thenable object that also has chainable methods
-function thenableArray(arr: unknown[]) {
-  const obj = {
-    where: vi.fn().mockResolvedValue(arr),
+function thenableChain(arr: unknown[]) {
+  const obj: Record<string, unknown> = {
+    where: vi.fn().mockImplementation(() => thenableChain(arr)),
+    limit: vi.fn().mockImplementation(() => thenableChain(arr)),
     then: (resolve: (v: unknown[]) => void) => Promise.resolve(arr).then(resolve),
   };
   return obj;
+}
+function thenableArray(arr: unknown[]) {
+  return thenableChain(arr);
 }
 
 vi.mock('@/lib/db', () => ({
