@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { eq, asc, desc, and, inArray, count, isNull, sql } from 'drizzle-orm';
+import { eq, asc, desc, and, or, like, inArray, count, isNull, sql } from 'drizzle-orm';
 import { db } from './index';
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
@@ -1423,6 +1423,34 @@ export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuid
     .where(and(
       eq(projectsTable.isPublished, true),
       eq(projectsTable.serviceType, 'commercial')
+    ))
+    .orderBy(desc(projectsTable.createdAt));
+
+  return rows;
+});
+
+
+
+export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+  const rows = await db
+    .select({
+      titleEn: projectsTable.titleEn,
+      titleZh: projectsTable.titleZh,
+      locationCity: projectsTable.locationCity,
+      budgetRange: projectsTable.budgetRange,
+      durationEn: projectsTable.durationEn,
+      durationZh: projectsTable.durationZh,
+      spaceTypeEn: projectsTable.spaceTypeEn,
+      spaceTypeZh: projectsTable.spaceTypeZh,
+      slug: projectsTable.slug,
+    })
+    .from(projectsTable)
+    .where(and(
+      eq(projectsTable.isPublished, true),
+      or(
+        eq(projectsTable.serviceType, 'cabinet'),
+        like(projectsTable.titleEn, '%Cabinet%')
+      )
     ))
     .orderBy(desc(projectsTable.createdAt));
 

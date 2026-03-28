@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import CommercialCostGuidePage from '@/components/pages/CommercialCostGuidePage';
+import CabinetRefinishingCostGuidePage from '@/components/pages/CabinetRefinishingCostGuidePage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getCommercialProjectsForGuide } from '@/lib/db/queries';
+import { getCabinetProjectsForGuide } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'metadata.guides.commercialCost' });
+  const t = await getTranslations({ locale, namespace: 'metadata.guides.cabinetCost' });
 
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(t('title'), t('description'));
@@ -26,11 +26,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: t('title'),
     description: t('description'),
-    alternates: buildAlternates('/guides/commercial-renovation-cost-vancouver/', locale),
+    alternates: buildAlternates('/guides/cabinet-refinishing-cost-vancouver/', locale),
     openGraph: {
       title: t('title'),
       description: t('description'),
-      url: `${baseUrl}/${locale}/guides/commercial-renovation-cost-vancouver/`,
+      url: `${baseUrl}/${locale}/guides/cabinet-refinishing-cost-vancouver/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
@@ -50,22 +50,16 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  let projects: Awaited<ReturnType<typeof getCommercialProjectsForGuide>>;
-  try {
-    projects = await getCommercialProjectsForGuide();
-  } catch {
-    projects = [];
-  }
-
-  const [nav, t] = await Promise.all([
+  const [nav, t, projects] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
-    getTranslations({ locale, namespace: 'guides.commercialCost' }),
+    getTranslations({ locale, namespace: 'guides.cabinetCost' }),
+    getCabinetProjectsForGuide(),
   ]);
 
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: nav('guides'), url: `/${locale}/guides/` },
-    { name: t('breadcrumb'), url: `/${locale}/guides/commercial-renovation-cost-vancouver/` },
+    { name: t('breadcrumb'), url: `/${locale}/guides/cabinet-refinishing-cost-vancouver/` },
   ];
 
   const faqs = [
@@ -80,7 +74,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <CommercialCostGuidePage locale={locale as Locale} projects={projects} />
+      <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} />
     </>
   );
 }

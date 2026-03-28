@@ -2,12 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
-import { DollarSign, Bath, Home, ArrowDownToLine, Building2, ArrowRight } from 'lucide-react';
+import { DollarSign, Bath, Home, ArrowDownToLine, Building2, Paintbrush, ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu,
-  STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT, STEP_GREEN, STEP_GREEN_LIGHT,
+  STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT, STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
 } from '@/lib/theme';
 
 interface GuidesIndexPageProps {
@@ -54,6 +54,14 @@ const GUIDES = [
     descKey: 'guides.index.commercial.description',
     accent: GOLD,
     accentLight: GOLD_PALE,
+  },
+  {
+    slug: 'cabinet-refinishing-cost-vancouver',
+    icon: Paintbrush,
+    titleKey: 'guides.index.cabinet.title',
+    descKey: 'guides.index.cabinet.description',
+    accent: STEP_RED,
+    accentLight: STEP_RED_LIGHT,
   },
 ];
 
