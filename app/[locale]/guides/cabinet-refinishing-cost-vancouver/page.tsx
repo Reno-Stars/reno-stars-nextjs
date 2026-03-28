@@ -50,10 +50,16 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, projects] = await Promise.all([
+  let projects: Awaited<ReturnType<typeof getCabinetProjectsForGuide>>;
+  try {
+    projects = await getCabinetProjectsForGuide();
+  } catch {
+    projects = [];
+  }
+
+  const [nav, t] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'guides.cabinetCost' }),
-    getCabinetProjectsForGuide(),
   ]);
 
   const breadcrumbs = [
