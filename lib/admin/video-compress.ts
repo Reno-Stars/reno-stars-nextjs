@@ -6,24 +6,31 @@
  *
  * The CORE_VERSION must stay compatible with the installed @ffmpeg/ffmpeg
  * wrapper (currently 0.12.x). Bump both together when upgrading.
+ *
+ * All @ffmpeg/* imports are dynamic to avoid breaking server-side builds
+ * (the package uses `new Worker(...)` which is unavailable in Node.js).
  */
 
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import { MAX_COMPRESSIBLE_VIDEO_SIZE } from './upload-constants';
+
+type FFmpegType = import('@ffmpeg/ffmpeg').FFmpeg;
 
 const CORE_VERSION = '0.12.10';
 const CDN_BASE = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${CORE_VERSION}/dist/umd`;
 
-let ffmpeg: FFmpeg | null = null;
-let loadingPromise: Promise<FFmpeg> | null = null;
+let ffmpeg: FFmpegType | null = null;
+let loadingPromise: Promise<FFmpegType> | null = null;
 
-async function getFFmpeg(): Promise<FFmpeg> {
+async function getFFmpeg(): Promise<FFmpegType> {
   if (ffmpeg?.loaded) return ffmpeg;
   if (loadingPromise) return loadingPromise;
 
   loadingPromise = (async () => {
     try {
+      const [{ FFmpeg }, { toBlobURL }] = await Promise.all([
+        import('@ffmpeg/ffmpeg'),
+        import('@ffmpeg/util'),
+      ]);
       const ff = new FFmpeg();
 
       const [coreURL, wasmURL] = await Promise.all([
@@ -83,6 +90,9 @@ export async function compressVideo(
   }
 
   onLoadingFfmpeg?.();
+
+  // Dynamic import fetchFile at call time
+  const { fetchFile } = await import('@ffmpeg/util');
   const ff = await getFFmpeg();
 
   // Parse total duration from log output
