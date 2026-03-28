@@ -569,6 +569,10 @@
       "basementCost": {
         "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+      },
+      "commercialCost": {
+        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
       }
     },
     "about": {
@@ -846,6 +850,10 @@
       "basement": {
         "title": "Basement Renovation Cost",
         "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+      },
+      "commercial": {
+        "title": "Commercial Renovation Cost",
+        "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
       }
     },
     "kitchenCost": {
@@ -1263,6 +1271,104 @@
         "a4": "Yes, adding a legal secondary suite is one of the best renovation investments in Vancouver. A suite can generate $1,500–2,500 per month in rental income. With renovation costs of $80,000–120,000, the investment typically pays for itself in 3–5 years while also increasing your property value by 10–20%.",
         "q5": "What is the best flooring for a basement renovation?",
         "a5": "Luxury vinyl plank (LVP) is the most recommended basement flooring in Vancouver due to its waterproof properties and durability. It costs $4–8 per square foot installed and handles moisture better than hardwood or laminate. Engineered hardwood and ceramic tile are also good options depending on your budget and style preferences."
+      }
+    },
+    "commercialCost": {
+      "breadcrumb": "Commercial Renovation Cost",
+      "hero": {
+        "title": "Commercial Renovation Cost in Vancouver BC (2026)",
+        "subtitle": "What does a commercial renovation really cost in Greater Vancouver? From small office refreshes to full restaurant build-outs, here are the real numbers based on our project experience."
+      },
+      "stats": {
+        "avgCost": "Average Cost",
+        "range": "Price Range",
+        "sqft": "Cost per Sq Ft",
+        "sqftValue": "$75 – $300/sq ft",
+        "timeline": "Typical Timeline",
+        "timelineValue": "8–20 weeks"
+      },
+      "tiers": {
+        "title": "Commercial Renovation Cost by Project Scope",
+        "subtitle": "Typical pricing for commercial projects across Greater Vancouver",
+        "budget": {
+          "title": "Small Retail / Office Refresh",
+          "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work."
+        },
+        "midRange": {
+          "title": "Full Commercial Fit-Out",
+          "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics."
+        },
+        "highEnd": {
+          "title": "Restaurant / Medical / Premium Retail",
+          "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail spaces."
+        }
+      },
+      "factors": {
+        "title": "What Affects Your Commercial Renovation Cost?",
+        "subtitle": "Six key factors that determine your final price",
+        "permits": {
+          "title": "Permits & Zoning",
+          "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications add $3,000–8,000. The City of Vancouver's development permit process can take 8–16 weeks, so factor in timeline costs."
+        },
+        "hvac": {
+          "title": "HVAC & Mechanical Systems",
+          "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant hood and make-up air systems alone cost $20,000–50,000. Office spaces need proper zoning for tenant comfort. Vancouver's energy code requires high-efficiency systems."
+        },
+        "fireSafety": {
+          "title": "Fire Safety & Sprinklers",
+          "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify. Fire alarm upgrades run $5,000–20,000. Change-of-use triggers full fire code compliance review. Restaurants and assembly spaces have the most stringent requirements."
+        },
+        "accessibility": {
+          "title": "Accessibility Compliance",
+          "description": "BC Building Code requires barrier-free access for commercial spaces. Accessible washrooms, ramps, door widths, and signage add $5,000–25,000. Heritage buildings in Vancouver often need creative solutions to meet accessibility standards."
+        },
+        "electrical": {
+          "title": "Electrical & IT Infrastructure",
+          "description": "Commercial electrical upgrades cost $10,000–50,000+ depending on service capacity. Restaurants need 200–400 amp services. Modern offices require structured cabling ($3,000–15,000), server room cooling, and dedicated circuits for equipment."
+        },
+        "disruption": {
+          "title": "Project Timing & Business Disruption",
+          "description": "Working around business hours increases costs 15–25%. Many Vancouver commercial tenants renovate during lease transitions. After-hours work adds premium labor costs. A phased renovation plan can keep portions of the business operational during construction."
+        }
+      },
+      "realProjects": {
+        "title": "Our Commercial Renovation Projects",
+        "subtitle": "Browse {count} completed commercial projects across Greater Vancouver"
+      },
+      "tips": {
+        "title": "Money-Saving Tips for Commercial Renovations",
+        "tip1": {
+          "title": "Plan During Lease Negotiations",
+          "description": "Negotiate a tenant improvement allowance (TIA) with your landlord. Many Vancouver commercial leases include $20–80 per square foot in TIA that can offset renovation costs significantly."
+        },
+        "tip2": {
+          "title": "Phase Your Renovation",
+          "description": "Divide the project into phases to spread costs and minimize business disruption. Prioritize customer-facing areas first, then tackle back-of-house improvements in a second phase."
+        },
+        "tip3": {
+          "title": "Reuse Existing Infrastructure",
+          "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in costs alone."
+        },
+        "tip4": {
+          "title": "Choose Durable Commercial-Grade Materials",
+          "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term — commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+        }
+      },
+      "cta": {
+        "heading": "Get Your Free Commercial Renovation Quote",
+        "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours — no obligation."
+      },
+      "faq": {
+        "q1": "How much does a commercial renovation cost in Vancouver?",
+        "a1": "Commercial renovation costs in Vancouver typically range from $50,000 for a small office refresh to over $1,000,000 for a full restaurant or medical facility build-out. The average commercial renovation costs around $250,000. Cost per square foot ranges from $75 to $300 depending on the type of business, scope of work, and finish level.",
+        "q2": "How long does a commercial renovation take in Vancouver?",
+        "a2": "Most commercial renovations in Vancouver take 8 to 20 weeks depending on scope. A basic office refresh can be completed in 8–10 weeks, while a full restaurant build-out or medical clinic conversion typically takes 16–20 weeks including permit approvals and inspections.",
+        "q3": "Do I need a permit for a commercial renovation in Vancouver?",
+        "a3": "Yes, nearly all commercial renovations in Metro Vancouver require building permits. Any work involving structural changes, electrical, plumbing, HVAC, or fire safety systems needs permits. Change-of-use applications are required when converting between business types. Permit costs range from $2,000 to $15,000 depending on the scope and municipality.",
+        "q4": "What is the cost per square foot for commercial renovation in Vancouver?",
+        "a4": "Commercial renovation costs in Vancouver range from $75 to $300 per square foot. Basic office refreshes run $75–$120/sq ft, mid-range retail or office fit-outs cost $120–$200/sq ft, and specialized spaces like restaurants or medical clinics range from $200–$300+ per square foot due to complex mechanical, plumbing, and ventilation requirements.",
+        "q5": "Can I renovate my commercial space while staying open for business?",
+        "a5": "Yes, phased renovations allow many Vancouver businesses to stay operational during construction. We create detailed phasing plans that section off work areas while keeping customer-facing spaces accessible. After-hours and weekend work is also an option, though it adds 15–25% to labor costs. Many of our clients choose to renovate during seasonal slow periods to minimize impact."
       }
     }
   },

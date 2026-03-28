@@ -1405,6 +1405,30 @@ export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$infe
   return db.select().from(partnersTable).orderBy(asc(partnersTable.displayOrder));
 }
 
+
+export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+  const rows = await db
+    .select({
+      titleEn: projectsTable.titleEn,
+      titleZh: projectsTable.titleZh,
+      locationCity: projectsTable.locationCity,
+      budgetRange: projectsTable.budgetRange,
+      durationEn: projectsTable.durationEn,
+      durationZh: projectsTable.durationZh,
+      spaceTypeEn: projectsTable.spaceTypeEn,
+      spaceTypeZh: projectsTable.spaceTypeZh,
+      slug: projectsTable.slug,
+    })
+    .from(projectsTable)
+    .where(and(
+      eq(projectsTable.isPublished, true),
+      eq(projectsTable.serviceType, 'commercial')
+    ))
+    .orderBy(desc(projectsTable.createdAt));
+
+  return rows;
+});
+
 // ============================================================================
 // SOCIAL MEDIA POST QUERIES (ADMIN)
 // ============================================================================
