@@ -8,6 +8,7 @@ import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb, getCateg
 
 interface PageProps {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ service?: string }>;
 }
 
 export const revalidate = 3600;
@@ -46,8 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Page({ params }: PageProps) {
-  const { locale } = await params;
+export default async function Page({ params, searchParams }: PageProps) {
+  const [{ locale }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
 
   const [t, faqT, company, projects, sitesAsProjects, categories] = await Promise.all([
@@ -58,6 +59,13 @@ export default async function Page({ params }: PageProps) {
     getSitesAsProjectsFromDb(),
     getCategoriesLocalized(),
   ]);
+
+  // Validate searchParam against known categories (whitelist) before passing to client
+  const requestedService = resolvedSearchParams.service;
+  const initialService = categories.some((c) => c.serviceType === requestedService)
+    ? requestedService
+    : undefined;
+
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('projects'), url: `/${locale}/projects/` },
@@ -73,7 +81,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} />
+      <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} initialService={initialService} />
     </>
   );
 }

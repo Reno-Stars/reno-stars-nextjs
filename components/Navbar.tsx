@@ -1,25 +1,38 @@
 'use client';
 
 import Image from 'next/image';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Link, usePathname } from '@/navigation';
-import type { Company } from '@/lib/types';
+import { Link, usePathname, useRouter } from '@/navigation';
+import type { Company, Service } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { neu, SURFACE, SH_DARK, TEXT } from '@/lib/theme';
 
 interface NavbarProps {
   company: Company;
+  services?: Service[];
+}
+
+interface NavLink {
+  href: string;
+  label: string;
+  isDropdown?: boolean;
 }
 
 const LINK_CLASS = 'px-3 py-2 text-base font-medium rounded-lg cursor-pointer transition-colors duration-200 hover:bg-black/5';
+const DROPDOWN_CLOSE_DELAY_MS = 150;
 
-export default function Navbar({ company }: NavbarProps) {
+export default function Navbar({ company, services = [] }: NavbarProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -27,6 +40,11 @@ export default function Navbar({ company }: NavbarProps) {
     setIsMenuOpen(false);
     toggleRef.current?.focus();
   }, []);
+
+  const isLinkActive = useCallback((item: NavLink) => {
+    if (item.isDropdown) return pathname === item.href || pathname.startsWith(`${item.href}/`);
+    return pathname === item.href;
+  }, [pathname]);
 
   // Focus trap for mobile menu
   useEffect(() => {
@@ -51,10 +69,75 @@ export default function Navbar({ company }: NavbarProps) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen, closeMenu]);
 
-  const navLinks = useMemo(() => [
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!isProjectsDropdownOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsProjectsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isProjectsDropdownOpen]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    };
+  }, []);
+
+  const handleDropdownEnter = useCallback(() => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setIsProjectsDropdownOpen(true);
+  }, []);
+
+  const handleDropdownLeave = useCallback(() => {
+    dropdownTimeoutRef.current = setTimeout(() => setIsProjectsDropdownOpen(false), DROPDOWN_CLOSE_DELAY_MS);
+  }, []);
+
+  const handleDropdownKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setIsProjectsDropdownOpen(false);
+      // Return focus to trigger
+      const trigger = dropdownRef.current?.querySelector<HTMLAnchorElement>('a');
+      trigger?.focus();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!isProjectsDropdownOpen) {
+        setIsProjectsDropdownOpen(true);
+      } else {
+        // Focus next item in dropdown
+        const items = dropdownItemsRef.current.filter(Boolean) as HTMLAnchorElement[];
+        const idx = items.indexOf(document.activeElement as HTMLAnchorElement);
+        if (idx < items.length - 1) items[idx + 1]?.focus();
+        else if (idx === -1 && items.length > 0) items[0]?.focus();
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const items = dropdownItemsRef.current.filter(Boolean) as HTMLAnchorElement[];
+      const idx = items.indexOf(document.activeElement as HTMLAnchorElement);
+      if (idx > 0) items[idx - 1]?.focus();
+      else if (idx === 0) {
+        // Return focus to trigger
+        const trigger = dropdownRef.current?.querySelector<HTMLAnchorElement>('a');
+        trigger?.focus();
+      }
+    }
+  }, [isProjectsDropdownOpen]);
+
+  // Keep ref array in sync with the number of dropdown items (1 "All" + N services)
+  const dropdownItemCount = 1 + services.length;
+  if (dropdownItemsRef.current.length !== dropdownItemCount) {
+    dropdownItemsRef.current = Array.from({ length: dropdownItemCount }, (_, i) => dropdownItemsRef.current[i] ?? null);
+  }
+
+  const navLinks: NavLink[] = useMemo(() => [
     { href: '/', label: t('nav.home') },
     { href: '/services', label: t('nav.services') },
-    { href: '/projects', label: t('nav.projects') },
+    { href: '/projects', label: t('nav.projects'), isDropdown: true },
     { href: '/about', label: t('nav.about') },
     { href: '/design', label: t('nav.design') },
     { href: '/benefits', label: t('nav.benefits') },
@@ -75,7 +158,76 @@ export default function Navbar({ company }: NavbarProps) {
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = isLinkActive(item);
+
+              if (item.isDropdown && services.length > 0) {
+                return (
+                  <div
+                    key={item.href}
+                    ref={dropdownRef}
+                    className="relative"
+                    onMouseEnter={handleDropdownEnter}
+                    onMouseLeave={handleDropdownLeave}
+                    onKeyDown={handleDropdownKeyDown}
+                  >
+                    <Link
+                      href={item.href as '/'}
+                      className={`${LINK_CLASS} inline-flex items-center gap-1`}
+                      style={{ color: TEXT }}
+                      {...(isActive && { 'aria-current': 'page' as const })}
+                      aria-expanded={isProjectsDropdownOpen}
+                      aria-haspopup="menu"
+                    >
+                      {item.label}
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isProjectsDropdownOpen ? 'rotate-180' : ''}`} />
+                    </Link>
+                    {isProjectsDropdownOpen && (
+                      <div
+                        className="absolute top-full left-0 mt-1 py-2 rounded-xl min-w-[200px] z-50"
+                        style={{ backgroundColor: SURFACE, boxShadow: neu(6), border: `1px solid ${TEXT}10` }}
+                        role="menu"
+                        aria-label={item.label}
+                      >
+                        <a
+                          href={`/${locale}/projects`}
+                          ref={(el) => { dropdownItemsRef.current[0] = el; }}
+                          className="block px-4 py-2 text-sm font-medium transition-colors hover:bg-black/5 cursor-pointer"
+                          style={{ color: TEXT }}
+                          role="menuitem"
+                          tabIndex={-1}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsProjectsDropdownOpen(false);
+                            router.push('/projects' as '/');
+                          }}
+                        >
+                          {t('filter.allCategories')}
+                        </a>
+                        <div className="h-px mx-3 my-1" style={{ backgroundColor: `${TEXT}10` }} />
+                        {services.map((service, i) => (
+                          <a
+                            key={service.slug}
+                            href={`/${locale}/projects?service=${encodeURIComponent(service.slug)}`}
+                            ref={(el) => { dropdownItemsRef.current[i + 1] = el; }}
+                            className="block px-4 py-2 text-sm transition-colors hover:bg-black/5 cursor-pointer"
+                            style={{ color: TEXT }}
+                            role="menuitem"
+                            tabIndex={-1}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsProjectsDropdownOpen(false);
+                              router.push(`/projects?service=${encodeURIComponent(service.slug)}` as '/');
+                            }}
+                          >
+                            {service.title[locale]}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <Link key={item.href} href={item.href as '/'} className={LINK_CLASS} style={{ color: TEXT }} {...(isActive && { 'aria-current': 'page' as const })}>
                   {item.label}
@@ -115,7 +267,38 @@ export default function Navbar({ company }: NavbarProps) {
         {isMenuOpen && (
           <div ref={menuRef} id="mobile-menu" className="lg:hidden pb-3 space-y-1 border-t" style={{ borderColor: `${TEXT}10` }}>
             {navLinks.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = isLinkActive(item);
+
+              if (item.isDropdown && services.length > 0) {
+                return (
+                  <div key={item.href}>
+                    <Link href={item.href as '/'} onClick={closeMenu}
+                      className="block py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}
+                      {...(isActive && { 'aria-current': 'page' as const })}>
+                      {item.label}
+                    </Link>
+                    <ul className="pl-6 space-y-0.5 list-none" role="list" aria-label={item.label}>
+                      {services.map((service) => (
+                        <li key={service.slug}>
+                          <a
+                            href={`/${locale}/projects?service=${encodeURIComponent(service.slug)}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              closeMenu();
+                              router.push(`/projects?service=${encodeURIComponent(service.slug)}` as '/');
+                            }}
+                            className="block py-1.5 px-3 text-sm cursor-pointer rounded-lg"
+                            style={{ color: `${TEXT}cc` }}
+                          >
+                            {service.title[locale]}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              }
+
               return (
                 <Link key={item.href} href={item.href as '/'} onClick={closeMenu}
                   className="block py-2.5 px-3 text-base font-medium cursor-pointer rounded-lg" style={{ color: TEXT }}

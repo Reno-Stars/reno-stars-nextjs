@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -71,9 +71,10 @@ interface ProjectsPageProps {
   projects: Project[];
   sitesAsProjects?: SiteWithProjects[];
   categories: { serviceType: string; en: string; zh: string }[];
+  initialService?: string;
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories, initialService }: ProjectsPageProps) {
   const t = useTranslations();
 
   // Convert sites to display format (as "Whole House" projects)
@@ -304,13 +305,21 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     el.scrollLeft = ds.scrollLeft - walk;
   }, []);
 
-  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [activeCategory, setActiveCategory] = useState<string>(initialService ?? 'All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
   const [budgetFilter, setBudgetFilter] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
+
+  // Sync when initialService prop changes (e.g. client-side nav with ?service= param)
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) { isFirstRender.current = false; return; }
+    setActiveCategory(initialService ?? 'All');
+    setCurrentPage(1);
+  }, [initialService]);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
   const handleCategoryClick = useCallback((serviceType: string) => {
