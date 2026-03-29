@@ -212,6 +212,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/blog', label: t('nav.blogAndNews') },
     { href: '/guides', label: t('nav.guides') },
     { href: '/financing', label: t('nav.financing') },
+    { href: '/before-after', label: t('nav.beforeAfter') },
   ], [t]);
 
   const whyUsStats = useMemo(() => [

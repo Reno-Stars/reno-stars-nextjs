@@ -26,7 +26,8 @@
     "showroom": "Showroom",
     "guides": "Guides",
     "about": "About",
-    "financing": "Financing"
+    "financing": "Financing",
+    "beforeAfter": "Before & After"
   },
   "cta": {
     "getQuote": "Get Quote",
@@ -591,6 +592,10 @@
     "financing": {
       "title": "Renovation Financing & Budget Guide | Vancouver",
       "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+    },
+    "beforeAfter": {
+      "title": "Before & After Renovation Gallery | Reno Stars Vancouver",
+      "description": "See real before and after renovation photos from Reno Stars projects across Metro Vancouver. Kitchen, bathroom, basement, and whole-house transformations."
     }
   },
   "common": {
@@ -1725,6 +1730,64 @@
     "cta": {
       "heading": "Ready to Plan Your Renovation Budget?",
       "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+    }
+  },
+  "beforeAfterPage": {
+    "hero": {
+      "title": "Before & After Gallery",
+      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+    },
+    "stats": {
+      "transformations": "Transformations",
+      "projects": "Projects",
+      "cities": "Cities Served"
+    },
+    "filters": {
+      "all": "All",
+      "bathroom": "Bathroom",
+      "kitchen": "Kitchen",
+      "whole-house": "Whole House",
+      "commercial": "Commercial"
+    },
+    "labels": {
+      "before": "Before",
+      "after": "After",
+      "viewProject": "View Project"
+    },
+    "noResults": "No before & after photos found for this category.",
+    "whySection": {
+      "title": "Why We Share Before & After Photos",
+      "transparency": {
+        "title": "Complete Transparency",
+        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+      },
+      "quality": {
+        "title": "Proven Quality",
+        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+      },
+      "inspiration": {
+        "title": "Design Inspiration",
+        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+      }
+    },
+    "faqSection": {
+      "title": "Frequently Asked Questions"
+    },
+    "faq": {
+      "q1": "Are these real before and after photos?",
+      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
+      "q2": "How long does a typical renovation take?",
+      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
+      "q3": "Can I visit a completed project in person?",
+      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
+      "q4": "What areas do you serve?",
+      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
+      "q5": "How do I get started with my renovation?",
+      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+    },
+    "cta": {
+      "heading": "Ready to Transform Your Space?",
+      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
     }
   }
 }
