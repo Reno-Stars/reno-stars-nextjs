@@ -25,7 +25,8 @@
     "toggleAreas": "Toggle areas menu",
     "showroom": "Showroom",
     "guides": "Guides",
-    "about": "About"
+    "about": "About",
+    "financing": "Financing"
   },
   "cta": {
     "getQuote": "Get Quote",
@@ -586,6 +587,10 @@
     "reviews": {
       "title": "Customer Reviews & Testimonials | Reno Stars Vancouver",
       "description": "Read verified Google reviews from Reno Stars customers. 5-star rated Vancouver renovation company with 67+ reviews. See what real homeowners say about our kitchen, bathroom, and whole-house renovations."
+    },
+    "financing": {
+      "title": "Renovation Financing & Budget Guide | Vancouver",
+      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
     }
   },
   "common": {
@@ -1615,5 +1620,111 @@
     },
     "ctaHeading": "Ready to Start Your Renovation?",
     "ctaSubtitle": "Join our growing list of satisfied homeowners across Greater Vancouver"
+  },
+  "financing": {
+    "breadcrumb": "Financing & Budget Guide",
+    "hero": {
+      "title": "Renovation Financing & Budget Guide",
+      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+    },
+    "stats": {
+      "avgKitchen": "Avg Kitchen Reno",
+      "avgBathroom": "Avg Bathroom Reno",
+      "financingOptions": "Financing Options"
+    },
+    "options": {
+      "title": "Financing Options for Your Renovation",
+      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "heloc": {
+        "title": "Home Equity Line of Credit (HELOC)",
+        "rate": "Typical rate: Prime + 0.5% to 2%",
+        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
+        "pro": "✓ Low interest rates",
+        "con": "✗ Requires home equity"
+      },
+      "personalLoan": {
+        "title": "Personal Loan or Line of Credit",
+        "rate": "Typical rate: 6% – 12%",
+        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
+        "pro": "✓ No collateral needed",
+        "con": "✗ Higher interest rates"
+      },
+      "refinance": {
+        "title": "Mortgage Refinance",
+        "rate": "Typical rate: Current mortgage rates",
+        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
+        "pro": "✓ Lowest possible rate",
+        "con": "✗ Potential break fees"
+      },
+      "savings": {
+        "title": "Savings & Phased Approach",
+        "rate": "No interest cost",
+        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
+        "pro": "✓ Zero interest cost",
+        "con": "✗ Longer timeline"
+      }
+    },
+    "costs": {
+      "title": "Typical Renovation Costs in Metro Vancouver",
+      "subtitle": "Based on real completed projects from our portfolio.",
+      "bathroom": "Bathroom Renovation",
+      "kitchen": "Kitchen Renovation",
+      "basement": "Basement Renovation",
+      "wholeHouse": "Whole House Renovation",
+      "commercial": "Commercial Renovation",
+      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+    },
+    "tips": {
+      "title": "Budget Planning Tips",
+      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "prioritize": {
+        "title": "Prioritize High-Impact Areas",
+        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+      },
+      "contingency": {
+        "title": "Set Aside 10–15% Contingency",
+        "description": "Unexpected discoveries during renovation are common — old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+      },
+      "phased": {
+        "title": "Consider a Phased Approach",
+        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+      },
+      "quotes": {
+        "title": "Get Detailed Written Quotes",
+        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+      },
+      "permits": {
+        "title": "Budget for Permits & Inspections",
+        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+      },
+      "roi": {
+        "title": "Think About Return on Investment",
+        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+      }
+    },
+    "faqSection": {
+      "title": "Frequently Asked Questions"
+    },
+    "faq": {
+      "q1": "How much should I budget for a renovation in Vancouver?",
+      "a1": "Budget depends on scope: bathroom renovations range from $14,000–$60,000, kitchens from $20,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
+      "q1Answer": "Budget depends on scope: bathroom renovations range from $14,000–$60,000, kitchens from $20,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
+      "q2": "Can I renovate with a small budget?",
+      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
+      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
+      "q3": "Do you offer payment plans?",
+      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
+      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
+      "q4": "What is included in a renovation quote?",
+      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
+      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
+      "q5": "How can I maximize my renovation ROI?",
+      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
+      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+    },
+    "cta": {
+      "heading": "Ready to Plan Your Renovation Budget?",
+      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+    }
   }
 }

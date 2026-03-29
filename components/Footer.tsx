@@ -211,6 +211,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
     { href: '/guides', label: t('nav.guides') },
+    { href: '/financing', label: t('nav.financing') },
   ], [t]);
 
   const whyUsStats = useMemo(() => [
