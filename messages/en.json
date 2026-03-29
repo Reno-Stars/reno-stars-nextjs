@@ -579,6 +579,10 @@
       "cabinetCost": {
         "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+      },
+      "basementSuiteCost": {
+        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
       }
     },
     "about": {
@@ -872,6 +876,10 @@
       "cabinet": {
         "title": "Cabinet Refinishing Cost",
         "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+      },
+      "basementSuite": {
+        "title": "Basement Suite Cost",
+        "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
       }
     },
     "kitchenCost": {
@@ -1503,6 +1511,150 @@
       "cta": {
         "heading": "Get Your Free Cabinet Refinishing Quote",
         "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours — no obligation."
+      }
+    },
+    "basementSuiteCost": {
+      "breadcrumb": "Basement Suite Cost",
+      "hero": {
+        "title": "Basement Suite Conversion Cost in Vancouver BC (2026)",
+        "subtitle": "How much does it cost to build a legal basement suite in Greater Vancouver? Get detailed pricing for secondary suite conversions."
+      },
+      "stats": {
+        "avgCost": "Average Cost",
+        "range": "Price Range",
+        "sqft": "Cost per Sq Ft",
+        "sqftValue": "$80 – $180/sq ft",
+        "timeline": "Typical Timeline",
+        "timelineValue": "10–16 weeks"
+      },
+      "tiers": {
+        "title": "Basement Suite Cost by Tier",
+        "subtitle": "Typical pricing for legal suite conversions across Greater Vancouver",
+        "budget": {
+          "title": "Basic In-Law Suite",
+          "description": "Converting an already-finished basement into a basic suite with kitchenette, bathroom, bedroom with egress window, and interior shared entrance. Minimal structural changes. Ideal for family use."
+        },
+        "midRange": {
+          "title": "Standard Rental Suite",
+          "description": "Full legal secondary suite with separate entrance, complete kitchen, full bathroom, one bedroom with egress, fire separation, and all code-required features. Most common scope for rental income."
+        },
+        "highEnd": {
+          "title": "Premium Two-Bedroom Suite",
+          "description": "High-end legal suite with two bedrooms, full kitchen with quality appliances, in-suite laundry, upgraded finishes, separate HVAC zone, soundproofing, and premium fixtures."
+        }
+      },
+      "factors": {
+        "title": "What Drives Basement Suite Conversion Costs?",
+        "subtitle": "Six key factors specific to legal suite builds",
+        "separateEntrance": {
+          "title": "Separate Entrance",
+          "description": "Most municipalities require a separate exterior entrance. Excavation, concrete stairs, drainage, landing, and fire-rated door typically cost $8,000–$18,000."
+        },
+        "fireSeparation": {
+          "title": "Fire Separation & Safety",
+          "description": "BC Building Code requires 1-hour fire-rated separation between suite and main dwelling. Fire-rated drywall, smoke alarms, and fire-rated doors cost $4,000–$8,000."
+        },
+        "plumbing": {
+          "title": "Kitchen & Bathroom Plumbing",
+          "description": "Full suite kitchen costs $12,000–$25,000 including cabinets, countertops, sink, and appliance hookups. Bathroom addition runs $8,000–$15,000."
+        },
+        "electrical": {
+          "title": "Electrical Panel & Wiring",
+          "description": "Suites need a dedicated sub-panel ($2,500–$5,000). Full wiring with code-required outlets and lighting costs $5,000–$10,000. Panel upgrades add $3,000–$5,000."
+        },
+        "egress": {
+          "title": "Egress Windows & Natural Light",
+          "description": "Every bedroom needs an egress window (5.7 sq ft opening min). Installing in concrete foundation walls costs $2,500–$6,000 each. Window wells add $1,000–$2,000."
+        },
+        "permits": {
+          "title": "Permits, Inspections & Legalization",
+          "description": "Permit fees range $1,000–$3,500. Expect 4–6 inspections. Vancouver and Burnaby offer suite incentive programs offsetting $5,000–$10,000 in costs."
+        }
+      },
+      "roi": {
+        "title": "Return on Investment",
+        "subtitle": "Why a legal basement suite is one of the best renovation investments in Metro Vancouver",
+        "rentalIncome": {
+          "value": "$1,800–$2,800/mo",
+          "title": "Monthly Rental Income",
+          "description": "One-bedroom suites rent for $1,800–$2,200/month. Two-bedroom suites command $2,200–$2,800/month."
+        },
+        "propertyValue": {
+          "value": "15–25%",
+          "title": "Property Value Increase",
+          "description": "Homes with legal secondary suites sell for 15–25% more than comparable properties without."
+        },
+        "paybackPeriod": {
+          "value": "3–5 years",
+          "title": "Payback Period",
+          "description": "At average rental rates, a $95,000 suite conversion pays for itself in 3–5 years through rental income alone."
+        }
+      },
+      "realProjects": {
+        "title": "Related Renovation Projects",
+        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver"
+      },
+      "municipalities": {
+        "title": "Suite Regulations by Municipality",
+        "subtitle": "Each Metro Vancouver city has different rules for secondary suites",
+        "vancouver": {
+          "title": "City of Vancouver",
+          "description": "Allows secondary suites in most single-family zones (RS). Affordable Housing program may provide incentives. Permits $1,500–$3,000."
+        },
+        "burnaby": {
+          "title": "City of Burnaby",
+          "description": "Secondary Suite Program offers grants up to $10,000 for legalization. Requires minimum 1,850 sq ft lot. Suite max 40% of floor area."
+        },
+        "surrey": {
+          "title": "City of Surrey",
+          "description": "Allows suites in most single-family zones. Streamlined permit process. One additional off-street parking space required."
+        },
+        "coquitlam": {
+          "title": "City of Coquitlam",
+          "description": "Permits suites in RS-1 and RS-2 zones. Requires minimum lot size and separate utility meters. Pre-application consultations available."
+        }
+      },
+      "tips": {
+        "title": "Money-Saving Tips for Your Basement Suite",
+        "tip1": {
+          "title": "Apply for Municipal Incentives First",
+          "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction — some require pre-approval. Savings: $5,000–$10,000."
+        },
+        "tip2": {
+          "title": "Plan Kitchen Near Existing Plumbing",
+          "description": "Locating the suite kitchen near existing drain stacks saves thousands. Avoiding concrete cutting saves $3,000–$8,000."
+        },
+        "tip3": {
+          "title": "Choose a Side-Entry Entrance",
+          "description": "Side-entry entrances cost significantly less than rear entries requiring major excavation. Savings: $5,000–$10,000."
+        },
+        "tip4": {
+          "title": "Invest in Soundproofing Upfront",
+          "description": "Resilient channel and insulation between floors costs $2,000–$4,000 during construction. After drywall: 3–5x more and less effective."
+        }
+      },
+      "related": {
+        "title": "Explore More Renovation Guides",
+        "basementGuide": "General Basement Renovation Guide",
+        "kitchenGuide": "Kitchen Renovation Cost Guide",
+        "bathroomGuide": "Bathroom Renovation Cost Guide",
+        "allGuides": "All Cost Guides"
+      },
+      "cta": {
+        "heading": "Get Your Free Basement Suite Quote",
+        "subtitle": "Tell us about your suite project and receive a detailed estimate within 48 hours — no obligation."
+      },
+      "faq": {
+        "q1": "How much does a basement suite cost in Vancouver?",
+        "a1": "A legal basement suite conversion typically costs $60,000–$150,000. Basic in-law suite: $60,000–$85,000. Standard rental suite: $85,000–$120,000. Premium two-bedroom: $120,000–$150,000+. Average: ~$95,000.",
+        "q2": "Do I need a permit for a basement suite in Vancouver?",
+        "a2": "Yes, a building permit is required for any suite conversion in Metro Vancouver. Permits cost $1,000–$3,500. Expect 4–6 inspections. Operating without a permit risks fines, insurance issues, and liability.",
+        "q3": "How long does it take to build a basement suite?",
+        "a3": "Typically 10–16 weeks: permit processing (2–6 weeks), construction (8–12 weeks), and final inspections. Complex projects with structural work can take 16–20 weeks.",
+        "q4": "What is the minimum ceiling height for a basement suite in BC?",
+        "a4": "BC Building Code requires minimum 6 feet 5 inches (1.95m) for habitable rooms. If ceilings are too low, underpinning (lowering the floor) costs $15,000–$30,000.",
+        "q5": "Is a basement suite a good investment in Vancouver?",
+        "a5": "Yes — rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
       }
     }
   },

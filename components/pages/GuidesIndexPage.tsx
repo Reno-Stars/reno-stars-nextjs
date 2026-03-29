@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
-import { DollarSign, Bath, Home, ArrowDownToLine, Building2, Paintbrush, ArrowRight } from 'lucide-react';
+import { DollarSign, Bath, Home, ArrowDownToLine, Building2, Paintbrush, Landmark, ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import CTASection from '@/components/CTASection';
 import {
@@ -62,6 +62,14 @@ const GUIDES = [
     descKey: 'guides.index.cabinet.description',
     accent: STEP_RED,
     accentLight: STEP_RED_LIGHT,
+  },
+  {
+    slug: 'basement-suite-cost-vancouver',
+    icon: Landmark,
+    titleKey: 'guides.index.basementSuite.title',
+    descKey: 'guides.index.basementSuite.description',
+    accent: NAVY,
+    accentLight: '#E8EBF0',
   },
 ];
 
