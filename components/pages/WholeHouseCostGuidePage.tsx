@@ -34,23 +34,10 @@ function formatCurrency(n: number): string {
 export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouseCostGuidePageProps) {
   const t = useTranslations('guides.wholeHouseCost');
 
-  const stats = useMemo(() => {
-    const budgets = projects
-      .map((p) => parseBudgetRange(p.budgetRange))
-      .filter((b): b is [number, number] => b !== null);
-
-    if (budgets.length === 0) {
-      return { min: 50_000, max: 200_000, avg: 90_000, count: projects.length };
-    }
-
-    const lows = budgets.map((b) => b[0]);
-    const highs = budgets.map((b) => b[1]);
-    const min = Math.min(...lows);
-    const max = Math.max(...highs);
-    const avg = Math.round(budgets.reduce((sum, b) => sum + (b[0] + b[1]) / 2, 0) / budgets.length);
-
-    return { min, max, avg, count: projects.length };
-  }, [projects]);
+  // Use fixed pricing — DB projects have outdated budget ranges that misrepresent whole-house costs
+  const stats = useMemo(() => ({
+    min: 50_000, max: 200_000, avg: 90_000, count: projects.length,
+  }), [projects]);
 
   const projectsByCity = useMemo(() => {
     const map = new Map<string, KitchenGuideProject[]>();
