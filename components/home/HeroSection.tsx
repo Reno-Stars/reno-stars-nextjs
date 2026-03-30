@@ -19,6 +19,7 @@ interface HeroSectionProps {
     callNow: string;
     yearsExperience: string;
     liabilityCoverage: string;
+    wcbCoverage: string;
     rating: string;
     realEstateTitle: string;
     realEstateDesc: string;
@@ -154,11 +155,13 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
             {company.yearsExperience}+ {t.yearsExperience}
           </span>
-          <span className="text-sm font-medium text-white/70 flex items-center gap-1.5">
+          <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
+            <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
+            {t.liabilityCoverage}
+          </span>
+          <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm shrink-0" />
-            <span className="md:whitespace-nowrap">{t.liabilityCoverage.split('·').map((part, idx, arr) => (
-              <span key={idx}>{idx > 0 && <><span className="hidden md:inline"> · </span><br className="md:hidden" /></>}{part.trim()}</span>
-            ))}</span>
+            {t.wcbCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>
             {[0, 1, 2, 3, 4].map((i) => (

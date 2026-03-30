@@ -64,6 +64,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
     { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('stats.yearsExperience') },
     { type: 'stat' as const, value: company.projectsCompleted, label: t('stats.projectsCompleted') },
     { type: 'stat' as const, value: company.liabilityCoverage, label: t('stats.liabilityCoverage') },
+    { type: 'stat' as const, value: '', label: t('stats.wcbCoverage') },
     { type: 'rating' as const, label: t('stats.rating') },
   ], [company, t]);
 
@@ -138,9 +139,11 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-base sm:text-lg" style={{ color: GOLD }}>
-                      {badge.value}
-                    </span>
+                    {badge.value && (
+                      <span className="font-semibold text-base sm:text-lg" style={{ color: GOLD }}>
+                        {badge.value}
+                      </span>
+                    )}
                     <span className="text-white/80 text-sm sm:text-base">{badge.label}</span>
                   </div>
                 )}

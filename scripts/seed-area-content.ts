@@ -53,18 +53,18 @@ Our team understands the unique challenges of renovating in Vancouver — herita
       `Experienced with Vancouver strata regulations and permits
 Heritage and character home renovation specialists
 Moisture-resistant materials for coastal climate
-Licensed and insured for City of Vancouver projects
+$5M CGL insured + active WCB coverage for City of Vancouver projects
 Free on-site consultation and detailed estimates`,
     highlightsZh:
       `熟悉温哥华物业条例和许可证申请
 历史建筑和特色住宅装修专家
 沿海气候防潮材料专家
-持有温哥华市项目执照和保险
+持有温哥华市CGL保险和WCB工伤保障
 免费上门咨询和详细报价`,
     metaTitleEn: 'Vancouver Renovation Contractor | Kitchen, Bathroom & Whole House',
     metaTitleZh: '温哥华装修承包商 | 厨房、浴室和全屋翻新',
-    metaDescriptionEn: 'Trusted Vancouver renovation company specializing in kitchen, bathroom, and whole-house remodels. Free estimates, licensed & insured. Serving all Vancouver neighborhoods.',
-    metaDescriptionZh: '值得信赖的温哥华装修公司，专注厨房、浴室和全屋翻新。免费估价，持牌并投保。服务温哥华所有社区。',
+    metaDescriptionEn: 'Trusted Vancouver renovation company specializing in kitchen, bathroom, and whole-house remodels. Free estimates, licensed, CGL insured + WCB covered. Serving all Vancouver neighborhoods.',
+    metaDescriptionZh: '值得信赖的温哥华装修公司，专注厨房、浴室和全屋翻新。免费估价，CGL保险和WCB工伤保障齐全。服务温哥华所有社区。',
   },
   {
     slug: 'richmond',
@@ -225,8 +225,8 @@ Respectful restoration of character features`,
 尊重建筑特色的修复`,
     metaTitleEn: 'New Westminster Renovation | Heritage & Modern Home Remodels',
     metaTitleZh: '新西敏装修 | 历史和现代住宅翻新',
-    metaDescriptionEn: 'New Westminster renovation contractor for heritage and modern homes. Kitchen, bathroom & basement remodels. Licensed, insured, free estimates.',
-    metaDescriptionZh: '新西敏装修承包商，服务历史和现代住宅。厨房、浴室和地下室翻新。持牌投保，免费估价。',
+    metaDescriptionEn: 'New Westminster renovation contractor for heritage and modern homes. Kitchen, bathroom & basement remodels. Licensed, CGL insured + WCB covered, free estimates.',
+    metaDescriptionZh: '新西敏装修承包商，服务历史和现代住宅。厨房、浴室和地下室翻新。CGL保险和WCB工伤保障齐全，免费估价。',
   },
   {
     slug: 'delta',
@@ -378,13 +378,13 @@ From beachfront condos to hillside properties, we tailor our approach to each ho
 Beachfront condo and hillside home experience
 Careful attention to detail and finish quality
 Designs that capture White Rock's coastal charm
-Licensed and insured for all residential projects`,
+$5M CGL insured + active WCB coverage for all residential projects`,
     highlightsZh:
       `近海环境耐久材料专家
 海滨公寓和山坡住宅经验
 注重细节和装修质量
 捕捉白石海滨魅力的设计
-所有住宅项目持牌并投保`,
+所有住宅项目CGL保险和WCB工伤保障`,
     metaTitleEn: 'White Rock Renovation | Coastal Home Kitchen & Bathroom Remodels',
     metaTitleZh: '白石装修 | 海滨住宅厨房和浴室翻新',
     metaDescriptionEn: 'White Rock renovation company specializing in coastal homes. Kitchen, bathroom & whole-house remodels. Ocean-resistant materials, free estimates.',

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Phone, Mail, MapPin, Facebook, Instagram, Star } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Star, Shield } from 'lucide-react';
 import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
@@ -307,8 +307,12 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 </div>
               ))}
               <div className="flex items-center gap-1.5">
+                <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
+                <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
                 <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
-                <span className="text-sm text-white/70">{t('stats.fullCoverage')}</span>
+                <span className="text-sm text-white/70">{t('stats.wcbCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>
                 {[0, 1, 2, 3, 4].map((i) => (

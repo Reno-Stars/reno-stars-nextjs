@@ -158,11 +158,8 @@ export default async function Page({ params }: PageProps) {
   const stats = [
     { value: `${company.yearsExperience}+`, label: t("stats.yearsExperience") },
     { value: company.projectsCompleted, label: t("stats.projectsCompleted") },
-    {
-      value: company.liabilityCoverage,
-      label: t("stats.liabilityCoverage"),
-      image: WORKSAFE_BC_LOGO,
-    },
+    { value: company.liabilityCoverage, label: t("stats.liabilityCoverage") },
+    { value: '', label: t("stats.wcbCoverage"), image: WORKSAFE_BC_LOGO },
   ];
 
   // All translations computed server-side
@@ -176,7 +173,8 @@ export default async function Page({ params }: PageProps) {
       getFreeQuote: t("cta.getFreeQuote"),
       callNow: t("cta.callNow"),
       yearsExperience: t("stats.yearsExperience"),
-      liabilityCoverage: t("stats.fullCoverage"),
+      liabilityCoverage: t("stats.liabilityCoverage"),
+      wcbCoverage: t("stats.wcbCoverage"),
       rating: t("stats.rating"),
       realEstateTitle: t("hero.realEstateTitle"),
       realEstateDesc: t("hero.realEstateDesc"),

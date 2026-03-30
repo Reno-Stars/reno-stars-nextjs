@@ -4,7 +4,7 @@
  *
  * Display strings for warranty / liabilityCoverage come from
  * translation files (messages/en.json & zh.json) under "stats.*".
- * The values here are used as template parameters or as raw data.
+ * WCB (WorkSafeBC) coverage is handled via translations, not a config value.
  */
 export const COMPANY_STATS = {
   foundingYear: 2007,

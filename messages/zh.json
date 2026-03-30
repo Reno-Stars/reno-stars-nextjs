@@ -63,7 +63,7 @@
     "toLuxury": "臻于奢华",
     "buildingBetterSpaces": "打造更美好的空间",
     "professionalExcellence": "专业卓越的装修服务",
-    "professionalExcellenceDesc": "凭借超过{experience}年的经验、至多500万第三方责任保险及至多三年质保，我们为温哥华及低陆平原地区提供卓越的装修服务。",
+    "professionalExcellenceDesc": "凭借超过{experience}年的经验、至多500万CGL保险、有效WCB工伤保障及至多三年质保，我们为温哥华及低陆平原地区提供卓越的装修服务。",
     "realEstateTitle": "一站式服务：装修 + 房产经纪 + 摄影",
     "realEstateDesc": "从专业装修到房产经纪与摄影服务，我们与专业经纪人合作，为您提供真正的一站式服务，让您的房子以最佳状态呈现。"
   },
@@ -149,8 +149,9 @@
     "expertTeamMembers": "专业团队成员",
     "expertTeam": "专业团队",
     "expertCraftsmen": "资深工匠",
-    "liabilityCoverage": "至多500万第三方责任保险 · 至多三年质保",
-    "fullCoverage": "至多500万第三方责任保险 · 至多三年质保",
+    "liabilityCoverage": "至多500万CGL保险",
+    "fullCoverage": "至多500万CGL保险 · 有效WCB工伤保障 · 至多三年质保",
+    "wcbCoverage": "有效WCB工伤保障",
     "projectsCompleted": "已完成项目",
     "projectsDone": "已完成项目",
     "happyClients": "满意客户",
@@ -198,7 +199,7 @@
   "footer": {
     "allRightsReserved": "版权所有",
     "allRights": "版权所有。",
-    "licensedInsured": "持证经营，保险齐全",
+    "licensedInsured": "持证经营，CGL + WCB双重保障",
     "freeEstimates": "免费估价",
     "mapLocation": "地图位置",
     "wechatId": "微信号: {id}",
@@ -403,8 +404,8 @@
       "description": "数十年的综合经验，在低陆平原地区提供优质装修服务。"
     },
     "coverage": {
-      "title": "至多500万第三方责任保险 · 至多三年质保",
-      "description": "至多500万第三方责任保险及至多三年质保，全面保障让您安心无忧。"
+      "title": "至多500万CGL保险 · 有效WCB工伤保障 · 至多三年质保",
+      "description": "至多500万CGL保险保障您的物业，有效WCB工伤保障覆盖施工人员，加上至多三年质保——全面保障让您安心无忧。"
     },
     "rating": {
       "title": "Google 五星好评",
@@ -421,8 +422,8 @@
   },
   "serviceBenefits": {
     "freeConsultation": "免费咨询和报价",
-    "licensedInsured": "持证和保险专业人员",
-    "coverageAndWarranty": "至多500万第三方责任保险，至多三年质保",
+    "licensedInsured": "持证且CGL + WCB双重保障专业人员",
+    "coverageAndWarranty": "至多500万CGL保险、有效WCB工伤保障及至多三年质保",
     "experience": "{years}年以上经验",
     "rating": "Google 五星好评"
   },
@@ -482,7 +483,7 @@
     "competitivePricing": "有竞争力的本地价格",
     "quickResponse": "快速响应",
     "experience": "服务低陆平原{years}年以上",
-    "licensedInsured": "持证且全额保险"
+    "licensedInsured": "持证且CGL + WCB双重保障"
   },
   "areaBenefits": {
     "localTeam": "熟悉当地的本地团队",
@@ -495,7 +496,7 @@
   "metadata": {
     "home": {
       "title": "温哥华装修承包商 | 厨房、卫浴装修 | Reno Stars",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、至多500万第三方责任保险、至多三年质保、Google五星好评。"
+      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
     },
     "services": {
       "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
@@ -515,7 +516,7 @@
     },
     "benefits": {
       "title": "为什么选择Reno Stars | 温哥华装修承包商",
-      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、至多500万第三方责任保险、至多三年质保、Google五星好评。"
+      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
     },
     "design": {
       "title": "装修设计灵感 | Reno Stars 温哥华",
@@ -531,7 +532,7 @@
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
       "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
-      "description": "Reno Stars{area}专业{service}。{years}年以上经验、至多500万第三方责任保险、至多三年质保。查看本地项目，立即获取免费报价。"
+      "description": "Reno Stars{area}专业{service}。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保。查看本地项目，立即获取免费报价。"
     },
     "areas": {
       "title": "服务区域 | Reno Stars 温哥华",
@@ -587,7 +588,7 @@
     },
     "about": {
       "title": "关于 Reno Stars | 温哥华装修公司",
-      "description": "了解 Reno Stars — 温哥华值得信赖的装修公司，拥有{years}年以上经验、至多500万第三方责任保险、至多三年质保和百人专业团队，致力于卓越品质工艺。"
+      "description": "了解 Reno Stars — 温哥华值得信赖的装修公司，拥有{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保和百人专业团队，致力于卓越品质工艺。"
     },
     "reviews": {
       "title": "客户评价与见证 | Reno Stars 温哥华装修",
@@ -1670,7 +1671,8 @@
       "years": "年行业经验",
       "projects": "已完成项目",
       "team": "团队成员",
-      "insurance": "第三方责任保险"
+      "insurance": "CGL保险",
+      "wcbCoverage": "有效WCB工伤保障"
     },
     "offer": {
       "title": "我们的服务",
@@ -1727,7 +1729,7 @@
       "q1": "Reno Stars 经营了多久？",
       "a1": "Reno Stars 在温哥华装修行业拥有超过{years}年的综合经验。我们的团队已在大温哥华地区完成了数百个项目，从小型浴室更新到大规模全屋装修。",
       "q2": "你们有执照和保险吗？",
-      "a2": "是的，我们持有完整执照并拥有至多500万第三方责任保险。我们还提供至多3年的工程质保，让您在整个装修过程中完全放心。",
+      "a2": "是的，我们持有完整执照，拥有至多500万CGL（商业综合责任）保险和有效的WCB（WorkSafeBC）工伤保障。CGL保险保护您的物业，WCB保障施工现场所有工人。我们还提供至多3年的工程质保。",
       "q3": "你们服务哪些地区？",
       "a3": "我们服务覆盖整个大温哥华地区和菲沙河谷，包括温哥华、列治文、本拿比、素里、高贵林、北温哥华、西温哥华、三角洲、兰里、枫树岭、新西敏和穆迪港。",
       "q4": "如何开始一个装修项目？",

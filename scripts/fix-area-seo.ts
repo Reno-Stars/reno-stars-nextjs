@@ -44,8 +44,8 @@ const metaFixes: MetaFix[] = [
     slug: 'vancouver',
     metaTitleEn: 'Vancouver Renovation | Reno Stars Kitchen & Bath',
     metaTitleZh: '温哥华装修 | Reno Stars 厨房浴室翻新',
-    metaDescriptionEn: 'Reno Stars is a trusted Vancouver renovation company for kitchens, bathrooms, and whole-house remodels. Licensed, insured, and serving all Vancouver neighborhoods. Free estimates.',
-    metaDescriptionZh: 'Reno Stars是值得信赖的温哥华装修公司，提供厨房、浴室和全屋翻新。持牌投保，服务温哥华所有社区。免费估价。',
+    metaDescriptionEn: 'Reno Stars is a trusted Vancouver renovation company for kitchens, bathrooms, and whole-house remodels. Licensed, CGL insured + WCB covered, serving all Vancouver neighborhoods. Free estimates.',
+    metaDescriptionZh: 'Reno Stars是值得信赖的温哥华装修公司，提供厨房、浴室和全屋翻新。CGL保险和WCB工伤保障齐全，服务温哥华所有社区。免费估价。',
   },
   {
     slug: 'richmond',
@@ -86,8 +86,8 @@ const metaFixes: MetaFix[] = [
     slug: 'new-westminster',
     metaTitleEn: 'New Westminster Renovation | Reno Stars',
     metaTitleZh: '新西敏装修 | Reno Stars 住宅翻新',
-    metaDescriptionEn: 'Reno Stars renovates heritage and modern homes in New Westminster. Kitchen, bathroom, and basement remodels. Licensed, insured, free estimates available.',
-    metaDescriptionZh: 'Reno Stars在新西敏翻新历史和现代住宅。厨房、浴室和地下室装修。持牌投保，提供免费估价。',
+    metaDescriptionEn: 'Reno Stars renovates heritage and modern homes in New Westminster. Kitchen, bathroom, and basement remodels. Licensed, CGL insured + WCB covered, free estimates available.',
+    metaDescriptionZh: 'Reno Stars在新西敏翻新历史和现代住宅。厨房、浴室和地下室装修。CGL保险和WCB工伤保障齐全，免费估价。',
   },
   {
     slug: 'delta',

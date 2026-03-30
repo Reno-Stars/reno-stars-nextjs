@@ -50,6 +50,7 @@ interface HomePageProps {
       callNow: string;
       yearsExperience: string;
       liabilityCoverage: string;
+      wcbCoverage: string;
       rating: string;
       realEstateTitle: string;
       realEstateDesc: string;

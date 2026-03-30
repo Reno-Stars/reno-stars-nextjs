@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import {
-  Award, Shield, Users, Clock, Heart, Target, MapPin, Phone,
+  Award, Shield, HardHat, Users, Clock, Heart, Target, MapPin, Phone,
   CheckCircle, Star, Building2, ArrowRight,
 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
@@ -54,6 +54,7 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
     { value: company.projectsCompleted, labelKey: 'stats.projects', icon: Building2 },
     { value: company.teamSize + '+', labelKey: 'stats.team', icon: Users },
     { value: company.liabilityCoverage, labelKey: 'stats.insurance', icon: Shield },
+    { value: '', labelKey: 'stats.wcbCoverage', icon: HardHat },
   ], [company]);
 
   return (
@@ -85,11 +86,11 @@ export default function AboutPage({ locale, about, company, badges }: AboutPageP
             <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>
               {localize(about.ourJourney)}
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
               {stats.map(({ value, labelKey, icon: Icon }) => (
                 <div key={labelKey} className="text-center p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                   <Icon size={24} className="mx-auto mb-2" style={{ color: GOLD }} />
-                  <div className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{value}</div>
+                  {value && <div className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{value}</div>}
                   <div className="text-sm mt-1" style={{ color: TEXT_MID }}>{t(labelKey)}</div>
                 </div>
               ))}
