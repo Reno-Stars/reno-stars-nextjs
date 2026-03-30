@@ -1943,6 +1943,13 @@
     "cta": {
       "heading": "Ready to Transform Your Space?",
       "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+    },
+    "pagination": {
+      "label": "Gallery pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "previousPage": "Go to previous page",
+      "nextPage": "Go to next page"
     }
   }
 }
