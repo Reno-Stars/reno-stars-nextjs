@@ -33,20 +33,27 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Build image pairs from image_pairs field, falling back to legacy images array
+  // Prepend hero video as its own gallery entry so it gets its own thumbnail
   const imagePairs = useMemo((): LocalizedImagePair[] => {
     if (!project) return [];
+    let pairs: LocalizedImagePair[] = [];
     if (project.image_pairs && project.image_pairs.length > 0) {
-      return project.image_pairs;
+      pairs = project.image_pairs;
+    } else if (project.images && project.images.length > 0) {
+      pairs = imagesToPairs(project.images);
+    } else {
+      pairs = [{ afterImage: { src: project.hero_image, alt: project.title } }];
     }
-    if (project.images && project.images.length > 0) {
-      return imagesToPairs(project.images);
+    // Prepend hero video as a standalone entry with hero image as poster
+    if (project.hero_video) {
+      const heroEntry: LocalizedImagePair = {
+        afterVideo: project.hero_video,
+        afterImage: project.hero_image ? { src: project.hero_image, alt: project.title } : undefined,
+      };
+      return [heroEntry, ...pairs];
     }
-    // Last resort: hero image as single pair
-    return [{ afterImage: { src: project.hero_image, alt: project.title } }];
+    return pairs;
   }, [project]);
-
-  // Hero video: show in the main gallery when no image pair videos exist
-  const heroVideo = project?.hero_video;
 
   const currentPair = imagePairs[activePairIndex];
   const hasBefore = !!(currentPair?.beforeImage || currentPair?.beforeVideo);
@@ -56,11 +63,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
 
-  // Current display video: prefer image pair video, fall back to hero video on first pair
-  const pairVideo = showBefore
+  // Current display video from the active pair
+  const displayVideo = showBefore
     ? currentPair?.beforeVideo || currentPair?.afterVideo
     : currentPair?.afterVideo || currentPair?.beforeVideo;
-  const displayVideo = pairVideo || (activePairIndex === 0 ? heroVideo : undefined);
 
   // Store length in ref for stable callbacks
   const pairsLengthRef = useRef(imagePairs.length);
@@ -252,11 +258,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             {/* Gallery + description */}
             <div className="flex-1 min-w-0 p-4 sm:p-6">
               <div
-                className={`relative overflow-hidden rounded-xl aspect-[16/10] mb-4 group${hasBothImages ? ' cursor-pointer' : ''}`}
+                className={`relative overflow-hidden rounded-xl aspect-[16/10] mb-4 group${hasBothImages && !displayVideo ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neuIn(4), backgroundColor: SURFACE_ALT }}
-                role={hasBothImages ? 'button' : undefined}
-                aria-label={hasBothImages ? `Toggle to ${showBefore ? 'after' : 'before'} photo` : undefined}
-                onClick={handleImageClick}
+                role={hasBothImages && !displayVideo ? 'button' : undefined}
+                aria-label={hasBothImages && !displayVideo ? `Toggle to ${showBefore ? 'after' : 'before'} photo` : undefined}
+                onClick={displayVideo ? undefined : handleImageClick}
               >
                 {/* Animated image/video wrapper — key only changes on pair navigation, not before/after toggle */}
                 {(displayVideo || displayImage) && (
@@ -293,8 +299,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     ) : null}
                   </div>
                 )}
-                {/* Touch swipe overlay */}
-                {imagePairs.length > 1 && (
+                {/* Touch swipe overlay — hidden when video is playing so controls are interactive */}
+                {imagePairs.length > 1 && !displayVideo && (
                   <div
                     className="absolute inset-0 z-[5]"
                     onTouchStart={handleTouchStart}
@@ -302,12 +308,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     style={{ touchAction: 'pan-y pinch-zoom' }}
                   />
                 )}
-                <BeforeAfterBadge
-                  isBefore={showBefore && hasBothImages}
-                  t={t}
-                  showClickTip={hasBothImages}
-                  hasPair={hasBothImages}
-                />
+                {!displayVideo && (
+                  <BeforeAfterBadge
+                    isBefore={showBefore && hasBothImages}
+                    t={t}
+                    showClickTip={hasBothImages}
+                    hasPair={hasBothImages}
+                  />
+                )}
 
                 {/* Navigation arrows */}
                 {imagePairs.length > 1 && (
@@ -411,6 +419,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                               >
                                 {t('projects.beforeLabel')}
                               </span>
+                            )}
+                            {(pair.beforeVideo || pair.afterVideo) && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                                <Video className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                              </div>
                             )}
                           </div>
                         ) : (

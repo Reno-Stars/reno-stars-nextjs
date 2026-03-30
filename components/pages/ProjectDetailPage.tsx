@@ -78,6 +78,14 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
     }
   }, [hasBothImages]);
 
+  // Fullscreen click: toggle before/after for images, just stop propagation for video
+  const handleFullscreenClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!displayVideo && hasBothImages) {
+      setShowBefore((prev) => !prev);
+    }
+  }, [displayVideo, hasBothImages]);
+
   // Select a pair from thumbnails
   const handleSelectPair = useCallback((index: number) => {
     setActivePairIndex(index);
@@ -204,31 +212,23 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
               )}
               {/* Main Image */}
               <div
-                className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
+                className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages && !displayVideo ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
-                onClick={hasBothImages ? handleImageClick : undefined}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
+                onClick={hasBothImages && !displayVideo ? handleImageClick : undefined}
+                onTouchStart={displayVideo ? undefined : handleTouchStart}
+                onTouchEnd={displayVideo ? undefined : handleTouchEnd}
               >
                 {displayVideo ? (
-                  <>
-                    <video
-                      key={displayVideo}
-                      src={displayVideo}
-                      poster={displayImage?.src}
-                      controls
-                      playsInline
-                      preload="metadata"
-                      aria-label={displayImage?.alt || localizedProject.title}
-                      className="absolute inset-0 w-full h-full object-contain"
-                    />
-                    <BeforeAfterBadge
-                      isBefore={showBefore && hasBothImages}
-                      t={t}
-                      showClickTip={hasBothImages}
-                      hasPair={hasBothImages}
-                    />
-                  </>
+                  <video
+                    key={displayVideo}
+                    src={displayVideo}
+                    poster={displayImage?.src}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label={displayImage?.alt || localizedProject.title}
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
                 ) : displayImage ? (
                   <>
                     <OptimizedImage
@@ -622,7 +622,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           </button>
 
           {/* Before/After Badge in fullscreen */}
-          {hasBothImages && (
+          {hasBothImages && !displayVideo && (
             <div className="absolute top-4 left-4 z-10 flex items-center gap-3">
               <span
                 className="px-3 py-1.5 text-sm rounded-lg font-semibold text-white"
@@ -660,15 +660,10 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
           {/* Fullscreen image */}
           <div
-            className={`relative w-full h-full max-w-[90vw] max-h-[80vh]${hasBothImages ? ' cursor-pointer' : ''}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              if (hasBothImages) {
-                setShowBefore((prev) => !prev);
-              }
-            }}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
+            className={`relative w-full h-full max-w-[90vw] max-h-[80vh]${hasBothImages && !displayVideo ? ' cursor-pointer' : ''}`}
+            onClick={handleFullscreenClick}
+            onTouchStart={displayVideo ? undefined : handleTouchStart}
+            onTouchEnd={displayVideo ? undefined : handleTouchEnd}
           >
             {displayVideo ? (
               <video
