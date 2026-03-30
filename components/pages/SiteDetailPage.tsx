@@ -116,10 +116,10 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
 
-  // Current display video (if the active side has a video)
+  // Current display video: fall back to beforeVideo when afterVideo is missing
   const displayVideo = showBefore
-    ? currentPair?.beforeVideo
-    : currentPair?.afterVideo;
+    ? currentPair?.beforeVideo || currentPair?.afterVideo
+    : currentPair?.afterVideo || currentPair?.beforeVideo;
 
   // Fullscreen state
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -239,6 +239,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     poster={site.hero_image || undefined}
                     controls
                     playsInline
+                    preload="metadata"
+                    aria-label={site.title}
                     className="w-full aspect-video object-contain bg-black"
                   />
                 </div>
@@ -259,6 +261,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                       poster={displayImage?.src}
                       controls
                       playsInline
+                      preload="metadata"
+                      aria-label={displayImage?.alt || site.title}
                       className="absolute inset-0 w-full h-full object-contain"
                     />
                     <BeforeAfterBadge
@@ -361,7 +365,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                           }}
                         >
                           {pair.beforeImage && pair.afterImage ? (
-                            // Split view: before on left, after on right
+                            // Split view: needs two images for visual preview (video-only or mixed pairs show as single/icon)
                             <div className="flex h-full">
                               <div className="relative w-1/2 h-full">
                                 <OptimizedImage
@@ -703,6 +707,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 poster={displayImage?.src}
                 controls
                 playsInline
+                preload="auto"
+                aria-label={displayImage?.alt || site.title}
                 className="absolute inset-0 w-full h-full object-contain"
               />
             ) : displayImage ? (

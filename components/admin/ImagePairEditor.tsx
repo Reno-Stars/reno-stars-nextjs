@@ -323,6 +323,18 @@ export default function ImagePairEditor({
                 clearLabel={t.imagePairs.clearBefore}
                 fieldStyle={fieldStyle}
                 t={t}
+                videoSlot={
+                  <VideoUrlInput
+                    name={`${namePrefix}[${idx}].beforeVideoUrl-input`}
+                    label={t.imagePairs.beforeVideoUrl}
+                    defaultValue={pair.beforeVideoUrl}
+                    onChange={(url) => updatePair(pair.id, 'beforeVideoUrl', url)}
+                    slug={slug}
+                    imageRole={`before-video-${idx + 1}`}
+                    disabled={!editing}
+                    compact
+                  />
+                }
               />
 
               {/* After image zone */}
@@ -344,30 +356,18 @@ export default function ImagePairEditor({
                 clearLabel={t.imagePairs.clearAfter}
                 fieldStyle={fieldStyle}
                 t={t}
-              />
-            </div>
-
-            {/* Video URL fields */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
-              <VideoUrlInput
-                name={`${namePrefix}[${idx}].beforeVideoUrl-input`}
-                label={t.imagePairs.beforeVideoUrl}
-                defaultValue={pair.beforeVideoUrl}
-                onChange={(url) => updatePair(pair.id, 'beforeVideoUrl', url)}
-                slug={slug}
-                imageRole={`before-video-${idx + 1}`}
-                disabled={!editing}
-                compact
-              />
-              <VideoUrlInput
-                name={`${namePrefix}[${idx}].afterVideoUrl-input`}
-                label={t.imagePairs.afterVideoUrl}
-                defaultValue={pair.afterVideoUrl}
-                onChange={(url) => updatePair(pair.id, 'afterVideoUrl', url)}
-                slug={slug}
-                imageRole={`after-video-${idx + 1}`}
-                disabled={!editing}
-                compact
+                videoSlot={
+                  <VideoUrlInput
+                    name={`${namePrefix}[${idx}].afterVideoUrl-input`}
+                    label={t.imagePairs.afterVideoUrl}
+                    defaultValue={pair.afterVideoUrl}
+                    onChange={(url) => updatePair(pair.id, 'afterVideoUrl', url)}
+                    slug={slug}
+                    imageRole={`after-video-${idx + 1}`}
+                    disabled={!editing}
+                    compact
+                  />
+                }
               />
             </div>
 
@@ -552,6 +552,7 @@ function ImageZone({
   clearLabel,
   fieldStyle,
   t,
+  videoSlot,
 }: {
   label: string;
   imageUrl: string;
@@ -570,6 +571,7 @@ function ImageZone({
   clearLabel: string;
   fieldStyle: React.CSSProperties;
   t: ReturnType<typeof useAdminTranslations>;
+  videoSlot?: React.ReactNode;
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputId = useId();
@@ -710,6 +712,9 @@ function ImageZone({
           />
         </div>
       </div>
+
+      {/* Video upload slot */}
+      {videoSlot && <div style={{ marginTop: '0.375rem' }}>{videoSlot}</div>}
     </div>
   );
 }

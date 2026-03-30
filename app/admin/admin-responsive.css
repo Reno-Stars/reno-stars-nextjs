@@ -94,9 +94,18 @@ fieldset:disabled select {
   to { transform: rotate(360deg); }
 }
 
+/* Indeterminate progress bar for video compression */
+@keyframes admin-indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(333%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   @keyframes admin-spin {
     to { transform: none; }
+  }
+  @keyframes admin-indeterminate {
+    0%, 100% { transform: translateX(0); }
   }
 }
 

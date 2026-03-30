@@ -27,7 +27,7 @@ export interface LocalizedImageWithAlt {
 
 /**
  * A before/after image pair with comprehensive SEO metadata.
- * At least one of beforeImage or afterImage must be present.
+ * At least one of beforeImage, afterImage, beforeVideo, or afterVideo must be present.
  */
 export interface ImagePair {
   /** Before image (optional if afterImage exists) */

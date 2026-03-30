@@ -7,6 +7,11 @@ const isLocalStorage = STORAGE_ORIGIN.includes('localhost') ||
                        STORAGE_ORIGIN.includes('127.0.0.1') ||
                        STORAGE_ORIGIN.includes('minio');
 
+/** Like getAssetUrl but returns undefined for falsy inputs. */
+export function getOptionalAssetUrl(url: string | null | undefined): string | undefined {
+  return url ? getAssetUrl(url) : undefined;
+}
+
 /**
  * Rewrite asset URLs to use the configured storage origin.
  *

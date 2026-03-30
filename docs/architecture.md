@@ -85,7 +85,7 @@ lib/
     constants.ts          # Shared constants (SERVICE_TYPES, SPACE_TYPES, SPACE_TYPE_TO_ZH, STANDALONE_SITE_SLUG, AreaOption, mappings)
     translations.ts       # Admin translation hooks
     s3.ts                 # Shared S3 client singleton + S3_BUCKET constant + MIME_TO_EXT map
-    upload-constants.ts   # Shared upload limits (image: 50 MB, video: 1 GB, compressible: 500 MB) and allowed MIME types
+    upload-constants.ts   # Shared upload limits (image: 50 MB, video: 1 GB, compressible: 500 MB), allowed MIME types, and VIDEO_ACCEPT string
     upload-client.ts      # Client-side presigned S3 URL upload helpers (image + video)
     video-compress.ts     # Client-side video compression via ffmpeg.wasm (CRF 18 H.264, singleton)
   ai/                     # AI content optimization
@@ -102,7 +102,7 @@ lib/
   google-reviews.ts       # Google Places API reviews (24h cached, 5-star only)
   analytics.ts            # GA4 event tracking (disabled in development)
   email.ts                # Resend email notifications for contact form
-  storage.ts              # Asset URL rewriting (prod ↔ MinIO)
+  storage.ts              # Asset URL rewriting (prod ↔ MinIO), getOptionalAssetUrl helper
   types.ts                # Shared TypeScript types (includes DisplayProject for modals)
   theme.ts                # Neumorphic design tokens
   utils.ts                # Utility functions
@@ -154,7 +154,7 @@ The app uses a **hybrid static/database** model:
 - **Database-driven** (`lib/db/queries.ts`): Company info, services, social links, about sections, projects, service areas, blog posts, designs, trust badges, partners, and showroom info are all fetched from PostgreSQL at runtime via cached async query functions. These use React `cache()` for per-request deduplication.
 - **Google Reviews** (`lib/google-reviews.ts`): Testimonials are fetched from the Google Places API (New, v1) with 24h server-side caching, replacing the former database-managed testimonials. Two parallel requests (MOST_RELEVANT + NEWEST sort) are deduplicated and filtered to 5-star reviews.
 - **Static data** (`lib/data/`): `video`, `images`, `WORKSAFE_BC_LOGO`, and `MAP_EMBED_URL` constants (hardcoded asset URLs) and localization helpers (`getLocalizedBlogPost`, `getLocalizedArea`) remain as static TypeScript. `lib/data/projects.ts` retains localization helpers, category slug constants, and the `imagesToPairs()` utility for converting legacy flat image arrays to `LocalizedImagePair[]`.
-- **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
+- **Asset URLs**: Wrapped with `getAssetUrl()` which rewrites production URLs to local MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`. `getOptionalAssetUrl()` is a convenience wrapper that returns `undefined` for falsy inputs.
 
 ### Query Layer (`lib/db/queries.ts`)
 
@@ -612,7 +612,7 @@ Tab bar at top for mode selection (Sites / Standalone Projects), disabled during
 
 ## Media Upload (Images & Video)
 
-All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB). Video files are automatically compressed client-side via ffmpeg.wasm before upload — see `docs/admin-components.md` "Video Compression" section for details.
+All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB). Videos upload directly without client-side preprocessing.
 
 ### Architecture
 
@@ -648,9 +648,10 @@ Shared S3 client singleton with lazy initialization. Configured with `requestChe
 Shared validation constants used by both the API route and client-side helpers:
 - `MAX_IMAGE_SIZE` / `MAX_IMAGE_SIZE_LABEL` — 50 MB limit for images.
 - `MAX_VIDEO_SIZE` / `MAX_VIDEO_SIZE_LABEL` — 1 GB limit for video.
-- `MAX_COMPRESSIBLE_VIDEO_SIZE` — 500 MB. Videos larger than this skip client-side compression to avoid browser OOM.
+- `MAX_COMPRESSIBLE_VIDEO_SIZE` — 500 MB. Threshold for client-side compression (reserved for future use).
 - `ALLOWED_IMAGE_TYPES` — `Set` of allowed image MIME types (JPEG, PNG, WebP, SVG, GIF).
 - `ALLOWED_VIDEO_TYPES` — `Set` of allowed video MIME types (MP4, WebM, QuickTime/MOV).
+- `VIDEO_ACCEPT` — Comma-separated MIME type string derived from `ALLOWED_VIDEO_TYPES`, used for file input `accept` attributes.
 - `ALLOWED_MEDIA_TYPES` — Combined `Set` of all allowed image + video types.
 
 ### Presign API Route (`app/admin/api/upload/route.ts`)

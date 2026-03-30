@@ -36,15 +36,16 @@ const securityHeaders: Record<string, string> = {
     // Migration path: Use next.config.ts experimental.cspNonce when stable,
     // which adds nonces to inline scripts. See: https://nextjs.org/docs/app/api-reference/next-config-js/cspNonce
     isDev
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com"
-      : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com"
+      : "script-src 'self' 'unsafe-inline' blob: https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline'",
     `img-src 'self' data: blob: https: ${ASSET_ORIGIN}`,
     "font-src 'self' data:",
     isDev
-      ? `connect-src 'self' ws: wss: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://www.google-analytics.com https://www.googletagmanager.com`
-      : `connect-src 'self' ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://www.google-analytics.com https://www.googletagmanager.com`,
+      ? `connect-src 'self' blob: ws: wss: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://www.google-analytics.com https://www.googletagmanager.com`
+      : `connect-src 'self' blob: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://www.google-analytics.com https://www.googletagmanager.com`,
     `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
+    "worker-src 'self' blob:",
     "object-src 'none'",
     "frame-src 'self' https://www.google.com",
     "frame-ancestors 'self'",

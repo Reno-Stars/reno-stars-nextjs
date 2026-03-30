@@ -29,6 +29,9 @@ export const ALLOWED_VIDEO_TYPES = new Set([
   'video/quicktime',
 ]);
 
+/** Video MIME types as a comma-separated accept string for file inputs. */
+export const VIDEO_ACCEPT = Array.from(ALLOWED_VIDEO_TYPES).join(',');
+
 /** Combined allowed MIME types for image + video uploads. */
 export const ALLOWED_MEDIA_TYPES = new Set([
   ...ALLOWED_IMAGE_TYPES,

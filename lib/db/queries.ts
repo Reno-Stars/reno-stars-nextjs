@@ -26,7 +26,7 @@ import {
   partners as partnersTable,
   socialMediaPosts as socialMediaPostsTable,
 } from './schema';
-import { getAssetUrl } from '../storage';
+import { getAssetUrl, getOptionalAssetUrl } from '../storage';
 import { WHOLE_HOUSE_CATEGORY } from '../data/services';
 
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
@@ -150,8 +150,8 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
         row.longDescriptionEn && row.longDescriptionZh
           ? { en: row.longDescriptionEn, zh: row.longDescriptionZh }
           : undefined,
-      icon: row.iconUrl ? getAssetUrl(row.iconUrl) : undefined,
-      image: row.imageUrl ? getAssetUrl(row.imageUrl) : undefined,
+      icon: getOptionalAssetUrl(row.iconUrl),
+      image: getOptionalAssetUrl(row.imageUrl),
       tags: tags.length > 0
         ? { en: tags.map((t) => t.tagEn), zh: tags.map((t) => t.tagZh) }
         : undefined,
@@ -378,7 +378,7 @@ function mapDbProjectToProject(
         ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
         : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
-    hero_video: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : undefined,
+    hero_video: getOptionalAssetUrl(row.heroVideoUrl),
     images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
     image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairRowToImagePair),
     service_scope:
@@ -546,8 +546,8 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     title: { en: row.titleEn, zh: row.titleZh },
     description: { en: row.descriptionEn, zh: row.descriptionZh },
     location_city: row.locationCity ?? undefined,
-    hero_image: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : undefined,
-    hero_video: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : undefined,
+    hero_image: getOptionalAssetUrl(row.heroImageUrl),
+    hero_video: getOptionalAssetUrl(row.heroVideoUrl),
     badge:
       row.badgeEn && row.badgeZh
         ? { en: row.badgeEn, zh: row.badgeZh }
@@ -820,7 +820,7 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
       row.contentEn && row.contentZh
         ? { en: row.contentEn, zh: row.contentZh }
         : undefined,
-    featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
+    featured_image: getOptionalAssetUrl(row.featuredImageUrl),
     published_at: row.publishedAt ?? undefined,
     updated_at: row.updatedAt ?? undefined,
   }));
@@ -859,7 +859,7 @@ export const getBlogPostsPaginatedFromDb = cache(
         row.contentEn && row.contentZh
           ? { en: row.contentEn, zh: row.contentZh }
           : undefined,
-      featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
+      featured_image: getOptionalAssetUrl(row.featuredImageUrl),
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
     }));
@@ -919,7 +919,7 @@ export const getBlogPostBySlugFromDb = cache(
         row.contentEn && row.contentZh
           ? { en: row.contentEn, zh: row.contentZh }
           : undefined,
-      featured_image: row.featuredImageUrl ? getAssetUrl(row.featuredImageUrl) : undefined,
+      featured_image: getOptionalAssetUrl(row.featuredImageUrl),
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,

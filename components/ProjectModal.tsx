@@ -45,6 +45,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     return [{ afterImage: { src: project.hero_image, alt: project.title } }];
   }, [project]);
 
+  // Hero video: show in the main gallery when no image pair videos exist
+  const heroVideo = project?.hero_video;
+
   const currentPair = imagePairs[activePairIndex];
   const hasBefore = !!(currentPair?.beforeImage || currentPair?.beforeVideo);
   const hasAfter = !!(currentPair?.afterImage || currentPair?.afterVideo);
@@ -53,10 +56,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
 
-  // Current display video (if the active side has a video)
-  const displayVideo = showBefore
-    ? currentPair?.beforeVideo
-    : currentPair?.afterVideo;
+  // Current display video: prefer image pair video, fall back to hero video on first pair
+  const pairVideo = showBefore
+    ? currentPair?.beforeVideo || currentPair?.afterVideo
+    : currentPair?.afterVideo || currentPair?.beforeVideo;
+  const displayVideo = pairVideo || (activePairIndex === 0 ? heroVideo : undefined);
 
   // Store length in ref for stable callbacks
   const pairsLengthRef = useRef(imagePairs.length);
@@ -273,6 +277,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         poster={displayImage?.src}
                         controls
                         playsInline
+                        preload="metadata"
+                        aria-label={displayImage?.alt || project.title}
                         className="absolute inset-0 w-full h-full object-contain"
                       />
                     ) : displayImage ? (

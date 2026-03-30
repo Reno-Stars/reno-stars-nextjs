@@ -20,9 +20,12 @@ const CDN_BASE = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@${CORE_VERSION}/dist
 
 let ffmpeg: FFmpegType | null = null;
 let loadingPromise: Promise<FFmpegType> | null = null;
+/** Once CDN fetch fails, skip future attempts for the rest of the session. */
+let loadFailed = false;
 
 async function getFFmpeg(): Promise<FFmpegType> {
   if (ffmpeg?.loaded) return ffmpeg;
+  if (loadFailed) throw new Error('FFmpeg load previously failed — skipping compression');
   if (loadingPromise) return loadingPromise;
 
   loadingPromise = (async () => {
@@ -41,6 +44,9 @@ async function getFFmpeg(): Promise<FFmpegType> {
       await ff.load({ coreURL, wasmURL });
       ffmpeg = ff;
       return ff;
+    } catch (err) {
+      loadFailed = true;
+      throw err;
     } finally {
       loadingPromise = null;
     }
@@ -95,30 +101,14 @@ export async function compressVideo(
   const { fetchFile } = await import('@ffmpeg/util');
   const ff = await getFFmpeg();
 
-  // Parse total duration from log output
-  let totalDuration = 0;
-  let lastProgress = 0;
-
-  const logHandler = ({ message }: { message: string }) => {
-    // Capture total duration: "Duration: 00:01:23.45,"
-    const durMatch = message.match(/Duration:\s*(\d{2}:\d{2}:\d{2}\.\d+)/);
-    if (durMatch) {
-      totalDuration = parseTimeToSeconds(durMatch[1]);
-    }
-
-    // Capture current encoding time: "time=00:00:45.12"
-    const timeMatch = message.match(/time=\s*(\d{2}:\d{2}:\d{2}\.\d+)/);
-    if (timeMatch && totalDuration > 0) {
-      const currentTime = parseTimeToSeconds(timeMatch[1]);
-      const pct = Math.min(99, Math.round((currentTime / totalDuration) * 100));
-      if (pct > lastProgress) {
-        lastProgress = pct;
-        onProgress?.(pct);
-      }
-    }
+  // Use the dedicated progress event (0.12.x) — more reliable than parsing logs
+  const progressHandler = ({ progress }: { progress: number }) => {
+    // progress is 0..1 float
+    const pct = Math.min(99, Math.round(progress * 100));
+    onProgress?.(pct);
   };
 
-  ff.on('log', logHandler);
+  ff.on('progress', progressHandler);
 
   // Use unique filenames to be defensive against future concurrency
   const uid = Date.now().toString(36);
@@ -162,7 +152,7 @@ export async function compressVideo(
 
     return { file: compressedFile, originalSize, compressedSize, skipped: false };
   } finally {
-    ff.off('log', logHandler);
+    ff.off('progress', progressHandler);
     // Always clean up WASM filesystem — even if exec() threw
     await ff.deleteFile(inputName).catch((e) => {
       if (process.env.NODE_ENV === 'development') console.warn('ffmpeg cleanup (input):', e);

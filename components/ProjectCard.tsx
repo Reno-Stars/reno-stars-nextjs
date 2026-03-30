@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useRef, useCallback } from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { ChevronRight, Layers } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -30,17 +33,53 @@ export default function ProjectCard({
   project, showDescription, showChevron, href, onClick,
   isSiteProject, projectCount, areasCountLabel, siteBadgeLabel,
 }: ProjectCardProps) {
+  const [hovered, setHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const heroVideo = project.hero_video;
+
+  const handleMouseEnter = useCallback(() => {
+    setHovered(true);
+    videoRef.current?.play().catch(() => {});
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, []);
 
   const cardContent = (
     <>
-      <figure className="relative aspect-[4/3] overflow-hidden bg-neutral-800">
-        <OptimizedImage
-          src={project.hero_image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+      <figure
+        className="relative aspect-[4/3] overflow-hidden bg-neutral-800"
+        onMouseEnter={heroVideo ? handleMouseEnter : undefined}
+        onMouseLeave={heroVideo ? handleMouseLeave : undefined}
+      >
+        {project.hero_image && (
+          <OptimizedImage
+            src={project.hero_image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className={`object-cover transition-transform duration-300${heroVideo && hovered ? '' : ' group-hover:scale-105'}`}
+            style={{ opacity: heroVideo && hovered ? 0 : 1, transition: 'opacity 0.3s ease' }}
+          />
+        )}
+        {heroVideo && (
+          <video
+            ref={videoRef}
+            src={heroVideo}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}
+          />
+        )}
         <figcaption className="sr-only">{project.title}</figcaption>
         {project.badge && project.badge !== project.title && (
           <span

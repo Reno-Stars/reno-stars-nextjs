@@ -106,6 +106,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               afterImage: pair.afterImage
                 ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
                 : undefined,
+              beforeVideo: pair.beforeVideo,
+              afterVideo: pair.afterVideo,
               title: pair.title?.[locale],
               caption: pair.caption?.[locale],
               photographerCredit: pair.photographerCredit,
@@ -126,6 +128,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   afterImage: pair.afterImage
                     ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
                     : undefined,
+                  beforeVideo: pair.beforeVideo,
+                  afterVideo: pair.afterVideo,
                   title: pair.title?.[locale],
                   caption: pair.caption?.[locale],
                   photographerCredit: pair.photographerCredit,
@@ -151,6 +155,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           // Sites don't have a service_type - they're collections of room projects
           location_city: site.location_city || '',
           hero_image: heroImage,
+          hero_video: site.hero_video,
           images: allImages,
           image_pairs: combinedImagePairs,
           featured: site.featured,

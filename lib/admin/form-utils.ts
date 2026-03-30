@@ -63,14 +63,20 @@ export function validateTextLengths(
 
 /** Validate parsed image pair URLs (images and videos). Returns error message or null. */
 export function validatePairUrls(pairData: ParsedImagePair[]): string | null {
-  const invalidBefore = pairData.find((p) => p.beforeImageUrl && !isValidUrl(p.beforeImageUrl));
-  if (invalidBefore) return `Before image URL is not valid: ${invalidBefore.beforeImageUrl?.slice(0, 60) ?? ''}`;
-  const invalidAfter = pairData.find((p) => p.afterImageUrl && !isValidUrl(p.afterImageUrl));
-  if (invalidAfter) return `After image URL is not valid: ${invalidAfter.afterImageUrl?.slice(0, 60) ?? ''}`;
-  const invalidBeforeVideo = pairData.find((p) => p.beforeVideoUrl && !isValidUrl(p.beforeVideoUrl));
-  if (invalidBeforeVideo) return `Before video URL is not valid: ${invalidBeforeVideo.beforeVideoUrl?.slice(0, 60) ?? ''}`;
-  const invalidAfterVideo = pairData.find((p) => p.afterVideoUrl && !isValidUrl(p.afterVideoUrl));
-  if (invalidAfterVideo) return `After video URL is not valid: ${invalidAfterVideo.afterVideoUrl?.slice(0, 60) ?? ''}`;
+  const checks: [keyof ParsedImagePair, string][] = [
+    ['beforeImageUrl', 'Before image'],
+    ['afterImageUrl', 'After image'],
+    ['beforeVideoUrl', 'Before video'],
+    ['afterVideoUrl', 'After video'],
+  ];
+  for (const [field, label] of checks) {
+    for (const p of pairData) {
+      const val = p[field];
+      if (typeof val === 'string' && val && !isValidUrl(val)) {
+        return `${label} URL is not valid: ${val.slice(0, 60)}`;
+      }
+    }
+  }
   return null;
 }
 
