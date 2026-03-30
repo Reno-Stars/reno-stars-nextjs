@@ -41,7 +41,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
 
     if (budgets.length === 0) {
       // Fallback estimates based on Metro Vancouver kitchen renovation market (2024-2025)
-      return { min: 20_000, max: 72_000, avg: 30_000, count: projects.length };
+      return { min: 15_000, max: 72_000, avg: 30_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
@@ -64,7 +64,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$20,000 – $27,000' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$15,000 – $27,000' },
     { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$28,000 – $38,000' },
     { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$40,000 – $72,000+' },
   ];

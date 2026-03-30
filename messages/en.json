@@ -433,7 +433,7 @@
       "q1": "How long does a kitchen renovation typically take?",
       "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
       "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $25,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
+      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
       "q3": "Do I need permits for my kitchen renovation?",
       "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
     },
@@ -560,15 +560,15 @@
       "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $20,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
       },
       "bathroomCost": {
         "title": "Bathroom Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a bathroom renovation cost in Vancouver? Real pricing from $14,000 to $60,000 based on 19 completed projects. Accurate cost breakdowns by tier."
+        "description": "How much does a bathroom renovation cost in Vancouver? Real pricing from $10,000 to $60,000 based on 19 completed projects. Accurate cost breakdowns by tier."
       },
       "wholeHouseCost": {
         "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a whole house renovation cost in Vancouver? Real pricing from $23,000 to $31,000 based on 4 completed projects. Full cost breakdown for complete home renovations."
+        "description": "How much does a whole house renovation cost in Vancouver? Real pricing from $50,000 to $200,000+ based on completed projects. Full cost breakdown for complete home renovations."
       },
       "basementCost": {
         "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
@@ -972,7 +972,7 @@
       },
       "faq": {
         "q1": "How much does a kitchen renovation cost in Vancouver?",
-        "a1": "Kitchen renovation costs in Vancouver typically range from $20,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $20,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
+        "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
         "q2": "How long does a kitchen renovation take in Vancouver?",
         "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
         "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
@@ -1069,7 +1069,7 @@
       },
       "faq": {
         "q1": "How much does a bathroom renovation cost in Vancouver?",
-        "a1": "Bathroom renovation costs in Vancouver range from $14,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $14,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
+        "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
         "q2": "How long does a bathroom renovation take?",
         "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
         "q3": "Can I convert my bathtub to a walk-in shower?",
@@ -1118,11 +1118,11 @@
         },
         "kitchen": {
           "title": "Kitchen (30–40% of total budget)",
-          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $20,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
         },
         "bathrooms": {
           "title": "Bathrooms (15–25% of total budget)",
-          "description": "Each bathroom renovation adds $14,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+          "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
         },
         "flooring": {
           "title": "Flooring (10–15% of total budget)",
@@ -1190,7 +1190,7 @@
       },
       "faq": {
         "q1": "How much does a whole house renovation cost in Vancouver?",
-        "a1": "Whole house renovation costs in Vancouver typically range from $23,000 to $150,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $23,000–$35,000, comprehensive renovations with new kitchen and bathrooms run $40,000–$80,000, and premium transformations with structural changes can exceed $85,000.",
+        "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
         "q2": "How long does a whole house renovation take?",
         "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
         "q3": "Can I live in my home during a whole house renovation?",
@@ -1869,8 +1869,8 @@
     },
     "faq": {
       "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $14,000–$60,000, kitchens from $20,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $14,000–$60,000, kitchens from $20,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
+      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
+      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
       "q2": "Can I renovate with a small budget?",
       "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
       "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",

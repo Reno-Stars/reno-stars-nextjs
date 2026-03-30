@@ -42,7 +42,7 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
 
     if (budgets.length === 0) {
       // Fallback estimates based on Metro Vancouver bathroom renovation market (2024-2025)
-      return { min: 14_000, max: 60_000, avg: 28_000, count: projects.length };
+      return { min: 10_000, max: 60_000, avg: 28_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
@@ -65,7 +65,7 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$14,000 – $20,000' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$10,000 – $20,000' },
     { key: 'midRange', icon: Droplets, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$20,000 – $35,000' },
     { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$40,000 – $60,000+' },
   ];

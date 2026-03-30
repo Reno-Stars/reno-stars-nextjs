@@ -40,7 +40,7 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
       .filter((b): b is [number, number] => b !== null);
 
     if (budgets.length === 0) {
-      return { min: 23000, max: 150000, avg: 55000, count: projects.length };
+      return { min: 50_000, max: 200_000, avg: 90_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
@@ -63,9 +63,9 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
   }, [projects]);
 
   const costTiers = [
-    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$23,000 – $35,000' },
-    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$40,000 – $80,000' },
-    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$85,000 – $150,000+' },
+    { key: 'budget', icon: DollarSign, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT, range: '$50,000 – $80,000' },
+    { key: 'midRange', icon: Home, accent: STEP_TEAL, accentLight: STEP_TEAL_LIGHT, range: '$80,000 – $120,000' },
+    { key: 'highEnd', icon: TrendingUp, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT, range: '$120,000 – $200,000+' },
   ];
 
   const costFactors = [
