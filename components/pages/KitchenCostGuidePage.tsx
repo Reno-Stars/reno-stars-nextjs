@@ -40,13 +40,12 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
       .filter((b): b is [number, number] => b !== null);
 
     if (budgets.length === 0) {
-      // Fallback estimates based on Metro Vancouver kitchen renovation market (2024-2025)
       return { min: 15_000, max: 72_000, avg: 30_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
     const highs = budgets.map((b) => b[1]);
-    const min = Math.min(...lows);
+    const min = Math.min(15_000, ...lows);
     const max = Math.max(...highs);
     const avg = Math.round(budgets.reduce((sum, b) => sum + (b[0] + b[1]) / 2, 0) / budgets.length);
 

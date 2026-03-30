@@ -41,13 +41,12 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
       .filter((b): b is [number, number] => b !== null);
 
     if (budgets.length === 0) {
-      // Fallback estimates based on Metro Vancouver bathroom renovation market (2024-2025)
       return { min: 10_000, max: 60_000, avg: 28_000, count: projects.length };
     }
 
     const lows = budgets.map((b) => b[0]);
     const highs = budgets.map((b) => b[1]);
-    const min = Math.min(...lows);
+    const min = Math.min(10_000, ...lows);
     const max = Math.max(...highs);
     const avg = Math.round(budgets.reduce((sum, b) => sum + (b[0] + b[1]) / 2, 0) / budgets.length);
 
