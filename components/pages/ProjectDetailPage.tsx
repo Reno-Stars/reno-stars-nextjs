@@ -10,7 +10,6 @@ import type { Company, Project, LocalizedProject, LocalizedImagePair } from '@/l
 import { getLocalizedProject, imagesToPairs } from '@/lib/data/projects';
 import { formatSlug } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
-import ProjectModal from '@/components/ProjectModal';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import { useDragScroll } from '@/hooks/useDragScroll';
@@ -49,7 +48,6 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
 
   const [activePairIndex, setActivePairIndex] = useState(0);
   const [showBefore, setShowBefore] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Reset when project changes
@@ -65,14 +63,6 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
   const displayImage = showBefore && currentPair?.beforeImage
     ? currentPair.beforeImage
     : currentPair?.afterImage || currentPair?.beforeImage;
-
-  const handleCardClick = useCallback((p: LocalizedProject) => {
-    setSelectedProject(p);
-  }, []);
-
-  const handleModalClose = useCallback(() => {
-    setSelectedProject(null);
-  }, []);
 
   // Toggle before/after on click
   const handleImageClick = useCallback(() => {
@@ -556,17 +546,12 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedProjects.map((rp) => (
-                <ProjectCard key={rp.slug} project={rp} onClick={handleCardClick} />
+                <ProjectCard key={rp.slug} project={rp} href={`/projects/${rp.slug}`} />
               ))}
             </div>
           </div>
         </section>
       )}
-
-      <ProjectModal
-        project={selectedProject}
-        onClose={handleModalClose}
-      />
 
       {/* Fullscreen Image Overlay */}
       {isFullscreen && displayImage && (
