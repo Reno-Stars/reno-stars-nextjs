@@ -55,7 +55,7 @@
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
     "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Vancouver Home Renovation Experts",
+    "transformYourSpace": "Metro Vancouver Renovation Experts",
     "renovationRemodeling": "Renovation & Remodeling",
     "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
     "premiumRenovations": "Premium Renovations",
@@ -63,7 +63,7 @@
     "toLuxury": "To Luxury",
     "buildingBetterSpaces": "Building Better Spaces",
     "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "With over {experience} years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty, we deliver exceptional renovation services across Vancouver and the Lower Mainland.",
+    "professionalExcellenceDesc": "With over {experience} years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty, we deliver exceptional residential and commercial renovation services across Metro Vancouver.",
     "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
     "realEstateDesc": "From complete home renovation to real estate agents and professional photography — we partner with trusted professionals to deliver everything under one roof."
   },
