@@ -51,6 +51,19 @@
   --tw-prose-hr: #DED6CC;                    /* SURFACE_ALT */
 }
 
+/* Swipe hint: pulse twice then fade out (single keyframe avoids timing gaps) */
+@keyframes swipe-hint {
+  0%   { opacity: 0.5; }
+  15%  { opacity: 1; }
+  30%  { opacity: 0.5; }
+  55%  { opacity: 1; }
+  70%  { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+.swipe-hint {
+  animation: swipe-hint 3.2s ease-in-out forwards;
+}
+
 /* Marquee infinite-scroll (used by Marquee client component) */
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
@@ -72,5 +85,9 @@
 @media (prefers-reduced-motion: reduce) {
   @keyframes modalFadeIn {
     from, to { opacity: 1; transform: none; }
+  }
+  .swipe-hint {
+    animation: none;
+    opacity: 0.7;
   }
 }

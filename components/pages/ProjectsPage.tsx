@@ -250,6 +250,32 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const categoryScrollRef = useRef<HTMLDivElement>(null);
   const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0, hasDragged: false, lastX: 0, velocity: 0, lastTime: 0 });
 
+  // Track scroll position for fade indicators (false/false avoids flash before measurement)
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateScrollIndicators = useCallback(() => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    const SCROLL_THRESHOLD = 8;
+    const left = el.scrollLeft > SCROLL_THRESHOLD;
+    const right = el.scrollLeft < el.scrollWidth - el.clientWidth - SCROLL_THRESHOLD;
+    setCanScrollLeft((prev) => prev !== left ? left : prev);
+    setCanScrollRight((prev) => prev !== right ? right : prev);
+  }, []);
+
+  useEffect(() => {
+    const el = categoryScrollRef.current;
+    if (!el) return;
+    updateScrollIndicators();
+    el.addEventListener('scroll', updateScrollIndicators, { passive: true });
+    window.addEventListener('resize', updateScrollIndicators);
+    return () => {
+      el.removeEventListener('scroll', updateScrollIndicators);
+      window.removeEventListener('resize', updateScrollIndicators);
+    };
+  }, [updateScrollIndicators]);
+
   const handleDragStart = useCallback((e: React.MouseEvent) => {
     const el = categoryScrollRef.current;
     if (!el) return;
@@ -438,61 +464,84 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
       {/* Category Cards — horizontal scroll */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-lg font-bold mb-4" style={{ color: TEXT }}>
-            {t('filter.browseByCategory')}
-          </h2>
-          <div
-            ref={categoryScrollRef}
-            className="flex gap-4 overflow-x-auto p-2 -m-2 snap-x snap-proximity category-scroll"
-            style={{ cursor: 'grab', scrollBehavior: 'auto' }}
-            onMouseDown={handleDragStart}
-            onMouseLeave={handleDragEnd}
-            onMouseUp={handleDragEnd}
-            onMouseMove={handleDragMove}
-          >
-            {categories.filter((c) => c.serviceType !== 'All' && allProjects.some((p) => matchesCategory(p, c.serviceType))).map((category) => {
-              const categoryProjects = allProjects.filter((p) => matchesCategory(p, category.serviceType));
-              const firstProject = categoryProjects[0];
-              const isActive = activeCategory === category.serviceType;
+          <div className="flex items-baseline justify-between mb-4">
+            <h2 className="text-lg font-bold" style={{ color: TEXT }}>
+              {t('filter.browseByCategory')}
+            </h2>
+            <span className="text-xs sm:hidden swipe-hint" aria-hidden="true" style={{ color: TEXT_MUTED }}>
+              {t('filter.swipeToSeeMore')}
+            </span>
+          </div>
+          <div className="relative">
+            {/* Left fade — visible when scrolled */}
+            <div
+              className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 z-10 transition-opacity duration-300"
+              style={{
+                background: `linear-gradient(to right, ${SURFACE_ALT}, transparent)`,
+                opacity: canScrollLeft ? 1 : 0,
+              }}
+            />
+            {/* Right fade — visible when more content available */}
+            <div
+              className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 z-10 transition-opacity duration-300"
+              style={{
+                background: `linear-gradient(to left, ${SURFACE_ALT}, transparent)`,
+                opacity: canScrollRight ? 1 : 0,
+              }}
+            />
+            <div
+              ref={categoryScrollRef}
+              className="flex gap-4 overflow-x-auto p-2 -m-2 snap-x snap-proximity category-scroll"
+              style={{ cursor: 'grab', scrollBehavior: 'auto' }}
+              onMouseDown={handleDragStart}
+              onMouseLeave={handleDragEnd}
+              onMouseUp={handleDragEnd}
+              onMouseMove={handleDragMove}
+            >
+              {categories.filter((c) => c.serviceType !== 'All' && allProjects.some((p) => matchesCategory(p, c.serviceType))).map((category) => {
+                const categoryProjects = allProjects.filter((p) => matchesCategory(p, category.serviceType));
+                const firstProject = categoryProjects[0];
+                const isActive = activeCategory === category.serviceType;
 
-              return (
-                <button
-                  key={category.serviceType}
-                  onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.serviceType); }}
-                  className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat w-[180px] sm:w-[220px]"
-                  style={{
-                    boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neuShadow4,
-                  }}
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    {firstProject && (
-                      <Image
-                        src={firstProject.hero_image}
-                        alt={category[locale]}
-                        fill
-                        sizes="(max-width: 640px) 180px, 220px"
-                        className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
-                      />
-                    )}
-                    <div
-                      className="absolute inset-0 transition-colors duration-200"
-                      style={{ backgroundColor: isActive ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0.45)' }}
-                    />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                      <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
-                        {category[locale]}
-                      </span>
-                      <span className="text-sm text-white/90 block">
-                        {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}
-                      </span>
-                      {isActive && (
-                        <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD }} />
+                return (
+                  <button
+                    key={category.serviceType}
+                    onClick={() => { if (!dragState.current.hasDragged) handleCategoryClick(category.serviceType); }}
+                    className="relative rounded-xl overflow-hidden transition-all duration-200 shrink-0 snap-start group/cat w-[180px] sm:w-[220px]"
+                    style={{
+                      boxShadow: isActive ? `0 0 0 2px ${GOLD}` : neuShadow4,
+                    }}
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      {firstProject && (
+                        <Image
+                          src={firstProject.hero_image}
+                          alt={category[locale]}
+                          fill
+                          sizes="(max-width: 640px) 180px, 220px"
+                          className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
+                        />
                       )}
+                      <div
+                        className="absolute inset-0 transition-colors duration-200"
+                        style={{ backgroundColor: isActive ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0.45)' }}
+                      />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                        <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
+                          {category[locale]}
+                        </span>
+                        <span className="text-sm text-white/90 block">
+                          {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}
+                        </span>
+                        {isActive && (
+                          <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD }} />
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

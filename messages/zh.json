@@ -298,6 +298,7 @@
     "projects": "{count, plural, one {个项目} other {个项目}}",
     "clearAll": "清除筛选",
     "browseByCategory": "按类别浏览",
+    "swipeToSeeMore": "滑动查看更多 →",
     "noProjectsMatch": "没有符合筛选条件的项目。",
     "pagination": "项目分页",
     "previous": "上一页",

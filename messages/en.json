@@ -298,6 +298,7 @@
     "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Clear Filters",
     "browseByCategory": "Browse by Category",
+    "swipeToSeeMore": "Swipe to see more →",
     "noProjectsMatch": "No projects match your filters.",
     "pagination": "Projects pagination",
     "previous": "Previous",
