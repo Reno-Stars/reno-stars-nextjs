@@ -22,7 +22,7 @@ const ContactSection = dynamic(() => import('@/components/home/ContactSection'))
 
 // Pre-localized types (computed server-side)
 interface LocalizedBlogPost { slug: string; title: string }
-interface LocalizedShowroom { address: string; appointmentText: string; phone: string }
+interface LocalizedShowroom { address: string; phone: string }
 interface LocalizedFaq { id: string; question: string; answer: string }
 interface LocalizedPartner { name: string; logo: string; url?: string; isHiddenVisually: boolean }
 interface AboutItem { title: string; text: string }
@@ -64,7 +64,7 @@ interface HomePageProps {
     partners: { title: string; subtitle: string; srTitle: string };
     faq: { title: string; subtitle: string };
     blog: { title: string; subtitle: string };
-    showroom: { title: string; bookAppointment: string };
+    showroom: { title: string; appointmentPrefix: string; appointmentBold: string; bookAppointment: string };
     contact: {
       title: string;
       subtitle: string;

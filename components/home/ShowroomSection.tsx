@@ -7,11 +7,12 @@ interface ShowroomSectionProps {
   company: Company;
   showroom: {
     address: string;
-    appointmentText: string;
     phone: string;
   };
   translations: {
     title: string;
+    appointmentPrefix: string;
+    appointmentBold: string;
     bookAppointment: string;
   };
 }
@@ -48,7 +49,7 @@ export default function ShowroomSection({
           {t.title}
         </h2>
         <p className="text-base mb-2 text-white/80">
-          {showroom.appointmentText}
+          {t.appointmentPrefix} <strong className="text-white">{t.appointmentBold}</strong>
         </p>
         <p className="text-sm text-white/70 mb-6">
           {showroom.address} <br /> {showroom.phone}

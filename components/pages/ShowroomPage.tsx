@@ -11,13 +11,14 @@ interface ShowroomPageProps {
   company: Company;
   showroom: {
     address: string;
-    appointmentText: string;
     phone: string;
     email: string;
   };
   translations: {
     heroTitle: string;
     heroSubtitle: string;
+    appointmentPrefix: string;
+    appointmentBold: string;
     addressTitle: string;
     phoneTitle: string;
     emailTitle: string;
@@ -60,11 +61,9 @@ export default function ShowroomPage({ company, showroom, translations: t }: Sho
               {t.addressTitle}
             </h2>
 
-            {showroom.appointmentText && (
-              <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
-                {showroom.appointmentText}
-              </p>
-            )}
+            <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
+              {t.appointmentPrefix} <strong style={{ color: TEXT }}>{t.appointmentBold}</strong>
+            </p>
 
             <div className="space-y-5">
               <div className="flex items-start gap-3">

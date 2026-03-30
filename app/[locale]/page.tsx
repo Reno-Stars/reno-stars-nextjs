@@ -129,7 +129,6 @@ export default async function Page({ params }: PageProps) {
     .map((p) => ({ slug: p.slug, title: p.title[locale] }));
   const localizedShowroom = {
     address: showroom.address,
-    appointmentText: showroom.appointmentText[locale],
     phone: showroom.phone,
   };
   const localizedPartners = partners.map((p) => ({
@@ -207,6 +206,8 @@ export default async function Page({ params }: PageProps) {
     blog: { title: t("section.blogTips"), subtitle: t("section.blogSubtitle") },
     showroom: {
       title: t("section.visitShowroom"),
+      appointmentPrefix: t("showroomPage.appointmentPrefix"),
+      appointmentBold: t("showroomPage.appointmentBold"),
       bookAppointment: t("cta.bookAppointment"),
     },
     contact: {

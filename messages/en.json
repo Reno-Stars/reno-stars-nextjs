@@ -636,7 +636,9 @@
     "faq3q": "Is there parking available at the showroom?",
     "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
     "faq4q": "Can I bring my renovation plans to the showroom?",
-    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit."
+    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit.",
+    "appointmentPrefix": "Welcome to schedule a visit to our Renovation showroom",
+    "appointmentBold": "by appointment!"
   },
   "projectsFaqs": {
     "q1": "How do I get started with a renovation project?",

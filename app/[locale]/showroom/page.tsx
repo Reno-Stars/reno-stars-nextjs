@@ -75,7 +75,6 @@ export default async function Page({ params }: PageProps) {
 
   const localizedShowroom = {
     address: showroom.address,
-    appointmentText: showroom.appointmentText[locale as Locale],
     phone: showroom.phone,
     email: showroom.email,
   };
@@ -83,6 +82,8 @@ export default async function Page({ params }: PageProps) {
   const translations = {
     heroTitle: t('heroTitle'),
     heroSubtitle: t('heroSubtitle'),
+    appointmentPrefix: t('appointmentPrefix'),
+    appointmentBold: t('appointmentBold'),
     addressTitle: t('addressTitle'),
     phoneTitle: t('phoneTitle'),
     emailTitle: t('emailTitle'),
