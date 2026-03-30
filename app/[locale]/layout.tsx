@@ -78,11 +78,11 @@ export default async function LocaleLayout({
           >
             {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
           </a>
-          <Navbar company={company} services={services} />
+          <Navbar company={company} services={services.filter(s => s.isProjectType !== false)} />
           <main id="main-content">
             {children}
           </main>
-          <Footer company={company} socialLinks={socialLinks} services={services} areas={areas} googleRating={googleReviews.rating} />
+          <Footer company={company} socialLinks={socialLinks} services={services.filter(s => s.showOnServicesPage !== false)} areas={areas} googleRating={googleReviews.rating} />
         </NextIntlClientProvider>
       </body>
     </html>

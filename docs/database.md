@@ -19,7 +19,7 @@ Defined in `lib/db/schema.ts`. All tables use `pgTable()` from Drizzle.
 
 | Table | Purpose | Unique Key |
 |-------|---------|------------|
-| `services` | Renovation service types | `slug` |
+| `services` | Renovation service types (visibility flags: `show_on_services_page`, `is_project_type`) | `slug` |
 | `service_tags` | Sub-service tags per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_benefits` | "Why Us" benefits per service (bilingual) | `(serviceId, displayOrder)` |
 | `service_areas` | Geographic coverage (includes rich content, highlights, SEO meta) | `slug` |
@@ -127,7 +127,7 @@ pnpm db:seed:blog       # Crawl WordPress site for blog content (22 articles, EN
 ## Seeding
 
 `lib/db/seed.ts` populates:
-- 6 services (kitchen, bathroom, whole-house, basement, cabinet, commercial) with icons, descriptions, and image URLs
+- 6 services (kitchen, bathroom, whole-house, basement, cabinet, commercial) with icons, descriptions, image URLs, and explicit `showOnServicesPage: true, isProjectType: true` flags
 - 14 service areas (Vancouver, Richmond, Burnaby, Surrey, etc.)
 - Company info (including `foundingYear`, geo coordinates, logo URL, hero video/image URLs)
 - Showroom info, trust badges

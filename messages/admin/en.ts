@@ -354,6 +354,9 @@ const en = {
     benefitPlaceholderEn: 'Benefit in English',
     benefitPlaceholderZh: 'Benefit in Chinese',
     addBenefit: '+ Add Benefit',
+    visibility: 'Visibility',
+    showOnServicesPageLabel: 'Show on Services page, homepage & footer',
+    isProjectTypeLabel: 'Use as project filter category (navbar dropdown & project filters)',
   },
   socialLinks: {
     title: 'Social Links',

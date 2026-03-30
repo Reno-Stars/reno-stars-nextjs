@@ -23,6 +23,7 @@ export async function generateStaticParams() {
 
   for (const locale of locales) {
     for (const service of services) {
+      if (service.showOnServicesPage === false) continue;
       for (const area of areas) {
         params.push({ locale, 'service-slug': service.slug, city: area.slug });
       }
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
 
-  if (!service || !area) {
+  if (!service || !area || service.showOnServicesPage === false) {
     return { title: 'Page Not Found', robots: { index: false, follow: false } };
   }
 
@@ -95,7 +96,7 @@ export default async function Page({ params }: PageProps) {
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
 
-  if (!service || !area) {
+  if (!service || !area || service.showOnServicesPage === false) {
     notFound();
   }
 

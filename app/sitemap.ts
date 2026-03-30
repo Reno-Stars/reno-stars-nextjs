@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
-import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs } from '@/lib/db/queries';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
 
 export const revalidate = 3600;
 
@@ -12,13 +12,14 @@ const STATIC_LAST_MODIFIED = '2026-03-17';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas, serviceTypeMap, categorySlugs] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, serviceTypeMap, categorySlugs, allServices] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
     getServiceTypeToCategory(),
     getCategorySlugs(),
+    getServicesFromDb(),
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
@@ -26,7 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projectSlugs = projectRows.map(r => r.slug);
   const siteSlugs = siteRows.map(r => r.slug);
   const blogPostSlugs = blogPostRows.map(r => r.slug);
-  const serviceSlugs = Object.keys(serviceTypeMap);
+  // Service page URLs: only services shown on the services page
+  const serviceSlugs = allServices.filter(s => s.showOnServicesPage !== false).map(s => s.slug);
 
   const entries: MetadataRoute.Sitemap = [];
 

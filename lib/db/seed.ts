@@ -35,6 +35,8 @@ async function seed() {
         iconUrl: '/icons/services/hammer.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg',
         displayOrder: 1,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
       {
         slug: 'bathroom',
@@ -50,6 +52,8 @@ async function seed() {
         iconUrl: '/icons/services/bath.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg',
         displayOrder: 2,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
       {
         slug: 'whole-house',
@@ -65,6 +69,8 @@ async function seed() {
         iconUrl: '/icons/services/home.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/modern-open-concept-living-and-dining-room.jpg',
         displayOrder: 3,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
       {
         slug: 'basement',
@@ -79,6 +85,8 @@ async function seed() {
         iconName: 'ArrowDown',
         iconUrl: '/icons/services/arrow-down.svg',
         displayOrder: 4,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
       {
         slug: 'cabinet',
@@ -93,6 +101,8 @@ async function seed() {
         iconName: 'Paintbrush',
         iconUrl: '/icons/services/paintbrush.svg',
         displayOrder: 5,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
       {
         slug: 'commercial',
@@ -108,6 +118,8 @@ async function seed() {
         iconUrl: '/icons/services/building-2.svg',
         imageUrl: 'https://reno-stars.com/wp-content/uploads/2025/04/from-1-skin-lab-granville-commercial-renovation.jpg',
         displayOrder: 6,
+        showOnServicesPage: true,
+        isProjectType: true,
       },
     ])
     .onConflictDoNothing({ target: services.slug });

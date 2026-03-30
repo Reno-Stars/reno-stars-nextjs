@@ -236,7 +236,7 @@ export default async function Page({ params }: PageProps) {
       <HomePage
         locale={locale}
         company={company}
-        services={services}
+        services={services.filter(s => s.showOnServicesPage !== false)}
         googleReviews={googleReviews}
         gallery={galleryProjects}
         trustBadges={localizedBadges}

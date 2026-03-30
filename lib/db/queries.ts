@@ -158,6 +158,8 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
       benefits: benefits.length > 0
         ? { en: benefits.map((b) => b.benefitEn), zh: benefits.map((b) => b.benefitZh) }
         : undefined,
+      showOnServicesPage: row.showOnServicesPage,
+      isProjectType: row.isProjectType,
     };
   });
 });
@@ -170,6 +172,7 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: st
   const services = await getServicesFromDb();
   const map: Record<string, { en: string; zh: string }> = {};
   for (const s of services) {
+    if (s.isProjectType === false) continue;
     map[s.slug] = { en: s.title.en, zh: s.title.zh };
   }
   return map;

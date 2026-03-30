@@ -42,6 +42,8 @@ interface ServiceFormProps {
     iconUrl: string | null;
     imageUrl: string | null;
     displayOrder: number;
+    showOnServicesPage: boolean;
+    isProjectType: boolean;
     tags?: { id: string; en: string; zh: string }[];
     benefits?: { id: string; en: string; zh: string }[];
   };
@@ -79,6 +81,8 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
     iconUrl: '',
     imageUrl: '',
     displayOrder: 0,
+    showOnServicesPage: true,
+    isProjectType: true,
   };
 
   const addTag = () => {
@@ -143,6 +147,19 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
 
           <FormField label={t.services.displayOrder} htmlFor="displayOrder">
             <input id="displayOrder" name="displayOrder" type="number" min={0} defaultValue={defaults.displayOrder} required style={fieldStyle} />
+          </FormField>
+
+          <FormField label={t.services.visibility} htmlFor="showOnServicesPage">
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input id="showOnServicesPage" name="showOnServicesPage" type="checkbox" defaultChecked={defaults.showOnServicesPage} />
+                <span className="text-sm">{t.services.showOnServicesPageLabel}</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input id="isProjectType" name="isProjectType" type="checkbox" defaultChecked={defaults.isProjectType} />
+                <span className="text-sm">{t.services.isProjectTypeLabel}</span>
+              </label>
+            </div>
           </FormField>
 
           {/* Service Tags */}

@@ -356,6 +356,9 @@ const zh: AdminMessages = {
     benefitPlaceholderEn: '英文优势',
     benefitPlaceholderZh: '中文优势',
     addBenefit: '+ 添加优势',
+    visibility: '可见性',
+    showOnServicesPageLabel: '显示在服务页面、首页和页脚',
+    isProjectTypeLabel: '用作项目筛选分类（导航栏下拉菜单和项目过滤器）',
   },
   socialLinks: {
     title: '社交链接',

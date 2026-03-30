@@ -2,8 +2,8 @@
 
 ## Page & Layout Components
 
-- **Navbar**: Unified, no variant props. 8 links + Areas dropdown. Receives `company` and `areas` props from layout.
-- **Footer**: 5-column grid + service areas bar. Custom SVG icons for non-lucide platforms. Receives `company`, `socialLinks`, `services`, `areas` props from layout.
+- **Navbar**: Unified, no variant props. 10 links + Projects dropdown. Receives `company` and `services` (filtered by `isProjectType !== false`) props from layout.
+- **Footer**: 5-column grid + service areas bar. Custom SVG icons for non-lucide platforms. Receives `company`, `socialLinks`, `services` (filtered by `showOnServicesPage !== false`), `areas` props from layout.
 - **Page components** (`components/pages/`): All `'use client'`. Receive `locale` and `company` props. Do NOT render Navbar or Footer.
 - **Root layout** (`app/layout.tsx`): Pass-through that exports `metadata` and `viewport`. Does not render `<html>/<body>` — delegates to locale layout.
 - **Locale layout** (`app/[locale]/layout.tsx`): Server Component with `<html lang={locale}>` and `<body>`, fetches shared data via `Promise.all`, renders Navbar/Footer.
@@ -130,6 +130,7 @@ Unified site/project management. Roof = site, floors = project layers. Drag-and-
 
 - **Pre-save warnings**: `ProjectForm`, `SiteForm`, `BlogPostForm` check empty optional fields → `ConfirmDialog` with `variant="warning"`.
 - **Collapsible list sections**: First 3 items shown, "Show All (N)" toggle. Hidden inputs always render. Used by ServiceForm for both tags and benefits sections.
+- **Service visibility flags**: ServiceForm includes a "Visibility" `FormField` with two labeled checkboxes (`showOnServicesPage`, `isProjectType`) using bilingual translation keys. Server actions parse via `formData.get('name') === 'on'`.
 - **List page pattern**: Edit (`GOLD`) + Delete (`ERROR`) actions, `ConfirmDialog` via `deleteId` state.
 - **Batch operations** (Contacts): Checkbox column + "Select All" in `DataTable.headerAction`. Batch action bar appears on selection with count, select/deselect toggle, status dropdown, and delete button. `effectiveSelectedIds` (synchronous `useMemo`) prunes selection against current filter to prevent stale IDs. `ConfirmDialog` lists item names via `items` prop. Server actions use `inArray()` with `MAX_BATCH_SIZE = 100` and full UUID validation.
 - **Landing page previews**: FAQs, Services, Areas, Badges, Designs, Partners, About pages include homepage-mirroring preview sections.

@@ -74,6 +74,8 @@ export async function createService(
     const iconUrl = getString(formData, 'iconUrl') || null;
     const imageUrl = getString(formData, 'imageUrl') || null;
     const displayOrder = parseInt(getString(formData, 'displayOrder') || '0', 10);
+    const showOnServicesPage = formData.get('showOnServicesPage') === 'on';
+    const isProjectType = formData.get('isProjectType') === 'on';
 
     if (!slug) return { error: 'Slug is required.' };
     if (!isValidSlug(slug)) return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
@@ -114,6 +116,8 @@ export async function createService(
       iconUrl,
       imageUrl,
       displayOrder,
+      showOnServicesPage,
+      isProjectType,
     }).returning({ id: services.id });
 
     // Insert tags (already parsed and validated above)
@@ -217,6 +221,8 @@ export async function updateService(
       longDescriptionZh: getString(formData, 'longDescriptionZh') || null,
       iconUrl: getString(formData, 'iconUrl') || null,
       imageUrl: getString(formData, 'imageUrl') || null,
+      showOnServicesPage: formData.get('showOnServicesPage') === 'on',
+      isProjectType: formData.get('isProjectType') === 'on',
       updatedAt: new Date(),
     };
 

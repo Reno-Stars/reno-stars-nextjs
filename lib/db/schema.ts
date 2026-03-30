@@ -74,6 +74,8 @@ export const services = pgTable(
     iconUrl: varchar('icon_url', { length: 500 }),
     imageUrl: varchar('image_url', { length: 500 }),
     displayOrder: integer('display_order').default(0).notNull(),
+    showOnServicesPage: boolean('show_on_services_page').default(true).notNull(),
+    isProjectType: boolean('is_project_type').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   },

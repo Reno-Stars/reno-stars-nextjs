@@ -65,7 +65,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ServicesPage locale={locale as Locale} company={company} services={services} areas={areas} />
+      <ServicesPage locale={locale as Locale} company={company} services={services.filter(s => s.showOnServicesPage !== false)} areas={areas} />
     </>
   );
 }

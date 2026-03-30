@@ -22,6 +22,7 @@ export async function generateStaticParams() {
 
   for (const locale of locales) {
     for (const service of services) {
+      if (service.showOnServicesPage === false) continue;
       params.push({ locale, 'service-slug': service.slug });
     }
   }
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const services = await getServicesFromDb();
   const service = services.find((s) => s.slug === serviceSlug);
 
-  if (!service) {
+  if (!service || service.showOnServicesPage === false) {
     return { title: 'Service Not Found', robots: { index: false, follow: false } };
   }
 
@@ -77,7 +78,7 @@ export default async function Page({ params }: PageProps) {
   const [company, services, areas] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb()]);
   const service = services.find((s) => s.slug === serviceSlug);
 
-  if (!service) {
+  if (!service || service.showOnServicesPage === false) {
     notFound();
   }
   const localizedService = getLocalizedService(service, locale as Locale);

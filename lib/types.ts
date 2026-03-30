@@ -232,6 +232,10 @@ export interface Service {
   tags?: Localized<string[]>;
   /** Per-service "Why Us" benefits (overrides hardcoded defaults when present) */
   benefits?: Localized<string[]>;
+  /** Whether this service appears on /services, homepage services, and footer */
+  showOnServicesPage?: boolean;
+  /** Whether this service appears as a project filtering category (navbar, project filters) */
+  isProjectType?: boolean;
 }
 
 /**
