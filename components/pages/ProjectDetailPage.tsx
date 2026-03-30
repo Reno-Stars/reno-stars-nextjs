@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { MapPin, Calendar, DollarSign, Layers, ExternalLink, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
@@ -191,7 +191,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
               >
                 {displayImage ? (
                   <>
-                    <Image
+                    <OptimizedImage
                       src={displayImage.src}
                       alt={displayImage.alt || localizedProject.title}
                       fill
@@ -273,7 +273,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                             // Split view: before on left, after on right
                             <div className="flex h-full">
                               <div className="relative w-1/2 h-full">
-                                <Image
+                                <OptimizedImage
                                   src={pair.beforeImage.src}
                                   alt={pair.beforeImage.alt || `${localizedProject.title} - ${t('projects.beforeLabel')}`}
                                   fill
@@ -289,7 +289,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                               </div>
                               <div className="w-px bg-white/80" />
                               <div className="relative w-1/2 h-full">
-                                <Image
+                                <OptimizedImage
                                   src={pair.afterImage.src}
                                   alt={pair.afterImage.alt || `${localizedProject.title} - ${t('projects.afterLabel')}`}
                                   fill
@@ -307,7 +307,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                           ) : (
                             // Single image (before or after only)
                             <div className="relative w-full h-full">
-                              <Image
+                              <OptimizedImage
                                 src={(pair.afterImage || pair.beforeImage)!.src}
                                 alt={(pair.afterImage || pair.beforeImage)!.alt || localizedProject.title}
                                 fill
@@ -621,7 +621,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <Image
+            <OptimizedImage
               src={displayImage.src}
               alt={displayImage.alt || localizedProject.title}
               fill
@@ -661,7 +661,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                     {pair.beforeImage && pair.afterImage ? (
                       <div className="flex h-full">
                         <div className="relative w-1/2 h-full">
-                          <Image
+                          <OptimizedImage
                             src={pair.beforeImage.src}
                             alt={pair.beforeImage.alt || `${localizedProject.title} - ${t('projects.beforeLabel')}`}
                             fill
@@ -671,7 +671,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                         </div>
                         <div className="w-px bg-white/80" />
                         <div className="relative w-1/2 h-full">
-                          <Image
+                          <OptimizedImage
                             src={pair.afterImage.src}
                             alt={pair.afterImage.alt || `${localizedProject.title} - ${t('projects.afterLabel')}`}
                             fill
@@ -682,7 +682,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                       </div>
                     ) : (
                       <div className="relative w-full h-full">
-                        <Image
+                        <OptimizedImage
                           src={(pair.afterImage || pair.beforeImage)!.src}
                           alt={(pair.afterImage || pair.beforeImage)!.alt || localizedProject.title}
                           fill

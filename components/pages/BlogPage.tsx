@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useCallback } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronRight, ChevronLeft, Calendar, BookOpen } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -120,7 +120,7 @@ export default function BlogPage({
                     >
                       {post.featured_image && (
                         <div className="relative w-full sm:w-48 h-40 sm:h-auto shrink-0">
-                          <Image
+                          <OptimizedImage
                             src={post.featured_image}
                             alt={post.title}
                             fill

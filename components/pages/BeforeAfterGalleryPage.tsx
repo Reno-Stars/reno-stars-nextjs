@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useCallback, useRef } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import { SlidersHorizontal, MapPin, Eye, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
@@ -167,7 +167,7 @@ export default function BeforeAfterGalleryPage({ locale, projects, company: _com
                       onMouseEnter={() => setHoveredItem(itemKey)} onMouseLeave={() => setHoveredItem(null)}>
                       <div className="relative aspect-[4/3] overflow-hidden">
                         <div className="absolute inset-0 w-1/2 overflow-hidden">
-                          <Image src={item.pair.beforeImage!.src}
+                          <OptimizedImage src={item.pair.beforeImage!.src}
                             alt={(item.pair.beforeImage!.alt && item.pair.beforeImage!.alt[locale]) || `${pairTitle} - Before`}
                             fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
                             className="object-cover" loading={idx < 6 ? 'eager' : 'lazy'} />
@@ -175,7 +175,7 @@ export default function BeforeAfterGalleryPage({ locale, projects, company: _com
                             style={{ backgroundColor: NAVY }}>{t('labels.before')}</div>
                         </div>
                         <div className="absolute inset-0 left-1/2 w-1/2 overflow-hidden">
-                          <Image src={item.pair.afterImage!.src}
+                          <OptimizedImage src={item.pair.afterImage!.src}
                             alt={(item.pair.afterImage!.alt && item.pair.afterImage!.alt[locale]) || `${pairTitle} - After`}
                             fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
                             className="object-cover object-right" loading={idx < 6 ? 'eager' : 'lazy'} />

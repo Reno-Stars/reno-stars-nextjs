@@ -1,8 +1,8 @@
 'use client';
 
 import { CSSProperties, KeyboardEvent } from 'react';
-import Image from 'next/image';
 import { Link } from '@/navigation';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export const tetrisLayouts = [
   { col: 'col-span-2', aspect: 'aspect-[2/1]' },
@@ -58,7 +58,7 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
 
         const content = (
           <>
-            <Image
+            <OptimizedImage
               src={item.image}
               alt={altText}
               fill

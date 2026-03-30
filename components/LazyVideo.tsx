@@ -10,32 +10,24 @@ interface LazyVideoProps {
 
 /**
  * Lazy-loading video component that:
- * 1. Shows poster image immediately for fast LCP
- * 2. Only loads video when it enters viewport
- * 3. Hides video on mobile to save bandwidth (uses poster image instead)
+ * 1. Always renders the <video> element to avoid CLS
+ * 2. Uses CSS to hide video on mobile (no JS layout shift)
+ * 3. Only loads video source when it enters viewport on desktop
  * 4. Respects prefers-reduced-motion
  */
 export default function LazyVideo({ src, poster, className = '' }: LazyVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(true); // Default to mobile (SSR-safe)
   const [shouldPlay, setShouldPlay] = useState(false);
-
-  // Detect mobile using matchMedia (only fires on breakpoint changes, not every resize)
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    setIsMobile(mq.matches);
-    const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', handleChange);
-    return () => mq.removeEventListener('change', handleChange);
-  }, []);
 
   // Intersection Observer to detect when video is in viewport
   useEffect(() => {
-    if (isMobile) return; // Don't observe on mobile
-
     const video = videoRef.current;
     if (!video) return;
+
+    // Check if we're on mobile via matchMedia (don't load video on mobile)
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (mq.matches) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -48,12 +40,26 @@ export default function LazyVideo({ src, poster, className = '' }: LazyVideoProp
     );
 
     observer.observe(video);
-    return () => observer.disconnect();
-  }, [isMobile]);
+
+    // Re-check on breakpoint change (e.g. device rotation from mobile → desktop).
+    // When isVisible flips to true this effect re-runs, creating a new observer
+    // that early-returns above if already on mobile — so no duplicate observation.
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!e.matches && !isVisible) {
+        observer.observe(video);
+      }
+    };
+    mq.addEventListener('change', handleChange);
+
+    return () => {
+      observer.disconnect();
+      mq.removeEventListener('change', handleChange);
+    };
+  }, [isVisible]);
 
   // Load and play video when visible
   useEffect(() => {
-    if (!isVisible || isMobile) return;
+    if (!isVisible) return;
 
     const video = videoRef.current;
     if (!video) return;
@@ -74,19 +80,9 @@ export default function LazyVideo({ src, poster, className = '' }: LazyVideoProp
           // Autoplay was prevented, that's fine
         });
     }
-  }, [isVisible, isMobile, src]);
+  }, [isVisible, src]);
 
-  // On mobile, just show the poster image
-  if (isMobile) {
-    return (
-      <div
-        className={className}
-        style={{ backgroundImage: `url(${poster})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-        aria-hidden="true"
-      />
-    );
-  }
-
+  // Always render <video> — hidden on mobile via CSS, no JS-driven layout shift
   return (
     <video
       ref={videoRef}
@@ -95,7 +91,7 @@ export default function LazyVideo({ src, poster, className = '' }: LazyVideoProp
       playsInline
       poster={poster}
       aria-hidden="true"
-      className={`${className} ${shouldPlay ? '' : 'opacity-0'}`}
+      className={`${className} hidden md:block ${shouldPlay ? '' : 'opacity-0'}`}
       style={{ transition: 'opacity 0.5s ease-in-out' }}
     />
   );

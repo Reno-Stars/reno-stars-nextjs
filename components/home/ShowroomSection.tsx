@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 import { Link } from "@/navigation";
 import type { Company } from "@/lib/types";
 import { NAVY, GOLD } from "@/lib/theme";
@@ -30,7 +30,7 @@ export default function ShowroomSection({
       style={{ backgroundColor: NAVY }}
     >
       <div className="max-w-4xl mx-auto text-center">
-        <Image
+        <OptimizedImage
           src={company.logo}
           alt={company.name}
           width={180}

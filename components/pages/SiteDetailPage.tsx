@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedImagePair } from '@/lib/types';
@@ -234,7 +234,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               >
                 {displayImage ? (
                   <>
-                    <Image
+                    <OptimizedImage
                       src={displayImage.src}
                       alt={displayImage.alt || site.title}
                       fill
@@ -325,7 +325,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                             // Split view: before on left, after on right
                             <div className="flex h-full">
                               <div className="relative w-1/2 h-full">
-                                <Image
+                                <OptimizedImage
                                   src={pair.beforeImage.src}
                                   alt={pair.beforeImage.alt || `${site.title} - ${t('projects.beforeLabel')}`}
                                   fill
@@ -341,7 +341,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                               </div>
                               <div className="w-px bg-white/80" />
                               <div className="relative w-1/2 h-full">
-                                <Image
+                                <OptimizedImage
                                   src={pair.afterImage.src}
                                   alt={pair.afterImage.alt || `${site.title} - ${t('projects.afterLabel')}`}
                                   fill
@@ -359,7 +359,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                           ) : (
                             // Single image (before or after only)
                             <div className="relative w-full h-full">
-                              <Image
+                              <OptimizedImage
                                 src={(pair.afterImage || pair.beforeImage)!.src}
                                 alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
                                 fill
@@ -651,7 +651,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <Image
+            <OptimizedImage
               src={displayImage.src}
               alt={displayImage.alt || site.title}
               fill
@@ -691,7 +691,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     {pair.beforeImage && pair.afterImage ? (
                       <div className="flex h-full">
                         <div className="relative w-1/2 h-full">
-                          <Image
+                          <OptimizedImage
                             src={pair.beforeImage.src}
                             alt={pair.beforeImage.alt || `${site.title} - ${t('projects.beforeLabel')}`}
                             fill
@@ -701,7 +701,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                         </div>
                         <div className="w-px bg-white/80" />
                         <div className="relative w-1/2 h-full">
-                          <Image
+                          <OptimizedImage
                             src={pair.afterImage.src}
                             alt={pair.afterImage.alt || `${site.title} - ${t('projects.afterLabel')}`}
                             fill
@@ -712,7 +712,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                       </div>
                     ) : (
                       <div className="relative w-full h-full">
-                        <Image
+                        <OptimizedImage
                           src={(pair.afterImage || pair.beforeImage)!.src}
                           alt={(pair.afterImage || pair.beforeImage)!.alt || site.title}
                           fill
@@ -772,7 +772,7 @@ function AreaDetailCard({
               <div className="grid grid-cols-2 gap-1 w-full">
                 {cardImages.map((img) => (
                   <div key={img.src} className="relative aspect-square">
-                    <Image
+                    <OptimizedImage
                       src={img.src}
                       alt={img.alt || project.title}
                       fill
@@ -792,7 +792,7 @@ function AreaDetailCard({
               </div>
             ) : (
               <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[250px]">
-                <Image
+                <OptimizedImage
                   src={cardImages[0].src}
                   alt={cardImages[0].alt || project.title}
                   fill

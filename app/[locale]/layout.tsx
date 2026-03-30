@@ -12,6 +12,7 @@ import { getGoogleReviews } from '@/lib/google-reviews';
 import { images } from '@/lib/data';
 import { ASSET_ORIGIN } from '@/lib/storage';
 import { NAVY } from '@/lib/theme';
+import { buildPreloadUrl } from '@/lib/image';
 
 // Revalidate layout data every hour (ISR)
 export const revalidate = 3600;
@@ -53,8 +54,10 @@ export default async function LocaleLayout({
       <head>
         {/* Preconnect for faster asset loading (implies dns-prefetch) */}
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
-        {/* Preload hero image for faster LCP */}
-        <link rel="preload" as="image" href={images.hero} fetchPriority="high" />
+        {/* Preload hero image for faster LCP — optimized WebP at mobile width.
+            type="image/webp" lets the <3% of browsers without WebP skip the preload;
+            they still get the image via the <img> onError fallback in OptimizedImage. */}
+        <link rel="preload" as="image" href={buildPreloadUrl(images.hero, 828)} type="image/webp" fetchPriority="high" />
         {/* RSS feed discovery */}
         <link rel="alternate" type="application/rss+xml" title={locale === 'zh' ? 'Reno Stars 博客 RSS' : 'Reno Stars Blog RSS'} href={`/${locale}/feed.xml/`} />
         <GoogleAnalytics />

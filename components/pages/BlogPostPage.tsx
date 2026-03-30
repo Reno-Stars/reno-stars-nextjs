@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react';
 import { Link } from '@/navigation';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
 import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
@@ -52,7 +52,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
             {/* Featured image */}
             {post.featured_image && (
               <div className="relative w-full aspect-[2/1] rounded-xl overflow-hidden mb-6">
-                <Image
+                <OptimizedImage
                   src={post.featured_image}
                   alt={localizedPost.title}
                   fill
@@ -123,7 +123,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   <div className="flex flex-col sm:flex-row">
                     {localizedPost.related_project.hero_image && (
                       <div className="relative w-full sm:w-48 h-32 sm:h-auto flex-shrink-0">
-                        <Image
+                        <OptimizedImage
                           src={localizedPost.related_project.hero_image}
                           alt={localizedPost.related_project.title}
                           fill
@@ -161,7 +161,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                         >
                           {product.image_url && (
                             <div className="relative w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
-                              <Image
+                              <OptimizedImage
                                 src={product.image_url}
                                 alt={product.label}
                                 fill

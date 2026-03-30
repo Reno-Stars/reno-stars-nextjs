@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { ChevronRight, Layers } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { LocalizedProject } from '@/lib/types';
@@ -34,7 +34,7 @@ export default function ProjectCard({
   const cardContent = (
     <>
       <figure className="relative aspect-[4/3] overflow-hidden bg-neutral-800">
-        <Image
+        <OptimizedImage
           src={project.hero_image}
           alt={project.title}
           fill

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useCallback, useEffect } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/config';
 import type { Company, DesignItem } from '@/lib/types';
@@ -139,7 +139,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
                     onClick={() => setLightboxIndex(index)}
                     aria-label={altText}
                   >
-                    <Image
+                    <OptimizedImage
                       src={item.image}
                       alt={altText}
                       fill
@@ -222,7 +222,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
             className="relative w-full h-full max-w-5xl max-h-[85vh] mx-4 sm:mx-8"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
+            <OptimizedImage
               src={currentItem.image}
               alt={currentItem.title || 'Design showcase'}
               fill

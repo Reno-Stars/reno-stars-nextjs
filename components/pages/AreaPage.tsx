@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronRight, MapPin } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -118,7 +118,7 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
                 >
                   {project.hero_image && (
                     <div className="aspect-[4/3] overflow-hidden relative">
-                      <Image
+                      <OptimizedImage
                         src={project.hero_image}
                         alt={project.title}
                         fill

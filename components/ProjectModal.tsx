@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { X, MapPin, Tag, DollarSign, Home, Wrench, Clock, ArrowRight, ExternalLink, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
@@ -259,7 +259,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     }}
                     onAnimationEnd={() => setSlideDirection(null)}
                   >
-                    <Image
+                    <OptimizedImage
                       key={`${activePairIndex}-${showBefore}`}
                       src={displayImage.src}
                       alt={displayImage.alt || `${project.title} - renovation project photo`}
@@ -337,7 +337,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         {pair.beforeImage && pair.afterImage ? (
                           <div className="flex h-full">
                             <div className="relative w-1/2 h-full">
-                              <Image
+                              <OptimizedImage
                                 src={pair.beforeImage.src}
                                 alt={pair.beforeImage.alt || `${project.title} - ${t('projects.beforeLabel')}`}
                                 fill
@@ -353,7 +353,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                             </div>
                             <div className="w-px bg-white/80" />
                             <div className="relative w-1/2 h-full">
-                              <Image
+                              <OptimizedImage
                                 src={pair.afterImage.src}
                                 alt={pair.afterImage.alt || `${project.title} - ${t('projects.afterLabel')}`}
                                 fill
@@ -370,7 +370,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                           </div>
                         ) : (
                           <div className="relative w-full h-full">
-                            <Image
+                            <OptimizedImage
                               src={(pair.afterImage || pair.beforeImage)!.src}
                               alt={(pair.afterImage || pair.beforeImage)!.alt || project.title}
                               fill

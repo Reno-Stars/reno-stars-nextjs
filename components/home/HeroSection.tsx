@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import Image from 'next/image';
 import { Shield, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
+import OptimizedImage from '@/components/OptimizedImage';
 
 interface HeroSectionProps {
   company: Company;
@@ -89,7 +89,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
   return (
     <section aria-label={t.transformYourSpace} className="relative overflow-hidden min-h-[70vh] flex items-center">
       {/* Poster image shown immediately for fast LCP */}
-      <Image
+      <OptimizedImage
         src={posterSrc}
         alt="Vancouver home renovation showcase featuring modern kitchen and bathroom remodeling by Reno Stars"
         fill
@@ -160,7 +160,8 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             {t.liabilityCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
-            <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm shrink-0" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm shrink-0" />
             {t.wcbCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>

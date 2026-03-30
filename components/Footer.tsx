@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { Phone, Mail, MapPin, Facebook, Instagram, Star, Shield } from 'lucide-react';
 import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
@@ -170,7 +170,7 @@ function WechatModal({ onClose }: { onClose: () => void }) {
         <div className="text-center">
           <h3 className="text-lg font-semibold mb-1" style={{ color: NAVY }}>WeChat</h3>
           <p className="text-sm text-gray-500 mb-4">ID: {wechatId}</p>
-          <Image
+          <OptimizedImage
             src="/wechat-qr.png"
             alt="WeChat QR Code"
             width={300}
@@ -227,7 +227,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Brand & Social */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image
+            <OptimizedImage
               src={company.logo}
               alt={company.name}
               width={160}
@@ -292,7 +292,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
             </div>
             <div className="mt-4">
               <p className="text-xs text-white/50 mb-1.5">{t('footer.scanToConnect')}</p>
-              <Image src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} className="rounded bg-white p-1" />
+              <OptimizedImage src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} className="rounded bg-white p-1" />
             </div>
           </div>
 
@@ -311,7 +311,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Image src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
+                <OptimizedImage src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
                 <span className="text-sm text-white/70">{t('stats.wcbCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>

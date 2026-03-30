@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
@@ -514,7 +514,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
                       {firstProject && (
-                        <Image
+                        <OptimizedImage
                           src={firstProject.hero_image}
                           alt={category[locale]}
                           fill

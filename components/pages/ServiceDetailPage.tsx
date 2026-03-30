@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
@@ -47,7 +47,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
       <section className="relative py-20 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         {service.image && (
           <div className="absolute inset-0 opacity-20">
-            <Image
+            <OptimizedImage
               src={service.image}
               alt={localizedService.title}
               fill

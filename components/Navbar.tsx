@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
@@ -152,7 +152,7 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="shrink-0">
-            <Image src={company.logo} alt={company.name} width={180} height={40} priority className="h-10 w-auto object-contain" />
+            <OptimizedImage src={company.logo} alt={company.name} width={180} height={40} priority className="h-10 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
