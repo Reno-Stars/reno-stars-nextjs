@@ -78,6 +78,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
     t('serviceBenefits.experience', { years: company.yearsExperience }),
     t('serviceBenefits.coverageAndWarranty'),
     t('serviceBenefits.rating'),
+    t('serviceBenefits.projectsDone'),
     t('serviceBenefits.licensedInsured'),
     t('serviceBenefits.freeConsultation'),
   ], [company, t]);

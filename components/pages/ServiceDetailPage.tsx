@@ -38,6 +38,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         t('serviceBenefits.coverageAndWarranty'),
         t('serviceBenefits.experience', { years: company.yearsExperience }),
         t('serviceBenefits.rating'),
+        t('serviceBenefits.projectsDone'),
       ];
 
   return (

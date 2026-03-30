@@ -98,11 +98,10 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
             const card = (
               <div
                 key={guide.slug}
-                className="rounded-2xl p-6 transition-transform hover:scale-[1.02]"
+                className="rounded-2xl p-6 transition-transform hover:scale-[1.02] h-full flex flex-col"
                 style={{
                   backgroundColor: CARD,
                   ...neu,
-                  
                 }}
               >
                 <div
@@ -114,10 +113,10 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
                 <h2 className="text-lg font-bold mb-2" style={{ color: TEXT }}>
                   {t(guide.titleKey)}
                 </h2>
-                <p className="text-sm mb-4" style={{ color: TEXT_MID }}>
+                <p className="text-sm mb-4 flex-1" style={{ color: TEXT_MID }}>
                   {t(guide.descKey)}
                 </p>
-                <span className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: GOLD }}>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold mt-auto" style={{ color: GOLD }}>
                     {t('guides.index.readGuide')} <ArrowRight size={16} />
                   </span>
               </div>
