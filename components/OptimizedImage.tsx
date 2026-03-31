@@ -1,13 +1,14 @@
 'use client';
 
 /**
- * OptimizedImage — drop-in replacement for next/image that uses our
- * self-hosted /api/image sharp endpoint for resizing + WebP conversion.
- *
- * Generates responsive srcSet at standard breakpoints so the browser
- * downloads the smallest image that fits the viewport.
+ * OptimizedImage — drop-in replacement for next/image with performance optimizations:
+ * - Self-hosted /api/image for resizing + WebP conversion
+ * - Responsive srcSet at standard breakpoints
+ * - Blur placeholder for smooth loading
+ * - Lazy loading with intersection observer
  */
 
+import { useState, useEffect, useRef } from 'react';
 import { buildOptimizedUrl, buildSrcSet } from '@/lib/image';
 
 interface OptimizedImageProps {
@@ -24,6 +25,8 @@ interface OptimizedImageProps {
   style?: React.CSSProperties;
   'aria-hidden'?: boolean | 'true' | 'false';
   onError?: () => void;
+  /** Show blur placeholder while loading (default: true) */
+  placeholder?: 'blur' | 'empty';
 }
 
 export default function OptimizedImage({
@@ -36,15 +39,38 @@ export default function OptimizedImage({
   loading,
   className = '',
   fill = false,
-  quality = 75,
+  quality = 70,
   style,
   'aria-hidden': ariaHidden,
   onError: onErrorProp,
+  placeholder = 'blur',
 }: OptimizedImageProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(priority); // Priority images load immediately
+  const imgRef = useRef<HTMLImageElement>(null);
+
   const resolvedLoading = priority ? 'eager' : (loading || 'lazy');
   const resolvedDecoding = priority ? 'sync' : 'async';
   const fillClassName = fill ? 'absolute inset-0 w-full h-full' : '';
   const fillStyle = fill ? { objectFit: 'cover' as const, ...style } : style;
+
+  // Intersection observer for lazy loading
+  useEffect(() => {
+    if (priority || !imgRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '50px' } // Start loading 50px before visible
+    );
+
+    observer.observe(imgRef.current);
+    return () => observer.disconnect();
+  }, [priority]);
 
   // For relative paths (e.g. /worksafe-bc-logo.jpg), use regular img
   const isExternal = src.startsWith('http://') || src.startsWith('https://');
@@ -53,6 +79,7 @@ export default function OptimizedImage({
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         width={width}
@@ -63,12 +90,25 @@ export default function OptimizedImage({
         style={fillStyle}
         aria-hidden={ariaHidden}
         onError={onErrorProp}
+        onLoad={() => setIsLoaded(true)}
       />
     );
   }
 
+  // Blur placeholder style
+  const placeholderStyle = placeholder === 'blur' && !isLoaded
+    ? {
+        filter: 'blur(10px)',
+        transform: 'scale(1.1)',
+        transition: 'filter 0.3s ease-out, transform 0.3s ease-out',
+      }
+    : {
+        filter: 'blur(0)',
+        transform: 'scale(1)',
+        transition: 'filter 0.3s ease-out, transform 0.3s ease-out',
+      };
+
   // Fall back to original src if the optimized version fails to load.
-  // If the fallback also fails, invoke the caller's onError (e.g. DesignPage broken-image tracking).
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
     if (!img.dataset.fallback) {
@@ -80,11 +120,20 @@ export default function OptimizedImage({
     }
   };
 
+  const handleLoad = () => {
+    setIsLoaded(true);
+  };
+
+  // Don't render src/srcset until in view (for non-priority images)
+  const imgSrc = isInView ? buildOptimizedUrl(src, 828, quality) : undefined;
+  const imgSrcSet = isInView ? buildSrcSet(src, quality) : undefined;
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={buildOptimizedUrl(src, 828, quality)}
-      srcSet={buildSrcSet(src, quality)}
+      ref={imgRef}
+      src={imgSrc}
+      srcSet={imgSrcSet}
       sizes={sizes}
       alt={alt}
       width={fill ? undefined : width}
@@ -93,9 +142,10 @@ export default function OptimizedImage({
       decoding={resolvedDecoding}
       fetchPriority={priority ? 'high' : undefined}
       className={`${fillClassName} ${className}`}
-      style={fillStyle}
+      style={{ ...fillStyle, ...placeholderStyle }}
       aria-hidden={ariaHidden}
       onError={handleError}
+      onLoad={handleLoad}
     />
   );
 }
