@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import {
   Award, Shield, HardHat, Users, Clock, Heart, Target, MapPin, Phone,
-  CheckCircle, Star, Building2, ArrowRight,
+  CheckCircle, Star, Building2, ArrowRight, AlertCircle, Wrench,
 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
@@ -13,7 +13,7 @@ import type { Company } from '@/lib/types';
 import {
   NAVY, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
-  STEP_GREEN, STEP_GREEN_LIGHT,
+  STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
 } from '@/lib/theme';
 
 const VALUES = [
@@ -22,6 +22,8 @@ const VALUES = [
   { key: 'transparency', icon: Target, accent: STEP_ORANGE, accentLight: STEP_ORANGE_LIGHT },
   { key: 'satisfaction', icon: Heart, accent: STEP_GREEN, accentLight: STEP_GREEN_LIGHT },
 ] as const;
+
+const SYSTEM_ICONS = [Wrench, CheckCircle, Users, Clock, Shield];
 
 const SERVICES = [
   { key: 'kitchen', icon: CheckCircle },
@@ -56,6 +58,11 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
     { value: '', labelKey: 'stats.wcbCoverage', icon: HardHat },
   ], [company]);
 
+  const painPoints: string[] = t.raw('journey.painPoints') as string[];
+  const systemItems: { title: string; desc: string }[] = t.raw('offer.systemItems') as { title: string; desc: string }[];
+  const guaranteeItems: string[] = t.raw('values.guaranteeItems') as string[];
+  const chooseItems: string[] = t.raw('whyUs.chooseItems') as string[];
+
   return (
     <main>
       {/* Hero Section */}
@@ -73,7 +80,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
       {/* Our Journey */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: GOLD_PALE }}>
               <Clock size={20} style={{ color: GOLD }} />
             </div>
@@ -81,16 +88,44 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
               {t('journey.title')}
             </h2>
           </div>
+
           <div className="rounded-xl p-6 md:p-8" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
-            <p className="text-base md:text-lg leading-relaxed mb-6 whitespace-pre-line" style={{ color: TEXT }}>
-              {t('journey.body')}
+            {/* Lead statement */}
+            <p className="text-base md:text-lg font-medium leading-relaxed mb-4" style={{ color: NAVY }}>
+              {t('journey.lead')}
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+            <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>
+              {t('journey.context')}
+            </p>
+
+            {/* Pain points */}
+            <div className="rounded-xl p-5 mb-8" style={{ backgroundColor: STEP_RED_LIGHT }}>
+              <p className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: STEP_RED }}>
+                <AlertCircle size={16} />
+                {t('journey.painPointsTitle')}
+              </p>
+              <ul className="space-y-2">
+                {painPoints.map((point, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: TEXT }}>
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: STEP_RED }} />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Conclusion callout */}
+            <p className="text-base font-semibold leading-relaxed mb-8 pl-4 border-l-4" style={{ color: NAVY, borderColor: GOLD }}>
+              {t('journey.conclusion')}
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {stats.map(({ value, labelKey, icon: Icon }) => (
                 <div key={labelKey} className="text-center p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                   <Icon size={24} className="mx-auto mb-2" style={{ color: GOLD }} />
                   {value && <div className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{value}</div>}
-                  <div className="text-sm mt-1" style={{ color: TEXT_MID }}>{t(labelKey)}</div>
+                  <div className="text-xs mt-1" style={{ color: TEXT_MID }}>{t(labelKey)}</div>
                 </div>
               ))}
             </div>
@@ -101,13 +136,39 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
       {/* What We Offer */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: STEP_TEAL_LIGHT }}>
               <Building2 size={20} style={{ color: STEP_TEAL }} />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('offer.title')}</h2>
           </div>
-          <p className="text-base md:text-lg leading-relaxed mb-8 whitespace-pre-line" style={{ color: TEXT }}>{t('offer.body')}</p>
+
+          {/* Lead + goal */}
+          <p className="text-base md:text-lg font-medium mb-2" style={{ color: NAVY }}>{t('offer.lead')}</p>
+          <p className="text-base mb-8" style={{ color: TEXT_MID }}>{t('offer.goal')}</p>
+
+          {/* Structured system items */}
+          <p className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: STEP_TEAL }}>
+            {t('offer.systemTitle')}
+          </p>
+          <div className="space-y-3 mb-10">
+            {systemItems.map((item, i) => {
+              const Icon = SYSTEM_ICONS[i % SYSTEM_ICONS.length];
+              return (
+                <div key={i} className="flex items-start gap-4 p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: STEP_TEAL_LIGHT }}>
+                    <Icon size={18} style={{ color: STEP_TEAL }} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-sm mb-0.5" style={{ color: NAVY }}>{item.title}</p>
+                    <p className="text-sm" style={{ color: TEXT_MID }}>{item.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Services grid */}
           <div className="grid sm:grid-cols-2 gap-4">
             {SERVICES.map(({ key, icon: Icon }) => (
               <div key={key} className="flex items-start gap-3 p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
@@ -127,16 +188,36 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
-      {/* Our Values */}
+      {/* Our Values / Managing Expectations */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: STEP_GREEN_LIGHT }}>
               <Heart size={20} style={{ color: STEP_GREEN }} />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('values.title')}</h2>
           </div>
-          <p className="text-base md:text-lg leading-relaxed mb-8 whitespace-pre-line" style={{ color: TEXT }}>{t('values.body')}</p>
+
+          <p className="text-base mb-6" style={{ color: TEXT_MID }}>{t('values.lead')}</p>
+
+          {/* Guarantee block */}
+          <div className="rounded-xl p-5 md:p-6 mb-8" style={{ backgroundColor: STEP_GREEN_LIGHT }}>
+            <p className="font-semibold mb-4" style={{ color: STEP_GREEN }}>{t('values.guarantee')}</p>
+            <ul className="space-y-3">
+              {guaranteeItems.map((item, i) => (
+                <li key={i} className="flex items-start gap-3" style={{ color: TEXT }}>
+                  <CheckCircle size={18} className="mt-0.5 flex-shrink-0" style={{ color: STEP_GREEN }} />
+                  <span className="text-sm md:text-base">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="text-base font-semibold pl-4 border-l-4 mb-8" style={{ color: NAVY, borderColor: GOLD }}>
+            {t('values.closing')}
+          </p>
+
+          {/* Values cards */}
           <div className="grid sm:grid-cols-2 gap-4">
             {VALUES.map(({ key, icon: Icon, accent, accentLight }) => (
               <div key={key} className="p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
@@ -156,25 +237,50 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
       {/* Why Choose Us */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: GOLD_PALE }}>
               <Star size={20} style={{ color: GOLD }} />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('whyUs.title')}</h2>
           </div>
-          <div className="rounded-xl p-6 md:p-8" style={{ boxShadow: neu(), backgroundColor: CARD }}>
-            <p className="text-base md:text-lg leading-relaxed mb-6 whitespace-pre-line" style={{ color: TEXT }}>{t('whyUs.body')}</p>
-            {badges.length > 0 && (
-              <div className="grid sm:grid-cols-3 gap-3 mt-6">
-                {badges.map((badge) => (
-                  <div key={badge.en} className="flex items-center gap-2 p-3 rounded-lg text-sm font-medium" style={{ backgroundColor: GOLD_PALE, color: NAVY }}>
-                    <Award size={16} className="flex-shrink-0" style={{ color: GOLD }} />
-                    {localize(badge)}
+
+          <p className="text-base md:text-lg font-medium mb-6" style={{ color: NAVY }}>{t('whyUs.lead')}</p>
+
+          {/* Choose items */}
+          <div className="rounded-xl p-5 md:p-6 mb-6" style={{ boxShadow: neu(), backgroundColor: CARD }}>
+            <p className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: GOLD }}>
+              {t('whyUs.chooseTitle')}
+            </p>
+            <ul className="space-y-3">
+              {chooseItems.map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: GOLD_PALE }}>
+                    <Star size={12} style={{ color: GOLD }} />
                   </div>
-                ))}
-              </div>
-            )}
+                  <span className="text-sm md:text-base font-medium" style={{ color: TEXT }}>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <p className="text-base mb-4" style={{ color: TEXT_MID }}>{t('whyUs.specialise')}</p>
+
+          {/* Philosophy callout */}
+          <div className="rounded-xl p-5 text-center" style={{ backgroundColor: NAVY }}>
+            <p className="text-base md:text-lg font-semibold text-white">{t('whyUs.philosophy')}</p>
+          </div>
+
+          {/* Badges */}
+          {badges.length > 0 && (
+            <div className="grid sm:grid-cols-3 gap-3 mt-6">
+              {badges.map((badge) => (
+                <div key={badge.en} className="flex items-center gap-2 p-3 rounded-lg text-sm font-medium" style={{ backgroundColor: GOLD_PALE, color: NAVY }}>
+                  <Award size={16} className="flex-shrink-0" style={{ color: GOLD }} />
+                  {localize(badge)}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
