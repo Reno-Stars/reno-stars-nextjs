@@ -4,7 +4,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import AboutPage from '@/components/pages/AboutPage';
 import { BreadcrumbSchema, FAQSchema, OrganizationSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getAboutSectionsFromDb, getCompanyFromDb, getTrustBadgesFromDb, getSocialLinksFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getTrustBadgesFromDb, getSocialLinksFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import { getYearsExperience } from '@/lib/company-config';
 
 interface PageProps {
@@ -52,10 +52,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, about, company, badges, socialLinks, areas] = await Promise.all([
+  const [nav, t, company, badges, socialLinks, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'aboutPage' }),
-    getAboutSectionsFromDb(),
     getCompanyFromDb(),
     getTrustBadgesFromDb(),
     getSocialLinksFromDb(),
@@ -80,7 +79,6 @@ export default async function Page({ params }: PageProps) {
       <OrganizationSchema company={company} socialLinks={socialLinks} areas={areas} />
       <AboutPage
         locale={locale as Locale}
-        about={about}
         company={company}
         badges={badges}
       />

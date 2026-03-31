@@ -1669,7 +1669,8 @@
       "subtitle": "Vancouver’s renovation company built on transparency, structured process, and real accountability — serving homeowners across Metro Vancouver since 2021."
     },
     "journey": {
-      "title": "Our Journey"
+      "title": "Our Journey",
+      "body": "Reno Stars was built on experience — not just in construction, but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish — and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
     },
     "stats": {
       "years": "Years Experience",
@@ -1698,7 +1699,8 @@
           "title": "Commercial Renovation",
           "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
         }
-      }
+      },
+      "body": "We did not just start another renovation company — we rebuilt the process. From the beginning, our goal has been simple: make renovation predictable, transparent, and stress-free for homeowners across Metro Vancouver.\n\nEvery project is supported by a structured system: detailed contracts that clearly define scope, responsibilities, and key materials (a typical bathroom renovation may include over 20 clearly listed items); clear payment milestones tied to progress with no surprises; dedicated office coordination for material selection and fast communication; reliable scheduling so your project moves forward as planned; and clearly specified waterproofing and quality standards for every critical element. We are also continuously developing internal construction and inspection standards to further improve consistency and quality."
     },
     "values": {
       "title": "Our Values",
@@ -1719,10 +1721,12 @@
           "title": "Client Satisfaction",
           "desc": "We do not just complete projects — we manage them. Quick responses, proactive communication, and full accountability from start to finish."
         }
-      }
+      },
+      "body": "Renovation involves many moving parts — from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage — so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one."
     },
     "whyUs": {
-      "title": "Why Choose Us"
+      "title": "Why Choose Us",
+      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects — where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space — it is about building trust."
     },
     "areas": {
       "title": "Service Areas",
@@ -1743,7 +1747,8 @@
     },
     "cta": {
       "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote"
+      "getQuote": "Get a Free Quote",
+      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote — and discover why homeowners across Metro Vancouver trust Reno Stars."
     }
   },
   "reviewsPage": {
