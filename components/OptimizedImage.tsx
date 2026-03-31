@@ -51,8 +51,15 @@ export default function OptimizedImage({
 
   const resolvedLoading = priority ? 'eager' : (loading || 'lazy');
   const resolvedDecoding = priority ? 'sync' : 'async';
+  
+  // When fill=true, add positioning classes but let className control object-fit
+  // Default to object-cover if no object-* class is specified
   const fillClassName = fill ? 'absolute inset-0 w-full h-full' : '';
-  const fillStyle = fill ? { objectFit: 'cover' as const, ...style } : style;
+  const hasObjectFit = className.includes('object-');
+  const defaultObjectFit = fill && !hasObjectFit ? 'object-cover' : '';
+  const combinedClassName = `${fillClassName} ${defaultObjectFit} ${className}`.trim();
+  
+  const fillStyle = style;
 
   // Intersection observer for lazy loading
   useEffect(() => {
@@ -86,7 +93,7 @@ export default function OptimizedImage({
         height={height}
         loading={resolvedLoading}
         decoding={resolvedDecoding}
-        className={`${fillClassName} ${className}`}
+        className={combinedClassName}
         style={fillStyle}
         aria-hidden={ariaHidden}
         onError={onErrorProp}
@@ -141,7 +148,7 @@ export default function OptimizedImage({
       loading={resolvedLoading}
       decoding={resolvedDecoding}
       fetchPriority={priority ? 'high' : undefined}
-      className={`${fillClassName} ${className}`}
+      className={combinedClassName}
       style={{ ...fillStyle, ...placeholderStyle }}
       aria-hidden={ariaHidden}
       onError={handleError}
