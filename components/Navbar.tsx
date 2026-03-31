@@ -136,12 +136,12 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
 
   const navLinks: NavLink[] = useMemo(() => [
     { href: '/', label: t('nav.home') },
-    { href: '/services', label: t('nav.services') },
     { href: '/projects', label: t('nav.projects'), isDropdown: true },
     { href: '/about', label: t('nav.about') },
+    { href: '/workflow', label: t('nav.process') },
+    { href: '/services', label: t('nav.services') },
     { href: '/design', label: t('nav.design') },
     { href: '/features', label: t('nav.features') },
-    { href: '/workflow', label: t('nav.process') },
     { href: '/reviews', label: t('nav.reviews') },
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
