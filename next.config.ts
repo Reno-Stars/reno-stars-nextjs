@@ -171,7 +171,12 @@ const nextConfig: NextConfig = {
         destination: '/:locale/projects/:slug',
         permanent: true,
       },
-      // /have-a-project → /contact
+      // /have-a-project → /contact (and thank-you subpage for conversion tracking)
+      {
+        source: '/:locale(en|zh)/have-a-project/thank-you',
+        destination: '/:locale/contact/thank-you',
+        permanent: true,
+      },
       {
         source: '/:locale(en|zh)/have-a-project',
         destination: '/:locale/contact',
