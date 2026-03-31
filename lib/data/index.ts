@@ -3,7 +3,7 @@ import { getAssetUrl } from '../storage';
 
 // Re-export types
 export type {
-  Locale, Localized, Company, Showroom, AboutSections, DesignItem, GoogleReview, GooglePlaceRating, BlogPost, SocialLink,
+  Locale, Localized, Company, DesignItem, GoogleReview, GooglePlaceRating, BlogPost, SocialLink,
   LocalizedProject, LocalizedService, LocalizedArea,
 } from '../types';
 
@@ -30,20 +30,6 @@ export interface LocalizedBlogPost {
   related_project?: LocalizedBlogRelatedProject;
 }
 
-export interface LocalizedShowroom {
-  address: string;
-  appointmentText: string;
-  phone: string;
-  email: string;
-}
-
-export interface LocalizedAboutSections {
-  ourJourney: string;
-  whatWeOffer: string;
-  ourValues: string;
-  whyChooseUs: string;
-  letsBuildTogether: string;
-}
 
 // Re-export from other data files.
 // Named exports only to avoid ambiguity with db/schema exports (e.g. `services`).

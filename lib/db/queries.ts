@@ -8,7 +8,7 @@ import {
   services as servicesTable,
   serviceTags as serviceTagsTable,
   serviceBenefits as serviceBenefitsTable,
-  aboutSections as aboutSectionsTable,
+
   projectSites as sitesTable,
   siteImagePairs as siteImagePairsTable,
   siteExternalProducts as siteExternalProductsTable,
@@ -21,7 +21,7 @@ import {
   serviceAreas as serviceAreasTable,
   designs as designsTable,
   trustBadges as trustBadgesTable,
-  showroomInfo as showroomInfoTable,
+
   faqs as faqsTable,
   partners as partnersTable,
   socialMediaPosts as socialMediaPostsTable,
@@ -30,7 +30,7 @@ import { getAssetUrl, getOptionalAssetUrl } from '../storage';
 import { WHOLE_HOUSE_CATEGORY } from '../data/services';
 
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
-import type { Company, SocialLink, Service, AboutSections, Project, ServiceArea, BlogPost, BlogRelatedProject, DesignItem, Showroom, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
+import type { Company, SocialLink, Service, Project, ServiceArea, BlogPost, BlogRelatedProject, DesignItem, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
 
 // ============================================================================
 // HELPERS
@@ -220,49 +220,7 @@ export const getCategorySlugs = cache(async (): Promise<string[]> => {
     .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
 });
 
-/**
- * Fetch about sections from DB, mapped to `AboutSections`.
- * The `{yearsExperience}` placeholder in ourJourney is replaced with the
- * computed value from company's founding year.
- */
-export const getAboutSectionsFromDb = cache(async (): Promise<AboutSections> => {
-  const rows = await db.select().from(aboutSectionsTable).limit(1);
-  const row = rows[0];
-  if (!row) {
-    const empty = { en: '', zh: '' };
-    return { ourJourney: empty, whatWeOffer: empty, ourValues: empty, whyChooseUs: empty, letsBuildTogether: empty };
-  }
 
-  // Compute years for placeholder replacement — reuse cached getCompanyFromDb
-  const company = await getCompanyFromDb();
-  const yearsExperience = company.yearsExperience;
-
-  const replaceYears = (text: string | null) =>
-    (text ?? '').replace(/\{yearsExperience\}/g, yearsExperience);
-
-  return {
-    ourJourney: {
-      en: replaceYears(row.ourJourneyEn),
-      zh: replaceYears(row.ourJourneyZh),
-    },
-    whatWeOffer: {
-      en: row.whatWeOfferEn ?? '',
-      zh: row.whatWeOfferZh ?? '',
-    },
-    ourValues: {
-      en: row.ourValuesEn ?? '',
-      zh: row.ourValuesZh ?? '',
-    },
-    whyChooseUs: {
-      en: row.whyChooseUsEn ?? '',
-      zh: row.whyChooseUsZh ?? '',
-    },
-    letsBuildTogether: {
-      en: row.letsBuildTogetherEn ?? '',
-      zh: row.letsBuildTogetherZh ?? '',
-    },
-  };
-});
 
 // ============================================================================
 // PROJECT QUERIES
@@ -989,28 +947,7 @@ export const getTrustBadgesFromDb = cache(async (): Promise<{ en: string; zh: st
   }));
 });
 
-// ============================================================================
-// SHOWROOM QUERIES
-// ============================================================================
 
-/** Fetch showroom info (singleton row). */
-export const getShowroomFromDb = cache(async (): Promise<Showroom> => {
-  const rows = await db.select().from(showroomInfoTable).limit(1);
-  const row = rows[0];
-  if (!row) {
-    return { address: '', appointmentText: { en: '', zh: '' }, phone: '', email: '' };
-  }
-
-  return {
-    address: row.address ?? '',
-    appointmentText: {
-      en: row.appointmentTextEn ?? '',
-      zh: row.appointmentTextZh ?? '',
-    },
-    phone: row.phone ?? '',
-    email: row.email ?? '',
-  };
-});
 
 // ============================================================================
 // FAQ QUERIES
@@ -1223,17 +1160,6 @@ export async function getAllTrustBadgesAdmin(): Promise<(typeof trustBadgesTable
   return db.select().from(trustBadgesTable).orderBy(asc(trustBadgesTable.displayOrder));
 }
 
-/** Fetch about sections (admin — singleton row). */
-export async function getAboutSectionsAdmin(): Promise<(typeof aboutSectionsTable.$inferSelect) | null> {
-  const rows = await db.select().from(aboutSectionsTable).limit(1);
-  return rows[0] ?? null;
-}
-
-/** Fetch showroom info (admin — singleton row). */
-export async function getShowroomInfoAdmin(): Promise<(typeof showroomInfoTable.$inferSelect) | null> {
-  const rows = await db.select().from(showroomInfoTable).limit(1);
-  return rows[0] ?? null;
-}
 
 /** Fetch all FAQs (admin — includes inactive). */
 export async function getAllFaqsAdmin(): Promise<(typeof faqsTable.$inferSelect)[]> {

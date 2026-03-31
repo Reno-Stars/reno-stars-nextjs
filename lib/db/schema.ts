@@ -733,42 +733,7 @@ export const companyInfo = pgTable('company_info', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-// ============================================================================
-// SHOWROOM INFO (Singleton)
-// ============================================================================
 
-/** Showroom location and scheduling info */
-export const showroomInfo = pgTable('showroom_info', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  address: text('address'),
-  appointmentTextEn: text('appointment_text_en'),
-  appointmentTextZh: text('appointment_text_zh'),
-  phone: varchar('phone', { length: 30 }),
-  email: varchar('email', { length: 255 }),
-  hoursOpen: varchar('hours_open', { length: 20 }),
-  hoursClose: varchar('hours_close', { length: 20 }),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
-
-// ============================================================================
-// ABOUT SECTIONS (Singleton)
-// ============================================================================
-
-/** About page content sections with i18n */
-export const aboutSections = pgTable('about_sections', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  ourJourneyEn: text('our_journey_en'),
-  ourJourneyZh: text('our_journey_zh'),
-  whatWeOfferEn: text('what_we_offer_en'),
-  whatWeOfferZh: text('what_we_offer_zh'),
-  ourValuesEn: text('our_values_en'),
-  ourValuesZh: text('our_values_zh'),
-  whyChooseUsEn: text('why_choose_us_en'),
-  whyChooseUsZh: text('why_choose_us_zh'),
-  letsBuildTogetherEn: text('lets_build_together_en'),
-  letsBuildTogetherZh: text('lets_build_together_zh'),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
 
 // ============================================================================
 // TRUST BADGES
@@ -882,11 +847,6 @@ export type NewDbContactSubmission = typeof contactSubmissions.$inferInsert;
 export type DbCompanyInfo = typeof companyInfo.$inferSelect;
 export type NewDbCompanyInfo = typeof companyInfo.$inferInsert;
 
-export type DbShowroomInfo = typeof showroomInfo.$inferSelect;
-export type NewDbShowroomInfo = typeof showroomInfo.$inferInsert;
-
-export type DbAboutSections = typeof aboutSections.$inferSelect;
-export type NewDbAboutSections = typeof aboutSections.$inferInsert;
 
 export type DbTrustBadge = typeof trustBadges.$inferSelect;
 export type NewDbTrustBadge = typeof trustBadges.$inferInsert;

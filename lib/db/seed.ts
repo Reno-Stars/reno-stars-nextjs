@@ -5,10 +5,10 @@ import {
   services,
   serviceAreas,
   companyInfo,
-  showroomInfo,
+
   trustBadges,
   socialLinks,
-  aboutSections,
+
   designs,
   faqs,
   partners,
@@ -269,24 +269,6 @@ async function seed() {
     console.log('Company info already exists, skipping');
   }
 
-  // Seed Showroom Info (upsert)
-  const existingShowroom = await db.select().from(showroomInfo).limit(1);
-  if (existingShowroom.length === 0) {
-    await db.insert(showroomInfo).values({
-      address: '21300 Gordon Way, Unit 188, Richmond, BC V6W 1M2',
-      appointmentTextEn:
-        'Welcome to schedule a visit to our Renovation showroom by appointment!',
-      appointmentTextZh: '欢迎预约参观我们的装修展厅！',
-      phone: '778-960-7999',
-      email: 'info@reno-stars.com',
-      hoursOpen: '9:00 AM',
-      hoursClose: '5:00 PM',
-    });
-    console.log('Showroom info seeded');
-  } else {
-    console.log('Showroom info already exists, skipping');
-  }
-
   // Seed Trust Badges (idempotent via unique constraint on badgeEn)
   await db
     .insert(trustBadges)
@@ -353,26 +335,6 @@ async function seed() {
     ])
     .onConflictDoNothing({ target: socialLinks.platform });
   console.log('Social links seeded');
-
-  // Seed About Sections (singleton)
-  const existingAbout = await db.select().from(aboutSections).limit(1);
-  if (existingAbout.length === 0) {
-    await db.insert(aboutSections).values({
-      ourJourneyEn: 'With over {yearsExperience} years of combined experience, Reno Stars has grown from a small family operation into one of Vancouver\'s most trusted renovation companies, delivering quality craftsmanship to hundreds of satisfied homeowners.',
-      ourJourneyZh: '凭借超过{yearsExperience}年的综合经验，Reno Stars 从一个小型家族企业发展成为温哥华最受信赖的装修公司之一，为数百位满意的房主提供优质工艺。',
-      whatWeOfferEn: 'From kitchen and bathroom renovations to full-scale whole house remodels, we provide end-to-end renovation services including design consultation, project management, and expert construction.',
-      whatWeOfferZh: '从厨房和浴室装修到全屋改造，我们提供端到端的装修服务，包括设计咨询、项目管理和专业施工。',
-      ourValuesEn: 'Integrity, quality, and client satisfaction drive everything we do. We believe in transparent communication, fair pricing, and standing behind our work with a comprehensive warranty.',
-      ourValuesZh: '诚信、品质和客户满意是我们一切工作的驱动力。我们坚持透明沟通、公平定价，并以全面的保修为我们的工作提供保障。',
-      whyChooseUsEn: `Licensed, insured with ${COMPANY_STATS.liabilityCoverage} CGL insurance, active WCB coverage, and backed by up to a 3-year warranty. Our 5-star Google rating and dedicated team of ${COMPANY_STATS.teamSize}+ professionals ensure your project is in expert hands.`,
-      whyChooseUsZh: `持证经营，拥有至多${COMPANY_STATS.liabilityCoverage.replace('Up to ', '')}CGL保险、有效WCB工伤保障及至多3年质保。我们的Google五星好评和${COMPANY_STATS.teamSize}人专业团队确保您的项目由专家负责。`,
-      letsBuildTogetherEn: 'Your dream home is just a conversation away. Whether you\'re planning a minor update or a major transformation, we\'d love to bring your vision to life.',
-      letsBuildTogetherZh: '您的梦想之家只需一次对话。无论您是计划小幅更新还是大规模改造，我们都乐意将您的愿景变为现实。',
-    });
-    console.log('About sections seeded');
-  } else {
-    console.log('About sections already exist, skipping');
-  }
 
   // Blog posts are seeded separately via `pnpm db:seed:blog` (crawls WP REST API)
   console.log('Blog posts: run `pnpm db:seed:blog` to seed from WordPress');

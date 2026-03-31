@@ -389,35 +389,6 @@ export interface Company {
   geo: { latitude: number; longitude: number };
 }
 
-/**
- * Showroom location and scheduling info.
- */
-export interface Showroom {
-  /** Showroom address */
-  address: string;
-  /** Appointment booking text */
-  appointmentText: Localized<string>;
-  /** Showroom phone */
-  phone: string;
-  /** Showroom email */
-  email: string;
-}
-
-/**
- * About page content sections.
- */
-export interface AboutSections {
-  /** Company history/journey */
-  ourJourney: Localized<string>;
-  /** Services overview */
-  whatWeOffer: Localized<string>;
-  /** Company values */
-  ourValues: Localized<string>;
-  /** Differentiators */
-  whyChooseUs: Localized<string>;
-  /** Call to action */
-  letsBuildTogether: Localized<string>;
-}
 
 // Localized (single-locale) return types for data accessor functions
 

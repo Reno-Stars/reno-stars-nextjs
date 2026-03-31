@@ -90,9 +90,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
       label: t.nav.groups.settings,
       items: [
         { href: '/admin/company', label: t.nav.company },
-        { href: '/admin/showroom', label: t.nav.showroom },
         { href: '/admin/social-links', label: t.nav.socialLinks },
-        { href: '/admin/about', label: t.nav.about },
       ],
       defaultExpanded: false,
     },

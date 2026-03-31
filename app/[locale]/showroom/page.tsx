@@ -4,7 +4,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ShowroomPage from '@/components/pages/ShowroomPage';
 import { BreadcrumbSchema, FAQSchema, LocalBusinessSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getCompanyFromDb, getShowroomFromDb, getServiceAreasFromDb, getSocialLinksFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServiceAreasFromDb, getSocialLinksFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -51,11 +51,10 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, company, showroom, areas, socialLinks, googleReviews] = await Promise.all([
+  const [nav, t, company, areas, socialLinks, googleReviews] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'showroomPage' }),
     getCompanyFromDb(),
-    getShowroomFromDb(),
     getServiceAreasFromDb(),
     getSocialLinksFromDb(),
     getGoogleReviews(),
@@ -74,9 +73,9 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const localizedShowroom = {
-    address: showroom.address,
-    phone: showroom.phone,
-    email: showroom.email,
+    address: company.address,
+    phone: company.phone,
+    email: company.email,
   };
 
   const translations = {

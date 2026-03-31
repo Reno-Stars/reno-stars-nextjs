@@ -8,12 +8,10 @@ import { WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
   getCompanyFromDb,
   getServicesFromDb,
-  getAboutSectionsFromDb,
   getProjectsFromDb,
   getTrustBadgesFromDb,
   getFaqsFromDb,
   getBlogPostsFromDb,
-  getShowroomFromDb,
   getServiceAreasFromDb,
   getPartnersFromDb,
 } from "@/lib/db/queries";
@@ -79,12 +77,10 @@ export default async function Page({ params }: PageProps) {
     company,
     services,
     googleReviews,
-    aboutSections,
     allProjects,
     trustBadges,
     faqs,
     blogPosts,
-    showroom,
     areas,
     partners,
   ] = await Promise.all([
@@ -92,12 +88,10 @@ export default async function Page({ params }: PageProps) {
     getCompanyFromDb(),
     getServicesFromDb(),
     getGoogleReviews(),
-    getAboutSectionsFromDb(),
     getProjectsFromDb(),
     getTrustBadgesFromDb(),
     getFaqsFromDb(),
     getBlogPostsFromDb(),
-    getShowroomFromDb(),
     getServiceAreasFromDb(),
     getPartnersFromDb(),
   ]);
@@ -128,8 +122,8 @@ export default async function Page({ params }: PageProps) {
     .slice(0, 5)
     .map((p) => ({ slug: p.slug, title: p.title[locale] }));
   const localizedShowroom = {
-    address: showroom.address,
-    phone: showroom.phone,
+    address: company.address,
+    phone: company.phone,
   };
   const localizedPartners = partners.map((p) => ({
     name: p.name[locale],
@@ -144,14 +138,11 @@ export default async function Page({ params }: PageProps) {
       .join(", ") + "…";
 
   const aboutItems = [
-    { title: t("about.ourJourney"), text: aboutSections.ourJourney[locale] },
-    { title: t("about.whatWeOffer"), text: aboutSections.whatWeOffer[locale] },
-    { title: t("about.ourValues"), text: aboutSections.ourValues[locale] },
-    { title: t("about.whyChooseUs"), text: aboutSections.whyChooseUs[locale] },
-    {
-      title: t("about.letsBuildTogether"),
-      text: aboutSections.letsBuildTogether[locale],
-    },
+    { title: t("about.ourJourney"), text: t("aboutPage.journey.body") },
+    { title: t("about.whatWeOffer"), text: t("aboutPage.offer.body") },
+    { title: t("about.ourValues"), text: t("aboutPage.values.body") },
+    { title: t("about.whyChooseUs"), text: t("aboutPage.whyUs.body") },
+    { title: t("about.letsBuildTogether"), text: t("aboutPage.cta.body") },
   ];
 
   const stats = [
