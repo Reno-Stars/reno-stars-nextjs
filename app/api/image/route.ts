@@ -15,7 +15,7 @@ const ALLOWED_HOSTS = [
 const isDev = process.env.NODE_ENV === 'development';
 
 const MAX_WIDTH = 1920;
-const DEFAULT_QUALITY = 75;
+const DEFAULT_QUALITY = 70;
 const MAX_SOURCE_SIZE = 50 * 1024 * 1024; // 50MB
 const FETCH_TIMEOUT_MS = 30_000; // 30s — large PNGs from R2 can be slow
 
@@ -129,23 +129,31 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Source image too large' }, { status: 413 });
     }
 
-    let pipeline = sharp(new Uint8Array(arrayBuffer));
+    let pipeline = sharp(new Uint8Array(arrayBuffer), {
+      // Limit input pixel count to avoid OOM on huge source images
+      // 200MP should cover any realistic photo
+      limitInputPixels: 200_000_000,
+      // Use sequential read for better memory efficiency on large files
+      sequentialRead: true,
+    });
 
     // Resize if width specified
     if (width > 0) {
       pipeline = pipeline.resize(width, undefined, {
         withoutEnlargement: true,
         fit: 'inside',
+        // Use faster lanczos for large downscales
+        kernel: width <= 640 ? 'lanczos3' : 'lanczos2',
       });
     }
 
     // Convert format
     let contentType: string;
     if (format === 'avif') {
-      pipeline = pipeline.avif({ quality });
+      pipeline = pipeline.avif({ quality, effort: 2 }); // effort 2 = fast encode
       contentType = 'image/avif';
     } else {
-      pipeline = pipeline.webp({ quality });
+      pipeline = pipeline.webp({ quality, effort: 3, smartSubsample: true }); // effort 3 = balanced speed/size
       contentType = 'image/webp';
     }
 
@@ -158,9 +166,13 @@ export async function GET(request: NextRequest) {
     return new Response(buffer as BodyInit, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000, immutable',
+        // s-maxage tells Vercel's CDN to cache at the edge (not just browser)
+        // stale-while-revalidate serves stale while refreshing in background
+        'Cache-Control': 'public, s-maxage=31536000, max-age=31536000, stale-while-revalidate=86400, immutable',
         'X-Cache': 'MISS',
         'Vary': 'Accept',
+        'CDN-Cache-Control': 'public, s-maxage=31536000, stale-while-revalidate=86400',
+        'Vercel-CDN-Cache-Control': 'public, s-maxage=31536000, stale-while-revalidate=86400',
       },
     });
   } catch {

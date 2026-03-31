@@ -1,0 +1,17 @@
+{
+  "headers": [
+    {
+      "source": "/api/image(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=31536000, max-age=31536000, stale-while-revalidate=86400, immutable"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "public, s-maxage=31536000, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ]
+}
