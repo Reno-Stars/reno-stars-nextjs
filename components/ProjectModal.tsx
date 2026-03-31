@@ -77,6 +77,43 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     closeTimerRef.current = setTimeout(() => onClose(), 200);
   }, [onClose]);
 
+  // Preload adjacent images and before/after pairs
+  useEffect(() => {
+    if (!project || imagePairs.length === 0) return;
+    
+    const preloadImages: string[] = [];
+    
+    // Preload current pair's opposite image
+    if (currentPair?.beforeImage?.src && !showBefore) {
+      preloadImages.push(currentPair.beforeImage.src);
+    }
+    if (currentPair?.afterImage?.src && showBefore) {
+      preloadImages.push(currentPair.afterImage.src);
+    }
+    
+    // Preload next/prev pair images
+    const nextIndex = (activePairIndex + 1) % imagePairs.length;
+    const prevIndex = (activePairIndex - 1 + imagePairs.length) % imagePairs.length;
+    
+    const nextPair = imagePairs[nextIndex];
+    const prevPair = imagePairs[prevIndex];
+    
+    if (nextPair?.afterImage?.src) preloadImages.push(nextPair.afterImage.src);
+    if (prevPair?.afterImage?.src) preloadImages.push(prevPair.afterImage.src);
+    
+    // Create preload link tags
+    preloadImages.forEach(src => {
+      if (!src.startsWith('http')) return; // Skip non-external
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = `/api/image?url=${encodeURIComponent(src)}&w=1200&q=70&f=webp`;
+      document.head.appendChild(link);
+      // Clean up after a short delay to avoid memory leak
+      setTimeout(() => link.remove(), 5000);
+    });
+  }, [project, imagePairs, activePairIndex, currentPair, showBefore]);
+
   // Toggle before/after on click
   const handleImageClick = useCallback(() => {
     if (hasBothImages) {
@@ -295,6 +332,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         fill
                         sizes="(max-width: 1024px) 100vw, 60vw"
                         className="object-contain"
+                        priority
+                        loading="eager"
                       />
                     ) : null}
                   </div>
