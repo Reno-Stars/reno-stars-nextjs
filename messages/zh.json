@@ -16,7 +16,7 @@
     "blog": "博客",
     "areas": "服务区域",
     "design": "设计",
-    "benefits": "优势",
+    "benefits": "特色优势",
     "process": "工作流程",
     "openMenu": "打开菜单",
     "closeMenu": "关闭菜单",
@@ -27,7 +27,8 @@
     "guides": "指南",
     "about": "关于我们",
     "financing": "融资指南",
-    "beforeAfter": "改造前后"
+    "beforeAfter": "改造前后",
+    "features": "特色优势"
   },
   "cta": {
     "getQuote": "获取报价",
@@ -398,35 +399,73 @@
     "returnHome": "返回首页"
   },
   "benefits": {
-    "title": "为什么选择Reno Stars",
-    "subtitle": "与我们专业装修团队合作的优势",
-    "experience": {
-      "title": "{years}年以上经验",
-      "description": "数十年的综合经验，在低陆平原地区提供优质装修服务。"
+    "title": "为什么选择 Reno Stars",
+    "subtitle": "与我们合作，不只是完成装修项目 — 而是让整个过程变得清晰、可控、且省心。",
+    "foundation": {
+      "heading": "基础保障（建立信任）",
+      "items": {
+        "experience": {
+          "title": "20年以上行业经验",
+          "description": "我们拥有长期的行业积累，不只是施工经验，更了解整个装修流程中可能出现的问题，并提前规避。"
+        },
+        "coverage": {
+          "title": "至多500万CGL保险 + 有效WCB工伤保障",
+          "description": "完整保险覆盖，让您的项目在施工过程中更有保障。"
+        },
+        "rating": {
+          "title": "真实的五星好评",
+          "description": "长期稳定的客户反馈，来自真实项目与真实体验。"
+        },
+        "team": {
+          "title": "专业稳定的团队",
+          "description": "我们拥有固定团队，而不是临时拼凑的施工人员，确保每一个项目的质量稳定。"
+        },
+        "service": {
+          "title": "全流程服务",
+          "description": "从设计到施工，我们负责每一个环节，减少沟通成本，让过程更加顺畅。"
+        }
+      }
     },
-    "coverage": {
-      "title": "至多500万CGL保险 · 有效WCB工伤保障 · 至多三年质保",
-      "description": "至多500万CGL保险保障您的物业，有效WCB工伤保障覆盖施工人员，加上至多三年质保——全面保障让您安心无忧。"
+    "differentiators": {
+      "heading": "真正的差异（Why Clients Choose Us）",
+      "items": {
+        "transparent": {
+          "problem": "很多报价看起来便宜，是因为关键项目被省略。",
+          "solution": "我们更愿意一开始就讲清楚。我们的报价会详细列出每一项内容，包括施工范围、材料责任以及关键材料品牌，让你在开始之前，就清楚知道整个项目的真实情况。"
+        },
+        "managed": {
+          "problem": "装修不应该靠经验和临场发挥。",
+          "solution": "我们通过清晰的流程管理项目：明确阶段、明确验收、明确付款节点。每一步完成后再进入下一步，让整个项目始终在可控范围内。"
+        },
+        "responsive": {
+          "problem": "很多装修问题，本质是沟通问题。",
+          "solution": "我们有专门的办公室团队，持续跟进项目、快速回应问题、协助材料选择。你不会遇到「发消息没人回」的情况。"
+        },
+        "scheduled": {
+          "problem": "部分公司会同时接太多项目，导致工期被不断推迟。",
+          "solution": "我们会控制接单量，确保每个项目都能稳定推进。在供应链不可控的情况下，我们也会提前沟通，及时调整，让你始终清楚项目进度。"
+        },
+        "consistent": {
+          "problem": "质量不应该看运气。",
+          "solution": "我们使用固定团队和明确标准进行施工，关键工艺（例如防水）会明确材料、品牌和施工范围。质量不是依赖个人，而是依赖系统。"
+        },
+        "experience": {
+          "problem": "装修不仅是结果，更是过程。",
+          "solution": "我们希望你在整个过程中清楚每一步、知道下一步、不需要反复催促。把复杂的事情变简单。"
+        }
+      }
     },
-    "rating": {
-      "title": "Google 五星好评",
-      "description": "在Google上持续获得满意客户的五星好评。"
-    },
-    "team": {
-      "title": "专业团队",
-      "description": "{teamSize}位技术精湛的专业人员致力于将您的愿景变为现实。"
-    },
-    "service": {
-      "title": "全方位服务",
-      "description": "从设计到完工，我们处理装修的每个方面。"
+    "cta": {
+      "heading": "准备开始您的项目了吗？",
+      "subtitle": "体验围绕透明度、清晰沟通和您的安心而构建的装修流程。"
     }
   },
   "serviceBenefits": {
     "freeConsultation": "免费咨询和报价",
-    "licensedInsured": "持证且CGL + WCB双重保障专业人员",
-    "coverageAndWarranty": "至多500万CGL保险、有效WCB工伤保障及至多三年质保",
+    "licensedInsured": "持证和全面保险（CGL + WCB）",
+    "coverageAndWarranty": "至多500万CGL保险、有效WCB保障、至多3年质保",
     "experience": "{years}年以上经验",
-    "rating": "Google 五星好评",
+    "rating": "谷歌五星好评",
     "projectsDone": "已完成700+项目"
   },
   "faq": {
@@ -517,8 +556,8 @@
       "description": "专业的装修技巧、设计趋势和实用家居改善创意。阅读温哥华装修案例分析、改造前后对比和Reno Stars的专业建议。"
     },
     "benefits": {
-      "title": "为什么选择Reno Stars | 温哥华装修承包商",
-      "description": "了解为什么Reno Stars是温哥华最值得信赖的装修承包商。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
+      "title": "为什么选择 Reno Stars | 温哥华装修公司特色",
+      "description": "透明报价、结构化流程、快速响应、稳定团队。了解 Reno Stars 与其他温哥华装修公司的区别。"
     },
     "design": {
       "title": "装修设计灵感 | Reno Stars 温哥华",
@@ -603,6 +642,10 @@
     "beforeAfter": {
       "title": "装修改造前后对比 | Reno Stars 温哥华",
       "description": "查看Reno Stars在大温哥华地区完成的真实装修改造前后对比照片。厨房、卫生间、地下室和全屋改造案例展示。"
+    },
+    "features": {
+      "title": "为什么选择 Reno Stars | 温哥华装修公司特色",
+      "description": "透明报价、结构化流程、快速响应、稳定团队。了解 Reno Stars 与其他温哥华装修公司的区别。"
     }
   },
   "common": {
@@ -1958,6 +2001,68 @@
       "next": "下一页",
       "previousPage": "转到上一页",
       "nextPage": "转到下一页"
+    }
+  },
+  "features": {
+    "title": "为什么选择 Reno Stars",
+    "subtitle": "与我们合作，不只是完成装修项目 — 而是让整个过程变得清晰、可控、且省心。",
+    "foundation": {
+      "heading": "基础保障（建立信任）",
+      "items": {
+        "experience": {
+          "title": "20年以上行业经验",
+          "description": "我们拥有长期的行业积累，不只是施工经验，更了解整个装修流程中可能出现的问题，并提前规避。"
+        },
+        "coverage": {
+          "title": "至多500万CGL保险 + 有效WCB工伤保障",
+          "description": "完整保险覆盖，让您的项目在施工过程中更有保障。"
+        },
+        "rating": {
+          "title": "真实的五星好评",
+          "description": "长期稳定的客户反馈，来自真实项目与真实体验。"
+        },
+        "team": {
+          "title": "专业稳定的团队",
+          "description": "我们拥有固定团队，而不是临时拼凑的施工人员，确保每一个项目的质量稳定。"
+        },
+        "service": {
+          "title": "全流程服务",
+          "description": "从设计到施工，我们负责每一个环节，减少沟通成本，让过程更加顺畅。"
+        }
+      }
+    },
+    "differentiators": {
+      "heading": "真正的差异（Why Clients Choose Us）",
+      "items": {
+        "transparent": {
+          "problem": "很多报价看起来便宜，是因为关键项目被省略。",
+          "solution": "我们更愿意一开始就讲清楚。我们的报价会详细列出每一项内容，包括施工范围、材料责任以及关键材料品牌，让你在开始之前，就清楚知道整个项目的真实情况。"
+        },
+        "managed": {
+          "problem": "装修不应该靠经验和临场发挥。",
+          "solution": "我们通过清晰的流程管理项目：明确阶段、明确验收、明确付款节点。每一步完成后再进入下一步，让整个项目始终在可控范围内。"
+        },
+        "responsive": {
+          "problem": "很多装修问题，本质是沟通问题。",
+          "solution": "我们有专门的办公室团队，持续跟进项目、快速回应问题、协助材料选择。你不会遇到「发消息没人回」的情况。"
+        },
+        "scheduled": {
+          "problem": "部分公司会同时接太多项目，导致工期被不断推迟。",
+          "solution": "我们会控制接单量，确保每个项目都能稳定推进。在供应链不可控的情况下，我们也会提前沟通，及时调整，让你始终清楚项目进度。"
+        },
+        "consistent": {
+          "problem": "质量不应该看运气。",
+          "solution": "我们使用固定团队和明确标准进行施工，关键工艺（例如防水）会明确材料、品牌和施工范围。质量不是依赖个人，而是依赖系统。"
+        },
+        "experience": {
+          "problem": "装修不仅是结果，更是过程。",
+          "solution": "我们希望你在整个过程中清楚每一步、知道下一步、不需要反复催促。把复杂的事情变简单。"
+        }
+      }
+    },
+    "cta": {
+      "heading": "准备开始您的项目了吗？",
+      "subtitle": "体验围绕透明度、清晰沟通和您的安心而构建的装修流程。"
     }
   }
 }

@@ -140,7 +140,7 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
     { href: '/projects', label: t('nav.projects'), isDropdown: true },
     { href: '/about', label: t('nav.about') },
     { href: '/design', label: t('nav.design') },
-    { href: '/benefits', label: t('nav.benefits') },
+    { href: '/features', label: t('nav.features') },
     { href: '/workflow', label: t('nav.process') },
     { href: '/reviews', label: t('nav.reviews') },
     { href: '/contact', label: t('nav.contact') },

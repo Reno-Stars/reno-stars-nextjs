@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
-import BenefitsPage from '@/components/pages/BenefitsPage';
+import FeaturesPage from '@/components/pages/FeaturesPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
@@ -19,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const [t, company] = await Promise.all([
-    getTranslations({ locale, namespace: 'metadata.benefits' }),
+    getTranslations({ locale, namespace: 'metadata.features' }),
     getCompanyFromDb(),
   ]);
   const years = { years: company.yearsExperience };
@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: t('title'),
     description: t('description', years),
-    alternates: buildAlternates('/benefits/', locale),
+    alternates: buildAlternates('/features/', locale),
     openGraph: {
       title: t('title'),
       description: t('description', years),
-      url: `${baseUrl}/${locale}/benefits/`,
+      url: `${baseUrl}/${locale}/features/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
@@ -56,27 +56,27 @@ export default async function Page({ params }: PageProps) {
 
   const [nav, t, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
-    getTranslations({ locale, namespace: 'benefits' }),
+    getTranslations({ locale, namespace: 'features' }),
     getCompanyFromDb(),
   ]);
 
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
-    { name: nav('benefits'), url: `/${locale}/benefits/` },
+    { name: nav('features'), url: `/${locale}/features/` },
   ];
 
   const faqs = [
-    { question: t('coverage.title'), answer: t('coverage.description') },
-    { question: t('rating.title'), answer: t('rating.description') },
-    { question: t('team.title'), answer: t('team.description') },
-    { question: t('service.title'), answer: t('service.description') },
+    { question: t('foundation.items.coverage.title'), answer: t('foundation.items.coverage.description') },
+    { question: t('foundation.items.rating.title'), answer: t('foundation.items.rating.description') },
+    { question: t('foundation.items.team.title'), answer: t('foundation.items.team.description') },
+    { question: t('foundation.items.service.title'), answer: t('foundation.items.service.description') },
   ];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <BenefitsPage company={company} />
+      <FeaturesPage company={company} />
     </>
   );
 }
