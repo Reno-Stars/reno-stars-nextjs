@@ -233,6 +233,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
               alt={company.name}
               width={160}
               height={36}
+              placeholder="empty"
               className="h-9 w-auto object-contain rounded bg-white/95 px-2 py-1 mb-3"
             />
             <p className="text-sm text-white/80 mb-4">{company.tagline}</p>
@@ -293,7 +294,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
             </div>
             <div className="mt-4">
               <p className="text-xs text-white/50 mb-1.5">{t('footer.scanToConnect')}</p>
-              <OptimizedImage src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} className="rounded bg-white p-1" />
+              <OptimizedImage src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} placeholder="empty" className="rounded bg-white p-1" />
             </div>
           </div>
 
@@ -312,7 +313,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <OptimizedImage src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm" />
+                <OptimizedImage src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} placeholder="empty" className="h-4 w-auto object-contain rounded-sm" />
                 <span className="text-sm text-white/70">{t('stats.wcbCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>

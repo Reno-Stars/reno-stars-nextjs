@@ -36,6 +36,7 @@ export default function ShowroomSection({
           width={180}
           height={40}
           loading="lazy"
+          placeholder="empty"
           className="h-10 w-auto object-contain mx-auto mb-5 rounded-md bg-white/95 px-3 py-1"
           style={{
             boxShadow:
