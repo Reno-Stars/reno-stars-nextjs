@@ -589,8 +589,8 @@
       }
     },
     "about": {
-      "title": "About Reno Stars | Vancouver Renovation Company",
-      "description": "Learn about Reno Stars — Vancouver's trusted renovation contractor with {years}+ years experience, up to $5M CGL insurance, active WCB coverage, and a team of 100+ professionals dedicated to quality craftsmanship."
+      "title": "About Reno Stars | Vancouver Home Renovation Company",
+      "description": "Reno Stars is a Vancouver renovation company founded in 2021 with a structured, transparent process. Detailed contracts, milestone payments, and dedicated coordination — serving Metro Vancouver homeowners."
     },
     "reviews": {
       "title": "Customer Reviews & Testimonials | Reno Stars Vancouver",
@@ -1666,7 +1666,7 @@
   "aboutPage": {
     "hero": {
       "title": "About Reno Stars",
-      "subtitle": "Vancouver's trusted renovation company — delivering quality craftsmanship with integrity, transparency, and a commitment to your satisfaction."
+      "subtitle": "Vancouver’s renovation company built on transparency, structured process, and real accountability — serving homeowners across Metro Vancouver since 2021."
     },
     "journey": {
       "title": "Our Journey"
@@ -1705,19 +1705,19 @@
       "items": {
         "integrity": {
           "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly throughout every project. No hidden fees, no surprises."
+          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep — just clear agreements and follow-through."
         },
         "quality": {
           "title": "Quality Craftsmanship",
-          "desc": "Every detail matters. We use premium materials and proven techniques to deliver results that last."
+          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
         },
         "transparency": {
           "title": "Transparency",
-          "desc": "Clear timelines, detailed quotes, and regular progress updates so you always know where your project stands."
+          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates — so you always know exactly where your project stands."
         },
         "satisfaction": {
           "title": "Client Satisfaction",
-          "desc": "Your happiness is our measure of success. We go above and beyond to exceed expectations on every project."
+          "desc": "We do not just complete projects — we manage them. Quick responses, proactive communication, and full accountability from start to finish."
         }
       }
     },
@@ -1738,8 +1738,8 @@
       "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
       "q4": "How do I get started with a renovation project?",
       "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
-      "q5": "What makes Reno Stars different from other contractors?",
-      "a5": "Our combination of experienced professionals, transparent pricing, comprehensive warranties, and a proven track record of 5-star reviews sets us apart. We handle everything from design consultation to final walkthrough, ensuring a seamless renovation experience."
+      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
+      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach — detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling — addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
     },
     "cta": {
       "title": "Ready to Start Your Renovation?",
