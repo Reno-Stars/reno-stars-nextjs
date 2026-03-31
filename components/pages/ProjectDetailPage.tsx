@@ -265,23 +265,39 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                     aria-label={displayImage?.alt || localizedProject.title}
                     className="absolute inset-0 w-full h-full object-contain"
                   />
-                ) : displayImage ? (
+                ) : (currentPair?.afterImage || currentPair?.beforeImage) ? (
                   <>
-                    <OptimizedImage
-                      src={displayImage.src}
-                      alt={displayImage.alt || localizedProject.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain"
-                      priority
-                    />
+                    {/* Render both images in DOM — toggle visibility for instant switching */}
+                    {currentPair?.afterImage && (
+                      <div className="absolute inset-0" style={{ opacity: showBefore ? 0 : 1, transition: 'opacity 0.15s ease' }}>
+                        <OptimizedImage
+                          src={currentPair.afterImage.src}
+                          alt={currentPair.afterImage.alt || localizedProject.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-contain"
+                          priority
+                        />
+                      </div>
+                    )}
+                    {currentPair?.beforeImage && (
+                      <div className="absolute inset-0" style={{ opacity: showBefore ? 1 : 0, transition: 'opacity 0.15s ease' }}>
+                        <OptimizedImage
+                          src={currentPair.beforeImage.src}
+                          alt={currentPair.beforeImage.alt || localizedProject.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-contain"
+                          priority={!showBefore} // preload whichever is not currently shown
+                        />
+                      </div>
+                    )}
                     <BeforeAfterBadge
                       isBefore={showBefore && hasBothImages}
                       t={t}
                       showClickTip={hasBothImages}
                       hasPair={hasBothImages}
                     />
-
                   </>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -712,15 +728,33 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 aria-label={displayImage?.alt || localizedProject.title}
                 className="absolute inset-0 w-full h-full object-contain"
               />
-            ) : displayImage ? (
-              <OptimizedImage
-                src={displayImage.src}
-                alt={displayImage.alt || localizedProject.title}
-                fill
-                sizes="90vw"
-                className="object-contain"
-                priority
-              />
+            ) : (currentPair?.afterImage || currentPair?.beforeImage) ? (
+              <>
+                {currentPair?.afterImage && (
+                  <div className="absolute inset-0" style={{ opacity: showBefore ? 0 : 1, transition: 'opacity 0.15s ease' }}>
+                    <OptimizedImage
+                      src={currentPair.afterImage.src}
+                      alt={currentPair.afterImage.alt || localizedProject.title}
+                      fill
+                      sizes="90vw"
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                )}
+                {currentPair?.beforeImage && (
+                  <div className="absolute inset-0" style={{ opacity: showBefore ? 1 : 0, transition: 'opacity 0.15s ease' }}>
+                    <OptimizedImage
+                      src={currentPair.beforeImage.src}
+                      alt={currentPair.beforeImage.alt || localizedProject.title}
+                      fill
+                      sizes="90vw"
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                )}
+              </>
             ) : null}
           </div>
 

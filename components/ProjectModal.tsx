@@ -315,7 +315,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   >
                     {displayVideo ? (
                       <video
-                        key={`${activePairIndex}-${showBefore}-video`}
+                        key={`${activePairIndex}-video`}
                         src={displayVideo}
                         poster={displayImage?.src}
                         controls
@@ -324,17 +324,36 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         aria-label={displayImage?.alt || project.title}
                         className="absolute inset-0 w-full h-full object-contain"
                       />
-                    ) : displayImage ? (
-                      <OptimizedImage
-                        key={`${activePairIndex}-${showBefore}`}
-                        src={displayImage.src}
-                        alt={displayImage.alt || `${project.title} - renovation project photo`}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 60vw"
-                        className="object-contain"
-                        priority
-                        loading="eager"
-                      />
+                    ) : (currentPair?.afterImage || currentPair?.beforeImage) ? (
+                      <>
+                        {/* Render both images in DOM — toggle opacity for instant switch */}
+                        {currentPair?.afterImage && (
+                          <div className="absolute inset-0" style={{ opacity: showBefore ? 0 : 1, transition: 'opacity 0.15s ease' }}>
+                            <OptimizedImage
+                              src={currentPair.afterImage.src}
+                              alt={currentPair.afterImage.alt || `${project.title} - after`}
+                              fill
+                              sizes="(max-width: 1024px) 100vw, 60vw"
+                              className="object-contain"
+                              priority
+                              loading="eager"
+                            />
+                          </div>
+                        )}
+                        {currentPair?.beforeImage && (
+                          <div className="absolute inset-0" style={{ opacity: showBefore ? 1 : 0, transition: 'opacity 0.15s ease' }}>
+                            <OptimizedImage
+                              src={currentPair.beforeImage.src}
+                              alt={currentPair.beforeImage.alt || `${project.title} - before`}
+                              fill
+                              sizes="(max-width: 1024px) 100vw, 60vw"
+                              className="object-contain"
+                              priority
+                              loading="eager"
+                            />
+                          </div>
+                        )}
+                      </>
                     ) : null}
                   </div>
                 )}
