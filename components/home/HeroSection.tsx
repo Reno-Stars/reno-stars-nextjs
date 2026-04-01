@@ -7,7 +7,6 @@ import type { Company } from '@/lib/types';
 import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
-import OptimizedImage from '@/components/OptimizedImage';
 
 interface HeroSectionProps {
   company: Company;
@@ -87,17 +86,22 @@ export default function HeroSection({ company, googleRating, translations: t }: 
   }, [goTo, slides.length]);
 
   return (
-    <section aria-label={t.transformYourSpace} className="relative overflow-hidden min-h-[70vh] flex items-center">
-      {/* Poster image shown immediately for fast LCP */}
-      <OptimizedImage
+    <section aria-label={t.transformYourSpace} className="relative overflow-hidden min-h-[70vh] flex items-center bg-gray-900">
+      {/* Poster image — direct R2 URL, no /api/image redirect, instant load */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={posterSrc}
-        alt="Vancouver home renovation showcase featuring modern kitchen and bathroom remodeling by Reno Stars"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-        placeholder="empty"
+        alt=""
         aria-hidden="true"
+        fetchPriority="high"
+        decoding="sync"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
       />
       {/* Video loads lazily on desktop only, fades in over the image */}
       <LazyVideo
