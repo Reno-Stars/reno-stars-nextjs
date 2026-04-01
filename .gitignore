@@ -64,3 +64,5 @@ test-data/
 # Migration
 temp.txt
 .migration-backup/
+.env.local.backup
+.env.local.prod_backup
