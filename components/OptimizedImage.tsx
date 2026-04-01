@@ -45,6 +45,7 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const [fullLoaded, setFullLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
+  const shimmerTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -105,13 +106,23 @@ export default function OptimizedImage({
     ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
     : undefined;
 
+  // Safety net: if image never loads after 8s, remove shimmer anyway
+  useEffect(() => {
+    if (!isInView || fullLoaded) return;
+    shimmerTimeoutRef.current = setTimeout(() => setFullLoaded(true), 8000);
+    return () => clearTimeout(shimmerTimeoutRef.current);
+  }, [isInView, fullLoaded]);
+
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
     if (!img.dataset.fallback) {
+      // First failure: try falling back to original source URL
       img.dataset.fallback = '1';
       img.srcset = '';
       img.src = src;
     } else {
+      // Second failure: image completely broken — hide shimmer anyway
+      setFullLoaded(true);
       onErrorProp?.();
     }
   };

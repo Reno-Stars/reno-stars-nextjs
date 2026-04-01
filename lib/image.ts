@@ -10,10 +10,13 @@ const R2_BASE = typeof process !== 'undefined'
   : '';
 
 /**
- * Check if a URL points to our R2 bucket (eligible for pre-processed variants).
+ * Check if a URL points to our R2 bucket AND is an admin-uploaded image
+ * that has pre-processed WebP variants available.
+ * Only uploads/admin/ and uploads/designs/ paths are processed.
  */
 export function isR2Url(url: string): boolean {
-  return R2_BASE.length > 0 && url.startsWith(R2_BASE);
+  if (!R2_BASE || !url.startsWith(R2_BASE)) return false;
+  return url.includes('/uploads/admin/') || url.includes('/uploads/designs/') || url.includes('/uploads/processed/');
 }
 
 /**
