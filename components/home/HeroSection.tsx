@@ -96,6 +96,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         priority
         sizes="100vw"
         className="object-cover"
+        placeholder="empty"
         aria-hidden="true"
       />
       {/* Video loads lazily on desktop only, fades in over the image */}
