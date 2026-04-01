@@ -42,29 +42,47 @@ export interface ProcessResult {
 }
 
 /**
- * Derive the processed key prefix from an original upload key or public URL.
- * e.g. "uploads/admin/foo.jpg" → "uploads/processed/foo"
+ * Derive the R2 key and public base URL from a source image URL.
+ * Handles both URL patterns:
+ *   https://pub-xxx.r2.dev/reno-stars/uploads/admin/foo.jpg  → key: reno-stars/uploads/processed/foo, base: https://pub-xxx.r2.dev
+ *   https://pub-xxx.r2.dev/uploads/admin/foo.jpg             → key: uploads/processed/foo, base: https://pub-xxx.r2.dev
  */
-export function getProcessedKeyPrefix(originalKey: string): string {
-  // Strip leading slash or full URL to get just the key
-  let key = originalKey;
-  const uploadsIdx = key.indexOf('uploads/');
-  if (uploadsIdx !== -1) key = key.slice(uploadsIdx);
+export function getProcessedInfo(originalUrl: string, width: number): { key: string; publicUrl: string } {
+  let key = originalUrl;
+  let base = '';
 
-  // Strip extension, replace "admin/" with "processed/"
+  // Strip domain to get path
+  try {
+    const parsed = new URL(originalUrl);
+    base = parsed.origin; // https://pub-xxx.r2.dev
+    key = parsed.pathname.slice(1); // strip leading /
+  } catch {
+    // not a URL, treat as key
+  }
+
+  // key is now e.g. "reno-stars/uploads/admin/foo.jpg" or "uploads/admin/foo.jpg"
   const withoutExt = key.replace(/\.[^.]+$/, '');
-  return withoutExt.replace('uploads/admin/', 'uploads/processed/');
+  const processedKey = withoutExt.replace('uploads/admin/', 'uploads/processed/');
+
+  return {
+    key: `${processedKey}_${width}.webp`,
+    publicUrl: `${base}/${processedKey}_${width}.webp`,
+  };
+}
+
+/**
+ * Derive the processed S3 key prefix (without width/extension).
+ * e.g. "https://pub-xxx.r2.dev/reno-stars/uploads/admin/foo.jpg" → "reno-stars/uploads/processed/foo"
+ */
+export function getProcessedKeyPrefix(originalUrl: string): string {
+  return getProcessedInfo(originalUrl, 0).key.replace('_0.webp', '');
 }
 
 /**
  * Build the public URL for a processed variant.
  */
 export function getProcessedUrl(originalUrl: string, width: number): string {
-  const s3PublicUrl = process.env.S3_PUBLIC_URL || process.env.NEXT_PUBLIC_STORAGE_PROVIDER || '';
-  const prefix = getProcessedKeyPrefix(originalUrl);
-  // Strip the base URL from prefix if it was included
-  const keyPart = prefix.startsWith('http') ? getProcessedKeyPrefix(new URL(prefix).pathname.slice(1)) : prefix;
-  return `${s3PublicUrl}/${keyPart}_${width}.webp`;
+  return getProcessedInfo(originalUrl, width).publicUrl;
 }
 
 /**
@@ -137,7 +155,6 @@ export async function processImage(sourceUrl: string, force = false): Promise<Pr
   }
 
   const sourceWidth = sourceMeta.width ?? 9999;
-  const keyPrefix = getProcessedKeyPrefix(sourceUrl);
   const variants: ProcessedVariant[] = [];
 
   // Generate each width variant
@@ -151,7 +168,7 @@ export async function processImage(sourceUrl: string, force = false): Promise<Pr
         .webp({ quality: QUALITY, effort: 4, smartSubsample: true })
         .toBuffer();
 
-      const key = `${keyPrefix}_${width}.webp`;
+      const { key, publicUrl } = getProcessedInfo(sourceUrl, width);
 
       await client.send(new PutObjectCommand({
         Bucket: S3_BUCKET,
@@ -164,7 +181,7 @@ export async function processImage(sourceUrl: string, force = false): Promise<Pr
       variants.push({
         width,
         key,
-        publicUrl: `${s3PublicUrl}/${key}`,
+        publicUrl,
         bytes: webpBuffer.byteLength,
       });
     } catch (e) {

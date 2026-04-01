@@ -18,16 +18,20 @@ export function isR2Url(url: string): boolean {
 
 /**
  * Build the R2 URL for a pre-processed WebP variant.
- * e.g. https://pub-xxx.r2.dev/uploads/admin/foo.jpg → https://pub-xxx.r2.dev/uploads/processed/foo_828.webp
+ * Preserves the original URL's path prefix (with or without /reno-stars/).
+ * e.g. https://pub-xxx.r2.dev/reno-stars/uploads/admin/foo.jpg → https://pub-xxx.r2.dev/reno-stars/uploads/processed/foo_828.webp
+ *      https://pub-xxx.r2.dev/uploads/admin/foo.jpg             → https://pub-xxx.r2.dev/uploads/processed/foo_828.webp
  */
 export function buildProcessedUrl(src: string, width: number): string {
   if (!isR2Url(src)) return buildOptimizedUrl(src, width);
-  // Strip base URL to get the key
-  const key = src.slice(R2_BASE.length).replace(/^\//, '');
-  // Strip extension, swap admin/ → processed/
-  const withoutExt = key.replace(/\.[^.]+$/, '');
-  const processedKey = withoutExt.replace('uploads/admin/', 'uploads/processed/');
-  return `${R2_BASE}/${processedKey}_${width}.webp`;
+  try {
+    const parsed = new URL(src);
+    const pathWithoutExt = parsed.pathname.replace(/\.[^.]+$/, '');
+    const processedPath = pathWithoutExt.replace('/uploads/admin/', '/uploads/processed/');
+    return `${parsed.origin}${processedPath}_${width}.webp`;
+  } catch {
+    return buildOptimizedUrl(src, width);
+  }
 }
 
 /**

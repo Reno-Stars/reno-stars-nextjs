@@ -30,7 +30,10 @@ const LIMIT = (() => {
 
 async function getImageUrls(pool: Pool): Promise<string[]> {
   const urls = new Set<string>();
-  const s3PublicUrl = process.env.S3_PUBLIC_URL || '';
+  // Match any URL on our R2 domain, regardless of path prefix
+  const r2Domain = (process.env.S3_PUBLIC_URL || '').replace(/\/[^/]+$/, ''); // strip /reno-stars suffix
+  const fallbackDomain = 'https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev';
+  const domain = r2Domain || fallbackDomain;
 
   const queries = [
     pool.query(`SELECT after_image_url, before_image_url FROM project_image_pairs WHERE after_image_url IS NOT NULL`),
@@ -45,13 +48,14 @@ async function getImageUrls(pool: Pool): Promise<string[]> {
   for (const res of results) {
     for (const row of res.rows) {
       for (const val of Object.values(row) as (string | null)[]) {
-        if (val && typeof val === 'string' && val.startsWith(s3PublicUrl) && val.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
+        if (val && typeof val === 'string' && val.startsWith(domain) && val.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
           urls.add(val);
         }
       }
     }
   }
 
+  console.log(`   R2 domain: ${domain}`);
   return Array.from(urls);
 }
 
