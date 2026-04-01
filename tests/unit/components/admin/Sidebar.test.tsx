@@ -24,9 +24,7 @@ vi.mock('@/lib/admin/translations', () => ({
       trustBadges: 'Trust Badges',
       contacts: 'Contacts',
       company: 'Company',
-      showroom: 'Showroom',
       socialLinks: 'Social Links',
-      about: 'About',
       partners: 'Partners',
       groups: {
         portfolio: 'Portfolio',
@@ -95,7 +93,7 @@ describe('Sidebar', () => {
 
     // Settings group is collapsed by default
     expect(screen.queryByText('Company')).not.toBeInTheDocument();
-    expect(screen.queryByText('Showroom')).not.toBeInTheDocument();
+    expect(screen.queryByText('Social Links')).not.toBeInTheDocument();
   });
 
   it('toggles group expansion when header is clicked', () => {
@@ -110,7 +108,7 @@ describe('Sidebar', () => {
 
     // Items should now be visible
     expect(screen.getByText('Company')).toBeInTheDocument();
-    expect(screen.getByText('Showroom')).toBeInTheDocument();
+    expect(screen.getByText('Social Links')).toBeInTheDocument();
 
     // Click to collapse
     fireEvent.click(settingsButton);
@@ -181,7 +179,7 @@ describe('Sidebar', () => {
 
     // Settings items should be visible because of auto-expansion
     expect(screen.getByText('Company')).toBeInTheDocument();
-    expect(screen.getByText('Showroom')).toBeInTheDocument();
+    expect(screen.getByText('Social Links')).toBeInTheDocument();
   });
 
   it('has correct aria attributes on group headers', () => {

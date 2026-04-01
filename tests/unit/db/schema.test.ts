@@ -10,8 +10,7 @@ import {
   designs,
   contactSubmissions,
   companyInfo,
-  showroomInfo,
-  aboutSections,
+
   trustBadges,
   socialLinks,
   faqs,
@@ -190,25 +189,6 @@ describe('Database Schema', () => {
     });
   });
 
-  describe('Showroom Info Table', () => {
-    it('should have required columns', () => {
-      const columns = Object.keys(showroomInfo);
-      expect(columns).toContain('id');
-      expect(columns).toContain('address');
-      expect(columns).toContain('appointmentTextEn');
-      expect(columns).toContain('appointmentTextZh');
-    });
-  });
-
-  describe('About Sections Table', () => {
-    it('should have i18n fields', () => {
-      const columns = Object.keys(aboutSections);
-      expect(columns).toContain('ourJourneyEn');
-      expect(columns).toContain('ourJourneyZh');
-      expect(columns).toContain('whatWeOfferEn');
-      expect(columns).toContain('whatWeOfferZh');
-    });
-  });
 
   describe('Trust Badges Table', () => {
     it('should have required columns', () => {
