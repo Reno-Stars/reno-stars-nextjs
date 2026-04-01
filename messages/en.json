@@ -431,7 +431,7 @@
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and brand names. You know the real cost before you start."
+          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
         },
         "managed": {
           "problem": "Renovation shouldn't rely on improvisation and luck.",
@@ -447,7 +447,7 @@
         },
         "consistent": {
           "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
+          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
         },
         "experience": {
           "problem": "Renovation is stressful when you're constantly chasing updates.",
@@ -2092,7 +2092,7 @@
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and brand names. You know the real cost before you start."
+          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
         },
         "managed": {
           "problem": "Renovation shouldn't rely on improvisation and luck.",
@@ -2108,7 +2108,7 @@
         },
         "consistent": {
           "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
+          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
         },
         "experience": {
           "problem": "Renovation is stressful when you're constantly chasing updates.",
