@@ -131,7 +131,7 @@ export default function OptimizedImage({
     <div
       ref={wrapperRef}
       className={fill ? 'absolute inset-0' : 'relative'}
-      style={fill ? undefined : { width, height }}
+      style={fill ? { isolation: 'isolate' } : { width, height, isolation: 'isolate' }}
       aria-hidden={ariaHidden}
     >
       {/* Shimmer skeleton — visible while full image is loading */}
@@ -141,7 +141,7 @@ export default function OptimizedImage({
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 2,
+            zIndex: 1,
             overflow: 'hidden',
             borderRadius: 'inherit',
             background: 'linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%)',
