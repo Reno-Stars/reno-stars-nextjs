@@ -47,6 +47,8 @@ export default function OptimizedImage({
   const [fullLoaded, setFullLoaded] = useState(false);   // blur fades when full loads
   const [isInView, setIsInView] = useState(priority);
   const shimmerTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const fullImgRef = useRef<HTMLImageElement>(null);
+  const thumbImgRef = useRef<HTMLImageElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -108,6 +110,12 @@ export default function OptimizedImage({
   const fullSrcSet = isInView
     ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
     : undefined;
+
+  // Handle images already in browser cache — onLoad won't fire for them
+  useEffect(() => {
+    if (thumbImgRef.current?.complete && thumbImgRef.current.naturalWidth > 0) setThumbLoaded(true);
+    if (fullImgRef.current?.complete && fullImgRef.current.naturalWidth > 0) setFullLoaded(true);
+  });
 
   // Safety net: if thumb never loads after 3s, hide shimmer anyway
   useEffect(() => {
@@ -183,8 +191,9 @@ export default function OptimizedImage({
           transition: 'opacity 0.4s ease-out',
           pointerEvents: 'none',
         }}
+        ref={thumbImgRef}
         onLoad={() => setThumbLoaded(true)}
-        onError={() => setThumbLoaded(true)} // thumb failed → still hide shimmer
+        onError={() => setThumbLoaded(true)}
       />
 
       {/* Full image — fades in on top when loaded */}
@@ -205,6 +214,7 @@ export default function OptimizedImage({
           opacity: fullLoaded ? 1 : 0,
           transition: 'opacity 0.4s ease-out',
         }}
+        ref={fullImgRef}
         onError={handleError}
         onLoad={() => setFullLoaded(true)}
       />
