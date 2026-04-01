@@ -421,7 +421,7 @@ async function seed() {
         questionEn: 'Why choose Reno Stars?',
         questionZh: '为什么要选择 Reno Stars？',
         answerEn: `Reno Stars is committed to delivering high-quality craftsmanship with over ${getYearsExperience()} years of combined experience. We carry ${COMPANY_STATS.liabilityCoverage} CGL insurance, maintain active WCB coverage, offer up to 3 years warranty on all work, transparent pricing, and ${COMPANY_STATS.projectsCompleted} successfully completed projects. Our 5-star Google rating reflects our commitment to customer satisfaction.`,
-        answerZh: `Reno Stars 始终致力于提供高品质的工艺，拥有超过${getYearsExperience()}年的综合经验。我们拥有至多${COMPANY_STATS.liabilityCoverage.replace('Up to ', '')}CGL保险、有效WCB工伤保障、至多3年质保、透明定价，已成功完成${COMPANY_STATS.projectsCompleted}项目。我们的Google五星好评反映了我们对客户满意度的承诺。`,
+        answerZh: `Reno Stars 始终致力于提供高品质的工艺，拥有超过${getYearsExperience()}年的综合经验。我们拥有${COMPANY_STATS.liabilityCoverage}CGL保险、有效WCB工伤保障、至多3年质保、透明定价，已成功完成${COMPANY_STATS.projectsCompleted}项目。我们的Google五星好评反映了我们对客户满意度的承诺。`,
         displayOrder: 2,
       },
       {

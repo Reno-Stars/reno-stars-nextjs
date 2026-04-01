@@ -11,7 +11,7 @@ export const COMPANY_STATS = {
   teamSize: 17,
   projectsCompleted: "700+",
   /** Dollar amount with "Up to" qualifier — full label comes from translations */
-  liabilityCoverage: "Up to $5M",
+  liabilityCoverage: "$5M",
 } as const;
 
 /** Years of experience rounded up to nearest 5 for cleaner display */

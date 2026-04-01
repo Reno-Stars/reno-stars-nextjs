@@ -64,7 +64,7 @@
     "toLuxury": "臻于奢华",
     "buildingBetterSpaces": "打造更美好的空间",
     "professionalExcellence": "专业卓越的装修服务",
-    "professionalExcellenceDesc": "凭借超过{experience}年的经验、至多500万CGL保险、有效WCB工伤保障及至多三年质保，我们为大温哥华地区提供卓越的住宅及商业装修服务。",
+    "professionalExcellenceDesc": "凭借超过{experience}年的经验、500万CGL保险、有效WCB工伤保障及至多三年质保，我们为大温哥华地区提供卓越的住宅及商业装修服务。",
     "realEstateTitle": "一站式服务：装修 + 房产经纪 + 摄影",
     "realEstateDesc": "从专业装修到房产经纪与摄影服务，我们与专业经纪人合作，为您提供真正的一站式服务，让您的房子以最佳状态呈现。"
   },
@@ -150,8 +150,8 @@
     "expertTeamMembers": "专业团队成员",
     "expertTeam": "专业团队",
     "expertCraftsmen": "资深工匠",
-    "liabilityCoverage": "至多500万CGL保险",
-    "fullCoverage": "至多500万CGL保险 · 有效WCB工伤保障 · 至多三年质保",
+    "liabilityCoverage": "500万CGL保险",
+    "fullCoverage": "500万CGL保险 · 有效WCB工伤保障 · 至多三年质保",
     "wcbCoverage": "有效WCB工伤保障",
     "projectsCompleted": "已完成项目",
     "projectsDone": "已完成项目",
@@ -409,7 +409,7 @@
           "description": "我们拥有长期的行业积累，不只是施工经验，更了解整个装修流程中可能出现的问题，并提前规避。"
         },
         "coverage": {
-          "title": "至多500万CGL保险 + 有效WCB工伤保障",
+          "title": "500万CGL保险 + 有效WCB工伤保障",
           "description": "完整保险覆盖，让您的项目在施工过程中更有保障。"
         },
         "rating": {
@@ -463,7 +463,7 @@
   "serviceBenefits": {
     "freeConsultation": "免费咨询和报价",
     "licensedInsured": "持证和全面保险（CGL + WCB）",
-    "coverageAndWarranty": "至多500万CGL保险、有效WCB保障、至多3年质保",
+    "coverageAndWarranty": "500万CGL保险、有效WCB保障、至多3年质保",
     "experience": "{years}年以上经验",
     "rating": "谷歌五星好评",
     "projectsDone": "已完成700+项目"
@@ -537,7 +537,7 @@
   "metadata": {
     "home": {
       "title": "温哥华装修承包商 | 厨房、卫浴装修 | Reno Stars",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
+      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
     },
     "services": {
       "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
@@ -573,7 +573,7 @@
     "serviceLocation": {
       "title": "{area}{service} | Reno Stars",
       "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
-      "description": "Reno Stars{area}专业{service}。{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保。查看本地项目，立即获取免费报价。"
+      "description": "Reno Stars{area}专业{service}。{years}年以上经验、500万CGL保险、有效WCB工伤保障、至多三年质保。查看本地项目，立即获取免费报价。"
     },
     "areas": {
       "title": "服务区域 | Reno Stars 温哥华",
@@ -629,7 +629,7 @@
     },
     "about": {
       "title": "关于 Reno Stars | 温哥华装修公司",
-      "description": "了解 Reno Stars, 温哥华值得信赖的装修公司，拥有{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保和百人专业团队，致力于卓越品质工艺。"
+      "description": "了解 Reno Stars, 温哥华值得信赖的装修公司，拥有{years}年以上经验、500万CGL保险、有效WCB工伤保障、至多三年质保和百人专业团队，致力于卓越品质工艺。"
     },
     "reviews": {
       "title": "客户评价与见证 | Reno Stars 温哥华装修",
@@ -1833,7 +1833,7 @@
       "q1": "Reno Stars 经营了多久？",
       "a1": "Reno Stars 在温哥华装修行业拥有超过{years}年的综合经验。我们的团队已在大温哥华地区完成了数百个项目，从小型浴室更新到大规模全屋装修。",
       "q2": "你们有执照和保险吗？",
-      "a2": "是的，我们持有完整执照，拥有至多500万CGL（商业综合责任）保险和有效的WCB（WorkSafeBC）工伤保障。CGL保险保护您的物业，WCB保障施工现场所有工人。我们还提供至多3年的工程质保。",
+      "a2": "是的，我们持有完整执照，拥有500万CGL（商业综合责任）保险和有效的WCB（WorkSafeBC）工伤保障。CGL保险保护您的物业，WCB保障施工现场所有工人。我们还提供至多3年的工程质保。",
       "q3": "你们服务哪些地区？",
       "a3": "我们服务覆盖整个大温哥华地区和菲沙河谷，包括温哥华、列治文、本拿比、素里、高贵林、北温哥华、西温哥华、三角洲、兰里、枫树岭、新西敏和穆迪港。",
       "q4": "如何开始一个装修项目？",
@@ -2067,7 +2067,7 @@
           "description": "我们拥有长期的行业积累，不只是施工经验，更了解整个装修流程中可能出现的问题，并提前规避。"
         },
         "coverage": {
-          "title": "至多500万CGL保险 + 有效WCB工伤保障",
+          "title": "500万CGL保险 + 有效WCB工伤保障",
           "description": "完整保险覆盖，让您的项目在施工过程中更有保障。"
         },
         "rating": {

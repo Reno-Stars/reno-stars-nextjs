@@ -150,8 +150,8 @@
     "expertTeamMembers": "Expert Team Members",
     "expertTeam": "Expert Team",
     "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "Up to $5M CGL Insurance",
-    "fullCoverage": "Up to $5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
+    "liabilityCoverage": "$5M CGL Insurance",
+    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
     "wcbCoverage": "Active WCB Coverage",
     "projectsCompleted": "Projects Completed",
     "projectsDone": "Projects Done",
@@ -409,7 +409,7 @@
           "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
-          "title": "Up to $5M CGL Insurance · Active WCB Coverage",
+          "title": "$5M CGL Insurance · Active WCB Coverage",
           "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
         },
         "rating": {
@@ -463,7 +463,7 @@
   "serviceBenefits": {
     "freeConsultation": "Free consultation and quote",
     "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "Up to $5M CGL insurance, active WCB coverage, up to 3 years warranty",
+    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
     "experience": "{years}+ years experience",
     "rating": "5-star Google rating",
     "projectsDone": "700+ projects completed"
@@ -537,7 +537,7 @@
   "metadata": {
     "home": {
       "title": "Vancouver Renovation Contractor | Kitchen & Bathroom | Reno Stars",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, up to $5M CGL insurance, active WCB coverage, up to 3 years warranty, 5-star Google rating."
+      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty, 5-star Google rating."
     },
     "services": {
       "title": "Kitchen, Bathroom & Whole House Renovation Services | Reno Stars Vancouver",
@@ -573,7 +573,7 @@
     "serviceLocation": {
       "title": "{service} in {area} | Reno Stars",
       "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, up to $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
     },
     "areas": {
       "title": "Service Areas | Reno Stars Vancouver",
@@ -2067,7 +2067,7 @@
           "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
-          "title": "Up to $5M CGL Insurance · Active WCB Coverage",
+          "title": "$5M CGL Insurance · Active WCB Coverage",
           "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
         },
         "rating": {
