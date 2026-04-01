@@ -78,6 +78,17 @@ async function uploadDirect(
       return { error: `Upload failed (${uploadRes.status}).` };
     }
 
+    // Step 3: Trigger server-side WebP processing (fire-and-forget, non-blocking)
+    // This generates optimized variants in R2 so /api/image is never needed at runtime.
+    // Fire-and-forget: don't await, don't block the UI
+    fetch('/admin/api/process-image/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: publicUrl }),
+    }).catch(() => {
+      // Processing failure is non-fatal — /api/image fallback still works
+    });
+
     return { url: publicUrl };
   } catch (err) {
     if (process.env.NODE_ENV === 'development') console.error('Upload error:', err);

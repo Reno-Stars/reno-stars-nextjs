@@ -8,7 +8,7 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import { buildOptimizedUrl, buildSrcSet } from '@/lib/image';
+import { buildOptimizedUrl, buildSrcSet, buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
 
 interface OptimizedImageProps {
   src: string;
@@ -94,9 +94,16 @@ export default function OptimizedImage({
   }
 
   // LQIP: tiny 20px thumbnail URL
-  const thumbSrc = buildOptimizedUrl(src, 20, 30); // 20px wide, low quality = tiny file
-  const fullSrc = isInView ? buildOptimizedUrl(src, 828, quality) : undefined;
-  const fullSrcSet = isInView ? buildSrcSet(src, quality) : undefined;
+  // For R2 images: use pre-processed WebP variants (zero Fluid CPU cost)
+  // For other images: fall back to /api/image route
+  const useProcessed = isR2Url(src);
+  const thumbSrc = buildOptimizedUrl(src, 20, 30); // always via /api/image — tiny, fast
+  const fullSrc = isInView
+    ? (useProcessed ? buildProcessedUrl(src, 828) : buildOptimizedUrl(src, 828, quality))
+    : undefined;
+  const fullSrcSet = isInView
+    ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
+    : undefined;
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
