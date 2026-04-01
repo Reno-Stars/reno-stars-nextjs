@@ -94,11 +94,13 @@ export default function OptimizedImage({
     );
   }
 
-  // LQIP: tiny 20px thumbnail URL
-  // For R2 images: use pre-processed WebP variants (zero Fluid CPU cost)
+  // LQIP: tiny thumbnail URL
+  // For R2 admin/designs images: use pre-processed 320w variant as thumb (instant, no /api/image)
   // For other images: fall back to /api/image route
   const useProcessed = isR2Url(src);
-  const thumbSrc = buildOptimizedUrl(src, 20, 30); // always via /api/image — tiny, fast
+  const thumbSrc = useProcessed
+    ? buildProcessedUrl(src, 320)   // direct R2, no redirect, ~fast
+    : buildOptimizedUrl(src, 20, 30); // /api/image for external/legacy
   const fullSrc = isInView
     ? (useProcessed ? buildProcessedUrl(src, 828) : buildOptimizedUrl(src, 828, quality))
     : undefined;
@@ -144,7 +146,7 @@ export default function OptimizedImage({
             zIndex: 1,
             overflow: 'hidden',
             borderRadius: 'inherit',
-            background: 'linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%)',
+            background: 'linear-gradient(90deg, #d8d8d8 25%, #e8e8e8 50%, #d8d8d8 75%)',
             backgroundSize: '200% 100%',
             animation: 'shimmer 1.4s infinite linear',
             opacity: fullLoaded ? 0 : 1,
