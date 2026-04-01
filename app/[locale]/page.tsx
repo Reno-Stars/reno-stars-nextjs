@@ -18,7 +18,7 @@ import {
 import { getGoogleReviews } from "@/lib/google-reviews";
 
 // Revalidate homepage every hour (ISR) - serves cached HTML instantly
-export const revalidate = 3600;
+export const revalidate = 7200; // 2h
 
 interface PageProps {
   params: Promise<{ locale: string }>;

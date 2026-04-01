@@ -15,7 +15,7 @@ import { NAVY } from '@/lib/theme';
 import { buildPreloadUrl } from '@/lib/image';
 
 // Revalidate layout data every hour (ISR)
-export const revalidate = 3600;
+export const revalidate = 86400; // 24h
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

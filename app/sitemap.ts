@@ -3,7 +3,7 @@ import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
 
-export const revalidate = 3600;
+export const revalidate = 21600; // 6h
 
 const BASE_URL = getBaseUrl();
 

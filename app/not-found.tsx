@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import { NAVY, GOLD, SURFACE, TEXT_MID } from '@/lib/theme';
 import { SITE_NAME } from '@/lib/utils';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // 24h
 
 export const metadata: Metadata = {
   title: `Page Not Found | ${SITE_NAME}`,

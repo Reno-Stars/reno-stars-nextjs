@@ -11,7 +11,7 @@ interface PageProps {
   searchParams: Promise<{ service?: string }>;
 }
 
-export const revalidate = 3600;
+export const revalidate = 7200; // 2h
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

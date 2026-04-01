@@ -14,7 +14,7 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
-export const revalidate = 3600;
+export const revalidate = 21600; // 6h
 
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
