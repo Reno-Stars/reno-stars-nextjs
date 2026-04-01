@@ -400,7 +400,7 @@
   },
   "benefits": {
     "title": "为什么选择 Reno Stars",
-    "subtitle": "与我们合作，不只是完成装修项目 — 而是让整个过程变得清晰、可控、且省心。",
+    "subtitle": "与我们合作，不只是完成装修项目, 而是让整个过程变得清晰、可控、且省心。",
     "foundation": {
       "heading": "基础保障（建立信任）",
       "items": {
@@ -588,7 +588,7 @@
       "description": "您的消息已收到，我们会尽快回复您。"
     },
     "process": {
-      "title": "装修工作流程 — 5 步走 | Reno Stars 温哥华",
+      "title": "装修工作流程, 5 步走 | Reno Stars 温哥华",
       "description": "了解我们精简的5步装修工作流程。从初步咨询到项目交付，让您的装修之旅简单无忧。"
     },
     "showroom": {
@@ -629,7 +629,7 @@
     },
     "about": {
       "title": "关于 Reno Stars | 温哥华装修公司",
-      "description": "了解 Reno Stars — 温哥华值得信赖的装修公司，拥有{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保和百人专业团队，致力于卓越品质工艺。"
+      "description": "了解 Reno Stars, 温哥华值得信赖的装修公司，拥有{years}年以上经验、至多500万CGL保险、有效WCB工伤保障、至多三年质保和百人专业团队，致力于卓越品质工艺。"
     },
     "reviews": {
       "title": "客户评价与见证 | Reno Stars 温哥华装修",
@@ -724,7 +724,7 @@
   },
   "process": {
     "hero": {
-      "title": "装修服务流程 — 5 步走",
+      "title": "装修服务流程, 5 步走",
       "subtitle": "从咨询到完工",
       "googleReviews": "Google 评价",
       "stepLabel": "第{stepNum}步"
@@ -1709,7 +1709,7 @@
   "aboutPage": {
     "hero": {
       "title": "关于 Reno Stars",
-      "subtitle": "温哥华值得信赖的装修公司 — 以诚信、透明和对客户满意度的承诺，打造卓越品质工艺。"
+      "subtitle": "温哥华值得信赖的装修公司, 以诚信、透明和对客户满意度的承诺，打造卓越品质工艺。"
     },
     "journey": {
       "title": "我们的历程",
@@ -2058,7 +2058,7 @@
   },
   "features": {
     "title": "为什么选择 Reno Stars",
-    "subtitle": "与我们合作，不只是完成装修项目 — 而是让整个过程变得清晰、可控、且省心。",
+    "subtitle": "与我们合作，不只是完成装修项目, 而是让整个过程变得清晰、可控、且省心。",
     "foundation": {
       "heading": "基础保障（建立信任）",
       "items": {

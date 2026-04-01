@@ -66,7 +66,7 @@
     "professionalExcellence": "Professional Renovation Excellence",
     "professionalExcellenceDesc": "With over {experience} years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty, we deliver exceptional residential and commercial renovation services across Metro Vancouver.",
     "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
-    "realEstateDesc": "From complete home renovation to real estate agents and professional photography — we partner with trusted professionals to deliver everything under one roof."
+    "realEstateDesc": "From complete home renovation to real estate agents and professional photography. We partner with trusted professionals to deliver everything under one roof."
   },
   "section": {
     "serviceAreas": "Service Areas",
@@ -135,9 +135,9 @@
   "design": {
     "seoTitle": "Professional Renovation Design & 3D Rendering",
     "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
-    "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality — tailored to homes and businesses across Vancouver and the Lower Mainland.",
+    "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
     "designFeature1Title": "3D Visualization",
-    "designFeature1Desc": "Photorealistic renderings let you see every detail — materials, lighting, and layout — before construction begins.",
+    "designFeature1Desc": "Photorealistic renderings let you see every detail: materials, lighting, and layout, before construction begins.",
     "designFeature2Title": "Tailored to You",
     "designFeature2Desc": "Every design is customized to your space, lifestyle, and budget. No cookie-cutter solutions.",
     "designFeature3Title": "Design to Build",
@@ -400,13 +400,13 @@
   },
   "benefits": {
     "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation — it's about making the entire process clear, controlled, and stress-free.",
+    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
     "foundation": {
       "heading": "Built on Trust",
       "items": {
         "experience": {
           "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise — not just in construction, but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
           "title": "Up to $5M CGL Insurance · Active WCB Coverage",
@@ -418,7 +418,7 @@
         },
         "team": {
           "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew — not temporary hires — ensuring quality stays stable across every project."
+          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
         },
         "service": {
           "title": "End-to-End Service",
@@ -431,7 +431,7 @@
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront — detailed scope, material responsibilities, and brand names. You know the real cost before you start."
+          "solution": "We list everything upfront, detailed scope, material responsibilities, and brand names. You know the real cost before you start."
         },
         "managed": {
           "problem": "Renovation shouldn't rely on improvisation and luck.",
@@ -439,7 +439,7 @@
         },
         "responsive": {
           "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated — no 'sent a message, got no reply' moments."
+          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
         },
         "scheduled": {
           "problem": "Some contractors overbook and your timeline keeps slipping.",
@@ -447,11 +447,11 @@
         },
         "consistent": {
           "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards — especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
+          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
         },
         "experience": {
           "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it — without needing to follow up."
+          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
         }
       }
     },
@@ -588,7 +588,7 @@
       "description": "Your message has been received. We will get back to you shortly."
     },
     "process": {
-      "title": "Renovation Workflow — 5 Steps | Reno Stars Vancouver",
+      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
       "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
     },
     "showroom": {
@@ -629,7 +629,7 @@
     },
     "about": {
       "title": "About Reno Stars | Vancouver Home Renovation Company",
-      "description": "Reno Stars is a Vancouver renovation company founded in 2021 with a structured, transparent process. Detailed contracts, milestone payments, and dedicated coordination — serving Metro Vancouver homeowners."
+      "description": "Reno Stars is a Vancouver renovation company founded in 2021 with a structured, transparent process. Detailed contracts, milestone payments, and dedicated coordination, serving Metro Vancouver homeowners."
     },
     "reviews": {
       "title": "Customer Reviews & Testimonials | Reno Stars Vancouver",
@@ -686,7 +686,7 @@
   },
   "projectsFaqs": {
     "q1": "How do I get started with a renovation project?",
-    "a1": "Start with a free consultation — contact us online or visit our showroom. We'll discuss your vision, assess the space, and provide a detailed quote and timeline.",
+    "a1": "Start with a free consultation. Contact us online or visit our showroom. We'll discuss your vision, assess the space, and provide a detailed quote and timeline.",
     "q2": "Can I see examples of your past work?",
     "a2": "Yes! Browse our portfolio above to see before-and-after photos of completed kitchen, bathroom, and whole house renovation projects across Metro Vancouver.",
     "q3": "Do you handle permits and inspections?",
@@ -724,7 +724,7 @@
   },
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow — 5 Steps",
+      "title": "Renovation Service Workflow: 5 Steps",
       "subtitle": "From consultation to completion",
       "googleReviews": "Google Reviews",
       "stepLabel": "STEP {stepNum}"
@@ -848,7 +848,7 @@
           "label": "Quick Response"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly—we coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
     },
     "step5": {
       "title": "Walkthrough & Aftercare",
@@ -893,7 +893,7 @@
     "index": {
       "hero": {
         "title": "Renovation Cost Guides",
-        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork — just real data."
+        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
       },
       "kitchen": {
         "title": "Kitchen Renovation Cost",
@@ -934,7 +934,7 @@
       "breadcrumb": "Kitchen Renovation Cost",
       "hero": {
         "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects — not industry estimates."
+        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
       },
       "stats": {
         "avgCost": "Average Cost",
@@ -1012,7 +1012,7 @@
       },
       "cta": {
         "heading": "Get Your Free Kitchen Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
       },
       "faq": {
         "q1": "How much does a kitchen renovation cost in Vancouver?",
@@ -1031,7 +1031,7 @@
       "breadcrumb": "Bathroom Renovation Cost",
       "hero": {
         "title": "Bathroom Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed bathroom renovations across Greater Vancouver. Every number comes from actual projects — not industry estimates."
+        "subtitle": "Real pricing from completed bathroom renovations across Greater Vancouver. Every number comes from actual projects. Not industry estimates."
       },
       "stats": {
         "avgCost": "Average Cost",
@@ -1109,7 +1109,7 @@
       },
       "cta": {
         "heading": "Get Your Free Bathroom Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
       },
       "faq": {
         "q1": "How much does a bathroom renovation cost in Vancouver?",
@@ -1128,7 +1128,7 @@
       "breadcrumb": "Whole House Renovation Cost",
       "hero": {
         "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations — every number comes from actual projects."
+        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
       },
       "stats": {
         "avgCost": "Average Cost",
@@ -1198,7 +1198,7 @@
         },
         "item3": {
           "title": "Flooring Throughout",
-          "description": "New flooring in all living spaces — hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+          "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
         },
         "item4": {
           "title": "Paint & Trim",
@@ -1253,7 +1253,7 @@
       "breadcrumb": "Basement Renovation Cost",
       "hero": {
         "title": "Basement Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope — from basic finishing to full legal suite conversions."
+        "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope, from basic finishing to full legal suite conversions."
       },
       "stats": {
         "avgCost": "Average Cost",
@@ -1309,7 +1309,7 @@
       },
       "realProjects": {
         "title": "Related Whole-House Renovation Projects",
-        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver — many include basement work"
+        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver, many include basement work"
       },
       "tips": {
         "title": "Money-Saving Tips for Your Basement Renovation",
@@ -1327,12 +1327,12 @@
         },
         "tip4": {
           "title": "Choose LVP Flooring",
-          "description": "Luxury vinyl plank is the best basement flooring choice — waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
+          "description": "Luxury vinyl plank is the best basement flooring choice. Waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
         }
       },
       "cta": {
         "heading": "Get Your Free Basement Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
       },
       "faq": {
         "q1": "How much does a basement renovation cost in Vancouver?",
@@ -1425,12 +1425,12 @@
         },
         "tip4": {
           "title": "Choose Durable Commercial-Grade Materials",
-          "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term — commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+          "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term. Commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
         }
       },
       "cta": {
         "heading": "Get Your Free Commercial Renovation Quote",
-        "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours, no obligation."
       },
       "faq": {
         "q1": "How much does a commercial renovation cost in Vancouver?",
@@ -1482,7 +1482,7 @@
           "title": "Refinishing / Refacing",
           "pro1": "50–70% less expensive than replacement",
           "pro2": "Completed in 3–5 days with minimal disruption",
-          "pro3": "Eco-friendly — keeps existing cabinets out of landfill",
+          "pro3": "Eco-friendly, keeping existing cabinets out of landfill",
           "con1": "Cannot change cabinet layout or configuration"
         },
         "replacement": {
@@ -1518,7 +1518,7 @@
         },
         "condition": {
           "title": "Current Cabinet Condition",
-          "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical — refacing or replacement becomes the better option."
+          "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical, refacing or replacement becomes the better option."
         }
       },
       "realProjects": {
@@ -1558,7 +1558,7 @@
       },
       "cta": {
         "heading": "Get Your Free Cabinet Refinishing Quote",
-        "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours, no obligation."
       }
     },
     "basementSuiteCost": {
@@ -1666,7 +1666,7 @@
         "title": "Money-Saving Tips for Your Basement Suite",
         "tip1": {
           "title": "Apply for Municipal Incentives First",
-          "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction — some require pre-approval. Savings: $5,000–$10,000."
+          "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction. Some require pre-approval. Savings: $5,000–$10,000."
         },
         "tip2": {
           "title": "Plan Kitchen Near Existing Plumbing",
@@ -1690,7 +1690,7 @@
       },
       "cta": {
         "heading": "Get Your Free Basement Suite Quote",
-        "subtitle": "Tell us about your suite project and receive a detailed estimate within 48 hours — no obligation."
+        "subtitle": "Tell us about your suite project and receive a detailed estimate within 48 hours, no obligation."
       },
       "faq": {
         "q1": "How much does a basement suite cost in Vancouver?",
@@ -1702,20 +1702,20 @@
         "q4": "What is the minimum ceiling height for a basement suite in BC?",
         "a4": "BC Building Code requires minimum 6 feet 5 inches (1.95m) for habitable rooms. If ceilings are too low, underpinning (lowering the floor) costs $15,000–$30,000.",
         "q5": "Is a basement suite a good investment in Vancouver?",
-        "a5": "Yes — rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
+        "a5": "Yes. Rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
       }
     }
   },
   "aboutPage": {
     "hero": {
       "title": "About Reno Stars",
-      "subtitle": "Vancouver’s renovation company built on transparency, structured process, and real accountability — serving homeowners across Metro Vancouver since 2021."
+      "subtitle": "Vancouver’s renovation company built on transparency, structured process, and real accountability, serving homeowners across Metro Vancouver since 2021."
     },
     "journey": {
       "title": "Our Journey",
-      "body": "Reno Stars was built on experience — not just in construction, but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish — and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience — not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years on renovation platforms connecting homeowners with contractors. We saw thousands of projects — and more importantly, where things go wrong.",
+      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
+      "lead": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.",
+      "context": "Before founding Reno Stars in 2021, our team spent years on renovation platforms connecting homeowners with contractors. We saw thousands of projects, and more importantly, where things go wrong.",
       "painPointsTitle": "The frustrations we kept seeing:",
       "painPoints": [
         "Quotes that grow with hidden items after signing",
@@ -1753,14 +1753,14 @@
           "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
         }
       },
-      "body": "We did not just start another renovation company — we rebuilt the process. From the beginning, our goal has been simple: make renovation predictable, transparent, and stress-free for homeowners across Metro Vancouver.\n\nEvery project is supported by a structured system: detailed contracts that clearly define scope, responsibilities, and key materials (a typical bathroom renovation may include over 20 clearly listed items); clear payment milestones tied to progress with no surprises; dedicated office coordination for material selection and fast communication; reliable scheduling so your project moves forward as planned; and clearly specified waterproofing and quality standards for every critical element. We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company — we rebuilt the process.",
+      "body": "We did not just start another renovation company. We rebuilt the process. From the beginning, our goal has been simple: make renovation predictable, transparent, and stress-free for homeowners across Metro Vancouver.\n\nEvery project is supported by a structured system: detailed contracts that clearly define scope, responsibilities, and key materials (a typical bathroom renovation may include over 20 clearly listed items); clear payment milestones tied to progress with no surprises; dedicated office coordination for material selection and fast communication; reliable scheduling so your project moves forward as planned; and clearly specified waterproofing and quality standards for every critical element. We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
+      "lead": "We did not just start another renovation company. We rebuilt the process.",
       "goal": "Our goal from day one: make renovation predictable, transparent, and stress-free.",
       "systemTitle": "Every project runs on a structured system:",
       "systemItems": [
         {
           "title": "Detailed Contracts",
-          "desc": "20+ clearly listed items covering scope, responsibilities, and key materials — no vague line items."
+          "desc": "20+ clearly listed items covering scope, responsibilities, and key materials, no vague line items."
         },
         {
           "title": "Milestone Payments",
@@ -1772,11 +1772,11 @@
         },
         {
           "title": "Reliable Scheduling",
-          "desc": "We control our project load so yours moves forward as planned — not when it is convenient for us."
+          "desc": "We control our project load so yours moves forward as planned. Not when it is convenient for us."
         },
         {
           "title": "Quality Standards",
-          "desc": "Materials, brands, and application scope clearly specified — especially for critical work like waterproofing."
+          "desc": "Materials, brands, and application scope clearly specified, especially for critical work like waterproofing."
         }
       ]
     },
@@ -1785,7 +1785,7 @@
       "items": {
         "integrity": {
           "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep — just clear agreements and follow-through."
+          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
         },
         "quality": {
           "title": "Quality Craftsmanship",
@@ -1793,18 +1793,18 @@
         },
         "transparency": {
           "title": "Transparency",
-          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates — so you always know exactly where your project stands."
+          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
         },
         "satisfaction": {
           "title": "Client Satisfaction",
-          "desc": "We do not just complete projects — we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
         }
       },
-      "body": "Renovation involves many moving parts — from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage — so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation has moving parts. Some things — like supplier timelines — can be outside our control.",
+      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
+      "lead": "Renovation has moving parts. Some things, like supplier timelines, can be outside our control.",
       "guarantee": "What we can always guarantee is our response:",
       "guaranteeItems": [
-        "We communicate early — before problems become surprises",
+        "We communicate early, before problems become surprises",
         "We adjust quickly when things shift",
         "You always know where your project stands"
       ],
@@ -1812,16 +1812,16 @@
     },
     "whyUs": {
       "title": "Why Choose Us",
-      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects — where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space — it is about building trust.",
+      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
       "lead": "We are not the lowest-priced option, and we do not aim to be.",
       "chooseTitle": "Our clients choose us because they want:",
       "chooseItems": [
         "A clear process from quote to completion",
-        "Honest communication — not excuses",
+        "Honest communication. Not excuses",
         "Reliable timelines that actually hold",
         "A team that takes full responsibility"
       ],
-      "specialise": "We specialise in full home renovations, kitchens, bathrooms, and commercial projects — where coordination and accountability make all the difference.",
+      "specialise": "We specialise in full home renovations, kitchens, bathrooms, and commercial projects, where coordination and accountability make all the difference.",
       "philosophy": "We approach every project with one mindset: treat every home as if it were our own."
     },
     "areas": {
@@ -1839,12 +1839,12 @@
       "q4": "How do I get started with a renovation project?",
       "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
       "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
-      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach — detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling — addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
     },
     "cta": {
       "title": "Ready to Start Your Renovation?",
       "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote — and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
     }
   },
   "reviewsPage": {
@@ -1858,7 +1858,7 @@
     "allReviewsTitle": "All Reviews",
     "noReviews": "No reviews available at this time.",
     "whyTrustTitle": "Why Homeowners Trust Reno Stars",
-    "whyTrustSubtitle": "Our commitment to quality speaks through our clients'  words",
+    "whyTrustSubtitle": "Our commitment to quality speaks through our clients' words",
     "trustItem1Title": "Transparent Pricing",
     "trustItem1Desc": "Clear, detailed quotes with no hidden fees. Our clients consistently praise our upfront approach to pricing.",
     "trustItem2Title": "Quality Craftsmanship",
@@ -1947,7 +1947,7 @@
       },
       "contingency": {
         "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common — old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
       },
       "phased": {
         "title": "Consider a Phased Approach",
@@ -2058,13 +2058,13 @@
   },
   "features": {
     "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation — it's about making the entire process clear, controlled, and stress-free.",
+    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
     "foundation": {
       "heading": "Built on Trust",
       "items": {
         "experience": {
           "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise — not just in construction, but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
           "title": "Up to $5M CGL Insurance · Active WCB Coverage",
@@ -2076,7 +2076,7 @@
         },
         "team": {
           "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew — not temporary hires — ensuring quality stays stable across every project."
+          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
         },
         "service": {
           "title": "End-to-End Service",
@@ -2089,7 +2089,7 @@
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront — detailed scope, material responsibilities, and brand names. You know the real cost before you start."
+          "solution": "We list everything upfront, detailed scope, material responsibilities, and brand names. You know the real cost before you start."
         },
         "managed": {
           "problem": "Renovation shouldn't rely on improvisation and luck.",
@@ -2097,7 +2097,7 @@
         },
         "responsive": {
           "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated — no 'sent a message, got no reply' moments."
+          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
         },
         "scheduled": {
           "problem": "Some contractors overbook and your timeline keeps slipping.",
@@ -2105,11 +2105,11 @@
         },
         "consistent": {
           "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards — especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
+          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials, brands, and application scope are specified upfront."
         },
         "experience": {
           "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it — without needing to follow up."
+          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
         }
       }
     },
