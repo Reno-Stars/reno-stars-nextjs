@@ -65,7 +65,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
 
   return (
     <main>
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style={{ color: NAVY }}>
@@ -77,7 +77,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
-      {/* Our Journey */}
+      {/* About Reno Stars (Our Journey) */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -90,8 +90,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
           </div>
 
           <div className="rounded-xl p-6 md:p-8" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
-            {/* Lead statement */}
-            <p className="text-base md:text-lg font-medium leading-relaxed mb-4" style={{ color: NAVY }}>
+            <p className="text-base md:text-lg leading-relaxed mb-4" style={{ color: TEXT }}>
               {t('journey.lead')}
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>
@@ -100,31 +99,33 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
 
             {/* Pain points */}
             <div className="rounded-xl p-5 mb-8" style={{ backgroundColor: STEP_RED_LIGHT }}>
-              <p className="text-sm font-semibold mb-3 flex items-center gap-2" style={{ color: STEP_RED }}>
+              <p className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: STEP_RED }}>
                 <AlertCircle size={16} />
                 {t('journey.painPointsTitle')}
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {painPoints.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: TEXT }}>
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: STEP_RED }} />
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: TEXT }}>
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: STEP_RED }} />
                     {point}
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Conclusion callout */}
-            <p className="text-base font-semibold leading-relaxed mb-8 pl-4 border-l-4" style={{ color: NAVY, borderColor: GOLD }}>
-              {t('journey.conclusion')}
-            </p>
+            {/* Conclusion */}
+            <div className="pl-4 border-l-4 mb-8" style={{ borderColor: GOLD }}>
+              <p className="text-base font-semibold leading-relaxed" style={{ color: NAVY }}>
+                {t('journey.conclusion')}
+              </p>
+            </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {stats.map(({ value, labelKey, icon: Icon }) => (
                 <div key={labelKey} className="text-center p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                   <Icon size={24} className="mx-auto mb-2" style={{ color: GOLD }} />
-                  {value && <div className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{value}</div>}
+                  {value && <div className="text-xl md:text-2xl font-bold" style={{ color: NAVY }}>{value}</div>}
                   <div className="text-xs mt-1" style={{ color: TEXT_MID }}>{t(labelKey)}</div>
                 </div>
               ))}
@@ -133,7 +134,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
-      {/* What We Offer */}
+      {/* A More Structured, Transparent Approach */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -143,33 +144,32 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('offer.title')}</h2>
           </div>
 
-          {/* Lead + goal */}
-          <p className="text-base md:text-lg font-medium mb-2" style={{ color: NAVY }}>{t('offer.lead')}</p>
+          <p className="text-base md:text-lg font-medium mb-2" style={{ color: TEXT }}>{t('offer.lead')}</p>
           <p className="text-base mb-8" style={{ color: TEXT_MID }}>{t('offer.goal')}</p>
 
-          {/* Structured system items */}
-          <p className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: STEP_TEAL }}>
-            {t('offer.systemTitle')}
-          </p>
-          <div className="space-y-3 mb-10">
+          <p className="text-sm font-semibold mb-5" style={{ color: NAVY }}>{t('offer.systemTitle')}</p>
+
+          <div className="space-y-4 mb-8">
             {systemItems.map((item, i) => {
               const Icon = SYSTEM_ICONS[i % SYSTEM_ICONS.length];
               return (
-                <div key={i} className="flex items-start gap-4 p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: STEP_TEAL_LIGHT }}>
-                    <Icon size={18} style={{ color: STEP_TEAL }} />
+                <div key={i} className="flex items-start gap-4 p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: STEP_TEAL_LIGHT }}>
+                    <Icon size={20} style={{ color: STEP_TEAL }} />
                   </div>
                   <div>
-                    <p className="font-semibold text-sm mb-0.5" style={{ color: NAVY }}>{item.title}</p>
-                    <p className="text-sm" style={{ color: TEXT_MID }}>{item.desc}</p>
+                    <p className="font-semibold mb-1" style={{ color: NAVY }}>{item.title}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{item.desc}</p>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Services grid */}
-          <div className="grid sm:grid-cols-2 gap-4">
+          <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t('offer.body')}</p>
+
+          {/* Services */}
+          <div className="grid sm:grid-cols-2 gap-4 mt-10">
             {SERVICES.map(({ key, icon: Icon }) => (
               <div key={key} className="flex items-start gap-3 p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                 <Icon size={20} className="mt-0.5 flex-shrink-0" style={{ color: STEP_GREEN }} />
@@ -188,7 +188,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
-      {/* Our Values / Managing Expectations */}
+      {/* Managing Details and Expectations */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -198,27 +198,28 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('values.title')}</h2>
           </div>
 
-          <p className="text-base mb-6" style={{ color: TEXT_MID }}>{t('values.lead')}</p>
+          <p className="text-base leading-relaxed mb-6" style={{ color: TEXT }}>{t('values.lead')}</p>
 
-          {/* Guarantee block */}
-          <div className="rounded-xl p-5 md:p-6 mb-8" style={{ backgroundColor: STEP_GREEN_LIGHT }}>
+          <div className="rounded-xl p-5 md:p-6 mb-6" style={{ backgroundColor: STEP_GREEN_LIGHT }}>
             <p className="font-semibold mb-4" style={{ color: STEP_GREEN }}>{t('values.guarantee')}</p>
             <ul className="space-y-3">
               {guaranteeItems.map((item, i) => (
-                <li key={i} className="flex items-start gap-3" style={{ color: TEXT }}>
+                <li key={i} className="flex items-start gap-3">
                   <CheckCircle size={18} className="mt-0.5 flex-shrink-0" style={{ color: STEP_GREEN }} />
-                  <span className="text-sm md:text-base">{item}</span>
+                  <span className="text-sm md:text-base leading-relaxed" style={{ color: TEXT }}>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <p className="text-base font-semibold pl-4 border-l-4 mb-8" style={{ color: NAVY, borderColor: GOLD }}>
-            {t('values.closing')}
-          </p>
+          <div className="pl-4 border-l-4" style={{ borderColor: GOLD }}>
+            <p className="text-base font-medium leading-relaxed" style={{ color: NAVY }}>
+              {t('values.closing')}
+            </p>
+          </div>
 
           {/* Values cards */}
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-4 mt-10">
             {VALUES.map(({ key, icon: Icon, accent, accentLight }) => (
               <div key={key} className="p-5 rounded-xl" style={{ boxShadow: neu(), backgroundColor: SURFACE }}>
                 <div className="flex items-center gap-3 mb-3">
@@ -227,14 +228,14 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
                   </div>
                   <h3 className="font-semibold" style={{ color: NAVY }}>{t(`values.items.${key}.title`)}</h3>
                 </div>
-                <p className="text-sm" style={{ color: TEXT_MID }}>{t(`values.items.${key}.desc`)}</p>
+                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`values.items.${key}.desc`)}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Built for Homeowners Who Value Peace of Mind */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
@@ -244,18 +245,15 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('whyUs.title')}</h2>
           </div>
 
-          <p className="text-base md:text-lg font-medium mb-6" style={{ color: NAVY }}>{t('whyUs.lead')}</p>
+          <p className="text-base leading-relaxed mb-6" style={{ color: TEXT }}>{t('whyUs.lead')}</p>
 
-          {/* Choose items */}
           <div className="rounded-xl p-5 md:p-6 mb-6" style={{ boxShadow: neu(), backgroundColor: CARD }}>
-            <p className="text-sm font-semibold uppercase tracking-wider mb-4" style={{ color: GOLD }}>
-              {t('whyUs.chooseTitle')}
-            </p>
+            <p className="font-semibold mb-4" style={{ color: NAVY }}>{t('whyUs.chooseTitle')}</p>
             <ul className="space-y-3">
               {chooseItems.map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: GOLD_PALE }}>
-                    <Star size={12} style={{ color: GOLD }} />
+                    <CheckCircle size={14} style={{ color: GOLD }} />
                   </div>
                   <span className="text-sm md:text-base font-medium" style={{ color: TEXT }}>{item}</span>
                 </li>
@@ -263,16 +261,11 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             </ul>
           </div>
 
-          <p className="text-base mb-4" style={{ color: TEXT_MID }}>{t('whyUs.specialise')}</p>
-
-          {/* Philosophy callout */}
-          <div className="rounded-xl p-5 text-center" style={{ backgroundColor: NAVY }}>
-            <p className="text-base md:text-lg font-semibold text-white">{t('whyUs.philosophy')}</p>
-          </div>
+          <p className="text-base leading-relaxed mb-8" style={{ color: TEXT_MID }}>{t('whyUs.specialise')}</p>
 
           {/* Badges */}
           {badges.length > 0 && (
-            <div className="grid sm:grid-cols-3 gap-3 mt-6">
+            <div className="grid sm:grid-cols-3 gap-3">
               {badges.map((badge) => (
                 <div key={badge.en} className="flex items-center gap-2 p-3 rounded-lg text-sm font-medium" style={{ backgroundColor: GOLD_PALE, color: NAVY }}>
                   <Award size={16} className="flex-shrink-0" style={{ color: GOLD }} />
@@ -281,6 +274,18 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Our Philosophy */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">{t('philosophy.title')}</h2>
+          <p className="text-base mb-6 text-white/70">{t('philosophy.lead')}</p>
+          <blockquote className="text-xl md:text-2xl font-bold mb-6" style={{ color: GOLD }}>
+            {t('philosophy.quote')}
+          </blockquote>
+          <p className="text-base text-white/70">{t('philosophy.closing')}</p>
         </div>
       </section>
 
@@ -293,7 +298,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             </div>
             <h2 className="text-2xl md:text-3xl font-bold" style={{ color: NAVY }}>{t('areas.title')}</h2>
           </div>
-          <p className="text-base md:text-lg leading-relaxed mb-6" style={{ color: TEXT }}>{t('areas.description')}</p>
+          <p className="text-base leading-relaxed mb-6" style={{ color: TEXT }}>{t('areas.description')}</p>
           <div className="flex flex-wrap gap-2">
             {SERVICE_AREA_CITIES.map((city) => (
               <Link key={city} href="/areas" className="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:opacity-80" style={{ boxShadow: neu(), backgroundColor: SURFACE, color: NAVY }}>
@@ -304,7 +309,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center" style={{ color: NAVY }}>{t('faq.title')}</h2>
@@ -323,15 +328,15 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
       </section>
 
       {/* CTA */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">{t('cta.title')}</h2>
-          <p className="text-base mb-8" style={{ color: 'rgba(255,255,255,0.8)' }}>{t('cta.body')}</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: NAVY }}>{t('cta.title')}</h2>
+          <p className="text-base mb-8" style={{ color: TEXT_MID }}>{t('cta.body')}</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors" style={{ backgroundColor: GOLD, color: '#fff' }}>
               {t('cta.getQuote')} <ArrowRight size={16} />
             </Link>
-            <a href={`tel:${company.phone}`} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border transition-colors" style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
+            <a href={`tel:${company.phone}`} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border transition-colors" style={{ borderColor: NAVY, color: NAVY }}>
               <Phone size={16} /> {company.phone}
             </a>
           </div>

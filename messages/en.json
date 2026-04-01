@@ -25,7 +25,7 @@
     "toggleAreas": "Toggle areas menu",
     "showroom": "Showroom",
     "guides": "Guides",
-    "about": "About",
+    "about": "About Us",
     "financing": "Financing",
     "beforeAfter": "Before & After",
     "features": "Features"
@@ -1709,19 +1709,19 @@
   "aboutPage": {
     "hero": {
       "title": "About Reno Stars",
-      "subtitle": "Vancouver’s renovation company built on transparency, structured process, and real accountability, serving homeowners across Metro Vancouver since 2021."
+      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
     },
     "journey": {
-      "title": "Our Journey",
+      "title": "About Reno Stars",
       "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years on renovation platforms connecting homeowners with contractors. We saw thousands of projects, and more importantly, where things go wrong.",
-      "painPointsTitle": "The frustrations we kept seeing:",
+      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
+      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
+      "painPointsTitle": "We understand the common frustrations homeowners face.",
       "painPoints": [
-        "Quotes that grow with hidden items after signing",
-        "Poor communication and delayed responses",
-        "Timelines that keep slipping without explanation",
-        "Inconsistent quality due to unstable crews"
+        "Quotes that look attractive at first but grow with hidden items later.",
+        "Poor communication and delayed responses.",
+        "Uncertain timelines and projects dragging on.",
+        "Inconsistent workmanship due to unstable crews."
       ],
       "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
     },
@@ -1733,7 +1733,7 @@
       "wcbCoverage": "Active WCB Coverage"
     },
     "offer": {
-      "title": "What We Offer",
+      "title": "A More Structured, Transparent Approach",
       "viewAll": "View All Services",
       "services": {
         "kitchen": {
@@ -1753,35 +1753,35 @@
           "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
         }
       },
-      "body": "We did not just start another renovation company. We rebuilt the process. From the beginning, our goal has been simple: make renovation predictable, transparent, and stress-free for homeowners across Metro Vancouver.\n\nEvery project is supported by a structured system: detailed contracts that clearly define scope, responsibilities, and key materials (a typical bathroom renovation may include over 20 clearly listed items); clear payment milestones tied to progress with no surprises; dedicated office coordination for material selection and fast communication; reliable scheduling so your project moves forward as planned; and clearly specified waterproofing and quality standards for every critical element. We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
+      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
       "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "Our goal from day one: make renovation predictable, transparent, and stress-free.",
-      "systemTitle": "Every project runs on a structured system:",
+      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
+      "systemTitle": "Every project is supported by a structured system.",
       "systemItems": [
         {
           "title": "Detailed Contracts",
-          "desc": "20+ clearly listed items covering scope, responsibilities, and key materials, no vague line items."
+          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
         },
         {
-          "title": "Milestone Payments",
-          "desc": "Payments tied to progress. Each stage reviewed and signed off before moving forward."
+          "title": "Clear Payment Milestones",
+          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
         },
         {
           "title": "Dedicated Coordination",
-          "desc": "Office team responds quickly, helps with material selection, keeps everything on track."
+          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
         },
         {
           "title": "Reliable Scheduling",
-          "desc": "We control our project load so yours moves forward as planned. Not when it is convenient for us."
+          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
         },
         {
-          "title": "Quality Standards",
-          "desc": "Materials, brands, and application scope clearly specified, especially for critical work like waterproofing."
+          "title": "Quality and Waterproofing Standards",
+          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
         }
       ]
     },
     "values": {
-      "title": "Our Values",
+      "title": "Managing Details and Expectations",
       "items": {
         "integrity": {
           "title": "Integrity",
@@ -1801,28 +1801,25 @@
         }
       },
       "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation has moving parts. Some things, like supplier timelines, can be outside our control.",
-      "guarantee": "What we can always guarantee is our response:",
+      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
+      "guarantee": "What we can guarantee is our response.",
       "guaranteeItems": [
-        "We communicate early, before problems become surprises",
-        "We adjust quickly when things shift",
-        "You always know where your project stands"
+        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
       ],
-      "closing": "Our goal is not to promise a perfect process. It is to deliver a well-managed one."
+      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
     },
     "whyUs": {
-      "title": "Why Choose Us",
+      "title": "Built for Homeowners Who Value Peace of Mind",
       "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest-priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want:",
+      "lead": "We are not the lowest priced option, and we do not aim to be.",
+      "chooseTitle": "Our clients choose us because they want",
       "chooseItems": [
-        "A clear process from quote to completion",
-        "Honest communication. Not excuses",
-        "Reliable timelines that actually hold",
-        "A team that takes full responsibility"
+        "A clear process",
+        "Honest communication",
+        "Reliable timelines",
+        "A team that takes responsibility"
       ],
-      "specialise": "We specialise in full home renovations, kitchens, bathrooms, and commercial projects, where coordination and accountability make all the difference.",
-      "philosophy": "We approach every project with one mindset: treat every home as if it were our own."
+      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
     },
     "areas": {
       "title": "Service Areas",
@@ -1845,6 +1842,12 @@
       "title": "Ready to Start Your Renovation?",
       "getQuote": "Get a Free Quote",
       "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+    },
+    "philosophy": {
+      "title": "Our Philosophy",
+      "lead": "We approach every project with one simple mindset.",
+      "quote": "Treat every home as if it were our own.",
+      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
     }
   },
   "reviewsPage": {
