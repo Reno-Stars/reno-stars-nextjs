@@ -33,9 +33,11 @@ export default function FeaturesPage({ company }: FeaturesPageProps) {
   const t = useTranslations('features');
 
   const trustBadges = useMemo(() => [
-    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('foundation.items.experience.title') },
-    { type: 'stat' as const, value: company.projectsCompleted, label: `${company.projectsCompleted} ${t('foundation.items.rating.title')}` },
-    { type: 'stat' as const, value: company.liabilityCoverage, label: company.liabilityCoverage },
+    // Strip the numeric prefix (e.g. "20+ ") from the title so value + label don't duplicate
+    { type: 'stat' as const, value: `${company.yearsExperience}+`, label: t('foundation.items.experience.title').replace(`${company.yearsExperience}+ `, '') },
+    { type: 'stat' as const, value: company.projectsCompleted, label: t('foundation.items.rating.title') },
+    // Label was incorrectly set to company.liabilityCoverage ("$5M") — show coverage context instead
+    { type: 'stat' as const, value: company.liabilityCoverage, label: 'CGL Insurance' },
     { type: 'rating' as const, label: '5-Star Rating' },
   ], [company, t]);
 
