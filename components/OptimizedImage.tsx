@@ -116,7 +116,34 @@ export default function OptimizedImage({
       style={fill ? undefined : { width, height }}
       aria-hidden={ariaHidden}
     >
-      {/* Thumbnail (LQIP) — always loaded, blurred, fades out when full image ready */}
+      {/* Shimmer skeleton — visible while full image is loading */}
+      {!fullLoaded && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 2,
+            overflow: 'hidden',
+            borderRadius: 'inherit',
+            background: 'linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%)',
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 1.4s infinite linear',
+            opacity: fullLoaded ? 0 : 1,
+            transition: 'opacity 0.3s ease-out',
+          }}
+        />
+      )}
+
+      {/* Shimmer keyframes — injected once */}
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+
+      {/* Thumbnail (LQIP) — blurred preview, fades out when full image ready */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={thumbSrc}
@@ -137,7 +164,7 @@ export default function OptimizedImage({
         }}
       />
 
-      {/* Full image — loads in background, fades in on top */}
+      {/* Full image — fades in on top when loaded */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={fullSrc}
