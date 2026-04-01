@@ -11,7 +11,7 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400; // cache for 24 hours
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
