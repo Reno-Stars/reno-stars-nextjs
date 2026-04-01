@@ -43,7 +43,8 @@ export default function OptimizedImage({
   onError: onErrorProp,
   placeholder = 'blur',
 }: OptimizedImageProps) {
-  const [fullLoaded, setFullLoaded] = useState(false);
+  const [thumbLoaded, setThumbLoaded] = useState(false); // shimmer hides when thumb loads
+  const [fullLoaded, setFullLoaded] = useState(false);   // blur fades when full loads
   const [isInView, setIsInView] = useState(priority);
   const shimmerTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -108,12 +109,12 @@ export default function OptimizedImage({
     ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
     : undefined;
 
-  // Safety net: if image never loads after 8s, remove shimmer anyway
+  // Safety net: if thumb never loads after 3s, hide shimmer anyway
   useEffect(() => {
-    if (!isInView || fullLoaded) return;
-    shimmerTimeoutRef.current = setTimeout(() => setFullLoaded(true), 8000);
+    if (!isInView || thumbLoaded) return;
+    shimmerTimeoutRef.current = setTimeout(() => setThumbLoaded(true), 3000);
     return () => clearTimeout(shimmerTimeoutRef.current);
-  }, [isInView, fullLoaded]);
+  }, [isInView, thumbLoaded]);
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -123,7 +124,8 @@ export default function OptimizedImage({
       img.srcset = '';
       img.src = src;
     } else {
-      // Second failure: image completely broken — hide shimmer anyway
+      // Second failure: image completely broken — hide everything
+      setThumbLoaded(true);
       setFullLoaded(true);
       onErrorProp?.();
     }
@@ -136,8 +138,8 @@ export default function OptimizedImage({
       style={fill ? { isolation: 'isolate' } : { width, height, isolation: 'isolate' }}
       aria-hidden={ariaHidden}
     >
-      {/* Shimmer skeleton — visible while full image is loading */}
-      {!fullLoaded && (
+      {/* Shimmer — only shown until thumb loads (~instant for R2, <300ms) */}
+      {!thumbLoaded && (
         <div
           aria-hidden="true"
           style={{
@@ -149,7 +151,6 @@ export default function OptimizedImage({
             background: 'linear-gradient(90deg, #d8d8d8 25%, #e8e8e8 50%, #d8d8d8 75%)',
             backgroundSize: '200% 100%',
             animation: 'shimmer 1.4s infinite linear',
-            opacity: fullLoaded ? 0 : 1,
             transition: 'opacity 0.3s ease-out',
           }}
         />
@@ -163,7 +164,7 @@ export default function OptimizedImage({
         }
       `}</style>
 
-      {/* Thumbnail (LQIP) — blurred preview, fades out when full image ready */}
+      {/* Thumb — blurred preview, shows as soon as it loads, fades out when full image ready */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={thumbSrc}
@@ -182,6 +183,8 @@ export default function OptimizedImage({
           transition: 'opacity 0.4s ease-out',
           pointerEvents: 'none',
         }}
+        onLoad={() => setThumbLoaded(true)}
+        onError={() => setThumbLoaded(true)} // thumb failed → still hide shimmer
       />
 
       {/* Full image — fades in on top when loaded */}
