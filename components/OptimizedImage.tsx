@@ -1,11 +1,10 @@
 'use client';
 
 /**
- * OptimizedImage — drop-in replacement for next/image with performance optimizations:
- * - Self-hosted /api/image for resizing + WebP conversion
- * - Responsive srcSet at standard breakpoints
- * - Blur placeholder for smooth loading
- * - Lazy loading with intersection observer
+ * OptimizedImage — drop-in with LQIP (Low Quality Image Placeholder):
+ * 1. Instantly shows a tiny 20px thumbnail (blurred) — loads in ~100ms even cold
+ * 2. Loads the full-res image in the background
+ * 3. Crossfades from thumbnail → full image when ready
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -25,7 +24,6 @@ interface OptimizedImageProps {
   style?: React.CSSProperties;
   'aria-hidden'?: boolean | 'true' | 'false';
   onError?: () => void;
-  /** Show blur placeholder while loading (default: true) */
   placeholder?: 'blur' | 'empty';
 }
 
@@ -45,77 +43,61 @@ export default function OptimizedImage({
   onError: onErrorProp,
   placeholder = 'blur',
 }: OptimizedImageProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority); // Priority images load immediately
+  const [fullLoaded, setFullLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(priority);
   const imgRef = useRef<HTMLImageElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const resolvedLoading = priority ? 'eager' : (loading || 'lazy');
   const resolvedDecoding = priority ? 'sync' : 'async';
-  
-  // When fill=true, add positioning classes but let className control object-fit
-  // Default to object-cover if no object-* class is specified
+
   const fillClassName = fill ? 'absolute inset-0 w-full h-full' : '';
   const hasObjectFit = className.includes('object-');
   const defaultObjectFit = fill && !hasObjectFit ? 'object-cover' : '';
   const combinedClassName = `${fillClassName} ${defaultObjectFit} ${className}`.trim();
-  
-  const fillStyle = style;
 
-  // Intersection observer for lazy loading
+  // Intersection observer — watch wrapper div for LQIP, img for simple path
   useEffect(() => {
-    if (priority || !imgRef.current) return;
-
+    if (priority) return;
+    const el = wrapperRef.current || imgRef.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '50px' } // Start loading 50px before visible
+      ([entry]) => { if (entry.isIntersecting) { setIsInView(true); observer.disconnect(); } },
+      { rootMargin: '50px' }
     );
-
-    observer.observe(imgRef.current);
+    observer.observe(el);
     return () => observer.disconnect();
   }, [priority]);
 
-  // For relative paths (e.g. /worksafe-bc-logo.jpg), use regular img
+  // Non-external images (local paths like /logo.png) — simple img, no LQIP
   const isExternal = src.startsWith('http://') || src.startsWith('https://');
-
-  if (!isExternal) {
+  if (!isExternal || placeholder === 'empty') {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        ref={imgRef}
-        src={src}
+        ref={imgRef as React.RefObject<HTMLImageElement>}
+        src={isExternal ? (isInView ? buildOptimizedUrl(src, 828, quality) : undefined) : src}
+        srcSet={isExternal && isInView ? buildSrcSet(src, quality) : undefined}
+        sizes={isExternal ? sizes : undefined}
         alt={alt}
-        width={width}
-        height={height}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
         loading={resolvedLoading}
         decoding={resolvedDecoding}
+        fetchPriority={priority ? 'high' : undefined}
         className={combinedClassName}
-        style={fillStyle}
+        style={style}
         aria-hidden={ariaHidden}
         onError={onErrorProp}
-        onLoad={() => setIsLoaded(true)}
       />
     );
   }
 
-  // Blur placeholder style
-  const placeholderStyle = placeholder === 'blur' && !isLoaded
-    ? {
-        filter: 'blur(10px)',
-        transform: 'scale(1.1)',
-        transition: 'filter 0.3s ease-out, transform 0.3s ease-out',
-      }
-    : {
-        filter: 'blur(0)',
-        transform: 'scale(1)',
-        transition: 'filter 0.3s ease-out, transform 0.3s ease-out',
-      };
+  // LQIP: tiny 20px thumbnail URL
+  const thumbSrc = buildOptimizedUrl(src, 20, 30); // 20px wide, low quality = tiny file
+  const fullSrc = isInView ? buildOptimizedUrl(src, 828, quality) : undefined;
+  const fullSrcSet = isInView ? buildSrcSet(src, quality) : undefined;
 
-  // Fall back to original src if the optimized version fails to load.
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
     if (!img.dataset.fallback) {
@@ -127,32 +109,55 @@ export default function OptimizedImage({
     }
   };
 
-  const handleLoad = () => {
-    setIsLoaded(true);
-  };
-
-  // Don't render src/srcset until in view (for non-priority images)
-  const imgSrc = isInView ? buildOptimizedUrl(src, 828, quality) : undefined;
-  const imgSrcSet = isInView ? buildSrcSet(src, quality) : undefined;
-
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      ref={imgRef}
-      src={imgSrc}
-      srcSet={imgSrcSet}
-      sizes={sizes}
-      alt={alt}
-      width={fill ? undefined : width}
-      height={fill ? undefined : height}
-      loading={resolvedLoading}
-      decoding={resolvedDecoding}
-      fetchPriority={priority ? 'high' : undefined}
-      className={combinedClassName}
-      style={{ ...fillStyle, ...placeholderStyle }}
+    <div
+      ref={wrapperRef}
+      className={fill ? 'absolute inset-0' : 'relative'}
+      style={fill ? undefined : { width, height }}
       aria-hidden={ariaHidden}
-      onError={handleError}
-      onLoad={handleLoad}
-    />
+    >
+      {/* Thumbnail (LQIP) — always loaded, blurred, fades out when full image ready */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={thumbSrc}
+        alt=""
+        aria-hidden="true"
+        className={combinedClassName}
+        style={{
+          ...style,
+          position: fill ? undefined : 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          filter: 'blur(20px)',
+          transform: 'scale(1.05)',
+          opacity: fullLoaded ? 0 : 1,
+          transition: 'opacity 0.4s ease-out',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Full image — loads in background, fades in on top */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={fullSrc}
+        srcSet={fullSrcSet}
+        sizes={sizes}
+        alt={alt}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
+        loading={resolvedLoading}
+        decoding={resolvedDecoding}
+        fetchPriority={priority ? 'high' : undefined}
+        className={combinedClassName}
+        style={{
+          ...style,
+          opacity: fullLoaded ? 1 : 0,
+          transition: 'opacity 0.4s ease-out',
+        }}
+        onError={handleError}
+        onLoad={() => setFullLoaded(true)}
+      />
+    </div>
   );
 }
