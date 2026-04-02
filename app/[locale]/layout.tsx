@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import MicrosoftClarity from '@/components/MicrosoftClarity';
 import GoogleAdsConversion from '@/components/GoogleAdsConversion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -61,6 +62,7 @@ export default async function LocaleLayout({
         {/* RSS feed discovery */}
         <link rel="alternate" type="application/rss+xml" title={locale === 'zh' ? 'Reno Stars 博客 RSS' : 'Reno Stars Blog RSS'} href={`/${locale}/feed.xml/`} />
         <GoogleAnalytics />
+        <MicrosoftClarity />
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <GoogleAdsConversion />

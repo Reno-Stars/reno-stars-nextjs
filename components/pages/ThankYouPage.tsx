@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { CheckCircle } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -8,12 +9,29 @@ import {
   GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
+const AW_CONVERSION_ID = process.env.NEXT_PUBLIC_AW_CONVERSION_ID;
+const AW_CONVERSION_LABEL = process.env.NEXT_PUBLIC_AW_CONVERSION_LABEL;
+
 interface ThankYouPageProps {
   locale: Locale;
 }
 
 export default function ThankYouPage({ locale: _locale }: ThankYouPageProps) {
   const t = useTranslations();
+
+  // Fire Google Ads conversion on thank-you page load
+  useEffect(() => {
+    if (AW_CONVERSION_ID && AW_CONVERSION_LABEL && typeof window !== 'undefined') {
+      const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          send_to: `${AW_CONVERSION_ID}/${AW_CONVERSION_LABEL}`,
+          value: 100.0,
+          currency: 'CAD',
+        });
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: SURFACE }}>
