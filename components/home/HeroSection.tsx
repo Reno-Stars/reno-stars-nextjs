@@ -129,9 +129,15 @@ export default function HeroSection({ company, googleRating, translations: t }: 
                   }}
                   aria-hidden={!active}
                 >
-                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-                    {s.title}
-                  </h1>
+                  {i === 0 ? (
+                    <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
+                      {s.title}
+                    </h1>
+                  ) : (
+                    <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-white" role="heading" aria-level={2}>
+                      {s.title}
+                    </p>
+                  )}
                   <p className="text-base lg:text-lg leading-relaxed text-white/80">
                     {s.description}
                   </p>
