@@ -11,9 +11,9 @@ import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
+  NAVY, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
-  STEP_GREEN, STEP_GREEN_LIGHT, STEP_RED, STEP_RED_LIGHT,
+  STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
 
 const VALUES = [
@@ -98,15 +98,15 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
             </p>
 
             {/* Pain points */}
-            <div className="rounded-xl p-5 mb-8" style={{ backgroundColor: STEP_RED_LIGHT }}>
-              <p className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: STEP_RED }}>
+            <div className="rounded-xl p-5 mb-8" style={{ backgroundColor: NAVY_PALE }}>
+              <p className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: TEXT_MID }}>
                 <AlertCircle size={16} />
                 {t('journey.painPointsTitle')}
               </p>
               <ul className="space-y-3">
                 {painPoints.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: TEXT }}>
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: STEP_RED }} />
+                  <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: TEXT_MID }} />
                     {point}
                   </li>
                 ))}
