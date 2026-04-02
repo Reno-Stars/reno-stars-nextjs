@@ -126,7 +126,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
                 <div key={labelKey} className="text-center p-4 rounded-xl" style={{ boxShadow: neu(), backgroundColor: CARD }}>
                   <Icon size={24} className="mx-auto mb-2" style={{ color: GOLD }} />
                   {value && <div className="text-xl md:text-2xl font-bold" style={{ color: NAVY }}>{value}</div>}
-                  <div className={`text-xs mt-1${!value ? ' font-semibold' : ''}`} style={{ color: TEXT_MID }}>{t(labelKey)}</div>
+                  <div className={`mt-1 ${!value ? 'text-sm font-bold' : 'text-xs'}`} style={{ color: !value ? NAVY : TEXT_MID }}>{t(labelKey)}</div>
                 </div>
               ))}
             </div>
