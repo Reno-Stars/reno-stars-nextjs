@@ -8,9 +8,7 @@ import type { Locale } from '@/i18n/config';
 import {
   GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
-
-const AW_CONVERSION_ID = process.env.NEXT_PUBLIC_AW_CONVERSION_ID;
-const AW_CONVERSION_LABEL = process.env.NEXT_PUBLIC_AW_CONVERSION_LABEL;
+import { trackMetaEvent } from '@/components/MetaPixel';
 
 interface ThankYouPageProps {
   locale: Locale;
@@ -19,18 +17,9 @@ interface ThankYouPageProps {
 export default function ThankYouPage({ locale: _locale }: ThankYouPageProps) {
   const t = useTranslations();
 
-  // Fire Google Ads conversion on thank-you page load
+  // Fire Meta Pixel Lead event on thank-you page
   useEffect(() => {
-    if (AW_CONVERSION_ID && AW_CONVERSION_LABEL && typeof window !== 'undefined') {
-      const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
-      if (typeof gtag === 'function') {
-        gtag('event', 'conversion', {
-          send_to: `${AW_CONVERSION_ID}/${AW_CONVERSION_LABEL}`,
-          value: 100.0,
-          currency: 'CAD',
-        });
-      }
-    }
+    trackMetaEvent('Lead', { value: 100, currency: 'CAD' });
   }, []);
 
   return (

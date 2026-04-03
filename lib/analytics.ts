@@ -59,11 +59,25 @@ export function trackFormSubmission(
 
 /**
  * Track a phone number click event.
+ * Also fires a Google Ads conversion if AW conversion ID/label are set.
  */
 export function trackPhoneClick(phoneNumber: string): void {
   trackEvent('phone_click', {
     phone_number: phoneNumber,
   });
+
+  // Also fire Google Ads call conversion
+  const awId = process.env.NEXT_PUBLIC_AW_CONVERSION_ID;
+  const awLabel = process.env.NEXT_PUBLIC_AW_CALL_CONVERSION_LABEL;
+  if (awId && awLabel && isAnalyticsEnabled()) {
+    try {
+      window.gtag?.('event', 'conversion', {
+        send_to: `${awId}/${awLabel}`,
+      });
+    } catch {
+      // Silently ignore
+    }
+  }
 }
 
 /**
