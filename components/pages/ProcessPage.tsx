@@ -300,53 +300,6 @@ export default function ProcessPage({ company, locale, googleRating }: ProcessPa
           <TreeSvg className="absolute top-[85%] right-[10%] w-12 h-16 opacity-20" />
         </div>
 
-        {/* Hero Section Animations */}
-      <style>{`
-        @keyframes heroFadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes heroGlow {
-          0%, 100% { opacity: 0.06; transform: translate(-50%, -50%) scale(1); }
-          50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.08); }
-        }
-        @keyframes heroFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-        @keyframes heroStar {
-          0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
-          50% { opacity: 0.6; transform: scale(1.15) rotate(8deg); }
-        }
-        @keyframes heroDividerGrow {
-          from { width: 0; }
-          to { width: 100%; }
-        }
-        .hero-fade-up { animation: heroFadeUp 0.8s ease-out both; }
-        .hero-fade-up-1 { animation: heroFadeUp 0.8s ease-out 0.1s both; }
-        .hero-fade-up-2 { animation: heroFadeUp 0.8s ease-out 0.3s both; }
-        .hero-fade-up-3 { animation: heroFadeUp 0.8s ease-out 0.5s both; }
-        .hero-fade-up-4 { animation: heroFadeUp 0.8s ease-out 0.7s both; }
-        .hero-fade-up-5 { animation: heroFadeUp 0.8s ease-out 0.9s both; }
-        .hero-glow { animation: heroGlow 6s ease-in-out infinite; }
-        .hero-float { animation: heroFloat 4s ease-in-out infinite; }
-        .hero-float-delay { animation: heroFloat 5s ease-in-out 1s infinite; }
-        .hero-star-pulse { animation: heroStar 3s ease-in-out infinite; }
-        .hero-star-pulse-delay { animation: heroStar 4s ease-in-out 1.5s infinite; }
-        .hero-divider-line {
-          animation: heroDividerGrow 1s ease-out 0.6s both;
-          overflow: hidden;
-        }
-        .poster-capturing [data-hero-animated="entrance"] {
-          animation: none !important;
-          opacity: 1 !important;
-          transform: none !important;
-        }
-        .poster-capturing [data-hero-animated="decorative"] {
-          animation: none !important;
-        }
-      `}</style>
-
         {/* Hero Section */}
       <section
         className="py-14 sm:py-18 lg:py-22 px-4 sm:px-6 lg:px-8 relative overflow-hidden"

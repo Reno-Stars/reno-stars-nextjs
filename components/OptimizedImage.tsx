@@ -164,14 +164,6 @@ export default function OptimizedImage({
         />
       )}
 
-      {/* Shimmer keyframes — injected once */}
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
-
       {/* Thumb — blurred preview, shows as soon as it loads, fades out when full image ready */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

@@ -115,9 +115,6 @@ export default function MoveProjectDialog({
       onClose={handleCancel}
       data-move-dialog=""
     >
-      {/* Backdrop styling — scoped to this dialog via data attribute */}
-      <style>{`dialog[data-move-dialog][open]::backdrop { background: rgba(27,54,93,0.35); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }`}</style>
-
       {/* Header accent bar */}
       <div
         style={{
