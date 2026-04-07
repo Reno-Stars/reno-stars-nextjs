@@ -73,6 +73,15 @@ export default function OptimizedImage({
     return () => observer.disconnect();
   }, [priority]);
 
+  // Clear the fallback marker when src changes — otherwise the sticky
+  // dataset.fallback from a previous image short-circuits handleError for the
+  // new src and the new image gets hidden instead of trying its own fallback.
+  // Don't reset load state here: the cached-images effect below will correct
+  // it on the next render and avoiding the toggle prevents an opacity flicker.
+  useEffect(() => {
+    if (fullImgRef.current) delete fullImgRef.current.dataset.fallback;
+  }, [src]);
+
   // Non-external images (local paths like /logo.png) — simple img, no LQIP
   const isExternal = src.startsWith('http://') || src.startsWith('https://');
   if (!isExternal || placeholder === 'empty') {
