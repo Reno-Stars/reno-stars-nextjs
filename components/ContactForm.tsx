@@ -155,7 +155,6 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
               placeholder={t(f.placeholderKey)}
               required={f.required}
               disabled={isPending}
-              aria-required={f.required || undefined}
             />
           </div>
         ))}
@@ -174,7 +173,6 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
           placeholder={t('form.messagePlaceholder')}
           required
           disabled={isPending}
-          aria-required="true"
         />
       </div>
       <button

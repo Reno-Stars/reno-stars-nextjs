@@ -86,7 +86,6 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
               href={item.href!}
               className={className}
               style={cardStyle}
-              role="listitem"
               aria-label={altText}
             >
               {content}

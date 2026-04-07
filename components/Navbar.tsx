@@ -253,7 +253,6 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
             className="lg:hidden p-2 rounded-lg cursor-pointer"
             style={{ boxShadow: neu(3) }}
             aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
             aria-label={isMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
           >
             {isMenuOpen
