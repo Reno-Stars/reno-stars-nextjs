@@ -113,9 +113,7 @@ export default function ShowroomPage({ company, showroom, translations: t }: Sho
             <iframe
               title={t.mapTitle}
               src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: 400 }}
+              style={{ border: 0, width: '100%', height: '100%', minHeight: 400 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

@@ -56,9 +56,7 @@ export default function ContactSection({ company, areasText, translations: t }: 
             <div className="rounded-xl overflow-hidden" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
               <iframe
                 src={MAP_EMBED_URL}
-                width="100%"
-                height="200"
-                style={{ border: 0 }}
+                style={{ border: 0, width: '100%', height: 200 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

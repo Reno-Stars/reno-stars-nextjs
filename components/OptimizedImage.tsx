@@ -202,7 +202,7 @@ export default function OptimizedImage({
       <img
         src={fullSrc}
         srcSet={fullSrcSet}
-        sizes={sizes}
+        sizes={fullSrcSet ? sizes : undefined}
         alt={alt}
         width={fill ? undefined : width}
         height={fill ? undefined : height}

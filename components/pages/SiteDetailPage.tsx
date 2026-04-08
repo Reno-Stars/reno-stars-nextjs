@@ -247,6 +247,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               )}
               {/* Main Image */}
               <div
+                id="area-gallery-panel"
+                role="tabpanel"
                 className={`relative aspect-[4/3] rounded-2xl overflow-hidden${hasBothImages ? ' cursor-pointer' : ''}`}
                 style={{ boxShadow: neu(6), backgroundColor: SURFACE_ALT }}
                 onClick={hasBothImages ? handleImageClick : undefined}
@@ -448,6 +450,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 <button
                   role="tab"
                   aria-selected={areaFilter === 'all'}
+                  aria-controls="area-gallery-panel"
                   onClick={() => setAreaFilter('all')}
                   className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                   style={{
@@ -462,6 +465,7 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                     key={area.slug}
                     role="tab"
                     aria-selected={areaFilter === area.slug}
+                    aria-controls="area-gallery-panel"
                     onClick={() => setAreaFilter(area.slug)}
                     className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                     style={{
