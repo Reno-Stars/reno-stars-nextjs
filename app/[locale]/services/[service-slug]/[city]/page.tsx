@@ -55,10 +55,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tParams = { service: localizedService.title, area: localizedArea.name, years: company.yearsExperience, tagline };
   // Use tagline variant only if it fits within ~60 chars (Google truncation limit)
   const titleWithTagline = tagline ? t('titleWithTagline', tParams) : '';
-  const title = titleWithTagline && titleWithTagline.length <= 60
+  let title = titleWithTagline && titleWithTagline.length <= 60
     ? titleWithTagline
     : t('title', tParams);
-  const description = t('description', tParams);
+  let description = t('description', tParams);
+
+  // High-priority keyword overrides driven by the local rank tracker (2026-04-08).
+  // For specific city+service combos that are underperforming OR that hold the
+  // most search volume, hand-tune the title/meta to put the exact keyword in
+  // the title and boost CTR. EN only — Chinese keywords are different.
+  const overrideKey = `${serviceSlug}/${city}`;
+  const enOverrides: Record<string, { title: string; description: string }> = {
+    // Highest-volume term, currently rank ~15 (page 2) with +5 weekly trend.
+    'whole-house/vancouver': {
+      title: 'Home Renovations Vancouver: Real Projects & Costs (2026)',
+      description: 'Home renovations in Vancouver BC with real project pricing from $50K to $200K+. 18+ years experience, $5M CGL insurance, 3-year workmanship warranty. See completed Vancouver projects + get a free quote.',
+    },
+    // Currently NOT RANKING in Local Finder for "Coquitlam Home renovation company".
+    'whole-house/coquitlam': {
+      title: 'Coquitlam Home Renovation Company | Reno Stars',
+      description: 'Reno Stars is a Coquitlam home renovation company serving Burke Mountain, Maillardville, Westwood Plateau, Eagle Ridge, Austin Heights and Ranch Park. Whole-house renovations, permit-ready work, $5M CGL, 3-year warranty. Free quote.',
+    },
+    // Currently NOT RANKING in Local Finder for "Coquitlam kitchen renovation company".
+    'kitchen/coquitlam': {
+      title: 'Coquitlam Kitchen Renovation Company | Reno Stars',
+      description: 'Coquitlam kitchen renovation company — custom cabinets, quartz countertops, layout reconfiguration, full project management. Serving Burke Mountain to Maillardville with 18+ years experience and a 3-year workmanship warranty.',
+    },
+  };
+  if (locale === 'en' && enOverrides[overrideKey]) {
+    title = enOverrides[overrideKey].title;
+    description = enOverrides[overrideKey].description;
+  }
   const ogImage = service.image || siteImages.hero;
 
   return {
