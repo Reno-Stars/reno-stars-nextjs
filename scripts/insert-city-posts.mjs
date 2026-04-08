@@ -1,3 +1,4 @@
+/* global process, console */
 import pkg from 'pg';
 const { Pool } = pkg;
 const pool = new Pool({connectionString: 'postgresql://neondb_owner:npg_awTDCmisE5B2@ep-empty-frost-ad3adqc1-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require'});

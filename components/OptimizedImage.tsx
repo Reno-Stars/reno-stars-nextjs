@@ -82,6 +82,23 @@ export default function OptimizedImage({
     if (fullImgRef.current) delete fullImgRef.current.dataset.fallback;
   }, [src]);
 
+  // Handle images already in browser cache — onLoad won't fire for them.
+  // Must live before any early return so the hook runs on every code path
+  // (rules-of-hooks). On the simple-img branch the refs are null, so the
+  // checks no-op safely.
+  useEffect(() => {
+    if (thumbImgRef.current?.complete && thumbImgRef.current.naturalWidth > 0) setThumbLoaded(true);
+    if (fullImgRef.current?.complete && fullImgRef.current.naturalWidth > 0) setFullLoaded(true);
+  }, [src, isInView]);
+
+  // Safety net: if thumb never loads after 3s, hide shimmer anyway. Also
+  // hoisted above the early return for rules-of-hooks compliance.
+  useEffect(() => {
+    if (!isInView || thumbLoaded) return;
+    shimmerTimeoutRef.current = setTimeout(() => setThumbLoaded(true), 3000);
+    return () => clearTimeout(shimmerTimeoutRef.current);
+  }, [isInView, thumbLoaded]);
+
   // Non-external images (local paths like /logo.png) — simple img, no LQIP
   const isExternal = src.startsWith('http://') || src.startsWith('https://');
   if (!isExternal || placeholder === 'empty') {
@@ -119,19 +136,6 @@ export default function OptimizedImage({
   const fullSrcSet = isInView
     ? (useProcessed ? buildProcessedSrcSet(src) : buildSrcSet(src, quality))
     : undefined;
-
-  // Handle images already in browser cache — onLoad won't fire for them
-  useEffect(() => {
-    if (thumbImgRef.current?.complete && thumbImgRef.current.naturalWidth > 0) setThumbLoaded(true);
-    if (fullImgRef.current?.complete && fullImgRef.current.naturalWidth > 0) setFullLoaded(true);
-  });
-
-  // Safety net: if thumb never loads after 3s, hide shimmer anyway
-  useEffect(() => {
-    if (!isInView || thumbLoaded) return;
-    shimmerTimeoutRef.current = setTimeout(() => setThumbLoaded(true), 3000);
-    return () => clearTimeout(shimmerTimeoutRef.current);
-  }, [isInView, thumbLoaded]);
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
