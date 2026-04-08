@@ -291,8 +291,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </button>
           </div>
 
-          <div className="flex flex-col lg:flex-row overflow-hidden">
-            {/* Gallery + description */}
+          <div className="flex flex-col overflow-hidden">
+            {/* Gallery + description (full width — details stack below) */}
             <div className="flex-1 min-w-0 p-4 sm:p-6">
               <div
                 className={`relative overflow-hidden rounded-xl aspect-[16/10] mb-4 group${hasBothImages && !displayVideo ? ' cursor-pointer' : ''}`}
@@ -517,16 +517,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
             </div>
 
-            {/* Sidebar */}
+            {/* Details panel (now stacked below the full-width gallery — was a
+                lg:w-72 right sidebar). Top inset shadow visually separates it
+                from the gallery above. */}
             <div
-              className="w-full lg:w-72 flex-shrink-0 p-4 sm:p-6"
+              className="w-full p-4 sm:p-6"
               style={{
                 backgroundColor: SURFACE_ALT,
-                boxShadow: `inset 2px 0 4px -2px ${SH_DARK}`,
+                boxShadow: `inset 0 2px 4px -2px ${SH_DARK}`,
               }}
             >
-              {/* Key details — 2-col grid on mobile, single column on desktop sidebar */}
-              <div className="grid grid-cols-2 gap-3 lg:grid-cols-1 lg:gap-5">
+              {/* Key details — 2 cards on mobile, 4-up on tablet+ now that we
+                  have the full modal width to work with */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 {sidebarItems.map(({ icon: Icon, label, value }) =>
                   value ? (
                     <div key={label}>

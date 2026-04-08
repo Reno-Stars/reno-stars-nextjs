@@ -228,9 +228,9 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
       {/* Hero Section */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Gallery - Image Pairs */}
-            <div className="col-span-2">
+          <div className="space-y-10">
+            {/* Gallery - Image Pairs (full width) */}
+            <div>
               {/* Hero video (site walkthrough) */}
               {site.hero_video && (
                 <div className="mb-4 rounded-2xl overflow-hidden" style={{ boxShadow: neu(6) }}>
@@ -479,8 +479,8 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
               </div>
             </div>
 
-            {/* Details */}
-            <div>
+            {/* Details (max-w-4xl for comfortable reading width below the full-width gallery) */}
+            <div className="max-w-4xl mx-auto w-full">
               <div className="flex items-center gap-2 mb-2">
                 <Home className="w-5 h-5" style={{ color: GOLD }} />
                 <span className="text-sm font-medium" style={{ color: GOLD }}>
@@ -494,8 +494,9 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 {site.description}
               </p>
 
-              {/* Aggregated Stats */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+              {/* Aggregated Stats — 5 cards: 2-up mobile, 3-up tablet, 5-up desktop
+                  (now that we have full width to work with below the gallery) */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
                 {site.location_city && (
                   <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                     <div className="flex items-center gap-2 mb-1">
