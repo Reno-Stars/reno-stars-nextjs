@@ -229,9 +229,9 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       {/* Main Content */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Gallery - Image Pairs with Before/After Toggle */}
-            <div className="lg:col-span-2">
+          <div className="space-y-10">
+            {/* Gallery - Image Pairs with Before/After Toggle (full width) */}
+            <div>
               {/* Hero video (project walkthrough) */}
               {localizedProject.hero_video && (
                 <div className="mb-4 rounded-2xl overflow-hidden" style={{ boxShadow: neu(6) }}>
@@ -444,8 +444,8 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
               </div>
             </div>
 
-            {/* Details */}
-            <div>
+            {/* Details (max-w-4xl for comfortable reading width below the full-width gallery) */}
+            <div className="max-w-4xl mx-auto w-full">
               <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
                 {localizedProject.title}
               </h1>
@@ -453,8 +453,9 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                 {localizedProject.description}
               </p>
 
-              {/* Quick Info */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
+              {/* Quick Info — 4 stat cards laid out 2-up on mobile, 4-up on tablet+
+                  (now that the details section is wider than the old sidebar slot) */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
                 <div className="rounded-xl p-3 sm:p-4" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
                   <div className="flex items-center gap-2 mb-1">
                     <MapPin className="w-4 h-4" style={{ color: GOLD }} />
