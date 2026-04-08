@@ -182,10 +182,20 @@ const nextConfig: NextConfig = {
         destination: '/:locale/contact',
         permanent: true,
       },
-      // /features-benefits → /benefits
+      // /features-benefits → /features (the page was renamed Benefits → Features
+      // in commit 1d51206; the old destination /benefits no longer exists and
+      // was 404'ing, breaking the redirect chain).
       {
         source: '/:locale(en|zh)/features-benefits',
-        destination: '/:locale/benefits',
+        destination: '/:locale/features',
+        permanent: true,
+      },
+      // /benefits → /features (catch any remaining inbound links to the
+      // pre-rename URL — Google had this indexed and was hitting 404s, which
+      // shows up in GSC as "Indexed pages drop" + "Not found (404) rises").
+      {
+        source: '/:locale(en|zh)/benefits',
+        destination: '/:locale/features',
         permanent: true,
       },
       // /vancouver-renovation-blog → /blog
@@ -563,12 +573,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/benefits',
-        destination: '/en/benefits/',
+        destination: '/en/features/',
         permanent: true,
       },
       {
         source: '/process',
-        destination: '/en/process/',
+        destination: '/en/workflow/',
         permanent: true,
       },
       {

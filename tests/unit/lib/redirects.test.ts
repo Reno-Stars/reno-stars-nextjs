@@ -106,10 +106,14 @@ describe('next.config.ts redirects', () => {
       expect(r!.destination).toBe('/:locale/contact');
     });
 
-    it('should redirect /features-benefits to /benefits', () => {
+    it('should redirect /features-benefits to /features', () => {
+      // Updated 2026-04-08: Benefits page was renamed to Features (commit
+      // 1d51206), so the old destination /benefits no longer exists. The
+      // duplicate assertion in section 9e covers this same redirect with
+      // the rename context — left here for the original WP-rename test path.
       const r = findRedirect(redirects, '/:locale(en|zh)/features-benefits');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/benefits');
+      expect(r!.destination).toBe('/:locale/features');
     });
 
     it('should redirect /vancouver-renovation-blog to /blog', () => {
@@ -206,6 +210,36 @@ describe('next.config.ts redirects', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/about-us');
       expect(r).toBeDefined();
       expect(r!.destination).toBe('/:locale/about');
+    });
+  });
+
+  describe('9e. Renamed pages — Benefits → Features, Process → Workflow', () => {
+    // These guard against the indexing regression that happened when
+    // benefits/page.tsx was renamed to features/page.tsx without updating
+    // the legacy redirects: Google kept hitting /benefits, got 404, and
+    // GSC's "Indexed pages" count dropped while "Not found (404)" rose.
+    it('localized /benefits should redirect to /features', () => {
+      const r = findRedirect(redirects, '/:locale(en|zh)/benefits');
+      expect(r).toBeDefined();
+      expect(r!.destination).toBe('/:locale/features');
+    });
+
+    it('legacy /features-benefits should redirect to /features (NOT /benefits)', () => {
+      const r = findRedirect(redirects, '/:locale(en|zh)/features-benefits');
+      expect(r).toBeDefined();
+      expect(r!.destination).toBe('/:locale/features');
+    });
+
+    it('non-localized /benefits should redirect to /en/features/', () => {
+      const r = findRedirect(redirects, '/benefits');
+      expect(r).toBeDefined();
+      expect(r!.destination).toBe('/en/features/');
+    });
+
+    it('non-localized /process should redirect directly to /en/workflow/ (no double-hop)', () => {
+      const r = findRedirect(redirects, '/process');
+      expect(r).toBeDefined();
+      expect(r!.destination).toBe('/en/workflow/');
     });
   });
 
