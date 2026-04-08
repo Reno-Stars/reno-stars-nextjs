@@ -7,6 +7,7 @@ import type { Company } from '@/lib/types';
 import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
+import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
 
 interface HeroSectionProps {
   company: Company;
@@ -30,6 +31,14 @@ const SLIDE_DURATION = 6000;
 export default function HeroSection({ company, googleRating, translations: t }: HeroSectionProps) {
   const posterSrc = company.heroImageUrl || images.hero;
   const videoSrc = company.heroVideoUrl || video.hero;
+  // If the poster lives on R2 with pre-processed variants, serve a responsive
+  // srcSet so mobile fetches a 21KB 640w WebP instead of the full 173KB JPG.
+  // Falls back to the original src for non-R2 (legacy) URLs.
+  const posterIsR2 = isR2Url(posterSrc);
+  const posterSrcSet = posterIsR2 ? buildProcessedSrcSet(posterSrc) : undefined;
+  // Anchor src to the 828w variant (matches OptimizedImage's default) — keeps
+  // the LCP candidate small even before srcSet kicks in.
+  const posterDefaultSrc = posterIsR2 ? buildProcessedUrl(posterSrc, 828) : posterSrc;
 
   const slides = useMemo(() => [
     {
@@ -87,10 +96,15 @@ export default function HeroSection({ company, googleRating, translations: t }: 
 
   return (
     <section aria-label={t.transformYourSpace} className="relative overflow-hidden min-h-[70vh] flex items-center bg-gray-900">
-      {/* Poster image — direct R2 URL, no /api/image redirect, instant load */}
+      {/* Poster image — direct R2 URL, no /api/image redirect, instant load.
+          Serves responsive WebP variants from R2 when available so mobile
+          doesn't download the full-res JPG (was the LCP bottleneck at 5.6s
+          per the seo-builder Apr 7 audit). */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={posterSrc}
+        src={posterDefaultSrc}
+        srcSet={posterSrcSet}
+        sizes="100vw"
         alt=""
         aria-hidden="true"
         fetchPriority="high"

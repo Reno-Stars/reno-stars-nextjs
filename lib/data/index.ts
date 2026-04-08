@@ -54,7 +54,10 @@ export const MAP_EMBED_URL =
   'https://www.google.com/maps?q=Reno+Stars+Local+Renovation+Company,+21300+Gordon+Way+unit+188,+Richmond,+BC&output=embed';
 
 export const images = {
-  hero: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/modern-white-kitchen-renovation.jpg"),
+  // Hero source moved to R2 with pre-processed WebP variants (320/640/828/1080/1200w)
+  // so HeroSection can serve responsive images and avoid the mobile LCP penalty.
+  // Mobile now fetches a 21KB 640w variant instead of the 173KB legacy WordPress JPG.
+  hero: getAssetUrl("https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/reno-stars/uploads/admin/hero-modern-white-kitchen-renovation.jpg"),
   bathroom: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/luxury-modern-bathroom-renovation.jpg"),
   living: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/modern-open-concept-living-and-dining-room.jpg"),
   dining: getAssetUrl("https://reno-stars.com/wp-content/uploads/2025/04/bright-and-cozy-dining-living-room.jpg"),
