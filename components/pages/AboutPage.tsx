@@ -35,9 +35,18 @@ const SERVICES = [
 const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
 
 const SERVICE_AREA_CITIES = [
-  'Vancouver', 'Richmond', 'Burnaby', 'Surrey', 'Coquitlam',
-  'North Vancouver', 'West Vancouver', 'Delta', 'Langley',
-  'Maple Ridge', 'New Westminster', 'Port Moody',
+  { name: 'Vancouver', slug: 'vancouver' },
+  { name: 'Richmond', slug: 'richmond' },
+  { name: 'Burnaby', slug: 'burnaby' },
+  { name: 'Surrey', slug: 'surrey' },
+  { name: 'Coquitlam', slug: 'coquitlam' },
+  { name: 'North Vancouver', slug: 'north-vancouver' },
+  { name: 'West Vancouver', slug: 'west-vancouver' },
+  { name: 'Delta', slug: 'delta' },
+  { name: 'Langley', slug: 'langley' },
+  { name: 'Maple Ridge', slug: 'maple-ridge' },
+  { name: 'New Westminster', slug: 'new-westminster' },
+  { name: 'Port Moody', slug: 'port-moody' },
 ] as const;
 
 interface AboutPageProps {
@@ -301,8 +310,8 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
           <p className="text-base leading-relaxed mb-6" style={{ color: TEXT }}>{t('areas.description')}</p>
           <div className="flex flex-wrap gap-2">
             {SERVICE_AREA_CITIES.map((city) => (
-              <Link key={city} href="/areas" className="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:opacity-80" style={{ boxShadow: neu(), backgroundColor: SURFACE, color: NAVY }}>
-                {city}
+              <Link key={city.slug} href={`/areas/${city.slug}`} className="px-4 py-2 rounded-full text-sm font-medium transition-colors hover:opacity-80" style={{ boxShadow: neu(), backgroundColor: SURFACE, color: NAVY }}>
+                {city.name}
               </Link>
             ))}
           </div>
