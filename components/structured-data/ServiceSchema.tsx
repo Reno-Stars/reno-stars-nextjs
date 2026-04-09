@@ -6,6 +6,7 @@ interface ServiceSchemaProps {
   serviceName: string;
   serviceDescription: string;
   location?: string;
+  areaServed?: string[];
   priceRange?: {
     min: number;
     max: number;
@@ -18,14 +19,18 @@ export default function ServiceSchema({
   serviceName,
   serviceDescription,
   location,
+  areaServed,
   priceRange,
   url,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
+  const absoluteUrl = `${baseUrl}${url}`;
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    '@id': `${absoluteUrl}#service`,
+    name: serviceName,
     serviceType: serviceName,
     description: serviceDescription,
     provider: {
@@ -40,10 +45,15 @@ export default function ServiceSchema({
         addressCountry: 'CA',
       },
     },
-    url: `${baseUrl}${url}`,
+    url: absoluteUrl,
   };
 
-  if (location) {
+  if (areaServed && areaServed.length > 0) {
+    schema.areaServed = areaServed.map((city) => ({
+      '@type': 'City',
+      name: city,
+    }));
+  } else if (location) {
     schema.areaServed = {
       '@type': 'City',
       name: location,

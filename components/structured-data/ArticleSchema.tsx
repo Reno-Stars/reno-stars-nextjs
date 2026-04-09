@@ -25,12 +25,15 @@ export default function ArticleSchema({
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
 
+  const absoluteUrl = `${baseUrl}${url}`;
+
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
+    '@id': `${absoluteUrl}#article`,
     headline,
     description,
-    url: `${baseUrl}${url}`,
+    url: absoluteUrl,
     ...(datePublished && { datePublished }),
     ...(dateModified ? { dateModified } : datePublished ? { dateModified: datePublished } : {}),
     author: {
@@ -47,7 +50,7 @@ export default function ArticleSchema({
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${baseUrl}${url}`,
+      '@id': absoluteUrl,
     },
     ...(image && {
       image: {

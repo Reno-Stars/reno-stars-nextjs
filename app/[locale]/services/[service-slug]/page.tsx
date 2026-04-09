@@ -110,6 +110,7 @@ export default async function Page({ params }: PageProps) {
         serviceName={localizedService.title}
         serviceDescription={localizedService.long_description || localizedService.description}
         url={`/${locale}/services/${serviceSlug}/`}
+        areaServed={areas.map((a) => a.name.en)}
       />
       <FAQSchema faqs={faqs} />
       <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} />
