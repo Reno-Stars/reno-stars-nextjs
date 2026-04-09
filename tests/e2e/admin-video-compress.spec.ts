@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import path from 'node:path';
 import fs from 'node:fs';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'test-admin-password';
 
 // ffmpeg.wasm CDN load + encoding can take a while
 const FFMPEG_TIMEOUT = 180_000; // 3 minutes

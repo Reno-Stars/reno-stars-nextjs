@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'test-admin-password';
 
 // Run tests serially to share login session and avoid rate-limiting
 test.describe.configure({ mode: 'serial' });
