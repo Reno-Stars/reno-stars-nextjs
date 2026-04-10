@@ -21,13 +21,14 @@ import {
 interface AreaPageProps {
   locale: Locale;
   area: ServiceArea;
+  allAreas: ServiceArea[];
   company: Company;
   services: LocalizedService[];
   faqs: Faq[];
   areaProjects: Project[];
 }
 
-export default function AreaPage({ locale, area, company, services, faqs, areaProjects }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
 
@@ -47,6 +48,14 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
   const localizedProjects = useMemo(
     () => areaProjects.map((p) => getLocalizedProject(p, locale)),
     [areaProjects, locale],
+  );
+
+  // Other areas for cross-linking (exclude current area)
+  const otherAreas = useMemo(
+    () => allAreas
+      .filter((a) => a.slug !== area.slug)
+      .map((a) => getLocalizedArea(a, locale)),
+    [allAreas, area.slug, locale],
   );
 
   // Use custom highlights when present, fallback to hardcoded i18n benefits
@@ -232,6 +241,29 @@ export default function AreaPage({ locale, area, company, services, faqs, areaPr
           </Link>
         </div>
       </section>
+
+      {/* Nearby Service Areas */}
+      {otherAreas.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('areas.nearbyAreas')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {otherAreas.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/areas/${a.slug}`}
+                  className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {a.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection
         heading={t('areas.readyToStartRenovation', { area: localizedArea.name })}

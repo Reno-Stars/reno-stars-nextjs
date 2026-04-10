@@ -127,6 +127,7 @@ export default async function Page({ params }: PageProps) {
       <AreaPage
         locale={locale as Locale}
         area={area}
+        allAreas={areas}
         company={company}
         services={localizedServices}
         faqs={areaFaqs}

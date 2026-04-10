@@ -370,7 +370,8 @@
     "learnOurProcess": "Learn About Our 5-Step Renovation Process",
     "processLinkText": "See How We Work",
     "blogLinkText": "Renovation Tips & Guides",
-    "serviceLinkText": "All About {service}"
+    "serviceLinkText": "All About {service}",
+    "nearbyAreas": "We Also Serve Nearby Areas"
   },
   "blog": {
     "title": "Vancouver Renovation Tips & Guides",
@@ -536,8 +537,8 @@
   },
   "metadata": {
     "home": {
-      "title": "Vancouver Renovation Contractor | Reno Stars",
-      "description": "Vancouver's trusted renovation contractor. Kitchen, bathroom & whole house renovations. {years}+ years, $5M insurance, WCB coverage, 3-year warranty."
+      "title": "Home Renovation Vancouver | Trusted Contractor | Reno Stars",
+      "description": "Vancouver home renovation company — kitchen, bathroom & whole house remodels. {years}+ years experience, $5M insurance, WCB coverage, 3-year warranty. Free quotes."
     },
     "services": {
       "title": "Renovation Services | Kitchen, Bathroom & More | Reno Stars",

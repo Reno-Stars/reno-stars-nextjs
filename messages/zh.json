@@ -370,7 +370,8 @@
     "learnOurProcess": "了解我们的5步装修流程",
     "processLinkText": "了解我们的工作方式",
     "blogLinkText": "装修技巧与指南",
-    "serviceLinkText": "了解{service}详情"
+    "serviceLinkText": "了解{service}详情",
+    "nearbyAreas": "我们也服务附近地区"
   },
   "blog": {
     "title": "温哥华装修技巧与指南",
@@ -536,8 +537,8 @@
   },
   "metadata": {
     "home": {
-      "title": "温哥华装修承包商 | 厨房、卫浴装修 | Reno Stars",
-      "description": "温哥华值得信赖的装修承包商。厨房、卫浴和全屋装修。{years}年以上经验、500万CGL保险、有效WCB工伤保障、至多三年质保、Google五星好评。"
+      "title": "温哥华家居装修 | 值得信赖的装修公司 | Reno Stars",
+      "description": "温哥华家居装修公司——厨房、卫浴和全屋翻新。{years}年以上经验、500万CGL保险、WCB工伤保障、三年质保。免费报价。"
     },
     "services": {
       "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
