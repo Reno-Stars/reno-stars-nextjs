@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'FuaUhlygBAgGgvbRm4saQDfrnX9EBkdo98ZSQU3B4Oo',
   },
+  other: {
+    'p:domain_verify': 'aba89ace071fac8fe04f3fd8d6e83160',
+  },
   // icons auto-detected from app/icon.png and app/apple-icon.png (file convention)
   twitter: {
     card: 'summary_large_image',
