@@ -109,6 +109,14 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         aria-hidden="true"
         fetchPriority="high"
         decoding="sync"
+        onError={(e) => {
+          // If a processed WebP variant 404s, fall back to original source
+          const img = e.currentTarget;
+          if (img.srcset) {
+            img.srcset = '';
+            img.src = posterSrc;
+          }
+        }}
         style={{
           position: 'absolute',
           inset: 0,
