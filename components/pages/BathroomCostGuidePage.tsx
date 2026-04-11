@@ -211,11 +211,12 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
             {locale === 'zh' ? '相关装修费用指南' : 'Related Renovation Cost Guides'}
           </h2>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { href: '/guides/kitchen-renovation-cost-vancouver', label: locale === 'zh' ? '厨房装修费用' : 'Kitchen Renovation Cost', range: '$15K–$80K' },
               { href: '/guides/whole-house-renovation-cost-vancouver', label: locale === 'zh' ? '全屋装修费用' : 'Whole House Renovation Cost', range: '$50K–$300K+' },
               { href: '/guides/basement-renovation-cost-vancouver', label: locale === 'zh' ? '地下室装修费用' : 'Basement Renovation Cost', range: '$20K–$80K' },
+              { href: '/blog/average-bathroom-renovation-cost-vancouver', label: locale === 'zh' ? '浴室装修平均费用' : 'Average Bathroom Reno Cost', range: '$18K–$45K+' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
