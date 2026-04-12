@@ -98,10 +98,10 @@ const metaFixes: MetaFix[] = [
   },
   {
     slug: 'north-vancouver',
-    metaTitleEn: 'North Vancouver Renovation | Reno Stars',
-    metaTitleZh: '北温哥华装修 | Reno Stars 住宅翻新',
-    metaDescriptionEn: 'Reno Stars provides kitchen, bathroom, and whole-house renovations in North Vancouver. Serving Lonsdale, Lynn Valley, and Deep Cove. Free estimates.',
-    metaDescriptionZh: 'Reno Stars在北温哥华提供厨房、浴室和全屋装修。服务Lonsdale、Lynn Valley和Deep Cove。免费估价。',
+    metaTitleEn: 'Home Renovations North Vancouver | Free Quotes | Reno Stars',
+    metaTitleZh: '北温哥华家庭装修 | 免费报价 | Reno Stars',
+    metaDescriptionEn: 'North Vancouver home renovation contractor serving Lonsdale, Lynn Valley & Deep Cove. Kitchen, bathroom & whole-house remodels. Insured, free estimates.',
+    metaDescriptionZh: '北温哥华家庭装修承包商，服务Lonsdale、Lynn Valley和Deep Cove。厨房、浴室及全屋翻新。持牌投保，免费估价。',
   },
   {
     slug: 'langley',
