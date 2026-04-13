@@ -35,7 +35,7 @@ export default function ProjectCategoryPage({ locale, categorySlug, company, pro
   const categoryName = categoryData ? categoryData[locale] : categorySlug;
 
   const filteredProjects = allProjects.filter(
-    (p) => p.category === categoryName
+    (p) => p.service_type === categorySlug
   );
 
   const [selectedProject, setSelectedProject] = useState<LocalizedProject | null>(null);
