@@ -43,7 +43,7 @@ async function isCategory(slug: string): Promise<boolean> {
 
 async function findCategoryBySlug(slug: string) {
   const categories = await getCategoriesLocalized();
-  return categories.find((c) => c.en.toLowerCase().replace(/\s+/g, '-') === slug) ?? null;
+  return categories.find((c) => c.serviceType === slug) ?? null;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

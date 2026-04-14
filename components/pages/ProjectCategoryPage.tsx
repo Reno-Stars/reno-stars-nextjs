@@ -19,7 +19,7 @@ interface ProjectCategoryPageProps {
   categorySlug: string;
   company: Company;
   projects: Project[];
-  categories: { en: string; zh: string }[];
+  categories: { serviceType?: string; en: string; zh: string }[];
 }
 
 export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories }: ProjectCategoryPageProps) {
@@ -29,7 +29,7 @@ export default function ProjectCategoryPage({ locale, categorySlug, company, pro
 
   // Find the category from slug
   const categoryData = categories.find(
-    (c) => c.en.toLowerCase().replace(/\s+/g, '-') === categorySlug
+    (c) => c.serviceType === categorySlug
   );
 
   const categoryName = categoryData ? categoryData[locale] : categorySlug;

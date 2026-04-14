@@ -216,8 +216,8 @@ export const getCategoriesLocalized = cache(async (): Promise<{ serviceType: str
 export const getCategorySlugs = cache(async (): Promise<string[]> => {
   const categories = await getCategoriesLocalized();
   return categories
-    .filter((c) => c.en !== 'All')
-    .map((c) => c.en.toLowerCase().replace(/\s+/g, '-'));
+    .filter((c) => c.serviceType !== 'All')
+    .map((c) => c.serviceType);
 });
 
 
