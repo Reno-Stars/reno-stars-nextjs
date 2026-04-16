@@ -70,13 +70,14 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // ================================================================
-      // 1. Root redirect
+      // 1. Root redirect — REMOVED 2026-04-16.
+      //
+      // A bare 308 at `/` was being indexed by Google with an empty
+      // snippet, getting 1,500+ daily impressions at position 2 and
+      // 0.07% CTR. `/` now serves `app/page.tsx` — real HTML with
+      // matching title/description, canonical to `/en/`, and a
+      // meta-refresh redirect so browsers still land on `/en/`.
       // ================================================================
-      {
-        source: '/',
-        destination: '/en',
-        permanent: true,
-      },
 
       // ================================================================
       // 2. Double locale prefix — strip inner duplicate
