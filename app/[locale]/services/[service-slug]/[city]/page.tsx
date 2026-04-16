@@ -81,6 +81,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Coquitlam Kitchen Renovation Company | Reno Stars',
       description: 'Coquitlam kitchen renovation company — custom cabinets, quartz countertops, layout reconfiguration, full project management. Serving Burke Mountain to Maillardville with 18+ years experience and a 3-year workmanship warranty.',
     },
+    // 315 imp pos 24.4 — top queries: "reno white rock" (114 imp) + "bathroom renovations white rock" (68 imp).
+    'bathroom/white-rock': {
+      title: 'White Rock Bathroom Renovations | Free Quotes | Reno Stars',
+      description: 'Bathroom renovations in White Rock BC. Walk-in showers, soaker tubs, custom tile and full remodels. Serving White Rock and South Surrey. $5M CGL, 3-year warranty. Free quote today.',
+    },
+    // 118 imp pos 31.3 — top queries: "reno port coquitlam" (53 imp pos 22.8), "reno coquitlam" (42 imp pos 48.2).
+    'whole-house/port-coquitlam': {
+      title: 'Home Renovations Port Coquitlam | Free Quotes | Reno Stars',
+      description: 'Port Coquitlam renovations — kitchens, bathrooms and basements. Serving PoCo, Birchland, Lincoln and Riverwood. 18+ years experience, $5M CGL, 3-year warranty. Free quote today.',
+    },
+    // 68 imp pos 35.6 — top queries: "luxury home painters caulfeild" (17 imp pos 7.4), "home renovation west vancouver" (7 imp pos 34.9).
+    'whole-house/west-vancouver': {
+      title: 'Home Renovations West Vancouver | Luxury Renos | Reno Stars',
+      description: 'West Vancouver renovations — kitchens, bathrooms and whole-house remodels. Serving Caulfeild, Dundarave, Ambleside and British Properties. $5M CGL, 3-year warranty. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
