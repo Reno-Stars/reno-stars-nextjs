@@ -7,6 +7,7 @@ import { Link } from '@/navigation';
 import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
+import { marked } from 'marked';
 import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
@@ -101,7 +102,13 @@ export default function BlogPostPage({ locale, post, company, services = [], are
 
             <div className="prose prose-lg max-w-none prose-img:rounded-xl prose-img:my-6 blog-content">
               {localizedPost.content ? (
-                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(localizedPost.content, BLOG_SANITIZE_OPTIONS) }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(
+                  // Accept both markdown AND HTML — marked passes HTML through unchanged,
+                  // so pure-HTML content still renders correctly. Markdown (##, **bold**,
+                  // |tables|) gets converted to proper HTML tags before sanitize.
+                  marked.parse(localizedPost.content, { async: false }) as string,
+                  BLOG_SANITIZE_OPTIONS
+                ) }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}
