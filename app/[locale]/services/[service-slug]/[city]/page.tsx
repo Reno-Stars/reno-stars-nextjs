@@ -96,6 +96,59 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Home Renovations West Vancouver | Luxury Renos | Reno Stars',
       description: 'West Vancouver renovations — kitchens, bathrooms and whole-house remodels. Serving Caulfeild, Dundarave, Ambleside and British Properties. $5M CGL, 3-year warranty. Free quote.',
     },
+    // Cabinet resurfacing — high-volume cluster (127+82+66 imp)
+    'cabinet/port-coquitlam': {
+      title: 'Cabinet Refacing Port Coquitlam | $4K–$15K | Reno Stars',
+      description: 'Cabinet refacing in Port Coquitlam — painting, door replacement & full cabinet swap. Real costs $4K–$15K. Transform your kitchen in 1–2 weeks. Free quote.',
+    },
+    'cabinet/maple-ridge': {
+      title: 'Cabinet Refacing Maple Ridge | $4K–$15K | Reno Stars',
+      description: 'Cabinet refacing in Maple Ridge — painting, refacing & replacement from $4K–$15K. 1–2 week timeline. Albion, Thornhill, Haney. Free quote.',
+    },
+    'cabinet/delta': {
+      title: 'Cabinet Refacing Delta BC | $4K–$15K | Reno Stars',
+      description: 'Cabinet refacing in Delta — Ladner, Tsawwassen & North Delta. Painting, door refacing & full replacement from $4K. Free in-home quote.',
+    },
+    // Kitchen — high-volume cities
+    'kitchen/west-vancouver': {
+      title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',
+      description: 'West Vancouver kitchen renovation — custom cabinets, quartz islands, premium appliances. Caulfeild, Dundarave, Ambleside. $30K–$90K+. Free quote.',
+    },
+    'kitchen/north-vancouver': {
+      title: 'Kitchen Renovation North Vancouver | $25K–$80K | Reno Stars',
+      description: 'North Vancouver kitchen renovation — Lynn Valley, Lonsdale, Deep Cove. Custom cabinets, quartz countertops, full layout redesign. Free quote.',
+    },
+    // Basement — near-page-1 opportunities
+    'basement/surrey': {
+      title: 'Basement Renovation Surrey | Legal Suites | Reno Stars',
+      description: 'Surrey basement renovation & legal suite conversion. $35K–$130K+. Permits handled, fire separation, separate entrance. Fleetwood, Newton, Cloverdale.',
+    },
+    'basement/north-vancouver': {
+      title: 'Basement Renovation North Vancouver | Waterproofing | Reno Stars',
+      description: 'North Vancouver basement renovation with waterproofing guarantee. $35K–$80K. Lynn Valley, Lonsdale, Deep Cove. Permits handled. Free quote.',
+    },
+    // Commercial — near-page-1
+    'commercial/west-vancouver': {
+      title: 'Commercial Renovation West Vancouver | Reno Stars',
+      description: 'West Vancouver commercial renovation — restaurants, clinics, retail. Permit-aware, off-hours scheduling. $150–$500/sqft. Free consultation.',
+    },
+    'commercial/delta': {
+      title: 'Commercial Renovation Delta BC | Reno Stars',
+      description: 'Delta commercial renovation — restaurants, offices, retail in Ladner, Tsawwassen & North Delta. Permits handled, minimal disruption. Free quote.',
+    },
+    'commercial/maple-ridge': {
+      title: 'Commercial Renovation Maple Ridge | Reno Stars',
+      description: 'Maple Ridge commercial renovation — restaurants, clinics, stores. Off-hours scheduling, permit management. Free consultation.',
+    },
+    // Bathroom — high impressions
+    'bathroom/burnaby': {
+      title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
+      description: 'Burnaby bathroom renovation — tiled showers, tub conversions, custom vanities. Metrotown to Heights. $15K–$45K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/maple-ridge': {
+      title: 'Bathroom Renovation Maple Ridge | $15K–$35K | Reno Stars',
+      description: 'Maple Ridge bathroom renovation with custom Glass Door, tiled walls & quartz vanity. Real project: $18K–$21K. Free in-home quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
