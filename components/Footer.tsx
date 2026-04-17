@@ -212,6 +212,9 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
     { href: '/guides', label: t('nav.guides') },
+    { href: '/guides/kitchen-renovation-cost-vancouver', label: 'Kitchen Cost Guide' },
+    { href: '/guides/bathroom-renovation-cost-vancouver', label: 'Bathroom Cost Guide' },
+    { href: '/renovation-near-me', label: 'Renovation Near Me' },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
   ], [t]);
