@@ -1,6 +1,10 @@
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
 
-export default function WebSiteSchema(): React.ReactElement {
+interface WebSiteSchemaProps {
+  locale?: string;
+}
+
+export default function WebSiteSchema({ locale = 'en' }: WebSiteSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
 
   const schema = {
@@ -10,7 +14,7 @@ export default function WebSiteSchema(): React.ReactElement {
     name: SITE_NAME,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${baseUrl}/en/projects/?search={search_term_string}`,
+      target: `${baseUrl}/${locale}/projects/?search={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   };

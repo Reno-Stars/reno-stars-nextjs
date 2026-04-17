@@ -109,6 +109,14 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.redirect(target, 308));
   }
 
+  // Root "/" — 308 permanent redirect to /en/ so Google consolidates link equity.
+  // next-intl would use 307 (temporary), which doesn't pass equity.
+  if (pathname === '/') {
+    const target = new URL('/en/', request.url);
+    target.search = request.nextUrl.search;
+    return addSecurityHeaders(NextResponse.redirect(target, 308));
+  }
+
   // All other routes — next-intl locale middleware + security headers
   const response = addSecurityHeaders(intlMiddleware(request));
 

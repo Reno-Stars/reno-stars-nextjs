@@ -7,16 +7,17 @@ const BASE_URL = getBaseUrl();
 interface ContactPageSchemaProps {
   company: Company;
   areaNames: string[];
+  locale?: string;
 }
 
-export default function ContactPageSchema({ company, areaNames }: ContactPageSchemaProps) {
+export default function ContactPageSchema({ company, areaNames, locale = 'en' }: ContactPageSchemaProps) {
   const addr = parseAddress(company.address);
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: `Contact ${company.name}`,
-    url: `${BASE_URL}/contact/`,
+    url: `${BASE_URL}/${locale}/contact/`,
     mainEntity: {
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,

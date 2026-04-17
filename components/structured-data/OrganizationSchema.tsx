@@ -19,6 +19,7 @@ export default function OrganizationSchema({ company, socialLinks, areas }: Orga
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
+    '@id': `${baseUrl}/#organization`,
     name: company.name,
     description:
       `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,

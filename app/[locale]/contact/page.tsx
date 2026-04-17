@@ -63,7 +63,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <ContactPageSchema company={company} areaNames={areaNames} />
+      <ContactPageSchema company={company} areaNames={areaNames} locale={locale} />
       <ContactPage company={company} areaNames={areaNames} googleRating={googleReviews.rating} />
     </>
   );

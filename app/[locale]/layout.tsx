@@ -85,7 +85,7 @@ export default async function LocaleLayout({
         <GoogleAdsConversion />
         <NextIntlClientProvider messages={messages}>
 
-          <WebSiteSchema />
+          <WebSiteSchema locale={locale} />
           <LocalBusinessSchema
             company={company}
             socialLinks={socialLinks}

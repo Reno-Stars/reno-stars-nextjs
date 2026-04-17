@@ -18,6 +18,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
+    '@id': `${BASE_URL}/#organization`,
     name: company.name,
     image: company.logo,
     url: BASE_URL,

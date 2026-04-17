@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ProcessPage from '@/components/pages/ProcessPage';
-import { BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
@@ -72,21 +72,10 @@ export default async function Page({ params }: PageProps) {
     { question: t('step5.title'), answer: t('step5.faqAnswer') },
   ];
 
-  // HowTo steps for structured data
-  const howToSteps = faqs.map((faq) => ({
-    name: faq.question,
-    text: faq.answer,
-  }));
-
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <HowToSchema
-        name={t('hero.title')}
-        description={t('whyMatters.description')}
-        steps={howToSteps}
-      />
       <ProcessPage company={company} locale={locale as Locale} googleRating={googleReviews.rating} />
     </>
   );
