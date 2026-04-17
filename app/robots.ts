@@ -15,6 +15,9 @@ export default function robots(): MetadataRoute.Robots {
           '/admin/',
           '/en/contact/thank-you/',
           '/zh/contact/thank-you/',
+          // Block test/e2e service pages that leaked to Google index
+          '*/kitchen-e2e-test/',
+          '*/kitchen-e2e-test/*',
         ],
       },
     ],
