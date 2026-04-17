@@ -58,10 +58,12 @@ describe('next.config.ts redirects', () => {
   });
 
   describe('1. Root redirect', () => {
-    it('should redirect / to /en', () => {
+    it('root / is served as real HTML (no next.config.ts redirect — handled by middleware)', () => {
+      // Since 7719f7c, the root serves real HTML via the App Router root page.
+      // The / → /en redirect was removed from next.config.ts; locale routing
+      // is handled by the proxy middleware instead.
       const r = findRedirect(redirects, '/');
-      expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en');
+      expect(r).toBeUndefined();
     });
   });
 

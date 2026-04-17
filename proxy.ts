@@ -95,6 +95,16 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.redirect(target, 301));
   }
 
+  // Redirect non-locale paths to /en/ with 308 (permanent) so Google consolidates
+  // link equity on the canonical /en/... URL instead of the bare path.
+  // next-intl would handle these with a 307 (temporary), which doesn't pass equity.
+  // Matcher config already excludes /api, /_next, /_vercel, and paths with extensions.
+  if (segments.length > 0 && !locales.includes(segments[0] as Locale)) {
+    const target = new URL(`/en${pathname}`, request.url);
+    target.search = request.nextUrl.search;
+    return addSecurityHeaders(NextResponse.redirect(target, 308));
+  }
+
   // All other routes — next-intl locale middleware + security headers
   const response = addSecurityHeaders(intlMiddleware(request));
 
