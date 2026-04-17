@@ -45,8 +45,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = service.image || siteImages.hero;
 
-  const vancouver = locale === 'zh' ? '温哥华' : 'Vancouver';
-  const title = `${localizedService.title} | ${SITE_NAME} ${vancouver}`;
+  const title = locale === 'zh'
+    ? `${localizedService.title} 温哥华 — 500万保险 | Reno Stars`
+    : `${localizedService.title} Vancouver — $5M Insured | Reno Stars`;
 
   return {
     title,
