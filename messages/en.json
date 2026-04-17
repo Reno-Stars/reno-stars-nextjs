@@ -647,6 +647,10 @@
     "features": {
       "title": "Why Choose Reno Stars | Vancouver Renovation Features",
       "description": "Transparent quotes, structured process, responsive communication, and stable teams. Discover what makes Reno Stars different from other Vancouver renovation contractors."
+    },
+    "nearMe": {
+      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
+      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
     }
   },
   "common": {
@@ -2120,6 +2124,109 @@
     "cta": {
       "heading": "Ready to Start Your Project?",
       "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+    }
+  },
+  "nearMe": {
+    "breadcrumb": "Renovation Near Me",
+    "hero": {
+      "eyebrow": "Serving Metro Vancouver since 2020",
+      "h1": "Looking for a renovation company near you?",
+      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
+      "ctaPrimary": "Get my free quote"
+    },
+    "trust": {
+      "reviews": {
+        "stat": "70+",
+        "label": "Google 5★ reviews"
+      },
+      "insured": {
+        "stat": "$5M",
+        "label": "Liability + WCB"
+      },
+      "experience": {
+        "stat": "20+",
+        "label": "Years in Vancouver"
+      },
+      "coverage": {
+        "stat": "14",
+        "label": "Metro Vancouver cities"
+      }
+    },
+    "areas": {
+      "heading": "Renovation service areas near you",
+      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+    },
+    "services": {
+      "heading": "What we renovate near you",
+      "learnMore": "Learn more",
+      "kitchen": {
+        "title": "Kitchen renovation near me",
+        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+      },
+      "bathroom": {
+        "title": "Bathroom renovation near me",
+        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+      },
+      "wholeHouse": {
+        "title": "Whole house renovation near me",
+        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+      },
+      "basement": {
+        "title": "Basement renovation near me",
+        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+      },
+      "cabinet": {
+        "title": "Cabinet refacing near me",
+        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+      },
+      "commercial": {
+        "title": "Commercial renovation near me",
+        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+      }
+    },
+    "why": {
+      "heading": "Why choose Reno Stars for a renovation near you",
+      "point1": {
+        "title": "One local team — not a marketplace",
+        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+      },
+      "point2": {
+        "title": "Licensed, insured, WCB-covered",
+        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+      },
+      "point3": {
+        "title": "Transparent pricing, no surprises",
+        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+      },
+      "point4": {
+        "title": "Bilingual service (English + Mandarin)",
+        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+      },
+      "point5": {
+        "title": "Real local portfolio near you",
+        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+      }
+    },
+    "faq": {
+      "heading": "Renovation near me — FAQ",
+      "q1": "How do I find a trusted renovation company near me in Vancouver?",
+      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
+      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
+      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
+      "q3": "How long does a renovation near me take?",
+      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
+      "q4": "Do you handle permits for renovations near me?",
+      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
+      "q5": "Do you offer free estimates near me?",
+      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
+      "q6": "What neighborhoods do you serve?",
+      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+    },
+    "finalCta": {
+      "heading": "Ready to find a renovation team near you?",
+      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
+      "quote": "Get my free quote",
+      "call": "Call 778-960-7999"
     }
   }
 }
