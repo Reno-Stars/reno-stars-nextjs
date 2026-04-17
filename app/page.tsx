@@ -15,9 +15,9 @@ import { getBaseUrl } from '@/lib/utils';
  * see rich metadata for the SERP; humans get auto-redirected.
  */
 export const metadata: Metadata = {
-  title: 'Home Renovation Vancouver | Trusted Contractor | Reno Stars',
+  title: 'Vancouver Home Renovations — 20+ Yrs, $5M Insured | Reno Stars',
   description:
-    'Vancouver home renovation company — kitchen, bathroom & whole house remodels. 20+ years experience, $5M insurance, WCB coverage, 3-year warranty. Free quotes.',
+    'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.',
   alternates: {
     canonical: `${getBaseUrl()}/en/`,
     languages: {
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   },
   // Don't pollute social cards for the redirect URL — use /en/'s instead
   openGraph: {
-    title: 'Home Renovation Vancouver | Trusted Contractor | Reno Stars',
+    title: 'Vancouver Home Renovations — 20+ Yrs, $5M Insured | Reno Stars',
     description:
-      'Vancouver home renovation company — kitchen, bathroom & whole house remodels.',
+      'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years, $5M CGL insurance, 3-year warranty.',
     url: `${getBaseUrl()}/en/`,
     type: 'website',
   },
@@ -45,7 +45,7 @@ export default function RootRedirect() {
       </head>
       <body>
         <p>
-          Redirecting to <a href={target}>Reno Stars — Home Renovation Vancouver</a>…
+          Redirecting to <a href={target}>Reno Stars — Vancouver Home Renovations</a>…
         </p>
         <script
           // Client-side fallback for the rare case `<meta refresh>` is disabled
