@@ -100,7 +100,11 @@ export default function proxy(request: NextRequest): NextResponse {
   // next-intl would handle these with a 307 (temporary), which doesn't pass equity.
   // Matcher config already excludes /api, /_next, /_vercel, and paths with extensions.
   if (segments.length > 0 && !locales.includes(segments[0] as Locale)) {
-    const target = new URL(`/en${pathname}`, request.url);
+    // Add trailing slash in the SAME redirect to avoid a 2-hop chain
+    // (non-locale → /en/ is one hop; without this, trailingSlash config
+    // would add a second hop from /en/path → /en/path/).
+    const withSlash = pathname.endsWith('/') ? pathname : pathname + '/';
+    const target = new URL(`/en${withSlash}`, request.url);
     target.search = request.nextUrl.search;
     return addSecurityHeaders(NextResponse.redirect(target, 308));
   }
