@@ -40,7 +40,9 @@ describe('Database Schema', () => {
       expect(enumValues).toContain('wechat');
       expect(enumValues).toContain('whatsapp');
       expect(enumValues).toContain('linktree');
-      expect(enumValues).toHaveLength(9);
+      expect(enumValues).toContain('tiktok');
+      expect(enumValues).toContain('reddit');
+      expect(enumValues).toHaveLength(11);
     });
   });
 

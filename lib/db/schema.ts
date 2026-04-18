@@ -52,6 +52,8 @@ export const socialPlatformEnum = pgEnum('social_platform', [
   'wechat',
   'whatsapp',
   'linktree',
+  'tiktok',
+  'reddit',
 ]);
 
 // ============================================================================

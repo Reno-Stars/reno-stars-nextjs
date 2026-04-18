@@ -1,5 +1,6 @@
 import type { Company } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
+import { parseAddress } from './parse-address';
 
 interface LocalBusinessAreaSchemaProps {
   company: Company;
@@ -22,13 +23,7 @@ export default function LocalBusinessAreaSchema({
 }: LocalBusinessAreaSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
 
-  // Parse address for structured data
-  const addressParts = company.address.split(', ');
-  const streetAddress = addressParts.slice(0, 2).join(', ');
-  const locality = addressParts[2] || 'Richmond';
-  const regionPostal = addressParts[3] || 'BC V6W 1M2';
-  const [region, ...postalParts] = regionPostal.split(' ');
-  const postalCode = postalParts.join(' ');
+  const addressParts = parseAddress(company.address);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -42,10 +37,10 @@ export default function LocalBusinessAreaSchema({
     image: company.logo,
     address: {
       '@type': 'PostalAddress',
-      streetAddress,
-      addressLocality: locality,
-      addressRegion: region,
-      postalCode,
+      streetAddress: addressParts.streetAddress,
+      addressLocality: addressParts.locality,
+      addressRegion: addressParts.region,
+      postalCode: addressParts.postalCode,
       addressCountry: 'CA',
     },
     geo: {
@@ -84,7 +79,7 @@ export default function LocalBusinessAreaSchema({
     priceRange: '$$',
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       opens: '09:00',
       closes: '18:00',
     },
