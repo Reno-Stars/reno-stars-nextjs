@@ -56,6 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/guides/basement-suite-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
     { path: '/financing', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/before-after', priority: 0.8, changeFrequency: 'weekly' as const },
+    { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' as const },
   ];
 
   // Add static pages for each locale
