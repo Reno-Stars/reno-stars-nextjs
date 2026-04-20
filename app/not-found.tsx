@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { headers } from 'next/headers';
 import { NAVY, GOLD, SURFACE, TEXT_MID } from '@/lib/theme';
 import { SITE_NAME } from '@/lib/utils';
 
@@ -11,25 +10,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Detects the preferred locale from request headers.
- * Falls back to 'en' if Chinese is not preferred.
+ * Returns the default locale. Previously used headers() for accept-language
+ * detection, but that forced the entire app into dynamic rendering mode
+ * (no ISR caching). Default to 'en' — the proxy handles locale routing.
  */
-async function getPreferredLocale(): Promise<'en' | 'zh'> {
-  try {
-    const headersList = await headers();
-    const acceptLanguage = headersList.get('accept-language') || '';
-
-    if (
-      acceptLanguage.includes('zh') ||
-      acceptLanguage.includes('cn') ||
-      acceptLanguage.startsWith('zh')
-    ) {
-      return 'zh';
-    }
-  } catch {
-    // Headers may not be available in all contexts
-  }
-
+function getPreferredLocale(): 'en' | 'zh' {
   return 'en';
 }
 
@@ -39,7 +24,7 @@ async function getPreferredLocale(): Promise<'en' | 'zh'> {
  * as a fallback within the [locale] segment.
  */
 export default async function NotFound() {
-  const locale = await getPreferredLocale();
+  const locale = getPreferredLocale();
   const isZh = locale === 'zh';
 
   return (
