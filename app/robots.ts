@@ -15,10 +15,15 @@ export default function robots(): MetadataRoute.Robots {
           '/admin/',
           '/en/contact/thank-you/',
           '/zh/contact/thank-you/',
-          // Block test/e2e service pages that leaked to Google index
           '*/kitchen-e2e-test/',
           '*/kitchen-e2e-test/*',
         ],
+      },
+      // Explicitly allow AI crawlers for citation/discovery
+      {
+        userAgent: ['GPTBot', 'ChatGPT-User', 'Google-Extended', 'PerplexityBot', 'ClaudeBot', 'Applebot-Extended'],
+        allow: '/',
+        disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
