@@ -114,7 +114,7 @@ export default async function Page({ params }: PageProps) {
         areaServed={areas.map((a) => a.name.en)}
       />
       <FAQSchema faqs={faqs} />
-      <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} />
+      <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} faqs={faqs} />
     </>
   );
 }

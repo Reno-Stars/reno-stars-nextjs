@@ -195,7 +195,8 @@
     "sending": "发送中...",
     "success": "感谢您！您的信息已成功发送。",
     "successTitle": "消息已发送！",
-    "error": "出了点问题，请重试。"
+    "error": "出了点问题，请重试。",
+    "responsePromise": "我们会在24小时内回复您，并提供详细报价。"
   },
   "footer": {
     "allRightsReserved": "版权所有",

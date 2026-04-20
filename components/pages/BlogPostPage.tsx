@@ -189,8 +189,25 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </div>
             )}
 
-            {/* Back to Blog */}
+            {/* Author Bio */}
             <div className="mt-10 pt-8 border-t" style={{ borderColor: `${TEXT}10` }}>
+              <div className="flex gap-4 items-start rounded-xl p-5" style={{ backgroundColor: SURFACE_ALT }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: NAVY }}>
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: NAVY }}>{company.name}</p>
+                  <p className="text-sm mt-1" style={{ color: TEXT_MID }}>
+                    {locale === 'zh'
+                      ? `大温哥华地区专业装修公司，${company.yearsExperience}年以上经验，${company.liabilityCoverage} CGL保险，WCB工伤保障，至多3年质保。`
+                      : `Professional renovation company serving Metro Vancouver with ${company.yearsExperience}+ years of experience, ${company.liabilityCoverage} CGL insurance, WCB coverage, and up to 3-year warranty.`}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Back to Blog */}
+            <div className="mt-6">
               <Link
                 href="/blog"
                 className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"

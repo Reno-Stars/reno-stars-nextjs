@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Loader2, CheckCircle, X } from 'lucide-react';
 import { submitContactForm } from '@/app/actions/contact';
 import { trackFormSubmission } from '@/lib/analytics';
-import { GOLD, SURFACE, TEXT, SUCCESS, ERROR, ERROR_BG, neuIn, neu, CARD } from '@/lib/theme';
+import { GOLD, SURFACE, TEXT, TEXT_MID, SUCCESS, ERROR, ERROR_BG, neuIn, neu, CARD } from '@/lib/theme';
 
 interface ContactFormProps {
   /** Called after a successful submission */
@@ -185,6 +185,9 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
         {isPending && <Loader2 className={large ? 'w-5 h-5 animate-spin' : 'w-4 h-4 animate-spin'} />}
         {isPending ? t('form.sending') : (submitLabel || t('cta.sendMessage'))}
       </button>
+      <p className="text-center text-sm mt-2" style={{ color: TEXT_MID }}>
+        {t('form.responsePromise')}
+      </p>
       </form>
     </>
   );

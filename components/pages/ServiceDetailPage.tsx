@@ -16,15 +16,21 @@ import {
   NAVY, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, CARD, neu,
 } from '@/lib/theme';
 
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
 interface ServiceDetailPageProps {
   locale: Locale;
   serviceSlug: ServiceType;
   company: Company;
   service: Service;
   areas?: ServiceArea[];
+  faqs?: FAQ[];
 }
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [] }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [] }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -143,6 +149,30 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ Section */}
+      {faqs.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-8" style={{ color: NAVY }}>
+              {t('faq.title')}
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
+                <details key={i} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, boxShadow: neu(2) }}>
+                  <summary className="font-semibold cursor-pointer list-none flex items-center justify-between" style={{ color: NAVY }}>
+                    {faq.question}
+                    <span className="ml-2 text-lg transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT }}>
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

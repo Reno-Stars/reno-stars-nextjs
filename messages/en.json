@@ -195,7 +195,8 @@
     "sending": "Sending...",
     "success": "Thank you! Your message has been sent successfully.",
     "successTitle": "Message Sent!",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "responsePromise": "We reply within 24 hours with a detailed estimate."
   },
   "footer": {
     "allRightsReserved": "All Rights Reserved",
