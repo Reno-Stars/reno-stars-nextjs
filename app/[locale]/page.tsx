@@ -39,14 +39,14 @@ export async function generateMetadata({
   const years = { years: company.yearsExperience };
 
   const baseUrl = getBaseUrl();
-  const ogImage = buildOgImageUrl(t("title"), t("description", years));
+  const ogImage = buildOgImageUrl(t("title", years), t("description", years));
 
   return {
-    title: t("title"),
+    title: t("title", years),
     description: t("description", years),
     alternates: buildAlternates("/", locale),
     openGraph: {
-      title: t("title"),
+      title: t("title", years),
       description: t("description", years),
       url: `${baseUrl}/${locale}/`,
       siteName: SITE_NAME,
@@ -54,14 +54,14 @@ export async function generateMetadata({
       alternateLocale: locale === "en" ? ["zh_CN"] : ["en_US"],
       type: "website",
       images: [
-        { url: ogImage, width: 1200, height: 630, alt: t("title") },
+        { url: ogImage, width: 1200, height: 630, alt: t("title", years) },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
+      title: t("title", years),
       description: t("description", years),
-      images: [{ url: ogImage, alt: t("title") }],
+      images: [{ url: ogImage, alt: t("title", years) }],
     },
   };
 }
