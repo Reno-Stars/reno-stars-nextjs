@@ -105,8 +105,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
         src={posterDefaultSrc}
         srcSet={posterSrcSet}
         sizes="100vw"
-        alt=""
-        aria-hidden="true"
+        alt="Vancouver home renovation by Reno Stars"
         fetchPriority="high"
         decoding="sync"
         onError={(e) => {

@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     url = body.url;
     force = body.force === true;
-  } catch {
+  } catch (error) {
+    console.error('Image processing request — invalid JSON body:', error);
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
