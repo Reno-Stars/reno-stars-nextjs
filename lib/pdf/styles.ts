@@ -158,7 +158,7 @@ export const styles = StyleSheet.create({
   },
 
   // ── Column widths — InvoiceSimple style (Description | Rate | Qty | Amount) ──
-  colDescription: { width: '60%', paddingRight: 8 },
+  colDescription: { width: '60%', paddingRight: 8, paddingLeft: 6 },
   colRate: { width: '14%', textAlign: 'right' as const },
   colQty: { width: '10%', textAlign: 'center' as const },
   colAmount: { width: '16%', textAlign: 'right' as const },
