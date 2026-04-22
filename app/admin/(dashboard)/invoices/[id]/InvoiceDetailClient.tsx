@@ -198,7 +198,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
         </button>
 
         <a
-          href={`/api/invoices/${invoice.id}/pdf?download=true`}
+          href={`/api/invoices/${invoice.id}/pdf/?download=true`}
           target="_blank"
           rel="noopener noreferrer"
           style={actionBtnStyle as React.CSSProperties}
@@ -228,7 +228,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
             <span style={{ fontWeight: 600, color: NAVY, fontSize: '0.875rem' }}>PDF Preview</span>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <a
-                href={`/api/invoices/${invoice.id}/pdf?download=true`}
+                href={`/api/invoices/${invoice.id}/pdf/?download=true`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ fontSize: '0.75rem', color: GOLD, fontWeight: 600, textDecoration: 'none' }}
@@ -241,7 +241,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
             </div>
           </div>
           <iframe
-            src={`/api/invoices/${invoice.id}/pdf`}
+            src={`/api/invoices/${invoice.id}/pdf/`}
             title="Invoice PDF Preview"
             style={{ width: '100%', height: '80vh', border: 'none' }}
           />
