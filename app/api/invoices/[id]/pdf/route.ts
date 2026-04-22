@@ -4,15 +4,24 @@ import { db } from '@/lib/db';
 import { invoiceTermsTemplates } from '@/lib/db/schema';
 import { getInvoiceById } from '@/lib/db/invoice-queries';
 import { generateInvoicePdf } from '@/lib/pdf/generate';
+import { verifyToken } from '@/lib/admin/auth';
 
 // ============================================================================
-// AUTH
+// AUTH — accepts either Bearer token (MCP) or admin session cookie (browser)
 // ============================================================================
 
 function isAuthorized(req: NextRequest): boolean {
+  // 1. Bearer token (MCP / API clients)
   const authHeader = req.headers.get('Authorization');
-  if (!authHeader?.startsWith('Bearer ')) return false;
-  return authHeader.slice(7) === process.env.INVOICE_API_SECRET;
+  if (authHeader?.startsWith('Bearer ') && authHeader.slice(7) === process.env.INVOICE_API_SECRET) {
+    return true;
+  }
+  // 2. Admin session cookie (browser / admin panel)
+  const sessionCookie = req.cookies.get('admin_session')?.value;
+  if (sessionCookie && verifyToken(sessionCookie)) {
+    return true;
+  }
+  return false;
 }
 
 // ============================================================================
