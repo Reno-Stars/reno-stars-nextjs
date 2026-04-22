@@ -1,5 +1,6 @@
 import React from 'react';
-import { Document, Page, View, Text } from '@react-pdf/renderer';
+import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import path from 'path';
 import { styles, BRAND } from './styles';
 import { formatCurrency, formatDate } from './format';
 
@@ -87,6 +88,10 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
   return (
     <View style={styles.header}>
       <View style={styles.companyBlock}>
+        <Image
+          src={path.join(process.cwd(), 'public', 'logo.png')}
+          style={{ width: 140, height: 35, marginBottom: 6 }}
+        />
         <Text style={styles.companyName}>{COMPANY.name}</Text>
         <Text style={styles.companyDetail}>{COMPANY.address}</Text>
         <Text style={styles.companyDetail}>{COMPANY.city}</Text>
@@ -120,7 +125,7 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
         <View style={styles.docInfoRow}>
           <Text style={styles.docInfoLabel}>Total</Text>
           <Text style={styles.docInfoValue}>
-            CAD {formatCurrency(invoice.totalCents)}
+            CAD {formatCurrency(invoice.type === 'estimate' ? invoice.subtotalCents : invoice.totalCents)}
           </Text>
         </View>
       </View>
@@ -220,6 +225,8 @@ function LineItemsTable({
 }
 
 function TotalsBox({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
+  const isEstimate = invoice.type === 'estimate';
+
   return (
     <View style={styles.totalsContainer}>
       <View style={styles.totalsBox}>
@@ -229,16 +236,18 @@ function TotalsBox({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
             {formatCurrency(invoice.subtotalCents)}
           </Text>
         </View>
-        <View style={styles.totalsRow}>
-          <Text style={styles.totalsLabel}>GST ({invoice.taxRate}%)</Text>
-          <Text style={styles.totalsValue}>
-            {formatCurrency(invoice.taxCents)}
-          </Text>
-        </View>
+        {!isEstimate && (
+          <View style={styles.totalsRow}>
+            <Text style={styles.totalsLabel}>GST ({invoice.taxRate}%)</Text>
+            <Text style={styles.totalsValue}>
+              {formatCurrency(invoice.taxCents)}
+            </Text>
+          </View>
+        )}
         <View style={styles.totalsRowFinal}>
           <Text style={styles.totalsLabelFinal}>Total</Text>
           <Text style={styles.totalsValueFinal}>
-            {formatCurrency(invoice.totalCents)}
+            {formatCurrency(isEstimate ? invoice.subtotalCents : invoice.totalCents)}
           </Text>
         </View>
       </View>
@@ -309,7 +318,7 @@ function TermsSection({ terms }: { terms: string }) {
   if (!terms) return null;
 
   return (
-    <View style={styles.termsSection}>
+    <View style={styles.termsSection} break>
       <Text style={styles.sectionTitle}>Terms & Conditions</Text>
       <Text style={styles.termsText}>{terms}</Text>
     </View>
