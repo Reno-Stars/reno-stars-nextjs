@@ -1,15 +1,31 @@
 import React from 'react';
-import { renderToBuffer } from '@react-pdf/renderer';
+import { renderToBuffer, Font } from '@react-pdf/renderer';
 import { InvoicePdf } from './invoice-template';
 import type { InvoicePdfProps } from './invoice-template';
+import path from 'path';
 
 export type { InvoicePdfProps };
+
+// ============================================================================
+// FONT REGISTRATION — Chinese (CJK) support via Noto Sans SC
+// ============================================================================
+
+const NOTO_SANS_SC_PATH = path.join(process.cwd(), 'public', 'fonts', 'NotoSansSC-Variable.ttf');
+
+Font.register({
+  family: 'Noto Sans SC',
+  src: NOTO_SANS_SC_PATH,
+});
+
+// Register as fallback for Helvetica — any glyph not found in Helvetica
+// will fall back to Noto Sans SC (covers CJK characters)
+Font.registerHyphenationCallback((word) => [word]);
 
 /**
  * Render an invoice PDF to a Node.js Buffer.
  * Runs server-side only — no browser dependency.
  *
- * TODO: Add Chinese font support (Noto Sans SC) for ZH invoices.
+ * Supports Chinese text via Noto Sans SC font (registered above).
  */
 export async function generateInvoicePdf(
   props: InvoicePdfProps

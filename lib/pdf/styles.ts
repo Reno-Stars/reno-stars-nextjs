@@ -21,7 +21,7 @@ export const BRAND = {
 export const styles = StyleSheet.create({
   // Page
   page: {
-    fontFamily: 'Helvetica',
+    fontFamily: 'Noto Sans SC',
     fontSize: 9,
     paddingTop: 0,
     paddingBottom: 40,
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   },
   companyName: {
     fontSize: 15,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.black,
     marginBottom: 3,
   },
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
   },
   docTitle: {
     fontSize: 20,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.navy,
     marginBottom: 4,
   },
@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
   },
   docInfoLabel: {
     fontSize: 7,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.grey,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
   },
   docInfoValue: {
     fontSize: 9,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.black,
   },
 
@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
   },
   clientLabel: {
     fontSize: 7,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.grey,
     marginBottom: 3,
     textTransform: 'uppercase',
@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
   },
   clientName: {
     fontSize: 12,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     marginBottom: 2,
   },
   clientDetail: {
@@ -126,12 +126,12 @@ export const styles = StyleSheet.create({
   tableHeaderRow: {
     flexDirection: 'row',
     backgroundColor: BRAND.headerBg,
-    paddingVertical: 6,
+    paddingVertical: 8,
     paddingHorizontal: 10,
   },
   tableHeaderCell: {
     fontSize: 7,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.headerText,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -154,7 +154,7 @@ export const styles = StyleSheet.create({
   },
   tableCellBold: {
     fontSize: 8,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
   },
 
   // ── Column widths — InvoiceSimple style (Description | Rate | Qty | Amount) ──
@@ -166,7 +166,7 @@ export const styles = StyleSheet.create({
   // Section label (bold heading within description column)
   sectionLabel: {
     fontSize: 9,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.navy,
     marginBottom: 4,
   },
@@ -215,16 +215,16 @@ export const styles = StyleSheet.create({
   },
   totalsValue: {
     fontSize: 9,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
   },
   totalsLabelFinal: {
     fontSize: 10,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.white,
   },
   totalsValueFinal: {
     fontSize: 10,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.gold,
   },
 
@@ -235,7 +235,7 @@ export const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 10,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.navy,
     marginBottom: 6,
     paddingBottom: 3,
@@ -250,7 +250,7 @@ export const styles = StyleSheet.create({
   },
   paymentHeaderCell: {
     fontSize: 7,
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
     color: BRAND.navy,
     textTransform: 'uppercase',
   },
@@ -268,7 +268,7 @@ export const styles = StyleSheet.create({
   paidBadge: {
     fontSize: 7,
     color: '#2E7D32',
-    fontFamily: 'Helvetica-Bold',
+    fontWeight: 700,
   },
   unpaidBadge: {
     fontSize: 7,

@@ -184,7 +184,7 @@ function StepView({ step, num }: { step: StepData; num: number }) {
       <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
         <Text style={{
           fontSize: 7.5,
-          fontFamily: 'Helvetica-Bold',
+          fontWeight: 700,
           color: BRAND.black,
           width: 16,
           textAlign: 'right',
@@ -271,7 +271,7 @@ function LineItemsTable({
                 }}>
                   <Text style={{
                     fontSize: 6.5,
-                    fontFamily: 'Helvetica-Bold',
+                    fontWeight: 700,
                     color: BRAND.navy,
                     marginBottom: 2,
                   }}>
