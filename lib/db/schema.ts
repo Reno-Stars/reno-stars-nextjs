@@ -1042,3 +1042,265 @@ export const socialMediaPostsRelations = relations(socialMediaPosts, ({ one }) =
 
 export type DbSocialMediaPost = typeof socialMediaPosts.$inferSelect;
 export type NewDbSocialMediaPost = typeof socialMediaPosts.$inferInsert;
+
+// ============================================================================
+// INVOICE MANAGEMENT — ENUMS
+// ============================================================================
+
+/** Type of invoice document */
+export const invoiceTypeEnum = pgEnum('invoice_type', ['estimate', 'invoice']);
+
+/** Status lifecycle for invoices */
+export const invoiceStatusEnum = pgEnum('invoice_status', [
+  'draft',
+  'sent',
+  'viewed',
+  'approved',
+  'in_progress',
+  'completed',
+  'paid',
+  'void',
+]);
+
+/** Accepted payment methods */
+export const paymentMethodEnum = pgEnum('payment_method', [
+  'e_transfer',
+  'cheque',
+  'cash',
+  'wire',
+  'credit_card',
+]);
+
+// ============================================================================
+// INVOICES
+// ============================================================================
+
+/** Master invoice/estimate record */
+export const invoices = pgTable(
+  'invoices',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    invoiceNumber: varchar('invoice_number', { length: 20 }).notNull().unique(),
+    type: invoiceTypeEnum('type').default('estimate').notNull(),
+    status: invoiceStatusEnum('status').default('draft').notNull(),
+
+    // Client info
+    clientName: varchar('client_name', { length: 200 }).notNull(),
+    clientEmail: varchar('client_email', { length: 255 }),
+    clientPhone: varchar('client_phone', { length: 30 }),
+    clientAddress: text('client_address'),
+
+    // Settings
+    language: varchar('language', { length: 10 }).default('english').notNull(),
+    taxRate: integer('tax_rate').default(5).notNull(),
+    gstNumber: varchar('gst_number', { length: 30 }).default('748434285RT0001').notNull(),
+    paymentScheduleKey: varchar('payment_schedule_key', { length: 30 }).default('70/30').notNull(),
+
+    // Totals (stored in cents)
+    subtotalCents: integer('subtotal_cents').default(0).notNull(),
+    taxCents: integer('tax_cents').default(0).notNull(),
+    totalCents: integer('total_cents').default(0).notNull(),
+
+    // Notes
+    notes: text('notes'),
+
+    // Sharing
+    shareToken: varchar('share_token', { length: 64 }).notNull().unique(),
+
+    // Dates
+    invoiceDate: timestamp('invoice_date').defaultNow().notNull(),
+    dueDate: timestamp('due_date'),
+    approvedAt: timestamp('approved_at'),
+    viewedAt: timestamp('viewed_at'),
+
+    // Link to project site (optional)
+    siteId: uuid('site_id').references(() => projectSites.id, { onDelete: 'set null' }),
+
+    // Versioning
+    version: integer('version').default(1).notNull(),
+
+    // Timestamps
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex('invoices_invoice_number_idx').on(table.invoiceNumber),
+    uniqueIndex('invoices_share_token_idx').on(table.shareToken),
+    index('invoices_status_idx').on(table.status),
+    index('invoices_client_name_idx').on(table.clientName),
+    index('invoices_type_idx').on(table.type),
+    index('invoices_created_at_idx').on(table.createdAt),
+  ]
+);
+
+export const invoicesRelations = relations(invoices, ({ one, many }) => ({
+  site: one(projectSites, {
+    fields: [invoices.siteId],
+    references: [projectSites.id],
+  }),
+  lineItems: many(invoiceLineItems),
+  paymentMilestones: many(invoicePaymentMilestones),
+  versions: many(invoiceVersions),
+}));
+
+export type DbInvoice = typeof invoices.$inferSelect;
+export type NewDbInvoice = typeof invoices.$inferInsert;
+
+// ============================================================================
+// INVOICE LINE ITEMS
+// ============================================================================
+
+/** Individual line items / sections on an invoice */
+export const invoiceLineItems = pgTable(
+  'invoice_line_items',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    invoiceId: uuid('invoice_id')
+      .notNull()
+      .references(() => invoices.id, { onDelete: 'cascade' }),
+
+    sectionType: varchar('section_type', { length: 30 }),
+    label: varchar('label', { length: 200 }).notNull(),
+    description: text('description').notNull(),
+
+    rateCents: integer('rate_cents').default(0).notNull(),
+    quantity: integer('quantity').default(1).notNull(),
+    amountCents: integer('amount_cents').default(0).notNull(),
+
+    footerLines: jsonb('footer_lines').$type<string[]>().default([]),
+    buildParams: jsonb('build_params').$type<Record<string, unknown>>(),
+
+    displayOrder: integer('display_order').default(0).notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('invoice_line_items_invoice_id_idx').on(table.invoiceId),
+    index('invoice_line_items_invoice_id_display_order_idx').on(
+      table.invoiceId,
+      table.displayOrder
+    ),
+  ]
+);
+
+export const invoiceLineItemsRelations = relations(invoiceLineItems, ({ one }) => ({
+  invoice: one(invoices, {
+    fields: [invoiceLineItems.invoiceId],
+    references: [invoices.id],
+  }),
+}));
+
+export type DbInvoiceLineItem = typeof invoiceLineItems.$inferSelect;
+export type NewDbInvoiceLineItem = typeof invoiceLineItems.$inferInsert;
+
+// ============================================================================
+// INVOICE PAYMENT MILESTONES
+// ============================================================================
+
+/** Payment milestones (e.g., 70% deposit, 30% completion) */
+export const invoicePaymentMilestones = pgTable(
+  'invoice_payment_milestones',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    invoiceId: uuid('invoice_id')
+      .notNull()
+      .references(() => invoices.id, { onDelete: 'cascade' }),
+
+    label: varchar('label', { length: 200 }).notNull(),
+    labelZh: varchar('label_zh', { length: 200 }),
+
+    percentage: integer('percentage').notNull(),
+    amountCents: integer('amount_cents').default(0).notNull(),
+
+    isPaid: boolean('is_paid').default(false).notNull(),
+    paidAt: timestamp('paid_at'),
+
+    paymentMethod: paymentMethodEnum('payment_method'),
+    paymentReference: varchar('payment_reference', { length: 100 }),
+
+    displayOrder: integer('display_order').default(0).notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('invoice_payment_milestones_invoice_id_idx').on(table.invoiceId),
+  ]
+);
+
+export const invoicePaymentMilestonesRelations = relations(
+  invoicePaymentMilestones,
+  ({ one }) => ({
+    invoice: one(invoices, {
+      fields: [invoicePaymentMilestones.invoiceId],
+      references: [invoices.id],
+    }),
+  })
+);
+
+export type DbInvoicePaymentMilestone = typeof invoicePaymentMilestones.$inferSelect;
+export type NewDbInvoicePaymentMilestone = typeof invoicePaymentMilestones.$inferInsert;
+
+// ============================================================================
+// INVOICE VERSIONS (AUDIT LOG)
+// ============================================================================
+
+/** Audit log capturing each version of an invoice */
+export const invoiceVersions = pgTable(
+  'invoice_versions',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    invoiceId: uuid('invoice_id')
+      .notNull()
+      .references(() => invoices.id, { onDelete: 'cascade' }),
+
+    version: integer('version').notNull(),
+    changeType: varchar('change_type', { length: 50 }).notNull(),
+    changeSummary: text('change_summary').notNull(),
+    changedBy: varchar('changed_by', { length: 100 }).notNull(),
+
+    snapshot: jsonb('snapshot').$type<Record<string, unknown>>().notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('invoice_versions_invoice_id_idx').on(table.invoiceId),
+    index('invoice_versions_created_at_idx').on(table.createdAt),
+  ]
+);
+
+export const invoiceVersionsRelations = relations(invoiceVersions, ({ one }) => ({
+  invoice: one(invoices, {
+    fields: [invoiceVersions.invoiceId],
+    references: [invoices.id],
+  }),
+}));
+
+export type DbInvoiceVersion = typeof invoiceVersions.$inferSelect;
+export type NewDbInvoiceVersion = typeof invoiceVersions.$inferInsert;
+
+// ============================================================================
+// INVOICE TERMS TEMPLATES
+// ============================================================================
+
+/** Reusable terms & conditions templates */
+export const invoiceTermsTemplates = pgTable(
+  'invoice_terms_templates',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name', { length: 100 }).notNull(),
+    language: varchar('language', { length: 10 }).notNull(),
+
+    content: text('content').notNull(),
+    isDefault: boolean('is_default').default(false).notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('invoice_terms_templates_language_idx').on(table.language),
+  ]
+);
+
+export type DbInvoiceTermsTemplate = typeof invoiceTermsTemplates.$inferSelect;
+export type NewDbInvoiceTermsTemplate = typeof invoiceTermsTemplates.$inferInsert;

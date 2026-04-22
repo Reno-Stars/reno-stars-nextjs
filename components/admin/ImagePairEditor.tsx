@@ -177,7 +177,8 @@ export default function ImagePairEditor({
             return { ...p, ...updates };
           })
         );
-      } catch {
+      } catch (error) {
+        console.error('Image pair upload failed:', error);
         setUploadError(t.upload.failed);
       } finally {
         setUploadingPair(null);

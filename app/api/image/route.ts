@@ -62,8 +62,8 @@ function evictStaleEntries() {
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const url = searchParams.get('url');
-  const w = parseInt(searchParams.get('w') || '0', 10);
-  const q = parseInt(searchParams.get('q') || String(DEFAULT_QUALITY), 10);
+  const w = Math.min(Math.max(parseInt(searchParams.get('w') || '0', 10) || 0, 0), 2048);
+  const q = Math.min(Math.max(parseInt(searchParams.get('q') || String(DEFAULT_QUALITY), 10) || DEFAULT_QUALITY, 1), 100);
   const f = searchParams.get('f') || 'webp';
 
   if (!url) {
@@ -175,7 +175,8 @@ export async function GET(request: NextRequest) {
         'Vercel-CDN-Cache-Control': 'public, s-maxage=31536000, stale-while-revalidate=86400',
       },
     });
-  } catch {
+  } catch (error) {
+    console.error('Image optimization failed:', error);
     return NextResponse.json(
       { error: 'Image optimization failed' },
       { status: 502 },

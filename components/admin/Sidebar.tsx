@@ -82,7 +82,10 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
     {
       key: 'crm',
       label: t.nav.groups.crm,
-      items: [{ href: '/admin/contacts', label: t.nav.contacts }],
+      items: [
+        { href: '/admin/contacts', label: t.nav.contacts },
+        { href: '/admin/invoices', label: t.nav.invoices },
+      ],
       defaultExpanded: true,
     },
     {
