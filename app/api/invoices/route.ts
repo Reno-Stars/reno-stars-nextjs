@@ -37,6 +37,7 @@ interface CreateLineItemInput {
   sectionType?: string;
   label: string;
   description: string;
+  steps?: Array<{ text: string; remarks: string[] }>;
   rateCents?: number;
   quantity?: number;
   amountCents?: number;
@@ -117,6 +118,7 @@ export async function POST(req: NextRequest) {
         sectionType: item.sectionType || null,
         label: item.label,
         description: item.description,
+        steps: item.steps ?? null,
         rateCents: item.rateCents ?? 0,
         quantity: item.quantity ?? 1,
         amountCents: item.amountCents ?? 0,

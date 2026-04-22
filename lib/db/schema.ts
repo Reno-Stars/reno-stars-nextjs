@@ -1163,6 +1163,9 @@ export const invoiceLineItems = pgTable(
     label: varchar('label', { length: 200 }).notNull(),
     description: text('description').notNull(),
 
+    /** Structured step data — each step has text + remarks array */
+    steps: jsonb('steps').$type<Array<{ text: string; remarks: string[] }>>(),
+
     rateCents: integer('rate_cents').default(0).notNull(),
     quantity: integer('quantity').default(1).notNull(),
     amountCents: integer('amount_cents').default(0).notNull(),

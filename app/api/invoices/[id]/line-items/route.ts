@@ -26,6 +26,7 @@ interface CreateLineItemBody {
   sectionType?: string;
   label: string;
   description: string;
+  steps?: Array<{ text: string; remarks: string[] }>;
   rateCents?: number;
   quantity?: number;
   amountCents?: number;
@@ -74,6 +75,7 @@ export async function POST(
       sectionType: body.sectionType || null,
       label: body.label.trim(),
       description: body.description.trim(),
+      steps: body.steps ?? null,
       rateCents: body.rateCents ?? 0,
       quantity: body.quantity ?? 1,
       amountCents: body.amountCents ?? 0,

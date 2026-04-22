@@ -24,6 +24,7 @@ export default async function InvoiceDetailPage({
     updatedAt: invoice.updatedAt.toISOString(),
     lineItems: invoice.lineItems.map((li) => ({
       ...li,
+      steps: li.steps ?? null,
       createdAt: li.createdAt.toISOString(),
     })),
     paymentMilestones: invoice.paymentMilestones.map((pm) => ({

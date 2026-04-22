@@ -41,6 +41,7 @@ interface SerializedInvoice {
     id: string;
     label: string;
     description: string;
+    steps?: Array<{ text: string; remarks: string[] }> | null;
     amountCents: number;
     displayOrder: number;
     sectionType: string | null;
