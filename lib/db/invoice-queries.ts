@@ -84,6 +84,97 @@ export async function getInvoiceById(
 }
 
 /**
+ * Fetch a single invoice by its public shareToken with all related data.
+ */
+export async function getInvoiceByShareToken(
+  shareToken: string
+): Promise<InvoiceWithDetails | null> {
+  const [invoice] = await db
+    .select()
+    .from(invoices)
+    .where(eq(invoices.shareToken, shareToken))
+    .limit(1);
+
+  if (!invoice) return null;
+
+  const [lineItems, milestones, versions] = await Promise.all([
+    db
+      .select()
+      .from(invoiceLineItems)
+      .where(eq(invoiceLineItems.invoiceId, invoice.id))
+      .orderBy(asc(invoiceLineItems.displayOrder)),
+    db
+      .select()
+      .from(invoicePaymentMilestones)
+      .where(eq(invoicePaymentMilestones.invoiceId, invoice.id))
+      .orderBy(asc(invoicePaymentMilestones.displayOrder)),
+    db
+      .select()
+      .from(invoiceVersions)
+      .where(eq(invoiceVersions.invoiceId, invoice.id))
+      .orderBy(desc(invoiceVersions.createdAt)),
+  ]);
+
+  return {
+    ...invoice,
+    lineItems,
+    paymentMilestones: milestones,
+    versions,
+  };
+}
+
+/**
+ * Mark an invoice as viewed (first client visit).
+ * Only updates if status is 'sent' and viewedAt is null.
+ */
+export async function markInvoiceViewed(invoiceId: string): Promise<void> {
+  await db
+    .update(invoices)
+    .set({
+      status: 'viewed',
+      viewedAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(invoices.id, invoiceId),
+        eq(invoices.status, 'sent')
+      )
+    );
+}
+
+/**
+ * Approve an invoice (client action). Returns the updated invoice or null if
+ * the invoice was not in an approvable state.
+ */
+export async function approveInvoice(
+  invoiceId: string
+): Promise<DbInvoice | null> {
+  // Only allow approval from 'sent' or 'viewed' status
+  const [invoice] = await db
+    .select()
+    .from(invoices)
+    .where(eq(invoices.id, invoiceId))
+    .limit(1);
+
+  if (!invoice) return null;
+  if (invoice.status !== 'sent' && invoice.status !== 'viewed') return null;
+
+  const [updated] = await db
+    .update(invoices)
+    .set({
+      status: 'approved',
+      approvedAt: new Date(),
+      version: invoice.version + 1,
+      updatedAt: new Date(),
+    })
+    .where(eq(invoices.id, invoiceId))
+    .returning();
+
+  return updated ?? null;
+}
+
+/**
  * List invoices with optional filters and pagination.
  */
 export async function listInvoices(
