@@ -62,6 +62,7 @@ export async function GET(
     lineItems: invoice.lineItems.map((item) => ({
       label: item.label,
       description: item.description,
+      steps: item.steps ?? undefined,
       rateCents: item.rateCents,
       quantity: item.quantity,
       amountCents: item.amountCents,

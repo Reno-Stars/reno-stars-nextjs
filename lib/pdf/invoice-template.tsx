@@ -8,6 +8,11 @@ import { formatCurrency, formatDate } from './format';
 // TYPES
 // ============================================================================
 
+interface StepData {
+  text: string;
+  remarks: string[];
+}
+
 export interface InvoicePdfProps {
   invoice: {
     invoiceNumber: string;
@@ -29,6 +34,7 @@ export interface InvoicePdfProps {
   lineItems: Array<{
     label: string;
     description: string;
+    steps?: StepData[] | null;
     rateCents: number;
     quantity: number;
     amountCents: number;
@@ -60,18 +66,36 @@ const COMPANY = {
 // HELPERS
 // ============================================================================
 
-/**
- * Parse description text into structured lines.
- * Recognizes numbered steps (1. xxx) and sub-remarks (*xxx).
- */
-function parseDescriptionLines(text: string): Array<{ type: 'step' | 'remark'; text: string }> {
-  return text.split('\n').filter(Boolean).map((line) => {
-    const trimmed = line.trim();
-    if (trimmed.startsWith('*')) {
-      return { type: 'remark' as const, text: trimmed };
+/** Parse description text into steps (fallback when steps JSONB is null) */
+function parseDescriptionToSteps(text: string): StepData[] {
+  const steps: StepData[] = [];
+  let current: StepData | null = null;
+
+  for (const rawLine of text.split('\n')) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    const stepMatch = line.match(/^(\d+)\.\s+(.+)$/);
+    if (stepMatch) {
+      if (current) steps.push(current);
+      current = { text: stepMatch[2], remarks: [] };
+      continue;
     }
-    return { type: 'step' as const, text: trimmed };
-  });
+
+    const remarkMatch = line.match(/^[-*]\s*(.+)$/);
+    if (remarkMatch && current) {
+      current.remarks.push(remarkMatch[1]);
+      continue;
+    }
+
+    if (current) {
+      current.remarks.push(line);
+    } else {
+      current = { text: line, remarks: [] };
+    }
+  }
+  if (current) steps.push(current);
+  return steps;
 }
 
 // ============================================================================
@@ -84,6 +108,7 @@ function TopBanner() {
 
 function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
   const docType = invoice.type === 'estimate' ? 'ESTIMATE' : 'INVOICE';
+  const isEstimate = invoice.type === 'estimate';
 
   return (
     <View style={styles.header}>
@@ -125,7 +150,7 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
         <View style={styles.docInfoRow}>
           <Text style={styles.docInfoLabel}>Total</Text>
           <Text style={styles.docInfoValue}>
-            CAD {formatCurrency(invoice.type === 'estimate' ? invoice.subtotalCents : invoice.totalCents)}
+            CAD {formatCurrency(isEstimate ? invoice.subtotalCents : invoice.totalCents)}
           </Text>
         </View>
       </View>
@@ -151,6 +176,56 @@ function ClientBlock({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
   );
 }
 
+/** Render a single step with number, text, and indented remarks */
+function StepView({ step, num }: { step: StepData; num: number }) {
+  return (
+    <View style={{ marginBottom: 3 }}>
+      {/* Step line: "1. Step text" */}
+      <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+        <Text style={{
+          fontSize: 7.5,
+          fontFamily: 'Helvetica-Bold',
+          color: BRAND.black,
+          width: 16,
+          textAlign: 'right',
+          marginRight: 4,
+        }}>
+          {num}.
+        </Text>
+        <Text style={{
+          fontSize: 7.5,
+          color: BRAND.black,
+          flex: 1,
+          lineHeight: 1.4,
+        }}>
+          {step.text}
+        </Text>
+      </View>
+      {/* Remarks: indented with gold accent */}
+      {step.remarks.map((remark, i) => (
+        <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', paddingLeft: 20 }}>
+          <Text style={{
+            fontSize: 6.5,
+            color: BRAND.gold,
+            marginRight: 3,
+            marginTop: 0.5,
+          }}>
+            *
+          </Text>
+          <Text style={{
+            fontSize: 6.5,
+            color: BRAND.grey,
+            flex: 1,
+            lineHeight: 1.35,
+          }}>
+            {remark}
+          </Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 function LineItemsTable({
   lineItems,
 }: {
@@ -159,7 +234,7 @@ function LineItemsTable({
   return (
     <View style={styles.table}>
       {/* Header row */}
-      <View style={styles.tableHeaderRow}>
+      <View style={styles.tableHeaderRow} fixed>
         <Text style={[styles.tableHeaderCell, styles.colDescription]}>
           Description
         </Text>
@@ -170,7 +245,9 @@ function LineItemsTable({
 
       {/* Data rows */}
       {lineItems.map((item, idx) => {
-        const lines = parseDescriptionLines(item.description);
+        const steps = item.steps && item.steps.length > 0
+          ? item.steps
+          : parseDescriptionToSteps(item.description);
         const isAlt = idx % 2 === 1;
 
         return (
@@ -178,26 +255,35 @@ function LineItemsTable({
             key={idx}
             style={[styles.tableRow, isAlt ? styles.tableRowAlt : {}]}
           >
-            {/* Description column — section label + step content */}
+            {/* Description column — section label + structured steps */}
             <View style={styles.colDescription}>
               <Text style={styles.sectionLabel}>{item.label}</Text>
-              {lines.map((line, lineIdx) => (
-                <Text
-                  key={lineIdx}
-                  style={line.type === 'remark' ? styles.descRemark : styles.descLine}
-                >
-                  {line.text}
-                </Text>
+              {steps.map((step, i) => (
+                <StepView key={i} step={step} num={i + 1} />
               ))}
+              {/* Footer lines (client-provides, notes) */}
               {item.footerLines && item.footerLines.length > 0 && (
-                <View style={{ marginTop: 4, paddingTop: 3, borderTopWidth: 0.5, borderTopColor: '#E0E0E0' }}>
+                <View style={{
+                  marginTop: 5,
+                  paddingTop: 4,
+                  borderTopWidth: 0.5,
+                  borderTopColor: '#D0D0D0',
+                }}>
+                  <Text style={{
+                    fontSize: 6.5,
+                    fontFamily: 'Helvetica-Bold',
+                    color: BRAND.navy,
+                    marginBottom: 2,
+                  }}>
+                    Note:
+                  </Text>
                   {item.footerLines.map((fl, flIdx) => (
-                    <Text
-                      key={flIdx}
-                      style={{ fontSize: 7, color: BRAND.grey, lineHeight: 1.3 }}
-                    >
-                      {fl}
-                    </Text>
+                    <View key={flIdx} style={{ flexDirection: 'row', alignItems: 'flex-start', paddingLeft: 2 }}>
+                      <Text style={{ fontSize: 6.5, color: BRAND.grey, marginRight: 3 }}>*</Text>
+                      <Text style={{ fontSize: 6.5, color: BRAND.grey, flex: 1, lineHeight: 1.3 }}>
+                        {fl}
+                      </Text>
+                    </View>
                   ))}
                 </View>
               )}
