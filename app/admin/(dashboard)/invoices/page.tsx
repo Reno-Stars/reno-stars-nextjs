@@ -23,8 +23,9 @@ export default async function InvoicesAdminPage({
   if (params.status && params.status !== 'all') {
     filters.status = params.status as ListInvoicesFilters['status'];
   }
-  if (params.type && params.type !== 'all') {
-    filters.type = params.type as ListInvoicesFilters['type'];
+  const activeType = params.type || 'estimate';
+  if (activeType !== 'all') {
+    filters.type = activeType as ListInvoicesFilters['type'];
   }
   if (params.q) {
     filters.clientName = params.q;
@@ -47,7 +48,7 @@ export default async function InvoicesAdminPage({
         page={result.page}
         totalPages={result.totalPages}
         currentStatus={params.status || 'all'}
-        currentType={params.type || 'all'}
+        currentType={params.type || 'estimate'}
         currentQuery={params.q || ''}
       />
     </div>

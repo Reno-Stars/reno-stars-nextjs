@@ -68,8 +68,49 @@ export default function InvoiceListClient({
     router.push(buildUrl({ q: search, page: '1' }));
   };
 
+  const tabStyle = (active: boolean): React.CSSProperties => ({
+    padding: '0.625rem 1.5rem',
+    fontSize: '0.875rem',
+    fontWeight: 600,
+    cursor: 'pointer',
+    border: 'none',
+    borderBottom: active ? `3px solid ${GOLD}` : '3px solid transparent',
+    backgroundColor: 'transparent',
+    color: active ? NAVY : TEXT_MID,
+    transition: 'all 0.15s',
+  });
+
   return (
     <div>
+      {/* Type tabs */}
+      <div style={{
+        display: 'flex',
+        borderBottom: `1px solid rgba(27,54,93,0.1)`,
+        marginBottom: '1rem',
+      }}>
+        <button
+          type="button"
+          onClick={() => router.push(buildUrl({ type: 'estimate', page: '1' }))}
+          style={tabStyle(currentType === 'estimate')}
+        >
+          {t.invoices.estimate}s
+        </button>
+        <button
+          type="button"
+          onClick={() => router.push(buildUrl({ type: 'invoice', page: '1' }))}
+          style={tabStyle(currentType === 'invoice')}
+        >
+          {t.invoices.invoice}s
+        </button>
+        <button
+          type="button"
+          onClick={() => router.push(buildUrl({ type: 'all', page: '1' }))}
+          style={tabStyle(currentType === 'all')}
+        >
+          All
+        </button>
+      </div>
+
       {/* Filter bar */}
       <div
         style={{
@@ -101,23 +142,6 @@ export default function InvoiceListClient({
           <option value="completed">{t.invoices.statusCompleted}</option>
           <option value="paid">{t.invoices.statusPaid}</option>
           <option value="void">{t.invoices.statusVoid}</option>
-        </select>
-
-        <select
-          value={currentType}
-          onChange={(e) => router.push(buildUrl({ type: e.target.value, page: '1' }))}
-          style={{
-            padding: '0.5rem 0.75rem',
-            borderRadius: '8px',
-            border: '1px solid rgba(27,54,93,0.2)',
-            fontSize: '0.875rem',
-            color: NAVY,
-            backgroundColor: '#fff',
-          }}
-        >
-          <option value="all">{t.invoices.allTypes}</option>
-          <option value="estimate">{t.invoices.estimate}</option>
-          <option value="invoice">{t.invoices.invoice}</option>
         </select>
 
         <div style={{ display: 'flex', flex: 1, minWidth: '200px' }}>
@@ -166,9 +190,8 @@ export default function InvoiceListClient({
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: `2px solid ${SURFACE_ALT}` }}>
-              <th style={thStyle}>{t.invoices.invoiceNumber}</th>
+              <th style={thStyle}>#</th>
               <th style={thStyle}>{t.invoices.clientName}</th>
-              <th style={thStyle}>{t.invoices.type}</th>
               <th style={thStyle}>{t.invoices.status}</th>
               <th style={{ ...thStyle, textAlign: 'right' }}>{t.invoices.total}</th>
               <th style={thStyle}>{t.invoices.date}</th>
@@ -177,7 +200,7 @@ export default function InvoiceListClient({
           <tbody>
             {invoices.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ padding: '2rem', textAlign: 'center', color: TEXT_MID, fontSize: '0.875rem' }}>
+                <td colSpan={5} style={{ padding: '2rem', textAlign: 'center', color: TEXT_MID, fontSize: '0.875rem' }}>
                   {t.common.noRecords}
                 </td>
               </tr>
@@ -194,7 +217,6 @@ export default function InvoiceListClient({
                     <span style={{ fontWeight: 600, color: NAVY }}>{inv.invoiceNumber}</span>
                   </td>
                   <td style={tdStyle}>{inv.clientName}</td>
-                  <td style={tdStyle}><InvoiceTypeBadge type={inv.type} /></td>
                   <td style={tdStyle}><InvoiceStatusBadge status={inv.status} /></td>
                   <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 600 }}>{formatCents(inv.totalCents)}</td>
                   <td style={tdStyle}>
