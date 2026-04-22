@@ -290,6 +290,7 @@ export const styles = StyleSheet.create({
   // ── Terms ───────────────────────────────────────────────────────────
   termsSection: {
     paddingHorizontal: 40,
+    paddingTop: 20,
     marginBottom: 16,
   },
   termsText: {
