@@ -90,7 +90,7 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
       <View style={styles.companyBlock}>
         <Image
           src={path.join(process.cwd(), 'public', 'logo.png')}
-          style={{ width: 140, height: 35, marginBottom: 6 }}
+          style={{ width: 160, marginBottom: 6 }}
         />
         <Text style={styles.companyName}>{COMPANY.name}</Text>
         <Text style={styles.companyDetail}>{COMPANY.address}</Text>

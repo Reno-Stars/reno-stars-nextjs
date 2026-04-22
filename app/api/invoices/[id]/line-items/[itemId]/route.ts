@@ -26,6 +26,7 @@ const UPDATABLE_FIELDS = [
   'sectionType',
   'label',
   'description',
+  'steps',
   'rateCents',
   'quantity',
   'amountCents',

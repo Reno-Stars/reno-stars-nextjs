@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { invoices, invoicePaymentMilestones } from '@/lib/db/schema';
+import { invoices, invoiceLineItems, invoicePaymentMilestones } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString } from '@/lib/admin/form-utils';
@@ -292,5 +292,37 @@ export async function recordPaymentAction(
   } catch (error) {
     console.error('Failed to record payment:', error);
     return { error: 'Failed to record payment.' };
+  }
+}
+
+export async function updateLineItemStepsAction(
+  invoiceId: string,
+  lineItemId: string,
+  steps: Array<{ text: string; remarks: string[] }>
+): Promise<{ error?: string }> {
+  try {
+    await requireAuth();
+    if (!isValidUUID(invoiceId) || !isValidUUID(lineItemId)) return { error: 'Invalid ID.' };
+
+    // Also regenerate the description text from steps for PDF/export backward compat
+    const descriptionLines: string[] = [];
+    steps.forEach((step, i) => {
+      descriptionLines.push(`${i + 1}. ${step.text}`);
+      for (const remark of step.remarks) {
+        descriptionLines.push(`   - ${remark}`);
+      }
+    });
+
+    await db
+      .update(invoiceLineItems)
+      .set({ steps, description: descriptionLines.join('\n') })
+      .where(eq(invoiceLineItems.id, lineItemId));
+
+    revalidatePath('/admin/invoices');
+    revalidatePath(`/admin/invoices/${invoiceId}`);
+    return {};
+  } catch (error) {
+    console.error('Failed to update line item steps:', error);
+    return { error: 'Failed to update steps.' };
   }
 }

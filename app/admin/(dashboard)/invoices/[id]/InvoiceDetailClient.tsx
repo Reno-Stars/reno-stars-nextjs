@@ -349,7 +349,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
               <p style={{ color: TEXT_MID, fontSize: '0.875rem' }}>{t.invoices.noLineItems}</p>
             ) : (
               invoice.lineItems.map((item, idx) => (
-                <InvoiceLineItemRow key={item.id} item={item} index={idx} />
+                <InvoiceLineItemRow key={item.id} item={item} invoiceId={invoice.id} index={idx} />
               ))
             )}
           </div>
