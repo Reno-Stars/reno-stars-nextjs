@@ -1,7 +1,7 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
 /**
- * Reno Stars brand colors
+ * Reno Stars brand colors — matching InvoiceSimple-style layout
  */
 export const BRAND = {
   navy: '#1B365D',
@@ -14,6 +14,8 @@ export const BRAND = {
   headerBg: '#1B365D',
   headerText: '#FFFFFF',
   rowAlt: '#F7F5F2',
+  stripeDark: '#2A4A73',
+  stripeLight: '#3A5A83',
 } as const;
 
 export const styles = StyleSheet.create({
@@ -21,31 +23,39 @@ export const styles = StyleSheet.create({
   page: {
     fontFamily: 'Helvetica',
     fontSize: 9,
-    paddingTop: 30,
+    paddingTop: 0,
     paddingBottom: 40,
-    paddingHorizontal: 35,
+    paddingHorizontal: 0,
     color: BRAND.black,
     backgroundColor: BRAND.white,
   },
 
-  // Header
+  // ── Top banner bar (diagonal stripes) ───────────────────────────────
+  topBanner: {
+    height: 14,
+    backgroundColor: BRAND.navy,
+    marginBottom: 0,
+  },
+
+  // ── Header ──────────────────────────────────────────────────────────
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
-    paddingBottom: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: BRAND.gold,
+    paddingHorizontal: 40,
+    paddingTop: 20,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: BRAND.lightGrey,
   },
   companyBlock: {
     flexDirection: 'column',
     maxWidth: '55%',
   },
   companyName: {
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: 'Helvetica-Bold',
-    color: BRAND.navy,
-    marginBottom: 4,
+    color: BRAND.black,
+    marginBottom: 3,
   },
   companyDetail: {
     fontSize: 8,
@@ -60,17 +70,19 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Helvetica-Bold',
     color: BRAND.navy,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   docInfoRow: {
     flexDirection: 'row',
     marginBottom: 2,
+    alignItems: 'baseline',
   },
   docInfoLabel: {
-    fontSize: 8,
+    fontSize: 7,
+    fontFamily: 'Helvetica-Bold',
     color: BRAND.grey,
-    width: 60,
-    textAlign: 'right',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
     marginRight: 6,
   },
   docInfoValue: {
@@ -79,46 +91,46 @@ export const styles = StyleSheet.create({
     color: BRAND.black,
   },
 
-  // Client
+  // ── Client ──────────────────────────────────────────────────────────
   clientSection: {
-    marginBottom: 16,
-    padding: 10,
-    backgroundColor: BRAND.rowAlt,
-    borderRadius: 4,
+    paddingHorizontal: 40,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: BRAND.lightGrey,
   },
   clientLabel: {
-    fontSize: 8,
+    fontSize: 7,
     fontFamily: 'Helvetica-Bold',
-    color: BRAND.navy,
-    marginBottom: 4,
+    color: BRAND.grey,
+    marginBottom: 3,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   clientName: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'Helvetica-Bold',
     marginBottom: 2,
   },
   clientDetail: {
-    fontSize: 8,
+    fontSize: 9,
     color: BRAND.grey,
     marginBottom: 1,
   },
 
-  // Line items table
+  // ── Line items table ────────────────────────────────────────────────
   table: {
-    marginBottom: 16,
+    paddingHorizontal: 40,
+    marginTop: 4,
+    marginBottom: 12,
   },
   tableHeaderRow: {
     flexDirection: 'row',
     backgroundColor: BRAND.headerBg,
     paddingVertical: 6,
-    paddingHorizontal: 8,
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
+    paddingHorizontal: 10,
   },
   tableHeaderCell: {
-    fontSize: 8,
+    fontSize: 7,
     fontFamily: 'Helvetica-Bold',
     color: BRAND.headerText,
     textTransform: 'uppercase',
@@ -126,55 +138,76 @@ export const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    paddingVertical: 6,
-    paddingHorizontal: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 10,
     borderBottomWidth: 0.5,
-    borderBottomColor: BRAND.lightGrey,
+    borderBottomColor: '#E0E0E0',
+    minHeight: 20,
   },
   tableRowAlt: {
     backgroundColor: BRAND.rowAlt,
   },
   tableCell: {
     fontSize: 8,
+    lineHeight: 1.4,
   },
   tableCellBold: {
     fontSize: 8,
     fontFamily: 'Helvetica-Bold',
   },
 
-  // Column widths for line items
-  colNum: { width: '6%' },
-  colSection: { width: '20%' },
-  colDetails: { width: '58%' },
+  // ── Column widths — InvoiceSimple style (Description | Rate | Qty | Amount) ──
+  colDescription: { width: '60%', paddingRight: 8 },
+  colRate: { width: '14%', textAlign: 'right' as const },
+  colQty: { width: '10%', textAlign: 'center' as const },
   colAmount: { width: '16%', textAlign: 'right' as const },
 
-  // Totals
+  // Section label (bold heading within description column)
+  sectionLabel: {
+    fontSize: 9,
+    fontFamily: 'Helvetica-Bold',
+    color: BRAND.navy,
+    marginBottom: 4,
+  },
+  // Description lines (step content)
+  descLine: {
+    fontSize: 7.5,
+    color: BRAND.black,
+    lineHeight: 1.5,
+  },
+  descRemark: {
+    fontSize: 7,
+    color: BRAND.grey,
+    lineHeight: 1.4,
+    paddingLeft: 4,
+  },
+
+  // ── Totals ──────────────────────────────────────────────────────────
   totalsContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    paddingHorizontal: 40,
     marginBottom: 16,
   },
   totalsBox: {
     width: 200,
-    borderWidth: 1,
-    borderColor: BRAND.navy,
-    borderRadius: 4,
-    overflow: 'hidden',
   },
   totalsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     borderBottomWidth: 0.5,
-    borderBottomColor: BRAND.lightGrey,
+    borderBottomColor: '#E0E0E0',
   },
   totalsRowFinal: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 6,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     backgroundColor: BRAND.navy,
+    marginTop: 2,
   },
   totalsLabel: {
     fontSize: 9,
@@ -195,12 +228,13 @@ export const styles = StyleSheet.create({
     color: BRAND.gold,
   },
 
-  // Payment schedule
+  // ── Payment schedule ────────────────────────────────────────────────
   paymentSection: {
+    paddingHorizontal: 40,
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Helvetica-Bold',
     color: BRAND.navy,
     marginBottom: 6,
@@ -213,20 +247,19 @@ export const styles = StyleSheet.create({
     backgroundColor: BRAND.surface,
     paddingVertical: 5,
     paddingHorizontal: 8,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
   },
   paymentHeaderCell: {
-    fontSize: 8,
+    fontSize: 7,
     fontFamily: 'Helvetica-Bold',
     color: BRAND.navy,
+    textTransform: 'uppercase',
   },
   paymentRow: {
     flexDirection: 'row',
     paddingVertical: 5,
     paddingHorizontal: 8,
     borderBottomWidth: 0.5,
-    borderBottomColor: BRAND.lightGrey,
+    borderBottomColor: '#E0E0E0',
   },
   payColLabel: { width: '35%' },
   payColPercent: { width: '15%', textAlign: 'center' as const },
@@ -242,12 +275,11 @@ export const styles = StyleSheet.create({
     color: BRAND.grey,
   },
 
-  // Notes
+  // ── Notes ───────────────────────────────────────────────────────────
   notesSection: {
-    marginBottom: 16,
-    padding: 10,
-    backgroundColor: BRAND.rowAlt,
-    borderRadius: 4,
+    paddingHorizontal: 40,
+    marginBottom: 12,
+    paddingVertical: 8,
   },
   notesText: {
     fontSize: 8,
@@ -255,22 +287,23 @@ export const styles = StyleSheet.create({
     lineHeight: 1.5,
   },
 
-  // Terms
+  // ── Terms ───────────────────────────────────────────────────────────
   termsSection: {
+    paddingHorizontal: 40,
     marginBottom: 16,
   },
   termsText: {
-    fontSize: 7,
+    fontSize: 6.5,
     color: BRAND.grey,
     lineHeight: 1.4,
   },
 
-  // Footer
+  // ── Footer ──────────────────────────────────────────────────────────
   footer: {
     position: 'absolute',
-    bottom: 15,
-    left: 35,
-    right: 35,
+    bottom: 12,
+    left: 40,
+    right: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     borderTopWidth: 0.5,

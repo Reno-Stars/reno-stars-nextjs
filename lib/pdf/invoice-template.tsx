@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, View, Text } from '@react-pdf/renderer';
-import { styles } from './styles';
+import { styles, BRAND } from './styles';
 import { formatCurrency, formatDate } from './format';
 
 // ============================================================================
@@ -49,8 +49,9 @@ export interface InvoicePdfProps {
 
 const COMPANY = {
   name: 'Reno Stars Construction Inc',
-  address: 'Unit 188-21300 Gordon Way, Richmond, BC, V6W 1M2',
-  phone: '7789607999',
+  address: 'Unit 188-21300 Gordon Way',
+  city: 'Richmond, BC V6W 1M2',
+  phone: '778-960-7999',
   email: 'renostars604@gmail.com',
 } as const;
 
@@ -59,21 +60,26 @@ const COMPANY = {
 // ============================================================================
 
 /**
- * Convert markdown-ish description text to plain text lines.
- * Turns `* item` into `  - item`, keeps numbered lists, strips other markdown.
+ * Parse description text into structured lines.
+ * Recognizes numbered steps (1. xxx) and sub-remarks (*xxx).
  */
-function descriptionToLines(text: string): string[] {
-  return text.split('\n').map((line) => {
-    // Convert * bullets to dashes
-    const trimmed = line.replace(/^\s*\*\s+/, '  - ');
-    // Strip bold/italic markdown
-    return trimmed.replace(/\*\*(.+?)\*\*/g, '$1').replace(/__(.+?)__/g, '$1');
+function parseDescriptionLines(text: string): Array<{ type: 'step' | 'remark'; text: string }> {
+  return text.split('\n').filter(Boolean).map((line) => {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('*')) {
+      return { type: 'remark' as const, text: trimmed };
+    }
+    return { type: 'step' as const, text: trimmed };
   });
 }
 
 // ============================================================================
 // SUB-COMPONENTS
 // ============================================================================
+
+function TopBanner() {
+  return <View style={styles.topBanner} fixed />;
+}
 
 function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
   const docType = invoice.type === 'estimate' ? 'ESTIMATE' : 'INVOICE';
@@ -83,8 +89,9 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
       <View style={styles.companyBlock}>
         <Text style={styles.companyName}>{COMPANY.name}</Text>
         <Text style={styles.companyDetail}>{COMPANY.address}</Text>
-        <Text style={styles.companyDetail}>Phone: {COMPANY.phone}</Text>
-        <Text style={styles.companyDetail}>Email: {COMPANY.email}</Text>
+        <Text style={styles.companyDetail}>{COMPANY.city}</Text>
+        <Text style={styles.companyDetail}>{COMPANY.phone}</Text>
+        <Text style={styles.companyDetail}>{COMPANY.email}</Text>
         <Text style={styles.companyDetail}>
           GST#: {invoice.gstNumber}
         </Text>
@@ -110,6 +117,12 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
             </Text>
           </View>
         )}
+        <View style={styles.docInfoRow}>
+          <Text style={styles.docInfoLabel}>Total</Text>
+          <Text style={styles.docInfoValue}>
+            CAD {formatCurrency(invoice.totalCents)}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -118,16 +131,16 @@ function Header({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
 function ClientBlock({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
   return (
     <View style={styles.clientSection}>
-      <Text style={styles.clientLabel}>Bill To</Text>
+      <Text style={styles.clientLabel}>To</Text>
       <Text style={styles.clientName}>{invoice.clientName}</Text>
       {invoice.clientAddress && (
         <Text style={styles.clientDetail}>{invoice.clientAddress}</Text>
       )}
       {invoice.clientPhone && (
-        <Text style={styles.clientDetail}>Phone: {invoice.clientPhone}</Text>
+        <Text style={styles.clientDetail}>{invoice.clientPhone}</Text>
       )}
       {invoice.clientEmail && (
-        <Text style={styles.clientDetail}>Email: {invoice.clientEmail}</Text>
+        <Text style={styles.clientDetail}>{invoice.clientEmail}</Text>
       )}
     </View>
   );
@@ -142,39 +155,41 @@ function LineItemsTable({
     <View style={styles.table}>
       {/* Header row */}
       <View style={styles.tableHeaderRow}>
-        <Text style={[styles.tableHeaderCell, styles.colNum]}>#</Text>
-        <Text style={[styles.tableHeaderCell, styles.colSection]}>Section</Text>
-        <Text style={[styles.tableHeaderCell, styles.colDetails]}>Details</Text>
+        <Text style={[styles.tableHeaderCell, styles.colDescription]}>
+          Description
+        </Text>
+        <Text style={[styles.tableHeaderCell, styles.colRate]}>Rate</Text>
+        <Text style={[styles.tableHeaderCell, styles.colQty]}>Qty</Text>
         <Text style={[styles.tableHeaderCell, styles.colAmount]}>Amount</Text>
       </View>
 
       {/* Data rows */}
       {lineItems.map((item, idx) => {
-        const lines = descriptionToLines(item.description);
+        const lines = parseDescriptionLines(item.description);
         const isAlt = idx % 2 === 1;
 
         return (
           <View
             key={idx}
             style={[styles.tableRow, isAlt ? styles.tableRowAlt : {}]}
-            wrap={false}
           >
-            <Text style={[styles.tableCell, styles.colNum]}>{idx + 1}</Text>
-            <Text style={[styles.tableCellBold, styles.colSection]}>
-              {item.label}
-            </Text>
-            <View style={styles.colDetails}>
+            {/* Description column — section label + step content */}
+            <View style={styles.colDescription}>
+              <Text style={styles.sectionLabel}>{item.label}</Text>
               {lines.map((line, lineIdx) => (
-                <Text key={lineIdx} style={styles.tableCell}>
-                  {line}
+                <Text
+                  key={lineIdx}
+                  style={line.type === 'remark' ? styles.descRemark : styles.descLine}
+                >
+                  {line.text}
                 </Text>
               ))}
               {item.footerLines && item.footerLines.length > 0 && (
-                <View style={{ marginTop: 3 }}>
+                <View style={{ marginTop: 4, paddingTop: 3, borderTopWidth: 0.5, borderTopColor: '#E0E0E0' }}>
                   {item.footerLines.map((fl, flIdx) => (
                     <Text
                       key={flIdx}
-                      style={[styles.tableCell, { color: '#888888' }]}
+                      style={{ fontSize: 7, color: BRAND.grey, lineHeight: 1.3 }}
                     >
                       {fl}
                     </Text>
@@ -182,6 +197,18 @@ function LineItemsTable({
                 </View>
               )}
             </View>
+
+            {/* Rate */}
+            <Text style={[styles.tableCellBold, styles.colRate]}>
+              {formatCurrency(item.rateCents)}
+            </Text>
+
+            {/* Qty */}
+            <Text style={[styles.tableCell, styles.colQty]}>
+              {item.quantity}
+            </Text>
+
+            {/* Amount */}
             <Text style={[styles.tableCellBold, styles.colAmount]}>
               {formatCurrency(item.amountCents)}
             </Text>
@@ -230,7 +257,6 @@ function PaymentSchedule({
     <View style={styles.paymentSection}>
       <Text style={styles.sectionTitle}>Payment Schedule</Text>
 
-      {/* Header */}
       <View style={styles.paymentHeaderRow}>
         <Text style={[styles.paymentHeaderCell, styles.payColLabel]}>
           Milestone
@@ -244,7 +270,6 @@ function PaymentSchedule({
         </Text>
       </View>
 
-      {/* Rows */}
       {milestones.map((ms, idx) => (
         <View key={idx} style={styles.paymentRow}>
           <Text style={[styles.tableCell, styles.payColLabel]}>{ms.label}</Text>
@@ -295,7 +320,7 @@ function Footer() {
   return (
     <View style={styles.footer} fixed>
       <Text style={styles.footerText}>
-        This document was generated by Reno Stars Construction Inc.
+        Reno Stars Construction Inc | 778-960-7999 | renostars604@gmail.com
       </Text>
     </View>
   );
@@ -317,6 +342,7 @@ export function InvoicePdf({
       author={COMPANY.name}
     >
       <Page size="LETTER" style={styles.page}>
+        <TopBanner />
         <Header invoice={invoice} />
         <ClientBlock invoice={invoice} />
         <LineItemsTable lineItems={lineItems} />
