@@ -179,11 +179,11 @@ function ClientBlock({ invoice }: { invoice: InvoicePdfProps['invoice'] }) {
 /** Render a single step with number, text, and indented remarks */
 function StepView({ step, num }: { step: StepData; num: number }) {
   return (
-    <View style={{ marginBottom: 3 }}>
-      {/* Step line: "1. Step text" */}
+    <View style={{ marginBottom: 4 }}>
+      {/* Step line: "1. Step text" — bold black for readability */}
       <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
         <Text style={{
-          fontSize: 7.5,
+          fontSize: 8,
           fontWeight: 700,
           color: BRAND.black,
           width: 16,
@@ -193,7 +193,8 @@ function StepView({ step, num }: { step: StepData; num: number }) {
           {num}.
         </Text>
         <Text style={{
-          fontSize: 7.5,
+          fontSize: 8,
+          fontWeight: 700,
           color: BRAND.black,
           flex: 1,
           lineHeight: 1.4,
@@ -201,20 +202,20 @@ function StepView({ step, num }: { step: StepData; num: number }) {
           {step.text}
         </Text>
       </View>
-      {/* Remarks: indented with gold accent */}
+      {/* Remarks: indented with * prefix */}
       {step.remarks.map((remark, i) => (
         <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', paddingLeft: 20 }}>
           <Text style={{
-            fontSize: 6.5,
-            color: BRAND.gold,
+            fontSize: 7,
+            color: '#888888',
             marginRight: 3,
             marginTop: 0.5,
           }}>
             *
           </Text>
           <Text style={{
-            fontSize: 6.5,
-            color: BRAND.grey,
+            fontSize: 7,
+            color: '#555555',
             flex: 1,
             lineHeight: 1.35,
           }}>

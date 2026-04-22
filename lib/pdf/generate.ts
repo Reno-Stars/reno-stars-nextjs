@@ -10,15 +10,19 @@ export type { InvoicePdfProps };
 // FONT REGISTRATION — Chinese (CJK) support via Noto Sans SC
 // ============================================================================
 
-const NOTO_SANS_SC_PATH = path.join(process.cwd(), 'public', 'fonts', 'NotoSansSC-Variable.ttf');
+const FONT_PATH = path.join(process.cwd(), 'public', 'fonts', 'NotoSansSC-Variable.ttf');
 
+// Register with explicit weight variants so @react-pdf/renderer
+// can distinguish normal vs bold rendering
 Font.register({
   family: 'Noto Sans SC',
-  src: NOTO_SANS_SC_PATH,
+  fonts: [
+    { src: FONT_PATH, fontWeight: 400 },
+    { src: FONT_PATH, fontWeight: 700 },
+  ],
 });
 
-// Register as fallback for Helvetica — any glyph not found in Helvetica
-// will fall back to Noto Sans SC (covers CJK characters)
+// Disable hyphenation for CJK
 Font.registerHyphenationCallback((word) => [word]);
 
 /**
