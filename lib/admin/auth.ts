@@ -66,7 +66,7 @@ export async function createSession(): Promise<void> {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    path: '/admin',
+    path: '/',
     maxAge: SESSION_MAX_AGE,
   });
 }
@@ -74,7 +74,7 @@ export async function createSession(): Promise<void> {
 /** Delete session cookie */
 export async function destroySession(): Promise<void> {
   const jar = await cookies();
-  jar.delete({ name: COOKIE_NAME, path: '/admin' });
+  jar.delete({ name: COOKIE_NAME, path: '/' });
 }
 
 /** Validate current session. Returns true if authenticated. */
