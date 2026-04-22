@@ -101,6 +101,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
   const [showVoidConfirm, setShowVoidConfirm] = useState(false);
   const [showVersions, setShowVersions] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [showPdfPreview, setShowPdfPreview] = useState(false);
 
   const nextStatuses = getNextStatuses(invoice.status);
 
@@ -192,6 +193,19 @@ export default function InvoiceDetailClient({ invoice }: Props) {
           </button>
         ))}
 
+        <button type="button" onClick={() => setShowPdfPreview(!showPdfPreview)} style={actionBtnStyle}>
+          {showPdfPreview ? 'Close Preview' : 'Preview PDF'}
+        </button>
+
+        <a
+          href={`/api/invoices/${invoice.id}/pdf?download=true`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={actionBtnStyle as React.CSSProperties}
+        >
+          Export PDF
+        </a>
+
         <button type="button" onClick={handleCopyShareLink} style={actionBtnStyle}>
           {t.invoices.copyShareLink}
         </button>
@@ -206,6 +220,33 @@ export default function InvoiceDetailClient({ invoice }: Props) {
           </button>
         )}
       </div>
+
+      {/* PDF Preview */}
+      {showPdfPreview && (
+        <div style={{ ...cardStyle, marginBottom: '1.5rem', padding: 0, overflow: 'hidden' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1rem', borderBottom: `1px solid ${NAVY}15` }}>
+            <span style={{ fontWeight: 600, color: NAVY, fontSize: '0.875rem' }}>PDF Preview</span>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <a
+                href={`/api/invoices/${invoice.id}/pdf?download=true`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '0.75rem', color: GOLD, fontWeight: 600, textDecoration: 'none' }}
+              >
+                Download
+              </a>
+              <button type="button" onClick={() => setShowPdfPreview(false)} style={{ fontSize: '0.75rem', color: TEXT_MID, background: 'none', border: 'none', cursor: 'pointer' }}>
+                Close
+              </button>
+            </div>
+          </div>
+          <iframe
+            src={`/api/invoices/${invoice.id}/pdf`}
+            title="Invoice PDF Preview"
+            style={{ width: '100%', height: '80vh', border: 'none' }}
+          />
+        </div>
+      )}
 
       {/* Edit header form */}
       {showEditHeader && (
