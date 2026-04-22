@@ -295,6 +295,71 @@ export async function recordPaymentAction(
   }
 }
 
+export async function addLineItemAction(
+  invoiceId: string,
+  label: string,
+  steps: Array<{ text: string; remarks: string[] }>
+): Promise<{ error?: string }> {
+  try {
+    await requireAuth();
+    if (!isValidUUID(invoiceId)) return { error: 'Invalid invoice ID.' };
+    if (!label.trim()) return { error: 'Label is required.' };
+
+    // Build description from steps
+    const descriptionLines: string[] = [];
+    steps.forEach((step, i) => {
+      descriptionLines.push(`${i + 1}. ${step.text}`);
+      for (const remark of step.remarks) {
+        descriptionLines.push(`   - ${remark}`);
+      }
+    });
+
+    // Get max display order
+    const existing = await db
+      .select({ displayOrder: invoiceLineItems.displayOrder })
+      .from(invoiceLineItems)
+      .where(eq(invoiceLineItems.invoiceId, invoiceId))
+      .orderBy(invoiceLineItems.displayOrder);
+    const maxOrder = existing.length > 0 ? existing[existing.length - 1].displayOrder : -1;
+
+    await db.insert(invoiceLineItems).values({
+      invoiceId,
+      label: label.trim(),
+      description: descriptionLines.join('\n'),
+      steps,
+      displayOrder: maxOrder + 1,
+    });
+
+    revalidatePath('/admin/invoices');
+    revalidatePath(`/admin/invoices/${invoiceId}`);
+    return {};
+  } catch (error) {
+    console.error('Failed to add line item:', error);
+    return { error: 'Failed to add line item.' };
+  }
+}
+
+export async function deleteLineItemAction(
+  invoiceId: string,
+  lineItemId: string
+): Promise<{ error?: string }> {
+  try {
+    await requireAuth();
+    if (!isValidUUID(invoiceId) || !isValidUUID(lineItemId)) return { error: 'Invalid ID.' };
+
+    await db
+      .delete(invoiceLineItems)
+      .where(eq(invoiceLineItems.id, lineItemId));
+
+    revalidatePath('/admin/invoices');
+    revalidatePath(`/admin/invoices/${invoiceId}`);
+    return {};
+  } catch (error) {
+    console.error('Failed to delete line item:', error);
+    return { error: 'Failed to delete line item.' };
+  }
+}
+
 export async function updateLineItemStepsAction(
   invoiceId: string,
   lineItemId: string,

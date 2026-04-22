@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { CARD, NAVY, GOLD, TEXT_MID, neu } from '@/lib/theme';
 import { ChevronDown, ChevronRight, Pencil, Save, X, Plus, Trash2 } from 'lucide-react';
-import { updateLineItemStepsAction } from '@/app/actions/admin/invoices';
+import { updateLineItemStepsAction, deleteLineItemAction } from '@/app/actions/admin/invoices';
 
 interface StepData {
   text: string;
@@ -217,11 +217,28 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
                 </button>
               </>
             ) : (
-              hasSteps && (
-                <button type="button" onClick={startEdit} style={{ ...iconBtn, color: NAVY, fontSize: '0.75rem', gap: '3px' }}>
-                  <Pencil size={13} /> Edit Steps
+              <>
+                {hasSteps && (
+                  <button type="button" onClick={startEdit} style={{ ...iconBtn, color: NAVY, fontSize: '0.75rem', gap: '3px' }}>
+                    <Pencil size={13} /> Edit
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm(`Delete "${item.label}"?`)) {
+                      startTransition(async () => {
+                        const result = await deleteLineItemAction(invoiceId, item.id);
+                        if (result.error) alert(result.error);
+                      });
+                    }
+                  }}
+                  disabled={isPending}
+                  style={{ ...iconBtn, color: '#c44', fontSize: '0.75rem', gap: '3px' }}
+                >
+                  <Trash2 size={13} /> Delete
                 </button>
-              )
+              </>
             )}
           </div>
 

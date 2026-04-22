@@ -9,7 +9,8 @@ import InvoiceStatusBadge from '@/components/admin/InvoiceStatusBadge';
 import InvoiceTypeBadge from '@/components/admin/InvoiceTypeBadge';
 import InvoiceLineItemRow from '@/components/admin/InvoiceLineItemRow';
 import PaymentMilestoneCard from '@/components/admin/PaymentMilestoneCard';
-import { updateInvoiceAction, updateStatusAction, deleteInvoiceAction } from '@/app/actions/admin/invoices';
+import { updateInvoiceAction, updateStatusAction, deleteInvoiceAction, addLineItemAction } from '@/app/actions/admin/invoices';
+import { Plus } from 'lucide-react';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 
 interface SerializedInvoice {
@@ -91,6 +92,71 @@ function getNextStatuses(current: string): string[] {
     void: [],
   };
   return transitions[current] ?? [];
+}
+
+function AddLineItemButton({ invoiceId }: { invoiceId: string }) {
+  const [open, setOpen] = useState(false);
+  const [label, setLabel] = useState('');
+  const [isPending, startTransition] = useTransition();
+
+  function handleAdd() {
+    if (!label.trim()) return;
+    startTransition(async () => {
+      const result = await addLineItemAction(invoiceId, label.trim(), [{ text: '', remarks: [] }]);
+      if (result.error) {
+        alert(result.error);
+      } else {
+        setLabel('');
+        setOpen(false);
+      }
+    });
+  }
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: '4px',
+          padding: '4px 12px', borderRadius: '6px', fontSize: '0.75rem',
+          border: `1px solid ${NAVY}22`, background: 'none', color: NAVY,
+          cursor: 'pointer', fontWeight: 500,
+        }}
+      >
+        <Plus size={14} /> Add Section
+      </button>
+    );
+  }
+
+  return (
+    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <input
+        type="text"
+        value={label}
+        onChange={(e) => setLabel(e.target.value)}
+        placeholder="Section name (e.g. Kitchen, Others)"
+        onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
+        autoFocus
+        style={{ fontSize: '0.8125rem', padding: '4px 8px', border: `1px solid ${NAVY}33`, borderRadius: '4px', width: '220px', fontFamily: 'inherit' }}
+      />
+      <button
+        type="button"
+        onClick={handleAdd}
+        disabled={isPending || !label.trim()}
+        style={{
+          padding: '4px 12px', borderRadius: '4px', fontSize: '0.75rem',
+          border: 'none', backgroundColor: NAVY, color: '#fff',
+          cursor: 'pointer', opacity: isPending ? 0.6 : 1,
+        }}
+      >
+        {isPending ? '...' : 'Add'}
+      </button>
+      <button type="button" onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: TEXT_MID, fontSize: '0.75rem' }}>
+        Cancel
+      </button>
+    </div>
+  );
 }
 
 export default function InvoiceDetailClient({ invoice }: Props) {
@@ -344,7 +410,10 @@ export default function InvoiceDetailClient({ invoice }: Props) {
 
           {/* Line items */}
           <div style={cardStyle}>
-            <h2 style={sectionHeading}>{t.invoices.lineItems}</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <h2 style={{ ...sectionHeading, marginBottom: 0 }}>{t.invoices.lineItems}</h2>
+              <AddLineItemButton invoiceId={invoice.id} />
+            </div>
             {invoice.lineItems.length === 0 ? (
               <p style={{ color: TEXT_MID, fontSize: '0.875rem' }}>{t.invoices.noLineItems}</p>
             ) : (
