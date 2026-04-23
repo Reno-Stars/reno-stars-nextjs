@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = isZh ? '附近卫浴装修 | 大温哥华 | Reno Stars' : 'Bathroom Renovation Near Me | Vancouver Metro | Reno Stars';
   const description = isZh
     ? '大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。$15K-$45K，3-6周完工。70+五星好评，免费估价。'
-    : 'Bathroom renovation near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. Tiled showers, tub conversions, vanities. $15K-$45K, 3-6 weeks. Free quotes.';
+    : 'Bathroom renovation near you in Vancouver, Richmond, Burnaby & 14+ Metro Vancouver cities. Walk-in showers, tub conversions, custom vanities. $15K-$45K, 3-6 wks. 3-yr warranty, $5M insured. Free quote.';
   const baseUrl = getBaseUrl();
   return {
     title, description,

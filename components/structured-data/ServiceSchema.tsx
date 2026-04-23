@@ -12,6 +12,8 @@ interface ServiceSchemaProps {
     max: number;
   };
   url: string;
+  googleRating?: number;
+  googleReviewCount?: number;
 }
 
 export default function ServiceSchema({
@@ -22,6 +24,8 @@ export default function ServiceSchema({
   areaServed,
   priceRange,
   url,
+  googleRating,
+  googleReviewCount,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
@@ -57,6 +61,17 @@ export default function ServiceSchema({
     schema.areaServed = {
       '@type': 'City',
       name: location,
+    };
+  }
+
+  if (googleRating && googleReviewCount) {
+    (schema.provider as Record<string, unknown>).aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: googleRating,
+      bestRating: 5,
+      worstRating: 1,
+      ratingCount: googleReviewCount,
+      reviewCount: googleReviewCount,
     };
   }
 

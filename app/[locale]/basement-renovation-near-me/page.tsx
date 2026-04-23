@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = isZh ? '附近地下室装修 | 大温哥华 | Reno Stars' : 'Basement Renovation Near Me | Vancouver Metro | Reno Stars';
   const description = isZh
     ? '大温哥华附近专业地下室装修：suite改造、家庭影院、活动室。$35K-$130K+，8-16周。许可证代办，防水保障。免费估价。'
-    : 'Basement renovation near you in Metro Vancouver. Legal suites, family rooms, home theatres. $35K-$130K+, 8-16 weeks. Permits handled, waterproofing guaranteed. Free quotes.';
+    : 'Basement renovation near you in Metro Vancouver. Legal suites, family rooms, home theatres. $35K-$130K+, 8-16 wks. Permits handled, 3-yr warranty, $5M insured. Free quote.';
   const baseUrl = getBaseUrl();
   return {
     title, description,

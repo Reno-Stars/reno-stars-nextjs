@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = isZh ? '附近厨房装修 | 大温哥华 | Reno Stars' : 'Kitchen Renovation Near Me | Vancouver Metro | Reno Stars';
   const description = isZh
     ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。$25K-$90K，4-8周完工。70+五星好评，免费估价。'
-    : 'Kitchen renovation near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. Custom cabinets, quartz countertops, backsplash. $25K-$90K, 4-8 weeks. Free quotes.';
+    : 'Kitchen renovation near you in Vancouver, Richmond, Burnaby & 14+ Metro Vancouver cities. Custom cabinets, quartz countertops, full design-build. $25K-$90K, 4-8 wks. 3-yr warranty, $5M insured. Free quotes.';
   const baseUrl = getBaseUrl();
   return {
     title, description,

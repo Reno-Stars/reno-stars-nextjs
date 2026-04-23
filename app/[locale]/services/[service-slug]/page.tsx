@@ -5,6 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
@@ -46,8 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = service.image || siteImages.hero;
 
   const title = locale === 'zh'
-    ? `${localizedService.title} 温哥华 — 500万保险 | Reno Stars`
-    : `${localizedService.title} Vancouver — $5M Insured | Reno Stars`;
+    ? `${localizedService.title} 温哥华 — 免费报价, 3年保修 | Reno Stars`
+    : `${localizedService.title} Vancouver — Free Quote, 3-Yr Warranty | Reno Stars`;
 
   return {
     title,
@@ -76,7 +77,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb()]);
+  const [company, services, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service || service.showOnServicesPage === false) {
@@ -112,6 +113,8 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={localizedService.long_description || localizedService.description}
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
+        googleRating={googleReviews.rating}
+        googleReviewCount={googleReviews.userRatingCount}
       />
       <FAQSchema faqs={faqs} />
       <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} faqs={faqs} />

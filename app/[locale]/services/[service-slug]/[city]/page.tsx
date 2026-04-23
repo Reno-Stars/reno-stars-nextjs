@@ -6,6 +6,7 @@ import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
@@ -183,10 +184,11 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas] = await Promise.all([
+  const [company, services, areas, googleReviews] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
+    getGoogleReviews(),
   ]);
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
@@ -243,6 +245,8 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={localizedService.long_description || localizedService.description}
         location={localizedArea.name}
         url={`/${locale}/services/${serviceSlug}/${city}/`}
+        googleRating={googleReviews.rating}
+        googleReviewCount={googleReviews.userRatingCount}
       />
       <FAQSchema faqs={faqs} />
       <ServiceLocationPage
