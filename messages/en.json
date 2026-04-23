@@ -605,8 +605,8 @@
         "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
       },
       "bathroomCost": {
-        "title": "Bathroom Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Bathroom renovation costs in Vancouver range $10K–$60K+. See real prices from 19 completed projects, tier breakdowns, and tips to save on your reno."
+        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
+        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
       },
       "wholeHouseCost": {
         "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
@@ -1036,8 +1036,8 @@
     "bathroomCost": {
       "breadcrumb": "Bathroom Renovation Cost",
       "hero": {
-        "title": "Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
-        "subtitle": "Bathroom renovation cost ranges from $10,000 to $60,000+ in Vancouver. These are real prices from completed projects — not industry estimates or national averages."
+        "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
+        "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
       },
       "stats": {
         "avgCost": "Average Cost",
