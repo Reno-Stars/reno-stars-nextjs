@@ -1256,459 +1256,459 @@
       }
     },
     "basementCost": {
-      "breadcrumb": "Basement Renovation Cost",
+      "breadcrumb": "地下室リノベーション費用",
       "hero": {
-        "title": "Basement Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope, from basic finishing to full legal suite conversions."
+        "title": "バンクーバーBCの地下室リノベーション費用 (2026)",
+        "subtitle": "グレーター・バンクーバーで地下室を仕上げる、またはリノベーションするのに本当にいくらかかりますか?基本仕上げから完全な合法スイート変換まで、プロジェクト範囲別の典型的な価格帯。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$35 – $120/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "6–12 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "sqft": "平方フィートあたりの費用",
+        "sqftValue": "$35〜$120/平方フィート",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "6〜12週間"
       },
       "tiers": {
-        "title": "Basement Renovation Cost by Tier",
-        "subtitle": "Typical pricing for basement projects across Greater Vancouver",
+        "title": "ティア別地下室リノベーション費用",
+        "subtitle": "グレーター・バンクーバーの地下室プロジェクトの典型的な価格",
         "budget": {
-          "title": "Basic Finishing",
-          "description": "Framing, insulation, drywall, basic flooring, paint, and standard lighting. Suitable for a recreation room, home office, or storage area without plumbing additions."
+          "title": "基本仕上げ",
+          "description": "フレーミング、断熱、ドライウォール、基本フローリング、塗装、標準照明。配管追加なしのレクリエーションルーム、ホームオフィス、収納エリアに適しています。"
         },
         "midRange": {
-          "title": "Mid-Range Renovation",
-          "description": "Full finishing with a bathroom addition, upgraded flooring (vinyl plank or laminate), pot lights, built-in storage, and a wet bar or kitchenette. The most popular scope for family homes."
+          "title": "ミッドレンジリノベーション",
+          "description": "完全仕上げにバスルーム追加、アップグレードフローリング (ビニルプランクまたはラミネート)、ポットライト、ビルトイン収納、ウェットバーまたは小型キッチン。ファミリーホームで最も人気の範囲。"
         },
         "highEnd": {
-          "title": "Legal Suite Conversion",
-          "description": "Full secondary suite with separate entrance, kitchen, bathroom, bedroom with egress windows, fire separation, and all code-required features. Includes permits and inspections for rental legalization."
+          "title": "合法スイート変換",
+          "description": "別個の入口、キッチン、バスルーム、エグレス窓付き寝室、防火分離、すべての法規必須機能を備えた完全な二次スイート。賃貸合法化のための許可と検査を含みます。"
         }
       },
       "factors": {
-        "title": "What Affects Your Basement Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "地下室リノベーション費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "waterproofing": {
-          "title": "Waterproofing & Moisture Control",
-          "description": "Vancouver's wet climate makes waterproofing critical. Interior drainage systems run $3,000–8,000, while exterior waterproofing can cost $10,000–25,000. Sump pump installation adds $1,500–3,000."
+          "title": "防水と湿気管理",
+          "description": "バンクーバーの湿った気候では防水が重要。内部排水システムは$3,000〜$8,000、外部防水は$10,000〜$25,000かかる場合があります。サンプポンプ設置は$1,500〜$3,000追加。"
         },
         "framing": {
-          "title": "Framing & Insulation",
-          "description": "Steel or wood framing with insulation typically costs $8–15 per square foot. Older Vancouver homes may need additional vapor barriers and insulation upgrades to meet current building code."
+          "title": "フレーミングと断熱",
+          "description": "鋼または木製フレーミングと断熱は通常平方フィートあたり$8〜$15。バンクーバーの古い住宅では現行の建築基準を満たすために追加の防湿シートと断熱アップグレードが必要な場合があります。"
         },
         "plumbing": {
-          "title": "Plumbing (Bathroom/Kitchen)",
-          "description": "Adding a basement bathroom costs $8,000–15,000 depending on whether you need to break concrete for drain lines. A full kitchen installation adds $12,000–25,000 including rough-in and fixtures."
+          "title": "配管 (バスルーム/キッチン)",
+          "description": "地下室バスルームの追加は、排水ラインのためにコンクリートを破壊する必要があるかどうかに応じて$8,000〜$15,000かかります。完全なキッチン設置はラフインと設備を含めて$12,000〜$25,000追加。"
         },
         "electrical": {
-          "title": "Electrical & HVAC",
-          "description": "Basement electrical typically runs $3,000–8,000 for a standard layout. Many older homes need panel upgrades ($2,000–4,000). Extending HVAC ductwork adds $2,000–5,000."
+          "title": "電気とHVAC",
+          "description": "標準的なレイアウトの地下室電気は通常$3,000〜$8,000。多くの古い住宅ではパネルアップグレードが必要 ($2,000〜$4,000)。HVACダクトの拡張は$2,000〜$5,000追加。"
         },
         "egress": {
-          "title": "Egress Windows & Separate Entrance",
-          "description": "Building code requires egress windows in bedrooms ($2,000–5,000 each to install). Adding a separate exterior entrance for a suite costs $8,000–15,000 including excavation and concrete work."
+          "title": "エグレス窓と別個の入口",
+          "description": "建築基準では寝室にエグレス窓が必要 (1つあたり$2,000〜$5,000で設置)。スイート用の別個の外部入口の追加は、掘削とコンクリート工事を含めて$8,000〜$15,000。"
         },
         "permits": {
-          "title": "Permits & Code Compliance",
-          "description": "Building permits for basement finishing in Metro Vancouver cost $500–2,000. Legal suite conversions require additional inspections. Some municipalities offer grants for adding rental suites."
+          "title": "許可と法規遵守",
+          "description": "メトロバンクーバーでの地下室仕上げの建築許可は$500〜$2,000。合法スイート変換には追加の検査が必要。一部の自治体は賃貸スイート追加のための助成金を提供しています。"
         }
       },
       "realProjects": {
-        "title": "Related Whole-House Renovation Projects",
-        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver, many include basement work"
+        "title": "関連住宅全体リノベーションプロジェクト",
+        "subtitle": "グレーター・バンクーバー全域で完了した{count}件のリノベーションプロジェクトをご覧ください。多くは地下室工事を含みます"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Basement Renovation",
+        "title": "地下室リノベーションのコスト節約のヒント",
         "tip1": {
-          "title": "Start with Waterproofing",
-          "description": "Address any moisture issues before finishing walls. Fixing water problems after drywall is installed costs 3–5x more than doing it upfront."
+          "title": "防水から始める",
+          "description": "壁を仕上げる前に湿気の問題に対処してください。ドライウォール設置後の水の問題の修正は、事前に行うより3〜5倍多くかかります。"
         },
         "tip2": {
-          "title": "Plan Plumbing Near Existing Lines",
-          "description": "Locating your bathroom or kitchen near existing drain stacks saves $3,000–8,000 by avoiding concrete cutting and new rough-ins."
+          "title": "既存ラインの近くに配管を計画",
+          "description": "既存の排水スタックの近くにバスルームまたはキッチンを配置すると、コンクリート切断と新しいラフインを避けて$3,000〜$8,000節約できます。"
         },
         "tip3": {
-          "title": "Consider a Legal Suite for ROI",
-          "description": "A legal secondary suite in Vancouver can generate $1,500–2,500/month in rental income. The renovation often pays for itself in 3–5 years."
+          "title": "ROIのための合法スイートを検討",
+          "description": "バンクーバーの合法二次スイートは月$1,500〜$2,500の賃貸収入を生み出すことができます。リノベーションは通常3〜5年で元が取れます。"
         },
         "tip4": {
-          "title": "Choose LVP Flooring",
-          "description": "Luxury vinyl plank is the best basement flooring choice. Waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
+          "title": "LVPフローリングを選ぶ",
+          "description": "ラグジュアリービニルプランクは最高の地下室フローリング選択。防水で、足元が暖かく、エンジニアド広葉樹より30〜50%安価。バンクーバーの湿った気候に最適。"
         }
       },
       "cta": {
-        "heading": "Get Your Free Basement Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料地下室リノベーション見積もりを取得",
+        "subtitle": "プロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       },
       "faq": {
-        "q1": "How much does a basement renovation cost in Vancouver?",
-        "a1": "Basement renovation costs in Vancouver typically range from $30,000 for basic finishing to $120,000+ for a full legal suite conversion. The average cost is around $55,000 for a mid-range renovation with a bathroom addition and quality finishes. Cost per square foot ranges from $35 to $120 depending on the scope.",
-        "q2": "How long does a basement renovation take in Vancouver?",
-        "a2": "Most basement renovations in Vancouver take 6 to 12 weeks. Basic finishing (framing, drywall, flooring) can be done in 6–8 weeks. A full legal suite conversion with permits, plumbing, electrical, and inspections typically takes 10–14 weeks.",
-        "q3": "Do I need a permit for a basement renovation in Vancouver?",
-        "a3": "Yes, most basement renovations require building permits in Metro Vancouver. Any work involving framing, electrical, plumbing, or egress modifications requires a permit. Legal suite conversions need additional zoning approval. Permit costs range from $500 to $2,000 depending on the municipality.",
-        "q4": "Is a basement suite a good investment in Vancouver?",
-        "a4": "Yes, adding a legal secondary suite is one of the best renovation investments in Vancouver. A suite can generate $1,500–2,500 per month in rental income. With renovation costs of $80,000–120,000, the investment typically pays for itself in 3–5 years while also increasing your property value by 10–20%.",
-        "q5": "What is the best flooring for a basement renovation?",
-        "a5": "Luxury vinyl plank (LVP) is the most recommended basement flooring in Vancouver due to its waterproof properties and durability. It costs $4–8 per square foot installed and handles moisture better than hardwood or laminate. Engineered hardwood and ceramic tile are also good options depending on your budget and style preferences."
+        "q1": "バンクーバーの地下室リノベーション費用はいくらですか?",
+        "a1": "バンクーバーの地下室リノベーション費用は通常、基本仕上げで$30,000から完全な合法スイート変換で$120,000+まで。バスルーム追加と質の高い仕上げを備えたミッドレンジリノベーションの平均費用は約$55,000。平方フィートあたりの費用は範囲によって$35〜$120。",
+        "q2": "バンクーバーで地下室リノベーションにはどのくらいかかりますか?",
+        "a2": "バンクーバーの大半の地下室リノベーションは6〜12週間。基本仕上げ (フレーミング、ドライウォール、フローリング) は6〜8週間。許可、配管、電気、検査を含む完全な合法スイート変換は通常10〜14週間。",
+        "q3": "バンクーバーで地下室リノベーションに許可が必要ですか?",
+        "a3": "はい、メトロバンクーバーの大半の地下室リノベーションには建築許可が必要。フレーミング、電気、配管、エグレス変更を含む作業には許可が必要。合法スイート変換には追加のゾーニング承認が必要。許可費用は自治体によって$500〜$2,000。",
+        "q4": "バンクーバーで地下室スイートは良い投資ですか?",
+        "a4": "はい、合法二次スイートの追加はバンクーバーで最高のリノベーション投資の一つ。スイートは月$1,500〜$2,500の賃貸収入を生み出すことができます。$80,000〜$120,000のリノベーション費用で、投資は通常3〜5年で元が取れ、不動産価値も10〜20%増加します。",
+        "q5": "地下室リノベーションに最適なフローリングは何ですか?",
+        "a5": "ラグジュアリービニルプランク (LVP) は防水特性と耐久性のためバンクーバーで最も推奨される地下室フローリング。施工込み平方フィートあたり$4〜$8で、広葉樹やラミネートより湿気をうまく処理。エンジニアド広葉樹とセラミックタイルも予算とスタイルの好みに応じて良い選択肢です。"
       }
     },
     "commercialCost": {
-      "breadcrumb": "Commercial Renovation Cost",
+      "breadcrumb": "商業リノベーション費用",
       "hero": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "What does a commercial renovation really cost in Greater Vancouver? From small office refreshes to full restaurant build-outs, here are the real numbers based on our project experience."
+        "title": "バンクーバーBCの商業リノベーション費用 (2026)",
+        "subtitle": "グレーター・バンクーバーで商業リノベーションは本当にいくらかかりますか?小規模オフィスのリフレッシュから完全なレストラン施工まで、プロジェクト経験に基づく実数値。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$75 – $300/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "8–20 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "sqft": "平方フィートあたりの費用",
+        "sqftValue": "$75〜$300/平方フィート",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "8〜20週間"
       },
       "tiers": {
-        "title": "Commercial Renovation Cost by Project Scope",
-        "subtitle": "Typical pricing for commercial projects across Greater Vancouver",
+        "title": "プロジェクト範囲別商業リノベーション費用",
+        "subtitle": "グレーター・バンクーバーの商業プロジェクトの典型的な価格",
         "budget": {
-          "title": "Small Retail / Office Refresh",
-          "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work."
+          "title": "小規模小売/オフィスリフレッシュ",
+          "description": "フレッシュペイント、新フローリング、新照明、基本設備のアップグレード、軽微なレイアウト変更。構造工事なしでモダンな更新が必要な小規模小売店、専門オフィス、コワーキングスペースに最適。"
         },
         "midRange": {
-          "title": "Full Commercial Fit-Out",
-          "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics."
+          "title": "完全な商業フィットアウト",
+          "description": "新しい壁、カスタム造作、HVACゾーンのアップグレード、商業グレードのフローリング、モダンな照明設計、完全な電気アップグレードを含む完全な内装施工。中規模オフィス、小売店、診療所に適しています。"
         },
         "highEnd": {
-          "title": "Restaurant / Medical / Premium Retail",
-          "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail spaces."
+          "title": "レストラン/医療/プレミアム小売",
+          "description": "商業キッチン設置、専用換気、カスタム設備、プレミアム仕上げ、広範な配管、複雑な許可要件を備えた本格的なリノベーション。レストラン、歯科クリニック、医療オフィス、フラッグシップ小売スペース含む。"
         }
       },
       "factors": {
-        "title": "What Affects Your Commercial Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "商業リノベーション費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "permits": {
-          "title": "Permits & Zoning",
-          "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications add $3,000–8,000. The City of Vancouver's development permit process can take 8–16 weeks, so factor in timeline costs."
+          "title": "許可とゾーニング",
+          "description": "メトロバンクーバーの商業許可は範囲と自治体によって$2,000〜$15,000。用途変更申請は$3,000〜$8,000追加。バンクーバー市の開発許可プロセスは8〜16週間かかる場合があるので、スケジュールコストを考慮してください。"
         },
         "hvac": {
-          "title": "HVAC & Mechanical Systems",
-          "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant hood and make-up air systems alone cost $20,000–50,000. Office spaces need proper zoning for tenant comfort. Vancouver's energy code requires high-efficiency systems."
+          "title": "HVACと機械システム",
+          "description": "商業HVACは$15,000〜$80,000+の主要なコスト要因。レストランのフードと補給空気システムだけで$20,000〜$50,000。オフィススペースはテナントの快適さのために適切なゾーニングが必要。バンクーバーのエネルギーコードは高効率システムを要求します。"
         },
         "fireSafety": {
-          "title": "Fire Safety & Sprinklers",
-          "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify. Fire alarm upgrades run $5,000–20,000. Change-of-use triggers full fire code compliance review. Restaurants and assembly spaces have the most stringent requirements."
+          "title": "防火安全とスプリンクラー",
+          "description": "防火スプリンクラーシステムの設置または変更は平方フィートあたり$3〜$8。火災警報のアップグレードは$5,000〜$20,000。用途変更は完全な防火コード遵守レビューを引き起こします。レストランと集会スペースが最も厳しい要件を持っています。"
         },
         "accessibility": {
-          "title": "Accessibility Compliance",
-          "description": "BC Building Code requires barrier-free access for commercial spaces. Accessible washrooms, ramps, door widths, and signage add $5,000–25,000. Heritage buildings in Vancouver often need creative solutions to meet accessibility standards."
+          "title": "アクセシビリティ遵守",
+          "description": "BC建築基準は商業スペースのバリアフリーアクセスを要求します。アクセシブルなトイレ、スロープ、ドア幅、看板は$5,000〜$25,000追加。バンクーバーのヘリテージ建物はアクセシビリティ基準を満たすために創造的な解決策がしばしば必要です。"
         },
         "electrical": {
-          "title": "Electrical & IT Infrastructure",
-          "description": "Commercial electrical upgrades cost $10,000–50,000+ depending on service capacity. Restaurants need 200–400 amp services. Modern offices require structured cabling ($3,000–15,000), server room cooling, and dedicated circuits for equipment."
+          "title": "電気とITインフラ",
+          "description": "商業電気アップグレードはサービス容量によって$10,000〜$50,000+。レストランは200〜400アンペアサービスが必要。モダンなオフィスは構造化された配線 ($3,000〜$15,000)、サーバールーム冷却、機器専用回路が必要。"
         },
         "disruption": {
-          "title": "Project Timing & Business Disruption",
-          "description": "Working around business hours increases costs 15–25%. Many Vancouver commercial tenants renovate during lease transitions. After-hours work adds premium labor costs. A phased renovation plan can keep portions of the business operational during construction."
+          "title": "プロジェクトのタイミングと事業中断",
+          "description": "営業時間中の作業はコストを15〜25%増加させます。多くのバンクーバーの商業テナントはリース移行中にリノベーションします。営業時間外作業は労働コストにプレミアムを追加。段階的なリノベーション計画は、施工中も事業の一部を運用可能に保つことができます。"
         }
       },
       "realProjects": {
-        "title": "Our Commercial Renovation Projects",
-        "subtitle": "Browse {count} completed commercial projects across Greater Vancouver"
+        "title": "当社の商業リノベーションプロジェクト",
+        "subtitle": "グレーター・バンクーバー全域で完了した{count}件の商業プロジェクトをご覧ください"
       },
       "tips": {
-        "title": "Money-Saving Tips for Commercial Renovations",
+        "title": "商業リノベーションのコスト節約のヒント",
         "tip1": {
-          "title": "Plan During Lease Negotiations",
-          "description": "Negotiate a tenant improvement allowance (TIA) with your landlord. Many Vancouver commercial leases include $20–80 per square foot in TIA that can offset renovation costs significantly."
+          "title": "リース交渉中に計画",
+          "description": "貸主とテナント改良手当 (TIA) を交渉。多くのバンクーバーの商業リースには平方フィートあたり$20〜$80のTIAが含まれており、リノベーション費用を大幅に相殺できます。"
         },
         "tip2": {
-          "title": "Phase Your Renovation",
-          "description": "Divide the project into phases to spread costs and minimize business disruption. Prioritize customer-facing areas first, then tackle back-of-house improvements in a second phase."
+          "title": "リノベーションを段階化",
+          "description": "プロジェクトをフェーズに分けて費用を分散し、事業中断を最小限に。最初に顧客向けエリアを優先し、第2フェーズで裏方の改善に取り組みます。"
         },
         "tip3": {
-          "title": "Reuse Existing Infrastructure",
-          "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in costs alone."
+          "title": "既存インフラを再利用",
+          "description": "可能な限り配管と電気を既存の場所に保ちます。商業キッチンやトイレの移動はラフインコストだけで$20,000〜$50,000追加できます。"
         },
         "tip4": {
-          "title": "Choose Durable Commercial-Grade Materials",
-          "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term. Commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+          "title": "耐久性のある商業グレード素材を選ぶ",
+          "description": "商業グレードのフローリング、設備、仕上げに投資。初期費用が高くても長期的に節約。商業LVTは高交通スペースで住宅グレード製品の5〜8年に対し15〜20年持ちます。"
         }
       },
       "cta": {
-        "heading": "Get Your Free Commercial Renovation Quote",
-        "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料商業リノベーション見積もりを取得",
+        "subtitle": "商業プロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       },
       "faq": {
-        "q1": "How much does a commercial renovation cost in Vancouver?",
-        "a1": "Commercial renovation costs in Vancouver typically range from $50,000 for a small office refresh to over $1,000,000 for a full restaurant or medical facility build-out. The average commercial renovation costs around $250,000. Cost per square foot ranges from $75 to $300 depending on the type of business, scope of work, and finish level.",
-        "q2": "How long does a commercial renovation take in Vancouver?",
-        "a2": "Most commercial renovations in Vancouver take 8 to 20 weeks depending on scope. A basic office refresh can be completed in 8–10 weeks, while a full restaurant build-out or medical clinic conversion typically takes 16–20 weeks including permit approvals and inspections.",
-        "q3": "Do I need a permit for a commercial renovation in Vancouver?",
-        "a3": "Yes, nearly all commercial renovations in Metro Vancouver require building permits. Any work involving structural changes, electrical, plumbing, HVAC, or fire safety systems needs permits. Change-of-use applications are required when converting between business types. Permit costs range from $2,000 to $15,000 depending on the scope and municipality.",
-        "q4": "What is the cost per square foot for commercial renovation in Vancouver?",
-        "a4": "Commercial renovation costs in Vancouver range from $75 to $300 per square foot. Basic office refreshes run $75–$120/sq ft, mid-range retail or office fit-outs cost $120–$200/sq ft, and specialized spaces like restaurants or medical clinics range from $200–$300+ per square foot due to complex mechanical, plumbing, and ventilation requirements.",
-        "q5": "Can I renovate my commercial space while staying open for business?",
-        "a5": "Yes, phased renovations allow many Vancouver businesses to stay operational during construction. We create detailed phasing plans that section off work areas while keeping customer-facing spaces accessible. After-hours and weekend work is also an option, though it adds 15–25% to labor costs. Many of our clients choose to renovate during seasonal slow periods to minimize impact."
+        "q1": "バンクーバーの商業リノベーション費用はいくらですか?",
+        "a1": "バンクーバーの商業リノベーション費用は通常、小規模オフィスリフレッシュで$50,000から完全なレストランや医療施設施工で$1,000,000以上まで。平均的な商業リノベーションは約$250,000。平方フィートあたりの費用は事業タイプ、作業範囲、仕上げレベルによって$75〜$300。",
+        "q2": "バンクーバーで商業リノベーションにはどのくらいかかりますか?",
+        "a2": "バンクーバーの大半の商業リノベーションは範囲によって8〜20週間。基本オフィスリフレッシュは8〜10週間で完了できますが、完全なレストラン施工や医療クリニック変換は許可承認と検査を含めて通常16〜20週間かかります。",
+        "q3": "バンクーバーで商業リノベーションに許可が必要ですか?",
+        "a3": "はい、メトロバンクーバーのほぼすべての商業リノベーションには建築許可が必要。構造変更、電気、配管、HVAC、防火安全システムを含む作業には許可が必要。事業タイプ間の変換時には用途変更申請が必要。許可費用は範囲と自治体によって$2,000〜$15,000。",
+        "q4": "バンクーバーの商業リノベーションの平方フィートあたりの費用は?",
+        "a4": "バンクーバーの商業リノベーション費用は平方フィートあたり$75〜$300。基本オフィスリフレッシュは$75〜$120/平方フィート、ミッドレンジ小売またはオフィスフィットアウトは$120〜$200/平方フィート、レストランや医療クリニックなどの専門スペースは複雑な機械、配管、換気要件のため平方フィートあたり$200〜$300+。",
+        "q5": "営業しながら商業スペースをリノベーションできますか?",
+        "a5": "はい、段階的なリノベーションにより、多くのバンクーバーの企業が施工中も運営を続けることができます。作業エリアを区切り、顧客向けスペースをアクセス可能に保つ詳細なフェーズ計画を作成します。営業時間外と週末作業もオプションですが、労働コストに15〜25%追加。多くのお客様は影響を最小限に抑えるために季節の閑散期にリノベーションすることを選びます。"
       }
     },
     "cabinetCost": {
-      "breadcrumb": "Cabinet Refinishing Cost",
+      "breadcrumb": "キャビネットリフィニッシュ費用",
       "hero": {
-        "title": "Cabinet Refinishing & Refacing Cost in Vancouver BC (2026)",
-        "subtitle": "A complete guide to cabinet refinishing, refacing, and replacement costs across Greater Vancouver. Based on our experience completing kitchen renovations with custom cabinetry throughout the region."
+        "title": "バンクーバーBCのキャビネットリフィニッシュとリフェイシング費用 (2026)",
+        "subtitle": "グレーター・バンクーバー全域でのキャビネットリフィニッシュ、リフェイシング、交換費用の完全ガイド。地域全体でカスタムキャビネットを使用したキッチンリノベーションを完了した経験に基づきます。"
       },
       "stats": {
-        "avgCost": "Avg. Refinishing",
-        "range": "Price Range",
-        "savings": "vs. Replacement",
-        "savingsValue": "Save 50–70%",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–5 days"
+        "avgCost": "平均リフィニッシュ",
+        "range": "価格帯",
+        "savings": "交換と比較",
+        "savingsValue": "50〜70%節約",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "3〜5日"
       },
       "tiers": {
-        "title": "Cabinet Update Options by Cost",
-        "subtitle": "Three approaches to updating your kitchen cabinets in Greater Vancouver",
+        "title": "費用別キャビネット更新オプション",
+        "subtitle": "グレーター・バンクーバーでキッチンキャビネットを更新する3つのアプローチ",
         "refinishing": {
-          "title": "Cabinet Refinishing",
-          "description": "Professional sanding, priming, and repainting or restaining of existing cabinet doors and frames. Best for solid wood cabinets in good structural condition. The most cost-effective way to transform your kitchen."
+          "title": "キャビネットリフィニッシュ",
+          "description": "既存のキャビネットドアとフレームのプロのサンディング、プライミング、再塗装または再着色。構造的に良好な状態の無垢材キャビネットに最適。キッチンを変える最もコスト効率の良い方法。"
         },
         "refacing": {
-          "title": "Cabinet Refacing",
-          "description": "Replacing cabinet doors and drawer fronts while keeping existing cabinet boxes. Includes new veneer on visible surfaces and new hardware. A mid-range option that gives a completely new look without full demolition."
+          "title": "キャビネットリフェイシング",
+          "description": "既存のキャビネットボックスを保ちながら、キャビネットドアと引き出しの前面を交換。可視面の新しいベニヤと新しい金具を含む。完全な解体なしで完全に新しい外観を提供するミッドレンジオプション。"
         },
         "fullReplacement": {
-          "title": "Full Cabinet Replacement",
-          "description": "Complete removal and installation of new cabinets. Choose from stock, semi-custom, or fully custom options. Best when cabinets are structurally damaged or you want to change the kitchen layout entirely."
+          "title": "完全キャビネット交換",
+          "description": "新しいキャビネットの完全な撤去と設置。ストック、セミカスタム、または完全カスタムオプションから選択。キャビネットが構造的に損傷している、またはキッチンレイアウトを完全に変更したい場合に最適。"
         }
       },
       "comparison": {
-        "title": "Refinishing vs. Replacement: Which Is Right for You?",
-        "subtitle": "Understanding the trade-offs helps you make the best decision for your kitchen and budget",
+        "title": "リフィニッシュと交換: どちらが正しい選択ですか?",
+        "subtitle": "トレードオフを理解することで、キッチンと予算に最適な決定を下すのに役立ちます",
         "refinishing": {
-          "title": "Refinishing / Refacing",
-          "pro1": "50–70% less expensive than replacement",
-          "pro2": "Completed in 3–5 days with minimal disruption",
-          "pro3": "Eco-friendly, keeping existing cabinets out of landfill",
-          "con1": "Cannot change cabinet layout or configuration"
+          "title": "リフィニッシュ/リフェイシング",
+          "pro1": "交換より50〜70%安価",
+          "pro2": "最小限の混乱で3〜5日で完了",
+          "pro3": "環境に優しく、既存のキャビネットを廃棄物から守る",
+          "con1": "キャビネットレイアウトや構成を変更できない"
         },
         "replacement": {
-          "title": "Full Replacement",
-          "pro1": "Completely customize layout, size, and configuration",
-          "pro2": "Address structural issues and water damage",
-          "pro3": "Modern features like soft-close and pull-out organizers",
-          "con1": "2–4 weeks of construction and higher cost"
+          "title": "完全交換",
+          "pro1": "レイアウト、サイズ、構成を完全にカスタマイズ",
+          "pro2": "構造問題と水害に対処",
+          "pro3": "ソフトクローズや引き出し式オーガナイザーなどのモダンな機能",
+          "con1": "2〜4週間の施工と高いコスト"
         }
       },
       "factors": {
-        "title": "What Affects Your Cabinet Refinishing Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "キャビネットリフィニッシュ費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "cabinetCount": {
-          "title": "Number of Cabinets",
-          "description": "A typical Vancouver kitchen has 20–30 cabinet doors and drawer fronts. More doors means more labour and materials. Expect to pay $150–$300 per door for professional refinishing."
+          "title": "キャビネット数",
+          "description": "典型的なバンクーバーのキッチンには20〜30のキャビネットドアと引き出しの前面があります。ドアが多いほど労力と材料が増えます。プロのリフィニッシュではドア1枚あたり$150〜$300を予想。"
         },
         "material": {
-          "title": "Cabinet Material",
-          "description": "Solid wood cabinets refinish beautifully. MDF and thermofoil cabinets require different techniques and may cost more. Laminate cabinets need special adhesion primers for lasting results."
+          "title": "キャビネット材料",
+          "description": "無垢材キャビネットは美しくリフィニッシュできます。MDFとサーモフォイルキャビネットは異なる技術が必要で、より高くなる可能性があります。ラミネートキャビネットは持続的な結果のために特殊な接着プライマーが必要。"
         },
         "finishType": {
-          "title": "Finish Type",
-          "description": "Basic paint refinishing costs less than specialty finishes. Staining, glazing, or distressed looks add $500–$1,500 to the project. Two-tone cabinet designs are popular but require extra labour."
+          "title": "仕上げタイプ",
+          "description": "基本塗装リフィニッシュは特殊仕上げよりコストが低いです。着色、グレージング、ディストレストルックはプロジェクトに$500〜$1,500追加。ツートーンキャビネットデザインは人気ですが追加の労力が必要。"
         },
         "hardware": {
-          "title": "Hardware Upgrades",
-          "description": "New handles, knobs, and hinges can add $300–$2,000 depending on quality. Upgrading to soft-close hinges is highly recommended and typically costs $5–$15 per hinge installed."
+          "title": "金具のアップグレード",
+          "description": "新しいハンドル、ノブ、ヒンジは品質によって$300〜$2,000追加できます。ソフトクローズヒンジへのアップグレードを強く推奨し、通常は1ヒンジあたり$5〜$15で設置されます。"
         },
         "kitchenSize": {
-          "title": "Kitchen Size & Accessibility",
-          "description": "Larger kitchens with upper and lower cabinets, pantry units, and island cabinets cost more. Hard-to-reach cabinets or intricate moulding details increase labour time."
+          "title": "キッチンサイズとアクセシビリティ",
+          "description": "上部および下部キャビネット、パントリーユニット、アイランドキャビネットを備えた大きなキッチンはより高くなります。届きにくいキャビネットや複雑なモールディングの詳細は労働時間を増加させます。"
         },
         "condition": {
-          "title": "Current Cabinet Condition",
-          "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical, refacing or replacement becomes the better option."
+          "title": "現在のキャビネットの状態",
+          "description": "水害、剥離、または構造的問題を抱えるキャビネットはリフィニッシュ前に修理が必要な場合があります。重大な損傷はリフィニッシュを実用的でなくする可能性があり、リフェイシングまたは交換がより良いオプションになります。"
         }
       },
       "realProjects": {
-        "title": "Related Kitchen Projects with Cabinet Work",
-        "subtitle": "Browse our completed kitchen renovations featuring custom cabinetry across Greater Vancouver"
+        "title": "キャビネット工事を含む関連キッチンプロジェクト",
+        "subtitle": "グレーター・バンクーバー全域でカスタムキャビネットを特徴とする完了したキッチンリノベーションをご覧ください"
       },
       "tips": {
-        "title": "Money-Saving Tips for Cabinet Updates",
+        "title": "キャビネット更新のコスト節約のヒント",
         "tip1": {
-          "title": "Consider Refinishing First",
-          "description": "If your cabinet boxes are structurally sound, refinishing saves 50–70% over replacement. A professional paint job on solid wood cabinets can last 10–15 years with proper care."
+          "title": "まずリフィニッシュを検討",
+          "description": "キャビネットボックスが構造的に良好であれば、リフィニッシュは交換より50〜70%節約できます。無垢材キャビネットへのプロの塗装は適切なケアで10〜15年持ちます。"
         },
         "tip2": {
-          "title": "Update Hardware for Instant Impact",
-          "description": "New handles and knobs are the easiest and cheapest upgrade. Modern hardware on freshly painted cabinets can make your kitchen look completely renovated for a fraction of the cost."
+          "title": "即座のインパクトのために金具を更新",
+          "description": "新しいハンドルとノブは最も簡単で安価なアップグレード。新しく塗装されたキャビネットにモダンな金具を組み合わせると、キッチンは費用のごく一部で完全にリノベーションされたように見えます。"
         },
         "tip3": {
-          "title": "Choose Durable Finishes",
-          "description": "Invest in high-quality cabinet paint or lacquer. Benjamin Moore Advance or similar cabinet-grade finishes cost more upfront but resist chipping and yellowing far better than standard wall paint."
+          "title": "耐久性のある仕上げを選ぶ",
+          "description": "高品質のキャビネット塗料またはラッカーに投資。Benjamin Moore Advanceや類似のキャビネットグレード仕上げは初期費用が高くても、標準的な壁塗料より欠けや黄変への耐性がはるかに優れています。"
         },
         "tip4": {
-          "title": "Bundle with a Kitchen Renovation",
-          "description": "If you are already planning a kitchen renovation, bundling cabinet work with countertop and backsplash updates often results in better overall pricing and a more cohesive design."
+          "title": "キッチンリノベーションとバンドル",
+          "description": "すでにキッチンリノベーションを計画している場合、キャビネット工事をカウンタートップとバックスプラッシュの更新と組み合わせると、より良い全体的な価格設定とより一貫したデザインが得られることが多いです。"
         }
       },
       "faq": {
-        "q1": "How much does cabinet refinishing cost in Vancouver?",
-        "a1": "Cabinet refinishing in Vancouver typically costs $4,000 to $8,000 for a standard kitchen with 20–30 doors. This includes professional sanding, priming, and painting with cabinet-grade finish. Costs vary based on kitchen size, number of doors, and finish complexity.",
-        "q2": "How long does cabinet refinishing take?",
-        "a2": "Professional cabinet refinishing typically takes 3 to 5 days for a standard kitchen. The process includes removing doors, sanding, priming, applying multiple coats of paint or stain, and reinstalling with new hardware. You can use your kitchen throughout most of the process.",
-        "q3": "Is cabinet refinishing worth it or should I replace?",
-        "a3": "Cabinet refinishing is worth it when your existing cabinets are structurally sound and you are happy with the layout. It costs 50–70% less than replacement and takes days instead of weeks. Replace cabinets only if they have significant water damage, structural issues, or you need to change the kitchen layout.",
-        "q4": "What is the difference between cabinet refinishing and refacing?",
-        "a4": "Refinishing means sanding and repainting or restaining existing cabinet doors and frames. Refacing replaces the doors and drawer fronts entirely while keeping the existing cabinet boxes, adding new veneer to visible surfaces. Refacing costs more ($8,000–$15,000) but gives a more dramatic transformation.",
-        "q5": "Can you refinish laminate or thermofoil cabinets?",
-        "a5": "Yes, but it requires special preparation. Laminate cabinets need thorough deglossing and bonding primer for paint to adhere properly. Thermofoil cabinets can be painted but the thermofoil may peel over time. For these materials, refacing with new solid wood or MDF doors is often a better long-term investment."
+        "q1": "バンクーバーのキャビネットリフィニッシュ費用はいくらですか?",
+        "a1": "バンクーバーのキャビネットリフィニッシュは通常、20〜30ドアの標準的なキッチンで$4,000〜$8,000。これにはプロのサンディング、プライミング、キャビネットグレード仕上げの塗装が含まれます。費用はキッチンサイズ、ドア数、仕上げの複雑さによって異なります。",
+        "q2": "キャビネットリフィニッシュにはどのくらい時間がかかりますか?",
+        "a2": "プロのキャビネットリフィニッシュは標準的なキッチンで通常3〜5日。プロセスにはドアの取り外し、サンディング、プライミング、複数の塗装または着色のコート塗布、新しい金具での再設置が含まれます。プロセスのほとんどでキッチンを使用できます。",
+        "q3": "キャビネットリフィニッシュは価値がありますか、それとも交換すべきですか?",
+        "a3": "既存のキャビネットが構造的に良好で、レイアウトに満足している場合、キャビネットリフィニッシュは価値があります。交換より50〜70%安く、数週間ではなく数日かかります。重大な水害、構造的問題、またはキッチンレイアウトを変更する必要がある場合のみキャビネットを交換してください。",
+        "q4": "キャビネットリフィニッシュとリフェイシングの違いは何ですか?",
+        "a4": "リフィニッシュとは、既存のキャビネットドアとフレームをサンディングして再塗装または再着色すること。リフェイシングは、ドアと引き出しの前面を完全に交換し、既存のキャビネットボックスを保ちながら、可視面に新しいベニヤを追加します。リフェイシングはコストが高く ($8,000〜$15,000)、より劇的な変化をもたらします。",
+        "q5": "ラミネートやサーモフォイルキャビネットをリフィニッシュできますか?",
+        "a5": "はい、しかし特別な準備が必要です。ラミネートキャビネットは塗料を適切に付着させるために徹底的な脱光沢と接着プライマーが必要。サーモフォイルキャビネットは塗装できますが、サーモフォイルは時間とともに剥がれる可能性があります。これらの材料には、新しい無垢材またはMDFドアでのリフェイシングがしばしばより良い長期投資です。"
       },
       "cta": {
-        "heading": "Get Your Free Cabinet Refinishing Quote",
-        "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料キャビネットリフィニッシュ見積もりを取得",
+        "subtitle": "キャビネットプロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       }
     },
     "basementSuiteCost": {
-      "breadcrumb": "Basement Suite Cost",
+      "breadcrumb": "地下室スイート費用",
       "hero": {
-        "title": "Basement Suite Conversion Cost in Vancouver BC (2026)",
-        "subtitle": "How much does it cost to build a legal basement suite in Greater Vancouver? Get detailed pricing for secondary suite conversions."
+        "title": "バンクーバーBCの地下室スイート変換費用 (2026)",
+        "subtitle": "グレーター・バンクーバーで合法地下室スイートを建設するのにいくらかかりますか?二次スイート変換の詳細価格を取得。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$80 – $180/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "10–16 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "sqft": "平方フィートあたりの費用",
+        "sqftValue": "$80〜$180/平方フィート",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "10〜16週間"
       },
       "tiers": {
-        "title": "Basement Suite Cost by Tier",
-        "subtitle": "Typical pricing for legal suite conversions across Greater Vancouver",
+        "title": "ティア別地下室スイート費用",
+        "subtitle": "グレーター・バンクーバー全域の合法スイート変換の典型的な価格",
         "budget": {
-          "title": "Basic In-Law Suite",
-          "description": "Converting an already-finished basement into a basic suite with kitchenette, bathroom, bedroom with egress window, and interior shared entrance. Minimal structural changes. Ideal for family use."
+          "title": "基本イン-ロースイート",
+          "description": "すでに仕上げられた地下室をキッチネット、バスルーム、エグレス窓付き寝室、内部共有入口を備えた基本スイートに変換。最小限の構造変更。家族用に最適。"
         },
         "midRange": {
-          "title": "Standard Rental Suite",
-          "description": "Full legal secondary suite with separate entrance, complete kitchen, full bathroom, one bedroom with egress, fire separation, and all code-required features. Most common scope for rental income."
+          "title": "標準賃貸スイート",
+          "description": "別個の入口、完全なキッチン、フルバスルーム、エグレス付き1寝室、防火分離、すべての法規必須機能を備えた完全な合法二次スイート。賃貸収入のための最も一般的な範囲。"
         },
         "highEnd": {
-          "title": "Premium Two-Bedroom Suite",
-          "description": "High-end legal suite with two bedrooms, full kitchen with quality appliances, in-suite laundry, upgraded finishes, separate HVAC zone, soundproofing, and premium fixtures."
+          "title": "プレミアム2寝室スイート",
+          "description": "2寝室、質の高い家電付きフルキッチン、室内ランドリー、アップグレードされた仕上げ、別個のHVACゾーン、防音、プレミアム設備を備えたハイエンド合法スイート。"
         }
       },
       "factors": {
-        "title": "What Drives Basement Suite Conversion Costs?",
-        "subtitle": "Six key factors specific to legal suite builds",
+        "title": "地下室スイート変換費用を決定するもの",
+        "subtitle": "合法スイート建設に特有の6つの要因",
         "separateEntrance": {
-          "title": "Separate Entrance",
-          "description": "Most municipalities require a separate exterior entrance. Excavation, concrete stairs, drainage, landing, and fire-rated door typically cost $8,000–$18,000."
+          "title": "別個の入口",
+          "description": "ほとんどの自治体は別個の外部入口を必要とします。掘削、コンクリート階段、排水、踊り場、防火ドアは通常$8,000〜$18,000かかります。"
         },
         "fireSeparation": {
-          "title": "Fire Separation & Safety",
-          "description": "BC Building Code requires 1-hour fire-rated separation between suite and main dwelling. Fire-rated drywall, smoke alarms, and fire-rated doors cost $4,000–$8,000."
+          "title": "防火分離と安全",
+          "description": "BC建築基準はスイートと主住居の間に1時間防火分離を要求。防火ドライウォール、煙感知器、防火ドアは$4,000〜$8,000。"
         },
         "plumbing": {
-          "title": "Kitchen & Bathroom Plumbing",
-          "description": "Full suite kitchen costs $12,000–$25,000 including cabinets, countertops, sink, and appliance hookups. Bathroom addition runs $8,000–$15,000."
+          "title": "キッチンとバスルームの配管",
+          "description": "フルスイートキッチンはキャビネット、カウンタートップ、シンク、家電フックアップを含めて$12,000〜$25,000。バスルーム追加は$8,000〜$15,000。"
         },
         "electrical": {
-          "title": "Electrical Panel & Wiring",
-          "description": "Suites need a dedicated sub-panel ($2,500–$5,000). Full wiring with code-required outlets and lighting costs $5,000–$10,000. Panel upgrades add $3,000–$5,000."
+          "title": "電気パネルと配線",
+          "description": "スイートには専用サブパネルが必要 ($2,500〜$5,000)。法規必須コンセントと照明を備えた完全な配線は$5,000〜$10,000。パネルアップグレードは$3,000〜$5,000追加。"
         },
         "egress": {
-          "title": "Egress Windows & Natural Light",
-          "description": "Every bedroom needs an egress window (5.7 sq ft opening min). Installing in concrete foundation walls costs $2,500–$6,000 each. Window wells add $1,000–$2,000."
+          "title": "エグレス窓と自然光",
+          "description": "すべての寝室にはエグレス窓が必要 (5.7平方フィートの開口部最小)。コンクリート基礎壁への設置は1つあたり$2,500〜$6,000。窓ウェルは$1,000〜$2,000追加。"
         },
         "permits": {
-          "title": "Permits, Inspections & Legalization",
-          "description": "Permit fees range $1,000–$3,500. Expect 4–6 inspections. Vancouver and Burnaby offer suite incentive programs offsetting $5,000–$10,000 in costs."
+          "title": "許可、検査、合法化",
+          "description": "許可料は$1,000〜$3,500。4〜6回の検査を予想。バンクーバーとバーナビーはスイートインセンティブプログラムを提供し、コストを$5,000〜$10,000相殺します。"
         }
       },
       "roi": {
-        "title": "Return on Investment",
-        "subtitle": "Why a legal basement suite is one of the best renovation investments in Metro Vancouver",
+        "title": "投資収益率",
+        "subtitle": "なぜ合法地下室スイートはメトロバンクーバーで最高のリノベーション投資の一つなのか",
         "rentalIncome": {
-          "value": "$1,800–$2,800/mo",
-          "title": "Monthly Rental Income",
-          "description": "One-bedroom suites rent for $1,800–$2,200/month. Two-bedroom suites command $2,200–$2,800/month."
+          "value": "$1,800〜$2,800/月",
+          "title": "月間賃貸収入",
+          "description": "1寝室スイートは月$1,800〜$2,200で賃貸。2寝室スイートは月$2,200〜$2,800を要求。"
         },
         "propertyValue": {
-          "value": "15–25%",
-          "title": "Property Value Increase",
-          "description": "Homes with legal secondary suites sell for 15–25% more than comparable properties without."
+          "value": "15〜25%",
+          "title": "不動産価値の増加",
+          "description": "合法二次スイートを備えた住宅は、ない同等の物件より15〜25%高く売れます。"
         },
         "paybackPeriod": {
-          "value": "3–5 years",
-          "title": "Payback Period",
-          "description": "At average rental rates, a $95,000 suite conversion pays for itself in 3–5 years through rental income alone."
+          "value": "3〜5年",
+          "title": "回収期間",
+          "description": "平均賃貸料で、$95,000のスイート変換は賃貸収入のみで3〜5年で元が取れます。"
         }
       },
       "realProjects": {
-        "title": "Related Renovation Projects",
-        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver"
+        "title": "関連リノベーションプロジェクト",
+        "subtitle": "グレーター・バンクーバー全域で完了した{count}件のリノベーションプロジェクトをご覧ください"
       },
       "municipalities": {
-        "title": "Suite Regulations by Municipality",
-        "subtitle": "Each Metro Vancouver city has different rules for secondary suites",
+        "title": "自治体別スイート規制",
+        "subtitle": "メトロバンクーバーの各都市には二次スイートのための異なるルールがあります",
         "vancouver": {
-          "title": "City of Vancouver",
-          "description": "Allows secondary suites in most single-family zones (RS). Affordable Housing program may provide incentives. Permits $1,500–$3,000."
+          "title": "バンクーバー市",
+          "description": "ほとんどの単一家族ゾーン (RS) で二次スイートを許可。手頃な住宅プログラムはインセンティブを提供する場合があります。許可$1,500〜$3,000。"
         },
         "burnaby": {
-          "title": "City of Burnaby",
-          "description": "Secondary Suite Program offers grants up to $10,000 for legalization. Requires minimum 1,850 sq ft lot. Suite max 40% of floor area."
+          "title": "バーナビー市",
+          "description": "二次スイートプログラムは合法化のために最大$10,000の助成金を提供。最小1,850平方フィートの土地が必要。スイートは床面積の最大40%。"
         },
         "surrey": {
-          "title": "City of Surrey",
-          "description": "Allows suites in most single-family zones. Streamlined permit process. One additional off-street parking space required."
+          "title": "サレー市",
+          "description": "ほとんどの単一家族ゾーンでスイートを許可。合理化された許可プロセス。1つの追加の路上駐車スペースが必要。"
         },
         "coquitlam": {
-          "title": "City of Coquitlam",
-          "description": "Permits suites in RS-1 and RS-2 zones. Requires minimum lot size and separate utility meters. Pre-application consultations available."
+          "title": "コキットラム市",
+          "description": "RS-1とRS-2ゾーンでスイートを許可。最小敷地サイズと別個の公共料金メーターが必要。事前申請相談が利用可能。"
         }
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Basement Suite",
+        "title": "地下室スイートのコスト節約のヒント",
         "tip1": {
-          "title": "Apply for Municipal Incentives First",
-          "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction. Some require pre-approval. Savings: $5,000–$10,000."
+          "title": "最初に自治体インセンティブを申請",
+          "description": "バンクーバー、バーナビー、その他の都市は合法スイート作成のための助成金を提供。施工前に申請。一部は事前承認が必要。節約: $5,000〜$10,000。"
         },
         "tip2": {
-          "title": "Plan Kitchen Near Existing Plumbing",
-          "description": "Locating the suite kitchen near existing drain stacks saves thousands. Avoiding concrete cutting saves $3,000–$8,000."
+          "title": "既存の配管の近くにキッチンを計画",
+          "description": "スイートキッチンを既存の排水スタックの近くに配置すると数千ドル節約できます。コンクリート切断を避けると$3,000〜$8,000節約。"
         },
         "tip3": {
-          "title": "Choose a Side-Entry Entrance",
-          "description": "Side-entry entrances cost significantly less than rear entries requiring major excavation. Savings: $5,000–$10,000."
+          "title": "サイドエントリー入口を選ぶ",
+          "description": "サイドエントリー入口は、大規模な掘削が必要な裏側の入口より大幅にコストが低い。節約: $5,000〜$10,000。"
         },
         "tip4": {
-          "title": "Invest in Soundproofing Upfront",
-          "description": "Resilient channel and insulation between floors costs $2,000–$4,000 during construction. After drywall: 3–5x more and less effective."
+          "title": "防音に事前投資",
+          "description": "床間の弾力性のあるチャンネルと断熱は施工中に$2,000〜$4,000かかります。ドライウォール後: 3〜5倍多くかかり、効果が低下。"
         }
       },
       "related": {
-        "title": "Explore More Renovation Guides",
-        "basementGuide": "General Basement Renovation Guide",
-        "kitchenGuide": "Kitchen Renovation Cost Guide",
-        "bathroomGuide": "Bathroom Renovation Cost Guide",
-        "allGuides": "All Cost Guides"
+        "title": "より多くのリノベーションガイドを探索",
+        "basementGuide": "一般的な地下室リノベーションガイド",
+        "kitchenGuide": "キッチンリノベーション費用ガイド",
+        "bathroomGuide": "バスルームリノベーション費用ガイド",
+        "allGuides": "すべての費用ガイド"
       },
       "cta": {
-        "heading": "Get Your Free Basement Suite Quote",
-        "subtitle": "Tell us about your suite project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料地下室スイート見積もりを取得",
+        "subtitle": "スイートプロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       },
       "faq": {
-        "q1": "How much does a basement suite cost in Vancouver?",
-        "a1": "A legal basement suite conversion typically costs $60,000–$150,000. Basic in-law suite: $60,000–$85,000. Standard rental suite: $85,000–$120,000. Premium two-bedroom: $120,000–$150,000+. Average: ~$95,000.",
-        "q2": "Do I need a permit for a basement suite in Vancouver?",
-        "a2": "Yes, a building permit is required for any suite conversion in Metro Vancouver. Permits cost $1,000–$3,500. Expect 4–6 inspections. Operating without a permit risks fines, insurance issues, and liability.",
-        "q3": "How long does it take to build a basement suite?",
-        "a3": "Typically 10–16 weeks: permit processing (2–6 weeks), construction (8–12 weeks), and final inspections. Complex projects with structural work can take 16–20 weeks.",
-        "q4": "What is the minimum ceiling height for a basement suite in BC?",
-        "a4": "BC Building Code requires minimum 6 feet 5 inches (1.95m) for habitable rooms. If ceilings are too low, underpinning (lowering the floor) costs $15,000–$30,000.",
-        "q5": "Is a basement suite a good investment in Vancouver?",
-        "a5": "Yes. Rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
+        "q1": "バンクーバーの地下室スイート費用はいくらですか?",
+        "a1": "合法地下室スイート変換は通常$60,000〜$150,000。基本イン-ロースイート: $60,000〜$85,000。標準賃貸スイート: $85,000〜$120,000。プレミアム2寝室: $120,000〜$150,000+。平均: 約$95,000。",
+        "q2": "バンクーバーで地下室スイートに許可が必要ですか?",
+        "a2": "はい、メトロバンクーバーのスイート変換には建築許可が必要。許可は$1,000〜$3,500。4〜6回の検査を予想。許可なしで運営すると罰金、保険問題、責任のリスクがあります。",
+        "q3": "地下室スイートを建てるのにどのくらいかかりますか?",
+        "a3": "通常10〜16週間: 許可処理 (2〜6週間)、施工 (8〜12週間)、最終検査。構造工事を含む複雑なプロジェクトは16〜20週間かかる場合があります。",
+        "q4": "BCの地下室スイートの最低天井高は?",
+        "a4": "BC建築基準は居住可能な部屋に最低6フィート5インチ (1.95m) を要求。天井が低すぎる場合、アンダーピニング (床を下げる) は$15,000〜$30,000。",
+        "q5": "バンクーバーで地下室スイートは良い投資ですか?",
+        "a5": "はい。月$1,800〜$2,800の賃貸収入は、約$95,000の投資が3〜5年で元が取れることを意味します。不動産価値は15〜25%増加。スイート収入はモーゲージ資格にも役立ちます。"
       }
     }
   },
