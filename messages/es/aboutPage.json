@@ -6,15 +6,15 @@
     },
     "journey": {
       "title": "Sobre Reno Stars",
-      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
+      "body": "Reno Stars fue construido sobre la experiencia. No solo en construcción sino en entender la industria de remodelación desde ambos lados.\n\nAntes de fundar Reno Stars en 2021, nuestro equipo pasó años trabajando en plataformas de remodelación, conectando a propietarios con contratistas. Hemos visto miles de proyectos de principio a fin, y lo más importante, hemos visto dónde las cosas salen mal.\n\nEntendemos las frustraciones comunes que enfrentan los propietarios: cotizaciones que crecen con artículos ocultos, mala comunicación y respuestas tardías, plazos inciertos y mano de obra inconsistente debido a equipos inestables. Estos no son problemas raros. Son normas de la industria. Por eso exactamente se creó Reno Stars.",
       "lead": "Reno Stars fue construido sobre experiencia, no solo en construcción, sino en entender la industria de remodelación desde ambos lados.",
       "context": "Antes de fundar Reno Stars en 2021, nuestro equipo pasó años trabajando en plataformas de remodelación, conectando propietarios con contratistas. Hemos visto miles de proyectos de principio a fin y, más importante, hemos visto dónde fallan las cosas.",
       "painPointsTitle": "Entendemos las frustraciones comunes que enfrentan los propietarios.",
       "painPoints": [
-        "Quotes that look attractive at first but grow with hidden items later.",
-        "Poor communication and delayed responses.",
-        "Uncertain timelines and projects dragging on.",
-        "Inconsistent workmanship due to unstable crews."
+        "Cotizaciones que parecen atractivas al principio pero crecen con artículos ocultos después.",
+        "Mala comunicación y respuestas tardías.",
+        "Plazos inciertos y proyectos que se alargan.",
+        "Mano de obra inconsistente debido a equipos inestables."
       ],
       "conclusion": "Estos no son problemas raros. Son normas de la industria. Por eso se creó Reno Stars."
     },
@@ -30,46 +30,46 @@
       "viewAll": "Ver todos los servicios",
       "services": {
         "kitchen": {
-          "title": "Kitchen Renovation",
-          "desc": "Custom cabinetry, countertops, backsplashes, and complete kitchen transformations tailored to your lifestyle."
+          "title": "Remodelación de cocina",
+          "desc": "Gabinetes personalizados, encimeras, salpicaderos y transformaciones completas de cocina adaptadas a su estilo de vida."
         },
         "bathroom": {
-          "title": "Bathroom Renovation",
-          "desc": "Modern fixtures, tile work, vanities, and spa-inspired designs that maximize your space."
+          "title": "Remodelación de baño",
+          "desc": "Accesorios modernos, trabajo de azulejos, lavabos y diseños inspirados en spa que maximizan su espacio."
         },
         "wholeHouse": {
-          "title": "Whole House Renovation",
-          "desc": "Comprehensive home remodels including structural work, flooring, lighting, and finishing touches."
+          "title": "Remodelación de casa completa",
+          "desc": "Remodelaciones completas de hogar incluyendo trabajo estructural, pisos, iluminación y toques finales."
         },
         "commercial": {
-          "title": "Commercial Renovation",
-          "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
+          "title": "Remodelación comercial",
+          "desc": "Espacios comerciales profesionales diseñados para funcionalidad, cumplimiento e impresiones duraderas."
         }
       },
-      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
+      "body": "También estamos desarrollando continuamente estándares internos de construcción e inspección para mejorar aún más la consistencia y la calidad.",
       "lead": "No solo iniciamos otra empresa de remodelación. Reconstruimos el proceso.",
       "goal": "Desde el principio, nuestro objetivo ha sido simple: hacer la remodelación predecible, transparente y sin estrés.",
       "systemTitle": "Cada proyecto está respaldado por un sistema estructurado.",
       "systemItems": [
         {
-          "title": "Detailed Contracts",
-          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
+          "title": "Contratos detallados",
+          "desc": "Nuestras cotizaciones definen claramente el alcance, las responsabilidades y los materiales clave. Una remodelación típica de baño puede incluir más de 20 elementos claramente listados, para que sepa exactamente qué está incluido y qué no."
         },
         {
-          "title": "Clear Payment Milestones",
-          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
+          "title": "Hitos de pago claros",
+          "desc": "Los pagos están ligados al progreso. Cada etapa se completa y se revisa antes de avanzar, sin sorpresas."
         },
         {
-          "title": "Dedicated Coordination",
-          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
+          "title": "Coordinación dedicada",
+          "desc": "Nuestro equipo de oficina responde rápidamente, ayuda con la selección de materiales y se asegura de que nada se pierda en la comunicación."
         },
         {
-          "title": "Reliable Scheduling",
-          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
+          "title": "Programación confiable",
+          "desc": "No sobrereservamos. Su proyecto avanza según lo planeado, no cuando es conveniente para nosotros."
         },
         {
-          "title": "Quality and Waterproofing Standards",
-          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
+          "title": "Estándares de calidad e impermeabilización",
+          "desc": "Especificamos claramente los materiales y las áreas de aplicación, especialmente para elementos críticos como la impermeabilización."
         }
       ]
     },
@@ -77,40 +77,40 @@
       "title": "Gestión de detalles y expectativas",
       "items": {
         "integrity": {
-          "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
+          "title": "Integridad",
+          "desc": "Cumplimos nuestras promesas y nos comunicamos honestamente en cada etapa. Sin tarifas ocultas, sin expansión del alcance, solo acuerdos claros y seguimiento."
         },
         "quality": {
-          "title": "Quality Craftsmanship",
-          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
+          "title": "Artesanía de calidad",
+          "desc": "Cada detalle importa. Especificamos los materiales por adelantado, aplicamos técnicas probadas y desarrollamos continuamente estándares internos para entregar resultados que perduran."
         },
         "transparency": {
-          "title": "Transparency",
-          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
+          "title": "Transparencia",
+          "desc": "Contratos detallados con más de 20 elementos, hitos de pago vinculados al progreso y actualizaciones regulares, para que siempre sepa exactamente dónde está su proyecto."
         },
         "satisfaction": {
-          "title": "Client Satisfaction",
-          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+          "title": "Satisfacción del cliente",
+          "desc": "No solo completamos proyectos, los gestionamos. Respuestas rápidas, comunicación proactiva y plena responsabilidad de principio a fin."
         }
       },
-      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
+      "body": "La remodelación involucra muchas partes móviles, desde materiales hasta programación. Si bien cuidamos mucho la planificación y la coordinación, ciertos factores como los plazos de los proveedores pueden ocasionalmente estar fuera de nuestro control directo.\n\nLo que podemos garantizar es nuestra respuesta. Nos comunicamos temprano, ajustamos rápidamente y mantenemos a nuestros clientes informados en cada etapa, para que no haya sorpresas ni incertidumbre. Nuestro objetivo no es prometer un proceso perfecto, sino entregar uno bien gestionado.",
       "lead": "La remodelación involucra muchas piezas en movimiento, desde materiales hasta programación. Aunque tenemos gran cuidado en planificación y coordinación, ciertos factores como cronogramas de proveedores ocasionalmente pueden estar fuera de nuestro control directo.",
       "guarantee": "Lo que sí podemos garantizar es nuestra respuesta.",
       "guaranteeItems": [
-        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
+        "Nos comunicamos temprano, ajustamos rápidamente y mantenemos a nuestros clientes informados en cada etapa, para que no haya sorpresas ni incertidumbre."
       ],
       "closing": "Nuestro objetivo no es prometer un proceso perfecto, sino entregar uno bien gestionado."
     },
     "whyUs": {
       "title": "Construido para propietarios que valoran la tranquilidad",
-      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
+      "body": "No somos la opción de precio más bajo, y no aspiramos a serlo. Nuestros clientes nos eligen porque quieren un proceso claro, comunicación honesta, plazos confiables y un equipo que asume responsabilidad.\n\nNos especializamos en remodelaciones completas de casa, cocinas, baños y proyectos comerciales, donde la coordinación, el detalle y la confiabilidad hacen toda la diferencia. Abordamos cada proyecto con una mentalidad simple: tratar cada hogar como si fuera el nuestro. Porque al final, la remodelación no se trata solo de construir un espacio, se trata de construir confianza.",
       "lead": "No somos la opción de menor precio, ni aspiramos a serlo.",
       "chooseTitle": "Nuestros clientes nos eligen porque quieren",
       "chooseItems": [
-        "A clear process",
-        "Honest communication",
-        "Reliable timelines",
-        "A team that takes responsibility"
+        "Un proceso claro",
+        "Comunicación honesta",
+        "Plazos confiables",
+        "Un equipo que asume responsabilidad"
       ],
       "specialise": "Nos especializamos en remodelaciones integrales, cocinas, baños y proyectos comerciales, donde la coordinación, el detalle y la confiabilidad marcan toda la diferencia."
     },
@@ -120,16 +120,16 @@
     },
     "faq": {
       "title": "Preguntas frecuentes",
-      "q1": "How long has Reno Stars been in business?",
-      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
-      "q2": "Are you licensed and insured?",
-      "a2": "Yes, we are fully licensed with up to $5 million in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage. CGL protects your property during the renovation, while WCB ensures all workers on your job site are covered. We also provide up to a 3-year warranty on our work.",
-      "q3": "What areas do you serve?",
-      "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
-      "q4": "How do I get started with a renovation project?",
-      "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
-      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
-      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+      "q1": "¿Cuánto tiempo lleva Reno Stars en el negocio?",
+      "a1": "Reno Stars tiene más de {years} años de experiencia combinada en la industria de remodelación de Vancouver. Nuestro equipo ha completado cientos de proyectos en todo Metro Vancouver, desde pequeñas actualizaciones de baños hasta remodelaciones completas de casa a gran escala.",
+      "q2": "¿Están licenciados y asegurados?",
+      "a2": "Sí, estamos totalmente licenciados con hasta $5 millones en seguro CGL (Responsabilidad Civil Comercial General) y cobertura WCB (WorkSafeBC) activa. CGL protege su propiedad durante la remodelación, mientras que WCB asegura que todos los trabajadores en el sitio estén cubiertos. También brindamos hasta 3 años de garantía en nuestro trabajo.",
+      "q3": "¿A qué áreas atienden?",
+      "a3": "Atendemos todo Metro Vancouver y el Valle del Fraser, incluyendo Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster y Port Moody.",
+      "q4": "¿Cómo empiezo con un proyecto de remodelación?",
+      "a4": "¡Empezar es fácil! Simplemente contáctenos por teléfono, correo electrónico o nuestro formulario en línea para programar una consulta gratuita. Discutiremos su visión, evaluaremos su espacio y proporcionaremos una cotización detallada adaptada a sus necesidades y presupuesto.",
+      "q5": "¿Qué hace que Reno Stars sea diferente de otros contratistas de remodelación de Vancouver?",
+      "a5": "Reconstruimos el proceso de remodelación desde cero. Antes de comenzar Reno Stars, nuestro equipo pasó años en plataformas de remodelación y vio dónde las cosas salían consistentemente mal. Nuestro enfoque estructurado, contratos detallados, pagos basados en hitos, coordinación dedicada y programación confiable, aborda los puntos de dolor reales que enfrentan los propietarios. No somos la opción más barata, pero somos la más responsable."
     },
     "cta": {
       "title": "¿Listo para comenzar su remodelación?",

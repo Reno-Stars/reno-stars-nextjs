@@ -4,7 +4,7 @@
       "title": "리노베이션 서비스 흐름: 5단계",
       "subtitle": "상담부터 완공까지",
       "googleReviews": "Google 리뷰",
-      "stepLabel": "STEP {stepNum}"
+      "stepLabel": "단계 {stepNum}"
     },
     "downloadPoster": "PNG 다운로드",
     "downloadPdf": "PDF 다운로드",
@@ -16,21 +16,21 @@
       "title": "초기 상담",
       "subtitle": "발견",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "전화, 이메일, WhatsApp, 위챗 또는 SMS를 통한 초기 연락",
+        "리노베이션 영역 확인: 주방, 거실, 욕실 또는 전체 주택",
+        "스타일 선호도 확인",
+        "자재 예산 및 포지셔닝",
+        "리노베이션 필요와 기대 이해",
+        "도면 및 현장 사진 입수 (가능한 경우)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "전화"
         },
         {
           "icon": "email",
-          "label": "Email"
+          "label": "이메일"
         },
         {
           "icon": "whatsapp",
@@ -38,7 +38,7 @@
         },
         {
           "icon": "wechat",
-          "label": "WeChat"
+          "label": "위챗"
         },
         {
           "icon": "sms",
@@ -51,23 +51,23 @@
       "title": "맞춤 평가 & 견적",
       "subtitle": "현장 측정(필요 시) 및 투명한 가격",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "정확한 치수를 위한 전문 현장 측정 (필요한 경우)",
+        "미래 공간을 보여주는 포괄적인 디자인 제안",
+        "명확하게 정의된 작업 범위, 프로젝트 일정, 허가 요구 사항 및 자재 사양",
+        "제안된 디자인 및 범위에 맞춘 명확하고 투명한 견적으로 프로세스 전반에 걸쳐 완전한 명확성과 예측 가능성을 보장"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "정확한 측정"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "투명한 가격"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "디자인 제안"
         }
       ],
       "faqAnswer": "필요할 때 전문 현장 측정을 제공하고 공간을 위한 포괄적인 디자인 제안을 만듭니다. 일정, 허가 요구 사항이 포함된 명확하게 정의된 작업 범위와 제안된 디자인에 부합하는 투명한 견적을 받습니다."
@@ -76,26 +76,26 @@
       "title": "확인 & 계약",
       "subtitle": "세부사항 확정 & 프로젝트 시작",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "직접 상담을 위해 고객을 쇼룸에 초대",
+        "질문 다루기 및 디자인 세부 사항 최적화",
+        "디자인 제안 및 자재 샘플 확인",
+        "지불 일정을 확정하고 배송 일정 지원",
+        "건설 계약 서명 및 보증금 수금",
+        "프로젝트 시작일 확보",
+        "프로젝트 팀 구성: 프로젝트 매니저, 건설 매니저, 코디네이터"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "계약"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "상담"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "프로젝트 팀"
         }
       ],
       "faqAnswer": "쇼룸으로 초대하여 자재 샘플을 검토하고 디자인 세부 사항을 확정합니다. 지불 일정 확인 및 계약 서명 후, 프로젝트 시작일을 확보하고 프로젝트 매니저, 시공 매니저, 코디네이터를 포함한 전담 프로젝트 팀을 구성합니다."
@@ -104,25 +104,25 @@
       "title": "실행 & 관리",
       "subtitle": "완전히 조정된 쉬운 소통",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "프로젝트의 모든 측면을 관리하는 통합 프로젝트 팀",
+        "노동자와의 직접적인 상호 작용 불필요",
+        "효율성과 일관성을 보장하기 위해 조정된 건설 진행",
+        "배송 일정 및 현장 조정 지원",
+        "전체 건설 프로세스에 걸친 일관된 품질 관리",
+        "모든 문제의 빠른 응답과 효율적인 해결"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "통합 관리"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "진행 추적"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "빠른 응답"
         }
       ],
       "faqAnswer": "통합된 프로젝트 팀이 프로젝트의 모든 측면을 관리합니다. 작업자와 직접 상호작용할 필요가 없습니다. 시공 진행, 배송 일정을 조정하고 일관된 품질 관리를 유지합니다. 모든 문제는 빠르고 효율적으로 해결됩니다."
@@ -131,22 +131,22 @@
       "title": "워크스루 & 사후 관리",
       "subtitle": "최종 점검 & 지속적인 지원",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "모든 작업이 기대를 충족하는지 확인하는 최종 검수",
+        "새 집 인계",
+        "보증 기간 동안 유지 보수에 대한 지속적인 지원"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "엄격한 검사"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "보증 서비스"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "지속적인 지원"
         }
       ],
       "faqAnswer": "최종 워크스루를 진행하여 모든 작업이 기대에 부응하는지 확인한 다음 새로운 집을 인도합니다. 보증 기간 동안 유지보수에 대한 지속적인 지원을 제공합니다."
@@ -158,7 +158,7 @@
     },
     "footer": {
       "tagline": "심플 · 안심 · 안전 · 보증",
-      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "taglineEn": "간단함 · 걱정 없음 · 안전 · 보증",
       "yearsIndustry": "업계 경력 연수",
       "googleRating": "Google",
       "warrantyService": "보증 서비스",

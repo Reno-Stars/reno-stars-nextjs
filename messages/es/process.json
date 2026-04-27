@@ -16,21 +16,21 @@
       "title": "Consulta inicial",
       "subtitle": "Descubrimiento",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "Contacto inicial por teléfono, correo electrónico, Whatsapp, WeChat o SMS",
+        "Confirmar áreas de remodelación: cocina, sala de estar, baño o casa completa",
+        "Confirmación de preferencia de estilo",
+        "Presupuesto y posicionamiento de materiales",
+        "Comprender las necesidades y expectativas de la remodelación",
+        "Obtener planos y fotos del sitio (si están disponibles)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "Teléfono"
         },
         {
           "icon": "email",
-          "label": "Email"
+          "label": "Correo electrónico"
         },
         {
           "icon": "whatsapp",
@@ -51,23 +51,23 @@
       "title": "Evaluación a medida y cotización",
       "subtitle": "Medición en sitio (si aplica) y precios transparentes",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "Medición profesional en el sitio para dimensiones precisas (si es necesario)",
+        "Una propuesta de diseño integral que ilustra su espacio futuro",
+        "Alcance del trabajo claramente definido, cronograma del proyecto, requisitos de permisos y especificaciones de materiales",
+        "Una cotización clara y transparente alineada con el diseño y alcance propuestos, asegurando total claridad y previsibilidad durante todo el proceso"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "Medición precisa"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "Precios transparentes"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "Propuesta de diseño"
         }
       ],
       "faqAnswer": "Proporcionamos medición profesional en sitio cuando es necesario y creamos una propuesta de diseño integral para su espacio. Recibirá un alcance de trabajo claramente definido con cronograma, requisitos de permisos y una cotización transparente alineada con el diseño propuesto."
@@ -76,26 +76,26 @@
       "title": "Confirmación y contrato",
       "subtitle": "Finalización de detalles e inicio del proyecto",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "Invitar a los clientes a la sala de exhibición para consulta en persona",
+        "Abordar preguntas y optimizar detalles de diseño",
+        "Confirmar propuesta de diseño y muestras de materiales",
+        "Finalizar el calendario de pagos y ayudar con la programación de entregas",
+        "Firmar contrato de construcción y cobrar depósito",
+        "Asegurar la fecha de inicio del proyecto",
+        "Establecer equipo del proyecto: Gerente de Proyecto, Gerente de Construcción, Coordinador"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "Contrato"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "Consulta"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "Equipo del proyecto"
         }
       ],
       "faqAnswer": "Le invitamos a nuestro showroom para revisar muestras de materiales y finalizar detalles de diseño. Después de confirmar el cronograma de pagos y firmar el contrato, aseguramos su fecha de inicio del proyecto y conformamos un equipo dedicado que incluye Gerente de Proyecto, Gerente de Construcción y Coordinador."
@@ -104,25 +104,25 @@
       "title": "Ejecución y gestión",
       "subtitle": "Totalmente coordinado y comunicación fácil",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "Un equipo de proyecto unificado que gestiona todos los aspectos de su proyecto",
+        "No se necesita interacción directa con los trabajadores",
+        "Progreso de construcción coordinado para garantizar eficiencia y consistencia",
+        "Asistencia con programación de entregas y coordinación en el sitio",
+        "Control de calidad consistente durante todo el proceso de construcción",
+        "Respuesta rápida y resolución eficiente de cualquier problema"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "Gestión unificada"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "Seguimiento del progreso"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "Respuesta rápida"
         }
       ],
       "faqAnswer": "Un equipo unificado de proyecto gestiona todos los aspectos de su proyecto. No necesitará interactuar directamente con los trabajadores. Coordinamos el progreso de la construcción, programación de entregas y mantenemos un control de calidad consistente. Cualquier problema se resuelve rápida y eficientemente."
@@ -131,22 +131,22 @@
       "title": "Recorrido y postventa",
       "subtitle": "Verificaciones finales y soporte continuo",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "Recorrido final para confirmar que todo el trabajo cumple con las expectativas",
+        "Entrega del nuevo hogar",
+        "Soporte continuo para mantenimiento durante el período de garantía"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "Inspección estricta"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "Servicio de garantía"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "Soporte continuo"
         }
       ],
       "faqAnswer": "Realizamos un recorrido final con usted para confirmar que todo el trabajo cumple sus expectativas, luego le entregamos su nuevo hogar. Brindamos soporte continuo para mantenimiento durante el período de garantía."
@@ -158,7 +158,7 @@
     },
     "footer": {
       "tagline": "Simple · Sin preocupaciones · Seguro · Garantizado",
-      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "taglineEn": "Simple · Sin preocupaciones · Seguro · Garantizado",
       "yearsIndustry": "Años de experiencia",
       "googleRating": "Google",
       "warrantyService": "Servicio de garantía",
