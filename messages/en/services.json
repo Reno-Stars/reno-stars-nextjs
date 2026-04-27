@@ -32,6 +32,10 @@
     },
     "hubTitle": "Our Services",
     "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}"
+    "getQuoteForService": "Get a Quote for {service}",
+    "realtor": {
+      "title": "Realtor Consultation",
+      "shortTitle": "Realtor"
+    }
   }
 }

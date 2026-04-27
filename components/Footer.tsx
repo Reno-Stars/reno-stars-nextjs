@@ -198,7 +198,28 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
   const [wechatModalOpen, setWechatModalOpen] = useState(false);
   const wechatTriggerRef = useRef<HTMLButtonElement>(null);
   const toggleWechatModal = useCallback(() => setWechatModalOpen((prev) => !prev), []);
-  const localizedServices = useMemo(() => services.map((s) => ({ slug: s.slug, title: pickLocale(s.title, locale) })), [services, locale]);
+  // Map DB service slugs to the i18n services namespace. The DB only stores
+  // EN/ZH titles, so for ja/ko/es pickLocale falls back to EN. Using the
+  // services.{key}.title message gives true native titles in all 5 locales.
+  const slugToServiceKey: Record<string, string> = {
+    'kitchen': 'kitchen',
+    'bathroom': 'bathroom',
+    'whole-house': 'wholeHouse',
+    'basement': 'basement',
+    'cabinet': 'cabinet',
+    'commercial': 'commercial',
+    'realtor': 'realtor',
+  };
+  const localizedServices = useMemo(() => services.map((s) => {
+    const messageKey = slugToServiceKey[s.slug];
+    let title: string;
+    try {
+      title = messageKey ? t(`services.${messageKey}.title`) : pickLocale(s.title, locale);
+    } catch {
+      title = pickLocale(s.title, locale);
+    }
+    return { slug: s.slug, title };
+  }), [services, locale, t]);
 
   const quickLinks = useMemo(() => [
     { href: '/', label: t('nav.home') },
@@ -213,9 +234,9 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
     { href: '/guides', label: t('nav.guides') },
-    { href: '/guides/kitchen-renovation-cost-vancouver', label: 'Kitchen Cost Guide' },
-    { href: '/guides/bathroom-renovation-cost-vancouver', label: 'Bathroom Cost Guide' },
-    { href: '/renovation-near-me', label: 'Renovation Near Me' },
+    { href: '/guides/kitchen-renovation-cost-vancouver', label: t('nav.kitchenCostGuide') },
+    { href: '/guides/bathroom-renovation-cost-vancouver', label: t('nav.bathroomCostGuide') },
+    { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
   ], [t]);

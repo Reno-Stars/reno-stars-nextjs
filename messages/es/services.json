@@ -32,6 +32,10 @@
     },
     "hubTitle": "Nuestros servicios",
     "hubSubtitle": "Soluciones profesionales de remodelación para cada espacio",
-    "getQuoteForService": "Cotización para {service}"
+    "getQuoteForService": "Cotización para {service}",
+    "realtor": {
+      "title": "Consulta para agentes inmobiliarios",
+      "shortTitle": "Inmobiliario"
+    }
   }
 }

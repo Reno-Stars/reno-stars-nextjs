@@ -32,6 +32,10 @@
     },
     "hubTitle": "サービス一覧",
     "hubSubtitle": "あらゆる空間のためのプロフェッショナルなリノベーション",
-    "getQuoteForService": "{service}の見積もりを取得"
+    "getQuoteForService": "{service}の見積もりを取得",
+    "realtor": {
+      "title": "不動産業者向け相談",
+      "shortTitle": "不動産業者"
+    }
   }
 }

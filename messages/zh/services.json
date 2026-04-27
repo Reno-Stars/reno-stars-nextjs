@@ -32,6 +32,10 @@
     },
     "hubTitle": "我们的服务",
     "hubSubtitle": "为每个空间提供专业的装修解决方案",
-    "getQuoteForService": "获取{service}报价"
+    "getQuoteForService": "获取{service}报价",
+    "realtor": {
+      "title": "地产经纪咨询",
+      "shortTitle": "地产经纪"
+    }
   }
 }

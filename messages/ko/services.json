@@ -32,6 +32,10 @@
     },
     "hubTitle": "서비스 안내",
     "hubSubtitle": "모든 공간을 위한 전문 리노베이션 솔루션",
-    "getQuoteForService": "{service} 견적 받기"
+    "getQuoteForService": "{service} 견적 받기",
+    "realtor": {
+      "title": "부동산 중개인 상담",
+      "shortTitle": "부동산 중개인"
+    }
   }
 }
