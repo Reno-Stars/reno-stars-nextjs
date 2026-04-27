@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "所在地",
+    "category": "カテゴリ",
+    "budget": "予算",
+    "spaceType": "空間タイプ",
+    "serviceScope": "サービス範囲",
+    "duration": "期間",
+    "challenge": "課題",
+    "solution": "ソリューション",
+    "close": "閉じる",
+    "viewDetails": "詳細を見る"
+  }
+}

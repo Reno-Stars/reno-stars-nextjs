@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "プロジェクト概要",
+    "includedAreas": "含まれるエリア",
+    "totalBudget": "予算",
+    "totalDuration": "期間",
+    "allServiceScopes": "含まれるすべてのサービス",
+    "viewAreaProject": "{area}のプロジェクトを見る",
+    "viewAreaDetails": "詳細を見る",
+    "combinedGallery": "プロジェクトギャラリー",
+    "filterByArea": "エリアで絞り込み",
+    "allAreas": "すべてのエリア",
+    "childProjectsCount": "{count} のリノベーションエリア",
+    "noImagesForArea": "このエリアの画像はありません",
+    "areasCount": "{count, plural, one {# エリア} other {# エリア}}",
+    "siteBadge": "住宅全体",
+    "areas": "エリア"
+  }
+}

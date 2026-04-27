@@ -1,0 +1,64 @@
+{
+  "benefits": {
+    "title": "Por qué elegir Reno Stars",
+    "subtitle": "Trabajar con nosotros significa más que solo completar una remodelación: se trata de hacer que todo el proceso sea claro, controlado y sin estrés.",
+    "foundation": {
+      "heading": "Construido sobre la confianza",
+      "items": {
+        "experience": {
+          "title": "Más de 20 años de experiencia",
+          "description": "Aportamos experiencia profunda. No solo en construcción, sino en entender dónde fallan los proyectos de remodelación y cómo prevenirlo desde el inicio."
+        },
+        "coverage": {
+          "title": "Seguro CGL de $5M · Cobertura WCB activa",
+          "description": "La cobertura de seguro integral protege su propiedad y garantiza que cada trabajador en el sitio esté completamente cubierto."
+        },
+        "rating": {
+          "title": "Reseñas auténticas de 5 estrellas",
+          "description": "Satisfacción del cliente a largo plazo respaldada por proyectos reales y experiencias reales, no promociones puntuales."
+        },
+        "team": {
+          "title": "Equipo profesional estable",
+          "description": "Trabajamos con un equipo consistente. No con contrataciones temporales, garantizando que la calidad permanezca estable en cada proyecto."
+        },
+        "service": {
+          "title": "Servicio integral de principio a fin",
+          "description": "Del diseño al recorrido final, gestionamos cada paso. Menos sobrecarga de coordinación, proceso más fluido."
+        }
+      }
+    },
+    "differentiators": {
+      "heading": "Por qué los clientes nos eligen",
+      "items": {
+        "transparent": {
+          "problem": "Muchas cotizaciones se ven baratas porque dejan fuera elementos clave.",
+          "solution": "Listamos todo por adelantado: alcance detallado, responsabilidades de materiales y lo que se incluye. Conoce el costo real antes de empezar."
+        },
+        "managed": {
+          "problem": "La remodelación no debería depender de la improvisación y la suerte.",
+          "solution": "Ejecutamos los proyectos con un sistema estructurado con etapas claras, inspecciones e hitos de pago. Cada paso completado antes de avanzar."
+        },
+        "responsive": {
+          "problem": "La mayoría de las frustraciones de remodelación vienen de mala comunicación.",
+          "solution": "Tenemos un equipo de oficina dedicado que responde rápido, ayuda con la selección de materiales y le mantiene actualizado: nada de 'envié un mensaje y no obtuve respuesta'."
+        },
+        "scheduled": {
+          "problem": "Algunos contratistas sobrereservan y su cronograma sigue retrasándose.",
+          "solution": "Controlamos nuestra carga de proyectos para asegurar que el suyo avance según lo planeado. Cuando ocurren retrasos (proveedores, etc.), comunicamos temprano y ajustamos transparentemente."
+        },
+        "consistent": {
+          "problem": "La calidad no debería depender de qué cuadrilla se presente.",
+          "solution": "Usamos un equipo fijo con estándares claros, especialmente para trabajos críticos como impermeabilización, donde se especifican materiales y alcance de aplicación por adelantado."
+        },
+        "experience": {
+          "problem": "La remodelación es estresante cuando estás constantemente persiguiendo actualizaciones.",
+          "solution": "Hacemos todo el proceso predecible: sabe qué está sucediendo ahora, qué sigue y cuándo esperarlo, sin necesidad de hacer seguimiento."
+        }
+      }
+    },
+    "cta": {
+      "heading": "¿Listo para comenzar su proyecto?",
+      "subtitle": "Experimente la diferencia de un proceso de remodelación basado en transparencia, comunicación clara y su tranquilidad."
+    }
+  }
+}

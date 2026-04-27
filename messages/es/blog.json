@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "Consejos y guías de remodelación en Vancouver",
+    "subtitle": "Consejos, tendencias e ideas para su proyecto de remodelación",
+    "readMore": "Leer más",
+    "publishedOn": "Publicado el",
+    "updated": "Actualizado",
+    "backToBlog": "Volver al blog",
+    "comingSoon": "El contenido completo del artículo estará disponible pronto. Mientras tanto, contáctenos con cualquier pregunta sobre remodelación.",
+    "noPosts": "Aún no hay publicaciones en el blog. Vuelva pronto para consejos e ideas de remodelación.",
+    "relatedProject": "Proyecto relacionado",
+    "pagination": "Paginación del blog",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "previousPage": "Ir a la página anterior",
+    "nextPage": "Ir a la página siguiente",
+    "showingPosts": "Mostrando {start}-{end} de {total} publicaciones",
+    "relatedServices": "Servicios relacionados",
+    "relatedAreas": "Remodelación en su área"
+  }
+}

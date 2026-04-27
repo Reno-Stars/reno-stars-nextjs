@@ -1,0 +1,146 @@
+{
+  "aboutPage": {
+    "hero": {
+      "title": "Reno Stars 소개",
+      "subtitle": "단순한 시공이 아니라 리노베이션 산업을 양면에서 이해한 경험 위에 세워졌습니다."
+    },
+    "journey": {
+      "title": "Reno Stars 소개",
+      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
+      "lead": "Reno Stars는 시공뿐만 아니라 리노베이션 산업을 양면에서 이해한 경험 위에 세워졌습니다.",
+      "context": "2021년 Reno Stars 설립 전에, 우리 팀은 리노베이션 플랫폼에서 주택 소유주와 시공자를 연결하며 수년간 일했습니다. 처음부터 끝까지 수천 개의 프로젝트를 보았으며, 더 중요하게는 어디서 일이 잘못되는지 보았습니다.",
+      "painPointsTitle": "주택 소유주가 직면하는 일반적인 좌절을 이해합니다.",
+      "painPoints": [
+        "Quotes that look attractive at first but grow with hidden items later.",
+        "Poor communication and delayed responses.",
+        "Uncertain timelines and projects dragging on.",
+        "Inconsistent workmanship due to unstable crews."
+      ],
+      "conclusion": "이는 드문 문제가 아닙니다. 업계의 표준입니다. 그래서 Reno Stars가 만들어졌습니다."
+    },
+    "stats": {
+      "years": "경력 연수",
+      "projects": "완료된 프로젝트",
+      "team": "팀 멤버",
+      "insurance": "CGL 보험",
+      "wcbCoverage": "활성 WCB 커버"
+    },
+    "offer": {
+      "title": "더 구조화되고 투명한 접근",
+      "viewAll": "모든 서비스 보기",
+      "services": {
+        "kitchen": {
+          "title": "Kitchen Renovation",
+          "desc": "Custom cabinetry, countertops, backsplashes, and complete kitchen transformations tailored to your lifestyle."
+        },
+        "bathroom": {
+          "title": "Bathroom Renovation",
+          "desc": "Modern fixtures, tile work, vanities, and spa-inspired designs that maximize your space."
+        },
+        "wholeHouse": {
+          "title": "Whole House Renovation",
+          "desc": "Comprehensive home remodels including structural work, flooring, lighting, and finishing touches."
+        },
+        "commercial": {
+          "title": "Commercial Renovation",
+          "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
+        }
+      },
+      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
+      "lead": "단지 또 다른 리노베이션 회사를 시작한 것이 아닙니다. 프로세스를 재구축했습니다.",
+      "goal": "처음부터 우리 목표는 단순했습니다. 리노베이션을 예측 가능하고 투명하며 스트레스 없게 만드는 것.",
+      "systemTitle": "모든 프로젝트는 구조화된 시스템으로 지원됩니다.",
+      "systemItems": [
+        {
+          "title": "Detailed Contracts",
+          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
+        },
+        {
+          "title": "Clear Payment Milestones",
+          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
+        },
+        {
+          "title": "Dedicated Coordination",
+          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
+        },
+        {
+          "title": "Reliable Scheduling",
+          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
+        },
+        {
+          "title": "Quality and Waterproofing Standards",
+          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
+        }
+      ]
+    },
+    "values": {
+      "title": "디테일과 기대 관리",
+      "items": {
+        "integrity": {
+          "title": "Integrity",
+          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
+        },
+        "quality": {
+          "title": "Quality Craftsmanship",
+          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
+        },
+        "transparency": {
+          "title": "Transparency",
+          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
+        },
+        "satisfaction": {
+          "title": "Client Satisfaction",
+          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+        }
+      },
+      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
+      "lead": "리노베이션은 자재부터 일정까지 많은 요소가 관여됩니다. 계획과 조정에 큰 주의를 기울이지만, 공급업체 일정과 같은 특정 요소는 때때로 우리의 직접 통제 밖에 있을 수 있습니다.",
+      "guarantee": "우리가 보장할 수 있는 것은 우리의 응답입니다.",
+      "guaranteeItems": [
+        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
+      ],
+      "closing": "우리 목표는 완벽한 프로세스를 약속하는 것이 아니라 잘 관리된 것을 제공하는 것입니다."
+    },
+    "whyUs": {
+      "title": "마음의 평화를 중시하는 주택 소유주를 위해",
+      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
+      "lead": "우리는 최저가 옵션이 아니며 그것을 목표로 하지도 않습니다.",
+      "chooseTitle": "고객이 우리를 선택하는 이유",
+      "chooseItems": [
+        "A clear process",
+        "Honest communication",
+        "Reliable timelines",
+        "A team that takes responsibility"
+      ],
+      "specialise": "우리는 조정, 디테일, 신뢰성이 모든 차이를 만드는 풀하우스 리노베이션, 주방, 욕실, 상업 프로젝트를 전문으로 합니다."
+    },
+    "areas": {
+      "title": "서비스 지역",
+      "description": "메트로 밴쿠버와 프레이저 밸리 전역의 주택 소유주에게 자랑스럽게 서비스를 제공하며, 브리티시컬럼비아 전역의 커뮤니티에 양질의 리노베이션 서비스를 제공합니다."
+    },
+    "faq": {
+      "title": "자주 묻는 질문",
+      "q1": "How long has Reno Stars been in business?",
+      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
+      "q2": "Are you licensed and insured?",
+      "a2": "Yes, we are fully licensed with up to $5 million in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage. CGL protects your property during the renovation, while WCB ensures all workers on your job site are covered. We also provide up to a 3-year warranty on our work.",
+      "q3": "What areas do you serve?",
+      "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
+      "q4": "How do I get started with a renovation project?",
+      "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
+      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
+      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+    },
+    "cta": {
+      "title": "리노베이션을 시작할 준비가 되셨나요?",
+      "getQuote": "무료 견적 받기",
+      "body": "투명성, 신뢰성, 마음의 평화를 중심으로 구축된 리노베이션 프로세스를 경험할 준비가 되셨나요? 오늘 무료 상세 견적을 위해 연락 주시고, 메트로 밴쿠버 전역의 주택 소유주가 Reno Stars를 신뢰하는 이유를 알아보세요."
+    },
+    "philosophy": {
+      "title": "우리의 철학",
+      "lead": "모든 프로젝트에 단 하나의 단순한 마음가짐으로 접근합니다.",
+      "quote": "모든 집을 우리 집인 것처럼 대하라.",
+      "closing": "왜냐하면 결국 리노베이션은 단지 공간을 짓는 것이 아니라 신뢰를 쌓는 것이기 때문입니다."
+    }
+  }
+}

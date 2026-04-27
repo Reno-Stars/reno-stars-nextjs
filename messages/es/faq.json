@@ -1,0 +1,52 @@
+{
+  "faq": {
+    "kitchen": {
+      "q1": "¿Cuánto tarda normalmente una remodelación de cocina?",
+      "a1": "Una remodelación típica de cocina toma 4-8 semanas dependiendo del alcance. Actualizaciones simples como renovar gabinetes pueden tomar 1-2 semanas, mientras que remodelaciones completas con gabinetes a medida pueden tomar 8-12 semanas.",
+      "q2": "¿Cuál es el costo promedio de una remodelación de cocina en {area}?",
+      "a2": "Las remodelaciones de cocina en {area} típicamente van de $15,000 a $75,000+ según tamaño y acabados. Proporcionamos cotizaciones detalladas gratis después de una consulta a domicilio.",
+      "q3": "¿Necesito permisos para mi remodelación de cocina?",
+      "a3": "Se requieren permisos para cambios eléctricos, de plomería y estructurales. Manejamos todas las solicitudes de permisos y aseguramos que su remodelación cumpla con los códigos de construcción de {area}."
+    },
+    "bathroom": {
+      "q1": "¿Cuánto tarda una remodelación de baño en {area}?",
+      "a1": "La mayoría de remodelaciones de baño en {area} toman 2-4 semanas. Una actualización cosmética simple puede tomar 1 semana, mientras que una remodelación completa con cambios de diseño puede tomar 4-6 semanas.",
+      "q2": "¿Puedo usar mi baño durante la remodelación?",
+      "a2": "Normalmente no, pero trabajamos eficientemente para minimizar la interrupción. Si tiene varios baños, podemos ayudarle a planificar alrededor del cronograma de la remodelación.",
+      "q3": "¿Qué impermeabilización usan para los baños?",
+      "a3": "Usamos sistemas de impermeabilización líderes en la industria, incluyendo Schluter y RedGard, para garantizar que su baño esté correctamente protegido contra daños por humedad."
+    },
+    "whole-house": {
+      "q1": "¿Puedo vivir en mi casa durante una remodelación integral en {area}?",
+      "a1": "Depende del alcance. Para remodelaciones grandes en {area}, a menudo recomendamos reubicación temporal por seguridad y eficiencia. Si prefiere quedarse, podemos ayudar a coordinar trabajos por fases.",
+      "q2": "¿Cómo gestionan un proyecto de remodelación integral?",
+      "a2": "Asignamos un gerente de proyecto dedicado que coordina todos los oficios, mantiene el cronograma y proporciona actualizaciones regulares. Tendrá un único punto de contacto durante todo el proceso.",
+      "q3": "¿Necesito permisos para una remodelación integral en {area}?",
+      "a3": "Sí, las remodelaciones integrales típicamente requieren múltiples permisos para trabajos estructurales, eléctricos y de plomería. Manejamos todas las solicitudes de permisos e inspecciones de {area}."
+    },
+    "basement": {
+      "q1": "¿Necesito un permiso para terminar mi sótano en {area}?",
+      "a1": "Sí, terminar un sótano requiere permisos de construcción en {area}. Manejamos todas las solicitudes de permisos e inspecciones como parte de nuestro servicio.",
+      "q2": "¿Cómo manejan los problemas de humedad del sótano?",
+      "a2": "Evaluamos los niveles de humedad e implementamos soluciones apropiadas, incluyendo mejoras de drenaje, barreras de vapor y aislamiento adecuado antes de terminar.",
+      "q3": "¿Puedo agregar un baño a mi sótano?",
+      "a3": "Sí, podemos agregar baños a los sótanos. Si está debajo del nivel del alcantarillado, instalamos sistemas de bombeo de aguas residuales. Toda la plomería cumple con los códigos de {area}."
+    },
+    "cabinet": {
+      "q1": "¿Cuál es la diferencia entre renovar y reemplazar gabinetes?",
+      "a1": "Renovar mantiene sus cajas de gabinete existentes y reemplaza puertas, frentes de cajón y herrajes. Cuesta 40-50% menos que el reemplazo completo y toma menos tiempo.",
+      "q2": "¿Cuánto tarda la renovación de gabinetes en {area}?",
+      "a2": "La renovación de gabinetes en {area} típicamente toma 3-5 días para una cocina promedio. Su cocina permanece funcional durante la mayor parte del proceso.",
+      "q3": "¿Se pueden renovar todos los gabinetes?",
+      "a3": "La mayoría de cajas de gabinete de madera maciza y contrachapado pueden renovarse si están estructuralmente sólidas. Evaluamos sus gabinetes durante una consulta gratis a domicilio en {area}."
+    },
+    "commercial": {
+      "q1": "¿Trabajan durante el horario comercial?",
+      "a1": "Ofrecemos horarios flexibles incluyendo noches y fines de semana para minimizar la interrupción de sus operaciones. Podemos hacer el trabajo por fases para mantener partes de su espacio operativas.",
+      "q2": "¿Tienen experiencia con los códigos comerciales de {area}?",
+      "a2": "Sí, nuestro equipo tiene experiencia con los códigos comerciales de {area}, requisitos de accesibilidad y regulaciones de seguridad contra incendios. Aseguramos cumplimiento total con todos los estándares comerciales.",
+      "q3": "¿Pueden manejar mejoras de inquilino en {area}?",
+      "a3": "Sí, nos especializamos en mejoras de inquilino (TI) para oficinas, espacios comerciales y restaurantes en {area}. Trabajamos con propietarios y administradores en los procesos de aprobación."
+    }
+  }
+}

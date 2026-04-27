@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "服务区域",
+    "subtitle": "我们自豪地服务于低陆平原各社区",
+    "servingIn": "{city}装修服务",
+    "cityDescription": "{city}提供专业装修服务。联系我们获取免费咨询。",
+    "viewProjects": "查看{city}项目",
+    "requestQuote": "获取报价",
+    "whyChooseArea": "为什么选择我们的{area}服务",
+    "areaProjects": "{area}项目",
+    "readyToStartIn": "准备在{area}开始您的{service}项目？",
+    "serviceInArea": "{area}{service}",
+    "servicesInArea": "我们在{area}的服务",
+    "readyToStartRenovation": "准备开始您的{area}装修项目？",
+    "faqTitle": "{area}装修常见问题",
+    "aboutArea": "关于{area}",
+    "aboutService": "关于{area}的{service}",
+    "areaServiceContent": "{area}{service}服务详情",
+    "otherAreasForService": "其他地区的{service}",
+    "otherServicesInArea": "{area}的其他服务",
+    "serviceFaqTitle": "关于{area}{service}的常见问题",
+    "learnOurProcess": "了解我们的5步装修流程",
+    "processLinkText": "了解我们的工作方式",
+    "blogLinkText": "装修技巧与指南",
+    "serviceLinkText": "了解{service}详情",
+    "nearbyAreas": "我们也服务附近地区"
+  }
+}

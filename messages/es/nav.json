@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "gallery": "Galería",
+    "projects": "Proyectos",
+    "testimonials": "Testimonios",
+    "contact": "Contacto",
+    "contactUs": "Contáctenos",
+    "reviews": "Reseñas",
+    "back": "Volver",
+    "backToHome": "Volver al inicio",
+    "blog": "Blog",
+    "areas": "Áreas",
+    "design": "Diseño",
+    "benefits": "Ventajas",
+    "process": "Proceso",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchLanguage": "Cambiar idioma",
+    "blogAndNews": "Blog y noticias",
+    "toggleAreas": "Alternar menú de áreas",
+    "showroom": "Showroom",
+    "guides": "Guías",
+    "about": "Sobre nosotros",
+    "financing": "Financiamiento",
+    "beforeAfter": "Antes y después",
+    "features": "Ventajas"
+  }
+}

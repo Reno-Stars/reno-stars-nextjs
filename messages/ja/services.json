@@ -1,0 +1,37 @@
+{
+  "services": {
+    "kitchen": {
+      "title": "キッチンリノベーション",
+      "description": "モダンなデザイン、カスタムキャビネット、プレミアムカウンタートップによる完全なキッチンリモデリング。",
+      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+    },
+    "bathroom": {
+      "title": "バスルームリノベーション",
+      "description": "ラグジュアリーな設備と仕上げで、バスルームをスパのような空間に変えます。",
+      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+    },
+    "wholeHouse": {
+      "title": "住宅全体リノベーション",
+      "description": "コンセプトから完成までの本格的な住宅変革。",
+      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+    },
+    "basement": {
+      "title": "地下室リモデリング",
+      "description": "地下室を機能的な居住空間に。Best of Vancouver第3位ランキング。",
+      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+    },
+    "cabinet": {
+      "title": "キャビネットリフェイシング",
+      "description": "プロのキャビネットリフェイシングでキッチンを刷新。",
+      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+    },
+    "commercial": {
+      "title": "商業リノベーション",
+      "description": "オフィス、店舗、レストランのプロフェッショナルな商業空間リノベーション。",
+      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+    },
+    "hubTitle": "サービス一覧",
+    "hubSubtitle": "あらゆる空間のためのプロフェッショナルなリノベーション",
+    "getQuoteForService": "{service}の見積もりを取得"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "밴쿠버 리노베이션 팁 & 가이드",
+    "subtitle": "리노베이션 프로젝트를 위한 팁, 트렌드, 인사이트",
+    "readMore": "더 보기",
+    "publishedOn": "게시일",
+    "updated": "업데이트",
+    "backToBlog": "블로그로",
+    "comingSoon": "전체 기사가 곧 공개됩니다. 그동안 리노베이션 관련 문의는 언제든 연락해 주세요.",
+    "noPosts": "아직 블로그 게시물이 없습니다. 리노베이션 팁과 인사이트는 곧 공개됩니다.",
+    "relatedProject": "관련 프로젝트",
+    "pagination": "블로그 페이지네이션",
+    "previous": "이전",
+    "next": "다음",
+    "previousPage": "이전 페이지",
+    "nextPage": "다음 페이지",
+    "showingPosts": "총 {total}개 중 {start}-{end}개 표시",
+    "relatedServices": "관련 서비스",
+    "relatedAreas": "내 지역의 리노베이션"
+  }
+}

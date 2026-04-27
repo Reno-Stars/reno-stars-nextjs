@@ -1,0 +1,40 @@
+{
+  "reviewsPage": {
+    "heroTitle": "What Our Clients Say",
+    "heroSubtitle": "Real reviews from real homeowners across Greater Vancouver",
+    "googleRating": "Google Rating",
+    "basedOn": "Based on {count} reviews",
+    "verifiedReviews": "Verified Google Reviews",
+    "verifiedSubtitle": "Every review is from a verified Google customer",
+    "readOnGoogle": "Read on Google",
+    "allReviewsTitle": "All Reviews",
+    "noReviews": "No reviews available at this time.",
+    "whyTrustTitle": "Why Homeowners Trust Reno Stars",
+    "whyTrustSubtitle": "Our commitment to quality speaks through our clients' words",
+    "trustItem1Title": "Transparent Pricing",
+    "trustItem1Desc": "Clear, detailed quotes with no hidden fees. Our clients consistently praise our upfront approach to pricing.",
+    "trustItem2Title": "Quality Craftsmanship",
+    "trustItem2Desc": "Meticulous attention to detail from demolition to final walkthrough. We don't cut corners.",
+    "trustItem3Title": "Responsive Communication",
+    "trustItem3Desc": "Quick responses via WeChat, phone, or email. We keep you updated every step of the way.",
+    "trustItem4Title": "On-Time Delivery",
+    "trustItem4Desc": "We respect your timeline. Our team shows up early and works efficiently to meet deadlines.",
+    "leaveReviewTitle": "Had a Great Experience?",
+    "leaveReviewSubtitle": "We'd love to hear about your renovation journey",
+    "leaveReviewButton": "Leave a Review on Google",
+    "faq": {
+      "q1": "Are these real reviews?",
+      "a1": "Yes, every review on this page comes directly from Google Reviews. They are written by verified customers who used our renovation services.",
+      "q2": "How can I leave a review for Reno Stars?",
+      "a2": "After your project is complete, you can leave a review on our Google Business profile. Click the \"Leave a Review\" button above to be taken directly to our Google review page.",
+      "q3": "What is your overall rating?",
+      "a3": "We maintain a perfect 5-star rating on Google with over 67 verified reviews from homeowners across Greater Vancouver.",
+      "q4": "Do you respond to reviews?",
+      "a4": "Yes, we read and respond to every review. Your feedback helps us continuously improve our renovation services.",
+      "q5": "What areas do your reviewers come from?",
+      "a5": "Our reviews come from homeowners throughout the Greater Vancouver area including Vancouver, Richmond, Burnaby, Coquitlam, Surrey, and more."
+    },
+    "ctaHeading": "Ready to Start Your Renovation?",
+    "ctaSubtitle": "Join our growing list of satisfied homeowners across Greater Vancouver"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "label": {
+    "phone": "電話",
+    "email": "メール",
+    "address": "住所",
+    "location": "所在地",
+    "contact": "連絡先",
+    "quality": "品質",
+    "whyChooseUs": "選ばれる理由",
+    "verifiedCustomer": "認証済みのお客様",
+    "new": "新着",
+    "new2": "新着",
+    "businessHours": "営業時間",
+    "businessHoursShort": "月〜金 8時〜18時、土 9時〜16時",
+    "businessHoursDetail": "月〜金: 8:00〜18:00\n土: 9:00〜16:00\n日: 休業",
+    "featured": "おすすめ"
+  }
+}

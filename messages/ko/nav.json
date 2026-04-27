@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "홈",
+    "services": "서비스",
+    "gallery": "갤러리",
+    "projects": "프로젝트",
+    "testimonials": "고객 후기",
+    "contact": "문의",
+    "contactUs": "문의하기",
+    "reviews": "리뷰",
+    "back": "뒤로",
+    "backToHome": "홈으로",
+    "blog": "블로그",
+    "areas": "서비스 지역",
+    "design": "디자인",
+    "benefits": "강점",
+    "process": "공정",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "switchLanguage": "언어 변경",
+    "blogAndNews": "블로그 & 뉴스",
+    "toggleAreas": "지역 메뉴 전환",
+    "showroom": "쇼룸",
+    "guides": "비용 가이드",
+    "about": "회사 소개",
+    "financing": "금융",
+    "beforeAfter": "비포 & 애프터",
+    "features": "강점"
+  }
+}

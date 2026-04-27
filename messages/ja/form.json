@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "お名前",
+    "fullName": "フルネーム",
+    "email": "メールアドレス",
+    "emailAddress": "メールアドレス",
+    "phone": "電話番号",
+    "phoneNumber": "電話番号",
+    "message": "メッセージ",
+    "projectDetails": "プロジェクトの詳細",
+    "service": "サービス",
+    "serviceInterestedIn": "ご興味のあるサービス",
+    "selectService": "サービスを選択",
+    "namePlaceholder": "お名前",
+    "namePlaceholder2": "山田 太郎",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "yamada@example.com",
+    "phonePlaceholder": "電話番号",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "プロジェクトについてお聞かせください...",
+    "messagePlaceholder2": "リノベーションプロジェクトについてお聞かせください...",
+    "sending": "送信中...",
+    "success": "ありがとうございます!メッセージを送信しました。",
+    "successTitle": "送信完了!",
+    "error": "問題が発生しました。もう一度お試しください。",
+    "responsePromise": "24時間以内に詳細な見積もりをお送りします。"
+  }
+}

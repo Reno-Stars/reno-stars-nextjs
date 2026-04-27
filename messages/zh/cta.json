@@ -1,0 +1,25 @@
+{
+  "cta": {
+    "getQuote": "获取报价",
+    "getFreeQuote": "免费报价",
+    "getYourFreeQuote": "获取免费报价",
+    "freeQuoteProject": "为您的项目获取免费报价！",
+    "freeQuote": "获取免费报价",
+    "startProject": "开始您的项目",
+    "startProjectToday": "立即开始您的项目",
+    "getStarted": "立即开始",
+    "viewProjects": "查看案例",
+    "viewOurWork": "查看我们的作品",
+    "ourServices": "我们的服务",
+    "learnMore": "了解更多",
+    "exploreService": "探索{service}",
+    "sendMessage": "发送信息",
+    "submitInquiry": "获取免费报价",
+    "bookAppointment": "预约参观",
+    "callNow": "立即致电",
+    "requestConsultation": "预约免费咨询",
+    "viewAllProjects": "查看所有项目",
+    "viewAllServices": "查看所有服务",
+    "scheduleConsultation": "预约咨询"
+  }
+}

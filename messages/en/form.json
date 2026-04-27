@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "Name",
+    "fullName": "Full Name",
+    "email": "Email",
+    "emailAddress": "Email Address",
+    "phone": "Phone",
+    "phoneNumber": "Phone Number",
+    "message": "Message",
+    "projectDetails": "Project Details",
+    "service": "Service",
+    "serviceInterestedIn": "Service Interested In",
+    "selectService": "Select a service",
+    "namePlaceholder": "Your name",
+    "namePlaceholder2": "John Smith",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "Your phone number",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "Tell us about your project...",
+    "messagePlaceholder2": "Tell us about your renovation project...",
+    "sending": "Sending...",
+    "success": "Thank you! Your message has been sent successfully.",
+    "successTitle": "Message Sent!",
+    "error": "Something went wrong. Please try again.",
+    "responsePromise": "We reply within 24 hours with a detailed estimate."
+  }
+}

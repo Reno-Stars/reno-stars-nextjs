@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "すべてのカテゴリ",
+    "location": "場所",
+    "allLocations": "すべての場所",
+    "spaceType": "空間タイプ",
+    "allSpaceTypes": "すべての空間タイプ",
+    "budget": "予算",
+    "allBudgets": "すべての予算",
+    "showing": "表示中",
+    "projects": "{count, plural, one {プロジェクト} other {プロジェクト}}",
+    "clearAll": "フィルターをクリア",
+    "browseByCategory": "カテゴリで探す",
+    "swipeToSeeMore": "スワイプして見る →",
+    "noProjectsMatch": "条件に一致するプロジェクトはありません。",
+    "pagination": "プロジェクトのページネーション",
+    "previous": "前へ",
+    "next": "次へ",
+    "previousPage": "前のページへ",
+    "nextPage": "次のページへ",
+    "showingProjects": "{total}件中 {start}〜{end}件を表示",
+    "search": "プロジェクトを検索..."
+  }
+}

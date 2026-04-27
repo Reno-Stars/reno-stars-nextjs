@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "services": "サービス",
+    "gallery": "ギャラリー",
+    "projects": "施工事例",
+    "testimonials": "お客様の声",
+    "contact": "お問い合わせ",
+    "contactUs": "お問い合わせ",
+    "reviews": "レビュー",
+    "back": "戻る",
+    "backToHome": "ホームへ戻る",
+    "blog": "ブログ",
+    "areas": "対応エリア",
+    "design": "デザイン",
+    "benefits": "強み",
+    "process": "施工フロー",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "switchLanguage": "言語を切り替える",
+    "blogAndNews": "ブログ・お知らせ",
+    "toggleAreas": "対応エリアメニュー",
+    "showroom": "ショールーム",
+    "guides": "コストガイド",
+    "about": "会社概要",
+    "financing": "ファイナンス",
+    "beforeAfter": "施工前後",
+    "features": "強み"
+  }
+}

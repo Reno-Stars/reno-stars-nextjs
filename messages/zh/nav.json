@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "首页",
+    "services": "服务项目",
+    "gallery": "作品展示",
+    "projects": "工程案例",
+    "testimonials": "客户评价",
+    "contact": "联系我们",
+    "contactUs": "联系我们",
+    "reviews": "客户评价",
+    "back": "返回",
+    "backToHome": "返回首页",
+    "blog": "博客",
+    "areas": "服务区域",
+    "design": "设计",
+    "benefits": "特色优势",
+    "process": "工作流程",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "switchLanguage": "Switch to English",
+    "blogAndNews": "博客与资讯",
+    "toggleAreas": "展开区域菜单",
+    "showroom": "展厅",
+    "guides": "指南",
+    "about": "关于我们",
+    "financing": "融资指南",
+    "beforeAfter": "改造前后",
+    "features": "特色优势"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "対応エリア",
+    "subtitle": "ロウアー・メインランド全域のコミュニティに誠意を持ってサービス提供しています",
+    "servingIn": "{city}の住宅リノベーション",
+    "cityDescription": "{city}でプロフェッショナルなリノベーションサービスを提供。無料相談をお申し込みください。",
+    "viewProjects": "{city}のプロジェクトを見る",
+    "requestQuote": "見積もりを依頼",
+    "whyChooseArea": "{area}サービスを選ぶ理由",
+    "areaProjects": "{area}のプロジェクト",
+    "readyToStartIn": "{area}での{service}プロジェクトを始める準備はできましたか?",
+    "serviceInArea": "{area}の{service}",
+    "servicesInArea": "{area}でのサービス",
+    "readyToStartRenovation": "{area}でのリノベーションを始める準備はできましたか?",
+    "faqTitle": "{area}リノベーションに関するよくあるご質問",
+    "aboutArea": "{area}について",
+    "aboutService": "{area}での{service}について",
+    "areaServiceContent": "{area}での{service}サービス",
+    "otherAreasForService": "他のエリアでの{service}",
+    "otherServicesInArea": "{area}での他のサービス",
+    "serviceFaqTitle": "{area}での{service}に関するよくあるご質問",
+    "learnOurProcess": "5ステップのリノベーションフローを見る",
+    "processLinkText": "施工フローを見る",
+    "blogLinkText": "リノベーションのコツとガイド",
+    "serviceLinkText": "{service}について",
+    "nearbyAreas": "近隣エリアにも対応"
+  }
+}

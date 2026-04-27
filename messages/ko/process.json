@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "리노베이션 서비스 흐름: 5단계",
+      "subtitle": "상담부터 완공까지",
+      "googleReviews": "Google 리뷰",
+      "stepLabel": "STEP {stepNum}"
+    },
+    "downloadPoster": "PNG 다운로드",
+    "downloadPdf": "PDF 다운로드",
+    "downloadSuccess": "다운로드 완료!",
+    "downloadError": "실패",
+    "downloadPosterHint": "PNG 다운로드를 클릭",
+    "downloadPdfHint": "PDF 다운로드를 클릭",
+    "step1": {
+      "title": "초기 상담",
+      "subtitle": "발견",
+      "points": [
+        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
+        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
+        "Style preference confirmation",
+        "Material budget and positioning",
+        "Understand renovation needs and expectations",
+        "Obtain floor plans and site photos (if available)"
+      ],
+      "tags": [
+        {
+          "icon": "phone",
+          "label": "Phone"
+        },
+        {
+          "icon": "email",
+          "label": "Email"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "wechat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
+      ],
+      "faqAnswer": "전화, 이메일, WhatsApp, WeChat 또는 SMS로 연락 가능한 초기 상담으로 시작합니다. 리노베이션 요구 사항, 스타일 선호도, 예산을 논의하고 기존 평면도 또는 사진을 수집합니다."
+    },
+    "step2": {
+      "title": "맞춤 평가 & 견적",
+      "subtitle": "현장 측정(필요 시) 및 투명한 가격",
+      "points": [
+        "Professional on-site measurement for precise dimensions (if needed)",
+        "A comprehensive design proposal illustrating your future space",
+        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
+        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+      ],
+      "tags": [
+        {
+          "icon": "ruler",
+          "label": "Precise Measurement"
+        },
+        {
+          "icon": "quote",
+          "label": "Transparent Pricing"
+        },
+        {
+          "icon": "site",
+          "label": "Design Proposal"
+        }
+      ],
+      "faqAnswer": "필요할 때 전문 현장 측정을 제공하고 공간을 위한 포괄적인 디자인 제안을 만듭니다. 일정, 허가 요구 사항이 포함된 명확하게 정의된 작업 범위와 제안된 디자인에 부합하는 투명한 견적을 받습니다."
+    },
+    "step3": {
+      "title": "확인 & 계약",
+      "subtitle": "세부사항 확정 & 프로젝트 시작",
+      "points": [
+        "Invite clients to showroom for in-person consultation",
+        "Address questions and optimize design details",
+        "Confirm design proposal and material samples",
+        "Finalize the payment schedule and assist with delivery scheduling",
+        "Sign construction contract and collect deposit",
+        "Secure the project start date",
+        "Establish project team: Project Manager, Construction Manager, Coordinator"
+      ],
+      "tags": [
+        {
+          "icon": "contract",
+          "label": "Contract"
+        },
+        {
+          "icon": "meeting",
+          "label": "Consultation"
+        },
+        {
+          "icon": "team",
+          "label": "Project Team"
+        }
+      ],
+      "faqAnswer": "쇼룸으로 초대하여 자재 샘플을 검토하고 디자인 세부 사항을 확정합니다. 지불 일정 확인 및 계약 서명 후, 프로젝트 시작일을 확보하고 프로젝트 매니저, 시공 매니저, 코디네이터를 포함한 전담 프로젝트 팀을 구성합니다."
+    },
+    "step4": {
+      "title": "실행 & 관리",
+      "subtitle": "완전히 조정된 쉬운 소통",
+      "points": [
+        "A unified project team managing all aspects of your project",
+        "No direct interaction with workers needed",
+        "Coordinated construction progress to ensure efficiency and consistency",
+        "Assistance with delivery scheduling and on-site coordination",
+        "Consistent quality control throughout the entire construction process",
+        "Fast response and efficient resolution of any issues"
+      ],
+      "tags": [
+        {
+          "icon": "management",
+          "label": "Unified Management"
+        },
+        {
+          "icon": "progress",
+          "label": "Progress Tracking"
+        },
+        {
+          "icon": "response",
+          "label": "Quick Response"
+        }
+      ],
+      "faqAnswer": "통합된 프로젝트 팀이 프로젝트의 모든 측면을 관리합니다. 작업자와 직접 상호작용할 필요가 없습니다. 시공 진행, 배송 일정을 조정하고 일관된 품질 관리를 유지합니다. 모든 문제는 빠르고 효율적으로 해결됩니다."
+    },
+    "step5": {
+      "title": "워크스루 & 사후 관리",
+      "subtitle": "최종 점검 & 지속적인 지원",
+      "points": [
+        "Final walkthrough to confirm all work meets expectations",
+        "New home handover",
+        "Ongoing support for maintenance during warranty period"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "Strict Inspection"
+        },
+        {
+          "icon": "warranty",
+          "label": "Warranty Service"
+        },
+        {
+          "icon": "support",
+          "label": "Ongoing Support"
+        }
+      ],
+      "faqAnswer": "최종 워크스루를 진행하여 모든 작업이 기대에 부응하는지 확인한 다음 새로운 집을 인도합니다. 보증 기간 동안 유지보수에 대한 지속적인 지원을 제공합니다."
+    },
+    "tagline": "리노베이션을 진정으로 가능하게",
+    "whyMatters": {
+      "title": "왜 이것이 중요한가",
+      "description": "Reno Stars의 구조화된 리노베이션 흐름은 고객이 각 단계에서 무엇을 기대해야 할지 알 수 있도록 돕습니다. 명확한 5단계 프로세스는 첫 연락부터 최종 인도까지 매끄럽고 스트레스 없는 리노베이션 경험을 보장합니다."
+    },
+    "footer": {
+      "tagline": "심플 · 안심 · 안전 · 보증",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "업계 경력 연수",
+      "googleRating": "Google",
+      "warrantyService": "보증 서비스",
+      "scanLinktree": "스캔하여 연결",
+      "website": "reno-stars.com"
+    }
+  }
+}

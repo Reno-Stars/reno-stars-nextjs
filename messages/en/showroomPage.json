@@ -1,0 +1,26 @@
+{
+  "showroomPage": {
+    "heroTitle": "Visit Our Showroom",
+    "heroSubtitle": "Experience renovation materials, designs, and finishes firsthand",
+    "addressTitle": "Location & Hours",
+    "phoneTitle": "Phone",
+    "emailTitle": "Email",
+    "hoursTitle": "Hours",
+    "hoursValue": "By Appointment",
+    "mapTitle": "Find Us",
+    "ctaTitle": "Ready to Start Your Project?",
+    "ctaDescription": "Book a free consultation at our showroom. Our design team will help you explore options and plan your renovation.",
+    "bookConsultation": "Book a Free Consultation",
+    "callUs": "Or call us at",
+    "faq1q": "Do I need an appointment to visit the showroom?",
+    "faq1a": "Walk-ins are welcome, but we recommend booking an appointment so our design team can dedicate time to discuss your project in detail.",
+    "faq2q": "What can I see at the Reno Stars showroom?",
+    "faq2a": "Our showroom features material samples, cabinet displays, countertop options, tile selections, and design inspiration for kitchen, bathroom, and whole house renovations.",
+    "faq3q": "Is there parking available at the showroom?",
+    "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
+    "faq4q": "Can I bring my renovation plans to the showroom?",
+    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit.",
+    "appointmentPrefix": "Welcome to schedule a visit to our Renovation showroom",
+    "appointmentBold": "by appointment!"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "バンクーバーのリノベーション情報・ガイド",
+    "subtitle": "プロジェクトに役立つコツ、トレンド、洞察",
+    "readMore": "続きを読む",
+    "publishedOn": "公開日",
+    "updated": "更新日",
+    "backToBlog": "ブログに戻る",
+    "comingSoon": "詳細記事は間もなく公開予定です。リノベーションのご質問はお気軽にお問い合わせください。",
+    "noPosts": "現在ブログ記事はありません。リノベーションのコツや情報は近日中に公開予定です。",
+    "relatedProject": "関連プロジェクト",
+    "pagination": "ブログのページネーション",
+    "previous": "前へ",
+    "next": "次へ",
+    "previousPage": "前のページへ",
+    "nextPage": "次のページへ",
+    "showingPosts": "{total}件中 {start}〜{end}件を表示",
+    "relatedServices": "関連サービス",
+    "relatedAreas": "あなたのエリアのリノベーション"
+  }
+}

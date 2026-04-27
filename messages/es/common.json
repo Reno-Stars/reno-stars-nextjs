@@ -1,0 +1,10 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "notFound": "Página no encontrada",
+    "notFoundDescription": "La página que busca no existe o ha sido movida.",
+    "backToHome": "Volver al inicio",
+    "tryAgain": "Reintentar"
+  }
+}

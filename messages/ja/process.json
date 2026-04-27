@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "リノベーションサービスの流れ: 5ステップ",
+      "subtitle": "相談から完成まで",
+      "googleReviews": "Googleレビュー",
+      "stepLabel": "ステップ {stepNum}"
+    },
+    "downloadPoster": "PNGダウンロード",
+    "downloadPdf": "PDFダウンロード",
+    "downloadSuccess": "ダウンロード完了!",
+    "downloadError": "失敗",
+    "downloadPosterHint": "クリックでPNGをダウンロード",
+    "downloadPdfHint": "クリックでPDFをダウンロード",
+    "step1": {
+      "title": "初回相談",
+      "subtitle": "ヒアリング",
+      "points": [
+        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
+        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
+        "Style preference confirmation",
+        "Material budget and positioning",
+        "Understand renovation needs and expectations",
+        "Obtain floor plans and site photos (if available)"
+      ],
+      "tags": [
+        {
+          "icon": "phone",
+          "label": "Phone"
+        },
+        {
+          "icon": "email",
+          "label": "Email"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "wechat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
+      ],
+      "faqAnswer": "電話、メール、WhatsApp、WeChat、SMSでお問い合わせいただける初回相談から始めます。リノベーションのご要望、スタイルの好み、予算について話し合い、既存の間取り図や写真があれば収集します。"
+    },
+    "step2": {
+      "title": "オーダーメイドの評価と見積もり",
+      "subtitle": "現場採寸(必要に応じて)と透明な価格設定",
+      "points": [
+        "Professional on-site measurement for precise dimensions (if needed)",
+        "A comprehensive design proposal illustrating your future space",
+        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
+        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+      ],
+      "tags": [
+        {
+          "icon": "ruler",
+          "label": "Precise Measurement"
+        },
+        {
+          "icon": "quote",
+          "label": "Transparent Pricing"
+        },
+        {
+          "icon": "site",
+          "label": "Design Proposal"
+        }
+      ],
+      "faqAnswer": "必要に応じてプロの現場採寸を行い、空間の包括的なデザイン提案を作成します。スケジュール、許可要件、提案されたデザインに沿った透明な見積もりを含む明確に定義された作業範囲を受け取ります。"
+    },
+    "step3": {
+      "title": "確認と契約",
+      "subtitle": "詳細の確定とプロジェクト開始",
+      "points": [
+        "Invite clients to showroom for in-person consultation",
+        "Address questions and optimize design details",
+        "Confirm design proposal and material samples",
+        "Finalize the payment schedule and assist with delivery scheduling",
+        "Sign construction contract and collect deposit",
+        "Secure the project start date",
+        "Establish project team: Project Manager, Construction Manager, Coordinator"
+      ],
+      "tags": [
+        {
+          "icon": "contract",
+          "label": "Contract"
+        },
+        {
+          "icon": "meeting",
+          "label": "Consultation"
+        },
+        {
+          "icon": "team",
+          "label": "Project Team"
+        }
+      ],
+      "faqAnswer": "ショールームにご招待し、素材サンプルを確認し、デザインの詳細を確定します。支払いスケジュールを確認して契約に署名した後、プロジェクト開始日を確保し、プロジェクトマネージャー、施工マネージャー、コーディネーターを含む専任のプロジェクトチームを構成します。"
+    },
+    "step4": {
+      "title": "施工と管理",
+      "subtitle": "完全に調整された簡単なコミュニケーション",
+      "points": [
+        "A unified project team managing all aspects of your project",
+        "No direct interaction with workers needed",
+        "Coordinated construction progress to ensure efficiency and consistency",
+        "Assistance with delivery scheduling and on-site coordination",
+        "Consistent quality control throughout the entire construction process",
+        "Fast response and efficient resolution of any issues"
+      ],
+      "tags": [
+        {
+          "icon": "management",
+          "label": "Unified Management"
+        },
+        {
+          "icon": "progress",
+          "label": "Progress Tracking"
+        },
+        {
+          "icon": "response",
+          "label": "Quick Response"
+        }
+      ],
+      "faqAnswer": "統一されたプロジェクトチームがプロジェクトのすべての側面を管理します。職人と直接やり取りする必要はありません。施工の進捗、納品スケジュールを調整し、一貫した品質管理を維持します。問題は迅速かつ効率的に解決されます。"
+    },
+    "step5": {
+      "title": "ウォークスルーとアフターケア",
+      "subtitle": "最終チェックと長期サポート",
+      "points": [
+        "Final walkthrough to confirm all work meets expectations",
+        "New home handover",
+        "Ongoing support for maintenance during warranty period"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "Strict Inspection"
+        },
+        {
+          "icon": "warranty",
+          "label": "Warranty Service"
+        },
+        {
+          "icon": "support",
+          "label": "Ongoing Support"
+        }
+      ],
+      "faqAnswer": "最終ウォークスルーを実施し、すべての作業がご期待に沿うことを確認してから、新しい住まいをお引き渡しします。保証期間中はメンテナンスの継続的なサポートを提供します。"
+    },
+    "tagline": "リノベーションを真に達成可能にする",
+    "whyMatters": {
+      "title": "なぜこれが重要なのか",
+      "description": "Reno Starsの構造化されたリノベーションフローは、お客様が各段階で何を期待すべきかを知るのに役立ちます。明確な5ステップのプロセスにより、最初のお問い合わせから最終的な引き渡しまで、スムーズでストレスのないリノベーション体験を保証します。"
+    },
+    "footer": {
+      "tagline": "シンプル · 安心 · 安全 · 保証付き",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "業界経験年数",
+      "googleRating": "Google",
+      "warrantyService": "保証サービス",
+      "scanLinktree": "スキャンしてつながる",
+      "website": "reno-stars.com"
+    }
+  }
+}

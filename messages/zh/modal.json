@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "地点",
+    "category": "类别",
+    "budget": "预算范围",
+    "spaceType": "空间类型",
+    "serviceScope": "服务范围",
+    "duration": "工期",
+    "challenge": "项目挑战",
+    "solution": "我们的方案",
+    "close": "关闭",
+    "viewDetails": "查看完整详情"
+  }
+}

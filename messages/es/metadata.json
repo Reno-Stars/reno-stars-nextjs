@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Remodelaciones en Vancouver — {years}+ años, $5M asegurado | Reno Stars",
+      "description": "Remodelaciones de cocina, baño y casa completa en Metro Vancouver. {years}+ años de experiencia, seguro CGL de $5M, equipos cubiertos por WCB y 3 años de garantía. Vea más de 100 proyectos completados u obtenga su cotización gratis."
+    },
+    "services": {
+      "title": "Servicios de remodelación en Vancouver — $5M asegurado | Reno Stars",
+      "description": "Servicios de remodelación de cocina, baño, casa completa, sótano y comercial en todo Metro Vancouver. Más de 20 años de experiencia, seguro CGL de $5M, 3 años de garantía. Cotizaciones gratis."
+    },
+    "projects": {
+      "title": "Más de 100 proyectos en Vancouver | Antes y después | Reno Stars",
+      "description": "Vea más de 100 proyectos reales de remodelación en Metro Vancouver con fotos antes/después, costos reales y plazos. Transformaciones de cocina, baño, sótano y casa completa."
+    },
+    "contact": {
+      "title": "Cotización gratis de remodelación en Vancouver | Contacto Reno Stars",
+      "description": "Reciba una cotización gratis de Reno Stars, la empresa de remodelación de confianza en Vancouver. Remodelación de cocina, baño, sótano y casa completa en Metro Vancouver. Llame al 778-960-7999."
+    },
+    "blog": {
+      "title": "Consejos y guías de costos | Vancouver | Blog Reno Stars",
+      "description": "Consejos expertos de remodelación, tendencias de diseño e ideas prácticas para su proyecto en Vancouver. Lea casos de estudio y transformaciones antes y después."
+    },
+    "benefits": {
+      "title": "Por qué elegir Reno Stars | 70+ reseñas 5★, $5M asegurado",
+      "description": "Cotizaciones transparentes, proceso estructurado, comunicación rápida y equipos estables. Más de 70 reseñas de 5 estrellas en Google, seguro CGL de $5M, cobertura WCB."
+    },
+    "design": {
+      "title": "Galería de diseño de remodelación | Proyectos reales en Vancouver | Reno Stars",
+      "description": "Explore ideas de diseño de remodelación a partir de más de 100 proyectos reales en Metro Vancouver. Inspiración para cocina, baño, sótano y casa completa."
+    },
+    "projectCategory": {
+      "title": "Proyectos de remodelación de {category} | Reno Stars Vancouver",
+      "description": "Explore nuestros proyectos de remodelación de {category} en Vancouver y el Lower Mainland. Vea fotos antes/después e inspiración de diseño."
+    },
+    "projectDetail": {
+      "titleWithLocation": "{title} en {city} | Reno Stars"
+    },
+    "serviceLocation": {
+      "title": "{service} en {area} | Reno Stars",
+      "titleWithTagline": "{service} en {area} – {tagline} | Reno Stars",
+      "description": "{service} experto en {area} por Reno Stars. Más de {years} años de experiencia, seguro CGL de $5M, cobertura WCB activa, hasta 3 años de garantía. Vea proyectos locales y obtenga cotización gratis."
+    },
+    "areas": {
+      "title": "Remodelación cerca de usted | 17 áreas de Metro Vancouver | Reno Stars",
+      "description": "Reno Stars sirve a 17 comunidades en Metro Vancouver y el Fraser Valley. Encuentre servicios de remodelación en su ciudad y obtenga una cotización gratis."
+    },
+    "area": {
+      "title": "Contratista de remodelación en {area} | Cocina y baño | Reno Stars",
+      "description": "Servicios profesionales de remodelación en {area}. Cocinas, baños y casas completas. Contáctenos para una cotización gratis."
+    },
+    "thankYou": {
+      "title": "Gracias | Reno Stars",
+      "description": "Su mensaje ha sido recibido. Pronto le responderemos."
+    },
+    "process": {
+      "title": "Proceso de remodelación: 5 pasos | Reno Stars Vancouver",
+      "description": "Conozca nuestro proceso de remodelación en 5 pasos. De la consulta inicial a la entrega del proyecto, hacemos su remodelación simple y sin preocupaciones."
+    },
+    "showroom": {
+      "title": "Showroom de remodelación en Richmond BC | Consulta gratis | Reno Stars",
+      "description": "Visite nuestro showroom en Richmond BC: toque materiales reales, vea exhibiciones de cocinas y baños, obtenga una cotización gratis. Lun-Sáb 9:30 AM. Sin cita previa."
+    },
+    "guides": {
+      "title": "Guías de costos de remodelación | Vancouver BC | Reno Stars",
+      "description": "Guías gratis de costos de remodelación basadas en datos reales del Greater Vancouver. Precios de cocina, baño y casa completa con presupuestos y plazos reales.",
+      "kitchenCost": {
+        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+      },
+      "bathroomCost": {
+        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
+        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+      },
+      "wholeHouseCost": {
+        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+      },
+      "basementCost": {
+        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+      },
+      "commercialCost": {
+        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+      },
+      "cabinetCost": {
+        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+      },
+      "basementSuiteCost": {
+        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+      }
+    },
+    "about": {
+      "title": "Sobre Reno Stars | 20+ años, 70+ reseñas 5★ | Remodelación en Vancouver",
+      "description": "Conozca al equipo detrás de más de 100 remodelaciones en Metro Vancouver. Más de 20 años de experiencia, $5M asegurado, cobertura WCB, 70+ reseñas de 5 estrellas en Google. Consultas gratis."
+    },
+    "reviews": {
+      "title": "Más de 70 reseñas de 5 estrellas | Reno Stars Vancouver",
+      "description": "Lea más de 70 reseñas verificadas de 5 estrellas de Google de propietarios reales en Vancouver. Vea por qué las familias de Metro Vancouver confían en Reno Stars."
+    },
+    "financing": {
+      "title": "Guía de financiamiento y presupuesto | Vancouver",
+      "description": "Explore opciones de financiamiento para remodelaciones en Metro Vancouver. HELOC, préstamos personales, refinanciamiento hipotecario y consejos de presupuesto."
+    },
+    "beforeAfter": {
+      "title": "Antes y después: remodelaciones reales en Vancouver | Reno Stars",
+      "description": "Impresionantes transformaciones antes/después de remodelaciones en Metro Vancouver. Proyectos reales, costos reales, resultados reales. Cocina, baño y casa completa."
+    },
+    "features": {
+      "title": "Por qué Reno Stars | $5M asegurado, garantía 3 años, 70+ reseñas",
+      "description": "Lo que diferencia a Reno Stars: seguro CGL de $5M, cobertura WCB, 3 años de garantía, equipo bilingüe, 70+ reseñas de 5 estrellas en Google. Vancouver."
+    },
+    "nearMe": {
+      "title": "Remodelación cerca de mí | Metro Vancouver | Reno Stars",
+      "description": "Empresa de remodelación bien valorada cerca de usted en Vancouver, Richmond, Burnaby, Surrey y 14 ciudades de Metro Vancouver. 70+ reseñas 5★, 20+ años, $5M asegurado. Cotizaciones gratis."
+    }
+  }
+}
