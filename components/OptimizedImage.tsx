@@ -201,28 +201,31 @@ export default function OptimizedImage({
         onError={() => setThumbLoaded(true)}
       />
 
-      {/* Full image — fades in on top when loaded */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={fullSrc}
-        srcSet={fullSrcSet}
-        sizes={fullSrcSet ? sizes : undefined}
-        alt={alt}
-        width={fill ? undefined : width}
-        height={fill ? undefined : height}
-        loading={resolvedLoading}
-        decoding={resolvedDecoding}
-        fetchPriority={priority ? 'high' : undefined}
-        className={combinedClassName}
-        style={{
-          ...style,
-          opacity: fullLoaded ? 1 : 0,
-          transition: 'opacity 0.4s ease-out',
-        }}
-        ref={fullImgRef}
-        onError={handleError}
-        onLoad={() => setFullLoaded(true)}
-      />
+      {/* Full image — fades in on top when loaded. Only mount once in view so
+          SSR HTML never emits an <img> without src/srcset (W3C validation). */}
+      {isInView && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={fullSrc}
+          srcSet={fullSrcSet}
+          sizes={fullSrcSet ? sizes : undefined}
+          alt={alt}
+          width={fill ? undefined : width}
+          height={fill ? undefined : height}
+          loading={resolvedLoading}
+          decoding={resolvedDecoding}
+          fetchPriority={priority ? 'high' : undefined}
+          className={combinedClassName}
+          style={{
+            ...style,
+            opacity: fullLoaded ? 1 : 0,
+            transition: 'opacity 0.4s ease-out',
+          }}
+          ref={fullImgRef}
+          onError={handleError}
+          onLoad={() => setFullLoaded(true)}
+        />
+      )}
     </div>
   );
 }
