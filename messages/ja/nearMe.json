@@ -9,19 +9,19 @@
     },
     "trust": {
       "reviews": {
-        "stat": "70+",
+        "stat": "70件以上",
         "label": "Google 5★レビュー"
       },
       "insured": {
-        "stat": "$5M",
+        "stat": "500万ドル",
         "label": "賠償責任保険 + WCB"
       },
       "experience": {
-        "stat": "20+",
+        "stat": "20年以上",
         "label": "バンクーバーでの経験年数"
       },
       "coverage": {
-        "stat": "14",
+        "stat": "14都市",
         "label": "メトロバンクーバーの都市"
       }
     },

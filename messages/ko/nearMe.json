@@ -9,19 +9,19 @@
     },
     "trust": {
       "reviews": {
-        "stat": "70+",
+        "stat": "70개 이상",
         "label": "Google 5★ 리뷰"
       },
       "insured": {
-        "stat": "$5M",
+        "stat": "500만 달러",
         "label": "책임보험 + WCB"
       },
       "experience": {
-        "stat": "20+",
+        "stat": "20년 이상",
         "label": "밴쿠버에서의 경력"
       },
       "coverage": {
-        "stat": "14",
+        "stat": "14개 도시",
         "label": "메트로 밴쿠버 도시"
       }
     },

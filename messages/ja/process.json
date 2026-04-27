@@ -34,15 +34,15 @@
         },
         {
           "icon": "whatsapp",
-          "label": "WhatsApp"
+          "label": "ワッツアップ"
         },
         {
           "icon": "wechat",
-          "label": "WeChat"
+          "label": "微信"
         },
         {
           "icon": "sms",
-          "label": "SMS"
+          "label": "ショートメッセージ"
         }
       ],
       "faqAnswer": "電話、メール、WhatsApp、WeChat、SMSでお問い合わせいただける初回相談から始めます。リノベーションのご要望、スタイルの好み、予算について話し合い、既存の間取り図や写真があれば収集します。"
@@ -160,7 +160,7 @@
       "tagline": "シンプル · 安心 · 安全 · 保証付き",
       "taglineEn": "シンプル · 心配無用 · 安全 · 保証付き",
       "yearsIndustry": "業界経験年数",
-      "googleRating": "Google",
+      "googleRating": "グーグル",
       "warrantyService": "保証サービス",
       "scanLinktree": "スキャンしてつながる",
       "website": "reno-stars.com"
