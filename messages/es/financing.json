@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "Guía de financiamiento y presupuesto",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "Guía de financiamiento y presupuesto para remodelación",
+      "subtitle": "Explore sus opciones de financiamiento y planifique su presupuesto de remodelación con sabiduría. Basado en costos reales de proyectos completados en todo Metro Vancouver."
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
-      "financingOptions": "Financing Options"
+      "avgKitchen": "Remod. cocina promedio",
+      "avgBathroom": "Remod. baño promedio",
+      "financingOptions": "Opciones de financiamiento"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "Opciones de financiamiento para su remodelación",
+      "subtitle": "Las formas más comunes en que los propietarios canadienses financian proyectos de remodelación en Columbia Británica.",
       "heloc": {
-        "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "title": "Línea de Crédito sobre el Valor Líquido de la Vivienda (HELOC)",
+        "rate": "Tasa típica: Prime + 0.5% a 2%",
+        "description": "Pida prestado contra el valor líquido de su vivienda con montos de retiro flexibles. Solo pague intereses sobre lo que use. Disponible en la mayoría de los bancos y cooperativas de crédito canadienses.",
+        "pro": "✓ Tasas de interés bajas",
+        "con": "✗ Requiere capital en la vivienda"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "Préstamo personal o línea de crédito",
+        "rate": "Tasa típica: 6% – 12%",
+        "description": "Préstamos no garantizados de bancos o cooperativas de crédito. No se requiere capital en la vivienda. Pagos mensuales fijos hacen que el presupuesto sea predecible.",
+        "pro": "✓ No se necesita garantía",
+        "con": "✗ Tasas de interés más altas"
       },
       "refinance": {
-        "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "title": "Refinanciamiento hipotecario",
+        "rate": "Tasa típica: Tasas hipotecarias actuales",
+        "description": "Refinancie su hipoteca para incluir los costos de remodelación. Distribuye el costo a lo largo del plazo de su hipoteca. Puede tener penalizaciones por ruptura si es a mitad de plazo.",
+        "pro": "✓ La tasa más baja posible",
+        "con": "✗ Posibles tarifas de ruptura"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
-        "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "title": "Ahorros y enfoque por fases",
+        "rate": "Sin costo de interés",
+        "description": "Pague desde sus ahorros o divida su remodelación en etapas. Complete una habitación a la vez para distribuir los costos. Sin deudas y sin cargos por intereses.",
+        "pro": "✓ Cero costo de interés",
+        "con": "✗ Cronograma más largo"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
-      "bathroom": "Bathroom Renovation",
-      "kitchen": "Kitchen Renovation",
-      "basement": "Basement Renovation",
-      "wholeHouse": "Whole House Renovation",
-      "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "title": "Costos típicos de remodelación en Metro Vancouver",
+      "subtitle": "Basado en proyectos reales completados de nuestro portafolio.",
+      "bathroom": "Remodelación de baño",
+      "kitchen": "Remodelación de cocina",
+      "basement": "Remodelación de sótano",
+      "wholeHouse": "Remodelación de casa completa",
+      "commercial": "Remodelación comercial",
+      "disclaimer": "* Rangos basados en nuestros proyectos completados en Greater Vancouver. Los costos reales varían según el alcance, los materiales y la ubicación."
     },
     "tips": {
-      "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "title": "Consejos de planificación de presupuesto",
+      "subtitle": "Estrategias inteligentes para aprovechar al máximo su inversión en remodelación.",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "Priorice las áreas de alto impacto",
+        "description": "Las cocinas y los baños ofrecen el mejor retorno de inversión. Concentre su presupuesto en los espacios que más importan para la vida diaria y el valor de reventa."
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "Reserve 10–15% de contingencia",
+        "description": "Los descubrimientos inesperados durante la remodelación son comunes: plomería antigua, moho oculto o problemas estructurales. Un fondo de contingencia previene el estrés del presupuesto."
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "Considere un enfoque por fases",
+        "description": "Si su remodelación total excede su presupuesto, priorice y complete las habitaciones en fases. Esto distribuye los costos mientras todavía logra sus metas."
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "Obtenga cotizaciones detalladas por escrito",
+        "description": "Siempre solicite cotizaciones detalladas de los contratistas. Compare el alcance del trabajo, no solo el precio total. Una cotización más baja puede excluir artículos que necesita."
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "Presupuesto para permisos e inspecciones",
+        "description": "Los permisos de construcción en Metro Vancouver típicamente cuestan $200–$2,000+ dependiendo del alcance. Saltarse los permisos puede causar problemas costosos durante la reventa."
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "Piense en el retorno de inversión",
+        "description": "Las remodelaciones de cocina pueden devolver 75–100% de los costos en la reventa. Las remodelaciones de baño devuelven 60–70%. Las suites de sótano pueden generar ingresos por alquiler para compensar los costos."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Preguntas frecuentes"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "¿Cuánto debo presupuestar para una remodelación en Vancouver?",
+      "a1": "El presupuesto depende del alcance: las remodelaciones de baño van de $10,000–$60,000, las cocinas de $15,000–$72,000, y los proyectos de toda la casa desde $50,000+. Proporcionamos estimaciones detalladas gratuitas según sus necesidades específicas.",
+      "q1Answer": "El presupuesto depende del alcance: las remodelaciones de baño van de $10,000–$60,000, las cocinas de $15,000–$72,000, y los proyectos de toda la casa desde $50,000+. Proporcionamos estimaciones detalladas gratuitas según sus necesidades específicas.",
+      "q2": "¿Puedo remodelar con un presupuesto pequeño?",
+      "a2": "¡Sí! Trabajamos con varios niveles de presupuesto. Un enfoque por fases le permite completar primero las áreas prioritarias. La renovación de gabinetes ($3,000–$8,000) es una alternativa rentable al reemplazo completo de la cocina.",
+      "q2Answer": "¡Sí! Trabajamos con varios niveles de presupuesto. Un enfoque por fases le permite completar primero las áreas prioritarias. La renovación de gabinetes ($3,000–$8,000) es una alternativa rentable al reemplazo completo de la cocina.",
+      "q3": "¿Ofrecen planes de pago?",
+      "a3": "Seguimos un cronograma de pagos estándar: un depósito para asegurar la fecha de su proyecto, pagos progresivos en hitos clave y un pago final al completar y a su satisfacción.",
+      "q3Answer": "Seguimos un cronograma de pagos estándar: un depósito para asegurar la fecha de su proyecto, pagos progresivos en hitos clave y un pago final al completar y a su satisfacción.",
+      "q4": "¿Qué se incluye en una cotización de remodelación?",
+      "a4": "Nuestras cotizaciones incluyen mano de obra, materiales, gestión de proyectos, permisos (si aplica) y limpieza. Proporcionamos desgloses detallados para que entienda exactamente a dónde va su presupuesto.",
+      "q4Answer": "Nuestras cotizaciones incluyen mano de obra, materiales, gestión de proyectos, permisos (si aplica) y limpieza. Proporcionamos desgloses detallados para que entienda exactamente a dónde va su presupuesto.",
+      "q5": "¿Cómo puedo maximizar el ROI de mi remodelación?",
+      "a5": "Concéntrese en cocinas y baños para el mejor retorno de reventa. Use materiales de calidad que duren. Considere una suite de sótano para ingresos por alquiler. Le ayudamos a planificar remodelaciones que equilibren sus necesidades de estilo de vida con el valor a largo plazo.",
+      "q5Answer": "Concéntrese en cocinas y baños para el mejor retorno de reventa. Use materiales de calidad que duren. Considere una suite de sótano para ingresos por alquiler. Le ayudamos a planificar remodelaciones que equilibren sus necesidades de estilo de vida con el valor a largo plazo."
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "¿Listo para planificar su presupuesto de remodelación?",
+      "subtitle": "Reciba una consulta gratis con una estimación detallada de costos adaptada a su proyecto y objetivos."
     }
   }
 }

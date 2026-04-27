@@ -1,67 +1,67 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "Galería de Antes y Después",
+      "subtitle": "Vea las transformaciones dramáticas de nuestros proyectos de remodelación en todo Metro Vancouver. Fotos reales de hogares reales."
     },
     "stats": {
-      "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "transformations": "Transformaciones",
+      "projects": "Proyectos",
+      "cities": "Ciudades atendidas"
     },
     "filters": {
-      "all": "All",
-      "bathroom": "Bathroom",
-      "kitchen": "Kitchen",
-      "whole-house": "Whole House",
-      "commercial": "Commercial"
+      "all": "Todos",
+      "bathroom": "Baño",
+      "kitchen": "Cocina",
+      "whole-house": "Casa completa",
+      "commercial": "Comercial"
     },
     "labels": {
-      "before": "Before",
-      "after": "After",
-      "viewProject": "View Project"
+      "before": "Antes",
+      "after": "Después",
+      "viewProject": "Ver proyecto"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "No se encontraron fotos de antes y después para esta categoría.",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "Por qué compartimos fotos de antes y después",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "Transparencia completa",
+        "description": "Creemos en mostrarle exactamente qué esperar. Nuestras fotos de antes y después no están editadas, dándole una mirada honesta a la calidad de nuestro trabajo."
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "Calidad probada",
+        "description": "Cada transformación habla por sí misma. Desde cocinas anticuadas hasta obras maestras modernas, nuestra artesanía es evidente en cada detalle."
       },
       "inspiration": {
-        "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "title": "Inspiración de diseño",
+        "description": "Navegue por remodelaciones reales para encontrar ideas para su propio proyecto. Vea cómo diferentes estilos, materiales y diseños se unen en hogares como el suyo."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Preguntas frecuentes"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "¿Estas son fotos reales de antes y después?",
+      "a1": "Sí, cada foto en esta página proviene directamente de nuestros proyectos de remodelación completados en Metro Vancouver. No utilizamos fotos de archivo ni alteramos digitalmente nuestras imágenes.",
+      "q2": "¿Cuánto tiempo toma una remodelación típica?",
+      "a2": "Los plazos de remodelación varían según el alcance del proyecto. Una remodelación de baño típicamente toma 2-4 semanas, una remodelación de cocina 4-8 semanas, y una remodelación de casa completa 2-4 meses. Proporcionamos plazos detallados durante nuestra consulta gratuita.",
+      "q3": "¿Puedo visitar un proyecto completado en persona?",
+      "a3": "Podemos organizar visitas a nuestra sala de exhibición donde puede ver muestras de materiales y acabados en persona. Para referencias de proyectos específicos, podemos conectarle con clientes anteriores que estén dispuestos a compartir su experiencia.",
+      "q4": "¿Qué áreas atienden?",
+      "a4": "Atendemos todo Metro Vancouver incluyendo Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley y Maple Ridge.",
+      "q5": "¿Cómo empiezo con mi remodelación?",
+      "a5": "Simplemente contáctenos para una consulta gratuita. Visitaremos su espacio, discutiremos su visión y presupuesto, y proporcionaremos una cotización detallada. Nuestro equipo maneja todo desde el diseño hasta la finalización."
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "¿Listo para transformar su espacio?",
+      "subtitle": "Contáctenos hoy para una consulta gratuita y vea lo que Reno Stars puede hacer por su hogar."
     },
     "pagination": {
-      "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "label": "Paginación de galería",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "previousPage": "Ir a la página anterior",
+      "nextPage": "Ir a la página siguiente"
     }
   }
 }
