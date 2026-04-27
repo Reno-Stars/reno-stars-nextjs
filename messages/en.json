@@ -351,7 +351,7 @@
   "areas": {
     "title": "Service Areas",
     "subtitle": "We proudly serve communities across the Lower Mainland",
-    "servingIn": "Renovation Services in {city}",
+    "servingIn": "Home Renovations in {city}",
     "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
     "viewProjects": "View {city} Projects",
     "requestQuote": "Request Quote",

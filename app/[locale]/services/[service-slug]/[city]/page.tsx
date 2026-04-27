@@ -150,6 +150,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Bathroom Renovation Maple Ridge | $15K–$35K | Reno Stars',
       description: 'Maple Ridge bathroom renovation with custom Glass Door, tiled walls & quartz vanity. Real project: $18K–$21K. Free in-home quote.',
     },
+    // Q7 (64 imp pos 5.2) "bathroom reno vancouver" + Q10 (57 imp pos 1.5) "bathroom remodel vancouver".
+    // Page is already ranking — entire fix is snippet attractiveness, not rank.
+    'bathroom/vancouver': {
+      title: 'Bathroom Remodel Vancouver | $15K–$45K | Reno Stars',
+      description: 'Vancouver bathroom remodel from $15K–$45K — walk-in showers, tub conversions, custom vanities. 3–6 wks. 20+ yrs, $5M insured, 3-yr warranty. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;

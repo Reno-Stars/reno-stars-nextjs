@@ -26,9 +26,11 @@ interface AreaPageProps {
   services: LocalizedService[];
   faqs: Faq[];
   areaProjects: Project[];
+  /** Optional code-driven intro paragraph that wins over the DB description (used for SEO CTR overrides). */
+  introOverride?: string;
 }
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
 
@@ -91,7 +93,7 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             {t('areas.servingIn', { city: localizedArea.name })}
           </h1>
           <p className="text-lg text-white/70 max-w-2xl">
-            {localizedArea.description || t('areas.cityDescription', { city: localizedArea.name })}
+            {introOverride || localizedArea.description || t('areas.cityDescription', { city: localizedArea.name })}
           </p>
         </div>
       </section>
