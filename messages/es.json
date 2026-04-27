@@ -898,361 +898,361 @@
   "guides": {
     "index": {
       "hero": {
-        "title": "Renovation Cost Guides",
-        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
+        "title": "Guías de costos de remodelación",
+        "subtitle": "Precios honestos basados en proyectos reales que hemos completado en Greater Vancouver. Sin suposiciones. Solo datos reales."
       },
       "kitchen": {
-        "title": "Kitchen Renovation Cost",
-        "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+        "title": "Costo de remodelación de cocina",
+        "description": "Desglose completo de los costos de remodelación de cocinas en Vancouver, desde actualizaciones económicas hasta transformaciones de alta gama."
       },
       "bathroom": {
-        "title": "Bathroom Renovation Cost",
-        "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+        "title": "Costo de remodelación de baño",
+        "description": "Desglose completo de los costos de remodelación de baños en el área de Greater Vancouver, desde renovaciones de un solo baño hasta proyectos de múltiples baños."
       },
       "wholeHouse": {
-        "title": "Whole House Renovation Cost",
-        "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+        "title": "Costo de remodelación integral",
+        "description": "Precios de remodelación integral del hogar incluyendo cocina, baños, pisos y trabajo estructural."
       },
-      "comingSoon": "Coming Soon",
-      "readGuide": "Read Guide",
+      "comingSoon": "Próximamente",
+      "readGuide": "Leer guía",
       "cta": {
-        "heading": "Ready to Start Your Renovation?",
-        "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+        "heading": "¿Listo para comenzar su remodelación?",
+        "subtitle": "Reciba una consulta gratis y una cotización precisa basada en las necesidades específicas de su proyecto."
       },
       "basement": {
-        "title": "Basement Renovation Cost",
-        "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+        "title": "Costo de remodelación de sótano",
+        "description": "Desglose completo de los costos de remodelación de sótanos en el área de Greater Vancouver, desde acabado básico hasta conversiones completas de suite legal."
       },
       "commercial": {
-        "title": "Commercial Renovation Cost",
-        "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+        "title": "Costo de remodelación comercial",
+        "description": "Desglose completo de los costos de remodelación comercial en Greater Vancouver, desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes."
       },
       "cabinet": {
-        "title": "Cabinet Refinishing Cost",
-        "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+        "title": "Costo de renovación de gabinetes",
+        "description": "Desglose completo de los costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver."
       },
       "basementSuite": {
-        "title": "Basement Suite Cost",
-        "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
+        "title": "Costo de suite de sótano",
+        "description": "Costos de conversión de suite legal de sótano, análisis de ROI y regulaciones específicas de cada municipio para Metro Vancouver."
       }
     },
     "kitchenCost": {
-      "breadcrumb": "Kitchen Renovation Cost",
+      "breadcrumb": "Costo de remodelación de cocina",
       "hero": {
-        "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+        "title": "Costo de remodelación de cocina en Vancouver BC (2026)",
+        "subtitle": "Precios reales de remodelaciones de cocina completadas en Greater Vancouver. Cada cifra a continuación viene de proyectos reales — no estimaciones de la industria."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–6 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "projects": "Proyectos completados",
+        "timeline": "Plazo típico",
+        "timelineValue": "3 a 6 semanas"
       },
       "tiers": {
-        "title": "Kitchen Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "Costo de remodelación de cocina por nivel",
+        "subtitle": "Basado en nuestros proyectos completados en Greater Vancouver",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+          "title": "Económico",
+          "description": "Renovación de gabinetes o gabinetes estándar, encimeras laminadas, salpicadero básico y accesorios estándar. Ideal para condominios y casas adosadas que buscan una nueva apariencia sin cambios estructurales."
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+          "title": "Gama media",
+          "description": "Gabinetes a medida o semi-personalizados, encimeras de cuarzo, salpicadero de azulejo, iluminación actualizada y nuevo piso. La opción más popular para hogares familiares."
         },
         "highEnd": {
-          "title": "High-End",
-          "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+          "title": "Alta gama",
+          "description": "Gabinetes totalmente a medida, encimeras de piedra premium, islas tipo cascada, electrodomésticos de alta gama, modificaciones estructurales y acabados de diseñador. Para propietarios que quieren lo mejor."
         }
       },
       "factors": {
-        "title": "What Affects Your Kitchen Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de su remodelación de cocina?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "cabinetry": {
-          "title": "Cabinetry (30–40% of budget)",
-          "description": "The biggest cost driver. Stock cabinets start around /linear foot, while custom options can exceed /linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+          "title": "Gabinetes (30-40% del presupuesto)",
+          "description": "El mayor factor de costo. Los gabinetes estándar comienzan alrededor de cientos de dólares por pie lineal, mientras que las opciones a medida pueden superar los miles de dólares por pie lineal. Los gabinetes blancos estilo Shaker son la opción más popular en Vancouver."
         },
         "countertops": {
-          "title": "Countertops (10–15% of budget)",
-          "description": "Laminate starts at /sq ft, quartz runs –150/sq ft, and natural stone can exceed /sq ft. Waterfall island edges add –2,000 to the total."
+          "title": "Encimeras (10-15% del presupuesto)",
+          "description": "El laminado comienza desde decenas de dólares por pie cuadrado, el cuarzo va de 80 a 150 dólares por pie cuadrado, y la piedra natural puede superar los 25 dólares por pie cuadrado. Los bordes de isla tipo cascada agregan miles al total."
         },
         "layout": {
-          "title": "Layout Changes",
-          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add ,000–15,000 depending on structural requirements and permits."
+          "title": "Cambios de distribución",
+          "description": "Mover plomería, líneas de gas o quitar paredes aumenta significativamente los costos. Un cambio de distribución puede agregar $5,000-$15,000 dependiendo de los requisitos estructurales y permisos."
         },
         "appliances": {
-          "title": "Appliances",
-          "description": "Budget-friendly packages start at ,000–5,000. Mid-range brands like Bosch or KitchenAid run ,000–15,000. Premium brands like Sub-Zero or Wolf can exceed ,000."
+          "title": "Electrodomésticos",
+          "description": "Los paquetes económicos comienzan en $3,000-$5,000. Marcas de gama media como Bosch o KitchenAid van de $8,000 a $15,000. Marcas premium como Sub-Zero o Wolf pueden superar los $25,000."
         },
         "plumbing": {
-          "title": "Plumbing & Electrical",
-          "description": "Relocating plumbing or adding circuits adds ,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+          "title": "Plomería y eléctrico",
+          "description": "Reubicar plomería o agregar circuitos agrega $3,000-$8,000. Las casas más antiguas de Vancouver pueden necesitar actualizaciones del panel eléctrico para soportar electrodomésticos modernos."
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "City of Vancouver building permits for kitchen renovations typically cost –1,000. Required when changing plumbing, electrical, gas, or structural elements."
+          "title": "Permisos e inspecciones",
+          "description": "Los permisos de construcción de la Ciudad de Vancouver para remodelaciones de cocina típicamente cuestan $200-$1,000. Requeridos al cambiar plomería, eléctrico, gas o elementos estructurales."
         }
       },
       "realProjects": {
-        "title": "Real Kitchen Renovation Projects",
-        "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+        "title": "Proyectos reales de remodelación de cocina",
+        "subtitle": "Explore {count} proyectos de cocina completados con presupuestos y plazos reales"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Kitchen Renovation",
+        "title": "Consejos para ahorrar en su remodelación de cocina",
         "tip1": {
-          "title": "Keep the Existing Layout",
-          "description": "Avoiding plumbing and gas line relocations can save ,000–15,000. Work with your existing kitchen footprint where possible."
+          "title": "Mantener la distribución existente",
+          "description": "Evitar reubicaciones de plomería y líneas de gas puede ahorrar $5,000-$15,000. Trabaje con la distribución existente de su cocina cuando sea posible."
         },
         "tip2": {
-          "title": "Choose Quartz Over Natural Stone",
-          "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+          "title": "Elegir cuarzo en lugar de piedra natural",
+          "description": "Las encimeras de cuarzo son más duraderas, no requieren sellado y cuestan 20-40% menos que el granito o el mármol. Además, lucen impresionantes."
         },
         "tip3": {
-          "title": "Semi-Custom Cabinets",
-          "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+          "title": "Gabinetes semi-personalizados",
+          "description": "Los gabinetes semi-personalizados ofrecen el aspecto de los totalmente a medida al 40-60% del precio. Puede elegir estilos de puertas, acabados y configuraciones."
         },
         "tip4": {
-          "title": "Plan During Off-Season",
-          "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+          "title": "Planificar fuera de temporada",
+          "description": "Los meses de invierno (noviembre-febrero) son temporada baja para los renovadores de Vancouver. Puede obtener mejores precios y plazos más rápidos comenzando en esa época."
         }
       },
       "cta": {
-        "heading": "Get Your Free Kitchen Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de remodelación de cocina",
+        "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       },
       "faq": {
-        "q1": "How much does a kitchen renovation cost in Vancouver?",
-        "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
-        "q2": "How long does a kitchen renovation take in Vancouver?",
-        "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
-        "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
-        "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
-        "q4": "What is the best countertop material for a kitchen renovation?",
-        "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
-        "q5": "Can I renovate my kitchen while living in my home?",
-        "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+        "q1": "¿Cuánto cuesta una remodelación de cocina en Vancouver?",
+        "a1": "Los costos de remodelación de cocina en Vancouver típicamente van de $15,000 a $72,000+ según nuestros proyectos completados. Las remodelaciones económicas (actualizaciones de gabinetes, encimeras básicas) comienzan en $15,000-$27,000, las remodelaciones de gama media con gabinetes a medida y encimeras de cuarzo van de $28,000-$38,000, y las transformaciones de alta gama con materiales premium pueden superar los $40,000.",
+        "q2": "¿Cuánto tarda una remodelación de cocina en Vancouver?",
+        "a2": "La mayoría de las remodelaciones de cocina en Vancouver toman de 3 a 6 semanas desde la demolición hasta la finalización. Las actualizaciones cosméticas simples se pueden hacer en 3-4 semanas, mientras que las remodelaciones complejas que involucran cambios de distribución, gabinetes a medida o trabajo estructural pueden tomar 8-10 semanas.",
+        "q3": "¿Necesito un permiso para una remodelación de cocina en Vancouver?",
+        "a3": "Necesita un permiso de construcción de la Ciudad de Vancouver si su remodelación involucra cambios en plomería, eléctrico, líneas de gas o elementos estructurales como quitar paredes. Las actualizaciones cosméticas como nuevos gabinetes, encimeras y salpicadero típicamente no requieren permisos. Los costos de permisos van de $200 a $1,000.",
+        "q4": "¿Cuál es el mejor material de encimera para una remodelación de cocina?",
+        "a4": "El cuarzo es la opción de encimera más popular en nuestras remodelaciones de cocina en Vancouver. Ofrece excelente durabilidad, no requiere sellado (a diferencia del granito), resiste manchas y viene en una amplia variedad de colores y patrones. Los precios van de $80 a $150 por pie cuadrado instalado.",
+        "q5": "¿Puedo remodelar mi cocina mientras vivo en mi casa?",
+        "a5": "Sí, la mayoría de nuestros clientes continúan viviendo en sus hogares durante las remodelaciones de cocina. Ayudamos a configurar un área de cocina temporal y programamos el trabajo para minimizar la interrupción. Espere estar sin una cocina funcional durante 2-4 semanas dependiendo del alcance del trabajo."
       }
     },
     "bathroomCost": {
-      "breadcrumb": "Bathroom Renovation Cost",
+      "breadcrumb": "Costo de remodelación de baño",
       "hero": {
-        "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
-        "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
+        "title": "Costo promedio de remodelación de baño en Vancouver (Guía de precios 2026)",
+        "subtitle": "El costo promedio de remodelación de baño en Vancouver varía de $10,000 a $60,000+. Estos son precios reales de 19 proyectos completados — no estimaciones de la industria ni promedios nacionales."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "2–8 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "projects": "Proyectos completados",
+        "timeline": "Plazo típico",
+        "timelineValue": "2 a 8 semanas"
       },
       "tiers": {
-        "title": "Bathroom Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "Costo de remodelación de baño por nivel",
+        "subtitle": "Basado en nuestros proyectos completados en Greater Vancouver",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Standard tile, basic vanity, updated fixtures, and fresh paint. Ideal for a single bathroom refresh in condos or townhouses without moving plumbing."
+          "title": "Económico",
+          "description": "Azulejo estándar, tocador básico, accesorios actualizados y pintura fresca. Ideal para una renovación de baño individual en condominios o casas adosadas sin mover plomería."
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Porcelain or large-format tile, custom vanity, frameless glass shower enclosure, modern fixtures, and heated flooring. The most popular choice for family homes."
+          "title": "Gama media",
+          "description": "Azulejo de porcelana o de gran formato, tocador a medida, ducha con vidrio sin marco, accesorios modernos y piso radiante. La opción más popular para hogares familiares."
         },
         "highEnd": {
-          "title": "High-End / Multi-Bathroom",
-          "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
+          "title": "Alta gama / Múltiples baños",
+          "description": "Azulejo premium, duchas sin curva, bañeras independientes, gabinetes a medida, accesorios inteligentes y modificaciones estructurales. A menudo incluye remodelar 2-3+ baños simultáneamente."
         }
       },
       "factors": {
-        "title": "What Affects Your Bathroom Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de su remodelación de baño?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "tiles": {
-          "title": "Tile & Flooring (25–35% of budget)",
-          "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+          "title": "Azulejos y pisos (25-35% del presupuesto)",
+          "description": "El azulejo cerámico estándar comienza en $5/pie cuadrado, la porcelana va de $8 a $15/pie cuadrado, y la piedra natural puede superar los $25/pie cuadrado. Los azulejos de gran formato reducen las líneas de lechada pero cuestan más instalar."
         },
         "shower": {
-          "title": "Shower / Tub Configuration",
-          "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+          "title": "Configuración de ducha / bañera",
+          "description": "Una conversión de bañera a ducha cuesta $3,000-$8,000. Las duchas sin curva (umbral cero) requieren impermeabilización a medida y subsuelo inclinado, agregando $2,000-$5,000 frente a una base de ducha estándar."
         },
         "vanity": {
-          "title": "Vanity & Countertop",
-          "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+          "title": "Tocador y encimera",
+          "description": "Los tocadores estándar comienzan en $500-$1,500. Semi-personalizado con tope de cuarzo va de $2,000-$4,000. Tocadores flotantes totalmente a medida con lavabos integrados pueden superar los $6,000."
         },
         "plumbing": {
-          "title": "Plumbing Relocation",
-          "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+          "title": "Reubicación de plomería",
+          "description": "Mover líneas de drenaje o tuberías de suministro agrega $2,000-$6,000. Las casas más antiguas pueden necesitar nuevas válvulas de cierre o actualizaciones de líneas de suministro. Mantener la distribución de plomería existente ahorra significativamente."
         },
         "waterproofing": {
-          "title": "Waterproofing",
-          "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+          "title": "Impermeabilización",
+          "description": "La impermeabilización adecuada con sistemas de membrana (Schluter, Laticrete) cuesta $1,500-$3,500 para una ducha estándar. Esencial en el clima de Vancouver para evitar daños por humedad detrás de las paredes."
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+          "title": "Permisos e inspecciones",
+          "description": "Los permisos de construcción para remodelaciones de baño cuestan $200-$800 en Metro Vancouver. Requeridos al mover plomería, agregar nuevos accesorios o hacer cambios estructurales."
         }
       },
       "realProjects": {
-        "title": "Real Bathroom Renovation Projects",
-        "subtitle": "Browse {count} completed bathroom projects with actual budgets and timelines"
+        "title": "Proyectos reales de remodelación de baño",
+        "subtitle": "Explore {count} proyectos de baño completados con presupuestos y plazos reales"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Bathroom Renovation",
+        "title": "Consejos para ahorrar en su remodelación de baño",
         "tip1": {
-          "title": "Keep Existing Plumbing Layout",
-          "description": "Relocating drain lines is one of the biggest cost drivers. Keeping the toilet, shower, and sink in their current positions can save $3,000–6,000."
+          "title": "Mantener la distribución de plomería existente",
+          "description": "Reubicar líneas de drenaje es uno de los mayores factores de costo. Mantener el inodoro, la ducha y el lavabo en sus posiciones actuales puede ahorrar $3,000-$6,000."
         },
         "tip2": {
-          "title": "Choose Large-Format Porcelain Tile",
-          "description": "Fewer grout lines mean less labour and a cleaner look. 24x24 or 12x24 porcelain tiles are durable, water-resistant, and more affordable than natural stone."
+          "title": "Elegir azulejo de porcelana de gran formato",
+          "description": "Menos líneas de lechada significan menos labor y un aspecto más limpio. Los azulejos de porcelana 24x24 o 12x24 son duraderos, resistentes al agua y más asequibles que la piedra natural."
         },
         "tip3": {
-          "title": "Renovate Multiple Bathrooms Together",
-          "description": "If you need more than one bathroom done, doing them simultaneously saves 10–20% vs separate projects. Contractors can share mobilization costs and bulk-buy materials."
+          "title": "Remodelar varios baños juntos",
+          "description": "Si necesita más de un baño hecho, hacerlos simultáneamente ahorra 10-20% frente a proyectos separados. Los contratistas pueden compartir costos de movilización y comprar materiales al por mayor."
         },
         "tip4": {
-          "title": "Invest in Waterproofing",
-          "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
+          "title": "Invertir en impermeabilización",
+          "description": "Escatimar en impermeabilización lleva a reparaciones costosas más tarde. Los sistemas de membrana adecuados agregan $1,500-$3,500 al inicio pero evitan $10,000+ en daños por agua a futuro."
         }
       },
       "cta": {
-        "heading": "Get Your Free Bathroom Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de remodelación de baño",
+        "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       },
       "faq": {
-        "q1": "How much does a bathroom renovation cost in Vancouver?",
-        "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
-        "q2": "How long does a bathroom renovation take?",
-        "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
-        "q3": "Can I convert my bathtub to a walk-in shower?",
-        "a3": "Yes, tub-to-shower conversions are one of our most popular requests. The cost ranges from $3,000–$8,000 depending on whether you choose a standard shower base or curbless design. Curbless showers require custom waterproofing and a sloped subfloor.",
-        "q4": "What is curbless shower and why is it more expensive?",
-        "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
-        "q5": "Should I renovate multiple bathrooms at the same time?",
-        "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+        "q1": "¿Cuánto cuesta una remodelación de baño en Vancouver?",
+        "a1": "Los costos de remodelación de baño en Vancouver van de $10,000 a $60,000+ según nuestros proyectos completados. Un baño económico individual comienza alrededor de $10,000-$20,000, las remodelaciones de gama media con tocador a medida y ducha de vidrio van de $20,000-$35,000, y los proyectos de alta gama o múltiples baños pueden superar los $40,000.",
+        "q2": "¿Cuánto tarda una remodelación de baño?",
+        "a2": "La remodelación de un solo baño típicamente toma de 2 a 5 semanas. Las actualizaciones cosméticas simples se pueden hacer en 2-3 semanas, mientras que los proyectos que involucran reubicación de plomería, duchas sin curva o cambios estructurales pueden tomar 4-8 semanas. Los proyectos de múltiples baños toman 5-11 semanas.",
+        "q3": "¿Puedo convertir mi bañera en una ducha de paso?",
+        "a3": "Sí, las conversiones de bañera a ducha son una de nuestras solicitudes más populares. El costo va de $3,000-$8,000 dependiendo de si elige una base de ducha estándar o un diseño sin curva. Las duchas sin curva requieren impermeabilización a medida y un subsuelo inclinado.",
+        "q4": "¿Qué es una ducha sin curva y por qué es más cara?",
+        "a4": "Una ducha sin curva (umbral cero) no tiene escalón ni borde en la entrada, creando una transición de piso sin costuras. Requiere membrana impermeabilizante a medida, un subsuelo precisamente inclinado e instalación de drenaje lineal, agregando $2,000-$5,000 frente a una base de ducha estándar. Es popular por accesibilidad y estética moderna.",
+        "q5": "¿Debería remodelar varios baños al mismo tiempo?",
+        "a5": "Sí, remodelar varios baños simultáneamente ahorra 10-20% comparado con proyectos separados. Los contratistas pueden compartir costos de movilización, coordinar oficios más eficientemente y comprar materiales al por mayor. Hemos completado muchos proyectos de 2-3 baños en Greater Vancouver."
       }
     },
     "wholeHouseCost": {
-      "breadcrumb": "Whole House Renovation Cost",
+      "breadcrumb": "Costo de remodelación integral",
       "hero": {
-        "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
+        "title": "Costo de remodelación integral en Vancouver BC (2026)",
+        "subtitle": "Precios reales de remodelaciones integrales completadas en Greater Vancouver. Desde renovaciones de condominios hasta transformaciones completas de casa. Cada cifra viene de proyectos reales."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–8 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "projects": "Proyectos completados",
+        "timeline": "Plazo típico",
+        "timelineValue": "3 a 8 semanas"
       },
       "tiers": {
-        "title": "Whole House Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "Costo de remodelación integral por nivel",
+        "subtitle": "Basado en nuestros proyectos completados en Greater Vancouver",
         "budget": {
-          "title": "Cosmetic Refresh",
-          "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+          "title": "Renovación cosmética",
+          "description": "Pintura completa, nuevos pisos, accesorios de iluminación actualizados, renovación de baño (tocador, espejo, herrajes) y actualizaciones menores de cocina. Ideal para condominios y propiedades de alquiler que necesitan una actualización moderna sin trabajo estructural."
         },
         "midRange": {
-          "title": "Comprehensive Renovation",
-          "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+          "title": "Remodelación integral",
+          "description": "Remodelación completa de cocina con nuevos gabinetes y encimeras, remodelación de baños, nuevos pisos en todo, pintura fresca, actualización de accesorios eléctricos y de plomería y nueva iluminación. La opción más popular para propietarios que planean quedarse a largo plazo."
         },
         "highEnd": {
-          "title": "Premium Transformation",
-          "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+          "title": "Transformación premium",
+          "description": "Remodelación completa con cambios estructurales, distribuciones de concepto abierto, cocinas y baños de alta gama, ebanistería a medida, pisos premium, integración de hogar inteligente y acabados de diseñador en todo. Para propietarios que quieren una casa verdaderamente a medida."
         }
       },
       "factors": {
-        "title": "What Affects Your Whole House Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de su remodelación integral?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "scope": {
-          "title": "Scope & Square Footage",
-          "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+          "title": "Alcance y metraje cuadrado",
+          "description": "El factor más grande. Una renovación de condominio de 600 pies cuadrados cuesta mucho menos que una remodelación de casa de 2,500 pies cuadrados. Defina sus imprescindibles vs deseables temprano para controlar el presupuesto."
         },
         "kitchen": {
-          "title": "Kitchen (30–40% of total budget)",
-          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+          "title": "Cocina (30-40% del presupuesto total)",
+          "description": "Las cocinas típicamente son la habitación más cara. Gabinetes a medida, encimeras de cuarzo y actualizaciones de electrodomésticos pueden costar $15,000-$72,000 por sí solos. Vea nuestra guía de costos de cocina para desgloses detallados."
         },
         "bathrooms": {
-          "title": "Bathrooms (15–25% of total budget)",
-          "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+          "title": "Baños (15-25% del presupuesto total)",
+          "description": "Cada remodelación de baño agrega $10,000-$40,000 dependiendo del tamaño y los acabados. La impermeabilización, el trabajo de azulejos y la calidad de los accesorios determinan el costo. Las casas con múltiples baños ven ahorros significativos por unidad."
         },
         "flooring": {
-          "title": "Flooring (10–15% of total budget)",
-          "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+          "title": "Pisos (10-15% del presupuesto total)",
+          "description": "La madera dura de ingeniería va de $8 a $15/pie cuadrado instalado. El vinilo de tablón de lujo (LVP) ofrece una alternativa económica a $5-$10/pie cuadrado. El azulejo para áreas húmedas agrega $12-$25/pie cuadrado."
         },
         "structural": {
-          "title": "Structural Changes",
-          "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+          "title": "Cambios estructurales",
+          "description": "Quitar paredes, agregar ventanas o reconfigurar distribuciones agrega $5,000-$25,000+. La remoción de paredes de carga requiere informes de ingeniería y permisos. Las conversiones a concepto abierto son populares pero costosas."
         },
         "permits": {
-          "title": "Permits & Professional Fees",
-          "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+          "title": "Permisos y honorarios profesionales",
+          "description": "Los permisos de construcción en Metro Vancouver típicamente cuestan $500-$2,500 para remodelaciones integrales. Presupueste $2,000-$5,000 adicionales para planos arquitectónicos, informes de ingeniería e inspecciones."
         }
       },
       "realProjects": {
-        "title": "Real Whole House Renovation Projects",
-        "subtitle": "Browse {count} completed whole-house projects with actual budgets and timelines"
+        "title": "Proyectos reales de remodelación integral",
+        "subtitle": "Explore {count} proyectos integrales completados con presupuestos y plazos reales"
       },
       "included": {
-        "title": "What's Typically Included in a Whole House Renovation",
-        "subtitle": "A comprehensive renovation touches every room and system",
+        "title": "Lo que típicamente se incluye en una remodelación integral",
+        "subtitle": "Una remodelación completa toca cada habitación y sistema",
         "item1": {
-          "title": "Kitchen Renovation",
-          "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+          "title": "Remodelación de cocina",
+          "description": "Nuevos gabinetes, encimeras, salpicadero, fregadero, grifo y conexiones de electrodomésticos actualizadas. Cambios de distribución disponibles para niveles de gama media y premium."
         },
         "item2": {
-          "title": "Bathroom Remodels",
-          "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+          "title": "Remodelaciones de baño",
+          "description": "Nuevo tocador, inodoro, ducha o bañera, trabajo de azulejos, impermeabilización y accesorios de plomería actualizados. Cada baño completamente renovado o reconstruido."
         },
         "item3": {
-          "title": "Flooring Throughout",
-          "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+          "title": "Pisos en todo",
+          "description": "Nuevos pisos en todos los espacios habitables: madera dura, madera de ingeniería o LVP en áreas principales; azulejo en baños y entradas."
         },
         "item4": {
-          "title": "Paint & Trim",
-          "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+          "title": "Pintura y molduras",
+          "description": "Pintura fresca en todas las paredes y techos, zócalos nuevos o reterminados, marcos de puertas y molduras de corona donde aplique."
         },
         "item5": {
-          "title": "Electrical & Lighting",
-          "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+          "title": "Eléctrico e iluminación",
+          "description": "Accesorios de iluminación actualizados, tomacorrientes adicionales donde sea necesario, interruptores reguladores y actualizaciones de panel para casas más antiguas."
         },
         "item6": {
-          "title": "Doors & Hardware",
-          "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+          "title": "Puertas y herrajes",
+          "description": "Nuevas puertas interiores, herrajes y bisagras de puerta actualizados, organizadores de armario y reemplazos de puertas exteriores según sea necesario."
         }
       },
       "tips": {
-        "title": "Money-Saving Tips for Whole House Renovations",
+        "title": "Consejos para ahorrar en remodelaciones integrales",
         "tip1": {
-          "title": "Prioritize and Phase Your Work",
-          "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+          "title": "Priorizar y planificar por fases",
+          "description": "No tiene que hacer todo a la vez. Aborde primero la cocina y los baños (mayor ROI), luego trate las actualizaciones cosméticas en fases posteriores. Esto distribuye los costos y le permite vivir en la casa durante las renovaciones."
         },
         "tip2": {
-          "title": "Keep Plumbing Where It Is",
-          "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+          "title": "Mantener la plomería donde está",
+          "description": "Reubicar plomería es uno de los cambios más caros. Mantener cocinas y baños en sus ubicaciones actuales ahorra $5,000-$15,000 en plomería y trabajo estructural."
         },
         "tip3": {
-          "title": "Choose Materials Strategically",
-          "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+          "title": "Elegir materiales estratégicamente",
+          "description": "Derroche en superficies de alto impacto y alto contacto como encimeras de cocina y azulejo de baño. Ahorre en áreas como pisos de dormitorio (LVP se ve genial a la mitad del costo de la madera dura) y pintura interior (las pinturas de gama media funcionan casi tan bien como las premium)."
         },
         "tip4": {
-          "title": "Bundle for Better Pricing",
-          "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+          "title": "Agrupar para mejor precio",
+          "description": "Las remodelaciones integrales a menudo cuestan menos por habitación que hacer las habitaciones individualmente. Los contratistas ofrecen mejores tarifas cuando pueden programar a sus equipos eficientemente en un proyecto más grande."
         }
       },
       "faq": {
-        "q1": "How much does a whole house renovation cost in Vancouver?",
-        "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
-        "q2": "How long does a whole house renovation take?",
-        "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
-        "q3": "Can I live in my home during a whole house renovation?",
-        "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
-        "q4": "What gives the best return on investment for a whole house renovation?",
-        "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
-        "q5": "Do I need permits for a whole house renovation in Vancouver?",
-        "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+        "q1": "¿Cuánto cuesta una remodelación integral en Vancouver?",
+        "a1": "Los costos de remodelación integral en Vancouver típicamente van de $50,000 a $200,000+ según nuestros proyectos completados. Las renovaciones cosméticas (pintura, pisos, accesorios) comienzan en $50,000-$80,000, las remodelaciones integrales con nueva cocina y baños van de $80,000-$120,000, y las transformaciones premium con cambios estructurales pueden superar los $120,000.",
+        "q2": "¿Cuánto tarda una remodelación integral?",
+        "a2": "La mayoría de las remodelaciones integrales toman de 3 a 8 semanas dependiendo del alcance. Una renovación cosmética (pintura, pisos, accesorios) se puede hacer en 3-4 semanas. Una remodelación integral incluyendo cocina y baños típicamente toma 5-8 semanas. Los proyectos con cambios estructurales o permisos pueden tomar 10-14 semanas.",
+        "q3": "¿Puedo vivir en mi casa durante una remodelación integral?",
+        "a3": "Depende del alcance. Para renovaciones cosméticas, generalmente puede quedarse en la casa ya que el trabajo se hace habitación por habitación. Para remodelaciones integrales que involucran demolición de cocina y baño, recomendamos arreglar alojamiento temporal por al menos 2-4 semanas durante las fases más disruptivas.",
+        "q4": "¿Qué da el mejor retorno de inversión para una remodelación integral?",
+        "a4": "Las remodelaciones de cocina y baño consistentemente dan el ROI más alto en el mercado de Vancouver. Pisos actualizados y pintura fresca proveen excelente valor a un costo relativamente bajo. Las distribuciones de concepto abierto son populares con los compradores pero requieren trabajo estructural que aumenta los costos significativamente.",
+        "q5": "¿Necesito permisos para una remodelación integral en Vancouver?",
+        "a5": "Sí, la mayoría de las remodelaciones integrales requieren permisos. Cualquier trabajo que involucre plomería, eléctrico, gas o cambios estructurales necesita un permiso de construcción de la Ciudad de Vancouver. El trabajo cosmético solamente (pintura, pisos, gabinetes) típicamente no requiere permisos. Presupueste $500-$2,500 para tarifas de permisos."
       },
       "cta": {
-        "heading": "Ready to Transform Your Entire Home?",
-        "subtitle": "Get a free consultation and detailed quote for your whole house renovation. We'll walk through every room and create a plan that fits your budget."
+        "heading": "¿Listo para transformar toda su casa?",
+        "subtitle": "Reciba una consulta gratis y cotización detallada para su remodelación integral. Recorreremos cada habitación y crearemos un plan que se ajuste a su presupuesto."
       }
     },
     "basementCost": {

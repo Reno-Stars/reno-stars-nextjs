@@ -898,361 +898,361 @@
   "guides": {
     "index": {
       "hero": {
-        "title": "Renovation Cost Guides",
-        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
+        "title": "リノベーションコストガイド",
+        "subtitle": "グレーター・バンクーバーで実施した実プロジェクトに基づく正直な価格。推測ではなく、実際のデータです。"
       },
       "kitchen": {
-        "title": "Kitchen Renovation Cost",
-        "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+        "title": "キッチンリノベーション費用",
+        "description": "予算に優しいアップデートからハイエンドな改装まで、バンクーバーのキッチンリノベーション費用の完全な内訳。"
       },
       "bathroom": {
-        "title": "Bathroom Renovation Cost",
-        "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+        "title": "バスルームリノベーション費用",
+        "description": "シングルバスルームのリフレッシュからマルチバスルームのプロジェクトまで、グレーター・バンクーバー地域のバスルームリノベーション費用の完全な内訳。"
       },
       "wholeHouse": {
-        "title": "Whole House Renovation Cost",
-        "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+        "title": "住宅全体リノベーション費用",
+        "description": "キッチン、バスルーム、フローリング、構造工事を含む住宅全体のリノベーション価格。"
       },
-      "comingSoon": "Coming Soon",
-      "readGuide": "Read Guide",
+      "comingSoon": "近日公開",
+      "readGuide": "ガイドを読む",
       "cta": {
-        "heading": "Ready to Start Your Renovation?",
-        "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+        "heading": "リノベーションを始める準備はできましたか?",
+        "subtitle": "プロジェクトのニーズに合わせた無料相談と正確な見積もりを取得。"
       },
       "basement": {
-        "title": "Basement Renovation Cost",
-        "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+        "title": "地下室リノベーション費用",
+        "description": "基本仕上げから完全な合法スイート変換まで、グレーター・バンクーバー地域の地下室リノベーション費用の完全な内訳。"
       },
       "commercial": {
-        "title": "Commercial Renovation Cost",
-        "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+        "title": "商業リノベーション費用",
+        "description": "小規模オフィスのリフレッシュから完全なレストラン施工まで、グレーター・バンクーバーの商業リノベーション費用の完全な内訳。"
       },
       "cabinet": {
-        "title": "Cabinet Refinishing Cost",
-        "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+        "title": "キャビネットリフィニッシュ費用",
+        "description": "グレーター・バンクーバーでのキャビネットリフィニッシュ、リフェイシング、交換費用の完全な内訳。"
       },
       "basementSuite": {
-        "title": "Basement Suite Cost",
-        "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
+        "title": "地下室スイート費用",
+        "description": "メトロバンクーバー向けの合法地下室スイート変換費用、ROI分析、自治体別の規制。"
       }
     },
     "kitchenCost": {
-      "breadcrumb": "Kitchen Renovation Cost",
+      "breadcrumb": "キッチンリノベーション費用",
       "hero": {
-        "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+        "title": "バンクーバーBCのキッチンリノベーション費用 (2026)",
+        "subtitle": "グレーター・バンクーバーで完了したキッチンリノベーションの実価格。以下の数字はすべて実プロジェクトから。業界の推定値ではありません。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–6 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "projects": "完了プロジェクト",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "3〜6週間"
       },
       "tiers": {
-        "title": "Kitchen Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "ティア別キッチンリノベーション費用",
+        "subtitle": "グレーター・バンクーバーで完了したプロジェクトに基づく",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+          "title": "予算優先",
+          "description": "キャビネットのリフェイシングまたはストックキャビネット、ラミネートカウンタートップ、基本のバックスプラッシュ、標準的な設備。構造変更なしで一新したいコンドミニアムやタウンハウスに最適。"
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+          "title": "ミッドレンジ",
+          "description": "カスタムまたはセミカスタムキャビネット、クォーツカウンタートップ、タイルバックスプラッシュ、新しい照明、新しいフローリング。ファミリーホームで最も人気の選択肢。"
         },
         "highEnd": {
-          "title": "High-End",
-          "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+          "title": "ハイエンド",
+          "description": "完全カスタムキャビネット、プレミアム天然石カウンタートップ、ウォーターフォールアイランド、ハイエンド家電、構造改修、デザイナー仕上げ。最高を求めるオーナーへ。"
         }
       },
       "factors": {
-        "title": "What Affects Your Kitchen Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "キッチンリノベーション費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "cabinetry": {
-          "title": "Cabinetry (30–40% of budget)",
-          "description": "The biggest cost driver. Stock cabinets start around /linear foot, while custom options can exceed /linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+          "title": "キャビネット (予算の30〜40%)",
+          "description": "最大のコスト要因。ストックキャビネットは1リニアフィートあたり数百ドルから、カスタムは数千ドルを超える可能性があります。シェーカースタイルの白いキャビネットがバンクーバーで最も人気。"
         },
         "countertops": {
-          "title": "Countertops (10–15% of budget)",
-          "description": "Laminate starts at /sq ft, quartz runs –150/sq ft, and natural stone can exceed /sq ft. Waterfall island edges add –2,000 to the total."
+          "title": "カウンタートップ (予算の10〜15%)",
+          "description": "ラミネートは平方フィートあたり数十ドルから、クォーツは80〜150ドル/平方フィート、天然石は25ドル/平方フィートを超える可能性。ウォーターフォールアイランドは合計に数千ドル追加。"
         },
         "layout": {
-          "title": "Layout Changes",
-          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add ,000–15,000 depending on structural requirements and permits."
+          "title": "レイアウト変更",
+          "description": "配管、ガス管の移動、壁の撤去は費用を大幅に増加させます。レイアウト変更は構造要件と許可によって$5,000〜$15,000を追加できます。"
         },
         "appliances": {
-          "title": "Appliances",
-          "description": "Budget-friendly packages start at ,000–5,000. Mid-range brands like Bosch or KitchenAid run ,000–15,000. Premium brands like Sub-Zero or Wolf can exceed ,000."
+          "title": "家電",
+          "description": "予算優先パッケージは$3,000〜$5,000から。BoschやKitchenAidなどのミッドレンジは$8,000〜$15,000。Sub-ZeroやWolfなどプレミアムは$25,000を超える可能性。"
         },
         "plumbing": {
-          "title": "Plumbing & Electrical",
-          "description": "Relocating plumbing or adding circuits adds ,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+          "title": "配管・電気",
+          "description": "配管の移設や回路の追加は$3,000〜$8,000を追加します。バンクーバーの古い住宅では、現代の家電をサポートするために電気パネルのアップグレードが必要な場合があります。"
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "City of Vancouver building permits for kitchen renovations typically cost –1,000. Required when changing plumbing, electrical, gas, or structural elements."
+          "title": "許可・検査",
+          "description": "バンクーバー市のキッチンリノベーション建築許可は通常$200〜$1,000。配管、電気、ガス、構造要素の変更時に必要。"
         }
       },
       "realProjects": {
-        "title": "Real Kitchen Renovation Projects",
-        "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+        "title": "実際のキッチンリノベーションプロジェクト",
+        "subtitle": "実予算と施工期間付きで完了した{count}件のキッチンプロジェクトをご覧ください"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Kitchen Renovation",
+        "title": "キッチンリノベーションのコスト節約のヒント",
         "tip1": {
-          "title": "Keep the Existing Layout",
-          "description": "Avoiding plumbing and gas line relocations can save ,000–15,000. Work with your existing kitchen footprint where possible."
+          "title": "既存のレイアウトを保つ",
+          "description": "配管とガス管の移設を避けると$5,000〜$15,000節約できます。可能な限り既存のキッチンのフットプリントで作業します。"
         },
         "tip2": {
-          "title": "Choose Quartz Over Natural Stone",
-          "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+          "title": "天然石よりクォーツを選ぶ",
+          "description": "クォーツカウンタートップはより耐久性があり、シーリング不要で、御影石や大理石より20〜40%安価。しかも美しい仕上がり。"
         },
         "tip3": {
-          "title": "Semi-Custom Cabinets",
-          "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+          "title": "セミカスタムキャビネット",
+          "description": "セミカスタムキャビネットは完全カスタムの見た目を40〜60%の価格で提供。ドアスタイル、仕上げ、構成を選択できます。"
         },
         "tip4": {
-          "title": "Plan During Off-Season",
-          "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+          "title": "オフシーズンに計画",
+          "description": "冬季 (11月〜2月) はバンクーバーのリノベーション業者にとって閑散期。この時期に開始するとより良い価格と早いスケジュールを得られる可能性があります。"
         }
       },
       "cta": {
-        "heading": "Get Your Free Kitchen Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料キッチンリノベーション見積もりを取得",
+        "subtitle": "プロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       },
       "faq": {
-        "q1": "How much does a kitchen renovation cost in Vancouver?",
-        "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
-        "q2": "How long does a kitchen renovation take in Vancouver?",
-        "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
-        "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
-        "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
-        "q4": "What is the best countertop material for a kitchen renovation?",
-        "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
-        "q5": "Can I renovate my kitchen while living in my home?",
-        "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+        "q1": "バンクーバーのキッチンリノベーション費用はいくらですか?",
+        "a1": "バンクーバーのキッチンリノベーション費用は完了プロジェクトに基づき通常$15,000〜$72,000+です。予算リノベーション (キャビネット更新、基本カウンター) は$15,000〜$27,000、ミッドレンジは$28,000〜$38,000、ハイエンドは$40,000を超えることがあります。",
+        "q2": "バンクーバーのキッチンリノベーションにはどのくらい時間がかかりますか?",
+        "a2": "バンクーバーの大半のキッチンリノベーションは解体から完成まで3〜6週間。簡単な美観更新は3〜4週間、レイアウト変更やカスタムキャビネット、構造作業を含む複雑なリノベーションは8〜10週間かかることがあります。",
+        "q3": "バンクーバーでキッチンリノベーションに許可は必要ですか?",
+        "a3": "配管、電気、ガスライン、または壁の撤去などの構造要素の変更を伴う場合、バンクーバー市の建築許可が必要です。新しいキャビネット、カウンタートップ、バックスプラッシュなど美観更新は通常許可不要。許可費用は$200〜$1,000。",
+        "q4": "キッチンリノベーションに最適なカウンタートップ素材は何ですか?",
+        "a4": "クォーツは当社のバンクーバーキッチンリノベーションで最も人気のカウンタートップ。優れた耐久性、シーリング不要 (御影石と異なり)、染みに強く、多様な色とパターンが揃います。価格は施工込みで平方フィートあたり$80〜$150。",
+        "q5": "キッチンをリノベーションしながら家に住み続けることはできますか?",
+        "a5": "はい、ほとんどのお客様はキッチンリノベーション中も家に住み続けます。一時的なキッチンエリアの設置をお手伝いし、混乱を最小限に抑えるよう作業を調整します。作業範囲によって2〜4週間機能するキッチンなしになることが想定されます。"
       }
     },
     "bathroomCost": {
-      "breadcrumb": "Bathroom Renovation Cost",
+      "breadcrumb": "バスルームリノベーション費用",
       "hero": {
-        "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
-        "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
+        "title": "バンクーバーの平均バスルームリノベーション費用 (2026年価格ガイド)",
+        "subtitle": "バンクーバーの平均バスルームリノベーション費用は$10,000〜$60,000+。これらは19件の完了プロジェクトの実価格 — 業界推定値や全国平均ではありません。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "2–8 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "projects": "完了プロジェクト",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "2〜8週間"
       },
       "tiers": {
-        "title": "Bathroom Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "ティア別バスルームリノベーション費用",
+        "subtitle": "グレーター・バンクーバーで完了したプロジェクトに基づく",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Standard tile, basic vanity, updated fixtures, and fresh paint. Ideal for a single bathroom refresh in condos or townhouses without moving plumbing."
+          "title": "予算優先",
+          "description": "標準タイル、基本のバニティ、新設備、フレッシュペイント。配管移設なしのコンドミニアムやタウンハウスでのシングルバスルームリフレッシュに最適。"
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Porcelain or large-format tile, custom vanity, frameless glass shower enclosure, modern fixtures, and heated flooring. The most popular choice for family homes."
+          "title": "ミッドレンジ",
+          "description": "磁器または大判タイル、カスタムバニティ、フレームレスガラスシャワー、モダンな設備、床暖房。ファミリーホームで最も人気の選択肢。"
         },
         "highEnd": {
-          "title": "High-End / Multi-Bathroom",
-          "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
+          "title": "ハイエンド/マルチバスルーム",
+          "description": "プレミアムタイル、カーブレスシャワー、独立型バスタブ、カスタムキャビネット、スマート設備、構造改修。多くの場合2〜3+のバスルームを同時にリノベーション。"
         }
       },
       "factors": {
-        "title": "What Affects Your Bathroom Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "バスルームリノベーション費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "tiles": {
-          "title": "Tile & Flooring (25–35% of budget)",
-          "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+          "title": "タイル・フローリング (予算の25〜35%)",
+          "description": "標準セラミックタイルは$5/平方フィートから、磁器は$8〜$15/平方フィート、天然石は$25/平方フィートを超える可能性。大判タイルは目地が減るが施工費が高い。"
         },
         "shower": {
-          "title": "Shower / Tub Configuration",
-          "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+          "title": "シャワー/バスタブ構成",
+          "description": "バスタブからシャワーへの変換は$3,000〜$8,000。カーブレス (段差ゼロ) シャワーはカスタム防水と傾斜下地が必要で、標準シャワーベースに比べ$2,000〜$5,000追加。"
         },
         "vanity": {
-          "title": "Vanity & Countertop",
-          "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+          "title": "バニティ・カウンタートップ",
+          "description": "ストックバニティは$500〜$1,500から。クォーツトップ付きセミカスタムは$2,000〜$4,000。シンク一体型のフルカスタムフローティングバニティは$6,000を超える可能性。"
         },
         "plumbing": {
-          "title": "Plumbing Relocation",
-          "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+          "title": "配管移設",
+          "description": "ドレンラインや給水管の移動は$2,000〜$6,000追加。古い住宅では新しい止水弁や給水管のアップグレードが必要な場合あり。既存配管レイアウトの維持で大幅節約。"
         },
         "waterproofing": {
-          "title": "Waterproofing",
-          "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+          "title": "防水",
+          "description": "メンブレンシステム (Schluter、Laticrete) を使用した適切な防水は標準シャワーで$1,500〜$3,500。バンクーバーの気候では壁裏の湿気被害を防ぐため必須。"
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+          "title": "許可・検査",
+          "description": "バスルームリノベーションの建築許可はメトロバンクーバーで$200〜$800。配管移動、新設備追加、構造変更時に必要。"
         }
       },
       "realProjects": {
-        "title": "Real Bathroom Renovation Projects",
-        "subtitle": "Browse {count} completed bathroom projects with actual budgets and timelines"
+        "title": "実際のバスルームリノベーションプロジェクト",
+        "subtitle": "実予算と施工期間付きで完了した{count}件のバスルームプロジェクトをご覧ください"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Bathroom Renovation",
+        "title": "バスルームリノベーションのコスト節約のヒント",
         "tip1": {
-          "title": "Keep Existing Plumbing Layout",
-          "description": "Relocating drain lines is one of the biggest cost drivers. Keeping the toilet, shower, and sink in their current positions can save $3,000–6,000."
+          "title": "既存配管レイアウトを保つ",
+          "description": "ドレンラインの移設は最大のコスト要因の一つ。トイレ、シャワー、シンクを現在の位置に保つことで$3,000〜$6,000節約できます。"
         },
         "tip2": {
-          "title": "Choose Large-Format Porcelain Tile",
-          "description": "Fewer grout lines mean less labour and a cleaner look. 24x24 or 12x24 porcelain tiles are durable, water-resistant, and more affordable than natural stone."
+          "title": "大判磁器タイルを選ぶ",
+          "description": "目地が少ないと労力が減り見た目もきれい。24x24または12x24の磁器タイルは耐久性、耐水性に優れ、天然石より手頃。"
         },
         "tip3": {
-          "title": "Renovate Multiple Bathrooms Together",
-          "description": "If you need more than one bathroom done, doing them simultaneously saves 10–20% vs separate projects. Contractors can share mobilization costs and bulk-buy materials."
+          "title": "複数のバスルームを同時にリノベーション",
+          "description": "複数のバスルームが必要な場合、同時施工で別個のプロジェクトに比べ10〜20%節約。業者は移動費用を共有し、材料を一括購入できます。"
         },
         "tip4": {
-          "title": "Invest in Waterproofing",
-          "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
+          "title": "防水に投資",
+          "description": "防水を節約すると後で高額な修理が必要に。適切なメンブレンシステムは$1,500〜$3,500の初期投資ですが、後の$10,000+の水害を防ぎます。"
         }
       },
       "cta": {
-        "heading": "Get Your Free Bathroom Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "無料バスルームリノベーション見積もりを取得",
+        "subtitle": "プロジェクトについてお聞かせください。48時間以内に詳細な見積もりをお送りします。義務はありません。"
       },
       "faq": {
-        "q1": "How much does a bathroom renovation cost in Vancouver?",
-        "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
-        "q2": "How long does a bathroom renovation take?",
-        "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
-        "q3": "Can I convert my bathtub to a walk-in shower?",
-        "a3": "Yes, tub-to-shower conversions are one of our most popular requests. The cost ranges from $3,000–$8,000 depending on whether you choose a standard shower base or curbless design. Curbless showers require custom waterproofing and a sloped subfloor.",
-        "q4": "What is curbless shower and why is it more expensive?",
-        "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
-        "q5": "Should I renovate multiple bathrooms at the same time?",
-        "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+        "q1": "バンクーバーのバスルームリノベーション費用はいくらですか?",
+        "a1": "バンクーバーのバスルームリノベーション費用は完了プロジェクトに基づき$10,000〜$60,000+です。シングル予算優先バスルームは$10,000〜$20,000、カスタムバニティとガラスシャワー付きミッドレンジは$20,000〜$35,000、ハイエンドまたはマルチバスルームは$40,000を超えることがあります。",
+        "q2": "バスルームリノベーションにはどのくらい時間がかかりますか?",
+        "a2": "シングルバスルームのリノベーションは通常2〜5週間。簡単な美観更新は2〜3週間、配管移設やカーブレスシャワー、構造変更を含む場合は4〜8週間。マルチバスルームは5〜11週間。",
+        "q3": "バスタブをウォークインシャワーに変換できますか?",
+        "a3": "はい、バスタブからシャワーへの変換は最も人気のリクエスト。標準シャワーベースかカーブレスデザインかにより$3,000〜$8,000。カーブレスシャワーはカスタム防水と傾斜下地が必要。",
+        "q4": "カーブレスシャワーとは何ですか、なぜ高いのですか?",
+        "a4": "カーブレス (段差ゼロ) シャワーは入口に段差や縁がなく、シームレスな床移行を作ります。カスタム防水メンブレン、正確に傾斜した下地、リニアドレン設置が必要で、標準シャワーベースに比べ$2,000〜$5,000追加。アクセシビリティとモダンな美学のため人気。",
+        "q5": "複数のバスルームを同時にリノベーションすべきですか?",
+        "a5": "はい、複数のバスルームを同時にリノベーションすると別個のプロジェクトに比べ10〜20%節約。業者は移動費用を共有し、職人をより効率的に調整し、材料を一括購入できます。グレーター・バンクーバーで多くの2〜3バスルームプロジェクトを完了しました。"
       }
     },
     "wholeHouseCost": {
-      "breadcrumb": "Whole House Renovation Cost",
+      "breadcrumb": "住宅全体リノベーション費用",
       "hero": {
-        "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
+        "title": "バンクーバーBCの住宅全体リノベーション費用 (2026)",
+        "subtitle": "グレーター・バンクーバーで完了した住宅全体のリノベーションの実価格。コンドのリフレッシュから完全な住宅変革まで。すべての数字が実プロジェクトから。"
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–8 weeks"
+        "avgCost": "平均費用",
+        "range": "価格帯",
+        "projects": "完了プロジェクト",
+        "timeline": "標準的な施工期間",
+        "timelineValue": "3〜8週間"
       },
       "tiers": {
-        "title": "Whole House Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "ティア別住宅全体リノベーション費用",
+        "subtitle": "グレーター・バンクーバーで完了したプロジェクトに基づく",
         "budget": {
-          "title": "Cosmetic Refresh",
-          "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+          "title": "美観リフレッシュ",
+          "description": "全室塗装、新フローリング、新照明、バスルームリフレッシュ (バニティ、ミラー、金具)、軽微なキッチン更新。構造工事なしで現代的にしたいコンドや賃貸物件に最適。"
         },
         "midRange": {
-          "title": "Comprehensive Renovation",
-          "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+          "title": "包括的リノベーション",
+          "description": "新キャビネットとカウンタートップ付きフルキッチンリノベーション、バスルームリモデル、全室新フローリング、フレッシュペイント、電気・配管設備の更新、新照明。長期居住予定の住宅オーナーに最も人気。"
         },
         "highEnd": {
-          "title": "Premium Transformation",
-          "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+          "title": "プレミアム変革",
+          "description": "構造変更、オープンコンセプトレイアウト、ハイエンドキッチン・バスルーム、カスタム造作、プレミアムフローリング、スマートホーム統合、デザイナー仕上げを含む完全ガットリノベーション。真にカスタムな住宅を望む方へ。"
         }
       },
       "factors": {
-        "title": "What Affects Your Whole House Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "住宅全体リノベーション費用に影響するもの",
+        "subtitle": "最終価格を決定する6つの要因",
         "scope": {
-          "title": "Scope & Square Footage",
-          "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+          "title": "範囲・面積",
+          "description": "最大の単一要因。600平方フィートのコンドリフレッシュは2,500平方フィートの住宅ガットリノベーションよりはるかに安価。早期に必須項目とあれば良い項目を定義して予算をコントロール。"
         },
         "kitchen": {
-          "title": "Kitchen (30–40% of total budget)",
-          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+          "title": "キッチン (総予算の30〜40%)",
+          "description": "キッチンは通常最も高額な部屋。カスタムキャビネット、クォーツカウンタートップ、家電のアップグレードだけで$15,000〜$72,000。詳細はキッチンコストガイドをご覧ください。"
         },
         "bathrooms": {
-          "title": "Bathrooms (15–25% of total budget)",
-          "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+          "title": "バスルーム (総予算の15〜25%)",
+          "description": "各バスルームのリノベーションはサイズと仕上げによって$10,000〜$40,000追加。防水、タイル工事、設備品質がコストを決定。マルチバスルーム住宅は単位あたり大幅な節約。"
         },
         "flooring": {
-          "title": "Flooring (10–15% of total budget)",
-          "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+          "title": "フローリング (総予算の10〜15%)",
+          "description": "エンジニアド広葉樹は施工込みで$8〜$15/平方フィート。ラグジュアリービニルプランク (LVP) は$5〜$10/平方フィートと予算優先の代替肢。ウェットエリアのタイルは$12〜$25/平方フィート追加。"
         },
         "structural": {
-          "title": "Structural Changes",
-          "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+          "title": "構造変更",
+          "description": "壁撤去、窓追加、レイアウト再構成は$5,000〜$25,000+追加。耐力壁の撤去はエンジニアレポートと許可が必要。オープンコンセプト変換は人気だが高価。"
         },
         "permits": {
-          "title": "Permits & Professional Fees",
-          "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+          "title": "許可・専門料金",
+          "description": "メトロバンクーバーの建築許可は住宅全体リノベーションで通常$500〜$2,500。建築図面、エンジニアレポート、検査のために追加$2,000〜$5,000を予算化。"
         }
       },
       "realProjects": {
-        "title": "Real Whole House Renovation Projects",
-        "subtitle": "Browse {count} completed whole-house projects with actual budgets and timelines"
+        "title": "実際の住宅全体リノベーションプロジェクト",
+        "subtitle": "実予算と施工期間付きで完了した{count}件の住宅全体プロジェクトをご覧ください"
       },
       "included": {
-        "title": "What's Typically Included in a Whole House Renovation",
-        "subtitle": "A comprehensive renovation touches every room and system",
+        "title": "住宅全体リノベーションに通常含まれるもの",
+        "subtitle": "包括的なリノベーションはすべての部屋とシステムに触れます",
         "item1": {
-          "title": "Kitchen Renovation",
-          "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+          "title": "キッチンリノベーション",
+          "description": "新しいキャビネット、カウンタートップ、バックスプラッシュ、シンク、蛇口、家電接続の更新。ミッドレンジとプレミアムティアではレイアウト変更可能。"
         },
         "item2": {
-          "title": "Bathroom Remodels",
-          "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+          "title": "バスルームリモデル",
+          "description": "新しいバニティ、トイレ、シャワーまたはバスタブ、タイル工事、防水、配管設備の更新。各バスルームを完全にリフレッシュまたは再構築。"
         },
         "item3": {
-          "title": "Flooring Throughout",
-          "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+          "title": "全室フローリング",
+          "description": "すべての居住空間に新フローリング: メインエリアに広葉樹、エンジニアドウッド、またはLVP、バスルームと玄関にタイル。"
         },
         "item4": {
-          "title": "Paint & Trim",
-          "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+          "title": "塗装・トリム",
+          "description": "壁と天井のフレッシュペイント、新規または再仕上げの幅木、ドアケーシング、該当する場合のクラウンモールディング。"
         },
         "item5": {
-          "title": "Electrical & Lighting",
-          "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+          "title": "電気・照明",
+          "description": "新照明、必要な場所への追加コンセント、調光スイッチ、古い住宅のパネルアップグレード。"
         },
         "item6": {
-          "title": "Doors & Hardware",
-          "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+          "title": "ドア・金具",
+          "description": "新しい内装ドア、ドアハンドルとヒンジの更新、クローゼットオーガナイザー、必要に応じた外装ドア交換。"
         }
       },
       "tips": {
-        "title": "Money-Saving Tips for Whole House Renovations",
+        "title": "住宅全体リノベーションのコスト節約のヒント",
         "tip1": {
-          "title": "Prioritize and Phase Your Work",
-          "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+          "title": "優先順位をつけて段階的に",
+          "description": "すべてを一度にやる必要はありません。最初にキッチンとバスルーム (最高ROI) を取り組み、次に美観の更新を後の段階で。これによりコストが分散し、リノベーション中に住み続けることができます。"
         },
         "tip2": {
-          "title": "Keep Plumbing Where It Is",
-          "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+          "title": "配管はそのまま",
+          "description": "配管の移設は最も高価な変更の一つ。キッチンとバスルームを現在の位置に保つことで配管と構造工事で$5,000〜$15,000節約できます。"
         },
         "tip3": {
-          "title": "Choose Materials Strategically",
-          "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+          "title": "戦略的な素材選択",
+          "description": "キッチンカウンタートップやバスルームタイルなど影響の大きい高接触面に投資。寝室のフローリング (LVPは広葉樹の半額で素晴らしく見える) や室内塗装 (ミッドレンジは高級品とほぼ同等) などのエリアで節約。"
         },
         "tip4": {
-          "title": "Bundle for Better Pricing",
-          "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+          "title": "バンドル割引",
+          "description": "住宅全体リノベーションは部屋を個別に行うより部屋あたりのコストが低いことが多い。業者はより大きなプロジェクトでクルーを効率的にスケジュールできるとき、より良いレートを提供します。"
         }
       },
       "faq": {
-        "q1": "How much does a whole house renovation cost in Vancouver?",
-        "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
-        "q2": "How long does a whole house renovation take?",
-        "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
-        "q3": "Can I live in my home during a whole house renovation?",
-        "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
-        "q4": "What gives the best return on investment for a whole house renovation?",
-        "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
-        "q5": "Do I need permits for a whole house renovation in Vancouver?",
-        "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+        "q1": "バンクーバーの住宅全体リノベーション費用はいくらですか?",
+        "a1": "バンクーバーの住宅全体リノベーション費用は完了プロジェクトに基づき通常$50,000〜$200,000+です。美観リフレッシュ (塗装、フローリング、設備) は$50,000〜$80,000、新キッチンとバスルーム付き包括的リノベーションは$80,000〜$120,000、構造変更を含むプレミアム変革は$120,000を超えることがあります。",
+        "q2": "住宅全体リノベーションにはどのくらい時間がかかりますか?",
+        "a2": "ほとんどの住宅全体リノベーションは範囲によって3〜8週間。美観リフレッシュ (塗装、フローリング、設備) は3〜4週間。キッチンとバスルームを含む包括的リノベーションは通常5〜8週間。構造変更や許可を含むプロジェクトは10〜14週間かかることがあります。",
+        "q3": "住宅全体リノベーション中に家に住めますか?",
+        "a3": "範囲によります。美観リフレッシュでは作業が部屋ごとに行われるため通常住み続けられます。キッチンとバスルームの解体を含む包括的リノベーションでは、最も混乱する段階の少なくとも2〜4週間、一時的な宿泊の手配を推奨します。",
+        "q4": "住宅全体リノベーションで最高のROIは何ですか?",
+        "a4": "キッチンとバスルームのリノベーションがバンクーバー市場で常に最高のROIを提供。フローリング更新とフレッシュペイントは比較的低コストで優れた価値を提供。オープンコンセプトレイアウトは買い手に人気だが、コストを大幅に増やす構造工事が必要。",
+        "q5": "バンクーバーで住宅全体リノベーションに許可は必要ですか?",
+        "a5": "はい、ほとんどの住宅全体リノベーションには許可が必要。配管、電気、ガス、構造変更を伴う作業はバンクーバー市の建築許可が必要。美観のみの作業 (塗装、フローリング、キャビネット) は通常許可不要。許可料は$500〜$2,500を予算化。"
       },
       "cta": {
-        "heading": "Ready to Transform Your Entire Home?",
-        "subtitle": "Get a free consultation and detailed quote for your whole house renovation. We'll walk through every room and create a plan that fits your budget."
+        "heading": "住宅全体を変える準備はできましたか?",
+        "subtitle": "住宅全体リノベーションの無料相談と詳細見積もりを取得。すべての部屋を見て回り、予算に合った計画を作成します。"
       }
     },
     "basementCost": {
