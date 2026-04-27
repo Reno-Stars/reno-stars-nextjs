@@ -75,8 +75,14 @@ export default async function LocaleLayout({
         ) : (
           <link rel="preload" as="image" href={buildPreloadUrl(images.hero, 828)} type="image/webp" fetchPriority="high" />
         )}
-        {/* RSS feed discovery */}
-        <link rel="alternate" type="application/rss+xml" title={locale === 'zh' ? 'Reno Stars 博客 RSS' : 'Reno Stars Blog RSS'} href={`/${locale}/feed.xml/`} />
+        {/* RSS feed discovery — localized title per locale for accurate browser bookmark labels */}
+        <link rel="alternate" type="application/rss+xml" title={
+          locale === 'zh' ? 'Reno Stars 博客 RSS'
+          : locale === 'ja' ? 'Reno Stars ブログ RSS'
+          : locale === 'ko' ? 'Reno Stars 블로그 RSS'
+          : locale === 'es' ? 'Reno Stars Blog RSS'
+          : 'Reno Stars Blog RSS'
+        } href={`/${locale}/feed.xml/`} />
         <GoogleAnalytics />
         <MicrosoftClarity />
         <MetaPixel />

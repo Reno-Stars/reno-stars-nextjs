@@ -183,6 +183,9 @@ export default function OptimizedImage({
         src={thumbSrc}
         alt=""
         aria-hidden="true"
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchPriority="low"
         className={combinedClassName}
         style={{
           ...style,

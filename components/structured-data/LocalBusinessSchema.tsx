@@ -1,6 +1,7 @@
 import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
+import { COMPANY_STATS } from '@/lib/company-config';
 
 const BASE_URL = getBaseUrl();
 
@@ -86,7 +87,11 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     }),
     description:
       `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,
-    foundingDate: String(company.foundingYear),
+    // schema.org foundingDate = legal incorporation year, NOT aggregate
+    // team experience. The "20+ years" stat on the marketing site reflects
+    // team-level renovation experience (foundingYear in company-config.ts);
+    // schema must use the corporate incorporation year for entity honesty.
+    foundingDate: String(COMPANY_STATS.companyFoundingYear),
     numberOfEmployees: company.teamSize,
     slogan: company.tagline,
   };

@@ -19,6 +19,8 @@ const S3_ORIGIN = (() => {
 // Security headers with environment-aware CSP
 const securityHeaders: Record<string, string> = {
   'X-DNS-Prefetch-Control': 'on',
+  // HSTS — 2 years, all subdomains (admin., api., invoice.), eligible for browser preload list
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   // X-XSS-Protection set to 0: the header is deprecated in modern browsers
   // and can introduce vulnerabilities in older ones. CSP is the replacement.
   'X-XSS-Protection': '0',
@@ -27,6 +29,10 @@ const securityHeaders: Record<string, string> = {
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  // TODO: when we have a CSP reporting endpoint provisioned (e.g. report-uri.com,
+  // Sentry CSP, or a self-hosted /api/csp-report route), add Content-Security-Policy-Report-Only
+  // here with a stricter nonce-based policy. Then once telemetry shows zero violations,
+  // drop 'unsafe-inline' from the enforced policy below.
   'Content-Security-Policy': [
     "default-src 'self'",
     // 'unsafe-inline' required for:
