@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "자금 조달 및 예산 가이드",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "리노베이션 자금 조달 및 예산 가이드",
+      "subtitle": "자금 조달 옵션을 살펴보고 리노베이션 예산을 현명하게 계획하세요. 메트로 밴쿠버 전역에서 완료된 리노베이션의 실제 프로젝트 비용을 기반으로 합니다."
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
-      "financingOptions": "Financing Options"
+      "avgKitchen": "평균 주방 리노베이션",
+      "avgBathroom": "평균 욕실 리노베이션",
+      "financingOptions": "자금 조달 옵션"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "리노베이션을 위한 자금 조달 옵션",
+      "subtitle": "브리티시컬럼비아주의 캐나다 주택 소유주가 리노베이션 프로젝트에 자금을 조달하는 가장 일반적인 방법.",
       "heloc": {
-        "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "title": "주택담보신용한도 (HELOC)",
+        "rate": "일반 금리: 프라임 + 0.5% ~ 2%",
+        "description": "유연한 인출 금액으로 주택 자산에 대해 차입합니다. 사용한 금액에 대해서만 이자를 지불합니다. 대부분의 캐나다 은행과 신용 조합에서 이용 가능합니다.",
+        "pro": "✓ 낮은 이자율",
+        "con": "✗ 주택 자산 필요"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "개인 대출 또는 신용 한도",
+        "rate": "일반 금리: 6% ~ 12%",
+        "description": "은행이나 신용 조합의 무담보 대출. 주택 자산이 필요하지 않습니다. 고정 월 지불액으로 예산이 예측 가능합니다.",
+        "pro": "✓ 담보 불필요",
+        "con": "✗ 더 높은 이자율"
       },
       "refinance": {
-        "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "title": "주택담보대출 재융자",
+        "rate": "일반 금리: 현재 주택담보대출 금리",
+        "description": "리노베이션 비용을 포함하기 위해 주택담보대출을 재융자합니다. 주택담보대출 기간에 걸쳐 비용을 분산시킵니다. 중간에 해약하면 위약금이 있을 수 있습니다.",
+        "pro": "✓ 가능한 가장 낮은 금리",
+        "con": "✗ 잠재적 위약금"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
-        "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "title": "저축 및 단계적 접근",
+        "rate": "이자 비용 없음",
+        "description": "저축에서 지불하거나 리노베이션을 단계로 나눕니다. 한 번에 한 방씩 완료하여 비용을 분산시킵니다. 부채와 이자 부과가 없습니다.",
+        "pro": "✓ 이자 비용 없음",
+        "con": "✗ 더 긴 일정"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
-      "bathroom": "Bathroom Renovation",
-      "kitchen": "Kitchen Renovation",
-      "basement": "Basement Renovation",
-      "wholeHouse": "Whole House Renovation",
-      "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "title": "메트로 밴쿠버의 일반적인 리노베이션 비용",
+      "subtitle": "포트폴리오의 실제 완료 프로젝트를 기반으로 합니다.",
+      "bathroom": "욕실 리노베이션",
+      "kitchen": "주방 리노베이션",
+      "basement": "지하실 리노베이션",
+      "wholeHouse": "전체 주택 리노베이션",
+      "commercial": "상업 리노베이션",
+      "disclaimer": "* 그레이터 밴쿠버에서 완료된 프로젝트를 기반으로 한 범위. 실제 비용은 범위, 재료 및 위치에 따라 다릅니다."
     },
     "tips": {
-      "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "title": "예산 계획 팁",
+      "subtitle": "리노베이션 투자를 최대한 활용하기 위한 스마트한 전략.",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "영향력이 높은 영역 우선",
+        "description": "주방과 욕실은 최고의 투자 수익을 제공합니다. 일상 생활과 재판매 가치에 가장 중요한 공간에 예산을 집중하세요."
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "10-15% 예비비 확보",
+        "description": "리노베이션 중 예상치 못한 발견이 흔합니다. 오래된 배관, 숨겨진 곰팡이 또는 구조적 문제. 예비비는 예산 스트레스를 방지합니다."
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "단계적 접근 고려",
+        "description": "총 리노베이션이 예산을 초과하는 경우, 우선 순위를 정하고 단계적으로 방을 완료하세요. 이것은 목표를 달성하면서 비용을 분산시킵니다."
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "상세한 서면 견적 받기",
+        "description": "도급업자로부터 항상 항목별 견적을 요청하세요. 총 가격이 아닌 작업 범위를 비교하세요. 더 낮은 견적은 필요한 항목을 제외할 수 있습니다."
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "허가 및 검사 예산",
+        "description": "메트로 밴쿠버의 건축 허가는 일반적으로 범위에 따라 $200-$2,000+의 비용이 듭니다. 허가를 건너뛰면 재판매 중 비용이 많이 드는 문제가 발생할 수 있습니다."
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "투자 수익을 생각하세요",
+        "description": "주방 리노베이션은 재판매 시 비용의 75-100%를 회수할 수 있습니다. 욕실 리노베이션은 60-70%를 회수합니다. 지하실 스위트는 비용을 상쇄하기 위한 임대 수입을 생성할 수 있습니다."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "자주 묻는 질문"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "밴쿠버에서 리노베이션을 위해 얼마를 예산해야 하나요?",
+      "a1": "예산은 범위에 따라 다릅니다: 욕실 리노베이션은 $10,000-$60,000, 주방은 $15,000-$72,000, 전체 주택 프로젝트는 $50,000+입니다. 귀하의 특정 요구사항에 따라 무료 상세 견적을 제공합니다.",
+      "q1Answer": "예산은 범위에 따라 다릅니다: 욕실 리노베이션은 $10,000-$60,000, 주방은 $15,000-$72,000, 전체 주택 프로젝트는 $50,000+입니다. 귀하의 특정 요구사항에 따라 무료 상세 견적을 제공합니다.",
+      "q2": "적은 예산으로 리노베이션할 수 있나요?",
+      "a2": "네! 우리는 다양한 예산 수준과 함께 작업합니다. 단계적 접근 방식을 사용하면 우선 영역을 먼저 완료할 수 있습니다. 캐비닛 재마감 ($3,000-$8,000)은 전체 주방 교체에 대한 비용 효율적인 대안입니다.",
+      "q2Answer": "네! 우리는 다양한 예산 수준과 함께 작업합니다. 단계적 접근 방식을 사용하면 우선 영역을 먼저 완료할 수 있습니다. 캐비닛 재마감 ($3,000-$8,000)은 전체 주방 교체에 대한 비용 효율적인 대안입니다.",
+      "q3": "지불 계획을 제공하나요?",
+      "a3": "표준 지불 일정을 따릅니다: 프로젝트 날짜를 확보하기 위한 보증금, 주요 이정표에서의 진행 지불, 완료 및 만족 시 최종 지불.",
+      "q3Answer": "표준 지불 일정을 따릅니다: 프로젝트 날짜를 확보하기 위한 보증금, 주요 이정표에서의 진행 지불, 완료 및 만족 시 최종 지불.",
+      "q4": "리노베이션 견적에 무엇이 포함되어 있나요?",
+      "a4": "견적에는 노동, 재료, 프로젝트 관리, 허가 (해당하는 경우) 및 청소가 포함됩니다. 예산이 정확히 어디로 가는지 이해할 수 있도록 항목별 분석을 제공합니다.",
+      "q4Answer": "견적에는 노동, 재료, 프로젝트 관리, 허가 (해당하는 경우) 및 청소가 포함됩니다. 예산이 정확히 어디로 가는지 이해할 수 있도록 항목별 분석을 제공합니다.",
+      "q5": "리노베이션 ROI를 어떻게 최대화할 수 있나요?",
+      "a5": "최고의 재판매 수익을 위해 주방과 욕실에 집중하세요. 오래 가는 고품질 재료를 사용하세요. 임대 수입을 위해 지하실 스위트를 고려하세요. 라이프스타일 요구와 장기적 가치의 균형을 맞추는 리노베이션을 계획하는 데 도움을 드립니다.",
+      "q5Answer": "최고의 재판매 수익을 위해 주방과 욕실에 집중하세요. 오래 가는 고품질 재료를 사용하세요. 임대 수입을 위해 지하실 스위트를 고려하세요. 라이프스타일 요구와 장기적 가치의 균형을 맞추는 리노베이션을 계획하는 데 도움을 드립니다."
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "리노베이션 예산을 계획할 준비가 되셨나요?",
+      "subtitle": "프로젝트와 목표에 맞춘 상세한 비용 견적과 함께 무료 상담을 받으세요."
     }
   }
 }

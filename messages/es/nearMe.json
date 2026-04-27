@@ -1,105 +1,105 @@
 {
   "nearMe": {
-    "breadcrumb": "Renovation Near Me",
+    "breadcrumb": "Remodelación cerca de mí",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "Sirviendo a Metro Vancouver desde 2020",
+      "h1": "¿Buscando una empresa de remodelación cerca de usted?",
+      "subtitle": "Reno Stars sirve a Vancouver y 14 ciudades de Metro Vancouver con equipos de remodelación residencial licenciados y asegurados. Remodelaciones de cocina, baño, sótano y casa completa — un equipo local desde el diseño hasta la entrega, no un mercado.",
+      "ctaPrimary": "Obtener mi cotización gratis"
     },
     "trust": {
       "reviews": {
         "stat": "70+",
-        "label": "Google 5★ reviews"
+        "label": "Reseñas de Google 5★"
       },
       "insured": {
         "stat": "$5M",
-        "label": "Liability + WCB"
+        "label": "Responsabilidad + WCB"
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "Años en Vancouver"
       },
       "coverage": {
         "stat": "14",
-        "label": "Metro Vancouver cities"
+        "label": "Ciudades de Metro Vancouver"
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "Áreas de servicio de remodelación cerca de usted",
+      "subtitle": "Elija su vecindario para fotos de proyectos locales, rangos de precios y equipos que ya están trabajando en su área."
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "Lo que remodelamos cerca de usted",
+      "learnMore": "Más información",
       "kitchen": {
-        "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "title": "Remodelación de cocina cerca de mí",
+        "desc": "Gabinetes, encimeras de cuarzo, salpicaderos, pisos, eléctrico. Renovación económica hasta personalización completa. Típico 4-8 semanas, $25K-$90K."
       },
       "bathroom": {
-        "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "title": "Remodelación de baño cerca de mí",
+        "desc": "Paredes de azulejos, impermeabilización Schluter, duchas embaldosadas o conversiones de bañera a ducha, lavabos, accesorios. 3-6 semanas típico, $15K-$45K."
       },
       "wholeHouse": {
-        "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "title": "Remodelación de casa completa cerca de mí",
+        "desc": "Remodelaciones interiores completas — cocina, baños, pisos, pintura, iluminación, a veces estructural. 2-6 meses, $80K-$400K+."
       },
       "basement": {
-        "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "title": "Remodelación de sótano cerca de mí",
+        "desc": "Conversiones de suite, salas familiares, cines en casa, baños. Enfoque de permisos primero en Vancouver, Burnaby, Richmond y más allá."
       },
       "cabinet": {
-        "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "title": "Refacción de gabinetes cerca de mí",
+        "desc": "Alternativa de menor costo al reemplazo completo de gabinetes — nuevas puertas, herrajes y cuarzo para la misma huella. 1-2 semanas, $8K-$20K."
       },
       "commercial": {
-        "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "title": "Remodelación comercial cerca de mí",
+        "desc": "Restaurantes, clínicas, salones, retail. Conciencia de permisos, programación fuera de horas, mínima interrupción del negocio en todo Metro Vancouver."
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "Por qué elegir Reno Stars para una remodelación cerca de usted",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "Un equipo local — no un mercado",
+        "body": "A diferencia de los sitios de directorio que le pasan a extraños, cada proyecto de Reno Stars es ejecutado por nuestro propio equipo. Mismo PM desde la cotización hasta la entrega."
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "Licenciado, asegurado, cubierto por WCB",
+        "body": "Seguro de responsabilidad de $5M y cobertura WCB activa en cada trabajo. Compartiremos certificados antes de comenzar el trabajo."
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "Precios transparentes, sin sorpresas",
+        "body": "Cotizaciones detalladas por escrito con especificaciones reales de materiales. Órdenes de cambio solo cuando las apruebe. Garantía de mano de obra de 3 años."
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "title": "Servicio bilingüe (inglés + mandarín)",
+        "body": "Los gerentes de proyecto y ventas hablan tanto inglés como mandarín. Contratos, órdenes de cambio y actualizaciones en su idioma preferido."
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "Portafolio local real cerca de usted",
+        "body": "Cientos de proyectos en Vancouver, Richmond, Burnaby, Surrey, Coquitlam y más allá. Compartiremos fotos + referencias de su vecindario."
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "heading": "Remodelación cerca de mí — FAQ",
+      "q1": "¿Cómo encuentro una empresa de remodelación confiable cerca de mí en Vancouver?",
+      "a1": "Verifique tres cosas: licencia + seguro (pida certificados, no promesas), reseñas reales de Google en volumen (100+ es significativo, 10 no lo es), y un portafolio de su vecindario. Reno Stars tiene 70+ reseñas de cinco estrellas en Google, seguro de responsabilidad de $5M, cobertura WCB y un portafolio de proyectos en cada ciudad de Metro Vancouver que servimos.",
+      "q2": "¿Cuál es el costo de una remodelación de baño o cocina cerca de mí?",
+      "a2": "En Metro Vancouver, las remodelaciones de baño típicamente van de $15K-$45K y las cocinas de $25K-$90K. El precio exacto depende del tamaño en pies cuadrados, el nivel de acabado y si se mueven paredes. Cada cotización de Reno Stars es detallada — mano de obra, materiales, permisos — para que vea adónde va cada dólar.",
+      "q3": "¿Cuánto tiempo toma una remodelación cerca de mí?",
+      "a3": "Baños: 3-6 semanas desde la demolición hasta la entrega. Cocinas: 4-8 semanas. Casa completa: 2-6 meses dependiendo del alcance. Refacción de gabinetes: 1-2 semanas. Le damos un cronograma semana por semana al firmar el contrato y actualizaciones por mensaje cuando se alcanzan los hitos.",
+      "q4": "¿Manejan permisos para remodelaciones cerca de mí?",
+      "a4": "Sí. Para cualquier trabajo que mueva paredes, plomería o eléctrico, sacamos permisos a través del municipio apropiado (Vancouver, Richmond, Burnaby, Surrey, etc.). El trabajo cosmético como pintura, pisos y refacción de gabinetes generalmente no necesita un permiso — le decimos la respuesta honesta antes de cotizar.",
+      "q5": "¿Ofrecen estimaciones gratuitas cerca de mí?",
+      "a5": "Sí — consulta gratuita en el hogar y cotización por escrito en las 14 ciudades de Metro Vancouver que servimos. Mediremos, discutiremos materiales, recorreremos el alcance y enviaremos una cotización detallada en 2-3 días hábiles. No se requiere depósito para cotizar.",
+      "q6": "¿A qué vecindarios sirven?",
+      "a6": "Estamos basados en Richmond BC y servimos a Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster y White Rock. Si está fuera de este radio, pregunte — ocasionalmente viajamos para proyectos de casa completa."
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "¿Listo para encontrar un equipo de remodelación cerca de usted?",
+      "subtitle": "Consulta gratuita en el hogar, cotización detallada por escrito en 2-3 días hábiles. No se requiere depósito para cotizar.",
+      "quote": "Obtener mi cotización gratis",
+      "call": "Llamar al 778-960-7999"
     }
   }
 }

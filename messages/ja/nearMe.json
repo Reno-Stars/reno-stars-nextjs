@@ -1,105 +1,105 @@
 {
   "nearMe": {
-    "breadcrumb": "Renovation Near Me",
+    "breadcrumb": "近くのリノベーション",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "2020年からメトロバンクーバーにサービスを提供",
+      "h1": "近くのリノベーション会社をお探しですか？",
+      "subtitle": "Reno Starsはバンクーバーとメトロバンクーバーの14都市にライセンスを持ち、保険に加入した住宅リノベーションチームでサービスを提供しています。キッチン、バスルーム、地下室、家全体のリフォーム — マーケットプレイスではなく、デザインから引き渡しまで一つの地元チーム。",
+      "ctaPrimary": "無料見積もりを取得"
     },
     "trust": {
       "reviews": {
         "stat": "70+",
-        "label": "Google 5★ reviews"
+        "label": "Google 5★レビュー"
       },
       "insured": {
         "stat": "$5M",
-        "label": "Liability + WCB"
+        "label": "賠償責任保険 + WCB"
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "バンクーバーでの経験年数"
       },
       "coverage": {
         "stat": "14",
-        "label": "Metro Vancouver cities"
+        "label": "メトロバンクーバーの都市"
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "お近くのリノベーションサービスエリア",
+      "subtitle": "地元のプロジェクト写真、価格帯、お住まいの地域で既に活動しているチームを見るには、お住まいのエリアを選択してください。"
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "お近くで私たちがリノベーションするもの",
+      "learnMore": "詳細を見る",
       "kitchen": {
-        "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "title": "近くのキッチンリノベーション",
+        "desc": "キャビネット、クォーツカウンタートップ、バックスプラッシュ、フローリング、電気工事。予算に優しいリフレッシュからフルカスタムまで。通常4〜8週間、$25K〜$90K。"
       },
       "bathroom": {
-        "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "title": "近くのバスルームリノベーション",
+        "desc": "タイル壁、シュルター防水、タイル張りシャワーまたは浴槽からシャワーへの変換、洗面化粧台、フィクスチャー。通常3〜6週間、$15K〜$45K。"
       },
       "wholeHouse": {
-        "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "title": "近くの家全体のリノベーション",
+        "desc": "完全なインテリアリフォーム — キッチン、バスルーム、フローリング、ペイント、照明、時には構造的なものまで。2〜6ヶ月、$80K〜$400K+。"
       },
       "basement": {
-        "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "title": "近くの地下室リノベーション",
+        "desc": "スイート変換、ファミリールーム、ホームシアター、バスルーム。バンクーバー、バーナビー、リッチモンド以遠での許可優先のアプローチ。"
       },
       "cabinet": {
-        "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "title": "近くのキャビネット再装",
+        "desc": "完全なキャビネット交換よりも低コストの代替品 — 同じフットプリントの新しいドア、ハードウェア、クォーツ。1〜2週間、$8K〜$20K。"
       },
       "commercial": {
-        "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "title": "近くの商業リノベーション",
+        "desc": "レストラン、クリニック、サロン、小売店。許可に対する認識、時間外スケジュール、メトロバンクーバー全域でビジネスへの混乱を最小限に抑えます。"
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "近くのリノベーションにReno Starsを選ぶ理由",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "1つの地元チーム — マーケットプレイスではない",
+        "body": "知らない人にあなたを渡すディレクトリサイトとは異なり、すべてのReno Starsプロジェクトは私たち自身のチームによって運営されています。見積もりから引き渡しまで同じPM。"
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "ライセンス取得、保険加入、WCB対象",
+        "body": "$5M賠償責任保険と、すべての仕事でアクティブなWCB保険。作業開始前に証明書を共有します。"
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "透明な価格設定、驚きなし",
+        "body": "実際の素材仕様を含む項目別の書面見積もり。承認した場合のみ変更注文。3年間の職人技保証。"
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "title": "バイリンガルサービス（英語+中国語）",
+        "body": "プロジェクトマネージャーとセールスは英語と中国語の両方を話します。契約書、変更注文、最新情報をご希望の言語でご提供。"
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "近くの実際の地元ポートフォリオ",
+        "body": "バンクーバー、リッチモンド、バーナビー、サリー、コキットラム以遠の数百のプロジェクト。お住まいの地域から写真と参照を共有します。"
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "heading": "近くのリノベーション — FAQ",
+      "q1": "バンクーバーで近くの信頼できるリノベーション会社を見つけるには？",
+      "a1": "3つのことを確認してください：ライセンス+保険（約束ではなく証明書を求める）、本物のGoogleレビューの量（100+は意味があり、10は意味がない）、お住まいの地域からのポートフォリオ。Reno Starsは70+の5つ星Googleレビュー、$5M賠償責任保険、WCB保険、サービスを提供するすべてのメトロバンクーバー都市でプロジェクトポートフォリオを持っています。",
+      "q2": "近くのバスルームまたはキッチンリノベーションの費用は？",
+      "a2": "メトロバンクーバーでは、バスルームのリノベーションは通常$15K〜$45K、キッチンは$25K〜$90Kです。正確な価格は平方フィート、仕上げレベル、壁の移動の有無によって異なります。すべてのReno Starsの見積もりは項目別 — 労働、材料、許可 — なので、すべてのドルがどこに行くのかが分かります。",
+      "q3": "近くのリノベーションにはどのくらいかかりますか？",
+      "a3": "バスルーム：解体から引き渡しまで3〜6週間。キッチン：4〜8週間。家全体：範囲によって2〜6ヶ月。キャビネット再装：1〜2週間。契約締結時に週ごとのスケジュールを提供し、マイルストーンが達成されるとテキスト更新を送信します。",
+      "q4": "近くのリノベーションの許可を処理しますか？",
+      "a4": "はい。壁、配管、電気を移動するすべての作業について、適切な自治体（バンクーバー、リッチモンド、バーナビー、サリーなど）を通じて許可を取得します。ペイント、フローリング、キャビネット再装などの装飾的な作業には通常許可は必要ありません — 見積もり前に正直な答えをお伝えします。",
+      "q5": "近くで無料の見積もりを提供しますか？",
+      "a5": "はい — サービスを提供する14のメトロバンクーバー都市すべてで無料の自宅相談と書面見積もり。測定し、材料について話し合い、範囲を歩き、2〜3営業日以内に項目別の見積もりを送信します。見積もりに保証金は不要です。",
+      "q6": "どの近隣にサービスを提供していますか？",
+      "a6": "私たちはリッチモンドBCに拠点を置き、バンクーバー、バーナビー、リッチモンド、サリー、コキットラム、ポートコキットラム、ポートムーディー、ノースバンクーバー、ウェストバンクーバー、ラングリー、デルタ、ツワッセン、メープルリッジ、ニューウェストミンスター、ホワイトロックにサービスを提供しています。この範囲外にお住まいの場合は、お問い合わせください — 家全体のプロジェクトのために時々遠出します。"
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "近くのリノベーションチームを見つける準備はできましたか？",
+      "subtitle": "無料の自宅相談、2〜3営業日以内に書面の項目別見積もり。見積もりに保証金は不要です。",
+      "quote": "無料見積もりを取得",
+      "call": "778-960-7999に電話"
     }
   }
 }

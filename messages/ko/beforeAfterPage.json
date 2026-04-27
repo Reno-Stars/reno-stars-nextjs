@@ -1,67 +1,67 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "비포 & 애프터 갤러리",
+      "subtitle": "메트로 밴쿠버 전역의 리노베이션 프로젝트에서 극적인 변화를 확인하세요. 실제 주택의 진짜 사진입니다."
     },
     "stats": {
-      "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "transformations": "변신",
+      "projects": "프로젝트",
+      "cities": "서비스 도시"
     },
     "filters": {
-      "all": "All",
-      "bathroom": "Bathroom",
-      "kitchen": "Kitchen",
-      "whole-house": "Whole House",
-      "commercial": "Commercial"
+      "all": "전체",
+      "bathroom": "욕실",
+      "kitchen": "주방",
+      "whole-house": "전체 주택",
+      "commercial": "상업"
     },
     "labels": {
-      "before": "Before",
-      "after": "After",
-      "viewProject": "View Project"
+      "before": "비포",
+      "after": "애프터",
+      "viewProject": "프로젝트 보기"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "이 카테고리에는 비포 & 애프터 사진이 없습니다.",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "비포 & 애프터 사진을 공유하는 이유",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "완전한 투명성",
+        "description": "우리는 무엇을 기대할 수 있는지 정확하게 보여주는 것을 믿습니다. 우리의 비포 & 애프터 사진은 편집되지 않았으며, 우리 작업의 품질에 대한 솔직한 모습을 제공합니다."
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "입증된 품질",
+        "description": "모든 변신이 스스로 말합니다. 구식 주방에서 현대적인 걸작까지, 우리의 장인 정신은 모든 디테일에서 분명합니다."
       },
       "inspiration": {
-        "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "title": "디자인 영감",
+        "description": "실제 리노베이션을 둘러보고 자신의 프로젝트에 대한 아이디어를 찾아보세요. 다양한 스타일, 재료 및 레이아웃이 귀하와 같은 주택에서 어떻게 어우러지는지 확인하세요."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "자주 묻는 질문"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "이것은 실제 비포 & 애프터 사진인가요?",
+      "a1": "네, 이 페이지의 모든 사진은 메트로 밴쿠버 전역에서 완료된 우리의 리노베이션 프로젝트에서 직접 가져온 것입니다. 스톡 사진을 사용하거나 이미지를 디지털로 변경하지 않습니다.",
+      "q2": "일반적인 리노베이션은 얼마나 걸리나요?",
+      "a2": "리노베이션 일정은 프로젝트 범위에 따라 다릅니다. 욕실 리노베이션은 일반적으로 2-4주, 주방 리노베이션은 4-8주, 전체 주택 리노베이션은 2-4개월이 걸립니다. 무료 상담 중에 상세한 일정을 제공합니다.",
+      "q3": "완성된 프로젝트를 직접 방문할 수 있나요?",
+      "a3": "재료 샘플과 마감재를 직접 볼 수 있는 우리 쇼룸을 방문하도록 주선할 수 있습니다. 특정 프로젝트 참조의 경우, 자신의 경험을 공유할 의향이 있는 이전 고객과 연결해 드릴 수 있습니다.",
+      "q4": "어떤 지역에 서비스를 제공하나요?",
+      "a4": "밴쿠버, 버나비, 리치몬드, 써리, 코퀴틀람, 포트 코퀴틀람, 포트 무디, 노스 밴쿠버, 웨스트 밴쿠버, 델타, 랭글리, 메이플 리지를 포함한 메트로 밴쿠버 전체에 서비스를 제공합니다.",
+      "q5": "리노베이션을 어떻게 시작하나요?",
+      "a5": "무료 상담을 위해 저희에게 연락해 주세요. 귀하의 공간을 방문하여 비전과 예산을 논의하고 상세한 견적을 제공합니다. 우리 팀이 디자인부터 완성까지 모든 것을 처리합니다."
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "당신의 공간을 변화시킬 준비가 되었나요?",
+      "subtitle": "오늘 무료 상담을 위해 저희에게 연락하시고 Reno Stars가 귀하의 집을 위해 무엇을 할 수 있는지 확인해 보세요."
     },
     "pagination": {
-      "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "label": "갤러리 페이지 매김",
+      "previous": "이전",
+      "next": "다음",
+      "previousPage": "이전 페이지로 이동",
+      "nextPage": "다음 페이지로 이동"
     }
   }
 }
