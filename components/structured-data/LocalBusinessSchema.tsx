@@ -1,18 +1,25 @@
-import type { Company, SocialLink, ServiceArea } from '@/lib/types';
+import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 
 const BASE_URL = getBaseUrl();
 
+// IMPORTANT: This is the canonical Organization node for the entire site
+// (rendered in app/[locale]/layout.tsx on every page). Any other JSON-LD that
+// describes the same business MUST NOT reuse `@id: ${BASE_URL}/#organization`,
+// or Google will merge nodes by @id and flag conflicts (e.g. "Review has
+// multiple aggregate ratings"). Page-level schemas should reference this node
+// via `{ "@id": "${BASE_URL}/#organization" }` instead of redeclaring it.
 interface LocalBusinessSchemaProps {
   company: Company;
   socialLinks: SocialLink[];
   areas: ServiceArea[];
   googleRating?: number;
   googleReviewCount?: number;
+  reviews?: GoogleReview[];
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
   const schema = {
@@ -58,6 +65,24 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         ratingCount: googleReviewCount,
         reviewCount: googleReviewCount,
       },
+    }),
+    ...(reviews && reviews.length > 0 && {
+      review: reviews.map((r) => ({
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: r.authorName,
+          ...(r.authorUri && { url: r.authorUri }),
+        },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        reviewBody: r.text,
+        ...(r.publishTime && { datePublished: r.publishTime }),
+      })),
     }),
     description:
       `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,

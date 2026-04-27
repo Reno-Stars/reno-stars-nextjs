@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
 import ReviewsPage from "@/components/pages/ReviewsPage";
-import { BreadcrumbSchema, FAQSchema, ReviewSchema } from "@/components/structured-data";
+import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from "@/lib/utils";
 import { getCompanyFromDb } from "@/lib/db/queries";
 import { getGoogleReviews } from "@/lib/google-reviews";
@@ -74,7 +74,6 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
-      <ReviewSchema company={company} googleReviews={googleReviews} />
       <ReviewsPage locale={locale as Locale} company={company} googleReviews={googleReviews} />
     </>
   );

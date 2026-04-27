@@ -2,10 +2,9 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ShowroomPage from '@/components/pages/ShowroomPage';
-import { BreadcrumbSchema, FAQSchema, LocalBusinessSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getCompanyFromDb, getServiceAreasFromDb, getSocialLinksFromDb } from '@/lib/db/queries';
-import { getGoogleReviews } from '@/lib/google-reviews';
+import { getCompanyFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -51,13 +50,10 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, company, areas, socialLinks, googleReviews] = await Promise.all([
+  const [nav, t, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'showroomPage' }),
     getCompanyFromDb(),
-    getServiceAreasFromDb(),
-    getSocialLinksFromDb(),
-    getGoogleReviews(),
   ]);
 
   const breadcrumbs = [
@@ -98,13 +94,6 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <LocalBusinessSchema
-        company={company}
-        socialLinks={socialLinks}
-        areas={areas}
-        googleRating={googleReviews.rating}
-        googleReviewCount={googleReviews.userRatingCount}
-      />
       <FAQSchema faqs={faqs} />
       <ShowroomPage
         company={company}
