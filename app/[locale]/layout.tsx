@@ -92,6 +92,7 @@ export default async function LocaleLayout({
             areas={areas}
             googleRating={googleReviews.rating}
             googleReviewCount={googleReviews.userRatingCount}
+            reviews={googleReviews.reviews.slice(0, 5)}
           />
           <a
             href="#main-content"
