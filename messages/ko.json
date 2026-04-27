@@ -898,361 +898,361 @@
   "guides": {
     "index": {
       "hero": {
-        "title": "Renovation Cost Guides",
-        "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
+        "title": "리노베이션 비용 가이드",
+        "subtitle": "광역 밴쿠버 전역에서 완료한 실제 프로젝트에 기반한 정직한 가격. 추측이 아닌 실제 데이터."
       },
       "kitchen": {
-        "title": "Kitchen Renovation Cost",
-        "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+        "title": "주방 리노베이션 비용",
+        "description": "예산 친화적 업데이트부터 하이엔드 변신까지, 밴쿠버 주방 리노베이션 비용의 완전한 분석."
       },
       "bathroom": {
-        "title": "Bathroom Renovation Cost",
-        "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+        "title": "욕실 리노베이션 비용",
+        "description": "단일 욕실 리프레시부터 다중 욕실 프로젝트까지, 광역 밴쿠버 지역 욕실 리노베이션 비용의 완전한 분석."
       },
       "wholeHouse": {
-        "title": "Whole House Renovation Cost",
-        "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+        "title": "주택 전체 리노베이션 비용",
+        "description": "주방, 욕실, 바닥, 구조 작업을 포함한 주택 전체 리노베이션 가격."
       },
-      "comingSoon": "Coming Soon",
-      "readGuide": "Read Guide",
+      "comingSoon": "곧 공개",
+      "readGuide": "가이드 읽기",
       "cta": {
-        "heading": "Ready to Start Your Renovation?",
-        "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+        "heading": "리노베이션을 시작할 준비가 되셨나요?",
+        "subtitle": "프로젝트 요구사항에 기반한 무료 상담과 정확한 견적을 받으세요."
       },
       "basement": {
-        "title": "Basement Renovation Cost",
-        "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+        "title": "지하실 리노베이션 비용",
+        "description": "기본 마감부터 완전한 합법 스위트 변환까지, 광역 밴쿠버 지역 지하실 리노베이션 비용의 완전한 분석."
       },
       "commercial": {
-        "title": "Commercial Renovation Cost",
-        "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+        "title": "상업 리노베이션 비용",
+        "description": "소규모 사무실 리프레시부터 완전한 식당 시공까지, 광역 밴쿠버 상업 리노베이션 비용의 완전한 분석."
       },
       "cabinet": {
-        "title": "Cabinet Refinishing Cost",
-        "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+        "title": "캐비닛 리피니싱 비용",
+        "description": "광역 밴쿠버 지역의 캐비닛 리피니싱, 리페이싱, 교체 비용의 완전한 분석."
       },
       "basementSuite": {
-        "title": "Basement Suite Cost",
-        "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
+        "title": "지하실 스위트 비용",
+        "description": "메트로 밴쿠버를 위한 합법 지하실 스위트 변환 비용, ROI 분석, 자치단체별 규정."
       }
     },
     "kitchenCost": {
-      "breadcrumb": "Kitchen Renovation Cost",
+      "breadcrumb": "주방 리노베이션 비용",
       "hero": {
-        "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+        "title": "밴쿠버 BC 주방 리노베이션 비용 (2026)",
+        "subtitle": "광역 밴쿠버에서 완료된 주방 리노베이션의 실제 가격. 아래 모든 숫자는 실제 프로젝트에서 나옵니다 — 업계 추정치가 아닙니다."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–6 weeks"
+        "avgCost": "평균 비용",
+        "range": "가격 범위",
+        "projects": "완료된 프로젝트",
+        "timeline": "일반적인 시공 기간",
+        "timelineValue": "3〜6주"
       },
       "tiers": {
-        "title": "Kitchen Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "등급별 주방 리노베이션 비용",
+        "subtitle": "광역 밴쿠버에서 완료된 프로젝트에 기반",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+          "title": "예산 친화적",
+          "description": "캐비닛 리페이싱 또는 스톡 캐비닛, 라미네이트 카운터탑, 기본 백스플래시, 표준 설비. 구조 변경 없이 새로운 모습을 원하는 콘도와 타운하우스에 적합."
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+          "title": "중급",
+          "description": "맞춤 또는 세미커스텀 캐비닛, 쿼츠 카운터탑, 타일 백스플래시, 업그레이드된 조명, 새 바닥. 가족 주택에 가장 인기 있는 선택."
         },
         "highEnd": {
-          "title": "High-End",
-          "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+          "title": "하이엔드",
+          "description": "완전 맞춤 캐비닛, 프리미엄 천연석 카운터탑, 워터폴 아일랜드, 하이엔드 가전, 구조 수정, 디자이너 마감. 최고를 원하는 주택 소유주를 위해."
         }
       },
       "factors": {
-        "title": "What Affects Your Kitchen Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "주방 리노베이션 비용에 영향을 미치는 요인",
+        "subtitle": "최종 가격을 결정하는 6가지 핵심 요인",
         "cabinetry": {
-          "title": "Cabinetry (30–40% of budget)",
-          "description": "The biggest cost driver. Stock cabinets start around /linear foot, while custom options can exceed /linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+          "title": "캐비닛 (예산의 30〜40%)",
+          "description": "가장 큰 비용 요인. 스톡 캐비닛은 선형 피트당 수백 달러부터 시작하며, 맞춤형은 수천 달러를 초과할 수 있습니다. 셰이커 스타일 화이트 캐비닛이 밴쿠버에서 가장 인기."
         },
         "countertops": {
-          "title": "Countertops (10–15% of budget)",
-          "description": "Laminate starts at /sq ft, quartz runs –150/sq ft, and natural stone can exceed /sq ft. Waterfall island edges add –2,000 to the total."
+          "title": "카운터탑 (예산의 10〜15%)",
+          "description": "라미네이트는 평방피트당 수십 달러부터, 쿼츠는 80〜150달러/평방피트, 천연석은 25달러/평방피트를 초과할 수 있습니다. 워터폴 아일랜드 가장자리는 총액에 수천 달러 추가."
         },
         "layout": {
-          "title": "Layout Changes",
-          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add ,000–15,000 depending on structural requirements and permits."
+          "title": "레이아웃 변경",
+          "description": "배관, 가스라인 이동, 벽 제거는 비용을 크게 증가시킵니다. 레이아웃 변경은 구조 요구 사항과 허가에 따라 $5,000〜$15,000을 추가할 수 있습니다."
         },
         "appliances": {
-          "title": "Appliances",
-          "description": "Budget-friendly packages start at ,000–5,000. Mid-range brands like Bosch or KitchenAid run ,000–15,000. Premium brands like Sub-Zero or Wolf can exceed ,000."
+          "title": "가전",
+          "description": "예산 친화적 패키지는 $3,000〜$5,000부터. Bosch나 KitchenAid 같은 중급 브랜드는 $8,000〜$15,000. Sub-Zero나 Wolf 같은 프리미엄은 $25,000을 초과할 수 있습니다."
         },
         "plumbing": {
-          "title": "Plumbing & Electrical",
-          "description": "Relocating plumbing or adding circuits adds ,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+          "title": "배관 & 전기",
+          "description": "배관 재배치 또는 회로 추가는 $3,000〜$8,000을 추가합니다. 밴쿠버의 오래된 주택은 현대 가전을 지원하기 위해 전기 패널 업그레이드가 필요할 수 있습니다."
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "City of Vancouver building permits for kitchen renovations typically cost –1,000. Required when changing plumbing, electrical, gas, or structural elements."
+          "title": "허가 & 검사",
+          "description": "주방 리노베이션을 위한 밴쿠버 시 건축 허가는 일반적으로 $200〜$1,000. 배관, 전기, 가스 또는 구조 요소 변경 시 필요."
         }
       },
       "realProjects": {
-        "title": "Real Kitchen Renovation Projects",
-        "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+        "title": "실제 주방 리노베이션 프로젝트",
+        "subtitle": "실제 예산과 시공 기간이 포함된 {count}개의 완료된 주방 프로젝트를 둘러보세요"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Kitchen Renovation",
+        "title": "주방 리노베이션 비용 절감 팁",
         "tip1": {
-          "title": "Keep the Existing Layout",
-          "description": "Avoiding plumbing and gas line relocations can save ,000–15,000. Work with your existing kitchen footprint where possible."
+          "title": "기존 레이아웃 유지",
+          "description": "배관과 가스라인 이동을 피하면 $5,000〜$15,000을 절약할 수 있습니다. 가능한 곳에서 기존 주방 풋프린트로 작업하세요."
         },
         "tip2": {
-          "title": "Choose Quartz Over Natural Stone",
-          "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+          "title": "천연석보다 쿼츠 선택",
+          "description": "쿼츠 카운터탑은 더 내구성 있고, 실링이 필요 없으며, 화강암이나 대리석보다 20〜40% 저렴합니다. 게다가 멋져 보입니다."
         },
         "tip3": {
-          "title": "Semi-Custom Cabinets",
-          "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+          "title": "세미커스텀 캐비닛",
+          "description": "세미커스텀 캐비닛은 완전 맞춤형의 외관을 40〜60% 가격에 제공합니다. 도어 스타일, 마감, 구성을 선택할 수 있습니다."
         },
         "tip4": {
-          "title": "Plan During Off-Season",
-          "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+          "title": "비수기에 계획",
+          "description": "겨울철 (11월〜2월) 은 밴쿠버 리노베이션 업체의 비수기입니다. 그때 시작하면 더 나은 가격과 더 빠른 일정을 얻을 수 있습니다."
         }
       },
       "cta": {
-        "heading": "Get Your Free Kitchen Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "무료 주방 리노베이션 견적 받기",
+        "subtitle": "프로젝트에 대해 알려주시면 48시간 이내에 상세한 견적을 받으세요. 의무는 없습니다."
       },
       "faq": {
-        "q1": "How much does a kitchen renovation cost in Vancouver?",
-        "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
-        "q2": "How long does a kitchen renovation take in Vancouver?",
-        "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
-        "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
-        "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
-        "q4": "What is the best countertop material for a kitchen renovation?",
-        "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
-        "q5": "Can I renovate my kitchen while living in my home?",
-        "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+        "q1": "밴쿠버에서 주방 리노베이션 비용은 얼마입니까?",
+        "a1": "밴쿠버의 주방 리노베이션 비용은 완료된 프로젝트에 기반하여 일반적으로 $15,000〜$72,000+ 입니다. 예산 리노베이션 (캐비닛 업데이트, 기본 카운터탑) 은 약 $15,000〜$27,000, 맞춤 캐비닛과 쿼츠 카운터탑이 있는 중급 리노베이션은 $28,000〜$38,000, 프리미엄 자재 사용 하이엔드 변신은 $40,000을 초과할 수 있습니다.",
+        "q2": "밴쿠버에서 주방 리노베이션은 얼마나 걸립니까?",
+        "a2": "밴쿠버의 대부분의 주방 리노베이션은 철거에서 완료까지 3〜6주가 걸립니다. 단순 미용 업데이트는 3〜4주, 레이아웃 변경, 맞춤 캐비닛 또는 구조 작업이 포함된 복잡한 리노베이션은 8〜10주가 걸릴 수 있습니다.",
+        "q3": "밴쿠버에서 주방 리노베이션에 허가증이 필요합니까?",
+        "a3": "리노베이션이 배관, 전기, 가스 라인 또는 벽 제거와 같은 구조 요소 변경을 포함하는 경우 밴쿠버 시 건축 허가가 필요합니다. 새 캐비닛, 카운터탑, 백스플래시와 같은 미용 업데이트는 일반적으로 허가가 필요하지 않습니다. 허가 비용은 $200〜$1,000 범위.",
+        "q4": "주방 리노베이션에 가장 좋은 카운터탑 자재는 무엇입니까?",
+        "a4": "쿼츠는 우리 밴쿠버 주방 리노베이션에서 가장 인기 있는 카운터탑 선택입니다. 우수한 내구성, 실링이 필요 없음 (화강암과 달리), 얼룩 저항, 다양한 색상과 패턴을 제공합니다. 가격은 설치 포함 평방피트당 $80〜$150 범위.",
+        "q5": "주방 리노베이션 중에 집에 살 수 있습니까?",
+        "a5": "네, 대부분의 고객이 주방 리노베이션 중에도 집에 계속 거주합니다. 임시 주방 공간을 설정하고 방해를 최소화하기 위해 작업 일정을 잡는 것을 도와드립니다. 작업 범위에 따라 작동하는 주방 없이 2〜4주를 예상하세요."
       }
     },
     "bathroomCost": {
-      "breadcrumb": "Bathroom Renovation Cost",
+      "breadcrumb": "욕실 리노베이션 비용",
       "hero": {
-        "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
-        "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
+        "title": "밴쿠버 평균 욕실 리노베이션 비용 (2026 가격 가이드)",
+        "subtitle": "밴쿠버의 평균 욕실 리노베이션 비용은 $10,000〜$60,000+ 범위입니다. 이는 19개의 완료된 프로젝트의 실제 가격입니다 — 업계 추정치나 전국 평균이 아닙니다."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "2–8 weeks"
+        "avgCost": "평균 비용",
+        "range": "가격 범위",
+        "projects": "완료된 프로젝트",
+        "timeline": "일반적인 시공 기간",
+        "timelineValue": "2〜8주"
       },
       "tiers": {
-        "title": "Bathroom Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "등급별 욕실 리노베이션 비용",
+        "subtitle": "광역 밴쿠버에서 완료된 프로젝트에 기반",
         "budget": {
-          "title": "Budget-Friendly",
-          "description": "Standard tile, basic vanity, updated fixtures, and fresh paint. Ideal for a single bathroom refresh in condos or townhouses without moving plumbing."
+          "title": "예산 친화적",
+          "description": "표준 타일, 기본 세면대, 업데이트된 설비, 새 페인트. 배관 이동 없이 콘도나 타운하우스의 단일 욕실 리프레시에 적합."
         },
         "midRange": {
-          "title": "Mid-Range",
-          "description": "Porcelain or large-format tile, custom vanity, frameless glass shower enclosure, modern fixtures, and heated flooring. The most popular choice for family homes."
+          "title": "중급",
+          "description": "도자기 또는 대형 타일, 맞춤 세면대, 프레임리스 글래스 샤워, 모던 설비, 바닥난방. 가족 주택에 가장 인기 있는 선택."
         },
         "highEnd": {
-          "title": "High-End / Multi-Bathroom",
-          "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
+          "title": "하이엔드 / 다중 욕실",
+          "description": "프리미엄 타일, 커브리스 샤워, 독립형 욕조, 맞춤 캐비닛, 스마트 설비, 구조 수정. 종종 2-3개+ 욕실을 동시에 리노베이션 포함."
         }
       },
       "factors": {
-        "title": "What Affects Your Bathroom Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "욕실 리노베이션 비용에 영향을 미치는 요인",
+        "subtitle": "최종 가격을 결정하는 6가지 핵심 요인",
         "tiles": {
-          "title": "Tile & Flooring (25–35% of budget)",
-          "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+          "title": "타일 & 바닥 (예산의 25〜35%)",
+          "description": "표준 세라믹 타일은 $5/평방피트부터 시작, 도자기는 $8〜$15/평방피트, 천연석은 $25/평방피트를 초과할 수 있습니다. 대형 타일은 줄눈을 줄이지만 설치 비용이 더 듭니다."
         },
         "shower": {
-          "title": "Shower / Tub Configuration",
-          "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+          "title": "샤워 / 욕조 구성",
+          "description": "욕조-샤워 변환은 $3,000〜$8,000. 커브리스 (제로 임계값) 샤워는 맞춤 방수와 경사 하부 바닥이 필요하며 표준 샤워베이스에 비해 $2,000〜$5,000 추가."
         },
         "vanity": {
-          "title": "Vanity & Countertop",
-          "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+          "title": "세면대 & 카운터탑",
+          "description": "스톡 세면대는 $500〜$1,500부터 시작. 쿼츠 상판 세미커스텀은 $2,000〜$4,000. 통합 세면대가 있는 완전 맞춤 플로팅 세면대는 $6,000을 초과할 수 있습니다."
         },
         "plumbing": {
-          "title": "Plumbing Relocation",
-          "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+          "title": "배관 재배치",
+          "description": "배수관이나 공급 파이프를 이동하면 $2,000〜$6,000 추가. 오래된 주택은 새 차단 밸브나 공급 라인 업그레이드가 필요할 수 있습니다. 기존 배관 레이아웃을 유지하면 상당한 절약."
         },
         "waterproofing": {
-          "title": "Waterproofing",
-          "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+          "title": "방수",
+          "description": "멤브레인 시스템 (Schluter, Laticrete) 으로 적절한 방수는 표준 샤워에 $1,500〜$3,500. 밴쿠버의 기후에서 벽 뒤의 습기 손상을 방지하기 위해 필수."
         },
         "permits": {
-          "title": "Permits & Inspections",
-          "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+          "title": "허가 & 검사",
+          "description": "욕실 리노베이션 건축 허가는 메트로 밴쿠버에서 $200〜$800. 배관 이동, 새 설비 추가, 또는 구조 변경 시 필요."
         }
       },
       "realProjects": {
-        "title": "Real Bathroom Renovation Projects",
-        "subtitle": "Browse {count} completed bathroom projects with actual budgets and timelines"
+        "title": "실제 욕실 리노베이션 프로젝트",
+        "subtitle": "실제 예산과 시공 기간이 포함된 {count}개의 완료된 욕실 프로젝트를 둘러보세요"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Bathroom Renovation",
+        "title": "욕실 리노베이션 비용 절감 팁",
         "tip1": {
-          "title": "Keep Existing Plumbing Layout",
-          "description": "Relocating drain lines is one of the biggest cost drivers. Keeping the toilet, shower, and sink in their current positions can save $3,000–6,000."
+          "title": "기존 배관 레이아웃 유지",
+          "description": "배수관 재배치는 가장 큰 비용 요인 중 하나입니다. 변기, 샤워, 세면대를 현재 위치에 두면 $3,000〜$6,000을 절약할 수 있습니다."
         },
         "tip2": {
-          "title": "Choose Large-Format Porcelain Tile",
-          "description": "Fewer grout lines mean less labour and a cleaner look. 24x24 or 12x24 porcelain tiles are durable, water-resistant, and more affordable than natural stone."
+          "title": "대형 도자기 타일 선택",
+          "description": "줄눈이 적으면 노동력이 적고 깔끔한 모습. 24x24 또는 12x24 도자기 타일은 내구성, 내수성, 천연석보다 저렴."
         },
         "tip3": {
-          "title": "Renovate Multiple Bathrooms Together",
-          "description": "If you need more than one bathroom done, doing them simultaneously saves 10–20% vs separate projects. Contractors can share mobilization costs and bulk-buy materials."
+          "title": "여러 욕실을 함께 리노베이션",
+          "description": "둘 이상의 욕실이 필요한 경우 동시에 하면 별도 프로젝트보다 10〜20% 절약. 시공자는 동원 비용을 공유하고 재료를 대량 구매할 수 있습니다."
         },
         "tip4": {
-          "title": "Invest in Waterproofing",
-          "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
+          "title": "방수에 투자",
+          "description": "방수에 인색하게 굴면 나중에 비싼 수리가 필요합니다. 적절한 멤브레인 시스템은 사전에 $1,500〜$3,500 추가하지만 나중에 $10,000+의 수해를 방지."
         }
       },
       "cta": {
-        "heading": "Get Your Free Bathroom Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "무료 욕실 리노베이션 견적 받기",
+        "subtitle": "프로젝트에 대해 알려주시면 48시간 이내에 상세한 견적을 받으세요. 의무는 없습니다."
       },
       "faq": {
-        "q1": "How much does a bathroom renovation cost in Vancouver?",
-        "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
-        "q2": "How long does a bathroom renovation take?",
-        "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
-        "q3": "Can I convert my bathtub to a walk-in shower?",
-        "a3": "Yes, tub-to-shower conversions are one of our most popular requests. The cost ranges from $3,000–$8,000 depending on whether you choose a standard shower base or curbless design. Curbless showers require custom waterproofing and a sloped subfloor.",
-        "q4": "What is curbless shower and why is it more expensive?",
-        "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
-        "q5": "Should I renovate multiple bathrooms at the same time?",
-        "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+        "q1": "밴쿠버에서 욕실 리노베이션 비용은 얼마입니까?",
+        "a1": "밴쿠버의 욕실 리노베이션 비용은 완료된 프로젝트에 기반하여 $10,000〜$60,000+ 범위입니다. 단일 예산 친화적 욕실은 약 $10,000〜$20,000부터 시작, 맞춤 세면대와 글래스 샤워가 있는 중급 리노베이션은 $20,000〜$35,000, 하이엔드 또는 다중 욕실 프로젝트는 $40,000을 초과할 수 있습니다.",
+        "q2": "욕실 리노베이션은 얼마나 걸립니까?",
+        "a2": "단일 욕실 리노베이션은 일반적으로 2〜5주 걸립니다. 단순 미용 업데이트는 2〜3주, 배관 재배치, 커브리스 샤워, 또는 구조 변경이 포함된 프로젝트는 4〜8주가 걸릴 수 있습니다. 다중 욕실 프로젝트는 5〜11주.",
+        "q3": "욕조를 워크인 샤워로 변환할 수 있습니까?",
+        "a3": "네, 욕조-샤워 변환은 가장 인기 있는 요청 중 하나입니다. 표준 샤워베이스를 선택하든 커브리스 디자인을 선택하든 $3,000〜$8,000 범위. 커브리스 샤워는 맞춤 방수와 경사 하부 바닥이 필요.",
+        "q4": "커브리스 샤워가 무엇이고 왜 더 비싼가요?",
+        "a4": "커브리스 (제로 임계값) 샤워는 입구에 단계나 입술이 없어 매끄러운 바닥 전환을 만듭니다. 맞춤 방수 멤브레인, 정확하게 경사진 하부 바닥, 선형 배수 설치가 필요하며 표준 샤워베이스에 비해 $2,000〜$5,000 추가. 접근성과 모던 미학으로 인기.",
+        "q5": "여러 욕실을 동시에 리노베이션해야 합니까?",
+        "a5": "네, 여러 욕실을 동시에 리노베이션하면 별도 프로젝트에 비해 10〜20% 절약. 시공자는 동원 비용을 공유하고, 거래를 더 효율적으로 조정하고, 재료를 대량 구매할 수 있습니다. 광역 밴쿠버 전역에서 많은 2-3 욕실 프로젝트를 완료했습니다."
       }
     },
     "wholeHouseCost": {
-      "breadcrumb": "Whole House Renovation Cost",
+      "breadcrumb": "주택 전체 리노베이션 비용",
       "hero": {
-        "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
+        "title": "밴쿠버 BC 주택 전체 리노베이션 비용 (2026)",
+        "subtitle": "광역 밴쿠버에서 완료된 주택 전체 리노베이션의 실제 가격. 콘도 리프레시부터 완전한 주택 변신까지. 모든 숫자는 실제 프로젝트에서 나옵니다."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "projects": "Projects Completed",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–8 weeks"
+        "avgCost": "평균 비용",
+        "range": "가격 범위",
+        "projects": "완료된 프로젝트",
+        "timeline": "일반적인 시공 기간",
+        "timelineValue": "3〜8주"
       },
       "tiers": {
-        "title": "Whole House Renovation Cost by Tier",
-        "subtitle": "Based on our completed projects across Greater Vancouver",
+        "title": "등급별 주택 전체 리노베이션 비용",
+        "subtitle": "광역 밴쿠버에서 완료된 프로젝트에 기반",
         "budget": {
-          "title": "Cosmetic Refresh",
-          "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+          "title": "미용 리프레시",
+          "description": "전체 페인트, 새 바닥, 업데이트된 조명 설비, 욕실 리프레시 (세면대, 거울, 하드웨어), 사소한 주방 업데이트. 구조 작업 없이 모던 업데이트가 필요한 콘도와 임대 부동산에 적합."
         },
         "midRange": {
-          "title": "Comprehensive Renovation",
-          "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+          "title": "포괄적 리노베이션",
+          "description": "새 캐비닛과 카운터탑이 있는 완전 주방 리노베이션, 욕실 리모델, 전체 새 바닥, 새 페인트, 업데이트된 전기 및 배관 설비, 새 조명. 장기 거주를 계획하는 주택 소유주에 가장 인기."
         },
         "highEnd": {
-          "title": "Premium Transformation",
-          "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+          "title": "프리미엄 변신",
+          "description": "구조 변경, 오픈 컨셉 레이아웃, 하이엔드 주방과 욕실, 맞춤 목공, 프리미엄 바닥, 스마트 홈 통합, 디자이너 마감을 포함한 완전 철거 리노베이션. 진정으로 맞춤화된 집을 원하는 주택 소유주를 위해."
         }
       },
       "factors": {
-        "title": "What Affects Your Whole House Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "주택 전체 리노베이션 비용에 영향을 미치는 요인",
+        "subtitle": "최종 가격을 결정하는 6가지 핵심 요인",
         "scope": {
-          "title": "Scope & Square Footage",
-          "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+          "title": "범위 & 면적",
+          "description": "단일 최대 요인. 600평방피트 콘도 리프레시는 2,500평방피트 주택 철거 리노베이션보다 훨씬 적게 듭니다. 예산을 통제하려면 일찍 필수와 좋으면 좋은 것을 정의하세요."
         },
         "kitchen": {
-          "title": "Kitchen (30–40% of total budget)",
-          "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+          "title": "주방 (총 예산의 30〜40%)",
+          "description": "주방은 일반적으로 가장 비싼 방. 맞춤 캐비닛, 쿼츠 카운터탑, 가전 업그레이드만으로 $15,000〜$72,000이 들 수 있습니다. 자세한 분석은 주방 비용 가이드를 참조."
         },
         "bathrooms": {
-          "title": "Bathrooms (15–25% of total budget)",
-          "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+          "title": "욕실 (총 예산의 15〜25%)",
+          "description": "각 욕실 리노베이션은 크기와 마감재에 따라 $10,000〜$40,000을 추가합니다. 방수, 타일 작업, 설비 품질이 비용을 좌우합니다. 다중 욕실 주택은 단위당 상당한 절약."
         },
         "flooring": {
-          "title": "Flooring (10–15% of total budget)",
-          "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+          "title": "바닥 (총 예산의 10〜15%)",
+          "description": "엔지니어드 하드우드는 설치 포함 $8〜$15/평방피트. 럭셔리 비닐 플랭크 (LVP) 는 $5〜$10/평방피트로 예산 친화적 대안. 젖은 영역 타일은 $12〜$25/평방피트 추가."
         },
         "structural": {
-          "title": "Structural Changes",
-          "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+          "title": "구조 변경",
+          "description": "벽 제거, 창문 추가, 또는 레이아웃 재구성은 $5,000〜$25,000+ 추가. 내력벽 제거는 엔지니어링 보고서와 허가가 필요합니다. 오픈 컨셉 변환은 인기 있지만 비쌉니다."
         },
         "permits": {
-          "title": "Permits & Professional Fees",
-          "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+          "title": "허가 & 전문 수수료",
+          "description": "메트로 밴쿠버의 건축 허가는 주택 전체 리노베이션에 일반적으로 $500〜$2,500. 건축 도면, 엔지니어링 보고서, 검사를 위해 추가 $2,000〜$5,000 예산."
         }
       },
       "realProjects": {
-        "title": "Real Whole House Renovation Projects",
-        "subtitle": "Browse {count} completed whole-house projects with actual budgets and timelines"
+        "title": "실제 주택 전체 리노베이션 프로젝트",
+        "subtitle": "실제 예산과 시공 기간이 포함된 {count}개의 완료된 주택 전체 프로젝트를 둘러보세요"
       },
       "included": {
-        "title": "What's Typically Included in a Whole House Renovation",
-        "subtitle": "A comprehensive renovation touches every room and system",
+        "title": "주택 전체 리노베이션에 일반적으로 포함되는 것",
+        "subtitle": "포괄적인 리노베이션은 모든 방과 시스템을 다룹니다",
         "item1": {
-          "title": "Kitchen Renovation",
-          "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+          "title": "주방 리노베이션",
+          "description": "새 캐비닛, 카운터탑, 백스플래시, 싱크, 수전, 업데이트된 가전 연결. 중급 및 프리미엄 등급에서 레이아웃 변경 가능."
         },
         "item2": {
-          "title": "Bathroom Remodels",
-          "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+          "title": "욕실 리모델",
+          "description": "새 세면대, 변기, 샤워 또는 욕조, 타일 작업, 방수, 업데이트된 배관 설비. 각 욕실을 완전히 새롭게 하거나 재구축."
         },
         "item3": {
-          "title": "Flooring Throughout",
-          "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+          "title": "전체 바닥",
+          "description": "모든 생활 공간의 새 바닥: 메인 영역에 하드우드, 엔지니어드 우드 또는 LVP, 욕실과 입구에 타일."
         },
         "item4": {
-          "title": "Paint & Trim",
-          "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+          "title": "페인트 & 트림",
+          "description": "모든 벽과 천장의 새 페인트, 새것 또는 마감 처리된 걸레받이, 도어 케이싱, 해당하는 경우 크라운 몰딩."
         },
         "item5": {
-          "title": "Electrical & Lighting",
-          "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+          "title": "전기 & 조명",
+          "description": "업데이트된 조명 설비, 필요한 곳에 추가 콘센트, 디머 스위치, 오래된 주택의 패널 업그레이드."
         },
         "item6": {
-          "title": "Doors & Hardware",
-          "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+          "title": "도어 & 하드웨어",
+          "description": "새 내부 도어, 업데이트된 도어 핸들과 힌지, 옷장 정리기, 필요에 따른 외부 도어 교체."
         }
       },
       "tips": {
-        "title": "Money-Saving Tips for Whole House Renovations",
+        "title": "주택 전체 리노베이션 비용 절감 팁",
         "tip1": {
-          "title": "Prioritize and Phase Your Work",
-          "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+          "title": "우선순위를 정하고 단계화",
+          "description": "한꺼번에 모든 것을 할 필요가 없습니다. 먼저 주방과 욕실 (가장 높은 ROI) 을 다루고, 나중 단계에서 미용 업데이트를 처리하세요. 이는 비용을 분산시키고 리노베이션 중에 집에 거주할 수 있게 합니다."
         },
         "tip2": {
-          "title": "Keep Plumbing Where It Is",
-          "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+          "title": "배관 그대로 유지",
+          "description": "배관 재배치는 가장 비싼 변경 중 하나입니다. 주방과 욕실을 현재 위치에 두면 배관과 구조 작업에서 $5,000〜$15,000을 절약할 수 있습니다."
         },
         "tip3": {
-          "title": "Choose Materials Strategically",
-          "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+          "title": "전략적으로 자재 선택",
+          "description": "주방 카운터탑과 욕실 타일과 같은 영향력이 큰, 접촉이 많은 표면에 투자하세요. 침실 바닥 (LVP는 하드우드의 절반 가격에 멋져 보입니다) 과 내부 페인트 (중급 페인트는 프리미엄과 거의 같은 성능) 와 같은 영역에서 절약하세요."
         },
         "tip4": {
-          "title": "Bundle for Better Pricing",
-          "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+          "title": "더 나은 가격을 위한 번들",
+          "description": "주택 전체 리노베이션은 종종 방을 개별적으로 하는 것보다 방당 비용이 적게 듭니다. 시공자는 더 큰 프로젝트에서 작업팀을 효율적으로 일정 잡을 수 있을 때 더 나은 요율을 제공합니다."
         }
       },
       "faq": {
-        "q1": "How much does a whole house renovation cost in Vancouver?",
-        "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
-        "q2": "How long does a whole house renovation take?",
-        "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
-        "q3": "Can I live in my home during a whole house renovation?",
-        "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
-        "q4": "What gives the best return on investment for a whole house renovation?",
-        "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
-        "q5": "Do I need permits for a whole house renovation in Vancouver?",
-        "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+        "q1": "밴쿠버에서 주택 전체 리노베이션 비용은 얼마입니까?",
+        "a1": "밴쿠버의 주택 전체 리노베이션 비용은 완료된 프로젝트에 기반하여 일반적으로 $50,000〜$200,000+ 범위입니다. 미용 리프레시 (페인트, 바닥, 설비) 는 약 $50,000〜$80,000부터 시작, 새 주방과 욕실이 있는 포괄적 리노베이션은 $80,000〜$120,000, 구조 변경이 있는 프리미엄 변신은 $120,000을 초과할 수 있습니다.",
+        "q2": "주택 전체 리노베이션은 얼마나 걸립니까?",
+        "a2": "대부분의 주택 전체 리노베이션은 범위에 따라 3〜8주 걸립니다. 미용 리프레시 (페인트, 바닥, 설비) 는 3〜4주에 완료될 수 있습니다. 주방과 욕실을 포함한 포괄적 리노베이션은 일반적으로 5〜8주 걸립니다. 구조 변경이나 허가가 있는 프로젝트는 10〜14주 걸릴 수 있습니다.",
+        "q3": "주택 전체 리노베이션 중에 집에 거주할 수 있습니까?",
+        "a3": "범위에 따라 다릅니다. 미용 리프레시의 경우 일반적으로 작업이 방별로 진행되므로 집에 거주할 수 있습니다. 주방과 욕실 철거를 포함한 포괄적 리노베이션의 경우 가장 방해가 되는 단계 동안 최소 2〜4주 임시 숙소를 마련하는 것을 권장합니다.",
+        "q4": "주택 전체 리노베이션에서 가장 좋은 ROI는 무엇입니까?",
+        "a4": "주방과 욕실 리노베이션이 밴쿠버 시장에서 일관되게 가장 높은 ROI를 제공합니다. 업데이트된 바닥과 새 페인트는 비교적 낮은 비용으로 우수한 가치를 제공합니다. 오픈 컨셉 레이아웃은 구매자에게 인기가 있지만 비용을 크게 증가시키는 구조 작업이 필요합니다.",
+        "q5": "밴쿠버에서 주택 전체 리노베이션에 허가증이 필요합니까?",
+        "a5": "네, 대부분의 주택 전체 리노베이션은 허가가 필요합니다. 배관, 전기, 가스 또는 구조 변경이 포함된 모든 작업은 밴쿠버 시 건축 허가가 필요합니다. 미용 전용 작업 (페인트, 바닥, 캐비닛) 은 일반적으로 허가가 필요하지 않습니다. 허가 비용은 $500〜$2,500 예산."
       },
       "cta": {
-        "heading": "Ready to Transform Your Entire Home?",
-        "subtitle": "Get a free consultation and detailed quote for your whole house renovation. We'll walk through every room and create a plan that fits your budget."
+        "heading": "주택 전체를 변화시킬 준비가 되셨나요?",
+        "subtitle": "주택 전체 리노베이션을 위한 무료 상담과 상세 견적을 받으세요. 모든 방을 둘러보고 예산에 맞는 계획을 만들겠습니다."
       }
     },
     "basementCost": {
