@@ -1256,459 +1256,459 @@
       }
     },
     "basementCost": {
-      "breadcrumb": "Basement Renovation Cost",
+      "breadcrumb": "Costo de remodelación de sótano",
       "hero": {
-        "title": "Basement Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope, from basic finishing to full legal suite conversions."
+        "title": "Costo de remodelación de sótano en Vancouver BC (2026)",
+        "subtitle": "¿Cuánto cuesta realmente terminar o remodelar un sótano en Greater Vancouver? Aquí están los rangos de precios típicos basados en el alcance del proyecto, desde acabado básico hasta conversiones completas de suite legal."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$35 – $120/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "6–12 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "sqft": "Costo por pie cuadrado",
+        "sqftValue": "$35-$120/pie cuadrado",
+        "timeline": "Plazo típico",
+        "timelineValue": "6 a 12 semanas"
       },
       "tiers": {
-        "title": "Basement Renovation Cost by Tier",
-        "subtitle": "Typical pricing for basement projects across Greater Vancouver",
+        "title": "Costo de remodelación de sótano por nivel",
+        "subtitle": "Precios típicos para proyectos de sótano en Greater Vancouver",
         "budget": {
-          "title": "Basic Finishing",
-          "description": "Framing, insulation, drywall, basic flooring, paint, and standard lighting. Suitable for a recreation room, home office, or storage area without plumbing additions."
+          "title": "Acabado básico",
+          "description": "Estructura, aislamiento, drywall, piso básico, pintura e iluminación estándar. Adecuado para una sala de recreación, oficina en casa o área de almacenamiento sin adiciones de plomería."
         },
         "midRange": {
-          "title": "Mid-Range Renovation",
-          "description": "Full finishing with a bathroom addition, upgraded flooring (vinyl plank or laminate), pot lights, built-in storage, and a wet bar or kitchenette. The most popular scope for family homes."
+          "title": "Remodelación de gama media",
+          "description": "Acabado completo con adición de baño, piso mejorado (vinilo o laminado), iluminación empotrada, almacenamiento integrado y un wet bar o cocineta. El alcance más popular para hogares familiares."
         },
         "highEnd": {
-          "title": "Legal Suite Conversion",
-          "description": "Full secondary suite with separate entrance, kitchen, bathroom, bedroom with egress windows, fire separation, and all code-required features. Includes permits and inspections for rental legalization."
+          "title": "Conversión a suite legal",
+          "description": "Suite secundaria completa con entrada separada, cocina, baño, dormitorio con ventanas de salida, separación contra incendios y todas las características requeridas por código. Incluye permisos e inspecciones para legalización de alquiler."
         }
       },
       "factors": {
-        "title": "What Affects Your Basement Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de su remodelación de sótano?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "waterproofing": {
-          "title": "Waterproofing & Moisture Control",
-          "description": "Vancouver's wet climate makes waterproofing critical. Interior drainage systems run $3,000–8,000, while exterior waterproofing can cost $10,000–25,000. Sump pump installation adds $1,500–3,000."
+          "title": "Impermeabilización y control de humedad",
+          "description": "El clima húmedo de Vancouver hace que la impermeabilización sea crítica. Los sistemas de drenaje interior van de $3,000-$8,000, mientras que la impermeabilización exterior puede costar $10,000-$25,000. La instalación de bomba de sumidero agrega $1,500-$3,000."
         },
         "framing": {
-          "title": "Framing & Insulation",
-          "description": "Steel or wood framing with insulation typically costs $8–15 per square foot. Older Vancouver homes may need additional vapor barriers and insulation upgrades to meet current building code."
+          "title": "Estructura y aislamiento",
+          "description": "El armazón de acero o madera con aislamiento típicamente cuesta $8-$15 por pie cuadrado. Las casas más antiguas de Vancouver pueden necesitar barreras de vapor adicionales y mejoras de aislamiento para cumplir con el código de construcción actual."
         },
         "plumbing": {
-          "title": "Plumbing (Bathroom/Kitchen)",
-          "description": "Adding a basement bathroom costs $8,000–15,000 depending on whether you need to break concrete for drain lines. A full kitchen installation adds $12,000–25,000 including rough-in and fixtures."
+          "title": "Plomería (Baño/Cocina)",
+          "description": "Agregar un baño en sótano cuesta $8,000-$15,000 dependiendo de si necesita romper concreto para líneas de drenaje. La instalación completa de cocina agrega $12,000-$25,000 incluyendo ruteo y accesorios."
         },
         "electrical": {
-          "title": "Electrical & HVAC",
-          "description": "Basement electrical typically runs $3,000–8,000 for a standard layout. Many older homes need panel upgrades ($2,000–4,000). Extending HVAC ductwork adds $2,000–5,000."
+          "title": "Eléctrico y HVAC",
+          "description": "El eléctrico de sótano típicamente va de $3,000-$8,000 para una distribución estándar. Muchas casas más antiguas necesitan actualizaciones de panel ($2,000-$4,000). Extender los conductos de HVAC agrega $2,000-$5,000."
         },
         "egress": {
-          "title": "Egress Windows & Separate Entrance",
-          "description": "Building code requires egress windows in bedrooms ($2,000–5,000 each to install). Adding a separate exterior entrance for a suite costs $8,000–15,000 including excavation and concrete work."
+          "title": "Ventanas de salida y entrada separada",
+          "description": "El código de construcción requiere ventanas de salida en dormitorios ($2,000-$5,000 cada una para instalar). Agregar una entrada exterior separada para una suite cuesta $8,000-$15,000 incluyendo excavación y trabajo de concreto."
         },
         "permits": {
-          "title": "Permits & Code Compliance",
-          "description": "Building permits for basement finishing in Metro Vancouver cost $500–2,000. Legal suite conversions require additional inspections. Some municipalities offer grants for adding rental suites."
+          "title": "Permisos y cumplimiento de código",
+          "description": "Los permisos de construcción para acabado de sótano en Metro Vancouver cuestan $500-$2,000. Las conversiones a suite legal requieren inspecciones adicionales. Algunos municipios ofrecen subsidios por agregar suites de alquiler."
         }
       },
       "realProjects": {
-        "title": "Related Whole-House Renovation Projects",
-        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver, many include basement work"
+        "title": "Proyectos relacionados de remodelación integral",
+        "subtitle": "Explore {count} proyectos de remodelación completados en Greater Vancouver, muchos incluyen trabajo de sótano"
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Basement Renovation",
+        "title": "Consejos para ahorrar en su remodelación de sótano",
         "tip1": {
-          "title": "Start with Waterproofing",
-          "description": "Address any moisture issues before finishing walls. Fixing water problems after drywall is installed costs 3–5x more than doing it upfront."
+          "title": "Comenzar con la impermeabilización",
+          "description": "Aborde cualquier problema de humedad antes de terminar las paredes. Reparar problemas de agua después de instalar el drywall cuesta 3-5 veces más que hacerlo desde el inicio."
         },
         "tip2": {
-          "title": "Plan Plumbing Near Existing Lines",
-          "description": "Locating your bathroom or kitchen near existing drain stacks saves $3,000–8,000 by avoiding concrete cutting and new rough-ins."
+          "title": "Planificar plomería cerca de líneas existentes",
+          "description": "Ubicar su baño o cocina cerca de las pilas de drenaje existentes ahorra $3,000-$8,000 evitando el corte de concreto y nuevos ruteos."
         },
         "tip3": {
-          "title": "Consider a Legal Suite for ROI",
-          "description": "A legal secondary suite in Vancouver can generate $1,500–2,500/month in rental income. The renovation often pays for itself in 3–5 years."
+          "title": "Considerar una suite legal para ROI",
+          "description": "Una suite secundaria legal en Vancouver puede generar $1,500-$2,500/mes en ingresos por alquiler. La remodelación a menudo se paga sola en 3-5 años."
         },
         "tip4": {
-          "title": "Choose LVP Flooring",
-          "description": "Luxury vinyl plank is the best basement flooring choice. Waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
+          "title": "Elegir piso LVP",
+          "description": "El vinilo de tablón de lujo es la mejor opción de piso para sótano. Impermeable, cálido al tacto y 30-50% más barato que la madera dura de ingeniería. Perfecto para el clima húmedo de Vancouver."
         }
       },
       "cta": {
-        "heading": "Get Your Free Basement Renovation Quote",
-        "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de remodelación de sótano",
+        "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       },
       "faq": {
-        "q1": "How much does a basement renovation cost in Vancouver?",
-        "a1": "Basement renovation costs in Vancouver typically range from $30,000 for basic finishing to $120,000+ for a full legal suite conversion. The average cost is around $55,000 for a mid-range renovation with a bathroom addition and quality finishes. Cost per square foot ranges from $35 to $120 depending on the scope.",
-        "q2": "How long does a basement renovation take in Vancouver?",
-        "a2": "Most basement renovations in Vancouver take 6 to 12 weeks. Basic finishing (framing, drywall, flooring) can be done in 6–8 weeks. A full legal suite conversion with permits, plumbing, electrical, and inspections typically takes 10–14 weeks.",
-        "q3": "Do I need a permit for a basement renovation in Vancouver?",
-        "a3": "Yes, most basement renovations require building permits in Metro Vancouver. Any work involving framing, electrical, plumbing, or egress modifications requires a permit. Legal suite conversions need additional zoning approval. Permit costs range from $500 to $2,000 depending on the municipality.",
-        "q4": "Is a basement suite a good investment in Vancouver?",
-        "a4": "Yes, adding a legal secondary suite is one of the best renovation investments in Vancouver. A suite can generate $1,500–2,500 per month in rental income. With renovation costs of $80,000–120,000, the investment typically pays for itself in 3–5 years while also increasing your property value by 10–20%.",
-        "q5": "What is the best flooring for a basement renovation?",
-        "a5": "Luxury vinyl plank (LVP) is the most recommended basement flooring in Vancouver due to its waterproof properties and durability. It costs $4–8 per square foot installed and handles moisture better than hardwood or laminate. Engineered hardwood and ceramic tile are also good options depending on your budget and style preferences."
+        "q1": "¿Cuánto cuesta una remodelación de sótano en Vancouver?",
+        "a1": "Los costos de remodelación de sótano en Vancouver típicamente van de $30,000 para acabado básico a $120,000+ para una conversión completa a suite legal. El costo promedio es alrededor de $55,000 para una remodelación de gama media con adición de baño y acabados de calidad. El costo por pie cuadrado va de $35 a $120 dependiendo del alcance.",
+        "q2": "¿Cuánto tarda una remodelación de sótano en Vancouver?",
+        "a2": "La mayoría de las remodelaciones de sótano en Vancouver toman de 6 a 12 semanas. El acabado básico (estructura, drywall, piso) se puede hacer en 6-8 semanas. Una conversión completa a suite legal con permisos, plomería, eléctrico e inspecciones típicamente toma 10-14 semanas.",
+        "q3": "¿Necesito un permiso para una remodelación de sótano en Vancouver?",
+        "a3": "Sí, la mayoría de las remodelaciones de sótano requieren permisos de construcción en Metro Vancouver. Cualquier trabajo que involucre estructura, eléctrico, plomería o modificaciones de salida requiere un permiso. Las conversiones a suite legal necesitan aprobación de zonificación adicional. Los costos de permisos van de $500 a $2,000 dependiendo del municipio.",
+        "q4": "¿Es una suite de sótano una buena inversión en Vancouver?",
+        "a4": "Sí, agregar una suite secundaria legal es una de las mejores inversiones de remodelación en Vancouver. Una suite puede generar $1,500-$2,500 por mes en ingresos por alquiler. Con costos de remodelación de $80,000-$120,000, la inversión típicamente se paga sola en 3-5 años mientras también aumenta el valor de su propiedad en 10-20%.",
+        "q5": "¿Cuál es el mejor piso para una remodelación de sótano?",
+        "a5": "El vinilo de tablón de lujo (LVP) es el piso de sótano más recomendado en Vancouver debido a sus propiedades impermeables y durabilidad. Cuesta $4-$8 por pie cuadrado instalado y maneja la humedad mejor que la madera dura o el laminado. La madera dura de ingeniería y la baldosa cerámica también son buenas opciones según su presupuesto y preferencias de estilo."
       }
     },
     "commercialCost": {
-      "breadcrumb": "Commercial Renovation Cost",
+      "breadcrumb": "Costo de remodelación comercial",
       "hero": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026)",
-        "subtitle": "What does a commercial renovation really cost in Greater Vancouver? From small office refreshes to full restaurant build-outs, here are the real numbers based on our project experience."
+        "title": "Costo de remodelación comercial en Vancouver BC (2026)",
+        "subtitle": "¿Cuánto cuesta realmente una remodelación comercial en Greater Vancouver? Desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes, aquí están los números reales basados en nuestra experiencia."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$75 – $300/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "8–20 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "sqft": "Costo por pie cuadrado",
+        "sqftValue": "$75-$300/pie cuadrado",
+        "timeline": "Plazo típico",
+        "timelineValue": "8 a 20 semanas"
       },
       "tiers": {
-        "title": "Commercial Renovation Cost by Project Scope",
-        "subtitle": "Typical pricing for commercial projects across Greater Vancouver",
+        "title": "Costo de remodelación comercial por alcance",
+        "subtitle": "Precios típicos para proyectos comerciales en Greater Vancouver",
         "budget": {
-          "title": "Small Retail / Office Refresh",
-          "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work."
+          "title": "Renovación pequeña de retail/oficina",
+          "description": "Pintura fresca, nuevos pisos, iluminación actualizada, mejoras básicas de accesorios y cambios menores de distribución. Ideal para tiendas pequeñas, oficinas profesionales y espacios de coworking que necesitan una actualización moderna sin trabajo estructural."
         },
         "midRange": {
-          "title": "Full Commercial Fit-Out",
-          "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics."
+          "title": "Construcción comercial completa",
+          "description": "Construcción interior completa incluyendo nuevas paredes, ebanistería a medida, zonas de HVAC mejoradas, pisos de grado comercial, diseño moderno de iluminación y actualizaciones eléctricas completas. Adecuado para oficinas medianas, tiendas y clínicas."
         },
         "highEnd": {
-          "title": "Restaurant / Medical / Premium Retail",
-          "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail spaces."
+          "title": "Restaurante/Médico/Retail premium",
+          "description": "Remodelación a gran escala con instalación de cocina comercial, ventilación especializada, accesorios a medida, acabados premium, plomería extensa y requisitos de permisos complejos. Incluye restaurantes, clínicas dentales, oficinas médicas y espacios retail insignia."
         }
       },
       "factors": {
-        "title": "What Affects Your Commercial Renovation Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de su remodelación comercial?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "permits": {
-          "title": "Permits & Zoning",
-          "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications add $3,000–8,000. The City of Vancouver's development permit process can take 8–16 weeks, so factor in timeline costs."
+          "title": "Permisos y zonificación",
+          "description": "Los permisos comerciales en Metro Vancouver cuestan $2,000-$15,000 dependiendo del alcance y municipio. Las solicitudes de cambio de uso agregan $3,000-$8,000. El proceso de permiso de desarrollo de la Ciudad de Vancouver puede tomar 8-16 semanas, así que considere costos de tiempo."
         },
         "hvac": {
-          "title": "HVAC & Mechanical Systems",
-          "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant hood and make-up air systems alone cost $20,000–50,000. Office spaces need proper zoning for tenant comfort. Vancouver's energy code requires high-efficiency systems."
+          "title": "HVAC y sistemas mecánicos",
+          "description": "El HVAC comercial es un factor de costo importante con $15,000-$80,000+. Solo los sistemas de campana y aire de reposición de restaurante cuestan $20,000-$50,000. Los espacios de oficina necesitan zonificación adecuada para la comodidad del inquilino. El código de energía de Vancouver requiere sistemas de alta eficiencia."
         },
         "fireSafety": {
-          "title": "Fire Safety & Sprinklers",
-          "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify. Fire alarm upgrades run $5,000–20,000. Change-of-use triggers full fire code compliance review. Restaurants and assembly spaces have the most stringent requirements."
+          "title": "Seguridad contra incendios y rociadores",
+          "description": "Los sistemas de rociadores contra incendios cuestan $3-$8 por pie cuadrado para instalar o modificar. Las actualizaciones de alarma de incendio van de $5,000-$20,000. El cambio de uso desencadena una revisión completa del cumplimiento del código contra incendios. Los restaurantes y espacios de reunión tienen los requisitos más estrictos."
         },
         "accessibility": {
-          "title": "Accessibility Compliance",
-          "description": "BC Building Code requires barrier-free access for commercial spaces. Accessible washrooms, ramps, door widths, and signage add $5,000–25,000. Heritage buildings in Vancouver often need creative solutions to meet accessibility standards."
+          "title": "Cumplimiento de accesibilidad",
+          "description": "El código de construcción de BC requiere acceso sin barreras para espacios comerciales. Baños accesibles, rampas, anchos de puerta y señalización agregan $5,000-$25,000. Los edificios patrimoniales en Vancouver a menudo necesitan soluciones creativas para cumplir con los estándares de accesibilidad."
         },
         "electrical": {
-          "title": "Electrical & IT Infrastructure",
-          "description": "Commercial electrical upgrades cost $10,000–50,000+ depending on service capacity. Restaurants need 200–400 amp services. Modern offices require structured cabling ($3,000–15,000), server room cooling, and dedicated circuits for equipment."
+          "title": "Eléctrico e infraestructura de TI",
+          "description": "Las actualizaciones eléctricas comerciales cuestan $10,000-$50,000+ dependiendo de la capacidad de servicio. Los restaurantes necesitan servicios de 200-400 amperios. Las oficinas modernas requieren cableado estructurado ($3,000-$15,000), enfriamiento de sala de servidores y circuitos dedicados para equipos."
         },
         "disruption": {
-          "title": "Project Timing & Business Disruption",
-          "description": "Working around business hours increases costs 15–25%. Many Vancouver commercial tenants renovate during lease transitions. After-hours work adds premium labor costs. A phased renovation plan can keep portions of the business operational during construction."
+          "title": "Tiempo del proyecto e interrupción del negocio",
+          "description": "Trabajar alrededor del horario comercial aumenta los costos 15-25%. Muchos inquilinos comerciales de Vancouver remodelan durante transiciones de arrendamiento. El trabajo después del horario agrega costos premium de mano de obra. Un plan de remodelación por fases puede mantener partes del negocio operativas durante la construcción."
         }
       },
       "realProjects": {
-        "title": "Our Commercial Renovation Projects",
-        "subtitle": "Browse {count} completed commercial projects across Greater Vancouver"
+        "title": "Nuestros proyectos de remodelación comercial",
+        "subtitle": "Explore {count} proyectos comerciales completados en Greater Vancouver"
       },
       "tips": {
-        "title": "Money-Saving Tips for Commercial Renovations",
+        "title": "Consejos para ahorrar en remodelaciones comerciales",
         "tip1": {
-          "title": "Plan During Lease Negotiations",
-          "description": "Negotiate a tenant improvement allowance (TIA) with your landlord. Many Vancouver commercial leases include $20–80 per square foot in TIA that can offset renovation costs significantly."
+          "title": "Planificar durante negociaciones de arrendamiento",
+          "description": "Negocie una asignación de mejora del inquilino (TIA) con su arrendador. Muchos arrendamientos comerciales en Vancouver incluyen $20-$80 por pie cuadrado en TIA que puede compensar significativamente los costos de remodelación."
         },
         "tip2": {
-          "title": "Phase Your Renovation",
-          "description": "Divide the project into phases to spread costs and minimize business disruption. Prioritize customer-facing areas first, then tackle back-of-house improvements in a second phase."
+          "title": "Realizar la remodelación por fases",
+          "description": "Divida el proyecto en fases para distribuir costos y minimizar la interrupción del negocio. Priorice primero las áreas orientadas al cliente, luego aborde las mejoras de la parte trasera en una segunda fase."
         },
         "tip3": {
-          "title": "Reuse Existing Infrastructure",
-          "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in costs alone."
+          "title": "Reutilizar infraestructura existente",
+          "description": "Mantenga la plomería y el eléctrico en ubicaciones existentes cuando sea posible. Mover una cocina comercial o baño puede agregar $20,000-$50,000 solo en costos de ruteo."
         },
         "tip4": {
-          "title": "Choose Durable Commercial-Grade Materials",
-          "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term. Commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+          "title": "Elegir materiales duraderos de grado comercial",
+          "description": "Invierta en pisos, accesorios y acabados de grado comercial. El mayor costo inicial ahorra dinero a largo plazo. El LVT comercial dura 15-20 años vs. 5-8 años para productos de grado residencial en espacios de alto tráfico."
         }
       },
       "cta": {
-        "heading": "Get Your Free Commercial Renovation Quote",
-        "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de remodelación comercial",
+        "subtitle": "Cuéntenos sobre su proyecto comercial y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       },
       "faq": {
-        "q1": "How much does a commercial renovation cost in Vancouver?",
-        "a1": "Commercial renovation costs in Vancouver typically range from $50,000 for a small office refresh to over $1,000,000 for a full restaurant or medical facility build-out. The average commercial renovation costs around $250,000. Cost per square foot ranges from $75 to $300 depending on the type of business, scope of work, and finish level.",
-        "q2": "How long does a commercial renovation take in Vancouver?",
-        "a2": "Most commercial renovations in Vancouver take 8 to 20 weeks depending on scope. A basic office refresh can be completed in 8–10 weeks, while a full restaurant build-out or medical clinic conversion typically takes 16–20 weeks including permit approvals and inspections.",
-        "q3": "Do I need a permit for a commercial renovation in Vancouver?",
-        "a3": "Yes, nearly all commercial renovations in Metro Vancouver require building permits. Any work involving structural changes, electrical, plumbing, HVAC, or fire safety systems needs permits. Change-of-use applications are required when converting between business types. Permit costs range from $2,000 to $15,000 depending on the scope and municipality.",
-        "q4": "What is the cost per square foot for commercial renovation in Vancouver?",
-        "a4": "Commercial renovation costs in Vancouver range from $75 to $300 per square foot. Basic office refreshes run $75–$120/sq ft, mid-range retail or office fit-outs cost $120–$200/sq ft, and specialized spaces like restaurants or medical clinics range from $200–$300+ per square foot due to complex mechanical, plumbing, and ventilation requirements.",
-        "q5": "Can I renovate my commercial space while staying open for business?",
-        "a5": "Yes, phased renovations allow many Vancouver businesses to stay operational during construction. We create detailed phasing plans that section off work areas while keeping customer-facing spaces accessible. After-hours and weekend work is also an option, though it adds 15–25% to labor costs. Many of our clients choose to renovate during seasonal slow periods to minimize impact."
+        "q1": "¿Cuánto cuesta una remodelación comercial en Vancouver?",
+        "a1": "Los costos de remodelación comercial en Vancouver típicamente van de $50,000 para una pequeña renovación de oficina a más de $1,000,000 para una construcción completa de restaurante o instalación médica. La remodelación comercial promedio cuesta alrededor de $250,000. El costo por pie cuadrado va de $75 a $300 dependiendo del tipo de negocio, alcance del trabajo y nivel de acabado.",
+        "q2": "¿Cuánto tarda una remodelación comercial en Vancouver?",
+        "a2": "La mayoría de las remodelaciones comerciales en Vancouver toman de 8 a 20 semanas dependiendo del alcance. Una renovación básica de oficina se puede completar en 8-10 semanas, mientras que una construcción completa de restaurante o conversión de clínica médica típicamente toma 16-20 semanas incluyendo aprobaciones de permisos e inspecciones.",
+        "q3": "¿Necesito un permiso para una remodelación comercial en Vancouver?",
+        "a3": "Sí, casi todas las remodelaciones comerciales en Metro Vancouver requieren permisos de construcción. Cualquier trabajo que involucre cambios estructurales, eléctrico, plomería, HVAC o sistemas de seguridad contra incendios necesita permisos. Las solicitudes de cambio de uso son requeridas al convertir entre tipos de negocio. Los costos de permisos van de $2,000 a $15,000 dependiendo del alcance y municipio.",
+        "q4": "¿Cuál es el costo por pie cuadrado para una remodelación comercial en Vancouver?",
+        "a4": "Los costos de remodelación comercial en Vancouver van de $75 a $300 por pie cuadrado. Las renovaciones básicas de oficina van de $75-$120/pie cuadrado, las construcciones de gama media de retail u oficina cuestan $120-$200/pie cuadrado, y los espacios especializados como restaurantes o clínicas médicas van de $200-$300+ por pie cuadrado debido a requisitos mecánicos, de plomería y ventilación complejos.",
+        "q5": "¿Puedo remodelar mi espacio comercial mientras permanezco abierto al negocio?",
+        "a5": "Sí, las remodelaciones por fases permiten que muchos negocios de Vancouver permanezcan operativos durante la construcción. Creamos planes detallados de fases que separan las áreas de trabajo mientras mantienen accesibles los espacios orientados al cliente. El trabajo después del horario y los fines de semana también es una opción, aunque agrega 15-25% a los costos de mano de obra. Muchos de nuestros clientes eligen remodelar durante temporadas bajas estacionales para minimizar el impacto."
       }
     },
     "cabinetCost": {
-      "breadcrumb": "Cabinet Refinishing Cost",
+      "breadcrumb": "Costo de renovación de gabinetes",
       "hero": {
-        "title": "Cabinet Refinishing & Refacing Cost in Vancouver BC (2026)",
-        "subtitle": "A complete guide to cabinet refinishing, refacing, and replacement costs across Greater Vancouver. Based on our experience completing kitchen renovations with custom cabinetry throughout the region."
+        "title": "Costo de renovación y refacción de gabinetes en Vancouver BC (2026)",
+        "subtitle": "Una guía completa de costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver. Basado en nuestra experiencia completando remodelaciones de cocina con gabinetes a medida en toda la región."
       },
       "stats": {
-        "avgCost": "Avg. Refinishing",
-        "range": "Price Range",
-        "savings": "vs. Replacement",
-        "savingsValue": "Save 50–70%",
-        "timeline": "Typical Timeline",
-        "timelineValue": "3–5 days"
+        "avgCost": "Renovación promedio",
+        "range": "Rango de precio",
+        "savings": "vs. Reemplazo",
+        "savingsValue": "Ahorre 50-70%",
+        "timeline": "Plazo típico",
+        "timelineValue": "3 a 5 días"
       },
       "tiers": {
-        "title": "Cabinet Update Options by Cost",
-        "subtitle": "Three approaches to updating your kitchen cabinets in Greater Vancouver",
+        "title": "Opciones de actualización de gabinetes por costo",
+        "subtitle": "Tres enfoques para actualizar sus gabinetes de cocina en Greater Vancouver",
         "refinishing": {
-          "title": "Cabinet Refinishing",
-          "description": "Professional sanding, priming, and repainting or restaining of existing cabinet doors and frames. Best for solid wood cabinets in good structural condition. The most cost-effective way to transform your kitchen."
+          "title": "Renovación de gabinetes",
+          "description": "Lijado profesional, imprimación y repintado o reteñido de puertas y marcos de gabinetes existentes. Mejor para gabinetes de madera maciza en buena condición estructural. La forma más económica de transformar su cocina."
         },
         "refacing": {
-          "title": "Cabinet Refacing",
-          "description": "Replacing cabinet doors and drawer fronts while keeping existing cabinet boxes. Includes new veneer on visible surfaces and new hardware. A mid-range option that gives a completely new look without full demolition."
+          "title": "Refacción de gabinetes",
+          "description": "Reemplazar puertas y frentes de cajones de gabinetes mientras se mantienen las cajas existentes. Incluye nueva chapa en superficies visibles y nuevos herrajes. Una opción de gama media que da una apariencia completamente nueva sin demolición completa."
         },
         "fullReplacement": {
-          "title": "Full Cabinet Replacement",
-          "description": "Complete removal and installation of new cabinets. Choose from stock, semi-custom, or fully custom options. Best when cabinets are structurally damaged or you want to change the kitchen layout entirely."
+          "title": "Reemplazo completo de gabinetes",
+          "description": "Remoción e instalación completa de nuevos gabinetes. Elija entre opciones estándar, semi-personalizadas o totalmente a medida. Mejor cuando los gabinetes están estructuralmente dañados o quiere cambiar la distribución de la cocina por completo."
         }
       },
       "comparison": {
-        "title": "Refinishing vs. Replacement: Which Is Right for You?",
-        "subtitle": "Understanding the trade-offs helps you make the best decision for your kitchen and budget",
+        "title": "Renovación vs. reemplazo: ¿Cuál es adecuado para usted?",
+        "subtitle": "Entender las compensaciones le ayuda a tomar la mejor decisión para su cocina y presupuesto",
         "refinishing": {
-          "title": "Refinishing / Refacing",
-          "pro1": "50–70% less expensive than replacement",
-          "pro2": "Completed in 3–5 days with minimal disruption",
-          "pro3": "Eco-friendly, keeping existing cabinets out of landfill",
-          "con1": "Cannot change cabinet layout or configuration"
+          "title": "Renovación / Refacción",
+          "pro1": "50-70% menos caro que el reemplazo",
+          "pro2": "Completado en 3-5 días con interrupción mínima",
+          "pro3": "Ecológico, mantiene los gabinetes existentes fuera del vertedero",
+          "con1": "No puede cambiar la distribución o configuración del gabinete"
         },
         "replacement": {
-          "title": "Full Replacement",
-          "pro1": "Completely customize layout, size, and configuration",
-          "pro2": "Address structural issues and water damage",
-          "pro3": "Modern features like soft-close and pull-out organizers",
-          "con1": "2–4 weeks of construction and higher cost"
+          "title": "Reemplazo completo",
+          "pro1": "Personalizar completamente la distribución, tamaño y configuración",
+          "pro2": "Abordar problemas estructurales y daños por agua",
+          "pro3": "Características modernas como cierre suave y organizadores extraíbles",
+          "con1": "2-4 semanas de construcción y mayor costo"
         }
       },
       "factors": {
-        "title": "What Affects Your Cabinet Refinishing Cost?",
-        "subtitle": "Six key factors that determine your final price",
+        "title": "¿Qué afecta el costo de renovación de gabinetes?",
+        "subtitle": "Seis factores clave que determinan su precio final",
         "cabinetCount": {
-          "title": "Number of Cabinets",
-          "description": "A typical Vancouver kitchen has 20–30 cabinet doors and drawer fronts. More doors means more labour and materials. Expect to pay $150–$300 per door for professional refinishing."
+          "title": "Número de gabinetes",
+          "description": "Una cocina típica de Vancouver tiene 20-30 puertas de gabinetes y frentes de cajones. Más puertas significa más mano de obra y materiales. Espere pagar $150-$300 por puerta para renovación profesional."
         },
         "material": {
-          "title": "Cabinet Material",
-          "description": "Solid wood cabinets refinish beautifully. MDF and thermofoil cabinets require different techniques and may cost more. Laminate cabinets need special adhesion primers for lasting results."
+          "title": "Material del gabinete",
+          "description": "Los gabinetes de madera maciza se renuevan hermosamente. Los gabinetes de MDF y termofoil requieren diferentes técnicas y pueden costar más. Los gabinetes laminados necesitan imprimadores especiales de adhesión para resultados duraderos."
         },
         "finishType": {
-          "title": "Finish Type",
-          "description": "Basic paint refinishing costs less than specialty finishes. Staining, glazing, or distressed looks add $500–$1,500 to the project. Two-tone cabinet designs are popular but require extra labour."
+          "title": "Tipo de acabado",
+          "description": "La renovación de pintura básica cuesta menos que los acabados especiales. Tinte, glaseado o aspectos envejecidos agregan $500-$1,500 al proyecto. Los diseños de gabinetes de dos tonos son populares pero requieren mano de obra adicional."
         },
         "hardware": {
-          "title": "Hardware Upgrades",
-          "description": "New handles, knobs, and hinges can add $300–$2,000 depending on quality. Upgrading to soft-close hinges is highly recommended and typically costs $5–$15 per hinge installed."
+          "title": "Actualizaciones de herrajes",
+          "description": "Nuevas manijas, perillas y bisagras pueden agregar $300-$2,000 dependiendo de la calidad. Actualizar a bisagras de cierre suave es altamente recomendado y típicamente cuesta $5-$15 por bisagra instalada."
         },
         "kitchenSize": {
-          "title": "Kitchen Size & Accessibility",
-          "description": "Larger kitchens with upper and lower cabinets, pantry units, and island cabinets cost more. Hard-to-reach cabinets or intricate moulding details increase labour time."
+          "title": "Tamaño y accesibilidad de la cocina",
+          "description": "Cocinas más grandes con gabinetes superiores e inferiores, unidades de despensa y gabinetes de isla cuestan más. Los gabinetes difíciles de alcanzar o detalles de moldura intrincados aumentan el tiempo de mano de obra."
         },
         "condition": {
-          "title": "Current Cabinet Condition",
-          "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical, refacing or replacement becomes the better option."
+          "title": "Condición actual del gabinete",
+          "description": "Los gabinetes con daños por agua, deslaminación o problemas estructurales pueden necesitar reparaciones antes de la renovación. Los daños significativos pueden hacer que la renovación sea poco práctica, la refacción o el reemplazo se convierten en la mejor opción."
         }
       },
       "realProjects": {
-        "title": "Related Kitchen Projects with Cabinet Work",
-        "subtitle": "Browse our completed kitchen renovations featuring custom cabinetry across Greater Vancouver"
+        "title": "Proyectos de cocina relacionados con trabajo de gabinetes",
+        "subtitle": "Explore nuestras remodelaciones de cocina completadas con gabinetes a medida en Greater Vancouver"
       },
       "tips": {
-        "title": "Money-Saving Tips for Cabinet Updates",
+        "title": "Consejos para ahorrar en actualizaciones de gabinetes",
         "tip1": {
-          "title": "Consider Refinishing First",
-          "description": "If your cabinet boxes are structurally sound, refinishing saves 50–70% over replacement. A professional paint job on solid wood cabinets can last 10–15 years with proper care."
+          "title": "Considerar la renovación primero",
+          "description": "Si las cajas de su gabinete son estructuralmente sólidas, la renovación ahorra 50-70% sobre el reemplazo. Un trabajo profesional de pintura en gabinetes de madera maciza puede durar 10-15 años con el cuidado adecuado."
         },
         "tip2": {
-          "title": "Update Hardware for Instant Impact",
-          "description": "New handles and knobs are the easiest and cheapest upgrade. Modern hardware on freshly painted cabinets can make your kitchen look completely renovated for a fraction of the cost."
+          "title": "Actualizar herrajes para impacto instantáneo",
+          "description": "Nuevas manijas y perillas son la actualización más fácil y barata. Herrajes modernos en gabinetes recién pintados pueden hacer que su cocina se vea completamente renovada por una fracción del costo."
         },
         "tip3": {
-          "title": "Choose Durable Finishes",
-          "description": "Invest in high-quality cabinet paint or lacquer. Benjamin Moore Advance or similar cabinet-grade finishes cost more upfront but resist chipping and yellowing far better than standard wall paint."
+          "title": "Elegir acabados duraderos",
+          "description": "Invierta en pintura o laca de alta calidad para gabinetes. Benjamin Moore Advance o acabados similares de grado de gabinete cuestan más al inicio pero resisten el descascarillado y amarillamiento mucho mejor que la pintura de pared estándar."
         },
         "tip4": {
-          "title": "Bundle with a Kitchen Renovation",
-          "description": "If you are already planning a kitchen renovation, bundling cabinet work with countertop and backsplash updates often results in better overall pricing and a more cohesive design."
+          "title": "Combinar con una remodelación de cocina",
+          "description": "Si ya está planeando una remodelación de cocina, combinar el trabajo de gabinetes con actualizaciones de encimeras y salpicadero a menudo resulta en mejor precio general y un diseño más cohesivo."
         }
       },
       "faq": {
-        "q1": "How much does cabinet refinishing cost in Vancouver?",
-        "a1": "Cabinet refinishing in Vancouver typically costs $4,000 to $8,000 for a standard kitchen with 20–30 doors. This includes professional sanding, priming, and painting with cabinet-grade finish. Costs vary based on kitchen size, number of doors, and finish complexity.",
-        "q2": "How long does cabinet refinishing take?",
-        "a2": "Professional cabinet refinishing typically takes 3 to 5 days for a standard kitchen. The process includes removing doors, sanding, priming, applying multiple coats of paint or stain, and reinstalling with new hardware. You can use your kitchen throughout most of the process.",
-        "q3": "Is cabinet refinishing worth it or should I replace?",
-        "a3": "Cabinet refinishing is worth it when your existing cabinets are structurally sound and you are happy with the layout. It costs 50–70% less than replacement and takes days instead of weeks. Replace cabinets only if they have significant water damage, structural issues, or you need to change the kitchen layout.",
-        "q4": "What is the difference between cabinet refinishing and refacing?",
-        "a4": "Refinishing means sanding and repainting or restaining existing cabinet doors and frames. Refacing replaces the doors and drawer fronts entirely while keeping the existing cabinet boxes, adding new veneer to visible surfaces. Refacing costs more ($8,000–$15,000) but gives a more dramatic transformation.",
-        "q5": "Can you refinish laminate or thermofoil cabinets?",
-        "a5": "Yes, but it requires special preparation. Laminate cabinets need thorough deglossing and bonding primer for paint to adhere properly. Thermofoil cabinets can be painted but the thermofoil may peel over time. For these materials, refacing with new solid wood or MDF doors is often a better long-term investment."
+        "q1": "¿Cuánto cuesta la renovación de gabinetes en Vancouver?",
+        "a1": "La renovación de gabinetes en Vancouver típicamente cuesta $4,000 a $8,000 para una cocina estándar con 20-30 puertas. Esto incluye lijado profesional, imprimación y pintura con acabado de grado de gabinete. Los costos varían según el tamaño de la cocina, el número de puertas y la complejidad del acabado.",
+        "q2": "¿Cuánto tarda la renovación de gabinetes?",
+        "a2": "La renovación profesional de gabinetes típicamente toma 3 a 5 días para una cocina estándar. El proceso incluye remover puertas, lijar, imprimar, aplicar varias capas de pintura o tinte y reinstalar con nuevos herrajes. Puede usar su cocina durante la mayor parte del proceso.",
+        "q3": "¿Vale la pena la renovación de gabinetes o debo reemplazar?",
+        "a3": "La renovación de gabinetes vale la pena cuando sus gabinetes existentes son estructuralmente sólidos y está contento con la distribución. Cuesta 50-70% menos que el reemplazo y toma días en lugar de semanas. Reemplace gabinetes solo si tienen daños significativos por agua, problemas estructurales o necesita cambiar la distribución de la cocina.",
+        "q4": "¿Cuál es la diferencia entre renovación y refacción de gabinetes?",
+        "a4": "Renovar significa lijar y repintar o reteñir las puertas y marcos de gabinetes existentes. La refacción reemplaza las puertas y frentes de cajones por completo mientras mantiene las cajas de gabinetes existentes, agregando nueva chapa a las superficies visibles. La refacción cuesta más ($8,000-$15,000) pero da una transformación más dramática.",
+        "q5": "¿Puede renovar gabinetes laminados o de termofoil?",
+        "a5": "Sí, pero requiere preparación especial. Los gabinetes laminados necesitan desbrillado completo e imprimador de adhesión para que la pintura se adhiera correctamente. Los gabinetes de termofoil pueden pintarse pero el termofoil puede pelarse con el tiempo. Para estos materiales, la refacción con nuevas puertas de madera maciza o MDF a menudo es una mejor inversión a largo plazo."
       },
       "cta": {
-        "heading": "Get Your Free Cabinet Refinishing Quote",
-        "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de renovación de gabinetes",
+        "subtitle": "Cuéntenos sobre su proyecto de gabinetes y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       }
     },
     "basementSuiteCost": {
-      "breadcrumb": "Basement Suite Cost",
+      "breadcrumb": "Costo de suite de sótano",
       "hero": {
-        "title": "Basement Suite Conversion Cost in Vancouver BC (2026)",
-        "subtitle": "How much does it cost to build a legal basement suite in Greater Vancouver? Get detailed pricing for secondary suite conversions."
+        "title": "Costo de conversión a suite de sótano en Vancouver BC (2026)",
+        "subtitle": "¿Cuánto cuesta construir una suite legal de sótano en Greater Vancouver? Obtenga precios detallados para conversiones de suite secundaria."
       },
       "stats": {
-        "avgCost": "Average Cost",
-        "range": "Price Range",
-        "sqft": "Cost per Sq Ft",
-        "sqftValue": "$80 – $180/sq ft",
-        "timeline": "Typical Timeline",
-        "timelineValue": "10–16 weeks"
+        "avgCost": "Costo promedio",
+        "range": "Rango de precio",
+        "sqft": "Costo por pie cuadrado",
+        "sqftValue": "$80-$180/pie cuadrado",
+        "timeline": "Plazo típico",
+        "timelineValue": "10 a 16 semanas"
       },
       "tiers": {
-        "title": "Basement Suite Cost by Tier",
-        "subtitle": "Typical pricing for legal suite conversions across Greater Vancouver",
+        "title": "Costo de suite de sótano por nivel",
+        "subtitle": "Precios típicos para conversiones de suite legal en Greater Vancouver",
         "budget": {
-          "title": "Basic In-Law Suite",
-          "description": "Converting an already-finished basement into a basic suite with kitchenette, bathroom, bedroom with egress window, and interior shared entrance. Minimal structural changes. Ideal for family use."
+          "title": "Suite básica para suegros",
+          "description": "Convertir un sótano ya terminado en una suite básica con cocineta, baño, dormitorio con ventana de salida y entrada compartida interior. Cambios estructurales mínimos. Ideal para uso familiar."
         },
         "midRange": {
-          "title": "Standard Rental Suite",
-          "description": "Full legal secondary suite with separate entrance, complete kitchen, full bathroom, one bedroom with egress, fire separation, and all code-required features. Most common scope for rental income."
+          "title": "Suite estándar de alquiler",
+          "description": "Suite secundaria legal completa con entrada separada, cocina completa, baño completo, un dormitorio con salida, separación contra incendios y todas las características requeridas por código. Alcance más común para ingresos por alquiler."
         },
         "highEnd": {
-          "title": "Premium Two-Bedroom Suite",
-          "description": "High-end legal suite with two bedrooms, full kitchen with quality appliances, in-suite laundry, upgraded finishes, separate HVAC zone, soundproofing, and premium fixtures."
+          "title": "Suite premium de dos dormitorios",
+          "description": "Suite legal de alta gama con dos dormitorios, cocina completa con electrodomésticos de calidad, lavandería en suite, acabados mejorados, zona de HVAC separada, insonorización y accesorios premium."
         }
       },
       "factors": {
-        "title": "What Drives Basement Suite Conversion Costs?",
-        "subtitle": "Six key factors specific to legal suite builds",
+        "title": "¿Qué impulsa los costos de conversión a suite de sótano?",
+        "subtitle": "Seis factores clave específicos para construcciones de suite legal",
         "separateEntrance": {
-          "title": "Separate Entrance",
-          "description": "Most municipalities require a separate exterior entrance. Excavation, concrete stairs, drainage, landing, and fire-rated door typically cost $8,000–$18,000."
+          "title": "Entrada separada",
+          "description": "La mayoría de los municipios requieren una entrada exterior separada. Excavación, escaleras de concreto, drenaje, descansillo y puerta resistente al fuego típicamente cuestan $8,000-$18,000."
         },
         "fireSeparation": {
-          "title": "Fire Separation & Safety",
-          "description": "BC Building Code requires 1-hour fire-rated separation between suite and main dwelling. Fire-rated drywall, smoke alarms, and fire-rated doors cost $4,000–$8,000."
+          "title": "Separación contra incendios y seguridad",
+          "description": "El código de construcción de BC requiere separación clasificada contra incendios de 1 hora entre la suite y la vivienda principal. Drywall resistente al fuego, alarmas de humo y puertas resistentes al fuego cuestan $4,000-$8,000."
         },
         "plumbing": {
-          "title": "Kitchen & Bathroom Plumbing",
-          "description": "Full suite kitchen costs $12,000–$25,000 including cabinets, countertops, sink, and appliance hookups. Bathroom addition runs $8,000–$15,000."
+          "title": "Plomería de cocina y baño",
+          "description": "La cocina completa de la suite cuesta $12,000-$25,000 incluyendo gabinetes, encimeras, fregadero y conexiones de electrodomésticos. La adición de baño va de $8,000-$15,000."
         },
         "electrical": {
-          "title": "Electrical Panel & Wiring",
-          "description": "Suites need a dedicated sub-panel ($2,500–$5,000). Full wiring with code-required outlets and lighting costs $5,000–$10,000. Panel upgrades add $3,000–$5,000."
+          "title": "Panel eléctrico y cableado",
+          "description": "Las suites necesitan un sub-panel dedicado ($2,500-$5,000). El cableado completo con tomacorrientes e iluminación requeridos por código cuesta $5,000-$10,000. Las actualizaciones de panel agregan $3,000-$5,000."
         },
         "egress": {
-          "title": "Egress Windows & Natural Light",
-          "description": "Every bedroom needs an egress window (5.7 sq ft opening min). Installing in concrete foundation walls costs $2,500–$6,000 each. Window wells add $1,000–$2,000."
+          "title": "Ventanas de salida y luz natural",
+          "description": "Cada dormitorio necesita una ventana de salida (apertura mín. 5.7 pies cuadrados). Instalar en paredes de cimientos de concreto cuesta $2,500-$6,000 cada una. Los pozos de ventana agregan $1,000-$2,000."
         },
         "permits": {
-          "title": "Permits, Inspections & Legalization",
-          "description": "Permit fees range $1,000–$3,500. Expect 4–6 inspections. Vancouver and Burnaby offer suite incentive programs offsetting $5,000–$10,000 in costs."
+          "title": "Permisos, inspecciones y legalización",
+          "description": "Las tarifas de permisos van de $1,000-$3,500. Espere 4-6 inspecciones. Vancouver y Burnaby ofrecen programas de incentivos de suite que compensan $5,000-$10,000 en costos."
         }
       },
       "roi": {
-        "title": "Return on Investment",
-        "subtitle": "Why a legal basement suite is one of the best renovation investments in Metro Vancouver",
+        "title": "Retorno de inversión",
+        "subtitle": "Por qué una suite legal de sótano es una de las mejores inversiones de remodelación en Metro Vancouver",
         "rentalIncome": {
-          "value": "$1,800–$2,800/mo",
-          "title": "Monthly Rental Income",
-          "description": "One-bedroom suites rent for $1,800–$2,200/month. Two-bedroom suites command $2,200–$2,800/month."
+          "value": "$1,800-$2,800/mes",
+          "title": "Ingresos mensuales por alquiler",
+          "description": "Las suites de un dormitorio se alquilan por $1,800-$2,200/mes. Las suites de dos dormitorios obtienen $2,200-$2,800/mes."
         },
         "propertyValue": {
-          "value": "15–25%",
-          "title": "Property Value Increase",
-          "description": "Homes with legal secondary suites sell for 15–25% more than comparable properties without."
+          "value": "15-25%",
+          "title": "Aumento en valor de propiedad",
+          "description": "Las casas con suites secundarias legales se venden por 15-25% más que propiedades comparables sin ellas."
         },
         "paybackPeriod": {
-          "value": "3–5 years",
-          "title": "Payback Period",
-          "description": "At average rental rates, a $95,000 suite conversion pays for itself in 3–5 years through rental income alone."
+          "value": "3-5 años",
+          "title": "Período de recuperación",
+          "description": "A tarifas de alquiler promedio, una conversión de suite de $95,000 se paga sola en 3-5 años solo a través de ingresos por alquiler."
         }
       },
       "realProjects": {
-        "title": "Related Renovation Projects",
-        "subtitle": "Browse {count} completed renovation projects across Greater Vancouver"
+        "title": "Proyectos relacionados de remodelación",
+        "subtitle": "Explore {count} proyectos de remodelación completados en Greater Vancouver"
       },
       "municipalities": {
-        "title": "Suite Regulations by Municipality",
-        "subtitle": "Each Metro Vancouver city has different rules for secondary suites",
+        "title": "Regulaciones de suite por municipio",
+        "subtitle": "Cada ciudad de Metro Vancouver tiene reglas diferentes para suites secundarias",
         "vancouver": {
-          "title": "City of Vancouver",
-          "description": "Allows secondary suites in most single-family zones (RS). Affordable Housing program may provide incentives. Permits $1,500–$3,000."
+          "title": "Ciudad de Vancouver",
+          "description": "Permite suites secundarias en la mayoría de zonas unifamiliares (RS). El programa de Vivienda Asequible puede proveer incentivos. Permisos $1,500-$3,000."
         },
         "burnaby": {
-          "title": "City of Burnaby",
-          "description": "Secondary Suite Program offers grants up to $10,000 for legalization. Requires minimum 1,850 sq ft lot. Suite max 40% of floor area."
+          "title": "Ciudad de Burnaby",
+          "description": "El Programa de Suite Secundaria ofrece subsidios de hasta $10,000 para legalización. Requiere lote mínimo de 1,850 pies cuadrados. La suite máx. 40% del área de piso."
         },
         "surrey": {
-          "title": "City of Surrey",
-          "description": "Allows suites in most single-family zones. Streamlined permit process. One additional off-street parking space required."
+          "title": "Ciudad de Surrey",
+          "description": "Permite suites en la mayoría de zonas unifamiliares. Proceso de permiso simplificado. Se requiere un espacio adicional de estacionamiento fuera de la calle."
         },
         "coquitlam": {
-          "title": "City of Coquitlam",
-          "description": "Permits suites in RS-1 and RS-2 zones. Requires minimum lot size and separate utility meters. Pre-application consultations available."
+          "title": "Ciudad de Coquitlam",
+          "description": "Permite suites en zonas RS-1 y RS-2. Requiere tamaño mínimo de lote y medidores de servicios separados. Consultas previas a la solicitud disponibles."
         }
       },
       "tips": {
-        "title": "Money-Saving Tips for Your Basement Suite",
+        "title": "Consejos para ahorrar en su suite de sótano",
         "tip1": {
-          "title": "Apply for Municipal Incentives First",
-          "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction. Some require pre-approval. Savings: $5,000–$10,000."
+          "title": "Solicitar incentivos municipales primero",
+          "description": "Vancouver, Burnaby y otras ciudades ofrecen subsidios para creación de suite legal. Solicite antes de la construcción. Algunos requieren aprobación previa. Ahorros: $5,000-$10,000."
         },
         "tip2": {
-          "title": "Plan Kitchen Near Existing Plumbing",
-          "description": "Locating the suite kitchen near existing drain stacks saves thousands. Avoiding concrete cutting saves $3,000–$8,000."
+          "title": "Planificar cocina cerca de plomería existente",
+          "description": "Ubicar la cocina de la suite cerca de pilas de drenaje existentes ahorra miles. Evitar el corte de concreto ahorra $3,000-$8,000."
         },
         "tip3": {
-          "title": "Choose a Side-Entry Entrance",
-          "description": "Side-entry entrances cost significantly less than rear entries requiring major excavation. Savings: $5,000–$10,000."
+          "title": "Elegir entrada lateral",
+          "description": "Las entradas laterales cuestan significativamente menos que las entradas traseras que requieren excavación importante. Ahorros: $5,000-$10,000."
         },
         "tip4": {
-          "title": "Invest in Soundproofing Upfront",
-          "description": "Resilient channel and insulation between floors costs $2,000–$4,000 during construction. After drywall: 3–5x more and less effective."
+          "title": "Invertir en insonorización por adelantado",
+          "description": "Canal resiliente y aislamiento entre pisos cuesta $2,000-$4,000 durante la construcción. Después del drywall: 3-5 veces más y menos efectivo."
         }
       },
       "related": {
-        "title": "Explore More Renovation Guides",
-        "basementGuide": "General Basement Renovation Guide",
-        "kitchenGuide": "Kitchen Renovation Cost Guide",
-        "bathroomGuide": "Bathroom Renovation Cost Guide",
-        "allGuides": "All Cost Guides"
+        "title": "Explore más guías de remodelación",
+        "basementGuide": "Guía general de remodelación de sótano",
+        "kitchenGuide": "Guía de costos de remodelación de cocina",
+        "bathroomGuide": "Guía de costos de remodelación de baño",
+        "allGuides": "Todas las guías de costos"
       },
       "cta": {
-        "heading": "Get Your Free Basement Suite Quote",
-        "subtitle": "Tell us about your suite project and receive a detailed estimate within 48 hours, no obligation."
+        "heading": "Reciba su cotización gratis de suite de sótano",
+        "subtitle": "Cuéntenos sobre su proyecto de suite y reciba una estimación detallada en menos de 48 horas, sin compromiso."
       },
       "faq": {
-        "q1": "How much does a basement suite cost in Vancouver?",
-        "a1": "A legal basement suite conversion typically costs $60,000–$150,000. Basic in-law suite: $60,000–$85,000. Standard rental suite: $85,000–$120,000. Premium two-bedroom: $120,000–$150,000+. Average: ~$95,000.",
-        "q2": "Do I need a permit for a basement suite in Vancouver?",
-        "a2": "Yes, a building permit is required for any suite conversion in Metro Vancouver. Permits cost $1,000–$3,500. Expect 4–6 inspections. Operating without a permit risks fines, insurance issues, and liability.",
-        "q3": "How long does it take to build a basement suite?",
-        "a3": "Typically 10–16 weeks: permit processing (2–6 weeks), construction (8–12 weeks), and final inspections. Complex projects with structural work can take 16–20 weeks.",
-        "q4": "What is the minimum ceiling height for a basement suite in BC?",
-        "a4": "BC Building Code requires minimum 6 feet 5 inches (1.95m) for habitable rooms. If ceilings are too low, underpinning (lowering the floor) costs $15,000–$30,000.",
-        "q5": "Is a basement suite a good investment in Vancouver?",
-        "a5": "Yes. Rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
+        "q1": "¿Cuánto cuesta una suite de sótano en Vancouver?",
+        "a1": "Una conversión a suite legal de sótano típicamente cuesta $60,000-$150,000. Suite básica para suegros: $60,000-$85,000. Suite estándar de alquiler: $85,000-$120,000. Premium dos dormitorios: $120,000-$150,000+. Promedio: ~$95,000.",
+        "q2": "¿Necesito un permiso para una suite de sótano en Vancouver?",
+        "a2": "Sí, se requiere un permiso de construcción para cualquier conversión de suite en Metro Vancouver. Los permisos cuestan $1,000-$3,500. Espere 4-6 inspecciones. Operar sin permiso arriesga multas, problemas de seguro y responsabilidad.",
+        "q3": "¿Cuánto tarda construir una suite de sótano?",
+        "a3": "Típicamente 10-16 semanas: procesamiento de permisos (2-6 semanas), construcción (8-12 semanas) e inspecciones finales. Los proyectos complejos con trabajo estructural pueden tomar 16-20 semanas.",
+        "q4": "¿Cuál es la altura mínima del techo para una suite de sótano en BC?",
+        "a4": "El código de construcción de BC requiere mínimo 6 pies 5 pulgadas (1.95m) para habitaciones habitables. Si los techos son demasiado bajos, el rebajamiento (bajar el piso) cuesta $15,000-$30,000.",
+        "q5": "¿Es una suite de sótano una buena inversión en Vancouver?",
+        "a5": "Sí. Los ingresos por alquiler de $1,800-$2,800/mes significan que la inversión de ~$95,000 se paga sola en 3-5 años. El valor de la propiedad aumenta 15-25%. Los ingresos de la suite también ayudan con la calificación hipotecaria."
       }
     }
   },
