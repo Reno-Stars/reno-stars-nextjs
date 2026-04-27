@@ -8,6 +8,7 @@ import { Link } from '@/navigation';
 import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { trackPhoneClick } from '@/lib/analytics';
+import { pickLocale } from '@/lib/utils';
 import { NAVY, GOLD } from '@/lib/theme';
 import { WORKSAFE_BC_LOGO } from '@/lib/data';
 
@@ -197,7 +198,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
   const [wechatModalOpen, setWechatModalOpen] = useState(false);
   const wechatTriggerRef = useRef<HTMLButtonElement>(null);
   const toggleWechatModal = useCallback(() => setWechatModalOpen((prev) => !prev), []);
-  const localizedServices = useMemo(() => services.map((s) => ({ slug: s.slug, title: s.title[locale] })), [services, locale]);
+  const localizedServices = useMemo(() => services.map((s) => ({ slug: s.slug, title: pickLocale(s.title, locale) })), [services, locale]);
 
   const quickLinks = useMemo(() => [
     { href: '/', label: t('nav.home') },
@@ -341,7 +342,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 href={`/areas/${area.slug}` as '/'}
                 className="text-sm text-white/80 hover:text-white transition-colors"
               >
-                {area.name[locale]}
+                {pickLocale(area.name, locale)}
               </Link>
             ))}
           </div>
