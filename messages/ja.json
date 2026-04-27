@@ -1,228 +1,228 @@
 {
   "lang": {
-    "toggle": "中文"
+    "toggle": "English"
   },
   "nav": {
-    "home": "Home",
-    "services": "Services",
-    "gallery": "Gallery",
-    "projects": "Projects",
-    "testimonials": "Testimonials",
-    "contact": "Contact",
-    "contactUs": "Contact Us",
-    "reviews": "Reviews",
-    "back": "Back",
-    "backToHome": "Back to Home",
-    "blog": "Blog",
-    "areas": "Areas",
-    "design": "Design",
-    "benefits": "Features",
-    "process": "Workflow",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "switchLanguage": "Switch to Chinese",
-    "blogAndNews": "Blog & News",
-    "toggleAreas": "Toggle areas menu",
-    "showroom": "Showroom",
-    "guides": "Guides",
-    "about": "About Us",
-    "financing": "Financing",
-    "beforeAfter": "Before & After",
-    "features": "Features"
+    "home": "ホーム",
+    "services": "サービス",
+    "gallery": "ギャラリー",
+    "projects": "施工事例",
+    "testimonials": "お客様の声",
+    "contact": "お問い合わせ",
+    "contactUs": "お問い合わせ",
+    "reviews": "レビュー",
+    "back": "戻る",
+    "backToHome": "ホームへ戻る",
+    "blog": "ブログ",
+    "areas": "対応エリア",
+    "design": "デザイン",
+    "benefits": "強み",
+    "process": "施工フロー",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "switchLanguage": "言語を切り替える",
+    "blogAndNews": "ブログ・お知らせ",
+    "toggleAreas": "対応エリアメニュー",
+    "showroom": "ショールーム",
+    "guides": "コストガイド",
+    "about": "会社概要",
+    "financing": "ファイナンス",
+    "beforeAfter": "施工前後",
+    "features": "強み"
   },
   "cta": {
-    "getQuote": "Get Quote",
-    "getFreeQuote": "Get Free Quote",
-    "getYourFreeQuote": "Get Your Free Quote",
-    "freeQuoteProject": "Get a Free Quote for Your Project!",
-    "freeQuote": "Get a Free Quote",
-    "startProject": "Start Your Project",
-    "startProjectToday": "Start Your Project Today",
-    "getStarted": "Get Started",
-    "viewProjects": "View Projects",
-    "viewOurWork": "View Our Work",
-    "ourServices": "Our Services",
-    "learnMore": "Learn More",
-    "exploreService": "Explore {service}",
-    "sendMessage": "Send Message",
-    "submitInquiry": "Get My Free Quote",
-    "bookAppointment": "Book an Appointment",
-    "callNow": "Call Now",
-    "requestConsultation": "Request Free Consultation",
-    "viewAllProjects": "View All Projects",
-    "viewAllServices": "View All Services",
-    "scheduleConsultation": "Schedule Consultation"
+    "getQuote": "見積もり依頼",
+    "getFreeQuote": "無料見積もり",
+    "getYourFreeQuote": "無料見積もりを取得",
+    "freeQuoteProject": "プロジェクトの無料見積もりを依頼!",
+    "freeQuote": "無料見積もりを依頼",
+    "startProject": "プロジェクトを始める",
+    "startProjectToday": "今日からプロジェクトを始める",
+    "getStarted": "はじめる",
+    "viewProjects": "施工事例を見る",
+    "viewOurWork": "施工事例を見る",
+    "ourServices": "サービス一覧",
+    "learnMore": "詳細を見る",
+    "exploreService": "{service} を詳しく見る",
+    "sendMessage": "メッセージを送信",
+    "submitInquiry": "無料見積もりを取得",
+    "bookAppointment": "予約する",
+    "callNow": "今すぐ電話",
+    "requestConsultation": "無料相談を依頼",
+    "viewAllProjects": "すべての施工事例を見る",
+    "viewAllServices": "すべてのサービスを見る",
+    "scheduleConsultation": "相談を予約"
   },
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
-    "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Home Renovation Vancouver Experts",
-    "renovationRemodeling": "Renovation & Remodeling",
-    "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
-    "premiumRenovations": "Premium Renovations",
-    "elevateYourSpace": "Elevate Your Space",
-    "toLuxury": "To Luxury",
-    "buildingBetterSpaces": "Building Better Spaces",
-    "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "Vancouver home renovation company with {experience}+ years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty. Kitchen, bathroom and whole house renovations across Metro Vancouver.",
-    "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
-    "realEstateDesc": "From complete home renovation to real estate agents and professional photography. We partner with trusted professionals to deliver everything under one roof."
+    "yearsOfExcellence": "卓越した実績の年数",
+    "transformYourSpace": "バンクーバーの住宅リノベーションのプロ",
+    "renovationRemodeling": "リノベーション・リモデリング",
+    "thoughtfulSpaces": "心を込めて作る、思い遣りの空間",
+    "premiumRenovations": "プレミアムリノベーション",
+    "elevateYourSpace": "あなたの空間を",
+    "toLuxury": "ラグジュアリーへ",
+    "buildingBetterSpaces": "より良い空間づくり",
+    "professionalExcellence": "プロフェッショナルなリノベーション",
+    "professionalExcellenceDesc": "{experience}年以上の経験、{coverage}のCGL保険、有効なWCBカバー、最大3年間の保証を備えたバンクーバーの住宅リノベーション会社。メトロバンクーバー全域でキッチン、バスルーム、住宅全体のリノベーションを手掛けています。",
+    "realEstateTitle": "ワンストップサービス: リノベーション + 不動産 + 撮影",
+    "realEstateDesc": "住宅の総合リノベーションから不動産仲介、プロカメラマンの撮影まで。信頼できるプロフェッショナルと連携し、すべてをワンストップで提供します。"
   },
   "section": {
-    "serviceAreas": "Service Areas",
-    "services": "Services",
-    "ourServices": "Our Services",
-    "ourProfessionalServices": "Our Professional Services",
-    "aboutUs": "About Us",
-    "gallery": "Gallery",
-    "ourWork": "Our Work",
-    "ourPortfolio": "Our Portfolio",
-    "portfolio": "Portfolio",
-    "testimonials": "Testimonials",
-    "whatOurClientsSay": "What Our Clients Say",
-    "clientTestimonials": "Client Testimonials",
-    "clientReviews": "Client Reviews",
-    "awardsRecognition": "Awards & Recognition",
-    "blog": "Blog",
-    "blogTips": "Blog & Tips",
-    "visitShowroom": "Visit Our Showroom",
-    "contact": "Contact",
-    "getInTouch": "Get In Touch",
-    "ourProjects": "Our Projects",
-    "projectsH1": "Vancouver Renovation Portfolio",
-    "whoWeAre": "Who We Are",
-    "whatWeDo": "What We Do",
-    "resources": "Resources",
-    "whyUs": "Why Us",
-    "areasWeServe": "Areas We Serve",
-    "servicesSubtitle": "Professional renovation solutions for your home",
-    "servicesSubtitle2": "Comprehensive renovation solutions tailored to your needs",
-    "servicesSubtitle3": "Expert renovation solutions for every room",
-    "servicesSubtitle4": "Exceptional craftsmanship across all aspects of home renovation",
-    "aboutSubtitle": "Our story and commitment to excellence",
-    "aboutSubtitle2": "Our story, values, and commitment to excellence",
-    "aboutSubtitle3": "Our story and commitment to your home",
-    "gallerySubtitle": "Recent renovation projects",
-    "gallerySubtitle2": "Recent projects we're proud of",
-    "gallerySubtitle3": "See the transformations we've created",
-    "gallerySubtitle4": "A showcase of our finest luxury renovation projects",
-    "gallerySubtitle5": "Showcasing excellence in every project",
-    "testimonialsSubtitle": "Real feedback from satisfied customers",
-    "testimonialsSubtitle2": "Hear from our satisfied clients",
-    "testimonialsSubtitle3": "What our customers say about us",
-    "testimonialsSubtitle4": "Trusted by homeowners and businesses across the Lower Mainland",
-    "blogSubtitle": "Vancouver Renovation Tips & Blog Articles",
-    "contactSubtitle": "Ready to start your renovation project?",
-    "contactSubtitle2": "Ready to transform your space?",
-    "contactSubtitle3": "Let's discuss your renovation project",
-    "sendUsMessage": "Send Us a Message",
-    "contactInfo": "Contact Information",
-    "quickLinks": "Quick Links",
-    "servingAreas": "Serving {areas} with excellence and dedication",
-    "designInspirations": "Design Inspirations",
-    "designSubtitle": "Explore beautiful renovation ideas for your home",
-    "benefitsTitle": "Why Choose Reno Stars",
-    "benefitsSubtitle": "The advantages of working with our professional team"
+    "serviceAreas": "対応エリア",
+    "services": "サービス",
+    "ourServices": "サービス一覧",
+    "ourProfessionalServices": "プロフェッショナルなサービス",
+    "aboutUs": "会社概要",
+    "gallery": "ギャラリー",
+    "ourWork": "施工実績",
+    "ourPortfolio": "ポートフォリオ",
+    "portfolio": "ポートフォリオ",
+    "testimonials": "お客様の声",
+    "whatOurClientsSay": "お客様の声",
+    "clientTestimonials": "お客様の声",
+    "clientReviews": "お客様レビュー",
+    "awardsRecognition": "受賞・実績",
+    "blog": "ブログ",
+    "blogTips": "ブログ・お役立ち情報",
+    "visitShowroom": "ショールームのご案内",
+    "contact": "お問い合わせ",
+    "getInTouch": "お気軽にご連絡ください",
+    "ourProjects": "施工事例",
+    "projectsH1": "バンクーバーのリノベーション・ポートフォリオ",
+    "whoWeAre": "会社紹介",
+    "whatWeDo": "事業内容",
+    "resources": "リソース",
+    "whyUs": "選ばれる理由",
+    "areasWeServe": "対応エリア",
+    "servicesSubtitle": "あなたの家のためのプロフェッショナルなリノベーション",
+    "servicesSubtitle2": "ご要望に合わせた総合的なリノベーション",
+    "servicesSubtitle3": "あらゆる部屋のためのエキスパート・リノベーション",
+    "servicesSubtitle4": "住宅リノベーションのあらゆる側面で卓越した職人技",
+    "aboutSubtitle": "私たちのストーリーと卓越への約束",
+    "aboutSubtitle2": "ストーリー、価値観、卓越への約束",
+    "aboutSubtitle3": "私たちのストーリーと住まいへの想い",
+    "gallerySubtitle": "最近のリノベーション実績",
+    "gallerySubtitle2": "誇りを持って手掛けた最近のプロジェクト",
+    "gallerySubtitle3": "私たちが生み出したトランスフォーメーション",
+    "gallerySubtitle4": "ラグジュアリーリノベーションの最高傑作",
+    "gallerySubtitle5": "すべてのプロジェクトに込めた卓越性",
+    "testimonialsSubtitle": "ご満足いただいたお客様からの本物のフィードバック",
+    "testimonialsSubtitle2": "ご満足いただいたお客様の声",
+    "testimonialsSubtitle3": "お客様からのお声",
+    "testimonialsSubtitle4": "ロウアー・メインランド全域の住宅オーナー・事業主に信頼されています",
+    "blogSubtitle": "バンクーバーのリノベーション情報・お役立ち記事",
+    "contactSubtitle": "リノベーションを始める準備はできましたか?",
+    "contactSubtitle2": "あなたの空間を変える準備はできましたか?",
+    "contactSubtitle3": "リノベーションプロジェクトについてお話ししましょう",
+    "sendUsMessage": "メッセージをお送りください",
+    "contactInfo": "連絡先情報",
+    "quickLinks": "クイックリンク",
+    "servingAreas": "{areas}に誠意と情熱を持って対応しています",
+    "designInspirations": "デザインのインスピレーション",
+    "designSubtitle": "あなたの家のための美しいリノベーションのアイデア",
+    "benefitsTitle": "Reno Starsが選ばれる理由",
+    "benefitsSubtitle": "プロフェッショナルチームと働く利点"
   },
   "about": {
-    "ourJourney": "Our Journey",
-    "whatWeOffer": "What We Offer",
-    "ourValues": "Our Values",
-    "whyChooseUs": "Why Choose Us?",
-    "letsBuildTogether": "Let's Build Together",
-    "ourPromise": "Our Promise"
+    "ourJourney": "私たちの歩み",
+    "whatWeOffer": "提供サービス",
+    "ourValues": "私たちの価値観",
+    "whyChooseUs": "なぜ私たちを選ぶのか?",
+    "letsBuildTogether": "一緒に作りましょう",
+    "ourPromise": "私たちの約束"
   },
   "design": {
-    "seoTitle": "Professional Renovation Design & 3D Rendering",
+    "seoTitle": "プロフェッショナルなリノベーションデザイン・3Dレンダリング",
     "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
     "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
-    "designFeature1Title": "3D Visualization",
-    "designFeature1Desc": "Photorealistic renderings let you see every detail: materials, lighting, and layout, before construction begins.",
-    "designFeature2Title": "Tailored to You",
-    "designFeature2Desc": "Every design is customized to your space, lifestyle, and budget. No cookie-cutter solutions.",
-    "designFeature3Title": "Design to Build",
-    "designFeature3Desc": "Our team handles the full journey from concept to completion, ensuring the final result matches the vision.",
-    "noDesigns": "Design gallery coming soon. Please check back later."
+    "designFeature1Title": "3Dビジュアライゼーション",
+    "designFeature1Desc": "材料、照明、レイアウトのすべての細部を、施工開始前にフォトリアリスティックなレンダリングで確認できます。",
+    "designFeature2Title": "あなただけのデザイン",
+    "designFeature2Desc": "すべてのデザインをあなたの空間、ライフスタイル、予算に合わせてカスタマイズ。型にはまった解決策はありません。",
+    "designFeature3Title": "デザインから施工まで",
+    "designFeature3Desc": "コンセプトから完成まで、私たちのチームが全工程を管理し、最終結果がビジョン通りになることを保証します。",
+    "noDesigns": "デザインギャラリーは間もなく公開予定です。後ほどご確認ください。"
   },
   "stats": {
-    "yearsExperience": "Years Experience",
-    "teamMembers": "Team Members",
-    "expertTeamMembers": "Expert Team Members",
-    "expertTeam": "Expert Team",
-    "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "$5M CGL Insurance",
-    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
-    "wcbCoverage": "Active WCB Coverage",
-    "projectsCompleted": "Projects Completed",
-    "projectsDone": "Projects Done",
-    "happyClients": "Happy Clients",
-    "satisfaction": "Satisfaction",
-    "satisfactionRate": "Satisfaction Rate",
-    "clientSatisfaction": "Client Satisfaction",
-    "support": "Support",
-    "quality": "Quality",
-    "projects": "Projects",
-    "years": "Years",
-    "averageRating": "Average Rating",
-    "areasServed": "Areas Served",
-    "rating": "Rating",
-    "srStats": "Company Statistics",
-    "srTrustBadges": "Trust Badges and Certifications"
+    "yearsExperience": "経験年数",
+    "teamMembers": "チームメンバー",
+    "expertTeamMembers": "エキスパートチームメンバー",
+    "expertTeam": "エキスパートチーム",
+    "expertCraftsmen": "熟練の職人",
+    "liabilityCoverage": "$5M CGL保険",
+    "fullCoverage": "$5M CGL保険・有効なWCBカバー・最大3年間の保証",
+    "wcbCoverage": "有効なWCBカバー",
+    "projectsCompleted": "施工完了プロジェクト数",
+    "projectsDone": "完了したプロジェクト",
+    "happyClients": "ご満足いただいたお客様",
+    "satisfaction": "満足度",
+    "satisfactionRate": "満足率",
+    "clientSatisfaction": "顧客満足度",
+    "support": "サポート",
+    "quality": "品質",
+    "projects": "プロジェクト",
+    "years": "年",
+    "averageRating": "平均評価",
+    "areasServed": "対応エリア",
+    "rating": "評価",
+    "srStats": "会社統計",
+    "srTrustBadges": "信頼バッジ・認証"
   },
   "form": {
-    "name": "Name",
-    "fullName": "Full Name",
-    "email": "Email",
-    "emailAddress": "Email Address",
-    "phone": "Phone",
-    "phoneNumber": "Phone Number",
-    "message": "Message",
-    "projectDetails": "Project Details",
-    "service": "Service",
-    "serviceInterestedIn": "Service Interested In",
-    "selectService": "Select a service",
-    "namePlaceholder": "Your name",
-    "namePlaceholder2": "John Smith",
+    "name": "お名前",
+    "fullName": "フルネーム",
+    "email": "メールアドレス",
+    "emailAddress": "メールアドレス",
+    "phone": "電話番号",
+    "phoneNumber": "電話番号",
+    "message": "メッセージ",
+    "projectDetails": "プロジェクトの詳細",
+    "service": "サービス",
+    "serviceInterestedIn": "ご興味のあるサービス",
+    "selectService": "サービスを選択",
+    "namePlaceholder": "お名前",
+    "namePlaceholder2": "山田 太郎",
     "emailPlaceholder": "your.email@example.com",
     "emailPlaceholder2": "your@email.com",
-    "emailPlaceholder3": "john@example.com",
-    "phonePlaceholder": "Your phone number",
+    "emailPlaceholder3": "yamada@example.com",
+    "phonePlaceholder": "電話番号",
     "phonePlaceholder2": "(555) 123-4567",
     "phonePlaceholder3": "(778) 960-7999",
     "phonePlaceholder4": "123-456-7890",
-    "messagePlaceholder": "Tell us about your project...",
-    "messagePlaceholder2": "Tell us about your renovation project...",
-    "sending": "Sending...",
-    "success": "Thank you! Your message has been sent successfully.",
-    "successTitle": "Message Sent!",
-    "error": "Something went wrong. Please try again.",
-    "responsePromise": "We reply within 24 hours with a detailed estimate."
+    "messagePlaceholder": "プロジェクトについてお聞かせください...",
+    "messagePlaceholder2": "リノベーションプロジェクトについてお聞かせください...",
+    "sending": "送信中...",
+    "success": "ありがとうございます!メッセージを送信しました。",
+    "successTitle": "送信完了!",
+    "error": "問題が発生しました。もう一度お試しください。",
+    "responsePromise": "24時間以内に詳細な見積もりをお送りします。"
   },
   "footer": {
-    "allRightsReserved": "All Rights Reserved",
+    "allRightsReserved": "全著作権所有",
     "allRights": "All rights reserved.",
-    "licensedInsured": "Licensed & Fully Insured (CGL + WCB)",
-    "freeEstimates": "Free Estimates",
-    "mapLocation": "Map Location",
+    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)",
+    "freeEstimates": "無料見積もり",
+    "mapLocation": "地図",
     "wechatId": "WeChat ID: {id}",
-    "quickLinks": "Quick Links",
-    "scanToConnect": "Scan to Connect"
+    "quickLinks": "クイックリンク",
+    "scanToConnect": "スキャンしてつながる"
   },
   "label": {
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
-    "location": "Location",
-    "contact": "Contact",
-    "quality": "Quality",
-    "whyChooseUs": "Why Choose Us",
-    "verifiedCustomer": "Verified Customer",
-    "new": "NEW",
-    "new2": "New",
-    "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
-    "featured": "Featured"
+    "phone": "電話",
+    "email": "メール",
+    "address": "住所",
+    "location": "所在地",
+    "contact": "連絡先",
+    "quality": "品質",
+    "whyChooseUs": "選ばれる理由",
+    "verifiedCustomer": "認証済みのお客様",
+    "new": "新着",
+    "new2": "新着",
+    "businessHours": "営業時間",
+    "businessHoursShort": "月〜金 8時〜18時、土 9時〜16時",
+    "businessHoursDetail": "月〜金: 8:00〜18:00\n土: 9:00〜16:00\n日: 休業",
+    "featured": "おすすめ"
   },
   "projects": {
     "ourProjects": "OUR\nPROJECTS",
@@ -232,10 +232,10 @@
     "subtitle4": "Discover our diverse portfolio of renovation projects across the Lower Mainland.",
     "subtitle5": "BOLD RENOVATIONS. DRAMATIC RESULTS. NO COMPROMISES.",
     "readyToStart": "READY TO START\nYOUR PROJECT?",
-    "readyToStart2": "Ready to Start Your Project?",
-    "readyToTransform": "Ready to Transform Your Space?",
-    "readyToTransformHome": "Ready to Transform Your Home?",
-    "letsBuildAmazing": "Let's Build Something Amazing",
+    "readyToStart2": "プロジェクトを始める準備はできましたか?",
+    "readyToTransform": "空間を変える準備はできましたか?",
+    "readyToTransformHome": "住まいを変える準備はできましたか?",
+    "letsBuildAmazing": "素晴らしいものを作りましょう",
     "ctaSubtitle": "Let's bring your renovation vision to life with our expert team.",
     "ctaSubtitle2": "Let's create something beautiful together. Start your renovation journey today.",
     "ctaSubtitle3": "Let our experienced team bring your renovation vision to life with quality craftsmanship.",
@@ -243,193 +243,193 @@
     "ctaSubtitle5": "STOP DREAMING. START BUILDING.",
     "ctaSubtitle6": "Let us transform your vision into reality with {years} years of experience and a proven track record of excellence.",
     "ctaSubtitle7": "Let us transform your vision into reality with {years} years of experience.",
-    "viewProject": "View Project",
-    "projectDetails": "Project Details",
-    "allProjects": "All Projects",
-    "noProjectsFound": "No projects found matching your criteria.",
-    "relatedProjects": "Related Projects",
-    "featuredProjects": "Featured Projects",
-    "categoryTitle": "{category} Renovation Projects",
-    "categorySubtitle": "Explore our {category} renovation portfolio and see how we transform spaces into dream homes.",
-    "openLightbox": "Click to enlarge image",
-    "viewImage": "View image",
-    "imageGallery": "Image gallery",
-    "previousImage": "Previous image",
-    "nextImage": "Next image",
-    "beforeLabel": "Before",
-    "afterLabel": "After",
-    "clickToSeeBefore": "Click to see before",
-    "clickToSeeAfter": "Click to see after",
-    "clickToToggle": "Click to toggle",
-    "externalProducts": "Products Used",
-    "noImages": "No images available",
-    "viewFullscreen": "View fullscreen",
-    "aboutService": "About our {service} services",
-    "serviceInCity": "{service} in {city}"
+    "viewProject": "プロジェクトを見る",
+    "projectDetails": "プロジェクト詳細",
+    "allProjects": "すべての施工事例",
+    "noProjectsFound": "条件に一致するプロジェクトはありませんでした。",
+    "relatedProjects": "関連プロジェクト",
+    "featuredProjects": "注目のプロジェクト",
+    "categoryTitle": "{category}リノベーションのプロジェクト",
+    "categorySubtitle": "{category}のリノベーション・ポートフォリオを見て、空間を理想の住まいに変える方法をご覧ください。",
+    "openLightbox": "クリックで拡大",
+    "viewImage": "画像を見る",
+    "imageGallery": "画像ギャラリー",
+    "previousImage": "前の画像",
+    "nextImage": "次の画像",
+    "beforeLabel": "ビフォー",
+    "afterLabel": "アフター",
+    "clickToSeeBefore": "クリックでビフォーを表示",
+    "clickToSeeAfter": "クリックでアフターを表示",
+    "clickToToggle": "クリックで切り替え",
+    "externalProducts": "使用した製品",
+    "noImages": "画像はありません",
+    "viewFullscreen": "全画面表示",
+    "aboutService": "{service}について",
+    "serviceInCity": "{city}での{service}"
   },
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "所在地",
+    "category": "カテゴリ",
+    "budget": "予算",
+    "spaceType": "空間タイプ",
+    "serviceScope": "サービス範囲",
+    "duration": "期間",
+    "challenge": "課題",
+    "solution": "ソリューション",
+    "close": "閉じる",
+    "viewDetails": "詳細を見る"
   },
   "lightbox": {
-    "previous": "Previous image",
-    "next": "Next image",
-    "close": "Close"
+    "previous": "前の画像",
+    "next": "次の画像",
+    "close": "閉じる"
   },
   "gallery": {
     "beforeShort": "B",
     "afterShort": "A"
   },
   "filter": {
-    "allCategories": "All Categories",
-    "location": "Location",
-    "allLocations": "All Locations",
-    "spaceType": "Space Type",
-    "allSpaceTypes": "All Space Types",
-    "budget": "Budget",
-    "allBudgets": "All Budgets",
-    "showing": "Showing",
-    "projects": "{count, plural, one {project} other {projects}}",
-    "clearAll": "Clear Filters",
-    "browseByCategory": "Browse by Category",
-    "swipeToSeeMore": "Swipe to see more →",
-    "noProjectsMatch": "No projects match your filters.",
-    "pagination": "Projects pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingProjects": "Showing {start}-{end} of {total} projects",
-    "search": "Search projects..."
+    "allCategories": "すべてのカテゴリ",
+    "location": "場所",
+    "allLocations": "すべての場所",
+    "spaceType": "空間タイプ",
+    "allSpaceTypes": "すべての空間タイプ",
+    "budget": "予算",
+    "allBudgets": "すべての予算",
+    "showing": "表示中",
+    "projects": "{count, plural, one {プロジェクト} other {プロジェクト}}",
+    "clearAll": "フィルターをクリア",
+    "browseByCategory": "カテゴリで探す",
+    "swipeToSeeMore": "スワイプして見る →",
+    "noProjectsMatch": "条件に一致するプロジェクトはありません。",
+    "pagination": "プロジェクトのページネーション",
+    "previous": "前へ",
+    "next": "次へ",
+    "previousPage": "前のページへ",
+    "nextPage": "次のページへ",
+    "showingProjects": "{total}件中 {start}〜{end}件を表示",
+    "search": "プロジェクトを検索..."
   },
   "category": {
-    "wholeHouse": "Whole House"
+    "wholeHouse": "住宅全体"
   },
   "services": {
     "kitchen": {
-      "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
+      "title": "キッチンリノベーション",
+      "description": "モダンなデザイン、カスタムキャビネット、プレミアムカウンタートップによる完全なキッチンリモデリング。",
       "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
     },
     "bathroom": {
-      "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
+      "title": "バスルームリノベーション",
+      "description": "ラグジュアリーな設備と仕上げで、バスルームをスパのような空間に変えます。",
       "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
     },
     "wholeHouse": {
-      "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
+      "title": "住宅全体リノベーション",
+      "description": "コンセプトから完成までの本格的な住宅変革。",
       "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
     },
     "basement": {
-      "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
+      "title": "地下室リモデリング",
+      "description": "地下室を機能的な居住空間に。Best of Vancouver第3位ランキング。",
       "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
     },
     "cabinet": {
-      "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
+      "title": "キャビネットリフェイシング",
+      "description": "プロのキャビネットリフェイシングでキッチンを刷新。",
       "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
     },
     "commercial": {
-      "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
+      "title": "商業リノベーション",
+      "description": "オフィス、店舗、レストランのプロフェッショナルな商業空間リノベーション。",
       "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}"
+    "hubTitle": "サービス一覧",
+    "hubSubtitle": "あらゆる空間のためのプロフェッショナルなリノベーション",
+    "getQuoteForService": "{service}の見積もりを取得"
   },
   "areas": {
-    "title": "Service Areas",
-    "subtitle": "We proudly serve communities across the Lower Mainland",
-    "servingIn": "Home Renovations in {city}",
-    "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
-    "viewProjects": "View {city} Projects",
-    "requestQuote": "Request Quote",
-    "whyChooseArea": "Why Choose Our {area} Service",
-    "areaProjects": "{area} Projects",
-    "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
-    "serviceInArea": "{service} in {area}",
-    "servicesInArea": "Our Services in {area}",
-    "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
-    "faqTitle": "Frequently Asked Questions About {area} Renovations",
-    "aboutArea": "About {area}",
-    "aboutService": "About {service} in {area}",
-    "areaServiceContent": "{service} Services in {area}",
-    "otherAreasForService": "{service} in Other Areas",
-    "otherServicesInArea": "Other Services in {area}",
-    "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
-    "learnOurProcess": "Learn About Our 5-Step Renovation Process",
-    "processLinkText": "See How We Work",
-    "blogLinkText": "Renovation Tips & Guides",
-    "serviceLinkText": "All About {service}",
-    "nearbyAreas": "We Also Serve Nearby Areas"
+    "title": "対応エリア",
+    "subtitle": "ロウアー・メインランド全域のコミュニティに誠意を持ってサービス提供しています",
+    "servingIn": "{city}の住宅リノベーション",
+    "cityDescription": "{city}でプロフェッショナルなリノベーションサービスを提供。無料相談をお申し込みください。",
+    "viewProjects": "{city}のプロジェクトを見る",
+    "requestQuote": "見積もりを依頼",
+    "whyChooseArea": "{area}サービスを選ぶ理由",
+    "areaProjects": "{area}のプロジェクト",
+    "readyToStartIn": "{area}での{service}プロジェクトを始める準備はできましたか?",
+    "serviceInArea": "{area}の{service}",
+    "servicesInArea": "{area}でのサービス",
+    "readyToStartRenovation": "{area}でのリノベーションを始める準備はできましたか?",
+    "faqTitle": "{area}リノベーションに関するよくあるご質問",
+    "aboutArea": "{area}について",
+    "aboutService": "{area}での{service}について",
+    "areaServiceContent": "{area}での{service}サービス",
+    "otherAreasForService": "他のエリアでの{service}",
+    "otherServicesInArea": "{area}での他のサービス",
+    "serviceFaqTitle": "{area}での{service}に関するよくあるご質問",
+    "learnOurProcess": "5ステップのリノベーションフローを見る",
+    "processLinkText": "施工フローを見る",
+    "blogLinkText": "リノベーションのコツとガイド",
+    "serviceLinkText": "{service}について",
+    "nearbyAreas": "近隣エリアにも対応"
   },
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "バンクーバーのリノベーション情報・ガイド",
+    "subtitle": "プロジェクトに役立つコツ、トレンド、洞察",
+    "readMore": "続きを読む",
+    "publishedOn": "公開日",
+    "updated": "更新日",
+    "backToBlog": "ブログに戻る",
+    "comingSoon": "詳細記事は間もなく公開予定です。リノベーションのご質問はお気軽にお問い合わせください。",
+    "noPosts": "現在ブログ記事はありません。リノベーションのコツや情報は近日中に公開予定です。",
+    "relatedProject": "関連プロジェクト",
+    "pagination": "ブログのページネーション",
+    "previous": "前へ",
+    "next": "次へ",
+    "previousPage": "前のページへ",
+    "nextPage": "次のページへ",
+    "showingPosts": "{total}件中 {start}〜{end}件を表示",
+    "relatedServices": "関連サービス",
+    "relatedAreas": "あなたのエリアのリノベーション"
   },
   "contact": {
-    "title": "Get a Free Renovation Quote in Vancouver",
-    "subtitle": "Vancouver's trusted renovation company — kitchen, bathroom, basement & whole house renovations across the Lower Mainland.",
-    "thankYouTitle": "Thank You!",
-    "thankYouMessage": "Your message has been sent successfully. We'll get back to you within 24 hours.",
-    "returnHome": "Return to Home"
+    "title": "バンクーバーのリノベーション無料見積もり",
+    "subtitle": "バンクーバーで信頼されるリノベーション会社 ― キッチン、バスルーム、地下室、住宅全体のリノベーションをロウアー・メインランド全域で展開。",
+    "thankYouTitle": "ありがとうございます!",
+    "thankYouMessage": "メッセージを正常に送信しました。24時間以内にご返信いたします。",
+    "returnHome": "ホームに戻る"
   },
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Reno Starsが選ばれる理由",
+    "subtitle": "私たちと共にリノベーションを進めるとは、施工を完了させるだけでなく、全プロセスを明確で管理された、ストレスのないものにすることです。",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "信頼の上に築かれる",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
+          "title": "20年以上の業界経験",
           "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
+          "title": "$5M CGL保険・有効なWCBカバー",
           "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
+          "title": "本物の5つ星レビュー",
           "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
         },
         "team": {
-          "title": "Stable, Professional Team",
+          "title": "安定したプロチーム",
           "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
         },
         "service": {
-          "title": "End-to-End Service",
+          "title": "ワンストップサービス",
           "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "お客様が私たちを選ぶ理由",
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
@@ -458,17 +458,17 @@
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "プロジェクトを始める準備はできましたか?",
+      "subtitle": "透明性、明確なコミュニケーション、安心感を中心に構築されたリノベーションプロセスの違いを体験してください。"
     }
   },
   "serviceBenefits": {
-    "freeConsultation": "Free consultation and quote",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
-    "experience": "{years}+ years experience",
-    "rating": "5-star Google rating",
-    "projectsDone": "700+ projects completed"
+    "freeConsultation": "無料相談・見積もり",
+    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)",
+    "coverageAndWarranty": "$5M CGL保険、有効なWCBカバー、最大3年間の保証",
+    "experience": "{years}年以上の経験",
+    "rating": "Google 5つ星評価",
+    "projectsDone": "700件以上の施工実績"
   },
   "faq": {
     "kitchen": {
@@ -521,85 +521,85 @@
     }
   },
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "地域に精通したプロ",
+    "freeOnsite": "無料の現地相談",
+    "competitivePricing": "地域に競争力のある価格",
+    "quickResponse": "迅速な対応",
+    "experience": "ロウアー・メインランドで{years}年以上の実績",
+    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)"
   },
   "areaBenefits": {
-    "localTeam": "Local team familiar with the area",
-    "quickResponse": "Quick response times",
-    "buildingCodes": "Knowledge of local building codes",
-    "supplierRelationships": "Established supplier relationships",
-    "freeOnsite": "Free on-site consultations",
-    "competitivePricing": "Competitive local pricing"
+    "localTeam": "エリアに精通した地元チーム",
+    "quickResponse": "迅速な対応",
+    "buildingCodes": "地域の建築基準への精通",
+    "supplierRelationships": "確立された仕入先との関係",
+    "freeOnsite": "無料の現地相談",
+    "competitivePricing": "地域に競争力のある価格"
   },
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+      "title": "バンクーバーの住宅リノベーション ― {years}年以上の実績、$5M保険 | Reno Stars",
+      "description": "メトロバンクーバーでのキッチン、バスルーム、住宅全体のリノベーション。{years}年以上の実績、$5M CGL保険、WCBカバー、3年間の保証。100件以上の完了プロジェクトを見るか、無料見積もりをご依頼ください。"
     },
     "services": {
-      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+      "title": "バンクーバーのリノベーションサービス ― $5M保険 | Reno Stars",
+      "description": "メトロバンクーバー全域でキッチン、バスルーム、住宅全体、地下室、商業リノベーションサービスを展開。20年以上の経験、$5M CGL保険、3年間の保証。無料見積もり。"
     },
     "projects": {
-      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
-      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+      "title": "バンクーバーのリノベーション100+件 | ビフォーアフター | Reno Stars",
+      "description": "メトロバンクーバーで実施した100件以上の実プロジェクトをビフォーアフター写真、実コスト、実施工期間付きでご覧ください。キッチン、バスルーム、地下室、住宅全体の変革。"
     },
     "contact": {
-      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+      "title": "バンクーバーのリノベーション無料見積もり | Reno Starsへお問い合わせ",
+      "description": "バンクーバーで信頼されるReno Starsから無料リノベーション見積もりを取得。メトロバンクーバーでキッチン、バスルーム、地下室、住宅全体のリノベーション。電話: 778-960-7999。"
     },
     "blog": {
-      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+      "title": "リノベーション情報・コストガイド | バンクーバー | Reno Starsブログ",
+      "description": "バンクーバーの住宅リノベーションに役立つ専門家のコツ、デザイントレンド、実用的なアイデア。事例研究やビフォーアフターをご覧ください。"
     },
     "benefits": {
-      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
-      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+      "title": "Reno Starsが選ばれる理由 | 70+ ★5レビュー、$5M保険",
+      "description": "明確な見積もり、構造化されたプロセス、迅速なコミュニケーション、安定したチーム。Googleで70+の5つ星レビュー、$5M CGL保険、WCBカバー。"
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "title": "リノベーションデザインギャラリー | バンクーバーの実プロジェクト | Reno Stars",
+      "description": "メトロバンクーバーの100件以上の実プロジェクトからリノベーションデザインのアイデアをご覧ください。キッチン、バスルーム、地下室、住宅全体のインスピレーション。"
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
-      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+      "title": "{category}リノベーションのプロジェクト | Reno Starsバンクーバー",
+      "description": "バンクーバーとロウアー・メインランドでの{category}リノベーションのプロジェクトをご覧ください。ビフォーアフター写真とデザインのインスピレーション。"
     },
     "projectDetail": {
-      "titleWithLocation": "{title} in {city} | Reno Stars"
+      "titleWithLocation": "{title} ({city}) | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} in {area} | Reno Stars",
-      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "title": "{area}での{service} | Reno Stars",
+      "titleWithTagline": "{area}での{service} – {tagline} | Reno Stars",
+      "description": "Reno Starsの{area}での専門の{service}。{years}年以上の経験、$5M CGL保険、有効なWCBカバー、最大3年間の保証。地元のプロジェクトを見て、無料見積もりをご依頼ください。"
     },
     "areas": {
-      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
-      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+      "title": "近隣エリアのリノベーション | メトロバンクーバー17エリア | Reno Stars",
+      "description": "Reno Starsはメトロバンクーバーとフレーザー・バレーの17のコミュニティに対応。お住まいの市でのリノベーションサービスを見つけ、無料見積もりをご依頼ください。"
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
-      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+      "title": "{area}のリノベーション業者 | キッチン・バスルーム | Reno Stars",
+      "description": "{area}でのプロフェッショナルなリノベーション。キッチン、バスルーム、住宅全体のリノベーション。無料見積もりはお問い合わせください。"
     },
     "thankYou": {
-      "title": "Thank You | Reno Stars",
-      "description": "Your message has been received. We will get back to you shortly."
+      "title": "ありがとうございます | Reno Stars",
+      "description": "メッセージを受信しました。まもなくご連絡いたします。"
     },
     "process": {
-      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "リノベーション施工フロー: 5ステップ | Reno Starsバンクーバー",
+      "description": "私たちの効率的な5ステップのリノベーションフローについて。初回相談からプロジェクト引き渡しまで、リノベーションをシンプルかつ安心に。"
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
-      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+      "title": "リノベーションショールーム リッチモンドBC | 無料相談 | Reno Stars",
+      "description": "リッチモンドBCのショールームをご訪問ください。実際の素材を手に取り、キッチン・バスルームの展示を見て、その場で無料見積もりを取得。月〜土 9時30分開店。予約不要。"
     },
     "guides": {
-      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "title": "リノベーションコストガイド | バンクーバーBC | Reno Stars",
+      "description": "メトロバンクーバーの実プロジェクトデータに基づく無料のリノベーションコストガイド。キッチン、バスルーム、住宅全体のリノベーション価格を実予算と施工期間付きで。",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
@@ -630,41 +630,41 @@
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+      "title": "Reno Starsについて | 20年以上、70+ ★5レビュー | バンクーバーリノベーション",
+      "description": "メトロバンクーバーで100件以上のリノベーションを手掛けたチームをご紹介。20年以上の経験、$5M保険、WCBカバー、Google 70+の5つ星レビュー。無料相談。"
     },
     "reviews": {
-      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
-      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+      "title": "70+の5つ星レビュー | Reno Starsバンクーバー",
+      "description": "メトロバンクーバーの住宅オーナーからの70件以上の認証済みGoogle 5つ星レビューをお読みください。なぜRenoStarsが信頼されるのかをご覧ください。"
     },
     "financing": {
-      "title": "Renovation Financing & Budget Guide | Vancouver",
-      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+      "title": "リノベーション・ファイナンス&予算ガイド | バンクーバー",
+      "description": "メトロバンクーバーでのリノベーション・ファイナンスのオプションをご覧ください。HELOC、個人ローン、住宅ローン借り換え、予算計画のヒント。"
     },
     "beforeAfter": {
-      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
-      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+      "title": "ビフォーアフター: バンクーバーの実リノベーション | Reno Stars",
+      "description": "メトロバンクーバーの息をのむようなビフォーアフターのリノベーション。実プロジェクト、実コスト、実成果。キッチン、バスルーム、住宅全体。"
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
-      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+      "title": "Reno Starsが選ばれる理由 | $5M保険、3年保証、70+レビュー",
+      "description": "Reno Starsが他社と違う理由: $5M CGL保険、WCBカバー、3年職人保証、バイリンガルチーム、Google 70+の5つ星レビュー。バンクーバー。"
     },
     "nearMe": {
-      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+      "title": "近くの住宅リノベーション | バンクーバーメトロ | Reno Stars",
+      "description": "バンクーバー、リッチモンド、バーナビー、サレー、メトロバンクーバー14都市の上位評価リノベーション会社。Google 70+の5つ星レビュー、20年以上、$5M保険。無料見積もり。"
     }
   },
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "notFound": "ページが見つかりません",
+    "notFoundDescription": "お探しのページは存在しないか、移動された可能性があります。",
+    "backToHome": "ホームに戻る",
+    "tryAgain": "再試行"
   },
   "homeFaq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Common questions about our renovation services"
+    "title": "よくあるご質問",
+    "subtitle": "リノベーションサービスに関するよくあるご質問"
   },
   "showroomPage": {
     "heroTitle": "Visit Our Showroom",
@@ -707,9 +707,9 @@
     "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
   },
   "homePartners": {
-    "title": "Our Partners",
-    "subtitle": "Trusted by industry-leading brands and suppliers",
-    "srTitle": "Our Partners"
+    "title": "パートナー",
+    "subtitle": "業界をリードするブランドとサプライヤーから信頼されています",
+    "srTitle": "パートナー"
   },
   "wholeHouse": {
     "projectOverview": "Project Overview",
