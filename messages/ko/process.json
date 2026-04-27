@@ -34,7 +34,7 @@
         },
         {
           "icon": "whatsapp",
-          "label": "WhatsApp"
+          "label": "왓츠앱"
         },
         {
           "icon": "wechat",
@@ -42,7 +42,7 @@
         },
         {
           "icon": "sms",
-          "label": "SMS"
+          "label": "문자"
         }
       ],
       "faqAnswer": "전화, 이메일, WhatsApp, WeChat 또는 SMS로 연락 가능한 초기 상담으로 시작합니다. 리노베이션 요구 사항, 스타일 선호도, 예산을 논의하고 기존 평면도 또는 사진을 수집합니다."
@@ -160,7 +160,7 @@
       "tagline": "심플 · 안심 · 안전 · 보증",
       "taglineEn": "간단함 · 걱정 없음 · 안전 · 보증",
       "yearsIndustry": "업계 경력 연수",
-      "googleRating": "Google",
+      "googleRating": "구글",
       "warrantyService": "보증 서비스",
       "scanLinktree": "스캔하여 연결",
       "website": "reno-stars.com"
