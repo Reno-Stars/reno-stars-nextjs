@@ -5,6 +5,7 @@ import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/config';
 import type { Company, DesignItem } from '@/lib/types';
+import { pickLocale } from '@/lib/utils';
 import { tetrisLayouts } from '@/components/TetrisGallery';
 import CTASection from '@/components/CTASection';
 import {
@@ -23,7 +24,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
   const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
 
   const allLocalizedDesigns = useMemo(
-    () => designs.map((d) => ({ image: d.image, title: d.title[locale] })),
+    () => designs.map((d) => ({ image: d.image, title: pickLocale(d.title, locale) })),
     [designs, locale],
   );
 

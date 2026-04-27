@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/navigation';
 import type { Company, Service } from '@/lib/types';
 import { type Locale, locales, localeNames } from '@/i18n/config';
+import { pickLocale } from '@/lib/utils';
 import { neu, SURFACE, SH_DARK, TEXT } from '@/lib/theme';
 
 interface NavbarProps {
@@ -46,6 +47,26 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
     if (item.isDropdown) return pathname === item.href || pathname.startsWith(`${item.href}/`);
     return pathname === item.href;
   }, [pathname]);
+
+  // Locale dropdown — close on outside click + Escape
+  useEffect(() => {
+    if (!isLocaleMenuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+      const root = document.querySelector('[data-locale-switcher]');
+      if (root && !root.contains(target)) setIsLocaleMenuOpen(false);
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setIsLocaleMenuOpen(false); }
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [isLocaleMenuOpen]);
 
   // Focus trap for mobile menu
   useEffect(() => {
@@ -219,7 +240,7 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
                               router.push(`/projects?service=${encodeURIComponent(service.slug)}` as '/');
                             }}
                           >
-                            {service.title[locale]}
+                            {pickLocale(service.title, locale)}
                           </a>
                         ))}
                       </div>
@@ -316,7 +337,7 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
                             className="block py-1.5 px-3 text-sm cursor-pointer rounded-lg"
                             style={{ color: `${TEXT}cc` }}
                           >
-                            {service.title[locale]}
+                            {pickLocale(service.title, locale)}
                           </a>
                         </li>
                       ))}

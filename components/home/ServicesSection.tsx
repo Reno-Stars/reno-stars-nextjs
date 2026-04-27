@@ -1,6 +1,7 @@
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Service } from '@/lib/types';
+import { pickLocale } from '@/lib/utils';
 import { GOLD_PALE, GOLD_ICON_FILTER, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface ServicesSectionProps {
@@ -37,8 +38,8 @@ export default function ServicesSection({ services, locale, translations: t }: S
                     </div>
                   )}
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold mb-1 transition-colors" style={{ color: TEXT }}>{service.title[locale]}</h3>
-                    <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>{service.description[locale]}</p>
+                    <h3 className="text-base font-bold mb-1 transition-colors" style={{ color: TEXT }}>{pickLocale(service.title, locale)}</h3>
+                    <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>{pickLocale(service.description, locale)}</p>
                   </div>
                 </div>
               </Link>
