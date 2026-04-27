@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
-import { BreadcrumbSchema, ArticleSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -14,6 +14,33 @@ interface PageProps {
 }
 
 export const revalidate = 3600;
+
+/**
+ * Pull FAQs out of a markdown blog body. Looks for an FAQ section heading
+ * (## Frequently Asked Questions / ## FAQs / ## 常见问题) and extracts each
+ * `### Question` / answer-paragraph pair. Returns [] if no recognizable
+ * FAQ block exists.
+ */
+function extractFaqsFromContent(content: string | null | undefined): { question: string; answer: string }[] {
+  if (!content) return [];
+  const faqHeading = content.match(/##\s*(?:Frequently Asked Questions|FAQs?|常见问题)\s*\n([\s\S]*?)(?=\n##\s|$)/i);
+  if (!faqHeading) return [];
+  const block = faqHeading[1];
+  const re = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
+  const out: { question: string; answer: string }[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(block)) !== null) {
+    const question = m[1].trim();
+    const answer = m[2]
+      .replace(/\[(.+?)\]\((.+?)\)/g, '$1')
+      .replace(/[*_`#>]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 1000);
+    if (question && answer) out.push({ question, answer });
+  }
+  return out;
+}
 
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
@@ -93,9 +120,12 @@ export default async function Page({ params }: PageProps) {
     { name: localizedPost.title, url: `/${locale}/blog/${slug}/` },
   ];
 
+  const faqs = extractFaqsFromContent(localizedPost.content);
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      {faqs.length > 0 && <FAQSchema faqs={faqs} />}
       <ArticleSchema
         company={company}
         headline={localizedPost.title}
