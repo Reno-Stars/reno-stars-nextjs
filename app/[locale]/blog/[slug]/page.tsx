@@ -5,7 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/blog/${slug}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
-      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+      alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'article',
       publishedTime: post.published_at?.toISOString(),
       modifiedTime: post.updated_at?.toISOString(),

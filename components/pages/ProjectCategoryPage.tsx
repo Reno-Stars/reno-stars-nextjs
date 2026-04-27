@@ -32,7 +32,7 @@ export default function ProjectCategoryPage({ locale, categorySlug, company, pro
     (c) => c.serviceType === categorySlug
   );
 
-  const categoryName = categoryData ? categoryData[locale] : categorySlug;
+  const categoryName = categoryData ? (categoryData[locale as 'en' | 'zh'] ?? categoryData.en) : categorySlug;
 
   const filteredProjects = allProjects.filter(
     (p) => p.service_type === categorySlug

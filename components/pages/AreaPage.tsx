@@ -9,6 +9,7 @@ import type { Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import { getLocalizedProject } from '@/lib/data/projects';
 import type { Company, Faq, LocalizedService, Project, ServiceArea } from '@/lib/types';
+import { pickLocale } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
@@ -40,8 +41,8 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
   const localizedFaqs = useMemo(
     () => faqs.map((faq) => ({
       id: faq.id,
-      question: faq.question[locale],
-      answer: faq.answer[locale],
+      question: pickLocale(faq.question, locale),
+      answer: pickLocale(faq.answer, locale),
     })),
     [faqs, locale],
   );

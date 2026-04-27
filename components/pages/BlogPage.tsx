@@ -7,6 +7,7 @@ import { ArrowRight, ChevronRight, ChevronLeft, Calendar, BookOpen } from 'lucid
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, BlogPost } from '@/lib/types';
+import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, GOLD, SURFACE,
@@ -35,8 +36,8 @@ export default function BlogPage({
   const t = useTranslations();
   const localizedPosts = useMemo(() => blogPosts.map((p) => ({
     slug: p.slug,
-    title: p.title[locale],
-    excerpt: p.excerpt?.[locale],
+    title: pickLocale(p.title, locale),
+    excerpt: pickLocaleOptional(p.excerpt, locale),
     featured_image: p.featured_image,
     published_at: p.published_at,
   })), [blogPosts, locale]);

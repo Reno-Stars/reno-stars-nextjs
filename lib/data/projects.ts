@@ -1,5 +1,6 @@
 import type { Project, ServiceType, Locale, LocalizedProject, LocalizedImagePair, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
+import { pickLocale, pickLocaleOptional } from '../utils';
 
 
 export const projects: Project[] = [
@@ -558,44 +559,44 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
   return {
     id: project.id,
     slug: project.slug,
-    title: project.title[locale],
-    description: project.description[locale],
-    category: project.category[locale],
+    title: pickLocale(project.title, locale),
+    description: pickLocale(project.description, locale),
+    category: pickLocale(project.category, locale),
     service_type: project.service_type,
     location_city: project.location_city,
     budget_range: project.budget_range,
-    duration: project.duration?.[locale],
-    space_type: project.space_type?.[locale],
+    duration: pickLocaleOptional(project.duration, locale),
+    space_type: pickLocaleOptional(project.space_type, locale),
     hero_image: project.hero_image,
     hero_video: project.hero_video,
     images: project.images.map((img) => ({
       src: img.src,
-      alt: img.alt[locale],
+      alt: pickLocale(img.alt, locale),
       is_before: img.is_before,
     })),
     image_pairs: project.image_pairs?.map((pair) => ({
       beforeImage: pair.beforeImage
-        ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+        ? { src: pair.beforeImage.src, alt: pickLocale(pair.beforeImage.alt, locale) }
         : undefined,
       afterImage: pair.afterImage
-        ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+        ? { src: pair.afterImage.src, alt: pickLocale(pair.afterImage.alt, locale) }
         : undefined,
       beforeVideo: pair.beforeVideo,
       afterVideo: pair.afterVideo,
-      title: pair.title?.[locale],
-      caption: pair.caption?.[locale],
+      title: pickLocaleOptional(pair.title, locale),
+      caption: pickLocaleOptional(pair.caption, locale),
       photographerCredit: pair.photographerCredit,
       keywords: pair.keywords,
     })),
-    service_scope: project.service_scope?.[locale],
-    challenge: project.challenge?.[locale],
-    solution: project.solution?.[locale],
+    service_scope: pickLocaleOptional(project.service_scope, locale),
+    challenge: pickLocaleOptional(project.challenge, locale),
+    solution: pickLocaleOptional(project.solution, locale),
     featured: project.featured,
-    badge: project.badge?.[locale],
+    badge: pickLocaleOptional(project.badge, locale),
     external_products: project.external_products?.map((ep) => ({
       url: ep.url,
       image_url: ep.image_url,
-      label: ep.label[locale],
+      label: pickLocale(ep.label, locale),
     })),
     po_number: project.po_number,
     site_id: project.site_id,
@@ -610,33 +611,33 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
   return {
     id: site.id,
     slug: site.slug,
-    title: site.title[locale],
-    description: site.description[locale],
+    title: pickLocale(site.title, locale),
+    description: pickLocale(site.description, locale),
     location_city: site.location_city,
     hero_image: site.hero_image,
     hero_video: site.hero_video,
-    badge: site.badge?.[locale],
+    badge: pickLocaleOptional(site.badge, locale),
     budget_range: site.budget_range,
-    duration: site.duration?.[locale],
-    space_type: site.space_type?.[locale],
+    duration: pickLocaleOptional(site.duration, locale),
+    space_type: pickLocaleOptional(site.space_type, locale),
     show_as_project: site.show_as_project,
     featured: site.featured,
     images: site.images?.map((img) => ({
       src: img.src,
-      alt: img.alt[locale],
+      alt: pickLocale(img.alt, locale),
       is_before: img.is_before,
     })),
     image_pairs: site.image_pairs?.map((pair) => ({
       beforeImage: pair.beforeImage
-        ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+        ? { src: pair.beforeImage.src, alt: pickLocale(pair.beforeImage.alt, locale) }
         : undefined,
       afterImage: pair.afterImage
-        ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+        ? { src: pair.afterImage.src, alt: pickLocale(pair.afterImage.alt, locale) }
         : undefined,
       beforeVideo: pair.beforeVideo,
       afterVideo: pair.afterVideo,
-      title: pair.title?.[locale],
-      caption: pair.caption?.[locale],
+      title: pickLocaleOptional(pair.title, locale),
+      caption: pickLocaleOptional(pair.caption, locale),
       photographerCredit: pair.photographerCredit,
       keywords: pair.keywords,
     })),
@@ -655,19 +656,19 @@ export function getLocalizedSiteWithProjects(
 
   const allImages: LocalizedSiteImage[] = site.aggregated.allImages.map((img) => ({
     src: img.src,
-    alt: img.alt[locale],
+    alt: pickLocale(img.alt, locale),
     is_before: img.is_before,
     projectSlug: img.projectSlug,
-    projectTitle: img.projectTitle[locale],
+    projectTitle: pickLocale(img.projectTitle, locale),
   }));
 
   const aggregated: LocalizedSiteAggregated = {
-    allServiceScopes: site.aggregated.allServiceScopes[locale],
+    allServiceScopes: pickLocale(site.aggregated.allServiceScopes, locale),
     allImages,
     allExternalProducts: site.aggregated.allExternalProducts.map((ep) => ({
       url: ep.url,
       image_url: ep.image_url,
-      label: ep.label[locale],
+      label: pickLocale(ep.label, locale),
     })),
   };
 
@@ -688,7 +689,7 @@ export function getProjectSlugs(): string[] {
 
 // Get unique categories for filtering
 export function getCategories(locale: Locale): string[] {
-  const categories = new Set(projects.map((p) => p.category[locale]));
+  const categories = new Set(projects.map((p) => pickLocale(p.category, locale)));
   return ['All', ...Array.from(categories)];
 }
 

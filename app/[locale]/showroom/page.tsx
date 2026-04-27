@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ShowroomPage from '@/components/pages/ShowroomPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
 
 interface PageProps {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/showroom/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
-      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+      alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'website',
       images: [{ url: ogImage, width: 1200, height: 630, alt: t('title') }],
     },
