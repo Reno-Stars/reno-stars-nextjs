@@ -30,6 +30,67 @@ export async function generateStaticParams() {
   return params;
 }
 
+/**
+ * EN-only CTR overrides for area landing pages, driven by GSC query data
+ * (2026-04-27 batch: 10 queries with real impressions but zero clicks).
+ *
+ * Strategy:
+ *  - Lead title with the exact-match query phrase ("home renovations [city]"),
+ *    not a generic "Renovation Company" rephrase.
+ *  - First 80 chars of description carry the keyword + a concrete value
+ *    (project count, insurance, warranty) and end with a soft CTA.
+ *
+ * These code overrides win over DB-stored meta_title/meta_description so the
+ * fix can ship without DB writes.
+ */
+const enAreaOverrides: Record<string, { title: string; description: string }> = {
+  // Q1 (105 imp pos 31.5) "home renovations coquitlam" + Q9 "home renovation contractor coquitlam"
+  coquitlam: {
+    title: 'Home Renovations Coquitlam | Free Quote 2026 | Reno Stars',
+    description:
+      'Home renovations in Coquitlam — kitchens, bathrooms & whole-house remodels. 700+ projects, $5M insured, 3-yr warranty. Burke Mountain to Westwood. Free quote.',
+  },
+  // Q2 (94 imp pos 40.5) "home renovations burnaby"
+  burnaby: {
+    title: 'Home Renovations Burnaby | 700+ Projects | Reno Stars',
+    description:
+      'Home renovations in Burnaby BC — kitchens, bathrooms & basements for SFH, townhouses & Metrotown condos. $5M insured, strata-compliant, 3-yr warranty. Free quote.',
+  },
+  // Q6 (74 imp pos 27.5) "home renovations maple ridge"
+  'maple-ridge': {
+    title: 'Home Renovations Maple Ridge | $5M Insured | Reno Stars',
+    description:
+      'Home renovations in Maple Ridge — kitchens, bathrooms & basements. Albion, Cottonwood, Hammond. 20+ yrs, $5M insured, 3-yr warranty. Free in-home quote.',
+  },
+  // Q8 (60 imp pos 57.4) "home renovation contractor port coquitlam"
+  'port-coquitlam': {
+    title: 'Home Renovation Contractor Port Coquitlam | Reno Stars',
+    description:
+      'Home renovation contractor in Port Coquitlam. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park, Riverwood. 20+ yrs, $5M insured. Free quote.',
+  },
+};
+
+/**
+ * EN intro paragraphs replacing the generic DB description for cities where
+ * the keyword + neighborhood specificity moves the needle. Renders as the
+ * lead paragraph below the H1 in <AreaPage>.
+ */
+const enAreaIntros: Record<string, string> = {
+  coquitlam:
+    'Home renovations in Coquitlam, BC — full-service remodels for homes from Burke Mountain and Westwood Plateau down to Maillardville and Austin Heights. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and a 3-year workmanship warranty.',
+  burnaby:
+    'Home renovations in Burnaby — kitchens, bathrooms, basements and whole-house remodels for single-family homes in The Heights and Capitol Hill, condos and townhouses around Metrotown and Brentwood, and properties throughout Burnaby Mountain and South Burnaby. Strata-compliant work, $5M CGL insurance and a 3-year warranty on every project.',
+  'maple-ridge':
+    'Home renovations in Maple Ridge — kitchens, bathrooms, basements and whole-house remodels for properties in Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, with permits handled end-to-end and a 3-year workmanship warranty.',
+  'port-coquitlam':
+    'Home renovations and contractor services in Port Coquitlam — kitchens, bathrooms, basements and whole-house remodels for homes in Citadel Heights, Lincoln Park, Oxford Heights, Birchland Manor and Riverwood. Permits handled end-to-end, $5M CGL insurance and a 3-year warranty on every project.',
+};
+
+export function getAreaIntroOverride(slug: string, locale: Locale): string | undefined {
+  if (locale !== 'en') return undefined;
+  return enAreaIntros[slug];
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, city } = await params;
   const areas = await getServiceAreasFromDb();
@@ -44,9 +105,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const t = await getTranslations({ locale, namespace: 'metadata.area' });
 
-  // Use custom meta title/description when available, fallback to generated
-  const title = localizedArea.metaTitle || t('title', { area: localizedArea.name });
-  const description = localizedArea.metaDescription || localizedArea.description || t('description', { area: localizedArea.name });
+  // EN code overrides win over DB meta for the cities we're actively tuning.
+  const enOverride = locale === 'en' ? enAreaOverrides[city] : undefined;
+  const title = enOverride?.title
+    || localizedArea.metaTitle
+    || t('title', { area: localizedArea.name });
+  const description = enOverride?.description
+    || localizedArea.metaDescription
+    || localizedArea.description
+    || t('description', { area: localizedArea.name });
 
   return {
     title,
@@ -132,6 +199,7 @@ export default async function Page({ params }: PageProps) {
         services={localizedServices}
         faqs={areaFaqs}
         areaProjects={areaProjects}
+        introOverride={getAreaIntroOverride(city, locale as Locale)}
       />
     </>
   );
