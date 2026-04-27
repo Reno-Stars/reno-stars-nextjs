@@ -1,0 +1,25 @@
+{
+  "cta": {
+    "getQuote": "Obtener cotización",
+    "getFreeQuote": "Cotización gratis",
+    "getYourFreeQuote": "Reciba su cotización gratis",
+    "freeQuoteProject": "¡Reciba una cotización gratis para su proyecto!",
+    "freeQuote": "Recibir cotización gratis",
+    "startProject": "Comenzar su proyecto",
+    "startProjectToday": "Comience su proyecto hoy",
+    "getStarted": "Comenzar",
+    "viewProjects": "Ver proyectos",
+    "viewOurWork": "Ver nuestro trabajo",
+    "ourServices": "Nuestros servicios",
+    "learnMore": "Más información",
+    "exploreService": "Explorar {service}",
+    "sendMessage": "Enviar mensaje",
+    "submitInquiry": "Recibir mi cotización gratis",
+    "bookAppointment": "Reservar cita",
+    "callNow": "Llamar ahora",
+    "requestConsultation": "Solicitar consulta gratis",
+    "viewAllProjects": "Ver todos los proyectos",
+    "viewAllServices": "Ver todos los servicios",
+    "scheduleConsultation": "Agendar consulta"
+  }
+}

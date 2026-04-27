@@ -1,0 +1,25 @@
+{
+  "cta": {
+    "getQuote": "見積もり依頼",
+    "getFreeQuote": "無料見積もり",
+    "getYourFreeQuote": "無料見積もりを取得",
+    "freeQuoteProject": "プロジェクトの無料見積もりを依頼!",
+    "freeQuote": "無料見積もりを依頼",
+    "startProject": "プロジェクトを始める",
+    "startProjectToday": "今日からプロジェクトを始める",
+    "getStarted": "はじめる",
+    "viewProjects": "施工事例を見る",
+    "viewOurWork": "施工事例を見る",
+    "ourServices": "サービス一覧",
+    "learnMore": "詳細を見る",
+    "exploreService": "{service} を詳しく見る",
+    "sendMessage": "メッセージを送信",
+    "submitInquiry": "無料見積もりを取得",
+    "bookAppointment": "予約する",
+    "callNow": "今すぐ電話",
+    "requestConsultation": "無料相談を依頼",
+    "viewAllProjects": "すべての施工事例を見る",
+    "viewAllServices": "すべてのサービスを見る",
+    "scheduleConsultation": "相談を予約"
+  }
+}

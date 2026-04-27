@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "Flujo de servicio de remodelación: 5 pasos",
+      "subtitle": "De la consulta a la finalización",
+      "googleReviews": "Reseñas Google",
+      "stepLabel": "PASO {stepNum}"
+    },
+    "downloadPoster": "Descargar PNG",
+    "downloadPdf": "Descargar PDF",
+    "downloadSuccess": "¡Descargado!",
+    "downloadError": "Falló",
+    "downloadPosterHint": "Haga clic para descargar PNG",
+    "downloadPdfHint": "Haga clic para descargar PDF",
+    "step1": {
+      "title": "Consulta inicial",
+      "subtitle": "Descubrimiento",
+      "points": [
+        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
+        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
+        "Style preference confirmation",
+        "Material budget and positioning",
+        "Understand renovation needs and expectations",
+        "Obtain floor plans and site photos (if available)"
+      ],
+      "tags": [
+        {
+          "icon": "phone",
+          "label": "Phone"
+        },
+        {
+          "icon": "email",
+          "label": "Email"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "wechat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
+      ],
+      "faqAnswer": "Comenzamos con una consulta inicial donde puede comunicarse por teléfono, correo, WhatsApp, WeChat o SMS. Discutiremos sus necesidades de remodelación, preferencias de estilo, presupuesto y recopilaremos planos o fotos existentes."
+    },
+    "step2": {
+      "title": "Evaluación a medida y cotización",
+      "subtitle": "Medición en sitio (si aplica) y precios transparentes",
+      "points": [
+        "Professional on-site measurement for precise dimensions (if needed)",
+        "A comprehensive design proposal illustrating your future space",
+        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
+        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+      ],
+      "tags": [
+        {
+          "icon": "ruler",
+          "label": "Precise Measurement"
+        },
+        {
+          "icon": "quote",
+          "label": "Transparent Pricing"
+        },
+        {
+          "icon": "site",
+          "label": "Design Proposal"
+        }
+      ],
+      "faqAnswer": "Proporcionamos medición profesional en sitio cuando es necesario y creamos una propuesta de diseño integral para su espacio. Recibirá un alcance de trabajo claramente definido con cronograma, requisitos de permisos y una cotización transparente alineada con el diseño propuesto."
+    },
+    "step3": {
+      "title": "Confirmación y contrato",
+      "subtitle": "Finalización de detalles e inicio del proyecto",
+      "points": [
+        "Invite clients to showroom for in-person consultation",
+        "Address questions and optimize design details",
+        "Confirm design proposal and material samples",
+        "Finalize the payment schedule and assist with delivery scheduling",
+        "Sign construction contract and collect deposit",
+        "Secure the project start date",
+        "Establish project team: Project Manager, Construction Manager, Coordinator"
+      ],
+      "tags": [
+        {
+          "icon": "contract",
+          "label": "Contract"
+        },
+        {
+          "icon": "meeting",
+          "label": "Consultation"
+        },
+        {
+          "icon": "team",
+          "label": "Project Team"
+        }
+      ],
+      "faqAnswer": "Le invitamos a nuestro showroom para revisar muestras de materiales y finalizar detalles de diseño. Después de confirmar el cronograma de pagos y firmar el contrato, aseguramos su fecha de inicio del proyecto y conformamos un equipo dedicado que incluye Gerente de Proyecto, Gerente de Construcción y Coordinador."
+    },
+    "step4": {
+      "title": "Ejecución y gestión",
+      "subtitle": "Totalmente coordinado y comunicación fácil",
+      "points": [
+        "A unified project team managing all aspects of your project",
+        "No direct interaction with workers needed",
+        "Coordinated construction progress to ensure efficiency and consistency",
+        "Assistance with delivery scheduling and on-site coordination",
+        "Consistent quality control throughout the entire construction process",
+        "Fast response and efficient resolution of any issues"
+      ],
+      "tags": [
+        {
+          "icon": "management",
+          "label": "Unified Management"
+        },
+        {
+          "icon": "progress",
+          "label": "Progress Tracking"
+        },
+        {
+          "icon": "response",
+          "label": "Quick Response"
+        }
+      ],
+      "faqAnswer": "Un equipo unificado de proyecto gestiona todos los aspectos de su proyecto. No necesitará interactuar directamente con los trabajadores. Coordinamos el progreso de la construcción, programación de entregas y mantenemos un control de calidad consistente. Cualquier problema se resuelve rápida y eficientemente."
+    },
+    "step5": {
+      "title": "Recorrido y postventa",
+      "subtitle": "Verificaciones finales y soporte continuo",
+      "points": [
+        "Final walkthrough to confirm all work meets expectations",
+        "New home handover",
+        "Ongoing support for maintenance during warranty period"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "Strict Inspection"
+        },
+        {
+          "icon": "warranty",
+          "label": "Warranty Service"
+        },
+        {
+          "icon": "support",
+          "label": "Ongoing Support"
+        }
+      ],
+      "faqAnswer": "Realizamos un recorrido final con usted para confirmar que todo el trabajo cumple sus expectativas, luego le entregamos su nuevo hogar. Brindamos soporte continuo para mantenimiento durante el período de garantía."
+    },
+    "tagline": "Hacer la remodelación verdaderamente alcanzable",
+    "whyMatters": {
+      "title": "Por qué esto importa",
+      "description": "El flujo de remodelación estructurado de Reno Stars ayuda a los clientes a saber qué esperar en cada etapa. Nuestro proceso claro de 5 pasos garantiza una experiencia de remodelación fluida y sin estrés desde el primer contacto hasta la entrega final."
+    },
+    "footer": {
+      "tagline": "Simple · Sin preocupaciones · Seguro · Garantizado",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "Años de experiencia",
+      "googleRating": "Google",
+      "warrantyService": "Servicio de garantía",
+      "scanLinktree": "Escanee para conectar con nosotros",
+      "website": "reno-stars.com"
+    }
+  }
+}

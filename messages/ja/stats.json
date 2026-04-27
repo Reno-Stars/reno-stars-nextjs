@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "yearsExperience": "経験年数",
+    "teamMembers": "チームメンバー",
+    "expertTeamMembers": "エキスパートチームメンバー",
+    "expertTeam": "エキスパートチーム",
+    "expertCraftsmen": "熟練の職人",
+    "liabilityCoverage": "$5M CGL保険",
+    "fullCoverage": "$5M CGL保険・有効なWCBカバー・最大3年間の保証",
+    "wcbCoverage": "有効なWCBカバー",
+    "projectsCompleted": "施工完了プロジェクト数",
+    "projectsDone": "完了したプロジェクト",
+    "happyClients": "ご満足いただいたお客様",
+    "satisfaction": "満足度",
+    "satisfactionRate": "満足率",
+    "clientSatisfaction": "顧客満足度",
+    "support": "サポート",
+    "quality": "品質",
+    "projects": "プロジェクト",
+    "years": "年",
+    "averageRating": "平均評価",
+    "areasServed": "対応エリア",
+    "rating": "評価",
+    "srStats": "会社統計",
+    "srTrustBadges": "信頼バッジ・認証"
+  }
+}

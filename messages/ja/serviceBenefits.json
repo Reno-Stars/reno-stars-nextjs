@@ -1,0 +1,10 @@
+{
+  "serviceBenefits": {
+    "freeConsultation": "無料相談・見積もり",
+    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)",
+    "coverageAndWarranty": "$5M CGL保険、有効なWCBカバー、最大3年間の保証",
+    "experience": "{years}年以上の経験",
+    "rating": "Google 5つ星評価",
+    "projectsDone": "700件以上の施工実績"
+  }
+}

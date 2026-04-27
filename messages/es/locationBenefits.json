@@ -1,0 +1,10 @@
+{
+  "locationBenefits": {
+    "localExpertise": "Experiencia local en su área",
+    "freeOnsite": "Consulta gratis en su domicilio",
+    "competitivePricing": "Precios locales competitivos",
+    "quickResponse": "Tiempo de respuesta rápido",
+    "experience": "Más de {years} años sirviendo al Lower Mainland",
+    "licensedInsured": "Licenciado y completamente asegurado (CGL + WCB)"
+  }
+}

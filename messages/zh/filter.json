@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "所有类别",
+    "location": "地点",
+    "allLocations": "所有地点",
+    "spaceType": "空间类型",
+    "allSpaceTypes": "所有空间类型",
+    "budget": "预算",
+    "allBudgets": "所有预算",
+    "showing": "显示",
+    "projects": "{count, plural, one {个项目} other {个项目}}",
+    "clearAll": "清除筛选",
+    "browseByCategory": "按类别浏览",
+    "swipeToSeeMore": "滑动查看更多 →",
+    "noProjectsMatch": "没有符合筛选条件的项目。",
+    "pagination": "项目分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "previousPage": "转到上一页",
+    "nextPage": "转到下一页",
+    "showingProjects": "显示第 {start}-{end} 个，共 {total} 个项目",
+    "search": "搜索项目..."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "위치",
+    "category": "카테고리",
+    "budget": "예산 범위",
+    "spaceType": "공간 유형",
+    "serviceScope": "서비스 범위",
+    "duration": "기간",
+    "challenge": "도전 과제",
+    "solution": "솔루션",
+    "close": "닫기",
+    "viewDetails": "전체 상세 보기"
+  }
+}

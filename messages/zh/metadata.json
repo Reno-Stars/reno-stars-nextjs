@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "home": {
+      "title": "温哥华装修公司 — {years}年经验·500万保险 | Reno Stars",
+      "description": "大温哥华厨房、卫浴、全屋翻新。{years}年以上经验、500万CGL保险、WCB工伤保障、三年质保。100+实景案例，免费上门估价。"
+    },
+    "services": {
+      "title": "厨房、卫浴、全屋装修服务 | Reno Stars 温哥华",
+      "description": "温哥华厨房、卫浴、全屋、地下室及商业装修服务。值得信赖的本地承包商，免费报价。"
+    },
+    "projects": {
+      "title": "100+温哥华装修案例 | 装修前后对比 | Reno Stars",
+      "description": "100+大温地区真实装修案例，装修前后对比照片、真实费用和工期。厨房、卫浴、地下室、全屋翻新。"
+    },
+    "contact": {
+      "title": "温哥华免费装修报价 | 联系Reno Stars",
+      "description": "联系Reno Stars获取免费装修报价。温哥华及大温地区厨房、浴室、地下室及全屋装修专家。拨打 778-960-7999 即刻咨询，24小时内回复。"
+    },
+    "blog": {
+      "title": "装修技巧与费用指南 | 温哥华 | Reno Stars 博客",
+      "description": "专业的装修技巧、设计趋势和实用家居改善创意。阅读温哥华装修案例分析、改造前后对比和Reno Stars的专业建议。"
+    },
+    "benefits": {
+      "title": "为什么选择 Reno Stars | 温哥华装修公司特色",
+      "description": "透明报价、结构化流程、快速响应、稳定团队。了解 Reno Stars 与其他温哥华装修公司的区别。"
+    },
+    "design": {
+      "title": "装修设计灵感 | Reno Stars 温哥华",
+      "description": "探索美丽的厨房、浴室和全屋装修设计创意。从温哥华专业装修团队获取灵感。"
+    },
+    "projectCategory": {
+      "title": "{category}装修项目 | Reno Stars 温哥华",
+      "description": "探索我们在温哥华及低陆平原地区的{category}装修项目。查看改造前后对比照片、项目详情和Reno Stars的设计灵感。"
+    },
+    "projectDetail": {
+      "titleWithLocation": "{city}{title} | Reno Stars"
+    },
+    "serviceLocation": {
+      "title": "{area}{service} | Reno Stars",
+      "titleWithTagline": "{area}{service} – {tagline} | Reno Stars",
+      "description": "Reno Stars{area}专业{service}。{years}年以上经验、500万CGL保险、有效WCB工伤保障、至多三年质保。查看本地项目，立即获取免费报价。"
+    },
+    "areas": {
+      "title": "服务区域 | Reno Stars 温哥华",
+      "description": "Reno Stars 服务温哥华及低陆平原地区。了解我们的装修服务区域，获取免费报价。"
+    },
+    "area": {
+      "title": "{area}装修承包商 | 厨房、卫浴装修 | Reno Stars",
+      "description": "{area}专业装修服务。厨房、浴室、全屋装修。联系我们获取免费报价。"
+    },
+    "thankYou": {
+      "title": "感谢您 | Reno Stars",
+      "description": "您的消息已收到，我们会尽快回复您。"
+    },
+    "process": {
+      "title": "装修工作流程, 5 步走 | Reno Stars 温哥华",
+      "description": "了解我们精简的5步装修工作流程。从初步咨询到项目交付，让您的装修之旅简单无忧。"
+    },
+    "showroom": {
+      "title": "装修展厅 列治文 | 免费咨询 | Reno Stars",
+      "description": "参观列治文装修展厅：实物材料展示、厨卫样板间、现场免费报价。周一至周六 9:30AM 开放，无需预约。"
+    },
+    "guides": {
+      "title": "装修费用指南 | 温哥华 BC | Reno Stars",
+      "description": "基于大温哥华地区真实项目数据的免费装修费用指南。厨房、卫生间和全屋装修真实报价与工期。",
+      "kitchenCost": {
+        "title": "温哥华厨房装修费用 (2026) | Reno Stars",
+        "description": "温哥华厨房装修要花多少钱？基于16个已完成项目的真实报价，从$15,000到$72,000。获取准确的费用明细。"
+      },
+      "bathroomCost": {
+        "title": "温哥华卫生间装修平均费用（2026最新报价指南）| Reno Stars",
+        "description": "温哥华卫生间装修平均要花多少钱？基于19个完工项目的真实报价，$10K–$60K+。含3件套、4件套、5件套卫生间详细费用明细与省钱攻略。"
+      },
+      "wholeHouseCost": {
+        "title": "温哥华全屋翻新费用 (2026) | Reno Stars",
+        "description": "温哥华全屋翻新需要多少钱？真实报价从$50,000到$200,000以上。全面的整屋翻新费用明细。"
+      },
+      "basementCost": {
+        "title": "温哥华地下室装修费用 (2026) | Reno Stars",
+        "description": "温哥华地下室装修需要多少钱？大温地区典型价格从$30,000到$120,000以上。按等级划分的详细费用明细及省钱技巧。"
+      },
+      "commercialCost": {
+        "title": "温哥华商业装修费用 (2026) | Reno Stars",
+        "description": "温哥华商业装修要多少钱？费用通常从$50,000到$1,000,000+不等。按项目类型详细分解，提供真实数据参考。"
+      },
+      "cabinetCost": {
+        "title": "温哥华橱柜翻新费用 (2026) | Reno Stars",
+        "description": "温哥华橱柜翻新要多少钱？大温地区典型费用从$4,000到$15,000。比较翻新、换门板和全面更换三种方案。"
+      },
+      "basementSuiteCost": {
+        "title": "温哥华地下室套房改造费用 (2026) | Reno Stars",
+        "description": "温哥华合法地下室套房要多少钱？大温地区典型费用$60,000到$150,000。详细费用分析、投资回报和市政法规。"
+      }
+    },
+    "about": {
+      "title": "关于 Reno Stars | 20+年经验 · 70+五星好评 | 温哥华装修",
+      "description": "了解Reno Stars：100+大温装修项目，20+年经验，$500万保险，WCB覆盖，70+Google五星好评。中英双语服务，免费上门估价。"
+    },
+    "reviews": {
+      "title": "客户评价与见证 | Reno Stars 温哥华装修",
+      "description": "查看Reno Stars客户的真实Google评价。温哥华五星好评装修公司，超过67条评价。了解真实业主对我们厨房、浴室和全屋装修的评价。"
+    },
+    "financing": {
+      "title": "装修融资与预算指南 | 温哥华",
+      "description": "探索大温哥华地区装修融资方案。房屋净值信贷、个人贷款、按揭再融资以及装修预算规划技巧。"
+    },
+    "beforeAfter": {
+      "title": "装修改造前后对比 | Reno Stars 温哥华",
+      "description": "查看Reno Stars在大温哥华地区完成的真实装修改造前后对比照片。厨房、卫生间、地下室和全屋改造案例展示。"
+    },
+    "features": {
+      "title": "为什么选择 Reno Stars | 温哥华装修公司特色",
+      "description": "透明报价、结构化流程、快速响应、稳定团队。了解 Reno Stars 与其他温哥华装修公司的区别。"
+    },
+    "nearMe": {
+      "title": "附近装修公司 | 大温哥华 | Reno Stars",
+      "description": "大温哥华地区值得信赖的装修公司，服务温哥华、列治文、本拿比、素里等14个城市。70+ Google五星好评，20+年经验，$500万保险，免费上门估价。"
+    }
+  }
+}

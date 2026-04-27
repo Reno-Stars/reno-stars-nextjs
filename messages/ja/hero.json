@@ -1,0 +1,17 @@
+{
+  "hero": {
+    "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
+    "yearsOfExcellence": "卓越した実績の年数",
+    "transformYourSpace": "バンクーバーの住宅リノベーションのプロ",
+    "renovationRemodeling": "リノベーション・リモデリング",
+    "thoughtfulSpaces": "心を込めて作る、思い遣りの空間",
+    "premiumRenovations": "プレミアムリノベーション",
+    "elevateYourSpace": "あなたの空間を",
+    "toLuxury": "ラグジュアリーへ",
+    "buildingBetterSpaces": "より良い空間づくり",
+    "professionalExcellence": "プロフェッショナルなリノベーション",
+    "professionalExcellenceDesc": "{experience}年以上の経験、{coverage}のCGL保険、有効なWCBカバー、最大3年間の保証を備えたバンクーバーの住宅リノベーション会社。メトロバンクーバー全域でキッチン、バスルーム、住宅全体のリノベーションを手掛けています。",
+    "realEstateTitle": "ワンストップサービス: リノベーション + 不動産 + 撮影",
+    "realEstateDesc": "住宅の総合リノベーションから不動産仲介、プロカメラマンの撮影まで。信頼できるプロフェッショナルと連携し、すべてをワンストップで提供します。"
+  }
+}

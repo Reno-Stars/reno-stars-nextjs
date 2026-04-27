@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "서비스 지역",
+    "subtitle": "로우어 메인랜드 전역의 커뮤니티에 자랑스럽게 서비스를 제공합니다",
+    "servingIn": "{city}의 주택 리노베이션",
+    "cityDescription": "{city}에서 전문 리노베이션 서비스를 제공합니다. 무료 상담을 신청해 주세요.",
+    "viewProjects": "{city} 프로젝트 보기",
+    "requestQuote": "견적 신청",
+    "whyChooseArea": "{area} 서비스를 선택하는 이유",
+    "areaProjects": "{area} 프로젝트",
+    "readyToStartIn": "{area}에서 {service} 프로젝트를 시작할 준비가 되셨나요?",
+    "serviceInArea": "{area}의 {service}",
+    "servicesInArea": "{area}에서 제공하는 서비스",
+    "readyToStartRenovation": "{area} 리노베이션을 시작할 준비가 되셨나요?",
+    "faqTitle": "{area} 리노베이션에 대해 자주 묻는 질문",
+    "aboutArea": "{area} 소개",
+    "aboutService": "{area}의 {service} 소개",
+    "areaServiceContent": "{area}의 {service} 서비스",
+    "otherAreasForService": "다른 지역의 {service}",
+    "otherServicesInArea": "{area}의 다른 서비스",
+    "serviceFaqTitle": "{area}의 {service}에 대해 자주 묻는 질문",
+    "learnOurProcess": "5단계 리노베이션 공정 보기",
+    "processLinkText": "공정 보기",
+    "blogLinkText": "리노베이션 팁 & 가이드",
+    "serviceLinkText": "{service} 자세히 보기",
+    "nearbyAreas": "인근 지역도 서비스"
+  }
+}

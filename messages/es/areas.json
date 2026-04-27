@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "Áreas de servicio",
+    "subtitle": "Servimos con orgullo a comunidades de todo el Lower Mainland",
+    "servingIn": "Remodelaciones de hogar en {city}",
+    "cityDescription": "Servicios profesionales de remodelación disponibles en {city}. Contáctenos para una consulta gratis.",
+    "viewProjects": "Ver proyectos en {city}",
+    "requestQuote": "Solicitar cotización",
+    "whyChooseArea": "Por qué elegir nuestro servicio en {area}",
+    "areaProjects": "Proyectos en {area}",
+    "readyToStartIn": "¿Listo para comenzar su proyecto de {service} en {area}?",
+    "serviceInArea": "{service} en {area}",
+    "servicesInArea": "Nuestros servicios en {area}",
+    "readyToStartRenovation": "¿Listo para comenzar su remodelación en {area}?",
+    "faqTitle": "Preguntas frecuentes sobre remodelaciones en {area}",
+    "aboutArea": "Sobre {area}",
+    "aboutService": "Sobre {service} en {area}",
+    "areaServiceContent": "Servicios de {service} en {area}",
+    "otherAreasForService": "{service} en otras áreas",
+    "otherServicesInArea": "Otros servicios en {area}",
+    "serviceFaqTitle": "Preguntas frecuentes sobre {service} en {area}",
+    "learnOurProcess": "Conozca nuestro proceso de 5 pasos",
+    "processLinkText": "Vea cómo trabajamos",
+    "blogLinkText": "Consejos y guías de remodelación",
+    "serviceLinkText": "Todo sobre {service}",
+    "nearbyAreas": "También servimos áreas cercanas"
+  }
+}

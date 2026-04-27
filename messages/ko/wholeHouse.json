@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "프로젝트 개요",
+    "includedAreas": "포함 지역",
+    "totalBudget": "예산",
+    "totalDuration": "기간",
+    "allServiceScopes": "포함된 모든 서비스",
+    "viewAreaProject": "{area} 프로젝트 보기",
+    "viewAreaDetails": "상세 보기",
+    "combinedGallery": "프로젝트 갤러리",
+    "filterByArea": "지역별 필터",
+    "allAreas": "모든 지역",
+    "childProjectsCount": "{count} 리노베이션 영역",
+    "noImagesForArea": "이 지역의 이미지가 없습니다",
+    "areasCount": "{count, plural, one {# 영역} other {# 영역}}",
+    "siteBadge": "주택 전체",
+    "areas": "영역"
+  }
+}

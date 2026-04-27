@@ -1,0 +1,40 @@
+{
+  "reviewsPage": {
+    "heroTitle": "客户怎么说",
+    "heroSubtitle": "来自大温地区真实业主的评价",
+    "googleRating": "Google 评分",
+    "basedOn": "基于 {count} 条评价",
+    "verifiedReviews": "Google 认证评价",
+    "verifiedSubtitle": "每条评价均来自经过验证的 Google 客户",
+    "readOnGoogle": "在 Google 上查看",
+    "allReviewsTitle": "全部评价",
+    "noReviews": "暂时没有可显示的评价。",
+    "whyTrustTitle": "为什么业主信赖 Reno Stars",
+    "whyTrustSubtitle": "我们对品质的承诺，由客户亲口见证",
+    "trustItem1Title": "价格透明",
+    "trustItem1Desc": "报价清晰详细，绝无隐藏费用。客户一致称赞我们坦诚的报价方式。",
+    "trustItem2Title": "精湛工艺",
+    "trustItem2Desc": "从拆除到验收，每个环节都精益求精。我们绝不偷工减料。",
+    "trustItem3Title": "响应迅速",
+    "trustItem3Desc": "通过微信、电话或邮件快速回复。施工全程随时为您更新进度。",
+    "trustItem4Title": "准时交付",
+    "trustItem4Desc": "我们尊重您的时间。团队每天准时到场，高效施工，确保按期完成。",
+    "leaveReviewTitle": "满意我们的服务？",
+    "leaveReviewSubtitle": "期待听到您的装修体验",
+    "leaveReviewButton": "在 Google 上留下评价",
+    "faq": {
+      "q1": "这些评价是真实的吗？",
+      "a1": "是的，本页面上的每条评价均直接来自 Google 评价。它们由使用过我们装修服务的经过验证的客户撰写。",
+      "q2": "如何为 Reno Stars 留下评价？",
+      "a2": "项目完成后，您可以在我们的 Google 商家页面留下评价。点击上方的留下评价按钮，即可直接跳转到我们的 Google 评价页面。",
+      "q3": "你们的整体评分是多少？",
+      "a3": "我们在 Google 上保持着满分五星的评分，拥有超过 67 条来自大温地区业主的真实评价。",
+      "q4": "你们会回复评价吗？",
+      "a4": "是的，我们会阅读并回复每一条评价。您的反馈帮助我们不断提升装修服务质量。",
+      "q5": "评价者来自哪些地区？",
+      "a5": "我们的评价来自大温哥华地区各处的业主，包括温哥华、列治文、本拿比、高贵林、素里等城市。"
+    },
+    "ctaHeading": "准备开始您的装修了吗？",
+    "ctaSubtitle": "加入大温地区越来越多满意业主的行列"
+  }
+}

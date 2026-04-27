@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
+      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+    },
+    "services": {
+      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
+      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+    },
+    "projects": {
+      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
+      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+    },
+    "contact": {
+      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
+      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+    },
+    "blog": {
+      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
+      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+    },
+    "benefits": {
+      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
+      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+    },
+    "design": {
+      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
+      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+    },
+    "projectCategory": {
+      "title": "{category} Renovation Projects | Reno Stars Vancouver",
+      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+    },
+    "projectDetail": {
+      "titleWithLocation": "{title} in {city} | Reno Stars"
+    },
+    "serviceLocation": {
+      "title": "{service} in {area} | Reno Stars",
+      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
+      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+    },
+    "areas": {
+      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
+      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+    },
+    "area": {
+      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
+      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+    },
+    "thankYou": {
+      "title": "Thank You | Reno Stars",
+      "description": "Your message has been received. We will get back to you shortly."
+    },
+    "process": {
+      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
+      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+    },
+    "showroom": {
+      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
+      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+    },
+    "guides": {
+      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
+      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "kitchenCost": {
+        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+      },
+      "bathroomCost": {
+        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
+        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+      },
+      "wholeHouseCost": {
+        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+      },
+      "basementCost": {
+        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+      },
+      "commercialCost": {
+        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+      },
+      "cabinetCost": {
+        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+      },
+      "basementSuiteCost": {
+        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+      }
+    },
+    "about": {
+      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
+      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+    },
+    "reviews": {
+      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
+      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+    },
+    "financing": {
+      "title": "Renovation Financing & Budget Guide | Vancouver",
+      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+    },
+    "beforeAfter": {
+      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
+      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+    },
+    "features": {
+      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
+      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+    },
+    "nearMe": {
+      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
+      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+    }
+  }
+}

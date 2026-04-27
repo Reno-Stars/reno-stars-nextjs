@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "Resumen del proyecto",
+    "includedAreas": "Áreas incluidas",
+    "totalBudget": "Presupuesto",
+    "totalDuration": "Plazo",
+    "allServiceScopes": "Todos los servicios incluidos",
+    "viewAreaProject": "Ver proyecto de {area}",
+    "viewAreaDetails": "Ver detalles",
+    "combinedGallery": "Galería del proyecto",
+    "filterByArea": "Filtrar por área",
+    "allAreas": "Todas las áreas",
+    "childProjectsCount": "{count} áreas de remodelación",
+    "noImagesForArea": "No hay imágenes disponibles para esta área",
+    "areasCount": "{count, plural, one {# Área} other {# Áreas}}",
+    "siteBadge": "Casa completa",
+    "areas": "Áreas"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "모든 카테고리",
+    "location": "위치",
+    "allLocations": "모든 위치",
+    "spaceType": "공간 유형",
+    "allSpaceTypes": "모든 공간 유형",
+    "budget": "예산",
+    "allBudgets": "모든 예산",
+    "showing": "표시",
+    "projects": "{count, plural, one {프로젝트} other {프로젝트}}",
+    "clearAll": "필터 초기화",
+    "browseByCategory": "카테고리로 보기",
+    "swipeToSeeMore": "스와이프해서 보기 →",
+    "noProjectsMatch": "필터와 일치하는 프로젝트가 없습니다.",
+    "pagination": "프로젝트 페이지네이션",
+    "previous": "이전",
+    "next": "다음",
+    "previousPage": "이전 페이지로",
+    "nextPage": "다음 페이지로",
+    "showingProjects": "총 {total}개 중 {start}-{end}개 표시",
+    "search": "프로젝트 검색..."
+  }
+}

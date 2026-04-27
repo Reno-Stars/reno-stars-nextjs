@@ -1,0 +1,26 @@
+{
+  "showroomPage": {
+    "heroTitle": "Visite nuestro showroom",
+    "heroSubtitle": "Conozca de primera mano materiales, diseños y acabados de remodelación",
+    "addressTitle": "Ubicación y horarios",
+    "phoneTitle": "Teléfono",
+    "emailTitle": "Correo",
+    "hoursTitle": "Horarios",
+    "hoursValue": "Con cita previa",
+    "mapTitle": "Cómo llegar",
+    "ctaTitle": "¿Listo para comenzar su proyecto?",
+    "ctaDescription": "Reserve una consulta gratis en nuestro showroom. Nuestro equipo de diseño le ayudará a explorar opciones y planificar su remodelación.",
+    "bookConsultation": "Reservar una consulta gratis",
+    "callUs": "O llámenos al",
+    "faq1q": "¿Necesito una cita para visitar el showroom?",
+    "faq1a": "Las visitas sin cita son bienvenidas, pero recomendamos reservar para que nuestro equipo de diseño pueda dedicarle tiempo a discutir su proyecto en detalle.",
+    "faq2q": "¿Qué puedo ver en el showroom de Reno Stars?",
+    "faq2a": "Nuestro showroom presenta muestras de materiales, exhibiciones de gabinetes, opciones de encimeras, selecciones de azulejos e inspiración de diseño para remodelaciones de cocina, baño y casa completa.",
+    "faq3q": "¿Hay estacionamiento disponible en el showroom?",
+    "faq3a": "Sí, hay estacionamiento gratis disponible justo frente a nuestro showroom en Richmond.",
+    "faq4q": "¿Puedo llevar mis planos de remodelación al showroom?",
+    "faq4a": "¡Por supuesto! Lleve sus planos, fotos o imágenes de inspiración. Nuestro equipo puede revisarlos y ofrecerle recomendaciones profesionales durante su visita.",
+    "appointmentPrefix": "Le invitamos a programar una visita a nuestro showroom de remodelación",
+    "appointmentBold": "¡con cita previa!"
+  }
+}

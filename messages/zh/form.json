@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "姓名",
+    "fullName": "全名",
+    "email": "邮箱",
+    "emailAddress": "邮箱地址",
+    "phone": "电话",
+    "phoneNumber": "电话号码",
+    "message": "留言",
+    "projectDetails": "项目详情",
+    "service": "服务类型",
+    "serviceInterestedIn": "感兴趣的服务",
+    "selectService": "选择服务类型",
+    "namePlaceholder": "您的姓名",
+    "namePlaceholder2": "张三",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "您的电话号码",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "请告诉我们您的项目需求...",
+    "messagePlaceholder2": "请告诉我们您的装修项目需求...",
+    "sending": "发送中...",
+    "success": "感谢您！您的信息已成功发送。",
+    "successTitle": "消息已发送！",
+    "error": "出了点问题，请重试。",
+    "responsePromise": "我们会在24小时内回复您，并提供详细报价。"
+  }
+}

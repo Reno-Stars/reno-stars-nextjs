@@ -1,0 +1,37 @@
+{
+  "services": {
+    "kitchen": {
+      "title": "주방 리노베이션",
+      "description": "현대적 디자인, 맞춤형 캐비닛, 프리미엄 카운터탑을 갖춘 완전한 주방 리모델링.",
+      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+    },
+    "bathroom": {
+      "title": "욕실 리노베이션",
+      "description": "고급 자재와 마감으로 욕실을 스파 같은 공간으로 변화시키세요.",
+      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+    },
+    "wholeHouse": {
+      "title": "주택 전체 리노베이션",
+      "description": "콘셉트부터 완공까지 본격적인 주택 변화.",
+      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+    },
+    "basement": {
+      "title": "지하실 리모델링",
+      "description": "지하실을 기능적인 생활 공간으로. Best of Vancouver 3위.",
+      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+    },
+    "cabinet": {
+      "title": "캐비닛 리페이싱",
+      "description": "전문 캐비닛 리페이싱으로 주방을 새롭게.",
+      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+    },
+    "commercial": {
+      "title": "상업 리노베이션",
+      "description": "사무실, 매장, 식당 등 전문적인 상업 공간 리노베이션.",
+      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+    },
+    "hubTitle": "서비스 안내",
+    "hubSubtitle": "모든 공간을 위한 전문 리노베이션 솔루션",
+    "getQuoteForService": "{service} 견적 받기"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "项目概览",
+    "includedAreas": "包含区域",
+    "totalBudget": "预算",
+    "totalDuration": "工期",
+    "allServiceScopes": "全部服务项目",
+    "viewAreaProject": "查看{area}项目",
+    "viewAreaDetails": "查看详情",
+    "combinedGallery": "项目图库",
+    "filterByArea": "按区域筛选",
+    "allAreas": "全部区域",
+    "childProjectsCount": "{count}个装修区域",
+    "noImagesForArea": "该区域暂无图片",
+    "areasCount": "{count} 个区域",
+    "siteBadge": "整屋项目",
+    "areas": "个区域"
+  }
+}

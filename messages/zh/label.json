@@ -1,0 +1,18 @@
+{
+  "label": {
+    "phone": "电话",
+    "email": "邮箱",
+    "address": "地址",
+    "location": "位置",
+    "contact": "联系方式",
+    "quality": "品质保证",
+    "whyChooseUs": "为什么选择我们",
+    "verifiedCustomer": "认证客户",
+    "new": "新",
+    "new2": "新",
+    "businessHours": "营业时间",
+    "businessHoursShort": "周一至五 8–18时，周六 9–16时",
+    "businessHoursDetail": "周一至周五：上午8:00 - 下午6:00\n周六：上午9:00 - 下午4:00\n周日：休息",
+    "featured": "精选"
+  }
+}

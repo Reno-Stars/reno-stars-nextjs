@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "home": {
+      "title": "밴쿠버 주택 리노베이션 — {years}년+, $5M 보험 | Reno Stars",
+      "description": "메트로 밴쿠버 주방, 욕실, 주택 전체 리노베이션. {years}년+ 사업, $5M CGL 보험, WCB 보험 가입 시공팀, 3년 보증. 100+ 완료된 프로젝트를 보거나 무료 견적을 받으세요."
+    },
+    "services": {
+      "title": "밴쿠버 리노베이션 서비스 — $5M 보험 | Reno Stars",
+      "description": "메트로 밴쿠버 전역의 주방, 욕실, 주택 전체, 지하실, 상업 리노베이션 서비스. 20년+ 경력, $5M CGL 보험, 3년 보증. 무료 견적."
+    },
+    "projects": {
+      "title": "밴쿠버 리노베이션 100+ 프로젝트 | 비포 & 애프터 | Reno Stars",
+      "description": "메트로 밴쿠버에서 진행한 100+ 실제 리노베이션 프로젝트의 비포/애프터 사진, 실제 비용, 시공 기간을 확인하세요. 주방, 욕실, 지하실, 주택 전체 변화."
+    },
+    "contact": {
+      "title": "밴쿠버 리노베이션 무료 견적 | Reno Stars 문의",
+      "description": "밴쿠버에서 신뢰받는 Reno Stars의 무료 리노베이션 견적. 메트로 밴쿠버의 주방, 욕실, 지하실, 주택 전체 리노베이션. 전화 778-960-7999."
+    },
+    "blog": {
+      "title": "리노베이션 팁 & 비용 가이드 | 밴쿠버 | Reno Stars 블로그",
+      "description": "밴쿠버 주택 개선 프로젝트를 위한 전문가의 리노베이션 팁, 디자인 트렌드, 실용적 아이디어. 사례 연구와 비포-애프터 변화를 읽어보세요."
+    },
+    "benefits": {
+      "title": "Reno Stars를 선택하는 이유 | 70+ 5★ 리뷰, $5M 보험",
+      "description": "투명한 견적, 구조화된 프로세스, 빠른 소통, 안정적인 팀. Google 70+ 5성 리뷰, $5M CGL 보험, WCB 커버."
+    },
+    "design": {
+      "title": "리노베이션 디자인 갤러리 | 실제 밴쿠버 프로젝트 | Reno Stars",
+      "description": "메트로 밴쿠버의 100+ 실제 프로젝트에서 리노베이션 디자인 아이디어를 확인하세요. 주방, 욕실, 지하실, 주택 전체 영감."
+    },
+    "projectCategory": {
+      "title": "{category} 리노베이션 프로젝트 | Reno Stars 밴쿠버",
+      "description": "밴쿠버와 로우어 메인랜드 전역의 {category} 리노베이션 프로젝트를 살펴보세요. 비포-애프터 사진과 디자인 영감을 보세요."
+    },
+    "projectDetail": {
+      "titleWithLocation": "{title} ({city}) | Reno Stars"
+    },
+    "serviceLocation": {
+      "title": "{area}의 {service} | Reno Stars",
+      "titleWithTagline": "{area}의 {service} – {tagline} | Reno Stars",
+      "description": "Reno Stars의 {area} 전문 {service}. {years}년+ 경력, $5M CGL 보험, 활성 WCB 커버, 최대 3년 보증. 지역 프로젝트를 보고 오늘 무료 견적을 받으세요."
+    },
+    "areas": {
+      "title": "내 지역 리노베이션 | 메트로 밴쿠버 17개 지역 | Reno Stars",
+      "description": "Reno Stars는 메트로 밴쿠버와 프레이저 밸리 전역의 17개 커뮤니티에 서비스를 제공합니다. 거주 도시의 리노베이션 서비스를 찾고 무료 견적을 받으세요."
+    },
+    "area": {
+      "title": "{area} 리노베이션 시공자 | 주방 & 욕실 | Reno Stars",
+      "description": "{area}의 전문 리노베이션 서비스. 주방, 욕실, 주택 전체 리노베이션. 무료 견적은 문의해 주세요."
+    },
+    "thankYou": {
+      "title": "감사합니다 | Reno Stars",
+      "description": "메시지를 받았습니다. 곧 답변 드리겠습니다."
+    },
+    "process": {
+      "title": "리노베이션 공정: 5단계 | Reno Stars 밴쿠버",
+      "description": "체계적인 5단계 리노베이션 공정에 대해 알아보세요. 첫 상담부터 프로젝트 인계까지, 리노베이션을 간단하고 걱정 없이."
+    },
+    "showroom": {
+      "title": "리노베이션 쇼룸 리치몬드 BC | 무료 상담 | Reno Stars",
+      "description": "리치몬드 BC 쇼룸을 방문해 실제 자재를 만지고, 주방 & 욕실 디스플레이를 보고, 즉석에서 무료 견적을 받으세요. 월-토 오전 9:30 오픈. 예약 불필요."
+    },
+    "guides": {
+      "title": "리노베이션 비용 가이드 | 밴쿠버 BC | Reno Stars",
+      "description": "광역 밴쿠버의 실제 프로젝트 데이터에 기반한 무료 리노베이션 비용 가이드. 주방, 욕실, 주택 전체 리노베이션 가격을 실제 예산과 시공 기간으로 확인.",
+      "kitchenCost": {
+        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+      },
+      "bathroomCost": {
+        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
+        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+      },
+      "wholeHouseCost": {
+        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+      },
+      "basementCost": {
+        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+      },
+      "commercialCost": {
+        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+      },
+      "cabinetCost": {
+        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+      },
+      "basementSuiteCost": {
+        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
+        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+      }
+    },
+    "about": {
+      "title": "Reno Stars 소개 | 20년+, 70+ 5★ 리뷰 | 밴쿠버 리노베이션",
+      "description": "메트로 밴쿠버에서 100+ 리노베이션을 진행한 팀을 만나보세요. 20년+ 경력, $5M 보험, WCB 커버, Google 70+ 5성 리뷰. 무료 상담."
+    },
+    "reviews": {
+      "title": "70+ 5성 리뷰 | Reno Stars 밴쿠버",
+      "description": "메트로 밴쿠버의 실제 주택 소유주 70+의 인증된 Google 5성 리뷰를 확인하세요. 메트로 밴쿠버의 가족들이 리노베이션을 위해 Reno Stars를 신뢰하는 이유를 보세요."
+    },
+    "financing": {
+      "title": "리노베이션 금융 & 예산 가이드 | 밴쿠버",
+      "description": "메트로 밴쿠버에서 리노베이션 금융 옵션을 살펴보세요. HELOC, 개인 대출, 모기지 재융자, 주택 리노베이션 프로젝트를 위한 예산 계획 팁."
+    },
+    "beforeAfter": {
+      "title": "비포 & 애프터: 실제 밴쿠버 리노베이션 | Reno Stars",
+      "description": "메트로 밴쿠버의 멋진 비포-애프터 리노베이션 변화. 실제 프로젝트, 실제 비용, 실제 결과. 주방, 욕실, 주택 전체."
+    },
+    "features": {
+      "title": "Reno Stars의 차별점 | $5M 보험, 3년 보증, 70+ 리뷰",
+      "description": "Reno Stars가 다른 이유: $5M CGL 보험, WCB 커버, 3년 시공 보증, 이중 언어 팀, Google 70+ 5성 리뷰. 밴쿠버."
+    },
+    "nearMe": {
+      "title": "내 근처 주택 리노베이션 | 밴쿠버 메트로 | Reno Stars",
+      "description": "밴쿠버, 리치몬드, 버나비, 서리, 메트로 밴쿠버 14개 도시의 최고 평점 주택 리노베이션 회사. Google 70+ 5★ 리뷰, 20년+, $5M 보험. 무료 견적."
+    }
+  }
+}

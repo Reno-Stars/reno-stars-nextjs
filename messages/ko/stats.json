@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "yearsExperience": "경력 연수",
+    "teamMembers": "팀 멤버",
+    "expertTeamMembers": "전문 팀 멤버",
+    "expertTeam": "전문 팀",
+    "expertCraftsmen": "숙련 장인",
+    "liabilityCoverage": "$5M CGL 보험",
+    "fullCoverage": "$5M CGL 보험 · 활성 WCB 커버 · 최대 3년 보증",
+    "wcbCoverage": "활성 WCB 커버",
+    "projectsCompleted": "완료된 프로젝트",
+    "projectsDone": "완료된 프로젝트",
+    "happyClients": "만족 고객",
+    "satisfaction": "만족도",
+    "satisfactionRate": "만족률",
+    "clientSatisfaction": "고객 만족도",
+    "support": "지원",
+    "quality": "품질",
+    "projects": "프로젝트",
+    "years": "년",
+    "averageRating": "평균 평점",
+    "areasServed": "서비스 지역",
+    "rating": "평점",
+    "srStats": "회사 통계",
+    "srTrustBadges": "신뢰 배지 및 인증"
+  }
+}

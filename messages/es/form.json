@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "Nombre",
+    "fullName": "Nombre completo",
+    "email": "Correo",
+    "emailAddress": "Correo electrónico",
+    "phone": "Teléfono",
+    "phoneNumber": "Número de teléfono",
+    "message": "Mensaje",
+    "projectDetails": "Detalles del proyecto",
+    "service": "Servicio",
+    "serviceInterestedIn": "Servicio de interés",
+    "selectService": "Seleccione un servicio",
+    "namePlaceholder": "Su nombre",
+    "namePlaceholder2": "Juan Pérez",
+    "emailPlaceholder": "su.correo@ejemplo.com",
+    "emailPlaceholder2": "su@correo.com",
+    "emailPlaceholder3": "juan@ejemplo.com",
+    "phonePlaceholder": "Su teléfono",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "Cuéntenos sobre su proyecto...",
+    "messagePlaceholder2": "Cuéntenos sobre su proyecto de remodelación...",
+    "sending": "Enviando...",
+    "success": "¡Gracias! Su mensaje ha sido enviado.",
+    "successTitle": "¡Mensaje enviado!",
+    "error": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "responsePromise": "Respondemos en menos de 24 horas con una cotización detallada."
+  }
+}

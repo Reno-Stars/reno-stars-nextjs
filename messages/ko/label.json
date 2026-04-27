@@ -1,0 +1,18 @@
+{
+  "label": {
+    "phone": "전화",
+    "email": "이메일",
+    "address": "주소",
+    "location": "위치",
+    "contact": "연락처",
+    "quality": "품질",
+    "whyChooseUs": "선택의 이유",
+    "verifiedCustomer": "인증된 고객",
+    "new": "신규",
+    "new2": "새로움",
+    "businessHours": "영업 시간",
+    "businessHoursShort": "월–금 8AM–6PM, 토 9AM–4PM",
+    "businessHoursDetail": "월요일 - 금요일: 오전 8:00 - 오후 6:00\n토요일: 오전 9:00 - 오후 4:00\n일요일: 휴무",
+    "featured": "추천"
+  }
+}
