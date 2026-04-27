@@ -74,23 +74,23 @@
         "subtitle": "Six key factors that determine your final price",
         "cabinetry": {
           "title": "Cabinetry (30–40% of budget)",
-          "description": "The biggest cost driver. Stock cabinets start around /linear foot, while custom options can exceed /linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+          "description": "The biggest cost driver. Stock cabinets start around $150/linear foot, while custom options can exceed $800/linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
         },
         "countertops": {
           "title": "Countertops (10–15% of budget)",
-          "description": "Laminate starts at /sq ft, quartz runs –150/sq ft, and natural stone can exceed /sq ft. Waterfall island edges add –2,000 to the total."
+          "description": "Laminate starts at $30/sq ft, quartz runs $80–150/sq ft, and natural stone can exceed $200/sq ft. Waterfall island edges add $500–2,000 to the total."
         },
         "layout": {
           "title": "Layout Changes",
-          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add ,000–15,000 depending on structural requirements and permits."
+          "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add $3,000–15,000 depending on structural requirements and permits."
         },
         "appliances": {
           "title": "Appliances",
-          "description": "Budget-friendly packages start at ,000–5,000. Mid-range brands like Bosch or KitchenAid run ,000–15,000. Premium brands like Sub-Zero or Wolf can exceed ,000."
+          "description": "Budget-friendly packages start at $3,000–5,000. Mid-range brands like Bosch or KitchenAid run $8,000–15,000. Premium brands like Sub-Zero or Wolf can exceed $30,000."
         },
         "plumbing": {
           "title": "Plumbing & Electrical",
-          "description": "Relocating plumbing or adding circuits adds ,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+          "description": "Relocating plumbing or adding circuits adds $2,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
         },
         "permits": {
           "title": "Permits & Inspections",
@@ -105,7 +105,7 @@
         "title": "Money-Saving Tips for Your Kitchen Renovation",
         "tip1": {
           "title": "Keep the Existing Layout",
-          "description": "Avoiding plumbing and gas line relocations can save ,000–15,000. Work with your existing kitchen footprint where possible."
+          "description": "Avoiding plumbing and gas line relocations can save $5,000–15,000. Work with your existing kitchen footprint where possible."
         },
         "tip2": {
           "title": "Choose Quartz Over Natural Stone",
