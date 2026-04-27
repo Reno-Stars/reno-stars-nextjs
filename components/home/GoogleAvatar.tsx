@@ -21,6 +21,9 @@ export default function GoogleAvatar({ src, name }: { src: string; name: string 
       alt={name}
       width={36}
       height={36}
+      loading="lazy"
+      decoding="async"
+      fetchPriority="low"
       className="w-9 h-9 rounded-full object-cover shrink-0"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}

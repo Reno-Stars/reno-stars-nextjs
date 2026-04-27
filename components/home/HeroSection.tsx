@@ -193,7 +193,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} className="h-4 w-auto object-contain rounded-sm shrink-0" />
+            <img src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={120} height={32} loading="lazy" decoding="async" fetchPriority="low" className="h-4 w-auto object-contain rounded-sm shrink-0" />
             {t.wcbCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>

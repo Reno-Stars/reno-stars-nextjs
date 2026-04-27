@@ -34,7 +34,7 @@ export default function ServicesSection({ services, locale, translations: t }: S
                       style={{ backgroundColor: GOLD_PALE }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={service.icon} alt="" className="w-5 h-5" style={{ filter: GOLD_ICON_FILTER }} />
+                      <img src={service.icon} alt="" loading="lazy" decoding="async" fetchPriority="low" className="w-5 h-5" style={{ filter: GOLD_ICON_FILTER }} />
                     </div>
                   )}
                   <div className="min-w-0">

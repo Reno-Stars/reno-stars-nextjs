@@ -1,23 +1,24 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
-import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getServiceTypeToCategory, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
 
 export const revalidate = 21600; // 6h
 
 const BASE_URL = getBaseUrl();
 
-/** Fixed date for static pages — avoids misleading "updated" signals on every deploy */
-const STATIC_LAST_MODIFIED = '2026-03-17';
-
+/**
+ * Build a per-page lastmod from a stable build/revalidation timestamp.
+ * Google ignores priority/changefreq (per their public docs), so those are
+ * intentionally omitted to keep the sitemap small and signal-clean.
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas, serviceTypeMap, categorySlugs, allServices] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
-    getServiceTypeToCategory(),
     getCategorySlugs(),
     getServicesFromDb(),
   ]);
@@ -27,215 +28,139 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projectSlugs = projectRows.map(r => r.slug);
   const siteSlugs = siteRows.map(r => r.slug);
   const blogPostSlugs = blogPostRows.map(r => r.slug);
-  // Service page URLs: only services shown on the services page
   const serviceSlugs = allServices.filter(s => s.showOnServicesPage !== false).map(s => s.slug);
+
+  // Use the latest DB timestamp as the lastmod for static pages — gives Google
+  // a real "site updated" signal that moves when content changes.
+  const allDates = [
+    ...Array.from(projectDateMap.values()),
+    ...Array.from(siteDateMap.values()),
+    ...Array.from(blogDateMap.values()),
+  ];
+  const staticLastModified = allDates.length > 0
+    ? allDates.sort().slice(-1)[0]
+    : now;
 
   const entries: MetadataRoute.Sitemap = [];
 
-  // Static pages for each locale
   const staticPages = [
-    { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
-    { path: '/services', priority: 0.9, changeFrequency: 'weekly' as const },
-    { path: '/projects', priority: 0.9, changeFrequency: 'weekly' as const },
-    { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/design', priority: 0.7, changeFrequency: 'monthly' as const },
-    { path: '/features', priority: 0.7, changeFrequency: 'monthly' as const },
-    { path: '/blog', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/contact', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/workflow', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/areas', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/showroom', priority: 0.7, changeFrequency: 'monthly' as const },
-    { path: '/reviews', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/guides', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/guides/kitchen-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/bathroom-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/whole-house-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/basement-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/commercial-renovation-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/cabinet-refinishing-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/guides/basement-suite-cost-vancouver', priority: 0.9, changeFrequency: 'monthly' as const },
-    { path: '/financing', priority: 0.8, changeFrequency: 'monthly' as const },
-    { path: '/before-after', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' as const },
-    { path: '/terms', priority: 0.3, changeFrequency: 'yearly' as const },
+    '',
+    '/services',
+    '/projects',
+    '/about',
+    '/design',
+    '/features',
+    '/blog',
+    '/contact',
+    '/workflow',
+    '/areas',
+    '/showroom',
+    '/reviews',
+    '/guides',
+    '/guides/kitchen-renovation-cost-vancouver',
+    '/guides/bathroom-renovation-cost-vancouver',
+    '/guides/whole-house-renovation-cost-vancouver',
+    '/guides/basement-renovation-cost-vancouver',
+    '/guides/commercial-renovation-cost-vancouver',
+    '/guides/cabinet-refinishing-cost-vancouver',
+    '/guides/basement-suite-cost-vancouver',
+    '/financing',
+    '/before-after',
+    '/privacy',
+    '/terms',
   ];
 
-  // Add static pages for each locale
-  for (const page of staticPages) {
+  const buildAlternates = (path: string) => ({
+    languages: {
+      en: `${BASE_URL}/en${path}/`,
+      zh: `${BASE_URL}/zh${path}/`,
+      ja: `${BASE_URL}/ja${path}/`,
+      ko: `${BASE_URL}/ko${path}/`,
+      es: `${BASE_URL}/es${path}/`,
+      'x-default': `${BASE_URL}/en${path}/`,
+    },
+  });
+
+  for (const path of staticPages) {
     for (const locale of locales) {
       entries.push({
-        url: `${BASE_URL}/${locale}${page.path}/`,
-        lastModified: STATIC_LAST_MODIFIED,
-        changeFrequency: page.changeFrequency,
-        priority: page.priority,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en${page.path}/`,
-            zh: `${BASE_URL}/zh${page.path}/`,
-            ja: `${BASE_URL}/ja${page.path}/`,
-            ko: `${BASE_URL}/ko${page.path}/`,
-            es: `${BASE_URL}/es${page.path}/`,
-            'x-default': `${BASE_URL}/en${page.path}/`,
-          },
-        },
+        url: `${BASE_URL}/${locale}${path}/`,
+        lastModified: staticLastModified,
+        alternates: buildAlternates(path),
       });
     }
   }
 
-  // Service pages
   for (const slug of serviceSlugs) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/services/${slug}/`,
-        lastModified: STATIC_LAST_MODIFIED,
-        changeFrequency: 'monthly',
-        priority: 0.8,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/services/${slug}/`,
-            zh: `${BASE_URL}/zh/services/${slug}/`,
-            ja: `${BASE_URL}/ja/services/${slug}/`,
-            ko: `${BASE_URL}/ko/services/${slug}/`,
-            es: `${BASE_URL}/es/services/${slug}/`,
-            'x-default': `${BASE_URL}/en/services/${slug}/`,
-          },
-        },
+        lastModified: staticLastModified,
+        alternates: buildAlternates(`/services/${slug}`),
       });
     }
   }
 
-  // Service + Location combination pages
   for (const slug of serviceSlugs) {
     for (const area of serviceAreas) {
       for (const locale of locales) {
         entries.push({
           url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
-          lastModified: STATIC_LAST_MODIFIED,
-          changeFrequency: 'monthly',
-          priority: 0.7,
-          alternates: {
-            languages: {
-              en: `${BASE_URL}/en/services/${slug}/${area.slug}/`,
-              zh: `${BASE_URL}/zh/services/${slug}/${area.slug}/`,
-              ja: `${BASE_URL}/ja/services/${slug}/${area.slug}/`,
-              ko: `${BASE_URL}/ko/services/${slug}/${area.slug}/`,
-              es: `${BASE_URL}/es/services/${slug}/${area.slug}/`,
-              'x-default': `${BASE_URL}/en/services/${slug}/${area.slug}/`,
-            },
-          },
+          lastModified: staticLastModified,
+          alternates: buildAlternates(`/services/${slug}/${area.slug}`),
         });
       }
     }
   }
 
-  // Project category pages
   for (const category of categorySlugs) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${category}/`,
-        lastModified: STATIC_LAST_MODIFIED,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/projects/${category}/`,
-            zh: `${BASE_URL}/zh/projects/${category}/`,
-            ja: `${BASE_URL}/ja/projects/${category}/`,
-            ko: `${BASE_URL}/ko/projects/${category}/`,
-            es: `${BASE_URL}/es/projects/${category}/`,
-            'x-default': `${BASE_URL}/en/projects/${category}/`,
-          },
-        },
+        lastModified: staticLastModified,
+        alternates: buildAlternates(`/projects/${category}`),
       });
     }
   }
 
-  // Individual project pages
   const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: projectDateMap.get(slug) ?? now,
-        changeFrequency: 'monthly',
-        priority: 0.6,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/projects/${slug}/`,
-            zh: `${BASE_URL}/zh/projects/${slug}/`,
-            ja: `${BASE_URL}/ja/projects/${slug}/`,
-            ko: `${BASE_URL}/ko/projects/${slug}/`,
-            es: `${BASE_URL}/es/projects/${slug}/`,
-            'x-default': `${BASE_URL}/en/projects/${slug}/`,
-          },
-        },
+        alternates: buildAlternates(`/projects/${slug}`),
       });
     }
   }
 
-  // Site pages (whole-house projects displayed as /projects/{site-slug}/)
   const projectSlugSet = new Set(projectSlugs);
   for (const slug of siteSlugs.filter(s => !projectSlugSet.has(s))) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: siteDateMap.get(slug) ?? now,
-        changeFrequency: 'monthly',
-        priority: 0.6,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/projects/${slug}/`,
-            zh: `${BASE_URL}/zh/projects/${slug}/`,
-            ja: `${BASE_URL}/ja/projects/${slug}/`,
-            ko: `${BASE_URL}/ko/projects/${slug}/`,
-            es: `${BASE_URL}/es/projects/${slug}/`,
-            'x-default': `${BASE_URL}/en/projects/${slug}/`,
-          },
-        },
+        alternates: buildAlternates(`/projects/${slug}`),
       });
     }
   }
 
-  // Blog posts
   for (const slug of blogPostSlugs) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
         lastModified: blogDateMap.get(slug) ?? now,
-        changeFrequency: 'monthly',
-        priority: 0.6,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/blog/${slug}/`,
-            zh: `${BASE_URL}/zh/blog/${slug}/`,
-            ja: `${BASE_URL}/ja/blog/${slug}/`,
-            ko: `${BASE_URL}/ko/blog/${slug}/`,
-            es: `${BASE_URL}/es/blog/${slug}/`,
-            'x-default': `${BASE_URL}/en/blog/${slug}/`,
-          },
-        },
+        alternates: buildAlternates(`/blog/${slug}`),
       });
     }
   }
 
-  // Service area pages
   for (const area of serviceAreas) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/areas/${area.slug}/`,
-        lastModified: STATIC_LAST_MODIFIED,
-        changeFrequency: 'monthly',
-        priority: 0.7,
-        alternates: {
-          languages: {
-            en: `${BASE_URL}/en/areas/${area.slug}/`,
-            zh: `${BASE_URL}/zh/areas/${area.slug}/`,
-            ja: `${BASE_URL}/ja/areas/${area.slug}/`,
-            ko: `${BASE_URL}/ko/areas/${area.slug}/`,
-            es: `${BASE_URL}/es/areas/${area.slug}/`,
-            'x-default': `${BASE_URL}/en/areas/${area.slug}/`,
-          },
-        },
+        lastModified: staticLastModified,
+        alternates: buildAlternates(`/areas/${area.slug}`),
       });
     }
   }
