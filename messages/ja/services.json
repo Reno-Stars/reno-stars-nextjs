@@ -3,32 +3,32 @@
     "kitchen": {
       "title": "キッチンリノベーション",
       "description": "モダンなデザイン、カスタムキャビネット、プレミアムカウンタートップによる完全なキッチンリモデリング。",
-      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+      "longDescription": "包括的なリノベーションサービスで、キッチンを家の中心に変えましょう。カスタムキャビネットと高級カウンタートップから最先端の家電と革新的な収納ソリューションまで、美しく機能的なキッチンを作ります。"
     },
     "bathroom": {
       "title": "バスルームリノベーション",
       "description": "ラグジュアリーな設備と仕上げで、バスルームをスパのような空間に変えます。",
-      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+      "longDescription": "私たちのバスルームリノベーションの専門知識で、あなたの個人的な聖域を作りましょう。豪華なスパインスパイアのデザイン、モダンな備品、カスタムタイル工事、スタイルと機能性の両方を最大化する革新的な収納ソリューションを専門としています。"
     },
     "wholeHouse": {
       "title": "住宅全体リノベーション",
       "description": "コンセプトから完成までの本格的な住宅変革。",
-      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+      "longDescription": "私たちの家全体のリノベーションサービスで、家の完全な変身を体験してください。最初のデザインコンセプトから最終完成まで、プロジェクトのすべての側面を管理し、シームレスなリノベーション体験を保証します。"
     },
     "basement": {
       "title": "地下室リモデリング",
       "description": "地下室を機能的な居住空間に。Best of Vancouver第3位ランキング。",
-      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+      "longDescription": "受賞歴のある地下室リフォームサービスで、家の可能性を最大限に引き出しましょう。ホームシアター、ジム、ゲストスイート、ホームオフィスなど、活用されていない地下室を美しく機能的な生活空間に変えます。"
     },
     "cabinet": {
       "title": "キャビネットリフェイシング",
       "description": "プロのキャビネットリフェイシングでキッチンを刷新。",
-      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+      "longDescription": "完全なリノベーションのコストなしで、キッチンに素晴らしい新しい外観を与えましょう。私たちのキャビネット再装サービスには新しいドア、引き出しフロント、ハードウェアが含まれ、既存のキャビネットボックスを維持しながらキッチンの外観を変えます。"
     },
     "commercial": {
       "title": "商業リノベーション",
       "description": "オフィス、店舗、レストランのプロフェッショナルな商業空間リノベーション。",
-      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+      "longDescription": "私たちの商業リノベーションの専門知識でビジネススペースを向上させましょう。オフィスビルドアウト、小売店のリノベーション、レストランの再設計などを扱い、ブランドと顧客体験を高めるプロフェッショナルな結果を提供します。"
     },
     "hubTitle": "サービス一覧",
     "hubSubtitle": "あらゆる空間のためのプロフェッショナルなリノベーション",

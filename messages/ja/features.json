@@ -1,64 +1,64 @@
 {
   "features": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Reno Starsを選ぶ理由",
+    "subtitle": "私たちと提携することは、単にリノベーションを完了させること以上の意味があります。プロセス全体を明確で、管理され、ストレスフリーなものにすることです。",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "信頼の上に築かれた",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "title": "業界経験20年以上",
+          "description": "私たちは深い専門知識をもたらします。建設だけでなく、リノベーションプロジェクトがどこでうまくいかなくなるか、そして最初からそれを防ぐ方法を理解することについても。"
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "title": "$5M CGL保険 · アクティブなWCBカバレッジ",
+          "description": "包括的な保険カバレッジがあなたの財産を保護し、現場のすべての労働者が完全にカバーされることを保証します。"
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "title": "本物の5つ星レビュー",
+          "description": "長期的なクライアント満足度は、一回限りのプロモーションではなく、実際のプロジェクトと実際の経験に裏打ちされています。"
         },
         "team": {
-          "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "title": "安定したプロのチーム",
+          "description": "私たちは一貫したチームと働きます。一時的な雇用ではなく、すべてのプロジェクトで品質が安定したままになるようにします。"
         },
         "service": {
-          "title": "End-to-End Service",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "title": "エンドツーエンドサービス",
+          "description": "デザインから最終ウォークスルーまで、すべてのステップを管理します。調整オーバーヘッドが少なく、よりスムーズなプロセス。"
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "クライアントが私たちを選ぶ理由",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "多くの見積もりは、重要な項目が省かれているため安く見えます。",
+          "solution": "私たちはすべてを事前にリストアップします、詳細な範囲、材料の責任、および何が含まれているか。始める前に実際の費用を知ることができます。"
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "リノベーションは即興と運に頼るべきではありません。",
+          "solution": "明確な段階、検査、支払いマイルストーンを持つ構造化されたシステムを通じてプロジェクトを実行します。進む前にすべてのステップが完了します。"
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "ほとんどのリノベーションの不満は、コミュニケーション不足から来ています。",
+          "solution": "迅速に対応し、材料選択を支援し、最新情報をお伝えする専任のオフィスチームがいます。「メッセージを送ったのに返信がない」瞬間はありません。"
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "一部の業者は過剰予約し、スケジュールが滑り続けます。",
+          "solution": "私たちはプロジェクトの負荷を管理して、あなたのプロジェクトが計画通りに進むようにします。遅延が発生した場合（サプライヤーなど）、早期にコミュニケーションを取り、透明性を持って調整します。"
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "品質はどのチームが現れるかに依存すべきではありません。",
+          "solution": "私たちは明確な基準を持つ固定チームを使用します。特に防水のような重要な作業では、材料と適用範囲が事前に指定されます。"
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "常に更新を追いかけているとき、リノベーションはストレスです。",
+          "solution": "プロセス全体を予測可能にします：今何が起こっているか、次は何か、いつ期待するかを、フォローアップする必要なく知ることができます。"
         }
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "プロジェクトを始める準備はできましたか？",
+      "subtitle": "透明性、明確なコミュニケーション、そしてあなたの心の安らぎを中心に構築されたリノベーションプロセスの違いを体験してください。"
     }
   }
 }

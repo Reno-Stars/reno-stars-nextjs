@@ -1,64 +1,64 @@
 {
   "features": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Por qué elegir Reno Stars",
+    "subtitle": "Asociarse con nosotros significa más que solo completar una remodelación, se trata de hacer que todo el proceso sea claro, controlado y libre de estrés.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "Construido sobre la confianza",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "title": "Más de 20 años de experiencia en la industria",
+          "description": "Aportamos profunda experiencia. No solo en construcción sino en entender dónde los proyectos de remodelación salen mal y cómo prevenirlo desde el principio."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "title": "$5M Seguro CGL · Cobertura WCB activa",
+          "description": "La cobertura de seguro integral protege su propiedad y garantiza que todos los trabajadores en el sitio estén completamente cubiertos."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "title": "Reseñas auténticas de 5 estrellas",
+          "description": "Satisfacción del cliente a largo plazo respaldada por proyectos reales y experiencias reales, no promociones puntuales."
         },
         "team": {
-          "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "title": "Equipo estable y profesional",
+          "description": "Trabajamos con un equipo consistente. No contrataciones temporales, asegurando que la calidad se mantenga estable en cada proyecto."
         },
         "service": {
-          "title": "End-to-End Service",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "title": "Servicio integral",
+          "description": "Desde el diseño hasta el recorrido final, gestionamos cada paso. Menos sobrecarga de coordinación, proceso más fluido."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "Por qué los clientes nos eligen",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "Muchas cotizaciones parecen baratas porque se omiten elementos clave.",
+          "solution": "Listamos todo por adelantado, alcance detallado, responsabilidades de materiales y lo que está incluido. Conoce el costo real antes de comenzar."
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "La remodelación no debería depender de la improvisación y la suerte.",
+          "solution": "Ejecutamos proyectos a través de un sistema estructurado con etapas claras, inspecciones y hitos de pago. Cada paso se completa antes de avanzar."
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "La mayoría de las frustraciones de remodelación provienen de mala comunicación.",
+          "solution": "Tenemos un equipo de oficina dedicado que responde rápidamente, ayuda con la selección de materiales y lo mantiene actualizado, sin momentos de 'envié un mensaje, no recibí respuesta'."
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "Algunos contratistas sobrereservan y su cronograma sigue retrasándose.",
+          "solution": "Controlamos nuestra carga de proyectos para asegurar que el suyo avance según lo planeado. Cuando ocurren retrasos (proveedores, etc.), nos comunicamos temprano y nos ajustamos de manera transparente."
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "La calidad no debería depender de qué equipo aparezca.",
+          "solution": "Usamos un equipo fijo con estándares claros, especialmente para trabajos críticos como impermeabilización, donde los materiales y el alcance de la aplicación se especifican por adelantado."
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "La remodelación es estresante cuando estás constantemente persiguiendo actualizaciones.",
+          "solution": "Hacemos que todo el proceso sea predecible: usted sabe qué está sucediendo ahora, qué sigue y cuándo esperarlo, sin necesidad de hacer seguimiento."
         }
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "¿Listo para comenzar su proyecto?",
+      "subtitle": "Experimente la diferencia de un proceso de remodelación construido en torno a la transparencia, la comunicación clara y su tranquilidad."
     }
   }
 }

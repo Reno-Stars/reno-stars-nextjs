@@ -64,32 +64,32 @@
       "title": "リノベーションコストガイド | バンクーバーBC | Reno Stars",
       "description": "メトロバンクーバーの実プロジェクトデータに基づく無料のリノベーションコストガイド。キッチン、バスルーム、住宅全体のリノベーション価格を実予算と施工期間付きで。",
       "kitchenCost": {
-        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+        "title": "バンクーバーBCのキッチンリノベーション費用 (2026) | Reno Stars",
+        "description": "バンクーバーでのキッチンリノベーションの費用は？16の完了プロジェクトに基づく$15,000〜$72,000の実際の価格。階層別の正確な費用内訳を取得してください。"
       },
       "bathroomCost": {
-        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
-        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+        "title": "バンクーバーの平均バスルームリノベーション費用 (2026) | Reno Stars",
+        "description": "バンクーバーの平均バスルームリノベーション費用は？19の完了プロジェクトに基づく$10K〜$60K+の実際の価格。3点、4点、5点バスルームによる完全な費用内訳。"
       },
       "wholeHouseCost": {
-        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+        "title": "バンクーバーBCの家全体リノベーション費用 (2026) | Reno Stars",
+        "description": "バンクーバーの家全体のリノベーション費用：実際のプロジェクトから$50K〜$200K+。範囲別の完全な内訳 — キッチン、バスルーム、フローリングなど。Reno Starsから無料見積もりを取得。"
       },
       "basementCost": {
-        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+        "title": "バンクーバーBCの地下室リノベーション費用 (2026) | Reno Stars",
+        "description": "バンクーバーでの地下室リノベーションの費用は？グレーターバンクーバーの典型的な価格は$30,000〜$120,000+。階層別の正確な費用内訳と、お金を節約するヒントを取得。"
       },
       "commercialCost": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+        "title": "バンクーバーBCの商業リノベーション費用 (2026) | Reno Stars",
+        "description": "バンクーバーでの商業リノベーションの費用は？典型的な費用は$50,000〜$1,000,000+。実際のデータを含むプロジェクトタイプ別の詳細な内訳。"
       },
       "cabinetCost": {
-        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+        "title": "バンクーバーBCのキャビネット再仕上げ費用 (2026) | Reno Stars",
+        "description": "バンクーバーでのキャビネット再仕上げの費用は？グレーターバンクーバーの典型的な価格は$4,000〜$15,000。再仕上げ、再装、完全な交換オプションを比較。"
       },
       "basementSuiteCost": {
-        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+        "title": "バンクーバーBCの地下室スイート変換費用 (2026) | Reno Stars",
+        "description": "バンクーバーでの合法的な地下室スイートの費用は？典型的な価格は$60,000〜$150,000。詳細な費用内訳、ROI分析、自治体の規制。"
       }
     },
     "about": {

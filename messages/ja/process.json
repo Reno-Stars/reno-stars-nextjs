@@ -14,23 +14,23 @@
     "downloadPdfHint": "クリックでPDFをダウンロード",
     "step1": {
       "title": "初回相談",
-      "subtitle": "ヒアリング",
+      "subtitle": "発見",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "電話、メール、WhatsApp、WeChat、またはSMSによる初回連絡",
+        "リノベーション範囲の確認：キッチン、リビングルーム、バスルーム、または家全体",
+        "スタイルの好みの確認",
+        "材料の予算とポジショニング",
+        "リノベーションのニーズと期待を理解する",
+        "フロアプランと現場写真の入手（利用可能な場合）"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "電話"
         },
         {
           "icon": "email",
-          "label": "Email"
+          "label": "メール"
         },
         {
           "icon": "whatsapp",
@@ -51,23 +51,23 @@
       "title": "オーダーメイドの評価と見積もり",
       "subtitle": "現場採寸(必要に応じて)と透明な価格設定",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "正確な寸法のためのプロフェッショナルな現場測定（必要な場合）",
+        "あなたの将来の空間を示す包括的なデザイン提案",
+        "明確に定義された作業範囲、プロジェクトのスケジュール、許可要件、材料仕様",
+        "提案されたデザインと範囲に沿った明確で透明な見積もりにより、プロセス全体を通じて完全な明瞭さと予測可能性を確保"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "正確な測定"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "透明な価格設定"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "デザイン提案"
         }
       ],
       "faqAnswer": "必要に応じてプロの現場採寸を行い、空間の包括的なデザイン提案を作成します。スケジュール、許可要件、提案されたデザインに沿った透明な見積もりを含む明確に定義された作業範囲を受け取ります。"
@@ -76,26 +76,26 @@
       "title": "確認と契約",
       "subtitle": "詳細の確定とプロジェクト開始",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "対面相談のためにクライアントをショールームに招待",
+        "質問に対処し、デザインの詳細を最適化",
+        "デザイン提案と材料サンプルの確認",
+        "支払いスケジュールを確定し、配送スケジュールを支援",
+        "建設契約に署名し、保証金を回収",
+        "プロジェクト開始日の確保",
+        "プロジェクトチームの設立：プロジェクトマネージャー、建設マネージャー、コーディネーター"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "契約"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "相談"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "プロジェクトチーム"
         }
       ],
       "faqAnswer": "ショールームにご招待し、素材サンプルを確認し、デザインの詳細を確定します。支払いスケジュールを確認して契約に署名した後、プロジェクト開始日を確保し、プロジェクトマネージャー、施工マネージャー、コーディネーターを含む専任のプロジェクトチームを構成します。"
@@ -104,25 +104,25 @@
       "title": "施工と管理",
       "subtitle": "完全に調整された簡単なコミュニケーション",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "プロジェクトのすべての側面を管理する統合プロジェクトチーム",
+        "労働者との直接的なやり取りは不要",
+        "効率と一貫性を確保するための調整された建設進捗",
+        "配送スケジュールと現場調整の支援",
+        "建設プロセス全体を通じての一貫した品質管理",
+        "迅速な対応と問題の効率的な解決"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "統合管理"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "進捗追跡"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "迅速な対応"
         }
       ],
       "faqAnswer": "統一されたプロジェクトチームがプロジェクトのすべての側面を管理します。職人と直接やり取りする必要はありません。施工の進捗、納品スケジュールを調整し、一貫した品質管理を維持します。問題は迅速かつ効率的に解決されます。"
@@ -131,22 +131,22 @@
       "title": "ウォークスルーとアフターケア",
       "subtitle": "最終チェックと長期サポート",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "すべての作業が期待を満たしていることを確認するための最終ウォークスルー",
+        "新居の引き渡し",
+        "保証期間中のメンテナンスの継続的なサポート"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "厳格な検査"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "保証サービス"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "継続的なサポート"
         }
       ],
       "faqAnswer": "最終ウォークスルーを実施し、すべての作業がご期待に沿うことを確認してから、新しい住まいをお引き渡しします。保証期間中はメンテナンスの継続的なサポートを提供します。"
@@ -158,7 +158,7 @@
     },
     "footer": {
       "tagline": "シンプル · 安心 · 安全 · 保証付き",
-      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "taglineEn": "シンプル · 心配無用 · 安全 · 保証付き",
       "yearsIndustry": "業界経験年数",
       "googleRating": "Google",
       "warrantyService": "保証サービス",

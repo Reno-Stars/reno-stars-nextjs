@@ -3,32 +3,32 @@
     "kitchen": {
       "title": "주방 리노베이션",
       "description": "현대적 디자인, 맞춤형 캐비닛, 프리미엄 카운터탑을 갖춘 완전한 주방 리모델링.",
-      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+      "longDescription": "우리의 포괄적인 리노베이션 서비스로 주방을 집의 중심으로 변화시키세요. 맞춤 캐비닛과 프리미엄 카운터탑부터 최첨단 가전 제품과 혁신적인 수납 솔루션까지, 우리는 아름답고 기능적인 주방을 만듭니다."
     },
     "bathroom": {
       "title": "욕실 리노베이션",
       "description": "고급 자재와 마감으로 욕실을 스파 같은 공간으로 변화시키세요.",
-      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+      "longDescription": "우리의 욕실 리노베이션 전문성으로 개인 성역을 만드세요. 우리는 럭셔리 스파 영감의 디자인, 현대적인 비품, 맞춤 타일 작업, 그리고 스타일과 기능성을 모두 극대화하는 혁신적인 수납 솔루션을 전문으로 합니다."
     },
     "wholeHouse": {
       "title": "주택 전체 리노베이션",
       "description": "콘셉트부터 완공까지 본격적인 주택 변화.",
-      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+      "longDescription": "우리의 전체 주택 리노베이션 서비스로 완전한 주택 변신을 경험하세요. 초기 디자인 컨셉부터 최종 완성까지 프로젝트의 모든 측면을 관리하여 원활한 리노베이션 경험을 보장합니다."
     },
     "basement": {
       "title": "지하실 리모델링",
       "description": "지하실을 기능적인 생활 공간으로. Best of Vancouver 3위.",
-      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+      "longDescription": "수상 경력이 있는 우리의 지하실 리모델링 서비스로 집의 잠재력을 최대한 발휘하세요. 홈 시어터, 체육관, 게스트 스위트 또는 홈 오피스를 원하든, 우리는 활용도가 낮은 지하실을 아름답고 기능적인 생활 공간으로 변화시킵니다."
     },
     "cabinet": {
       "title": "캐비닛 리페이싱",
       "description": "전문 캐비닛 리페이싱으로 주방을 새롭게.",
-      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+      "longDescription": "전체 리노베이션 비용 없이 주방에 멋진 새 모습을 선사하세요. 우리의 캐비닛 재커버 서비스에는 새 문, 서랍 앞면 및 하드웨어가 포함되어 있어 기존 캐비닛 박스를 보존하면서 주방의 외관을 변화시킵니다."
     },
     "commercial": {
       "title": "상업 리노베이션",
       "description": "사무실, 매장, 식당 등 전문적인 상업 공간 리노베이션.",
-      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+      "longDescription": "우리의 상업 리노베이션 전문성으로 비즈니스 공간을 향상시키세요. 사무실 구축, 소매점 리노베이션, 레스토랑 재설계 등을 처리하여 브랜드와 고객 경험을 향상시키는 전문적인 결과를 제공합니다."
     },
     "hubTitle": "서비스 안내",
     "hubSubtitle": "모든 공간을 위한 전문 리노베이션 솔루션",
