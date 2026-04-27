@@ -134,8 +134,8 @@
   },
   "design": {
     "seoTitle": "プロフェッショナルなリノベーションデザイン・3Dレンダリング",
-    "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
-    "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
+    "seoParagraph1": "Reno Starsでは、すべてのリノベーションが詳細なデザインフェーズから始まります。社内のデザイナーがフォトリアリスティックな3Dレンダリングを作成し、施工開始前に最終的な仕上がりをご確認いただけます。キッチンのレイアウトやバスルームのリモデリングから住宅全体のトランスフォーメーションまで、精度と創造性をもってビジョンを形にします。",
+    "seoParagraph2": "キッチン、バスルーム、リビング空間、商業インテリアにわたるインテリアデザインのコレクションをご覧ください。各レンダリングは、現代的な美学と実用的な機能性を融合させ、バンクーバーとロウアー・メインランドの住宅と事業所に合わせた、私たちの取り組みを反映しています。",
     "designFeature1Title": "3Dビジュアライゼーション",
     "designFeature1Desc": "材料、照明、レイアウトのすべての細部を、施工開始前にフォトリアリスティックなレンダリングで確認できます。",
     "designFeature2Title": "あなただけのデザイン",
@@ -408,23 +408,23 @@
       "items": {
         "experience": {
           "title": "20年以上の業界経験",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "description": "深い専門知識をもたらします。建設だけでなく、リノベーションプロジェクトがどこで失敗するか、そしてそれを最初から防ぐ方法を理解しています。"
         },
         "coverage": {
           "title": "$5M CGL保険・有効なWCBカバー",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "description": "包括的な保険カバーがあなたの財産を保護し、現場のすべての作業員が完全にカバーされていることを保証します。"
         },
         "rating": {
           "title": "本物の5つ星レビュー",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "description": "実際のプロジェクトと実際の経験に裏打ちされた長期的な顧客満足度。一過性のプロモーションではありません。"
         },
         "team": {
           "title": "安定したプロチーム",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "description": "一貫したクルーで作業します。臨時雇用ではなく、すべてのプロジェクトで品質が安定して保たれます。"
         },
         "service": {
           "title": "ワンストップサービス",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "description": "デザインから最終ウォークスルーまで、すべてのステップを管理します。調整の負担が減り、プロセスがスムーズになります。"
         }
       }
     },
@@ -432,28 +432,28 @@
       "heading": "お客様が私たちを選ぶ理由",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "重要な項目が省略されているため、多くの見積もりが安く見えます。",
+          "solution": "すべてを事前にリストアップします。詳細な範囲、材料の責任、含まれるもの。開始前に実際のコストがわかります。"
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "リノベーションは即興と運に頼るべきではありません。",
+          "solution": "明確な段階、検査、支払いマイルストーンを備えた構造化されたシステムでプロジェクトを実行します。次に進む前にすべてのステップが完了します。"
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "リノベーションの不満のほとんどはコミュニケーション不足から来ます。",
+          "solution": "迅速に対応する専任のオフィスチームがあり、材料選択を支援し、最新の情報をお届けします。「メッセージを送ったが返事がない」ことはありません。"
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "一部の業者はオーバーブッキングし、スケジュールがずれ続けます。",
+          "solution": "プロジェクトの負荷を管理して、計画通りに進むようにします。遅延が発生した場合(サプライヤーなど)、早期に連絡し、透明性を持って調整します。"
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "品質はどのクルーが現れるかに依存すべきではありません。",
+          "solution": "明確な基準を持つ固定チームを使用します。特に防水のような重要な作業では、材料と適用範囲を事前に指定します。"
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "更新を常に追いかけているとき、リノベーションはストレスです。",
+          "solution": "プロセス全体を予測可能にします。今何が起こっているか、次は何か、いつ期待できるかが、フォローアップなしでわかります。"
         }
       }
     },
@@ -472,52 +472,52 @@
   },
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "キッチンリノベーションには通常どのくらいの時間がかかりますか?",
+      "a1": "標準的なキッチンリノベーションは、規模に応じて4〜8週間かかります。キャビネットリフェイシングなどの簡単なアップデートは1〜2週間、フルガットリノベーションでカスタムキャビネットを使用する場合は8〜12週間かかることがあります。",
+      "q2": "{area}でのキッチンリノベーションの平均費用はいくらですか?",
+      "a2": "{area}でのキッチンリノベーションは通常$15,000から$75,000以上で、サイズと仕上げによって異なります。現地相談後に詳細な無料見積もりを提供します。",
+      "q3": "キッチンリノベーションには許可証が必要ですか?",
+      "a3": "電気、配管、構造的な変更には許可証が必要です。すべての許可申請を当社が処理し、リノベーションが{area}の建築基準を満たすことを確認します。"
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "{area}でのバスルームリノベーションにはどのくらいの時間がかかりますか?",
+      "a1": "{area}での大半のバスルームリノベーションは2〜4週間かかります。簡単な美観アップデートは1週間、レイアウト変更を含む完全なリノベーションは4〜6週間かかることがあります。",
+      "q2": "リノベーション中にバスルームを使用できますか?",
+      "a2": "通常はできませんが、混乱を最小限に抑えるよう効率的に作業します。複数のバスルームがある場合、リノベーションスケジュールに合わせて計画を立てるお手伝いをします。",
+      "q3": "バスルームにはどのような防水加工を使用しますか?",
+      "a3": "SchluterやRedGardなど、業界をリードする防水システムを使用して、バスルームが湿気による損傷から確実に保護されるようにします。"
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "{area}での住宅全体のリノベーション中に家に住むことはできますか?",
+      "a1": "規模によります。{area}での大規模なリノベーションでは、安全と効率のために一時的な転居をお勧めすることが多いです。滞在を希望される場合は、段階的な作業の調整をお手伝いできます。",
+      "q2": "住宅全体のリノベーションプロジェクトをどのように管理しますか?",
+      "a2": "すべての職人を調整し、スケジュールを維持し、定期的な更新を提供する専任のプロジェクトマネージャーを任命します。最初から最後まで単一の連絡窓口があります。",
+      "q3": "{area}での住宅全体のリノベーションには許可証が必要ですか?",
+      "a3": "はい、住宅全体のリノベーションには通常、構造、電気、配管作業のための複数の許可証が必要です。すべての{area}の許可申請と検査を当社が処理します。"
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "{area}で地下室を仕上げるのに許可証が必要ですか?",
+      "a1": "はい、{area}での地下室の仕上げには建築許可証が必要です。すべての許可申請と検査をサービスの一部として処理します。",
+      "q2": "地下室の湿気の問題にどのように対処しますか?",
+      "a2": "湿気レベルを評価し、仕上げ前に排水改善、防湿シート、適切な断熱を含む適切な解決策を実施します。",
+      "q3": "地下室にバスルームを追加できますか?",
+      "a3": "はい、地下室にバスルームを追加できます。下水ラインより下にある場合は、汚水排出システムを設置します。すべての配管は{area}の建築基準を満たします。"
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "キャビネットのリフェイシングと交換の違いは何ですか?",
+      "a1": "リフェイシングは既存のキャビネットボックスを保持し、ドア、引き出しの前面、金具を交換します。完全交換より40〜50%安く、時間も短縮できます。",
+      "q2": "{area}でのキャビネットリフェイシングにはどのくらいの時間がかかりますか?",
+      "a2": "{area}での平均的なキッチンのキャビネットリフェイシングは通常3〜5日かかります。プロセスのほとんどの間、キッチンは機能し続けます。",
+      "q3": "すべてのキャビネットをリフェイシングできますか?",
+      "a3": "ほとんどの無垢材と合板のキャビネットボックスは、構造的に健全であればリフェイシングできます。{area}での無料現地相談中にキャビネットを評価します。"
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "営業時間中に作業しますか?",
+      "a1": "事業運営への混乱を最小限に抑えるため、夕方や週末を含む柔軟なスケジュールを提供します。スペースの一部を運用可能に保つため、作業を段階的に行うことができます。",
+      "q2": "{area}の商業建築基準に精通していますか?",
+      "a2": "はい、当社のチームは{area}の商業建築基準、アクセシビリティ要件、防火安全規制に精通しています。すべての商業基準への完全な準拠を確保します。",
+      "q3": "{area}でのテナント改修を行えますか?",
+      "a3": "はい、{area}でのオフィス、小売スペース、レストランのテナント改修(TI)を専門としています。承認プロセスについて、貸主や物件管理者と協力します。"
     }
   },
   "locationBenefits": {
@@ -667,44 +667,44 @@
     "subtitle": "リノベーションサービスに関するよくあるご質問"
   },
   "showroomPage": {
-    "heroTitle": "Visit Our Showroom",
-    "heroSubtitle": "Experience renovation materials, designs, and finishes firsthand",
-    "addressTitle": "Location & Hours",
-    "phoneTitle": "Phone",
-    "emailTitle": "Email",
-    "hoursTitle": "Hours",
-    "hoursValue": "By Appointment",
-    "mapTitle": "Find Us",
-    "ctaTitle": "Ready to Start Your Project?",
-    "ctaDescription": "Book a free consultation at our showroom. Our design team will help you explore options and plan your renovation.",
-    "bookConsultation": "Book a Free Consultation",
-    "callUs": "Or call us at",
-    "faq1q": "Do I need an appointment to visit the showroom?",
-    "faq1a": "Walk-ins are welcome, but we recommend booking an appointment so our design team can dedicate time to discuss your project in detail.",
-    "faq2q": "What can I see at the Reno Stars showroom?",
-    "faq2a": "Our showroom features material samples, cabinet displays, countertop options, tile selections, and design inspiration for kitchen, bathroom, and whole house renovations.",
-    "faq3q": "Is there parking available at the showroom?",
-    "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
-    "faq4q": "Can I bring my renovation plans to the showroom?",
-    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit.",
-    "appointmentPrefix": "Welcome to schedule a visit to our Renovation showroom",
-    "appointmentBold": "by appointment!"
+    "heroTitle": "ショールームのご案内",
+    "heroSubtitle": "リノベーション素材、デザイン、仕上げを直接ご体験ください",
+    "addressTitle": "場所と営業時間",
+    "phoneTitle": "電話",
+    "emailTitle": "メール",
+    "hoursTitle": "営業時間",
+    "hoursValue": "予約制",
+    "mapTitle": "アクセス",
+    "ctaTitle": "プロジェクトを始める準備はできましたか?",
+    "ctaDescription": "ショールームでの無料相談をご予約ください。デザインチームがオプションのご検討とリノベーション計画のお手伝いをします。",
+    "bookConsultation": "無料相談を予約",
+    "callUs": "またはお電話で",
+    "faq1q": "ショールームを訪問するのに予約は必要ですか?",
+    "faq1a": "ご来店は歓迎ですが、デザインチームがプロジェクトについて詳しくお話しできるよう、事前のご予約をお勧めします。",
+    "faq2q": "Reno Starsのショールームでは何を見られますか?",
+    "faq2a": "ショールームでは、素材サンプル、キャビネットの展示、カウンタートップのオプション、タイルの選択肢、キッチン、バスルーム、住宅全体のリノベーションのデザインインスピレーションをご覧いただけます。",
+    "faq3q": "ショールームに駐車場はありますか?",
+    "faq3a": "はい、リッチモンドのショールーム前に無料駐車場をご利用いただけます。",
+    "faq4q": "リノベーション計画書をショールームに持ち込めますか?",
+    "faq4a": "もちろんです!間取り図、写真、インスピレーション画像をお持ちください。チームがそれらを確認し、ご訪問中にプロのアドバイスを提供します。",
+    "appointmentPrefix": "リノベーションショールームへのご訪問をお待ちしています",
+    "appointmentBold": "事前予約制!"
   },
   "projectsFaqs": {
-    "q1": "How do I get started with a renovation project?",
-    "a1": "Start with a free consultation. Contact us online or visit our showroom. We'll discuss your vision, assess the space, and provide a detailed quote and timeline.",
-    "q2": "Can I see examples of your past work?",
-    "a2": "Yes! Browse our portfolio above to see before-and-after photos of completed kitchen, bathroom, and whole house renovation projects across Metro Vancouver.",
-    "q3": "Do you handle permits and inspections?",
-    "a3": "Yes, we manage all necessary permits and coordinate inspections as part of our full-service renovation process, so you don't have to worry about any of the paperwork."
+    "q1": "リノベーションプロジェクトをどう始めればよいですか?",
+    "a1": "無料相談からスタートします。オンラインでご連絡いただくか、ショールームをご訪問ください。ビジョンについて話し合い、空間を評価し、詳細な見積もりとスケジュールを提供します。",
+    "q2": "過去の施工事例を見ることはできますか?",
+    "a2": "もちろんです!上記のポートフォリオで、メトロバンクーバー全域で完了したキッチン、バスルーム、住宅全体のリノベーションのビフォーアフター写真をご覧いただけます。",
+    "q3": "許可証や検査も対応していただけますか?",
+    "a3": "はい、フルサービスのリノベーションプロセスの一部として、必要なすべての許可証を管理し、検査を調整しますので、書類作業の心配はありません。"
   },
   "designFaqs": {
-    "q1": "What does the design consultation include?",
-    "a1": "Our design consultation includes a discussion of your vision, space assessment, material recommendations, 3D visualization when applicable, and a detailed project plan with timeline and budget estimate.",
-    "q2": "Do you offer 3D renderings of renovation designs?",
-    "a2": "Yes, we provide 3D visualizations for many projects so you can see exactly how your renovated space will look before any work begins.",
-    "q3": "How much does a design consultation cost?",
-    "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
+    "q1": "デザイン相談には何が含まれますか?",
+    "a1": "デザイン相談には、ビジョンについての話し合い、空間の評価、素材の推奨、必要に応じた3Dビジュアライゼーション、スケジュールと予算見積もりを含む詳細なプロジェクト計画が含まれます。",
+    "q2": "リノベーションデザインの3Dレンダリングは提供されますか?",
+    "a2": "はい、多くのプロジェクトで3Dビジュアライゼーションを提供していますので、施工開始前にリノベーション後の空間がどのように見えるかを正確にご覧いただけます。",
+    "q3": "デザイン相談の費用はいくらですか?",
+    "a3": "初回のデザイン相談は無料です。お約束をする前にオプションを検討するお手伝いができることを大切にしています。"
   },
   "homePartners": {
     "title": "パートナー",
@@ -712,38 +712,38 @@
     "srTitle": "パートナー"
   },
   "wholeHouse": {
-    "projectOverview": "Project Overview",
-    "includedAreas": "Included Areas",
-    "totalBudget": "Budget",
-    "totalDuration": "Timeline",
-    "allServiceScopes": "All Services Included",
-    "viewAreaProject": "View {area} Project",
-    "viewAreaDetails": "View Details",
-    "combinedGallery": "Project Gallery",
-    "filterByArea": "Filter by Area",
-    "allAreas": "All Areas",
-    "childProjectsCount": "{count} renovation areas",
-    "noImagesForArea": "No images available for this area",
-    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
-    "siteBadge": "Whole House",
-    "areas": "Areas"
+    "projectOverview": "プロジェクト概要",
+    "includedAreas": "含まれるエリア",
+    "totalBudget": "予算",
+    "totalDuration": "期間",
+    "allServiceScopes": "含まれるすべてのサービス",
+    "viewAreaProject": "{area}のプロジェクトを見る",
+    "viewAreaDetails": "詳細を見る",
+    "combinedGallery": "プロジェクトギャラリー",
+    "filterByArea": "エリアで絞り込み",
+    "allAreas": "すべてのエリア",
+    "childProjectsCount": "{count} のリノベーションエリア",
+    "noImagesForArea": "このエリアの画像はありません",
+    "areasCount": "{count, plural, one {# エリア} other {# エリア}}",
+    "siteBadge": "住宅全体",
+    "areas": "エリア"
   },
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "title": "リノベーションサービスの流れ: 5ステップ",
+      "subtitle": "相談から完成まで",
+      "googleReviews": "Googleレビュー",
+      "stepLabel": "ステップ {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "PNGダウンロード",
+    "downloadPdf": "PDFダウンロード",
+    "downloadSuccess": "ダウンロード完了!",
+    "downloadError": "失敗",
+    "downloadPosterHint": "クリックでPNGをダウンロード",
+    "downloadPdfHint": "クリックでPDFをダウンロード",
     "step1": {
-      "title": "Initial Consultation",
-      "subtitle": "Discovery",
+      "title": "初回相談",
+      "subtitle": "ヒアリング",
       "points": [
         "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
         "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
@@ -774,11 +774,11 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "電話、メール、WhatsApp、WeChat、SMSでお問い合わせいただける初回相談から始めます。リノベーションのご要望、スタイルの好み、予算について話し合い、既存の間取り図や写真があれば収集します。"
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "オーダーメイドの評価と見積もり",
+      "subtitle": "現場採寸(必要に応じて)と透明な価格設定",
       "points": [
         "Professional on-site measurement for precise dimensions (if needed)",
         "A comprehensive design proposal illustrating your future space",
@@ -799,11 +799,11 @@
           "label": "Design Proposal"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "必要に応じてプロの現場採寸を行い、空間の包括的なデザイン提案を作成します。スケジュール、許可要件、提案されたデザインに沿った透明な見積もりを含む明確に定義された作業範囲を受け取ります。"
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "確認と契約",
+      "subtitle": "詳細の確定とプロジェクト開始",
       "points": [
         "Invite clients to showroom for in-person consultation",
         "Address questions and optimize design details",
@@ -827,11 +827,11 @@
           "label": "Project Team"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "ショールームにご招待し、素材サンプルを確認し、デザインの詳細を確定します。支払いスケジュールを確認して契約に署名した後、プロジェクト開始日を確保し、プロジェクトマネージャー、施工マネージャー、コーディネーターを含む専任のプロジェクトチームを構成します。"
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "施工と管理",
+      "subtitle": "完全に調整された簡単なコミュニケーション",
       "points": [
         "A unified project team managing all aspects of your project",
         "No direct interaction with workers needed",
@@ -854,11 +854,11 @@
           "label": "Quick Response"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "統一されたプロジェクトチームがプロジェクトのすべての側面を管理します。職人と直接やり取りする必要はありません。施工の進捗、納品スケジュールを調整し、一貫した品質管理を維持します。問題は迅速かつ効率的に解決されます。"
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "ウォークスルーとアフターケア",
+      "subtitle": "最終チェックと長期サポート",
       "points": [
         "Final walkthrough to confirm all work meets expectations",
         "New home handover",
@@ -878,20 +878,20 @@
           "label": "Ongoing Support"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "最終ウォークスルーを実施し、すべての作業がご期待に沿うことを確認してから、新しい住まいをお引き渡しします。保証期間中はメンテナンスの継続的なサポートを提供します。"
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "リノベーションを真に達成可能にする",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "なぜこれが重要なのか",
+      "description": "Reno Starsの構造化されたリノベーションフローは、お客様が各段階で何を期待すべきかを知るのに役立ちます。明確な5ステップのプロセスにより、最初のお問い合わせから最終的な引き渡しまで、スムーズでストレスのないリノベーション体験を保証します。"
     },
     "footer": {
-      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "シンプル · 安心 · 安全 · 保証付き",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "業界経験年数",
       "googleRating": "Google",
-      "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "warrantyService": "保証サービス",
+      "scanLinktree": "スキャンしてつながる",
       "website": "reno-stars.com"
     }
   },
@@ -1714,33 +1714,33 @@
   },
   "aboutPage": {
     "hero": {
-      "title": "About Reno Stars",
-      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
+      "title": "Reno Starsについて",
+      "subtitle": "建設だけでなく、リノベーション業界を両側から理解した経験の上に築かれた会社。"
     },
     "journey": {
-      "title": "About Reno Stars",
+      "title": "Reno Starsについて",
       "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
-      "painPointsTitle": "We understand the common frustrations homeowners face.",
+      "lead": "Reno Starsは、建設だけでなく、リノベーション業界を両側から理解する経験の上に築かれました。",
+      "context": "2021年にReno Starsを設立する前、私たちのチームはリノベーションプラットフォームで働き、住宅オーナーと業者をつなぐことに何年も費やしてきました。何千ものプロジェクトを最初から最後まで見てきました。そして何より重要なのは、どこで物事がうまくいかなくなるかを見てきたことです。",
+      "painPointsTitle": "住宅オーナーが直面する一般的なフラストレーションを理解しています。",
       "painPoints": [
         "Quotes that look attractive at first but grow with hidden items later.",
         "Poor communication and delayed responses.",
         "Uncertain timelines and projects dragging on.",
         "Inconsistent workmanship due to unstable crews."
       ],
-      "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
+      "conclusion": "これらは稀な問題ではありません。業界の常態です。だからこそReno Starsが生まれました。"
     },
     "stats": {
-      "years": "Years Experience",
-      "projects": "Projects Completed",
-      "team": "Team Members",
-      "insurance": "CGL Insurance",
-      "wcbCoverage": "Active WCB Coverage"
+      "years": "経験年数",
+      "projects": "完了プロジェクト",
+      "team": "チームメンバー",
+      "insurance": "CGL保険",
+      "wcbCoverage": "有効なWCBカバー"
     },
     "offer": {
-      "title": "A More Structured, Transparent Approach",
-      "viewAll": "View All Services",
+      "title": "より構造化された透明なアプローチ",
+      "viewAll": "すべてのサービスを見る",
       "services": {
         "kitchen": {
           "title": "Kitchen Renovation",
@@ -1760,9 +1760,9 @@
         }
       },
       "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
-      "systemTitle": "Every project is supported by a structured system.",
+      "lead": "私たちは別のリノベーション会社を始めただけではありません。プロセスを再構築しました。",
+      "goal": "最初から、私たちの目標はシンプルでした。リノベーションを予測可能で透明性があり、ストレスのないものにすること。",
+      "systemTitle": "すべてのプロジェクトは構造化されたシステムでサポートされています。",
       "systemItems": [
         {
           "title": "Detailed Contracts",
@@ -1787,7 +1787,7 @@
       ]
     },
     "values": {
-      "title": "Managing Details and Expectations",
+      "title": "詳細と期待を管理する",
       "items": {
         "integrity": {
           "title": "Integrity",
@@ -1807,32 +1807,32 @@
         }
       },
       "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
-      "guarantee": "What we can guarantee is our response.",
+      "lead": "リノベーションには素材からスケジュールまで、多くの要素が関わります。計画と調整に細心の注意を払っていますが、サプライヤーのスケジュールなど、私たちの直接的なコントロール外の要因が時々あります。",
+      "guarantee": "私たちが保証できるのは、私たちの対応です。",
       "guaranteeItems": [
         "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
       ],
-      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
+      "closing": "私たちの目標は完璧なプロセスを約束することではなく、よく管理されたものを提供することです。"
     },
     "whyUs": {
-      "title": "Built for Homeowners Who Value Peace of Mind",
+      "title": "心の平安を大切にする住宅オーナーのために構築",
       "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want",
+      "lead": "私たちは最低価格のオプションではなく、目指してもいません。",
+      "chooseTitle": "お客様が私たちを選ぶ理由",
       "chooseItems": [
         "A clear process",
         "Honest communication",
         "Reliable timelines",
         "A team that takes responsibility"
       ],
-      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
+      "specialise": "私たちは、調整、詳細、信頼性が決定的な違いを生み出す、住宅全体のリノベーション、キッチン、バスルーム、商業プロジェクトを専門としています。"
     },
     "areas": {
-      "title": "Service Areas",
-      "description": "We proudly serve homeowners across Metro Vancouver and the Fraser Valley, bringing quality renovation services to communities throughout British Columbia."
+      "title": "対応エリア",
+      "description": "メトロバンクーバーとフレーザー・バレー全域の住宅オーナーに誇りを持ってサービス提供し、ブリティッシュ・コロンビア州全体のコミュニティに質の高いリノベーションサービスをお届けしています。"
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "よくあるご質問",
       "q1": "How long has Reno Stars been in business?",
       "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
       "q2": "Are you licensed and insured?",
@@ -1845,15 +1845,15 @@
       "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
     },
     "cta": {
-      "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "title": "リノベーションを始める準備はできましたか?",
+      "getQuote": "無料見積もりを取得",
+      "body": "透明性、信頼性、心の平安を中心に構築されたリノベーションプロセスを体験する準備はできましたか?今日無料の詳細見積もりについてお問い合わせいただき、メトロバンクーバー全域の住宅オーナーがReno Starsを信頼する理由をご確認ください。"
     },
     "philosophy": {
-      "title": "Our Philosophy",
-      "lead": "We approach every project with one simple mindset.",
-      "quote": "Treat every home as if it were our own.",
-      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
+      "title": "私たちの哲学",
+      "lead": "すべてのプロジェクトに、シンプルな考え方で取り組みます。",
+      "quote": "すべての家を自分の家のように扱う。",
+      "closing": "なぜなら結局のところ、リノベーションは空間を作ることだけでなく、信頼を築くことだからです。"
     }
   },
   "reviewsPage": {

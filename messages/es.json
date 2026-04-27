@@ -134,8 +134,8 @@
   },
   "design": {
     "seoTitle": "Diseño profesional de remodelación y renderizado 3D",
-    "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
-    "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
+    "seoParagraph1": "En Reno Stars, toda remodelación comienza con una fase de diseño detallada. Nuestros diseñadores internos crean renderizados 3D fotorrealistas para que pueda visualizar el resultado final antes de iniciar la construcción. Desde diseños de cocina y remodelaciones de baño hasta transformaciones integrales del hogar, llevamos su visión a la realidad con precisión y creatividad.",
+    "seoParagraph2": "Explore nuestra colección de conceptos de diseño de interiores que abarcan cocinas, baños, salas y espacios comerciales. Cada renderizado refleja nuestro compromiso con combinar la estética moderna con la funcionalidad práctica, adaptado a hogares y negocios en Vancouver y el Lower Mainland.",
     "designFeature1Title": "Visualización 3D",
     "designFeature1Desc": "Renderizados fotorrealistas le permiten ver cada detalle: materiales, iluminación y diseño, antes de comenzar la construcción.",
     "designFeature2Title": "Hecho a su medida",
@@ -408,23 +408,23 @@
       "items": {
         "experience": {
           "title": "Más de 20 años de experiencia",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "description": "Aportamos experiencia profunda. No solo en construcción, sino en entender dónde fallan los proyectos de remodelación y cómo prevenirlo desde el inicio."
         },
         "coverage": {
           "title": "Seguro CGL de $5M · Cobertura WCB activa",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "description": "La cobertura de seguro integral protege su propiedad y garantiza que cada trabajador en el sitio esté completamente cubierto."
         },
         "rating": {
           "title": "Reseñas auténticas de 5 estrellas",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "description": "Satisfacción del cliente a largo plazo respaldada por proyectos reales y experiencias reales, no promociones puntuales."
         },
         "team": {
           "title": "Equipo profesional estable",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "description": "Trabajamos con un equipo consistente. No con contrataciones temporales, garantizando que la calidad permanezca estable en cada proyecto."
         },
         "service": {
           "title": "Servicio integral de principio a fin",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "description": "Del diseño al recorrido final, gestionamos cada paso. Menos sobrecarga de coordinación, proceso más fluido."
         }
       }
     },
@@ -432,28 +432,28 @@
       "heading": "Por qué los clientes nos eligen",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "Muchas cotizaciones se ven baratas porque dejan fuera elementos clave.",
+          "solution": "Listamos todo por adelantado: alcance detallado, responsabilidades de materiales y lo que se incluye. Conoce el costo real antes de empezar."
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "La remodelación no debería depender de la improvisación y la suerte.",
+          "solution": "Ejecutamos los proyectos con un sistema estructurado con etapas claras, inspecciones e hitos de pago. Cada paso completado antes de avanzar."
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "La mayoría de las frustraciones de remodelación vienen de mala comunicación.",
+          "solution": "Tenemos un equipo de oficina dedicado que responde rápido, ayuda con la selección de materiales y le mantiene actualizado: nada de 'envié un mensaje y no obtuve respuesta'."
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "Algunos contratistas sobrereservan y su cronograma sigue retrasándose.",
+          "solution": "Controlamos nuestra carga de proyectos para asegurar que el suyo avance según lo planeado. Cuando ocurren retrasos (proveedores, etc.), comunicamos temprano y ajustamos transparentemente."
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "La calidad no debería depender de qué cuadrilla se presente.",
+          "solution": "Usamos un equipo fijo con estándares claros, especialmente para trabajos críticos como impermeabilización, donde se especifican materiales y alcance de aplicación por adelantado."
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "La remodelación es estresante cuando estás constantemente persiguiendo actualizaciones.",
+          "solution": "Hacemos todo el proceso predecible: sabe qué está sucediendo ahora, qué sigue y cuándo esperarlo, sin necesidad de hacer seguimiento."
         }
       }
     },
@@ -472,52 +472,52 @@
   },
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "¿Cuánto tarda normalmente una remodelación de cocina?",
+      "a1": "Una remodelación típica de cocina toma 4-8 semanas dependiendo del alcance. Actualizaciones simples como renovar gabinetes pueden tomar 1-2 semanas, mientras que remodelaciones completas con gabinetes a medida pueden tomar 8-12 semanas.",
+      "q2": "¿Cuál es el costo promedio de una remodelación de cocina en {area}?",
+      "a2": "Las remodelaciones de cocina en {area} típicamente van de $15,000 a $75,000+ según tamaño y acabados. Proporcionamos cotizaciones detalladas gratis después de una consulta a domicilio.",
+      "q3": "¿Necesito permisos para mi remodelación de cocina?",
+      "a3": "Se requieren permisos para cambios eléctricos, de plomería y estructurales. Manejamos todas las solicitudes de permisos y aseguramos que su remodelación cumpla con los códigos de construcción de {area}."
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "¿Cuánto tarda una remodelación de baño en {area}?",
+      "a1": "La mayoría de remodelaciones de baño en {area} toman 2-4 semanas. Una actualización cosmética simple puede tomar 1 semana, mientras que una remodelación completa con cambios de diseño puede tomar 4-6 semanas.",
+      "q2": "¿Puedo usar mi baño durante la remodelación?",
+      "a2": "Normalmente no, pero trabajamos eficientemente para minimizar la interrupción. Si tiene varios baños, podemos ayudarle a planificar alrededor del cronograma de la remodelación.",
+      "q3": "¿Qué impermeabilización usan para los baños?",
+      "a3": "Usamos sistemas de impermeabilización líderes en la industria, incluyendo Schluter y RedGard, para garantizar que su baño esté correctamente protegido contra daños por humedad."
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "¿Puedo vivir en mi casa durante una remodelación integral en {area}?",
+      "a1": "Depende del alcance. Para remodelaciones grandes en {area}, a menudo recomendamos reubicación temporal por seguridad y eficiencia. Si prefiere quedarse, podemos ayudar a coordinar trabajos por fases.",
+      "q2": "¿Cómo gestionan un proyecto de remodelación integral?",
+      "a2": "Asignamos un gerente de proyecto dedicado que coordina todos los oficios, mantiene el cronograma y proporciona actualizaciones regulares. Tendrá un único punto de contacto durante todo el proceso.",
+      "q3": "¿Necesito permisos para una remodelación integral en {area}?",
+      "a3": "Sí, las remodelaciones integrales típicamente requieren múltiples permisos para trabajos estructurales, eléctricos y de plomería. Manejamos todas las solicitudes de permisos e inspecciones de {area}."
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "¿Necesito un permiso para terminar mi sótano en {area}?",
+      "a1": "Sí, terminar un sótano requiere permisos de construcción en {area}. Manejamos todas las solicitudes de permisos e inspecciones como parte de nuestro servicio.",
+      "q2": "¿Cómo manejan los problemas de humedad del sótano?",
+      "a2": "Evaluamos los niveles de humedad e implementamos soluciones apropiadas, incluyendo mejoras de drenaje, barreras de vapor y aislamiento adecuado antes de terminar.",
+      "q3": "¿Puedo agregar un baño a mi sótano?",
+      "a3": "Sí, podemos agregar baños a los sótanos. Si está debajo del nivel del alcantarillado, instalamos sistemas de bombeo de aguas residuales. Toda la plomería cumple con los códigos de {area}."
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "¿Cuál es la diferencia entre renovar y reemplazar gabinetes?",
+      "a1": "Renovar mantiene sus cajas de gabinete existentes y reemplaza puertas, frentes de cajón y herrajes. Cuesta 40-50% menos que el reemplazo completo y toma menos tiempo.",
+      "q2": "¿Cuánto tarda la renovación de gabinetes en {area}?",
+      "a2": "La renovación de gabinetes en {area} típicamente toma 3-5 días para una cocina promedio. Su cocina permanece funcional durante la mayor parte del proceso.",
+      "q3": "¿Se pueden renovar todos los gabinetes?",
+      "a3": "La mayoría de cajas de gabinete de madera maciza y contrachapado pueden renovarse si están estructuralmente sólidas. Evaluamos sus gabinetes durante una consulta gratis a domicilio en {area}."
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "¿Trabajan durante el horario comercial?",
+      "a1": "Ofrecemos horarios flexibles incluyendo noches y fines de semana para minimizar la interrupción de sus operaciones. Podemos hacer el trabajo por fases para mantener partes de su espacio operativas.",
+      "q2": "¿Tienen experiencia con los códigos comerciales de {area}?",
+      "a2": "Sí, nuestro equipo tiene experiencia con los códigos comerciales de {area}, requisitos de accesibilidad y regulaciones de seguridad contra incendios. Aseguramos cumplimiento total con todos los estándares comerciales.",
+      "q3": "¿Pueden manejar mejoras de inquilino en {area}?",
+      "a3": "Sí, nos especializamos en mejoras de inquilino (TI) para oficinas, espacios comerciales y restaurantes en {area}. Trabajamos con propietarios y administradores en los procesos de aprobación."
     }
   },
   "locationBenefits": {
@@ -667,44 +667,44 @@
     "subtitle": "Preguntas comunes sobre nuestros servicios de remodelación"
   },
   "showroomPage": {
-    "heroTitle": "Visit Our Showroom",
-    "heroSubtitle": "Experience renovation materials, designs, and finishes firsthand",
-    "addressTitle": "Location & Hours",
-    "phoneTitle": "Phone",
-    "emailTitle": "Email",
-    "hoursTitle": "Hours",
-    "hoursValue": "By Appointment",
-    "mapTitle": "Find Us",
-    "ctaTitle": "Ready to Start Your Project?",
-    "ctaDescription": "Book a free consultation at our showroom. Our design team will help you explore options and plan your renovation.",
-    "bookConsultation": "Book a Free Consultation",
-    "callUs": "Or call us at",
-    "faq1q": "Do I need an appointment to visit the showroom?",
-    "faq1a": "Walk-ins are welcome, but we recommend booking an appointment so our design team can dedicate time to discuss your project in detail.",
-    "faq2q": "What can I see at the Reno Stars showroom?",
-    "faq2a": "Our showroom features material samples, cabinet displays, countertop options, tile selections, and design inspiration for kitchen, bathroom, and whole house renovations.",
-    "faq3q": "Is there parking available at the showroom?",
-    "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
-    "faq4q": "Can I bring my renovation plans to the showroom?",
-    "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit.",
-    "appointmentPrefix": "Welcome to schedule a visit to our Renovation showroom",
-    "appointmentBold": "by appointment!"
+    "heroTitle": "Visite nuestro showroom",
+    "heroSubtitle": "Conozca de primera mano materiales, diseños y acabados de remodelación",
+    "addressTitle": "Ubicación y horarios",
+    "phoneTitle": "Teléfono",
+    "emailTitle": "Correo",
+    "hoursTitle": "Horarios",
+    "hoursValue": "Con cita previa",
+    "mapTitle": "Cómo llegar",
+    "ctaTitle": "¿Listo para comenzar su proyecto?",
+    "ctaDescription": "Reserve una consulta gratis en nuestro showroom. Nuestro equipo de diseño le ayudará a explorar opciones y planificar su remodelación.",
+    "bookConsultation": "Reservar una consulta gratis",
+    "callUs": "O llámenos al",
+    "faq1q": "¿Necesito una cita para visitar el showroom?",
+    "faq1a": "Las visitas sin cita son bienvenidas, pero recomendamos reservar para que nuestro equipo de diseño pueda dedicarle tiempo a discutir su proyecto en detalle.",
+    "faq2q": "¿Qué puedo ver en el showroom de Reno Stars?",
+    "faq2a": "Nuestro showroom presenta muestras de materiales, exhibiciones de gabinetes, opciones de encimeras, selecciones de azulejos e inspiración de diseño para remodelaciones de cocina, baño y casa completa.",
+    "faq3q": "¿Hay estacionamiento disponible en el showroom?",
+    "faq3a": "Sí, hay estacionamiento gratis disponible justo frente a nuestro showroom en Richmond.",
+    "faq4q": "¿Puedo llevar mis planos de remodelación al showroom?",
+    "faq4a": "¡Por supuesto! Lleve sus planos, fotos o imágenes de inspiración. Nuestro equipo puede revisarlos y ofrecerle recomendaciones profesionales durante su visita.",
+    "appointmentPrefix": "Le invitamos a programar una visita a nuestro showroom de remodelación",
+    "appointmentBold": "¡con cita previa!"
   },
   "projectsFaqs": {
-    "q1": "How do I get started with a renovation project?",
-    "a1": "Start with a free consultation. Contact us online or visit our showroom. We'll discuss your vision, assess the space, and provide a detailed quote and timeline.",
-    "q2": "Can I see examples of your past work?",
-    "a2": "Yes! Browse our portfolio above to see before-and-after photos of completed kitchen, bathroom, and whole house renovation projects across Metro Vancouver.",
-    "q3": "Do you handle permits and inspections?",
-    "a3": "Yes, we manage all necessary permits and coordinate inspections as part of our full-service renovation process, so you don't have to worry about any of the paperwork."
+    "q1": "¿Cómo empiezo un proyecto de remodelación?",
+    "a1": "Comience con una consulta gratis. Contáctenos en línea o visite nuestro showroom. Discutiremos su visión, evaluaremos el espacio y proporcionaremos una cotización detallada con plazos.",
+    "q2": "¿Puedo ver ejemplos de su trabajo anterior?",
+    "a2": "¡Sí! Explore nuestro portafolio arriba para ver fotos antes y después de proyectos completados de cocina, baño y casa completa en Metro Vancouver.",
+    "q3": "¿Manejan permisos e inspecciones?",
+    "a3": "Sí, gestionamos todos los permisos necesarios y coordinamos las inspecciones como parte de nuestro proceso de remodelación integral, así no tiene que preocuparse por papeleo."
   },
   "designFaqs": {
-    "q1": "What does the design consultation include?",
-    "a1": "Our design consultation includes a discussion of your vision, space assessment, material recommendations, 3D visualization when applicable, and a detailed project plan with timeline and budget estimate.",
-    "q2": "Do you offer 3D renderings of renovation designs?",
-    "a2": "Yes, we provide 3D visualizations for many projects so you can see exactly how your renovated space will look before any work begins.",
-    "q3": "How much does a design consultation cost?",
-    "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
+    "q1": "¿Qué incluye la consulta de diseño?",
+    "a1": "Nuestra consulta de diseño incluye discusión de su visión, evaluación del espacio, recomendaciones de materiales, visualización 3D cuando aplica, y un plan de proyecto detallado con plazos y estimación de presupuesto.",
+    "q2": "¿Ofrecen renderizados 3D de los diseños?",
+    "a2": "Sí, proporcionamos visualizaciones 3D para muchos proyectos para que pueda ver exactamente cómo se verá su espacio remodelado antes de iniciar cualquier trabajo.",
+    "q3": "¿Cuánto cuesta una consulta de diseño?",
+    "a3": "Nuestras consultas iniciales de diseño son gratis. Creemos en ayudarle a explorar opciones antes de que tome cualquier compromiso."
   },
   "homePartners": {
     "title": "Nuestros socios",
@@ -712,38 +712,38 @@
     "srTitle": "Nuestros socios"
   },
   "wholeHouse": {
-    "projectOverview": "Project Overview",
-    "includedAreas": "Included Areas",
-    "totalBudget": "Budget",
-    "totalDuration": "Timeline",
-    "allServiceScopes": "All Services Included",
-    "viewAreaProject": "View {area} Project",
-    "viewAreaDetails": "View Details",
-    "combinedGallery": "Project Gallery",
-    "filterByArea": "Filter by Area",
-    "allAreas": "All Areas",
-    "childProjectsCount": "{count} renovation areas",
-    "noImagesForArea": "No images available for this area",
-    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
-    "siteBadge": "Whole House",
-    "areas": "Areas"
+    "projectOverview": "Resumen del proyecto",
+    "includedAreas": "Áreas incluidas",
+    "totalBudget": "Presupuesto",
+    "totalDuration": "Plazo",
+    "allServiceScopes": "Todos los servicios incluidos",
+    "viewAreaProject": "Ver proyecto de {area}",
+    "viewAreaDetails": "Ver detalles",
+    "combinedGallery": "Galería del proyecto",
+    "filterByArea": "Filtrar por área",
+    "allAreas": "Todas las áreas",
+    "childProjectsCount": "{count} áreas de remodelación",
+    "noImagesForArea": "No hay imágenes disponibles para esta área",
+    "areasCount": "{count, plural, one {# Área} other {# Áreas}}",
+    "siteBadge": "Casa completa",
+    "areas": "Áreas"
   },
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "title": "Flujo de servicio de remodelación: 5 pasos",
+      "subtitle": "De la consulta a la finalización",
+      "googleReviews": "Reseñas Google",
+      "stepLabel": "PASO {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "Descargar PNG",
+    "downloadPdf": "Descargar PDF",
+    "downloadSuccess": "¡Descargado!",
+    "downloadError": "Falló",
+    "downloadPosterHint": "Haga clic para descargar PNG",
+    "downloadPdfHint": "Haga clic para descargar PDF",
     "step1": {
-      "title": "Initial Consultation",
-      "subtitle": "Discovery",
+      "title": "Consulta inicial",
+      "subtitle": "Descubrimiento",
       "points": [
         "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
         "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
@@ -774,11 +774,11 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "Comenzamos con una consulta inicial donde puede comunicarse por teléfono, correo, WhatsApp, WeChat o SMS. Discutiremos sus necesidades de remodelación, preferencias de estilo, presupuesto y recopilaremos planos o fotos existentes."
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "Evaluación a medida y cotización",
+      "subtitle": "Medición en sitio (si aplica) y precios transparentes",
       "points": [
         "Professional on-site measurement for precise dimensions (if needed)",
         "A comprehensive design proposal illustrating your future space",
@@ -799,11 +799,11 @@
           "label": "Design Proposal"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "Proporcionamos medición profesional en sitio cuando es necesario y creamos una propuesta de diseño integral para su espacio. Recibirá un alcance de trabajo claramente definido con cronograma, requisitos de permisos y una cotización transparente alineada con el diseño propuesto."
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "Confirmación y contrato",
+      "subtitle": "Finalización de detalles e inicio del proyecto",
       "points": [
         "Invite clients to showroom for in-person consultation",
         "Address questions and optimize design details",
@@ -827,11 +827,11 @@
           "label": "Project Team"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "Le invitamos a nuestro showroom para revisar muestras de materiales y finalizar detalles de diseño. Después de confirmar el cronograma de pagos y firmar el contrato, aseguramos su fecha de inicio del proyecto y conformamos un equipo dedicado que incluye Gerente de Proyecto, Gerente de Construcción y Coordinador."
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "Ejecución y gestión",
+      "subtitle": "Totalmente coordinado y comunicación fácil",
       "points": [
         "A unified project team managing all aspects of your project",
         "No direct interaction with workers needed",
@@ -854,11 +854,11 @@
           "label": "Quick Response"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "Un equipo unificado de proyecto gestiona todos los aspectos de su proyecto. No necesitará interactuar directamente con los trabajadores. Coordinamos el progreso de la construcción, programación de entregas y mantenemos un control de calidad consistente. Cualquier problema se resuelve rápida y eficientemente."
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "Recorrido y postventa",
+      "subtitle": "Verificaciones finales y soporte continuo",
       "points": [
         "Final walkthrough to confirm all work meets expectations",
         "New home handover",
@@ -878,20 +878,20 @@
           "label": "Ongoing Support"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "Realizamos un recorrido final con usted para confirmar que todo el trabajo cumple sus expectativas, luego le entregamos su nuevo hogar. Brindamos soporte continuo para mantenimiento durante el período de garantía."
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "Hacer la remodelación verdaderamente alcanzable",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "Por qué esto importa",
+      "description": "El flujo de remodelación estructurado de Reno Stars ayuda a los clientes a saber qué esperar en cada etapa. Nuestro proceso claro de 5 pasos garantiza una experiencia de remodelación fluida y sin estrés desde el primer contacto hasta la entrega final."
     },
     "footer": {
-      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "Simple · Sin preocupaciones · Seguro · Garantizado",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "Años de experiencia",
       "googleRating": "Google",
-      "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "warrantyService": "Servicio de garantía",
+      "scanLinktree": "Escanee para conectar con nosotros",
       "website": "reno-stars.com"
     }
   },
@@ -1714,33 +1714,33 @@
   },
   "aboutPage": {
     "hero": {
-      "title": "About Reno Stars",
-      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
+      "title": "Sobre Reno Stars",
+      "subtitle": "Construido sobre experiencia, no solo en construcción, sino en entender la industria de remodelación desde ambos lados."
     },
     "journey": {
-      "title": "About Reno Stars",
+      "title": "Sobre Reno Stars",
       "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
-      "painPointsTitle": "We understand the common frustrations homeowners face.",
+      "lead": "Reno Stars fue construido sobre experiencia, no solo en construcción, sino en entender la industria de remodelación desde ambos lados.",
+      "context": "Antes de fundar Reno Stars en 2021, nuestro equipo pasó años trabajando en plataformas de remodelación, conectando propietarios con contratistas. Hemos visto miles de proyectos de principio a fin y, más importante, hemos visto dónde fallan las cosas.",
+      "painPointsTitle": "Entendemos las frustraciones comunes que enfrentan los propietarios.",
       "painPoints": [
         "Quotes that look attractive at first but grow with hidden items later.",
         "Poor communication and delayed responses.",
         "Uncertain timelines and projects dragging on.",
         "Inconsistent workmanship due to unstable crews."
       ],
-      "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
+      "conclusion": "Estos no son problemas raros. Son normas de la industria. Por eso se creó Reno Stars."
     },
     "stats": {
-      "years": "Years Experience",
-      "projects": "Projects Completed",
-      "team": "Team Members",
-      "insurance": "CGL Insurance",
-      "wcbCoverage": "Active WCB Coverage"
+      "years": "Años de experiencia",
+      "projects": "Proyectos completados",
+      "team": "Miembros del equipo",
+      "insurance": "Seguro CGL",
+      "wcbCoverage": "Cobertura WCB activa"
     },
     "offer": {
-      "title": "A More Structured, Transparent Approach",
-      "viewAll": "View All Services",
+      "title": "Un enfoque más estructurado y transparente",
+      "viewAll": "Ver todos los servicios",
       "services": {
         "kitchen": {
           "title": "Kitchen Renovation",
@@ -1760,9 +1760,9 @@
         }
       },
       "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
-      "systemTitle": "Every project is supported by a structured system.",
+      "lead": "No solo iniciamos otra empresa de remodelación. Reconstruimos el proceso.",
+      "goal": "Desde el principio, nuestro objetivo ha sido simple: hacer la remodelación predecible, transparente y sin estrés.",
+      "systemTitle": "Cada proyecto está respaldado por un sistema estructurado.",
       "systemItems": [
         {
           "title": "Detailed Contracts",
@@ -1787,7 +1787,7 @@
       ]
     },
     "values": {
-      "title": "Managing Details and Expectations",
+      "title": "Gestión de detalles y expectativas",
       "items": {
         "integrity": {
           "title": "Integrity",
@@ -1807,32 +1807,32 @@
         }
       },
       "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
-      "guarantee": "What we can guarantee is our response.",
+      "lead": "La remodelación involucra muchas piezas en movimiento, desde materiales hasta programación. Aunque tenemos gran cuidado en planificación y coordinación, ciertos factores como cronogramas de proveedores ocasionalmente pueden estar fuera de nuestro control directo.",
+      "guarantee": "Lo que sí podemos garantizar es nuestra respuesta.",
       "guaranteeItems": [
         "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
       ],
-      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
+      "closing": "Nuestro objetivo no es prometer un proceso perfecto, sino entregar uno bien gestionado."
     },
     "whyUs": {
-      "title": "Built for Homeowners Who Value Peace of Mind",
+      "title": "Construido para propietarios que valoran la tranquilidad",
       "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want",
+      "lead": "No somos la opción de menor precio, ni aspiramos a serlo.",
+      "chooseTitle": "Nuestros clientes nos eligen porque quieren",
       "chooseItems": [
         "A clear process",
         "Honest communication",
         "Reliable timelines",
         "A team that takes responsibility"
       ],
-      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
+      "specialise": "Nos especializamos en remodelaciones integrales, cocinas, baños y proyectos comerciales, donde la coordinación, el detalle y la confiabilidad marcan toda la diferencia."
     },
     "areas": {
-      "title": "Service Areas",
-      "description": "We proudly serve homeowners across Metro Vancouver and the Fraser Valley, bringing quality renovation services to communities throughout British Columbia."
+      "title": "Áreas de servicio",
+      "description": "Servimos con orgullo a propietarios en todo Metro Vancouver y el Fraser Valley, llevando servicios de remodelación de calidad a comunidades de toda la Columbia Británica."
     },
     "faq": {
-      "title": "Frequently Asked Questions",
+      "title": "Preguntas frecuentes",
       "q1": "How long has Reno Stars been in business?",
       "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
       "q2": "Are you licensed and insured?",
@@ -1845,15 +1845,15 @@
       "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
     },
     "cta": {
-      "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "title": "¿Listo para comenzar su remodelación?",
+      "getQuote": "Obtener cotización gratis",
+      "body": "¿Listo para experimentar un proceso de remodelación construido en torno a la transparencia, confiabilidad y su tranquilidad? Contáctenos hoy para una cotización gratis y detallada, y descubra por qué los propietarios de Metro Vancouver confían en Reno Stars."
     },
     "philosophy": {
-      "title": "Our Philosophy",
-      "lead": "We approach every project with one simple mindset.",
-      "quote": "Treat every home as if it were our own.",
-      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
+      "title": "Nuestra filosofía",
+      "lead": "Abordamos cada proyecto con una mentalidad simple.",
+      "quote": "Tratar cada hogar como si fuera el nuestro.",
+      "closing": "Porque al final, la remodelación no se trata solo de construir un espacio, se trata de construir confianza."
     }
   },
   "reviewsPage": {
