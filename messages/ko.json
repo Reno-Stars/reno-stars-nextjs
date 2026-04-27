@@ -1,228 +1,228 @@
 {
   "lang": {
-    "toggle": "中文"
+    "toggle": "English"
   },
   "nav": {
-    "home": "Home",
-    "services": "Services",
-    "gallery": "Gallery",
-    "projects": "Projects",
-    "testimonials": "Testimonials",
-    "contact": "Contact",
-    "contactUs": "Contact Us",
-    "reviews": "Reviews",
-    "back": "Back",
-    "backToHome": "Back to Home",
-    "blog": "Blog",
-    "areas": "Areas",
-    "design": "Design",
-    "benefits": "Features",
-    "process": "Workflow",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "switchLanguage": "Switch to Chinese",
-    "blogAndNews": "Blog & News",
-    "toggleAreas": "Toggle areas menu",
-    "showroom": "Showroom",
-    "guides": "Guides",
-    "about": "About Us",
-    "financing": "Financing",
-    "beforeAfter": "Before & After",
-    "features": "Features"
+    "home": "홈",
+    "services": "서비스",
+    "gallery": "갤러리",
+    "projects": "프로젝트",
+    "testimonials": "고객 후기",
+    "contact": "문의",
+    "contactUs": "문의하기",
+    "reviews": "리뷰",
+    "back": "뒤로",
+    "backToHome": "홈으로",
+    "blog": "블로그",
+    "areas": "서비스 지역",
+    "design": "디자인",
+    "benefits": "강점",
+    "process": "공정",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "switchLanguage": "언어 변경",
+    "blogAndNews": "블로그 & 뉴스",
+    "toggleAreas": "지역 메뉴 전환",
+    "showroom": "쇼룸",
+    "guides": "비용 가이드",
+    "about": "회사 소개",
+    "financing": "금융",
+    "beforeAfter": "비포 & 애프터",
+    "features": "강점"
   },
   "cta": {
-    "getQuote": "Get Quote",
-    "getFreeQuote": "Get Free Quote",
-    "getYourFreeQuote": "Get Your Free Quote",
-    "freeQuoteProject": "Get a Free Quote for Your Project!",
-    "freeQuote": "Get a Free Quote",
-    "startProject": "Start Your Project",
-    "startProjectToday": "Start Your Project Today",
-    "getStarted": "Get Started",
-    "viewProjects": "View Projects",
-    "viewOurWork": "View Our Work",
-    "ourServices": "Our Services",
-    "learnMore": "Learn More",
-    "exploreService": "Explore {service}",
-    "sendMessage": "Send Message",
-    "submitInquiry": "Get My Free Quote",
-    "bookAppointment": "Book an Appointment",
-    "callNow": "Call Now",
-    "requestConsultation": "Request Free Consultation",
-    "viewAllProjects": "View All Projects",
-    "viewAllServices": "View All Services",
-    "scheduleConsultation": "Schedule Consultation"
+    "getQuote": "견적 받기",
+    "getFreeQuote": "무료 견적",
+    "getYourFreeQuote": "무료 견적 받기",
+    "freeQuoteProject": "프로젝트 무료 견적 받기!",
+    "freeQuote": "무료 견적 신청",
+    "startProject": "프로젝트 시작",
+    "startProjectToday": "지금 프로젝트 시작",
+    "getStarted": "시작하기",
+    "viewProjects": "프로젝트 보기",
+    "viewOurWork": "작업 둘러보기",
+    "ourServices": "서비스 보기",
+    "learnMore": "자세히 보기",
+    "exploreService": "{service} 살펴보기",
+    "sendMessage": "메시지 보내기",
+    "submitInquiry": "무료 견적 받기",
+    "bookAppointment": "예약하기",
+    "callNow": "지금 전화",
+    "requestConsultation": "무료 상담 신청",
+    "viewAllProjects": "전체 프로젝트 보기",
+    "viewAllServices": "전체 서비스 보기",
+    "scheduleConsultation": "상담 일정 잡기"
   },
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
-    "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Home Renovation Vancouver Experts",
-    "renovationRemodeling": "Renovation & Remodeling",
-    "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
-    "premiumRenovations": "Premium Renovations",
-    "elevateYourSpace": "Elevate Your Space",
-    "toLuxury": "To Luxury",
-    "buildingBetterSpaces": "Building Better Spaces",
-    "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "Vancouver home renovation company with {experience}+ years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty. Kitchen, bathroom and whole house renovations across Metro Vancouver.",
-    "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
-    "realEstateDesc": "From complete home renovation to real estate agents and professional photography. We partner with trusted professionals to deliver everything under one roof."
+    "yearsOfExcellence": "탁월한 경력",
+    "transformYourSpace": "밴쿠버 주택 리노베이션 전문가",
+    "renovationRemodeling": "리노베이션 & 리모델링",
+    "thoughtfulSpaces": "정성을 다해 만드는 사려 깊은 공간",
+    "premiumRenovations": "프리미엄 리노베이션",
+    "elevateYourSpace": "당신의 공간을",
+    "toLuxury": "럭셔리하게",
+    "buildingBetterSpaces": "더 나은 공간 만들기",
+    "professionalExcellence": "전문 리노베이션의 차이",
+    "professionalExcellenceDesc": "{experience}년 이상의 경력, {coverage} CGL 보험, 활성 WCB 커버, 최대 3년 보증을 갖춘 밴쿠버 주택 리노베이션 회사. 메트로 밴쿠버 전역의 주방, 욕실, 주택 전체 리노베이션.",
+    "realEstateTitle": "원스톱 서비스: 리노베이션 + 부동산 + 촬영",
+    "realEstateDesc": "주택 종합 리노베이션부터 부동산 중개와 전문 사진까지. 신뢰할 수 있는 전문가들과 협력하여 모든 것을 한 지붕 아래에서 제공합니다."
   },
   "section": {
-    "serviceAreas": "Service Areas",
-    "services": "Services",
-    "ourServices": "Our Services",
-    "ourProfessionalServices": "Our Professional Services",
-    "aboutUs": "About Us",
-    "gallery": "Gallery",
-    "ourWork": "Our Work",
-    "ourPortfolio": "Our Portfolio",
-    "portfolio": "Portfolio",
-    "testimonials": "Testimonials",
-    "whatOurClientsSay": "What Our Clients Say",
-    "clientTestimonials": "Client Testimonials",
-    "clientReviews": "Client Reviews",
-    "awardsRecognition": "Awards & Recognition",
-    "blog": "Blog",
-    "blogTips": "Blog & Tips",
-    "visitShowroom": "Visit Our Showroom",
-    "contact": "Contact",
-    "getInTouch": "Get In Touch",
-    "ourProjects": "Our Projects",
-    "projectsH1": "Vancouver Renovation Portfolio",
-    "whoWeAre": "Who We Are",
-    "whatWeDo": "What We Do",
-    "resources": "Resources",
-    "whyUs": "Why Us",
-    "areasWeServe": "Areas We Serve",
-    "servicesSubtitle": "Professional renovation solutions for your home",
-    "servicesSubtitle2": "Comprehensive renovation solutions tailored to your needs",
-    "servicesSubtitle3": "Expert renovation solutions for every room",
-    "servicesSubtitle4": "Exceptional craftsmanship across all aspects of home renovation",
-    "aboutSubtitle": "Our story and commitment to excellence",
-    "aboutSubtitle2": "Our story, values, and commitment to excellence",
-    "aboutSubtitle3": "Our story and commitment to your home",
-    "gallerySubtitle": "Recent renovation projects",
-    "gallerySubtitle2": "Recent projects we're proud of",
-    "gallerySubtitle3": "See the transformations we've created",
-    "gallerySubtitle4": "A showcase of our finest luxury renovation projects",
-    "gallerySubtitle5": "Showcasing excellence in every project",
-    "testimonialsSubtitle": "Real feedback from satisfied customers",
-    "testimonialsSubtitle2": "Hear from our satisfied clients",
-    "testimonialsSubtitle3": "What our customers say about us",
-    "testimonialsSubtitle4": "Trusted by homeowners and businesses across the Lower Mainland",
-    "blogSubtitle": "Vancouver Renovation Tips & Blog Articles",
-    "contactSubtitle": "Ready to start your renovation project?",
-    "contactSubtitle2": "Ready to transform your space?",
-    "contactSubtitle3": "Let's discuss your renovation project",
-    "sendUsMessage": "Send Us a Message",
-    "contactInfo": "Contact Information",
-    "quickLinks": "Quick Links",
-    "servingAreas": "Serving {areas} with excellence and dedication",
-    "designInspirations": "Design Inspirations",
-    "designSubtitle": "Explore beautiful renovation ideas for your home",
-    "benefitsTitle": "Why Choose Reno Stars",
-    "benefitsSubtitle": "The advantages of working with our professional team"
+    "serviceAreas": "서비스 지역",
+    "services": "서비스",
+    "ourServices": "서비스 안내",
+    "ourProfessionalServices": "전문 서비스",
+    "aboutUs": "회사 소개",
+    "gallery": "갤러리",
+    "ourWork": "시공 사례",
+    "ourPortfolio": "포트폴리오",
+    "portfolio": "포트폴리오",
+    "testimonials": "고객 후기",
+    "whatOurClientsSay": "고객의 한마디",
+    "clientTestimonials": "고객 후기",
+    "clientReviews": "고객 리뷰",
+    "awardsRecognition": "수상 & 인정",
+    "blog": "블로그",
+    "blogTips": "블로그 & 팁",
+    "visitShowroom": "쇼룸 방문하기",
+    "contact": "문의",
+    "getInTouch": "연락하기",
+    "ourProjects": "프로젝트",
+    "projectsH1": "밴쿠버 리노베이션 포트폴리오",
+    "whoWeAre": "회사 소개",
+    "whatWeDo": "사업 분야",
+    "resources": "자료",
+    "whyUs": "선택의 이유",
+    "areasWeServe": "서비스 지역",
+    "servicesSubtitle": "주택을 위한 전문 리노베이션 솔루션",
+    "servicesSubtitle2": "고객 맞춤형 종합 리노베이션 솔루션",
+    "servicesSubtitle3": "모든 공간을 위한 전문 리노베이션",
+    "servicesSubtitle4": "주택 리노베이션 전 분야의 뛰어난 장인 정신",
+    "aboutSubtitle": "우리의 이야기와 탁월함에 대한 약속",
+    "aboutSubtitle2": "이야기, 가치, 그리고 약속",
+    "aboutSubtitle3": "우리의 이야기와 주택에 대한 약속",
+    "gallerySubtitle": "최근 리노베이션 프로젝트",
+    "gallerySubtitle2": "자랑스러운 최근 프로젝트",
+    "gallerySubtitle3": "우리가 만든 변화의 순간들",
+    "gallerySubtitle4": "최고의 럭셔리 리노베이션 프로젝트",
+    "gallerySubtitle5": "모든 프로젝트에 담은 탁월함",
+    "testimonialsSubtitle": "만족하신 고객님의 진솔한 후기",
+    "testimonialsSubtitle2": "만족하신 고객님의 이야기",
+    "testimonialsSubtitle3": "고객님이 말하는 우리",
+    "testimonialsSubtitle4": "로우어 메인랜드 전역의 주택 소유주와 사업주가 신뢰하는 회사",
+    "blogSubtitle": "밴쿠버 리노베이션 팁 & 블로그 기사",
+    "contactSubtitle": "리노베이션 프로젝트를 시작할 준비가 되셨나요?",
+    "contactSubtitle2": "공간을 변화시킬 준비가 되셨나요?",
+    "contactSubtitle3": "리노베이션 프로젝트에 대해 이야기해 봐요",
+    "sendUsMessage": "메시지를 보내주세요",
+    "contactInfo": "연락처 정보",
+    "quickLinks": "바로가기",
+    "servingAreas": "{areas}에 진심을 다해 서비스합니다",
+    "designInspirations": "디자인 영감",
+    "designSubtitle": "주택을 위한 아름다운 리노베이션 아이디어",
+    "benefitsTitle": "Reno Stars를 선택하는 이유",
+    "benefitsSubtitle": "전문 팀과 협력하는 이점"
   },
   "about": {
-    "ourJourney": "Our Journey",
-    "whatWeOffer": "What We Offer",
-    "ourValues": "Our Values",
-    "whyChooseUs": "Why Choose Us?",
-    "letsBuildTogether": "Let's Build Together",
-    "ourPromise": "Our Promise"
+    "ourJourney": "우리의 여정",
+    "whatWeOffer": "제공 서비스",
+    "ourValues": "우리의 가치",
+    "whyChooseUs": "왜 우리를 선택해야 할까요?",
+    "letsBuildTogether": "함께 만들어요",
+    "ourPromise": "우리의 약속"
   },
   "design": {
-    "seoTitle": "Professional Renovation Design & 3D Rendering",
+    "seoTitle": "전문 리노베이션 디자인 & 3D 렌더링",
     "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
     "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
-    "designFeature1Title": "3D Visualization",
-    "designFeature1Desc": "Photorealistic renderings let you see every detail: materials, lighting, and layout, before construction begins.",
-    "designFeature2Title": "Tailored to You",
-    "designFeature2Desc": "Every design is customized to your space, lifestyle, and budget. No cookie-cutter solutions.",
-    "designFeature3Title": "Design to Build",
-    "designFeature3Desc": "Our team handles the full journey from concept to completion, ensuring the final result matches the vision.",
-    "noDesigns": "Design gallery coming soon. Please check back later."
+    "designFeature1Title": "3D 비주얼라이제이션",
+    "designFeature1Desc": "시공 시작 전에 모든 디테일 ― 자재, 조명, 배치 ― 을 사진처럼 사실적인 렌더링으로 확인하세요.",
+    "designFeature2Title": "고객 맞춤형",
+    "designFeature2Desc": "모든 디자인을 공간, 라이프스타일, 예산에 맞게 맞춤화합니다. 천편일률적 솔루션은 없습니다.",
+    "designFeature3Title": "디자인부터 시공까지",
+    "designFeature3Desc": "콘셉트부터 완공까지 우리 팀이 전 과정을 관리하며 비전이 그대로 실현되도록 합니다.",
+    "noDesigns": "디자인 갤러리는 곧 공개됩니다. 추후 다시 확인해 주세요."
   },
   "stats": {
-    "yearsExperience": "Years Experience",
-    "teamMembers": "Team Members",
-    "expertTeamMembers": "Expert Team Members",
-    "expertTeam": "Expert Team",
-    "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "$5M CGL Insurance",
-    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
-    "wcbCoverage": "Active WCB Coverage",
-    "projectsCompleted": "Projects Completed",
-    "projectsDone": "Projects Done",
-    "happyClients": "Happy Clients",
-    "satisfaction": "Satisfaction",
-    "satisfactionRate": "Satisfaction Rate",
-    "clientSatisfaction": "Client Satisfaction",
-    "support": "Support",
-    "quality": "Quality",
-    "projects": "Projects",
-    "years": "Years",
-    "averageRating": "Average Rating",
-    "areasServed": "Areas Served",
-    "rating": "Rating",
-    "srStats": "Company Statistics",
-    "srTrustBadges": "Trust Badges and Certifications"
+    "yearsExperience": "경력 연수",
+    "teamMembers": "팀 멤버",
+    "expertTeamMembers": "전문 팀 멤버",
+    "expertTeam": "전문 팀",
+    "expertCraftsmen": "숙련 장인",
+    "liabilityCoverage": "$5M CGL 보험",
+    "fullCoverage": "$5M CGL 보험 · 활성 WCB 커버 · 최대 3년 보증",
+    "wcbCoverage": "활성 WCB 커버",
+    "projectsCompleted": "완료된 프로젝트",
+    "projectsDone": "완료된 프로젝트",
+    "happyClients": "만족 고객",
+    "satisfaction": "만족도",
+    "satisfactionRate": "만족률",
+    "clientSatisfaction": "고객 만족도",
+    "support": "지원",
+    "quality": "품질",
+    "projects": "프로젝트",
+    "years": "년",
+    "averageRating": "평균 평점",
+    "areasServed": "서비스 지역",
+    "rating": "평점",
+    "srStats": "회사 통계",
+    "srTrustBadges": "신뢰 배지 및 인증"
   },
   "form": {
-    "name": "Name",
-    "fullName": "Full Name",
-    "email": "Email",
-    "emailAddress": "Email Address",
-    "phone": "Phone",
-    "phoneNumber": "Phone Number",
-    "message": "Message",
-    "projectDetails": "Project Details",
-    "service": "Service",
-    "serviceInterestedIn": "Service Interested In",
-    "selectService": "Select a service",
-    "namePlaceholder": "Your name",
-    "namePlaceholder2": "John Smith",
+    "name": "이름",
+    "fullName": "전체 이름",
+    "email": "이메일",
+    "emailAddress": "이메일 주소",
+    "phone": "전화",
+    "phoneNumber": "전화번호",
+    "message": "메시지",
+    "projectDetails": "프로젝트 상세",
+    "service": "서비스",
+    "serviceInterestedIn": "관심 있는 서비스",
+    "selectService": "서비스를 선택하세요",
+    "namePlaceholder": "이름을 입력하세요",
+    "namePlaceholder2": "홍길동",
     "emailPlaceholder": "your.email@example.com",
     "emailPlaceholder2": "your@email.com",
-    "emailPlaceholder3": "john@example.com",
-    "phonePlaceholder": "Your phone number",
+    "emailPlaceholder3": "hong@example.com",
+    "phonePlaceholder": "전화번호",
     "phonePlaceholder2": "(555) 123-4567",
     "phonePlaceholder3": "(778) 960-7999",
     "phonePlaceholder4": "123-456-7890",
-    "messagePlaceholder": "Tell us about your project...",
-    "messagePlaceholder2": "Tell us about your renovation project...",
-    "sending": "Sending...",
-    "success": "Thank you! Your message has been sent successfully.",
-    "successTitle": "Message Sent!",
-    "error": "Something went wrong. Please try again.",
-    "responsePromise": "We reply within 24 hours with a detailed estimate."
+    "messagePlaceholder": "프로젝트에 대해 알려주세요...",
+    "messagePlaceholder2": "리노베이션 프로젝트에 대해 알려주세요...",
+    "sending": "전송 중...",
+    "success": "감사합니다! 메시지가 성공적으로 전송되었습니다.",
+    "successTitle": "전송 완료!",
+    "error": "문제가 발생했습니다. 다시 시도해 주세요.",
+    "responsePromise": "24시간 이내에 상세한 견적을 보내드립니다."
   },
   "footer": {
-    "allRightsReserved": "All Rights Reserved",
+    "allRightsReserved": "모든 권리 보유",
     "allRights": "All rights reserved.",
-    "licensedInsured": "Licensed & Fully Insured (CGL + WCB)",
-    "freeEstimates": "Free Estimates",
-    "mapLocation": "Map Location",
+    "licensedInsured": "면허 보유 & 완전 보험 가입 (CGL + WCB)",
+    "freeEstimates": "무료 견적",
+    "mapLocation": "지도 위치",
     "wechatId": "WeChat ID: {id}",
-    "quickLinks": "Quick Links",
-    "scanToConnect": "Scan to Connect"
+    "quickLinks": "바로가기",
+    "scanToConnect": "스캔하여 연결"
   },
   "label": {
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
-    "location": "Location",
-    "contact": "Contact",
-    "quality": "Quality",
-    "whyChooseUs": "Why Choose Us",
-    "verifiedCustomer": "Verified Customer",
-    "new": "NEW",
-    "new2": "New",
-    "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
-    "featured": "Featured"
+    "phone": "전화",
+    "email": "이메일",
+    "address": "주소",
+    "location": "위치",
+    "contact": "연락처",
+    "quality": "품질",
+    "whyChooseUs": "선택의 이유",
+    "verifiedCustomer": "인증된 고객",
+    "new": "신규",
+    "new2": "새로움",
+    "businessHours": "영업 시간",
+    "businessHoursShort": "월–금 8AM–6PM, 토 9AM–4PM",
+    "businessHoursDetail": "월요일 - 금요일: 오전 8:00 - 오후 6:00\n토요일: 오전 9:00 - 오후 4:00\n일요일: 휴무",
+    "featured": "추천"
   },
   "projects": {
     "ourProjects": "OUR\nPROJECTS",
@@ -232,10 +232,10 @@
     "subtitle4": "Discover our diverse portfolio of renovation projects across the Lower Mainland.",
     "subtitle5": "BOLD RENOVATIONS. DRAMATIC RESULTS. NO COMPROMISES.",
     "readyToStart": "READY TO START\nYOUR PROJECT?",
-    "readyToStart2": "Ready to Start Your Project?",
-    "readyToTransform": "Ready to Transform Your Space?",
-    "readyToTransformHome": "Ready to Transform Your Home?",
-    "letsBuildAmazing": "Let's Build Something Amazing",
+    "readyToStart2": "프로젝트를 시작할 준비가 되셨나요?",
+    "readyToTransform": "공간을 변화시킬 준비가 되셨나요?",
+    "readyToTransformHome": "주택을 변화시킬 준비가 되셨나요?",
+    "letsBuildAmazing": "멋진 것을 함께 만들어요",
     "ctaSubtitle": "Let's bring your renovation vision to life with our expert team.",
     "ctaSubtitle2": "Let's create something beautiful together. Start your renovation journey today.",
     "ctaSubtitle3": "Let our experienced team bring your renovation vision to life with quality craftsmanship.",
@@ -243,193 +243,193 @@
     "ctaSubtitle5": "STOP DREAMING. START BUILDING.",
     "ctaSubtitle6": "Let us transform your vision into reality with {years} years of experience and a proven track record of excellence.",
     "ctaSubtitle7": "Let us transform your vision into reality with {years} years of experience.",
-    "viewProject": "View Project",
-    "projectDetails": "Project Details",
-    "allProjects": "All Projects",
-    "noProjectsFound": "No projects found matching your criteria.",
-    "relatedProjects": "Related Projects",
-    "featuredProjects": "Featured Projects",
-    "categoryTitle": "{category} Renovation Projects",
-    "categorySubtitle": "Explore our {category} renovation portfolio and see how we transform spaces into dream homes.",
-    "openLightbox": "Click to enlarge image",
-    "viewImage": "View image",
-    "imageGallery": "Image gallery",
-    "previousImage": "Previous image",
-    "nextImage": "Next image",
-    "beforeLabel": "Before",
-    "afterLabel": "After",
-    "clickToSeeBefore": "Click to see before",
-    "clickToSeeAfter": "Click to see after",
-    "clickToToggle": "Click to toggle",
-    "externalProducts": "Products Used",
-    "noImages": "No images available",
-    "viewFullscreen": "View fullscreen",
-    "aboutService": "About our {service} services",
-    "serviceInCity": "{service} in {city}"
+    "viewProject": "프로젝트 보기",
+    "projectDetails": "프로젝트 상세",
+    "allProjects": "전체 프로젝트",
+    "noProjectsFound": "조건에 맞는 프로젝트가 없습니다.",
+    "relatedProjects": "관련 프로젝트",
+    "featuredProjects": "추천 프로젝트",
+    "categoryTitle": "{category} 리노베이션 프로젝트",
+    "categorySubtitle": "{category} 리노베이션 포트폴리오를 통해 공간이 어떻게 꿈의 주택으로 바뀌는지 확인해 보세요.",
+    "openLightbox": "클릭하여 확대",
+    "viewImage": "이미지 보기",
+    "imageGallery": "이미지 갤러리",
+    "previousImage": "이전 이미지",
+    "nextImage": "다음 이미지",
+    "beforeLabel": "비포",
+    "afterLabel": "애프터",
+    "clickToSeeBefore": "비포 보기",
+    "clickToSeeAfter": "애프터 보기",
+    "clickToToggle": "클릭하여 전환",
+    "externalProducts": "사용 제품",
+    "noImages": "이미지가 없습니다",
+    "viewFullscreen": "전체 화면",
+    "aboutService": "{service} 서비스 소개",
+    "serviceInCity": "{city}의 {service}"
   },
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "위치",
+    "category": "카테고리",
+    "budget": "예산 범위",
+    "spaceType": "공간 유형",
+    "serviceScope": "서비스 범위",
+    "duration": "기간",
+    "challenge": "도전 과제",
+    "solution": "솔루션",
+    "close": "닫기",
+    "viewDetails": "전체 상세 보기"
   },
   "lightbox": {
-    "previous": "Previous image",
-    "next": "Next image",
-    "close": "Close"
+    "previous": "이전 이미지",
+    "next": "다음 이미지",
+    "close": "닫기"
   },
   "gallery": {
     "beforeShort": "B",
     "afterShort": "A"
   },
   "filter": {
-    "allCategories": "All Categories",
-    "location": "Location",
-    "allLocations": "All Locations",
-    "spaceType": "Space Type",
-    "allSpaceTypes": "All Space Types",
-    "budget": "Budget",
-    "allBudgets": "All Budgets",
-    "showing": "Showing",
-    "projects": "{count, plural, one {project} other {projects}}",
-    "clearAll": "Clear Filters",
-    "browseByCategory": "Browse by Category",
-    "swipeToSeeMore": "Swipe to see more →",
-    "noProjectsMatch": "No projects match your filters.",
-    "pagination": "Projects pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingProjects": "Showing {start}-{end} of {total} projects",
-    "search": "Search projects..."
+    "allCategories": "모든 카테고리",
+    "location": "위치",
+    "allLocations": "모든 위치",
+    "spaceType": "공간 유형",
+    "allSpaceTypes": "모든 공간 유형",
+    "budget": "예산",
+    "allBudgets": "모든 예산",
+    "showing": "표시",
+    "projects": "{count, plural, one {프로젝트} other {프로젝트}}",
+    "clearAll": "필터 초기화",
+    "browseByCategory": "카테고리로 보기",
+    "swipeToSeeMore": "스와이프해서 보기 →",
+    "noProjectsMatch": "필터와 일치하는 프로젝트가 없습니다.",
+    "pagination": "프로젝트 페이지네이션",
+    "previous": "이전",
+    "next": "다음",
+    "previousPage": "이전 페이지로",
+    "nextPage": "다음 페이지로",
+    "showingProjects": "총 {total}개 중 {start}-{end}개 표시",
+    "search": "프로젝트 검색..."
   },
   "category": {
-    "wholeHouse": "Whole House"
+    "wholeHouse": "주택 전체"
   },
   "services": {
     "kitchen": {
-      "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
+      "title": "주방 리노베이션",
+      "description": "현대적 디자인, 맞춤형 캐비닛, 프리미엄 카운터탑을 갖춘 완전한 주방 리모델링.",
       "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
     },
     "bathroom": {
-      "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
+      "title": "욕실 리노베이션",
+      "description": "고급 자재와 마감으로 욕실을 스파 같은 공간으로 변화시키세요.",
       "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
     },
     "wholeHouse": {
-      "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
+      "title": "주택 전체 리노베이션",
+      "description": "콘셉트부터 완공까지 본격적인 주택 변화.",
       "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
     },
     "basement": {
-      "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
+      "title": "지하실 리모델링",
+      "description": "지하실을 기능적인 생활 공간으로. Best of Vancouver 3위.",
       "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
     },
     "cabinet": {
-      "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
+      "title": "캐비닛 리페이싱",
+      "description": "전문 캐비닛 리페이싱으로 주방을 새롭게.",
       "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
     },
     "commercial": {
-      "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
+      "title": "상업 리노베이션",
+      "description": "사무실, 매장, 식당 등 전문적인 상업 공간 리노베이션.",
       "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}"
+    "hubTitle": "서비스 안내",
+    "hubSubtitle": "모든 공간을 위한 전문 리노베이션 솔루션",
+    "getQuoteForService": "{service} 견적 받기"
   },
   "areas": {
-    "title": "Service Areas",
-    "subtitle": "We proudly serve communities across the Lower Mainland",
-    "servingIn": "Home Renovations in {city}",
-    "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
-    "viewProjects": "View {city} Projects",
-    "requestQuote": "Request Quote",
-    "whyChooseArea": "Why Choose Our {area} Service",
-    "areaProjects": "{area} Projects",
-    "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
-    "serviceInArea": "{service} in {area}",
-    "servicesInArea": "Our Services in {area}",
-    "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
-    "faqTitle": "Frequently Asked Questions About {area} Renovations",
-    "aboutArea": "About {area}",
-    "aboutService": "About {service} in {area}",
-    "areaServiceContent": "{service} Services in {area}",
-    "otherAreasForService": "{service} in Other Areas",
-    "otherServicesInArea": "Other Services in {area}",
-    "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
-    "learnOurProcess": "Learn About Our 5-Step Renovation Process",
-    "processLinkText": "See How We Work",
-    "blogLinkText": "Renovation Tips & Guides",
-    "serviceLinkText": "All About {service}",
-    "nearbyAreas": "We Also Serve Nearby Areas"
+    "title": "서비스 지역",
+    "subtitle": "로우어 메인랜드 전역의 커뮤니티에 자랑스럽게 서비스를 제공합니다",
+    "servingIn": "{city}의 주택 리노베이션",
+    "cityDescription": "{city}에서 전문 리노베이션 서비스를 제공합니다. 무료 상담을 신청해 주세요.",
+    "viewProjects": "{city} 프로젝트 보기",
+    "requestQuote": "견적 신청",
+    "whyChooseArea": "{area} 서비스를 선택하는 이유",
+    "areaProjects": "{area} 프로젝트",
+    "readyToStartIn": "{area}에서 {service} 프로젝트를 시작할 준비가 되셨나요?",
+    "serviceInArea": "{area}의 {service}",
+    "servicesInArea": "{area}에서 제공하는 서비스",
+    "readyToStartRenovation": "{area} 리노베이션을 시작할 준비가 되셨나요?",
+    "faqTitle": "{area} 리노베이션에 대해 자주 묻는 질문",
+    "aboutArea": "{area} 소개",
+    "aboutService": "{area}의 {service} 소개",
+    "areaServiceContent": "{area}의 {service} 서비스",
+    "otherAreasForService": "다른 지역의 {service}",
+    "otherServicesInArea": "{area}의 다른 서비스",
+    "serviceFaqTitle": "{area}의 {service}에 대해 자주 묻는 질문",
+    "learnOurProcess": "5단계 리노베이션 공정 보기",
+    "processLinkText": "공정 보기",
+    "blogLinkText": "리노베이션 팁 & 가이드",
+    "serviceLinkText": "{service} 자세히 보기",
+    "nearbyAreas": "인근 지역도 서비스"
   },
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "밴쿠버 리노베이션 팁 & 가이드",
+    "subtitle": "리노베이션 프로젝트를 위한 팁, 트렌드, 인사이트",
+    "readMore": "더 보기",
+    "publishedOn": "게시일",
+    "updated": "업데이트",
+    "backToBlog": "블로그로",
+    "comingSoon": "전체 기사가 곧 공개됩니다. 그동안 리노베이션 관련 문의는 언제든 연락해 주세요.",
+    "noPosts": "아직 블로그 게시물이 없습니다. 리노베이션 팁과 인사이트는 곧 공개됩니다.",
+    "relatedProject": "관련 프로젝트",
+    "pagination": "블로그 페이지네이션",
+    "previous": "이전",
+    "next": "다음",
+    "previousPage": "이전 페이지",
+    "nextPage": "다음 페이지",
+    "showingPosts": "총 {total}개 중 {start}-{end}개 표시",
+    "relatedServices": "관련 서비스",
+    "relatedAreas": "내 지역의 리노베이션"
   },
   "contact": {
-    "title": "Get a Free Renovation Quote in Vancouver",
-    "subtitle": "Vancouver's trusted renovation company — kitchen, bathroom, basement & whole house renovations across the Lower Mainland.",
-    "thankYouTitle": "Thank You!",
-    "thankYouMessage": "Your message has been sent successfully. We'll get back to you within 24 hours.",
-    "returnHome": "Return to Home"
+    "title": "밴쿠버 리노베이션 무료 견적",
+    "subtitle": "밴쿠버에서 신뢰받는 리노베이션 회사 — 로우어 메인랜드 전역의 주방, 욕실, 지하실, 주택 전체 리노베이션.",
+    "thankYouTitle": "감사합니다!",
+    "thankYouMessage": "메시지가 성공적으로 전송되었습니다. 24시간 이내에 답변 드리겠습니다.",
+    "returnHome": "홈으로"
   },
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Reno Stars를 선택하는 이유",
+    "subtitle": "우리와 함께 일한다는 것은 단순히 리노베이션을 완료하는 것을 넘어 ― 전 과정을 명확하고 통제 가능하며 스트레스 없이 진행하는 것입니다.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "신뢰 위에 세워진",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
+          "title": "20년 이상의 업계 경력",
           "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
+          "title": "$5M CGL 보험 · 활성 WCB 커버",
           "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
+          "title": "진정한 5성급 리뷰",
           "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
         },
         "team": {
-          "title": "Stable, Professional Team",
+          "title": "안정적인 전문 팀",
           "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
         },
         "service": {
-          "title": "End-to-End Service",
+          "title": "원스톱 서비스",
           "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "고객이 우리를 선택하는 이유",
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
@@ -458,17 +458,17 @@
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "프로젝트를 시작할 준비가 되셨나요?",
+      "subtitle": "투명성, 명확한 소통, 마음의 평화를 중심으로 구축된 리노베이션 프로세스의 차이를 경험해 보세요."
     }
   },
   "serviceBenefits": {
-    "freeConsultation": "Free consultation and quote",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
-    "experience": "{years}+ years experience",
-    "rating": "5-star Google rating",
-    "projectsDone": "700+ projects completed"
+    "freeConsultation": "무료 상담 및 견적",
+    "licensedInsured": "면허 보유 및 완전 보험 (CGL + WCB)",
+    "coverageAndWarranty": "$5M CGL 보험, 활성 WCB 커버, 최대 3년 보증",
+    "experience": "{years}년 이상의 경력",
+    "rating": "Google 5성 평점",
+    "projectsDone": "700+ 프로젝트 완료"
   },
   "faq": {
     "kitchen": {
@@ -521,85 +521,85 @@
     }
   },
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "지역에 특화된 전문성",
+    "freeOnsite": "무료 현장 상담",
+    "competitivePricing": "경쟁력 있는 지역 가격",
+    "quickResponse": "빠른 응답",
+    "experience": "로우어 메인랜드 {years}년+ 서비스",
+    "licensedInsured": "면허 보유 및 완전 보험 (CGL + WCB)"
   },
   "areaBenefits": {
-    "localTeam": "Local team familiar with the area",
-    "quickResponse": "Quick response times",
-    "buildingCodes": "Knowledge of local building codes",
-    "supplierRelationships": "Established supplier relationships",
-    "freeOnsite": "Free on-site consultations",
-    "competitivePricing": "Competitive local pricing"
+    "localTeam": "지역에 익숙한 현지 팀",
+    "quickResponse": "빠른 응답",
+    "buildingCodes": "지역 건축 법규에 대한 지식",
+    "supplierRelationships": "확립된 공급업체 관계",
+    "freeOnsite": "무료 현장 상담",
+    "competitivePricing": "경쟁력 있는 지역 가격"
   },
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+      "title": "밴쿠버 주택 리노베이션 — {years}년+, $5M 보험 | Reno Stars",
+      "description": "메트로 밴쿠버 주방, 욕실, 주택 전체 리노베이션. {years}년+ 사업, $5M CGL 보험, WCB 보험 가입 시공팀, 3년 보증. 100+ 완료된 프로젝트를 보거나 무료 견적을 받으세요."
     },
     "services": {
-      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+      "title": "밴쿠버 리노베이션 서비스 — $5M 보험 | Reno Stars",
+      "description": "메트로 밴쿠버 전역의 주방, 욕실, 주택 전체, 지하실, 상업 리노베이션 서비스. 20년+ 경력, $5M CGL 보험, 3년 보증. 무료 견적."
     },
     "projects": {
-      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
-      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+      "title": "밴쿠버 리노베이션 100+ 프로젝트 | 비포 & 애프터 | Reno Stars",
+      "description": "메트로 밴쿠버에서 진행한 100+ 실제 리노베이션 프로젝트의 비포/애프터 사진, 실제 비용, 시공 기간을 확인하세요. 주방, 욕실, 지하실, 주택 전체 변화."
     },
     "contact": {
-      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+      "title": "밴쿠버 리노베이션 무료 견적 | Reno Stars 문의",
+      "description": "밴쿠버에서 신뢰받는 Reno Stars의 무료 리노베이션 견적. 메트로 밴쿠버의 주방, 욕실, 지하실, 주택 전체 리노베이션. 전화 778-960-7999."
     },
     "blog": {
-      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+      "title": "리노베이션 팁 & 비용 가이드 | 밴쿠버 | Reno Stars 블로그",
+      "description": "밴쿠버 주택 개선 프로젝트를 위한 전문가의 리노베이션 팁, 디자인 트렌드, 실용적 아이디어. 사례 연구와 비포-애프터 변화를 읽어보세요."
     },
     "benefits": {
-      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
-      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+      "title": "Reno Stars를 선택하는 이유 | 70+ 5★ 리뷰, $5M 보험",
+      "description": "투명한 견적, 구조화된 프로세스, 빠른 소통, 안정적인 팀. Google 70+ 5성 리뷰, $5M CGL 보험, WCB 커버."
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "title": "리노베이션 디자인 갤러리 | 실제 밴쿠버 프로젝트 | Reno Stars",
+      "description": "메트로 밴쿠버의 100+ 실제 프로젝트에서 리노베이션 디자인 아이디어를 확인하세요. 주방, 욕실, 지하실, 주택 전체 영감."
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
-      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+      "title": "{category} 리노베이션 프로젝트 | Reno Stars 밴쿠버",
+      "description": "밴쿠버와 로우어 메인랜드 전역의 {category} 리노베이션 프로젝트를 살펴보세요. 비포-애프터 사진과 디자인 영감을 보세요."
     },
     "projectDetail": {
-      "titleWithLocation": "{title} in {city} | Reno Stars"
+      "titleWithLocation": "{title} ({city}) | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} in {area} | Reno Stars",
-      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "title": "{area}의 {service} | Reno Stars",
+      "titleWithTagline": "{area}의 {service} – {tagline} | Reno Stars",
+      "description": "Reno Stars의 {area} 전문 {service}. {years}년+ 경력, $5M CGL 보험, 활성 WCB 커버, 최대 3년 보증. 지역 프로젝트를 보고 오늘 무료 견적을 받으세요."
     },
     "areas": {
-      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
-      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+      "title": "내 지역 리노베이션 | 메트로 밴쿠버 17개 지역 | Reno Stars",
+      "description": "Reno Stars는 메트로 밴쿠버와 프레이저 밸리 전역의 17개 커뮤니티에 서비스를 제공합니다. 거주 도시의 리노베이션 서비스를 찾고 무료 견적을 받으세요."
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
-      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+      "title": "{area} 리노베이션 시공자 | 주방 & 욕실 | Reno Stars",
+      "description": "{area}의 전문 리노베이션 서비스. 주방, 욕실, 주택 전체 리노베이션. 무료 견적은 문의해 주세요."
     },
     "thankYou": {
-      "title": "Thank You | Reno Stars",
-      "description": "Your message has been received. We will get back to you shortly."
+      "title": "감사합니다 | Reno Stars",
+      "description": "메시지를 받았습니다. 곧 답변 드리겠습니다."
     },
     "process": {
-      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "리노베이션 공정: 5단계 | Reno Stars 밴쿠버",
+      "description": "체계적인 5단계 리노베이션 공정에 대해 알아보세요. 첫 상담부터 프로젝트 인계까지, 리노베이션을 간단하고 걱정 없이."
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
-      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+      "title": "리노베이션 쇼룸 리치몬드 BC | 무료 상담 | Reno Stars",
+      "description": "리치몬드 BC 쇼룸을 방문해 실제 자재를 만지고, 주방 & 욕실 디스플레이를 보고, 즉석에서 무료 견적을 받으세요. 월-토 오전 9:30 오픈. 예약 불필요."
     },
     "guides": {
-      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "title": "리노베이션 비용 가이드 | 밴쿠버 BC | Reno Stars",
+      "description": "광역 밴쿠버의 실제 프로젝트 데이터에 기반한 무료 리노베이션 비용 가이드. 주방, 욕실, 주택 전체 리노베이션 가격을 실제 예산과 시공 기간으로 확인.",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
@@ -630,41 +630,41 @@
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+      "title": "Reno Stars 소개 | 20년+, 70+ 5★ 리뷰 | 밴쿠버 리노베이션",
+      "description": "메트로 밴쿠버에서 100+ 리노베이션을 진행한 팀을 만나보세요. 20년+ 경력, $5M 보험, WCB 커버, Google 70+ 5성 리뷰. 무료 상담."
     },
     "reviews": {
-      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
-      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+      "title": "70+ 5성 리뷰 | Reno Stars 밴쿠버",
+      "description": "메트로 밴쿠버의 실제 주택 소유주 70+의 인증된 Google 5성 리뷰를 확인하세요. 메트로 밴쿠버의 가족들이 리노베이션을 위해 Reno Stars를 신뢰하는 이유를 보세요."
     },
     "financing": {
-      "title": "Renovation Financing & Budget Guide | Vancouver",
-      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+      "title": "리노베이션 금융 & 예산 가이드 | 밴쿠버",
+      "description": "메트로 밴쿠버에서 리노베이션 금융 옵션을 살펴보세요. HELOC, 개인 대출, 모기지 재융자, 주택 리노베이션 프로젝트를 위한 예산 계획 팁."
     },
     "beforeAfter": {
-      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
-      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+      "title": "비포 & 애프터: 실제 밴쿠버 리노베이션 | Reno Stars",
+      "description": "메트로 밴쿠버의 멋진 비포-애프터 리노베이션 변화. 실제 프로젝트, 실제 비용, 실제 결과. 주방, 욕실, 주택 전체."
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
-      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+      "title": "Reno Stars의 차별점 | $5M 보험, 3년 보증, 70+ 리뷰",
+      "description": "Reno Stars가 다른 이유: $5M CGL 보험, WCB 커버, 3년 시공 보증, 이중 언어 팀, Google 70+ 5성 리뷰. 밴쿠버."
     },
     "nearMe": {
-      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+      "title": "내 근처 주택 리노베이션 | 밴쿠버 메트로 | Reno Stars",
+      "description": "밴쿠버, 리치몬드, 버나비, 서리, 메트로 밴쿠버 14개 도시의 최고 평점 주택 리노베이션 회사. Google 70+ 5★ 리뷰, 20년+, $5M 보험. 무료 견적."
     }
   },
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "불러오는 중...",
+    "error": "오류가 발생했습니다",
+    "notFound": "페이지를 찾을 수 없습니다",
+    "notFoundDescription": "찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
+    "backToHome": "홈으로",
+    "tryAgain": "다시 시도"
   },
   "homeFaq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Common questions about our renovation services"
+    "title": "자주 묻는 질문",
+    "subtitle": "리노베이션 서비스에 대한 일반적인 질문"
   },
   "showroomPage": {
     "heroTitle": "Visit Our Showroom",
@@ -707,9 +707,9 @@
     "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
   },
   "homePartners": {
-    "title": "Our Partners",
-    "subtitle": "Trusted by industry-leading brands and suppliers",
-    "srTitle": "Our Partners"
+    "title": "파트너",
+    "subtitle": "업계 선도 브랜드와 공급업체에게 신뢰받는",
+    "srTitle": "파트너"
   },
   "wholeHouse": {
     "projectOverview": "Project Overview",

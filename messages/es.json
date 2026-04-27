@@ -1,228 +1,228 @@
 {
   "lang": {
-    "toggle": "中文"
+    "toggle": "English"
   },
   "nav": {
-    "home": "Home",
-    "services": "Services",
-    "gallery": "Gallery",
-    "projects": "Projects",
-    "testimonials": "Testimonials",
-    "contact": "Contact",
-    "contactUs": "Contact Us",
-    "reviews": "Reviews",
-    "back": "Back",
-    "backToHome": "Back to Home",
+    "home": "Inicio",
+    "services": "Servicios",
+    "gallery": "Galería",
+    "projects": "Proyectos",
+    "testimonials": "Testimonios",
+    "contact": "Contacto",
+    "contactUs": "Contáctenos",
+    "reviews": "Reseñas",
+    "back": "Volver",
+    "backToHome": "Volver al inicio",
     "blog": "Blog",
-    "areas": "Areas",
-    "design": "Design",
-    "benefits": "Features",
-    "process": "Workflow",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "switchLanguage": "Switch to Chinese",
-    "blogAndNews": "Blog & News",
-    "toggleAreas": "Toggle areas menu",
+    "areas": "Áreas",
+    "design": "Diseño",
+    "benefits": "Ventajas",
+    "process": "Proceso",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchLanguage": "Cambiar idioma",
+    "blogAndNews": "Blog y noticias",
+    "toggleAreas": "Alternar menú de áreas",
     "showroom": "Showroom",
-    "guides": "Guides",
-    "about": "About Us",
-    "financing": "Financing",
-    "beforeAfter": "Before & After",
-    "features": "Features"
+    "guides": "Guías",
+    "about": "Sobre nosotros",
+    "financing": "Financiamiento",
+    "beforeAfter": "Antes y después",
+    "features": "Ventajas"
   },
   "cta": {
-    "getQuote": "Get Quote",
-    "getFreeQuote": "Get Free Quote",
-    "getYourFreeQuote": "Get Your Free Quote",
-    "freeQuoteProject": "Get a Free Quote for Your Project!",
-    "freeQuote": "Get a Free Quote",
-    "startProject": "Start Your Project",
-    "startProjectToday": "Start Your Project Today",
-    "getStarted": "Get Started",
-    "viewProjects": "View Projects",
-    "viewOurWork": "View Our Work",
-    "ourServices": "Our Services",
-    "learnMore": "Learn More",
-    "exploreService": "Explore {service}",
-    "sendMessage": "Send Message",
-    "submitInquiry": "Get My Free Quote",
-    "bookAppointment": "Book an Appointment",
-    "callNow": "Call Now",
-    "requestConsultation": "Request Free Consultation",
-    "viewAllProjects": "View All Projects",
-    "viewAllServices": "View All Services",
-    "scheduleConsultation": "Schedule Consultation"
+    "getQuote": "Obtener cotización",
+    "getFreeQuote": "Cotización gratis",
+    "getYourFreeQuote": "Reciba su cotización gratis",
+    "freeQuoteProject": "¡Reciba una cotización gratis para su proyecto!",
+    "freeQuote": "Recibir cotización gratis",
+    "startProject": "Comenzar su proyecto",
+    "startProjectToday": "Comience su proyecto hoy",
+    "getStarted": "Comenzar",
+    "viewProjects": "Ver proyectos",
+    "viewOurWork": "Ver nuestro trabajo",
+    "ourServices": "Nuestros servicios",
+    "learnMore": "Más información",
+    "exploreService": "Explorar {service}",
+    "sendMessage": "Enviar mensaje",
+    "submitInquiry": "Recibir mi cotización gratis",
+    "bookAppointment": "Reservar cita",
+    "callNow": "Llamar ahora",
+    "requestConsultation": "Solicitar consulta gratis",
+    "viewAllProjects": "Ver todos los proyectos",
+    "viewAllServices": "Ver todos los servicios",
+    "scheduleConsultation": "Agendar consulta"
   },
   "hero": {
     "whereRenovationStarts": "WHERE\nRENOVATION\nSTARTS",
-    "yearsOfExcellence": "Years of Excellence",
-    "transformYourSpace": "Home Renovation Vancouver Experts",
-    "renovationRemodeling": "Renovation & Remodeling",
-    "thoughtfulSpaces": "Thoughtful spaces, crafted with care",
-    "premiumRenovations": "Premium Renovations",
-    "elevateYourSpace": "Elevate Your Space",
-    "toLuxury": "To Luxury",
-    "buildingBetterSpaces": "Building Better Spaces",
-    "professionalExcellence": "Professional Renovation Excellence",
-    "professionalExcellenceDesc": "Vancouver home renovation company with {experience}+ years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty. Kitchen, bathroom and whole house renovations across Metro Vancouver.",
-    "realEstateTitle": "One-Stop Service: Renovation + Real Estate + Photography",
-    "realEstateDesc": "From complete home renovation to real estate agents and professional photography. We partner with trusted professionals to deliver everything under one roof."
+    "yearsOfExcellence": "Años de excelencia",
+    "transformYourSpace": "Expertos en remodelación de hogar en Vancouver",
+    "renovationRemodeling": "Renovación y remodelación",
+    "thoughtfulSpaces": "Espacios pensados, creados con cuidado",
+    "premiumRenovations": "Remodelaciones premium",
+    "elevateYourSpace": "Eleve su espacio",
+    "toLuxury": "al lujo",
+    "buildingBetterSpaces": "Construyendo mejores espacios",
+    "professionalExcellence": "Excelencia profesional en remodelación",
+    "professionalExcellenceDesc": "Empresa de remodelación residencial en Vancouver con más de {experience} años de experiencia, seguro CGL de {coverage}, cobertura WCB activa y hasta 3 años de garantía. Cocinas, baños y remodelaciones integrales en todo Metro Vancouver.",
+    "realEstateTitle": "Servicio integral: Remodelación + Bienes raíces + Fotografía",
+    "realEstateDesc": "Desde la remodelación completa hasta agentes inmobiliarios y fotografía profesional. Trabajamos con profesionales de confianza para entregar todo bajo un mismo techo."
   },
   "section": {
-    "serviceAreas": "Service Areas",
-    "services": "Services",
-    "ourServices": "Our Services",
-    "ourProfessionalServices": "Our Professional Services",
-    "aboutUs": "About Us",
-    "gallery": "Gallery",
-    "ourWork": "Our Work",
-    "ourPortfolio": "Our Portfolio",
-    "portfolio": "Portfolio",
-    "testimonials": "Testimonials",
-    "whatOurClientsSay": "What Our Clients Say",
-    "clientTestimonials": "Client Testimonials",
-    "clientReviews": "Client Reviews",
-    "awardsRecognition": "Awards & Recognition",
+    "serviceAreas": "Áreas de servicio",
+    "services": "Servicios",
+    "ourServices": "Nuestros servicios",
+    "ourProfessionalServices": "Nuestros servicios profesionales",
+    "aboutUs": "Sobre nosotros",
+    "gallery": "Galería",
+    "ourWork": "Nuestro trabajo",
+    "ourPortfolio": "Nuestro portafolio",
+    "portfolio": "Portafolio",
+    "testimonials": "Testimonios",
+    "whatOurClientsSay": "Lo que dicen nuestros clientes",
+    "clientTestimonials": "Testimonios de clientes",
+    "clientReviews": "Reseñas de clientes",
+    "awardsRecognition": "Premios y reconocimientos",
     "blog": "Blog",
-    "blogTips": "Blog & Tips",
-    "visitShowroom": "Visit Our Showroom",
-    "contact": "Contact",
-    "getInTouch": "Get In Touch",
-    "ourProjects": "Our Projects",
-    "projectsH1": "Vancouver Renovation Portfolio",
-    "whoWeAre": "Who We Are",
-    "whatWeDo": "What We Do",
-    "resources": "Resources",
-    "whyUs": "Why Us",
-    "areasWeServe": "Areas We Serve",
-    "servicesSubtitle": "Professional renovation solutions for your home",
-    "servicesSubtitle2": "Comprehensive renovation solutions tailored to your needs",
-    "servicesSubtitle3": "Expert renovation solutions for every room",
-    "servicesSubtitle4": "Exceptional craftsmanship across all aspects of home renovation",
-    "aboutSubtitle": "Our story and commitment to excellence",
-    "aboutSubtitle2": "Our story, values, and commitment to excellence",
-    "aboutSubtitle3": "Our story and commitment to your home",
-    "gallerySubtitle": "Recent renovation projects",
-    "gallerySubtitle2": "Recent projects we're proud of",
-    "gallerySubtitle3": "See the transformations we've created",
-    "gallerySubtitle4": "A showcase of our finest luxury renovation projects",
-    "gallerySubtitle5": "Showcasing excellence in every project",
-    "testimonialsSubtitle": "Real feedback from satisfied customers",
-    "testimonialsSubtitle2": "Hear from our satisfied clients",
-    "testimonialsSubtitle3": "What our customers say about us",
-    "testimonialsSubtitle4": "Trusted by homeowners and businesses across the Lower Mainland",
-    "blogSubtitle": "Vancouver Renovation Tips & Blog Articles",
-    "contactSubtitle": "Ready to start your renovation project?",
-    "contactSubtitle2": "Ready to transform your space?",
-    "contactSubtitle3": "Let's discuss your renovation project",
-    "sendUsMessage": "Send Us a Message",
-    "contactInfo": "Contact Information",
-    "quickLinks": "Quick Links",
-    "servingAreas": "Serving {areas} with excellence and dedication",
-    "designInspirations": "Design Inspirations",
-    "designSubtitle": "Explore beautiful renovation ideas for your home",
-    "benefitsTitle": "Why Choose Reno Stars",
-    "benefitsSubtitle": "The advantages of working with our professional team"
+    "blogTips": "Blog y consejos",
+    "visitShowroom": "Visite nuestro showroom",
+    "contact": "Contacto",
+    "getInTouch": "Contáctenos",
+    "ourProjects": "Nuestros proyectos",
+    "projectsH1": "Portafolio de remodelaciones en Vancouver",
+    "whoWeAre": "Quiénes somos",
+    "whatWeDo": "Qué hacemos",
+    "resources": "Recursos",
+    "whyUs": "Por qué nosotros",
+    "areasWeServe": "Áreas que servimos",
+    "servicesSubtitle": "Soluciones profesionales de remodelación para su hogar",
+    "servicesSubtitle2": "Soluciones integrales de remodelación adaptadas a sus necesidades",
+    "servicesSubtitle3": "Soluciones expertas de remodelación para cada habitación",
+    "servicesSubtitle4": "Mano de obra excepcional en todos los aspectos de la remodelación",
+    "aboutSubtitle": "Nuestra historia y compromiso con la excelencia",
+    "aboutSubtitle2": "Nuestra historia, valores y compromiso con la excelencia",
+    "aboutSubtitle3": "Nuestra historia y compromiso con su hogar",
+    "gallerySubtitle": "Proyectos recientes de remodelación",
+    "gallerySubtitle2": "Proyectos recientes de los que estamos orgullosos",
+    "gallerySubtitle3": "Vea las transformaciones que hemos creado",
+    "gallerySubtitle4": "Una muestra de nuestros mejores proyectos de lujo",
+    "gallerySubtitle5": "Excelencia en cada proyecto",
+    "testimonialsSubtitle": "Comentarios reales de clientes satisfechos",
+    "testimonialsSubtitle2": "Escuche a nuestros clientes satisfechos",
+    "testimonialsSubtitle3": "Lo que dicen nuestros clientes sobre nosotros",
+    "testimonialsSubtitle4": "La confianza de propietarios y empresas en todo el Lower Mainland",
+    "blogSubtitle": "Consejos y artículos de remodelación en Vancouver",
+    "contactSubtitle": "¿Listo para comenzar su proyecto de remodelación?",
+    "contactSubtitle2": "¿Listo para transformar su espacio?",
+    "contactSubtitle3": "Hablemos de su proyecto de remodelación",
+    "sendUsMessage": "Envíenos un mensaje",
+    "contactInfo": "Información de contacto",
+    "quickLinks": "Enlaces rápidos",
+    "servingAreas": "Sirviendo a {areas} con excelencia y dedicación",
+    "designInspirations": "Inspiraciones de diseño",
+    "designSubtitle": "Explore hermosas ideas de remodelación para su hogar",
+    "benefitsTitle": "Por qué elegir Reno Stars",
+    "benefitsSubtitle": "Las ventajas de trabajar con nuestro equipo profesional"
   },
   "about": {
-    "ourJourney": "Our Journey",
-    "whatWeOffer": "What We Offer",
-    "ourValues": "Our Values",
-    "whyChooseUs": "Why Choose Us?",
-    "letsBuildTogether": "Let's Build Together",
-    "ourPromise": "Our Promise"
+    "ourJourney": "Nuestra trayectoria",
+    "whatWeOffer": "Qué ofrecemos",
+    "ourValues": "Nuestros valores",
+    "whyChooseUs": "¿Por qué elegirnos?",
+    "letsBuildTogether": "Construyamos juntos",
+    "ourPromise": "Nuestra promesa"
   },
   "design": {
-    "seoTitle": "Professional Renovation Design & 3D Rendering",
+    "seoTitle": "Diseño profesional de remodelación y renderizado 3D",
     "seoParagraph1": "At Reno Stars, every renovation begins with a detailed design phase. Our in-house designers create photorealistic 3D renderings so you can visualize the final result before construction starts. From kitchen layouts and bathroom remodels to whole-house transformations, we bring your vision to life with precision and creativity.",
     "seoParagraph2": "Browse our collection of interior design concepts spanning kitchens, bathrooms, living spaces, and commercial interiors. Each rendering reflects our commitment to blending modern aesthetics with practical functionality, tailored to homes and businesses across Vancouver and the Lower Mainland.",
-    "designFeature1Title": "3D Visualization",
-    "designFeature1Desc": "Photorealistic renderings let you see every detail: materials, lighting, and layout, before construction begins.",
-    "designFeature2Title": "Tailored to You",
-    "designFeature2Desc": "Every design is customized to your space, lifestyle, and budget. No cookie-cutter solutions.",
-    "designFeature3Title": "Design to Build",
-    "designFeature3Desc": "Our team handles the full journey from concept to completion, ensuring the final result matches the vision.",
-    "noDesigns": "Design gallery coming soon. Please check back later."
+    "designFeature1Title": "Visualización 3D",
+    "designFeature1Desc": "Renderizados fotorrealistas le permiten ver cada detalle: materiales, iluminación y diseño, antes de comenzar la construcción.",
+    "designFeature2Title": "Hecho a su medida",
+    "designFeature2Desc": "Cada diseño se personaliza según su espacio, estilo de vida y presupuesto. Nada de soluciones genéricas.",
+    "designFeature3Title": "Del diseño a la construcción",
+    "designFeature3Desc": "Nuestro equipo gestiona todo el proceso de concepto a finalización, asegurando que el resultado coincida con la visión.",
+    "noDesigns": "La galería de diseños estará disponible pronto. Vuelva más tarde."
   },
   "stats": {
-    "yearsExperience": "Years Experience",
-    "teamMembers": "Team Members",
-    "expertTeamMembers": "Expert Team Members",
-    "expertTeam": "Expert Team",
-    "expertCraftsmen": "Expert Craftsmen",
-    "liabilityCoverage": "$5M CGL Insurance",
-    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
-    "wcbCoverage": "Active WCB Coverage",
-    "projectsCompleted": "Projects Completed",
-    "projectsDone": "Projects Done",
-    "happyClients": "Happy Clients",
-    "satisfaction": "Satisfaction",
-    "satisfactionRate": "Satisfaction Rate",
-    "clientSatisfaction": "Client Satisfaction",
-    "support": "Support",
-    "quality": "Quality",
-    "projects": "Projects",
-    "years": "Years",
-    "averageRating": "Average Rating",
-    "areasServed": "Areas Served",
-    "rating": "Rating",
-    "srStats": "Company Statistics",
-    "srTrustBadges": "Trust Badges and Certifications"
+    "yearsExperience": "Años de experiencia",
+    "teamMembers": "Miembros del equipo",
+    "expertTeamMembers": "Miembros expertos del equipo",
+    "expertTeam": "Equipo experto",
+    "expertCraftsmen": "Artesanos expertos",
+    "liabilityCoverage": "Seguro CGL de $5M",
+    "fullCoverage": "Seguro CGL de $5M · Cobertura WCB activa · Hasta 3 años de garantía",
+    "wcbCoverage": "Cobertura WCB activa",
+    "projectsCompleted": "Proyectos completados",
+    "projectsDone": "Proyectos realizados",
+    "happyClients": "Clientes satisfechos",
+    "satisfaction": "Satisfacción",
+    "satisfactionRate": "Índice de satisfacción",
+    "clientSatisfaction": "Satisfacción del cliente",
+    "support": "Soporte",
+    "quality": "Calidad",
+    "projects": "Proyectos",
+    "years": "Años",
+    "averageRating": "Calificación promedio",
+    "areasServed": "Áreas atendidas",
+    "rating": "Calificación",
+    "srStats": "Estadísticas de la empresa",
+    "srTrustBadges": "Insignias y certificaciones de confianza"
   },
   "form": {
-    "name": "Name",
-    "fullName": "Full Name",
-    "email": "Email",
-    "emailAddress": "Email Address",
-    "phone": "Phone",
-    "phoneNumber": "Phone Number",
-    "message": "Message",
-    "projectDetails": "Project Details",
-    "service": "Service",
-    "serviceInterestedIn": "Service Interested In",
-    "selectService": "Select a service",
-    "namePlaceholder": "Your name",
-    "namePlaceholder2": "John Smith",
-    "emailPlaceholder": "your.email@example.com",
-    "emailPlaceholder2": "your@email.com",
-    "emailPlaceholder3": "john@example.com",
-    "phonePlaceholder": "Your phone number",
+    "name": "Nombre",
+    "fullName": "Nombre completo",
+    "email": "Correo",
+    "emailAddress": "Correo electrónico",
+    "phone": "Teléfono",
+    "phoneNumber": "Número de teléfono",
+    "message": "Mensaje",
+    "projectDetails": "Detalles del proyecto",
+    "service": "Servicio",
+    "serviceInterestedIn": "Servicio de interés",
+    "selectService": "Seleccione un servicio",
+    "namePlaceholder": "Su nombre",
+    "namePlaceholder2": "Juan Pérez",
+    "emailPlaceholder": "su.correo@ejemplo.com",
+    "emailPlaceholder2": "su@correo.com",
+    "emailPlaceholder3": "juan@ejemplo.com",
+    "phonePlaceholder": "Su teléfono",
     "phonePlaceholder2": "(555) 123-4567",
     "phonePlaceholder3": "(778) 960-7999",
     "phonePlaceholder4": "123-456-7890",
-    "messagePlaceholder": "Tell us about your project...",
-    "messagePlaceholder2": "Tell us about your renovation project...",
-    "sending": "Sending...",
-    "success": "Thank you! Your message has been sent successfully.",
-    "successTitle": "Message Sent!",
-    "error": "Something went wrong. Please try again.",
-    "responsePromise": "We reply within 24 hours with a detailed estimate."
+    "messagePlaceholder": "Cuéntenos sobre su proyecto...",
+    "messagePlaceholder2": "Cuéntenos sobre su proyecto de remodelación...",
+    "sending": "Enviando...",
+    "success": "¡Gracias! Su mensaje ha sido enviado.",
+    "successTitle": "¡Mensaje enviado!",
+    "error": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "responsePromise": "Respondemos en menos de 24 horas con una cotización detallada."
   },
   "footer": {
-    "allRightsReserved": "All Rights Reserved",
-    "allRights": "All rights reserved.",
-    "licensedInsured": "Licensed & Fully Insured (CGL + WCB)",
-    "freeEstimates": "Free Estimates",
-    "mapLocation": "Map Location",
+    "allRightsReserved": "Todos los derechos reservados",
+    "allRights": "Todos los derechos reservados.",
+    "licensedInsured": "Licenciado y completamente asegurado (CGL + WCB)",
+    "freeEstimates": "Cotizaciones gratis",
+    "mapLocation": "Ubicación en mapa",
     "wechatId": "WeChat ID: {id}",
-    "quickLinks": "Quick Links",
-    "scanToConnect": "Scan to Connect"
+    "quickLinks": "Enlaces rápidos",
+    "scanToConnect": "Escanee para conectar"
   },
   "label": {
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
-    "location": "Location",
-    "contact": "Contact",
-    "quality": "Quality",
-    "whyChooseUs": "Why Choose Us",
-    "verifiedCustomer": "Verified Customer",
-    "new": "NEW",
-    "new2": "New",
-    "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
-    "featured": "Featured"
+    "phone": "Teléfono",
+    "email": "Correo",
+    "address": "Dirección",
+    "location": "Ubicación",
+    "contact": "Contacto",
+    "quality": "Calidad",
+    "whyChooseUs": "Por qué elegirnos",
+    "verifiedCustomer": "Cliente verificado",
+    "new": "NUEVO",
+    "new2": "Nuevo",
+    "businessHours": "Horario",
+    "businessHoursShort": "Lun–Vie 8AM–6PM, Sáb 9AM–4PM",
+    "businessHoursDetail": "Lunes - Viernes: 8:00 AM - 6:00 PM\nSábado: 9:00 AM - 4:00 PM\nDomingo: Cerrado",
+    "featured": "Destacado"
   },
   "projects": {
     "ourProjects": "OUR\nPROJECTS",
@@ -232,10 +232,10 @@
     "subtitle4": "Discover our diverse portfolio of renovation projects across the Lower Mainland.",
     "subtitle5": "BOLD RENOVATIONS. DRAMATIC RESULTS. NO COMPROMISES.",
     "readyToStart": "READY TO START\nYOUR PROJECT?",
-    "readyToStart2": "Ready to Start Your Project?",
-    "readyToTransform": "Ready to Transform Your Space?",
-    "readyToTransformHome": "Ready to Transform Your Home?",
-    "letsBuildAmazing": "Let's Build Something Amazing",
+    "readyToStart2": "¿Listo para comenzar su proyecto?",
+    "readyToTransform": "¿Listo para transformar su espacio?",
+    "readyToTransformHome": "¿Listo para transformar su hogar?",
+    "letsBuildAmazing": "Construyamos algo extraordinario",
     "ctaSubtitle": "Let's bring your renovation vision to life with our expert team.",
     "ctaSubtitle2": "Let's create something beautiful together. Start your renovation journey today.",
     "ctaSubtitle3": "Let our experienced team bring your renovation vision to life with quality craftsmanship.",
@@ -243,193 +243,193 @@
     "ctaSubtitle5": "STOP DREAMING. START BUILDING.",
     "ctaSubtitle6": "Let us transform your vision into reality with {years} years of experience and a proven track record of excellence.",
     "ctaSubtitle7": "Let us transform your vision into reality with {years} years of experience.",
-    "viewProject": "View Project",
-    "projectDetails": "Project Details",
-    "allProjects": "All Projects",
-    "noProjectsFound": "No projects found matching your criteria.",
-    "relatedProjects": "Related Projects",
-    "featuredProjects": "Featured Projects",
-    "categoryTitle": "{category} Renovation Projects",
-    "categorySubtitle": "Explore our {category} renovation portfolio and see how we transform spaces into dream homes.",
-    "openLightbox": "Click to enlarge image",
-    "viewImage": "View image",
-    "imageGallery": "Image gallery",
-    "previousImage": "Previous image",
-    "nextImage": "Next image",
-    "beforeLabel": "Before",
-    "afterLabel": "After",
-    "clickToSeeBefore": "Click to see before",
-    "clickToSeeAfter": "Click to see after",
-    "clickToToggle": "Click to toggle",
-    "externalProducts": "Products Used",
-    "noImages": "No images available",
-    "viewFullscreen": "View fullscreen",
-    "aboutService": "About our {service} services",
-    "serviceInCity": "{service} in {city}"
+    "viewProject": "Ver proyecto",
+    "projectDetails": "Detalles del proyecto",
+    "allProjects": "Todos los proyectos",
+    "noProjectsFound": "No se encontraron proyectos que coincidan con sus criterios.",
+    "relatedProjects": "Proyectos relacionados",
+    "featuredProjects": "Proyectos destacados",
+    "categoryTitle": "Proyectos de remodelación de {category}",
+    "categorySubtitle": "Explore nuestro portafolio de remodelaciones de {category} y vea cómo transformamos espacios en hogares de ensueño.",
+    "openLightbox": "Haga clic para ampliar",
+    "viewImage": "Ver imagen",
+    "imageGallery": "Galería de imágenes",
+    "previousImage": "Imagen anterior",
+    "nextImage": "Imagen siguiente",
+    "beforeLabel": "Antes",
+    "afterLabel": "Después",
+    "clickToSeeBefore": "Haga clic para ver antes",
+    "clickToSeeAfter": "Haga clic para ver después",
+    "clickToToggle": "Haga clic para alternar",
+    "externalProducts": "Productos utilizados",
+    "noImages": "Sin imágenes disponibles",
+    "viewFullscreen": "Ver pantalla completa",
+    "aboutService": "Sobre nuestros servicios de {service}",
+    "serviceInCity": "{service} en {city}"
   },
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "Ubicación",
+    "category": "Categoría",
+    "budget": "Rango de presupuesto",
+    "spaceType": "Tipo de espacio",
+    "serviceScope": "Alcance del servicio",
+    "duration": "Duración",
+    "challenge": "El desafío",
+    "solution": "Nuestra solución",
+    "close": "Cerrar",
+    "viewDetails": "Ver detalles completos"
   },
   "lightbox": {
-    "previous": "Previous image",
-    "next": "Next image",
-    "close": "Close"
+    "previous": "Imagen anterior",
+    "next": "Imagen siguiente",
+    "close": "Cerrar"
   },
   "gallery": {
     "beforeShort": "B",
     "afterShort": "A"
   },
   "filter": {
-    "allCategories": "All Categories",
-    "location": "Location",
-    "allLocations": "All Locations",
-    "spaceType": "Space Type",
-    "allSpaceTypes": "All Space Types",
-    "budget": "Budget",
-    "allBudgets": "All Budgets",
-    "showing": "Showing",
-    "projects": "{count, plural, one {project} other {projects}}",
-    "clearAll": "Clear Filters",
-    "browseByCategory": "Browse by Category",
-    "swipeToSeeMore": "Swipe to see more →",
-    "noProjectsMatch": "No projects match your filters.",
-    "pagination": "Projects pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingProjects": "Showing {start}-{end} of {total} projects",
-    "search": "Search projects..."
+    "allCategories": "Todas las categorías",
+    "location": "Ubicación",
+    "allLocations": "Todas las ubicaciones",
+    "spaceType": "Tipo de espacio",
+    "allSpaceTypes": "Todos los tipos",
+    "budget": "Presupuesto",
+    "allBudgets": "Todos los presupuestos",
+    "showing": "Mostrando",
+    "projects": "{count, plural, one {proyecto} other {proyectos}}",
+    "clearAll": "Limpiar filtros",
+    "browseByCategory": "Explorar por categoría",
+    "swipeToSeeMore": "Deslice para ver más →",
+    "noProjectsMatch": "Ningún proyecto coincide con sus filtros.",
+    "pagination": "Paginación de proyectos",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "previousPage": "Ir a la página anterior",
+    "nextPage": "Ir a la página siguiente",
+    "showingProjects": "Mostrando {start}-{end} de {total} proyectos",
+    "search": "Buscar proyectos..."
   },
   "category": {
-    "wholeHouse": "Whole House"
+    "wholeHouse": "Casa completa"
   },
   "services": {
     "kitchen": {
-      "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
+      "title": "Remodelación de cocina",
+      "description": "Remodelación completa de cocina con diseños modernos, gabinetes a medida y encimeras premium.",
       "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
     },
     "bathroom": {
-      "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
+      "title": "Remodelación de baño",
+      "description": "Transforme su baño en un retiro tipo spa con accesorios y acabados de lujo.",
       "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
     },
     "wholeHouse": {
-      "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
+      "title": "Remodelación integral",
+      "description": "Transformaciones completas del hogar, del concepto a la finalización.",
       "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
     },
     "basement": {
-      "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
+      "title": "Remodelación de sótano",
+      "description": "Convierta su sótano en un espacio funcional. 3.º puesto en Best of Vancouver.",
       "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
     },
     "cabinet": {
-      "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
+      "title": "Renovación de gabinetes",
+      "description": "Renueve su cocina con servicios profesionales de renovación de gabinetes.",
       "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
     },
     "commercial": {
-      "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
+      "title": "Remodelación comercial",
+      "description": "Remodelaciones comerciales profesionales para oficinas, comercios y restaurantes.",
       "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}"
+    "hubTitle": "Nuestros servicios",
+    "hubSubtitle": "Soluciones profesionales de remodelación para cada espacio",
+    "getQuoteForService": "Cotización para {service}"
   },
   "areas": {
-    "title": "Service Areas",
-    "subtitle": "We proudly serve communities across the Lower Mainland",
-    "servingIn": "Home Renovations in {city}",
-    "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
-    "viewProjects": "View {city} Projects",
-    "requestQuote": "Request Quote",
-    "whyChooseArea": "Why Choose Our {area} Service",
-    "areaProjects": "{area} Projects",
-    "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
-    "serviceInArea": "{service} in {area}",
-    "servicesInArea": "Our Services in {area}",
-    "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
-    "faqTitle": "Frequently Asked Questions About {area} Renovations",
-    "aboutArea": "About {area}",
-    "aboutService": "About {service} in {area}",
-    "areaServiceContent": "{service} Services in {area}",
-    "otherAreasForService": "{service} in Other Areas",
-    "otherServicesInArea": "Other Services in {area}",
-    "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
-    "learnOurProcess": "Learn About Our 5-Step Renovation Process",
-    "processLinkText": "See How We Work",
-    "blogLinkText": "Renovation Tips & Guides",
-    "serviceLinkText": "All About {service}",
-    "nearbyAreas": "We Also Serve Nearby Areas"
+    "title": "Áreas de servicio",
+    "subtitle": "Servimos con orgullo a comunidades de todo el Lower Mainland",
+    "servingIn": "Remodelaciones de hogar en {city}",
+    "cityDescription": "Servicios profesionales de remodelación disponibles en {city}. Contáctenos para una consulta gratis.",
+    "viewProjects": "Ver proyectos en {city}",
+    "requestQuote": "Solicitar cotización",
+    "whyChooseArea": "Por qué elegir nuestro servicio en {area}",
+    "areaProjects": "Proyectos en {area}",
+    "readyToStartIn": "¿Listo para comenzar su proyecto de {service} en {area}?",
+    "serviceInArea": "{service} en {area}",
+    "servicesInArea": "Nuestros servicios en {area}",
+    "readyToStartRenovation": "¿Listo para comenzar su remodelación en {area}?",
+    "faqTitle": "Preguntas frecuentes sobre remodelaciones en {area}",
+    "aboutArea": "Sobre {area}",
+    "aboutService": "Sobre {service} en {area}",
+    "areaServiceContent": "Servicios de {service} en {area}",
+    "otherAreasForService": "{service} en otras áreas",
+    "otherServicesInArea": "Otros servicios en {area}",
+    "serviceFaqTitle": "Preguntas frecuentes sobre {service} en {area}",
+    "learnOurProcess": "Conozca nuestro proceso de 5 pasos",
+    "processLinkText": "Vea cómo trabajamos",
+    "blogLinkText": "Consejos y guías de remodelación",
+    "serviceLinkText": "Todo sobre {service}",
+    "nearbyAreas": "También servimos áreas cercanas"
   },
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "Consejos y guías de remodelación en Vancouver",
+    "subtitle": "Consejos, tendencias e ideas para su proyecto de remodelación",
+    "readMore": "Leer más",
+    "publishedOn": "Publicado el",
+    "updated": "Actualizado",
+    "backToBlog": "Volver al blog",
+    "comingSoon": "El contenido completo del artículo estará disponible pronto. Mientras tanto, contáctenos con cualquier pregunta sobre remodelación.",
+    "noPosts": "Aún no hay publicaciones en el blog. Vuelva pronto para consejos e ideas de remodelación.",
+    "relatedProject": "Proyecto relacionado",
+    "pagination": "Paginación del blog",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "previousPage": "Ir a la página anterior",
+    "nextPage": "Ir a la página siguiente",
+    "showingPosts": "Mostrando {start}-{end} de {total} publicaciones",
+    "relatedServices": "Servicios relacionados",
+    "relatedAreas": "Remodelación en su área"
   },
   "contact": {
-    "title": "Get a Free Renovation Quote in Vancouver",
-    "subtitle": "Vancouver's trusted renovation company — kitchen, bathroom, basement & whole house renovations across the Lower Mainland.",
-    "thankYouTitle": "Thank You!",
-    "thankYouMessage": "Your message has been sent successfully. We'll get back to you within 24 hours.",
-    "returnHome": "Return to Home"
+    "title": "Cotización gratis de remodelación en Vancouver",
+    "subtitle": "La empresa de remodelación de confianza en Vancouver — cocinas, baños, sótanos y casas completas en todo el Lower Mainland.",
+    "thankYouTitle": "¡Gracias!",
+    "thankYouMessage": "Su mensaje ha sido enviado con éxito. Le responderemos en menos de 24 horas.",
+    "returnHome": "Volver al inicio"
   },
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Por qué elegir Reno Stars",
+    "subtitle": "Trabajar con nosotros significa más que solo completar una remodelación: se trata de hacer que todo el proceso sea claro, controlado y sin estrés.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "Construido sobre la confianza",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
+          "title": "Más de 20 años de experiencia",
           "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
+          "title": "Seguro CGL de $5M · Cobertura WCB activa",
           "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
+          "title": "Reseñas auténticas de 5 estrellas",
           "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
         },
         "team": {
-          "title": "Stable, Professional Team",
+          "title": "Equipo profesional estable",
           "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
         },
         "service": {
-          "title": "End-to-End Service",
+          "title": "Servicio integral de principio a fin",
           "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "Por qué los clientes nos eligen",
       "items": {
         "transparent": {
           "problem": "Many quotes look cheap because key items are left out.",
@@ -458,17 +458,17 @@
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "¿Listo para comenzar su proyecto?",
+      "subtitle": "Experimente la diferencia de un proceso de remodelación basado en transparencia, comunicación clara y su tranquilidad."
     }
   },
   "serviceBenefits": {
-    "freeConsultation": "Free consultation and quote",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
-    "experience": "{years}+ years experience",
-    "rating": "5-star Google rating",
-    "projectsDone": "700+ projects completed"
+    "freeConsultation": "Consulta y cotización gratis",
+    "licensedInsured": "Licenciado y completamente asegurado (CGL + WCB)",
+    "coverageAndWarranty": "Seguro CGL de $5M, cobertura WCB activa, hasta 3 años de garantía",
+    "experience": "Más de {years} años de experiencia",
+    "rating": "Calificación de 5 estrellas en Google",
+    "projectsDone": "700+ proyectos completados"
   },
   "faq": {
     "kitchen": {
@@ -521,85 +521,85 @@
     }
   },
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "Experiencia local en su área",
+    "freeOnsite": "Consulta gratis en su domicilio",
+    "competitivePricing": "Precios locales competitivos",
+    "quickResponse": "Tiempo de respuesta rápido",
+    "experience": "Más de {years} años sirviendo al Lower Mainland",
+    "licensedInsured": "Licenciado y completamente asegurado (CGL + WCB)"
   },
   "areaBenefits": {
-    "localTeam": "Local team familiar with the area",
-    "quickResponse": "Quick response times",
-    "buildingCodes": "Knowledge of local building codes",
-    "supplierRelationships": "Established supplier relationships",
-    "freeOnsite": "Free on-site consultations",
-    "competitivePricing": "Competitive local pricing"
+    "localTeam": "Equipo local familiarizado con la zona",
+    "quickResponse": "Tiempo de respuesta rápido",
+    "buildingCodes": "Conocimiento de los códigos de construcción locales",
+    "supplierRelationships": "Relaciones establecidas con proveedores",
+    "freeOnsite": "Consultas gratis en su domicilio",
+    "competitivePricing": "Precios locales competitivos"
   },
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+      "title": "Remodelaciones en Vancouver — {years}+ años, $5M asegurado | Reno Stars",
+      "description": "Remodelaciones de cocina, baño y casa completa en Metro Vancouver. {years}+ años de experiencia, seguro CGL de $5M, equipos cubiertos por WCB y 3 años de garantía. Vea más de 100 proyectos completados u obtenga su cotización gratis."
     },
     "services": {
-      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+      "title": "Servicios de remodelación en Vancouver — $5M asegurado | Reno Stars",
+      "description": "Servicios de remodelación de cocina, baño, casa completa, sótano y comercial en todo Metro Vancouver. Más de 20 años de experiencia, seguro CGL de $5M, 3 años de garantía. Cotizaciones gratis."
     },
     "projects": {
-      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
-      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+      "title": "Más de 100 proyectos en Vancouver | Antes y después | Reno Stars",
+      "description": "Vea más de 100 proyectos reales de remodelación en Metro Vancouver con fotos antes/después, costos reales y plazos. Transformaciones de cocina, baño, sótano y casa completa."
     },
     "contact": {
-      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+      "title": "Cotización gratis de remodelación en Vancouver | Contacto Reno Stars",
+      "description": "Reciba una cotización gratis de Reno Stars, la empresa de remodelación de confianza en Vancouver. Remodelación de cocina, baño, sótano y casa completa en Metro Vancouver. Llame al 778-960-7999."
     },
     "blog": {
-      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+      "title": "Consejos y guías de costos | Vancouver | Blog Reno Stars",
+      "description": "Consejos expertos de remodelación, tendencias de diseño e ideas prácticas para su proyecto en Vancouver. Lea casos de estudio y transformaciones antes y después."
     },
     "benefits": {
-      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
-      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+      "title": "Por qué elegir Reno Stars | 70+ reseñas 5★, $5M asegurado",
+      "description": "Cotizaciones transparentes, proceso estructurado, comunicación rápida y equipos estables. Más de 70 reseñas de 5 estrellas en Google, seguro CGL de $5M, cobertura WCB."
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "title": "Galería de diseño de remodelación | Proyectos reales en Vancouver | Reno Stars",
+      "description": "Explore ideas de diseño de remodelación a partir de más de 100 proyectos reales en Metro Vancouver. Inspiración para cocina, baño, sótano y casa completa."
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
-      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+      "title": "Proyectos de remodelación de {category} | Reno Stars Vancouver",
+      "description": "Explore nuestros proyectos de remodelación de {category} en Vancouver y el Lower Mainland. Vea fotos antes/después e inspiración de diseño."
     },
     "projectDetail": {
-      "titleWithLocation": "{title} in {city} | Reno Stars"
+      "titleWithLocation": "{title} en {city} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} in {area} | Reno Stars",
-      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "title": "{service} en {area} | Reno Stars",
+      "titleWithTagline": "{service} en {area} – {tagline} | Reno Stars",
+      "description": "{service} experto en {area} por Reno Stars. Más de {years} años de experiencia, seguro CGL de $5M, cobertura WCB activa, hasta 3 años de garantía. Vea proyectos locales y obtenga cotización gratis."
     },
     "areas": {
-      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
-      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+      "title": "Remodelación cerca de usted | 17 áreas de Metro Vancouver | Reno Stars",
+      "description": "Reno Stars sirve a 17 comunidades en Metro Vancouver y el Fraser Valley. Encuentre servicios de remodelación en su ciudad y obtenga una cotización gratis."
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
-      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+      "title": "Contratista de remodelación en {area} | Cocina y baño | Reno Stars",
+      "description": "Servicios profesionales de remodelación en {area}. Cocinas, baños y casas completas. Contáctenos para una cotización gratis."
     },
     "thankYou": {
-      "title": "Thank You | Reno Stars",
-      "description": "Your message has been received. We will get back to you shortly."
+      "title": "Gracias | Reno Stars",
+      "description": "Su mensaje ha sido recibido. Pronto le responderemos."
     },
     "process": {
-      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "Proceso de remodelación: 5 pasos | Reno Stars Vancouver",
+      "description": "Conozca nuestro proceso de remodelación en 5 pasos. De la consulta inicial a la entrega del proyecto, hacemos su remodelación simple y sin preocupaciones."
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
-      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+      "title": "Showroom de remodelación en Richmond BC | Consulta gratis | Reno Stars",
+      "description": "Visite nuestro showroom en Richmond BC: toque materiales reales, vea exhibiciones de cocinas y baños, obtenga una cotización gratis. Lun-Sáb 9:30 AM. Sin cita previa."
     },
     "guides": {
-      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "title": "Guías de costos de remodelación | Vancouver BC | Reno Stars",
+      "description": "Guías gratis de costos de remodelación basadas en datos reales del Greater Vancouver. Precios de cocina, baño y casa completa con presupuestos y plazos reales.",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
@@ -630,41 +630,41 @@
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+      "title": "Sobre Reno Stars | 20+ años, 70+ reseñas 5★ | Remodelación en Vancouver",
+      "description": "Conozca al equipo detrás de más de 100 remodelaciones en Metro Vancouver. Más de 20 años de experiencia, $5M asegurado, cobertura WCB, 70+ reseñas de 5 estrellas en Google. Consultas gratis."
     },
     "reviews": {
-      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
-      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+      "title": "Más de 70 reseñas de 5 estrellas | Reno Stars Vancouver",
+      "description": "Lea más de 70 reseñas verificadas de 5 estrellas de Google de propietarios reales en Vancouver. Vea por qué las familias de Metro Vancouver confían en Reno Stars."
     },
     "financing": {
-      "title": "Renovation Financing & Budget Guide | Vancouver",
-      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+      "title": "Guía de financiamiento y presupuesto | Vancouver",
+      "description": "Explore opciones de financiamiento para remodelaciones en Metro Vancouver. HELOC, préstamos personales, refinanciamiento hipotecario y consejos de presupuesto."
     },
     "beforeAfter": {
-      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
-      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+      "title": "Antes y después: remodelaciones reales en Vancouver | Reno Stars",
+      "description": "Impresionantes transformaciones antes/después de remodelaciones en Metro Vancouver. Proyectos reales, costos reales, resultados reales. Cocina, baño y casa completa."
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
-      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+      "title": "Por qué Reno Stars | $5M asegurado, garantía 3 años, 70+ reseñas",
+      "description": "Lo que diferencia a Reno Stars: seguro CGL de $5M, cobertura WCB, 3 años de garantía, equipo bilingüe, 70+ reseñas de 5 estrellas en Google. Vancouver."
     },
     "nearMe": {
-      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+      "title": "Remodelación cerca de mí | Metro Vancouver | Reno Stars",
+      "description": "Empresa de remodelación bien valorada cerca de usted en Vancouver, Richmond, Burnaby, Surrey y 14 ciudades de Metro Vancouver. 70+ reseñas 5★, 20+ años, $5M asegurado. Cotizaciones gratis."
     }
   },
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "notFound": "Página no encontrada",
+    "notFoundDescription": "La página que busca no existe o ha sido movida.",
+    "backToHome": "Volver al inicio",
+    "tryAgain": "Reintentar"
   },
   "homeFaq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Common questions about our renovation services"
+    "title": "Preguntas frecuentes",
+    "subtitle": "Preguntas comunes sobre nuestros servicios de remodelación"
   },
   "showroomPage": {
     "heroTitle": "Visit Our Showroom",
@@ -707,9 +707,9 @@
     "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
   },
   "homePartners": {
-    "title": "Our Partners",
-    "subtitle": "Trusted by industry-leading brands and suppliers",
-    "srTitle": "Our Partners"
+    "title": "Nuestros socios",
+    "subtitle": "La confianza de marcas y proveedores líderes",
+    "srTitle": "Nuestros socios"
   },
   "wholeHouse": {
     "projectOverview": "Project Overview",
