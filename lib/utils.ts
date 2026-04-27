@@ -3,12 +3,46 @@
  * @module lib/utils
  */
 
+import type { Locale, Localized } from '@/lib/types';
+import { locales, ogLocaleMap } from '@/i18n/config';
+
 // ============================================================================
 // ENVIRONMENT UTILITIES
 // ============================================================================
 
 /** Canonical site name used across metadata and structured data */
 export const SITE_NAME = 'Reno Stars';
+
+// ============================================================================
+// LOCALE UTILITIES
+// ============================================================================
+
+/**
+ * Returns the best available translation for a given locale, falling back
+ * to English when the requested locale is missing. EN is the source-of-truth
+ * and is always present on `Localized<T>` rows.
+ */
+export function pickLocale<T>(field: Localized<T>, locale: Locale): T {
+  return (field[locale] as T | undefined) ?? field.en;
+}
+
+/**
+ * Same as pickLocale but tolerant of an undefined field — returns undefined
+ * when the entire field is missing. Use for optional fields like badge/excerpt.
+ */
+export function pickLocaleOptional<T>(field: Localized<T> | undefined, locale: Locale): T | undefined {
+  if (!field) return undefined;
+  return (field[locale] as T | undefined) ?? field.en;
+}
+
+/**
+ * Returns OG-format locale codes (e.g. "zh_CN", "ja_JP") for every locale
+ * EXCEPT the current one. Used to populate openGraph.alternateLocale on
+ * page-level metadata so social/SEO crawlers know about every translation.
+ */
+export function buildAlternateLocales(currentLocale: Locale): string[] {
+  return locales.filter((l) => l !== currentLocale).map((l) => ogLocaleMap[l]);
+}
 
 /**
  * Gets the base URL for the application.
@@ -317,7 +351,7 @@ export function getRelativeTime(
  */
 export function buildAlternates(path: string, locale: string): {
   canonical: string;
-  languages: { en: string; zh: string; 'x-default': string };
+  languages: { en: string; zh: string; ja: string; ko: string; es: string; 'x-default': string };
 } {
   const baseUrl = getBaseUrl();
   return {
@@ -325,6 +359,9 @@ export function buildAlternates(path: string, locale: string): {
     languages: {
       en: `${baseUrl}/en${path}`,
       zh: `${baseUrl}/zh${path}`,
+      ja: `${baseUrl}/ja${path}`,
+      ko: `${baseUrl}/ko${path}`,
+      es: `${baseUrl}/es${path}`,
       'x-default': `${baseUrl}/en${path}`,
     },
   };

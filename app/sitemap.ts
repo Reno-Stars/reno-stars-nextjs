@@ -72,6 +72,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en${page.path}/`,
             zh: `${BASE_URL}/zh${page.path}/`,
+            ja: `${BASE_URL}/ja${page.path}/`,
+            ko: `${BASE_URL}/ko${page.path}/`,
+            es: `${BASE_URL}/es${page.path}/`,
             'x-default': `${BASE_URL}/en${page.path}/`,
           },
         },
@@ -91,6 +94,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/services/${slug}/`,
             zh: `${BASE_URL}/zh/services/${slug}/`,
+            ja: `${BASE_URL}/ja/services/${slug}/`,
+            ko: `${BASE_URL}/ko/services/${slug}/`,
+            es: `${BASE_URL}/es/services/${slug}/`,
             'x-default': `${BASE_URL}/en/services/${slug}/`,
           },
         },
@@ -111,6 +117,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             languages: {
               en: `${BASE_URL}/en/services/${slug}/${area.slug}/`,
               zh: `${BASE_URL}/zh/services/${slug}/${area.slug}/`,
+              ja: `${BASE_URL}/ja/services/${slug}/${area.slug}/`,
+              ko: `${BASE_URL}/ko/services/${slug}/${area.slug}/`,
+              es: `${BASE_URL}/es/services/${slug}/${area.slug}/`,
               'x-default': `${BASE_URL}/en/services/${slug}/${area.slug}/`,
             },
           },
@@ -131,6 +140,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/projects/${category}/`,
             zh: `${BASE_URL}/zh/projects/${category}/`,
+            ja: `${BASE_URL}/ja/projects/${category}/`,
+            ko: `${BASE_URL}/ko/projects/${category}/`,
+            es: `${BASE_URL}/es/projects/${category}/`,
             'x-default': `${BASE_URL}/en/projects/${category}/`,
           },
         },
@@ -151,6 +163,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/projects/${slug}/`,
             zh: `${BASE_URL}/zh/projects/${slug}/`,
+            ja: `${BASE_URL}/ja/projects/${slug}/`,
+            ko: `${BASE_URL}/ko/projects/${slug}/`,
+            es: `${BASE_URL}/es/projects/${slug}/`,
             'x-default': `${BASE_URL}/en/projects/${slug}/`,
           },
         },
@@ -171,6 +186,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/projects/${slug}/`,
             zh: `${BASE_URL}/zh/projects/${slug}/`,
+            ja: `${BASE_URL}/ja/projects/${slug}/`,
+            ko: `${BASE_URL}/ko/projects/${slug}/`,
+            es: `${BASE_URL}/es/projects/${slug}/`,
             'x-default': `${BASE_URL}/en/projects/${slug}/`,
           },
         },
@@ -190,6 +208,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/blog/${slug}/`,
             zh: `${BASE_URL}/zh/blog/${slug}/`,
+            ja: `${BASE_URL}/ja/blog/${slug}/`,
+            ko: `${BASE_URL}/ko/blog/${slug}/`,
+            es: `${BASE_URL}/es/blog/${slug}/`,
             'x-default': `${BASE_URL}/en/blog/${slug}/`,
           },
         },
@@ -209,6 +230,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           languages: {
             en: `${BASE_URL}/en/areas/${area.slug}/`,
             zh: `${BASE_URL}/zh/areas/${area.slug}/`,
+            ja: `${BASE_URL}/ja/areas/${area.slug}/`,
+            ko: `${BASE_URL}/ko/areas/${area.slug}/`,
+            es: `${BASE_URL}/es/areas/${area.slug}/`,
             'x-default': `${BASE_URL}/en/areas/${area.slug}/`,
           },
         },

@@ -5,7 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
@@ -125,7 +125,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/areas/${city}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
-      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+      alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'website',
       images: [{ url: siteImages.hero, width: 1200, height: 630, alt: localizedArea.name }],
     },
@@ -174,8 +174,8 @@ export default async function Page({ params }: PageProps) {
 
   // Build localized FAQ data for structured data
   const localizedFaqs = areaFaqs.map((faq) => ({
-    question: faq.question[locale as Locale],
-    answer: faq.answer[locale as Locale],
+    question: pickLocale(faq.question, locale as Locale),
+    answer: pickLocale(faq.answer, locale as Locale),
   }));
 
   return (

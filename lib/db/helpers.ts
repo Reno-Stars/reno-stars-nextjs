@@ -17,7 +17,9 @@ export function mergeServiceScopes(projects: Project[]): Localized<string[]> {
   for (const p of projects) {
     if (p.service_scope) {
       p.service_scope.en.forEach((s) => scopesEn.add(s));
-      p.service_scope.zh.forEach((s) => scopesZh.add(s));
+      // ZH/JA/KO/ES are optional on the localized JSONB; fall back to EN entries
+      // so the aggregated set still surfaces every scope.
+      (p.service_scope.zh ?? p.service_scope.en).forEach((s) => scopesZh.add(s));
     }
   }
   return {

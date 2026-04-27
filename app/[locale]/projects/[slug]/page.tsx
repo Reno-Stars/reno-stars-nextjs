@@ -7,7 +7,7 @@ import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
 import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       return { title: 'Category Not Found', robots: { index: false, follow: false } };
     }
 
-    const categoryName = categoryData[locale as Locale];
+    const categoryName = categoryData[locale as 'en' | 'zh'] ?? categoryData.en;
     const t = await getTranslations({ locale, namespace: 'metadata.projectCategory' });
 
     const title = t('title', { category: categoryName });
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
-        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+        alternateLocale: buildAlternateLocales(locale as Locale),
         type: 'website',
         images: [{ url: siteImages.hero, width: 1200, height: 630, alt: categoryName }],
       },
@@ -114,7 +114,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
-        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+        alternateLocale: buildAlternateLocales(locale as Locale),
         type: 'article',
         images: [{ url: project.hero_image, width: 1200, height: 630, alt: localizedProject.title }],
       },
@@ -134,16 +134,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // Use dedicated SEO fields, fallback to location-enriched title if city exists
     const siteFallbackTitle = siteData.location_city
       ? (locale === 'zh'
-        ? `${siteData.location_city}${siteData.title[locale as Locale]} | Reno Stars`
-        : `${siteData.title[locale as Locale]} in ${siteData.location_city} | Reno Stars`)
-      : `${siteData.title[locale as Locale]} | ${SITE_NAME}`;
-    const metaTitle = siteData.meta_title?.[locale as Locale] ?? siteFallbackTitle;
-    const metaDescription = siteData.meta_description?.[locale as Locale] ?? truncateMetaDescription(siteData.description[locale as Locale]);
+        ? `${siteData.location_city}${pickLocale(siteData.title, locale as Locale)} | Reno Stars`
+        : `${pickLocale(siteData.title, locale as Locale)} in ${siteData.location_city} | Reno Stars`)
+      : `${pickLocale(siteData.title, locale as Locale)} | ${SITE_NAME}`;
+    const metaTitle = pickLocaleOptional(siteData.meta_title, locale as Locale) ?? siteFallbackTitle;
+    const metaDescription = pickLocaleOptional(siteData.meta_description, locale as Locale) ?? truncateMetaDescription(pickLocale(siteData.description, locale as Locale));
 
     return {
       title: metaTitle,
       description: metaDescription,
-      keywords: siteData.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
+      keywords: pickLocaleOptional(siteData.seo_keywords, locale as Locale)?.split(',').map(k => k.trim()).filter(Boolean),
       alternates: buildAlternates(`/projects/${slug}/`, locale),
       openGraph: {
         title: metaTitle,
@@ -151,7 +151,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `${baseUrl}/${locale}/projects/${slug}/`,
         siteName: SITE_NAME,
         locale: ogLocaleMap[locale as Locale],
-        alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+        alternateLocale: buildAlternateLocales(locale as Locale),
         type: 'article',
         images: siteData.hero_image
           ? [{ url: siteData.hero_image, width: 1200, height: 630, alt: siteData.title[locale as Locale] }]
@@ -188,7 +188,7 @@ export default async function Page({ params }: PageProps) {
   if (await isCategory(slug)) {
     const categoryData = await findCategoryBySlug(slug);
     if (!categoryData) notFound();
-    const categoryName = categoryData[locale as Locale];
+    const categoryName = categoryData[locale as 'en' | 'zh'] ?? categoryData.en;
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
@@ -216,7 +216,7 @@ export default async function Page({ params }: PageProps) {
 
   if (project) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
-    const serviceTypeName = (project.service_type && serviceTypeMap[project.service_type]?.[locale as Locale]) || project.service_type || '';
+    const serviceTypeName = (project.service_type && (serviceTypeMap[project.service_type]?.[locale as 'en' | 'zh'] ?? serviceTypeMap[project.service_type]?.en)) || project.service_type || '';
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
@@ -224,7 +224,7 @@ export default async function Page({ params }: PageProps) {
       ...(project.service_type && serviceTypeName
         ? [{ name: serviceTypeName, url: `/${locale}/projects/${project.service_type}/` }]
         : []),
-      { name: project.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+      { name: pickLocale(project.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
     return (
@@ -259,7 +259,7 @@ export default async function Page({ params }: PageProps) {
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
       { name: t('projects'), url: `/${locale}/projects/` },
-      { name: siteData.title[locale as Locale], url: `/${locale}/projects/${slug}/` },
+      { name: pickLocale(siteData.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
     return (

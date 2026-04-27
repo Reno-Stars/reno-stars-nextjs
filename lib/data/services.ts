@@ -1,15 +1,16 @@
 import type { Service, Locale, LocalizedService } from '../types';
+import { pickLocale, pickLocaleOptional } from '../utils';
 
 export function getLocalizedService(service: Service, locale: Locale): LocalizedService {
   return {
     slug: service.slug,
-    title: service.title[locale],
-    description: service.description[locale],
-    long_description: service.long_description?.[locale],
+    title: pickLocale(service.title, locale),
+    description: pickLocale(service.description, locale),
+    long_description: pickLocaleOptional(service.long_description, locale),
     icon: service.icon,
     image: service.image,
-    tags: service.tags?.[locale],
-    benefits: service.benefits?.[locale],
+    tags: pickLocaleOptional(service.tags, locale),
+    benefits: pickLocaleOptional(service.benefits, locale),
   };
 }
 

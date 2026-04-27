@@ -1,5 +1,6 @@
 import type { Locale, BlogPost } from '../types';
 import { getAssetUrl } from '../storage';
+import { pickLocale, pickLocaleOptional } from '../utils';
 
 // Re-export types
 export type {
@@ -73,21 +74,21 @@ export function getLocalizedBlogPost(post: BlogPost, locale: Locale): LocalizedB
     const rp = post.related_project;
     localizedRelatedProject = {
       slug: rp.slug,
-      title: rp.title[locale],
+      title: pickLocale(rp.title, locale),
       hero_image: rp.hero_image,
       external_products: rp.external_products?.map((ep) => ({
         url: ep.url,
         image_url: ep.image_url,
-        label: ep.label[locale],
+        label: pickLocale(ep.label, locale),
       })),
     };
   }
 
   return {
     slug: post.slug,
-    title: post.title[locale],
-    excerpt: post.excerpt?.[locale],
-    content: post.content?.[locale],
+    title: pickLocale(post.title, locale),
+    excerpt: pickLocaleOptional(post.excerpt, locale),
+    content: pickLocaleOptional(post.content, locale),
     published_at: post.published_at,
     url: post.url,
     related_project: localizedRelatedProject,

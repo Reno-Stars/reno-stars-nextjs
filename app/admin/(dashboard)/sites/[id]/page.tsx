@@ -79,7 +79,7 @@ export default async function EditSitePage({ params }: PageProps) {
         projects={projectsWithDetails}
         cities={cities}
         allSites={allSiteRows}
-        services={dbServices.map((s) => ({ slug: s.slug, titleEn: s.title.en, titleZh: s.title.zh }))}
+        services={dbServices.map((s) => ({ slug: s.slug, titleEn: s.title.en, titleZh: s.title.zh ?? s.title.en }))}
       />
     </div>
   );

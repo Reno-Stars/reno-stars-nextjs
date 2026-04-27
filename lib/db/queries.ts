@@ -173,7 +173,7 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: st
   const map: Record<string, { en: string; zh: string }> = {};
   for (const s of services) {
     if (s.isProjectType === false) continue;
-    map[s.slug] = { en: s.title.en, zh: s.title.zh };
+    map[s.slug] = { en: s.title.en, zh: s.title.zh ?? s.title.en };
   }
   return map;
 });

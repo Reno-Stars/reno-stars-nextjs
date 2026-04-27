@@ -3,11 +3,17 @@
  * @module lib/types
  */
 
-/** Supported locales for internationalization */
-export type Locale = 'en' | 'zh';
+/** Supported locales for internationalization. Source of truth is i18n/config.ts. */
+export type Locale = 'en' | 'zh' | 'ja' | 'ko' | 'es';
 
-/** Helper type for bilingual content */
-export type Localized<T> = Record<Locale, T>;
+/**
+ * Helper type for multilingual content. EN is required (source-of-truth);
+ * other locales are optional and fall back to EN at read time via pickLocale().
+ * Existing legacy code that does `field.zh` directly continues to work because
+ * all current rows have ZH; new locales (ja/ko/es) start as undefined and get
+ * back-filled by translation runs.
+ */
+export type Localized<T> = { en: T } & Partial<Record<Exclude<Locale, 'en'>, T>>;
 
 // ============================================================================
 // IMAGE PAIR TYPES

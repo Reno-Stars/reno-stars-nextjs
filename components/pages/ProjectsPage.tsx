@@ -8,6 +8,7 @@ import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, SiteWithProjects, DisplayProject, LocalizedImagePair } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
+import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 // categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
 import ProjectCard from '@/components/ProjectCard';
@@ -88,7 +89,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
 
         // Collect all images: hero + site image pairs + all aggregated images from child projects
         const allImages: GalleryImage[] = [];
-        const siteTitle = site.title[locale];
+        const siteTitle = pickLocale(site.title, locale);
 
         // Add hero image first
         allImages.push({ src: heroImage, alt: siteTitle });
@@ -101,15 +102,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           for (const pair of site.image_pairs) {
             combinedImagePairs.push({
               beforeImage: pair.beforeImage
-                ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+                ? { src: pair.beforeImage.src, alt: pickLocale(pair.beforeImage.alt, locale) }
                 : undefined,
               afterImage: pair.afterImage
-                ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+                ? { src: pair.afterImage.src, alt: pickLocale(pair.afterImage.alt, locale) }
                 : undefined,
               beforeVideo: pair.beforeVideo,
               afterVideo: pair.afterVideo,
-              title: pair.title?.[locale],
-              caption: pair.caption?.[locale],
+              title: pickLocaleOptional(pair.title, locale),
+              caption: pickLocaleOptional(pair.caption, locale),
               photographerCredit: pair.photographerCredit,
               keywords: pair.keywords,
             });
@@ -123,15 +124,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               for (const pair of proj.image_pairs) {
                 combinedImagePairs.push({
                   beforeImage: pair.beforeImage
-                    ? { src: pair.beforeImage.src, alt: pair.beforeImage.alt[locale] }
+                    ? { src: pair.beforeImage.src, alt: pickLocale(pair.beforeImage.alt, locale) }
                     : undefined,
                   afterImage: pair.afterImage
-                    ? { src: pair.afterImage.src, alt: pair.afterImage.alt[locale] }
+                    ? { src: pair.afterImage.src, alt: pickLocale(pair.afterImage.alt, locale) }
                     : undefined,
                   beforeVideo: pair.beforeVideo,
                   afterVideo: pair.afterVideo,
-                  title: pair.title?.[locale],
-                  caption: pair.caption?.[locale],
+                  title: pickLocaleOptional(pair.title, locale),
+                  caption: pickLocaleOptional(pair.caption, locale),
                   photographerCredit: pair.photographerCredit,
                   keywords: pair.keywords,
                 });
@@ -149,8 +150,8 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         acc.push({
           id: site.id,
           slug: site.slug,
-          title: site.title[locale],
-          description: site.description[locale],
+          title: pickLocale(site.title, locale),
+          description: pickLocale(site.description, locale),
           category: wholeHouseCategory,
           // Sites don't have a service_type - they're collections of room projects
           location_city: site.location_city || '',
@@ -159,20 +160,20 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           images: allImages,
           image_pairs: combinedImagePairs,
           featured: site.featured,
-          badge: site.badge?.[locale],
-          space_type: site.space_type?.[locale],
+          badge: pickLocaleOptional(site.badge, locale),
+          space_type: pickLocaleOptional(site.space_type, locale),
           po_number: site.po_number,
           isSiteProject: true,
           projectCount: site.project_count ?? site.projects?.length ?? 0,
           // Site-specific data
-          childAreas: site.projects?.map((p) => p.category[locale]) ?? [],
+          childAreas: site.projects?.map((p) => pickLocale(p.category, locale)) ?? [],
           totalBudget: site.budget_range,
-          totalDuration: site.duration?.[locale],
-          allServiceScopes: site.aggregated?.allServiceScopes?.[locale] ?? [],
+          totalDuration: pickLocaleOptional(site.duration, locale),
+          allServiceScopes: site.aggregated?.allServiceScopes ? pickLocale(site.aggregated.allServiceScopes, locale) : [],
           allExternalProducts: site.aggregated?.allExternalProducts?.map((ep) => ({
             url: ep.url,
             image_url: ep.image_url,
-            label: ep.label[locale],
+            label: pickLocale(ep.label, locale),
           })) ?? [],
         });
         return acc;
@@ -370,7 +371,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
 
   const categoryOptions = useMemo(() => categories.map((c) => ({
     value: c.serviceType,
-    label: c[locale],
+    label: c[locale as 'en' | 'zh'] ?? c.en,
   })), [categories, locale]);
 
   const locationOptions = useMemo(() => [
@@ -521,7 +522,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                       {firstProject && (
                         <OptimizedImage
                           src={firstProject.hero_image}
-                          alt={category[locale]}
+                          alt={(category[locale as 'en' | 'zh'] ?? category.en)}
                           fill
                           sizes="(max-width: 640px) 180px, 220px"
                           className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
@@ -533,7 +534,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                       />
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
                         <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
-                          {category[locale]}
+                          {(category[locale as 'en' | 'zh'] ?? category.en)}
                         </span>
                         <span className="text-sm text-white/90 block">
                           {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}

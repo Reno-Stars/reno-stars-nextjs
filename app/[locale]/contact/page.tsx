@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
 import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `${baseUrl}/${locale}/contact/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
-      alternateLocale: locale === 'en' ? ['zh_CN'] : ['en_US'],
+      alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'website',
       images: [{ url: ogImage, width: 1200, height: 630, alt: t('title') }],
     },
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const [company, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
-  const areaNames = areas.map((a) => a.name[locale as Locale]);
+  const areaNames = areas.map((a) => pickLocale(a.name, locale as Locale));
 
   return (
     <>

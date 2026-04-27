@@ -57,7 +57,7 @@ interface AboutPageProps {
 
 export default function AboutPage({ locale, company, badges }: AboutPageProps) {
   const t = useTranslations('aboutPage');
-  const localize = (obj: { en: string; zh: string }) => obj[locale] ?? obj.en;
+  const localize = (obj: { en: string; zh: string }) => obj[locale as 'en' | 'zh'] ?? obj.en;
 
   const stats = useMemo(() => [
     { value: company.yearsExperience + '+', labelKey: 'stats.years', icon: Clock },
