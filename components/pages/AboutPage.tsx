@@ -52,12 +52,13 @@ const SERVICE_AREA_CITIES = [
 interface AboutPageProps {
   locale: Locale;
   company: Company;
-  badges: { en: string; zh: string }[];
+  badges: import('@/lib/types').Localized<string>[];
 }
 
 export default function AboutPage({ locale, company, badges }: AboutPageProps) {
   const t = useTranslations('aboutPage');
-  const localize = (obj: { en: string; zh: string }) => obj[locale as 'en' | 'zh'] ?? obj.en;
+  const localize = (obj: import('@/lib/types').Localized<string>) =>
+    (obj[locale] as string | undefined) ?? obj.en;
 
   const stats = useMemo(() => [
     { value: company.yearsExperience + '+', labelKey: 'stats.years', icon: Clock },

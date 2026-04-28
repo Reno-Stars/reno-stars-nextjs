@@ -28,6 +28,38 @@ import {
 } from './schema';
 import { getAssetUrl, getOptionalAssetUrl } from '../storage';
 import { WHOLE_HOUSE_CATEGORY } from '../data/services';
+import { buildLocalized, buildLocalizedOptional } from '../utils';
+
+/**
+ * For per-row arrays (tags, benefits, highlights), build a Localized<string[]>
+ * by reading each row's localizations jsonb. Items without a translation in
+ * the requested locale fall back to the EN value, so locale arrays are always
+ * the same length as the source array.
+ */
+function buildLocalizedArray<R extends { localizations?: unknown }>(
+  rows: R[],
+  enField: keyof R,
+  zhField: keyof R,
+  jsonbBaseName: string,
+): { en: string[]; zh: string[]; ja?: string[]; ko?: string[]; es?: string[] } {
+  const result: { en: string[]; zh: string[]; ja?: string[]; ko?: string[]; es?: string[] } = {
+    en: rows.map((r) => r[enField] as string),
+    zh: rows.map((r) => r[zhField] as string),
+  };
+  for (const [suffix, key] of [['Ja', 'ja'] as const, ['Ko', 'ko'] as const, ['Es', 'es'] as const]) {
+    const arr = rows.map((r) => {
+      const loc = r.localizations as Record<string, unknown> | null | undefined;
+      const v = loc?.[`${jsonbBaseName}${suffix}`];
+      return typeof v === 'string' && v ? v : (r[enField] as string);
+    });
+    // Only include the locale if at least one translation exists (otherwise
+    // pickLocale would already fall back to en — no need to duplicate).
+    if (arr.some((v, i) => v !== rows[i][enField])) {
+      result[key] = arr;
+    }
+  }
+  return result;
+}
 
 import { mergeServiceScopes, collectAllImages, collectAllExternalProducts } from './helpers';
 import type { Company, SocialLink, Service, Project, ServiceArea, BlogPost, BlogRelatedProject, DesignItem, Faq, Site, SiteWithProjects, ImagePair, Partner } from '../types';
@@ -144,19 +176,16 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
     const benefits = sortByDisplayOrder(benefitsByService.get(row.id) ?? []);
     return {
       slug: row.slug,
-      title: { en: row.titleEn, zh: row.titleZh },
-      description: { en: row.descriptionEn, zh: row.descriptionZh },
-      long_description:
-        row.longDescriptionEn && row.longDescriptionZh
-          ? { en: row.longDescriptionEn, zh: row.longDescriptionZh }
-          : undefined,
+      title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+      description: buildLocalized('description', row.descriptionEn, row.descriptionZh, row.localizations),
+      long_description: buildLocalizedOptional('longDescription', row.longDescriptionEn, row.longDescriptionZh, row.localizations),
       icon: getOptionalAssetUrl(row.iconUrl),
       image: getOptionalAssetUrl(row.imageUrl),
       tags: tags.length > 0
-        ? { en: tags.map((t) => t.tagEn), zh: tags.map((t) => t.tagZh) }
+        ? buildLocalizedArray(tags, 'tagEn', 'tagZh', 'tag')
         : undefined,
       benefits: benefits.length > 0
-        ? { en: benefits.map((b) => b.benefitEn), zh: benefits.map((b) => b.benefitZh) }
+        ? buildLocalizedArray(benefits, 'benefitEn', 'benefitZh', 'benefit')
         : undefined,
       showOnServicesPage: row.showOnServicesPage,
       isProjectType: row.isProjectType,
@@ -719,27 +748,15 @@ export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
     return {
       id: row.id,
       slug: row.slug,
-      name: { en: row.nameEn, zh: row.nameZh },
-      description:
-        row.descriptionEn && row.descriptionZh
-          ? { en: row.descriptionEn, zh: row.descriptionZh }
-          : undefined,
-      content:
-        row.contentEn || row.contentZh
-          ? { en: row.contentEn ?? '', zh: row.contentZh ?? '' }
-          : undefined,
+      name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
+      description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
+      content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
       highlights:
         highlightsEn || highlightsZh
           ? { en: highlightsEn ?? [], zh: highlightsZh ?? [] }
           : undefined,
-      metaTitle:
-        row.metaTitleEn || row.metaTitleZh
-          ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
-          : undefined,
-      metaDescription:
-        row.metaDescriptionEn || row.metaDescriptionZh
-          ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
-          : undefined,
+      metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
+      metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
     };
   });
 });
@@ -934,17 +951,16 @@ export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
 // ============================================================================
 
 /** Fetch active trust badges ordered by display_order. */
-export const getTrustBadgesFromDb = cache(async (): Promise<{ en: string; zh: string }[]> => {
+export const getTrustBadgesFromDb = cache(async (): Promise<import('../types').Localized<string>[]> => {
   const rows = await db
     .select()
     .from(trustBadgesTable)
     .where(eq(trustBadgesTable.isActive, true))
     .orderBy(asc(trustBadgesTable.displayOrder));
 
-  return rows.map((row: typeof trustBadgesTable.$inferSelect) => ({
-    en: row.badgeEn,
-    zh: row.badgeZh,
-  }));
+  return rows.map((row: typeof trustBadgesTable.$inferSelect) =>
+    buildLocalized('badge', row.badgeEn, row.badgeZh, row.localizations)
+  );
 });
 
 
@@ -959,11 +975,23 @@ async function mapFaqRows(rows: (typeof faqsTable.$inferSelect)[]): Promise<Faq[
   const company = await getCompanyFromDb();
   const replaceYears = (text: string) =>
     text.replace(/\{yearsExperience\}/g, company.yearsExperience);
-  return rows.map((row) => ({
-    id: row.id,
-    question: { en: row.questionEn, zh: row.questionZh },
-    answer: { en: replaceYears(row.answerEn), zh: replaceYears(row.answerZh) },
-  }));
+  return rows.map((row) => {
+    const question = buildLocalized('question', row.questionEn, row.questionZh, row.localizations);
+    const answerRaw = buildLocalized('answer', row.answerEn, row.answerZh, row.localizations);
+    // Apply {yearsExperience} substitution across all locale variants
+    const answer: import('../types').Localized<string> = {
+      en: replaceYears(answerRaw.en),
+    };
+    if (answerRaw.zh !== undefined) answer.zh = replaceYears(answerRaw.zh);
+    if (answerRaw.ja !== undefined) answer.ja = replaceYears(answerRaw.ja);
+    if (answerRaw.ko !== undefined) answer.ko = replaceYears(answerRaw.ko);
+    if (answerRaw.es !== undefined) answer.es = replaceYears(answerRaw.es);
+    return {
+      id: row.id,
+      question,
+      answer,
+    };
+  });
 }
 
 /** Fetch active global FAQs (no area scope) ordered by display_order. */
