@@ -80,6 +80,7 @@ export const services = pgTable(
     isProjectType: boolean('is_project_type').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [uniqueIndex('services_slug_idx').on(table.slug)]
 );
@@ -105,6 +106,7 @@ export const serviceTags = pgTable(
     tagEn: varchar('tag_en', { length: 200 }).notNull(),
     tagZh: varchar('tag_zh', { length: 200 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [index('service_tags_service_id_idx').on(table.serviceId)]
 );
@@ -131,6 +133,7 @@ export const serviceBenefits = pgTable(
     benefitEn: varchar('benefit_en', { length: 200 }).notNull(),
     benefitZh: varchar('benefit_zh', { length: 200 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [index('service_benefits_service_id_idx').on(table.serviceId)]
 );
@@ -175,6 +178,7 @@ export const serviceAreas = pgTable(
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [uniqueIndex('service_areas_slug_idx').on(table.slug)]
 );
@@ -247,6 +251,7 @@ export const projectSites = pgTable(
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     uniqueIndex('project_sites_slug_idx').on(table.slug),
@@ -299,6 +304,7 @@ export const siteImagePairs = pgTable(
     // Display
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     index('site_image_pairs_site_id_idx').on(table.siteId),
@@ -332,6 +338,7 @@ export const siteExternalProducts = pgTable(
     labelZh: varchar('label_zh', { length: 200 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [index('site_external_products_site_id_idx').on(table.siteId)]
 );
@@ -422,6 +429,7 @@ export const projects = pgTable(
     publishedAt: timestamp('published_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     uniqueIndex('projects_slug_idx').on(table.slug),
@@ -485,6 +493,7 @@ export const projectImagePairs = pgTable(
     // Display
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     index('project_image_pairs_project_id_idx').on(table.projectId),
@@ -515,6 +524,7 @@ export const projectScopes = pgTable(
     scopeEn: varchar('scope_en', { length: 100 }).notNull(),
     scopeZh: varchar('scope_zh', { length: 100 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [index('project_scopes_project_id_idx').on(table.projectId)]
 );
@@ -544,6 +554,7 @@ export const projectExternalProducts = pgTable(
     labelZh: varchar('label_zh', { length: 200 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [index('project_external_products_project_id_idx').on(table.projectId)]
 );
@@ -593,6 +604,7 @@ export const blogPosts = pgTable(
     }),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     uniqueIndex('blog_posts_slug_idx').on(table.slug),
@@ -633,6 +645,7 @@ export const testimonials = pgTable(
     isFeatured: boolean('is_featured').default(false).notNull(),
     verified: boolean('verified').default(false).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     index('testimonials_featured_idx').on(table.isFeatured),
@@ -664,6 +677,7 @@ export const designs = pgTable(
     displayOrder: integer('display_order').default(0).notNull(),
     isPublished: boolean('is_published').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     uniqueIndex('designs_image_url_idx').on(table.imageUrl),
@@ -750,6 +764,7 @@ export const trustBadges = pgTable(
     badgeZh: varchar('badge_zh', { length: 100 }).notNull(),
     displayOrder: integer('display_order').default(0).notNull(),
     isActive: boolean('is_active').default(true).notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [uniqueIndex('trust_badges_badge_en_idx').on(table.badgeEn)]
 );
@@ -773,6 +788,7 @@ export const faqs = pgTable(
     isActive: boolean('is_active').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     index('faqs_active_order_idx').on(table.isActive, table.displayOrder),
@@ -881,6 +897,7 @@ export const partners = pgTable(
     isHiddenVisually: boolean('is_hidden_visually').default(false).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   },
   (table) => [
     uniqueIndex('partners_name_en_idx').on(table.nameEn),

@@ -36,6 +36,49 @@ export function pickLocaleOptional<T>(field: Localized<T> | undefined, locale: L
 }
 
 /**
+ * Build a `Localized<string>` shape from a DB row's en/zh columns plus the
+ * `localizations` jsonb that holds ja/ko/es overrides as `${field}Ja`,
+ * `${field}Ko`, `${field}Es`.
+ *
+ * Example: a `projects` row has `title_en`, `title_zh`, and a localizations
+ * jsonb like `{ titleJa: '...', titleKo: '...' }`. Calling
+ * `buildLocalized('title', row.titleEn, row.titleZh, row.localizations)`
+ * returns `{ en, zh, ja, ko }` with es absent (so pickLocale falls back
+ * to en for /es/).
+ */
+export function buildLocalized(
+  fieldName: string,
+  en: string,
+  zh: string,
+  localizations: Record<string, unknown> | null | undefined,
+): Localized<string> {
+  const result: Localized<string> = { en, zh };
+  if (localizations && typeof localizations === 'object') {
+    const ja = localizations[`${fieldName}Ja`];
+    const ko = localizations[`${fieldName}Ko`];
+    const es = localizations[`${fieldName}Es`];
+    if (typeof ja === 'string' && ja) result.ja = ja;
+    if (typeof ko === 'string' && ko) result.ko = ko;
+    if (typeof es === 'string' && es) result.es = es;
+  }
+  return result;
+}
+
+/**
+ * Same as buildLocalized but for optional fields where en/zh may be null.
+ * Returns undefined when neither en nor zh is present.
+ */
+export function buildLocalizedOptional(
+  fieldName: string,
+  en: string | null | undefined,
+  zh: string | null | undefined,
+  localizations: Record<string, unknown> | null | undefined,
+): Localized<string> | undefined {
+  if (!en || !zh) return undefined;
+  return buildLocalized(fieldName, en, zh, localizations);
+}
+
+/**
  * Returns OG-format locale codes (e.g. "zh_CN", "ja_JP") for every locale
  * EXCEPT the current one. Used to populate openGraph.alternateLocale on
  * page-level metadata so social/SEO crawlers know about every translation.
