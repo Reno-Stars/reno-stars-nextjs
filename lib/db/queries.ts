@@ -1016,6 +1016,8 @@ export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<P
 
 /** Lightweight kitchen project data for the cost guide page. */
 export interface KitchenGuideProject {
+  /** Legacy flat fields kept for unchanged consumers — read .title/.duration/
+   *  .spaceType (Localized<string>) when rendering across all 5 locales. */
   titleEn: string;
   titleZh: string;
   locationCity: string;
@@ -1025,6 +1027,11 @@ export interface KitchenGuideProject {
   spaceTypeEn: string | null;
   spaceTypeZh: string | null;
   slug: string;
+  /** Localized<string> shapes built from row.localizations jsonb so guide pages
+   *  on /ja/, /ko/, /es/ can render native titles via pickLocale. */
+  title: import('../types').Localized<string>;
+  duration?: import('../types').Localized<string>;
+  spaceType?: import('../types').Localized<string>;
 }
 
 export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
@@ -1038,6 +1045,7 @@ export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuidePr
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
       spaceTypeZh: projectsTable.spaceTypeZh,
+      localizations: projectsTable.localizations,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
@@ -1047,7 +1055,16 @@ export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuidePr
     ))
     .orderBy(desc(projectsTable.createdAt));
 
-  return rows;
+  return rows.map((r: typeof rows[number]) => ({
+    ...r,
+    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+    duration: r.durationEn && r.durationZh
+      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+    spaceType: r.spaceTypeEn && r.spaceTypeZh
+      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+  }));
 });
 
 
@@ -1062,6 +1079,7 @@ export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideP
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
       spaceTypeZh: projectsTable.spaceTypeZh,
+      localizations: projectsTable.localizations,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
@@ -1071,7 +1089,16 @@ export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideP
     ))
     .orderBy(desc(projectsTable.createdAt));
 
-  return rows;
+  return rows.map((r: typeof rows[number]) => ({
+    ...r,
+    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+    duration: r.durationEn && r.durationZh
+      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+    spaceType: r.spaceTypeEn && r.spaceTypeZh
+      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+  }));
 });
 
 
@@ -1094,7 +1121,16 @@ export const getWholeHouseProjectsForGuide = cache(async (): Promise<KitchenGuid
     ))
     .orderBy(desc(projectsTable.createdAt));
 
-  return rows;
+  return rows.map((r: typeof rows[number]) => ({
+    ...r,
+    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+    duration: r.durationEn && r.durationZh
+      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+    spaceType: r.spaceTypeEn && r.spaceTypeZh
+      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+  }));
 });
 
 // ============================================================================
@@ -1343,6 +1379,7 @@ export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuid
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
       spaceTypeZh: projectsTable.spaceTypeZh,
+      localizations: projectsTable.localizations,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
@@ -1352,7 +1389,16 @@ export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuid
     ))
     .orderBy(desc(projectsTable.createdAt));
 
-  return rows;
+  return rows.map((r: typeof rows[number]) => ({
+    ...r,
+    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+    duration: r.durationEn && r.durationZh
+      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+    spaceType: r.spaceTypeEn && r.spaceTypeZh
+      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+  }));
 });
 
 
@@ -1368,6 +1414,7 @@ export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuidePr
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
       spaceTypeZh: projectsTable.spaceTypeZh,
+      localizations: projectsTable.localizations,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
@@ -1380,7 +1427,16 @@ export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuidePr
     ))
     .orderBy(desc(projectsTable.createdAt));
 
-  return rows;
+  return rows.map((r: typeof rows[number]) => ({
+    ...r,
+    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+    duration: r.durationEn && r.durationZh
+      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+    spaceType: r.spaceTypeEn && r.spaceTypeZh
+      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+      : undefined,
+  }));
 });
 
 // ============================================================================

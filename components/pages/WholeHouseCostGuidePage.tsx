@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { pickLocale } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import {
@@ -150,7 +151,7 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
                       style={{ backgroundColor: CARD, ...neu }}
                     >
                       <span className="font-semibold flex-1 min-w-[200px]" style={{ color: TEXT }}>
-                        {locale === 'zh' ? project.titleZh : project.titleEn}
+                        {pickLocale(project.title, locale)}
                       </span>
                       {project.budgetRange && (
                         <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
@@ -159,7 +160,7 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
                       )}
                       {project.durationEn && (
                         <span className="text-sm flex items-center gap-1" style={{ color: TEXT_MUTED }}>
-                          <Clock size={14} /> {locale === 'zh' ? project.durationZh : project.durationEn}
+                          <Clock size={14} /> {project.duration ? pickLocale(project.duration, locale) : null}
                         </span>
                       )}
                       {project.spaceTypeEn && (
