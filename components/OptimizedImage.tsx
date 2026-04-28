@@ -185,7 +185,13 @@ export default function OptimizedImage({
         aria-hidden="true"
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
-        fetchPriority="low"
+        // Match the full image's fetch priority so the thumb arrives BEFORE
+        // the full image and acts as a real LQIP. Earlier this was "low"
+        // which (with default-priority full image) put the thumb behind
+        // the full image in the network queue and defeated the placeholder.
+        // loading="lazy" already prevents React 19's auto-preload, so we
+        // don't need fetchPriority="low" to suppress that.
+        fetchPriority={priority ? 'high' : 'auto'}
         className={combinedClassName}
         style={{
           ...style,

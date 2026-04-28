@@ -821,7 +821,8 @@
       "kitchen": "주방 리노베이션 비용",
       "wholeHouse": "전체 주택 리노베이션 비용",
       "basement": "지하실 리노베이션 비용",
-      "bathroom": "평균 욕실 리노베이션 비용"
+      "bathroom": "평균 욕실 리노베이션 비용",
+      "bathroomGuide": "욕실 리노베이션 비용"
     }
   }
 }

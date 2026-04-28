@@ -43,7 +43,10 @@ export function buildProcessedUrl(src: string, width: number): string {
   try {
     const parsed = new URL(src);
     const pathWithoutExt = parsed.pathname.replace(/\.[^.]+$/, '');
-    const processedPath = pathWithoutExt.replace('/uploads/admin/', '/uploads/processed/');
+    // Both /uploads/admin/ and /uploads/designs/ get processed variants
+    // written to /uploads/processed/. Earlier this only rewrote admin paths,
+    // so design images 404'd with no fallback.
+    const processedPath = pathWithoutExt.replace(/\/uploads\/(admin|designs)\//, '/uploads/processed/');
     return `${parsed.origin}${processedPath}_${width}.webp`;
   } catch {
     return buildOptimizedUrl(src, width);

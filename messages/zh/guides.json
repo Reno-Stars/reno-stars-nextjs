@@ -821,7 +821,8 @@
       "kitchen": "厨房装修费用",
       "wholeHouse": "全屋装修费用",
       "basement": "地下室装修费用",
-      "bathroom": "浴室装修平均费用"
+      "bathroom": "浴室装修平均费用",
+      "bathroomGuide": "卫生间装修费用"
     }
   }
 }

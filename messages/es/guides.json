@@ -821,7 +821,8 @@
       "kitchen": "Costo de remodelación de cocina",
       "wholeHouse": "Costo de remodelación de casa completa",
       "basement": "Costo de remodelación de sótano",
-      "bathroom": "Costo promedio de remodelación de baño"
+      "bathroom": "Costo promedio de remodelación de baño",
+      "bathroomGuide": "Costo de remodelación de baño"
     }
   }
 }

@@ -214,7 +214,7 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
-              { href: '/guides/bathroom-renovation-cost-vancouver', label: locale === 'zh' ? '卫生间装修费用' : 'Bathroom Renovation Cost', range: '$10K–$60K+' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
               { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
             ].map((guide) => (

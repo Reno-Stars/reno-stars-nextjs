@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
@@ -40,14 +40,16 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const [messages, company, socialLinks, services, areas, googleReviews] = await Promise.all([
+  const [messages, t, company, socialLinks, services, areas, googleReviews] = await Promise.all([
     getMessages(),
+    getTranslations({ locale, namespace: 'metadata' }),
     getCompanyFromDb(),
     getSocialLinksFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
     getGoogleReviews(),
   ]);
+  const localBusinessDescription = t('localBusinessDescription');
 
   // suppressHydrationWarning: locale from URL params may differ during initial hydration;
   // also handles browser extensions (Grammarly, etc.) modifying the DOM
@@ -99,7 +101,7 @@ export default async function LocaleLayout({
             googleRating={googleReviews.rating}
             googleReviewCount={googleReviews.userRatingCount}
             reviews={googleReviews.reviews.slice(0, 5)}
-            description={messages?.metadata?.localBusinessDescription}
+            description={localBusinessDescription}
           />
           <a
             href="#main-content"

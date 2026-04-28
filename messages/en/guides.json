@@ -94,7 +94,7 @@
         },
         "permits": {
           "title": "Permits & Inspections",
-          "description": "City of Vancouver building permits for kitchen renovations typically cost –1,000. Required when changing plumbing, electrical, gas, or structural elements."
+          "description": "City of Vancouver building permits for kitchen renovations typically cost $200–$1,000. Required when changing plumbing, electrical, gas, or structural elements."
         }
       },
       "realProjects": {
@@ -821,7 +821,8 @@
       "kitchen": "Kitchen Renovation Cost",
       "wholeHouse": "Whole House Renovation Cost",
       "basement": "Basement Renovation Cost",
-      "bathroom": "Average Bathroom Reno Cost"
+      "bathroom": "Average Bathroom Reno Cost",
+      "bathroomGuide": "Bathroom Renovation Cost"
     }
   }
 }

@@ -745,23 +745,32 @@ export interface PaginatedBlogPosts {
 
 /** Fetch all published blog posts ordered by publishedAt desc. */
 export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
+  // Listing-only projection — exclude content_en/content_zh and the entire
+  // localizations jsonb. Once Phase A blog content is fully populated, each
+  // localizations payload is ~30 KB (3 langs × ~10 KB content). With 113
+  // posts that's ~3 MB extra wire per list query that the listing UI
+  // doesn't render. Slim projection keeps blog-list pages fast.
   const rows = await db
-    .select()
+    .select({
+      slug: blogPostsTable.slug,
+      titleEn: blogPostsTable.titleEn,
+      titleZh: blogPostsTable.titleZh,
+      excerptEn: blogPostsTable.excerptEn,
+      excerptZh: blogPostsTable.excerptZh,
+      featuredImageUrl: blogPostsTable.featuredImageUrl,
+      publishedAt: blogPostsTable.publishedAt,
+      updatedAt: blogPostsTable.updatedAt,
+      localizations: blogPostsTable.localizations,
+    })
     .from(blogPostsTable)
     .where(eq(blogPostsTable.isPublished, true))
     .orderBy(desc(blogPostsTable.publishedAt));
 
-  return rows.map((row: typeof blogPostsTable.$inferSelect) => ({
+  return rows.map((row: typeof rows[number]) => ({
     slug: row.slug,
-    title: { en: row.titleEn, zh: row.titleZh },
-    excerpt:
-      row.excerptEn && row.excerptZh
-        ? { en: row.excerptEn, zh: row.excerptZh }
-        : undefined,
-    content:
-      row.contentEn && row.contentZh
-        ? { en: row.contentEn, zh: row.contentZh }
-        : undefined,
+    title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+    excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+    content: undefined,
     featured_image: getOptionalAssetUrl(row.featuredImageUrl),
     published_at: row.publishedAt ?? undefined,
     updated_at: row.updatedAt ?? undefined,
@@ -782,25 +791,31 @@ export const getBlogPostsPaginatedFromDb = cache(
     const currentPage = Math.max(1, Math.min(page, totalPages || 1));
     const offset = (currentPage - 1) * perPage;
 
+    // Slim projection — see getBlogPostsFromDb comment. Excludes content
+    // fields entirely (listing UI uses excerpt only).
     const rows = await db
-      .select()
+      .select({
+        slug: blogPostsTable.slug,
+        titleEn: blogPostsTable.titleEn,
+        titleZh: blogPostsTable.titleZh,
+        excerptEn: blogPostsTable.excerptEn,
+        excerptZh: blogPostsTable.excerptZh,
+        featuredImageUrl: blogPostsTable.featuredImageUrl,
+        publishedAt: blogPostsTable.publishedAt,
+        updatedAt: blogPostsTable.updatedAt,
+        localizations: blogPostsTable.localizations,
+      })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true))
       .orderBy(desc(blogPostsTable.publishedAt))
       .limit(perPage)
       .offset(offset);
 
-    const posts = rows.map((row: typeof blogPostsTable.$inferSelect) => ({
+    const posts = rows.map((row: typeof rows[number]) => ({
       slug: row.slug,
-      title: { en: row.titleEn, zh: row.titleZh },
-      excerpt:
-        row.excerptEn && row.excerptZh
-          ? { en: row.excerptEn, zh: row.excerptZh }
-          : undefined,
-      content:
-        row.contentEn && row.contentZh
-          ? { en: row.contentEn, zh: row.contentZh }
-          : undefined,
+      title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+      excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+      content: undefined,
       featured_image: getOptionalAssetUrl(row.featuredImageUrl),
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
@@ -1112,6 +1127,8 @@ export const getWholeHouseProjectsForGuide = cache(async (): Promise<KitchenGuid
       durationEn: projectsTable.durationEn,
       durationZh: projectsTable.durationZh,
       spaceTypeEn: projectsTable.spaceTypeEn,
+      spaceTypeZh: projectsTable.spaceTypeZh,
+      localizations: projectsTable.localizations,
       slug: projectsTable.slug,
     })
     .from(projectsTable)
