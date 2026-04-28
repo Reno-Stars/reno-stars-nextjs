@@ -814,6 +814,14 @@
         "q5": "¿Es una suite de sótano una buena inversión en Vancouver?",
         "a5": "Sí. Los ingresos por alquiler de $1,800-$2,800/mes significan que la inversión de ~$95,000 se paga sola en 3-5 años. El valor de la propiedad aumenta 15-25%. Los ingresos de la suite también ayudan con la calificación hipotecaria."
       }
+    },
+    "relatedGuides": {
+      "title": "Guías de costos de remodelación relacionadas",
+      "viewGuide": "Ver guía",
+      "kitchen": "Costo de remodelación de cocina",
+      "wholeHouse": "Costo de remodelación de casa completa",
+      "basement": "Costo de remodelación de sótano",
+      "bathroom": "Costo promedio de remodelación de baño"
     }
   }
 }

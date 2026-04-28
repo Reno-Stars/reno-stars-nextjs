@@ -814,6 +814,14 @@
         "q5": "Is a basement suite a good investment in Vancouver?",
         "a5": "Yes. Rental income of $1,800–$2,800/month means the ~$95,000 investment pays for itself in 3–5 years. Property value increases 15–25%. Suite income also helps with mortgage qualification."
       }
+    },
+    "relatedGuides": {
+      "title": "Related Renovation Cost Guides",
+      "viewGuide": "View Guide",
+      "kitchen": "Kitchen Renovation Cost",
+      "wholeHouse": "Whole House Renovation Cost",
+      "basement": "Basement Renovation Cost",
+      "bathroom": "Average Bathroom Reno Cost"
     }
   }
 }

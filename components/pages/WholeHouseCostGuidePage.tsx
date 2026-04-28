@@ -34,6 +34,7 @@ function formatCurrency(n: number): string {
 
 export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouseCostGuidePageProps) {
   const t = useTranslations('guides.wholeHouseCost');
+  const tGuides = useTranslations('guides.relatedGuides');
 
   // Use fixed pricing — DB projects have outdated budget ranges that misrepresent whole-house costs
   const stats = useMemo(() => ({
@@ -216,19 +217,19 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
-            {locale === 'zh' ? '相关装修费用指南' : 'Related Renovation Cost Guides'}
+            {tGuides('title')}
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
               { href: '/guides/bathroom-renovation-cost-vancouver', label: locale === 'zh' ? '卫生间装修费用' : 'Bathroom Renovation Cost', range: '$10K–$60K+' },
-              { href: '/guides/kitchen-renovation-cost-vancouver', label: locale === 'zh' ? '厨房装修费用' : 'Kitchen Renovation Cost', range: '$15K–$80K' },
-              { href: '/guides/basement-renovation-cost-vancouver', label: locale === 'zh' ? '地下室装修费用' : 'Basement Renovation Cost', range: '$20K–$80K' },
+              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, ...neu }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
                 <span className="text-sm" style={{ color: GOLD }}>{guide.range}</span>
                 <span className="inline-flex items-center gap-1 text-sm font-semibold mt-auto" style={{ color: NAVY }}>
-                  {locale === 'zh' ? '查看指南' : 'View Guide'} <ArrowRight size={14} />
+                  {tGuides('viewGuide')} <ArrowRight size={14} />
                 </span>
               </Link>
             ))}
