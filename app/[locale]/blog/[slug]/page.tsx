@@ -70,10 +70,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const metaTitle = post.meta_title?.[locale as Locale] || `${localizedPost.title} | ${SITE_NAME}`;
   const metaDescription = post.meta_description?.[locale as Locale] || truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
 
+  // Blog post bodies are not yet translated for ja/ko/es. Pickling EN content
+  // under a /ja/blog/[slug] URL with hreflang declarations creates duplicate-
+  // content risk and contradicts the locale signal. Until per-locale bodies
+  // exist (post.content_ja/ko/es present in localizations jsonb), noindex
+  // these locale variants. EN and ZH have native bodies and stay indexed.
+  const hasNativeBody = locale === 'en' || locale === 'zh'
+    || Boolean((post.content as Record<string, string | undefined>)?.[locale]
+        && (post.content as Record<string, string | undefined>)[locale] !== (post.content as Record<string, string | undefined>).en);
+
   return {
     title: metaTitle,
     description: metaDescription,
     keywords: post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
+    ...(hasNativeBody ? {} : { robots: { index: false, follow: true } }),
     alternates: buildAlternates(`/blog/${slug}/`, locale),
     openGraph: {
       title: metaTitle,

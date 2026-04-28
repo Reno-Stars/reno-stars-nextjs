@@ -850,35 +850,25 @@ export const getBlogPostBySlugFromDb = cache(
 
     return {
       slug: row.slug,
-      title: { en: row.titleEn, zh: row.titleZh },
-      excerpt:
-        row.excerptEn && row.excerptZh
-          ? { en: row.excerptEn, zh: row.excerptZh }
-          : undefined,
-      content:
-        row.contentEn && row.contentZh
-          ? { en: row.contentEn, zh: row.contentZh }
-          : undefined,
+      title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+      excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+      content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
       featured_image: getOptionalAssetUrl(row.featuredImageUrl),
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
-      meta_title:
-        row.metaTitleEn || row.metaTitleZh
-          ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
-          : undefined,
-      meta_description:
-        row.metaDescriptionEn || row.metaDescriptionZh
-          ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
-          : undefined,
-      focus_keyword:
-        row.focusKeywordEn || row.focusKeywordZh
-          ? { en: row.focusKeywordEn ?? '', zh: row.focusKeywordZh ?? '' }
-          : undefined,
-      seo_keywords:
-        row.seoKeywordsEn || row.seoKeywordsZh
-          ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
-          : undefined,
+      meta_title: (row.metaTitleEn || row.metaTitleZh)
+        ? buildLocalized('metaTitle', row.metaTitleEn ?? '', row.metaTitleZh ?? '', row.localizations)
+        : undefined,
+      meta_description: (row.metaDescriptionEn || row.metaDescriptionZh)
+        ? buildLocalized('metaDescription', row.metaDescriptionEn ?? '', row.metaDescriptionZh ?? '', row.localizations)
+        : undefined,
+      focus_keyword: (row.focusKeywordEn || row.focusKeywordZh)
+        ? buildLocalized('focusKeyword', row.focusKeywordEn ?? '', row.focusKeywordZh ?? '', row.localizations)
+        : undefined,
+      seo_keywords: (row.seoKeywordsEn || row.seoKeywordsZh)
+        ? buildLocalized('seoKeywords', row.seoKeywordsEn ?? '', row.seoKeywordsZh ?? '', row.localizations)
+        : undefined,
       related_project: relatedProject,
     };
   }
