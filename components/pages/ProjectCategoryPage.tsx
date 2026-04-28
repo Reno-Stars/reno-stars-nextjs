@@ -7,6 +7,7 @@ import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import type { Locale } from '@/i18n/config';
 import type { Company, Project, LocalizedProject } from '@/lib/types';
 import { getLocalizedProject } from '@/lib/data/projects';
+import { pickLocale } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -19,7 +20,7 @@ interface ProjectCategoryPageProps {
   categorySlug: string;
   company: Company;
   projects: Project[];
-  categories: { serviceType?: string; en: string; zh: string }[];
+  categories: ({ serviceType?: string } & import('@/lib/types').Localized<string>)[];
 }
 
 export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories }: ProjectCategoryPageProps) {
@@ -32,7 +33,7 @@ export default function ProjectCategoryPage({ locale, categorySlug, company, pro
     (c) => c.serviceType === categorySlug
   );
 
-  const categoryName = categoryData ? (categoryData[locale as 'en' | 'zh'] ?? categoryData.en) : categorySlug;
+  const categoryName = categoryData ? pickLocale(categoryData, locale) : categorySlug;
 
   const filteredProjects = allProjects.filter(
     (p) => p.service_type === categorySlug

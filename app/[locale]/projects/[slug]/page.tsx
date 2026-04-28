@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       return { title: 'Category Not Found', robots: { index: false, follow: false } };
     }
 
-    const categoryName = categoryData[locale as 'en' | 'zh'] ?? categoryData.en;
+    const categoryName = pickLocale(categoryData, locale as Locale);
     const t = await getTranslations({ locale, namespace: 'metadata.projectCategory' });
 
     const title = t('title', { category: categoryName });
@@ -188,7 +188,7 @@ export default async function Page({ params }: PageProps) {
   if (await isCategory(slug)) {
     const categoryData = await findCategoryBySlug(slug);
     if (!categoryData) notFound();
-    const categoryName = categoryData[locale as 'en' | 'zh'] ?? categoryData.en;
+    const categoryName = pickLocale(categoryData, locale as Locale);
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
@@ -216,7 +216,7 @@ export default async function Page({ params }: PageProps) {
 
   if (project) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
-    const serviceTypeName = (project.service_type && (serviceTypeMap[project.service_type]?.[locale as 'en' | 'zh'] ?? serviceTypeMap[project.service_type]?.en)) || project.service_type || '';
+    const serviceTypeName = (project.service_type && serviceTypeMap[project.service_type] && pickLocale(serviceTypeMap[project.service_type], locale as Locale)) || project.service_type || '';
 
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },

@@ -1,4 +1,4 @@
-import type { Service, Locale, LocalizedService } from '../types';
+import type { Service, Locale, LocalizedService, Localized } from '../types';
 import { pickLocale, pickLocaleOptional } from '../utils';
 
 export function getLocalizedService(service: Service, locale: Locale): LocalizedService {
@@ -14,5 +14,13 @@ export function getLocalizedService(service: Service, locale: Locale): Localized
   };
 }
 
-// Whole House category (for Sites displayed as projects in listings)
-export const WHOLE_HOUSE_CATEGORY = { en: 'Whole House', zh: '全屋' };
+// Whole House category (for Sites displayed as projects in listings).
+// Localized<string> shape so /ja/, /ko/, /es/ category filter cards
+// render in the user's language.
+export const WHOLE_HOUSE_CATEGORY: Localized<string> = {
+  en: 'Whole House',
+  zh: '全屋',
+  ja: '家全体',
+  ko: '주택 전체',
+  es: 'Casa completa',
+};

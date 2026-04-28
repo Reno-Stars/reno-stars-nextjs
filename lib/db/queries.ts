@@ -197,12 +197,14 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
  * Fetch a slug → { en, zh } title map from the services table.
  * Used as the dynamic replacement for the old hardcoded serviceTypeToCategory.
  */
-export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: string; zh: string }>> => {
+export const getServiceTypeMap = cache(async (): Promise<Record<string, import('../types').Localized<string>>> => {
   const services = await getServicesFromDb();
-  const map: Record<string, { en: string; zh: string }> = {};
+  const map: Record<string, import('../types').Localized<string>> = {};
   for (const s of services) {
     if (s.isProjectType === false) continue;
-    map[s.slug] = { en: s.title.en, zh: s.title.zh ?? s.title.en };
+    // Carry full Localized shape (en, zh, ja, ko, es) so /xx/projects/ filter
+    // cards and category labels render in the user's language. Was {en, zh} only.
+    map[s.slug] = s.title;
   }
   return map;
 });
@@ -212,7 +214,7 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, { en: st
  * Replaces the old hardcoded `serviceTypeToCategory`.
  * Includes 'whole-house' for Sites displayed as projects.
  */
-export const getServiceTypeToCategory = cache(async (): Promise<Record<string, { en: string; zh: string }>> => {
+export const getServiceTypeToCategory = cache(async (): Promise<Record<string, import('../types').Localized<string>>> => {
   const map = { ...await getServiceTypeMap() };
   // Ensure whole-house is always present (for Sites displayed as projects)
   if (!map['whole-house']) {
@@ -226,14 +228,14 @@ export const getServiceTypeToCategory = cache(async (): Promise<Record<string, {
  * Includes "All" and "Whole House" (for Sites), plus all service types from DB.
  * Each category includes a `serviceType` matching the service_type field on projects.
  */
-export const getCategoriesLocalized = cache(async (): Promise<{ serviceType: string; en: string; zh: string }[]> => {
+export const getCategoriesLocalized = cache(async (): Promise<({ serviceType: string } & import('../types').Localized<string>)[]> => {
   const serviceTypeToCategory = await getServiceTypeToCategory();
   const otherCategories = Object.entries(serviceTypeToCategory)
     .filter(([key]) => key !== 'whole-house')
     .map(([key, value]) => ({ serviceType: key, ...value }));
 
   return [
-    { serviceType: 'All', en: 'All', zh: '全部' },
+    { serviceType: 'All', en: 'All', zh: '全部', ja: 'すべて', ko: '전체', es: 'Todos' },
     { serviceType: 'whole-house', ...WHOLE_HOUSE_CATEGORY },
     ...otherCategories,
   ];

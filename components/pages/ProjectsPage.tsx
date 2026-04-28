@@ -71,7 +71,7 @@ interface ProjectsPageProps {
   company: Company;
   projects: Project[];
   sitesAsProjects?: SiteWithProjects[];
-  categories: { serviceType: string; en: string; zh: string }[];
+  categories: ({ serviceType: string } & import('@/lib/types').Localized<string>)[];
   initialService?: string;
 }
 
@@ -371,7 +371,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
 
   const categoryOptions = useMemo(() => categories.map((c) => ({
     value: c.serviceType,
-    label: c[locale as 'en' | 'zh'] ?? c.en,
+    label: pickLocale(c, locale),
   })), [categories, locale]);
 
   const locationOptions = useMemo(() => [
@@ -522,7 +522,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                       {firstProject && (
                         <OptimizedImage
                           src={firstProject.hero_image}
-                          alt={(category[locale as 'en' | 'zh'] ?? category.en)}
+                          alt={pickLocale(category, locale)}
                           fill
                           sizes="(max-width: 640px) 180px, 220px"
                           className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}
@@ -534,7 +534,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                       />
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
                         <span className="text-xl font-bold text-white block mb-1 drop-shadow-lg">
-                          {(category[locale as 'en' | 'zh'] ?? category.en)}
+                          {pickLocale(category, locale)}
                         </span>
                         <span className="text-sm text-white/90 block">
                           {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}

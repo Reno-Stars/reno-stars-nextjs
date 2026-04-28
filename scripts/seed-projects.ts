@@ -52,7 +52,7 @@ const FETCH_TIMEOUT = 30_000;
 const PAIR_BATCH = 5;
 
 /** Service type → category map, populated from DB at startup */
-let SERVICE_TYPE_TO_CATEGORY: Record<string, { en: string; zh: string }> = {};
+let SERVICE_TYPE_TO_CATEGORY: Record<string, import('@/lib/types').Localized<string>> = {};
 let SERVICE_TYPES: string[] = [];
 
 /** Category listing pages on the old WP site (Elementor) — may contain projects not in REST API.
@@ -888,7 +888,7 @@ function buildPlaceholderEnrichment(crawled: CrawledProject): EnrichedProject {
     descriptionZh: crawled.descriptionZh || crawled.descriptionEn,
     serviceType,
     categoryEn: cat.en,
-    categoryZh: cat.zh,
+    categoryZh: cat.zh ?? cat.en,
     locationCity: city,
     budgetRange: undefined,
     durationEn: '3-4 weeks',
@@ -961,8 +961,8 @@ async function enrichProject(crawled: CrawledProject): Promise<EnrichedProject> 
         ? (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { en: parsed.serviceType }).en
         : (SERVICE_TYPE_TO_CATEGORY[crawled.inferredServiceType] ?? { en: crawled.inferredServiceType }).en,
       categoryZh: parsed.serviceType
-        ? (SERVICE_TYPE_TO_CATEGORY[parsed.serviceType] ?? { zh: parsed.serviceType }).zh
-        : (SERVICE_TYPE_TO_CATEGORY[crawled.inferredServiceType] ?? { zh: crawled.inferredServiceType }).zh,
+        ? ((SERVICE_TYPE_TO_CATEGORY[parsed.serviceType]?.zh ?? parsed.serviceType))
+        : ((SERVICE_TYPE_TO_CATEGORY[crawled.inferredServiceType]?.zh ?? crawled.inferredServiceType)),
       locationCity: parsed.locationCity,
       budgetRange: parsed.budgetRange,
       durationEn: s(parsed.durationEn),

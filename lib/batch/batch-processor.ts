@@ -69,7 +69,7 @@ export async function generateProjectMetadata(
   folderName: string,
   serviceType: string | null,
   notes: string | null,
-  serviceTypeMap: Record<string, { en: string; zh: string }>,
+  serviceTypeMap: Record<string, import('@/lib/types').Localized<string>>,
   /** Skip folder name in prompt — root folders can be internal codes like "1171-van" */
   skipFolderName = false,
   /** ZIP filename hint (e.g., "2828-van") for PO number / location context */
@@ -219,12 +219,12 @@ export function fallbackSiteData(folderName: string) {
 
 export function fallbackProjectData(
   serviceType: string | null,
-  serviceTypeMap: Record<string, { en: string; zh: string }>
+  serviceTypeMap: Record<string, import('@/lib/types').Localized<string>>
 ) {
   const validType = serviceType && serviceTypeMap[serviceType] ? serviceType : null;
   const category = validType ? serviceTypeMap[validType] : { en: 'Renovation', zh: '装修' };
   const fullEn = ensureActionSuffix(category.en);
-  const fullZh = ensureActionSuffix(category.zh, true);
+  const fullZh = ensureActionSuffix(category.zh ?? category.en, true);
   return {
     ...buildFallbackSeo(fullEn, fullZh),
     serviceType: validType,
@@ -306,7 +306,7 @@ export async function saveProjectFromUrls(opts: {
   displayOrder: number;
   existingProjectSlugs: string[];
   errors: BatchError[];
-  serviceTypeMap: Record<string, { en: string; zh: string }>;
+  serviceTypeMap: Record<string, import('@/lib/types').Localized<string>>;
   zipBaseName?: string;
 }): Promise<string> {
   const {
