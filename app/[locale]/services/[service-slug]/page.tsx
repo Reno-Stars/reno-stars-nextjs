@@ -15,7 +15,7 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
-export const revalidate = 21600; // 6h
+export const revalidate = 86400; // 24h — Vercel free-tier optimization
 
 export async function generateStaticParams() {
   const services = await getServicesFromDb();

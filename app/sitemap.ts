@@ -3,7 +3,7 @@ import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
 
-export const revalidate = 21600; // 6h
+export const revalidate = 604800; // 168h — bumped to reduce ISR writes (Vercel free-tier optimization)
 
 const BASE_URL = getBaseUrl();
 

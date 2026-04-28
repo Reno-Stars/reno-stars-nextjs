@@ -15,7 +15,7 @@ interface PageProps {
   params: Promise<{ locale: string; city: string }>;
 }
 
-export const revalidate = 21600; // 6h
+export const revalidate = 86400; // 24h — bumped to reduce ISR writes (Vercel free-tier optimization)
 
 export async function generateStaticParams() {
   const areas = await getServiceAreasFromDb();
