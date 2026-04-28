@@ -18,9 +18,13 @@ interface LocalBusinessSchemaProps {
   googleRating?: number;
   googleReviewCount?: number;
   reviews?: GoogleReview[];
+  /** Pre-resolved localized business description from layout's loaded
+   *  i18n messages. When omitted we fall back to an EN string so the
+   *  schema remains valid even on pages that haven't wired this up. */
+  description?: string;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
   const schema = {
@@ -85,8 +89,8 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         ...(r.publishTime && { datePublished: r.publishTime }),
       })),
     }),
-    description:
-      `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,
+    description: description
+      ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,
     // schema.org foundingDate = legal incorporation year, NOT aggregate
     // team experience. The "20+ years" stat on the marketing site reflects
     // team-level renovation experience (foundingYear in company-config.ts);

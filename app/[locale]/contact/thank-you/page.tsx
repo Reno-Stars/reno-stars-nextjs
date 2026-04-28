@@ -25,6 +25,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       index: false,
       follow: false,
     },
+    // Explicitly empty alternates: prevents Next-intl from emitting hreflang
+    // Link headers / <link rel="alternate"> tags on a noindex page. A noindex
+    // page that broadcasts 6 hreflang alternates sends contradictory signals
+    // ("don't index me" + "here are 6 localized versions of me"). Strip them.
+    alternates: {
+      canonical: undefined,
+      languages: {},
+    },
   };
 }
 

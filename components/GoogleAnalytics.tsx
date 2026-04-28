@@ -20,11 +20,14 @@ export default function GoogleAnalytics() {
 
   return (
     <>
+      {/* lazyOnload: skips Next's automatic <link rel="preload"> emission for
+          third-party analytics scripts. Tag fires after window load — pageviews
+          still tracked, but no LCP-bandwidth competition with critical resources. */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

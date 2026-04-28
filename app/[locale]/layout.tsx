@@ -82,7 +82,7 @@ export default async function LocaleLayout({
           : locale === 'ko' ? 'Reno Stars 블로그 RSS'
           : locale === 'es' ? 'Reno Stars Blog RSS'
           : 'Reno Stars Blog RSS'
-        } href={`/${locale}/feed.xml/`} />
+        } href={`/${locale}/feed.xml`} />
         <GoogleAnalytics />
         <MicrosoftClarity />
         <MetaPixel />
@@ -99,6 +99,7 @@ export default async function LocaleLayout({
             googleRating={googleReviews.rating}
             googleReviewCount={googleReviews.userRatingCount}
             reviews={googleReviews.reviews.slice(0, 5)}
+            description={messages?.metadata?.localBusinessDescription}
           />
           <a
             href="#main-content"

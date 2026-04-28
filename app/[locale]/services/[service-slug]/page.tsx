@@ -107,10 +107,18 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      {/* Use long_description in schema only when the current locale has a
+          genuine translation (not a pickLocale en-fallback). Otherwise use
+          the short description, which IS localized via the localizations jsonb.
+          This prevents English long-form copy bleeding into /es/, /ja/, /ko/
+          schema even when the service title and short description are native. */}
       <ServiceSchema
         company={company}
         serviceName={localizedService.title}
-        serviceDescription={localizedService.long_description || localizedService.description}
+        serviceDescription={
+          (service.long_description as { [k: string]: string | undefined } | undefined)?.[locale]
+            ?? localizedService.description
+        }
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
         googleRating={googleReviews.rating}
