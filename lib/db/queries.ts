@@ -339,56 +339,31 @@ function mapDbProjectToProject(
   return {
     id: row.id,
     slug: row.slug,
-    title: { en: row.titleEn, zh: row.titleZh },
-    description: { en: row.descriptionEn, zh: row.descriptionZh },
-    project_story:
-      row.projectStoryEn && row.projectStoryZh
-        ? { en: row.projectStoryEn, zh: row.projectStoryZh }
-        : undefined,
-    excerpt:
-      row.excerptEn && row.excerptZh
-        ? { en: row.excerptEn, zh: row.excerptZh }
-        : undefined,
+    title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+    description: buildLocalized('description', row.descriptionEn, row.descriptionZh, row.localizations),
+    project_story: buildLocalizedOptional('projectStory', row.projectStoryEn, row.projectStoryZh, row.localizations),
+    excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
     service_type: row.serviceType ?? undefined,
-    category: {
-      en: row.categoryEn ?? '',
-      zh: row.categoryZh ?? '',
-    },
+    category: buildLocalized('category', row.categoryEn ?? '', row.categoryZh ?? '', row.localizations),
     location_city: row.locationCity ?? '',
     budget_range: row.budgetRange ?? undefined,
-    duration:
-      row.durationEn && row.durationZh
-        ? { en: row.durationEn, zh: row.durationZh }
-        : undefined,
-    space_type:
-      row.spaceTypeEn || row.spaceTypeZh
-        ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
-        : undefined,
+    duration: buildLocalizedOptional('duration', row.durationEn, row.durationZh, row.localizations),
+    space_type: (row.spaceTypeEn || row.spaceTypeZh)
+      ? buildLocalized('spaceType', row.spaceTypeEn ?? '', row.spaceTypeZh ?? '', row.localizations)
+      : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
     hero_video: getOptionalAssetUrl(row.heroVideoUrl),
     images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
     image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairRowToImagePair),
     service_scope:
       scopes.length > 0
-        ? {
-            en: sortByDisplayOrder(scopes).map((s) => s.scopeEn),
-            zh: sortByDisplayOrder(scopes).map((s) => s.scopeZh),
-          }
+        ? buildLocalizedArray(sortByDisplayOrder(scopes), 'scopeEn', 'scopeZh', 'scope')
         : undefined,
-    challenge:
-      row.challengeEn && row.challengeZh
-        ? { en: row.challengeEn, zh: row.challengeZh }
-        : undefined,
-    solution:
-      row.solutionEn && row.solutionZh
-        ? { en: row.solutionEn, zh: row.solutionZh }
-        : undefined,
+    challenge: buildLocalizedOptional('challenge', row.challengeEn, row.challengeZh, row.localizations),
+    solution: buildLocalizedOptional('solution', row.solutionEn, row.solutionZh, row.localizations),
     published_at: row.publishedAt ?? undefined,
     featured: row.featured,
-    badge:
-      row.badgeEn && row.badgeZh
-        ? { en: row.badgeEn, zh: row.badgeZh }
-        : undefined,
+    badge: buildLocalizedOptional('badge', row.badgeEn, row.badgeZh, row.localizations),
     external_products:
       externalProducts.length > 0
         ? sortByDisplayOrder(externalProducts).map((ep) => ({
@@ -535,39 +510,29 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     location_city: row.locationCity ?? undefined,
     hero_image: getOptionalAssetUrl(row.heroImageUrl),
     hero_video: getOptionalAssetUrl(row.heroVideoUrl),
-    badge:
-      row.badgeEn && row.badgeZh
-        ? { en: row.badgeEn, zh: row.badgeZh }
-        : undefined,
-    excerpt:
-      row.excerptEn || row.excerptZh
-        ? { en: row.excerptEn ?? '', zh: row.excerptZh ?? '' }
-        : undefined,
-    meta_title:
-      row.metaTitleEn || row.metaTitleZh
-        ? { en: row.metaTitleEn ?? '', zh: row.metaTitleZh ?? '' }
-        : undefined,
-    meta_description:
-      row.metaDescriptionEn || row.metaDescriptionZh
-        ? { en: row.metaDescriptionEn ?? '', zh: row.metaDescriptionZh ?? '' }
-        : undefined,
-    focus_keyword:
-      row.focusKeywordEn || row.focusKeywordZh
-        ? { en: row.focusKeywordEn ?? '', zh: row.focusKeywordZh ?? '' }
-        : undefined,
-    seo_keywords:
-      row.seoKeywordsEn || row.seoKeywordsZh
-        ? { en: row.seoKeywordsEn ?? '', zh: row.seoKeywordsZh ?? '' }
-        : undefined,
+    badge: buildLocalizedOptional('badge', row.badgeEn, row.badgeZh, row.localizations),
+    excerpt: (row.excerptEn || row.excerptZh)
+      ? buildLocalized('excerpt', row.excerptEn ?? '', row.excerptZh ?? '', row.localizations)
+      : undefined,
+    meta_title: (row.metaTitleEn || row.metaTitleZh)
+      ? buildLocalized('metaTitle', row.metaTitleEn ?? '', row.metaTitleZh ?? '', row.localizations)
+      : undefined,
+    meta_description: (row.metaDescriptionEn || row.metaDescriptionZh)
+      ? buildLocalized('metaDescription', row.metaDescriptionEn ?? '', row.metaDescriptionZh ?? '', row.localizations)
+      : undefined,
+    focus_keyword: (row.focusKeywordEn || row.focusKeywordZh)
+      ? buildLocalized('focusKeyword', row.focusKeywordEn ?? '', row.focusKeywordZh ?? '', row.localizations)
+      : undefined,
+    seo_keywords: (row.seoKeywordsEn || row.seoKeywordsZh)
+      ? buildLocalized('seoKeywords', row.seoKeywordsEn ?? '', row.seoKeywordsZh ?? '', row.localizations)
+      : undefined,
     budget_range: row.budgetRange ?? undefined,
-    duration:
-      row.durationEn || row.durationZh
-        ? { en: row.durationEn ?? '', zh: row.durationZh ?? '' }
-        : undefined,
-    space_type:
-      row.spaceTypeEn || row.spaceTypeZh
-        ? { en: row.spaceTypeEn ?? '', zh: row.spaceTypeZh ?? '' }
-        : undefined,
+    duration: (row.durationEn || row.durationZh)
+      ? buildLocalized('duration', row.durationEn ?? '', row.durationZh ?? '', row.localizations)
+      : undefined,
+    space_type: (row.spaceTypeEn || row.spaceTypeZh)
+      ? buildLocalized('spaceType', row.spaceTypeEn ?? '', row.spaceTypeZh ?? '', row.localizations)
+      : undefined,
     po_number: row.poNumber ?? undefined,
     show_as_project: row.showAsProject,
     featured: row.featured,
