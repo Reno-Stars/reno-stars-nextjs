@@ -7,6 +7,8 @@
     "mapLocation": "지도 위치",
     "wechatId": "위챗 ID: {id}",
     "quickLinks": "바로가기",
-    "scanToConnect": "스캔하여 연결"
+    "scanToConnect": "스캔하여 연결",
+    "privacyPolicy": "개인정보 처리방침",
+    "termsOfService": "이용약관"
   }
 }

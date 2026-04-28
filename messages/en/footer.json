@@ -7,6 +7,8 @@
     "mapLocation": "Map Location",
     "wechatId": "WeChat ID: {id}",
     "quickLinks": "Quick Links",
-    "scanToConnect": "Scan to Connect"
+    "scanToConnect": "Scan to Connect",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
   }
 }

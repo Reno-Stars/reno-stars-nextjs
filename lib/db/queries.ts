@@ -505,8 +505,8 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
   return {
     id: row.id,
     slug: row.slug,
-    title: { en: row.titleEn, zh: row.titleZh },
-    description: { en: row.descriptionEn, zh: row.descriptionZh },
+    title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+    description: buildLocalized('description', row.descriptionEn, row.descriptionZh, row.localizations),
     location_city: row.locationCity ?? undefined,
     hero_image: getOptionalAssetUrl(row.heroImageUrl),
     hero_video: getOptionalAssetUrl(row.heroVideoUrl),

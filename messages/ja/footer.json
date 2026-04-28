@@ -7,6 +7,8 @@
     "mapLocation": "地図",
     "wechatId": "WeChat ID：{id}",
     "quickLinks": "クイックリンク",
-    "scanToConnect": "スキャンしてつながる"
+    "scanToConnect": "スキャンしてつながる",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約"
   }
 }

@@ -7,6 +7,8 @@
     "mapLocation": "地图位置",
     "wechatId": "微信号: {id}",
     "quickLinks": "快捷链接",
-    "scanToConnect": "扫码联系我们"
+    "scanToConnect": "扫码联系我们",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款"
   }
 }

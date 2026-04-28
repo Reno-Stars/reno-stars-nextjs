@@ -373,8 +373,8 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
           <p>&copy; {new Date().getFullYear()} {company.name}. {t('footer.allRights')}</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-white transition-colors">{locale === 'zh' ? '隐私政策' : 'Privacy Policy'}</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">{locale === 'zh' ? '服务条款' : 'Terms of Service'}</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">{t('footer.termsOfService')}</Link>
             <p>{t('footer.licensedInsured')}</p>
           </div>
         </div>
