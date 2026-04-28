@@ -394,19 +394,20 @@ export function getRelativeTime(
  */
 export function buildAlternates(path: string, locale: string): {
   canonical: string;
-  languages: { en: string; zh: string; ja: string; ko: string; es: string; 'x-default': string };
+  languages: Record<string, string>;
 } {
   const baseUrl = getBaseUrl();
+  // Generate hreflang alternates for every supported locale. Driven by the
+  // canonical `locales` array so adding a new locale doesn't require editing
+  // every page's metadata helper.
+  const languages: Record<string, string> = {};
+  for (const loc of locales) {
+    languages[loc] = `${baseUrl}/${loc}${path}`;
+  }
+  languages['x-default'] = `${baseUrl}/en${path}`;
   return {
     canonical: `${baseUrl}/${locale}${path}`,
-    languages: {
-      en: `${baseUrl}/en${path}`,
-      zh: `${baseUrl}/zh${path}`,
-      ja: `${baseUrl}/ja${path}`,
-      ko: `${baseUrl}/ko${path}`,
-      es: `${baseUrl}/es${path}`,
-      'x-default': `${baseUrl}/en${path}`,
-    },
+    languages,
   };
 }
 

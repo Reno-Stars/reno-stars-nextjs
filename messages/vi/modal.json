@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "Location",
+    "category": "Category",
+    "budget": "Budget Range",
+    "spaceType": "Space Type",
+    "serviceScope": "Service Scope",
+    "duration": "Duration",
+    "challenge": "The Challenge",
+    "solution": "Our Solution",
+    "close": "Close",
+    "viewDetails": "View Full Details"
+  }
+}

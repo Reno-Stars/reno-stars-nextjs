@@ -70,16 +70,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/terms',
   ];
 
-  const buildAlternates = (path: string) => ({
-    languages: {
-      en: `${BASE_URL}/en${path}/`,
-      zh: `${BASE_URL}/zh${path}/`,
-      ja: `${BASE_URL}/ja${path}/`,
-      ko: `${BASE_URL}/ko${path}/`,
-      es: `${BASE_URL}/es${path}/`,
-      'x-default': `${BASE_URL}/en${path}/`,
-    },
-  });
+  // Generate hreflang alternates for every supported locale. Driven by
+  // i18n/config.ts locales array so adding a new locale automatically
+  // expands the sitemap without further edits here.
+  const buildAlternates = (path: string) => {
+    const languages: Record<string, string> = {};
+    for (const loc of locales) {
+      languages[loc] = `${BASE_URL}/${loc}${path}/`;
+    }
+    languages['x-default'] = `${BASE_URL}/en${path}/`;
+    return { languages };
+  };
 
   for (const path of staticPages) {
     for (const locale of locales) {

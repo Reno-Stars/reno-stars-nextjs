@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "Vancouver Renovation Tips & Guides",
+    "subtitle": "Tips, trends, and insights for your renovation project",
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "updated": "Updated",
+    "backToBlog": "Back to Blog",
+    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
+    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
+    "relatedProject": "Related Project",
+    "pagination": "Blog pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "showingPosts": "Showing {start}-{end} of {total} posts",
+    "relatedServices": "Related Services",
+    "relatedAreas": "Renovation in Your Area"
+  }
+}

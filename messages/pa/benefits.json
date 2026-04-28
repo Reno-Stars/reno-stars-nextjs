@@ -1,0 +1,64 @@
+{
+  "benefits": {
+    "title": "Why Choose Reno Stars",
+    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "foundation": {
+      "heading": "Built on Trust",
+      "items": {
+        "experience": {
+          "title": "20+ Years Industry Experience",
+          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+        },
+        "coverage": {
+          "title": "$5M CGL Insurance · Active WCB Coverage",
+          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+        },
+        "rating": {
+          "title": "Authentic 5-Star Reviews",
+          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+        },
+        "team": {
+          "title": "Stable, Professional Team",
+          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+        },
+        "service": {
+          "title": "End-to-End Service",
+          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+        }
+      }
+    },
+    "differentiators": {
+      "heading": "Why Clients Choose Us",
+      "items": {
+        "transparent": {
+          "problem": "Many quotes look cheap because key items are left out.",
+          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+        },
+        "managed": {
+          "problem": "Renovation shouldn't rely on improvisation and luck.",
+          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+        },
+        "responsive": {
+          "problem": "Most renovation frustrations come from poor communication.",
+          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+        },
+        "scheduled": {
+          "problem": "Some contractors overbook and your timeline keeps slipping.",
+          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+        },
+        "consistent": {
+          "problem": "Quality shouldn't depend on which crew shows up.",
+          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+        },
+        "experience": {
+          "problem": "Renovation is stressful when you're constantly chasing updates.",
+          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+        }
+      }
+    },
+    "cta": {
+      "heading": "Ready to Start Your Project?",
+      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+    }
+  }
+}

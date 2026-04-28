@@ -165,7 +165,9 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
     { href: '/design', label: t('nav.design') },
     { href: '/features', label: t('nav.features') },
     { href: '/contact', label: t('nav.contact') },
-    { href: '/blog', label: t('nav.blogAndNews') },
+    // Blog & News intentionally moved out of the top nav to the footer only
+    // (footer.quickLinks renders /blog). Keeps top nav focused on conversion-
+    // path pages — services, design, contact — and reduces clutter on mobile.
   ], [t]);
 
   return (

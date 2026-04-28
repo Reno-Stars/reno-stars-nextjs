@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "gallery": "Gallery",
+    "projects": "Projects",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "reviews": "Reviews",
+    "back": "Back",
+    "backToHome": "Back to Home",
+    "blog": "Blog",
+    "areas": "Areas",
+    "design": "Design",
+    "benefits": "Features",
+    "process": "Workflow",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "Switch to Chinese",
+    "blogAndNews": "Blog & News",
+    "toggleAreas": "Toggle areas menu",
+    "showroom": "Showroom",
+    "guides": "Guides",
+    "about": "About Us",
+    "financing": "Financing",
+    "beforeAfter": "Before & After",
+    "features": "Features",
+    "kitchenCostGuide": "Kitchen Cost Guide",
+    "bathroomCostGuide": "Bathroom Cost Guide",
+    "renovationNearMe": "Renovation Near Me"
+  }
+}

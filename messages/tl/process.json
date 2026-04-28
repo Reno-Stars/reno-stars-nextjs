@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "Renovation Service Workflow: 5 Steps",
+      "subtitle": "From consultation to completion",
+      "googleReviews": "Google Reviews",
+      "stepLabel": "STEP {stepNum}"
+    },
+    "downloadPoster": "Download PNG",
+    "downloadPdf": "Download PDF",
+    "downloadSuccess": "Downloaded!",
+    "downloadError": "Failed",
+    "downloadPosterHint": "Click to download PNG",
+    "downloadPdfHint": "Click to download PDF",
+    "step1": {
+      "title": "Initial Consultation",
+      "subtitle": "Discovery",
+      "points": [
+        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
+        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
+        "Style preference confirmation",
+        "Material budget and positioning",
+        "Understand renovation needs and expectations",
+        "Obtain floor plans and site photos (if available)"
+      ],
+      "tags": [
+        {
+          "icon": "phone",
+          "label": "Phone"
+        },
+        {
+          "icon": "email",
+          "label": "Email"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "wechat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
+      ],
+      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+    },
+    "step2": {
+      "title": "Tailored Assessment & Quote",
+      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "points": [
+        "Professional on-site measurement for precise dimensions (if needed)",
+        "A comprehensive design proposal illustrating your future space",
+        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
+        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+      ],
+      "tags": [
+        {
+          "icon": "ruler",
+          "label": "Precise Measurement"
+        },
+        {
+          "icon": "quote",
+          "label": "Transparent Pricing"
+        },
+        {
+          "icon": "site",
+          "label": "Design Proposal"
+        }
+      ],
+      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+    },
+    "step3": {
+      "title": "Confirmation & Contract",
+      "subtitle": "Finalizing Details & Project Initiation",
+      "points": [
+        "Invite clients to showroom for in-person consultation",
+        "Address questions and optimize design details",
+        "Confirm design proposal and material samples",
+        "Finalize the payment schedule and assist with delivery scheduling",
+        "Sign construction contract and collect deposit",
+        "Secure the project start date",
+        "Establish project team: Project Manager, Construction Manager, Coordinator"
+      ],
+      "tags": [
+        {
+          "icon": "contract",
+          "label": "Contract"
+        },
+        {
+          "icon": "meeting",
+          "label": "Consultation"
+        },
+        {
+          "icon": "team",
+          "label": "Project Team"
+        }
+      ],
+      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+    },
+    "step4": {
+      "title": "Execution & Management",
+      "subtitle": "Fully Coordinated & Easy Communication",
+      "points": [
+        "A unified project team managing all aspects of your project",
+        "No direct interaction with workers needed",
+        "Coordinated construction progress to ensure efficiency and consistency",
+        "Assistance with delivery scheduling and on-site coordination",
+        "Consistent quality control throughout the entire construction process",
+        "Fast response and efficient resolution of any issues"
+      ],
+      "tags": [
+        {
+          "icon": "management",
+          "label": "Unified Management"
+        },
+        {
+          "icon": "progress",
+          "label": "Progress Tracking"
+        },
+        {
+          "icon": "response",
+          "label": "Quick Response"
+        }
+      ],
+      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+    },
+    "step5": {
+      "title": "Walkthrough & Aftercare",
+      "subtitle": "Final Checks & Lasting Support",
+      "points": [
+        "Final walkthrough to confirm all work meets expectations",
+        "New home handover",
+        "Ongoing support for maintenance during warranty period"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "Strict Inspection"
+        },
+        {
+          "icon": "warranty",
+          "label": "Warranty Service"
+        },
+        {
+          "icon": "support",
+          "label": "Ongoing Support"
+        }
+      ],
+      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+    },
+    "tagline": "Making renovation truly achievable",
+    "whyMatters": {
+      "title": "Why This Matters",
+      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+    },
+    "footer": {
+      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "Years Industry Experience",
+      "googleRating": "Google",
+      "warrantyService": "Warranty Service",
+      "scanLinktree": "Scan to connect with us",
+      "website": "reno-stars.com"
+    }
+  }
+}

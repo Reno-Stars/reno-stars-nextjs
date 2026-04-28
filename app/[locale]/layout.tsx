@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, type Locale } from '@/i18n/config';
+import { locales, type Locale, isRtl } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import MicrosoftClarity from '@/components/MicrosoftClarity';
@@ -54,7 +54,7 @@ export default async function LocaleLayout({
   // suppressHydrationWarning: locale from URL params may differ during initial hydration;
   // also handles browser extensions (Grammarly, etc.) modifying the DOM
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} dir={isRtl(locale as Locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
         {/* Preconnect for faster asset loading (implies dns-prefetch) */}
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />

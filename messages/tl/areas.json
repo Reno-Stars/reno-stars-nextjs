@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "Service Areas",
+    "subtitle": "We proudly serve communities across the Lower Mainland",
+    "servingIn": "Home Renovations in {city}",
+    "cityDescription": "Professional renovation services available in {city}. Contact us for a free consultation.",
+    "viewProjects": "View {city} Projects",
+    "requestQuote": "Request Quote",
+    "whyChooseArea": "Why Choose Our {area} Service",
+    "areaProjects": "{area} Projects",
+    "readyToStartIn": "Ready to Start Your {service} Project in {area}?",
+    "serviceInArea": "{service} in {area}",
+    "servicesInArea": "Our Services in {area}",
+    "readyToStartRenovation": "Ready to Start Your {area} Renovation?",
+    "faqTitle": "Frequently Asked Questions About {area} Renovations",
+    "aboutArea": "About {area}",
+    "aboutService": "About {service} in {area}",
+    "areaServiceContent": "{service} Services in {area}",
+    "otherAreasForService": "{service} in Other Areas",
+    "otherServicesInArea": "Other Services in {area}",
+    "serviceFaqTitle": "Frequently Asked Questions About {service} in {area}",
+    "learnOurProcess": "Learn About Our 5-Step Renovation Process",
+    "processLinkText": "See How We Work",
+    "blogLinkText": "Renovation Tips & Guides",
+    "serviceLinkText": "All About {service}",
+    "nearbyAreas": "We Also Serve Nearby Areas"
+  }
+}

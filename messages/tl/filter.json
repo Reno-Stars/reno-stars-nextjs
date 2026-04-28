@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "All Categories",
+    "location": "Location",
+    "allLocations": "All Locations",
+    "spaceType": "Space Type",
+    "allSpaceTypes": "All Space Types",
+    "budget": "Budget",
+    "allBudgets": "All Budgets",
+    "showing": "Showing",
+    "projects": "{count, plural, one {project} other {projects}}",
+    "clearAll": "Clear Filters",
+    "browseByCategory": "Browse by Category",
+    "swipeToSeeMore": "Swipe to see more →",
+    "noProjectsMatch": "No projects match your filters.",
+    "pagination": "Projects pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "showingProjects": "Showing {start}-{end} of {total} projects",
+    "search": "Search projects..."
+  }
+}
