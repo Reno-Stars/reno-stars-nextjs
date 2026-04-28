@@ -174,6 +174,14 @@ export async function GET(request: NextRequest) {
         { name: 'Inter', data: boldFont, style: 'normal', weight: 700 },
         { name: 'Inter', data: regularFont, style: 'normal', weight: 400 },
       ],
+      // Maximum aggressive edge caching — OG images for a given (title, subtitle)
+      // tuple never change, so we can serve them from CDN forever after the
+      // first generation. Explicit headers beat Next.js defaults for clarity.
+      headers: {
+        'Cache-Control': 'public, immutable, no-transform, max-age=31536000, s-maxage=31536000',
+        'CDN-Cache-Control': 'public, max-age=31536000',
+        'Vercel-CDN-Cache-Control': 'public, max-age=31536000',
+      },
     }
   );
 }

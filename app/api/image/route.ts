@@ -177,9 +177,19 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('Image optimization failed:', error);
+    // Cache 502 errors for 5 min so a single broken upstream URL doesn't
+    // burn Lambda CPU + bandwidth on every retry. Edge serves stale error
+    // from cache; admin can re-deploy / invalidate when source is fixed.
     return NextResponse.json(
       { error: 'Image optimization failed' },
-      { status: 502 },
+      {
+        status: 502,
+        headers: {
+          'Cache-Control': 'public, max-age=300, s-maxage=300',
+          'CDN-Cache-Control': 'public, max-age=300',
+          'Vercel-CDN-Cache-Control': 'public, max-age=300',
+        },
+      },
     );
   }
 }

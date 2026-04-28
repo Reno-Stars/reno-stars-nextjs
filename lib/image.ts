@@ -13,10 +13,23 @@ const R2_BASE = typeof process !== 'undefined'
  * Check if a URL points to our R2 bucket AND is an admin-uploaded image
  * that has pre-processed WebP variants available.
  * Only uploads/admin/ and uploads/designs/ paths are processed.
+ *
+ * Detection is robust: matches when (a) R2_BASE env is set and the URL
+ * starts with it, OR (b) the URL hostname pattern matches Cloudflare R2
+ * public hosts (pub-*.r2.dev, *.r2.cloudflarestorage.com). Pattern-based
+ * fallback ensures processed-variant routing works even when the env var
+ * isn't deployed correctly — was the root cause of /api/image being used
+ * for every R2 image, driving Vercel Fast Origin Transfer way over quota.
  */
 export function isR2Url(url: string): boolean {
-  if (!R2_BASE || !url.startsWith(R2_BASE)) return false;
-  return url.includes('/uploads/admin/') || url.includes('/uploads/designs/') || url.includes('/uploads/processed/');
+  if (!url) return false;
+  const hasUploadPath = url.includes('/uploads/admin/')
+    || url.includes('/uploads/designs/')
+    || url.includes('/uploads/processed/');
+  if (!hasUploadPath) return false;
+  if (R2_BASE && url.startsWith(R2_BASE)) return true;
+  // Hostname-based fallback: matches R2 public host patterns
+  return /^https?:\/\/(pub-[a-z0-9]+\.r2\.dev|[a-z0-9]+\.r2\.cloudflarestorage\.com)/i.test(url);
 }
 
 /**
