@@ -1,0 +1,40 @@
+{
+  "reviewsPage": {
+    "heroTitle": "客戶怎麼說",
+    "heroSubtitle": "來自大溫地區真實業主的評價",
+    "googleRating": "Google 評分",
+    "basedOn": "基於 {count} 條評價",
+    "verifiedReviews": "Google 認證評價",
+    "verifiedSubtitle": "每條評價均來自經過驗證的 Google 客戶",
+    "readOnGoogle": "在 Google 上查看",
+    "allReviewsTitle": "全部評價",
+    "noReviews": "暫時沒有可顯示的評價。",
+    "whyTrustTitle": "爲什麼業主信賴 Reno Stars",
+    "whyTrustSubtitle": "我們對品質的承諾，由客戶親口見證",
+    "trustItem1Title": "價格透明",
+    "trustItem1Desc": "報價清晰詳細，絕無隱藏費用。客戶一致稱讚我們坦誠的報價方式。",
+    "trustItem2Title": "精湛工藝",
+    "trustItem2Desc": "從拆除到驗收，每個環節都精益求精。我們絕不偷工減料。",
+    "trustItem3Title": "響應迅速",
+    "trustItem3Desc": "通過微信、電話或郵件快速回復。施工全程隨時爲您更新進度。",
+    "trustItem4Title": "準時交付",
+    "trustItem4Desc": "我們尊重您的時間。團隊每天準時到場，高效施工，確保按期完成。",
+    "leaveReviewTitle": "滿意我們的服務？",
+    "leaveReviewSubtitle": "期待聽到您的裝修體驗",
+    "leaveReviewButton": "在 Google 上留下評價",
+    "faq": {
+      "q1": "這些評價是真實的嗎？",
+      "a1": "是的，本頁面上的每條評價均直接來自 Google 評價。它們由使用過我們裝修服務的經過驗證的客戶撰寫。",
+      "q2": "如何爲 Reno Stars 留下評價？",
+      "a2": "項目完成後，您可以在我們的 Google 商家頁面留下評價。點擊上方的留下評價按鈕，即可直接跳轉到我們的 Google 評價頁面。",
+      "q3": "你們的整體評分是多少？",
+      "a3": "我們在 Google 上保持着滿分五星的評分，擁有超過 67 條來自大溫地區業主的真實評價。",
+      "q4": "你們會回覆評價嗎？",
+      "a4": "是的，我們會閱讀並回復每一條評價。您的反饋幫助我們不斷提升裝修服務質量。",
+      "q5": "評價者來自哪些地區？",
+      "a5": "我們的評價來自大溫哥華地區各處的業主，包括溫哥華、列治文、本拿比、高貴林、素裏等城市。"
+    },
+    "ctaHeading": "準備開始您的裝修了嗎？",
+    "ctaSubtitle": "加入大溫地區越來越多滿意業主的行列"
+  }
+}

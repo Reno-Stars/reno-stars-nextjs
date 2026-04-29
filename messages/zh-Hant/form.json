@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "姓名",
+    "fullName": "全名",
+    "email": "郵箱",
+    "emailAddress": "郵箱地址",
+    "phone": "電話",
+    "phoneNumber": "電話號碼",
+    "message": "留言",
+    "projectDetails": "項目詳情",
+    "service": "服務類型",
+    "serviceInterestedIn": "感興趣的服務",
+    "selectService": "選擇服務類型",
+    "namePlaceholder": "您的姓名",
+    "namePlaceholder2": "張三",
+    "emailPlaceholder": "您的郵箱@example.com",
+    "emailPlaceholder2": "您的郵箱@example.com",
+    "emailPlaceholder3": "您的郵箱@example.com",
+    "phonePlaceholder": "您的電話號碼",
+    "phonePlaceholder2": "138 1234 5678",
+    "phonePlaceholder3": "138 9876 5432",
+    "phonePlaceholder4": "138 1234 5678",
+    "messagePlaceholder": "請告訴我們您的項目需求...",
+    "messagePlaceholder2": "請告訴我們您的裝修項目需求...",
+    "sending": "發送中...",
+    "success": "感謝您！您的信息已成功發送。",
+    "successTitle": "消息已發送！",
+    "error": "出了點問題，請重試。",
+    "responsePromise": "我們會在24小時內回覆您，並提供詳細報價。"
+  }
+}

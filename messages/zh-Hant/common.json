@@ -1,0 +1,10 @@
+{
+  "common": {
+    "loading": "加載中...",
+    "error": "發生錯誤",
+    "notFound": "頁面未找到",
+    "notFoundDescription": "您訪問的頁面不存在或已被移動。",
+    "backToHome": "返回首頁",
+    "tryAgain": "重試"
+  }
+}

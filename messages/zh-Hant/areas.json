@@ -1,0 +1,28 @@
+{
+  "areas": {
+    "title": "服務區域",
+    "subtitle": "我們自豪地服務於低陸平原各社區",
+    "servingIn": "{city}裝修服務",
+    "cityDescription": "{city}提供專業裝修服務。聯繫我們獲取免費諮詢。",
+    "viewProjects": "查看{city}項目",
+    "requestQuote": "獲取報價",
+    "whyChooseArea": "爲什麼選擇我們的{area}服務",
+    "areaProjects": "{area}項目",
+    "readyToStartIn": "準備在{area}開始您的{service}項目？",
+    "serviceInArea": "{area}{service}",
+    "servicesInArea": "我們在{area}的服務",
+    "readyToStartRenovation": "準備開始您的{area}裝修項目？",
+    "faqTitle": "{area}裝修常見問題",
+    "aboutArea": "關於{area}",
+    "aboutService": "關於{area}的{service}",
+    "areaServiceContent": "{area}{service}服務詳情",
+    "otherAreasForService": "其他地區的{service}",
+    "otherServicesInArea": "{area}的其他服務",
+    "serviceFaqTitle": "關於{area}{service}的常見問題",
+    "learnOurProcess": "瞭解我們的5步裝修流程",
+    "processLinkText": "瞭解我們的工作方式",
+    "blogLinkText": "裝修技巧與指南",
+    "serviceLinkText": "瞭解{service}詳情",
+    "nearbyAreas": "我們也服務附近地區"
+  }
+}

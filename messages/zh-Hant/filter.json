@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "所有類別",
+    "location": "地點",
+    "allLocations": "所有地點",
+    "spaceType": "空間類型",
+    "allSpaceTypes": "所有空間類型",
+    "budget": "預算",
+    "allBudgets": "所有預算",
+    "showing": "顯示",
+    "projects": "{count, plural, one {個項目} other {個項目}}",
+    "clearAll": "清除篩選",
+    "browseByCategory": "按類別瀏覽",
+    "swipeToSeeMore": "滑動查看更多 →",
+    "noProjectsMatch": "沒有符合篩選條件的項目。",
+    "pagination": "項目分頁",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "previousPage": "轉到上一頁",
+    "nextPage": "轉到下一頁",
+    "showingProjects": "顯示第 {start}-{end} 個，共 {total} 個項目",
+    "search": "搜索項目..."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "溫哥華裝修技巧與指南",
+    "subtitle": "裝修項目的技巧、趨勢和見解",
+    "readMore": "閱讀更多",
+    "publishedOn": "發佈於",
+    "updated": "更新於",
+    "backToBlog": "返回博客",
+    "comingSoon": "完整文章內容即將上線。如有任何裝修問題，請隨時聯繫我們。",
+    "noPosts": "暫無博客文章。請稍後查看裝修技巧和見解。",
+    "relatedProject": "相關項目",
+    "pagination": "博客分頁",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "previousPage": "轉到上一頁",
+    "nextPage": "轉到下一頁",
+    "showingPosts": "顯示第 {start}-{end} 篇，共 {total} 篇文章",
+    "relatedServices": "相關服務",
+    "relatedAreas": "您所在地區的裝修服務"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "地點",
+    "category": "類別",
+    "budget": "預算範圍",
+    "spaceType": "空間類型",
+    "serviceScope": "服務範圍",
+    "duration": "工期",
+    "challenge": "項目挑戰",
+    "solution": "我們的方案",
+    "close": "關閉",
+    "viewDetails": "查看完整詳情"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "裝修服務流程, 5 步走",
+      "subtitle": "從諮詢到完工",
+      "googleReviews": "Google 評價",
+      "stepLabel": "第{stepNum}步"
+    },
+    "downloadPoster": "下載 PNG",
+    "downloadPdf": "下載 PDF",
+    "downloadSuccess": "下載成功!",
+    "downloadError": "下載失敗",
+    "downloadPosterHint": "點擊下載 PNG 圖片",
+    "downloadPdfHint": "點擊下載 PDF 文件",
+    "step1": {
+      "title": "前期溝通",
+      "subtitle": "探索",
+      "points": [
+        "客戶初步聯繫（電話 / 郵件 / Whatsapp / 微信 / 短信）",
+        "確認翻新區域（廚房 / 客廳 / 洗手間 / 全屋）",
+        "風格偏好確認",
+        "材料預算與定位",
+        "瞭解裝修需求與期望",
+        "獲取平面圖與現場照片（如有）"
+      ],
+      "tags": [
+        {
+          "icon": "phone",
+          "label": "電話"
+        },
+        {
+          "icon": "email",
+          "label": "郵件"
+        },
+        {
+          "icon": "whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "wechat",
+          "label": "微信"
+        },
+        {
+          "icon": "sms",
+          "label": "短信"
+        }
+      ],
+      "faqAnswer": "我們首先進行初步諮詢，您可以通過電話、郵件、WhatsApp、微信或短信聯繫我們。我們將討論您的裝修需求、風格偏好、預算，並收集現有的平面圖或照片。"
+    },
+    "step2": {
+      "title": "定製評估與報價",
+      "subtitle": "現場測量（如需）與透明定價",
+      "points": [
+        "專業現場測量，獲取精準尺寸數據（如需）",
+        "提供全面的設計方案，展示未來空間效果",
+        "明確施工範圍、項目時間線、許可要求與材料規格",
+        "提供清晰透明的報價方案，與設計和施工範圍完全對應，確保全程清晰可預期"
+      ],
+      "tags": [
+        {
+          "icon": "ruler",
+          "label": "精準測量"
+        },
+        {
+          "icon": "quote",
+          "label": "透明定價"
+        },
+        {
+          "icon": "site",
+          "label": "設計方案"
+        }
+      ],
+      "faqAnswer": "我們根據需要提供專業現場測量，併爲您的空間創建全面的設計方案。您將獲得明確的施工範圍、時間線、許可要求，以及與設計方案完全對應的透明報價。"
+    },
+    "step3": {
+      "title": "確認與簽約",
+      "subtitle": "細節確認與項目啓動",
+      "points": [
+        "邀請客戶到 Showroom 面談確認方案",
+        "解答疑問並優化方案細節",
+        "確認設計方案與材料樣品",
+        "確定付款計劃並協助配送安排",
+        "簽訂施工合同並收取定金",
+        "確認開工日期",
+        "建立項目團隊（項目經理 / 工程管理 / 協調員）"
+      ],
+      "tags": [
+        {
+          "icon": "contract",
+          "label": "簽約"
+        },
+        {
+          "icon": "meeting",
+          "label": "面談"
+        },
+        {
+          "icon": "team",
+          "label": "項目團隊"
+        }
+      ],
+      "faqAnswer": "我們邀請您到展廳查看材料樣品並確認設計細節。確定付款計劃並簽訂合同後，我們將確認開工日期，並建立包括項目經理、工程管理和協調員在內的專屬項目團隊。"
+    },
+    "step4": {
+      "title": "施工與管理",
+      "subtitle": "全程協調 · 溝通無憂",
+      "points": [
+        "統一項目團隊管理項目全部環節",
+        "客戶無需直接對接施工人員",
+        "施工進度統一協調，確保效率與一致性",
+        "協助配送安排與現場協調",
+        "全程一致的質量管控",
+        "快速響應並高效解決任何問題"
+      ],
+      "tags": [
+        {
+          "icon": "management",
+          "label": "統一管理"
+        },
+        {
+          "icon": "progress",
+          "label": "進度管控"
+        },
+        {
+          "icon": "response",
+          "label": "快速響應"
+        }
+      ],
+      "faqAnswer": "統一項目團隊管理項目全部環節。您無需直接與施工人員對接，我們協調施工進度、配送安排，並全程保持一致的質量管控。任何問題都將快速高效地解決。"
+    },
+    "step5": {
+      "title": "驗收與售後",
+      "subtitle": "最終檢查與持續保障",
+      "points": [
+        "最終驗收，確認所有工程符合預期",
+        "新家交付",
+        "質保期內持續提供維護支持"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "嚴格驗收"
+        },
+        {
+          "icon": "warranty",
+          "label": "質保服務"
+        },
+        {
+          "icon": "support",
+          "label": "持續支持"
+        }
+      ],
+      "faqAnswer": "我們與您一起進行最終驗收，確認所有工程符合預期，然後交付您的新家。質保期內我們持續提供維護支持。"
+    },
+    "tagline": "讓裝修簡單無憂",
+    "whyMatters": {
+      "title": "爲什麼這很重要",
+      "description": "Reno Stars 的標準化裝修流程讓客戶在每個階段都清楚瞭解進度。我們清晰的5步流程確保從首次聯繫到最終交付的整個裝修過程順暢無憂。"
+    },
+    "footer": {
+      "tagline": "簡單 · 省心 · 安全 · 有保障",
+      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "yearsIndustry": "年行業經驗",
+      "googleRating": "谷歌",
+      "warrantyService": "質保服務",
+      "scanLinktree": "掃碼聯繫我們",
+      "website": "reno-stars.com"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "cta": {
+    "getQuote": "獲取報價",
+    "getFreeQuote": "免費報價",
+    "getYourFreeQuote": "獲取免費報價",
+    "freeQuoteProject": "爲您的項目獲取免費報價！",
+    "freeQuote": "獲取免費報價",
+    "startProject": "開始您的項目",
+    "startProjectToday": "立即開始您的項目",
+    "getStarted": "立即開始",
+    "viewProjects": "查看案例",
+    "viewOurWork": "查看我們的作品",
+    "ourServices": "我們的服務",
+    "learnMore": "瞭解更多",
+    "exploreService": "探索{service}",
+    "sendMessage": "發送信息",
+    "submitInquiry": "獲取免費報價",
+    "bookAppointment": "預約參觀",
+    "callNow": "立即致電",
+    "requestConsultation": "預約免費諮詢",
+    "viewAllProjects": "查看所有項目",
+    "viewAllServices": "查看所有服務",
+    "scheduleConsultation": "預約諮詢"
+  }
+}

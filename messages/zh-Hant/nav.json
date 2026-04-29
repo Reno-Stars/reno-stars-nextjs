@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "home": "首頁",
+    "services": "服務項目",
+    "gallery": "作品展示",
+    "projects": "工程案例",
+    "testimonials": "客戶評價",
+    "contact": "聯繫我們",
+    "contactUs": "聯繫我們",
+    "reviews": "客戶評價",
+    "back": "返回",
+    "backToHome": "返回首頁",
+    "blog": "博客",
+    "areas": "服務區域",
+    "design": "設計",
+    "benefits": "特色優勢",
+    "process": "工作流程",
+    "openMenu": "打開菜單",
+    "closeMenu": "關閉菜單",
+    "switchLanguage": "Switch to English",
+    "blogAndNews": "博客與資訊",
+    "toggleAreas": "展開區域菜單",
+    "showroom": "展廳",
+    "guides": "指南",
+    "about": "關於我們",
+    "financing": "融資指南",
+    "beforeAfter": "改造前後",
+    "features": "特色優勢",
+    "kitchenCostGuide": "廚房裝修費用指南",
+    "bathroomCostGuide": "浴室裝修費用指南",
+    "renovationNearMe": "附近裝修服務"
+  }
+}

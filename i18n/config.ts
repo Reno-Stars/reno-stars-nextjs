@@ -1,6 +1,9 @@
 import { defineRouting } from 'next-intl/routing';
 
-export const locales = ['en', 'zh', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi'] as const;
+// 'zh' is Simplified Chinese (mainland / overseas Mandarin readers).
+// 'zh-Hant' is Traditional Chinese (HK / TW readers — different script,
+// some vocabulary differences). Two distinct user groups.
+export const locales = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi'] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'en';
@@ -9,7 +12,8 @@ export const localePrefix = 'always' as const;
 
 export const localeNames: Record<Locale, string> = {
   en: 'English',
-  zh: '中文',
+  zh: '简体中文',
+  'zh-Hant': '繁體中文',
   ja: '日本語',
   ko: '한국어',
   es: 'Español',
@@ -23,6 +27,7 @@ export const localeNames: Record<Locale, string> = {
 export const ogLocaleMap: Record<Locale, string> = {
   en: 'en_US',
   zh: 'zh_CN',
+  'zh-Hant': 'zh_TW',
   ja: 'ja_JP',
   ko: 'ko_KR',
   es: 'es_ES',

@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "項目概覽",
+    "includedAreas": "包含區域",
+    "totalBudget": "預算",
+    "totalDuration": "工期",
+    "allServiceScopes": "全部服務項目",
+    "viewAreaProject": "查看{area}項目",
+    "viewAreaDetails": "查看詳情",
+    "combinedGallery": "項目圖庫",
+    "filterByArea": "按區域篩選",
+    "allAreas": "全部區域",
+    "childProjectsCount": "{count}個裝修區域",
+    "noImagesForArea": "該區域暫無圖片",
+    "areasCount": "{count} 個區域",
+    "siteBadge": "整屋項目",
+    "areas": "個區域"
+  }
+}

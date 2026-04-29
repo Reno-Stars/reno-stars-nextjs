@@ -80,6 +80,7 @@ export default async function LocaleLayout({
         {/* RSS feed discovery — localized title per locale for accurate browser bookmark labels */}
         <link rel="alternate" type="application/rss+xml" title={
           locale === 'zh' ? 'Reno Stars 博客 RSS'
+          : locale === 'zh-Hant' ? 'Reno Stars 部落格 RSS'
           : locale === 'ja' ? 'Reno Stars ブログ RSS'
           : locale === 'ko' ? 'Reno Stars 블로그 RSS'
           : locale === 'es' ? 'Reno Stars Blog RSS'
@@ -108,7 +109,7 @@ export default async function LocaleLayout({
             className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
             style={{ backgroundColor: NAVY, color: '#fff' }}
           >
-            {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
+            {locale === 'zh' ? '跳到主要内容' : locale === 'zh-Hant' ? '跳到主要內容' : 'Skip to main content'}
           </a>
           <Navbar company={company} services={services.filter(s => s.isProjectType !== false)} />
           <main id="main-content">

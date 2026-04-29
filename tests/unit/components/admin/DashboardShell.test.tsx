@@ -63,9 +63,9 @@ describe('DashboardShell', () => {
       </DashboardShell>
     );
 
-    // TopBar renders locale switcher buttons
+    // TopBar renders locale switcher buttons (admin UI is en/zh only)
     expect(screen.getByText('English')).toBeInTheDocument();
-    expect(screen.getByText('中文')).toBeInTheDocument();
+    expect(screen.getByText('简体中文')).toBeInTheDocument();
   });
 
   it('closes sidebar on Escape key when open on mobile', async () => {

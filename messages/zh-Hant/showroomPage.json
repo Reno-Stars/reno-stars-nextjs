@@ -1,0 +1,26 @@
+{
+  "showroomPage": {
+    "heroTitle": "參觀我們的展廳",
+    "heroSubtitle": "親身體驗裝修材料、設計方案和飾面效果",
+    "addressTitle": "地址與營業時間",
+    "phoneTitle": "電話",
+    "emailTitle": "郵箱",
+    "hoursTitle": "營業時間",
+    "hoursValue": "需預約",
+    "mapTitle": "查找我們",
+    "ctaTitle": "準備開始您的項目？",
+    "ctaDescription": "在展廳預約免費諮詢。我們的設計團隊將幫助您探索方案並規劃裝修。",
+    "bookConsultation": "預約免費諮詢",
+    "callUs": "或致電",
+    "faq1q": "參觀展廳需要預約嗎？",
+    "faq1a": "歡迎隨時來訪，但我們建議預約，以便設計團隊能專注於討論您的項目細節。",
+    "faq2q": "在Reno Stars展廳可以看到什麼？",
+    "faq2a": "展廳展示材料樣品、櫥櫃展示、檯面選擇、瓷磚選擇，以及廚房、浴室和全屋裝修的設計靈感。",
+    "faq3q": "展廳有停車位嗎？",
+    "faq3a": "有的，列治文展廳門前有免費停車位。",
+    "faq4q": "可以帶裝修方案來展廳嗎？",
+    "faq4a": "當然可以！請帶上您的平面圖、照片或靈感圖片。我們的團隊可以在參觀期間爲您提供專業建議。",
+    "appointmentPrefix": "歡迎",
+    "appointmentBold": "預約參觀我們的裝修展廳！"
+  }
+}

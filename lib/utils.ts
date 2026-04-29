@@ -17,13 +17,28 @@ export const SITE_NAME = 'Reno Stars';
 // LOCALE UTILITIES
 // ============================================================================
 
+// Fallback chain for missing translations. zh-Hant prefers Simplified
+// (script-conversion is closer than English) before falling back to en.
+// All other locales fall back directly to en.
+const LOCALE_FALLBACKS: Partial<Record<Locale, ReadonlyArray<Locale>>> = {
+  'zh-Hant': ['zh', 'en'],
+};
+
 /**
  * Returns the best available translation for a given locale, falling back
- * to English when the requested locale is missing. EN is the source-of-truth
- * and is always present on `Localized<T>` rows.
+ * through LOCALE_FALLBACKS (zh-Hant → zh → en) and finally to en.
  */
 export function pickLocale<T>(field: Localized<T>, locale: Locale): T {
-  return (field[locale] as T | undefined) ?? field.en;
+  const direct = field[locale] as T | undefined;
+  if (direct !== undefined) return direct;
+  const chain = LOCALE_FALLBACKS[locale];
+  if (chain) {
+    for (const fb of chain) {
+      const v = field[fb] as T | undefined;
+      if (v !== undefined) return v;
+    }
+  }
+  return field.en;
 }
 
 /**
@@ -32,19 +47,28 @@ export function pickLocale<T>(field: Localized<T>, locale: Locale): T {
  */
 export function pickLocaleOptional<T>(field: Localized<T> | undefined, locale: Locale): T | undefined {
   if (!field) return undefined;
-  return (field[locale] as T | undefined) ?? field.en;
+  return pickLocale(field, locale);
 }
+
+// Map non-base locales to the camelCase suffix used in the DB localizations
+// jsonb. e.g. 'ja' → 'Ja', 'zh-Hant' → 'ZhHant'. The base locales (en, zh)
+// have dedicated columns and are not represented in this map.
+const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = {
+  ja: 'Ja',
+  ko: 'Ko',
+  es: 'Es',
+  pa: 'Pa',
+  tl: 'Tl',
+  fa: 'Fa',
+  vi: 'Vi',
+  'zh-Hant': 'ZhHant',
+};
 
 /**
  * Build a `Localized<string>` shape from a DB row's en/zh columns plus the
- * `localizations` jsonb that holds ja/ko/es overrides as `${field}Ja`,
- * `${field}Ko`, `${field}Es`.
- *
- * Example: a `projects` row has `title_en`, `title_zh`, and a localizations
- * jsonb like `{ titleJa: '...', titleKo: '...' }`. Calling
- * `buildLocalized('title', row.titleEn, row.titleZh, row.localizations)`
- * returns `{ en, zh, ja, ko }` with es absent (so pickLocale falls back
- * to en for /es/).
+ * `localizations` jsonb that holds locale overrides as `${field}<Suffix>`
+ * (e.g. `titleJa`, `titleZhHant`). Missing locales are simply omitted —
+ * pickLocale handles the fallback chain at read time.
  */
 export function buildLocalized(
   fieldName: string,
@@ -53,13 +77,12 @@ export function buildLocalized(
   localizations: Record<string, unknown> | null | undefined,
 ): Localized<string> {
   const result: Localized<string> = { en, zh };
-  if (localizations && typeof localizations === 'object') {
-    const ja = localizations[`${fieldName}Ja`];
-    const ko = localizations[`${fieldName}Ko`];
-    const es = localizations[`${fieldName}Es`];
-    if (typeof ja === 'string' && ja) result.ja = ja;
-    if (typeof ko === 'string' && ko) result.ko = ko;
-    if (typeof es === 'string' && es) result.es = es;
+  if (!localizations || typeof localizations !== 'object') return result;
+  for (const [loc, suffix] of Object.entries(LOCALE_TO_DB_SUFFIX) as [Locale, string][]) {
+    const v = localizations[`${fieldName}${suffix}`];
+    if (typeof v === 'string' && v) {
+      (result as Record<string, string>)[loc] = v;
+    }
   }
   return result;
 }
