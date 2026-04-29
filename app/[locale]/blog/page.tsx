@@ -11,10 +11,10 @@ interface PageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-// Blog list refreshes weekly via ISR; admin blog actions explicitly
+// Blog list refreshes daily via ISR; admin blog actions explicitly
 // revalidate this path + ping IndexNow on every post save, so newly
-// published content shows up immediately.
-export const revalidate = 604800; // 7d
+// published content shows up immediately. 24h is the slow-fallback path.
+export const revalidate = 86400; // 24h
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
