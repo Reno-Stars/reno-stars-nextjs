@@ -20,6 +20,7 @@ import FaqSection from '@/components/home/FaqSection';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
+import { renderProseHtml } from '@/lib/markdown-html';
 
 interface FaqItem {
   id: string;
@@ -120,18 +121,18 @@ export default function ServiceLocationPage({
         </div>
       </section>
 
-      {/* Service Description */}
+      {/* Service Description — accepts markdown OR HTML */}
       {localizedService.long_description && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="max-w-3xl mx-auto">
             <h2 className="sr-only">
               {t('areas.aboutService', { service: localizedService.title, area: localizedArea.name })}
             </h2>
-            {localizedService.long_description.split('\n\n').filter(Boolean).map((paragraph, i) => (
-              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
-                {paragraph}
-              </p>
-            ))}
+            <div
+              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-strong:text-[#1B365D]"
+              style={{ color: TEXT_MID }}
+              dangerouslySetInnerHTML={{ __html: renderProseHtml(localizedService.long_description) }}
+            />
           </div>
         </section>
       )}
