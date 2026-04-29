@@ -246,7 +246,6 @@ export async function createProject(
     }
 
     revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
   } catch (error) {
     console.error('Failed to create project:', error);
     return { error: 'Failed to create project.' };
@@ -390,7 +389,6 @@ export async function updateProject(
     ]);
 
     revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update project:', error);
@@ -406,7 +404,6 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
   try {
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to delete project:', error);
@@ -423,7 +420,6 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to toggle featured:', error);
@@ -448,7 +444,6 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);
@@ -495,7 +490,6 @@ export async function moveProjectToSite(
       .where(eq(projects.id, projectId));
 
     revalidatePath('/admin/sites');
-    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Failed to move project:', error);
@@ -527,7 +521,6 @@ export async function reorderProjectsInSite(
     );
 
     revalidatePath('/admin/sites');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to reorder projects:', error);

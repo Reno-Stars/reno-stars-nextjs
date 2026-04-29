@@ -11,7 +11,7 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export const revalidate = 86400; // cache for 24 hours
+export const revalidate = 604800; // 7d — Vercel quota optimization
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

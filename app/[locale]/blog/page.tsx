@@ -11,7 +11,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-export const revalidate = 21600; // 6h — Vercel free-tier optimization
+export const revalidate = 86400; // 24h — Vercel quota optimization
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

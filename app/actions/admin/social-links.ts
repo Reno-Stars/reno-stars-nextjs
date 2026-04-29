@@ -37,7 +37,6 @@ export async function updateSocialLink(
     if (updated.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Failed to update social link:', error);
@@ -57,7 +56,6 @@ export async function deleteSocialLink(id: string): Promise<{ error?: string }> 
     if (deleted.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to delete social link:', error);
@@ -81,7 +79,6 @@ export async function toggleSocialLinkActive(
     if (updated.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to toggle social link active:', error);

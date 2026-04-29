@@ -6,6 +6,5 @@ export async function POST() {
   const isAuth = await validateSession();
   if (!isAuth) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  revalidatePath('/', 'layout');
   return NextResponse.json({ ok: true, revalidated: true });
 }

@@ -16,7 +16,7 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export const revalidate = 86400; // 24h — bumped to reduce ISR writes (Vercel free-tier optimization)
+export const revalidate = 604800; // 7d — Vercel quota optimization
 
 export async function generateStaticParams() {
   const [projects, sites, categorySlugs] = await Promise.all([

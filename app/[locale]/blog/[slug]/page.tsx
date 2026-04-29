@@ -13,7 +13,7 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export const revalidate = 86400; // 24h — Vercel free-tier optimization
+export const revalidate = 604800; // 7d — Vercel quota optimization
 
 /**
  * Pull FAQs out of a markdown blog body. Looks for an FAQ section heading

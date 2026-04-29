@@ -74,7 +74,6 @@ export async function updateCompanyInfo(
       console.error('S3 cleanup failed:', err);
     });
 
-    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Failed to update company info:', error);

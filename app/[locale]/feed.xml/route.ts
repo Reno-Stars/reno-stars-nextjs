@@ -2,7 +2,7 @@ import { getBlogPostsFromDb } from '@/lib/db/queries';
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
 import { locales } from '@/i18n/config';
 
-export const revalidate = 86400; // 24h — bumped to reduce ISR writes (Vercel free-tier optimization)
+export const revalidate = 604800; // 7d — Vercel quota optimization
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

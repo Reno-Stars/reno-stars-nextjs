@@ -86,7 +86,6 @@ export async function createBlogPost(
 
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
-    revalidatePath('/', 'layout');
   } catch (error) {
     console.error('Failed to create blog post:', error);
     return { error: 'Failed to create blog post.' };
@@ -136,7 +135,6 @@ export async function updateBlogPost(
       return { error: 'Blog post not found.' };
     }
     revalidatePath('/admin/blog');
-    revalidatePath('/', 'layout');
     return { success: true };
   } catch (error) {
     console.error('Failed to update blog post:', error);
@@ -150,7 +148,6 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
   try {
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
     revalidatePath('/admin/blog');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to delete blog post:', error);
@@ -175,7 +172,6 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
       return { error: 'Blog post not found.' };
     }
     revalidatePath('/admin/blog');
-    revalidatePath('/', 'layout');
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);

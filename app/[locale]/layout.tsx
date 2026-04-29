@@ -17,7 +17,7 @@ import { NAVY } from '@/lib/theme';
 import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } from '@/lib/image';
 
 // Revalidate layout data every hour (ISR)
-export const revalidate = 86400; // 24h
+export const revalidate = 604800; // 7d — Vercel quota optimization
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
