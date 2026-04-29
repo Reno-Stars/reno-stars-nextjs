@@ -1,19 +1,19 @@
 {
   "wholeHouse": {
-    "projectOverview": "Project Overview",
-    "includedAreas": "Included Areas",
-    "totalBudget": "Budget",
-    "totalDuration": "Timeline",
-    "allServiceScopes": "All Services Included",
-    "viewAreaProject": "View {area} Project",
-    "viewAreaDetails": "View Details",
-    "combinedGallery": "Project Gallery",
-    "filterByArea": "Filter by Area",
-    "allAreas": "All Areas",
-    "childProjectsCount": "{count} renovation areas",
-    "noImagesForArea": "No images available for this area",
-    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
-    "siteBadge": "Whole House",
-    "areas": "Areas"
+    "projectOverview": "شرح پروژه",
+    "includedAreas": "فضاهای شامل پروژه",
+    "totalBudget": "بودجه",
+    "totalDuration": "زمان‌بندی",
+    "allServiceScopes": "تمام خدمات شامل پروژه",
+    "viewAreaProject": "مشاهده پروژه {area}",
+    "viewAreaDetails": "مشاهده جزئیات",
+    "combinedGallery": "گالری پروژه",
+    "filterByArea": "فیلتر بر اساس فضا",
+    "allAreas": "همه فضاها",
+    "childProjectsCount": "{count} فضای بازسازی‌شده",
+    "noImagesForArea": "تصویری برای این فضا موجود نیست",
+    "areasCount": "{count, plural, one {# فضا} other {# فضا}}",
+    "siteBadge": "بازسازی کامل منزل",
+    "areas": "فضاها"
   }
 }

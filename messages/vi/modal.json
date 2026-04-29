@@ -1,14 +1,14 @@
 {
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "Vị Trí",
+    "category": "Danh Mục",
+    "budget": "Khoảng Ngân Sách",
+    "spaceType": "Loại Không Gian",
+    "serviceScope": "Phạm Vi Dịch Vụ",
+    "duration": "Thời Gian",
+    "challenge": "Thách Thức",
+    "solution": "Giải Pháp Của Chúng Tôi",
+    "close": "Đóng",
+    "viewDetails": "Xem Chi Tiết Đầy Đủ"
   }
 }

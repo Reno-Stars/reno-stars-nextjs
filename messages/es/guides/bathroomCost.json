@@ -1,0 +1,99 @@
+{
+  "bathroomCost": {
+    "breadcrumb": "Costo de remodelación de baño",
+    "hero": {
+      "title": "Costo promedio de remodelación de baño en Vancouver (Guía de precios 2026)",
+      "subtitle": "El costo promedio de remodelación de baño en Vancouver varía de $10,000 a $60,000+. Estos son precios reales de 19 proyectos completados — no estimaciones de la industria ni promedios nacionales."
+    },
+    "stats": {
+      "avgCost": "Costo promedio",
+      "range": "Rango de precio",
+      "projects": "Proyectos completados",
+      "timeline": "Plazo típico",
+      "timelineValue": "2 a 8 semanas"
+    },
+    "tiers": {
+      "title": "Costo de remodelación de baño por nivel",
+      "subtitle": "Basado en nuestros proyectos completados en Greater Vancouver",
+      "budget": {
+        "title": "Económico",
+        "description": "Azulejo estándar, tocador básico, accesorios actualizados y pintura fresca. Ideal para una renovación de baño individual en condominios o casas adosadas sin mover plomería."
+      },
+      "midRange": {
+        "title": "Gama media",
+        "description": "Azulejo de porcelana o de gran formato, tocador a medida, ducha con vidrio sin marco, accesorios modernos y piso radiante. La opción más popular para hogares familiares."
+      },
+      "highEnd": {
+        "title": "Alta gama / Múltiples baños",
+        "description": "Azulejo premium, duchas sin curva, bañeras independientes, gabinetes a medida, accesorios inteligentes y modificaciones estructurales. A menudo incluye remodelar 2-3+ baños simultáneamente."
+      }
+    },
+    "factors": {
+      "title": "¿Qué afecta el costo de su remodelación de baño?",
+      "subtitle": "Seis factores clave que determinan su precio final",
+      "tiles": {
+        "title": "Azulejos y pisos (25-35% del presupuesto)",
+        "description": "El azulejo cerámico estándar comienza en $5/pie cuadrado, la porcelana va de $8 a $15/pie cuadrado, y la piedra natural puede superar los $25/pie cuadrado. Los azulejos de gran formato reducen las líneas de lechada pero cuestan más instalar."
+      },
+      "shower": {
+        "title": "Configuración de ducha / bañera",
+        "description": "Una conversión de bañera a ducha cuesta $3,000-$8,000. Las duchas sin curva (umbral cero) requieren impermeabilización a medida y subsuelo inclinado, agregando $2,000-$5,000 frente a una base de ducha estándar."
+      },
+      "vanity": {
+        "title": "Tocador y encimera",
+        "description": "Los tocadores estándar comienzan en $500-$1,500. Semi-personalizado con tope de cuarzo va de $2,000-$4,000. Tocadores flotantes totalmente a medida con lavabos integrados pueden superar los $6,000."
+      },
+      "plumbing": {
+        "title": "Reubicación de plomería",
+        "description": "Mover líneas de drenaje o tuberías de suministro agrega $2,000-$6,000. Las casas más antiguas pueden necesitar nuevas válvulas de cierre o actualizaciones de líneas de suministro. Mantener la distribución de plomería existente ahorra significativamente."
+      },
+      "waterproofing": {
+        "title": "Impermeabilización",
+        "description": "La impermeabilización adecuada con sistemas de membrana (Schluter, Laticrete) cuesta $1,500-$3,500 para una ducha estándar. Esencial en el clima de Vancouver para evitar daños por humedad detrás de las paredes."
+      },
+      "permits": {
+        "title": "Permisos e inspecciones",
+        "description": "Los permisos de construcción para remodelaciones de baño cuestan $200-$800 en Metro Vancouver. Requeridos al mover plomería, agregar nuevos accesorios o hacer cambios estructurales."
+      }
+    },
+    "realProjects": {
+      "title": "Proyectos reales de remodelación de baño",
+      "subtitle": "Explore {count} proyectos de baño completados con presupuestos y plazos reales"
+    },
+    "tips": {
+      "title": "Consejos para ahorrar en su remodelación de baño",
+      "tip1": {
+        "title": "Mantener la distribución de plomería existente",
+        "description": "Reubicar líneas de drenaje es uno de los mayores factores de costo. Mantener el inodoro, la ducha y el lavabo en sus posiciones actuales puede ahorrar $3,000-$6,000."
+      },
+      "tip2": {
+        "title": "Elegir azulejo de porcelana de gran formato",
+        "description": "Menos líneas de lechada significan menos labor y un aspecto más limpio. Los azulejos de porcelana 24x24 o 12x24 son duraderos, resistentes al agua y más asequibles que la piedra natural."
+      },
+      "tip3": {
+        "title": "Remodelar varios baños juntos",
+        "description": "Si necesita más de un baño hecho, hacerlos simultáneamente ahorra 10-20% frente a proyectos separados. Los contratistas pueden compartir costos de movilización y comprar materiales al por mayor."
+      },
+      "tip4": {
+        "title": "Invertir en impermeabilización",
+        "description": "Escatimar en impermeabilización lleva a reparaciones costosas más tarde. Los sistemas de membrana adecuados agregan $1,500-$3,500 al inicio pero evitan $10,000+ en daños por agua a futuro."
+      }
+    },
+    "cta": {
+      "heading": "Reciba su cotización gratis de remodelación de baño",
+      "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta una remodelación de baño en Vancouver?",
+      "a1": "Los costos de remodelación de baño en Vancouver van de $10,000 a $60,000+ según nuestros proyectos completados. Un baño económico individual comienza alrededor de $10,000-$20,000, las remodelaciones de gama media con tocador a medida y ducha de vidrio van de $20,000-$35,000, y los proyectos de alta gama o múltiples baños pueden superar los $40,000.",
+      "q2": "¿Cuánto tarda una remodelación de baño?",
+      "a2": "La remodelación de un solo baño típicamente toma de 2 a 5 semanas. Las actualizaciones cosméticas simples se pueden hacer en 2-3 semanas, mientras que los proyectos que involucran reubicación de plomería, duchas sin curva o cambios estructurales pueden tomar 4-8 semanas. Los proyectos de múltiples baños toman 5-11 semanas.",
+      "q3": "¿Puedo convertir mi bañera en una ducha de paso?",
+      "a3": "Sí, las conversiones de bañera a ducha son una de nuestras solicitudes más populares. El costo va de $3,000-$8,000 dependiendo de si elige una base de ducha estándar o un diseño sin curva. Las duchas sin curva requieren impermeabilización a medida y un subsuelo inclinado.",
+      "q4": "¿Qué es una ducha sin curva y por qué es más cara?",
+      "a4": "Una ducha sin curva (umbral cero) no tiene escalón ni borde en la entrada, creando una transición de piso sin costuras. Requiere membrana impermeabilizante a medida, un subsuelo precisamente inclinado e instalación de drenaje lineal, agregando $2,000-$5,000 frente a una base de ducha estándar. Es popular por accesibilidad y estética moderna.",
+      "q5": "¿Debería remodelar varios baños al mismo tiempo?",
+      "a5": "Sí, remodelar varios baños simultáneamente ahorra 10-20% comparado con proyectos separados. Los contratistas pueden compartir costos de movilización, coordinar oficios más eficientemente y comprar materiales al por mayor. Hemos completado muchos proyectos de 2-3 baños en Greater Vancouver."
+    }
+  }
+}

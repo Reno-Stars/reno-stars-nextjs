@@ -1,0 +1,146 @@
+{
+  "basementSuiteCost": {
+    "breadcrumb": "Basement Suite Cost",
+    "hero": {
+      "title": "Basement Suite Conversion Cost sa Vancouver BC (2026)",
+      "subtitle": "Magkano ang halaga ng pagtatayo ng legal basement suite sa Greater Vancouver? Kumuha ng detalyadong pricing para sa secondary suite conversions."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "sqft": "Cost per Sq Ft",
+      "sqftValue": "$80 – $180/sq ft",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "10–16 na linggo"
+    },
+    "tiers": {
+      "title": "Basement Suite Cost ayon sa Tier",
+      "subtitle": "Karaniwang pricing para sa legal suite conversions sa buong Greater Vancouver",
+      "budget": {
+        "title": "Basic In-Law Suite",
+        "description": "Pagco-convert ng natapos na basement sa basic suite na may kitchenette, bathroom, bedroom na may egress window, at interior shared entrance. Minimal structural changes. Ideal para sa family use."
+      },
+      "midRange": {
+        "title": "Standard Rental Suite",
+        "description": "Full legal secondary suite na may separate entrance, complete kitchen, full bathroom, isang bedroom na may egress, fire separation, at lahat ng code-required features. Pinakakaraniwang scope para sa rental income."
+      },
+      "highEnd": {
+        "title": "Premium Two-Bedroom Suite",
+        "description": "High-end legal suite na may dalawang bedroom, full kitchen na may quality appliances, in-suite laundry, upgraded finishes, separate HVAC zone, soundproofing, at premium fixtures."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Nag-drive sa Basement Suite Conversion Costs?",
+      "subtitle": "Anim na key factors na specific sa legal suite builds",
+      "separateEntrance": {
+        "title": "Separate Entrance",
+        "description": "Karamihan sa municipalities ay nangangailangan ng separate exterior entrance. Ang excavation, concrete stairs, drainage, landing, at fire-rated door ay karaniwang $8,000–$18,000."
+      },
+      "fireSeparation": {
+        "title": "Fire Separation at Safety",
+        "description": "Ang BC Building Code ay nangangailangan ng 1-oras na fire-rated separation sa pagitan ng suite at main dwelling. Ang fire-rated drywall, smoke alarms, at fire-rated doors ay $4,000–$8,000."
+      },
+      "plumbing": {
+        "title": "Kitchen at Bathroom Plumbing",
+        "description": "Ang full suite kitchen ay $12,000–$25,000 kasama ang cabinets, countertops, sink, at appliance hookups. Ang bathroom addition ay $8,000–$15,000."
+      },
+      "electrical": {
+        "title": "Electrical Panel at Wiring",
+        "description": "Ang suites ay nangangailangan ng dedicated sub-panel ($2,500–$5,000). Ang full wiring na may code-required outlets at lighting ay $5,000–$10,000. Ang panel upgrades ay nagdadagdag ng $3,000–$5,000."
+      },
+      "egress": {
+        "title": "Egress Windows at Natural Light",
+        "description": "Bawat bedroom ay nangangailangan ng egress window (5.7 sq ft opening minimum). Ang installation sa concrete foundation walls ay $2,500–$6,000 bawat isa. Ang window wells ay nagdadagdag ng $1,000–$2,000."
+      },
+      "permits": {
+        "title": "Permits, Inspections, at Legalization",
+        "description": "Ang permit fees ay $1,000–$3,500. Asahan ang 4–6 na inspections. Nag-aalok ang Vancouver at Burnaby ng suite incentive programs na nag-o-offset ng $5,000–$10,000 sa costs."
+      }
+    },
+    "roi": {
+      "title": "Return on Investment",
+      "subtitle": "Bakit ang legal basement suite ay isa sa pinakamagandang renovation investments sa Metro Vancouver",
+      "rentalIncome": {
+        "value": "$1,800–$2,800/buwan",
+        "title": "Buwanang Rental Income",
+        "description": "Ang one-bedroom suites ay umuupa ng $1,800–$2,200/buwan. Ang two-bedroom suites ay nag-command ng $2,200–$2,800/buwan."
+      },
+      "propertyValue": {
+        "value": "15–25%",
+        "title": "Property Value Increase",
+        "description": "Ang mga bahay na may legal secondary suites ay nabebenta ng 15–25% mas mataas kaysa sa comparable properties na wala."
+      },
+      "paybackPeriod": {
+        "value": "3–5 taon",
+        "title": "Payback Period",
+        "description": "Sa average rental rates, ang $95,000 suite conversion ay nababayaran ang sarili sa 3–5 taon sa pamamagitan ng rental income lang."
+      }
+    },
+    "realProjects": {
+      "title": "Kaugnay na Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na renovation projects sa buong Greater Vancouver"
+    },
+    "municipalities": {
+      "title": "Suite Regulations ayon sa Municipality",
+      "subtitle": "Bawat Metro Vancouver city ay may iba't ibang patakaran para sa secondary suites",
+      "vancouver": {
+        "title": "City of Vancouver",
+        "description": "Pinapayagan ang secondary suites sa karamihan ng single-family zones (RS). Maaaring magbigay ng incentives ang Affordable Housing program. Permits $1,500–$3,000."
+      },
+      "burnaby": {
+        "title": "City of Burnaby",
+        "description": "Nag-aalok ng grants hanggang $10,000 ang Secondary Suite Program para sa legalization. Nangangailangan ng minimum 1,850 sq ft lot. Suite max 40% ng floor area."
+      },
+      "surrey": {
+        "title": "City of Surrey",
+        "description": "Pinapayagan ang suites sa karamihan ng single-family zones. Streamlined permit process. Kailangan ng isang dagdag na off-street parking space."
+      },
+      "coquitlam": {
+        "title": "City of Coquitlam",
+        "description": "Pinapayagan ang suites sa RS-1 at RS-2 zones. Nangangailangan ng minimum lot size at separate utility meters. Available ang pre-application consultations."
+      }
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Iyong Basement Suite",
+      "tip1": {
+        "title": "Mag-apply ng Municipal Incentives Muna",
+        "description": "Nag-aalok ang Vancouver, Burnaby, at iba pang siyudad ng grants para sa legal suite creation. Mag-apply bago konstruksyon. May mga nangangailangan ng pre-approval. Savings: $5,000–$10,000."
+      },
+      "tip2": {
+        "title": "Mag-plano ng Kitchen Malapit sa Existing Plumbing",
+        "description": "Ang paglagay ng suite kitchen malapit sa existing drain stacks ay nag-save ng libu-libo. Ang pag-iwas sa concrete cutting ay nag-save ng $3,000–$8,000."
+      },
+      "tip3": {
+        "title": "Pumili ng Side-Entry Entrance",
+        "description": "Ang side-entry entrances ay mas mura kaysa sa rear entries na nangangailangan ng major excavation. Savings: $5,000–$10,000."
+      },
+      "tip4": {
+        "title": "Mag-invest sa Soundproofing sa Simula",
+        "description": "Ang resilient channel at insulation sa pagitan ng floors ay $2,000–$4,000 habang konstruksyon. Pagkatapos ng drywall: 3–5x mas mahal at less effective."
+      }
+    },
+    "related": {
+      "title": "I-explore ang mas maraming Renovation Guides",
+      "basementGuide": "General Basement Renovation Guide",
+      "kitchenGuide": "Kitchen Renovation Cost Guide",
+      "bathroomGuide": "Bathroom Renovation Cost Guide",
+      "allGuides": "Lahat ng Cost Guides"
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Basement Suite Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong suite project at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang basement suite sa Vancouver?",
+      "a1": "Ang legal basement suite conversion ay karaniwang $60,000–$150,000. Basic in-law suite: $60,000–$85,000. Standard rental suite: $85,000–$120,000. Premium two-bedroom: $120,000–$150,000+. Average: ~$95,000.",
+      "q2": "Kailangan ko ba ng permit para sa basement suite sa Vancouver?",
+      "a2": "Oo, kailangan ng building permit para sa anumang suite conversion sa Metro Vancouver. Ang permits ay $1,000–$3,500. Asahan ang 4–6 na inspections. Ang pag-operate nang walang permit ay nagre-risk ng fines, insurance issues, at liability.",
+      "q3": "Gaano katagal ang pagtatayo ng basement suite?",
+      "a3": "Karaniwang 10–16 na linggo: permit processing (2–6 na linggo), konstruksyon (8–12 na linggo), at final inspections. Ang complex projects na may structural work ay maaaring tumagal ng 16–20 na linggo.",
+      "q4": "Ano ang minimum ceiling height para sa basement suite sa BC?",
+      "a4": "Ang BC Building Code ay nangangailangan ng minimum 6 feet 5 inches (1.95m) para sa habitable rooms. Kung masyadong mababa ang ceilings, ang underpinning (pagbaba ng floor) ay $15,000–$30,000.",
+      "q5": "Magandang investment ba ang basement suite sa Vancouver?",
+      "a5": "Oo. Ang rental income na $1,800–$2,800/buwan ay nangangahulugan na ang ~$95,000 investment ay nababayaran ang sarili sa 3–5 taon. Ang property value ay tumataas ng 15–25%. Tumutulong din ang suite income sa mortgage qualification."
+    }
+  }
+}

@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "ਫਾਇਨੈਂਸਿੰਗ ਅਤੇ ਬਜਟ ਗਾਈਡ",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "ਰੈਨੋਵੇਸ਼ਨ ਫਾਇਨੈਂਸਿੰਗ ਅਤੇ ਬਜਟ ਗਾਈਡ",
+      "subtitle": "ਆਪਣੇ ਫਾਇਨੈਂਸਿੰਗ ਵਿਕਲਪਾਂ ਦੀ ਖੋਜ ਕਰੋ ਅਤੇ ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ਦਾ ਬਜਟ ਸਮਝਦਾਰੀ ਨਾਲ ਯੋਜਨਾਬੱਧ ਕਰੋ। ਮੈਟਰੋ Vancouver ਭਰ ਵਿੱਚ ਸਾਡੀਆਂ ਮੁਕੰਮਲ ਕੀਤੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਦੇ ਅਸਲ ਪ੍ਰੋਜੈਕਟ ਖਰਚਿਆਂ 'ਤੇ ਆਧਾਰਿਤ।"
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
-      "financingOptions": "Financing Options"
+      "avgKitchen": "ਔਸਤ ਰਸੋਈ ਰੈਨੋ",
+      "avgBathroom": "ਔਸਤ ਬਾਥਰੂਮ ਰੈਨੋ",
+      "financingOptions": "ਫਾਇਨੈਂਸਿੰਗ ਵਿਕਲਪ"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "ਤੁਹਾਡੀ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਫਾਇਨੈਂਸਿੰਗ ਵਿਕਲਪ",
+      "subtitle": "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਕੈਨੇਡੀਅਨ ਘਰ ਦੇ ਮਾਲਕ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ ਫੰਡ ਦੇਣ ਦੇ ਸਭ ਤੋਂ ਆਮ ਤਰੀਕੇ।",
       "heloc": {
-        "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "title": "ਹੋਮ ਇਕਵਿਟੀ ਲਾਈਨ ਆਫ਼ ਕ੍ਰੈਡਿਟ (HELOC)",
+        "rate": "ਆਮ ਦਰ: Prime + 0.5% ਤੋਂ 2%",
+        "description": "ਲਚਕਦਾਰ ਡਰਾਅ ਰਾਸ਼ੀਆਂ ਨਾਲ ਆਪਣੀ ਘਰ ਦੀ ਇਕਵਿਟੀ ਦੇ ਖਿਲਾਫ਼ ਉਧਾਰ ਲਓ। ਸਿਰਫ਼ ਉਹੀ ਵਿਆਜ ਅਦਾ ਕਰੋ ਜੋ ਤੁਸੀਂ ਵਰਤਦੇ ਹੋ। ਜ਼ਿਆਦਾਤਰ ਕੈਨੇਡੀਅਨ ਬੈਂਕਾਂ ਅਤੇ ਕ੍ਰੈਡਿਟ ਯੂਨੀਅਨਾਂ ਤੋਂ ਉਪਲਬਧ।",
+        "pro": "✓ ਘੱਟ ਵਿਆਜ ਦਰਾਂ",
+        "con": "✗ ਘਰ ਦੀ ਇਕਵਿਟੀ ਦੀ ਲੋੜ ਹੈ"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "ਨਿੱਜੀ ਲੋਨ ਜਾਂ ਲਾਈਨ ਆਫ਼ ਕ੍ਰੈਡਿਟ",
+        "rate": "ਆਮ ਦਰ: 6% – 12%",
+        "description": "ਬੈਂਕਾਂ ਜਾਂ ਕ੍ਰੈਡਿਟ ਯੂਨੀਅਨਾਂ ਤੋਂ ਅਣਸੁਰੱਖਿਅਤ ਲੋਨ। ਘਰ ਦੀ ਇਕਵਿਟੀ ਦੀ ਲੋੜ ਨਹੀਂ। ਨਿਸ਼ਚਿਤ ਮਹੀਨਾਵਾਰ ਅਦਾਇਗੀਆਂ ਬਜਟ ਨੂੰ ਅਨੁਮਾਨਯੋਗ ਬਣਾਉਂਦੀਆਂ ਹਨ।",
+        "pro": "✓ ਕਿਸੇ ਜ਼ਮਾਨਤ ਦੀ ਲੋੜ ਨਹੀਂ",
+        "con": "✗ ਉੱਚ ਵਿਆਜ ਦਰਾਂ"
       },
       "refinance": {
-        "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "title": "ਮੋਰਟਗੇਜ ਰੀਫਾਇਨੈਂਸ",
+        "rate": "ਆਮ ਦਰ: ਮੌਜੂਦਾ ਮੋਰਟਗੇਜ ਦਰਾਂ",
+        "description": "ਰੈਨੋਵੇਸ਼ਨ ਖਰਚਿਆਂ ਨੂੰ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਆਪਣੇ ਮੋਰਟਗੇਜ ਨੂੰ ਰੀਫਾਇਨੈਂਸ ਕਰੋ। ਖਰਚਾ ਤੁਹਾਡੇ ਮੋਰਟਗੇਜ ਦੇ ਸਮੇਂ ਵਿੱਚ ਫੈਲਾਉਂਦਾ ਹੈ। ਮਿਆਦ ਦੇ ਵਿਚਕਾਰ ਹੋਣ 'ਤੇ ਬਰੇਕ ਪੈਨਲਟੀ ਹੋ ਸਕਦੀ ਹੈ।",
+        "pro": "✓ ਸਭ ਤੋਂ ਘੱਟ ਸੰਭਵ ਦਰ",
+        "con": "✗ ਸੰਭਾਵੀ ਬਰੇਕ ਫੀਸ"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
-        "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "title": "ਬੱਚਤ ਅਤੇ ਪੜਾਅਵਾਰ ਤਰੀਕਾ",
+        "rate": "ਕੋਈ ਵਿਆਜ ਖਰਚਾ ਨਹੀਂ",
+        "description": "ਬੱਚਤ ਤੋਂ ਅਦਾ ਕਰੋ ਜਾਂ ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਪੜਾਵਾਂ ਵਿੱਚ ਵੰਡੋ। ਖਰਚੇ ਫੈਲਾਉਣ ਲਈ ਇੱਕ ਸਮੇਂ ਵਿੱਚ ਇੱਕ ਕਮਰਾ ਮੁਕੰਮਲ ਕਰੋ। ਕੋਈ ਕਰਜ਼ਾ ਨਹੀਂ ਅਤੇ ਕੋਈ ਵਿਆਜ ਨਹੀਂ।",
+        "pro": "✓ ਜ਼ੀਰੋ ਵਿਆਜ ਖਰਚਾ",
+        "con": "✗ ਲੰਬੀ ਸਮਾਂ-ਸੀਮਾ"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
-      "bathroom": "Bathroom Renovation",
-      "kitchen": "Kitchen Renovation",
-      "basement": "Basement Renovation",
-      "wholeHouse": "Whole House Renovation",
-      "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "title": "ਮੈਟਰੋ Vancouver ਵਿੱਚ ਆਮ ਰੈਨੋਵੇਸ਼ਨ ਖਰਚੇ",
+      "subtitle": "ਸਾਡੇ ਪੋਰਟਫੋਲੀਓ ਤੋਂ ਅਸਲ ਮੁਕੰਮਲ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟਾਂ 'ਤੇ ਆਧਾਰਿਤ।",
+      "bathroom": "ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ",
+      "kitchen": "ਰਸੋਈ ਰੈਨੋਵੇਸ਼ਨ",
+      "basement": "ਬੇਸਮੈਂਟ ਰੈਨੋਵੇਸ਼ਨ",
+      "wholeHouse": "ਪੂਰੇ ਘਰ ਦੀ ਰੈਨੋਵੇਸ਼ਨ",
+      "commercial": "ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ",
+      "disclaimer": "* ਰੇਂਜਾਂ Greater Vancouver ਵਿੱਚ ਸਾਡੇ ਮੁਕੰਮਲ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟਾਂ 'ਤੇ ਆਧਾਰਿਤ ਹਨ। ਅਸਲ ਖਰਚੇ ਘੇਰੇ, ਸਮੱਗਰੀ ਅਤੇ ਟਿਕਾਣੇ ਅਨੁਸਾਰ ਵੱਖ-ਵੱਖ ਹੁੰਦੇ ਹਨ।"
     },
     "tips": {
-      "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "title": "ਬਜਟ ਯੋਜਨਾਬੰਦੀ ਟਿਪਸ",
+      "subtitle": "ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ਦੇ ਨਿਵੇਸ਼ ਦਾ ਵੱਧ ਤੋਂ ਵੱਧ ਲਾਭ ਉਠਾਉਣ ਲਈ ਸਮਾਰਟ ਰਣਨੀਤੀਆਂ।",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "ਉੱਚ-ਪ੍ਰਭਾਵ ਵਾਲੇ ਖੇਤਰਾਂ ਨੂੰ ਪਹਿਲ ਦਿਓ",
+        "description": "ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ ਨਿਵੇਸ਼ 'ਤੇ ਸਭ ਤੋਂ ਵਧੀਆ ਰਿਟਰਨ ਪੇਸ਼ ਕਰਦੇ ਹਨ। ਆਪਣੇ ਬਜਟ ਨੂੰ ਉਹਨਾਂ ਥਾਵਾਂ 'ਤੇ ਕੇਂਦਰਿਤ ਕਰੋ ਜੋ ਰੋਜ਼ਾਨਾ ਜੀਵਨ ਅਤੇ ਮੁੜ-ਵਿਕਰੀ ਮੁੱਲ ਲਈ ਸਭ ਤੋਂ ਮਹੱਤਵਪੂਰਨ ਹਨ।"
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "10–15% ਸੰਕਟਕਾਲੀਨ ਫੰਡ ਅਲੱਗ ਰੱਖੋ",
+        "description": "ਰੈਨੋਵੇਸ਼ਨ ਦੌਰਾਨ ਅਣਕਿਆਸੇ ਖੁਲਾਸੇ ਆਮ ਹਨ, ਪੁਰਾਣੀ ਪਲੰਬਿੰਗ, ਛੁਪੀ ਹੋਈ ਫ਼ਫ਼ੂੰਦੀ, ਜਾਂ ਢਾਂਚਾਗਤ ਮਸਲੇ। ਇੱਕ ਸੰਕਟਕਾਲੀਨ ਫੰਡ ਬਜਟ ਤਣਾਅ ਨੂੰ ਰੋਕਦਾ ਹੈ।"
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "ਪੜਾਅਵਾਰ ਤਰੀਕੇ 'ਤੇ ਵਿਚਾਰ ਕਰੋ",
+        "description": "ਜੇ ਤੁਹਾਡੀ ਕੁੱਲ ਰੈਨੋਵੇਸ਼ਨ ਤੁਹਾਡੇ ਬਜਟ ਤੋਂ ਵੱਧ ਹੈ, ਤਾਂ ਪਹਿਲ ਦਿਓ ਅਤੇ ਕਮਰੇ ਪੜਾਵਾਂ ਵਿੱਚ ਮੁਕੰਮਲ ਕਰੋ। ਇਹ ਖਰਚੇ ਫੈਲਾਉਂਦਾ ਹੈ ਜਦੋਂ ਕਿ ਤੁਹਾਡੇ ਟੀਚਿਆਂ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਦਾ ਹੈ।"
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "ਵਿਸਤ੍ਰਿਤ ਲਿਖਤੀ ਅੰਦਾਜ਼ੇ ਲਓ",
+        "description": "ਹਮੇਸ਼ਾ ਠੇਕੇਦਾਰਾਂ ਤੋਂ ਆਈਟਮ-ਵਾਰ ਅੰਦਾਜ਼ੇ ਮੰਗੋ। ਕੰਮ ਦੇ ਘੇਰੇ ਦੀ ਤੁਲਨਾ ਕਰੋ, ਨਾ ਕਿ ਸਿਰਫ਼ ਕੁੱਲ ਕੀਮਤ ਦੀ। ਘੱਟ ਅੰਦਾਜ਼ਾ ਉਹਨਾਂ ਚੀਜ਼ਾਂ ਨੂੰ ਛੱਡ ਸਕਦਾ ਹੈ ਜਿਨ੍ਹਾਂ ਦੀ ਤੁਹਾਨੂੰ ਲੋੜ ਹੈ।"
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਜਾਂਚਾਂ ਲਈ ਬਜਟ",
+        "description": "ਮੈਟਰੋ Vancouver ਵਿੱਚ ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਆਮ ਤੌਰ 'ਤੇ ਘੇਰੇ ਅਨੁਸਾਰ $200–$2,000+ ਖਰਚ ਹੁੰਦੇ ਹਨ। ਪਰਮਿਟ ਛੱਡਣ ਨਾਲ ਮੁੜ-ਵਿਕਰੀ ਦੌਰਾਨ ਮਹਿੰਗੀਆਂ ਸਮੱਸਿਆਵਾਂ ਹੋ ਸਕਦੀਆਂ ਹਨ।"
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "ਨਿਵੇਸ਼ 'ਤੇ ਰਿਟਰਨ ਬਾਰੇ ਸੋਚੋ",
+        "description": "ਰਸੋਈ ਦੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਮੁੜ-ਵਿਕਰੀ 'ਤੇ ਖਰਚਿਆਂ ਦਾ 75–100% ਵਾਪਸ ਕਰ ਸਕਦੀਆਂ ਹਨ। ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨਾਂ 60–70% ਵਾਪਸ ਕਰਦੀਆਂ ਹਨ। ਬੇਸਮੈਂਟ ਸੂਟ ਖਰਚਿਆਂ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਕਿਰਾਏ ਦੀ ਆਮਦਨ ਪੈਦਾ ਕਰ ਸਕਦੇ ਹਨ।"
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "Vancouver ਵਿੱਚ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਮੈਨੂੰ ਕਿੰਨਾ ਬਜਟ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "a1": "ਬਜਟ ਘੇਰੇ 'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ: ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨਾਂ $10,000–$60,000, ਰਸੋਈਆਂ $15,000–$72,000, ਅਤੇ ਪੂਰੇ ਘਰ ਦੇ ਪ੍ਰੋਜੈਕਟ $50,000+ ਤੱਕ ਹਨ। ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਖਾਸ ਲੋੜਾਂ 'ਤੇ ਆਧਾਰਿਤ ਮੁਫ਼ਤ ਵਿਸਤ੍ਰਿਤ ਅੰਦਾਜ਼ੇ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।",
+      "q1Answer": "ਬਜਟ ਘੇਰੇ 'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ: ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨਾਂ $10,000–$60,000, ਰਸੋਈਆਂ $15,000–$72,000, ਅਤੇ ਪੂਰੇ ਘਰ ਦੇ ਪ੍ਰੋਜੈਕਟ $50,000+ ਤੱਕ ਹਨ। ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਖਾਸ ਲੋੜਾਂ 'ਤੇ ਆਧਾਰਿਤ ਮੁਫ਼ਤ ਵਿਸਤ੍ਰਿਤ ਅੰਦਾਜ਼ੇ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।",
+      "q2": "ਕੀ ਮੈਂ ਛੋਟੇ ਬਜਟ ਨਾਲ ਰੈਨੋਵੇਟ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "a2": "ਜੀ ਹਾਂ! ਅਸੀਂ ਵੱਖ-ਵੱਖ ਬਜਟ ਪੱਧਰਾਂ ਨਾਲ ਕੰਮ ਕਰਦੇ ਹਾਂ। ਪੜਾਅਵਾਰ ਤਰੀਕਾ ਤੁਹਾਨੂੰ ਪਹਿਲ ਵਾਲੇ ਖੇਤਰਾਂ ਨੂੰ ਪਹਿਲਾਂ ਮੁਕੰਮਲ ਕਰਨ ਦਿੰਦਾ ਹੈ। ਕੈਬਿਨੇਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ($3,000–$8,000) ਪੂਰੀ ਰਸੋਈ ਬਦਲਣ ਦਾ ਇੱਕ ਲਾਗਤ-ਪ੍ਰਭਾਵੀ ਬਦਲ ਹੈ।",
+      "q2Answer": "ਜੀ ਹਾਂ! ਅਸੀਂ ਵੱਖ-ਵੱਖ ਬਜਟ ਪੱਧਰਾਂ ਨਾਲ ਕੰਮ ਕਰਦੇ ਹਾਂ। ਪੜਾਅਵਾਰ ਤਰੀਕਾ ਤੁਹਾਨੂੰ ਪਹਿਲ ਵਾਲੇ ਖੇਤਰਾਂ ਨੂੰ ਪਹਿਲਾਂ ਮੁਕੰਮਲ ਕਰਨ ਦਿੰਦਾ ਹੈ। ਕੈਬਿਨੇਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ($3,000–$8,000) ਪੂਰੀ ਰਸੋਈ ਬਦਲਣ ਦਾ ਇੱਕ ਲਾਗਤ-ਪ੍ਰਭਾਵੀ ਬਦਲ ਹੈ।",
+      "q3": "ਕੀ ਤੁਸੀਂ ਅਦਾਇਗੀ ਯੋਜਨਾਵਾਂ ਪੇਸ਼ ਕਰਦੇ ਹੋ?",
+      "a3": "ਅਸੀਂ ਇੱਕ ਮਿਆਰੀ ਅਦਾਇਗੀ ਸ਼ਡਿਊਲ ਦੀ ਪਾਲਣਾ ਕਰਦੇ ਹਾਂ: ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਦੀ ਤਾਰੀਖ਼ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਇੱਕ ਡਿਪਾਜ਼ਿਟ, ਮੁੱਖ ਮੀਲ ਪੱਥਰਾਂ 'ਤੇ ਪ੍ਰਗਤੀ ਅਦਾਇਗੀਆਂ, ਅਤੇ ਮੁਕੰਮਲਤਾ ਅਤੇ ਤੁਹਾਡੀ ਸੰਤੁਸ਼ਟੀ 'ਤੇ ਅੰਤਿਮ ਅਦਾਇਗੀ।",
+      "q3Answer": "ਅਸੀਂ ਇੱਕ ਮਿਆਰੀ ਅਦਾਇਗੀ ਸ਼ਡਿਊਲ ਦੀ ਪਾਲਣਾ ਕਰਦੇ ਹਾਂ: ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਦੀ ਤਾਰੀਖ਼ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਇੱਕ ਡਿਪਾਜ਼ਿਟ, ਮੁੱਖ ਮੀਲ ਪੱਥਰਾਂ 'ਤੇ ਪ੍ਰਗਤੀ ਅਦਾਇਗੀਆਂ, ਅਤੇ ਮੁਕੰਮਲਤਾ ਅਤੇ ਤੁਹਾਡੀ ਸੰਤੁਸ਼ਟੀ 'ਤੇ ਅੰਤਿਮ ਅਦਾਇਗੀ।",
+      "q4": "ਰੈਨੋਵੇਸ਼ਨ ਅੰਦਾਜ਼ੇ ਵਿੱਚ ਕੀ ਸ਼ਾਮਲ ਹੈ?",
+      "a4": "ਸਾਡੇ ਅੰਦਾਜ਼ਿਆਂ ਵਿੱਚ ਮਜ਼ਦੂਰੀ, ਸਮੱਗਰੀ, ਪ੍ਰੋਜੈਕਟ ਪ੍ਰਬੰਧਨ, ਪਰਮਿਟ (ਜੇ ਲਾਗੂ ਹੋਣ), ਅਤੇ ਸਫ਼ਾਈ ਸ਼ਾਮਲ ਹੈ। ਅਸੀਂ ਆਈਟਮ-ਵਾਰ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ ਤਾਂ ਜੋ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸਮਝ ਸਕੋ ਕਿ ਤੁਹਾਡਾ ਬਜਟ ਕਿੱਥੇ ਜਾਂਦਾ ਹੈ।",
+      "q4Answer": "ਸਾਡੇ ਅੰਦਾਜ਼ਿਆਂ ਵਿੱਚ ਮਜ਼ਦੂਰੀ, ਸਮੱਗਰੀ, ਪ੍ਰੋਜੈਕਟ ਪ੍ਰਬੰਧਨ, ਪਰਮਿਟ (ਜੇ ਲਾਗੂ ਹੋਣ), ਅਤੇ ਸਫ਼ਾਈ ਸ਼ਾਮਲ ਹੈ। ਅਸੀਂ ਆਈਟਮ-ਵਾਰ ਵੇਰਵੇ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ ਤਾਂ ਜੋ ਤੁਸੀਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸਮਝ ਸਕੋ ਕਿ ਤੁਹਾਡਾ ਬਜਟ ਕਿੱਥੇ ਜਾਂਦਾ ਹੈ।",
+      "q5": "ਮੈਂ ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ROI ਨੂੰ ਕਿਵੇਂ ਵੱਧ ਤੋਂ ਵੱਧ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "a5": "ਸਭ ਤੋਂ ਵਧੀਆ ਮੁੜ-ਵਿਕਰੀ ਰਿਟਰਨ ਲਈ ਰਸੋਈਆਂ ਅਤੇ ਬਾਥਰੂਮਾਂ 'ਤੇ ਧਿਆਨ ਕੇਂਦਰਿਤ ਕਰੋ। ਟਿਕਾਊ ਉੱਚ-ਗੁਣਵੱਤਾ ਵਾਲੀਆਂ ਸਮੱਗਰੀਆਂ ਵਰਤੋ। ਕਿਰਾਏ ਦੀ ਆਮਦਨ ਲਈ ਬੇਸਮੈਂਟ ਸੂਟ 'ਤੇ ਵਿਚਾਰ ਕਰੋ। ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਜੀਵਨ ਸ਼ੈਲੀ ਦੀਆਂ ਲੋੜਾਂ ਨੂੰ ਲੰਬੇ ਸਮੇਂ ਦੇ ਮੁੱਲ ਨਾਲ ਸੰਤੁਲਿਤ ਕਰਨ ਵਾਲੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਦੀ ਯੋਜਨਾ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰਦੇ ਹਾਂ।",
+      "q5Answer": "ਸਭ ਤੋਂ ਵਧੀਆ ਮੁੜ-ਵਿਕਰੀ ਰਿਟਰਨ ਲਈ ਰਸੋਈਆਂ ਅਤੇ ਬਾਥਰੂਮਾਂ 'ਤੇ ਧਿਆਨ ਕੇਂਦਰਿਤ ਕਰੋ। ਟਿਕਾਊ ਉੱਚ-ਗੁਣਵੱਤਾ ਵਾਲੀਆਂ ਸਮੱਗਰੀਆਂ ਵਰਤੋ। ਕਿਰਾਏ ਦੀ ਆਮਦਨ ਲਈ ਬੇਸਮੈਂਟ ਸੂਟ 'ਤੇ ਵਿਚਾਰ ਕਰੋ। ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਜੀਵਨ ਸ਼ੈਲੀ ਦੀਆਂ ਲੋੜਾਂ ਨੂੰ ਲੰਬੇ ਸਮੇਂ ਦੇ ਮੁੱਲ ਨਾਲ ਸੰਤੁਲਿਤ ਕਰਨ ਵਾਲੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਦੀ ਯੋਜਨਾ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰਦੇ ਹਾਂ।"
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "ਆਪਣਾ ਰੈਨੋਵੇਸ਼ਨ ਬਜਟ ਯੋਜਨਾਬੱਧ ਕਰਨ ਲਈ ਤਿਆਰ ਹੋ?",
+      "subtitle": "ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਅਤੇ ਟੀਚਿਆਂ ਅਨੁਸਾਰ ਤਿਆਰ ਕੀਤੇ ਵਿਸਤ੍ਰਿਤ ਖਰਚ ਅੰਦਾਜ਼ੇ ਨਾਲ ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰਾ ਪ੍ਰਾਪਤ ਕਰੋ।"
     }
   }
 }

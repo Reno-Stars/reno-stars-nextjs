@@ -1,146 +1,146 @@
 {
   "aboutPage": {
     "hero": {
-      "title": "About Reno Stars",
-      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
+      "title": "Tungkol sa Reno Stars",
+      "subtitle": "Itinatag sa karanasan, hindi lang sa konstruksyon, kundi sa pag-unawa sa renovation industry mula sa magkabilang panig."
     },
     "journey": {
-      "title": "About Reno Stars",
-      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
-      "painPointsTitle": "We understand the common frustrations homeowners face.",
+      "title": "Tungkol sa Reno Stars",
+      "body": "Itinatag ang Reno Stars sa karanasan. Hindi lang sa konstruksyon kundi sa pag-unawa sa renovation industry mula sa magkabilang panig.\n\nBago itinatag ang Reno Stars noong 2021, ang aming team ay gumugol ng maraming taon sa mga renovation platform, nag-uugnay ng mga homeowner sa mga contractor. Nakita namin ang libu-libong proyekto mula simula hanggang katapusan, at higit sa lahat, nakita namin kung saan nagkakamali.\n\nNauunawaan namin ang mga karaniwang frustration ng mga homeowner: mga quote na lumalaki dahil sa nakatagong items, hindi maayos na komunikasyon at delayed na sagot, hindi tiyak na timeline, at hindi pare-parehong workmanship dahil sa hindi stable na crew. Hindi ito mga bihirang isyu. Karaniwan ito sa industriya. Iyan mismo ang dahilan kung bakit ginawa ang Reno Stars.",
+      "lead": "Itinatag ang Reno Stars sa karanasan, hindi lang sa konstruksyon, kundi sa pag-unawa sa renovation industry mula sa magkabilang panig.",
+      "context": "Bago itinatag ang Reno Stars noong 2021, ang aming team ay gumugol ng maraming taon sa mga renovation platform, nag-uugnay ng mga homeowner sa mga contractor. Nakita namin ang libu-libong proyekto mula simula hanggang katapusan, at higit sa lahat, nakita namin kung saan nagkakamali.",
+      "painPointsTitle": "Nauunawaan namin ang mga karaniwang frustration ng mga homeowner.",
       "painPoints": [
-        "Quotes that look attractive at first but grow with hidden items later.",
-        "Poor communication and delayed responses.",
-        "Uncertain timelines and projects dragging on.",
-        "Inconsistent workmanship due to unstable crews."
+        "Mga quote na mukhang mura sa simula pero lumalaki dahil sa nakatagong items.",
+        "Hindi maayos na komunikasyon at delayed na sagot.",
+        "Hindi tiyak na timeline at proyektong tumatagal.",
+        "Hindi pare-parehong workmanship dahil sa hindi stable na crew."
       ],
-      "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
+      "conclusion": "Hindi ito mga bihirang isyu. Karaniwan ito sa industriya. Iyan mismo ang dahilan kung bakit ginawa ang Reno Stars."
     },
     "stats": {
-      "years": "Years Experience",
-      "projects": "Projects Completed",
+      "years": "Taon ng Karanasan",
+      "projects": "Natapos na Proyekto",
       "team": "Team Members",
       "insurance": "CGL Insurance",
-      "wcbCoverage": "Active WCB Coverage"
+      "wcbCoverage": "Active na WCB Coverage"
     },
     "offer": {
-      "title": "A More Structured, Transparent Approach",
-      "viewAll": "View All Services",
+      "title": "Mas Maayos at Transparent na Approach",
+      "viewAll": "Tingnan Lahat ng Serbisyo",
       "services": {
         "kitchen": {
           "title": "Kitchen Renovation",
-          "desc": "Custom cabinetry, countertops, backsplashes, and complete kitchen transformations tailored to your lifestyle."
+          "desc": "Custom cabinetry, countertops, backsplashes, at kompletong kitchen transformation na akma sa iyong lifestyle."
         },
         "bathroom": {
           "title": "Bathroom Renovation",
-          "desc": "Modern fixtures, tile work, vanities, and spa-inspired designs that maximize your space."
+          "desc": "Modernong fixtures, tile work, vanities, at spa-inspired designs na nagma-maximize ng iyong espasyo."
         },
         "wholeHouse": {
           "title": "Whole House Renovation",
-          "desc": "Comprehensive home remodels including structural work, flooring, lighting, and finishing touches."
+          "desc": "Komprehensibong home remodels kasama ang structural work, flooring, lighting, at finishing touches."
         },
         "commercial": {
           "title": "Commercial Renovation",
-          "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
+          "desc": "Mga professional commercial space na dinisenyo para sa functionality, compliance, at pangmatagalang impresyon."
         }
       },
-      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
-      "systemTitle": "Every project is supported by a structured system.",
+      "body": "Patuloy din kaming bumubuo ng internal construction at inspection standards para mas mapaganda ang consistency at quality.",
+      "lead": "Hindi lang kami nag-umpisa ng isa pang renovation company. Binago namin ang proseso.",
+      "goal": "Mula sa simula, simple lang ang aming layunin. Gawing predictable, transparent, at stress-free ang renovation.",
+      "systemTitle": "Bawat proyekto ay sinusuportahan ng structured system.",
       "systemItems": [
         {
-          "title": "Detailed Contracts",
-          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
+          "title": "Detalyadong Kontrata",
+          "desc": "Malinaw sa aming quotes ang scope, responsibilities, at mga key materials. Sa typical bathroom renovation, maaaring kasama ang mahigit 20 malinaw na nakalistang items, kaya alam mo nang eksakto kung ano ang kasama at hindi."
         },
         {
-          "title": "Clear Payment Milestones",
-          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
+          "title": "Malinaw na Payment Milestones",
+          "desc": "Ang mga payment ay nakatali sa progress. Bawat stage ay tinatapos at sinusuri bago lumipat sa susunod, walang sorpresa."
         },
         {
-          "title": "Dedicated Coordination",
-          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
+          "title": "Dedicated na Coordination",
+          "desc": "Ang aming office team ay mabilis sumagot, tumutulong sa material selection, at sinisigurong walang nawawalang impormasyon sa komunikasyon."
         },
         {
-          "title": "Reliable Scheduling",
-          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
+          "title": "Maaasahang Scheduling",
+          "desc": "Hindi kami nag-o-overbook. Ang iyong proyekto ay umuusad ayon sa plano, hindi lang kapag convenient para sa amin."
         },
         {
-          "title": "Quality and Waterproofing Standards",
-          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
+          "title": "Quality at Waterproofing Standards",
+          "desc": "Malinaw naming tinutukoy ang mga materyales at application areas, lalo na sa mga critical na elemento tulad ng waterproofing."
         }
       ]
     },
     "values": {
-      "title": "Managing Details and Expectations",
+      "title": "Pamamahala ng mga Detalye at Inaasahan",
       "items": {
         "integrity": {
-          "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
+          "title": "Integridad",
+          "desc": "Tinutupad namin ang aming pangako at nagko-komunikasyon nang totoo sa bawat stage. Walang nakatagong bayarin, walang scope creep, malinaw lang na kasunduan at follow-through."
         },
         "quality": {
           "title": "Quality Craftsmanship",
-          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
+          "desc": "Bawat detalye ay mahalaga. Tinutukoy namin nang maaga ang materyales, ginagamit ang subok na pamamaraan, at patuloy na binubuo ang internal standards para sa pangmatagalang resulta."
         },
         "transparency": {
           "title": "Transparency",
-          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
+          "desc": "Detalyadong kontrata na may 20+ na line items, payment milestones na nakatali sa progress, at regular na update, kaya laging alam mo kung saan na ang iyong proyekto."
         },
         "satisfaction": {
-          "title": "Client Satisfaction",
-          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+          "title": "Kasiyahan ng Kliyente",
+          "desc": "Hindi lang namin tinatapos ang proyekto, pinamamahalaan namin ito. Mabilis na sagot, proactive na komunikasyon, at full accountability mula simula hanggang katapusan."
         }
       },
-      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
-      "guarantee": "What we can guarantee is our response.",
+      "body": "Maraming bahagi ang renovation, mula sa materyales hanggang sa scheduling. Bagama't maingat kami sa pagpaplano at coordination, may mga factor tulad ng supplier timeline na minsan ay hindi namin kontrolado.\n\nAng matitiyak namin ay ang aming pagsagot. Maaga kaming nagko-komunikasyon, mabilis na nag-a-adjust, at pinapanatiling updated ang aming mga kliyente sa bawat stage, kaya walang sorpresa at walang kawalan ng katiyakan. Ang aming layunin ay hindi ang mangako ng perpektong proseso, kundi maghatid ng maayos na pamahalaang isa.",
+      "lead": "Maraming bahagi ang renovation, mula sa materyales hanggang sa scheduling. Bagama't maingat kami sa pagpaplano at coordination, may mga factor tulad ng supplier timeline na minsan ay hindi namin kontrolado.",
+      "guarantee": "Ang matitiyak namin ay ang aming pagsagot.",
       "guaranteeItems": [
-        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
+        "Maaga kaming nagko-komunikasyon, mabilis na nag-a-adjust, at pinapanatiling updated ang aming mga kliyente sa bawat stage, kaya walang sorpresa at walang kawalan ng katiyakan."
       ],
-      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
+      "closing": "Ang aming layunin ay hindi ang mangako ng perpektong proseso, kundi maghatid ng maayos na pamahalaang proseso."
     },
     "whyUs": {
-      "title": "Built for Homeowners Who Value Peace of Mind",
-      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want",
+      "title": "Ginawa para sa mga Homeowner na Pinahahalagahan ang Peace of Mind",
+      "body": "Hindi kami ang pinakamurang option, at hindi rin namin gusto. Pinipili kami ng aming mga kliyente dahil gusto nila ng malinaw na proseso, totoong komunikasyon, maaasahang timeline, at team na may pananagutan.\n\nDalubhasa kami sa full home renovation, kitchen, bathroom, at commercial projects, kung saan mahalaga ang coordination, detalye, at reliability. Ina-approach namin ang bawat proyekto na may iisang simpleng mindset: tratuhin ang bawat bahay na parang sa amin. Dahil sa huli, ang renovation ay hindi lang tungkol sa pagbuo ng espasyo, ito ay tungkol sa pagbuo ng tiwala.",
+      "lead": "Hindi kami ang pinakamurang option, at hindi rin namin gusto.",
+      "chooseTitle": "Pinipili kami ng aming mga kliyente dahil gusto nila ng",
       "chooseItems": [
-        "A clear process",
-        "Honest communication",
-        "Reliable timelines",
-        "A team that takes responsibility"
+        "Malinaw na proseso",
+        "Totoong komunikasyon",
+        "Maaasahang timeline",
+        "Team na may pananagutan"
       ],
-      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
+      "specialise": "Dalubhasa kami sa full home renovation, kitchen, bathroom, at commercial projects, kung saan mahalaga ang coordination, detalye, at reliability."
     },
     "areas": {
       "title": "Service Areas",
-      "description": "We proudly serve homeowners across Metro Vancouver and the Fraser Valley, bringing quality renovation services to communities throughout British Columbia."
+      "description": "Ipinagmamalaki naming pagsisilbihan ang mga homeowner sa buong Metro Vancouver at Fraser Valley, naghahatid ng quality renovation services sa mga komunidad sa British Columbia."
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": "How long has Reno Stars been in business?",
-      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
-      "q2": "Are you licensed and insured?",
-      "a2": "Yes, we are fully licensed with up to $5 million in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage. CGL protects your property during the renovation, while WCB ensures all workers on your job site are covered. We also provide up to a 3-year warranty on our work.",
-      "q3": "What areas do you serve?",
-      "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
-      "q4": "How do I get started with a renovation project?",
-      "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
-      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
-      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+      "title": "Mga Madalas Itanong",
+      "q1": "Gaano katagal nang nag-o-operate ang Reno Stars?",
+      "a1": "May higit sa {years} na taong combined experience ang Reno Stars sa industriya ng Vancouver renovation. Ang aming team ay nakatapos ng daan-daang proyekto sa Metro Vancouver, mula sa maliit na bathroom update hanggang full-scale whole house renovations.",
+      "q2": "Lisensyado at insured ba kayo?",
+      "a2": "Oo, kami ay fully licensed at may hanggang $5 million CGL (Commercial General Liability) insurance at active na WCB (WorkSafeBC) coverage. Ang CGL ay nagpoprotekta sa iyong property habang nagre-renovate, habang sinisigurado ng WCB na ang lahat ng manggagawa sa iyong job site ay covered. Nag-aalok din kami ng hanggang 3 taong warranty sa aming trabaho.",
+      "q3": "Anong mga lugar ang sinisilbihan ninyo?",
+      "a3": "Nagsisilbi kami sa buong Metro Vancouver at Fraser Valley, kasama ang Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, at Port Moody.",
+      "q4": "Paano ako magsisimula ng renovation project?",
+      "a4": "Madali lang magsimula! I-contact lang kami sa telepono, email, o sa aming online form para mag-schedule ng libreng konsultasyon. Pag-uusapan namin ang iyong vision, susuriin ang iyong espasyo, at magbibigay ng detalyadong quote na akma sa iyong needs at budget.",
+      "q5": "Ano ang ipinagkaiba ng Reno Stars sa ibang Vancouver renovation contractors?",
+      "a5": "Binago namin ang renovation process mula sa simula. Bago itinatag ang Reno Stars, ang aming team ay gumugol ng maraming taon sa renovation platforms at nakita kung saan palaging nagkakamali. Ang aming structured approach, detalyadong kontrata, milestone-based payments, dedicated coordination, at maaasahang scheduling ay tumutugon sa mga totoong pain points ng homeowners. Hindi kami ang pinakamura, pero kami ang pinaka-accountable."
     },
     "cta": {
-      "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "title": "Handa na bang Simulan ang Iyong Renovation?",
+      "getQuote": "Kumuha ng Libreng Quote",
+      "body": "Handa ka na bang maranasan ang renovation process na ginawa sa paligid ng transparency, reliability, at iyong peace of mind? I-contact kami ngayon para sa libre at detalyadong quote, at alamin kung bakit nagtitiwala sa Reno Stars ang mga homeowner sa buong Metro Vancouver."
     },
     "philosophy": {
-      "title": "Our Philosophy",
-      "lead": "We approach every project with one simple mindset.",
-      "quote": "Treat every home as if it were our own.",
-      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
+      "title": "Ang Aming Pilosopiya",
+      "lead": "Ina-approach namin ang bawat proyekto na may iisang simpleng mindset.",
+      "quote": "Tratuhin ang bawat bahay na parang sa amin.",
+      "closing": "Dahil sa huli, ang renovation ay hindi lang tungkol sa pagbuo ng espasyo, ito ay tungkol sa pagbuo ng tiwala."
     }
   }
 }

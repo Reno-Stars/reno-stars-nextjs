@@ -1,18 +1,18 @@
 {
   "label": {
-    "phone": "Phone",
+    "phone": "Điện Thoại",
     "email": "Email",
-    "address": "Address",
-    "location": "Location",
-    "contact": "Contact",
-    "quality": "Quality",
-    "whyChooseUs": "Why Choose Us",
-    "verifiedCustomer": "Verified Customer",
-    "new": "NEW",
-    "new2": "New",
-    "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
-    "featured": "Featured"
+    "address": "Địa Chỉ",
+    "location": "Vị Trí",
+    "contact": "Liên Hệ",
+    "quality": "Chất Lượng",
+    "whyChooseUs": "Vì Sao Chọn Chúng Tôi",
+    "verifiedCustomer": "Khách Hàng Đã Xác Minh",
+    "new": "MỚI",
+    "new2": "Mới",
+    "businessHours": "Giờ Làm Việc",
+    "businessHoursShort": "T2–T6 8h–18h, T7 9h–16h",
+    "businessHoursDetail": "Thứ Hai - Thứ Sáu: 8:00 - 18:00\nThứ Bảy: 9:00 - 16:00\nChủ Nhật: Đóng cửa",
+    "featured": "Nổi Bật"
   }
 }

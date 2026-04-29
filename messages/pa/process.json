@@ -1,36 +1,36 @@
 {
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "title": "ਰੈਨੋਵੇਸ਼ਨ ਸੇਵਾ ਕਾਰਜਪ੍ਰਣਾਲੀ: 5 ਕਦਮ",
+      "subtitle": "ਸਲਾਹ-ਮਸ਼ਵਰੇ ਤੋਂ ਮੁਕੰਮਲ ਹੋਣ ਤੱਕ",
+      "googleReviews": "Google ਸਮੀਖਿਆਵਾਂ",
+      "stepLabel": "ਕਦਮ {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "PNG ਡਾਊਨਲੋਡ ਕਰੋ",
+    "downloadPdf": "PDF ਡਾਊਨਲੋਡ ਕਰੋ",
+    "downloadSuccess": "ਡਾਊਨਲੋਡ ਹੋ ਗਿਆ!",
+    "downloadError": "ਅਸਫਲ",
+    "downloadPosterHint": "PNG ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
+    "downloadPdfHint": "PDF ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
     "step1": {
-      "title": "Initial Consultation",
-      "subtitle": "Discovery",
+      "title": "ਸ਼ੁਰੂਆਤੀ ਸਲਾਹ-ਮਸ਼ਵਰਾ",
+      "subtitle": "ਖੋਜ",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "ਫ਼ੋਨ, ਈਮੇਲ, WhatsApp, WeChat, ਜਾਂ SMS ਰਾਹੀਂ ਸ਼ੁਰੂਆਤੀ ਸੰਪਰਕ",
+        "ਰੈਨੋਵੇਸ਼ਨ ਖੇਤਰਾਂ ਦੀ ਪੁਸ਼ਟੀ: ਰਸੋਈ, ਡਰਾਇੰਗ ਰੂਮ, ਬਾਥਰੂਮ, ਜਾਂ ਪੂਰਾ ਘਰ",
+        "ਸ਼ੈਲੀ ਪਸੰਦ ਦੀ ਪੁਸ਼ਟੀ",
+        "ਸਮੱਗਰੀ ਬਜਟ ਅਤੇ ਪੋਜੀਸ਼ਨਿੰਗ",
+        "ਰੈਨੋਵੇਸ਼ਨ ਦੀਆਂ ਲੋੜਾਂ ਅਤੇ ਉਮੀਦਾਂ ਨੂੰ ਸਮਝਣਾ",
+        "ਫਲੋਰ ਪਲਾਨ ਅਤੇ ਸਾਈਟ ਫੋਟੋ ਪ੍ਰਾਪਤ ਕਰੋ (ਜੇ ਉਪਲਬਧ ਹੋਣ)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "ਫ਼ੋਨ"
         },
         {
           "icon": "email",
-          "label": "Email"
+          "label": "ਈਮੇਲ"
         },
         {
           "icon": "whatsapp",
@@ -45,124 +45,124 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "ਅਸੀਂ ਸ਼ੁਰੂਆਤੀ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਨਾਲ ਸ਼ੁਰੂ ਕਰਦੇ ਹਾਂ ਜਿੱਥੇ ਤੁਸੀਂ ਸਾਨੂੰ ਫ਼ੋਨ, ਈਮੇਲ, WhatsApp, WeChat, ਜਾਂ SMS ਰਾਹੀਂ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ। ਅਸੀਂ ਤੁਹਾਡੀਆਂ ਰੈਨੋਵੇਸ਼ਨ ਲੋੜਾਂ, ਸ਼ੈਲੀ ਪਸੰਦ, ਬਜਟ ਬਾਰੇ ਚਰਚਾ ਕਰਾਂਗੇ ਅਤੇ ਕੋਈ ਵੀ ਮੌਜੂਦਾ ਫਲੋਰ ਪਲਾਨ ਜਾਂ ਫੋਟੋ ਇਕੱਠੇ ਕਰਾਂਗੇ।"
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "ਅਨੁਕੂਲਿਤ ਮੁਲਾਂਕਣ ਅਤੇ ਕੋਟ",
+      "subtitle": "ਆਨ-ਸਾਈਟ ਮਾਪ (ਜੇ ਲੋੜ ਹੋਵੇ) ਅਤੇ ਪਾਰਦਰਸ਼ੀ ਕੀਮਤਾਂ",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "ਸਟੀਕ ਮਾਪਾਂ ਲਈ ਪੇਸ਼ੇਵਰ ਆਨ-ਸਾਈਟ ਮਾਪ (ਜੇ ਲੋੜ ਹੋਵੇ)",
+        "ਤੁਹਾਡੀ ਭਵਿੱਖੀ ਥਾਂ ਨੂੰ ਦਰਸਾਉਂਦਾ ਇੱਕ ਵਿਆਪਕ ਡਿਜ਼ਾਈਨ ਪ੍ਰਸਤਾਵ",
+        "ਸਪਸ਼ਟ ਤੌਰ 'ਤੇ ਪਰਿਭਾਸ਼ਿਤ ਕੰਮ ਦਾ ਘੇਰਾ, ਪ੍ਰੋਜੈਕਟ ਸਮਾਂ-ਸਾਰਣੀ, ਪਰਮਿਟ ਲੋੜਾਂ, ਅਤੇ ਸਮੱਗਰੀ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+        "ਪ੍ਰਸਤਾਵਿਤ ਡਿਜ਼ਾਈਨ ਅਤੇ ਘੇਰੇ ਦੇ ਅਨੁਕੂਲ ਇੱਕ ਸਪਸ਼ਟ ਅਤੇ ਪਾਰਦਰਸ਼ੀ ਕੋਟੇਸ਼ਨ, ਪ੍ਰਕਿਰਿਆ ਦੌਰਾਨ ਪੂਰੀ ਸਪੱਸ਼ਟਤਾ ਅਤੇ ਅਨੁਮਾਨ ਯੋਗਤਾ ਨੂੰ ਯਕੀਨੀ ਬਣਾਉਣਾ"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "ਸਟੀਕ ਮਾਪ"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "ਪਾਰਦਰਸ਼ੀ ਕੀਮਤਾਂ"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "ਡਿਜ਼ਾਈਨ ਪ੍ਰਸਤਾਵ"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "ਜਦੋਂ ਲੋੜ ਹੋਵੇ ਤਾਂ ਅਸੀਂ ਪੇਸ਼ੇਵਰ ਆਨ-ਸਾਈਟ ਮਾਪ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ ਅਤੇ ਤੁਹਾਡੀ ਥਾਂ ਲਈ ਇੱਕ ਵਿਆਪਕ ਡਿਜ਼ਾਈਨ ਪ੍ਰਸਤਾਵ ਬਣਾਉਂਦੇ ਹਾਂ। ਤੁਹਾਨੂੰ ਸਪਸ਼ਟ ਤੌਰ 'ਤੇ ਪਰਿਭਾਸ਼ਿਤ ਕੰਮ ਦਾ ਘੇਰਾ, ਸਮਾਂ-ਸਾਰਣੀ, ਪਰਮਿਟ ਲੋੜਾਂ, ਅਤੇ ਪ੍ਰਸਤਾਵਿਤ ਡਿਜ਼ਾਈਨ ਨਾਲ ਮੇਲ ਖਾਂਦੀ ਪਾਰਦਰਸ਼ੀ ਕੋਟੇਸ਼ਨ ਮਿਲੇਗੀ।"
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "ਪੁਸ਼ਟੀ ਅਤੇ ਇਕਰਾਰਨਾਮਾ",
+      "subtitle": "ਵੇਰਵਿਆਂ ਨੂੰ ਅੰਤਿਮ ਰੂਪ ਦੇਣਾ ਅਤੇ ਪ੍ਰੋਜੈਕਟ ਸ਼ੁਰੂ ਕਰਨਾ",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "ਆਹਮੋ-ਸਾਹਮਣੇ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਲਈ ਗਾਹਕਾਂ ਨੂੰ ਸ਼ੋਅਰੂਮ ਸੱਦਾ",
+        "ਸਵਾਲਾਂ ਨੂੰ ਸੰਬੋਧਿਤ ਕਰਨਾ ਅਤੇ ਡਿਜ਼ਾਈਨ ਵੇਰਵਿਆਂ ਨੂੰ ਅਨੁਕੂਲ ਬਣਾਉਣਾ",
+        "ਡਿਜ਼ਾਈਨ ਪ੍ਰਸਤਾਵ ਅਤੇ ਸਮੱਗਰੀ ਦੇ ਨਮੂਨੇ ਦੀ ਪੁਸ਼ਟੀ",
+        "ਭੁਗਤਾਨ ਸਮਾਂ-ਸਾਰਣੀ ਨੂੰ ਅੰਤਿਮ ਰੂਪ ਦੇਣਾ ਅਤੇ ਡਿਲੀਵਰੀ ਸਮਾਂ-ਸਾਰਣੀ ਵਿੱਚ ਸਹਾਇਤਾ",
+        "ਉਸਾਰੀ ਇਕਰਾਰਨਾਮੇ 'ਤੇ ਦਸਤਖਤ ਅਤੇ ਡਿਪਾਜ਼ਿਟ ਇਕੱਤਰ ਕਰਨਾ",
+        "ਪ੍ਰੋਜੈਕਟ ਸ਼ੁਰੂ ਹੋਣ ਦੀ ਮਿਤੀ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨਾ",
+        "ਪ੍ਰੋਜੈਕਟ ਟੀਮ ਸਥਾਪਿਤ ਕਰੋ: ਪ੍ਰੋਜੈਕਟ ਮੈਨੇਜਰ, ਨਿਰਮਾਣ ਮੈਨੇਜਰ, ਕੋਆਰਡੀਨੇਟਰ"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "ਇਕਰਾਰਨਾਮਾ"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "ਸਲਾਹ-ਮਸ਼ਵਰਾ"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "ਪ੍ਰੋਜੈਕਟ ਟੀਮ"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "ਅਸੀਂ ਤੁਹਾਨੂੰ ਸਮੱਗਰੀ ਦੇ ਨਮੂਨਿਆਂ ਦੀ ਸਮੀਖਿਆ ਕਰਨ ਅਤੇ ਡਿਜ਼ਾਈਨ ਵੇਰਵਿਆਂ ਨੂੰ ਅੰਤਿਮ ਰੂਪ ਦੇਣ ਲਈ ਆਪਣੇ ਸ਼ੋਅਰੂਮ ਸੱਦਦੇ ਹਾਂ। ਭੁਗਤਾਨ ਸਮਾਂ-ਸਾਰਣੀ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਅਤੇ ਇਕਰਾਰਨਾਮੇ 'ਤੇ ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਬਾਅਦ, ਅਸੀਂ ਤੁਹਾਡੀ ਪ੍ਰੋਜੈਕਟ ਸ਼ੁਰੂ ਹੋਣ ਦੀ ਮਿਤੀ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਦੇ ਹਾਂ ਅਤੇ ਪ੍ਰੋਜੈਕਟ ਮੈਨੇਜਰ, ਨਿਰਮਾਣ ਮੈਨੇਜਰ, ਅਤੇ ਕੋਆਰਡੀਨੇਟਰ ਸਮੇਤ ਸਮਰਪਿਤ ਪ੍ਰੋਜੈਕਟ ਟੀਮ ਸਥਾਪਿਤ ਕਰਦੇ ਹਾਂ।"
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "ਅਮਲ ਅਤੇ ਪ੍ਰਬੰਧਨ",
+      "subtitle": "ਪੂਰੀ ਤਰ੍ਹਾਂ ਤਾਲਮੇਲ ਅਤੇ ਆਸਾਨ ਸੰਚਾਰ",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਦੇ ਸਾਰੇ ਪਹਿਲੂਆਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਨ ਵਾਲੀ ਇੱਕ ਏਕੀਕ੍ਰਿਤ ਪ੍ਰੋਜੈਕਟ ਟੀਮ",
+        "ਮਜ਼ਦੂਰਾਂ ਨਾਲ ਸਿੱਧੇ ਗੱਲਬਾਤ ਦੀ ਲੋੜ ਨਹੀਂ",
+        "ਕੁਸ਼ਲਤਾ ਅਤੇ ਇਕਸਾਰਤਾ ਨੂੰ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ ਤਾਲਮੇਲ ਨਾਲ ਉਸਾਰੀ ਦੀ ਪ੍ਰਗਤੀ",
+        "ਡਿਲੀਵਰੀ ਸਮਾਂ-ਸਾਰਣੀ ਅਤੇ ਆਨ-ਸਾਈਟ ਤਾਲਮੇਲ ਵਿੱਚ ਸਹਾਇਤਾ",
+        "ਪੂਰੀ ਉਸਾਰੀ ਪ੍ਰਕਿਰਿਆ ਦੌਰਾਨ ਨਿਰੰਤਰ ਗੁਣਵੱਤਾ ਨਿਯੰਤਰਣ",
+        "ਕਿਸੇ ਵੀ ਮੁੱਦੇ ਦਾ ਤੇਜ਼ ਜਵਾਬ ਅਤੇ ਕੁਸ਼ਲ ਹੱਲ"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "ਏਕੀਕ੍ਰਿਤ ਪ੍ਰਬੰਧਨ"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "ਪ੍ਰਗਤੀ ਟਰੈਕਿੰਗ"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "ਤੇਜ਼ ਜਵਾਬ"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "ਇੱਕ ਏਕੀਕ੍ਰਿਤ ਪ੍ਰੋਜੈਕਟ ਟੀਮ ਤੁਹਾਡੇ ਪ੍ਰੋਜੈਕਟ ਦੇ ਸਾਰੇ ਪਹਿਲੂਆਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰਦੀ ਹੈ। ਤੁਹਾਨੂੰ ਮਜ਼ਦੂਰਾਂ ਨਾਲ ਸਿੱਧੇ ਗੱਲਬਾਤ ਕਰਨ ਦੀ ਲੋੜ ਨਹੀਂ ਪਵੇਗੀ। ਅਸੀਂ ਉਸਾਰੀ ਦੀ ਪ੍ਰਗਤੀ, ਡਿਲੀਵਰੀ ਸਮਾਂ-ਸਾਰਣੀ ਦਾ ਤਾਲਮੇਲ ਕਰਦੇ ਹਾਂ ਅਤੇ ਨਿਰੰਤਰ ਗੁਣਵੱਤਾ ਨਿਯੰਤਰਣ ਬਣਾਈ ਰੱਖਦੇ ਹਾਂ। ਕੋਈ ਵੀ ਮੁੱਦੇ ਜਲਦੀ ਅਤੇ ਕੁਸ਼ਲਤਾ ਨਾਲ ਹੱਲ ਕੀਤੇ ਜਾਂਦੇ ਹਨ।"
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "ਵਾਕਥਰੂ ਅਤੇ ਬਾਅਦ ਦੀ ਦੇਖਭਾਲ",
+      "subtitle": "ਅੰਤਿਮ ਜਾਂਚਾਂ ਅਤੇ ਲੰਮੇ ਸਮੇਂ ਦੀ ਸਹਾਇਤਾ",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "ਸਾਰੇ ਕੰਮ ਉਮੀਦਾਂ 'ਤੇ ਖਰੇ ਉਤਰਨ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਅੰਤਿਮ ਵਾਕਥਰੂ",
+        "ਨਵਾਂ ਘਰ ਸੌਂਪਣਾ",
+        "ਵਾਰੰਟੀ ਮਿਆਦ ਦੌਰਾਨ ਰੱਖ-ਰਖਾਅ ਲਈ ਨਿਰੰਤਰ ਸਹਾਇਤਾ"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "ਸਖ਼ਤ ਨਿਰੀਖਣ"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "ਵਾਰੰਟੀ ਸੇਵਾ"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "ਨਿਰੰਤਰ ਸਹਾਇਤਾ"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "ਅਸੀਂ ਤੁਹਾਡੇ ਨਾਲ ਅੰਤਿਮ ਵਾਕਥਰੂ ਕਰਦੇ ਹਾਂ ਤਾਂ ਜੋ ਪੁਸ਼ਟੀ ਕੀਤੀ ਜਾ ਸਕੇ ਕਿ ਸਾਰੇ ਕੰਮ ਤੁਹਾਡੀਆਂ ਉਮੀਦਾਂ 'ਤੇ ਖਰੇ ਉਤਰਦੇ ਹਨ, ਫਿਰ ਤੁਹਾਡਾ ਨਵਾਂ ਘਰ ਸੌਂਪਦੇ ਹਾਂ। ਅਸੀਂ ਵਾਰੰਟੀ ਮਿਆਦ ਦੌਰਾਨ ਰੱਖ-ਰਖਾਅ ਲਈ ਨਿਰੰਤਰ ਸਹਾਇਤਾ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।"
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਅਸਲ ਵਿੱਚ ਪ੍ਰਾਪਤ ਕਰਨਯੋਗ ਬਣਾਉਣਾ",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "ਇਹ ਮਹੱਤਵਪੂਰਨ ਕਿਉਂ ਹੈ",
+      "description": "Reno Stars ਦੀ ਢਾਂਚਾਗਤ ਰੈਨੋਵੇਸ਼ਨ ਕਾਰਜਪ੍ਰਣਾਲੀ ਗਾਹਕਾਂ ਨੂੰ ਹਰ ਪੜਾਅ 'ਤੇ ਕੀ ਉਮੀਦ ਕਰਨੀ ਹੈ ਇਹ ਜਾਣਨ ਵਿੱਚ ਮਦਦ ਕਰਦੀ ਹੈ। ਸਾਡੀ ਸਪਸ਼ਟ 5-ਕਦਮ ਪ੍ਰਕਿਰਿਆ ਪਹਿਲੇ ਸੰਪਰਕ ਤੋਂ ਅੰਤਿਮ ਸੌਂਪਣ ਤੱਕ ਨਿਰਵਿਘਨ, ਤਣਾਅ-ਮੁਕਤ ਰੈਨੋਵੇਸ਼ਨ ਅਨੁਭਵ ਨੂੰ ਯਕੀਨੀ ਬਣਾਉਂਦੀ ਹੈ।"
     },
     "footer": {
-      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "ਸਰਲ · ਚਿੰਤਾ-ਮੁਕਤ · ਸੁਰੱਖਿਅਤ · ਗਾਰੰਟੀਸ਼ੁਦਾ",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "ਉਦਯੋਗ ਦੇ ਸਾਲਾਂ ਦਾ ਤਜਰਬਾ",
       "googleRating": "Google",
-      "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "warrantyService": "ਵਾਰੰਟੀ ਸੇਵਾ",
+      "scanLinktree": "ਸਾਡੇ ਨਾਲ ਜੁੜਨ ਲਈ ਸਕੈਨ ਕਰੋ",
       "website": "reno-stars.com"
     }
   }

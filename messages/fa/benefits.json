@@ -1,64 +1,64 @@
 {
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "چرا Reno Stars را انتخاب کنید",
+    "subtitle": "همکاری با ما فراتر از تکمیل یک پروژه بازسازی است؛ تمام فرآیند را شفاف، تحت کنترل و آرام می‌کنیم.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "بنا شده بر پایه اعتماد",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "title": "بیش از ۲۰ سال تجربه در صنعت",
+          "description": "ما تخصصی عمیق به ارمغان می‌آوریم. نه فقط در ساخت‌وساز، بلکه در شناخت دقیق نقاطی که پروژه‌های بازسازی به اشتباه می‌روند و چگونگی پیشگیری از همان ابتدا."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "title": "بیمه $5M CGL · پوشش فعال WCB",
+          "description": "پوشش بیمه‌ای جامع از ملک شما محافظت می‌کند و تضمین می‌نماید که هر کارگر در محل به‌طور کامل بیمه باشد."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "title": "نظرات اصیل پنج ستاره",
+          "description": "رضایت بلندمدت مشتریان که توسط پروژه‌های واقعی و تجربیات واقعی پشتیبانی می‌شود، نه تبلیغات مقطعی."
         },
         "team": {
-          "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "title": "تیم باثبات و حرفه‌ای",
+          "description": "ما با یک تیم منسجم کار می‌کنیم. نه نیروی موقت، تا کیفیت در هر پروژه پایدار بماند."
         },
         "service": {
-          "title": "End-to-End Service",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "title": "خدمات یکپارچه از ابتدا تا انتها",
+          "description": "از طراحی تا بازدید نهایی، هر مرحله را ما مدیریت می‌کنیم. هماهنگی کمتر، فرآیند روان‌تر."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "چرا مشتریان ما را انتخاب می‌کنند",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "بسیاری از پیش‌فاکتورها به دلیل حذف اقلام کلیدی، ارزان به نظر می‌رسند.",
+          "solution": "ما همه چیز را از ابتدا فهرست می‌کنیم؛ دامنه دقیق کار، مسئولیت متریال و آنچه شامل پروژه است. شما هزینه واقعی را پیش از شروع می‌دانید."
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "بازسازی نباید به بداهه و شانس متکی باشد.",
+          "solution": "ما پروژه‌ها را از طریق سیستمی ساختاریافته با مراحل شفاف، بازرسی‌ها و مراحل پرداخت اجرا می‌کنیم. هر مرحله پیش از حرکت به جلو تکمیل می‌شود."
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "بیشتر نارضایتی‌های بازسازی از ارتباط ضعیف ناشی می‌شود.",
+          "solution": "ما تیم اختصاصی دفتری داریم که سریع پاسخ می‌دهد، در انتخاب متریال کمک می‌کند و شما را در جریان قرار می‌دهد، بدون لحظات «پیام دادم اما پاسخ نگرفتم»."
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "برخی پیمانکاران بیش از ظرفیت کار می‌پذیرند و زمان‌بندی شما به تأخیر می‌افتد.",
+          "solution": "ما تعداد پروژه‌ها را کنترل می‌کنیم تا اطمینان حاصل کنیم پروژه شما طبق برنامه پیش می‌رود. زمانی که تأخیر رخ می‌دهد (تأمین‌کنندگان و غیره)، زود اطلاع می‌دهیم و شفاف تطبیق می‌کنیم."
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "کیفیت نباید به این بستگی داشته باشد که کدام تیم در محل حاضر می‌شود.",
+          "solution": "ما از یک تیم ثابت با استانداردهای روشن استفاده می‌کنیم، به‌ویژه برای کارهای حساس مانند آب‌بندی، که در آن متریال و دامنه اجرا از ابتدا مشخص می‌شود."
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "بازسازی زمانی که دائماً به دنبال پیگیری به‌روزرسانی هستید، استرس‌زا می‌شود.",
+          "solution": "ما کل فرآیند را قابل پیش‌بینی می‌کنیم: می‌دانید الان چه اتفاقی می‌افتد، چه چیزی در پیش است و چه زمانی باید انتظارش را داشته باشید، بدون نیاز به پیگیری."
         }
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "آماده‌اید پروژه خود را آغاز کنید؟",
+      "subtitle": "تجربه تفاوت یک فرآیند بازسازی که حول محور شفافیت، ارتباط روشن و آرامش خاطر شما طراحی شده است."
     }
   }
 }

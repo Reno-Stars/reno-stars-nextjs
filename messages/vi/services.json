@@ -1,41 +1,41 @@
 {
   "services": {
     "kitchen": {
-      "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
-      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+      "title": "Cải Tạo Phòng Bếp",
+      "description": "Sửa sang phòng bếp toàn diện với thiết kế hiện đại, tủ bếp đặt đóng và mặt bàn cao cấp.",
+      "longDescription": "Biến đổi phòng bếp của bạn thành trái tim của ngôi nhà với dịch vụ cải tạo toàn diện của chúng tôi. Từ tủ bếp đặt đóng và mặt bàn cao cấp đến thiết bị tiên tiến và giải pháp lưu trữ sáng tạo, chúng tôi tạo nên những phòng bếp vừa đẹp vừa tiện dụng."
     },
     "bathroom": {
-      "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
-      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+      "title": "Cải Tạo Phòng Tắm",
+      "description": "Biến đổi phòng tắm của bạn thành nơi thư giãn như spa với phụ kiện và hoàn thiện sang trọng.",
+      "longDescription": "Tạo nên không gian thư giãn cá nhân với chuyên môn cải tạo phòng tắm của chúng tôi. Chúng tôi chuyên về thiết kế lấy cảm hứng từ spa sang trọng, phụ kiện hiện đại, ốp gạch đặt đóng và giải pháp lưu trữ sáng tạo, tối đa hóa cả phong cách và công năng."
     },
     "wholeHouse": {
-      "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
-      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+      "title": "Cải Tạo Toàn Bộ Nhà",
+      "description": "Biến đổi nhà toàn diện từ ý tưởng đến hoàn thành.",
+      "longDescription": "Trải nghiệm sự biến đổi toàn diện của ngôi nhà với dịch vụ cải tạo toàn nhà của chúng tôi. Chúng tôi quản lý mọi khía cạnh của dự án, từ ý tưởng thiết kế ban đầu đến hoàn thành cuối cùng, đảm bảo trải nghiệm cải tạo mượt mà."
     },
     "basement": {
-      "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
-      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+      "title": "Sửa Sang Tầng Hầm",
+      "description": "Chuyển đổi tầng hầm thành không gian sống tiện dụng. Xếp hạng thứ 3 trong Best of Vancouver.",
+      "longDescription": "Khai thác toàn bộ tiềm năng của ngôi nhà với dịch vụ sửa sang tầng hầm đoạt giải của chúng tôi. Cho dù bạn muốn rạp chiếu phim tại nhà, phòng gym, căn hộ khách hay văn phòng tại nhà, chúng tôi biến những tầng hầm chưa được khai thác thành không gian sống đẹp và tiện dụng."
     },
     "cabinet": {
-      "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
-      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+      "title": "Thay Mặt Tủ",
+      "description": "Làm mới diện mạo phòng bếp của bạn với dịch vụ thay mặt tủ chuyên nghiệp.",
+      "longDescription": "Mang đến cho phòng bếp của bạn một diện mạo mới tuyệt đẹp mà không tốn chi phí cải tạo toàn bộ. Dịch vụ thay mặt tủ của chúng tôi bao gồm cánh tủ mới, mặt ngăn kéo và phụ kiện, biến đổi diện mạo phòng bếp của bạn trong khi giữ lại khung tủ hiện có."
     },
     "commercial": {
-      "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
-      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+      "title": "Cải Tạo Thương Mại",
+      "description": "Cải tạo không gian thương mại chuyên nghiệp cho văn phòng, bán lẻ và nhà hàng.",
+      "longDescription": "Nâng tầm không gian kinh doanh của bạn với chuyên môn cải tạo thương mại của chúng tôi. Chúng tôi xử lý hoàn thiện văn phòng, cải tạo cửa hàng bán lẻ, thiết kế lại nhà hàng và hơn nữa, mang lại kết quả chuyên nghiệp nâng cao thương hiệu và trải nghiệm khách hàng của bạn."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}",
+    "hubTitle": "Dịch Vụ Của Chúng Tôi",
+    "hubSubtitle": "Giải pháp cải tạo chuyên nghiệp cho mọi không gian",
+    "getQuoteForService": "Nhận Báo Giá Cho {service}",
     "realtor": {
-      "title": "Realtor Consultation",
-      "shortTitle": "Realtor"
+      "title": "Tư Vấn Môi Giới Bất Động Sản",
+      "shortTitle": "Môi Giới"
     }
   }
 }

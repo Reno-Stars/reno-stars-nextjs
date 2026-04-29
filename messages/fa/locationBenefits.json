@@ -1,10 +1,10 @@
 {
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "تخصص محلی در منطقه شما",
+    "freeOnsite": "مشاوره رایگان در محل",
+    "competitivePricing": "قیمت‌گذاری رقابتی محلی",
+    "quickResponse": "زمان پاسخگویی سریع",
+    "experience": "بیش از {years} سال خدمت در لوور مین‌لند",
+    "licensedInsured": "دارای مجوز و بیمه کامل (CGL + WCB)"
   }
 }

@@ -1,21 +1,21 @@
 {
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "نکات و راهنماهای بازسازی ونکوور",
+    "subtitle": "نکات، روندها و دیدگاه‌های مفید برای پروژه بازسازی شما",
+    "readMore": "ادامه مطلب",
+    "publishedOn": "منتشر شده در",
+    "updated": "به‌روزرسانی شده",
+    "backToBlog": "بازگشت به Blog",
+    "comingSoon": "متن کامل مقاله به‌زودی در دسترس قرار می‌گیرد. در این فاصله برای هر پرسشی درباره بازسازی با ما در تماس باشید.",
+    "noPosts": "هنوز مطلبی منتشر نشده است. برای دریافت نکات و دیدگاه‌های بازسازی به‌زودی سر بزنید.",
+    "relatedProject": "پروژه مرتبط",
+    "pagination": "صفحه‌بندی Blog",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "previousPage": "رفتن به صفحه قبلی",
+    "nextPage": "رفتن به صفحه بعدی",
+    "showingPosts": "نمایش {start}-{end} از {total} مطلب",
+    "relatedServices": "خدمات مرتبط",
+    "relatedAreas": "بازسازی در منطقه شما"
   }
 }

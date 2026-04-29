@@ -1,10 +1,10 @@
 {
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "Đang tải...",
+    "error": "Đã xảy ra lỗi",
+    "notFound": "Không tìm thấy trang",
+    "notFoundDescription": "Trang bạn đang tìm không tồn tại hoặc đã được di chuyển.",
+    "backToHome": "Quay Về Trang Chủ",
+    "tryAgain": "Thử Lại"
   }
 }

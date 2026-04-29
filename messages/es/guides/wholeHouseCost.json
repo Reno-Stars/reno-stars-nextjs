@@ -1,0 +1,127 @@
+{
+  "wholeHouseCost": {
+    "breadcrumb": "Costo de remodelación integral",
+    "hero": {
+      "title": "Costo de remodelación integral en Vancouver BC (2026)",
+      "subtitle": "Precios reales de remodelaciones integrales completadas en Greater Vancouver. Desde renovaciones de condominios hasta transformaciones completas de casa. Cada cifra viene de proyectos reales."
+    },
+    "stats": {
+      "avgCost": "Costo promedio",
+      "range": "Rango de precio",
+      "projects": "Proyectos completados",
+      "timeline": "Plazo típico",
+      "timelineValue": "3 a 8 semanas"
+    },
+    "tiers": {
+      "title": "Costo de remodelación integral por nivel",
+      "subtitle": "Basado en nuestros proyectos completados en Greater Vancouver",
+      "budget": {
+        "title": "Renovación cosmética",
+        "description": "Pintura completa, nuevos pisos, accesorios de iluminación actualizados, renovación de baño (tocador, espejo, herrajes) y actualizaciones menores de cocina. Ideal para condominios y propiedades de alquiler que necesitan una actualización moderna sin trabajo estructural."
+      },
+      "midRange": {
+        "title": "Remodelación integral",
+        "description": "Remodelación completa de cocina con nuevos gabinetes y encimeras, remodelación de baños, nuevos pisos en todo, pintura fresca, actualización de accesorios eléctricos y de plomería y nueva iluminación. La opción más popular para propietarios que planean quedarse a largo plazo."
+      },
+      "highEnd": {
+        "title": "Transformación premium",
+        "description": "Remodelación completa con cambios estructurales, distribuciones de concepto abierto, cocinas y baños de alta gama, ebanistería a medida, pisos premium, integración de hogar inteligente y acabados de diseñador en todo. Para propietarios que quieren una casa verdaderamente a medida."
+      }
+    },
+    "factors": {
+      "title": "¿Qué afecta el costo de su remodelación integral?",
+      "subtitle": "Seis factores clave que determinan su precio final",
+      "scope": {
+        "title": "Alcance y metraje cuadrado",
+        "description": "El factor más grande. Una renovación de condominio de 600 pies cuadrados cuesta mucho menos que una remodelación de casa de 2,500 pies cuadrados. Defina sus imprescindibles vs deseables temprano para controlar el presupuesto."
+      },
+      "kitchen": {
+        "title": "Cocina (30-40% del presupuesto total)",
+        "description": "Las cocinas típicamente son la habitación más cara. Gabinetes a medida, encimeras de cuarzo y actualizaciones de electrodomésticos pueden costar $15,000-$72,000 por sí solos. Vea nuestra guía de costos de cocina para desgloses detallados."
+      },
+      "bathrooms": {
+        "title": "Baños (15-25% del presupuesto total)",
+        "description": "Cada remodelación de baño agrega $10,000-$40,000 dependiendo del tamaño y los acabados. La impermeabilización, el trabajo de azulejos y la calidad de los accesorios determinan el costo. Las casas con múltiples baños ven ahorros significativos por unidad."
+      },
+      "flooring": {
+        "title": "Pisos (10-15% del presupuesto total)",
+        "description": "La madera dura de ingeniería va de $8 a $15/pie cuadrado instalado. El vinilo de tablón de lujo (LVP) ofrece una alternativa económica a $5-$10/pie cuadrado. El azulejo para áreas húmedas agrega $12-$25/pie cuadrado."
+      },
+      "structural": {
+        "title": "Cambios estructurales",
+        "description": "Quitar paredes, agregar ventanas o reconfigurar distribuciones agrega $5,000-$25,000+. La remoción de paredes de carga requiere informes de ingeniería y permisos. Las conversiones a concepto abierto son populares pero costosas."
+      },
+      "permits": {
+        "title": "Permisos y honorarios profesionales",
+        "description": "Los permisos de construcción en Metro Vancouver típicamente cuestan $500-$2,500 para remodelaciones integrales. Presupueste $2,000-$5,000 adicionales para planos arquitectónicos, informes de ingeniería e inspecciones."
+      }
+    },
+    "realProjects": {
+      "title": "Proyectos reales de remodelación integral",
+      "subtitle": "Explore {count} proyectos integrales completados con presupuestos y plazos reales"
+    },
+    "included": {
+      "title": "Lo que típicamente se incluye en una remodelación integral",
+      "subtitle": "Una remodelación completa toca cada habitación y sistema",
+      "item1": {
+        "title": "Remodelación de cocina",
+        "description": "Nuevos gabinetes, encimeras, salpicadero, fregadero, grifo y conexiones de electrodomésticos actualizadas. Cambios de distribución disponibles para niveles de gama media y premium."
+      },
+      "item2": {
+        "title": "Remodelaciones de baño",
+        "description": "Nuevo tocador, inodoro, ducha o bañera, trabajo de azulejos, impermeabilización y accesorios de plomería actualizados. Cada baño completamente renovado o reconstruido."
+      },
+      "item3": {
+        "title": "Pisos en todo",
+        "description": "Nuevos pisos en todos los espacios habitables: madera dura, madera de ingeniería o LVP en áreas principales; azulejo en baños y entradas."
+      },
+      "item4": {
+        "title": "Pintura y molduras",
+        "description": "Pintura fresca en todas las paredes y techos, zócalos nuevos o reterminados, marcos de puertas y molduras de corona donde aplique."
+      },
+      "item5": {
+        "title": "Eléctrico e iluminación",
+        "description": "Accesorios de iluminación actualizados, tomacorrientes adicionales donde sea necesario, interruptores reguladores y actualizaciones de panel para casas más antiguas."
+      },
+      "item6": {
+        "title": "Puertas y herrajes",
+        "description": "Nuevas puertas interiores, herrajes y bisagras de puerta actualizados, organizadores de armario y reemplazos de puertas exteriores según sea necesario."
+      }
+    },
+    "tips": {
+      "title": "Consejos para ahorrar en remodelaciones integrales",
+      "tip1": {
+        "title": "Priorizar y planificar por fases",
+        "description": "No tiene que hacer todo a la vez. Aborde primero la cocina y los baños (mayor ROI), luego trate las actualizaciones cosméticas en fases posteriores. Esto distribuye los costos y le permite vivir en la casa durante las renovaciones."
+      },
+      "tip2": {
+        "title": "Mantener la plomería donde está",
+        "description": "Reubicar plomería es uno de los cambios más caros. Mantener cocinas y baños en sus ubicaciones actuales ahorra $5,000-$15,000 en plomería y trabajo estructural."
+      },
+      "tip3": {
+        "title": "Elegir materiales estratégicamente",
+        "description": "Derroche en superficies de alto impacto y alto contacto como encimeras de cocina y azulejo de baño. Ahorre en áreas como pisos de dormitorio (LVP se ve genial a la mitad del costo de la madera dura) y pintura interior (las pinturas de gama media funcionan casi tan bien como las premium)."
+      },
+      "tip4": {
+        "title": "Agrupar para mejor precio",
+        "description": "Las remodelaciones integrales a menudo cuestan menos por habitación que hacer las habitaciones individualmente. Los contratistas ofrecen mejores tarifas cuando pueden programar a sus equipos eficientemente en un proyecto más grande."
+      }
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta una remodelación integral en Vancouver?",
+      "a1": "Los costos de remodelación integral en Vancouver típicamente van de $50,000 a $200,000+ según nuestros proyectos completados. Las renovaciones cosméticas (pintura, pisos, accesorios) comienzan en $50,000-$80,000, las remodelaciones integrales con nueva cocina y baños van de $80,000-$120,000, y las transformaciones premium con cambios estructurales pueden superar los $120,000.",
+      "q2": "¿Cuánto tarda una remodelación integral?",
+      "a2": "La mayoría de las remodelaciones integrales toman de 3 a 8 semanas dependiendo del alcance. Una renovación cosmética (pintura, pisos, accesorios) se puede hacer en 3-4 semanas. Una remodelación integral incluyendo cocina y baños típicamente toma 5-8 semanas. Los proyectos con cambios estructurales o permisos pueden tomar 10-14 semanas.",
+      "q3": "¿Puedo vivir en mi casa durante una remodelación integral?",
+      "a3": "Depende del alcance. Para renovaciones cosméticas, generalmente puede quedarse en la casa ya que el trabajo se hace habitación por habitación. Para remodelaciones integrales que involucran demolición de cocina y baño, recomendamos arreglar alojamiento temporal por al menos 2-4 semanas durante las fases más disruptivas.",
+      "q4": "¿Qué da el mejor retorno de inversión para una remodelación integral?",
+      "a4": "Las remodelaciones de cocina y baño consistentemente dan el ROI más alto en el mercado de Vancouver. Pisos actualizados y pintura fresca proveen excelente valor a un costo relativamente bajo. Las distribuciones de concepto abierto son populares con los compradores pero requieren trabajo estructural que aumenta los costos significativamente.",
+      "q5": "¿Necesito permisos para una remodelación integral en Vancouver?",
+      "a5": "Sí, la mayoría de las remodelaciones integrales requieren permisos. Cualquier trabajo que involucre plomería, eléctrico, gas o cambios estructurales necesita un permiso de construcción de la Ciudad de Vancouver. El trabajo cosmético solamente (pintura, pisos, gabinetes) típicamente no requiere permisos. Presupueste $500-$2,500 para tarifas de permisos."
+    },
+    "cta": {
+      "heading": "¿Listo para transformar toda su casa?",
+      "subtitle": "Reciba una consulta gratis y cotización detallada para su remodelación integral. Recorreremos cada habitación y crearemos un plan que se ajuste a su presupuesto."
+    }
+  }
+}

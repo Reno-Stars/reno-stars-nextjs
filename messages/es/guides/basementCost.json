@@ -1,0 +1,100 @@
+{
+  "basementCost": {
+    "breadcrumb": "Costo de remodelación de sótano",
+    "hero": {
+      "title": "Costo de remodelación de sótano en Vancouver BC (2026)",
+      "subtitle": "¿Cuánto cuesta realmente terminar o remodelar un sótano en Greater Vancouver? Aquí están los rangos de precios típicos basados en el alcance del proyecto, desde acabado básico hasta conversiones completas de suite legal."
+    },
+    "stats": {
+      "avgCost": "Costo promedio",
+      "range": "Rango de precio",
+      "sqft": "Costo por pie cuadrado",
+      "sqftValue": "$35-$120/pie cuadrado",
+      "timeline": "Plazo típico",
+      "timelineValue": "6 a 12 semanas"
+    },
+    "tiers": {
+      "title": "Costo de remodelación de sótano por nivel",
+      "subtitle": "Precios típicos para proyectos de sótano en Greater Vancouver",
+      "budget": {
+        "title": "Acabado básico",
+        "description": "Estructura, aislamiento, drywall, piso básico, pintura e iluminación estándar. Adecuado para una sala de recreación, oficina en casa o área de almacenamiento sin adiciones de plomería."
+      },
+      "midRange": {
+        "title": "Remodelación de gama media",
+        "description": "Acabado completo con adición de baño, piso mejorado (vinilo o laminado), iluminación empotrada, almacenamiento integrado y un wet bar o cocineta. El alcance más popular para hogares familiares."
+      },
+      "highEnd": {
+        "title": "Conversión a suite legal",
+        "description": "Suite secundaria completa con entrada separada, cocina, baño, dormitorio con ventanas de salida, separación contra incendios y todas las características requeridas por código. Incluye permisos e inspecciones para legalización de alquiler."
+      }
+    },
+    "factors": {
+      "title": "¿Qué afecta el costo de su remodelación de sótano?",
+      "subtitle": "Seis factores clave que determinan su precio final",
+      "waterproofing": {
+        "title": "Impermeabilización y control de humedad",
+        "description": "El clima húmedo de Vancouver hace que la impermeabilización sea crítica. Los sistemas de drenaje interior van de $3,000-$8,000, mientras que la impermeabilización exterior puede costar $10,000-$25,000. La instalación de bomba de sumidero agrega $1,500-$3,000."
+      },
+      "framing": {
+        "title": "Estructura y aislamiento",
+        "description": "El armazón de acero o madera con aislamiento típicamente cuesta $8-$15 por pie cuadrado. Las casas más antiguas de Vancouver pueden necesitar barreras de vapor adicionales y mejoras de aislamiento para cumplir con el código de construcción actual."
+      },
+      "plumbing": {
+        "title": "Plomería (Baño/Cocina)",
+        "description": "Agregar un baño en sótano cuesta $8,000-$15,000 dependiendo de si necesita romper concreto para líneas de drenaje. La instalación completa de cocina agrega $12,000-$25,000 incluyendo ruteo y accesorios."
+      },
+      "electrical": {
+        "title": "Eléctrico y HVAC",
+        "description": "El eléctrico de sótano típicamente va de $3,000-$8,000 para una distribución estándar. Muchas casas más antiguas necesitan actualizaciones de panel ($2,000-$4,000). Extender los conductos de HVAC agrega $2,000-$5,000."
+      },
+      "egress": {
+        "title": "Ventanas de salida y entrada separada",
+        "description": "El código de construcción requiere ventanas de salida en dormitorios ($2,000-$5,000 cada una para instalar). Agregar una entrada exterior separada para una suite cuesta $8,000-$15,000 incluyendo excavación y trabajo de concreto."
+      },
+      "permits": {
+        "title": "Permisos y cumplimiento de código",
+        "description": "Los permisos de construcción para acabado de sótano en Metro Vancouver cuestan $500-$2,000. Las conversiones a suite legal requieren inspecciones adicionales. Algunos municipios ofrecen subsidios por agregar suites de alquiler."
+      }
+    },
+    "realProjects": {
+      "title": "Proyectos relacionados de remodelación integral",
+      "subtitle": "Explore {count} proyectos de remodelación completados en Greater Vancouver, muchos incluyen trabajo de sótano"
+    },
+    "tips": {
+      "title": "Consejos para ahorrar en su remodelación de sótano",
+      "tip1": {
+        "title": "Comenzar con la impermeabilización",
+        "description": "Aborde cualquier problema de humedad antes de terminar las paredes. Reparar problemas de agua después de instalar el drywall cuesta 3-5 veces más que hacerlo desde el inicio."
+      },
+      "tip2": {
+        "title": "Planificar plomería cerca de líneas existentes",
+        "description": "Ubicar su baño o cocina cerca de las pilas de drenaje existentes ahorra $3,000-$8,000 evitando el corte de concreto y nuevos ruteos."
+      },
+      "tip3": {
+        "title": "Considerar una suite legal para ROI",
+        "description": "Una suite secundaria legal en Vancouver puede generar $1,500-$2,500/mes en ingresos por alquiler. La remodelación a menudo se paga sola en 3-5 años."
+      },
+      "tip4": {
+        "title": "Elegir piso LVP",
+        "description": "El vinilo de tablón de lujo es la mejor opción de piso para sótano. Impermeable, cálido al tacto y 30-50% más barato que la madera dura de ingeniería. Perfecto para el clima húmedo de Vancouver."
+      }
+    },
+    "cta": {
+      "heading": "Reciba su cotización gratis de remodelación de sótano",
+      "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta una remodelación de sótano en Vancouver?",
+      "a1": "Los costos de remodelación de sótano en Vancouver típicamente van de $30,000 para acabado básico a $120,000+ para una conversión completa a suite legal. El costo promedio es alrededor de $55,000 para una remodelación de gama media con adición de baño y acabados de calidad. El costo por pie cuadrado va de $35 a $120 dependiendo del alcance.",
+      "q2": "¿Cuánto tarda una remodelación de sótano en Vancouver?",
+      "a2": "La mayoría de las remodelaciones de sótano en Vancouver toman de 6 a 12 semanas. El acabado básico (estructura, drywall, piso) se puede hacer en 6-8 semanas. Una conversión completa a suite legal con permisos, plomería, eléctrico e inspecciones típicamente toma 10-14 semanas.",
+      "q3": "¿Necesito un permiso para una remodelación de sótano en Vancouver?",
+      "a3": "Sí, la mayoría de las remodelaciones de sótano requieren permisos de construcción en Metro Vancouver. Cualquier trabajo que involucre estructura, eléctrico, plomería o modificaciones de salida requiere un permiso. Las conversiones a suite legal necesitan aprobación de zonificación adicional. Los costos de permisos van de $500 a $2,000 dependiendo del municipio.",
+      "q4": "¿Es una suite de sótano una buena inversión en Vancouver?",
+      "a4": "Sí, agregar una suite secundaria legal es una de las mejores inversiones de remodelación en Vancouver. Una suite puede generar $1,500-$2,500 por mes en ingresos por alquiler. Con costos de remodelación de $80,000-$120,000, la inversión típicamente se paga sola en 3-5 años mientras también aumenta el valor de su propiedad en 10-20%.",
+      "q5": "¿Cuál es el mejor piso para una remodelación de sótano?",
+      "a5": "El vinilo de tablón de lujo (LVP) es el piso de sótano más recomendado en Vancouver debido a sus propiedades impermeables y durabilidad. Cuesta $4-$8 por pie cuadrado instalado y maneja la humedad mejor que la madera dura o el laminado. La madera dura de ingeniería y la baldosa cerámica también son buenas opciones según su presupuesto y preferencias de estilo."
+    }
+  }
+}

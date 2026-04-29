@@ -1,14 +1,14 @@
 {
   "footer": {
-    "allRightsReserved": "All Rights Reserved",
-    "allRights": "All rights reserved.",
-    "licensedInsured": "Licensed & Fully Insured (CGL + WCB)",
-    "freeEstimates": "Free Estimates",
-    "mapLocation": "Map Location",
+    "allRightsReserved": "ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ",
+    "allRights": "ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।",
+    "licensedInsured": "ਲਾਇਸੰਸਸ਼ੁਦਾ ਅਤੇ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ (CGL + WCB)",
+    "freeEstimates": "ਮੁਫ਼ਤ ਅੰਦਾਜ਼ੇ",
+    "mapLocation": "ਨਕਸ਼ੇ ਦਾ ਟਿਕਾਣਾ",
     "wechatId": "WeChat ID: {id}",
-    "quickLinks": "Quick Links",
-    "scanToConnect": "Scan to Connect",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service"
+    "quickLinks": "ਤੁਰੰਤ ਲਿੰਕ",
+    "scanToConnect": "ਜੁੜਨ ਲਈ ਸਕੈਨ ਕਰੋ",
+    "privacyPolicy": "ਗੋਪਨੀਯਤਾ ਨੀਤੀ",
+    "termsOfService": "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ"
   }
 }

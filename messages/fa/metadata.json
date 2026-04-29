@@ -1,121 +1,121 @@
 {
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+      "title": "بازسازی منزل در ونکوور — بیش از {years} سال، بیمه $5M | Reno Stars",
+      "description": "بازسازی آشپزخانه، حمام و کل منزل در سراسر مترو ونکوور. بیش از {years} سال فعالیت، بیمه $5M CGL، تیم‌های تحت پوشش WCB و گارانتی ۳ ساله. بیش از ۱۰۰ پروژه تکمیل‌شده ما را ببینید یا همین امروز پیش‌فاکتور رایگان دریافت کنید."
     },
     "services": {
-      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+      "title": "خدمات بازسازی ونکوور — بیمه $5M | Reno Stars",
+      "description": "خدمات بازسازی آشپزخانه، حمام، کامل منزل، زیرزمین و فضاهای تجاری در سراسر مترو ونکوور. بیش از ۲۰ سال تجربه، بیمه $5M CGL، گارانتی ۳ ساله. پیش‌فاکتور رایگان."
     },
     "projects": {
-      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
-      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+      "title": "بیش از ۱۰۰ پروژه بازسازی در ونکوور | قبل و بعد | Reno Stars",
+      "description": "بیش از ۱۰۰ پروژه واقعی بازسازی در سراسر مترو ونکوور را با تصاویر قبل و بعد، هزینه‌های واقعی و زمان‌بندی ببینید. تحول آشپزخانه، حمام، زیرزمین و کل منزل."
     },
     "contact": {
-      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+      "title": "پیش‌فاکتور رایگان بازسازی ونکوور | تماس با Reno Stars",
+      "description": "پیش‌فاکتور رایگان بازسازی از Reno Stars دریافت کنید — شرکت بازسازی مورد اعتماد ونکوور. بازسازی آشپزخانه، حمام، زیرزمین و کل منزل در مترو ونکوور. تماس: 778-960-7999."
     },
     "blog": {
-      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+      "title": "نکات و راهنمای هزینه‌های بازسازی | ونکوور | Blog Reno Stars",
+      "description": "نکات تخصصی بازسازی، روندهای طراحی و ایده‌های کاربردی برای پروژه بازسازی منزل ونکوور. مطالعه پروژه‌های موردی و تحول‌های قبل و بعد را بخوانید."
     },
     "benefits": {
-      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
-      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+      "title": "چرا Reno Stars | بیش از ۷۰ نظر پنج‌ستاره، بیمه $5M",
+      "description": "پیش‌فاکتورهای شفاف، فرآیند ساختاریافته، ارتباط پاسخگو و تیم‌های باثبات. بیش از ۷۰ نظر پنج‌ستاره Google، بیمه $5M CGL، پوشش WCB. ببینید چرا صاحبان منازل ونکوور به ما اعتماد می‌کنند."
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "title": "گالری طراحی بازسازی | پروژه‌های واقعی ونکوور | Reno Stars",
+      "description": "ایده‌های طراحی بازسازی را از بیش از ۱۰۰ پروژه واقعی مترو ونکوور مرور کنید. الهام‌بخش‌های آشپزخانه، حمام، زیرزمین و بازسازی کامل منزل با هزینه‌های واقعی."
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
-      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+      "title": "پروژه‌های بازسازی {category} | Reno Stars ونکوور",
+      "description": "پروژه‌های بازسازی {category} ما را در سراسر ونکوور و لوور مین‌لند کشف کنید. تصاویر قبل و بعد و الهام‌بخش‌های طراحی را ببینید."
     },
     "projectDetail": {
-      "titleWithLocation": "{title} in {city} | Reno Stars"
+      "titleWithLocation": "{title} در {city} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} in {area} | Reno Stars",
-      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "title": "{service} در {area} | Reno Stars",
+      "titleWithTagline": "{service} در {area} – {tagline} | Reno Stars",
+      "description": "{service} تخصصی در {area} توسط Reno Stars. بیش از {years} سال تجربه، بیمه $5M CGL، پوشش فعال WCB، تا ۳ سال گارانتی. مشاهده پروژه‌های محلی و دریافت پیش‌فاکتور رایگان همین امروز."
     },
     "areas": {
-      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
-      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+      "title": "بازسازی نزدیک شما | ۱۷ منطقه مترو ونکوور | Reno Stars",
+      "description": "Reno Stars به ۱۷ جامعه در سراسر مترو ونکوور و فریزر ولی خدمات می‌دهد. خدمات بازسازی در شهر خود را بیابید و پیش‌فاکتور رایگان دریافت کنید."
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
-      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+      "title": "پیمانکار بازسازی در {area} | آشپزخانه و حمام | Reno Stars",
+      "description": "خدمات حرفه‌ای بازسازی در {area}. بازسازی آشپزخانه، حمام و کامل منزل. برای پیش‌فاکتور رایگان با ما تماس بگیرید."
     },
     "thankYou": {
-      "title": "Thank You | Reno Stars",
-      "description": "Your message has been received. We will get back to you shortly."
+      "title": "از شما متشکریم | Reno Stars",
+      "description": "پیام شما دریافت شد. به‌زودی با شما تماس خواهیم گرفت."
     },
     "process": {
-      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "فرآیند بازسازی: ۵ مرحله | Reno Stars ونکوور",
+      "description": "با فرآیند روان پنج‌مرحله‌ای بازسازی ما آشنا شوید. از مشاوره اولیه تا تحویل پروژه، سفر بازسازی شما را ساده و بدون نگرانی می‌کنیم."
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
-      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+      "title": "شوروم بازسازی Richmond BC | مشاوره رایگان | Reno Stars",
+      "description": "از شوروم ما در Richmond BC بازدید کنید: متریال‌های واقعی را لمس کنید، نمایشگاه آشپزخانه و حمام را ببینید، در همان جا پیش‌فاکتور رایگان دریافت کنید. باز از دوشنبه تا شنبه ۹:۳۰ صبح. بدون نیاز به تعیین وقت قبلی."
     },
     "guides": {
-      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "title": "راهنمای هزینه‌های بازسازی | ونکوور BC | Reno Stars",
+      "description": "راهنمای رایگان هزینه بازسازی بر اساس داده‌های واقعی پروژه از گریتر ونکوور. قیمت‌گذاری بازسازی آشپزخانه، حمام و کامل منزل با بودجه‌ها و زمان‌بندی واقعی.",
       "kitchenCost": {
-        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+        "title": "هزینه بازسازی آشپزخانه ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه بازسازی آشپزخانه در ونکوور چقدر است؟ قیمت‌گذاری واقعی از $15,000 تا $72,000 بر اساس ۱۶ پروژه تکمیل‌شده. تفکیک دقیق هزینه را بر اساس سطح دریافت کنید."
       },
       "bathroomCost": {
-        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
-        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+        "title": "میانگین هزینه بازسازی حمام ونکوور (۲۰۲۶) | Reno Stars",
+        "description": "میانگین هزینه بازسازی حمام در ونکوور چقدر است؟ قیمت‌های واقعی از $10K تا بیش از $60K بر اساس ۱۹ پروژه تکمیل‌شده. تفکیک کامل هزینه برای حمام‌های ۳، ۴ و ۵ تکه."
       },
       "wholeHouseCost": {
-        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+        "title": "هزینه بازسازی کامل منزل ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه بازسازی کامل منزل در ونکوور: $50K تا بیش از $200K بر اساس پروژه‌های واقعی. تفکیک کامل بر اساس دامنه — آشپزخانه، حمام، کف‌سازی و موارد دیگر. برآورد رایگان از Reno Stars دریافت کنید."
       },
       "basementCost": {
-        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+        "title": "هزینه بازسازی زیرزمین ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه بازسازی زیرزمین در ونکوور چقدر است؟ قیمت‌گذاری معمول از $30,000 تا بیش از $120,000 برای گریتر ونکوور. تفکیک دقیق هزینه بر اساس سطح، به‌علاوه نکات صرفه‌جویی در هزینه."
       },
       "commercialCost": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+        "title": "هزینه بازسازی تجاری در ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه بازسازی تجاری در ونکوور چقدر است؟ هزینه‌های معمول از $50,000 تا بیش از $1,000,000. تفکیک دقیق بر اساس نوع پروژه با داده‌های واقعی."
       },
       "cabinetCost": {
-        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+        "title": "هزینه روکش‌کاری مجدد کابینت ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه روکش‌کاری مجدد کابینت در ونکوور چقدر است؟ قیمت‌گذاری معمول از $4,000 تا $15,000 برای گریتر ونکوور. مقایسه گزینه‌های روکش‌کاری مجدد، تعویض دربچه و تعویض کامل."
       },
       "basementSuiteCost": {
-        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+        "title": "هزینه تبدیل سوئیت زیرزمینی ونکوور BC (۲۰۲۶) | Reno Stars",
+        "description": "هزینه سوئیت زیرزمینی قانونی در ونکوور چقدر است؟ قیمت‌گذاری معمول از $60,000 تا $150,000. تفکیک دقیق هزینه، تحلیل بازده و مقررات شهرداری‌ها."
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+      "title": "درباره Reno Stars | بیش از ۲۰ سال، ۷۰+ نظر پنج‌ستاره | بازسازی ونکوور",
+      "description": "با تیم پشت بیش از ۱۰۰ بازسازی مترو ونکوور آشنا شوید. بیش از ۲۰ سال تجربه، بیمه $5M، پوشش WCB، بیش از ۷۰ نظر پنج‌ستاره Google. مشاوره رایگان."
     },
     "reviews": {
-      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
-      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+      "title": "بیش از ۷۰ نظر پنج‌ستاره | Reno Stars ونکوور",
+      "description": "بیش از ۷۰ نظر پنج‌ستاره تأییدشده Google از صاحبان واقعی منازل در ونکوور را بخوانید. ببینید چرا خانواده‌های مترو ونکوور برای بازسازی خود به Reno Stars اعتماد می‌کنند."
     },
     "financing": {
-      "title": "Renovation Financing & Budget Guide | Vancouver",
-      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+      "title": "راهنمای تأمین مالی و بودجه بازسازی | ونکوور",
+      "description": "گزینه‌های تأمین مالی بازسازی در مترو ونکوور را بررسی کنید. HELOC، وام شخصی، بازپرداخت رهن و نکات برنامه‌ریزی بودجه برای پروژه بازسازی منزل."
     },
     "beforeAfter": {
-      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
-      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+      "title": "قبل و بعد: بازسازی‌های واقعی ونکوور | Reno Stars",
+      "description": "تحول‌های شگفت‌انگیز قبل و بعد بازسازی در مترو ونکوور. پروژه‌های واقعی، هزینه‌های واقعی، نتایج واقعی. آشپزخانه، حمام و کل منزل."
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
-      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+      "title": "چرا Reno Stars | بیمه $5M، گارانتی ۳ ساله، ۷۰+ نظر",
+      "description": "آنچه Reno Stars را متمایز می‌کند: بیمه $5M CGL، پوشش WCB، گارانتی ۳ ساله صنعتگری، تیم دوزبانه، بیش از ۷۰ نظر پنج‌ستاره Google. ونکوور."
     },
     "nearMe": {
-      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+      "title": "بازسازی منزل نزدیک من | مترو ونکوور | Reno Stars",
+      "description": "شرکت برتر بازسازی منزل نزدیک شما در ونکوور، Richmond، Burnaby، Surrey و ۱۴ شهر مترو ونکوور. بیش از ۷۰ نظر پنج‌ستاره Google، بیش از ۲۰ سال، بیمه $5M. پیش‌فاکتور رایگان."
     },
-    "localBusinessDescription": "Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with up to $5M CGL insurance, active WCB coverage, and up to 3 years warranty."
+    "localBusinessDescription": "خدمات حرفه‌ای بازسازی منزل در مترو ونکوور. بازسازی آشپزخانه، حمام و کامل منزل. دارای مجوز و بیمه با پوشش $5M CGL، پوشش فعال WCB و تا ۳ سال گارانتی."
   }
 }

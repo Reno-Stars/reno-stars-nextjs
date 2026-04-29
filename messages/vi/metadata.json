@@ -1,121 +1,121 @@
 {
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations across Metro Vancouver. {years}+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today."
+      "title": "Cải Tạo Nhà Vancouver — Hơn {years} Năm, Bảo Hiểm $5M | Reno Stars",
+      "description": "Cải tạo phòng bếp, phòng tắm và toàn bộ nhà khắp Metro Vancouver. Hơn {years} năm hoạt động, bảo hiểm $5M CGL, đội thợ có bảo hiểm WCB và bảo hành 3 năm. Xem hơn 100 dự án đã hoàn thành hoặc nhận báo giá miễn phí ngay hôm nay."
     },
     "services": {
-      "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement & commercial renovation services across Metro Vancouver. 20+ years experience, $5M CGL insurance, 3-year warranty. Free quotes."
+      "title": "Dịch Vụ Cải Tạo Vancouver — Bảo Hiểm $5M | Reno Stars",
+      "description": "Dịch vụ cải tạo phòng bếp, phòng tắm, toàn bộ nhà, tầng hầm và thương mại khắp Metro Vancouver. 20+ năm kinh nghiệm, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí."
     },
     "projects": {
-      "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
-      "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
+      "title": "Hơn 100 Dự Án Cải Tạo Vancouver | Trước & Sau | Reno Stars",
+      "description": "Xem hơn 100 dự án cải tạo thực khắp Metro Vancouver với hình ảnh trước/sau, chi phí thực và tiến độ. Biến đổi phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà."
     },
     "contact": {
-      "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."
+      "title": "Báo Giá Cải Tạo Miễn Phí Vancouver | Liên Hệ Reno Stars",
+      "description": "Nhận báo giá cải tạo miễn phí từ Reno Stars — công ty cải tạo đáng tin cậy của Vancouver. Cải tạo phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà tại Metro Vancouver. Gọi 778-960-7999."
     },
     "blog": {
-      "title": "Renovation Tips & Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Expert renovation tips, design trends, and practical ideas for your Vancouver home improvement project. Read case studies and before-and-after transformations."
+      "title": "Mẹo Cải Tạo & Hướng Dẫn Chi Phí | Vancouver | Blog Reno Stars",
+      "description": "Mẹo cải tạo chuyên gia, xu hướng thiết kế và ý tưởng thực tế cho dự án cải tạo nhà của bạn tại Vancouver. Đọc các nghiên cứu trường hợp và biến đổi trước-và-sau."
     },
     "benefits": {
-      "title": "Why Choose Reno Stars | 70+ 5★ Reviews, $5M Insured",
-      "description": "Transparent quotes, structured process, responsive communication, and stable teams. 70+ Google five-star reviews, $5M CGL insurance, WCB coverage. See why Vancouver homeowners trust us."
+      "title": "Vì Sao Chọn Reno Stars | 70+ Đánh Giá 5★, Bảo Hiểm $5M",
+      "description": "Báo giá minh bạch, quy trình có hệ thống, giao tiếp phản hồi nhanh và đội ngũ ổn định. Hơn 70 đánh giá năm sao trên Google, bảo hiểm $5M CGL, bảo hiểm WCB. Xem vì sao các chủ nhà Vancouver tin tưởng chúng tôi."
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
-      "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
+      "title": "Bộ Sưu Tập Thiết Kế Cải Tạo | Dự Án Vancouver Thực | Reno Stars",
+      "description": "Duyệt qua các ý tưởng thiết kế cải tạo từ hơn 100 dự án thực tại Metro Vancouver. Nguồn cảm hứng cho phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà với chi phí thực."
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
-      "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
+      "title": "Dự Án Cải Tạo {category} | Reno Stars Vancouver",
+      "description": "Khám phá các dự án cải tạo {category} của chúng tôi khắp Vancouver và Lower Mainland. Xem hình ảnh trước-và-sau và cảm hứng thiết kế."
     },
     "projectDetail": {
-      "titleWithLocation": "{title} in {city} | Reno Stars"
+      "titleWithLocation": "{title} tại {city} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{service} in {area} | Reno Stars",
-      "titleWithTagline": "{service} in {area} – {tagline} | Reno Stars",
-      "description": "Expert {service} in {area} by Reno Stars. {years}+ years experience, $5M CGL insurance, active WCB coverage, up to 3 years warranty. View local projects and get a free quote today."
+      "title": "{service} tại {area} | Reno Stars",
+      "titleWithTagline": "{service} tại {area} – {tagline} | Reno Stars",
+      "description": "{service} chuyên nghiệp tại {area} bởi Reno Stars. Hơn {years} năm kinh nghiệm, bảo hiểm $5M CGL, bảo hiểm WCB đang hiệu lực, bảo hành lên đến 3 năm. Xem các dự án địa phương và nhận báo giá miễn phí ngay hôm nay."
     },
     "areas": {
-      "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
-      "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
+      "title": "Cải Tạo Gần Bạn | 17 Khu Vực Metro Vancouver | Reno Stars",
+      "description": "Reno Stars phục vụ 17 cộng đồng khắp Metro Vancouver và Fraser Valley. Tìm dịch vụ cải tạo trong thành phố của bạn và nhận báo giá miễn phí."
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
-      "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
+      "title": "Nhà Thầu Cải Tạo Tại {area} | Phòng Bếp & Phòng Tắm | Reno Stars",
+      "description": "Dịch vụ cải tạo chuyên nghiệp tại {area}. Cải tạo phòng bếp, phòng tắm và toàn bộ nhà. Liên hệ với chúng tôi để nhận báo giá miễn phí."
     },
     "thankYou": {
-      "title": "Thank You | Reno Stars",
-      "description": "Your message has been received. We will get back to you shortly."
+      "title": "Cảm Ơn Bạn | Reno Stars",
+      "description": "Tin nhắn của bạn đã được nhận. Chúng tôi sẽ liên hệ lại với bạn sớm."
     },
     "process": {
-      "title": "Renovation Workflow: 5 Steps | Reno Stars Vancouver",
-      "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
+      "title": "Quy Trình Cải Tạo: 5 Bước | Reno Stars Vancouver",
+      "description": "Tìm hiểu về quy trình cải tạo 5 bước được tinh giản của chúng tôi. Từ tư vấn ban đầu đến bàn giao dự án, chúng tôi làm cho hành trình cải tạo của bạn đơn giản và an tâm."
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
-      "description": "Visit our Richmond BC showroom: touch real materials, see kitchen & bathroom displays, get a free quote on the spot. Open Mon-Sat 9:30AM. No appointment needed."
+      "title": "Showroom Cải Tạo Richmond BC | Tư Vấn Miễn Phí | Reno Stars",
+      "description": "Ghé thăm showroom của chúng tôi tại Richmond BC: chạm vào vật liệu thực, xem trưng bày phòng bếp & phòng tắm, nhận báo giá miễn phí tại chỗ. Mở cửa T2-T7 từ 9:30. Không cần hẹn trước."
     },
     "guides": {
-      "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
+      "title": "Hướng Dẫn Chi Phí Cải Tạo | Vancouver BC | Reno Stars",
+      "description": "Hướng dẫn chi phí cải tạo miễn phí dựa trên dữ liệu dự án thực từ Greater Vancouver. Báo giá cải tạo phòng bếp, phòng tắm và toàn bộ nhà với ngân sách và tiến độ thực.",
       "kitchenCost": {
-        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+        "title": "Chi Phí Cải Tạo Phòng Bếp Vancouver BC (2026) | Reno Stars",
+        "description": "Cải tạo phòng bếp tại Vancouver tốn bao nhiêu? Báo giá thực từ $15,000 đến $72,000 dựa trên 16 dự án đã hoàn thành. Nhận phân tích chi phí chính xác theo hạng mức."
       },
       "bathroomCost": {
-        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
-        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+        "title": "Chi Phí Cải Tạo Phòng Tắm Trung Bình Vancouver (2026) | Reno Stars",
+        "description": "Chi phí cải tạo phòng tắm trung bình tại Vancouver là bao nhiêu? Giá thực từ $10K–$60K+ dựa trên 19 dự án đã hoàn thành. Phân tích chi phí đầy đủ cho phòng tắm 3, 4 và 5 hạng mục."
       },
       "wholeHouseCost": {
-        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+        "title": "Chi Phí Cải Tạo Toàn Bộ Nhà Vancouver BC (2026) | Reno Stars",
+        "description": "Chi phí cải tạo toàn bộ nhà tại Vancouver: $50K–$200K+ từ các dự án thực. Phân tích đầy đủ theo phạm vi — phòng bếp, phòng tắm, sàn và hơn nữa. Nhận ước tính miễn phí từ Reno Stars."
       },
       "basementCost": {
-        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+        "title": "Chi Phí Cải Tạo Tầng Hầm Vancouver BC (2026) | Reno Stars",
+        "description": "Cải tạo tầng hầm tại Vancouver tốn bao nhiêu? Báo giá điển hình từ $30,000 đến $120,000+ cho Greater Vancouver. Nhận phân tích chi phí chính xác theo hạng mức, kèm mẹo tiết kiệm tiền."
       },
       "commercialCost": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+        "title": "Chi Phí Cải Tạo Thương Mại Tại Vancouver BC (2026) | Reno Stars",
+        "description": "Cải tạo thương mại tại Vancouver tốn bao nhiêu? Chi phí điển hình dao động từ $50,000 đến $1,000,000+. Phân tích chi tiết theo loại dự án với dữ liệu thực."
       },
       "cabinetCost": {
-        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+        "title": "Chi Phí Sơn Lại Tủ Vancouver BC (2026) | Reno Stars",
+        "description": "Sơn lại tủ tại Vancouver tốn bao nhiêu? Báo giá điển hình từ $4,000 đến $15,000 cho Greater Vancouver. So sánh các tùy chọn sơn lại, thay mặt và thay mới hoàn toàn."
       },
       "basementSuiteCost": {
-        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+        "title": "Chi Phí Chuyển Đổi Căn Hộ Tầng Hầm Vancouver BC (2026) | Reno Stars",
+        "description": "Một căn hộ tầng hầm hợp pháp tại Vancouver tốn bao nhiêu? Báo giá điển hình từ $60,000 đến $150,000. Phân tích chi phí chi tiết, phân tích ROI và quy định đô thị."
       }
     },
     "about": {
-      "title": "About Reno Stars | 20+ Years, 70+ 5★ Reviews | Vancouver Renovations",
-      "description": "Meet the team behind 100+ Metro Vancouver renovations. 20+ years experience, $5M insured, WCB covered, 70+ Google five-star reviews. Free consultations."
+      "title": "Về Reno Stars | Hơn 20 Năm, 70+ Đánh Giá 5★ | Cải Tạo Vancouver",
+      "description": "Gặp gỡ đội ngũ đứng sau hơn 100 dự án cải tạo tại Metro Vancouver. Hơn 20 năm kinh nghiệm, bảo hiểm $5M, có WCB, hơn 70 đánh giá năm sao trên Google. Tư vấn miễn phí."
     },
     "reviews": {
-      "title": "70+ Five-Star Reviews | Reno Stars Vancouver",
-      "description": "Read 70+ verified Google five-star reviews from real Vancouver homeowners. See why families across Metro Vancouver trust Reno Stars for their renovations."
+      "title": "Hơn 70 Đánh Giá Năm Sao | Reno Stars Vancouver",
+      "description": "Đọc hơn 70 đánh giá năm sao trên Google đã được xác minh từ các chủ nhà Vancouver thực. Xem vì sao các gia đình khắp Metro Vancouver tin tưởng Reno Stars cho cải tạo của họ."
     },
     "financing": {
-      "title": "Renovation Financing & Budget Guide | Vancouver",
-      "description": "Explore renovation financing options in Metro Vancouver. HELOC, personal loans, mortgage refinancing, and budget planning tips for your home renovation project."
+      "title": "Hướng Dẫn Tài Chính & Ngân Sách Cải Tạo | Vancouver",
+      "description": "Khám phá các lựa chọn tài chính cải tạo tại Metro Vancouver. HELOC, vay cá nhân, tái tài trợ thế chấp và mẹo lập kế hoạch ngân sách cho dự án cải tạo nhà của bạn."
     },
     "beforeAfter": {
-      "title": "Before & After: Real Vancouver Renovations | Reno Stars",
-      "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
+      "title": "Trước & Sau: Cải Tạo Vancouver Thực | Reno Stars",
+      "description": "Những biến đổi cải tạo trước và sau tuyệt đẹp từ Metro Vancouver. Dự án thực, chi phí thực, kết quả thực. Phòng bếp, phòng tắm và toàn bộ nhà."
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, 70+ Reviews",
-      "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, 70+ five-star Google reviews. Vancouver."
+      "title": "Vì Sao Reno Stars | Bảo Hiểm $5M, Bảo Hành 3 Năm, 70+ Đánh Giá",
+      "description": "Điều làm Reno Stars khác biệt: bảo hiểm $5M CGL, bảo hiểm WCB, bảo hành tay nghề 3 năm, đội ngũ song ngữ, hơn 70 đánh giá năm sao trên Google. Vancouver."
     },
     "nearMe": {
-      "title": "Home Renovation Near Me | Vancouver Metro | Reno Stars",
-      "description": "Top-rated home renovation company near you in Vancouver, Richmond, Burnaby, Surrey & 14 Metro Vancouver cities. 70+ Google 5★ reviews, 20+ years, $5M insured. Free quotes."
+      "title": "Cải Tạo Nhà Gần Tôi | Vancouver Metro | Reno Stars",
+      "description": "Công ty cải tạo nhà được đánh giá cao gần bạn tại Vancouver, Richmond, Burnaby, Surrey & 14 thành phố Metro Vancouver. 70+ Google 5★, hơn 20 năm, bảo hiểm $5M. Báo giá miễn phí."
     },
-    "localBusinessDescription": "Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with up to $5M CGL insurance, active WCB coverage, and up to 3 years warranty."
+    "localBusinessDescription": "Dịch vụ cải tạo nhà chuyên nghiệp tại Metro Vancouver. Cải tạo phòng bếp, phòng tắm, toàn bộ nhà. Có giấy phép, bảo hiểm với bảo hiểm CGL lên đến $5M, bảo hiểm WCB đang hiệu lực và bảo hành lên đến 3 năm."
   }
 }

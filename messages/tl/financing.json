@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "Financing at Budget Guide",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "Renovation Financing at Budget Guide",
+      "subtitle": "I-explore ang iyong financing options at planuhin nang matalino ang iyong renovation budget. Base sa totoong project costs mula sa aming natapos na renovation sa buong Metro Vancouver."
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
+      "avgKitchen": "Avg na Kitchen Reno",
+      "avgBathroom": "Avg na Bathroom Reno",
       "financingOptions": "Financing Options"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "Financing Options para sa Iyong Renovation",
+      "subtitle": "Ang pinakakaraniwang paraan ng pagpopondo ng renovation projects ng Canadian homeowners sa British Columbia.",
       "heloc": {
         "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "rate": "Karaniwang rate: Prime + 0.5% hanggang 2%",
+        "description": "Manghiram laban sa iyong home equity na may flexible draw amounts. Magbabayad lang ng interest sa ginagamit mo. Available sa karamihan ng Canadian banks at credit unions.",
+        "pro": "✓ Mababang interest rate",
+        "con": "✗ Kailangan ng home equity"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "Personal Loan o Line of Credit",
+        "rate": "Karaniwang rate: 6% – 12%",
+        "description": "Unsecured loans mula sa banks o credit unions. Hindi kailangan ng home equity. Predictable ang budget dahil fixed monthly payments.",
+        "pro": "✓ Hindi kailangan ng collateral",
+        "con": "✗ Mas mataas na interest rate"
       },
       "refinance": {
         "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "rate": "Karaniwang rate: Current mortgage rates",
+        "description": "I-refinance ang iyong mortgage para isama ang renovation costs. Spread ang cost sa buong mortgage term. Maaaring may break penalties kung mid-term.",
+        "pro": "✓ Pinakamababang posibleng rate",
+        "con": "✗ Posibleng break fees"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
+        "title": "Savings at Phased Approach",
+        "rate": "Walang interest cost",
+        "description": "Bayaran mula sa savings o i-phase ang iyong renovation sa stages. Tapusin ang isang kwarto sa isang pagkakataon para spread ang costs. Walang utang at walang interest charges.",
         "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "con": "✗ Mas mahabang timeline"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
+      "title": "Karaniwang Renovation Costs sa Metro Vancouver",
+      "subtitle": "Base sa mga totoong natapos na project mula sa aming portfolio.",
       "bathroom": "Bathroom Renovation",
       "kitchen": "Kitchen Renovation",
       "basement": "Basement Renovation",
       "wholeHouse": "Whole House Renovation",
       "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "disclaimer": "* Range base sa aming natapos na project sa Greater Vancouver. Iba-iba ang aktwal na cost depende sa scope, materyales, at lokasyon."
     },
     "tips": {
       "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "subtitle": "Matalinong strategies para masulit ang iyong renovation investment.",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "I-prioritize ang High-Impact Areas",
+        "description": "Ang kitchen at bathroom ay nag-aalok ng pinakamagandang return on investment. I-focus ang iyong budget sa mga espasyong pinakamahalaga para sa pang-araw-araw na pamumuhay at resale value."
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "Magtabi ng 10–15% Contingency",
+        "description": "Karaniwan ang mga hindi inaasahang natutuklasan habang nagre-renovate, lumang plumbing, nakatagong amag, o structural issues. Iniiwasan ng contingency fund ang budget stress."
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "Mag-isip ng Phased Approach",
+        "description": "Kung ang iyong total renovation ay lumalampas sa iyong budget, mag-prioritize at tapusin ang kwarto sa phases. Spread nito ang costs habang nakakamit pa rin ang iyong goals."
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "Kumuha ng Detalyadong Written Quotes",
+        "description": "Laging humingi ng itemized quotes mula sa mga contractor. Ihambing ang scope of work, hindi lang ang total price. Maaaring hindi kasama sa mas mababang quote ang mga items na kailangan mo."
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "Mag-budget para sa Permits at Inspections",
+        "description": "Ang mga building permit sa Metro Vancouver ay karaniwang $200–$2,000+ depende sa scope. Ang pag-skip sa permits ay maaaring magdulot ng magastos na problema sa resale."
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "Isipin ang Return on Investment",
+        "description": "Ang kitchen renovation ay maaaring magbalik ng 75–100% ng costs sa resale. Ang bathroom renovation ay nagbabalik ng 60–70%. Ang basement suites ay maaaring makagenerate ng rental income para offset sa costs."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Mga Madalas Itanong"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "Magkano dapat ang aking budget para sa renovation sa Vancouver?",
+      "a1": "Depende sa scope ang budget: ang bathroom renovation ay $10,000–$60,000, kitchens ay $15,000–$72,000, at whole-house projects ay $50,000+. Nagbibigay kami ng libreng detalyadong estimate base sa iyong specific na pangangailangan.",
+      "q1Answer": "Depende sa scope ang budget: ang bathroom renovation ay $10,000–$60,000, kitchens ay $15,000–$72,000, at whole-house projects ay $50,000+. Nagbibigay kami ng libreng detalyadong estimate base sa iyong specific na pangangailangan.",
+      "q2": "Pwede ba akong mag-renovate sa maliit na budget?",
+      "a2": "Oo! Nagtatrabaho kami sa iba't ibang antas ng budget. Pinapayagan ka ng phased approach na tapusin ang priority areas muna. Ang cabinet refinishing ($3,000–$8,000) ay cost-effective alternative sa full kitchen replacement.",
+      "q2Answer": "Oo! Nagtatrabaho kami sa iba't ibang antas ng budget. Pinapayagan ka ng phased approach na tapusin ang priority areas muna. Ang cabinet refinishing ($3,000–$8,000) ay cost-effective alternative sa full kitchen replacement.",
+      "q3": "Nag-aalok ba kayo ng payment plans?",
+      "a3": "Sumusunod kami sa standard payment schedule: deposit para sigurahin ang iyong project date, progress payments sa key milestones, at final payment sa completion at iyong satisfaction.",
+      "q3Answer": "Sumusunod kami sa standard payment schedule: deposit para sigurahin ang iyong project date, progress payments sa key milestones, at final payment sa completion at iyong satisfaction.",
+      "q4": "Ano ang kasama sa renovation quote?",
+      "a4": "Kasama sa aming quotes ang labour, materyales, project management, permits (kung applicable), at cleanup. Nagbibigay kami ng itemized breakdown para alam mo nang eksakto kung saan napupunta ang iyong budget.",
+      "q4Answer": "Kasama sa aming quotes ang labour, materyales, project management, permits (kung applicable), at cleanup. Nagbibigay kami ng itemized breakdown para alam mo nang eksakto kung saan napupunta ang iyong budget.",
+      "q5": "Paano ko ma-maximize ang aking renovation ROI?",
+      "a5": "Mag-focus sa kitchen at bathroom para sa pinakamagandang resale return. Gumamit ng quality materials na pangmatagalan. Mag-isip ng basement suite para sa rental income. Tinutulungan namin kayong mag-plano ng renovation na nagba-balance ng iyong lifestyle needs at long-term value.",
+      "q5Answer": "Mag-focus sa kitchen at bathroom para sa pinakamagandang resale return. Gumamit ng quality materials na pangmatagalan. Mag-isip ng basement suite para sa rental income. Tinutulungan namin kayong mag-plano ng renovation na nagba-balance ng iyong lifestyle needs at long-term value."
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "Handa nang Mag-plano ng Iyong Renovation Budget?",
+      "subtitle": "Kumuha ng libreng konsultasyon na may detalyadong cost estimate na akma sa iyong proyekto at goals."
     }
   }
 }

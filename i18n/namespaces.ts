@@ -19,7 +19,8 @@ export const namespaces = [
   'footer',
   'form',
   'gallery',
-  'guides',
+  // 'guides' is loaded as a multi-file namespace from messages/<locale>/guides/*.json
+  // (see i18n/request.ts + i18n/guideSections.ts) — kept out of this flat list.
   'hero',
   'homeFaq',
   'homePartners',

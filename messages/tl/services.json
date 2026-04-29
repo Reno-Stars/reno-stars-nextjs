@@ -2,37 +2,37 @@
   "services": {
     "kitchen": {
       "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
-      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+      "description": "Kompletong kitchen remodeling na may modernong design, custom cabinetry, at premium countertops.",
+      "longDescription": "Baguhin ang iyong kitchen sa puso ng iyong tahanan sa aming komprehensibong renovation services. Mula custom cabinetry at premium countertops hanggang state-of-the-art appliances at innovative storage solutions, gumagawa kami ng kitchen na maganda at functional."
     },
     "bathroom": {
       "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
-      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+      "description": "Baguhin ang iyong bathroom sa spa-like na refuge na may luxury fixtures at finishes.",
+      "longDescription": "Lumikha ng iyong personal na sanctuary sa aming bathroom renovation expertise. Dalubhasa kami sa luxury spa-inspired designs, modernong fixtures, custom tile work, at innovative storage solutions na nagma-maximize ng style at functionality."
     },
     "wholeHouse": {
       "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
-      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+      "description": "Full-scale na home transformations mula concept hanggang completion.",
+      "longDescription": "Maranasan ang kompletong home transformation sa aming whole house renovation services. Pinamamahalaan namin ang bawat aspekto ng iyong proyekto, mula initial design concepts hanggang final completion, sinisigurong seamless ang renovation experience."
     },
     "basement": {
       "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
-      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+      "description": "Gawing functional living space ang iyong basement. Ranked 3rd sa Best of Vancouver.",
+      "longDescription": "I-unlock ang full potential ng iyong tahanan sa aming award-winning basement remodeling services. Kung gusto mo ng home theater, gym, guest suite, o home office, binabago namin ang underutilized basements sa magaganda at functional na living spaces."
     },
     "cabinet": {
       "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
-      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+      "description": "I-refresh ang itsura ng iyong kitchen sa professional cabinet refacing services.",
+      "longDescription": "Bigyan ang iyong kitchen ng nakakamanghang bagong itsura nang walang gastos ng full renovation. Kasama sa aming cabinet refacing services ang bagong doors, drawer fronts, at hardware, binabago ang itsura ng iyong kitchen habang pinapanatili ang existing cabinet boxes."
     },
     "commercial": {
       "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
-      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+      "description": "Professional commercial space renovations para sa offices, retail, at restaurants.",
+      "longDescription": "I-elevate ang iyong business space sa aming commercial renovation expertise. Hinahawakan namin ang office build-outs, retail store renovations, restaurant redesigns, at iba pa, naghahatid ng professional na resulta na nagpapahusay sa iyong brand at customer experience."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}",
+    "hubTitle": "Aming mga Serbisyo",
+    "hubSubtitle": "Professional renovation solutions para sa bawat espasyo",
+    "getQuoteForService": "Kumuha ng Quote para sa {service}",
     "realtor": {
       "title": "Realtor Consultation",
       "shortTitle": "Realtor"

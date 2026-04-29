@@ -1,0 +1,127 @@
+{
+  "wholeHouseCost": {
+    "breadcrumb": "Whole House Renovation Cost",
+    "hero": {
+      "title": "Whole House Renovation Cost sa Vancouver BC (2026)",
+      "subtitle": "Totoong pricing mula sa natapos na whole-home renovations sa buong Greater Vancouver. Mula sa condo refresh hanggang full house transformations. Bawat numero ay galing sa aktwal na projects."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "projects": "Natapos na Projects",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "3–8 na linggo"
+    },
+    "tiers": {
+      "title": "Whole House Renovation Cost ayon sa Tier",
+      "subtitle": "Base sa aming natapos na projects sa buong Greater Vancouver",
+      "budget": {
+        "title": "Cosmetic Refresh",
+        "description": "Paint sa buong bahay, bagong flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), at minor kitchen updates. Ideal para sa condos at rental properties na nangangailangan ng modernong update nang walang structural work."
+      },
+      "midRange": {
+        "title": "Comprehensive Renovation",
+        "description": "Full kitchen renovation na may bagong cabinets at countertops, bathroom remodels, bagong flooring sa buong bahay, fresh paint, updated electrical at plumbing fixtures, at bagong lighting. Pinakapopular na choice para sa homeowners na pangmatagalan."
+      },
+      "highEnd": {
+        "title": "Premium Transformation",
+        "description": "Kompletong gut renovation kasama ang structural changes, open-concept layouts, high-end kitchen at bathrooms, custom millwork, premium flooring, smart home integration, at designer finishes sa buong bahay. Para sa homeowners na gusto ng tunay na custom home."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Whole House Renovation Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "scope": {
+        "title": "Scope at Square Footage",
+        "description": "Ang pinakamalaking factor. Ang 600 sq ft condo refresh ay mas mura kaysa sa 2,500 sq ft house gut renovation. I-define ang iyong must-haves vs nice-to-haves nang maaga para makontrol ang budget."
+      },
+      "kitchen": {
+        "title": "Kitchen (30–40% ng total budget)",
+        "description": "Ang kitchen ay karaniwang ang pinakamahal na kwarto. Ang custom cabinets, quartz countertops, at appliance upgrades ay maaaring $15,000–$72,000 lang. Tingnan ang aming kitchen cost guide para sa detalyadong breakdown."
+      },
+      "bathrooms": {
+        "title": "Bathrooms (15–25% ng total budget)",
+        "description": "Bawat bathroom renovation ay nagdadagdag ng $10,000–$40,000 depende sa laki at finishes. Waterproofing, tile work, at fixture quality ay nag-drive ng costs. Ang multi-bathroom homes ay nakakakita ng malaking savings per unit."
+      },
+      "flooring": {
+        "title": "Flooring (10–15% ng total budget)",
+        "description": "Engineered hardwood ay $8–$15/sq ft installed. Luxury vinyl plank (LVP) ay nag-aalok ng budget-friendly alternative sa $5–$10/sq ft. Tile para sa wet areas ay nagdadagdag ng $12–$25/sq ft."
+      },
+      "structural": {
+        "title": "Structural Changes",
+        "description": "Pagtanggal ng walls, pagdagdag ng windows, o pag-reconfigure ng layouts ay nagdadagdag ng $5,000–$25,000+. Ang load-bearing wall removal ay nangangailangan ng engineering reports at permits. Ang open-concept conversions ay popular pero magastos."
+      },
+      "permits": {
+        "title": "Permits at Professional Fees",
+        "description": "Ang building permits sa Metro Vancouver ay karaniwang $500–$2,500 para sa whole house renovation. Mag-budget ng dagdag $2,000–$5,000 para sa architectural drawings, engineering reports, at inspections."
+      }
+    },
+    "realProjects": {
+      "title": "Totoong Whole House Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na whole-house projects na may aktwal na budget at timeline"
+    },
+    "included": {
+      "title": "Ano ang Karaniwang Kasama sa Whole House Renovation",
+      "subtitle": "Komprehensibong renovation na nakakaapekto sa bawat kwarto at system",
+      "item1": {
+        "title": "Kitchen Renovation",
+        "description": "Bagong cabinets, countertops, backsplash, sink, faucet, at updated appliance connections. Available ang layout changes para sa mid-range at premium tiers."
+      },
+      "item2": {
+        "title": "Bathroom Remodels",
+        "description": "Bagong vanity, toilet, shower o tub, tile work, waterproofing, at updated plumbing fixtures. Bawat bathroom ay fully refreshed o rebuilt."
+      },
+      "item3": {
+        "title": "Flooring sa Buong Bahay",
+        "description": "Bagong flooring sa lahat ng living spaces: hardwood, engineered wood, o LVP sa main areas; tile sa bathrooms at entryways."
+      },
+      "item4": {
+        "title": "Paint at Trim",
+        "description": "Fresh paint sa lahat ng walls at ceilings, bago o refinished baseboards, door casings, at crown moulding kung applicable."
+      },
+      "item5": {
+        "title": "Electrical at Lighting",
+        "description": "Updated light fixtures, dagdag na outlets kung kailangan, dimmer switches, at panel upgrades para sa lumang bahay."
+      },
+      "item6": {
+        "title": "Doors at Hardware",
+        "description": "Bagong interior doors, updated door handles at hinges, closet organizers, at anumang exterior door replacements kung kailangan."
+      }
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Whole House Renovations",
+      "tip1": {
+        "title": "Mag-prioritize at Mag-phase ng Iyong Trabaho",
+        "description": "Hindi mo kailangang gawin lahat nang sabay. Tackle ang kitchen at bathrooms muna (highest ROI), tapos i-address ang cosmetic updates sa later phases. Spread nito ang costs at pinapayagan kang manirahan sa bahay habang nagre-renovate."
+      },
+      "tip2": {
+        "title": "Panatilihin ang Plumbing kung Saan Ito",
+        "description": "Ang paglilipat ng plumbing ay isa sa pinakamahal na changes. Ang pag-keep sa kitchen at bathrooms sa kanilang current locations ay nag-save ng $5,000–$15,000 sa plumbing at structural work."
+      },
+      "tip3": {
+        "title": "Pumili ng Materials nang Strategically",
+        "description": "Mag-splurge sa high-impact, high-touch surfaces tulad ng kitchen countertops at bathroom tile. Mag-save sa areas tulad ng bedroom flooring (LVP ay maganda sa kalahating cost ng hardwood) at interior paint (mid-range paints ay halos kasing ganda ng premium)."
+      },
+      "tip4": {
+        "title": "Mag-bundle para sa Mas Magandang Pricing",
+        "description": "Ang whole house renovations ay madalas na mas mura per kwarto kaysa sa paggawa nang isa-isa. Nag-aalok ang mga contractor ng mas magandang rates kapag pwede silang mag-schedule ng crews efficiently sa mas malaking project."
+      }
+    },
+    "faq": {
+      "q1": "Magkano ang whole house renovation sa Vancouver?",
+      "a1": "Ang whole house renovation costs sa Vancouver ay karaniwang $50,000 hanggang $200,000+ base sa aming natapos na projects. Ang cosmetic refreshes (paint, flooring, fixtures) ay nagsisimula sa $50,000–$80,000, comprehensive renovations na may bagong kitchen at bathrooms ay $80,000–$120,000, at premium transformations na may structural changes ay maaaring lumampas sa $120,000.",
+      "q2": "Gaano katagal ang whole house renovation?",
+      "a2": "Karaniwang 3 hanggang 8 na linggo ang whole house renovation depende sa scope. Ang cosmetic refresh (paint, flooring, fixtures) ay maaaring matapos sa 3–4 na linggo. Ang comprehensive renovation kasama ang kitchen at bathrooms ay karaniwang 5–8 na linggo. Ang projects na may structural changes o permits ay maaaring tumagal ng 10–14 na linggo.",
+      "q3": "Pwede ba akong manirahan sa bahay habang whole house renovation?",
+      "a3": "Depende sa scope. Para sa cosmetic refreshes, karaniwang pwede kang manatili sa bahay habang ginagawa ang trabaho room-by-room. Para sa comprehensive renovations na kasama ang kitchen at bathroom demolition, inirerekomenda namin ang temporary accommodation sa loob ng 2–4 na linggo habang ang pinaka-disruptive na phases.",
+      "q4": "Ano ang nagbibigay ng pinakamagandang return on investment para sa whole house renovation?",
+      "a4": "Ang kitchen at bathroom renovations ay palaging naghahatid ng pinakamataas na ROI sa Vancouver market. Ang updated flooring at fresh paint ay nagbibigay ng excellent value sa relatibong mababang cost. Ang open-concept layouts ay popular sa mga buyer pero nangangailangan ng structural work na nagpapataas ng costs nang malaki.",
+      "q5": "Kailangan ko ba ng permits para sa whole house renovation sa Vancouver?",
+      "a5": "Oo, karamihan sa whole house renovations ay nangangailangan ng permits. Ang anumang trabaho na may plumbing, electrical, gas, o structural changes ay nangangailangan ng City of Vancouver building permit. Ang cosmetic-only work (paint, flooring, cabinets) ay karaniwang hindi nangangailangan ng permits. Mag-budget ng $500–$2,500 para sa permit fees."
+    },
+    "cta": {
+      "heading": "Handa nang Baguhin ang Iyong Buong Tahanan?",
+      "subtitle": "Kumuha ng libreng konsultasyon at detalyadong quote para sa iyong whole house renovation. Lalakarin namin ang bawat kwarto at gagawa ng plano na akma sa iyong budget."
+    }
+  }
+}

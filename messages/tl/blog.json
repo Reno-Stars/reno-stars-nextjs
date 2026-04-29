@@ -1,21 +1,21 @@
 {
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
+    "title": "Vancouver Renovation Tips at Guides",
+    "subtitle": "Tips, trends, at insights para sa iyong renovation project",
+    "readMore": "Magbasa Pa",
+    "publishedOn": "Inilathala noong",
     "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
+    "backToBlog": "Bumalik sa Blog",
+    "comingSoon": "Paparating na ang full article content. I-contact kami para sa anumang renovation question pansamantala.",
+    "noPosts": "Wala pang blog posts. Bumalik mamaya para sa renovation tips at insights.",
+    "relatedProject": "Kaugnay na Proyekto",
     "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "previous": "Nakaraan",
+    "next": "Susunod",
+    "previousPage": "Pumunta sa nakaraang pahina",
+    "nextPage": "Pumunta sa susunod na pahina",
+    "showingPosts": "Pinapakita ang {start}-{end} ng {total} posts",
+    "relatedServices": "Kaugnay na Serbisyo",
+    "relatedAreas": "Renovation sa Iyong Lugar"
   }
 }

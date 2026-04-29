@@ -1,19 +1,19 @@
 {
   "wholeHouse": {
-    "projectOverview": "Project Overview",
-    "includedAreas": "Included Areas",
-    "totalBudget": "Budget",
-    "totalDuration": "Timeline",
-    "allServiceScopes": "All Services Included",
-    "viewAreaProject": "View {area} Project",
-    "viewAreaDetails": "View Details",
-    "combinedGallery": "Project Gallery",
-    "filterByArea": "Filter by Area",
-    "allAreas": "All Areas",
-    "childProjectsCount": "{count} renovation areas",
-    "noImagesForArea": "No images available for this area",
-    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
-    "siteBadge": "Whole House",
-    "areas": "Areas"
+    "projectOverview": "ਪ੍ਰੋਜੈਕਟ ਦੀ ਸਮੀਖਿਆ",
+    "includedAreas": "ਸ਼ਾਮਲ ਖੇਤਰ",
+    "totalBudget": "ਬਜਟ",
+    "totalDuration": "ਸਮਾਂ-ਸਾਰਣੀ",
+    "allServiceScopes": "ਸਾਰੀਆਂ ਸੇਵਾਵਾਂ ਸ਼ਾਮਲ",
+    "viewAreaProject": "{area} ਪ੍ਰੋਜੈਕਟ ਵੇਖੋ",
+    "viewAreaDetails": "ਵੇਰਵੇ ਵੇਖੋ",
+    "combinedGallery": "ਪ੍ਰੋਜੈਕਟ ਗੈਲਰੀ",
+    "filterByArea": "ਖੇਤਰ ਅਨੁਸਾਰ ਫਿਲਟਰ ਕਰੋ",
+    "allAreas": "ਸਾਰੇ ਖੇਤਰ",
+    "childProjectsCount": "{count} ਰੈਨੋਵੇਸ਼ਨ ਖੇਤਰ",
+    "noImagesForArea": "ਇਸ ਖੇਤਰ ਲਈ ਕੋਈ ਤਸਵੀਰ ਉਪਲਬਧ ਨਹੀਂ",
+    "areasCount": "{count, plural, one {# ਖੇਤਰ} other {# ਖੇਤਰ}}",
+    "siteBadge": "ਪੂਰਾ ਘਰ",
+    "areas": "ਖੇਤਰ"
   }
 }

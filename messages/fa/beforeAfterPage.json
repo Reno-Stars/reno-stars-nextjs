@@ -1,67 +1,67 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "گالری قبل و بعد",
+      "subtitle": "تحول‌های چشمگیر پروژه‌های بازسازی ما در سراسر مترو ونکوور را ببینید. تصاویر واقعی از منازل واقعی."
     },
     "stats": {
-      "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "transformations": "تحول‌ها",
+      "projects": "پروژه‌ها",
+      "cities": "شهرهای تحت پوشش"
     },
     "filters": {
-      "all": "All",
-      "bathroom": "Bathroom",
-      "kitchen": "Kitchen",
-      "whole-house": "Whole House",
-      "commercial": "Commercial"
+      "all": "همه",
+      "bathroom": "حمام",
+      "kitchen": "آشپزخانه",
+      "whole-house": "بازسازی کامل منزل",
+      "commercial": "تجاری"
     },
     "labels": {
-      "before": "Before",
-      "after": "After",
-      "viewProject": "View Project"
+      "before": "قبل",
+      "after": "بعد",
+      "viewProject": "مشاهده پروژه"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "تصویر قبل و بعدی برای این دسته‌بندی یافت نشد.",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "چرا تصاویر قبل و بعد را به اشتراک می‌گذاریم",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "شفافیت کامل",
+        "description": "ما به نشان دادن دقیق آنچه باید انتظار داشته باشید اعتقاد داریم. تصاویر قبل و بعد ما ویرایش‌نشده هستند و نگاهی صادقانه به کیفیت کار ما ارائه می‌دهند."
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "کیفیت اثبات‌شده",
+        "description": "هر تحول گویای خود است. از آشپزخانه‌های قدیمی تا شاهکارهای مدرن، صنعتگری ما در هر جزئیات مشهود است."
       },
       "inspiration": {
-        "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "title": "الهام طراحی",
+        "description": "بازسازی‌های واقعی را مرور کنید تا برای پروژه خود ایده بگیرید. ببینید چگونه سبک‌ها، متریال‌ها و چیدمان‌های مختلف در منازلی شبیه به منزل شما ترکیب شده‌اند."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "پرسش‌های متداول"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "آیا این تصاویر قبل و بعد واقعی هستند؟",
+      "a1": "بله، هر تصویر در این صفحه مستقیماً از پروژه‌های بازسازی تکمیل‌شده ما در سراسر مترو ونکوور گرفته شده است. ما از تصاویر استوک یا ویرایش دیجیتال استفاده نمی‌کنیم.",
+      "q2": "بازسازی معمولی چقدر زمان می‌برد؟",
+      "a2": "زمان‌بندی بازسازی بر اساس دامنه پروژه متفاوت است. بازسازی حمام معمولاً ۲ تا ۴ هفته، آشپزخانه ۴ تا ۸ هفته و بازسازی کامل منزل ۲ تا ۴ ماه طول می‌کشد. ما در جلسه مشاوره رایگان زمان‌بندی دقیق ارائه می‌دهیم.",
+      "q3": "آیا می‌توانم پروژه‌ای تکمیل‌شده را از نزدیک ببینم؟",
+      "a3": "می‌توانیم بازدید از شوروم خود را ترتیب دهیم، جایی که می‌توانید نمونه‌های متریال و فینیشن‌ها را از نزدیک ببینید. برای ارجاعات خاص پروژه، می‌توانیم شما را با مشتریان قبلی که مایل به اشتراک تجربه خود هستند مرتبط کنیم.",
+      "q4": "به چه مناطقی خدمات می‌دهید؟",
+      "a4": "ما به تمام مترو ونکوور شامل Vancouver، Burnaby، Richmond، Surrey، Coquitlam، Port Coquitlam، Port Moody، North Vancouver، West Vancouver، Delta، Langley و Maple Ridge خدمات می‌دهیم.",
+      "q5": "چگونه بازسازی خود را آغاز کنم؟",
+      "a5": "به‌سادگی با ما برای یک مشاوره رایگان تماس بگیرید. ما به فضای شما سر می‌زنیم، درباره ایده‌ها و بودجه شما گفتگو می‌کنیم و یک پیش‌فاکتور دقیق ارائه می‌دهیم. تیم ما همه چیز را از طراحی تا تکمیل مدیریت می‌کند."
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "آماده‌اید فضای خود را متحول کنید؟",
+      "subtitle": "همین امروز برای مشاوره رایگان با ما تماس بگیرید و ببینید Reno Stars چه کاری می‌تواند برای منزل شما انجام دهد."
     },
     "pagination": {
-      "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "label": "صفحه‌بندی گالری",
+      "previous": "قبلی",
+      "next": "بعدی",
+      "previousPage": "رفتن به صفحه قبلی",
+      "nextPage": "رفتن به صفحه بعدی"
     }
   }
 }

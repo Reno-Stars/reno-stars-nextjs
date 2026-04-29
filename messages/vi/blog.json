@@ -1,21 +1,21 @@
 {
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "Mẹo & Hướng Dẫn Cải Tạo Vancouver",
+    "subtitle": "Mẹo, xu hướng và những góc nhìn cho dự án cải tạo của bạn",
+    "readMore": "Đọc Thêm",
+    "publishedOn": "Đăng ngày",
+    "updated": "Cập nhật",
+    "backToBlog": "Quay Lại Blog",
+    "comingSoon": "Nội dung bài viết đầy đủ sẽ sớm có. Trong khi chờ đợi, hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào về cải tạo.",
+    "noPosts": "Chưa có bài viết nào. Hãy quay lại sớm để xem các mẹo và góc nhìn về cải tạo.",
+    "relatedProject": "Dự Án Liên Quan",
+    "pagination": "Phân trang Blog",
+    "previous": "Trước",
+    "next": "Sau",
+    "previousPage": "Đến trang trước",
+    "nextPage": "Đến trang sau",
+    "showingPosts": "Hiển thị {start}-{end} trong tổng số {total} bài",
+    "relatedServices": "Dịch Vụ Liên Quan",
+    "relatedAreas": "Cải Tạo Tại Khu Vực Của Bạn"
   }
 }

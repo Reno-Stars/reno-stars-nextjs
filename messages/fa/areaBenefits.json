@@ -1,10 +1,10 @@
 {
   "areaBenefits": {
-    "localTeam": "Local team familiar with the area",
-    "quickResponse": "Quick response times",
-    "buildingCodes": "Knowledge of local building codes",
-    "supplierRelationships": "Established supplier relationships",
-    "freeOnsite": "Free on-site consultations",
-    "competitivePricing": "Competitive local pricing"
+    "localTeam": "تیم محلی آشنا با منطقه",
+    "quickResponse": "زمان پاسخگویی سریع",
+    "buildingCodes": "آشنایی با مقررات ساختمانی محلی",
+    "supplierRelationships": "روابط تثبیت‌شده با تأمین‌کنندگان",
+    "freeOnsite": "مشاوره رایگان در محل",
+    "competitivePricing": "قیمت‌گذاری رقابتی محلی"
   }
 }

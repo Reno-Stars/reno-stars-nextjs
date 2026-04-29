@@ -1,67 +1,67 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "Bộ Sưu Tập Trước & Sau",
+      "subtitle": "Khám phá những thay đổi ấn tượng từ các dự án cải tạo của chúng tôi khắp Metro Vancouver. Hình ảnh thực từ những ngôi nhà thực."
     },
     "stats": {
-      "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "transformations": "Lần Biến Đổi",
+      "projects": "Dự Án",
+      "cities": "Thành Phố Đã Phục Vụ"
     },
     "filters": {
-      "all": "All",
-      "bathroom": "Bathroom",
-      "kitchen": "Kitchen",
-      "whole-house": "Whole House",
-      "commercial": "Commercial"
+      "all": "Tất Cả",
+      "bathroom": "Phòng Tắm",
+      "kitchen": "Phòng Bếp",
+      "whole-house": "Toàn Bộ Nhà",
+      "commercial": "Thương Mại"
     },
     "labels": {
-      "before": "Before",
-      "after": "After",
-      "viewProject": "View Project"
+      "before": "Trước",
+      "after": "Sau",
+      "viewProject": "Xem Dự Án"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "Không tìm thấy hình ảnh trước & sau cho danh mục này.",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "Vì Sao Chúng Tôi Chia Sẻ Hình Ảnh Trước & Sau",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "Minh Bạch Hoàn Toàn",
+        "description": "Chúng tôi tin vào việc cho bạn thấy chính xác những gì có thể mong đợi. Hình ảnh trước và sau của chúng tôi không qua chỉnh sửa, mang lại cho bạn cái nhìn trung thực về chất lượng công việc."
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "Chất Lượng Đã Được Chứng Minh",
+        "description": "Mỗi sự biến đổi đều tự nói lên điều đó. Từ những phòng bếp lỗi thời đến những kiệt tác hiện đại, tay nghề của chúng tôi thể hiện rõ trong từng chi tiết."
       },
       "inspiration": {
-        "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "title": "Cảm Hứng Thiết Kế",
+        "description": "Duyệt qua các dự án cải tạo thực để tìm ý tưởng cho dự án của bạn. Xem cách các phong cách, vật liệu và bố cục khác nhau hòa quyện trong những ngôi nhà tương tự nhà bạn."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Các Câu Hỏi Thường Gặp"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "Đây có phải là hình ảnh trước và sau thực không?",
+      "a1": "Vâng, mọi hình ảnh trên trang này đều đến trực tiếp từ các dự án cải tạo đã hoàn thành của chúng tôi khắp Metro Vancouver. Chúng tôi không sử dụng ảnh stock hay chỉnh sửa hình ảnh bằng kỹ thuật số.",
+      "q2": "Một dự án cải tạo điển hình mất bao lâu?",
+      "a2": "Tiến độ cải tạo thay đổi tùy theo phạm vi dự án. Cải tạo phòng tắm thường mất 2-4 tuần, cải tạo phòng bếp 4-8 tuần, và cải tạo toàn bộ nhà 2-4 tháng. Chúng tôi cung cấp tiến độ chi tiết trong buổi tư vấn miễn phí.",
+      "q3": "Tôi có thể trực tiếp tham quan một dự án đã hoàn thành không?",
+      "a3": "Chúng tôi có thể sắp xếp các chuyến tham quan đến showroom của chúng tôi, nơi bạn có thể xem mẫu vật liệu và các loại hoàn thiện trực tiếp. Đối với các dự án tham khảo cụ thể, chúng tôi có thể kết nối bạn với khách hàng trước đây sẵn sàng chia sẻ trải nghiệm của họ.",
+      "q4": "Bạn phục vụ những khu vực nào?",
+      "a4": "Chúng tôi phục vụ toàn bộ Metro Vancouver bao gồm Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley và Maple Ridge.",
+      "q5": "Làm thế nào để bắt đầu cải tạo?",
+      "a5": "Chỉ cần liên hệ với chúng tôi để được tư vấn miễn phí. Chúng tôi sẽ đến tận nơi xem không gian của bạn, trao đổi về ý tưởng và ngân sách, và cung cấp báo giá chi tiết. Đội ngũ của chúng tôi xử lý mọi việc từ thiết kế đến hoàn thành."
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "Sẵn Sàng Biến Đổi Không Gian Của Bạn?",
+      "subtitle": "Liên hệ với chúng tôi hôm nay để được tư vấn miễn phí và xem Reno Stars có thể làm gì cho ngôi nhà của bạn."
     },
     "pagination": {
-      "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "label": "Phân trang bộ sưu tập",
+      "previous": "Trước",
+      "next": "Sau",
+      "previousPage": "Đến trang trước",
+      "nextPage": "Đến trang sau"
     }
   }
 }

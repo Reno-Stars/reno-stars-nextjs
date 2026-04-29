@@ -1,52 +1,52 @@
 {
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "Cải tạo phòng bếp thường mất bao lâu?",
+      "a1": "Một dự án cải tạo phòng bếp điển hình mất 4-8 tuần tùy phạm vi. Các nâng cấp đơn giản như sơn lại tủ bếp có thể mất 1-2 tuần, trong khi cải tạo toàn bộ với tủ bếp đặt đóng riêng có thể mất 8-12 tuần.",
+      "q2": "Chi phí trung bình cho cải tạo phòng bếp tại {area} là bao nhiêu?",
+      "a2": "Cải tạo phòng bếp tại {area} thường dao động từ $15,000 đến $75,000+ tùy kích thước và vật liệu hoàn thiện. Chúng tôi cung cấp báo giá chi tiết miễn phí sau buổi tư vấn tại nhà.",
+      "q3": "Tôi có cần giấy phép cho cải tạo phòng bếp không?",
+      "a3": "Giấy phép cần thiết cho các thay đổi về điện, nước và kết cấu. Chúng tôi xử lý mọi đơn xin giấy phép và đảm bảo cải tạo của bạn đáp ứng quy chuẩn xây dựng tại {area}."
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "Cải tạo phòng tắm tại {area} mất bao lâu?",
+      "a1": "Hầu hết cải tạo phòng tắm tại {area} mất 2-4 tuần. Nâng cấp đơn giản về thẩm mỹ có thể mất 1 tuần, trong khi cải tạo toàn diện với thay đổi bố cục có thể mất 4-6 tuần.",
+      "q2": "Tôi có thể sử dụng phòng tắm trong khi cải tạo không?",
+      "a2": "Thường thì không, nhưng chúng tôi làm việc hiệu quả để giảm thiểu gián đoạn. Nếu bạn có nhiều phòng tắm, chúng tôi có thể giúp bạn lên kế hoạch xoay quanh lịch cải tạo.",
+      "q3": "Bạn sử dụng vật liệu chống thấm gì cho phòng tắm?",
+      "a3": "Chúng tôi sử dụng các hệ thống chống thấm hàng đầu trong ngành bao gồm Schluter và RedGard để đảm bảo phòng tắm của bạn được bảo vệ đúng cách khỏi hư hỏng do ẩm."
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "Tôi có thể ở trong nhà trong khi cải tạo toàn bộ tại {area} không?",
+      "a1": "Tùy vào phạm vi. Đối với cải tạo lớn tại {area}, chúng tôi thường khuyến nghị tạm chuyển đi nơi khác để đảm bảo an toàn và hiệu quả. Chúng tôi có thể giúp điều phối thi công theo giai đoạn nếu bạn muốn ở lại.",
+      "q2": "Bạn quản lý dự án cải tạo toàn bộ nhà như thế nào?",
+      "a2": "Chúng tôi chỉ định một quản lý dự án chuyên trách điều phối các tổ thợ, duy trì lịch trình và cập nhật thường xuyên. Bạn có một đầu mối liên lạc duy nhất xuyên suốt.",
+      "q3": "Tôi có cần giấy phép cho cải tạo toàn bộ nhà tại {area} không?",
+      "a3": "Có, cải tạo toàn bộ nhà thường yêu cầu nhiều giấy phép cho công việc kết cấu, điện và nước. Chúng tôi xử lý mọi đơn xin giấy phép và kiểm tra tại {area}."
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "Tôi có cần giấy phép để hoàn thiện tầng hầm tại {area} không?",
+      "a1": "Có, hoàn thiện tầng hầm yêu cầu giấy phép xây dựng tại {area}. Chúng tôi xử lý mọi đơn xin giấy phép và kiểm tra như một phần của dịch vụ.",
+      "q2": "Bạn xử lý vấn đề ẩm ở tầng hầm như thế nào?",
+      "a2": "Chúng tôi đánh giá độ ẩm và triển khai các giải pháp phù hợp bao gồm cải thiện thoát nước, lớp chắn hơi và cách nhiệt đúng cách trước khi hoàn thiện.",
+      "q3": "Tôi có thể thêm phòng tắm vào tầng hầm không?",
+      "a3": "Có, chúng tôi có thể thêm phòng tắm vào tầng hầm. Nếu nằm dưới đường thoát nước thải, chúng tôi lắp đặt hệ thống bơm thoát nước thải. Mọi đường ống đều đáp ứng quy chuẩn xây dựng tại {area}."
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "Sự khác biệt giữa thay mặt tủ và thay tủ mới là gì?",
+      "a1": "Thay mặt tủ giữ lại khung tủ hiện có và thay cánh, mặt ngăn kéo và phụ kiện. Chi phí rẻ hơn 40-50% so với thay mới hoàn toàn và mất ít thời gian hơn.",
+      "q2": "Thay mặt tủ tại {area} mất bao lâu?",
+      "a2": "Thay mặt tủ tại {area} thường mất 3-5 ngày cho một phòng bếp trung bình. Phòng bếp của bạn vẫn hoạt động được trong hầu hết quá trình.",
+      "q3": "Có phải mọi tủ đều có thể thay mặt được không?",
+      "a3": "Hầu hết các khung tủ bằng gỗ nguyên khối và gỗ dán đều có thể thay mặt nếu kết cấu còn vững chắc. Chúng tôi đánh giá tủ của bạn trong buổi tư vấn miễn phí tại nhà ở {area}."
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "Bạn có làm việc trong giờ kinh doanh không?",
+      "a1": "Chúng tôi cung cấp lịch linh hoạt bao gồm buổi tối và cuối tuần để giảm thiểu gián đoạn hoạt động kinh doanh của bạn. Chúng tôi có thể chia giai đoạn thi công để giữ một phần không gian vẫn hoạt động.",
+      "q2": "Bạn có kinh nghiệm với quy chuẩn xây dựng thương mại tại {area} không?",
+      "a2": "Có, đội ngũ chúng tôi có kinh nghiệm với quy chuẩn xây dựng thương mại tại {area}, các yêu cầu về tiếp cận và quy định an toàn cháy. Chúng tôi đảm bảo tuân thủ đầy đủ mọi tiêu chuẩn thương mại.",
+      "q3": "Bạn có thể xử lý cải tạo cho người thuê tại {area} không?",
+      "a3": "Có, chúng tôi chuyên về cải tạo cho người thuê (TI) cho văn phòng, không gian bán lẻ và nhà hàng tại {area}. Chúng tôi làm việc với chủ nhà và quản lý tài sản về quy trình phê duyệt."
     }
   }
 }

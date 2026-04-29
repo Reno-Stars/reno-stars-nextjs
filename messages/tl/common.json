@@ -1,10 +1,10 @@
 {
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "Naglo-load...",
+    "error": "May naganap na error",
+    "notFound": "Hindi nahanap ang pahina",
+    "notFoundDescription": "Ang pahinang hinahanap mo ay hindi umiiral o inilipat na.",
+    "backToHome": "Bumalik sa Home",
+    "tryAgain": "Subukan Muli"
   }
 }

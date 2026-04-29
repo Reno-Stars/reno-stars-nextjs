@@ -1,0 +1,100 @@
+{
+  "basementCost": {
+    "breadcrumb": "Basement Renovation Cost",
+    "hero": {
+      "title": "Basement Renovation Cost sa Vancouver BC (2026)",
+      "subtitle": "Magkano talaga ang halaga ng pagtatapos o pag-renovate ng basement sa Greater Vancouver? Narito ang typical price ranges base sa project scope, mula basic finishing hanggang full legal suite conversions."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "sqft": "Cost per Sq Ft",
+      "sqftValue": "$35 – $120/sq ft",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "6–12 na linggo"
+    },
+    "tiers": {
+      "title": "Basement Renovation Cost ayon sa Tier",
+      "subtitle": "Karaniwang pricing para sa basement projects sa buong Greater Vancouver",
+      "budget": {
+        "title": "Basic Finishing",
+        "description": "Framing, insulation, drywall, basic flooring, paint, at standard lighting. Angkop para sa recreation room, home office, o storage area nang walang plumbing additions."
+      },
+      "midRange": {
+        "title": "Mid-Range Renovation",
+        "description": "Full finishing na may bathroom addition, upgraded flooring (vinyl plank o laminate), pot lights, built-in storage, at wet bar o kitchenette. Pinakapopular na scope para sa family homes."
+      },
+      "highEnd": {
+        "title": "Legal Suite Conversion",
+        "description": "Full secondary suite na may separate entrance, kitchen, bathroom, bedroom na may egress windows, fire separation, at lahat ng code-required features. Kasama ang permits at inspections para sa rental legalization."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Basement Renovation Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "waterproofing": {
+        "title": "Waterproofing at Moisture Control",
+        "description": "Ang basa na klima ng Vancouver ay nagpapahalaga ng waterproofing. Ang interior drainage systems ay $3,000–8,000, habang ang exterior waterproofing ay maaaring $10,000–25,000. Ang sump pump installation ay nagdadagdag ng $1,500–3,000."
+      },
+      "framing": {
+        "title": "Framing at Insulation",
+        "description": "Ang steel o wood framing na may insulation ay karaniwang $8–15 per square foot. Ang lumang Vancouver homes ay maaaring mangailangan ng karagdagang vapor barriers at insulation upgrades para tumugon sa current building code."
+      },
+      "plumbing": {
+        "title": "Plumbing (Bathroom/Kitchen)",
+        "description": "Ang pagdagdag ng basement bathroom ay $8,000–15,000 depende kung kailangan mong basagin ang concrete para sa drain lines. Ang full kitchen installation ay nagdadagdag ng $12,000–25,000 kasama ang rough-in at fixtures."
+      },
+      "electrical": {
+        "title": "Electrical at HVAC",
+        "description": "Ang basement electrical ay karaniwang $3,000–8,000 para sa standard layout. Maraming lumang bahay ang nangangailangan ng panel upgrades ($2,000–4,000). Ang pag-extend ng HVAC ductwork ay nagdadagdag ng $2,000–5,000."
+      },
+      "egress": {
+        "title": "Egress Windows at Separate Entrance",
+        "description": "Ang building code ay nangangailangan ng egress windows sa bedrooms ($2,000–5,000 bawat isa para mag-install). Ang pagdagdag ng separate exterior entrance para sa suite ay $8,000–15,000 kasama ang excavation at concrete work."
+      },
+      "permits": {
+        "title": "Permits at Code Compliance",
+        "description": "Ang building permits para sa basement finishing sa Metro Vancouver ay $500–2,000. Ang legal suite conversions ay nangangailangan ng karagdagang inspections. May mga municipalities na nag-aalok ng grants para sa pagdagdag ng rental suites."
+      }
+    },
+    "realProjects": {
+      "title": "Kaugnay na Whole-House Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na renovation projects sa buong Greater Vancouver, marami ay may basement work"
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Iyong Basement Renovation",
+      "tip1": {
+        "title": "Magsimula sa Waterproofing",
+        "description": "I-address ang anumang moisture issues bago mag-finishing ng walls. Ang pag-aayos ng water problems pagkatapos ma-install ang drywall ay 3–5x mas mahal kaysa sa paggawa nito sa simula."
+      },
+      "tip2": {
+        "title": "Mag-plano ng Plumbing Malapit sa Existing Lines",
+        "description": "Ang paglagay ng iyong bathroom o kitchen malapit sa existing drain stacks ay nag-save ng $3,000–8,000 sa pamamagitan ng pag-iwas sa concrete cutting at bagong rough-ins."
+      },
+      "tip3": {
+        "title": "Mag-isip ng Legal Suite para sa ROI",
+        "description": "Ang legal secondary suite sa Vancouver ay maaaring makagenerate ng $1,500–2,500/buwan sa rental income. Ang renovation ay madalas na nababayaran ang sarili sa loob ng 3–5 na taon."
+      },
+      "tip4": {
+        "title": "Pumili ng LVP Flooring",
+        "description": "Ang luxury vinyl plank ay ang pinakamagandang basement flooring choice. Waterproof, mainit sa paa, at 30–50% mas mura kaysa engineered hardwood. Perpekto para sa basa na klima ng Vancouver."
+      }
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Basement Renovation Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong proyekto at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang basement renovation sa Vancouver?",
+      "a1": "Ang basement renovation costs sa Vancouver ay karaniwang $30,000 para sa basic finishing hanggang $120,000+ para sa full legal suite conversion. Ang average cost ay nasa $55,000 para sa mid-range renovation na may bathroom addition at quality finishes. Ang cost per square foot ay $35 hanggang $120 depende sa scope.",
+      "q2": "Gaano katagal ang basement renovation sa Vancouver?",
+      "a2": "Karaniwang 6 hanggang 12 na linggo ang basement renovation sa Vancouver. Ang basic finishing (framing, drywall, flooring) ay maaaring matapos sa 6–8 na linggo. Ang full legal suite conversion na may permits, plumbing, electrical, at inspections ay karaniwang 10–14 na linggo.",
+      "q3": "Kailangan ko ba ng permit para sa basement renovation sa Vancouver?",
+      "a3": "Oo, karamihan sa basement renovations ay nangangailangan ng building permits sa Metro Vancouver. Anumang trabaho na may framing, electrical, plumbing, o egress modifications ay nangangailangan ng permit. Ang legal suite conversions ay nangangailangan ng karagdagang zoning approval. Ang permit costs ay $500 hanggang $2,000 depende sa municipality.",
+      "q4": "Magandang investment ba ang basement suite sa Vancouver?",
+      "a4": "Oo, ang pagdagdag ng legal secondary suite ay isa sa pinakamagandang renovation investments sa Vancouver. Ang suite ay maaaring makagenerate ng $1,500–2,500 bawat buwan sa rental income. Sa renovation costs na $80,000–120,000, ang investment ay karaniwang nababayaran ang sarili sa loob ng 3–5 na taon habang nagpapataas din ng property value ng 10–20%.",
+      "q5": "Ano ang pinakamagandang flooring para sa basement renovation?",
+      "a5": "Ang luxury vinyl plank (LVP) ay ang pinakairerekomenda na basement flooring sa Vancouver dahil sa waterproof properties at durability. Ito ay $4–8 per square foot installed at mas mahusay sa moisture kaysa hardwood o laminate. Ang engineered hardwood at ceramic tile ay magagandang option din depende sa iyong budget at style preferences."
+    }
+  }
+}

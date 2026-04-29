@@ -1,32 +1,32 @@
 {
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
+      "title": "Renovation Service Workflow: 5 Hakbang",
+      "subtitle": "Mula konsultasyon hanggang completion",
       "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "stepLabel": "HAKBANG {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "I-download ang PNG",
+    "downloadPdf": "I-download ang PDF",
+    "downloadSuccess": "Na-download na!",
+    "downloadError": "Nabigo",
+    "downloadPosterHint": "I-click para mag-download ng PNG",
+    "downloadPdfHint": "I-click para mag-download ng PDF",
     "step1": {
       "title": "Initial Consultation",
       "subtitle": "Discovery",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "Initial contact sa pamamagitan ng telepono, email, WhatsApp, WeChat, o SMS",
+        "Kumpirmahin ang renovation areas: kitchen, living room, bathroom, o whole house",
+        "Kumpirmasyon ng style preference",
+        "Material budget at positioning",
+        "Unawain ang renovation needs at expectations",
+        "Kumuha ng floor plans at site photos (kung available)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "Telepono"
         },
         {
           "icon": "email",
@@ -45,76 +45,76 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "Magsisimula kami sa initial consultation kung saan maaari kang makipag-ugnayan sa amin sa pamamagitan ng telepono, email, WhatsApp, WeChat, o SMS. Pag-uusapan namin ang iyong renovation needs, style preferences, budget, at kukuhanin ang anumang existing floor plans o photos."
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "Tailored Assessment at Quote",
+      "subtitle": "On-Site Measurement (kung kailangan) at Transparent Pricing",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "Professional na on-site measurement para sa tumpak na sukat (kung kailangan)",
+        "Komprehensibong design proposal na nag-iillustrate ng iyong future space",
+        "Malinaw na nakatakdang scope of work, project timeline, permit requirements, at material specifications",
+        "Malinaw at transparent na quotation na umaayon sa proposed design at scope, sinisigurong full clarity at predictability sa buong proseso"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "Tumpak na Pagsusukat"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "Transparent na Pricing"
         },
         {
           "icon": "site",
           "label": "Design Proposal"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "Nagbibigay kami ng professional on-site measurement kapag kinakailangan at gumagawa ng komprehensibong design proposal para sa iyong espasyo. Makakatanggap ka ng malinaw na nakatakdang scope of work na may timeline, permit requirements, at transparent na quotation na umaayon sa proposed design."
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "Kumpirmasyon at Kontrata",
+      "subtitle": "Pagtatapos ng mga Detalye at Project Initiation",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "Imbitahan ang mga kliyente sa showroom para sa in-person consultation",
+        "Sagutin ang mga tanong at i-optimize ang design details",
+        "Kumpirmahin ang design proposal at material samples",
+        "Tapusin ang payment schedule at tumulong sa delivery scheduling",
+        "Pirmahan ang construction contract at kolektahin ang deposit",
+        "Sigurahin ang project start date",
+        "Itatag ang project team: Project Manager, Construction Manager, Coordinator"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "Kontrata"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "Konsultasyon"
         },
         {
           "icon": "team",
           "label": "Project Team"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "Iniimbita ka namin sa aming showroom para suriin ang material samples at tapusin ang design details. Pagkatapos kumpirmahin ang payment schedule at lagdaan ang kontrata, sinisigurado namin ang iyong project start date at itinatag ang dedicated project team na kasama ang Project Manager, Construction Manager, at Coordinator."
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "Execution at Pamamahala",
+      "subtitle": "Fully Coordinated at Madaling Komunikasyon",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "Pinag-isang project team na pinamamahalaan ang lahat ng aspekto ng iyong proyekto",
+        "Walang direktang interaksyon sa mga manggagawa na kinakailangan",
+        "Coordinated na progress ng konstruksyon para masiguro ang efficiency at consistency",
+        "Tulong sa delivery scheduling at on-site coordination",
+        "Pare-parehong quality control sa buong proseso ng konstruksyon",
+        "Mabilis na response at mahusay na pagresolba ng anumang isyu"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "Pinag-isang Pamamahala"
         },
         {
           "icon": "progress",
@@ -122,23 +122,23 @@
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "Mabilis na Sagot"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "Pinag-isang project team ang namamahala sa lahat ng aspekto ng iyong proyekto. Hindi mo kailangang makipag-interact direkta sa mga manggagawa. Coordinated namin ang progress ng konstruksyon, delivery scheduling, at pinapanatili ang pare-parehong quality control sa buong proseso. Ang anumang isyu ay nareresolba nang mabilis at mahusay."
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "Walkthrough at Aftercare",
+      "subtitle": "Final Checks at Pangmatagalang Suporta",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "Final walkthrough para kumpirmahin na natutugunan ng lahat ng trabaho ang inaasahan",
+        "Pagturn-over ng bagong tahanan",
+        "Patuloy na suporta para sa maintenance habang warranty period"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "Mahigpit na Inspeksyon"
         },
         {
           "icon": "warranty",
@@ -146,23 +146,23 @@
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "Patuloy na Suporta"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "Nagsasagawa kami ng final walkthrough kasama mo para kumpirmahin na ang lahat ng trabaho ay tumutugon sa iyong inaasahan, pagkatapos ay i-handover ang iyong bagong tahanan. Nagbibigay kami ng patuloy na suporta para sa maintenance habang warranty period."
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "Ginagawang totoong achievable ang renovation",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "Bakit Mahalaga Ito",
+      "description": "Ang structured renovation workflow ng Reno Stars ay tumutulong sa mga kliyente na malaman kung ano ang aasahan sa bawat stage. Ang aming malinaw na 5-step process ay sinisigurong smooth at stress-free na renovation experience mula first contact hanggang final handover."
     },
     "footer": {
       "tagline": "Simple · Worry-Free · Safe · Guaranteed",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "Taon ng Industry Experience",
       "googleRating": "Google",
       "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "scanLinktree": "Scan para mag-connect sa amin",
       "website": "reno-stars.com"
     }
   }

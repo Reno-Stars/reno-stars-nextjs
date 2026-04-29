@@ -1,146 +1,146 @@
 {
   "aboutPage": {
     "hero": {
-      "title": "About Reno Stars",
-      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
+      "title": "Về Reno Stars",
+      "subtitle": "Được xây dựng trên kinh nghiệm — không chỉ trong xây dựng, mà còn trong việc thấu hiểu ngành cải tạo nhà cửa từ cả hai phía."
     },
     "journey": {
-      "title": "About Reno Stars",
-      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
-      "painPointsTitle": "We understand the common frustrations homeowners face.",
+      "title": "Về Reno Stars",
+      "body": "Reno Stars được xây dựng trên nền tảng kinh nghiệm. Không chỉ trong xây dựng mà còn trong việc thấu hiểu ngành cải tạo nhà cửa từ cả hai phía.\n\nTrước khi thành lập Reno Stars vào năm 2021, đội ngũ của chúng tôi đã có nhiều năm làm việc trên các nền tảng cải tạo, kết nối chủ nhà với nhà thầu. Chúng tôi đã chứng kiến hàng ngàn dự án từ đầu đến cuối, và quan trọng hơn, chúng tôi đã thấy những điều thường xảy ra sai sót.\n\nChúng tôi hiểu rõ những bức xúc mà chủ nhà thường gặp phải: báo giá phình to vì những hạng mục ẩn, giao tiếp kém và phản hồi chậm trễ, tiến độ không chắc chắn, và chất lượng tay nghề thiếu nhất quán do đội thợ không ổn định. Đây không phải là những vấn đề hiếm gặp. Đó là chuẩn mực của ngành. Và chính vì vậy mà Reno Stars ra đời.",
+      "lead": "Reno Stars được xây dựng trên kinh nghiệm — không chỉ trong xây dựng, mà còn trong việc thấu hiểu ngành cải tạo nhà cửa từ cả hai phía.",
+      "context": "Trước khi thành lập Reno Stars vào năm 2021, đội ngũ của chúng tôi đã có nhiều năm làm việc trên các nền tảng cải tạo, kết nối chủ nhà với nhà thầu. Chúng tôi đã chứng kiến hàng ngàn dự án từ đầu đến cuối, và quan trọng hơn, chúng tôi đã thấy những điều thường xảy ra sai sót.",
+      "painPointsTitle": "Chúng tôi hiểu rõ những bức xúc mà chủ nhà thường gặp phải.",
       "painPoints": [
-        "Quotes that look attractive at first but grow with hidden items later.",
-        "Poor communication and delayed responses.",
-        "Uncertain timelines and projects dragging on.",
-        "Inconsistent workmanship due to unstable crews."
+        "Báo giá ban đầu trông hấp dẫn nhưng sau đó phình to vì những hạng mục ẩn.",
+        "Giao tiếp kém và phản hồi chậm trễ.",
+        "Tiến độ không chắc chắn, dự án kéo dài lê thê.",
+        "Chất lượng tay nghề thiếu nhất quán do đội thợ không ổn định."
       ],
-      "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
+      "conclusion": "Đây không phải là những vấn đề hiếm gặp. Đó là chuẩn mực của ngành. Và chính vì vậy mà Reno Stars ra đời."
     },
     "stats": {
-      "years": "Years Experience",
-      "projects": "Projects Completed",
-      "team": "Team Members",
-      "insurance": "CGL Insurance",
-      "wcbCoverage": "Active WCB Coverage"
+      "years": "Năm Kinh Nghiệm",
+      "projects": "Dự Án Hoàn Thành",
+      "team": "Thành Viên Đội Ngũ",
+      "insurance": "Bảo Hiểm CGL",
+      "wcbCoverage": "Bảo Hiểm WCB Đang Hiệu Lực"
     },
     "offer": {
-      "title": "A More Structured, Transparent Approach",
-      "viewAll": "View All Services",
+      "title": "Quy Trình Có Hệ Thống, Minh Bạch Hơn",
+      "viewAll": "Xem Tất Cả Dịch Vụ",
       "services": {
         "kitchen": {
-          "title": "Kitchen Renovation",
-          "desc": "Custom cabinetry, countertops, backsplashes, and complete kitchen transformations tailored to your lifestyle."
+          "title": "Cải Tạo Phòng Bếp",
+          "desc": "Tủ bếp đặt đóng riêng, mặt bàn, ốp tường và biến đổi toàn diện phòng bếp phù hợp với phong cách sống của bạn."
         },
         "bathroom": {
-          "title": "Bathroom Renovation",
-          "desc": "Modern fixtures, tile work, vanities, and spa-inspired designs that maximize your space."
+          "title": "Cải Tạo Phòng Tắm",
+          "desc": "Thiết bị hiện đại, ốp gạch, tủ lavabo và thiết kế lấy cảm hứng từ spa giúp tối ưu không gian."
         },
         "wholeHouse": {
-          "title": "Whole House Renovation",
-          "desc": "Comprehensive home remodels including structural work, flooring, lighting, and finishing touches."
+          "title": "Cải Tạo Toàn Bộ Nhà",
+          "desc": "Cải tạo nhà toàn diện bao gồm kết cấu, sàn, hệ thống chiếu sáng và các chi tiết hoàn thiện."
         },
         "commercial": {
-          "title": "Commercial Renovation",
-          "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
+          "title": "Cải Tạo Mặt Bằng Thương Mại",
+          "desc": "Không gian thương mại chuyên nghiệp được thiết kế để vận hành tốt, tuân thủ quy định và tạo ấn tượng lâu dài."
         }
       },
-      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
-      "systemTitle": "Every project is supported by a structured system.",
+      "body": "Chúng tôi cũng liên tục phát triển các tiêu chuẩn nội bộ về thi công và kiểm tra để nâng cao tính nhất quán và chất lượng.",
+      "lead": "Chúng tôi không chỉ mở thêm một công ty cải tạo. Chúng tôi đã xây dựng lại quy trình.",
+      "goal": "Ngay từ đầu, mục tiêu của chúng tôi rất đơn giản. Làm cho việc cải tạo trở nên dự đoán được, minh bạch và không căng thẳng.",
+      "systemTitle": "Mỗi dự án đều được hỗ trợ bởi một hệ thống có cấu trúc.",
       "systemItems": [
         {
-          "title": "Detailed Contracts",
-          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
+          "title": "Hợp Đồng Chi Tiết",
+          "desc": "Báo giá của chúng tôi xác định rõ phạm vi công việc, trách nhiệm và vật tư chính. Một dự án cải tạo phòng tắm điển hình có thể bao gồm hơn 20 hạng mục được liệt kê rõ ràng, để bạn biết chính xác cái gì có và cái gì không."
         },
         {
-          "title": "Clear Payment Milestones",
-          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
+          "title": "Mốc Thanh Toán Rõ Ràng",
+          "desc": "Thanh toán gắn với tiến độ. Mỗi giai đoạn đều được hoàn thành và kiểm tra trước khi chuyển sang bước tiếp theo, không có bất ngờ nào."
         },
         {
-          "title": "Dedicated Coordination",
-          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
+          "title": "Điều Phối Tận Tâm",
+          "desc": "Đội ngũ văn phòng của chúng tôi phản hồi nhanh, hỗ trợ chọn vật tư và đảm bảo không có thông tin nào bị bỏ sót."
         },
         {
-          "title": "Reliable Scheduling",
-          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
+          "title": "Lịch Trình Đáng Tin Cậy",
+          "desc": "Chúng tôi không nhận quá nhiều dự án cùng lúc. Dự án của bạn tiến triển đúng kế hoạch, không phải khi nào tiện cho chúng tôi."
         },
         {
-          "title": "Quality and Waterproofing Standards",
-          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
+          "title": "Tiêu Chuẩn Chất Lượng và Chống Thấm",
+          "desc": "Chúng tôi quy định rõ vật tư và khu vực thi công, đặc biệt là các hạng mục quan trọng như chống thấm."
         }
       ]
     },
     "values": {
-      "title": "Managing Details and Expectations",
+      "title": "Quản Lý Chi Tiết và Kỳ Vọng",
       "items": {
         "integrity": {
-          "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
+          "title": "Chính Trực",
+          "desc": "Chúng tôi giữ lời hứa và giao tiếp trung thực ở mọi giai đoạn. Không có phí ẩn, không phát sinh ngoài phạm vi, chỉ có các thỏa thuận rõ ràng và sự thực hiện đến nơi đến chốn."
         },
         "quality": {
-          "title": "Quality Craftsmanship",
-          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
+          "title": "Tay Nghề Chất Lượng",
+          "desc": "Mỗi chi tiết đều quan trọng. Chúng tôi quy định vật tư từ đầu, áp dụng các kỹ thuật đã được chứng minh và liên tục phát triển các tiêu chuẩn nội bộ để mang lại kết quả bền vững."
         },
         "transparency": {
-          "title": "Transparency",
-          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
+          "title": "Minh Bạch",
+          "desc": "Hợp đồng chi tiết với hơn 20 hạng mục, các mốc thanh toán gắn với tiến độ và cập nhật thường xuyên, để bạn luôn biết chính xác dự án của mình đang ở đâu."
         },
         "satisfaction": {
-          "title": "Client Satisfaction",
-          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+          "title": "Sự Hài Lòng Của Khách Hàng",
+          "desc": "Chúng tôi không chỉ hoàn thành dự án, chúng tôi quản lý chúng. Phản hồi nhanh, giao tiếp chủ động và chịu trách nhiệm hoàn toàn từ đầu đến cuối."
         }
       },
-      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
-      "guarantee": "What we can guarantee is our response.",
+      "body": "Cải tạo nhà liên quan đến nhiều khâu, từ vật tư đến lịch trình. Mặc dù chúng tôi rất chú trọng việc lập kế hoạch và phối hợp, một số yếu tố như thời gian giao hàng của nhà cung cấp đôi khi nằm ngoài tầm kiểm soát trực tiếp của chúng tôi.\n\nĐiều chúng tôi có thể đảm bảo là cách phản hồi. Chúng tôi giao tiếp sớm, điều chỉnh nhanh chóng và luôn cập nhật cho khách hàng ở mọi giai đoạn, để không có bất ngờ và không có sự mơ hồ. Mục tiêu của chúng tôi không phải là hứa hẹn một quy trình hoàn hảo, mà là mang đến một quy trình được quản lý tốt.",
+      "lead": "Cải tạo nhà liên quan đến nhiều khâu, từ vật tư đến lịch trình. Mặc dù chúng tôi rất chú trọng việc lập kế hoạch và phối hợp, một số yếu tố như thời gian giao hàng của nhà cung cấp đôi khi nằm ngoài tầm kiểm soát trực tiếp của chúng tôi.",
+      "guarantee": "Điều chúng tôi có thể đảm bảo là cách phản hồi.",
       "guaranteeItems": [
-        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
+        "Chúng tôi giao tiếp sớm, điều chỉnh nhanh chóng và luôn cập nhật cho khách hàng ở mọi giai đoạn, để không có bất ngờ và không có sự mơ hồ."
       ],
-      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
+      "closing": "Mục tiêu của chúng tôi không phải là hứa hẹn một quy trình hoàn hảo, mà là mang đến một quy trình được quản lý tốt."
     },
     "whyUs": {
-      "title": "Built for Homeowners Who Value Peace of Mind",
-      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want",
+      "title": "Dành Cho Chủ Nhà Coi Trọng Sự An Tâm",
+      "body": "Chúng tôi không phải là lựa chọn rẻ nhất, và chúng tôi cũng không nhắm tới điều đó. Khách hàng chọn chúng tôi vì họ muốn có một quy trình rõ ràng, giao tiếp trung thực, tiến độ đáng tin cậy và một đội ngũ chịu trách nhiệm.\n\nChúng tôi chuyên về cải tạo toàn bộ nhà, phòng bếp, phòng tắm và các dự án thương mại — nơi mà sự phối hợp, chi tiết và độ tin cậy tạo nên tất cả khác biệt. Chúng tôi tiếp cận mọi dự án với một tâm thế đơn giản: coi mỗi ngôi nhà như chính nhà mình. Bởi vì cuối cùng, cải tạo không chỉ là xây dựng một không gian, mà là xây dựng niềm tin.",
+      "lead": "Chúng tôi không phải là lựa chọn rẻ nhất, và chúng tôi cũng không nhắm tới điều đó.",
+      "chooseTitle": "Khách hàng chọn chúng tôi vì họ muốn",
       "chooseItems": [
-        "A clear process",
-        "Honest communication",
-        "Reliable timelines",
-        "A team that takes responsibility"
+        "Một quy trình rõ ràng",
+        "Giao tiếp trung thực",
+        "Tiến độ đáng tin cậy",
+        "Một đội ngũ chịu trách nhiệm"
       ],
-      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
+      "specialise": "Chúng tôi chuyên về cải tạo toàn bộ nhà, phòng bếp, phòng tắm và các dự án thương mại — nơi mà sự phối hợp, chi tiết và độ tin cậy tạo nên tất cả khác biệt."
     },
     "areas": {
-      "title": "Service Areas",
-      "description": "We proudly serve homeowners across Metro Vancouver and the Fraser Valley, bringing quality renovation services to communities throughout British Columbia."
+      "title": "Khu Vực Phục Vụ",
+      "description": "Chúng tôi tự hào phục vụ chủ nhà khắp Metro Vancouver và Fraser Valley, mang đến dịch vụ cải tạo chất lượng cho các cộng đồng trên khắp British Columbia."
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": "How long has Reno Stars been in business?",
-      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
-      "q2": "Are you licensed and insured?",
-      "a2": "Yes, we are fully licensed with up to $5 million in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage. CGL protects your property during the renovation, while WCB ensures all workers on your job site are covered. We also provide up to a 3-year warranty on our work.",
-      "q3": "What areas do you serve?",
-      "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
-      "q4": "How do I get started with a renovation project?",
-      "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
-      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
-      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+      "title": "Các Câu Hỏi Thường Gặp",
+      "q1": "Reno Stars đã hoạt động được bao lâu?",
+      "a1": "Reno Stars có hơn {years} năm kinh nghiệm tích lũy trong ngành cải tạo nhà ở Vancouver. Đội ngũ của chúng tôi đã hoàn thành hàng trăm dự án khắp Metro Vancouver, từ những dự án nâng cấp phòng tắm nhỏ đến cải tạo toàn bộ nhà quy mô lớn.",
+      "q2": "Bạn có giấy phép và bảo hiểm không?",
+      "a2": "Có, chúng tôi có giấy phép đầy đủ với bảo hiểm CGL (Trách nhiệm Chung Thương mại) lên đến 5 triệu đô và bảo hiểm WCB (WorkSafeBC) đang hiệu lực. CGL bảo vệ tài sản của bạn trong quá trình cải tạo, trong khi WCB đảm bảo mọi công nhân tại công trình đều được bảo hiểm. Chúng tôi cũng cung cấp bảo hành lên đến 3 năm cho công việc của mình.",
+      "q3": "Bạn phục vụ những khu vực nào?",
+      "a3": "Chúng tôi phục vụ toàn bộ Metro Vancouver và Fraser Valley, bao gồm Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster và Port Moody.",
+      "q4": "Làm thế nào để bắt đầu một dự án cải tạo?",
+      "a4": "Bắt đầu rất đơn giản! Chỉ cần liên hệ với chúng tôi qua điện thoại, email hoặc biểu mẫu trực tuyến để đặt lịch tư vấn miễn phí. Chúng tôi sẽ trao đổi về ý tưởng của bạn, đánh giá không gian và cung cấp báo giá chi tiết phù hợp với nhu cầu và ngân sách của bạn.",
+      "q5": "Điều gì khiến Reno Stars khác biệt với các nhà thầu cải tạo khác ở Vancouver?",
+      "a5": "Chúng tôi đã xây dựng lại quy trình cải tạo từ đầu. Trước khi mở Reno Stars, đội ngũ của chúng tôi đã có nhiều năm làm việc trên các nền tảng cải tạo và thấy được những điều thường xuyên xảy ra sai sót. Cách tiếp cận có hệ thống của chúng tôi — hợp đồng chi tiết, thanh toán theo mốc, điều phối tận tâm và lịch trình đáng tin cậy — giải quyết những bức xúc thực sự mà chủ nhà phải đối mặt. Chúng tôi không phải là lựa chọn rẻ nhất, nhưng chúng tôi là lựa chọn có trách nhiệm nhất."
     },
     "cta": {
-      "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "title": "Sẵn Sàng Bắt Đầu Cải Tạo?",
+      "getQuote": "Nhận Báo Giá Miễn Phí",
+      "body": "Sẵn sàng trải nghiệm một quy trình cải tạo được xây dựng quanh sự minh bạch, độ tin cậy và sự an tâm của bạn? Liên hệ với chúng tôi hôm nay để nhận báo giá chi tiết miễn phí, và khám phá vì sao các chủ nhà khắp Metro Vancouver tin tưởng Reno Stars."
     },
     "philosophy": {
-      "title": "Our Philosophy",
-      "lead": "We approach every project with one simple mindset.",
-      "quote": "Treat every home as if it were our own.",
-      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
+      "title": "Triết Lý Của Chúng Tôi",
+      "lead": "Chúng tôi tiếp cận mọi dự án với một tâm thế đơn giản.",
+      "quote": "Coi mỗi ngôi nhà như chính nhà mình.",
+      "closing": "Bởi vì cuối cùng, cải tạo không chỉ là xây dựng một không gian, mà là xây dựng niềm tin."
     }
   }
 }

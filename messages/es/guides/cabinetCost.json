@@ -1,0 +1,118 @@
+{
+  "cabinetCost": {
+    "breadcrumb": "Costo de renovación de gabinetes",
+    "hero": {
+      "title": "Costo de renovación y refacción de gabinetes en Vancouver BC (2026)",
+      "subtitle": "Una guía completa de costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver. Basado en nuestra experiencia completando remodelaciones de cocina con gabinetes a medida en toda la región."
+    },
+    "stats": {
+      "avgCost": "Renovación promedio",
+      "range": "Rango de precio",
+      "savings": "vs. Reemplazo",
+      "savingsValue": "Ahorre 50-70%",
+      "timeline": "Plazo típico",
+      "timelineValue": "3 a 5 días"
+    },
+    "tiers": {
+      "title": "Opciones de actualización de gabinetes por costo",
+      "subtitle": "Tres enfoques para actualizar sus gabinetes de cocina en Greater Vancouver",
+      "refinishing": {
+        "title": "Renovación de gabinetes",
+        "description": "Lijado profesional, imprimación y repintado o reteñido de puertas y marcos de gabinetes existentes. Mejor para gabinetes de madera maciza en buena condición estructural. La forma más económica de transformar su cocina."
+      },
+      "refacing": {
+        "title": "Refacción de gabinetes",
+        "description": "Reemplazar puertas y frentes de cajones de gabinetes mientras se mantienen las cajas existentes. Incluye nueva chapa en superficies visibles y nuevos herrajes. Una opción de gama media que da una apariencia completamente nueva sin demolición completa."
+      },
+      "fullReplacement": {
+        "title": "Reemplazo completo de gabinetes",
+        "description": "Remoción e instalación completa de nuevos gabinetes. Elija entre opciones estándar, semi-personalizadas o totalmente a medida. Mejor cuando los gabinetes están estructuralmente dañados o quiere cambiar la distribución de la cocina por completo."
+      }
+    },
+    "comparison": {
+      "title": "Renovación vs. reemplazo: ¿Cuál es adecuado para usted?",
+      "subtitle": "Entender las compensaciones le ayuda a tomar la mejor decisión para su cocina y presupuesto",
+      "refinishing": {
+        "title": "Renovación / Refacción",
+        "pro1": "50-70% menos caro que el reemplazo",
+        "pro2": "Completado en 3-5 días con interrupción mínima",
+        "pro3": "Ecológico, mantiene los gabinetes existentes fuera del vertedero",
+        "con1": "No puede cambiar la distribución o configuración del gabinete"
+      },
+      "replacement": {
+        "title": "Reemplazo completo",
+        "pro1": "Personalizar completamente la distribución, tamaño y configuración",
+        "pro2": "Abordar problemas estructurales y daños por agua",
+        "pro3": "Características modernas como cierre suave y organizadores extraíbles",
+        "con1": "2-4 semanas de construcción y mayor costo"
+      }
+    },
+    "factors": {
+      "title": "¿Qué afecta el costo de renovación de gabinetes?",
+      "subtitle": "Seis factores clave que determinan su precio final",
+      "cabinetCount": {
+        "title": "Número de gabinetes",
+        "description": "Una cocina típica de Vancouver tiene 20-30 puertas de gabinetes y frentes de cajones. Más puertas significa más mano de obra y materiales. Espere pagar $150-$300 por puerta para renovación profesional."
+      },
+      "material": {
+        "title": "Material del gabinete",
+        "description": "Los gabinetes de madera maciza se renuevan hermosamente. Los gabinetes de MDF y termofoil requieren diferentes técnicas y pueden costar más. Los gabinetes laminados necesitan imprimadores especiales de adhesión para resultados duraderos."
+      },
+      "finishType": {
+        "title": "Tipo de acabado",
+        "description": "La renovación de pintura básica cuesta menos que los acabados especiales. Tinte, glaseado o aspectos envejecidos agregan $500-$1,500 al proyecto. Los diseños de gabinetes de dos tonos son populares pero requieren mano de obra adicional."
+      },
+      "hardware": {
+        "title": "Actualizaciones de herrajes",
+        "description": "Nuevas manijas, perillas y bisagras pueden agregar $300-$2,000 dependiendo de la calidad. Actualizar a bisagras de cierre suave es altamente recomendado y típicamente cuesta $5-$15 por bisagra instalada."
+      },
+      "kitchenSize": {
+        "title": "Tamaño y accesibilidad de la cocina",
+        "description": "Cocinas más grandes con gabinetes superiores e inferiores, unidades de despensa y gabinetes de isla cuestan más. Los gabinetes difíciles de alcanzar o detalles de moldura intrincados aumentan el tiempo de mano de obra."
+      },
+      "condition": {
+        "title": "Condición actual del gabinete",
+        "description": "Los gabinetes con daños por agua, deslaminación o problemas estructurales pueden necesitar reparaciones antes de la renovación. Los daños significativos pueden hacer que la renovación sea poco práctica, la refacción o el reemplazo se convierten en la mejor opción."
+      }
+    },
+    "realProjects": {
+      "title": "Proyectos de cocina relacionados con trabajo de gabinetes",
+      "subtitle": "Explore nuestras remodelaciones de cocina completadas con gabinetes a medida en Greater Vancouver"
+    },
+    "tips": {
+      "title": "Consejos para ahorrar en actualizaciones de gabinetes",
+      "tip1": {
+        "title": "Considerar la renovación primero",
+        "description": "Si las cajas de su gabinete son estructuralmente sólidas, la renovación ahorra 50-70% sobre el reemplazo. Un trabajo profesional de pintura en gabinetes de madera maciza puede durar 10-15 años con el cuidado adecuado."
+      },
+      "tip2": {
+        "title": "Actualizar herrajes para impacto instantáneo",
+        "description": "Nuevas manijas y perillas son la actualización más fácil y barata. Herrajes modernos en gabinetes recién pintados pueden hacer que su cocina se vea completamente renovada por una fracción del costo."
+      },
+      "tip3": {
+        "title": "Elegir acabados duraderos",
+        "description": "Invierta en pintura o laca de alta calidad para gabinetes. Benjamin Moore Advance o acabados similares de grado de gabinete cuestan más al inicio pero resisten el descascarillado y amarillamiento mucho mejor que la pintura de pared estándar."
+      },
+      "tip4": {
+        "title": "Combinar con una remodelación de cocina",
+        "description": "Si ya está planeando una remodelación de cocina, combinar el trabajo de gabinetes con actualizaciones de encimeras y salpicadero a menudo resulta en mejor precio general y un diseño más cohesivo."
+      }
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta la renovación de gabinetes en Vancouver?",
+      "a1": "La renovación de gabinetes en Vancouver típicamente cuesta $4,000 a $8,000 para una cocina estándar con 20-30 puertas. Esto incluye lijado profesional, imprimación y pintura con acabado de grado de gabinete. Los costos varían según el tamaño de la cocina, el número de puertas y la complejidad del acabado.",
+      "q2": "¿Cuánto tarda la renovación de gabinetes?",
+      "a2": "La renovación profesional de gabinetes típicamente toma 3 a 5 días para una cocina estándar. El proceso incluye remover puertas, lijar, imprimar, aplicar varias capas de pintura o tinte y reinstalar con nuevos herrajes. Puede usar su cocina durante la mayor parte del proceso.",
+      "q3": "¿Vale la pena la renovación de gabinetes o debo reemplazar?",
+      "a3": "La renovación de gabinetes vale la pena cuando sus gabinetes existentes son estructuralmente sólidos y está contento con la distribución. Cuesta 50-70% menos que el reemplazo y toma días en lugar de semanas. Reemplace gabinetes solo si tienen daños significativos por agua, problemas estructurales o necesita cambiar la distribución de la cocina.",
+      "q4": "¿Cuál es la diferencia entre renovación y refacción de gabinetes?",
+      "a4": "Renovar significa lijar y repintar o reteñir las puertas y marcos de gabinetes existentes. La refacción reemplaza las puertas y frentes de cajones por completo mientras mantiene las cajas de gabinetes existentes, agregando nueva chapa a las superficies visibles. La refacción cuesta más ($8,000-$15,000) pero da una transformación más dramática.",
+      "q5": "¿Puede renovar gabinetes laminados o de termofoil?",
+      "a5": "Sí, pero requiere preparación especial. Los gabinetes laminados necesitan desbrillado completo e imprimador de adhesión para que la pintura se adhiera correctamente. Los gabinetes de termofoil pueden pintarse pero el termofoil puede pelarse con el tiempo. Para estos materiales, la refacción con nuevas puertas de madera maciza o MDF a menudo es una mejor inversión a largo plazo."
+    },
+    "cta": {
+      "heading": "Reciba su cotización gratis de renovación de gabinetes",
+      "subtitle": "Cuéntenos sobre su proyecto de gabinetes y reciba una estimación detallada en menos de 48 horas, sin compromiso."
+    }
+  }
+}

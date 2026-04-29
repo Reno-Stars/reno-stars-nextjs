@@ -1,10 +1,10 @@
 {
   "common": {
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "notFound": "Page not found",
-    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
-    "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+    "error": "ਇੱਕ ਗਲਤੀ ਆਈ ਹੈ",
+    "notFound": "ਪੰਨਾ ਨਹੀਂ ਮਿਲਿਆ",
+    "notFoundDescription": "ਜਿਸ ਪੰਨੇ ਦੀ ਤੁਸੀਂ ਖੋਜ ਕਰ ਰਹੇ ਹੋ ਉਹ ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ ਉਸਨੂੰ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ।",
+    "backToHome": "ਘਰ ਵਾਪਸ ਜਾਓ",
+    "tryAgain": "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
   }
 }

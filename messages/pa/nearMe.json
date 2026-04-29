@@ -1,105 +1,105 @@
 {
   "nearMe": {
-    "breadcrumb": "Renovation Near Me",
+    "breadcrumb": "ਮੇਰੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "2020 ਤੋਂ Metro Vancouver ਦੀ ਸੇਵਾ ਕਰ ਰਹੇ ਹਾਂ",
+      "h1": "ਆਪਣੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਕੰਪਨੀ ਲੱਭ ਰਹੇ ਹੋ?",
+      "subtitle": "Reno Stars Vancouver ਅਤੇ Metro Vancouver ਦੇ 14 ਸ਼ਹਿਰਾਂ ਨੂੰ ਲਾਇਸੰਸਸ਼ੁਦਾ, ਬੀਮਿਤ ਘਰ ਰੈਨੋਵੇਸ਼ਨ ਕਰੂ ਨਾਲ ਸੇਵਾ ਦਿੰਦਾ ਹੈ। ਰਸੋਈ, ਬਾਥਰੂਮ, ਬੇਸਮੈਂਟ, ਅਤੇ ਪੂਰੇ ਘਰ ਦੇ ਰੀਮਾਡਲ — ਡਿਜ਼ਾਈਨ ਤੋਂ ਸੌਂਪਣ ਤੱਕ ਇੱਕ ਸਥਾਨਕ ਟੀਮ, ਮਾਰਕੀਟਪਲੇਸ ਨਹੀਂ।",
+      "ctaPrimary": "ਮੇਰਾ ਮੁਫ਼ਤ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ"
     },
     "trust": {
       "reviews": {
         "stat": "70+",
-        "label": "Google 5★ reviews"
+        "label": "Google 5★ ਸਮੀਖਿਆਵਾਂ"
       },
       "insured": {
         "stat": "$5M",
-        "label": "Liability + WCB"
+        "label": "ਜ਼ਿੰਮੇਵਾਰੀ + WCB"
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "Vancouver ਵਿੱਚ ਸਾਲ"
       },
       "coverage": {
         "stat": "14",
-        "label": "Metro Vancouver cities"
+        "label": "Metro Vancouver ਸ਼ਹਿਰ"
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "ਤੁਹਾਡੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਸੇਵਾ ਖੇਤਰ",
+      "subtitle": "ਸਥਾਨਕ ਪ੍ਰੋਜੈਕਟ ਫੋਟੋਆਂ, ਕੀਮਤਾਂ ਦੀਆਂ ਰੇਂਜਾਂ, ਅਤੇ ਤੁਹਾਡੇ ਖੇਤਰ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਕੰਮ ਕਰ ਰਹੇ ਕਰੂ ਲਈ ਆਪਣਾ ਆਂਢ-ਗੁਆਂਢ ਚੁਣੋ।"
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "ਅਸੀਂ ਤੁਹਾਡੇ ਨੇੜੇ ਕੀ ਰੈਨੋਵੇਟ ਕਰਦੇ ਹਾਂ",
+      "learnMore": "ਹੋਰ ਜਾਣੋ",
       "kitchen": {
-        "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਰਸੋਈ ਰੈਨੋਵੇਸ਼ਨ",
+        "desc": "ਕੈਬਿਨੇਟ, ਕੁਆਰਟਜ਼ ਕਾਊਂਟਰਟਾਪ, ਬੈਕਸਪਲੈਸ਼, ਫਲੋਰਿੰਗ, ਇਲੈਕਟ੍ਰੀਕਲ। ਬਜਟ-ਅਨੁਕੂਲ ਰਿਫਰੈਸ਼ ਤੋਂ ਪੂਰਾ ਕਸਟਮ ਤੱਕ। ਆਮ ਤੌਰ 'ਤੇ 4-8 ਹਫ਼ਤੇ, $25K-$90K।"
       },
       "bathroom": {
-        "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ",
+        "desc": "ਟਾਈਲ ਕੰਧਾਂ, Schluter ਵਾਟਰਪ੍ਰੂਫਿੰਗ, ਟਾਈਲ ਵਾਲੇ ਸ਼ਾਵਰ ਜਾਂ ਟੱਬ-ਟੂ-ਸ਼ਾਵਰ ਪਰਿਵਰਤਨ, ਵੈਨਿਟੀਆਂ, ਫਿਟਿੰਗਜ਼। ਆਮ 3-6 ਹਫ਼ਤੇ, $15K-$45K।"
       },
       "wholeHouse": {
-        "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਪੂਰੇ ਘਰ ਦੀ ਰੈਨੋਵੇਸ਼ਨ",
+        "desc": "ਪੂਰੇ ਅੰਦਰੂਨੀ ਰੀਮਾਡਲ — ਰਸੋਈ, ਬਾਥਰੂਮ, ਫਲੋਰਿੰਗ, ਪੇਂਟ, ਲਾਈਟਿੰਗ, ਕਈ ਵਾਰ ਢਾਂਚਾਗਤ। 2-6 ਮਹੀਨੇ, $80K-$400K+।"
       },
       "basement": {
-        "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਬੇਸਮੈਂਟ ਰੈਨੋਵੇਸ਼ਨ",
+        "desc": "ਸੂਟ ਪਰਿਵਰਤਨ, ਪਰਿਵਾਰਕ ਕਮਰੇ, ਹੋਮ ਥੀਏਟਰ, ਬਾਥਰੂਮ। Vancouver, Burnaby, Richmond ਅਤੇ ਉਸ ਤੋਂ ਅੱਗੇ ਪਰਮਿਟ-ਪਹਿਲੀ ਪਹੁੰਚ।"
       },
       "cabinet": {
-        "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ",
+        "desc": "ਪੂਰੇ ਕੈਬਿਨੇਟ ਬਦਲਣ ਦਾ ਘੱਟ-ਲਾਗਤ ਵਿਕਲਪ — ਉਸੇ ਫੁੱਟਪ੍ਰਿੰਟ ਲਈ ਨਵੇਂ ਦਰਵਾਜ਼ੇ, ਹਾਰਡਵੇਅਰ, ਅਤੇ ਕੁਆਰਟਜ਼। 1-2 ਹਫ਼ਤੇ, $8K-$20K।"
       },
       "commercial": {
-        "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "title": "ਮੇਰੇ ਨੇੜੇ ਵਪਾਰਕ ਰੈਨੋਵੇਸ਼ਨ",
+        "desc": "ਰੈਸਟੋਰੈਂਟ, ਕਲੀਨਿਕ, ਸੈਲੂਨ, ਰਿਟੇਲ। Metro Vancouver ਵਿੱਚ ਪਰਮਿਟ-ਜਾਣੂ, ਆਫ-ਆਵਰਜ਼ ਸਮਾਂ-ਸਾਰਣੀ, ਘੱਟੋ-ਘੱਟ ਕਾਰੋਬਾਰੀ ਵਿਘਨ।"
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "ਆਪਣੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਲਈ Reno Stars ਨੂੰ ਕਿਉਂ ਚੁਣੋ",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "ਇੱਕ ਸਥਾਨਕ ਟੀਮ — ਮਾਰਕੀਟਪਲੇਸ ਨਹੀਂ",
+        "body": "ਡਾਇਰੈਕਟਰੀ ਸਾਈਟਾਂ ਦੇ ਉਲਟ ਜੋ ਤੁਹਾਨੂੰ ਅਣਜਾਣ ਲੋਕਾਂ ਨੂੰ ਸੌਂਪਦੀਆਂ ਹਨ, ਹਰ Reno Stars ਪ੍ਰੋਜੈਕਟ ਸਾਡੇ ਆਪਣੇ ਕਰੂ ਦੁਆਰਾ ਚਲਾਇਆ ਜਾਂਦਾ ਹੈ। ਕੋਟ ਤੋਂ ਸੌਂਪਣ ਤੱਕ ਉਹੀ PM।"
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "ਲਾਇਸੰਸਸ਼ੁਦਾ, ਬੀਮਿਤ, WCB-ਕਵਰਡ",
+        "body": "ਹਰ ਕੰਮ 'ਤੇ $5M ਜ਼ਿੰਮੇਵਾਰੀ ਬੀਮਾ ਅਤੇ ਸਰਗਰਮ WCB ਕਵਰੇਜ। ਅਸੀਂ ਕੰਮ ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਪ੍ਰਮਾਣ-ਪੱਤਰ ਸਾਂਝੇ ਕਰਾਂਗੇ।"
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "ਪਾਰਦਰਸ਼ੀ ਕੀਮਤਾਂ, ਕੋਈ ਹੈਰਾਨੀ ਨਹੀਂ",
+        "body": "ਅਸਲ ਸਮੱਗਰੀ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨਾਲ ਆਈਟਮਾਈਜ਼ਡ ਲਿਖਤੀ ਕੋਟ। ਤੁਹਾਡੀ ਮਨਜ਼ੂਰੀ 'ਤੇ ਹੀ ਚੇਂਜ ਆਰਡਰ। 3-ਸਾਲ ਕਾਰੀਗਰੀ ਵਾਰੰਟੀ।"
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "title": "ਦੋਭਾਸ਼ੀ ਸੇਵਾ (ਅੰਗਰੇਜ਼ੀ + ਮੈਂਡਰਿਨ)",
+        "body": "ਪ੍ਰੋਜੈਕਟ ਮੈਨੇਜਰ ਅਤੇ ਸੇਲਜ਼ ਅੰਗਰੇਜ਼ੀ ਅਤੇ ਮੈਂਡਰਿਨ ਦੋਵੇਂ ਬੋਲਦੇ ਹਨ। ਇਕਰਾਰਨਾਮੇ, ਚੇਂਜ ਆਰਡਰ, ਅਤੇ ਅਪਡੇਟ ਤੁਹਾਡੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਵਿੱਚ।"
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "ਤੁਹਾਡੇ ਨੇੜੇ ਅਸਲ ਸਥਾਨਕ ਪੋਰਟਫੋਲੀਓ",
+        "body": "Vancouver, Richmond, Burnaby, Surrey, Coquitlam, ਅਤੇ ਉਸ ਤੋਂ ਅੱਗੇ ਸੈਂਕੜੇ ਪ੍ਰੋਜੈਕਟ। ਅਸੀਂ ਤੁਹਾਡੇ ਆਂਢ-ਗੁਆਂਢ ਤੋਂ ਫੋਟੋਆਂ + ਹਵਾਲੇ ਸਾਂਝੇ ਕਰਾਂਗੇ।"
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "heading": "ਮੇਰੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ — ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ",
+      "q1": "ਮੈਂ Vancouver ਵਿੱਚ ਆਪਣੇ ਨੇੜੇ ਭਰੋਸੇਯੋਗ ਰੈਨੋਵੇਸ਼ਨ ਕੰਪਨੀ ਕਿਵੇਂ ਲੱਭਾਂ?",
+      "a1": "ਤਿੰਨ ਚੀਜ਼ਾਂ ਜਾਂਚੋ: ਲਾਇਸੰਸ + ਬੀਮਾ (ਵਾਅਦਿਆਂ ਨਹੀਂ, ਪ੍ਰਮਾਣ-ਪੱਤਰ ਮੰਗੋ), ਮਾਤਰਾ ਵਿੱਚ ਅਸਲ Google ਸਮੀਖਿਆਵਾਂ (100+ ਮਹੱਤਵਪੂਰਨ ਹੈ, 10 ਨਹੀਂ), ਅਤੇ ਤੁਹਾਡੇ ਆਂਢ-ਗੁਆਂਢ ਤੋਂ ਪੋਰਟਫੋਲੀਓ। Reno Stars ਕੋਲ 70+ ਪੰਜ-ਸਿਤਾਰਾ Google ਸਮੀਖਿਆਵਾਂ, $5M ਜ਼ਿੰਮੇਵਾਰੀ ਬੀਮਾ, WCB ਕਵਰੇਜ, ਅਤੇ ਹਰ Metro Vancouver ਸ਼ਹਿਰ ਵਿੱਚ ਪ੍ਰੋਜੈਕਟ ਪੋਰਟਫੋਲੀਓ ਹੈ ਜਿਸ ਦੀ ਅਸੀਂ ਸੇਵਾ ਕਰਦੇ ਹਾਂ।",
+      "q2": "ਮੇਰੇ ਨੇੜੇ ਬਾਥਰੂਮ ਜਾਂ ਰਸੋਈ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਕੀ ਹੈ?",
+      "a2": "Metro Vancouver ਵਿੱਚ, ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਆਮ ਤੌਰ 'ਤੇ $15K-$45K ਚੱਲਦੀਆਂ ਹਨ ਅਤੇ ਰਸੋਈਆਂ $25K-$90K। ਸਹੀ ਕੀਮਤ ਵਰਗ ਫੁੱਟ, ਫਿਨਿਸ਼ ਪੱਧਰ, ਅਤੇ ਕੀ ਕੋਈ ਕੰਧਾਂ ਹਟਾਈਆਂ ਜਾਂਦੀਆਂ ਹਨ 'ਤੇ ਨਿਰਭਰ ਕਰਦੀ ਹੈ। ਹਰ Reno Stars ਕੋਟ ਆਈਟਮਾਈਜ਼ਡ ਹੈ — ਮਜ਼ਦੂਰੀ, ਸਮੱਗਰੀ, ਪਰਮਿਟ — ਤਾਂ ਜੋ ਤੁਸੀਂ ਵੇਖ ਸਕੋ ਹਰ ਡਾਲਰ ਕਿੱਥੇ ਜਾਂਦਾ ਹੈ।",
+      "q3": "ਮੇਰੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a3": "ਬਾਥਰੂਮ: ਡੀਮੋ ਤੋਂ ਸੌਂਪਣ ਤੱਕ 3-6 ਹਫ਼ਤੇ। ਰਸੋਈ: 4-8 ਹਫ਼ਤੇ। ਪੂਰਾ ਘਰ: ਘੇਰੇ 'ਤੇ ਨਿਰਭਰ 2-6 ਮਹੀਨੇ। ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ: 1-2 ਹਫ਼ਤੇ। ਅਸੀਂ ਇਕਰਾਰਨਾਮੇ ਦੇ ਦਸਤਖਤ 'ਤੇ ਤੁਹਾਨੂੰ ਹਫ਼ਤੇ-ਦਰ-ਹਫ਼ਤੇ ਸਮਾਂ-ਸਾਰਣੀ ਦਿੰਦੇ ਹਾਂ ਅਤੇ ਜਿਵੇਂ-ਜਿਵੇਂ ਮੀਲ ਪੱਥਰ ਪੂਰੇ ਹੁੰਦੇ ਹਨ ਟੈਕਸਟ ਅਪਡੇਟ ਦਿੰਦੇ ਹਾਂ।",
+      "q4": "ਕੀ ਤੁਸੀਂ ਮੇਰੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪਰਮਿਟ ਸੰਭਾਲਦੇ ਹੋ?",
+      "a4": "ਜੀ ਹਾਂ। ਕਿਸੇ ਵੀ ਕੰਮ ਲਈ ਜੋ ਕੰਧਾਂ, ਪਲੰਬਿੰਗ, ਜਾਂ ਇਲੈਕਟ੍ਰੀਕਲ ਨੂੰ ਹਿਲਾਉਂਦਾ ਹੈ, ਅਸੀਂ ਉਚਿਤ ਨਗਰਪਾਲਿਕਾ (Vancouver, Richmond, Burnaby, Surrey, ਆਦਿ) ਰਾਹੀਂ ਪਰਮਿਟ ਪ੍ਰਾਪਤ ਕਰਦੇ ਹਾਂ। ਕਾਸਮੈਟਿਕ ਕੰਮ ਜਿਵੇਂ ਪੇਂਟ, ਫਲੋਰਿੰਗ, ਅਤੇ ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਨੂੰ ਆਮ ਤੌਰ 'ਤੇ ਪਰਮਿਟ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ — ਅਸੀਂ ਕੋਟ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਨੂੰ ਇਮਾਨਦਾਰ ਜਵਾਬ ਦਿੰਦੇ ਹਾਂ।",
+      "q5": "ਕੀ ਤੁਸੀਂ ਮੇਰੇ ਨੇੜੇ ਮੁਫ਼ਤ ਅਨੁਮਾਨ ਦਿੰਦੇ ਹੋ?",
+      "a5": "ਜੀ ਹਾਂ — ਅਸੀਂ ਜਿਨ੍ਹਾਂ 14 Metro Vancouver ਸ਼ਹਿਰਾਂ ਦੀ ਸੇਵਾ ਕਰਦੇ ਹਾਂ ਉਨ੍ਹਾਂ ਸਾਰਿਆਂ ਵਿੱਚ ਮੁਫ਼ਤ ਘਰ ਵਿੱਚ ਸਲਾਹ-ਮਸ਼ਵਰਾ ਅਤੇ ਲਿਖਤੀ ਕੋਟ। ਅਸੀਂ ਮਾਪਾਂਗੇ, ਸਮੱਗਰੀ ਬਾਰੇ ਚਰਚਾ ਕਰਾਂਗੇ, ਘੇਰੇ ਵਿੱਚੋਂ ਲੰਘਾਂਗੇ, ਅਤੇ 2-3 ਕਾਰੋਬਾਰੀ ਦਿਨਾਂ ਵਿੱਚ ਆਈਟਮਾਈਜ਼ਡ ਕੋਟ ਭੇਜਾਂਗੇ। ਕੋਟ ਲਈ ਕੋਈ ਡਿਪਾਜ਼ਿਟ ਜ਼ਰੂਰੀ ਨਹੀਂ।",
+      "q6": "ਤੁਸੀਂ ਕਿਹੜੇ ਆਂਢ-ਗੁਆਂਢ ਨੂੰ ਸੇਵਾ ਦਿੰਦੇ ਹੋ?",
+      "a6": "ਅਸੀਂ Richmond BC ਵਿੱਚ ਅਧਾਰਿਤ ਹਾਂ ਅਤੇ Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, ਅਤੇ White Rock ਨੂੰ ਸੇਵਾ ਦਿੰਦੇ ਹਾਂ। ਜੇ ਤੁਸੀਂ ਇਸ ਘੇਰੇ ਤੋਂ ਬਾਹਰ ਹੋ, ਪੁੱਛੋ — ਅਸੀਂ ਕਦੇ-ਕਦਾਈਂ ਪੂਰੇ ਘਰ ਦੇ ਪ੍ਰੋਜੈਕਟਾਂ ਲਈ ਸਫ਼ਰ ਕਰਦੇ ਹਾਂ।"
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "ਆਪਣੇ ਨੇੜੇ ਰੈਨੋਵੇਸ਼ਨ ਟੀਮ ਲੱਭਣ ਲਈ ਤਿਆਰ ਹੋ?",
+      "subtitle": "ਮੁਫ਼ਤ ਘਰ ਵਿੱਚ ਸਲਾਹ-ਮਸ਼ਵਰਾ, 2-3 ਕਾਰੋਬਾਰੀ ਦਿਨਾਂ ਵਿੱਚ ਲਿਖਤੀ ਆਈਟਮਾਈਜ਼ਡ ਕੋਟ। ਕੋਟ ਲਈ ਕੋਈ ਡਿਪਾਜ਼ਿਟ ਜ਼ਰੂਰੀ ਨਹੀਂ।",
+      "quote": "ਮੇਰਾ ਮੁਫ਼ਤ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "call": "778-960-7999 'ਤੇ ਫ਼ੋਨ ਕਰੋ"
     }
   }
 }

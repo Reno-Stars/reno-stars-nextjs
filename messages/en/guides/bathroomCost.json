@@ -1,0 +1,99 @@
+{
+  "bathroomCost": {
+    "breadcrumb": "Bathroom Renovation Cost",
+    "hero": {
+      "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
+      "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "projects": "Projects Completed",
+      "timeline": "Typical Timeline",
+      "timelineValue": "2–8 weeks"
+    },
+    "tiers": {
+      "title": "Bathroom Renovation Cost by Tier",
+      "subtitle": "Based on our completed projects across Greater Vancouver",
+      "budget": {
+        "title": "Budget-Friendly",
+        "description": "Standard tile, basic vanity, updated fixtures, and fresh paint. Ideal for a single bathroom refresh in condos or townhouses without moving plumbing."
+      },
+      "midRange": {
+        "title": "Mid-Range",
+        "description": "Porcelain or large-format tile, custom vanity, frameless glass shower enclosure, modern fixtures, and heated flooring. The most popular choice for family homes."
+      },
+      "highEnd": {
+        "title": "High-End / Multi-Bathroom",
+        "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
+      }
+    },
+    "factors": {
+      "title": "What Affects Your Bathroom Renovation Cost?",
+      "subtitle": "Six key factors that determine your final price",
+      "tiles": {
+        "title": "Tile & Flooring (25–35% of budget)",
+        "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+      },
+      "shower": {
+        "title": "Shower / Tub Configuration",
+        "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+      },
+      "vanity": {
+        "title": "Vanity & Countertop",
+        "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+      },
+      "plumbing": {
+        "title": "Plumbing Relocation",
+        "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+      },
+      "waterproofing": {
+        "title": "Waterproofing",
+        "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+      },
+      "permits": {
+        "title": "Permits & Inspections",
+        "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+      }
+    },
+    "realProjects": {
+      "title": "Real Bathroom Renovation Projects",
+      "subtitle": "Browse {count} completed bathroom projects with actual budgets and timelines"
+    },
+    "tips": {
+      "title": "Money-Saving Tips for Your Bathroom Renovation",
+      "tip1": {
+        "title": "Keep Existing Plumbing Layout",
+        "description": "Relocating drain lines is one of the biggest cost drivers. Keeping the toilet, shower, and sink in their current positions can save $3,000–6,000."
+      },
+      "tip2": {
+        "title": "Choose Large-Format Porcelain Tile",
+        "description": "Fewer grout lines mean less labour and a cleaner look. 24x24 or 12x24 porcelain tiles are durable, water-resistant, and more affordable than natural stone."
+      },
+      "tip3": {
+        "title": "Renovate Multiple Bathrooms Together",
+        "description": "If you need more than one bathroom done, doing them simultaneously saves 10–20% vs separate projects. Contractors can share mobilization costs and bulk-buy materials."
+      },
+      "tip4": {
+        "title": "Invest in Waterproofing",
+        "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
+      }
+    },
+    "cta": {
+      "heading": "Get Your Free Bathroom Renovation Quote",
+      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+    },
+    "faq": {
+      "q1": "How much does a bathroom renovation cost in Vancouver?",
+      "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
+      "q2": "How long does a bathroom renovation take?",
+      "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
+      "q3": "Can I convert my bathtub to a walk-in shower?",
+      "a3": "Yes, tub-to-shower conversions are one of our most popular requests. The cost ranges from $3,000–$8,000 depending on whether you choose a standard shower base or curbless design. Curbless showers require custom waterproofing and a sloped subfloor.",
+      "q4": "What is curbless shower and why is it more expensive?",
+      "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
+      "q5": "Should I renovate multiple bathrooms at the same time?",
+      "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+    }
+  }
+}

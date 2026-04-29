@@ -1,52 +1,52 @@
 {
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "ਰਸੋਈ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਆਮ ਤੌਰ 'ਤੇ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a1": "ਇੱਕ ਆਮ ਰਸੋਈ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਘੇਰੇ ਅਨੁਸਾਰ 4-8 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ। ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਵਰਗੇ ਸਾਧਾਰਨ ਅੱਪਡੇਟ 1-2 ਹਫ਼ਤੇ ਲੈ ਸਕਦੇ ਹਨ, ਜਦੋਂ ਕਿ ਕਸਟਮ ਕੈਬਿਨੇਟਰੀ ਨਾਲ ਪੂਰੀ ਉਖਾੜ-ਪੁਖਾੜ ਵਾਲੀ ਰੈਨੋਵੇਸ਼ਨ 8-12 ਹਫ਼ਤੇ ਲੈ ਸਕਦੀ ਹੈ।",
+      "q2": "{area} ਵਿੱਚ ਰਸੋਈ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਔਸਤ ਲਾਗਤ ਕੀ ਹੈ?",
+      "a2": "{area} ਵਿੱਚ ਰਸੋਈ ਦੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਆਮ ਤੌਰ 'ਤੇ ਆਕਾਰ ਅਤੇ ਫਿਨਿਸ਼ ਅਨੁਸਾਰ $15,000 ਤੋਂ $75,000+ ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ। ਅਸੀਂ ਘਰ ਵਿੱਚ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਤੋਂ ਬਾਅਦ ਮੁਫ਼ਤ ਵਿਸਤ੍ਰਿਤ ਅੰਦਾਜ਼ੇ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।",
+      "q3": "ਕੀ ਮੈਨੂੰ ਆਪਣੀ ਰਸੋਈ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a3": "ਬਿਜਲੀ, ਪਲੰਬਿੰਗ ਅਤੇ ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਲਈ ਪਰਮਿਟ ਜ਼ਰੂਰੀ ਹਨ। ਅਸੀਂ ਸਾਰੀਆਂ ਪਰਮਿਟ ਅਰਜ਼ੀਆਂ ਸੰਭਾਲਦੇ ਹਾਂ ਅਤੇ ਯਕੀਨੀ ਬਣਾਉਂਦੇ ਹਾਂ ਕਿ ਤੁਹਾਡੀ ਰੈਨੋਵੇਸ਼ਨ {area} ਬਿਲਡਿੰਗ ਕੋਡਾਂ ਦੀ ਪਾਲਣਾ ਕਰੇ।"
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "{area} ਵਿੱਚ ਬਾਥਰੂਮ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a1": "{area} ਵਿੱਚ ਜ਼ਿਆਦਾਤਰ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨਾਂ ਨੂੰ 2-4 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ। ਇੱਕ ਸਾਧਾਰਨ ਕਾਸਮੈਟਿਕ ਅੱਪਡੇਟ 1 ਹਫ਼ਤਾ ਲੈ ਸਕਦਾ ਹੈ, ਜਦੋਂ ਕਿ ਲੇਆਉਟ ਤਬਦੀਲੀਆਂ ਨਾਲ ਪੂਰੀ ਰੈਨੋਵੇਸ਼ਨ 4-6 ਹਫ਼ਤੇ ਲੈ ਸਕਦੀ ਹੈ।",
+      "q2": "ਕੀ ਮੈਂ ਰੈਨੋਵੇਸ਼ਨ ਦੌਰਾਨ ਆਪਣਾ ਬਾਥਰੂਮ ਵਰਤ ਸਕਦਾ ਹਾਂ?",
+      "a2": "ਆਮ ਤੌਰ 'ਤੇ ਨਹੀਂ, ਪਰ ਅਸੀਂ ਖਲਲ ਨੂੰ ਘੱਟ ਕਰਨ ਲਈ ਕੁਸ਼ਲਤਾ ਨਾਲ ਕੰਮ ਕਰਦੇ ਹਾਂ। ਜੇ ਤੁਹਾਡੇ ਕੋਲ ਕਈ ਬਾਥਰੂਮ ਹਨ, ਤਾਂ ਅਸੀਂ ਰੈਨੋਵੇਸ਼ਨ ਦੇ ਸ਼ਡਿਊਲ ਅਨੁਸਾਰ ਯੋਜਨਾ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਦੇ ਹਾਂ।",
+      "q3": "ਤੁਸੀਂ ਬਾਥਰੂਮਾਂ ਲਈ ਕਿਹੜੀ ਵਾਟਰਪਰੂਫਿੰਗ ਵਰਤਦੇ ਹੋ?",
+      "a3": "ਅਸੀਂ ਉਦਯੋਗ-ਪ੍ਰਮੁੱਖ ਵਾਟਰਪਰੂਫਿੰਗ ਸਿਸਟਮ ਵਰਤਦੇ ਹਾਂ ਜਿਵੇਂ ਕਿ Schluter ਅਤੇ RedGard, ਤਾਂ ਜੋ ਤੁਹਾਡੇ ਬਾਥਰੂਮ ਨੂੰ ਨਮੀ ਦੇ ਨੁਕਸਾਨ ਤੋਂ ਸਹੀ ਢੰਗ ਨਾਲ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾਵੇ।"
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "ਕੀ ਮੈਂ {area} ਵਿੱਚ ਪੂਰੇ ਘਰ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਦੌਰਾਨ ਆਪਣੇ ਘਰ ਵਿੱਚ ਰਹਿ ਸਕਦਾ ਹਾਂ?",
+      "a1": "ਇਹ ਘੇਰੇ 'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ। {area} ਵਿੱਚ ਵੱਡੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਲਈ, ਅਸੀਂ ਅਕਸਰ ਸੁਰੱਖਿਆ ਅਤੇ ਕੁਸ਼ਲਤਾ ਲਈ ਅਸਥਾਈ ਮੁੜ-ਵਸੇਬੇ ਦੀ ਸਿਫ਼ਾਰਸ਼ ਕਰਦੇ ਹਾਂ। ਜੇ ਰਹਿਣਾ ਪਸੰਦ ਹੋਵੇ ਤਾਂ ਅਸੀਂ ਪੜਾਅਵਾਰ ਕੰਮ ਦਾ ਤਾਲਮੇਲ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਦੇ ਹਾਂ।",
+      "q2": "ਤੁਸੀਂ ਪੂਰੇ ਘਰ ਦੇ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟ ਦਾ ਪ੍ਰਬੰਧਨ ਕਿਵੇਂ ਕਰਦੇ ਹੋ?",
+      "a2": "ਅਸੀਂ ਇੱਕ ਸਮਰਪਿਤ ਪ੍ਰੋਜੈਕਟ ਮੈਨੇਜਰ ਨਿਯੁਕਤ ਕਰਦੇ ਹਾਂ ਜੋ ਸਾਰੇ ਟਰੇਡਾਂ ਦਾ ਤਾਲਮੇਲ ਕਰਦਾ ਹੈ, ਸ਼ਡਿਊਲ ਨੂੰ ਕਾਇਮ ਰੱਖਦਾ ਹੈ, ਅਤੇ ਨਿਯਮਤ ਅੱਪਡੇਟ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ। ਤੁਹਾਡੇ ਕੋਲ ਪੂਰੇ ਸਮੇਂ ਇੱਕ ਹੀ ਸੰਪਰਕ ਪੁਆਇੰਟ ਹੁੰਦਾ ਹੈ।",
+      "q3": "ਕੀ ਮੈਨੂੰ {area} ਵਿੱਚ ਪੂਰੇ ਘਰ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a3": "ਜੀ ਹਾਂ, ਪੂਰੇ ਘਰ ਦੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ ਨੂੰ ਆਮ ਤੌਰ 'ਤੇ ਢਾਂਚਾਗਤ, ਬਿਜਲੀ ਅਤੇ ਪਲੰਬਿੰਗ ਦੇ ਕੰਮ ਲਈ ਕਈ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਅਸੀਂ ਸਾਰੀਆਂ {area} ਪਰਮਿਟ ਅਰਜ਼ੀਆਂ ਅਤੇ ਜਾਂਚਾਂ ਸੰਭਾਲਦੇ ਹਾਂ।"
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "ਕੀ ਮੈਨੂੰ {area} ਵਿੱਚ ਆਪਣੀ ਬੇਸਮੈਂਟ ਨੂੰ ਮੁਕੰਮਲ ਕਰਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a1": "ਜੀ ਹਾਂ, {area} ਵਿੱਚ ਬੇਸਮੈਂਟ ਫਿਨਿਸ਼ਿੰਗ ਲਈ ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਜ਼ਰੂਰੀ ਹਨ। ਅਸੀਂ ਆਪਣੀ ਸੇਵਾ ਦੇ ਹਿੱਸੇ ਵਜੋਂ ਸਾਰੀਆਂ ਪਰਮਿਟ ਅਰਜ਼ੀਆਂ ਅਤੇ ਜਾਂਚਾਂ ਸੰਭਾਲਦੇ ਹਾਂ।",
+      "q2": "ਤੁਸੀਂ ਬੇਸਮੈਂਟ ਦੀਆਂ ਨਮੀ ਦੀਆਂ ਸਮੱਸਿਆਵਾਂ ਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲਦੇ ਹੋ?",
+      "a2": "ਅਸੀਂ ਨਮੀ ਦੇ ਪੱਧਰ ਦਾ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ ਅਤੇ ਫਿਨਿਸ਼ਿੰਗ ਤੋਂ ਪਹਿਲਾਂ ਡਰੇਨੇਜ ਸੁਧਾਰ, ਵੇਪਰ ਬੈਰੀਅਰ ਅਤੇ ਸਹੀ ਇਨਸੁਲੇਸ਼ਨ ਸਮੇਤ ਉਚਿਤ ਹੱਲ ਲਾਗੂ ਕਰਦੇ ਹਾਂ।",
+      "q3": "ਕੀ ਮੈਂ ਆਪਣੀ ਬੇਸਮੈਂਟ ਵਿੱਚ ਬਾਥਰੂਮ ਜੋੜ ਸਕਦਾ ਹਾਂ?",
+      "a3": "ਜੀ ਹਾਂ, ਅਸੀਂ ਬੇਸਮੈਂਟਾਂ ਵਿੱਚ ਬਾਥਰੂਮ ਜੋੜ ਸਕਦੇ ਹਾਂ। ਜੇ ਸੀਵਰ ਲਾਈਨ ਤੋਂ ਹੇਠਾਂ ਹੋਵੇ, ਅਸੀਂ ਸੀਵੇਜ ਇਜੈਕਟਰ ਸਿਸਟਮ ਲਗਾਉਂਦੇ ਹਾਂ। ਸਾਰੀ ਪਲੰਬਿੰਗ {area} ਬਿਲਡਿੰਗ ਕੋਡਾਂ ਦੀ ਪਾਲਣਾ ਕਰਦੀ ਹੈ।"
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਅਤੇ ਬਦਲਣ ਵਿੱਚ ਕੀ ਫ਼ਰਕ ਹੈ?",
+      "a1": "ਰੀਫੇਸਿੰਗ ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਕੈਬਿਨੇਟ ਬਾਕਸਾਂ ਨੂੰ ਰੱਖਦੀ ਹੈ ਅਤੇ ਦਰਵਾਜ਼ੇ, ਡਰਾਅਰ ਫਰੰਟ ਅਤੇ ਹਾਰਡਵੇਅਰ ਬਦਲਦੀ ਹੈ। ਇਸਦੀ ਲਾਗਤ ਪੂਰੀ ਤਬਦੀਲੀ ਨਾਲੋਂ 40-50% ਘੱਟ ਹੈ ਅਤੇ ਸਮਾਂ ਵੀ ਘੱਟ ਲੱਗਦਾ ਹੈ।",
+      "q2": "{area} ਵਿੱਚ ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "{area} ਵਿੱਚ ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਨੂੰ ਔਸਤ ਰਸੋਈ ਲਈ ਆਮ ਤੌਰ 'ਤੇ 3-5 ਦਿਨ ਲੱਗਦੇ ਹਨ। ਪ੍ਰਕਿਰਿਆ ਦੌਰਾਨ ਜ਼ਿਆਦਾਤਰ ਸਮਾਂ ਤੁਹਾਡੀ ਰਸੋਈ ਚਾਲੂ ਰਹਿੰਦੀ ਹੈ।",
+      "q3": "ਕੀ ਸਾਰੇ ਕੈਬਿਨੇਟਾਂ ਨੂੰ ਰੀਫੇਸ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ?",
+      "a3": "ਜ਼ਿਆਦਾਤਰ ਠੋਸ ਲੱਕੜ ਅਤੇ ਪਲਾਈਵੁੱਡ ਦੇ ਕੈਬਿਨੇਟ ਬਾਕਸਾਂ ਨੂੰ ਰੀਫੇਸ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ ਜੇ ਉਹ ਢਾਂਚਾਗਤ ਤੌਰ 'ਤੇ ਠੀਕ ਹੋਣ। ਅਸੀਂ {area} ਵਿੱਚ ਮੁਫ਼ਤ ਘਰ ਵਿੱਚ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਦੌਰਾਨ ਤੁਹਾਡੇ ਕੈਬਿਨੇਟਾਂ ਦਾ ਮੁਲਾਂਕਣ ਕਰਦੇ ਹਾਂ।"
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "ਕੀ ਤੁਸੀਂ ਕਾਰੋਬਾਰੀ ਘੰਟਿਆਂ ਦੌਰਾਨ ਕੰਮ ਕਰਦੇ ਹੋ?",
+      "a1": "ਅਸੀਂ ਤੁਹਾਡੇ ਕਾਰੋਬਾਰੀ ਕੰਮਕਾਜ ਵਿੱਚ ਖਲਲ ਨੂੰ ਘੱਟ ਕਰਨ ਲਈ ਸ਼ਾਮ ਅਤੇ ਵੀਕੈਂਡ ਸਮੇਤ ਲਚਕਦਾਰ ਸ਼ਡਿਊਲਿੰਗ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ। ਅਸੀਂ ਤੁਹਾਡੀ ਥਾਂ ਦੇ ਹਿੱਸੇ ਚਾਲੂ ਰੱਖਣ ਲਈ ਪੜਾਅਵਾਰ ਕੰਮ ਕਰ ਸਕਦੇ ਹਾਂ।",
+      "q2": "ਕੀ ਤੁਹਾਨੂੰ {area} ਕਮਰਸ਼ੀਅਲ ਬਿਲਡਿੰਗ ਕੋਡਾਂ ਦਾ ਤਜ਼ਰਬਾ ਹੈ?",
+      "a2": "ਜੀ ਹਾਂ, ਸਾਡੀ ਟੀਮ ਨੂੰ {area} ਕਮਰਸ਼ੀਅਲ ਬਿਲਡਿੰਗ ਕੋਡਾਂ, ਪਹੁੰਚਯੋਗਤਾ ਲੋੜਾਂ ਅਤੇ ਅੱਗ ਸੁਰੱਖਿਆ ਨਿਯਮਾਂ ਦਾ ਤਜ਼ਰਬਾ ਹੈ। ਅਸੀਂ ਸਾਰੇ ਕਮਰਸ਼ੀਅਲ ਮਿਆਰਾਂ ਦੀ ਪੂਰੀ ਪਾਲਣਾ ਯਕੀਨੀ ਬਣਾਉਂਦੇ ਹਾਂ।",
+      "q3": "ਕੀ ਤੁਸੀਂ {area} ਵਿੱਚ ਟੀਨੈਂਟ ਇੰਪਰੂਵਮੈਂਟਸ ਨੂੰ ਸੰਭਾਲ ਸਕਦੇ ਹੋ?",
+      "a3": "ਜੀ ਹਾਂ, ਅਸੀਂ {area} ਵਿੱਚ ਦਫ਼ਤਰਾਂ, ਰਿਟੇਲ ਥਾਵਾਂ ਅਤੇ ਰੈਸਟੋਰੈਂਟਾਂ ਲਈ ਟੀਨੈਂਟ ਇੰਪਰੂਵਮੈਂਟਸ (TI) ਵਿੱਚ ਮਾਹਰ ਹਾਂ। ਅਸੀਂ ਮਨਜ਼ੂਰੀ ਦੀਆਂ ਪ੍ਰਕਿਰਿਆਵਾਂ ਲਈ ਮਾਲਕਾਂ ਅਤੇ ਜਾਇਦਾਦ ਪ੍ਰਬੰਧਕਾਂ ਨਾਲ ਕੰਮ ਕਰਦੇ ਹਾਂ।"
     }
   }
 }

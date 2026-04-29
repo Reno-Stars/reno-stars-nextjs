@@ -1,36 +1,36 @@
 {
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "title": "فرآیند خدمات بازسازی: ۵ مرحله",
+      "subtitle": "از مشاوره تا تکمیل پروژه",
+      "googleReviews": "نظرات Google",
+      "stepLabel": "مرحله {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "دانلود PNG",
+    "downloadPdf": "دانلود PDF",
+    "downloadSuccess": "دانلود شد!",
+    "downloadError": "ناموفق",
+    "downloadPosterHint": "برای دانلود PNG کلیک کنید",
+    "downloadPdfHint": "برای دانلود PDF کلیک کنید",
     "step1": {
-      "title": "Initial Consultation",
-      "subtitle": "Discovery",
+      "title": "مشاوره اولیه",
+      "subtitle": "شناخت پروژه",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "تماس اولیه از طریق تلفن، ایمیل، WhatsApp، WeChat یا SMS",
+        "تأیید فضاهای بازسازی: آشپزخانه، نشیمن، حمام یا کل منزل",
+        "تأیید سلیقه و سبک طراحی",
+        "بودجه و جایگاه متریال",
+        "درک نیازها و انتظارات بازسازی",
+        "دریافت نقشه‌ها و تصاویر محل (در صورت موجود بودن)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "تلفن"
         },
         {
           "icon": "email",
-          "label": "Email"
+          "label": "ایمیل"
         },
         {
           "icon": "whatsapp",
@@ -45,124 +45,124 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "ما با یک مشاوره اولیه شروع می‌کنیم که در آن می‌توانید از طریق تلفن، ایمیل، WhatsApp، WeChat یا SMS با ما در ارتباط باشید. درباره نیازهای بازسازی، سلیقه طراحی، بودجه شما گفتگو می‌کنیم و نقشه‌ها یا تصاویر موجود را جمع‌آوری می‌کنیم."
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "ارزیابی و پیش‌فاکتور سفارشی",
+      "subtitle": "اندازه‌گیری در محل (در صورت نیاز) و قیمت‌گذاری شفاف",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "اندازه‌گیری حرفه‌ای در محل برای ابعاد دقیق (در صورت نیاز)",
+        "یک طرح طراحی جامع که فضای آینده شما را به‌تصویر می‌کشد",
+        "تعریف شفاف دامنه کار، زمان‌بندی پروژه، الزامات مجوز و مشخصات متریال",
+        "یک پیش‌فاکتور شفاف و دقیق متناسب با طراحی و دامنه پیشنهادی، با تضمین وضوح کامل و قابلیت پیش‌بینی در سراسر فرآیند"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "اندازه‌گیری دقیق"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "قیمت‌گذاری شفاف"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "طرح طراحی"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "ما در صورت نیاز اندازه‌گیری حرفه‌ای در محل ارائه می‌دهیم و یک طرح طراحی جامع برای فضای شما خلق می‌کنیم. شما یک دامنه کار شفاف همراه با زمان‌بندی، الزامات مجوز و یک پیش‌فاکتور شفاف متناسب با طراحی پیشنهادی دریافت خواهید کرد."
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "تأیید و قرارداد",
+      "subtitle": "نهایی‌سازی جزئیات و آغاز پروژه",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "دعوت از مشتریان به شوروم برای مشاوره حضوری",
+        "پاسخ به پرسش‌ها و بهینه‌سازی جزئیات طراحی",
+        "تأیید طرح طراحی و نمونه‌های متریال",
+        "نهایی‌سازی برنامه پرداخت و کمک در زمان‌بندی تحویل",
+        "امضای قرارداد ساخت و دریافت پیش‌پرداخت",
+        "ایمن‌سازی تاریخ شروع پروژه",
+        "تشکیل تیم پروژه: مدیر پروژه، مدیر ساخت، هماهنگ‌کننده"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "قرارداد"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "مشاوره"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "تیم پروژه"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "ما شما را به شوروم خود دعوت می‌کنیم تا نمونه‌های متریال را بررسی و جزئیات طراحی را نهایی کنید. پس از تأیید برنامه پرداخت و امضای قرارداد، تاریخ شروع پروژه شما را ایمن می‌کنیم و یک تیم اختصاصی پروژه شامل مدیر پروژه، مدیر ساخت و هماهنگ‌کننده تشکیل می‌دهیم."
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "اجرا و مدیریت",
+      "subtitle": "هماهنگی کامل و ارتباط آسان",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "یک تیم یکپارچه پروژه که تمام جنبه‌های پروژه شما را مدیریت می‌کند",
+        "بدون نیاز به ارتباط مستقیم با کارگران",
+        "هماهنگی پیشرفت ساخت برای تضمین کارایی و یکپارچگی",
+        "کمک در زمان‌بندی تحویل و هماهنگی در محل",
+        "کنترل مداوم کیفیت در سراسر فرآیند ساخت",
+        "پاسخگویی سریع و حل کارآمد هر مشکل"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "مدیریت یکپارچه"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "پیگیری پیشرفت"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "پاسخگویی سریع"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "یک تیم یکپارچه پروژه تمام جنبه‌های پروژه شما را مدیریت می‌کند. شما نیازی به تعامل مستقیم با کارگران نخواهید داشت. ما پیشرفت ساخت، زمان‌بندی تحویل را هماهنگ می‌کنیم و کنترل کیفیت یکپارچه را در سراسر پروژه حفظ می‌نماییم. هرگونه مشکلی به‌سرعت و با کارایی برطرف می‌شود."
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "بازدید نهایی و خدمات پس از تحویل",
+      "subtitle": "بررسی نهایی و پشتیبانی بلندمدت",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "بازدید نهایی برای تأیید مطابقت تمام کارها با انتظارات",
+        "تحویل منزل جدید",
+        "پشتیبانی مداوم برای نگهداری در دوره گارانتی"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "بازرسی دقیق"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "خدمات گارانتی"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "پشتیبانی مداوم"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "ما بازدیدی نهایی همراه با شما انجام می‌دهیم تا تأیید کنیم تمام کارها با انتظارات شما مطابقت دارد، سپس منزل جدید شما را تحویل می‌دهیم. در دوره گارانتی، پشتیبانی مداوم برای نگهداری ارائه می‌کنیم."
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "بازسازی را به‌راستی دست‌یافتنی می‌کنیم",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "چرا این موضوع مهم است",
+      "description": "فرآیند ساختاریافته بازسازی Reno Stars به مشتریان کمک می‌کند بدانند در هر مرحله چه انتظاری داشته باشند. فرآیند شفاف پنج‌مرحله‌ای ما، تجربه‌ای روان و بدون استرس از تماس اولیه تا تحویل نهایی را تضمین می‌کند."
     },
     "footer": {
-      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "ساده · بدون نگرانی · ایمن · تضمینی",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "سال تجربه در صنعت",
       "googleRating": "Google",
-      "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "warrantyService": "خدمات گارانتی",
+      "scanLinktree": "برای ارتباط با ما اسکن کنید",
       "website": "reno-stars.com"
     }
   }

@@ -1,0 +1,100 @@
+{
+  "commercialCost": {
+    "breadcrumb": "Chi Phí Cải Tạo Thương Mại",
+    "hero": {
+      "title": "Chi Phí Cải Tạo Thương Mại Tại Vancouver BC (2026)",
+      "subtitle": "Cải tạo thương mại tại Greater Vancouver thực sự tốn bao nhiêu? Từ làm mới văn phòng nhỏ đến xây dựng nhà hàng đầy đủ, đây là các con số thực dựa trên kinh nghiệm dự án của chúng tôi."
+    },
+    "stats": {
+      "avgCost": "Chi Phí Trung Bình",
+      "range": "Khoảng Giá",
+      "sqft": "Chi Phí Mỗi Sq Ft",
+      "sqftValue": "$75 – $300/sq ft",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "8–20 tuần"
+    },
+    "tiers": {
+      "title": "Chi Phí Cải Tạo Thương Mại Theo Phạm Vi Dự Án",
+      "subtitle": "Báo giá điển hình cho các dự án thương mại khắp Greater Vancouver",
+      "budget": {
+        "title": "Làm Mới Bán Lẻ / Văn Phòng Nhỏ",
+        "description": "Sơn mới, sàn mới, đèn chiếu sáng cập nhật, nâng cấp phụ kiện cơ bản và thay đổi bố cục nhỏ. Lý tưởng cho cửa hàng bán lẻ nhỏ, văn phòng chuyên nghiệp và không gian co-working cần cập nhật hiện đại mà không có công việc kết cấu."
+      },
+      "midRange": {
+        "title": "Hoàn Thiện Thương Mại Đầy Đủ",
+        "description": "Hoàn thiện nội thất hoàn chỉnh bao gồm tường mới, đồ gỗ đặt đóng, vùng HVAC nâng cấp, sàn cấp thương mại, thiết kế chiếu sáng hiện đại và nâng cấp điện đầy đủ. Phù hợp cho văn phòng cỡ trung, cửa hàng bán lẻ và phòng khám."
+      },
+      "highEnd": {
+        "title": "Nhà Hàng / Y Tế / Bán Lẻ Cao Cấp",
+        "description": "Cải tạo quy mô đầy đủ với lắp đặt phòng bếp thương mại, thông gió đặc biệt, phụ kiện đặt đóng, hoàn thiện cao cấp, đường ống mở rộng và yêu cầu giấy phép phức tạp. Bao gồm nhà hàng, phòng khám nha khoa, phòng khám y tế và không gian bán lẻ flagship."
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Thương Mại?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "permits": {
+        "title": "Giấy Phép & Phân Vùng",
+        "description": "Giấy phép thương mại tại Metro Vancouver có giá $2,000–15,000 tùy phạm vi và đô thị. Đơn xin thay đổi mục đích sử dụng thêm $3,000–8,000. Quy trình giấy phép phát triển của thành phố Vancouver có thể mất 8–16 tuần, vì vậy hãy tính đến chi phí thời gian."
+      },
+      "hvac": {
+        "title": "HVAC & Hệ Thống Cơ Khí",
+        "description": "HVAC thương mại là yếu tố tốn kém lớn với $15,000–80,000+. Riêng hệ thống quạt hút và cấp khí cho nhà hàng tốn $20,000–50,000. Không gian văn phòng cần phân vùng đúng cách cho sự thoải mái của người thuê. Quy chuẩn năng lượng của Vancouver yêu cầu hệ thống hiệu suất cao."
+      },
+      "fireSafety": {
+        "title": "An Toàn Cháy & Bộ Phun Nước",
+        "description": "Hệ thống bộ phun nước chữa cháy có giá $3–8 mỗi sq ft để lắp đặt hoặc sửa đổi. Nâng cấp báo cháy dao động $5,000–20,000. Thay đổi mục đích sử dụng kích hoạt đánh giá tuân thủ quy chuẩn cháy đầy đủ. Nhà hàng và không gian tập trung có yêu cầu nghiêm ngặt nhất."
+      },
+      "accessibility": {
+        "title": "Tuân Thủ Khả Năng Tiếp Cận",
+        "description": "Quy chuẩn xây dựng BC yêu cầu lối tiếp cận không rào cản cho không gian thương mại. Phòng vệ sinh dễ tiếp cận, đường dốc, độ rộng cửa và biển báo thêm $5,000–25,000. Các tòa nhà di sản tại Vancouver thường cần giải pháp sáng tạo để đáp ứng tiêu chuẩn tiếp cận."
+      },
+      "electrical": {
+        "title": "Điện & Cơ Sở Hạ Tầng IT",
+        "description": "Nâng cấp điện thương mại có giá $10,000–50,000+ tùy công suất phục vụ. Nhà hàng cần dịch vụ 200–400 amp. Văn phòng hiện đại yêu cầu cáp có cấu trúc ($3,000–15,000), làm mát phòng máy chủ và mạch chuyên dụng cho thiết bị."
+      },
+      "disruption": {
+        "title": "Thời Điểm Dự Án & Gián Đoạn Kinh Doanh",
+        "description": "Làm việc xung quanh giờ kinh doanh tăng chi phí 15–25%. Nhiều người thuê thương mại tại Vancouver cải tạo trong giai đoạn chuyển tiếp hợp đồng thuê. Làm việc ngoài giờ thêm chi phí nhân công cao cấp. Kế hoạch cải tạo theo giai đoạn có thể giữ một phần kinh doanh hoạt động trong khi xây dựng."
+      }
+    },
+    "realProjects": {
+      "title": "Các Dự Án Cải Tạo Thương Mại Của Chúng Tôi",
+      "subtitle": "Duyệt qua {count} dự án thương mại đã hoàn thành khắp Greater Vancouver"
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cải Tạo Thương Mại",
+      "tip1": {
+        "title": "Lập Kế Hoạch Trong Đàm Phán Hợp Đồng Thuê",
+        "description": "Đàm phán khoản trợ cấp cải tạo cho người thuê (TIA) với chủ nhà. Nhiều hợp đồng thuê thương mại tại Vancouver bao gồm $20–80 mỗi sq ft trong TIA có thể bù đắp đáng kể chi phí cải tạo."
+      },
+      "tip2": {
+        "title": "Chia Giai Đoạn Cải Tạo",
+        "description": "Chia dự án thành các giai đoạn để trải đều chi phí và giảm thiểu gián đoạn kinh doanh. Ưu tiên các khu vực hướng đến khách hàng trước, sau đó xử lý cải tiến phía sau ở giai đoạn thứ hai."
+      },
+      "tip3": {
+        "title": "Tái Sử Dụng Cơ Sở Hạ Tầng Hiện Có",
+        "description": "Giữ đường ống và điện ở vị trí hiện có khi có thể. Di chuyển phòng bếp thương mại hoặc phòng vệ sinh có thể thêm $20,000–50,000 chỉ riêng cho chi phí lắp đặt thô."
+      },
+      "tip4": {
+        "title": "Chọn Vật Liệu Cấp Thương Mại Bền",
+        "description": "Đầu tư vào sàn, phụ kiện và hoàn thiện cấp thương mại. Chi phí ban đầu cao hơn tiết kiệm tiền dài hạn. LVT thương mại bền 15–20 năm so với 5–8 năm cho sản phẩm cấp dân dụng trong không gian lưu thông cao."
+      }
+    },
+    "cta": {
+      "heading": "Nhận Báo Giá Cải Tạo Thương Mại Miễn Phí",
+      "subtitle": "Hãy cho chúng tôi biết về dự án thương mại của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."
+    },
+    "faq": {
+      "q1": "Cải tạo thương mại tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Chi phí cải tạo thương mại tại Vancouver thường dao động từ $50,000 cho làm mới văn phòng nhỏ đến hơn $1,000,000 cho xây dựng nhà hàng hoặc cơ sở y tế đầy đủ. Cải tạo thương mại trung bình tốn khoảng $250,000. Chi phí mỗi sq ft dao động từ $75 đến $300 tùy loại hình kinh doanh, phạm vi công việc và mức độ hoàn thiện.",
+      "q2": "Cải tạo thương mại tại Vancouver mất bao lâu?",
+      "a2": "Hầu hết các dự án cải tạo thương mại tại Vancouver mất 8 đến 20 tuần tùy phạm vi. Làm mới văn phòng cơ bản có thể hoàn thành trong 8–10 tuần, trong khi xây dựng nhà hàng đầy đủ hoặc chuyển đổi phòng khám y tế thường mất 16–20 tuần bao gồm phê duyệt giấy phép và kiểm tra.",
+      "q3": "Tôi có cần giấy phép cho cải tạo thương mại tại Vancouver không?",
+      "a3": "Có, gần như mọi dự án cải tạo thương mại tại Metro Vancouver yêu cầu giấy phép xây dựng. Bất kỳ công việc nào liên quan đến thay đổi kết cấu, điện, đường ống, HVAC hoặc hệ thống an toàn cháy đều cần giấy phép. Đơn xin thay đổi mục đích sử dụng được yêu cầu khi chuyển đổi giữa các loại hình kinh doanh. Chi phí giấy phép dao động từ $2,000 đến $15,000 tùy phạm vi và đô thị.",
+      "q4": "Chi phí mỗi sq ft cho cải tạo thương mại tại Vancouver là bao nhiêu?",
+      "a4": "Chi phí cải tạo thương mại tại Vancouver dao động từ $75 đến $300 mỗi sq ft. Làm mới văn phòng cơ bản dao động $75–$120/sq ft, hoàn thiện văn phòng hoặc bán lẻ tầm trung tốn $120–$200/sq ft, và không gian chuyên biệt như nhà hàng hoặc phòng khám y tế dao động từ $200–$300+ mỗi sq ft do yêu cầu phức tạp về cơ khí, đường ống và thông gió.",
+      "q5": "Tôi có thể cải tạo không gian thương mại trong khi vẫn mở cửa kinh doanh không?",
+      "a5": "Có, cải tạo theo giai đoạn cho phép nhiều doanh nghiệp tại Vancouver duy trì hoạt động trong quá trình xây dựng. Chúng tôi tạo kế hoạch giai đoạn chi tiết phân chia khu vực làm việc trong khi giữ không gian hướng đến khách hàng có thể tiếp cận. Làm việc ngoài giờ và cuối tuần cũng là một lựa chọn, mặc dù nó thêm 15–25% chi phí nhân công. Nhiều khách hàng của chúng tôi chọn cải tạo trong các giai đoạn thấp điểm theo mùa để giảm thiểu tác động."
+    }
+  }
+}

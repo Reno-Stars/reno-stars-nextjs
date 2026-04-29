@@ -1,0 +1,42 @@
+{
+  "index": {
+    "hero": {
+      "title": "Guías de costos de remodelación",
+      "subtitle": "Precios honestos basados en proyectos reales que hemos completado en Greater Vancouver. Sin suposiciones. Solo datos reales."
+    },
+    "kitchen": {
+      "title": "Costo de remodelación de cocina",
+      "description": "Desglose completo de los costos de remodelación de cocinas en Vancouver, desde actualizaciones económicas hasta transformaciones de alta gama."
+    },
+    "bathroom": {
+      "title": "Costo de remodelación de baño",
+      "description": "Desglose completo de los costos de remodelación de baños en el área de Greater Vancouver, desde renovaciones de un solo baño hasta proyectos de múltiples baños."
+    },
+    "wholeHouse": {
+      "title": "Costo de remodelación integral",
+      "description": "Precios de remodelación integral del hogar incluyendo cocina, baños, pisos y trabajo estructural."
+    },
+    "comingSoon": "Próximamente",
+    "readGuide": "Leer guía",
+    "cta": {
+      "heading": "¿Listo para comenzar su remodelación?",
+      "subtitle": "Reciba una consulta gratis y una cotización precisa basada en las necesidades específicas de su proyecto."
+    },
+    "basement": {
+      "title": "Costo de remodelación de sótano",
+      "description": "Desglose completo de los costos de remodelación de sótanos en el área de Greater Vancouver, desde acabado básico hasta conversiones completas de suite legal."
+    },
+    "commercial": {
+      "title": "Costo de remodelación comercial",
+      "description": "Desglose completo de los costos de remodelación comercial en Greater Vancouver, desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes."
+    },
+    "cabinet": {
+      "title": "Costo de renovación de gabinetes",
+      "description": "Desglose completo de los costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver."
+    },
+    "basementSuite": {
+      "title": "Costo de suite de sótano",
+      "description": "Costos de conversión de suite legal de sótano, análisis de ROI y regulaciones específicas de cada municipio para Metro Vancouver."
+    }
+  }
+}

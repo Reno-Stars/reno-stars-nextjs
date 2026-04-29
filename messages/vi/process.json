@@ -1,32 +1,32 @@
 {
   "process": {
     "hero": {
-      "title": "Renovation Service Workflow: 5 Steps",
-      "subtitle": "From consultation to completion",
-      "googleReviews": "Google Reviews",
-      "stepLabel": "STEP {stepNum}"
+      "title": "Quy Trình Dịch Vụ Cải Tạo: 5 Bước",
+      "subtitle": "Từ tư vấn đến hoàn thành",
+      "googleReviews": "Đánh Giá Google",
+      "stepLabel": "BƯỚC {stepNum}"
     },
-    "downloadPoster": "Download PNG",
-    "downloadPdf": "Download PDF",
-    "downloadSuccess": "Downloaded!",
-    "downloadError": "Failed",
-    "downloadPosterHint": "Click to download PNG",
-    "downloadPdfHint": "Click to download PDF",
+    "downloadPoster": "Tải PNG",
+    "downloadPdf": "Tải PDF",
+    "downloadSuccess": "Đã tải!",
+    "downloadError": "Thất bại",
+    "downloadPosterHint": "Nhấn để tải PNG",
+    "downloadPdfHint": "Nhấn để tải PDF",
     "step1": {
-      "title": "Initial Consultation",
-      "subtitle": "Discovery",
+      "title": "Tư Vấn Ban Đầu",
+      "subtitle": "Khám Phá",
       "points": [
-        "Initial contact via phone, email, Whatsapp, WeChat, or SMS",
-        "Confirm renovation areas: kitchen, living room, bathroom, or whole house",
-        "Style preference confirmation",
-        "Material budget and positioning",
-        "Understand renovation needs and expectations",
-        "Obtain floor plans and site photos (if available)"
+        "Liên hệ ban đầu qua điện thoại, email, WhatsApp, WeChat hoặc SMS",
+        "Xác nhận khu vực cải tạo: phòng bếp, phòng khách, phòng tắm hoặc toàn bộ nhà",
+        "Xác nhận sở thích phong cách",
+        "Ngân sách vật liệu và định vị",
+        "Hiểu rõ nhu cầu và kỳ vọng cải tạo",
+        "Lấy bản vẽ mặt bằng và hình ảnh hiện trạng (nếu có)"
       ],
       "tags": [
         {
           "icon": "phone",
-          "label": "Phone"
+          "label": "Điện Thoại"
         },
         {
           "icon": "email",
@@ -45,124 +45,124 @@
           "label": "SMS"
         }
       ],
-      "faqAnswer": "We begin with an initial consultation where you can reach us by phone, email, WhatsApp, WeChat, or SMS. We'll discuss your renovation needs, style preferences, budget, and gather any existing floor plans or photos."
+      "faqAnswer": "Chúng tôi bắt đầu với một buổi tư vấn ban đầu, nơi bạn có thể liên hệ với chúng tôi qua điện thoại, email, WhatsApp, WeChat hoặc SMS. Chúng tôi sẽ trao đổi về nhu cầu cải tạo, sở thích phong cách, ngân sách và thu thập bản vẽ mặt bằng hoặc hình ảnh hiện có."
     },
     "step2": {
-      "title": "Tailored Assessment & Quote",
-      "subtitle": "On-Site Measurement (if needed) & Transparent Pricing",
+      "title": "Đánh Giá & Báo Giá Theo Yêu Cầu",
+      "subtitle": "Đo Đạc Tại Hiện Trường (nếu cần) & Báo Giá Minh Bạch",
       "points": [
-        "Professional on-site measurement for precise dimensions (if needed)",
-        "A comprehensive design proposal illustrating your future space",
-        "Clearly defined scope of work, project timeline, permit requirements, and material specifications",
-        "A clear and transparent quotation aligned with the proposed design and scope, ensuring full clarity and predictability throughout the process"
+        "Đo đạc chuyên nghiệp tại hiện trường để có kích thước chính xác (nếu cần)",
+        "Một đề xuất thiết kế toàn diện minh họa không gian tương lai của bạn",
+        "Phạm vi công việc, tiến độ dự án, yêu cầu giấy phép và thông số vật liệu được xác định rõ ràng",
+        "Một báo giá rõ ràng và minh bạch phù hợp với thiết kế và phạm vi đề xuất, đảm bảo sự rõ ràng và dự đoán được trong toàn bộ quy trình"
       ],
       "tags": [
         {
           "icon": "ruler",
-          "label": "Precise Measurement"
+          "label": "Đo Đạc Chính Xác"
         },
         {
           "icon": "quote",
-          "label": "Transparent Pricing"
+          "label": "Báo Giá Minh Bạch"
         },
         {
           "icon": "site",
-          "label": "Design Proposal"
+          "label": "Đề Xuất Thiết Kế"
         }
       ],
-      "faqAnswer": "We provide professional on-site measurement when needed and create a comprehensive design proposal for your space. You'll receive a clearly defined scope of work with timeline, permit requirements, and a transparent quotation aligned with the proposed design."
+      "faqAnswer": "Chúng tôi cung cấp đo đạc chuyên nghiệp tại hiện trường khi cần và tạo một đề xuất thiết kế toàn diện cho không gian của bạn. Bạn sẽ nhận được phạm vi công việc được xác định rõ với tiến độ, yêu cầu giấy phép và báo giá minh bạch phù hợp với thiết kế đề xuất."
     },
     "step3": {
-      "title": "Confirmation & Contract",
-      "subtitle": "Finalizing Details & Project Initiation",
+      "title": "Xác Nhận & Hợp Đồng",
+      "subtitle": "Hoàn Thiện Chi Tiết & Khởi Động Dự Án",
       "points": [
-        "Invite clients to showroom for in-person consultation",
-        "Address questions and optimize design details",
-        "Confirm design proposal and material samples",
-        "Finalize the payment schedule and assist with delivery scheduling",
-        "Sign construction contract and collect deposit",
-        "Secure the project start date",
-        "Establish project team: Project Manager, Construction Manager, Coordinator"
+        "Mời khách hàng đến showroom để tư vấn trực tiếp",
+        "Giải đáp thắc mắc và tối ưu hóa chi tiết thiết kế",
+        "Xác nhận đề xuất thiết kế và mẫu vật liệu",
+        "Hoàn thiện lịch thanh toán và hỗ trợ lập lịch giao hàng",
+        "Ký hợp đồng thi công và thu tiền cọc",
+        "Đảm bảo ngày bắt đầu dự án",
+        "Thiết lập đội dự án: Quản Lý Dự Án, Quản Lý Thi Công, Điều Phối Viên"
       ],
       "tags": [
         {
           "icon": "contract",
-          "label": "Contract"
+          "label": "Hợp Đồng"
         },
         {
           "icon": "meeting",
-          "label": "Consultation"
+          "label": "Tư Vấn"
         },
         {
           "icon": "team",
-          "label": "Project Team"
+          "label": "Đội Dự Án"
         }
       ],
-      "faqAnswer": "We invite you to our showroom to review material samples and finalize design details. After confirming the payment schedule and signing the contract, we secure your project start date and establish a dedicated project team including a Project Manager, Construction Manager, and Coordinator."
+      "faqAnswer": "Chúng tôi mời bạn đến showroom của chúng tôi để xem mẫu vật liệu và hoàn thiện chi tiết thiết kế. Sau khi xác nhận lịch thanh toán và ký hợp đồng, chúng tôi đảm bảo ngày bắt đầu dự án và thiết lập một đội dự án tận tâm bao gồm Quản Lý Dự Án, Quản Lý Thi Công và Điều Phối Viên."
     },
     "step4": {
-      "title": "Execution & Management",
-      "subtitle": "Fully Coordinated & Easy Communication",
+      "title": "Thi Công & Quản Lý",
+      "subtitle": "Phối Hợp Toàn Diện & Giao Tiếp Dễ Dàng",
       "points": [
-        "A unified project team managing all aspects of your project",
-        "No direct interaction with workers needed",
-        "Coordinated construction progress to ensure efficiency and consistency",
-        "Assistance with delivery scheduling and on-site coordination",
-        "Consistent quality control throughout the entire construction process",
-        "Fast response and efficient resolution of any issues"
+        "Một đội dự án thống nhất quản lý mọi khía cạnh của dự án bạn",
+        "Không cần tương tác trực tiếp với công nhân",
+        "Tiến độ thi công được phối hợp để đảm bảo hiệu quả và nhất quán",
+        "Hỗ trợ lập lịch giao hàng và điều phối tại hiện trường",
+        "Kiểm soát chất lượng nhất quán trong suốt quá trình thi công",
+        "Phản hồi nhanh và giải quyết hiệu quả mọi vấn đề"
       ],
       "tags": [
         {
           "icon": "management",
-          "label": "Unified Management"
+          "label": "Quản Lý Thống Nhất"
         },
         {
           "icon": "progress",
-          "label": "Progress Tracking"
+          "label": "Theo Dõi Tiến Độ"
         },
         {
           "icon": "response",
-          "label": "Quick Response"
+          "label": "Phản Hồi Nhanh"
         }
       ],
-      "faqAnswer": "A unified project team manages all aspects of your project. You won't need to interact with workers directly. We coordinate construction progress, delivery scheduling, and maintain consistent quality control throughout. Any issues are resolved quickly and efficiently."
+      "faqAnswer": "Một đội dự án thống nhất quản lý mọi khía cạnh dự án của bạn. Bạn sẽ không cần tương tác trực tiếp với công nhân. Chúng tôi điều phối tiến độ thi công, lập lịch giao hàng và duy trì kiểm soát chất lượng nhất quán xuyên suốt. Mọi vấn đề được giải quyết nhanh chóng và hiệu quả."
     },
     "step5": {
-      "title": "Walkthrough & Aftercare",
-      "subtitle": "Final Checks & Lasting Support",
+      "title": "Nghiệm Thu & Hậu Mãi",
+      "subtitle": "Kiểm Tra Cuối & Hỗ Trợ Lâu Dài",
       "points": [
-        "Final walkthrough to confirm all work meets expectations",
-        "New home handover",
-        "Ongoing support for maintenance during warranty period"
+        "Đi nghiệm thu cuối để xác nhận mọi công việc đáp ứng kỳ vọng",
+        "Bàn giao nhà mới",
+        "Hỗ trợ liên tục cho bảo trì trong thời gian bảo hành"
       ],
       "tags": [
         {
           "icon": "inspection",
-          "label": "Strict Inspection"
+          "label": "Kiểm Tra Nghiêm Ngặt"
         },
         {
           "icon": "warranty",
-          "label": "Warranty Service"
+          "label": "Dịch Vụ Bảo Hành"
         },
         {
           "icon": "support",
-          "label": "Ongoing Support"
+          "label": "Hỗ Trợ Liên Tục"
         }
       ],
-      "faqAnswer": "We conduct a final walkthrough with you to confirm all work meets your expectations, then hand over your new home. We provide ongoing support for maintenance during the warranty period."
+      "faqAnswer": "Chúng tôi tiến hành đi nghiệm thu cuối với bạn để xác nhận mọi công việc đáp ứng kỳ vọng của bạn, sau đó bàn giao ngôi nhà mới của bạn. Chúng tôi cung cấp hỗ trợ liên tục cho bảo trì trong thời gian bảo hành."
     },
-    "tagline": "Making renovation truly achievable",
+    "tagline": "Làm cho cải tạo thực sự khả thi",
     "whyMatters": {
-      "title": "Why This Matters",
-      "description": "Reno Stars' structured renovation workflow helps customers know what to expect at every stage. Our clear 5-step process ensures a smooth, stress-free renovation experience from first contact to final handover."
+      "title": "Vì Sao Điều Này Quan Trọng",
+      "description": "Quy trình cải tạo có hệ thống của Reno Stars giúp khách hàng biết những gì có thể mong đợi ở mọi giai đoạn. Quy trình 5 bước rõ ràng của chúng tôi đảm bảo trải nghiệm cải tạo mượt mà, không căng thẳng từ liên hệ đầu tiên đến bàn giao cuối cùng."
     },
     "footer": {
-      "tagline": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "Đơn Giản · Yên Tâm · An Toàn · Đảm Bảo",
       "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
-      "yearsIndustry": "Years Industry Experience",
+      "yearsIndustry": "Năm Kinh Nghiệm Trong Ngành",
       "googleRating": "Google",
-      "warrantyService": "Warranty Service",
-      "scanLinktree": "Scan to connect with us",
+      "warrantyService": "Dịch Vụ Bảo Hành",
+      "scanLinktree": "Quét để kết nối với chúng tôi",
       "website": "reno-stars.com"
     }
   }

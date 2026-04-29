@@ -1,10 +1,10 @@
 {
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "Chuyên môn địa phương trong khu vực của bạn",
+    "freeOnsite": "Tư vấn tại nhà miễn phí",
+    "competitivePricing": "Giá cạnh tranh tại địa phương",
+    "quickResponse": "Thời gian phản hồi nhanh",
+    "experience": "Hơn {years} năm phục vụ Lower Mainland",
+    "licensedInsured": "Có giấy phép và bảo hiểm đầy đủ (CGL + WCB)"
   }
 }

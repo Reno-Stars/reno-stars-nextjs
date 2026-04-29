@@ -1,18 +1,18 @@
 {
   "label": {
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
-    "location": "Location",
-    "contact": "Contact",
-    "quality": "Quality",
-    "whyChooseUs": "Why Choose Us",
-    "verifiedCustomer": "Verified Customer",
-    "new": "NEW",
-    "new2": "New",
-    "businessHours": "Business Hours",
-    "businessHoursShort": "Mon–Fri 8AM–6PM, Sat 9AM–4PM",
-    "businessHoursDetail": "Monday - Friday: 8:00 AM - 6:00 PM\nSaturday: 9:00 AM - 4:00 PM\nSunday: Closed",
-    "featured": "Featured"
+    "phone": "تلفن",
+    "email": "ایمیل",
+    "address": "آدرس",
+    "location": "موقعیت",
+    "contact": "تماس",
+    "quality": "کیفیت",
+    "whyChooseUs": "چرا ما را انتخاب کنید",
+    "verifiedCustomer": "مشتری تأییدشده",
+    "new": "جدید",
+    "new2": "جدید",
+    "businessHours": "ساعات کاری",
+    "businessHoursShort": "دوشنبه تا جمعه ۸ صبح تا ۶ عصر، شنبه ۹ صبح تا ۴ عصر",
+    "businessHoursDetail": "دوشنبه تا جمعه: ۸:۰۰ صبح تا ۶:۰۰ عصر\nشنبه: ۹:۰۰ صبح تا ۴:۰۰ عصر\nیکشنبه: تعطیل",
+    "featured": "ویژه"
   }
 }

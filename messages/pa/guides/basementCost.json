@@ -1,0 +1,100 @@
+{
+  "basementCost": {
+    "breadcrumb": "Basement Renovation Cost",
+    "hero": {
+      "title": "Basement Renovation Cost in Vancouver BC (2026)",
+      "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope, from basic finishing to full legal suite conversions."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "sqft": "Cost per Sq Ft",
+      "sqftValue": "$35 – $120/sq ft",
+      "timeline": "Typical Timeline",
+      "timelineValue": "6–12 weeks"
+    },
+    "tiers": {
+      "title": "Basement Renovation Cost by Tier",
+      "subtitle": "Typical pricing for basement projects across Greater Vancouver",
+      "budget": {
+        "title": "Basic Finishing",
+        "description": "Framing, insulation, drywall, basic flooring, paint, and standard lighting. Suitable for a recreation room, home office, or storage area without plumbing additions."
+      },
+      "midRange": {
+        "title": "Mid-Range Renovation",
+        "description": "Full finishing with a bathroom addition, upgraded flooring (vinyl plank or laminate), pot lights, built-in storage, and a wet bar or kitchenette. The most popular scope for family homes."
+      },
+      "highEnd": {
+        "title": "Legal Suite Conversion",
+        "description": "Full secondary suite with separate entrance, kitchen, bathroom, bedroom with egress windows, fire separation, and all code-required features. Includes permits and inspections for rental legalization."
+      }
+    },
+    "factors": {
+      "title": "What Affects Your Basement Renovation Cost?",
+      "subtitle": "Six key factors that determine your final price",
+      "waterproofing": {
+        "title": "Waterproofing & Moisture Control",
+        "description": "Vancouver's wet climate makes waterproofing critical. Interior drainage systems run $3,000–8,000, while exterior waterproofing can cost $10,000–25,000. Sump pump installation adds $1,500–3,000."
+      },
+      "framing": {
+        "title": "Framing & Insulation",
+        "description": "Steel or wood framing with insulation typically costs $8–15 per square foot. Older Vancouver homes may need additional vapor barriers and insulation upgrades to meet current building code."
+      },
+      "plumbing": {
+        "title": "Plumbing (Bathroom/Kitchen)",
+        "description": "Adding a basement bathroom costs $8,000–15,000 depending on whether you need to break concrete for drain lines. A full kitchen installation adds $12,000–25,000 including rough-in and fixtures."
+      },
+      "electrical": {
+        "title": "Electrical & HVAC",
+        "description": "Basement electrical typically runs $3,000–8,000 for a standard layout. Many older homes need panel upgrades ($2,000–4,000). Extending HVAC ductwork adds $2,000–5,000."
+      },
+      "egress": {
+        "title": "Egress Windows & Separate Entrance",
+        "description": "Building code requires egress windows in bedrooms ($2,000–5,000 each to install). Adding a separate exterior entrance for a suite costs $8,000–15,000 including excavation and concrete work."
+      },
+      "permits": {
+        "title": "Permits & Code Compliance",
+        "description": "Building permits for basement finishing in Metro Vancouver cost $500–2,000. Legal suite conversions require additional inspections. Some municipalities offer grants for adding rental suites."
+      }
+    },
+    "realProjects": {
+      "title": "Related Whole-House Renovation Projects",
+      "subtitle": "Browse {count} completed renovation projects across Greater Vancouver, many include basement work"
+    },
+    "tips": {
+      "title": "Money-Saving Tips for Your Basement Renovation",
+      "tip1": {
+        "title": "Start with Waterproofing",
+        "description": "Address any moisture issues before finishing walls. Fixing water problems after drywall is installed costs 3–5x more than doing it upfront."
+      },
+      "tip2": {
+        "title": "Plan Plumbing Near Existing Lines",
+        "description": "Locating your bathroom or kitchen near existing drain stacks saves $3,000–8,000 by avoiding concrete cutting and new rough-ins."
+      },
+      "tip3": {
+        "title": "Consider a Legal Suite for ROI",
+        "description": "A legal secondary suite in Vancouver can generate $1,500–2,500/month in rental income. The renovation often pays for itself in 3–5 years."
+      },
+      "tip4": {
+        "title": "Choose LVP Flooring",
+        "description": "Luxury vinyl plank is the best basement flooring choice. Waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
+      }
+    },
+    "cta": {
+      "heading": "Get Your Free Basement Renovation Quote",
+      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+    },
+    "faq": {
+      "q1": "How much does a basement renovation cost in Vancouver?",
+      "a1": "Basement renovation costs in Vancouver typically range from $30,000 for basic finishing to $120,000+ for a full legal suite conversion. The average cost is around $55,000 for a mid-range renovation with a bathroom addition and quality finishes. Cost per square foot ranges from $35 to $120 depending on the scope.",
+      "q2": "How long does a basement renovation take in Vancouver?",
+      "a2": "Most basement renovations in Vancouver take 6 to 12 weeks. Basic finishing (framing, drywall, flooring) can be done in 6–8 weeks. A full legal suite conversion with permits, plumbing, electrical, and inspections typically takes 10–14 weeks.",
+      "q3": "Do I need a permit for a basement renovation in Vancouver?",
+      "a3": "Yes, most basement renovations require building permits in Metro Vancouver. Any work involving framing, electrical, plumbing, or egress modifications requires a permit. Legal suite conversions need additional zoning approval. Permit costs range from $500 to $2,000 depending on the municipality.",
+      "q4": "Is a basement suite a good investment in Vancouver?",
+      "a4": "Yes, adding a legal secondary suite is one of the best renovation investments in Vancouver. A suite can generate $1,500–2,500 per month in rental income. With renovation costs of $80,000–120,000, the investment typically pays for itself in 3–5 years while also increasing your property value by 10–20%.",
+      "q5": "What is the best flooring for a basement renovation?",
+      "a5": "Luxury vinyl plank (LVP) is the most recommended basement flooring in Vancouver due to its waterproof properties and durability. It costs $4–8 per square foot installed and handles moisture better than hardwood or laminate. Engineered hardwood and ceramic tile are also good options depending on your budget and style preferences."
+    }
+  }
+}

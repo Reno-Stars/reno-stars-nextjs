@@ -1,27 +1,27 @@
 {
   "stats": {
-    "yearsExperience": "Years Experience",
+    "yearsExperience": "Taon ng Karanasan",
     "teamMembers": "Team Members",
     "expertTeamMembers": "Expert Team Members",
     "expertTeam": "Expert Team",
     "expertCraftsmen": "Expert Craftsmen",
     "liabilityCoverage": "$5M CGL Insurance",
-    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Up to 3 Years Warranty",
+    "fullCoverage": "$5M CGL Insurance · Active WCB Coverage · Hanggang 3 Taong Warranty",
     "wcbCoverage": "Active WCB Coverage",
-    "projectsCompleted": "Projects Completed",
-    "projectsDone": "Projects Done",
-    "happyClients": "Happy Clients",
+    "projectsCompleted": "Natapos na Projects",
+    "projectsDone": "Tapos na Projects",
+    "happyClients": "Masisiyahang Kliyente",
     "satisfaction": "Satisfaction",
     "satisfactionRate": "Satisfaction Rate",
     "clientSatisfaction": "Client Satisfaction",
     "support": "Support",
     "quality": "Quality",
     "projects": "Projects",
-    "years": "Years",
+    "years": "Taon",
     "averageRating": "Average Rating",
-    "areasServed": "Areas Served",
+    "areasServed": "Sinilbihang Lugar",
     "rating": "Rating",
     "srStats": "Company Statistics",
-    "srTrustBadges": "Trust Badges and Certifications"
+    "srTrustBadges": "Trust Badges at Certifications"
   }
 }

@@ -1,0 +1,99 @@
+{
+  "kitchenCost": {
+    "breadcrumb": "Chi Phí Cải Tạo Phòng Bếp",
+    "hero": {
+      "title": "Chi Phí Cải Tạo Phòng Bếp Tại Vancouver BC (2026)",
+      "subtitle": "Báo giá thực từ các dự án cải tạo phòng bếp đã hoàn thành khắp Greater Vancouver. Mọi con số bên dưới đến từ các dự án thực — không phải ước tính của ngành."
+    },
+    "stats": {
+      "avgCost": "Chi Phí Trung Bình",
+      "range": "Khoảng Giá",
+      "projects": "Dự Án Đã Hoàn Thành",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "3–6 tuần"
+    },
+    "tiers": {
+      "title": "Chi Phí Cải Tạo Phòng Bếp Theo Hạng Mức",
+      "subtitle": "Dựa trên các dự án đã hoàn thành của chúng tôi khắp Greater Vancouver",
+      "budget": {
+        "title": "Tiết Kiệm",
+        "description": "Sơn lại tủ hoặc tủ có sẵn, mặt bàn laminate, ốp tường cơ bản và phụ kiện tiêu chuẩn. Lý tưởng cho căn hộ và nhà liền kề muốn diện mạo mới mà không thay đổi kết cấu."
+      },
+      "midRange": {
+        "title": "Tầm Trung",
+        "description": "Tủ đặt đóng riêng hoặc bán đóng theo yêu cầu, mặt bàn quartz, ốp tường gạch, hệ thống chiếu sáng nâng cấp và sàn mới. Lựa chọn phổ biến nhất cho nhà gia đình."
+      },
+      "highEnd": {
+        "title": "Cao Cấp",
+        "description": "Tủ đặt đóng hoàn toàn theo yêu cầu, mặt bàn đá cao cấp, đảo bếp dạng thác nước, thiết bị cao cấp, thay đổi kết cấu và hoàn thiện theo phong cách thiết kế. Dành cho chủ nhà muốn những gì tốt nhất."
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Phòng Bếp?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "cabinetry": {
+        "title": "Tủ Bếp (30–40% ngân sách)",
+        "description": "Yếu tố tốn kém nhất. Tủ có sẵn bắt đầu từ khoảng $150/foot dài, trong khi các tùy chọn đặt đóng có thể vượt $800/foot dài. Tủ Shaker màu trắng là lựa chọn phổ biến nhất tại Vancouver."
+      },
+      "countertops": {
+        "title": "Mặt Bàn (10–15% ngân sách)",
+        "description": "Laminate bắt đầu từ $30/sq ft, quartz từ $80–150/sq ft, và đá tự nhiên có thể vượt $200/sq ft. Cạnh đảo dạng thác nước thêm $500–2,000 vào tổng chi phí."
+      },
+      "layout": {
+        "title": "Thay Đổi Bố Cục",
+        "description": "Di chuyển đường ống, đường khí gas hoặc dỡ tường làm tăng chi phí đáng kể. Thay đổi bố cục có thể thêm $3,000–15,000 tùy yêu cầu kết cấu và giấy phép."
+      },
+      "appliances": {
+        "title": "Thiết Bị",
+        "description": "Gói tiết kiệm bắt đầu từ $3,000–5,000. Thương hiệu tầm trung như Bosch hoặc KitchenAid dao động $8,000–15,000. Thương hiệu cao cấp như Sub-Zero hoặc Wolf có thể vượt $30,000."
+      },
+      "plumbing": {
+        "title": "Đường Nước & Điện",
+        "description": "Di chuyển đường ống hoặc thêm mạch điện thêm $2,000–8,000. Nhà cũ tại Vancouver có thể cần nâng cấp tủ điện để hỗ trợ thiết bị hiện đại."
+      },
+      "permits": {
+        "title": "Giấy Phép & Kiểm Tra",
+        "description": "Giấy phép xây dựng của thành phố Vancouver cho cải tạo phòng bếp thường có giá $200–$1,000. Bắt buộc khi thay đổi đường ống, điện, gas hoặc các yếu tố kết cấu."
+      }
+    },
+    "realProjects": {
+      "title": "Dự Án Cải Tạo Phòng Bếp Thực",
+      "subtitle": "Duyệt qua {count} dự án phòng bếp đã hoàn thành với ngân sách và tiến độ thực"
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cải Tạo Phòng Bếp",
+      "tip1": {
+        "title": "Giữ Bố Cục Hiện Tại",
+        "description": "Tránh di chuyển đường nước và đường gas có thể tiết kiệm $5,000–15,000. Làm việc với khu vực bếp hiện có khi có thể."
+      },
+      "tip2": {
+        "title": "Chọn Quartz Thay Vì Đá Tự Nhiên",
+        "description": "Mặt bàn quartz bền hơn, không cần phủ kín và rẻ hơn 20–40% so với granite hoặc cẩm thạch. Hơn nữa, chúng trông tuyệt đẹp."
+      },
+      "tip3": {
+        "title": "Tủ Bán Đặt Đóng",
+        "description": "Tủ bán đặt đóng có vẻ ngoài như tủ đặt đóng hoàn toàn với 40–60% giá. Bạn có thể chọn kiểu cánh, màu sắc và cấu hình."
+      },
+      "tip4": {
+        "title": "Lập Kế Hoạch Vào Mùa Thấp Điểm",
+        "description": "Các tháng mùa đông (Tháng 11–Tháng 2) là mùa thấp điểm cho các nhà cải tạo tại Vancouver. Bạn có thể nhận được giá tốt hơn và tiến độ nhanh hơn nếu bắt đầu vào lúc đó."
+      }
+    },
+    "cta": {
+      "heading": "Nhận Báo Giá Cải Tạo Phòng Bếp Miễn Phí",
+      "subtitle": "Hãy cho chúng tôi biết về dự án của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."
+    },
+    "faq": {
+      "q1": "Cải tạo phòng bếp tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Chi phí cải tạo phòng bếp tại Vancouver thường dao động từ $15,000 đến $72,000+ dựa trên các dự án đã hoàn thành của chúng tôi. Cải tạo tiết kiệm (cập nhật tủ, mặt bàn cơ bản) bắt đầu khoảng $15,000–$27,000, cải tạo tầm trung với tủ đặt đóng và mặt bàn quartz dao động $28,000–$38,000, và biến đổi cao cấp với vật liệu cao cấp có thể vượt $40,000.",
+      "q2": "Cải tạo phòng bếp tại Vancouver mất bao lâu?",
+      "a2": "Hầu hết các dự án cải tạo phòng bếp tại Vancouver mất 3 đến 6 tuần từ tháo dỡ đến hoàn thành. Các nâng cấp thẩm mỹ đơn giản có thể hoàn thành trong 3–4 tuần, trong khi cải tạo phức tạp liên quan đến thay đổi bố cục, tủ đặt đóng hoặc công việc kết cấu có thể mất 8–10 tuần.",
+      "q3": "Tôi có cần giấy phép cho cải tạo phòng bếp tại Vancouver không?",
+      "a3": "Bạn cần giấy phép xây dựng của thành phố Vancouver nếu cải tạo của bạn liên quan đến thay đổi đường nước, điện, đường gas hoặc các yếu tố kết cấu như dỡ tường. Các nâng cấp thẩm mỹ như tủ mới, mặt bàn và ốp tường thường không yêu cầu giấy phép. Chi phí giấy phép dao động từ $200 đến $1,000.",
+      "q4": "Vật liệu mặt bàn nào tốt nhất cho cải tạo phòng bếp?",
+      "a4": "Quartz là lựa chọn mặt bàn phổ biến nhất trong các dự án cải tạo phòng bếp tại Vancouver của chúng tôi. Nó mang lại độ bền tuyệt vời, không cần phủ kín (không như granite), chống bẩn và có nhiều màu sắc và họa tiết. Giá dao động từ $80 đến $150 mỗi sq ft đã lắp đặt.",
+      "q5": "Tôi có thể cải tạo phòng bếp trong khi sống ở nhà không?",
+      "a5": "Có, hầu hết khách hàng của chúng tôi tiếp tục sống trong nhà trong suốt thời gian cải tạo phòng bếp. Chúng tôi giúp thiết lập một khu vực bếp tạm thời và sắp xếp công việc để giảm thiểu gián đoạn. Hãy chuẩn bị tinh thần không có phòng bếp hoạt động trong 2–4 tuần tùy phạm vi công việc."
+    }
+  }
+}

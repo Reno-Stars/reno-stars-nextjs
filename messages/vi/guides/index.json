@@ -1,0 +1,42 @@
+{
+  "index": {
+    "hero": {
+      "title": "Hướng Dẫn Chi Phí Cải Tạo",
+      "subtitle": "Báo giá trung thực dựa trên các dự án thực chúng tôi đã hoàn thành khắp Greater Vancouver. Không phải đoán mò. Chỉ có dữ liệu thực."
+    },
+    "kitchen": {
+      "title": "Chi Phí Cải Tạo Phòng Bếp",
+      "description": "Phân tích đầy đủ chi phí cải tạo phòng bếp tại Vancouver, từ những nâng cấp tiết kiệm đến những biến đổi cao cấp."
+    },
+    "bathroom": {
+      "title": "Chi Phí Cải Tạo Phòng Tắm",
+      "description": "Phân tích đầy đủ chi phí cải tạo phòng tắm tại khu vực Greater Vancouver, từ làm mới một phòng tắm đến các dự án nhiều phòng tắm."
+    },
+    "wholeHouse": {
+      "title": "Chi Phí Cải Tạo Toàn Bộ Nhà",
+      "description": "Báo giá cải tạo toàn nhà bao gồm phòng bếp, phòng tắm, sàn và công việc kết cấu."
+    },
+    "comingSoon": "Sắp Có",
+    "readGuide": "Đọc Hướng Dẫn",
+    "cta": {
+      "heading": "Sẵn Sàng Bắt Đầu Cải Tạo?",
+      "subtitle": "Nhận tư vấn miễn phí và báo giá chính xác dựa trên nhu cầu cụ thể của dự án bạn."
+    },
+    "basement": {
+      "title": "Chi Phí Cải Tạo Tầng Hầm",
+      "description": "Phân tích đầy đủ chi phí cải tạo tầng hầm tại khu vực Greater Vancouver, từ hoàn thiện cơ bản đến chuyển đổi thành căn hộ hợp pháp đầy đủ."
+    },
+    "commercial": {
+      "title": "Chi Phí Cải Tạo Thương Mại",
+      "description": "Phân tích đầy đủ chi phí cải tạo thương mại tại Greater Vancouver, từ làm mới văn phòng nhỏ đến xây dựng nhà hàng đầy đủ."
+    },
+    "cabinet": {
+      "title": "Chi Phí Sơn Lại Tủ",
+      "description": "Phân tích đầy đủ chi phí sơn lại tủ, thay mặt tủ và thay tủ tại Greater Vancouver."
+    },
+    "basementSuite": {
+      "title": "Chi Phí Căn Hộ Tầng Hầm",
+      "description": "Chi phí chuyển đổi căn hộ tầng hầm hợp pháp, phân tích ROI và quy định riêng của từng đô thị tại Metro Vancouver."
+    }
+  }
+}

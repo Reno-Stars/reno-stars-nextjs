@@ -2,10 +2,10 @@
   "nearMe": {
     "breadcrumb": "Renovation Near Me",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "Naglilingkod sa Metro Vancouver mula 2020",
+      "h1": "Naghahanap ng renovation company malapit sa iyo?",
+      "subtitle": "Naglilingkod ang Reno Stars sa Vancouver at 14 Metro Vancouver cities na may lisensyado at insured na home renovation crews. Kitchen, bathroom, basement, at whole-house remodels — isang local team mula design hanggang handover, hindi marketplace.",
+      "ctaPrimary": "Kunin ang aking libreng quote"
     },
     "trust": {
       "reviews": {
@@ -18,7 +18,7 @@
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "Taon sa Vancouver"
       },
       "coverage": {
         "stat": "14",
@@ -26,80 +26,80 @@
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "Renovation service areas malapit sa iyo",
+      "subtitle": "Piliin ang iyong neighborhood para sa local project photos, price ranges, at crews na nagtatrabaho na sa iyong lugar."
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "Ano ang aming nire-renovate malapit sa iyo",
+      "learnMore": "Alamin pa",
       "kitchen": {
         "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Mula budget-friendly refresh hanggang full custom. Karaniwang 4-8 na linggo, $25K-$90K."
       },
       "bathroom": {
         "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "desc": "Tile walls, Schluter waterproofing, tiled showers o tub-to-shower conversions, vanities, fixtures. 3-6 na linggo karaniwan, $15K-$45K."
       },
       "wholeHouse": {
         "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, minsan structural. 2-6 na buwan, $80K-$400K+."
       },
       "basement": {
         "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach sa Vancouver, Burnaby, Richmond at iba pa."
       },
       "cabinet": {
         "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "desc": "Mas murang alternative sa full cabinet replacement — bagong doors, hardware, at quartz para sa parehong footprint. 1-2 linggo, $8K-$20K."
       },
       "commercial": {
         "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption sa buong Metro Vancouver."
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "Bakit piliin ang Reno Stars para sa renovation malapit sa iyo",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "Isang local team — hindi marketplace",
+        "body": "Hindi tulad ng directory sites na pumapasa sa iyo sa mga estranghero, ang bawat Reno Stars project ay pinapatakbo ng aming sariling crew. Parehong PM mula quote hanggang handover."
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "Lisensyado, insured, WCB-covered",
+        "body": "$5M liability insurance at active na WCB coverage sa bawat trabaho. Ipinapakita namin ang certificates bago magsimula ang trabaho."
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "Transparent na presyo, walang sorpresa",
+        "body": "Itemized written quotes na may totoong material specs. Change orders lang kapag inaprubahan mo. 3-taong workmanship warranty."
       },
       "point4": {
         "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "body": "Nagsasalita ng English at Mandarin ang mga project manager at sales. Mga kontrata, change orders, at update sa wikang gusto mo."
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "Totoong local portfolio malapit sa iyo",
+        "body": "Daan-daang projects sa Vancouver, Richmond, Burnaby, Surrey, Coquitlam, at iba pa. Magpapakita kami ng photos at references mula sa iyong neighborhood."
       }
     },
     "faq": {
       "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "q1": "Paano ako makakahanap ng pinagkakatiwalaang renovation company malapit sa akin sa Vancouver?",
+      "a1": "Tingnan ang tatlong bagay: lisensya at insurance (humingi ng certificate, hindi pangako), totoong Google reviews na maraming volume (100+ ang makahulugan, 10 ay hindi), at portfolio mula sa iyong neighborhood. Ang Reno Stars ay may 70+ five-star Google reviews, $5M liability insurance, WCB coverage, at project portfolio sa bawat Metro Vancouver city na sinisilbihan namin.",
+      "q2": "Magkano ang cost ng bathroom o kitchen renovation malapit sa akin?",
+      "a2": "Sa Metro Vancouver, ang bathroom renovation ay karaniwang $15K-$45K at ang kitchen ay $25K-$90K. Depende sa eksaktong presyo ang square footage, finish level, at kung may walls na lumilipat. Ang bawat Reno Stars quote ay itemized — labour, materyales, permits — para makita mo kung saan napupunta ang bawat dolyar.",
+      "q3": "Gaano katagal ang renovation malapit sa akin?",
+      "a3": "Bathrooms: 3-6 na linggo mula demo hanggang handover. Kitchens: 4-8 na linggo. Whole-house: 2-6 na buwan depende sa scope. Cabinet refacing: 1-2 linggo. Bibigyan ka namin ng week-by-week schedule sa contract signing at text updates kapag may milestone.",
+      "q4": "Hinahawakan ba ninyo ang permits para sa renovation malapit sa akin?",
+      "a4": "Oo. Para sa anumang trabaho na naglilipat ng walls, plumbing, o electrical, kumukuha kami ng permit sa angkop na municipality (Vancouver, Richmond, Burnaby, Surrey, atbp.). Ang cosmetic work tulad ng paint, flooring, at cabinet refacing ay karaniwang hindi nangangailangan ng permit — sasabihin namin sa iyo ang totoong sagot bago mag-quote.",
+      "q5": "Nag-aalok ba kayo ng libreng estimate malapit sa akin?",
+      "a5": "Oo — libreng in-home consultation at written quote sa lahat ng 14 Metro Vancouver cities na sinisilbihan namin. Susukatin namin, pag-uusapan ang materyales, dadaanan ang scope, at magpapadala ng itemized quote sa loob ng 2-3 business days. Walang deposit kailangan para mag-quote.",
+      "q6": "Anong neighborhood ang sinisilbihan ninyo?",
+      "a6": "Nakabase kami sa Richmond BC at naglilingkod sa Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, at White Rock. Kung nasa labas ka ng radius na ito, tanungin lang — minsan kami ay byahe para sa whole-house projects."
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "Handa nang humanap ng renovation team malapit sa iyo?",
+      "subtitle": "Libreng in-home consultation, written itemized quote sa loob ng 2-3 business days. Walang deposit kailangan para mag-quote.",
+      "quote": "Kunin ang aking libreng quote",
+      "call": "Tumawag sa 778-960-7999"
     }
   }
 }

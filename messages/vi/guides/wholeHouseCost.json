@@ -1,0 +1,127 @@
+{
+  "wholeHouseCost": {
+    "breadcrumb": "Chi Phí Cải Tạo Toàn Bộ Nhà",
+    "hero": {
+      "title": "Chi Phí Cải Tạo Toàn Bộ Nhà Tại Vancouver BC (2026)",
+      "subtitle": "Báo giá thực từ các dự án cải tạo toàn nhà đã hoàn thành khắp Greater Vancouver. Từ làm mới căn hộ đến biến đổi nhà toàn bộ. Mọi con số đến từ các dự án thực."
+    },
+    "stats": {
+      "avgCost": "Chi Phí Trung Bình",
+      "range": "Khoảng Giá",
+      "projects": "Dự Án Đã Hoàn Thành",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "3–8 tuần"
+    },
+    "tiers": {
+      "title": "Chi Phí Cải Tạo Toàn Bộ Nhà Theo Hạng Mức",
+      "subtitle": "Dựa trên các dự án đã hoàn thành của chúng tôi khắp Greater Vancouver",
+      "budget": {
+        "title": "Làm Mới Thẩm Mỹ",
+        "description": "Sơn toàn bộ, sàn mới, đèn chiếu sáng cập nhật, làm mới phòng tắm (tủ lavabo, gương, phụ kiện) và nâng cấp phòng bếp nhỏ. Lý tưởng cho căn hộ và bất động sản cho thuê cần cập nhật hiện đại mà không có công việc kết cấu."
+      },
+      "midRange": {
+        "title": "Cải Tạo Toàn Diện",
+        "description": "Cải tạo phòng bếp toàn bộ với tủ và mặt bàn mới, sửa chữa phòng tắm, sàn mới toàn bộ, sơn mới, phụ kiện điện và nước cập nhật, và đèn chiếu sáng mới. Lựa chọn phổ biến nhất cho chủ nhà có kế hoạch ở dài hạn."
+      },
+      "highEnd": {
+        "title": "Biến Đổi Cao Cấp",
+        "description": "Cải tạo dỡ bỏ toàn bộ bao gồm thay đổi kết cấu, bố cục mở, phòng bếp và phòng tắm cao cấp, đồ gỗ đặt đóng, sàn cao cấp, tích hợp nhà thông minh và hoàn thiện theo phong cách thiết kế. Dành cho chủ nhà muốn một ngôi nhà thực sự đặt riêng."
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Toàn Bộ Nhà?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "scope": {
+        "title": "Phạm Vi & Diện Tích",
+        "description": "Yếu tố lớn nhất. Làm mới căn hộ 600 sq ft chi phí thấp hơn nhiều so với cải tạo dỡ bỏ nhà 2,500 sq ft. Xác định những thứ phải có và những thứ tùy chọn từ sớm để kiểm soát ngân sách."
+      },
+      "kitchen": {
+        "title": "Phòng Bếp (30–40% tổng ngân sách)",
+        "description": "Phòng bếp thường là phòng đắt tiền nhất. Tủ đặt đóng, mặt bàn quartz và nâng cấp thiết bị có thể tốn $15,000–$72,000 chỉ riêng. Xem hướng dẫn chi phí phòng bếp của chúng tôi để biết chi tiết."
+      },
+      "bathrooms": {
+        "title": "Phòng Tắm (15–25% tổng ngân sách)",
+        "description": "Mỗi cải tạo phòng tắm thêm $10,000–$40,000 tùy kích thước và hoàn thiện. Chống thấm, ốp gạch và chất lượng phụ kiện ảnh hưởng đến chi phí. Nhà nhiều phòng tắm tiết kiệm đáng kể trên mỗi đơn vị."
+      },
+      "flooring": {
+        "title": "Sàn (10–15% tổng ngân sách)",
+        "description": "Sàn gỗ kỹ thuật dao động $8–$15/sq ft đã lắp đặt. Sàn vinyl cao cấp (LVP) là lựa chọn tiết kiệm với $5–$10/sq ft. Gạch cho khu vực ướt thêm $12–$25/sq ft."
+      },
+      "structural": {
+        "title": "Thay Đổi Kết Cấu",
+        "description": "Dỡ tường, thêm cửa sổ hoặc cấu hình lại bố cục thêm $5,000–$25,000+. Dỡ tường chịu lực yêu cầu báo cáo kỹ thuật và giấy phép. Chuyển đổi sang bố cục mở phổ biến nhưng tốn kém."
+      },
+      "permits": {
+        "title": "Giấy Phép & Phí Chuyên Môn",
+        "description": "Giấy phép xây dựng tại Metro Vancouver thường có giá $500–$2,500 cho cải tạo toàn nhà. Dự trù thêm $2,000–$5,000 cho bản vẽ kiến trúc, báo cáo kỹ thuật và kiểm tra."
+      }
+    },
+    "realProjects": {
+      "title": "Dự Án Cải Tạo Toàn Bộ Nhà Thực",
+      "subtitle": "Duyệt qua {count} dự án toàn nhà đã hoàn thành với ngân sách và tiến độ thực"
+    },
+    "included": {
+      "title": "Cải Tạo Toàn Bộ Nhà Thường Bao Gồm Những Gì",
+      "subtitle": "Một dự án cải tạo toàn diện chạm đến mọi phòng và hệ thống",
+      "item1": {
+        "title": "Cải Tạo Phòng Bếp",
+        "description": "Tủ mới, mặt bàn, ốp tường, bồn rửa, vòi và kết nối thiết bị cập nhật. Có sẵn thay đổi bố cục cho hạng mức tầm trung và cao cấp."
+      },
+      "item2": {
+        "title": "Sửa Chữa Phòng Tắm",
+        "description": "Tủ lavabo mới, toilet, vòi sen hoặc bồn tắm, ốp gạch, chống thấm và phụ kiện đường ống cập nhật. Mỗi phòng tắm được làm mới hoặc xây lại hoàn toàn."
+      },
+      "item3": {
+        "title": "Sàn Toàn Nhà",
+        "description": "Sàn mới ở mọi không gian sinh hoạt: gỗ cứng, gỗ kỹ thuật hoặc LVP ở khu vực chính; gạch ở phòng tắm và lối vào."
+      },
+      "item4": {
+        "title": "Sơn & Trang Trí",
+        "description": "Sơn mới trên mọi tường và trần, viền chân tường mới hoặc sơn lại, viền cửa và viền trần khi áp dụng."
+      },
+      "item5": {
+        "title": "Điện & Chiếu Sáng",
+        "description": "Đèn chiếu sáng cập nhật, ổ cắm bổ sung khi cần, công tắc dimmer và nâng cấp tủ điện cho nhà cũ."
+      },
+      "item6": {
+        "title": "Cửa & Phụ Kiện",
+        "description": "Cửa nội thất mới, tay nắm và bản lề cập nhật, tổ chức tủ quần áo và thay cửa ngoài khi cần."
+      }
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cải Tạo Toàn Bộ Nhà",
+      "tip1": {
+        "title": "Ưu Tiên và Chia Giai Đoạn",
+        "description": "Bạn không phải làm tất cả cùng lúc. Xử lý phòng bếp và phòng tắm trước (ROI cao nhất), sau đó giải quyết các nâng cấp thẩm mỹ ở giai đoạn sau. Điều này trải đều chi phí và cho phép bạn sống trong nhà trong khi cải tạo."
+      },
+      "tip2": {
+        "title": "Giữ Đường Ống Ở Vị Trí Hiện Tại",
+        "description": "Di chuyển đường ống là một trong những thay đổi đắt tiền nhất. Giữ phòng bếp và phòng tắm ở vị trí hiện tại tiết kiệm $5,000–$15,000 chi phí đường ống và kết cấu."
+      },
+      "tip3": {
+        "title": "Chọn Vật Liệu Một Cách Chiến Lược",
+        "description": "Chi mạnh vào các bề mặt tác động cao, hay tiếp xúc như mặt bàn phòng bếp và gạch phòng tắm. Tiết kiệm ở các khu vực như sàn phòng ngủ (LVP đẹp với một nửa giá gỗ cứng) và sơn nội thất (sơn tầm trung gần như tốt như cao cấp)."
+      },
+      "tip4": {
+        "title": "Gói Lại Để Có Giá Tốt Hơn",
+        "description": "Cải tạo toàn nhà thường có chi phí trên mỗi phòng thấp hơn so với làm từng phòng riêng. Nhà thầu cung cấp giá tốt hơn khi họ có thể sắp xếp đội thợ hiệu quả cho dự án lớn hơn."
+      }
+    },
+    "faq": {
+      "q1": "Cải tạo toàn bộ nhà tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Chi phí cải tạo toàn bộ nhà tại Vancouver thường dao động từ $50,000 đến $200,000+ dựa trên các dự án đã hoàn thành của chúng tôi. Làm mới thẩm mỹ (sơn, sàn, phụ kiện) bắt đầu khoảng $50,000–$80,000, cải tạo toàn diện với phòng bếp và phòng tắm mới dao động $80,000–$120,000, và biến đổi cao cấp với thay đổi kết cấu có thể vượt $120,000.",
+      "q2": "Cải tạo toàn bộ nhà mất bao lâu?",
+      "a2": "Hầu hết các dự án cải tạo toàn bộ nhà mất 3 đến 8 tuần tùy phạm vi. Làm mới thẩm mỹ (sơn, sàn, phụ kiện) có thể hoàn thành trong 3–4 tuần. Cải tạo toàn diện bao gồm phòng bếp và phòng tắm thường mất 5–8 tuần. Dự án có thay đổi kết cấu hoặc giấy phép có thể mất 10–14 tuần.",
+      "q3": "Tôi có thể sống trong nhà trong khi cải tạo toàn bộ không?",
+      "a3": "Tùy phạm vi. Đối với làm mới thẩm mỹ, bạn thường có thể ở lại trong nhà khi công việc được làm từng phòng. Đối với cải tạo toàn diện liên quan đến tháo dỡ phòng bếp và phòng tắm, chúng tôi khuyến nghị sắp xếp chỗ ở tạm thời ít nhất 2–4 tuần trong các giai đoạn gây gián đoạn nhất.",
+      "q4": "Điều gì mang lại lợi tức đầu tư tốt nhất cho cải tạo toàn bộ nhà?",
+      "a4": "Cải tạo phòng bếp và phòng tắm liên tục mang lại ROI cao nhất trên thị trường Vancouver. Sàn cập nhật và sơn mới mang lại giá trị tuyệt vời với chi phí tương đối thấp. Bố cục mở phổ biến với người mua nhưng yêu cầu công việc kết cấu làm tăng chi phí đáng kể.",
+      "q5": "Tôi có cần giấy phép cho cải tạo toàn bộ nhà tại Vancouver không?",
+      "a5": "Có, hầu hết các dự án cải tạo toàn bộ nhà yêu cầu giấy phép. Bất kỳ công việc nào liên quan đến đường ống, điện, gas hoặc thay đổi kết cấu đều cần giấy phép xây dựng của thành phố Vancouver. Công việc thẩm mỹ thuần túy (sơn, sàn, tủ) thường không yêu cầu giấy phép. Dự trù $500–$2,500 cho phí giấy phép."
+    },
+    "cta": {
+      "heading": "Sẵn Sàng Biến Đổi Toàn Bộ Ngôi Nhà Của Bạn?",
+      "subtitle": "Nhận tư vấn miễn phí và báo giá chi tiết cho cải tạo toàn bộ nhà của bạn. Chúng tôi sẽ đi qua mọi phòng và lập kế hoạch phù hợp với ngân sách của bạn."
+    }
+  }
+}

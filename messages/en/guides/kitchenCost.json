@@ -1,0 +1,99 @@
+{
+  "kitchenCost": {
+    "breadcrumb": "Kitchen Renovation Cost",
+    "hero": {
+      "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
+      "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "projects": "Projects Completed",
+      "timeline": "Typical Timeline",
+      "timelineValue": "3–6 weeks"
+    },
+    "tiers": {
+      "title": "Kitchen Renovation Cost by Tier",
+      "subtitle": "Based on our completed projects across Greater Vancouver",
+      "budget": {
+        "title": "Budget-Friendly",
+        "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+      },
+      "midRange": {
+        "title": "Mid-Range",
+        "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+      },
+      "highEnd": {
+        "title": "High-End",
+        "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+      }
+    },
+    "factors": {
+      "title": "What Affects Your Kitchen Renovation Cost?",
+      "subtitle": "Six key factors that determine your final price",
+      "cabinetry": {
+        "title": "Cabinetry (30–40% of budget)",
+        "description": "The biggest cost driver. Stock cabinets start around $150/linear foot, while custom options can exceed $800/linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+      },
+      "countertops": {
+        "title": "Countertops (10–15% of budget)",
+        "description": "Laminate starts at $30/sq ft, quartz runs $80–150/sq ft, and natural stone can exceed $200/sq ft. Waterfall island edges add $500–2,000 to the total."
+      },
+      "layout": {
+        "title": "Layout Changes",
+        "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add $3,000–15,000 depending on structural requirements and permits."
+      },
+      "appliances": {
+        "title": "Appliances",
+        "description": "Budget-friendly packages start at $3,000–5,000. Mid-range brands like Bosch or KitchenAid run $8,000–15,000. Premium brands like Sub-Zero or Wolf can exceed $30,000."
+      },
+      "plumbing": {
+        "title": "Plumbing & Electrical",
+        "description": "Relocating plumbing or adding circuits adds $2,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+      },
+      "permits": {
+        "title": "Permits & Inspections",
+        "description": "City of Vancouver building permits for kitchen renovations typically cost $200–$1,000. Required when changing plumbing, electrical, gas, or structural elements."
+      }
+    },
+    "realProjects": {
+      "title": "Real Kitchen Renovation Projects",
+      "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+    },
+    "tips": {
+      "title": "Money-Saving Tips for Your Kitchen Renovation",
+      "tip1": {
+        "title": "Keep the Existing Layout",
+        "description": "Avoiding plumbing and gas line relocations can save $5,000–15,000. Work with your existing kitchen footprint where possible."
+      },
+      "tip2": {
+        "title": "Choose Quartz Over Natural Stone",
+        "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+      },
+      "tip3": {
+        "title": "Semi-Custom Cabinets",
+        "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+      },
+      "tip4": {
+        "title": "Plan During Off-Season",
+        "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+      }
+    },
+    "cta": {
+      "heading": "Get Your Free Kitchen Renovation Quote",
+      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+    },
+    "faq": {
+      "q1": "How much does a kitchen renovation cost in Vancouver?",
+      "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
+      "q2": "How long does a kitchen renovation take in Vancouver?",
+      "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
+      "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
+      "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
+      "q4": "What is the best countertop material for a kitchen renovation?",
+      "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
+      "q5": "Can I renovate my kitchen while living in my home?",
+      "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+    }
+  }
+}

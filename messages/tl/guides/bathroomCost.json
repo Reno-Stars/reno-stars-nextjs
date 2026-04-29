@@ -1,0 +1,99 @@
+{
+  "bathroomCost": {
+    "breadcrumb": "Bathroom Renovation Cost",
+    "hero": {
+      "title": "Average Bathroom Renovation Cost sa Vancouver (2026 Price Guide)",
+      "subtitle": "Ang average na bathroom renovation cost sa Vancouver ay $10,000 hanggang $60,000+. Totoong presyo ito mula sa 19 na natapos na projects — hindi industry estimates o national averages."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "projects": "Natapos na Projects",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "2–8 na linggo"
+    },
+    "tiers": {
+      "title": "Bathroom Renovation Cost ayon sa Tier",
+      "subtitle": "Base sa aming natapos na projects sa buong Greater Vancouver",
+      "budget": {
+        "title": "Budget-Friendly",
+        "description": "Standard tile, basic vanity, updated fixtures, at fresh paint. Ideal para sa single bathroom refresh sa condos o townhouses nang hindi inililipat ang plumbing."
+      },
+      "midRange": {
+        "title": "Mid-Range",
+        "description": "Porcelain o large-format tile, custom vanity, frameless glass shower enclosure, modernong fixtures, at heated flooring. Pinakapopular na choice para sa family homes."
+      },
+      "highEnd": {
+        "title": "High-End / Multi-Bathroom",
+        "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, at structural modifications. Madalas kasama ang pagre-renovate ng 2-3+ bathrooms nang sabay."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Bathroom Renovation Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "tiles": {
+        "title": "Tile at Flooring (25–35% ng budget)",
+        "description": "Standard ceramic tile ay nagsisimula sa $5/sq ft, porcelain ay $8–15/sq ft, at natural stone ay maaaring lumampas sa $25/sq ft. Ang large-format tiles ay nagbabawas ng grout lines pero mas mahal i-install."
+      },
+      "shower": {
+        "title": "Shower / Tub Configuration",
+        "description": "Ang tub-to-shower conversion ay $3,000–8,000. Ang curbless (zero-threshold) showers ay nangangailangan ng custom waterproofing at sloped subfloor, nagdadagdag ng $2,000–5,000 vs standard shower base."
+      },
+      "vanity": {
+        "title": "Vanity at Countertop",
+        "description": "Stock vanities ay nagsisimula sa $500–1,500. Semi-custom na may quartz top ay $2,000–4,000. Fully custom floating vanities na may integrated sinks ay maaaring lumampas sa $6,000."
+      },
+      "plumbing": {
+        "title": "Plumbing Relocation",
+        "description": "Ang paglipat ng drain lines o supply pipes ay nagdadagdag ng $2,000–6,000. Ang lumang bahay ay maaaring mangailangan ng bagong shut-off valves o supply line upgrades. Ang pag-keep sa existing plumbing layout ay nag-save ng malaki."
+      },
+      "waterproofing": {
+        "title": "Waterproofing",
+        "description": "Tamang waterproofing na may membrane systems (Schluter, Laticrete) ay $1,500–3,500 para sa standard shower. Mahalaga sa Vancouver climate para iwasan ang moisture damage sa likod ng walls."
+      },
+      "permits": {
+        "title": "Permits at Inspections",
+        "description": "Ang building permits para sa bathroom renovation ay $200–800 sa Metro Vancouver. Kailangan kapag inililipat ang plumbing, nagdadagdag ng new fixtures, o gumagawa ng structural changes."
+      }
+    },
+    "realProjects": {
+      "title": "Totoong Bathroom Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na bathroom projects na may aktwal na budget at timeline"
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Iyong Bathroom Renovation",
+      "tip1": {
+        "title": "Panatilihin ang Existing Plumbing Layout",
+        "description": "Ang paglilipat ng drain lines ay isa sa pinakamalaking cost driver. Ang pag-keep sa toilet, shower, at sink sa kanilang current positions ay maaaring mag-save ng $3,000–6,000."
+      },
+      "tip2": {
+        "title": "Pumili ng Large-Format Porcelain Tile",
+        "description": "Mas konting grout lines ay nangangahulugan ng mas konting labour at mas malinis na itsura. Ang 24x24 o 12x24 porcelain tiles ay durable, water-resistant, at mas mura kaysa natural stone."
+      },
+      "tip3": {
+        "title": "Mag-renovate ng Maraming Bathroom nang Sabay",
+        "description": "Kung kailangan mo ng higit sa isang bathroom, ang paggawa nang sabay ay nag-save ng 10–20% vs separate projects. Ang mga contractor ay maaaring mag-share ng mobilization costs at bulk-buy materials."
+      },
+      "tip4": {
+        "title": "Mag-invest sa Waterproofing",
+        "description": "Ang pagtitipid sa waterproofing ay nagdudulot ng magastos na repairs sa hinaharap. Tamang membrane systems ay $1,500–3,500 sa simula pero pinipigilan ang $10,000+ sa water damage sa hinaharap."
+      }
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Bathroom Renovation Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong proyekto at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang bathroom renovation sa Vancouver?",
+      "a1": "Ang bathroom renovation costs sa Vancouver ay $10,000 hanggang $60,000+ base sa aming natapos na projects. Ang single budget-friendly bathroom ay nagsisimula sa $10,000–$20,000, mid-range renovations na may custom vanity at glass shower ay $20,000–$35,000, at high-end o multi-bathroom projects ay maaaring lumampas sa $40,000.",
+      "q2": "Gaano katagal ang bathroom renovation?",
+      "a2": "Karaniwang 2–5 na linggo ang single bathroom renovation. Simpleng cosmetic updates ay maaaring matapos sa 2–3 na linggo, habang ang projects na may plumbing relocation, curbless showers, o structural changes ay maaaring tumagal ng 4–8 na linggo. Ang multi-bathroom projects ay 5–11 na linggo.",
+      "q3": "Pwede ko bang i-convert ang aking bathtub sa walk-in shower?",
+      "a3": "Oo, ang tub-to-shower conversions ay isa sa aming pinakapopular na requests. Ang cost ay $3,000–$8,000 depende kung pumili ka ng standard shower base o curbless design. Ang curbless showers ay nangangailangan ng custom waterproofing at sloped subfloor.",
+      "q4": "Ano ang curbless shower at bakit mas mahal?",
+      "a4": "Ang curbless (zero-threshold) shower ay walang step o lip sa entry, gumagawa ng seamless floor transition. Kailangan nito ng custom waterproofing membrane, precisely sloped subfloor, at linear drain installation, nagdadagdag ng $2,000–$5,000 vs standard shower base. Popular ito para sa accessibility at modern aesthetics.",
+      "q5": "Dapat ba akong mag-renovate ng maraming bathroom nang sabay?",
+      "a5": "Oo, ang pagre-renovate ng maraming bathroom nang sabay ay nag-save ng 10–20% kumpara sa separate projects. Ang mga contractor ay maaaring mag-share ng mobilization costs, mag-coordinate ng trades nang mas efficient, at bumili ng materials in bulk. Marami kaming natapos na 2–3 bathroom projects sa buong Greater Vancouver."
+    }
+  }
+}

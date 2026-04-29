@@ -1,10 +1,10 @@
 {
   "locationBenefits": {
-    "localExpertise": "Local expertise in your area",
-    "freeOnsite": "Free on-site consultation",
-    "competitivePricing": "Competitive local pricing",
-    "quickResponse": "Quick response times",
-    "experience": "{years}+ years serving the Lower Mainland",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)"
+    "localExpertise": "ਤੁਹਾਡੇ ਇਲਾਕੇ ਵਿੱਚ ਸਥਾਨਕ ਮੁਹਾਰਤ",
+    "freeOnsite": "ਮੁਫ਼ਤ ਆਨ-ਸਾਈਟ ਸਲਾਹ-ਮਸ਼ਵਰਾ",
+    "competitivePricing": "ਪ੍ਰਤੀਯੋਗੀ ਸਥਾਨਕ ਕੀਮਤਾਂ",
+    "quickResponse": "ਤੇਜ਼ ਜਵਾਬ ਦਾ ਸਮਾਂ",
+    "experience": "Lower Mainland ਨੂੰ ਸੇਵਾ ਦੇਣ ਦੇ {years}+ ਸਾਲ",
+    "licensedInsured": "ਲਾਇਸੰਸਸ਼ੁਦਾ ਅਤੇ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ (CGL + WCB)"
   }
 }

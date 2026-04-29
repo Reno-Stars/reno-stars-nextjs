@@ -1,10 +1,10 @@
 {
   "serviceBenefits": {
-    "freeConsultation": "Free consultation and quote",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
-    "experience": "{years}+ years experience",
+    "freeConsultation": "Libreng konsultasyon at quote",
+    "licensedInsured": "Lisensyado at fully insured (CGL + WCB)",
+    "coverageAndWarranty": "$5M CGL insurance, active na WCB coverage, hanggang 3 taong warranty",
+    "experience": "{years}+ taong karanasan",
     "rating": "5-star Google rating",
-    "projectsDone": "700+ projects completed"
+    "projectsDone": "700+ na natapos na projects"
   }
 }

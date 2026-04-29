@@ -1,0 +1,100 @@
+{
+  "basementCost": {
+    "breadcrumb": "Chi Phí Cải Tạo Tầng Hầm",
+    "hero": {
+      "title": "Chi Phí Cải Tạo Tầng Hầm Tại Vancouver BC (2026)",
+      "subtitle": "Hoàn thiện hoặc cải tạo tầng hầm tại Greater Vancouver thực sự tốn bao nhiêu? Đây là các khoảng giá điển hình theo phạm vi dự án, từ hoàn thiện cơ bản đến chuyển đổi căn hộ hợp pháp đầy đủ."
+    },
+    "stats": {
+      "avgCost": "Chi Phí Trung Bình",
+      "range": "Khoảng Giá",
+      "sqft": "Chi Phí Mỗi Sq Ft",
+      "sqftValue": "$35 – $120/sq ft",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "6–12 tuần"
+    },
+    "tiers": {
+      "title": "Chi Phí Cải Tạo Tầng Hầm Theo Hạng Mức",
+      "subtitle": "Báo giá điển hình cho các dự án tầng hầm khắp Greater Vancouver",
+      "budget": {
+        "title": "Hoàn Thiện Cơ Bản",
+        "description": "Khung, cách nhiệt, tường thạch cao, sàn cơ bản, sơn và đèn chiếu sáng tiêu chuẩn. Phù hợp cho phòng giải trí, văn phòng tại nhà hoặc khu vực lưu trữ mà không thêm đường ống."
+      },
+      "midRange": {
+        "title": "Cải Tạo Tầm Trung",
+        "description": "Hoàn thiện đầy đủ với thêm phòng tắm, sàn nâng cấp (vinyl plank hoặc laminate), đèn LED âm trần, tủ tích hợp và quầy bar ướt hoặc khu bếp nhỏ. Phạm vi phổ biến nhất cho nhà gia đình."
+      },
+      "highEnd": {
+        "title": "Chuyển Đổi Căn Hộ Hợp Pháp",
+        "description": "Căn hộ phụ đầy đủ với lối vào riêng, phòng bếp, phòng tắm đầy đủ, phòng ngủ với cửa sổ thoát hiểm, ngăn cháy và mọi tính năng theo quy chuẩn. Bao gồm giấy phép và kiểm tra để hợp pháp hóa cho thuê."
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Tầng Hầm?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "waterproofing": {
+        "title": "Chống Thấm & Kiểm Soát Ẩm",
+        "description": "Khí hậu ẩm ướt của Vancouver làm cho chống thấm trở nên quan trọng. Hệ thống thoát nước nội bộ dao động $3,000–8,000, trong khi chống thấm ngoại bộ có thể tốn $10,000–25,000. Lắp đặt máy bơm hố thêm $1,500–3,000."
+      },
+      "framing": {
+        "title": "Khung & Cách Nhiệt",
+        "description": "Khung thép hoặc gỗ với cách nhiệt thường có giá $8–15 mỗi sq ft. Nhà cũ tại Vancouver có thể cần thêm lớp chắn hơi và nâng cấp cách nhiệt để đáp ứng quy chuẩn xây dựng hiện hành."
+      },
+      "plumbing": {
+        "title": "Đường Ống (Phòng Tắm/Phòng Bếp)",
+        "description": "Thêm phòng tắm tầng hầm có giá $8,000–15,000 tùy bạn có cần phá bê tông cho đường thoát nước hay không. Lắp đặt phòng bếp đầy đủ thêm $12,000–25,000 bao gồm hệ thống thô và phụ kiện."
+      },
+      "electrical": {
+        "title": "Điện & HVAC",
+        "description": "Hệ thống điện tầng hầm thường dao động $3,000–8,000 cho bố cục tiêu chuẩn. Nhiều nhà cũ cần nâng cấp tủ điện ($2,000–4,000). Mở rộng đường ống HVAC thêm $2,000–5,000."
+      },
+      "egress": {
+        "title": "Cửa Sổ Thoát Hiểm & Lối Vào Riêng",
+        "description": "Quy chuẩn xây dựng yêu cầu cửa sổ thoát hiểm trong phòng ngủ ($2,000–5,000 mỗi cái để lắp đặt). Thêm lối vào ngoài riêng cho căn hộ có giá $8,000–15,000 bao gồm đào và đổ bê tông."
+      },
+      "permits": {
+        "title": "Giấy Phép & Tuân Thủ Quy Chuẩn",
+        "description": "Giấy phép xây dựng cho hoàn thiện tầng hầm tại Metro Vancouver có giá $500–2,000. Chuyển đổi căn hộ hợp pháp yêu cầu kiểm tra bổ sung. Một số đô thị cung cấp khoản hỗ trợ cho việc thêm căn hộ cho thuê."
+      }
+    },
+    "realProjects": {
+      "title": "Các Dự Án Cải Tạo Toàn Nhà Liên Quan",
+      "subtitle": "Duyệt qua {count} dự án cải tạo đã hoàn thành khắp Greater Vancouver, nhiều dự án bao gồm công việc tầng hầm"
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cải Tạo Tầng Hầm",
+      "tip1": {
+        "title": "Bắt Đầu Với Chống Thấm",
+        "description": "Giải quyết bất kỳ vấn đề ẩm nào trước khi hoàn thiện tường. Sửa các vấn đề về nước sau khi tường thạch cao đã được lắp tốn 3–5 lần so với làm từ đầu."
+      },
+      "tip2": {
+        "title": "Lập Kế Hoạch Đường Ống Gần Đường Hiện Có",
+        "description": "Đặt phòng tắm hoặc phòng bếp gần ống thoát nước hiện có tiết kiệm $3,000–8,000 bằng cách tránh cắt bê tông và lắp đặt thô mới."
+      },
+      "tip3": {
+        "title": "Cân Nhắc Căn Hộ Hợp Pháp Cho ROI",
+        "description": "Một căn hộ phụ hợp pháp tại Vancouver có thể tạo $1,500–2,500/tháng thu nhập cho thuê. Cải tạo thường tự hoàn vốn trong 3–5 năm."
+      },
+      "tip4": {
+        "title": "Chọn Sàn LVP",
+        "description": "Sàn vinyl cao cấp là lựa chọn tốt nhất cho tầng hầm. Chống nước, ấm khi đi và rẻ hơn 30–50% so với gỗ kỹ thuật. Hoàn hảo cho khí hậu ẩm của Vancouver."
+      }
+    },
+    "cta": {
+      "heading": "Nhận Báo Giá Cải Tạo Tầng Hầm Miễn Phí",
+      "subtitle": "Hãy cho chúng tôi biết về dự án của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."
+    },
+    "faq": {
+      "q1": "Cải tạo tầng hầm tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Chi phí cải tạo tầng hầm tại Vancouver thường dao động từ $30,000 cho hoàn thiện cơ bản đến $120,000+ cho chuyển đổi căn hộ hợp pháp đầy đủ. Chi phí trung bình khoảng $55,000 cho cải tạo tầm trung với thêm phòng tắm và hoàn thiện chất lượng. Chi phí mỗi sq ft dao động từ $35 đến $120 tùy phạm vi.",
+      "q2": "Cải tạo tầng hầm tại Vancouver mất bao lâu?",
+      "a2": "Hầu hết các dự án cải tạo tầng hầm tại Vancouver mất 6 đến 12 tuần. Hoàn thiện cơ bản (khung, tường thạch cao, sàn) có thể hoàn thành trong 6–8 tuần. Chuyển đổi căn hộ hợp pháp đầy đủ với giấy phép, đường ống, điện và kiểm tra thường mất 10–14 tuần.",
+      "q3": "Tôi có cần giấy phép cho cải tạo tầng hầm tại Vancouver không?",
+      "a3": "Có, hầu hết các dự án cải tạo tầng hầm yêu cầu giấy phép xây dựng tại Metro Vancouver. Bất kỳ công việc nào liên quan đến khung, điện, đường ống hoặc sửa đổi cửa sổ thoát hiểm đều yêu cầu giấy phép. Chuyển đổi căn hộ hợp pháp cần phê duyệt phân vùng bổ sung. Chi phí giấy phép dao động từ $500 đến $2,000 tùy đô thị.",
+      "q4": "Căn hộ tầng hầm có phải là khoản đầu tư tốt tại Vancouver không?",
+      "a4": "Có, thêm một căn hộ phụ hợp pháp là một trong những khoản đầu tư cải tạo tốt nhất tại Vancouver. Một căn hộ có thể tạo $1,500–2,500 mỗi tháng thu nhập cho thuê. Với chi phí cải tạo $80,000–120,000, khoản đầu tư thường tự hoàn vốn trong 3–5 năm đồng thời tăng giá trị bất động sản 10–20%.",
+      "q5": "Sàn tốt nhất cho cải tạo tầng hầm là gì?",
+      "a5": "Sàn vinyl cao cấp (LVP) là sàn tầng hầm được khuyến nghị nhất tại Vancouver vì tính chống nước và độ bền. Có giá $4–8 mỗi sq ft đã lắp đặt và xử lý ẩm tốt hơn gỗ cứng hoặc laminate. Gỗ kỹ thuật và gạch ceramic cũng là lựa chọn tốt tùy ngân sách và sở thích phong cách của bạn."
+    }
+  }
+}

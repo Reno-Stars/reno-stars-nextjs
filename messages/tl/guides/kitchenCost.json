@@ -1,0 +1,99 @@
+{
+  "kitchenCost": {
+    "breadcrumb": "Kitchen Renovation Cost",
+    "hero": {
+      "title": "Kitchen Renovation Cost sa Vancouver BC (2026)",
+      "subtitle": "Totoong pricing mula sa natapos na kitchen renovations sa buong Greater Vancouver. Bawat numero sa ibaba ay galing sa aktwal na projects. Hindi industry estimates."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "projects": "Natapos na Projects",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "3–6 na linggo"
+    },
+    "tiers": {
+      "title": "Kitchen Renovation Cost ayon sa Tier",
+      "subtitle": "Base sa aming natapos na projects sa buong Greater Vancouver",
+      "budget": {
+        "title": "Budget-Friendly",
+        "description": "Cabinet refacing o stock cabinets, laminate countertops, basic backsplash, at standard fixtures. Ideal para sa condos at townhouses na gustong mag-fresh look nang walang structural changes."
+      },
+      "midRange": {
+        "title": "Mid-Range",
+        "description": "Custom o semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, at bagong flooring. Pinakapopular na choice para sa family homes."
+      },
+      "highEnd": {
+        "title": "High-End",
+        "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, at designer finishes. Para sa homeowners na gusto ng pinakamaganda."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Kitchen Renovation Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "cabinetry": {
+        "title": "Cabinetry (30–40% ng budget)",
+        "description": "Ang pinakamalaking cost driver. Stock cabinets ay nagsisimula sa $150/linear foot, habang ang custom options ay maaaring lumampas sa $800/linear foot. Shaker-style white cabinets ang pinakapopular na choice sa Vancouver."
+      },
+      "countertops": {
+        "title": "Countertops (10–15% ng budget)",
+        "description": "Laminate ay nagsisimula sa $30/sq ft, quartz ay $80–150/sq ft, at natural stone ay maaaring lumampas sa $200/sq ft. Waterfall island edges ay nagdadagdag ng $500–2,000 sa total."
+      },
+      "layout": {
+        "title": "Layout Changes",
+        "description": "Ang paglilipat ng plumbing, gas lines, o pagtatanggal ng walls ay nagpapataas ng costs nang malaki. Maaaring magdagdag ng $3,000–15,000 ang layout change depende sa structural requirements at permits."
+      },
+      "appliances": {
+        "title": "Appliances",
+        "description": "Budget-friendly packages ay nagsisimula sa $3,000–5,000. Mid-range brands tulad ng Bosch o KitchenAid ay $8,000–15,000. Premium brands tulad ng Sub-Zero o Wolf ay maaaring lumampas sa $30,000."
+      },
+      "plumbing": {
+        "title": "Plumbing at Electrical",
+        "description": "Ang pag-relocate ng plumbing o pagdagdag ng circuits ay nagdadagdag ng $2,000–8,000. Ang lumang Vancouver homes ay maaaring mangailangan ng electrical panel upgrades para suportahan ang modernong appliances."
+      },
+      "permits": {
+        "title": "Permits at Inspections",
+        "description": "Ang City of Vancouver building permits para sa kitchen renovation ay karaniwang $200–$1,000. Kailangan kapag may pagbabago sa plumbing, electrical, gas, o structural elements."
+      }
+    },
+    "realProjects": {
+      "title": "Totoong Kitchen Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na kitchen projects na may aktwal na budget at timeline"
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Iyong Kitchen Renovation",
+      "tip1": {
+        "title": "Panatilihin ang Existing Layout",
+        "description": "Ang pag-iwas sa plumbing at gas line relocations ay maaaring mag-save ng $5,000–15,000. Magtrabaho sa iyong existing kitchen footprint kung posible."
+      },
+      "tip2": {
+        "title": "Pumili ng Quartz kaysa Natural Stone",
+        "description": "Ang quartz countertops ay mas durable, hindi nangangailangan ng sealing, at 20–40% mas mura kaysa granite o marble. Bukod pa, maganda ang itsura nila."
+      },
+      "tip3": {
+        "title": "Semi-Custom Cabinets",
+        "description": "Ang semi-custom cabinets ay may itsura ng fully custom sa 40–60% lang ng presyo. Pumipili ka pa ng door styles, finishes, at configurations."
+      },
+      "tip4": {
+        "title": "Mag-plano sa Off-Season",
+        "description": "Ang winter months (November–February) ay mas mabagal para sa renovators sa Vancouver. Maaaring makuha mo ang mas magandang pricing at mas mabilis na timeline kung magsisimula ka noon."
+      }
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Kitchen Renovation Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong proyekto at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang kitchen renovation sa Vancouver?",
+      "a1": "Ang kitchen renovation costs sa Vancouver ay karaniwang $15,000 hanggang $72,000+ base sa aming natapos na projects. Budget renovations (cabinet updates, basic countertops) ay nagsisimula sa $15,000–$27,000, mid-range renovations na may custom cabinets at quartz countertops ay $28,000–$38,000, at high-end transformations na may premium materials ay maaaring lumampas sa $40,000.",
+      "q2": "Gaano katagal ang kitchen renovation sa Vancouver?",
+      "a2": "Karaniwang 3 hanggang 6 na linggo ang kitchen renovation sa Vancouver mula demolition hanggang completion. Simpleng cosmetic updates ay maaaring matapos sa 3–4 na linggo, habang ang complex renovations na may layout changes, custom cabinetry, o structural work ay maaaring tumagal ng 8–10 na linggo.",
+      "q3": "Kailangan ko ba ng permit para sa kitchen renovation sa Vancouver?",
+      "a3": "Kailangan mo ng City of Vancouver building permit kung ang iyong renovation ay may pagbabago sa plumbing, electrical, gas lines, o structural elements tulad ng pagtanggal ng walls. Ang cosmetic updates tulad ng bagong cabinets, countertops, at backsplash ay karaniwang hindi nangangailangan ng permits. Ang permit costs ay nasa $200 hanggang $1,000.",
+      "q4": "Ano ang pinakamagandang countertop material para sa kitchen renovation?",
+      "a4": "Ang quartz ang pinakapopular na countertop choice sa aming Vancouver kitchen renovations. Nag-aalok ito ng excellent durability, hindi kailangan ng sealing (hindi tulad ng granite), resistant sa stains, at may iba't ibang colours at patterns. Ang presyo ay nasa $80 hanggang $150 per square foot installed.",
+      "q5": "Pwede ba akong magrenovate ng kitchen habang nakatira sa bahay?",
+      "a5": "Oo, karamihan sa aming kliyente ay nagpapatuloy sa pamumuhay sa kanilang bahay habang kitchen renovation. Tinutulungan namin sa pag-set up ng temporary kitchen area at i-schedule ang trabaho para mabawasan ang abala. Asahan na walang functional kitchen sa loob ng 2–4 na linggo depende sa scope ng trabaho."
+    }
+  }
+}

@@ -1,10 +1,10 @@
 {
   "serviceBenefits": {
-    "freeConsultation": "Free consultation and quote",
-    "licensedInsured": "Licensed and fully insured (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL insurance, active WCB coverage, up to 3 years warranty",
-    "experience": "{years}+ years experience",
-    "rating": "5-star Google rating",
-    "projectsDone": "700+ projects completed"
+    "freeConsultation": "ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰਾ ਅਤੇ ਕੋਟ",
+    "licensedInsured": "ਲਾਇਸੰਸਸ਼ੁਦਾ ਅਤੇ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬੀਮਿਤ (CGL + WCB)",
+    "coverageAndWarranty": "$5M CGL ਬੀਮਾ, ਸਰਗਰਮ WCB ਕਵਰੇਜ, 3 ਸਾਲ ਤੱਕ ਦੀ ਵਾਰੰਟੀ",
+    "experience": "{years}+ ਸਾਲਾਂ ਦਾ ਤਜਰਬਾ",
+    "rating": "5-ਸਿਤਾਰਾ Google ਰੇਟਿੰਗ",
+    "projectsDone": "700+ ਪ੍ਰੋਜੈਕਟ ਪੂਰੇ ਕੀਤੇ"
   }
 }

@@ -1,0 +1,100 @@
+{
+  "commercialCost": {
+    "breadcrumb": "Commercial Renovation Cost",
+    "hero": {
+      "title": "Commercial Renovation Cost sa Vancouver BC (2026)",
+      "subtitle": "Magkano talaga ang commercial renovation sa Greater Vancouver? Mula sa maliit na office refresh hanggang full restaurant build-outs, narito ang totoong numbers base sa aming project experience."
+    },
+    "stats": {
+      "avgCost": "Average Cost",
+      "range": "Price Range",
+      "sqft": "Cost per Sq Ft",
+      "sqftValue": "$75 – $300/sq ft",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "8–20 na linggo"
+    },
+    "tiers": {
+      "title": "Commercial Renovation Cost ayon sa Project Scope",
+      "subtitle": "Karaniwang pricing para sa commercial projects sa buong Greater Vancouver",
+      "budget": {
+        "title": "Maliit na Retail / Office Refresh",
+        "description": "Fresh paint, bagong flooring, updated lighting, basic fixture upgrades, at minor layout changes. Ideal para sa maliit na retail shops, professional offices, at co-working spaces na nangangailangan ng modernong update nang walang structural work."
+      },
+      "midRange": {
+        "title": "Full Commercial Fit-Out",
+        "description": "Kompletong interior build-out kasama ang bagong walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modernong lighting design, at full electrical upgrades. Angkop para sa mid-sized offices, retail stores, at clinics."
+      },
+      "highEnd": {
+        "title": "Restaurant / Medical / Premium Retail",
+        "description": "Full-scale renovation na may commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, at complex permit requirements. Kasama ang restaurants, dental clinics, medical offices, at flagship retail spaces."
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Commercial Renovation Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "permits": {
+        "title": "Permits at Zoning",
+        "description": "Ang commercial permits sa Metro Vancouver ay $2,000–15,000 depende sa scope at municipality. Ang change-of-use applications ay nagdadagdag ng $3,000–8,000. Ang City of Vancouver development permit process ay maaaring tumagal ng 8–16 na linggo, kaya isama ang timeline costs."
+      },
+      "hvac": {
+        "title": "HVAC at Mechanical Systems",
+        "description": "Ang commercial HVAC ay isang malaking cost driver sa $15,000–80,000+. Ang restaurant hood at make-up air systems lang ay $20,000–50,000. Ang office spaces ay nangangailangan ng tamang zoning para sa tenant comfort. Ang Vancouver energy code ay nangangailangan ng high-efficiency systems."
+      },
+      "fireSafety": {
+        "title": "Fire Safety at Sprinklers",
+        "description": "Ang fire sprinkler systems ay $3–8 per square foot para mag-install o magbago. Ang fire alarm upgrades ay $5,000–20,000. Ang change-of-use ay nag-trigger ng full fire code compliance review. Ang restaurants at assembly spaces ay may pinakamahigpit na requirements."
+      },
+      "accessibility": {
+        "title": "Accessibility Compliance",
+        "description": "Ang BC Building Code ay nangangailangan ng barrier-free access para sa commercial spaces. Ang accessible washrooms, ramps, door widths, at signage ay nagdadagdag ng $5,000–25,000. Ang mga heritage buildings sa Vancouver ay madalas na nangangailangan ng creative solutions para tumugon sa accessibility standards."
+      },
+      "electrical": {
+        "title": "Electrical at IT Infrastructure",
+        "description": "Ang commercial electrical upgrades ay $10,000–50,000+ depende sa service capacity. Ang restaurants ay nangangailangan ng 200–400 amp services. Ang modernong offices ay nangangailangan ng structured cabling ($3,000–15,000), server room cooling, at dedicated circuits para sa equipment."
+      },
+      "disruption": {
+        "title": "Project Timing at Business Disruption",
+        "description": "Ang pagtatrabaho sa paligid ng business hours ay nagpapataas ng costs ng 15–25%. Maraming Vancouver commercial tenants ang nagre-renovate habang lease transitions. Ang after-hours work ay nagdadagdag ng premium labor costs. Ang phased renovation plan ay maaaring panatilihin ang ilang bahagi ng business operational habang konstruksyon."
+      }
+    },
+    "realProjects": {
+      "title": "Aming mga Commercial Renovation Projects",
+      "subtitle": "Mag-browse sa {count} natapos na commercial projects sa buong Greater Vancouver"
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Commercial Renovations",
+      "tip1": {
+        "title": "Mag-plano sa Lease Negotiations",
+        "description": "Mag-negotiate ng tenant improvement allowance (TIA) sa iyong landlord. Maraming Vancouver commercial leases ang may $20–80 per square foot sa TIA na maaaring mag-offset ng renovation costs nang malaki."
+      },
+      "tip2": {
+        "title": "Mag-phase ng Iyong Renovation",
+        "description": "Hatiin ang project sa mga phase para spread ang costs at mabawasan ang business disruption. I-prioritize ang customer-facing areas muna, tapos i-tackle ang back-of-house improvements sa second phase."
+      },
+      "tip3": {
+        "title": "Gamitin Muli ang Existing Infrastructure",
+        "description": "Panatilihin ang plumbing at electrical sa existing locations kung posible. Ang paglilipat ng commercial kitchen o washroom ay maaaring magdagdag ng $20,000–50,000 sa rough-in costs lang."
+      },
+      "tip4": {
+        "title": "Pumili ng Durable Commercial-Grade Materials",
+        "description": "Mag-invest sa commercial-grade flooring, fixtures, at finishes. Ang mas mataas na upfront cost ay nag-save ng pera long-term. Ang commercial LVT ay tumatagal ng 15–20 taon vs 5–8 taon para sa residential-grade products sa high-traffic spaces."
+      }
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Commercial Renovation Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong commercial project at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang commercial renovation sa Vancouver?",
+      "a1": "Ang commercial renovation costs sa Vancouver ay karaniwang $50,000 para sa maliit na office refresh hanggang sa lumampas sa $1,000,000 para sa full restaurant o medical facility build-out. Ang average commercial renovation ay nasa $250,000. Ang cost per square foot ay $75 hanggang $300 depende sa uri ng business, scope of work, at finish level.",
+      "q2": "Gaano katagal ang commercial renovation sa Vancouver?",
+      "a2": "Karaniwang 8 hanggang 20 na linggo ang commercial renovation sa Vancouver depende sa scope. Ang basic office refresh ay maaaring matapos sa 8–10 na linggo, habang ang full restaurant build-out o medical clinic conversion ay karaniwang 16–20 na linggo kasama ang permit approvals at inspections.",
+      "q3": "Kailangan ko ba ng permit para sa commercial renovation sa Vancouver?",
+      "a3": "Oo, halos lahat ng commercial renovations sa Metro Vancouver ay nangangailangan ng building permits. Anumang trabaho na may structural changes, electrical, plumbing, HVAC, o fire safety systems ay nangangailangan ng permits. Ang change-of-use applications ay kailangan kapag nagco-convert sa pagitan ng business types. Ang permit costs ay $2,000 hanggang $15,000 depende sa scope at municipality.",
+      "q4": "Ano ang cost per square foot para sa commercial renovation sa Vancouver?",
+      "a4": "Ang commercial renovation costs sa Vancouver ay $75 hanggang $300 per square foot. Ang basic office refresh ay $75–$120/sq ft, mid-range retail o office fit-out ay $120–$200/sq ft, at specialized spaces tulad ng restaurants o medical clinics ay $200–$300+ per square foot dahil sa complex mechanical, plumbing, at ventilation requirements.",
+      "q5": "Pwede ba akong mag-renovate ng commercial space habang bukas ang business?",
+      "a5": "Oo, ang phased renovations ay nagpapahintulot sa maraming Vancouver businesses na manatiling operational habang konstruksyon. Gumagawa kami ng detalyadong phasing plans na nag-section off ng work areas habang pinapanatiling accessible ang customer-facing spaces. Ang after-hours at weekend work ay isang option din, bagama't nagdadagdag ito ng 15–25% sa labor costs. Maraming kliyente namin ang pumipili na mag-renovate habang seasonal slow periods para mabawasan ang impact."
+    }
+  }
+}

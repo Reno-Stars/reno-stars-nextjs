@@ -1,0 +1,42 @@
+{
+  "index": {
+    "hero": {
+      "title": "Renovation Cost Guides",
+      "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
+    },
+    "kitchen": {
+      "title": "Kitchen Renovation Cost",
+      "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+    },
+    "bathroom": {
+      "title": "Bathroom Renovation Cost",
+      "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+    },
+    "wholeHouse": {
+      "title": "Whole House Renovation Cost",
+      "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+    },
+    "comingSoon": "Coming Soon",
+    "readGuide": "Read Guide",
+    "cta": {
+      "heading": "Ready to Start Your Renovation?",
+      "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+    },
+    "basement": {
+      "title": "Basement Renovation Cost",
+      "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+    },
+    "commercial": {
+      "title": "Commercial Renovation Cost",
+      "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+    },
+    "cabinet": {
+      "title": "Cabinet Refinishing Cost",
+      "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+    },
+    "basementSuite": {
+      "title": "Basement Suite Cost",
+      "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
+    }
+  }
+}

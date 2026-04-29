@@ -1,52 +1,52 @@
 {
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "Gaano katagal ang typical na kitchen renovation?",
+      "a1": "Karaniwang 4-8 na linggo ang typical na kitchen renovation depende sa scope. Ang simpleng update tulad ng cabinet refacing ay maaaring tumagal ng 1-2 linggo, habang ang complete gut renovation na may custom cabinetry ay maaaring tumagal ng 8-12 linggo.",
+      "q2": "Ano ang average na cost ng kitchen renovation sa {area}?",
+      "a2": "Ang kitchen renovation sa {area} ay karaniwang $15,000 hanggang $75,000+ depende sa laki at finishes. Nagbibigay kami ng libreng detalyadong quote pagkatapos ng in-home consultation.",
+      "q3": "Kailangan ko ba ng permit para sa kitchen renovation?",
+      "a3": "Kailangan ng permit para sa electrical, plumbing, at structural changes. Aming hinahawakan ang lahat ng permit applications at sinisigurong tumutugma ang iyong renovation sa {area} building codes."
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "Gaano katagal ang bathroom renovation sa {area}?",
+      "a1": "Karaniwang 2-4 na linggo ang bathroom renovation sa {area}. Ang simpleng cosmetic update ay maaaring 1 linggo, habang ang complete renovation na may layout changes ay maaaring 4-6 na linggo.",
+      "q2": "Pwede ko bang gamitin ang aking bathroom habang nagre-renovate?",
+      "a2": "Karaniwang hindi, pero efficient kaming magtrabaho para mabawasan ang abala. Kung may multiple bathrooms ka, makakatulong kami sa pagplano sa paligid ng renovation schedule.",
+      "q3": "Anong waterproofing ang ginagamit ninyo para sa bathroom?",
+      "a3": "Gumagamit kami ng industry-leading waterproofing systems kasama ang Schluter at RedGard para sigurong protektado ang iyong bathroom laban sa moisture damage."
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "Pwede ba akong manirahan sa aking bahay habang whole house renovation sa {area}?",
+      "a1": "Depende sa scope. Para sa malalaking renovation sa {area}, madalas naming inirerekomenda ang temporary relocation para sa kaligtasan at efficiency. Makakatulong kami sa pag-coordinate ng phased work kung mas gusto mong manatili.",
+      "q2": "Paano ninyo pinapamahalaan ang whole house renovation project?",
+      "a2": "Nag-a-assign kami ng dedicated project manager na nagco-coordinate sa lahat ng trades, nagma-maintain ng schedule, at nagbibigay ng regular update. May iisang point of contact ka sa buong proseso.",
+      "q3": "Kailangan ko ba ng permit para sa whole house renovation sa {area}?",
+      "a3": "Oo, ang whole house renovation ay karaniwang nangangailangan ng multiple permits para sa structural, electrical, at plumbing work. Aming hinahawakan ang lahat ng {area} permit applications at inspections."
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "Kailangan ko ba ng permit para tapusin ang aking basement sa {area}?",
+      "a1": "Oo, ang basement finishing ay nangangailangan ng building permits sa {area}. Aming hinahawakan ang lahat ng permit applications at inspections bilang bahagi ng aming serbisyo.",
+      "q2": "Paano ninyo hinahawakan ang basement moisture issues?",
+      "a2": "Sinusuri namin ang moisture levels at nagi-implement ng angkop na solutions kasama ang drainage improvements, vapor barriers, at maayos na insulation bago tapusin.",
+      "q3": "Pwede bang magdagdag ng bathroom sa aking basement?",
+      "a3": "Oo, makakapagdagdag kami ng bathroom sa basement. Kung nasa ilalim ng sewer line, nagi-install kami ng sewage ejector systems. Ang lahat ng plumbing ay tumutugma sa {area} building codes."
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "Ano ang pagkakaiba ng refacing at replacing cabinets?",
+      "a1": "Ang refacing ay pinapanatili ang existing cabinet boxes at pinapalitan ang doors, drawer fronts, at hardware. 40-50% mas mura kaysa sa full replacement at mas maikli ang oras.",
+      "q2": "Gaano katagal ang cabinet refacing sa {area}?",
+      "a2": "Karaniwang 3-5 araw ang cabinet refacing sa {area} para sa average na kitchen. Functional pa rin ang iyong kitchen sa karamihan ng proseso.",
+      "q3": "Pwede bang i-reface ang lahat ng cabinets?",
+      "a3": "Karamihan sa solid wood at plywood cabinet boxes ay maaaring i-reface kung structurally sound. Sinusuri namin ang iyong cabinets sa libreng in-home consultation sa {area}."
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "Nagtatrabaho ba kayo sa business hours?",
+      "a1": "Nag-aalok kami ng flexible scheduling kasama ang gabi at weekend para mabawasan ang abala sa iyong business operations. Pwede naming i-phase ang trabaho para mapanatili ang ilang bahagi ng iyong espasyo na operational.",
+      "q2": "May karanasan ba kayo sa {area} commercial building codes?",
+      "a2": "Oo, may karanasan ang aming team sa {area} commercial building codes, accessibility requirements, at fire safety regulations. Sinisiguro namin ang full compliance sa lahat ng commercial standards.",
+      "q3": "Pwede ba kayong humawak ng tenant improvements sa {area}?",
+      "a3": "Oo, dalubhasa kami sa tenant improvements (TI) para sa offices, retail spaces, at restaurants sa {area}. Nagtutulungan kami sa mga landlord at property manager sa approval processes."
     }
   }
 }

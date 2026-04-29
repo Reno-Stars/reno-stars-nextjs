@@ -1,41 +1,41 @@
 {
   "services": {
     "kitchen": {
-      "title": "Kitchen Renovation",
-      "description": "Complete kitchen remodeling with modern designs, custom cabinetry, and premium countertops.",
-      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
+      "title": "بازسازی آشپزخانه",
+      "description": "بازسازی کامل آشپزخانه با طراحی‌های مدرن، کابینت‌های سفارشی و صفحه کار ممتاز.",
+      "longDescription": "آشپزخانه خود را با خدمات جامع بازسازی ما به قلب خانه‌تان تبدیل کنید. از کابینت‌های سفارشی و صفحه کار ممتاز گرفته تا لوازم برقی پیشرفته و راهکارهای نوآورانه فضاسازی، آشپزخانه‌هایی خلق می‌کنیم که هم زیبا و هم کاربردی هستند."
     },
     "bathroom": {
-      "title": "Bathroom Renovation",
-      "description": "Transform your bathroom into a spa-like retreat with luxury fixtures and finishes.",
-      "longDescription": "Create your personal sanctuary with our bathroom renovation expertise. We specialize in luxury spa-inspired designs, modern fixtures, custom tile work, and innovative storage solutions that maximize both style and functionality."
+      "title": "بازسازی حمام",
+      "description": "حمام خود را با شیرآلات و فینیشن‌های لوکس به یک پناهگاه اسپا مانند تبدیل کنید.",
+      "longDescription": "با تخصص ما در بازسازی حمام، پناهگاه شخصی خود را خلق کنید. ما در طراحی‌های لوکس با الهام از اسپا، شیرآلات مدرن، کاشی‌کاری سفارشی و راهکارهای نوآورانه فضاسازی تخصص داریم که سبک و کارایی را به حداکثر می‌رسانند."
     },
     "wholeHouse": {
-      "title": "Whole House Renovation",
-      "description": "Full-scale home transformations from concept to completion.",
-      "longDescription": "Experience a complete home transformation with our whole house renovation services. We manage every aspect of your project, from initial design concepts through final completion, ensuring a seamless renovation experience."
+      "title": "بازسازی کامل منزل",
+      "description": "تحول کامل منزل از مرحله ایده تا تکمیل پروژه.",
+      "longDescription": "با خدمات بازسازی کامل منزل ما، یک تحول جامع را در خانه خود تجربه کنید. ما تمام جنبه‌های پروژه شما، از مفاهیم اولیه طراحی تا تکمیل نهایی، را مدیریت می‌کنیم تا تجربه‌ای روان از بازسازی داشته باشید."
     },
     "basement": {
-      "title": "Basement Remodeling",
-      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
-      "longDescription": "Unlock the full potential of your home with our award-winning basement remodeling services. Whether you want a home theater, gym, guest suite, or home office, we transform underutilized basements into beautiful, functional living spaces."
+      "title": "بازسازی زیرزمین",
+      "description": "زیرزمین خود را به فضای کاربردی زندگی تبدیل کنید. رتبه سوم در Best of Vancouver.",
+      "longDescription": "با خدمات بازسازی زیرزمین برنده جایزه ما، پتانسیل کامل منزل خود را آزاد کنید. خواه به دنبال سینمای خانگی، باشگاه ورزشی، سوئیت مهمان یا دفتر خانگی باشید، ما زیرزمین‌های کم‌استفاده را به فضاهای زیبا و کاربردی زندگی تبدیل می‌کنیم."
     },
     "cabinet": {
-      "title": "Cabinet Refacing",
-      "description": "Refresh your kitchen look with professional cabinet refacing services.",
-      "longDescription": "Give your kitchen a stunning new look without the cost of a full renovation. Our cabinet refacing services include new doors, drawer fronts, and hardware, transforming your kitchen's appearance while preserving your existing cabinet boxes."
+      "title": "روکش‌کاری مجدد کابینت",
+      "description": "ظاهر آشپزخانه خود را با خدمات حرفه‌ای روکش‌کاری مجدد کابینت تازه کنید.",
+      "longDescription": "بدون هزینه یک بازسازی کامل، ظاهری چشم‌نواز و جدید به آشپزخانه خود ببخشید. خدمات روکش‌کاری مجدد کابینت ما شامل دربچه‌های جدید، روی کشوها و یراق‌آلات است که ظاهر آشپزخانه شما را متحول می‌کند، در حالی که جعبه‌های موجود کابینت حفظ می‌شوند."
     },
     "commercial": {
-      "title": "Commercial Renovation",
-      "description": "Professional commercial space renovations for offices, retail, and restaurants.",
-      "longDescription": "Elevate your business space with our commercial renovation expertise. We handle office build-outs, retail store renovations, restaurant redesigns, and more, delivering professional results that enhance your brand and customer experience."
+      "title": "بازسازی فضاهای تجاری",
+      "description": "بازسازی حرفه‌ای فضاهای تجاری برای دفاتر، فروشگاه‌ها و رستوران‌ها.",
+      "longDescription": "فضای کسب‌وکار خود را با تخصص ما در بازسازی تجاری ارتقا دهید. ما تجهیز و طراحی دفاتر، بازسازی فروشگاه‌ها، طراحی مجدد رستوران‌ها و موارد دیگر را مدیریت می‌کنیم و نتایجی حرفه‌ای ارائه می‌دهیم که برند و تجربه مشتری شما را ارتقا می‌بخشد."
     },
-    "hubTitle": "Our Services",
-    "hubSubtitle": "Professional renovation solutions for every space",
-    "getQuoteForService": "Get a Quote for {service}",
+    "hubTitle": "خدمات ما",
+    "hubSubtitle": "راهکارهای حرفه‌ای بازسازی برای هر فضا",
+    "getQuoteForService": "دریافت پیش‌فاکتور برای {service}",
     "realtor": {
-      "title": "Realtor Consultation",
-      "shortTitle": "Realtor"
+      "title": "مشاوره مشاور املاک",
+      "shortTitle": "مشاور املاک"
     }
   }
 }

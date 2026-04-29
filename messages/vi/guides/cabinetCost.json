@@ -1,0 +1,118 @@
+{
+  "cabinetCost": {
+    "breadcrumb": "Chi Phí Sơn Lại Tủ",
+    "hero": {
+      "title": "Chi Phí Sơn Lại & Thay Mặt Tủ Tại Vancouver BC (2026)",
+      "subtitle": "Hướng dẫn đầy đủ về chi phí sơn lại tủ, thay mặt tủ và thay tủ khắp Greater Vancouver. Dựa trên kinh nghiệm hoàn thành các dự án cải tạo phòng bếp với tủ đặt đóng khắp khu vực."
+    },
+    "stats": {
+      "avgCost": "Sơn Lại Trung Bình",
+      "range": "Khoảng Giá",
+      "savings": "So Với Thay Mới",
+      "savingsValue": "Tiết kiệm 50–70%",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "3–5 ngày"
+    },
+    "tiers": {
+      "title": "Tùy Chọn Cập Nhật Tủ Theo Chi Phí",
+      "subtitle": "Ba cách tiếp cận để cập nhật tủ bếp của bạn tại Greater Vancouver",
+      "refinishing": {
+        "title": "Sơn Lại Tủ",
+        "description": "Đánh giấy nhám chuyên nghiệp, sơn lót và sơn lại hoặc nhuộm lại các cánh tủ và khung tủ hiện có. Tốt nhất cho tủ gỗ nguyên khối ở tình trạng kết cấu tốt. Cách tiết kiệm chi phí nhất để biến đổi phòng bếp."
+      },
+      "refacing": {
+        "title": "Thay Mặt Tủ",
+        "description": "Thay cánh tủ và mặt ngăn kéo trong khi giữ lại khung tủ hiện có. Bao gồm veneer mới trên các bề mặt nhìn thấy được và phụ kiện mới. Tùy chọn tầm trung mang lại diện mạo hoàn toàn mới mà không cần tháo dỡ toàn bộ."
+      },
+      "fullReplacement": {
+        "title": "Thay Tủ Hoàn Toàn",
+        "description": "Tháo bỏ và lắp đặt tủ mới hoàn toàn. Chọn từ tủ có sẵn, bán đặt đóng hoặc đặt đóng hoàn toàn. Tốt nhất khi tủ bị hư hỏng kết cấu hoặc bạn muốn thay đổi hoàn toàn bố cục phòng bếp."
+      }
+    },
+    "comparison": {
+      "title": "Sơn Lại So Với Thay Mới: Cái Nào Phù Hợp Với Bạn?",
+      "subtitle": "Hiểu rõ các đánh đổi giúp bạn đưa ra quyết định tốt nhất cho phòng bếp và ngân sách của mình",
+      "refinishing": {
+        "title": "Sơn Lại / Thay Mặt",
+        "pro1": "Rẻ hơn 50–70% so với thay mới",
+        "pro2": "Hoàn thành trong 3–5 ngày với gián đoạn tối thiểu",
+        "pro3": "Thân thiện với môi trường, giữ tủ hiện có khỏi bãi rác",
+        "con1": "Không thể thay đổi bố cục hoặc cấu hình tủ"
+      },
+      "replacement": {
+        "title": "Thay Mới Hoàn Toàn",
+        "pro1": "Tùy chỉnh hoàn toàn bố cục, kích thước và cấu hình",
+        "pro2": "Giải quyết các vấn đề kết cấu và hư hỏng do nước",
+        "pro3": "Tính năng hiện đại như đóng êm và ngăn kéo trượt",
+        "con1": "2–4 tuần thi công và chi phí cao hơn"
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Sơn Lại Tủ?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "cabinetCount": {
+        "title": "Số Lượng Tủ",
+        "description": "Một phòng bếp Vancouver điển hình có 20–30 cánh tủ và mặt ngăn kéo. Càng nhiều cánh tủ, càng nhiều nhân công và vật tư. Hãy chuẩn bị trả $150–$300 mỗi cánh để sơn lại chuyên nghiệp."
+      },
+      "material": {
+        "title": "Vật Liệu Tủ",
+        "description": "Tủ gỗ nguyên khối sơn lại đẹp. Tủ MDF và thermofoil yêu cầu kỹ thuật khác và có thể tốn nhiều hơn. Tủ laminate cần sơn lót bám dính đặc biệt cho kết quả bền lâu."
+      },
+      "finishType": {
+        "title": "Loại Hoàn Thiện",
+        "description": "Sơn lại cơ bản tốn ít hơn các hoàn thiện đặc biệt. Nhuộm, men hoặc giả cũ thêm $500–$1,500 vào dự án. Thiết kế tủ hai tông màu phổ biến nhưng yêu cầu thêm nhân công."
+      },
+      "hardware": {
+        "title": "Nâng Cấp Phụ Kiện",
+        "description": "Tay nắm, núm và bản lề mới có thể thêm $300–$2,000 tùy chất lượng. Nâng cấp lên bản lề đóng êm rất được khuyến nghị và thường có giá $5–$15 mỗi bản lề đã lắp."
+      },
+      "kitchenSize": {
+        "title": "Kích Thước & Khả Năng Tiếp Cận Phòng Bếp",
+        "description": "Phòng bếp lớn hơn với tủ trên và dưới, tủ đứng và tủ đảo tốn nhiều hơn. Tủ khó tiếp cận hoặc chi tiết khuôn phức tạp tăng thời gian nhân công."
+      },
+      "condition": {
+        "title": "Tình Trạng Tủ Hiện Tại",
+        "description": "Tủ với hư hỏng do nước, bong tróc lớp ngoài hoặc vấn đề kết cấu có thể cần sửa chữa trước khi sơn lại. Hư hỏng đáng kể có thể làm cho việc sơn lại không thực tế — thay mặt hoặc thay mới trở thành lựa chọn tốt hơn."
+      }
+    },
+    "realProjects": {
+      "title": "Các Dự Án Phòng Bếp Liên Quan Có Công Việc Tủ",
+      "subtitle": "Duyệt qua các dự án cải tạo phòng bếp đã hoàn thành của chúng tôi với tủ đặt đóng khắp Greater Vancouver"
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cập Nhật Tủ",
+      "tip1": {
+        "title": "Cân Nhắc Sơn Lại Trước",
+        "description": "Nếu khung tủ của bạn còn vững chắc về kết cấu, sơn lại tiết kiệm 50–70% so với thay mới. Một công việc sơn chuyên nghiệp trên tủ gỗ nguyên khối có thể bền 10–15 năm với chăm sóc đúng cách."
+      },
+      "tip2": {
+        "title": "Cập Nhật Phụ Kiện Để Tạo Tác Động Tức Thì",
+        "description": "Tay nắm và núm mới là nâng cấp dễ nhất và rẻ nhất. Phụ kiện hiện đại trên tủ vừa sơn mới có thể làm cho phòng bếp của bạn trông hoàn toàn được cải tạo với một phần nhỏ chi phí."
+      },
+      "tip3": {
+        "title": "Chọn Hoàn Thiện Bền",
+        "description": "Đầu tư vào sơn tủ hoặc sơn mài chất lượng cao. Benjamin Moore Advance hoặc các hoàn thiện cấp tủ tương tự tốn nhiều hơn từ đầu nhưng chống bong tróc và ố vàng tốt hơn nhiều so với sơn tường tiêu chuẩn."
+      },
+      "tip4": {
+        "title": "Gói Chung Với Cải Tạo Phòng Bếp",
+        "description": "Nếu bạn đã đang lên kế hoạch cải tạo phòng bếp, gói chung công việc tủ với cập nhật mặt bàn và ốp tường thường mang lại giá tổng tốt hơn và thiết kế đồng nhất hơn."
+      }
+    },
+    "faq": {
+      "q1": "Sơn lại tủ tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Sơn lại tủ tại Vancouver thường có giá $4,000 đến $8,000 cho một phòng bếp tiêu chuẩn với 20–30 cánh. Bao gồm đánh giấy nhám chuyên nghiệp, sơn lót và sơn với hoàn thiện cấp tủ. Chi phí thay đổi tùy kích thước phòng bếp, số lượng cánh và độ phức tạp của hoàn thiện.",
+      "q2": "Sơn lại tủ mất bao lâu?",
+      "a2": "Sơn lại tủ chuyên nghiệp thường mất 3 đến 5 ngày cho một phòng bếp tiêu chuẩn. Quá trình bao gồm tháo cánh, đánh giấy nhám, sơn lót, áp dụng nhiều lớp sơn hoặc nhuộm và lắp lại với phụ kiện mới. Bạn có thể sử dụng phòng bếp trong hầu hết quá trình.",
+      "q3": "Sơn lại tủ có đáng không hay nên thay mới?",
+      "a3": "Sơn lại tủ đáng giá khi tủ hiện có của bạn còn vững chắc về kết cấu và bạn hài lòng với bố cục. Tốn ít hơn 50–70% so với thay mới và mất ngày thay vì tuần. Chỉ thay tủ nếu chúng có hư hỏng do nước đáng kể, vấn đề kết cấu hoặc bạn cần thay đổi bố cục phòng bếp.",
+      "q4": "Sự khác biệt giữa sơn lại tủ và thay mặt tủ là gì?",
+      "a4": "Sơn lại nghĩa là đánh giấy nhám và sơn lại hoặc nhuộm lại các cánh tủ và khung hiện có. Thay mặt thay cánh và mặt ngăn kéo hoàn toàn trong khi giữ khung tủ hiện có, thêm veneer mới vào bề mặt nhìn thấy. Thay mặt tốn nhiều hơn ($8,000–$15,000) nhưng mang lại sự biến đổi ấn tượng hơn.",
+      "q5": "Bạn có thể sơn lại tủ laminate hoặc thermofoil không?",
+      "a5": "Có, nhưng cần chuẩn bị đặc biệt. Tủ laminate cần đánh nhẵn kỹ và sơn lót liên kết để sơn bám đúng cách. Tủ thermofoil có thể sơn được nhưng thermofoil có thể bong theo thời gian. Đối với các vật liệu này, thay mặt với cánh gỗ nguyên khối hoặc MDF mới thường là khoản đầu tư dài hạn tốt hơn."
+    },
+    "cta": {
+      "heading": "Nhận Báo Giá Sơn Lại Tủ Miễn Phí",
+      "subtitle": "Hãy cho chúng tôi biết về dự án tủ của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."
+    }
+  }
+}

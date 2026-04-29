@@ -1,0 +1,42 @@
+{
+  "index": {
+    "hero": {
+      "title": "Renovation Cost Guides",
+      "subtitle": "Totoong pricing base sa totoong projects na natapos namin sa buong Greater Vancouver. Walang guesswork. Totoong data lang."
+    },
+    "kitchen": {
+      "title": "Kitchen Renovation Cost",
+      "description": "Kompletong breakdown ng kitchen renovation costs sa Vancouver, mula budget-friendly updates hanggang high-end transformations."
+    },
+    "bathroom": {
+      "title": "Bathroom Renovation Cost",
+      "description": "Kompletong breakdown ng bathroom renovation costs sa Greater Vancouver area, mula sa single-bathroom refresh hanggang multi-bathroom projects."
+    },
+    "wholeHouse": {
+      "title": "Whole House Renovation Cost",
+      "description": "Full-home renovation pricing kasama ang kitchen, bathrooms, flooring, at structural work."
+    },
+    "comingSoon": "Paparating na",
+    "readGuide": "Basahin ang Guide",
+    "cta": {
+      "heading": "Handa nang Simulan ang Iyong Renovation?",
+      "subtitle": "Kumuha ng libreng konsultasyon at tumpak na quote base sa iyong specific na project needs."
+    },
+    "basement": {
+      "title": "Basement Renovation Cost",
+      "description": "Kompletong breakdown ng basement renovation costs sa Greater Vancouver area, mula sa basic finishing hanggang sa full legal suite conversions."
+    },
+    "commercial": {
+      "title": "Commercial Renovation Cost",
+      "description": "Kompletong breakdown ng commercial renovation costs sa Greater Vancouver, mula maliit na office refresh hanggang full restaurant build-outs."
+    },
+    "cabinet": {
+      "title": "Cabinet Refinishing Cost",
+      "description": "Kompletong breakdown ng cabinet refinishing, refacing, at replacement costs sa Greater Vancouver."
+    },
+    "basementSuite": {
+      "title": "Basement Suite Cost",
+      "description": "Legal basement suite conversion costs, ROI analysis, at municipality-specific regulations para sa Metro Vancouver."
+    }
+  }
+}

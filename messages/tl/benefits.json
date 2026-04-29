@@ -1,64 +1,64 @@
 {
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Bakit Piliin ang Reno Stars",
+    "subtitle": "Ang pakikipagtulungan sa amin ay hindi lang tungkol sa pagtatapos ng renovation, ito ay tungkol sa paggawa ng buong proseso na malinaw, kontrolado, at stress-free.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "Itinayo sa Tiwala",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "title": "20+ Taong Industry Experience",
+          "description": "Nagdadala kami ng malalim na expertise. Hindi lang sa konstruksyon kundi sa pag-unawa kung saan nagkakamali ang renovation projects, at kung paano ito iwasan mula sa simula."
         },
         "coverage": {
           "title": "$5M CGL Insurance · Active WCB Coverage",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "description": "Komprehensibong insurance coverage ang nagpoprotekta sa iyong property at sinisigurong fully covered ang bawat manggagawa sa site."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "title": "Tunay na 5-Star Reviews",
+          "description": "Pangmatagalang client satisfaction na naka-back up ng totoong projects at totoong karanasan, hindi one-off na promotion."
         },
         "team": {
-          "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "title": "Stable at Professional na Team",
+          "description": "Nagtatrabaho kami sa pare-parehong crew. Hindi temporary hires, sinisigurong stable ang quality sa bawat proyekto."
         },
         "service": {
           "title": "End-to-End Service",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "description": "Mula design hanggang final walkthrough, pinamamahalaan namin ang bawat hakbang. Mas konting coordination overhead, mas smooth na proseso."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "Bakit Pinipili Kami ng mga Kliyente",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "Maraming quote ang mukhang mura dahil hindi kasama ang mga key items.",
+          "solution": "Ina-list namin ang lahat sa simula, detalyadong scope, material responsibilities, at kung ano ang kasama. Alam mo ang totoong gastos bago ka magsimula."
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "Hindi dapat umaasa sa improvisation at suwerte ang renovation.",
+          "solution": "Pinapatakbo namin ang proyekto sa pamamagitan ng structured system na may malinaw na stages, inspections, at payment milestones. Bawat hakbang ay tinatapos bago lumipat sa susunod."
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "Karamihan sa renovation frustrations ay galing sa hindi maayos na komunikasyon.",
+          "solution": "May dedicated office team kami na mabilis sumagot, tumutulong sa material selection, at pinapanatiling updated ka, walang 'nagpadala ng message, walang sagot' moments."
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "May mga contractor na nag-o-overbook at patuloy na sumisira ang iyong timeline.",
+          "solution": "Kontrolado namin ang aming project load para sigurong umuusad ang sa iyo ayon sa plano. Kapag may delay (suppliers, atbp.), maaga kaming nagko-komunikasyon at nag-a-adjust nang transparent."
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "Hindi dapat depende sa kung anong crew ang dumating ang quality.",
+          "solution": "Gumagamit kami ng fixed team na may malinaw na standards, lalo na sa critical work tulad ng waterproofing, kung saan tinutukoy nang maaga ang materyales at application scope."
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "Stressful ang renovation kapag laging humahabol ka ng update.",
+          "solution": "Ginagawa naming predictable ang buong proseso: alam mo kung ano ang nangyayari ngayon, kung ano ang susunod, at kailan asahan, nang hindi kailangang mag-follow up."
         }
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "Handa nang Simulan ang Iyong Project?",
+      "subtitle": "Maranasan ang pagkakaiba ng renovation process na ginawa sa paligid ng transparency, malinaw na komunikasyon, at iyong peace of mind."
     }
   }
 }

@@ -1,14 +1,14 @@
 {
   "modal": {
-    "location": "Location",
-    "category": "Category",
+    "location": "Lokasyon",
+    "category": "Kategorya",
     "budget": "Budget Range",
-    "spaceType": "Space Type",
+    "spaceType": "Uri ng Espasyo",
     "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "duration": "Tagal",
+    "challenge": "Ang Hamon",
+    "solution": "Aming Solusyon",
+    "close": "Isara",
+    "viewDetails": "Tingnan ang Buong Detalye"
   }
 }

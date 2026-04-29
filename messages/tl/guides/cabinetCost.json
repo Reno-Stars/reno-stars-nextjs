@@ -1,0 +1,118 @@
+{
+  "cabinetCost": {
+    "breadcrumb": "Cabinet Refinishing Cost",
+    "hero": {
+      "title": "Cabinet Refinishing at Refacing Cost sa Vancouver BC (2026)",
+      "subtitle": "Kompletong guide sa cabinet refinishing, refacing, at replacement costs sa buong Greater Vancouver. Base sa aming karanasan sa pagkumpleto ng kitchen renovations na may custom cabinetry sa buong rehiyon."
+    },
+    "stats": {
+      "avgCost": "Avg. Refinishing",
+      "range": "Price Range",
+      "savings": "vs. Replacement",
+      "savingsValue": "Mag-save ng 50–70%",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "3–5 araw"
+    },
+    "tiers": {
+      "title": "Cabinet Update Options ayon sa Cost",
+      "subtitle": "Tatlong approach sa pag-update ng iyong kitchen cabinets sa Greater Vancouver",
+      "refinishing": {
+        "title": "Cabinet Refinishing",
+        "description": "Professional sanding, priming, at repainting o restaining ng existing cabinet doors at frames. Pinakamagaling para sa solid wood cabinets sa magandang structural condition. Ang pinaka-cost-effective na paraan para baguhin ang iyong kitchen."
+      },
+      "refacing": {
+        "title": "Cabinet Refacing",
+        "description": "Pagpapalit ng cabinet doors at drawer fronts habang pinapanatili ang existing cabinet boxes. Kasama ang bagong veneer sa visible surfaces at bagong hardware. Mid-range option na nagbibigay ng kompletong bagong itsura nang walang full demolition."
+      },
+      "fullReplacement": {
+        "title": "Full Cabinet Replacement",
+        "description": "Kompletong removal at installation ng bagong cabinets. Pumili sa stock, semi-custom, o fully custom options. Pinakamagaling kapag ang cabinets ay structurally damaged o gusto mong baguhin ang kitchen layout."
+      }
+    },
+    "comparison": {
+      "title": "Refinishing vs. Replacement: Alin ang Tama Para sa Iyo?",
+      "subtitle": "Ang pag-unawa sa trade-offs ay tumutulong sa iyo gumawa ng pinakamagandang desisyon para sa iyong kitchen at budget",
+      "refinishing": {
+        "title": "Refinishing / Refacing",
+        "pro1": "50–70% mas mura kaysa replacement",
+        "pro2": "Natatapos sa 3–5 araw na may minimal disruption",
+        "pro3": "Eco-friendly, pinapanatili ang existing cabinets sa labas ng landfill",
+        "con1": "Hindi mababago ang cabinet layout o configuration"
+      },
+      "replacement": {
+        "title": "Full Replacement",
+        "pro1": "Kompletong i-customize ang layout, size, at configuration",
+        "pro2": "I-address ang structural issues at water damage",
+        "pro3": "Modernong features tulad ng soft-close at pull-out organizers",
+        "con1": "2–4 na linggo ng konstruksyon at mas mataas na cost"
+      }
+    },
+    "factors": {
+      "title": "Ano ang Apektado sa Iyong Cabinet Refinishing Cost?",
+      "subtitle": "Anim na key factors na nagde-determine sa final price",
+      "cabinetCount": {
+        "title": "Bilang ng Cabinets",
+        "description": "Ang typical Vancouver kitchen ay may 20–30 cabinet doors at drawer fronts. Mas maraming doors, mas maraming labour at materyales. Asahan na magbabayad ng $150–$300 per door para sa professional refinishing."
+      },
+      "material": {
+        "title": "Cabinet Material",
+        "description": "Ang solid wood cabinets ay nag-rerefinish nang maganda. Ang MDF at thermofoil cabinets ay nangangailangan ng iba't ibang techniques at maaaring mas magastos. Ang laminate cabinets ay nangangailangan ng special adhesion primers para sa pangmatagalang resulta."
+      },
+      "finishType": {
+        "title": "Finish Type",
+        "description": "Ang basic paint refinishing ay mas mura kaysa specialty finishes. Ang staining, glazing, o distressed looks ay nagdadagdag ng $500–$1,500 sa project. Ang two-tone cabinet designs ay popular pero nangangailangan ng dagdag na labour."
+      },
+      "hardware": {
+        "title": "Hardware Upgrades",
+        "description": "Ang bagong handles, knobs, at hinges ay maaaring magdagdag ng $300–$2,000 depende sa quality. Ang pag-upgrade sa soft-close hinges ay highly recommended at karaniwang $5–$15 bawat hinge installed."
+      },
+      "kitchenSize": {
+        "title": "Kitchen Size at Accessibility",
+        "description": "Ang mas malaking kitchen na may upper at lower cabinets, pantry units, at island cabinets ay mas magastos. Ang mga hard-to-reach cabinets o intricate moulding details ay nagpapataas ng labour time."
+      },
+      "condition": {
+        "title": "Current Cabinet Condition",
+        "description": "Ang cabinets na may water damage, delamination, o structural issues ay maaaring mangailangan ng repairs bago mag-refinish. Ang malaking damage ay maaaring gawing impractical ang refinishing, ang refacing o replacement ay nagiging mas magandang option."
+      }
+    },
+    "realProjects": {
+      "title": "Kaugnay na Kitchen Projects na may Cabinet Work",
+      "subtitle": "Mag-browse sa aming natapos na kitchen renovations na nagtatampok ng custom cabinetry sa buong Greater Vancouver"
+    },
+    "tips": {
+      "title": "Money-Saving Tips para sa Cabinet Updates",
+      "tip1": {
+        "title": "Mag-isip ng Refinishing Muna",
+        "description": "Kung ang iyong cabinet boxes ay structurally sound, ang refinishing ay nag-save ng 50–70% kumpara sa replacement. Ang professional paint job sa solid wood cabinets ay maaaring tumagal ng 10–15 taon na may tamang care."
+      },
+      "tip2": {
+        "title": "I-update ang Hardware para sa Instant Impact",
+        "description": "Ang bagong handles at knobs ay ang pinakamadali at pinakamurang upgrade. Ang modernong hardware sa freshly painted cabinets ay maaaring gawing mukhang kompletong na-renovate ang iyong kitchen sa fraction of the cost."
+      },
+      "tip3": {
+        "title": "Pumili ng Durable Finishes",
+        "description": "Mag-invest sa high-quality cabinet paint o lacquer. Ang Benjamin Moore Advance o katulad na cabinet-grade finishes ay mas mahal sa simula pero resistant sa chipping at yellowing nang mas mahusay kaysa sa standard wall paint."
+      },
+      "tip4": {
+        "title": "Mag-bundle sa Kitchen Renovation",
+        "description": "Kung nag-plano ka na ng kitchen renovation, ang pag-bundle ng cabinet work sa countertop at backsplash updates ay madalas na nagreresulta sa mas magandang overall pricing at mas cohesive na design."
+      }
+    },
+    "faq": {
+      "q1": "Magkano ang cabinet refinishing sa Vancouver?",
+      "a1": "Ang cabinet refinishing sa Vancouver ay karaniwang $4,000 hanggang $8,000 para sa standard kitchen na may 20–30 doors. Kasama dito ang professional sanding, priming, at painting na may cabinet-grade finish. Iba-iba ang cost base sa kitchen size, bilang ng doors, at finish complexity.",
+      "q2": "Gaano katagal ang cabinet refinishing?",
+      "a2": "Karaniwang 3 hanggang 5 araw ang professional cabinet refinishing para sa standard kitchen. Kasama sa proseso ang pagtanggal ng doors, sanding, priming, paglagay ng maraming coats ng paint o stain, at reinstalling na may bagong hardware. Pwede mong gamitin ang iyong kitchen sa karamihan ng proseso.",
+      "q3": "Sulit ba ang cabinet refinishing o dapat akong mag-replace?",
+      "a3": "Sulit ang cabinet refinishing kapag ang iyong existing cabinets ay structurally sound at masaya ka sa layout. 50–70% mas mura ito kaysa replacement at araw lang ang oras kaysa linggo. Mag-replace ng cabinets lang kapag may significant water damage, structural issues, o kailangan mong baguhin ang kitchen layout.",
+      "q4": "Ano ang pagkakaiba ng cabinet refinishing at refacing?",
+      "a4": "Ang refinishing ay nangangahulugan ng sanding at repainting o restaining ng existing cabinet doors at frames. Ang refacing ay pinapalitan ang doors at drawer fronts nang buo habang pinapanatili ang existing cabinet boxes, nagdadagdag ng bagong veneer sa visible surfaces. Mas mahal ang refacing ($8,000–$15,000) pero nagbibigay ng mas dramatic transformation.",
+      "q5": "Pwede ba ninyong i-refinish ang laminate o thermofoil cabinets?",
+      "a5": "Oo, pero kailangan ng special preparation. Ang laminate cabinets ay nangangailangan ng thorough deglossing at bonding primer para mag-adhere ng paint nang maayos. Ang thermofoil cabinets ay maaaring i-paint pero ang thermofoil ay maaaring matuklap sa paglipas ng panahon. Para sa mga material na ito, ang refacing na may bagong solid wood o MDF doors ay madalas na mas magandang long-term investment."
+    },
+    "cta": {
+      "heading": "Kumuha ng Iyong Libreng Cabinet Refinishing Quote",
+      "subtitle": "Sabihin sa amin ang tungkol sa iyong cabinet project at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."
+    }
+  }
+}

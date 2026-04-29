@@ -1,0 +1,100 @@
+{
+  "commercialCost": {
+    "breadcrumb": "Costo de remodelación comercial",
+    "hero": {
+      "title": "Costo de remodelación comercial en Vancouver BC (2026)",
+      "subtitle": "¿Cuánto cuesta realmente una remodelación comercial en Greater Vancouver? Desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes, aquí están los números reales basados en nuestra experiencia."
+    },
+    "stats": {
+      "avgCost": "Costo promedio",
+      "range": "Rango de precio",
+      "sqft": "Costo por pie cuadrado",
+      "sqftValue": "$75-$300/pie cuadrado",
+      "timeline": "Plazo típico",
+      "timelineValue": "8 a 20 semanas"
+    },
+    "tiers": {
+      "title": "Costo de remodelación comercial por alcance",
+      "subtitle": "Precios típicos para proyectos comerciales en Greater Vancouver",
+      "budget": {
+        "title": "Renovación pequeña de retail/oficina",
+        "description": "Pintura fresca, nuevos pisos, iluminación actualizada, mejoras básicas de accesorios y cambios menores de distribución. Ideal para tiendas pequeñas, oficinas profesionales y espacios de coworking que necesitan una actualización moderna sin trabajo estructural."
+      },
+      "midRange": {
+        "title": "Construcción comercial completa",
+        "description": "Construcción interior completa incluyendo nuevas paredes, ebanistería a medida, zonas de HVAC mejoradas, pisos de grado comercial, diseño moderno de iluminación y actualizaciones eléctricas completas. Adecuado para oficinas medianas, tiendas y clínicas."
+      },
+      "highEnd": {
+        "title": "Restaurante/Médico/Retail premium",
+        "description": "Remodelación a gran escala con instalación de cocina comercial, ventilación especializada, accesorios a medida, acabados premium, plomería extensa y requisitos de permisos complejos. Incluye restaurantes, clínicas dentales, oficinas médicas y espacios retail insignia."
+      }
+    },
+    "factors": {
+      "title": "¿Qué afecta el costo de su remodelación comercial?",
+      "subtitle": "Seis factores clave que determinan su precio final",
+      "permits": {
+        "title": "Permisos y zonificación",
+        "description": "Los permisos comerciales en Metro Vancouver cuestan $2,000-$15,000 dependiendo del alcance y municipio. Las solicitudes de cambio de uso agregan $3,000-$8,000. El proceso de permiso de desarrollo de la Ciudad de Vancouver puede tomar 8-16 semanas, así que considere costos de tiempo."
+      },
+      "hvac": {
+        "title": "HVAC y sistemas mecánicos",
+        "description": "El HVAC comercial es un factor de costo importante con $15,000-$80,000+. Solo los sistemas de campana y aire de reposición de restaurante cuestan $20,000-$50,000. Los espacios de oficina necesitan zonificación adecuada para la comodidad del inquilino. El código de energía de Vancouver requiere sistemas de alta eficiencia."
+      },
+      "fireSafety": {
+        "title": "Seguridad contra incendios y rociadores",
+        "description": "Los sistemas de rociadores contra incendios cuestan $3-$8 por pie cuadrado para instalar o modificar. Las actualizaciones de alarma de incendio van de $5,000-$20,000. El cambio de uso desencadena una revisión completa del cumplimiento del código contra incendios. Los restaurantes y espacios de reunión tienen los requisitos más estrictos."
+      },
+      "accessibility": {
+        "title": "Cumplimiento de accesibilidad",
+        "description": "El código de construcción de BC requiere acceso sin barreras para espacios comerciales. Baños accesibles, rampas, anchos de puerta y señalización agregan $5,000-$25,000. Los edificios patrimoniales en Vancouver a menudo necesitan soluciones creativas para cumplir con los estándares de accesibilidad."
+      },
+      "electrical": {
+        "title": "Eléctrico e infraestructura de TI",
+        "description": "Las actualizaciones eléctricas comerciales cuestan $10,000-$50,000+ dependiendo de la capacidad de servicio. Los restaurantes necesitan servicios de 200-400 amperios. Las oficinas modernas requieren cableado estructurado ($3,000-$15,000), enfriamiento de sala de servidores y circuitos dedicados para equipos."
+      },
+      "disruption": {
+        "title": "Tiempo del proyecto e interrupción del negocio",
+        "description": "Trabajar alrededor del horario comercial aumenta los costos 15-25%. Muchos inquilinos comerciales de Vancouver remodelan durante transiciones de arrendamiento. El trabajo después del horario agrega costos premium de mano de obra. Un plan de remodelación por fases puede mantener partes del negocio operativas durante la construcción."
+      }
+    },
+    "realProjects": {
+      "title": "Nuestros proyectos de remodelación comercial",
+      "subtitle": "Explore {count} proyectos comerciales completados en Greater Vancouver"
+    },
+    "tips": {
+      "title": "Consejos para ahorrar en remodelaciones comerciales",
+      "tip1": {
+        "title": "Planificar durante negociaciones de arrendamiento",
+        "description": "Negocie una asignación de mejora del inquilino (TIA) con su arrendador. Muchos arrendamientos comerciales en Vancouver incluyen $20-$80 por pie cuadrado en TIA que puede compensar significativamente los costos de remodelación."
+      },
+      "tip2": {
+        "title": "Realizar la remodelación por fases",
+        "description": "Divida el proyecto en fases para distribuir costos y minimizar la interrupción del negocio. Priorice primero las áreas orientadas al cliente, luego aborde las mejoras de la parte trasera en una segunda fase."
+      },
+      "tip3": {
+        "title": "Reutilizar infraestructura existente",
+        "description": "Mantenga la plomería y el eléctrico en ubicaciones existentes cuando sea posible. Mover una cocina comercial o baño puede agregar $20,000-$50,000 solo en costos de ruteo."
+      },
+      "tip4": {
+        "title": "Elegir materiales duraderos de grado comercial",
+        "description": "Invierta en pisos, accesorios y acabados de grado comercial. El mayor costo inicial ahorra dinero a largo plazo. El LVT comercial dura 15-20 años vs. 5-8 años para productos de grado residencial en espacios de alto tráfico."
+      }
+    },
+    "cta": {
+      "heading": "Reciba su cotización gratis de remodelación comercial",
+      "subtitle": "Cuéntenos sobre su proyecto comercial y reciba una estimación detallada en menos de 48 horas, sin compromiso."
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta una remodelación comercial en Vancouver?",
+      "a1": "Los costos de remodelación comercial en Vancouver típicamente van de $50,000 para una pequeña renovación de oficina a más de $1,000,000 para una construcción completa de restaurante o instalación médica. La remodelación comercial promedio cuesta alrededor de $250,000. El costo por pie cuadrado va de $75 a $300 dependiendo del tipo de negocio, alcance del trabajo y nivel de acabado.",
+      "q2": "¿Cuánto tarda una remodelación comercial en Vancouver?",
+      "a2": "La mayoría de las remodelaciones comerciales en Vancouver toman de 8 a 20 semanas dependiendo del alcance. Una renovación básica de oficina se puede completar en 8-10 semanas, mientras que una construcción completa de restaurante o conversión de clínica médica típicamente toma 16-20 semanas incluyendo aprobaciones de permisos e inspecciones.",
+      "q3": "¿Necesito un permiso para una remodelación comercial en Vancouver?",
+      "a3": "Sí, casi todas las remodelaciones comerciales en Metro Vancouver requieren permisos de construcción. Cualquier trabajo que involucre cambios estructurales, eléctrico, plomería, HVAC o sistemas de seguridad contra incendios necesita permisos. Las solicitudes de cambio de uso son requeridas al convertir entre tipos de negocio. Los costos de permisos van de $2,000 a $15,000 dependiendo del alcance y municipio.",
+      "q4": "¿Cuál es el costo por pie cuadrado para una remodelación comercial en Vancouver?",
+      "a4": "Los costos de remodelación comercial en Vancouver van de $75 a $300 por pie cuadrado. Las renovaciones básicas de oficina van de $75-$120/pie cuadrado, las construcciones de gama media de retail u oficina cuestan $120-$200/pie cuadrado, y los espacios especializados como restaurantes o clínicas médicas van de $200-$300+ por pie cuadrado debido a requisitos mecánicos, de plomería y ventilación complejos.",
+      "q5": "¿Puedo remodelar mi espacio comercial mientras permanezco abierto al negocio?",
+      "a5": "Sí, las remodelaciones por fases permiten que muchos negocios de Vancouver permanezcan operativos durante la construcción. Creamos planes detallados de fases que separan las áreas de trabajo mientras mantienen accesibles los espacios orientados al cliente. El trabajo después del horario y los fines de semana también es una opción, aunque agrega 15-25% a los costos de mano de obra. Muchos de nuestros clientes eligen remodelar durante temporadas bajas estacionales para minimizar el impacto."
+    }
+  }
+}

@@ -1,105 +1,105 @@
 {
   "nearMe": {
-    "breadcrumb": "Renovation Near Me",
+    "breadcrumb": "Cải Tạo Gần Tôi",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "Phục vụ Metro Vancouver từ năm 2020",
+      "h1": "Đang tìm công ty cải tạo gần bạn?",
+      "subtitle": "Reno Stars phục vụ Vancouver và 14 thành phố Metro Vancouver với đội thợ cải tạo nhà có giấy phép, có bảo hiểm. Cải tạo phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà — một đội ngũ địa phương từ thiết kế đến bàn giao, không phải sàn giao dịch.",
+      "ctaPrimary": "Nhận báo giá miễn phí"
     },
     "trust": {
       "reviews": {
         "stat": "70+",
-        "label": "Google 5★ reviews"
+        "label": "Đánh giá Google 5★"
       },
       "insured": {
         "stat": "$5M",
-        "label": "Liability + WCB"
+        "label": "Bảo hiểm trách nhiệm + WCB"
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "Năm tại Vancouver"
       },
       "coverage": {
         "stat": "14",
-        "label": "Metro Vancouver cities"
+        "label": "Thành phố Metro Vancouver"
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "Khu vực dịch vụ cải tạo gần bạn",
+      "subtitle": "Chọn khu vực của bạn để xem hình ảnh dự án địa phương, khoảng giá và đội thợ đã làm việc trong khu vực của bạn."
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "Chúng tôi cải tạo gì gần bạn",
+      "learnMore": "Tìm hiểu thêm",
       "kitchen": {
-        "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "title": "Cải tạo phòng bếp gần tôi",
+        "desc": "Tủ bếp, mặt bàn quartz, ốp tường, sàn, điện. Làm mới tiết kiệm đến đặt đóng hoàn toàn. Thường 4-8 tuần, $25K-$90K."
       },
       "bathroom": {
-        "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "title": "Cải tạo phòng tắm gần tôi",
+        "desc": "Ốp gạch tường, chống thấm Schluter, vòi sen ốp gạch hoặc chuyển đổi từ bồn tắm sang vòi sen, tủ lavabo, phụ kiện. Thường 3-6 tuần, $15K-$45K."
       },
       "wholeHouse": {
-        "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "title": "Cải tạo toàn bộ nhà gần tôi",
+        "desc": "Sửa sang nội thất toàn bộ — phòng bếp, phòng tắm, sàn, sơn, chiếu sáng, đôi khi có kết cấu. 2-6 tháng, $80K-$400K+."
       },
       "basement": {
-        "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "title": "Cải tạo tầng hầm gần tôi",
+        "desc": "Chuyển đổi căn hộ, phòng gia đình, rạp chiếu phim tại nhà, phòng tắm. Cách tiếp cận ưu tiên giấy phép tại Vancouver, Burnaby, Richmond & các nơi khác."
       },
       "cabinet": {
-        "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "title": "Thay mặt tủ gần tôi",
+        "desc": "Lựa chọn tiết kiệm hơn so với thay tủ hoàn toàn — cánh tủ mới, phụ kiện và quartz cho cùng diện tích. 1-2 tuần, $8K-$20K."
       },
       "commercial": {
-        "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "title": "Cải tạo thương mại gần tôi",
+        "desc": "Nhà hàng, phòng khám, salon, bán lẻ. Có ý thức về giấy phép, lịch ngoài giờ, gián đoạn kinh doanh tối thiểu khắp Metro Vancouver."
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "Vì sao chọn Reno Stars cho dự án cải tạo gần bạn",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "Một đội ngũ địa phương — không phải sàn giao dịch",
+        "body": "Khác với các trang danh bạ chuyển bạn cho người lạ, mọi dự án Reno Stars đều được điều hành bởi đội thợ của chúng tôi. Cùng một PM từ báo giá đến bàn giao."
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "Có giấy phép, bảo hiểm, có bảo hiểm WCB",
+        "body": "Bảo hiểm trách nhiệm $5M và bảo hiểm WCB đang hiệu lực trên mọi công trình. Chúng tôi sẽ chia sẻ chứng nhận trước khi bắt đầu công việc."
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "Báo giá minh bạch, không bất ngờ",
+        "body": "Báo giá bằng văn bản chi tiết với thông số vật liệu thực. Đơn thay đổi chỉ khi bạn duyệt. Bảo hành tay nghề 3 năm."
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "title": "Dịch vụ song ngữ (tiếng Anh + tiếng Quan thoại)",
+        "body": "Quản lý dự án và kinh doanh nói cả tiếng Anh và tiếng Quan thoại. Hợp đồng, đơn thay đổi và cập nhật bằng ngôn ngữ bạn thích."
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "Danh mục dự án địa phương thực gần bạn",
+        "body": "Hàng trăm dự án khắp Vancouver, Richmond, Burnaby, Surrey, Coquitlam và hơn nữa. Chúng tôi sẽ chia sẻ hình ảnh + tham khảo từ khu vực của bạn."
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "heading": "Cải tạo gần tôi — Câu Hỏi Thường Gặp",
+      "q1": "Làm thế nào để tìm một công ty cải tạo đáng tin cậy gần tôi tại Vancouver?",
+      "a1": "Kiểm tra ba điều: giấy phép + bảo hiểm (yêu cầu chứng nhận, không phải lời hứa), đánh giá Google thực với số lượng đáng kể (100+ là có ý nghĩa, 10 thì chưa), và danh mục dự án từ khu vực của bạn. Reno Stars có hơn 70 đánh giá năm sao trên Google, bảo hiểm trách nhiệm $5M, bảo hiểm WCB và danh mục dự án ở mọi thành phố Metro Vancouver chúng tôi phục vụ.",
+      "q2": "Chi phí cải tạo phòng tắm hoặc phòng bếp gần tôi là bao nhiêu?",
+      "a2": "Tại Metro Vancouver, cải tạo phòng tắm thường dao động $15K-$45K và phòng bếp dao động $25K-$90K. Giá chính xác phụ thuộc vào diện tích, mức độ hoàn thiện và liệu có di chuyển tường không. Mọi báo giá Reno Stars đều chi tiết — nhân công, vật tư, giấy phép — để bạn thấy mỗi đồng đi đâu.",
+      "q3": "Cải tạo gần tôi mất bao lâu?",
+      "a3": "Phòng tắm: 3-6 tuần từ tháo dỡ đến bàn giao. Phòng bếp: 4-8 tuần. Toàn nhà: 2-6 tháng tùy phạm vi. Thay mặt tủ: 1-2 tuần. Chúng tôi cung cấp lịch trình theo tuần khi ký hợp đồng và cập nhật qua tin nhắn khi đạt mốc.",
+      "q4": "Bạn có xử lý giấy phép cho cải tạo gần tôi không?",
+      "a4": "Có. Đối với bất kỳ công việc nào di chuyển tường, đường ống hoặc điện, chúng tôi xin giấy phép qua đô thị thích hợp (Vancouver, Richmond, Burnaby, Surrey, v.v.). Công việc thẩm mỹ như sơn, sàn và thay mặt tủ thường không cần giấy phép — chúng tôi cho bạn biết câu trả lời trung thực trước khi báo giá.",
+      "q5": "Bạn có cung cấp ước tính miễn phí gần tôi không?",
+      "a5": "Có — tư vấn tại nhà miễn phí và báo giá bằng văn bản trên cả 14 thành phố Metro Vancouver chúng tôi phục vụ. Chúng tôi sẽ đo đạc, trao đổi vật tư, đi qua phạm vi và gửi báo giá chi tiết trong 2-3 ngày làm việc. Không cần đặt cọc để báo giá.",
+      "q6": "Bạn phục vụ những khu vực nào?",
+      "a6": "Chúng tôi đặt trụ sở tại Richmond BC và phục vụ Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster và White Rock. Nếu bạn ngoài khu vực này, hãy hỏi — chúng tôi đôi khi đi xa cho các dự án toàn nhà."
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "Sẵn sàng tìm đội cải tạo gần bạn?",
+      "subtitle": "Tư vấn tại nhà miễn phí, báo giá chi tiết bằng văn bản trong 2-3 ngày làm việc. Không cần đặt cọc để báo giá.",
+      "quote": "Nhận báo giá miễn phí",
+      "call": "Gọi 778-960-7999"
     }
   }
 }

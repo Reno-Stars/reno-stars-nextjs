@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "Hướng Dẫn Tài Chính & Ngân Sách",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "Hướng Dẫn Tài Chính & Ngân Sách Cải Tạo",
+      "subtitle": "Khám phá các lựa chọn tài chính và lập kế hoạch ngân sách cải tạo một cách thông minh. Dựa trên chi phí thực từ các dự án cải tạo đã hoàn thành của chúng tôi khắp Metro Vancouver."
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
-      "financingOptions": "Financing Options"
+      "avgKitchen": "Trung Bình Cải Tạo Bếp",
+      "avgBathroom": "Trung Bình Cải Tạo Phòng Tắm",
+      "financingOptions": "Lựa Chọn Tài Chính"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "Lựa Chọn Tài Chính Cho Cải Tạo Của Bạn",
+      "subtitle": "Những cách phổ biến nhất mà các chủ nhà Canada sử dụng để tài trợ dự án cải tạo tại British Columbia.",
       "heloc": {
-        "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "title": "Hạn Mức Tín Dụng Thế Chấp Nhà (HELOC)",
+        "rate": "Lãi suất điển hình: Prime + 0.5% đến 2%",
+        "description": "Vay dựa trên giá trị nhà của bạn với khoản vay linh hoạt. Chỉ trả lãi cho phần bạn sử dụng. Có sẵn từ hầu hết các ngân hàng và hợp tác xã tín dụng Canada.",
+        "pro": "✓ Lãi suất thấp",
+        "con": "✗ Cần có giá trị nhà"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "Vay Cá Nhân hoặc Hạn Mức Tín Dụng",
+        "rate": "Lãi suất điển hình: 6% – 12%",
+        "description": "Khoản vay không cần thế chấp từ ngân hàng hoặc hợp tác xã tín dụng. Không cần giá trị nhà. Trả góp cố định hàng tháng giúp dự đoán ngân sách dễ dàng.",
+        "pro": "✓ Không cần tài sản thế chấp",
+        "con": "✗ Lãi suất cao hơn"
       },
       "refinance": {
-        "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "title": "Tái Tài Trợ Thế Chấp",
+        "rate": "Lãi suất điển hình: Lãi suất thế chấp hiện tại",
+        "description": "Tái tài trợ thế chấp để bao gồm chi phí cải tạo. Trải đều chi phí qua thời hạn thế chấp. Có thể có phí phá vỡ hợp đồng nếu giữa kỳ.",
+        "pro": "✓ Lãi suất thấp nhất có thể",
+        "con": "✗ Có thể có phí phá hợp đồng"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
-        "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "title": "Tiết Kiệm & Cải Tạo Theo Giai Đoạn",
+        "rate": "Không có chi phí lãi",
+        "description": "Trả từ tiết kiệm hoặc chia cải tạo thành các giai đoạn. Hoàn thành từng phòng một để trải đều chi phí. Không nợ và không trả lãi.",
+        "pro": "✓ Không có chi phí lãi",
+        "con": "✗ Tiến độ kéo dài hơn"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
-      "bathroom": "Bathroom Renovation",
-      "kitchen": "Kitchen Renovation",
-      "basement": "Basement Renovation",
-      "wholeHouse": "Whole House Renovation",
-      "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "title": "Chi Phí Cải Tạo Điển Hình Tại Metro Vancouver",
+      "subtitle": "Dựa trên các dự án thực đã hoàn thành trong danh mục của chúng tôi.",
+      "bathroom": "Cải Tạo Phòng Tắm",
+      "kitchen": "Cải Tạo Phòng Bếp",
+      "basement": "Cải Tạo Tầng Hầm",
+      "wholeHouse": "Cải Tạo Toàn Bộ Nhà",
+      "commercial": "Cải Tạo Thương Mại",
+      "disclaimer": "* Khoảng giá dựa trên các dự án đã hoàn thành của chúng tôi tại Greater Vancouver. Chi phí thực tế thay đổi theo phạm vi, vật liệu và vị trí."
     },
     "tips": {
-      "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "title": "Mẹo Lập Kế Hoạch Ngân Sách",
+      "subtitle": "Các chiến lược thông minh để tận dụng tối đa khoản đầu tư cải tạo của bạn.",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "Ưu Tiên Khu Vực Tác Động Cao",
+        "description": "Phòng bếp và phòng tắm mang lại lợi tức đầu tư tốt nhất. Tập trung ngân sách vào những không gian quan trọng nhất cho sinh hoạt hàng ngày và giá trị bán lại."
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "Để Dành 10–15% Cho Phát Sinh",
+        "description": "Những phát hiện bất ngờ trong quá trình cải tạo là chuyện thường xảy ra — đường ống cũ, mốc ẩn hoặc vấn đề kết cấu. Quỹ dự phòng giúp tránh áp lực ngân sách."
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "Cân Nhắc Cải Tạo Theo Giai Đoạn",
+        "description": "Nếu tổng chi phí cải tạo vượt ngân sách, hãy ưu tiên và hoàn thành các phòng theo giai đoạn. Điều này trải đều chi phí mà vẫn đạt được mục tiêu."
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "Yêu Cầu Báo Giá Chi Tiết Bằng Văn Bản",
+        "description": "Luôn yêu cầu báo giá chi tiết từng hạng mục từ nhà thầu. So sánh phạm vi công việc, không chỉ tổng giá. Báo giá thấp hơn có thể đã loại bỏ các hạng mục bạn cần."
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "Dự Trù Ngân Sách Cho Giấy Phép & Kiểm Tra",
+        "description": "Giấy phép xây dựng tại Metro Vancouver thường có giá $200–$2,000+ tùy phạm vi. Bỏ qua giấy phép có thể gây ra những vấn đề tốn kém khi bán lại."
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "Suy Nghĩ Về Lợi Tức Đầu Tư",
+        "description": "Cải tạo phòng bếp có thể trả lại 75–100% chi phí khi bán lại. Cải tạo phòng tắm trả lại 60–70%. Căn hộ tầng hầm có thể tạo thu nhập cho thuê để bù đắp chi phí."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Các Câu Hỏi Thường Gặp"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "Tôi nên dự trù ngân sách bao nhiêu cho cải tạo tại Vancouver?",
+      "a1": "Ngân sách phụ thuộc vào phạm vi: cải tạo phòng tắm dao động từ $10,000–$60,000, phòng bếp từ $15,000–$72,000, và dự án toàn bộ nhà từ $50,000+. Chúng tôi cung cấp ước tính chi tiết miễn phí dựa trên nhu cầu cụ thể của bạn.",
+      "q1Answer": "Ngân sách phụ thuộc vào phạm vi: cải tạo phòng tắm dao động từ $10,000–$60,000, phòng bếp từ $15,000–$72,000, và dự án toàn bộ nhà từ $50,000+. Chúng tôi cung cấp ước tính chi tiết miễn phí dựa trên nhu cầu cụ thể của bạn.",
+      "q2": "Tôi có thể cải tạo với ngân sách nhỏ không?",
+      "a2": "Có! Chúng tôi làm việc với nhiều mức ngân sách khác nhau. Cách tiếp cận theo giai đoạn cho phép bạn hoàn thành các khu vực ưu tiên trước. Sơn lại tủ ($3,000–$8,000) là lựa chọn thay thế tiết kiệm chi phí cho việc thay tủ bếp toàn bộ.",
+      "q2Answer": "Có! Chúng tôi làm việc với nhiều mức ngân sách khác nhau. Cách tiếp cận theo giai đoạn cho phép bạn hoàn thành các khu vực ưu tiên trước. Sơn lại tủ ($3,000–$8,000) là lựa chọn thay thế tiết kiệm chi phí cho việc thay tủ bếp toàn bộ.",
+      "q3": "Bạn có cung cấp kế hoạch trả góp không?",
+      "a3": "Chúng tôi tuân theo lịch thanh toán chuẩn: tiền cọc để đặt lịch dự án, thanh toán theo tiến độ tại các mốc quan trọng và thanh toán cuối khi hoàn thành và bạn hài lòng.",
+      "q3Answer": "Chúng tôi tuân theo lịch thanh toán chuẩn: tiền cọc để đặt lịch dự án, thanh toán theo tiến độ tại các mốc quan trọng và thanh toán cuối khi hoàn thành và bạn hài lòng.",
+      "q4": "Báo giá cải tạo bao gồm những gì?",
+      "a4": "Báo giá của chúng tôi bao gồm nhân công, vật tư, quản lý dự án, giấy phép (nếu áp dụng) và dọn dẹp. Chúng tôi cung cấp bảng kê chi tiết để bạn hiểu chính xác ngân sách của mình đi đâu.",
+      "q4Answer": "Báo giá của chúng tôi bao gồm nhân công, vật tư, quản lý dự án, giấy phép (nếu áp dụng) và dọn dẹp. Chúng tôi cung cấp bảng kê chi tiết để bạn hiểu chính xác ngân sách của mình đi đâu.",
+      "q5": "Làm thế nào để tối đa hóa ROI cải tạo?",
+      "a5": "Tập trung vào phòng bếp và phòng tắm để có lợi tức bán lại tốt nhất. Sử dụng vật liệu chất lượng bền lâu. Cân nhắc một căn hộ tầng hầm để có thu nhập cho thuê. Chúng tôi giúp lên kế hoạch cải tạo cân bằng giữa nhu cầu sinh hoạt và giá trị dài hạn.",
+      "q5Answer": "Tập trung vào phòng bếp và phòng tắm để có lợi tức bán lại tốt nhất. Sử dụng vật liệu chất lượng bền lâu. Cân nhắc một căn hộ tầng hầm để có thu nhập cho thuê. Chúng tôi giúp lên kế hoạch cải tạo cân bằng giữa nhu cầu sinh hoạt và giá trị dài hạn."
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "Sẵn Sàng Lên Kế Hoạch Ngân Sách Cải Tạo?",
+      "subtitle": "Nhận tư vấn miễn phí với ước tính chi phí chi tiết phù hợp với dự án và mục tiêu của bạn."
     }
   }
 }

@@ -1,0 +1,99 @@
+{
+  "bathroomCost": {
+    "breadcrumb": "Chi Phí Cải Tạo Phòng Tắm",
+    "hero": {
+      "title": "Chi Phí Cải Tạo Phòng Tắm Trung Bình Tại Vancouver (Hướng Dẫn Giá 2026)",
+      "subtitle": "Chi phí cải tạo phòng tắm trung bình tại Vancouver dao động từ $10,000 đến $60,000+. Đây là giá thực từ 19 dự án đã hoàn thành — không phải ước tính ngành hay trung bình toàn quốc."
+    },
+    "stats": {
+      "avgCost": "Chi Phí Trung Bình",
+      "range": "Khoảng Giá",
+      "projects": "Dự Án Đã Hoàn Thành",
+      "timeline": "Tiến Độ Điển Hình",
+      "timelineValue": "2–8 tuần"
+    },
+    "tiers": {
+      "title": "Chi Phí Cải Tạo Phòng Tắm Theo Hạng Mức",
+      "subtitle": "Dựa trên các dự án đã hoàn thành của chúng tôi khắp Greater Vancouver",
+      "budget": {
+        "title": "Tiết Kiệm",
+        "description": "Gạch tiêu chuẩn, tủ lavabo cơ bản, phụ kiện cập nhật và sơn mới. Lý tưởng cho việc làm mới một phòng tắm trong căn hộ hoặc nhà liền kề mà không di chuyển đường ống."
+      },
+      "midRange": {
+        "title": "Tầm Trung",
+        "description": "Gạch porcelain hoặc gạch khổ lớn, tủ lavabo đặt đóng, vách kính tắm không khung, phụ kiện hiện đại và sàn sưởi. Lựa chọn phổ biến nhất cho nhà gia đình."
+      },
+      "highEnd": {
+        "title": "Cao Cấp / Nhiều Phòng Tắm",
+        "description": "Gạch cao cấp, vòi sen không bậc, bồn tắm đứng, tủ đặt đóng, phụ kiện thông minh và thay đổi kết cấu. Thường bao gồm cải tạo 2-3+ phòng tắm cùng lúc."
+      }
+    },
+    "factors": {
+      "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Phòng Tắm?",
+      "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
+      "tiles": {
+        "title": "Gạch & Sàn (25–35% ngân sách)",
+        "description": "Gạch ceramic tiêu chuẩn bắt đầu từ $5/sq ft, porcelain dao động $8–15/sq ft, và đá tự nhiên có thể vượt $25/sq ft. Gạch khổ lớn giảm đường gờ vữa nhưng chi phí lắp đặt cao hơn."
+      },
+      "shower": {
+        "title": "Cấu Hình Vòi Sen / Bồn Tắm",
+        "description": "Chuyển đổi từ bồn tắm sang vòi sen có giá $3,000–8,000. Vòi sen không bậc (zero-threshold) yêu cầu chống thấm tùy chỉnh và sàn nghiêng, thêm $2,000–5,000 so với đáy vòi sen tiêu chuẩn."
+      },
+      "vanity": {
+        "title": "Tủ Lavabo & Mặt Bàn",
+        "description": "Tủ lavabo có sẵn bắt đầu từ $500–1,500. Bán đặt đóng với mặt quartz dao động $2,000–4,000. Tủ lavabo treo đặt đóng hoàn toàn với chậu rửa tích hợp có thể vượt $6,000."
+      },
+      "plumbing": {
+        "title": "Di Chuyển Đường Ống",
+        "description": "Di chuyển đường thoát nước hoặc đường cấp nước thêm $2,000–6,000. Nhà cũ có thể cần van khóa mới hoặc nâng cấp đường cấp nước. Giữ bố cục đường ống hiện tại tiết kiệm đáng kể."
+      },
+      "waterproofing": {
+        "title": "Chống Thấm",
+        "description": "Chống thấm đúng cách với hệ thống màng (Schluter, Laticrete) có giá $1,500–3,500 cho một vòi sen tiêu chuẩn. Cần thiết trong khí hậu của Vancouver để ngăn ẩm phá hỏng phía sau tường."
+      },
+      "permits": {
+        "title": "Giấy Phép & Kiểm Tra",
+        "description": "Giấy phép xây dựng cho cải tạo phòng tắm có giá $200–800 tại Metro Vancouver. Bắt buộc khi di chuyển đường ống, thêm thiết bị mới hoặc thay đổi kết cấu."
+      }
+    },
+    "realProjects": {
+      "title": "Dự Án Cải Tạo Phòng Tắm Thực",
+      "subtitle": "Duyệt qua {count} dự án phòng tắm đã hoàn thành với ngân sách và tiến độ thực"
+    },
+    "tips": {
+      "title": "Mẹo Tiết Kiệm Tiền Cho Cải Tạo Phòng Tắm",
+      "tip1": {
+        "title": "Giữ Bố Cục Đường Ống Hiện Tại",
+        "description": "Di chuyển đường thoát nước là một trong những yếu tố tốn kém nhất. Giữ toilet, vòi sen và bồn rửa ở vị trí hiện tại có thể tiết kiệm $3,000–6,000."
+      },
+      "tip2": {
+        "title": "Chọn Gạch Porcelain Khổ Lớn",
+        "description": "Ít đường gờ vữa hơn nghĩa là ít nhân công hơn và diện mạo sạch hơn. Gạch porcelain 24x24 hoặc 12x24 bền, chống nước và rẻ hơn đá tự nhiên."
+      },
+      "tip3": {
+        "title": "Cải Tạo Nhiều Phòng Tắm Cùng Lúc",
+        "description": "Nếu bạn cần cải tạo hơn một phòng tắm, làm cùng lúc tiết kiệm 10–20% so với các dự án riêng. Nhà thầu có thể chia sẻ chi phí huy động và mua vật tư số lượng lớn."
+      },
+      "tip4": {
+        "title": "Đầu Tư Vào Chống Thấm",
+        "description": "Tiết kiệm trên chống thấm dẫn đến sửa chữa tốn kém sau này. Hệ thống màng đúng cách thêm $1,500–3,500 từ đầu nhưng ngăn $10,000+ hư hỏng do nước về sau."
+      }
+    },
+    "cta": {
+      "heading": "Nhận Báo Giá Cải Tạo Phòng Tắm Miễn Phí",
+      "subtitle": "Hãy cho chúng tôi biết về dự án của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."
+    },
+    "faq": {
+      "q1": "Cải tạo phòng tắm tại Vancouver có chi phí bao nhiêu?",
+      "a1": "Chi phí cải tạo phòng tắm tại Vancouver dao động từ $10,000 đến $60,000+ dựa trên các dự án đã hoàn thành của chúng tôi. Một phòng tắm tiết kiệm bắt đầu khoảng $10,000–$20,000, cải tạo tầm trung với tủ lavabo đặt đóng và vòi sen kính dao động $20,000–$35,000, và các dự án cao cấp hoặc nhiều phòng tắm có thể vượt $40,000.",
+      "q2": "Cải tạo phòng tắm mất bao lâu?",
+      "a2": "Một dự án cải tạo phòng tắm thường mất 2–5 tuần. Các nâng cấp thẩm mỹ đơn giản có thể hoàn thành trong 2–3 tuần, trong khi các dự án liên quan đến di chuyển đường ống, vòi sen không bậc hoặc thay đổi kết cấu có thể mất 4–8 tuần. Dự án nhiều phòng tắm mất 5–11 tuần.",
+      "q3": "Tôi có thể chuyển đổi bồn tắm thành phòng tắm đứng không?",
+      "a3": "Có, chuyển đổi từ bồn tắm sang vòi sen là một trong những yêu cầu phổ biến nhất của chúng tôi. Chi phí dao động $3,000–$8,000 tùy bạn chọn đáy vòi sen tiêu chuẩn hay thiết kế không bậc. Vòi sen không bậc yêu cầu chống thấm đặc biệt và sàn nghiêng.",
+      "q4": "Vòi sen không bậc là gì và tại sao nó đắt hơn?",
+      "a4": "Vòi sen không bậc (zero-threshold) không có bậc hoặc gờ ở lối vào, tạo nên sự chuyển tiếp sàn liền mạch. Nó yêu cầu màng chống thấm đặc biệt, sàn nghiêng chính xác và lắp đặt thoát nước dạng tuyến, thêm $2,000–$5,000 so với đáy vòi sen tiêu chuẩn. Phổ biến vì khả năng tiếp cận và thẩm mỹ hiện đại.",
+      "q5": "Tôi có nên cải tạo nhiều phòng tắm cùng lúc không?",
+      "a5": "Có, cải tạo nhiều phòng tắm cùng lúc tiết kiệm 10–20% so với các dự án riêng. Nhà thầu có thể chia sẻ chi phí huy động, phối hợp các tổ thợ hiệu quả hơn và mua vật tư số lượng lớn. Chúng tôi đã hoàn thành nhiều dự án 2–3 phòng tắm khắp Greater Vancouver."
+    }
+  }
+}

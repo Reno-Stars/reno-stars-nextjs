@@ -1,108 +1,108 @@
 {
   "financing": {
-    "breadcrumb": "Financing & Budget Guide",
+    "breadcrumb": "راهنمای تأمین مالی و بودجه",
     "hero": {
-      "title": "Renovation Financing & Budget Guide",
-      "subtitle": "Explore your financing options and plan your renovation budget wisely. Based on real project costs from our completed renovations across Metro Vancouver."
+      "title": "راهنمای تأمین مالی و بودجه بازسازی",
+      "subtitle": "گزینه‌های تأمین مالی خود را بررسی کنید و بودجه بازسازی خود را هوشمندانه برنامه‌ریزی نمایید. بر اساس هزینه‌های واقعی پروژه از بازسازی‌های تکمیل‌شده ما در سراسر مترو ونکوور."
     },
     "stats": {
-      "avgKitchen": "Avg Kitchen Reno",
-      "avgBathroom": "Avg Bathroom Reno",
-      "financingOptions": "Financing Options"
+      "avgKitchen": "میانگین بازسازی آشپزخانه",
+      "avgBathroom": "میانگین بازسازی حمام",
+      "financingOptions": "گزینه‌های تأمین مالی"
     },
     "options": {
-      "title": "Financing Options for Your Renovation",
-      "subtitle": "The most common ways Canadian homeowners fund renovation projects in British Columbia.",
+      "title": "گزینه‌های تأمین مالی برای بازسازی شما",
+      "subtitle": "رایج‌ترین روش‌هایی که صاحبان منازل کانادایی برای تأمین مالی پروژه‌های بازسازی در بریتیش کلمبیا استفاده می‌کنند.",
       "heloc": {
-        "title": "Home Equity Line of Credit (HELOC)",
-        "rate": "Typical rate: Prime + 0.5% to 2%",
-        "description": "Borrow against your home equity with flexible draw amounts. Only pay interest on what you use. Available from most Canadian banks and credit unions.",
-        "pro": "✓ Low interest rates",
-        "con": "✗ Requires home equity"
+        "title": "خط اعتباری مبتنی بر سرمایه منزل (HELOC)",
+        "rate": "نرخ معمول: نرخ پایه + ۰.۵٪ تا ۲٪",
+        "description": "از سرمایه منزل خود وام بگیرید با مبالغ برداشت منعطف. فقط بهره مبلغ مورد استفاده را پرداخت می‌کنید. از اکثر بانک‌ها و اتحادیه‌های اعتباری کانادا در دسترس است.",
+        "pro": "✓ نرخ بهره پایین",
+        "con": "✗ نیاز به سرمایه در منزل"
       },
       "personalLoan": {
-        "title": "Personal Loan or Line of Credit",
-        "rate": "Typical rate: 6% – 12%",
-        "description": "Unsecured loans from banks or credit unions. No home equity required. Fixed monthly payments make budgeting predictable.",
-        "pro": "✓ No collateral needed",
-        "con": "✗ Higher interest rates"
+        "title": "وام شخصی یا خط اعتباری",
+        "rate": "نرخ معمول: ۶٪ تا ۱۲٪",
+        "description": "وام‌های بدون وثیقه از بانک‌ها یا اتحادیه‌های اعتباری. نیازی به سرمایه منزل نیست. پرداخت‌های ماهیانه ثابت بودجه‌بندی را قابل پیش‌بینی می‌کند.",
+        "pro": "✓ بدون نیاز به وثیقه",
+        "con": "✗ نرخ بهره بالاتر"
       },
       "refinance": {
-        "title": "Mortgage Refinance",
-        "rate": "Typical rate: Current mortgage rates",
-        "description": "Refinance your mortgage to include renovation costs. Spreads the cost over your mortgage term. May have break penalties if mid-term.",
-        "pro": "✓ Lowest possible rate",
-        "con": "✗ Potential break fees"
+        "title": "بازپرداخت رهن (Refinance)",
+        "rate": "نرخ معمول: نرخ‌های فعلی رهن",
+        "description": "رهن خود را برای پوشش هزینه‌های بازسازی بازپرداخت کنید. هزینه را در مدت رهن گسترش می‌دهد. در صورت بازپرداخت میان‌دوره ممکن است جریمه فسخ داشته باشد.",
+        "pro": "✓ پایین‌ترین نرخ ممکن",
+        "con": "✗ احتمال هزینه‌های فسخ"
       },
       "savings": {
-        "title": "Savings & Phased Approach",
-        "rate": "No interest cost",
-        "description": "Pay from savings or phase your renovation into stages. Complete one room at a time to spread costs. No debt and no interest charges.",
-        "pro": "✓ Zero interest cost",
-        "con": "✗ Longer timeline"
+        "title": "پس‌انداز و رویکرد مرحله‌ای",
+        "rate": "بدون هزینه بهره",
+        "description": "از پس‌انداز پرداخت کنید یا بازسازی را به مراحل تقسیم کنید. هر بار یک اتاق را تکمیل کنید تا هزینه‌ها گسترش یابد. بدون بدهی و بدون هزینه بهره.",
+        "pro": "✓ بدون هزینه بهره",
+        "con": "✗ زمان‌بندی طولانی‌تر"
       }
     },
     "costs": {
-      "title": "Typical Renovation Costs in Metro Vancouver",
-      "subtitle": "Based on real completed projects from our portfolio.",
-      "bathroom": "Bathroom Renovation",
-      "kitchen": "Kitchen Renovation",
-      "basement": "Basement Renovation",
-      "wholeHouse": "Whole House Renovation",
-      "commercial": "Commercial Renovation",
-      "disclaimer": "* Ranges based on our completed projects in Greater Vancouver. Actual costs vary by scope, materials, and location."
+      "title": "هزینه‌های معمول بازسازی در مترو ونکوور",
+      "subtitle": "بر اساس پروژه‌های واقعی تکمیل‌شده در نمونه‌کارهای ما.",
+      "bathroom": "بازسازی حمام",
+      "kitchen": "بازسازی آشپزخانه",
+      "basement": "بازسازی زیرزمین",
+      "wholeHouse": "بازسازی کامل منزل",
+      "commercial": "بازسازی تجاری",
+      "disclaimer": "* محدوده‌ها بر اساس پروژه‌های تکمیل‌شده ما در گریتر ونکوور است. هزینه‌های واقعی بسته به دامنه، متریال و موقعیت متفاوت است."
     },
     "tips": {
-      "title": "Budget Planning Tips",
-      "subtitle": "Smart strategies to make the most of your renovation investment.",
+      "title": "نکات برنامه‌ریزی بودجه",
+      "subtitle": "راهبردهای هوشمندانه برای استفاده حداکثری از سرمایه‌گذاری بازسازی.",
       "prioritize": {
-        "title": "Prioritize High-Impact Areas",
-        "description": "Kitchens and bathrooms offer the best return on investment. Focus your budget on spaces that matter most for daily living and resale value."
+        "title": "اولویت‌بندی فضاهای پرتأثیر",
+        "description": "آشپزخانه و حمام بهترین بازده سرمایه‌گذاری را ارائه می‌دهند. بودجه خود را بر فضاهایی که برای زندگی روزمره و ارزش فروش مجدد اهمیت بیشتری دارند متمرکز کنید."
       },
       "contingency": {
-        "title": "Set Aside 10–15% Contingency",
-        "description": "Unexpected discoveries during renovation are common, old plumbing, hidden mold, or structural issues. A contingency fund prevents budget stress."
+        "title": "اختصاص ۱۰ تا ۱۵٪ بودجه احتیاط",
+        "description": "کشف موارد غیرمنتظره در طول بازسازی رایج است؛ لوله‌کشی قدیمی، کپک پنهان یا مشکلات سازه‌ای. صندوق احتیاط از فشار بر بودجه جلوگیری می‌کند."
       },
       "phased": {
-        "title": "Consider a Phased Approach",
-        "description": "If your total renovation exceeds your budget, prioritize and complete rooms in phases. This spreads costs while still achieving your goals."
+        "title": "رویکرد مرحله‌ای را در نظر بگیرید",
+        "description": "اگر بازسازی کامل از بودجه شما فراتر می‌رود، اولویت‌بندی کنید و اتاق‌ها را به‌صورت مرحله‌ای تکمیل نمایید. این کار هزینه‌ها را گسترش می‌دهد و در عین حال به اهداف شما می‌رسد."
       },
       "quotes": {
-        "title": "Get Detailed Written Quotes",
-        "description": "Always request itemized quotes from contractors. Compare scope of work, not just total price. A lower quote may exclude items you need."
+        "title": "دریافت پیش‌فاکتورهای کتبی دقیق",
+        "description": "همیشه از پیمانکاران پیش‌فاکتورهای ریز شده درخواست کنید. دامنه کار را مقایسه کنید، نه فقط قیمت کل را. یک پیش‌فاکتور پایین‌تر ممکن است شامل مواردی که شما به آن نیاز دارید نباشد."
       },
       "permits": {
-        "title": "Budget for Permits & Inspections",
-        "description": "Building permits in Metro Vancouver typically cost $200–$2,000+ depending on the scope. Skipping permits can cause costly problems during resale."
+        "title": "بودجه برای مجوزها و بازرسی‌ها",
+        "description": "مجوزهای ساختمانی در مترو ونکوور معمولاً بسته به دامنه، بین $200 تا بیش از $2,000 هزینه دارد. صرف‌نظر کردن از مجوز می‌تواند در زمان فروش مجدد مشکلات گران‌قیمتی ایجاد کند."
       },
       "roi": {
-        "title": "Think About Return on Investment",
-        "description": "Kitchen renovations can return 75–100% of costs at resale. Bathroom renovations return 60–70%. Basement suites can generate rental income to offset costs."
+        "title": "به بازده سرمایه‌گذاری فکر کنید",
+        "description": "بازسازی آشپزخانه می‌تواند ۷۵ تا ۱۰۰٪ هزینه‌ها را در فروش مجدد بازگرداند. بازسازی حمام ۶۰ تا ۷۰٪ بازده دارد. سوئیت‌های زیرزمینی می‌توانند درآمد اجاره‌ای ایجاد کنند تا هزینه‌ها را جبران کنند."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "پرسش‌های متداول"
     },
     "faq": {
-      "q1": "How much should I budget for a renovation in Vancouver?",
-      "a1": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q1Answer": "Budget depends on scope: bathroom renovations range from $10,000–$60,000, kitchens from $15,000–$72,000, and whole-house projects from $50,000+. We provide free detailed estimates based on your specific needs.",
-      "q2": "Can I renovate with a small budget?",
-      "a2": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q2Answer": "Yes! We work with various budget levels. A phased approach lets you complete priority areas first. Cabinet refinishing ($3,000–$8,000) is a cost-effective alternative to full kitchen replacement.",
-      "q3": "Do you offer payment plans?",
-      "a3": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q3Answer": "We follow a standard payment schedule: a deposit to secure your project date, progress payments at key milestones, and a final payment upon completion and your satisfaction.",
-      "q4": "What is included in a renovation quote?",
-      "a4": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q4Answer": "Our quotes include labour, materials, project management, permits (if applicable), and cleanup. We provide itemized breakdowns so you understand exactly where your budget goes.",
-      "q5": "How can I maximize my renovation ROI?",
-      "a5": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value.",
-      "q5Answer": "Focus on kitchens and bathrooms for the best resale return. Use quality materials that last. Consider a basement suite for rental income. We help plan renovations that balance your lifestyle needs with long-term value."
+      "q1": "برای بازسازی در ونکوور چقدر باید بودجه در نظر بگیرم؟",
+      "a1": "بودجه به دامنه کار بستگی دارد: بازسازی حمام بین $10,000 تا $60,000، آشپزخانه بین $15,000 تا $72,000 و بازسازی کامل منزل از $50,000 به بالا. ما برآوردهای دقیق رایگانی بر اساس نیازهای خاص شما ارائه می‌دهیم.",
+      "q1Answer": "بودجه به دامنه کار بستگی دارد: بازسازی حمام بین $10,000 تا $60,000، آشپزخانه بین $15,000 تا $72,000 و بازسازی کامل منزل از $50,000 به بالا. ما برآوردهای دقیق رایگانی بر اساس نیازهای خاص شما ارائه می‌دهیم.",
+      "q2": "آیا می‌توانم با بودجه‌ای کم بازسازی کنم؟",
+      "a2": "بله! ما با سطوح مختلف بودجه کار می‌کنیم. رویکرد مرحله‌ای به شما اجازه می‌دهد ابتدا فضاهای اولویت‌دار را تکمیل کنید. روکش‌کاری مجدد کابینت ($3,000 تا $8,000) جایگزینی مقرون‌به‌صرفه برای تعویض کامل آشپزخانه است.",
+      "q2Answer": "بله! ما با سطوح مختلف بودجه کار می‌کنیم. رویکرد مرحله‌ای به شما اجازه می‌دهد ابتدا فضاهای اولویت‌دار را تکمیل کنید. روکش‌کاری مجدد کابینت ($3,000 تا $8,000) جایگزینی مقرون‌به‌صرفه برای تعویض کامل آشپزخانه است.",
+      "q3": "آیا برنامه پرداخت ارائه می‌دهید؟",
+      "a3": "ما از یک برنامه پرداخت استاندارد پیروی می‌کنیم: یک پیش‌پرداخت برای رزرو تاریخ پروژه، پرداخت‌های مرحله‌ای در نقاط کلیدی و پرداخت نهایی پس از تکمیل و رضایت شما.",
+      "q3Answer": "ما از یک برنامه پرداخت استاندارد پیروی می‌کنیم: یک پیش‌پرداخت برای رزرو تاریخ پروژه، پرداخت‌های مرحله‌ای در نقاط کلیدی و پرداخت نهایی پس از تکمیل و رضایت شما.",
+      "q4": "پیش‌فاکتور بازسازی شامل چه چیزهایی است؟",
+      "a4": "پیش‌فاکتورهای ما شامل دستمزد، متریال، مدیریت پروژه، مجوزها (در صورت اعمال) و نظافت پایان کار می‌شود. ما تفکیک ریز اقلام را ارائه می‌دهیم تا دقیقاً بدانید بودجه شما کجا هزینه می‌شود.",
+      "q4Answer": "پیش‌فاکتورهای ما شامل دستمزد، متریال، مدیریت پروژه، مجوزها (در صورت اعمال) و نظافت پایان کار می‌شود. ما تفکیک ریز اقلام را ارائه می‌دهیم تا دقیقاً بدانید بودجه شما کجا هزینه می‌شود.",
+      "q5": "چگونه می‌توانم بازده بازسازی خود را به حداکثر برسانم؟",
+      "a5": "برای بهترین بازده در فروش مجدد، روی آشپزخانه و حمام تمرکز کنید. از متریال باکیفیت و ماندگار استفاده کنید. سوئیت زیرزمینی برای درآمد اجاره‌ای را در نظر بگیرید. ما در برنامه‌ریزی بازسازی‌هایی که نیازهای سبک زندگی شما را با ارزش بلندمدت متعادل می‌کنند کمک می‌کنیم.",
+      "q5Answer": "برای بهترین بازده در فروش مجدد، روی آشپزخانه و حمام تمرکز کنید. از متریال باکیفیت و ماندگار استفاده کنید. سوئیت زیرزمینی برای درآمد اجاره‌ای را در نظر بگیرید. ما در برنامه‌ریزی بازسازی‌هایی که نیازهای سبک زندگی شما را با ارزش بلندمدت متعادل می‌کنند کمک می‌کنیم."
     },
     "cta": {
-      "heading": "Ready to Plan Your Renovation Budget?",
-      "subtitle": "Get a free consultation with a detailed cost estimate tailored to your project and goals."
+      "heading": "آماده‌اید بودجه بازسازی خود را برنامه‌ریزی کنید؟",
+      "subtitle": "یک مشاوره رایگان با برآورد هزینه دقیق متناسب با پروژه و اهداف شما دریافت کنید."
     }
   }
 }

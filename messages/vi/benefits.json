@@ -1,64 +1,64 @@
 {
   "benefits": {
-    "title": "Why Choose Reno Stars",
-    "subtitle": "Partnering with us means more than just completing a renovation, it's about making the entire process clear, controlled, and stress-free.",
+    "title": "Vì Sao Chọn Reno Stars",
+    "subtitle": "Hợp tác với chúng tôi không chỉ là hoàn thành một dự án cải tạo, mà còn là làm cho toàn bộ quy trình trở nên rõ ràng, kiểm soát được và không căng thẳng.",
     "foundation": {
-      "heading": "Built on Trust",
+      "heading": "Xây Dựng Trên Niềm Tin",
       "items": {
         "experience": {
-          "title": "20+ Years Industry Experience",
-          "description": "We bring deep expertise. Not just in construction but in understanding where renovation projects go wrong, and how to prevent it from the start."
+          "title": "Hơn 20 Năm Kinh Nghiệm Trong Ngành",
+          "description": "Chúng tôi mang đến chuyên môn sâu sắc — không chỉ trong xây dựng mà còn trong việc hiểu rõ những điểm dễ sai sót trong dự án cải tạo, và cách phòng tránh chúng ngay từ đầu."
         },
         "coverage": {
-          "title": "$5M CGL Insurance · Active WCB Coverage",
-          "description": "Comprehensive insurance coverage protects your property and ensures every worker on-site is fully covered."
+          "title": "Bảo Hiểm $5M CGL · Bảo Hiểm WCB Đang Hiệu Lực",
+          "description": "Bảo hiểm toàn diện bảo vệ tài sản của bạn và đảm bảo mọi công nhân tại công trình đều được bảo hiểm đầy đủ."
         },
         "rating": {
-          "title": "Authentic 5-Star Reviews",
-          "description": "Long-term client satisfaction backed by real projects and real experiences, not one-off promotions."
+          "title": "Đánh Giá 5 Sao Chân Thực",
+          "description": "Sự hài lòng dài hạn của khách hàng được hậu thuẫn bởi các dự án và trải nghiệm thực, không phải chương trình khuyến mãi nhất thời."
         },
         "team": {
-          "title": "Stable, Professional Team",
-          "description": "We work with a consistent crew. Not temporary hires, ensuring quality stays stable across every project."
+          "title": "Đội Ngũ Chuyên Nghiệp, Ổn Định",
+          "description": "Chúng tôi làm việc với một đội thợ cố định — không phải thợ thuê tạm thời, đảm bảo chất lượng ổn định trên mọi dự án."
         },
         "service": {
-          "title": "End-to-End Service",
-          "description": "From design to final walkthrough, we manage every step. Less coordination overhead, smoother process."
+          "title": "Dịch Vụ Trọn Gói",
+          "description": "Từ thiết kế đến nghiệm thu cuối, chúng tôi quản lý mọi bước. Ít việc điều phối hơn cho bạn, quy trình mượt mà hơn."
         }
       }
     },
     "differentiators": {
-      "heading": "Why Clients Choose Us",
+      "heading": "Vì Sao Khách Hàng Chọn Chúng Tôi",
       "items": {
         "transparent": {
-          "problem": "Many quotes look cheap because key items are left out.",
-          "solution": "We list everything upfront, detailed scope, material responsibilities, and what is included. You know the real cost before you start."
+          "problem": "Nhiều báo giá trông rẻ vì các hạng mục quan trọng đã bị bỏ qua.",
+          "solution": "Chúng tôi liệt kê mọi thứ ngay từ đầu — phạm vi chi tiết, trách nhiệm vật tư và những gì được bao gồm. Bạn biết chi phí thực tế trước khi bắt đầu."
         },
         "managed": {
-          "problem": "Renovation shouldn't rely on improvisation and luck.",
-          "solution": "We run projects through a structured system with clear stages, inspections, and payment milestones. Every step completed before moving forward."
+          "problem": "Cải tạo không nên dựa vào sự ứng biến và may rủi.",
+          "solution": "Chúng tôi vận hành dự án qua một hệ thống có cấu trúc với các giai đoạn rõ ràng, kiểm tra và mốc thanh toán. Mỗi bước được hoàn thành trước khi chuyển tiếp."
         },
         "responsive": {
-          "problem": "Most renovation frustrations come from poor communication.",
-          "solution": "We have a dedicated office team that responds quickly, helps with material selection, and keeps you updated, no 'sent a message, got no reply' moments."
+          "problem": "Hầu hết bức xúc về cải tạo đến từ giao tiếp kém.",
+          "solution": "Chúng tôi có đội ngũ văn phòng tận tâm phản hồi nhanh, hỗ trợ chọn vật tư và cập nhật cho bạn — không có chuyện 'đã gửi tin nhắn nhưng không có hồi đáp'."
         },
         "scheduled": {
-          "problem": "Some contractors overbook and your timeline keeps slipping.",
-          "solution": "We control our project load to ensure yours moves forward as planned. When delays happen (suppliers, etc.), we communicate early and adjust transparently."
+          "problem": "Một số nhà thầu nhận quá nhiều việc và tiến độ của bạn cứ bị trượt.",
+          "solution": "Chúng tôi kiểm soát khối lượng dự án để đảm bảo dự án của bạn tiến triển đúng kế hoạch. Khi có chậm trễ (do nhà cung cấp v.v.), chúng tôi giao tiếp sớm và điều chỉnh minh bạch."
         },
         "consistent": {
-          "problem": "Quality shouldn't depend on which crew shows up.",
-          "solution": "We use a fixed team with clear standards, especially for critical work like waterproofing, where materials and application scope are specified upfront."
+          "problem": "Chất lượng không nên phụ thuộc vào việc đội thợ nào đến.",
+          "solution": "Chúng tôi sử dụng đội thợ cố định với tiêu chuẩn rõ ràng, đặc biệt cho các công việc quan trọng như chống thấm, nơi vật tư và phạm vi thi công được quy định từ đầu."
         },
         "experience": {
-          "problem": "Renovation is stressful when you're constantly chasing updates.",
-          "solution": "We make the whole process predictable: you know what's happening now, what's next, and when to expect it, without needing to follow up."
+          "problem": "Cải tạo trở nên căng thẳng khi bạn liên tục phải đuổi theo cập nhật.",
+          "solution": "Chúng tôi làm cho toàn bộ quy trình trở nên dự đoán được: bạn biết đang xảy ra điều gì, bước tiếp theo là gì và khi nào — mà không cần theo dõi liên tục."
         }
       }
     },
     "cta": {
-      "heading": "Ready to Start Your Project?",
-      "subtitle": "Experience the difference of a renovation process built around transparency, clear communication, and your peace of mind."
+      "heading": "Sẵn Sàng Bắt Đầu Dự Án Của Bạn?",
+      "subtitle": "Trải nghiệm sự khác biệt của một quy trình cải tạo được xây dựng quanh sự minh bạch, giao tiếp rõ ràng và sự an tâm của bạn."
     }
   }
 }

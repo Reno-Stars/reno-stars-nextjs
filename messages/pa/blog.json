@@ -1,21 +1,21 @@
 {
   "blog": {
-    "title": "Vancouver Renovation Tips & Guides",
-    "subtitle": "Tips, trends, and insights for your renovation project",
-    "readMore": "Read More",
-    "publishedOn": "Published on",
-    "updated": "Updated",
-    "backToBlog": "Back to Blog",
-    "comingSoon": "Full article content coming soon. Contact us for any renovation questions in the meantime.",
-    "noPosts": "No blog posts yet. Check back soon for renovation tips and insights.",
-    "relatedProject": "Related Project",
-    "pagination": "Blog pagination",
-    "previous": "Previous",
-    "next": "Next",
-    "previousPage": "Go to previous page",
-    "nextPage": "Go to next page",
-    "showingPosts": "Showing {start}-{end} of {total} posts",
-    "relatedServices": "Related Services",
-    "relatedAreas": "Renovation in Your Area"
+    "title": "Vancouver ਰੈਨੋਵੇਸ਼ਨ ਟਿਪਸ ਅਤੇ ਗਾਈਡ",
+    "subtitle": "ਤੁਹਾਡੇ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟ ਲਈ ਟਿਪਸ, ਰੁਝਾਨ ਅਤੇ ਜਾਣਕਾਰੀ",
+    "readMore": "ਹੋਰ ਪੜ੍ਹੋ",
+    "publishedOn": "ਪ੍ਰਕਾਸ਼ਿਤ",
+    "updated": "ਅੱਪਡੇਟ ਕੀਤਾ",
+    "backToBlog": "Blog 'ਤੇ ਵਾਪਸ",
+    "comingSoon": "ਪੂਰਾ ਲੇਖ ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ। ਇਸ ਦੌਰਾਨ ਕਿਸੇ ਵੀ ਰੈਨੋਵੇਸ਼ਨ ਸਵਾਲ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ।",
+    "noPosts": "ਅਜੇ ਕੋਈ Blog ਪੋਸਟ ਨਹੀਂ ਹੈ। ਰੈਨੋਵੇਸ਼ਨ ਟਿਪਸ ਅਤੇ ਜਾਣਕਾਰੀ ਲਈ ਜਲਦੀ ਵਾਪਸ ਆਓ।",
+    "relatedProject": "ਸਬੰਧਿਤ ਪ੍ਰੋਜੈਕਟ",
+    "pagination": "Blog ਪੇਜ਼ਨੇਸ਼ਨ",
+    "previous": "ਪਿੱਛੇ",
+    "next": "ਅੱਗੇ",
+    "previousPage": "ਪਿਛਲੇ ਪੰਨੇ 'ਤੇ ਜਾਓ",
+    "nextPage": "ਅਗਲੇ ਪੰਨੇ 'ਤੇ ਜਾਓ",
+    "showingPosts": "{total} ਪੋਸਟਾਂ ਵਿੱਚੋਂ {start}-{end} ਦਿਖਾਈ ਜਾ ਰਹੀਆਂ ਹਨ",
+    "relatedServices": "ਸਬੰਧਿਤ ਸੇਵਾਵਾਂ",
+    "relatedAreas": "ਤੁਹਾਡੇ ਖੇਤਰ ਵਿੱਚ ਰੈਨੋਵੇਸ਼ਨ"
   }
 }

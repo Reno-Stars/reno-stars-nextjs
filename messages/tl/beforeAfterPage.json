@@ -1,16 +1,16 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "Before at After Gallery",
+      "subtitle": "Tingnan ang mga kapansin-pansing transformation mula sa aming renovation projects sa buong Metro Vancouver. Tunay na litrato mula sa tunay na bahay."
     },
     "stats": {
       "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "projects": "Mga Proyekto",
+      "cities": "Mga Siyudad na Sinisilbihan"
     },
     "filters": {
-      "all": "All",
+      "all": "Lahat",
       "bathroom": "Bathroom",
       "kitchen": "Kitchen",
       "whole-house": "Whole House",
@@ -19,49 +19,49 @@
     "labels": {
       "before": "Before",
       "after": "After",
-      "viewProject": "View Project"
+      "viewProject": "Tingnan ang Proyekto"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "Walang nahanap na before at after photos para sa kategoryang ito.",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "Bakit Pinapakita Namin ang Before at After Photos",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "Kompletong Transparency",
+        "description": "Naniniwala kami sa pagpapakita sa iyo nang eksakto kung ano ang aasahan. Ang aming before at after photos ay hindi inedit, na nagbibigay sa iyo ng totoong tingin sa kalidad ng aming trabaho."
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "Patunay na Kalidad",
+        "description": "Bawat transformation ay nagsasalita para sa sarili. Mula sa lumang kitchen hanggang sa modernong masterpiece, kapansin-pansin ang aming pagkakagawa sa bawat detalye."
       },
       "inspiration": {
         "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "description": "Mag-browse sa totoong renovations para makakita ng ideya para sa sarili mong proyekto. Tingnan kung paano nagsasama ang ibat-ibang style, materyales, at layout sa mga bahay tulad ng sa iyo."
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "Mga Madalas Itanong"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "Totoo bang before at after photos ang mga ito?",
+      "a1": "Oo, bawat litrato sa pahinang ito ay direkta mula sa aming natapos na renovation projects sa buong Metro Vancouver. Hindi kami gumagamit ng stock photos o digital na ineedit ang aming imahe.",
+      "q2": "Gaano katagal ang typical na renovation?",
+      "a2": "Iba-iba ang renovation timeline depende sa scope. Karaniwang 2-4 na linggo ang bathroom renovation, 4-8 na linggo ang kitchen renovation, at 2-4 na buwan ang whole-house renovation. Nagbibigay kami ng detalyadong timeline sa libreng konsultasyon.",
+      "q3": "Pwede ba akong bumisita sa natapos na proyekto?",
+      "a3": "Pwede kaming mag-arrange ng visit sa aming showroom kung saan makikita mo ang material samples at finishes nang personal. Para sa specific project reference, pwede ka naming i-connect sa mga dating kliyente na pumapayag ibahagi ang karanasan.",
+      "q4": "Anong mga lugar ang sinisilbihan ninyo?",
+      "a4": "Nagsisilbi kami sa buong Metro Vancouver kasama ang Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, at Maple Ridge.",
+      "q5": "Paano ako magsisimula ng renovation?",
+      "a5": "I-contact lang kami para sa libreng konsultasyon. Bibisitahin namin ang iyong espasyo, pag-uusapan ang iyong vision at budget, at magbibigay ng detalyadong quote. Ang aming team ang humahawak sa lahat mula design hanggang completion."
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "Handa nang Baguhin ang Iyong Espasyo?",
+      "subtitle": "I-contact kami ngayon para sa libreng konsultasyon at tingnan kung ano ang magagawa ng Reno Stars para sa iyong tahanan."
     },
     "pagination": {
       "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "previous": "Nakaraan",
+      "next": "Susunod",
+      "previousPage": "Pumunta sa nakaraang pahina",
+      "nextPage": "Pumunta sa susunod na pahina"
     }
   }
 }

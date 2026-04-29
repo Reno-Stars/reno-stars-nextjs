@@ -1,146 +1,146 @@
 {
   "aboutPage": {
     "hero": {
-      "title": "About Reno Stars",
-      "subtitle": "Built on experience, not just in construction, but in understanding the renovation industry from both sides."
+      "title": "درباره Reno Stars",
+      "subtitle": "بنا شده بر تجربه، نه تنها در ساخت‌وساز، بلکه در شناخت صنعت بازسازی از هر دو سو."
     },
     "journey": {
-      "title": "About Reno Stars",
-      "body": "Reno Stars was built on experience. Not just in construction but in understanding the renovation industry from both sides.\n\nBefore founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.\n\nWe understand the common frustrations homeowners face: quotes that grow with hidden items, poor communication and delayed responses, uncertain timelines, and inconsistent workmanship due to unstable crews. These are not rare issues. They are industry norms. That is exactly why Reno Stars was created.",
-      "lead": "Reno Stars was built on experience, not just in construction, but in understanding the renovation industry from both sides.",
-      "context": "Before founding Reno Stars in 2021, our team spent years working on renovation platforms, connecting homeowners with contractors. We have seen thousands of projects from start to finish, and more importantly, we have seen where things go wrong.",
-      "painPointsTitle": "We understand the common frustrations homeowners face.",
+      "title": "درباره Reno Stars",
+      "body": "Reno Stars بر پایه تجربه ساخته شده است. نه فقط در ساخت‌وساز، بلکه در شناخت صنعت بازسازی از هر دو سو.\n\nپیش از تأسیس Reno Stars در سال ۲۰۲۱، تیم ما سال‌ها در پلتفرم‌های بازسازی فعالیت می‌کرد و صاحبان منازل را با پیمانکاران مرتبط می‌ساخت. ما هزاران پروژه را از ابتدا تا انتها دیده‌ایم و مهم‌تر از آن، دیده‌ایم که کارها در کجا اشتباه پیش می‌روند.\n\nما نارضایتی‌های رایج صاحبان منازل را می‌شناسیم: پیش‌فاکتورهایی که با اقلام پنهان رشد می‌کنند، ارتباط ضعیف و پاسخ‌های با تأخیر، زمان‌بندی نامطمئن و کیفیت ناهمگون به دلیل تیم‌های ناپایدار. این‌ها مشکلات نادر نیستند. این‌ها هنجار صنعت‌اند. دقیقاً به همین دلیل Reno Stars متولد شد.",
+      "lead": "Reno Stars بر پایه تجربه ساخته شده است، نه فقط در ساخت‌وساز، بلکه در شناخت صنعت بازسازی از هر دو سو.",
+      "context": "پیش از تأسیس Reno Stars در سال ۲۰۲۱، تیم ما سال‌ها در پلتفرم‌های بازسازی فعالیت می‌کرد و صاحبان منازل را با پیمانکاران مرتبط می‌ساخت. ما هزاران پروژه را از ابتدا تا انتها دیده‌ایم و مهم‌تر از آن، دیده‌ایم که کارها در کجا اشتباه پیش می‌روند.",
+      "painPointsTitle": "ما نارضایتی‌های رایج صاحبان منازل را به‌خوبی می‌شناسیم.",
       "painPoints": [
-        "Quotes that look attractive at first but grow with hidden items later.",
-        "Poor communication and delayed responses.",
-        "Uncertain timelines and projects dragging on.",
-        "Inconsistent workmanship due to unstable crews."
+        "پیش‌فاکتورهایی که در ابتدا جذاب به نظر می‌رسند اما بعداً با اقلام پنهان رشد می‌کنند.",
+        "ارتباط ضعیف و پاسخ‌های با تأخیر.",
+        "زمان‌بندی نامطمئن و پروژه‌هایی که به‌درازا می‌کشند.",
+        "کیفیت ناهمگون به دلیل تیم‌های ناپایدار."
       ],
-      "conclusion": "These are not rare issues. They are industry norms. That is exactly why Reno Stars was created."
+      "conclusion": "این‌ها مشکلات نادر نیستند. این‌ها هنجار صنعت‌اند. دقیقاً به همین دلیل Reno Stars متولد شد."
     },
     "stats": {
-      "years": "Years Experience",
-      "projects": "Projects Completed",
-      "team": "Team Members",
-      "insurance": "CGL Insurance",
-      "wcbCoverage": "Active WCB Coverage"
+      "years": "سال تجربه",
+      "projects": "پروژه تکمیل‌شده",
+      "team": "اعضای تیم",
+      "insurance": "بیمه CGL",
+      "wcbCoverage": "پوشش فعال WCB"
     },
     "offer": {
-      "title": "A More Structured, Transparent Approach",
-      "viewAll": "View All Services",
+      "title": "رویکردی ساختاریافته‌تر و شفاف‌تر",
+      "viewAll": "مشاهده تمام خدمات",
       "services": {
         "kitchen": {
-          "title": "Kitchen Renovation",
-          "desc": "Custom cabinetry, countertops, backsplashes, and complete kitchen transformations tailored to your lifestyle."
+          "title": "بازسازی آشپزخانه",
+          "desc": "کابینت‌سازی سفارشی، صفحه کار، کاشی پشت سینک و دگرگونی کامل آشپزخانه متناسب با سبک زندگی شما."
         },
         "bathroom": {
-          "title": "Bathroom Renovation",
-          "desc": "Modern fixtures, tile work, vanities, and spa-inspired designs that maximize your space."
+          "title": "بازسازی حمام",
+          "desc": "شیرآلات مدرن، کاشی‌کاری، کابینت روشویی و طراحی‌هایی با الهام از اسپا که فضای شما را به حداکثر می‌رسانند."
         },
         "wholeHouse": {
-          "title": "Whole House Renovation",
-          "desc": "Comprehensive home remodels including structural work, flooring, lighting, and finishing touches."
+          "title": "بازسازی کامل منزل",
+          "desc": "بازسازی جامع منزل شامل کارهای سازه‌ای، کف‌سازی، نورپردازی و فینیشن نهایی."
         },
         "commercial": {
-          "title": "Commercial Renovation",
-          "desc": "Professional commercial spaces designed for functionality, compliance, and lasting impressions."
+          "title": "بازسازی فضاهای تجاری",
+          "desc": "فضاهای تجاری حرفه‌ای طراحی‌شده برای کاربرد، انطباق با مقررات و تأثیرگذاری ماندگار."
         }
       },
-      "body": "We are also continuously developing internal construction and inspection standards to further improve consistency and quality.",
-      "lead": "We did not just start another renovation company. We rebuilt the process.",
-      "goal": "From the beginning, our goal has been simple. Make renovation predictable, transparent, and stress free.",
-      "systemTitle": "Every project is supported by a structured system.",
+      "body": "ما به‌طور مداوم استانداردهای داخلی ساخت و بازرسی را توسعه می‌دهیم تا یکپارچگی و کیفیت بهبود یابد.",
+      "lead": "ما صرفاً یک شرکت بازسازی دیگر تأسیس نکردیم. ما فرآیند را از نو ساختیم.",
+      "goal": "از ابتدا، هدف ما ساده بوده است. بازسازی را قابل پیش‌بینی، شفاف و بدون استرس کنیم.",
+      "systemTitle": "هر پروژه با یک سیستم ساختاریافته پشتیبانی می‌شود.",
       "systemItems": [
         {
-          "title": "Detailed Contracts",
-          "desc": "Our quotes clearly define scope, responsibilities, and key materials. A typical bathroom renovation may include over 20 clearly listed items, so you know exactly what is included and what is not."
+          "title": "قراردادهای دقیق",
+          "desc": "پیش‌فاکتورهای ما به‌وضوح دامنه کار، مسئولیت‌ها و متریال کلیدی را تعریف می‌کنند. یک بازسازی معمولی حمام ممکن است شامل بیش از ۲۰ مورد فهرست‌شده باشد، تا دقیقاً بدانید چه چیزی شامل است و چه چیزی نیست."
         },
         {
-          "title": "Clear Payment Milestones",
-          "desc": "Payments are tied to progress. Each stage is completed and reviewed before moving forward, with no surprises."
+          "title": "مراحل پرداخت شفاف",
+          "desc": "پرداخت‌ها بر اساس پیشرفت کار تنظیم می‌شوند. هر مرحله پیش از حرکت به جلو تکمیل و بازبینی می‌شود، بدون هیچ غافلگیری."
         },
         {
-          "title": "Dedicated Coordination",
-          "desc": "Our office team responds quickly, helps with material selection, and ensures nothing gets lost in communication."
+          "title": "هماهنگی اختصاصی",
+          "desc": "تیم دفتری ما سریع پاسخ می‌دهد، در انتخاب متریال کمک می‌کند و تضمین می‌کند که هیچ موضوعی در ارتباطات گم نشود."
         },
         {
-          "title": "Reliable Scheduling",
-          "desc": "We do not overbook. Your project moves forward as planned, not when it is convenient for us."
+          "title": "زمان‌بندی قابل اعتماد",
+          "desc": "ما بیش از ظرفیت کار نمی‌پذیریم. پروژه شما طبق برنامه پیش می‌رود، نه زمانی که برای ما راحت‌تر است."
         },
         {
-          "title": "Quality and Waterproofing Standards",
-          "desc": "We clearly specify materials, and application areas, especially for critical elements like waterproofing."
+          "title": "استانداردهای کیفیت و آب‌بندی",
+          "desc": "ما متریال و محل‌های اجرا را، به‌ویژه برای موارد حساس مانند آب‌بندی، به‌وضوح مشخص می‌کنیم."
         }
       ]
     },
     "values": {
-      "title": "Managing Details and Expectations",
+      "title": "مدیریت جزئیات و انتظارات",
       "items": {
         "integrity": {
-          "title": "Integrity",
-          "desc": "We keep our promises and communicate honestly at every stage. No hidden fees, no scope creep, just clear agreements and follow-through."
+          "title": "صداقت",
+          "desc": "ما به وعده‌های خود پایبندیم و در هر مرحله صادقانه ارتباط برقرار می‌کنیم. بدون هزینه‌های پنهان، بدون رشد دامنه کار، فقط توافق‌های شفاف و پیگیری دقیق."
         },
         "quality": {
-          "title": "Quality Craftsmanship",
-          "desc": "Every detail matters. We specify materials upfront, apply proven techniques, and continuously develop internal standards to deliver results that last."
+          "title": "صنعتگری ممتاز",
+          "desc": "هر جزئیات مهم است. ما متریال را از ابتدا مشخص می‌کنیم، تکنیک‌های اثبات‌شده را به کار می‌بریم و به‌طور مداوم استانداردهای داخلی را توسعه می‌دهیم تا نتایجی ماندگار ارائه کنیم."
         },
         "transparency": {
-          "title": "Transparency",
-          "desc": "Detailed contracts with 20+ line items, payment milestones tied to progress, and regular updates, so you always know exactly where your project stands."
+          "title": "شفافیت",
+          "desc": "قراردادهای دقیق با بیش از ۲۰ بند، مراحل پرداخت متناسب با پیشرفت و گزارش‌های منظم، تا همیشه دقیقاً بدانید پروژه شما در چه وضعیتی قرار دارد."
         },
         "satisfaction": {
-          "title": "Client Satisfaction",
-          "desc": "We do not just complete projects, we manage them. Quick responses, proactive communication, and full accountability from start to finish."
+          "title": "رضایت مشتری",
+          "desc": "ما صرفاً پروژه‌ها را تکمیل نمی‌کنیم؛ آن‌ها را مدیریت می‌کنیم. پاسخ‌های سریع، ارتباط فعال و مسئولیت‌پذیری کامل از ابتدا تا انتها."
         }
       },
-      "body": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.\n\nWhat we can guarantee is our response. We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty. Our goal is not to promise a perfect process, but to deliver a well-managed one.",
-      "lead": "Renovation involves many moving parts, from materials to scheduling. While we take great care in planning and coordination, certain factors such as supplier timelines can occasionally be outside of our direct control.",
-      "guarantee": "What we can guarantee is our response.",
+      "body": "بازسازی شامل بخش‌های متحرک بسیاری است، از متریال گرفته تا زمان‌بندی. در حالی که ما با دقت فراوان برنامه‌ریزی و هماهنگی می‌کنیم، عواملی مانند زمان‌بندی تأمین‌کنندگان گاهی خارج از کنترل مستقیم ماست.\n\nآنچه می‌توانیم تضمین کنیم پاسخ‌گویی ماست. ما زود ارتباط برقرار می‌کنیم، سریع تطبیق می‌دهیم و مشتریان خود را در هر مرحله در جریان قرار می‌دهیم، تا هیچ غافلگیری و عدم اطمینانی وجود نداشته باشد. هدف ما وعده فرآیندی بی‌نقص نیست، بلکه ارائه فرآیندی است که به‌خوبی مدیریت می‌شود.",
+      "lead": "بازسازی شامل بخش‌های متحرک بسیاری است، از متریال گرفته تا زمان‌بندی. در حالی که ما با دقت فراوان برنامه‌ریزی و هماهنگی می‌کنیم، عواملی مانند زمان‌بندی تأمین‌کنندگان گاهی خارج از کنترل مستقیم ماست.",
+      "guarantee": "آنچه می‌توانیم تضمین کنیم پاسخ‌گویی ماست.",
       "guaranteeItems": [
-        "We communicate early, adjust quickly, and keep our clients informed at every stage, so there are no surprises and no uncertainty."
+        "ما زود ارتباط برقرار می‌کنیم، سریع تطبیق می‌دهیم و مشتریان خود را در هر مرحله در جریان قرار می‌دهیم، تا هیچ غافلگیری و عدم اطمینانی وجود نداشته باشد."
       ],
-      "closing": "Our goal is not to promise a perfect process, but to deliver a well managed one."
+      "closing": "هدف ما وعده فرآیندی بی‌نقص نیست، بلکه ارائه فرآیندی است که به‌خوبی مدیریت می‌شود."
     },
     "whyUs": {
-      "title": "Built for Homeowners Who Value Peace of Mind",
-      "body": "We are not the lowest-priced option, and we do not aim to be. Our clients choose us because they want a clear process, honest communication, reliable timelines, and a team that takes responsibility.\n\nWe specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference. We approach every project with one simple mindset: treat every home as if it were our own. Because in the end, renovation is not just about building a space, it is about building trust.",
-      "lead": "We are not the lowest priced option, and we do not aim to be.",
-      "chooseTitle": "Our clients choose us because they want",
+      "title": "ساخته شده برای صاحبان منازلی که به آرامش خاطر اهمیت می‌دهند",
+      "body": "ما ارزان‌ترین گزینه نیستیم و قصد آن را هم نداریم. مشتریان ما ما را انتخاب می‌کنند زیرا فرآیندی شفاف، ارتباط صادقانه، زمان‌بندی قابل اعتماد و تیمی مسئولیت‌پذیر می‌خواهند.\n\nما در بازسازی کامل منزل، آشپزخانه، حمام و پروژه‌های تجاری تخصص داریم؛ جایی که هماهنگی، توجه به جزئیات و قابلیت اعتماد، تفاوت ایجاد می‌کند. ما به هر پروژه با یک ذهنیت ساده می‌نگریم: با هر خانه آن‌گونه رفتار کنیم که گویی خانه خودمان است. زیرا در نهایت، بازسازی فقط درباره ساخت یک فضا نیست، بلکه درباره ساخت اعتماد است.",
+      "lead": "ما ارزان‌ترین گزینه نیستیم و قصد آن را هم نداریم.",
+      "chooseTitle": "مشتریان ما ما را انتخاب می‌کنند زیرا می‌خواهند",
       "chooseItems": [
-        "A clear process",
-        "Honest communication",
-        "Reliable timelines",
-        "A team that takes responsibility"
+        "فرآیندی شفاف",
+        "ارتباطی صادقانه",
+        "زمان‌بندی قابل اعتماد",
+        "تیمی که مسئولیت‌پذیر است"
       ],
-      "specialise": "We specialize in full home renovations, kitchens, bathrooms, and commercial projects, where coordination, detail, and reliability make all the difference."
+      "specialise": "ما در بازسازی کامل منزل، آشپزخانه، حمام و پروژه‌های تجاری تخصص داریم؛ جایی که هماهنگی، توجه به جزئیات و قابلیت اعتماد، تفاوت ایجاد می‌کند."
     },
     "areas": {
-      "title": "Service Areas",
-      "description": "We proudly serve homeowners across Metro Vancouver and the Fraser Valley, bringing quality renovation services to communities throughout British Columbia."
+      "title": "مناطق خدمات‌رسانی",
+      "description": "ما با افتخار به صاحبان منازل در سراسر مترو ونکوور و فریزر ولی خدمات می‌دهیم و خدمات بازسازی باکیفیت را به جوامع سراسر بریتیش کلمبیا ارائه می‌کنیم."
     },
     "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": "How long has Reno Stars been in business?",
-      "a1": "Reno Stars has over {years} years of combined experience in the Vancouver renovation industry. Our team has completed hundreds of projects across Metro Vancouver, from small bathroom updates to full-scale whole house renovations.",
-      "q2": "Are you licensed and insured?",
-      "a2": "Yes, we are fully licensed with up to $5 million in CGL (Commercial General Liability) insurance and active WCB (WorkSafeBC) coverage. CGL protects your property during the renovation, while WCB ensures all workers on your job site are covered. We also provide up to a 3-year warranty on our work.",
-      "q3": "What areas do you serve?",
-      "a3": "We serve all of Metro Vancouver and the Fraser Valley, including Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster, and Port Moody.",
-      "q4": "How do I get started with a renovation project?",
-      "a4": "Getting started is easy! Simply contact us via phone, email, or our online form to schedule a free consultation. We'll discuss your vision, assess your space, and provide a detailed quote tailored to your needs and budget.",
-      "q5": "What makes Reno Stars different from other Vancouver renovation contractors?",
-      "a5": "We rebuilt the renovation process from the ground up. Before starting Reno Stars, our team spent years on renovation platforms and saw where things consistently went wrong. Our structured approach, detailed contracts, milestone-based payments, dedicated coordination, and reliable scheduling, addresses the real pain points homeowners face. We are not the cheapest option, but we are the most accountable one."
+      "title": "پرسش‌های متداول",
+      "q1": "Reno Stars چند سال است که فعالیت می‌کند؟",
+      "a1": "Reno Stars بیش از {years} سال تجربه ترکیبی در صنعت بازسازی ونکوور دارد. تیم ما صدها پروژه را در سراسر مترو ونکوور تکمیل کرده است، از به‌روزرسانی‌های کوچک حمام تا بازسازی‌های کامل منزل.",
+      "q2": "آیا دارای مجوز و بیمه هستید؟",
+      "a2": "بله، ما دارای مجوز کامل با بیمه CGL (مسئولیت عمومی تجاری) تا سقف ۵ میلیون دلار و پوشش فعال WCB (WorkSafeBC) هستیم. CGL از ملک شما در طول بازسازی محافظت می‌کند، در حالی که WCB تضمین می‌کند تمام کارگران در محل پروژه شما تحت پوشش هستند. ما همچنین تا ۳ سال گارانتی روی کار خود ارائه می‌دهیم.",
+      "q3": "به چه مناطقی خدمات می‌دهید؟",
+      "a3": "ما به تمام مترو ونکوور و فریزر ولی شامل Vancouver، Richmond، Burnaby، Surrey، Coquitlam، North Vancouver، West Vancouver، Delta، Langley، Maple Ridge، New Westminster و Port Moody خدمات می‌دهیم.",
+      "q4": "چگونه می‌توانم پروژه بازسازی خود را آغاز کنم؟",
+      "a4": "شروع کار آسان است! کافی است از طریق تلفن، ایمیل یا فرم آنلاین ما برای رزرو یک مشاوره رایگان با ما تماس بگیرید. ما درباره ایده‌های شما گفتگو می‌کنیم، فضای شما را ارزیابی می‌کنیم و یک پیش‌فاکتور دقیق متناسب با نیازها و بودجه شما ارائه می‌دهیم.",
+      "q5": "چه چیزی Reno Stars را از سایر پیمانکاران بازسازی ونکوور متمایز می‌کند؟",
+      "a5": "ما فرآیند بازسازی را از پایه بازسازی کرده‌ایم. پیش از تأسیس Reno Stars، تیم ما سال‌ها در پلتفرم‌های بازسازی فعالیت می‌کرد و دیده بود که کارها در کجا به‌طور مکرر اشتباه پیش می‌روند. رویکرد ساختاریافته ما؛ شامل قراردادهای دقیق، پرداخت‌های مرحله‌ای، هماهنگی اختصاصی و زمان‌بندی قابل اعتماد؛ به مشکلات واقعی صاحبان منازل پاسخ می‌دهد. ما ارزان‌ترین گزینه نیستیم، اما مسئولیت‌پذیرترین گزینه‌ایم."
     },
     "cta": {
-      "title": "Ready to Start Your Renovation?",
-      "getQuote": "Get a Free Quote",
-      "body": "Ready to experience a renovation process built around transparency, reliability, and your peace of mind? Contact us today for a free, detailed quote, and discover why homeowners across Metro Vancouver trust Reno Stars."
+      "title": "آماده‌اید بازسازی خود را آغاز کنید؟",
+      "getQuote": "دریافت پیش‌فاکتور رایگان",
+      "body": "آماده‌اید فرآیند بازسازی‌ای را تجربه کنید که حول محور شفافیت، قابلیت اعتماد و آرامش خاطر شما طراحی شده است؟ همین امروز برای یک پیش‌فاکتور رایگان و دقیق با ما تماس بگیرید و دریابید چرا صاحبان منازل سراسر مترو ونکوور به Reno Stars اعتماد می‌کنند."
     },
     "philosophy": {
-      "title": "Our Philosophy",
-      "lead": "We approach every project with one simple mindset.",
-      "quote": "Treat every home as if it were our own.",
-      "closing": "Because in the end, renovation is not just about building a space, it is about building trust."
+      "title": "فلسفه ما",
+      "lead": "ما به هر پروژه با یک ذهنیت ساده می‌نگریم.",
+      "quote": "با هر خانه آن‌گونه رفتار کنیم که گویی خانه خودمان است.",
+      "closing": "زیرا در نهایت، بازسازی فقط درباره ساخت یک فضا نیست، بلکه درباره ساخت اعتماد است."
     }
   }
 }

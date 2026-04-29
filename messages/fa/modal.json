@@ -1,14 +1,14 @@
 {
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "موقعیت",
+    "category": "دسته‌بندی",
+    "budget": "محدوده بودجه",
+    "spaceType": "نوع فضا",
+    "serviceScope": "دامنه خدمات",
+    "duration": "مدت زمان",
+    "challenge": "چالش پروژه",
+    "solution": "راه‌حل ما",
+    "close": "بستن",
+    "viewDetails": "مشاهده جزئیات کامل"
   }
 }

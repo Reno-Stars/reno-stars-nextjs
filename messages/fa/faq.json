@@ -1,52 +1,52 @@
 {
   "faq": {
     "kitchen": {
-      "q1": "How long does a kitchen renovation typically take?",
-      "a1": "A typical kitchen renovation takes 4-8 weeks depending on the scope. Simple updates like cabinet refacing may take 1-2 weeks, while complete gut renovations with custom cabinetry can take 8-12 weeks.",
-      "q2": "What is the average cost of a kitchen renovation in {area}?",
-      "a2": "Kitchen renovations in {area} typically range from $15,000 to $75,000+ depending on size and finishes. We provide free detailed quotes after an in-home consultation.",
-      "q3": "Do I need permits for my kitchen renovation?",
-      "a3": "Permits are required for electrical, plumbing, and structural changes. We handle all permit applications and ensure your renovation meets {area} building codes."
+      "q1": "بازسازی آشپزخانه معمولاً چقدر طول می‌کشد؟",
+      "a1": "یک بازسازی معمولی آشپزخانه بسته به دامنه کار، بین ۴ تا ۸ هفته طول می‌کشد. به‌روزرسانی‌های ساده مانند روکش‌کاری مجدد کابینت ممکن است ۱ تا ۲ هفته زمان ببرد، در حالی که بازسازی کامل با کابینت‌های سفارشی می‌تواند تا ۸ تا ۱۲ هفته به طول انجامد.",
+      "q2": "میانگین هزینه بازسازی آشپزخانه در {area} چقدر است؟",
+      "a2": "هزینه بازسازی آشپزخانه در {area} معمولاً از $15,000 تا بیش از $75,000 بسته به اندازه و فینیشن متغیر است. ما پس از مشاوره حضوری در منزل، پیش‌فاکتور دقیق و رایگان ارائه می‌دهیم.",
+      "q3": "آیا برای بازسازی آشپزخانه به مجوز نیاز دارم؟",
+      "a3": "برای تغییرات برقی، لوله‌کشی و سازه‌ای مجوز لازم است. ما تمام درخواست‌های مجوز را مدیریت می‌کنیم و اطمینان حاصل می‌کنیم که بازسازی شما مطابق با مقررات ساختمانی {area} باشد."
     },
     "bathroom": {
-      "q1": "How long does a bathroom renovation in {area} take?",
-      "a1": "Most bathroom renovations in {area} take 2-4 weeks. A simple cosmetic update may take 1 week, while a complete renovation with layout changes can take 4-6 weeks.",
-      "q2": "Can I use my bathroom during renovation?",
-      "a2": "Typically no, but we work efficiently to minimize disruption. If you have multiple bathrooms, we can help you plan around the renovation schedule.",
-      "q3": "What waterproofing do you use for bathrooms?",
-      "a3": "We use industry-leading waterproofing systems including Schluter and RedGard to ensure your bathroom is properly protected against moisture damage."
+      "q1": "بازسازی حمام در {area} چقدر طول می‌کشد؟",
+      "a1": "اکثر بازسازی‌های حمام در {area} بین ۲ تا ۴ هفته طول می‌کشد. یک به‌روزرسانی ساده ظاهری ممکن است ۱ هفته زمان ببرد، در حالی که بازسازی کامل با تغییر چیدمان می‌تواند ۴ تا ۶ هفته به طول انجامد.",
+      "q2": "آیا می‌توانم در طول بازسازی از حمام خود استفاده کنم؟",
+      "a2": "معمولاً خیر، اما ما با بالاترین کارایی کار می‌کنیم تا اختلال به حداقل برسد. اگر چندین حمام دارید، می‌توانیم به شما کمک کنیم برنامه‌ریزی متناسب با زمان‌بندی بازسازی داشته باشید.",
+      "q3": "از چه نوع آب‌بندی برای حمام‌ها استفاده می‌کنید؟",
+      "a3": "ما از سیستم‌های آب‌بندی پیشرو در صنعت از جمله Schluter و RedGard استفاده می‌کنیم تا اطمینان حاصل شود حمام شما به‌طور کامل در برابر آسیب‌های ناشی از رطوبت محافظت می‌شود."
     },
     "whole-house": {
-      "q1": "Can I live in my home during a whole house renovation in {area}?",
-      "a1": "It depends on the scope. For major renovations in {area}, we often recommend temporary relocation for safety and efficiency. We can help coordinate phased work if staying is preferred.",
-      "q2": "How do you manage a whole house renovation project?",
-      "a2": "We assign a dedicated project manager who coordinates all trades, maintains the schedule, and provides regular updates. You have a single point of contact throughout.",
-      "q3": "Do I need permits for a whole house renovation in {area}?",
-      "a3": "Yes, whole house renovations typically require multiple permits for structural, electrical, and plumbing work. We handle all {area} permit applications and inspections."
+      "q1": "آیا می‌توانم در طول بازسازی کامل منزل در {area} در خانه خود زندگی کنم؟",
+      "a1": "بستگی به دامنه کار دارد. برای بازسازی‌های گسترده در {area}، اغلب اقامت موقت در جای دیگر را برای ایمنی و کارایی توصیه می‌کنیم. اگر تمایل به ماندن دارید، می‌توانیم در هماهنگی کار به‌صورت مرحله‌ای کمک کنیم.",
+      "q2": "چگونه پروژه بازسازی کامل منزل را مدیریت می‌کنید؟",
+      "a2": "ما یک مدیر پروژه اختصاصی تعیین می‌کنیم که تمام پیمانکاران را هماهنگ می‌کند، زمان‌بندی را حفظ می‌کند و به‌طور منظم گزارش می‌دهد. شما در سراسر فرآیند یک نقطه تماس واحد دارید.",
+      "q3": "آیا برای بازسازی کامل منزل در {area} به مجوز نیاز دارم؟",
+      "a3": "بله، بازسازی کامل منزل معمولاً نیازمند چندین مجوز برای کارهای سازه‌ای، برقی و لوله‌کشی است. ما تمام درخواست‌های مجوز و بازرسی‌های {area} را مدیریت می‌کنیم."
     },
     "basement": {
-      "q1": "Do I need a permit to finish my basement in {area}?",
-      "a1": "Yes, basement finishing requires building permits in {area}. We handle all permit applications and inspections as part of our service.",
-      "q2": "How do you handle basement moisture issues?",
-      "a2": "We assess moisture levels and implement appropriate solutions including drainage improvements, vapor barriers, and proper insulation before finishing.",
-      "q3": "Can I add a bathroom to my basement?",
-      "a3": "Yes, we can add bathrooms to basements. If below the sewer line, we install sewage ejector systems. All plumbing meets {area} building codes."
+      "q1": "آیا برای تکمیل زیرزمین خود در {area} به مجوز نیاز دارم؟",
+      "a1": "بله، تکمیل زیرزمین در {area} نیاز به مجوز ساختمانی دارد. ما تمام درخواست‌های مجوز و بازرسی‌ها را به‌عنوان بخشی از خدمات خود مدیریت می‌کنیم.",
+      "q2": "چگونه با مشکلات رطوبت زیرزمین برخورد می‌کنید؟",
+      "a2": "ما سطح رطوبت را ارزیابی می‌کنیم و راهکارهای مناسبی از جمله بهبود زهکشی، نصب لایه‌های ضد بخار و عایق‌بندی مناسب را پیش از تکمیل اجرا می‌کنیم.",
+      "q3": "آیا می‌توانم به زیرزمین خود حمام اضافه کنم؟",
+      "a3": "بله، ما می‌توانیم به زیرزمین‌ها حمام اضافه کنیم. اگر زیر خط فاضلاب باشد، سیستم‌های پمپ فاضلاب نصب می‌کنیم. تمام لوله‌کشی‌ها مطابق با مقررات ساختمانی {area} اجرا می‌شود."
     },
     "cabinet": {
-      "q1": "What is the difference between refacing and replacing cabinets?",
-      "a1": "Refacing keeps your existing cabinet boxes and replaces doors, drawer fronts, and hardware. It costs 40-50% less than full replacement and takes less time.",
-      "q2": "How long does cabinet refacing take in {area}?",
-      "a2": "Cabinet refacing in {area} typically takes 3-5 days for an average kitchen. Your kitchen remains functional throughout most of the process.",
-      "q3": "Can all cabinets be refaced?",
-      "a3": "Most solid wood and plywood cabinet boxes can be refaced if they are structurally sound. We assess your cabinets during a free in-home consultation in {area}."
+      "q1": "تفاوت میان روکش‌کاری مجدد و تعویض کابینت چیست؟",
+      "a1": "روکش‌کاری مجدد، جعبه‌های موجود کابینت را حفظ می‌کند و دربچه‌ها، روی کشوها و یراق‌آلات را تعویض می‌کند. این روش ۴۰ تا ۵۰ درصد کم‌هزینه‌تر از تعویض کامل است و زمان کمتری می‌برد.",
+      "q2": "روکش‌کاری مجدد کابینت در {area} چقدر طول می‌کشد؟",
+      "a2": "روکش‌کاری مجدد کابینت در {area} برای یک آشپزخانه معمولی ۳ تا ۵ روز زمان می‌برد. آشپزخانه شما در بیشتر این فرآیند کاربردی باقی می‌ماند.",
+      "q3": "آیا تمام کابینت‌ها قابل روکش‌کاری مجدد هستند؟",
+      "a3": "بیشتر جعبه‌های کابینت چوب جامد و چندلایی در صورتی که از نظر سازه‌ای سالم باشند، قابل روکش‌کاری مجدد هستند. ما کابینت‌های شما را در یک جلسه مشاوره رایگان حضوری در {area} ارزیابی می‌کنیم."
     },
     "commercial": {
-      "q1": "Do you work during business hours?",
-      "a1": "We offer flexible scheduling including evenings and weekends to minimize disruption to your business operations. We can phase work to keep parts of your space operational.",
-      "q2": "Are you experienced with {area} commercial building codes?",
-      "a2": "Yes, our team is experienced with {area} commercial building codes, accessibility requirements, and fire safety regulations. We ensure full compliance with all commercial standards.",
-      "q3": "Can you handle tenant improvements in {area}?",
-      "a3": "Yes, we specialize in tenant improvements (TI) for offices, retail spaces, and restaurants in {area}. We work with landlords and property managers on approval processes."
+      "q1": "آیا در ساعات کاری فعالیت می‌کنید؟",
+      "a1": "ما زمان‌بندی منعطفی شامل عصرها و آخر هفته‌ها ارائه می‌دهیم تا اختلال در عملیات کسب‌وکار شما به حداقل برسد. می‌توانیم کار را به‌صورت مرحله‌ای انجام دهیم تا بخش‌هایی از فضا فعال بماند.",
+      "q2": "آیا با مقررات ساختمانی تجاری {area} آشنایی دارید؟",
+      "a2": "بله، تیم ما با مقررات ساختمانی تجاری {area}، الزامات دسترسی و مقررات ایمنی در برابر آتش آشنا است. ما رعایت کامل تمام استانداردهای تجاری را تضمین می‌کنیم.",
+      "q3": "آیا می‌توانید بهبود فضای استیجاری در {area} را انجام دهید؟",
+      "a3": "بله، ما در بهبود فضای استیجاری (TI) برای دفاتر، فروشگاه‌ها و رستوران‌ها در {area} تخصص داریم. در فرآیند تأیید با صاحب‌خانه‌ها و مدیران ملک همکاری می‌کنیم."
     }
   }
 }

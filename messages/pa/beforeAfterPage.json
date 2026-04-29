@@ -1,67 +1,67 @@
 {
   "beforeAfterPage": {
     "hero": {
-      "title": "Before & After Gallery",
-      "subtitle": "See the dramatic transformations from our renovation projects across Metro Vancouver. Real photos from real homes."
+      "title": "ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਗੈਲਰੀ",
+      "subtitle": "ਮੈਟਰੋ Vancouver ਭਰ ਵਿੱਚ ਸਾਡੇ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟਾਂ ਦੀਆਂ ਜਬਰਦਸਤ ਤਬਦੀਲੀਆਂ ਦੇਖੋ। ਅਸਲ ਘਰਾਂ ਦੀਆਂ ਅਸਲ ਫੋਟੋਆਂ।"
     },
     "stats": {
-      "transformations": "Transformations",
-      "projects": "Projects",
-      "cities": "Cities Served"
+      "transformations": "ਤਬਦੀਲੀਆਂ",
+      "projects": "ਪ੍ਰੋਜੈਕਟ",
+      "cities": "ਸੇਵਾ ਕੀਤੇ ਸ਼ਹਿਰ"
     },
     "filters": {
-      "all": "All",
-      "bathroom": "Bathroom",
-      "kitchen": "Kitchen",
-      "whole-house": "Whole House",
-      "commercial": "Commercial"
+      "all": "ਸਾਰੇ",
+      "bathroom": "ਬਾਥਰੂਮ",
+      "kitchen": "ਰਸੋਈ",
+      "whole-house": "ਪੂਰਾ ਘਰ",
+      "commercial": "ਕਮਰਸ਼ੀਅਲ"
     },
     "labels": {
-      "before": "Before",
-      "after": "After",
-      "viewProject": "View Project"
+      "before": "ਪਹਿਲਾਂ",
+      "after": "ਬਾਅਦ",
+      "viewProject": "ਪ੍ਰੋਜੈਕਟ ਦੇਖੋ"
     },
-    "noResults": "No before & after photos found for this category.",
+    "noResults": "ਇਸ ਸ਼੍ਰੇਣੀ ਲਈ ਕੋਈ ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਦੀਆਂ ਫੋਟੋਆਂ ਨਹੀਂ ਮਿਲੀਆਂ।",
     "whySection": {
-      "title": "Why We Share Before & After Photos",
+      "title": "ਅਸੀਂ ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਦੀਆਂ ਫੋਟੋਆਂ ਕਿਉਂ ਸਾਂਝੀਆਂ ਕਰਦੇ ਹਾਂ",
       "transparency": {
-        "title": "Complete Transparency",
-        "description": "We believe in showing you exactly what to expect. Our before and after photos are unedited, giving you an honest look at the quality of our work."
+        "title": "ਪੂਰੀ ਪਾਰਦਰਸ਼ਤਾ",
+        "description": "ਅਸੀਂ ਤੁਹਾਨੂੰ ਉਹੀ ਦਿਖਾਉਣ ਵਿੱਚ ਵਿਸ਼ਵਾਸ ਕਰਦੇ ਹਾਂ ਜੋ ਉਮੀਦ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ। ਸਾਡੀਆਂ ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਦੀਆਂ ਫੋਟੋਆਂ ਬਿਨਾਂ ਸੰਪਾਦਨ ਦੇ ਹਨ, ਜੋ ਤੁਹਾਨੂੰ ਸਾਡੇ ਕੰਮ ਦੀ ਗੁਣਵੱਤਾ ਦੀ ਇਮਾਨਦਾਰ ਝਲਕ ਦਿੰਦੀਆਂ ਹਨ।"
       },
       "quality": {
-        "title": "Proven Quality",
-        "description": "Every transformation speaks for itself. From outdated kitchens to modern masterpieces, our craftsmanship is evident in every detail."
+        "title": "ਪ੍ਰਮਾਣਿਤ ਗੁਣਵੱਤਾ",
+        "description": "ਹਰ ਤਬਦੀਲੀ ਆਪਣੇ ਆਪ ਬੋਲਦੀ ਹੈ। ਪੁਰਾਣੀਆਂ ਰਸੋਈਆਂ ਤੋਂ ਆਧੁਨਿਕ ਮਾਸਟਰਪੀਸਾਂ ਤੱਕ, ਸਾਡੀ ਕਾਰੀਗਰੀ ਹਰ ਵੇਰਵੇ ਵਿੱਚ ਸਪੱਸ਼ਟ ਹੈ।"
       },
       "inspiration": {
-        "title": "Design Inspiration",
-        "description": "Browse real renovations to find ideas for your own project. See how different styles, materials, and layouts come together in homes like yours."
+        "title": "ਡਿਜ਼ਾਈਨ ਪ੍ਰੇਰਨਾ",
+        "description": "ਆਪਣੇ ਖੁਦ ਦੇ ਪ੍ਰੋਜੈਕਟ ਲਈ ਵਿਚਾਰ ਲੱਭਣ ਲਈ ਅਸਲ ਰੈਨੋਵੇਸ਼ਨਾਂ ਵੇਖੋ। ਦੇਖੋ ਕਿ ਵੱਖ-ਵੱਖ ਸ਼ੈਲੀਆਂ, ਸਮੱਗਰੀਆਂ ਅਤੇ ਲੇਆਉਟ ਤੁਹਾਡੇ ਵਰਗੇ ਘਰਾਂ ਵਿੱਚ ਕਿਵੇਂ ਮਿਲਦੇ ਹਨ।"
       }
     },
     "faqSection": {
-      "title": "Frequently Asked Questions"
+      "title": "ਅਕਸਰ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ"
     },
     "faq": {
-      "q1": "Are these real before and after photos?",
-      "a1": "Yes, every photo on this page comes directly from our completed renovation projects across Metro Vancouver. We do not use stock photos or digitally alter our images.",
-      "q2": "How long does a typical renovation take?",
-      "a2": "Renovation timelines vary by project scope. A bathroom renovation typically takes 2-4 weeks, a kitchen renovation 4-8 weeks, and a whole-house renovation 2-4 months. We provide detailed timelines during our free consultation.",
-      "q3": "Can I visit a completed project in person?",
-      "a3": "We can arrange visits to our showroom where you can see material samples and finishes in person. For specific project references, we can connect you with previous clients who are willing to share their experience.",
-      "q4": "What areas do you serve?",
-      "a4": "We serve all of Metro Vancouver including Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, and Maple Ridge.",
-      "q5": "How do I get started with my renovation?",
-      "a5": "Simply contact us for a free consultation. We will visit your space, discuss your vision and budget, and provide a detailed quote. Our team handles everything from design to completion."
+      "q1": "ਕੀ ਇਹ ਅਸਲ ਪਹਿਲਾਂ ਅਤੇ ਬਾਅਦ ਦੀਆਂ ਫੋਟੋਆਂ ਹਨ?",
+      "a1": "ਜੀ ਹਾਂ, ਇਸ ਪੰਨੇ 'ਤੇ ਹਰ ਫੋਟੋ ਮੈਟਰੋ Vancouver ਭਰ ਵਿੱਚ ਸਾਡੇ ਮੁਕੰਮਲ ਕੀਤੇ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟਾਂ ਤੋਂ ਸਿੱਧੀ ਆਉਂਦੀ ਹੈ। ਅਸੀਂ ਸਟਾਕ ਫੋਟੋਆਂ ਨਹੀਂ ਵਰਤਦੇ ਜਾਂ ਆਪਣੀਆਂ ਤਸਵੀਰਾਂ ਨੂੰ ਡਿਜੀਟਲ ਤੌਰ 'ਤੇ ਨਹੀਂ ਬਦਲਦੇ।",
+      "q2": "ਇੱਕ ਆਮ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "ਰੈਨੋਵੇਸ਼ਨ ਦੀਆਂ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਪ੍ਰੋਜੈਕਟ ਦੇ ਘੇਰੇ ਅਨੁਸਾਰ ਵੱਖ-ਵੱਖ ਹੁੰਦੀਆਂ ਹਨ। ਇੱਕ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਆਮ ਤੌਰ 'ਤੇ 2-4 ਹਫ਼ਤੇ, ਇੱਕ ਰਸੋਈ ਰੈਨੋਵੇਸ਼ਨ 4-8 ਹਫ਼ਤੇ, ਅਤੇ ਪੂਰੇ ਘਰ ਦੀ ਰੈਨੋਵੇਸ਼ਨ 2-4 ਮਹੀਨੇ ਲੈਂਦੀ ਹੈ। ਅਸੀਂ ਆਪਣੇ ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਦੌਰਾਨ ਵਿਸਤ੍ਰਿਤ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ।",
+      "q3": "ਕੀ ਮੈਂ ਮੁਕੰਮਲ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ ਨੂੰ ਵਿਅਕਤੀਗਤ ਤੌਰ 'ਤੇ ਜਾ ਕੇ ਦੇਖ ਸਕਦਾ ਹਾਂ?",
+      "a3": "ਅਸੀਂ ਆਪਣੇ ਸ਼ੋਅਰੂਮ ਦੇ ਦੌਰਿਆਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰ ਸਕਦੇ ਹਾਂ ਜਿੱਥੇ ਤੁਸੀਂ ਸਮੱਗਰੀ ਦੇ ਨਮੂਨੇ ਅਤੇ ਫਿਨਿਸ਼ ਵਿਅਕਤੀਗਤ ਤੌਰ 'ਤੇ ਦੇਖ ਸਕਦੇ ਹੋ। ਖਾਸ ਪ੍ਰੋਜੈਕਟ ਹਵਾਲਿਆਂ ਲਈ, ਅਸੀਂ ਤੁਹਾਨੂੰ ਪਿਛਲੇ ਗਾਹਕਾਂ ਨਾਲ ਜੋੜ ਸਕਦੇ ਹਾਂ ਜੋ ਆਪਣਾ ਅਨੁਭਵ ਸਾਂਝਾ ਕਰਨ ਲਈ ਤਿਆਰ ਹਨ।",
+      "q4": "ਤੁਸੀਂ ਕਿਹੜੇ ਖੇਤਰਾਂ ਵਿੱਚ ਸੇਵਾ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹੋ?",
+      "a4": "ਅਸੀਂ ਮੈਟਰੋ Vancouver ਦੇ ਸਾਰੇ ਖੇਤਰਾਂ ਵਿੱਚ ਸੇਵਾ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਾਂ ਜਿਸ ਵਿੱਚ Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley, ਅਤੇ Maple Ridge ਸ਼ਾਮਲ ਹਨ।",
+      "q5": "ਮੈਂ ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ਨਾਲ ਕਿਵੇਂ ਸ਼ੁਰੂਆਤ ਕਰਾਂ?",
+      "a5": "ਬਸ ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਲਈ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਅਸੀਂ ਤੁਹਾਡੀ ਥਾਂ ਦੇਖਾਂਗੇ, ਤੁਹਾਡੇ ਵਿਚਾਰ ਅਤੇ ਬਜਟ 'ਤੇ ਚਰਚਾ ਕਰਾਂਗੇ, ਅਤੇ ਇੱਕ ਵਿਸਤ੍ਰਿਤ ਅੰਦਾਜ਼ਾ ਪ੍ਰਦਾਨ ਕਰਾਂਗੇ। ਸਾਡੀ ਟੀਮ ਡਿਜ਼ਾਈਨ ਤੋਂ ਮੁਕੰਮਲਤਾ ਤੱਕ ਸਭ ਕੁਝ ਸੰਭਾਲਦੀ ਹੈ।"
     },
     "cta": {
-      "heading": "Ready to Transform Your Space?",
-      "subtitle": "Contact us today for a free consultation and see what Reno Stars can do for your home."
+      "heading": "ਆਪਣੀ ਥਾਂ ਨੂੰ ਬਦਲਣ ਲਈ ਤਿਆਰ ਹੋ?",
+      "subtitle": "ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਲਈ ਅੱਜ ਹੀ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ਅਤੇ ਦੇਖੋ Reno Stars ਤੁਹਾਡੇ ਘਰ ਲਈ ਕੀ ਕਰ ਸਕਦਾ ਹੈ।"
     },
     "pagination": {
-      "label": "Gallery pagination",
-      "previous": "Previous",
-      "next": "Next",
-      "previousPage": "Go to previous page",
-      "nextPage": "Go to next page"
+      "label": "ਗੈਲਰੀ ਪੇਜ਼ਨੇਸ਼ਨ",
+      "previous": "ਪਿੱਛੇ",
+      "next": "ਅੱਗੇ",
+      "previousPage": "ਪਿਛਲੇ ਪੰਨੇ 'ਤੇ ਜਾਓ",
+      "nextPage": "ਅਗਲੇ ਪੰਨੇ 'ਤੇ ਜਾਓ"
     }
   }
 }

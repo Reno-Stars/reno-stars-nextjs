@@ -1,14 +1,14 @@
 {
   "modal": {
-    "location": "Location",
-    "category": "Category",
-    "budget": "Budget Range",
-    "spaceType": "Space Type",
-    "serviceScope": "Service Scope",
-    "duration": "Duration",
-    "challenge": "The Challenge",
-    "solution": "Our Solution",
-    "close": "Close",
-    "viewDetails": "View Full Details"
+    "location": "ਟਿਕਾਣਾ",
+    "category": "ਸ਼੍ਰੇਣੀ",
+    "budget": "ਬਜਟ ਰੇਂਜ",
+    "spaceType": "ਥਾਂ ਦੀ ਕਿਸਮ",
+    "serviceScope": "ਸੇਵਾ ਦਾ ਘੇਰਾ",
+    "duration": "ਮਿਆਦ",
+    "challenge": "ਚੁਣੌਤੀ",
+    "solution": "ਸਾਡਾ ਹੱਲ",
+    "close": "ਬੰਦ ਕਰੋ",
+    "viewDetails": "ਪੂਰੇ ਵੇਰਵੇ ਵੇਖੋ"
   }
 }

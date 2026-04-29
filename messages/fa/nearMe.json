@@ -1,105 +1,105 @@
 {
   "nearMe": {
-    "breadcrumb": "Renovation Near Me",
+    "breadcrumb": "بازسازی نزدیک من",
     "hero": {
-      "eyebrow": "Serving Metro Vancouver since 2020",
-      "h1": "Looking for a renovation company near you?",
-      "subtitle": "Reno Stars serves Vancouver and 14 Metro Vancouver cities with licensed, insured home renovation crews. Kitchen, bathroom, basement, and whole-house remodels — one local team from design to handover, not a marketplace.",
-      "ctaPrimary": "Get my free quote"
+      "eyebrow": "خدمت‌رسانی به مترو ونکوور از سال ۲۰۲۰",
+      "h1": "به دنبال شرکت بازسازی نزدیک خود هستید؟",
+      "subtitle": "Reno Stars به ونکوور و ۱۴ شهر مترو ونکوور با تیم‌های مجاز و بیمه‌شده بازسازی منزل خدمت می‌دهد. بازسازی آشپزخانه، حمام، زیرزمین و کامل منزل — یک تیم محلی واحد از طراحی تا تحویل، نه یک پلتفرم واسط.",
+      "ctaPrimary": "دریافت پیش‌فاکتور رایگان من"
     },
     "trust": {
       "reviews": {
         "stat": "70+",
-        "label": "Google 5★ reviews"
+        "label": "نظر پنج‌ستاره Google"
       },
       "insured": {
         "stat": "$5M",
-        "label": "Liability + WCB"
+        "label": "مسئولیت + WCB"
       },
       "experience": {
         "stat": "20+",
-        "label": "Years in Vancouver"
+        "label": "سال در ونکوور"
       },
       "coverage": {
         "stat": "14",
-        "label": "Metro Vancouver cities"
+        "label": "شهر مترو ونکوور"
       }
     },
     "areas": {
-      "heading": "Renovation service areas near you",
-      "subtitle": "Pick your neighborhood for local project photos, price ranges, and crews already working in your area."
+      "heading": "مناطق خدمات بازسازی نزدیک شما",
+      "subtitle": "محله خود را انتخاب کنید تا تصاویر پروژه‌های محلی، محدوده قیمت و تیم‌هایی که از قبل در منطقه شما در حال کار هستند را ببینید."
     },
     "services": {
-      "heading": "What we renovate near you",
-      "learnMore": "Learn more",
+      "heading": "آنچه نزدیک شما بازسازی می‌کنیم",
+      "learnMore": "اطلاعات بیشتر",
       "kitchen": {
-        "title": "Kitchen renovation near me",
-        "desc": "Cabinets, quartz countertops, backsplash, flooring, electrical. Budget-friendly refresh to full custom. Typical 4-8 weeks, $25K-$90K."
+        "title": "بازسازی آشپزخانه نزدیک من",
+        "desc": "کابینت، صفحه کار کوارتز، کاشی پشت سینک، کف‌سازی، برق‌کشی. از به‌روزرسانی مقرون‌به‌صرفه تا کاملاً سفارشی. معمولاً ۴ تا ۸ هفته، $25K تا $90K."
       },
       "bathroom": {
-        "title": "Bathroom renovation near me",
-        "desc": "Tile walls, Schluter waterproofing, tiled showers or tub-to-shower conversions, vanities, fixtures. 3-6 weeks typical, $15K-$45K."
+        "title": "بازسازی حمام نزدیک من",
+        "desc": "کاشی‌کاری دیوار، آب‌بندی Schluter، دوش‌های کاشی‌کاری‌شده یا تبدیل وان به دوش، روشویی، شیرآلات. معمولاً ۳ تا ۶ هفته، $15K تا $45K."
       },
       "wholeHouse": {
-        "title": "Whole house renovation near me",
-        "desc": "Full interior remodels — kitchen, baths, flooring, paint, lighting, sometimes structural. 2-6 months, $80K-$400K+."
+        "title": "بازسازی کامل منزل نزدیک من",
+        "desc": "بازسازی کامل داخلی — آشپزخانه، حمام، کف‌سازی، نقاشی، نورپردازی، گاهی کارهای سازه‌ای. ۲ تا ۶ ماه، $80K تا بیش از $400K."
       },
       "basement": {
-        "title": "Basement renovation near me",
-        "desc": "Suite conversions, family rooms, home theatres, bathrooms. Permit-first approach in Vancouver, Burnaby, Richmond & beyond."
+        "title": "بازسازی زیرزمین نزدیک من",
+        "desc": "تبدیل به سوئیت، اتاق نشیمن خانوادگی، سینمای خانگی، حمام. رویکرد مجوز-اول در ونکوور، Burnaby، Richmond و فراتر از آن."
       },
       "cabinet": {
-        "title": "Cabinet refacing near me",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "title": "روکش‌کاری مجدد کابینت نزدیک من",
+        "desc": "جایگزین کم‌هزینه برای تعویض کامل کابینت — دربچه جدید، یراق‌آلات و کوارتز برای همان فضا. ۱ تا ۲ هفته، $8K تا $20K."
       },
       "commercial": {
-        "title": "Commercial renovation near me",
-        "desc": "Restaurants, clinics, salons, retail. Permit-aware, off-hours scheduling, minimal business disruption across Metro Vancouver."
+        "title": "بازسازی تجاری نزدیک من",
+        "desc": "رستوران، کلینیک، آرایشگاه، مغازه. آگاه از مجوز، زمان‌بندی خارج از ساعات کاری، حداقل اختلال در کسب‌وکار در سراسر مترو ونکوور."
       }
     },
     "why": {
-      "heading": "Why choose Reno Stars for a renovation near you",
+      "heading": "چرا Reno Stars را برای بازسازی نزدیک خود انتخاب کنید",
       "point1": {
-        "title": "One local team — not a marketplace",
-        "body": "Unlike directory sites that pass you to strangers, every Reno Stars project is run by our own crew. Same PM from quote to handover."
+        "title": "یک تیم محلی واحد — نه یک پلتفرم واسط",
+        "body": "برخلاف سایت‌های فهرست که شما را به افراد ناشناس ارجاع می‌دهند، هر پروژه Reno Stars توسط تیم خود ما اجرا می‌شود. همان مدیر پروژه از پیش‌فاکتور تا تحویل."
       },
       "point2": {
-        "title": "Licensed, insured, WCB-covered",
-        "body": "$5M liability insurance and active WCB coverage on every job. We'll share certificates before work begins."
+        "title": "دارای مجوز، بیمه و پوشش WCB",
+        "body": "بیمه مسئولیت $5M و پوشش فعال WCB در هر پروژه. ما گواهینامه‌ها را پیش از شروع کار به اشتراک می‌گذاریم."
       },
       "point3": {
-        "title": "Transparent pricing, no surprises",
-        "body": "Itemized written quotes with real material specs. Change orders only when you approve them. 3-year workmanship warranty."
+        "title": "قیمت‌گذاری شفاف، بدون غافلگیری",
+        "body": "پیش‌فاکتورهای کتبی ریز شده با مشخصات واقعی متریال. تغییرات سفارش فقط با تأیید شما. گارانتی ۳ ساله صنعتگری."
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
-        "body": "Project managers and sales speak both English and Mandarin. Contracts, change orders, and updates in your preferred language."
+        "title": "خدمات دوزبانه (انگلیسی + ماندارین)",
+        "body": "مدیران پروژه و فروش به هر دو زبان انگلیسی و ماندارین صحبت می‌کنند. قراردادها، تغییرات سفارش و گزارش‌ها به زبان دلخواه شما."
       },
       "point5": {
-        "title": "Real local portfolio near you",
-        "body": "Hundreds of projects across Vancouver, Richmond, Burnaby, Surrey, Coquitlam, and beyond. We'll share photos + references from your neighborhood."
+        "title": "نمونه‌کارهای واقعی محلی نزدیک شما",
+        "body": "صدها پروژه در سراسر Vancouver، Richmond، Burnaby، Surrey، Coquitlam و فراتر از آن. ما تصاویر و معرفی‌نامه‌ها را از محله شما به اشتراک می‌گذاریم."
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
-      "q1": "How do I find a trusted renovation company near me in Vancouver?",
-      "a1": "Check three things: licensing + insurance (ask for certificates, not promises), real Google reviews at volume (100+ is meaningful, 10 is not), and a portfolio from your neighborhood. Reno Stars has 70+ five-star Google reviews, $5M liability insurance, WCB coverage, and a project portfolio in every Metro Vancouver city we serve.",
-      "q2": "What's the cost of a bathroom or kitchen renovation near me?",
-      "a2": "In Metro Vancouver, bathroom renovations typically run $15K-$45K and kitchens run $25K-$90K. Exact pricing depends on square footage, finish level, and whether any walls move. Every Reno Stars quote is itemized — labour, materials, permits — so you see where every dollar goes.",
-      "q3": "How long does a renovation near me take?",
-      "a3": "Bathrooms: 3-6 weeks from demo to handover. Kitchens: 4-8 weeks. Whole-house: 2-6 months depending on scope. Cabinet refacing: 1-2 weeks. We give you a week-by-week schedule at contract signing and text updates as milestones hit.",
-      "q4": "Do you handle permits for renovations near me?",
-      "a4": "Yes. For any work that moves walls, plumbing, or electrical, we pull permits through the appropriate municipality (Vancouver, Richmond, Burnaby, Surrey, etc.). Cosmetic work like paint, flooring, and cabinet refacing usually doesn't need a permit — we tell you the honest answer before quoting.",
-      "q5": "Do you offer free estimates near me?",
-      "a5": "Yes — free in-home consultation and written quote across all 14 Metro Vancouver cities we serve. We'll measure, discuss materials, walk through the scope, and send an itemized quote within 2-3 business days. No deposit required to quote.",
-      "q6": "What neighborhoods do you serve?",
-      "a6": "We're based in Richmond BC and serve Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster, and White Rock. If you're outside this radius, ask — we occasionally travel for whole-house projects."
+      "heading": "بازسازی نزدیک من — پرسش‌های متداول",
+      "q1": "چگونه می‌توانم یک شرکت بازسازی مورد اعتماد نزدیک خود در ونکوور پیدا کنم؟",
+      "a1": "سه مورد را بررسی کنید: مجوز و بیمه (گواهینامه بخواهید، نه وعده)، نظرات واقعی Google با تعداد قابل‌توجه (۱۰۰+ معنی‌دار است، ۱۰ نه)، و نمونه‌کارهایی از محله شما. Reno Stars بیش از ۷۰ نظر پنج‌ستاره Google، بیمه مسئولیت $5M، پوشش WCB و نمونه‌کار پروژه در هر شهر مترو ونکوور تحت پوشش دارد.",
+      "q2": "هزینه بازسازی حمام یا آشپزخانه نزدیک من چقدر است؟",
+      "a2": "در مترو ونکوور، بازسازی حمام معمولاً $15K تا $45K و آشپزخانه $25K تا $90K است. قیمت دقیق به متراژ، سطح فینیشن و جابجایی دیوارها بستگی دارد. هر پیش‌فاکتور Reno Stars ریز شده است — دستمزد، متریال، مجوز — تا ببینید هر دلار کجا خرج می‌شود.",
+      "q3": "بازسازی نزدیک من چقدر طول می‌کشد؟",
+      "a3": "حمام: ۳ تا ۶ هفته از تخریب تا تحویل. آشپزخانه: ۴ تا ۸ هفته. کامل منزل: ۲ تا ۶ ماه بسته به دامنه. روکش‌کاری مجدد کابینت: ۱ تا ۲ هفته. ما در زمان امضای قرارداد یک برنامه هفته‌به‌هفته به شما می‌دهیم و در هر مرحله از طریق پیامک به‌روزرسانی می‌فرستیم.",
+      "q4": "آیا کارهای مجوز برای بازسازی نزدیک من را شما انجام می‌دهید؟",
+      "a4": "بله. برای هر کاری که شامل جابجایی دیوار، لوله‌کشی یا برق باشد، ما از طریق شهرداری مربوطه (Vancouver، Richmond، Burnaby، Surrey و غیره) مجوز اخذ می‌کنیم. کارهای ظاهری مانند نقاشی، کف‌سازی و روکش‌کاری مجدد کابینت معمولاً نیازی به مجوز ندارد — ما پیش از پیش‌فاکتور پاسخ صادقانه می‌دهیم.",
+      "q5": "آیا برآورد رایگان نزدیک من ارائه می‌دهید؟",
+      "a5": "بله — مشاوره رایگان حضوری و پیش‌فاکتور کتبی در تمام ۱۴ شهر مترو ونکوور تحت پوشش. ما اندازه‌گیری می‌کنیم، درباره متریال گفتگو می‌کنیم، در دامنه کار قدم می‌زنیم و ظرف ۲ تا ۳ روز کاری یک پیش‌فاکتور ریز شده می‌فرستیم. برای پیش‌فاکتور نیازی به پیش‌پرداخت نیست.",
+      "q6": "به چه محله‌هایی خدمات می‌دهید؟",
+      "a6": "ما در Richmond BC مستقر هستیم و به Vancouver، Burnaby، Richmond، Surrey، Coquitlam، Port Coquitlam، Port Moody، North Vancouver، West Vancouver، Langley، Delta، Tsawwassen، Maple Ridge، New Westminster و White Rock خدمات می‌دهیم. اگر خارج از این محدوده هستید، بپرسید — گاهی برای پروژه‌های کامل منزل سفر می‌کنیم."
     },
     "finalCta": {
-      "heading": "Ready to find a renovation team near you?",
-      "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
-      "quote": "Get my free quote",
-      "call": "Call 778-960-7999"
+      "heading": "آماده‌اید یک تیم بازسازی نزدیک خود پیدا کنید؟",
+      "subtitle": "مشاوره رایگان حضوری، پیش‌فاکتور ریز شده کتبی ظرف ۲ تا ۳ روز کاری. برای پیش‌فاکتور نیازی به پیش‌پرداخت نیست.",
+      "quote": "دریافت پیش‌فاکتور رایگان من",
+      "call": "تماس 778-960-7999"
     }
   }
 }
