@@ -1,100 +1,100 @@
 {
   "basementCost": {
-    "breadcrumb": "Basement Renovation Cost",
+    "breadcrumb": "ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ",
     "hero": {
-      "title": "Basement Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Here are typical price ranges based on project scope, from basic finishing to full legal suite conversions."
+      "title": "Vancouver BC ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ (2026)",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਨੂੰ ਪੂਰਾ ਕਰਨ ਜਾਂ ਨਵੀਨੀਕਰਨ ਕਰਨ ਦੀ ਅਸਲ ਲਾਗਤ ਕੀ ਹੈ? ਇੱਥੇ ਪ੍ਰੋਜੈਕਟ ਦੇ ਦਾਇਰੇ ਦੇ ਆਧਾਰ 'ਤੇ ਆਮ ਕੀਮਤ ਦੀਆਂ ਸੀਮਾਵਾਂ ਹਨ, ਮੁਢਲੀ ਫਿਨਿਸ਼ਿੰਗ ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨਾਂ ਤੱਕ।"
     },
     "stats": {
-      "avgCost": "Average Cost",
-      "range": "Price Range",
-      "sqft": "Cost per Sq Ft",
-      "sqftValue": "$35 – $120/sq ft",
-      "timeline": "Typical Timeline",
-      "timelineValue": "6–12 weeks"
+      "avgCost": "ਔਸਤ ਲਾਗਤ",
+      "range": "ਕੀਮਤ ਦੀ ਸੀਮਾ",
+      "sqft": "ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਲਾਗਤ",
+      "sqftValue": "$35 – $120/ਵਰਗ ਫੁੱਟ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "6–12 ਹਫ਼ਤੇ"
     },
     "tiers": {
-      "title": "Basement Renovation Cost by Tier",
-      "subtitle": "Typical pricing for basement projects across Greater Vancouver",
+      "title": "ਟੀਅਰ ਅਨੁਸਾਰ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਪ੍ਰੋਜੈਕਟਾਂ ਲਈ ਆਮ ਕੀਮਤ",
       "budget": {
-        "title": "Basic Finishing",
-        "description": "Framing, insulation, drywall, basic flooring, paint, and standard lighting. Suitable for a recreation room, home office, or storage area without plumbing additions."
+        "title": "ਮੁਢਲੀ ਫਿਨਿਸ਼ਿੰਗ",
+        "description": "ਫਰੇਮਿੰਗ, ਇਨਸੂਲੇਸ਼ਨ, ਡਰਾਈਵਾਲ, ਮੁਢਲੀ ਫਲੋਰਿੰਗ, ਪੇਂਟ, ਅਤੇ ਮਿਆਰੀ ਲਾਈਟਿੰਗ। ਪਲੰਬਿੰਗ ਦੇ ਜੋੜਾਂ ਤੋਂ ਬਿਨਾਂ ਮਨੋਰੰਜਨ ਕਮਰੇ, ਘਰ ਦੇ ਦਫ਼ਤਰ, ਜਾਂ ਸਟੋਰੇਜ ਖੇਤਰ ਲਈ ਢੁਕਵੀਂ।"
       },
       "midRange": {
-        "title": "Mid-Range Renovation",
-        "description": "Full finishing with a bathroom addition, upgraded flooring (vinyl plank or laminate), pot lights, built-in storage, and a wet bar or kitchenette. The most popular scope for family homes."
+        "title": "ਦਰਮਿਆਨੇ ਪੱਧਰ ਦਾ ਨਵੀਨੀਕਰਨ",
+        "description": "ਬਾਥਰੂਮ ਦੇ ਜੋੜ, ਅਪਗ੍ਰੇਡਡ ਫਲੋਰਿੰਗ (ਵਿਨਾਇਲ ਪਲੈਂਕ ਜਾਂ ਲੈਮੀਨੇਟ), ਪੌਟ ਲਾਈਟਾਂ, ਬਿਲਟ-ਇਨ ਸਟੋਰੇਜ, ਅਤੇ ਇੱਕ ਵੈੱਟ ਬਾਰ ਜਾਂ ਕਿਚਨੇਟ ਨਾਲ ਪੂਰੀ ਫਿਨਿਸ਼ਿੰਗ। ਪਰਿਵਾਰਕ ਘਰਾਂ ਲਈ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਦਾਇਰਾ।"
       },
       "highEnd": {
-        "title": "Legal Suite Conversion",
-        "description": "Full secondary suite with separate entrance, kitchen, bathroom, bedroom with egress windows, fire separation, and all code-required features. Includes permits and inspections for rental legalization."
+        "title": "ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨ",
+        "description": "ਵੱਖਰੇ ਪ੍ਰਵੇਸ਼, ਰਸੋਈ, ਬਾਥਰੂਮ, ਐਗਰੈੱਸ ਖਿੜਕੀਆਂ ਵਾਲੇ ਬੈੱਡਰੂਮ, ਅੱਗ ਵੱਖਰਾ, ਅਤੇ ਸਾਰੀਆਂ ਕੋਡ-ਲੋੜੀਂਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨਾਲ ਪੂਰਾ ਸੈਕੰਡਰੀ ਸੂਟ। ਕਿਰਾਏ ਦੇ ਕਾਨੂੰਨੀਕਰਨ ਲਈ ਪਰਮਿਟ ਅਤੇ ਨਿਰੀਖਣ ਸ਼ਾਮਲ ਹਨ।"
       }
     },
     "factors": {
-      "title": "What Affects Your Basement Renovation Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੀ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ ਨੂੰ ਕੀ ਪ੍ਰਭਾਵਿਤ ਕਰਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਮ ਕੀਮਤ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ",
       "waterproofing": {
-        "title": "Waterproofing & Moisture Control",
-        "description": "Vancouver's wet climate makes waterproofing critical. Interior drainage systems run $3,000–8,000, while exterior waterproofing can cost $10,000–25,000. Sump pump installation adds $1,500–3,000."
+        "title": "ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਅਤੇ ਨਮੀ ਨਿਯੰਤਰਣ",
+        "description": "Vancouver ਦਾ ਗਿੱਲਾ ਮੌਸਮ ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਨੂੰ ਮਹੱਤਵਪੂਰਨ ਬਣਾਉਂਦਾ ਹੈ। ਅੰਦਰੂਨੀ ਡਰੇਨੇਜ ਸਿਸਟਮ $3,000–8,000 ਚਲਦੇ ਹਨ, ਜਦੋਂ ਕਿ ਬਾਹਰੀ ਵਾਟਰਪ੍ਰੂਫਿੰਗ $10,000–25,000 ਖਰਚ ਕਰ ਸਕਦੀ ਹੈ। ਸੰਪ ਪੰਪ ਸਥਾਪਨਾ $1,500–3,000 ਜੋੜਦੀ ਹੈ।"
       },
       "framing": {
-        "title": "Framing & Insulation",
-        "description": "Steel or wood framing with insulation typically costs $8–15 per square foot. Older Vancouver homes may need additional vapor barriers and insulation upgrades to meet current building code."
+        "title": "ਫਰੇਮਿੰਗ ਅਤੇ ਇਨਸੂਲੇਸ਼ਨ",
+        "description": "ਇਨਸੂਲੇਸ਼ਨ ਨਾਲ ਸਟੀਲ ਜਾਂ ਲੱਕੜ ਦੀ ਫਰੇਮਿੰਗ ਆਮ ਤੌਰ 'ਤੇ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ $8–15 ਖਰਚ ਕਰਦੀ ਹੈ। Vancouver ਦੇ ਪੁਰਾਣੇ ਘਰਾਂ ਨੂੰ ਮੌਜੂਦਾ ਬਿਲਡਿੰਗ ਕੋਡ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਵਾਧੂ ਵੇਪਰ ਬੈਰੀਅਰ ਅਤੇ ਇਨਸੂਲੇਸ਼ਨ ਅਪਗ੍ਰੇਡਾਂ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ।"
       },
       "plumbing": {
-        "title": "Plumbing (Bathroom/Kitchen)",
-        "description": "Adding a basement bathroom costs $8,000–15,000 depending on whether you need to break concrete for drain lines. A full kitchen installation adds $12,000–25,000 including rough-in and fixtures."
+        "title": "ਪਲੰਬਿੰਗ (ਬਾਥਰੂਮ/ਰਸੋਈ)",
+        "description": "ਬੇਸਮੈਂਟ ਬਾਥਰੂਮ ਜੋੜਨ 'ਤੇ $8,000–15,000 ਖਰਚ ਆਉਂਦਾ ਹੈ ਇਸ ਗੱਲ 'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ ਕਿ ਕੀ ਤੁਹਾਨੂੰ ਡਰੇਨ ਲਾਈਨਾਂ ਲਈ ਕੰਕਰੀਟ ਤੋੜਨ ਦੀ ਲੋੜ ਹੈ। ਪੂਰੀ ਰਸੋਈ ਸਥਾਪਨਾ ਰਫ-ਇਨ ਅਤੇ ਫਿਕਸਚਰਾਂ ਸਮੇਤ $12,000–25,000 ਜੋੜਦੀ ਹੈ।"
       },
       "electrical": {
-        "title": "Electrical & HVAC",
-        "description": "Basement electrical typically runs $3,000–8,000 for a standard layout. Many older homes need panel upgrades ($2,000–4,000). Extending HVAC ductwork adds $2,000–5,000."
+        "title": "ਇਲੈਕਟ੍ਰੀਕਲ ਅਤੇ HVAC",
+        "description": "ਬੇਸਮੈਂਟ ਇਲੈਕਟ੍ਰੀਕਲ ਆਮ ਤੌਰ 'ਤੇ ਮਿਆਰੀ ਲੇਆਉਟ ਲਈ $3,000–8,000 ਚਲਦਾ ਹੈ। ਬਹੁਤ ਸਾਰੇ ਪੁਰਾਣੇ ਘਰਾਂ ਨੂੰ ਪੈਨਲ ਅਪਗ੍ਰੇਡ ($2,000–4,000) ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। HVAC ਡਕਟਵਰਕ ਨੂੰ ਵਧਾਉਣ ਨਾਲ $2,000–5,000 ਜੁੜਦੇ ਹਨ।"
       },
       "egress": {
-        "title": "Egress Windows & Separate Entrance",
-        "description": "Building code requires egress windows in bedrooms ($2,000–5,000 each to install). Adding a separate exterior entrance for a suite costs $8,000–15,000 including excavation and concrete work."
+        "title": "ਐਗਰੈੱਸ ਖਿੜਕੀਆਂ ਅਤੇ ਵੱਖਰਾ ਪ੍ਰਵੇਸ਼",
+        "description": "ਬਿਲਡਿੰਗ ਕੋਡ ਨੂੰ ਬੈੱਡਰੂਮਾਂ ਵਿੱਚ ਐਗਰੈੱਸ ਖਿੜਕੀਆਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ (ਸਥਾਪਨਾ ਲਈ ਹਰੇਕ $2,000–5,000)। ਸੂਟ ਲਈ ਵੱਖਰਾ ਬਾਹਰੀ ਪ੍ਰਵੇਸ਼ ਜੋੜਨ 'ਤੇ ਖੁਦਾਈ ਅਤੇ ਕੰਕਰੀਟ ਦੇ ਕੰਮ ਸਮੇਤ $8,000–15,000 ਖਰਚ ਆਉਂਦਾ ਹੈ।"
       },
       "permits": {
-        "title": "Permits & Code Compliance",
-        "description": "Building permits for basement finishing in Metro Vancouver cost $500–2,000. Legal suite conversions require additional inspections. Some municipalities offer grants for adding rental suites."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਕੋਡ ਅਨੁਪਾਲਨ",
+        "description": "Metro Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਫਿਨਿਸ਼ਿੰਗ ਲਈ ਬਿਲਡਿੰਗ ਪਰਮਿਟਾਂ ਦੀ ਲਾਗਤ $500–2,000 ਹੁੰਦੀ ਹੈ। ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨਾਂ ਲਈ ਵਾਧੂ ਨਿਰੀਖਣਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕੁਝ ਨਗਰ ਪਾਲਿਕਾਵਾਂ ਕਿਰਾਏ ਦੇ ਸੂਟ ਜੋੜਨ ਲਈ ਗ੍ਰਾਂਟ ਪੇਸ਼ ਕਰਦੀਆਂ ਹਨ।"
       }
     },
     "realProjects": {
-      "title": "Related Whole-House Renovation Projects",
-      "subtitle": "Browse {count} completed renovation projects across Greater Vancouver, many include basement work"
+      "title": "ਸਬੰਧਤ ਪੂਰੇ-ਘਰ ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ {count} ਮੁਕੰਮਲ ਹੋਏ ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟ ਬ੍ਰਾਊਜ਼ ਕਰੋ, ਬਹੁਤਿਆਂ ਵਿੱਚ ਬੇਸਮੈਂਟ ਦਾ ਕੰਮ ਸ਼ਾਮਲ ਹੈ"
     },
     "tips": {
-      "title": "Money-Saving Tips for Your Basement Renovation",
+      "title": "ਤੁਹਾਡੇ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਵਾਲੇ ਸੁਝਾਅ",
       "tip1": {
-        "title": "Start with Waterproofing",
-        "description": "Address any moisture issues before finishing walls. Fixing water problems after drywall is installed costs 3–5x more than doing it upfront."
+        "title": "ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ",
+        "description": "ਕੰਧਾਂ ਨੂੰ ਮੁਕੰਮਲ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਨਮੀ ਦੇ ਕਿਸੇ ਵੀ ਮੁੱਦੇ ਨੂੰ ਹੱਲ ਕਰੋ। ਡਰਾਈਵਾਲ ਸਥਾਪਤ ਹੋਣ ਤੋਂ ਬਾਅਦ ਪਾਣੀ ਦੀਆਂ ਸਮੱਸਿਆਵਾਂ ਨੂੰ ਠੀਕ ਕਰਨ 'ਤੇ ਪਹਿਲਾਂ ਕਰਨ ਨਾਲੋਂ 3–5 ਗੁਣਾ ਜ਼ਿਆਦਾ ਖਰਚ ਆਉਂਦਾ ਹੈ।"
       },
       "tip2": {
-        "title": "Plan Plumbing Near Existing Lines",
-        "description": "Locating your bathroom or kitchen near existing drain stacks saves $3,000–8,000 by avoiding concrete cutting and new rough-ins."
+        "title": "ਮੌਜੂਦਾ ਲਾਈਨਾਂ ਦੇ ਨੇੜੇ ਪਲੰਬਿੰਗ ਦੀ ਯੋਜਨਾ ਬਣਾਓ",
+        "description": "ਆਪਣੇ ਬਾਥਰੂਮ ਜਾਂ ਰਸੋਈ ਨੂੰ ਮੌਜੂਦਾ ਡਰੇਨ ਸਟੈਕਾਂ ਦੇ ਨੇੜੇ ਰੱਖਣ ਨਾਲ ਕੰਕਰੀਟ ਕੱਟਣ ਅਤੇ ਨਵੇਂ ਰਫ-ਇਨ ਤੋਂ ਬਚ ਕੇ $3,000–8,000 ਦੀ ਬੱਚਤ ਹੁੰਦੀ ਹੈ।"
       },
       "tip3": {
-        "title": "Consider a Legal Suite for ROI",
-        "description": "A legal secondary suite in Vancouver can generate $1,500–2,500/month in rental income. The renovation often pays for itself in 3–5 years."
+        "title": "ROI ਲਈ ਕਾਨੂੰਨੀ ਸੂਟ 'ਤੇ ਵਿਚਾਰ ਕਰੋ",
+        "description": "Vancouver ਵਿੱਚ ਇੱਕ ਕਾਨੂੰਨੀ ਸੈਕੰਡਰੀ ਸੂਟ ਕਿਰਾਏ ਦੀ ਆਮਦਨ ਵਿੱਚ $1,500–2,500/ਮਹੀਨਾ ਪੈਦਾ ਕਰ ਸਕਦਾ ਹੈ। ਨਵੀਨੀਕਰਨ ਅਕਸਰ 3–5 ਸਾਲਾਂ ਵਿੱਚ ਆਪਣੇ ਆਪ ਦੀ ਕੀਮਤ ਚੁਕਾ ਦਿੰਦਾ ਹੈ।"
       },
       "tip4": {
-        "title": "Choose LVP Flooring",
-        "description": "Luxury vinyl plank is the best basement flooring choice. Waterproof, warm underfoot, and 30–50% cheaper than engineered hardwood. Perfect for Vancouver's damp climate."
+        "title": "LVP ਫਲੋਰਿੰਗ ਚੁਣੋ",
+        "description": "ਲਗਜ਼ਰੀ ਵਿਨਾਇਲ ਪਲੈਂਕ ਸਭ ਤੋਂ ਵਧੀਆ ਬੇਸਮੈਂਟ ਫਲੋਰਿੰਗ ਵਿਕਲਪ ਹੈ। ਵਾਟਰਪ੍ਰੂਫ, ਪੈਰਾਂ ਹੇਠ ਨਿੱਘਾ, ਅਤੇ ਇੰਜਨੀਅਰਡ ਹਾਰਡਵੁੱਡ ਨਾਲੋਂ 30–50% ਸਸਤਾ। Vancouver ਦੇ ਨਮ ਮੌਸਮ ਲਈ ਸੰਪੂਰਨ।"
       }
     },
     "cta": {
-      "heading": "Get Your Free Basement Renovation Quote",
-      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+      "heading": "ਆਪਣਾ ਮੁਫ਼ਤ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦਾ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "subtitle": "ਸਾਨੂੰ ਆਪਣੇ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਦੱਸੋ ਅਤੇ 48 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਇੱਕ ਵਿਸਤ੍ਰਿਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ, ਕੋਈ ਵਚਨਬੱਧਤਾ ਨਹੀਂ।"
     },
     "faq": {
-      "q1": "How much does a basement renovation cost in Vancouver?",
-      "a1": "Basement renovation costs in Vancouver typically range from $30,000 for basic finishing to $120,000+ for a full legal suite conversion. The average cost is around $55,000 for a mid-range renovation with a bathroom addition and quality finishes. Cost per square foot ranges from $35 to $120 depending on the scope.",
-      "q2": "How long does a basement renovation take in Vancouver?",
-      "a2": "Most basement renovations in Vancouver take 6 to 12 weeks. Basic finishing (framing, drywall, flooring) can be done in 6–8 weeks. A full legal suite conversion with permits, plumbing, electrical, and inspections typically takes 10–14 weeks.",
-      "q3": "Do I need a permit for a basement renovation in Vancouver?",
-      "a3": "Yes, most basement renovations require building permits in Metro Vancouver. Any work involving framing, electrical, plumbing, or egress modifications requires a permit. Legal suite conversions need additional zoning approval. Permit costs range from $500 to $2,000 depending on the municipality.",
-      "q4": "Is a basement suite a good investment in Vancouver?",
-      "a4": "Yes, adding a legal secondary suite is one of the best renovation investments in Vancouver. A suite can generate $1,500–2,500 per month in rental income. With renovation costs of $80,000–120,000, the investment typically pays for itself in 3–5 years while also increasing your property value by 10–20%.",
-      "q5": "What is the best flooring for a basement renovation?",
-      "a5": "Luxury vinyl plank (LVP) is the most recommended basement flooring in Vancouver due to its waterproof properties and durability. It costs $4–8 per square foot installed and handles moisture better than hardwood or laminate. Engineered hardwood and ceramic tile are also good options depending on your budget and style preferences."
+      "q1": "Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ 'ਤੇ ਕਿੰਨਾ ਖਰਚ ਆਉਂਦਾ ਹੈ?",
+      "a1": "Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਦੀਆਂ ਲਾਗਤਾਂ ਆਮ ਤੌਰ 'ਤੇ ਮੁਢਲੀ ਫਿਨਿਸ਼ਿੰਗ ਲਈ $30,000 ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨ ਲਈ $120,000+ ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ। ਔਸਤ ਲਾਗਤ ਬਾਥਰੂਮ ਜੋੜ ਅਤੇ ਗੁਣਵੱਤਾ ਵਾਲੀਆਂ ਫਿਨਿਸ਼ਾਂ ਨਾਲ ਦਰਮਿਆਨੇ ਪੱਧਰ ਦੇ ਨਵੀਨੀਕਰਨ ਲਈ ਲਗਭਗ $55,000 ਹੁੰਦੀ ਹੈ। ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਲਾਗਤ ਦਾਇਰੇ ਦੇ ਆਧਾਰ 'ਤੇ $35 ਤੋਂ $120 ਤੱਕ ਹੁੰਦੀ ਹੈ।",
+      "q2": "Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਵਿੱਚ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "Vancouver ਵਿੱਚ ਜ਼ਿਆਦਾਤਰ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨਾਂ ਨੂੰ 6 ਤੋਂ 12 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ। ਮੁਢਲੀ ਫਿਨਿਸ਼ਿੰਗ (ਫਰੇਮਿੰਗ, ਡਰਾਈਵਾਲ, ਫਲੋਰਿੰਗ) 6–8 ਹਫ਼ਤਿਆਂ ਵਿੱਚ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ। ਪਰਮਿਟਾਂ, ਪਲੰਬਿੰਗ, ਇਲੈਕਟ੍ਰੀਕਲ, ਅਤੇ ਨਿਰੀਖਣਾਂ ਨਾਲ ਪੂਰਾ ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨ ਆਮ ਤੌਰ 'ਤੇ 10–14 ਹਫ਼ਤੇ ਲੈਂਦਾ ਹੈ।",
+      "q3": "ਕੀ ਮੈਨੂੰ Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a3": "ਹਾਂ, Metro Vancouver ਵਿੱਚ ਜ਼ਿਆਦਾਤਰ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨਾਂ ਲਈ ਬਿਲਡਿੰਗ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਫਰੇਮਿੰਗ, ਇਲੈਕਟ੍ਰੀਕਲ, ਪਲੰਬਿੰਗ, ਜਾਂ ਐਗਰੈੱਸ ਸੋਧਾਂ ਵਾਲੇ ਕਿਸੇ ਵੀ ਕੰਮ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕਾਨੂੰਨੀ ਸੂਟ ਪਰਿਵਰਤਨਾਂ ਲਈ ਵਾਧੂ ਜ਼ੋਨਿੰਗ ਮਨਜ਼ੂਰੀ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਨਗਰ ਪਾਲਿਕਾ ਦੇ ਆਧਾਰ 'ਤੇ ਪਰਮਿਟ ਦੀਆਂ ਲਾਗਤਾਂ $500 ਤੋਂ $2,000 ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ।",
+      "q4": "ਕੀ Vancouver ਵਿੱਚ ਬੇਸਮੈਂਟ ਸੂਟ ਇੱਕ ਚੰਗਾ ਨਿਵੇਸ਼ ਹੈ?",
+      "a4": "ਹਾਂ, ਕਾਨੂੰਨੀ ਸੈਕੰਡਰੀ ਸੂਟ ਜੋੜਨਾ Vancouver ਵਿੱਚ ਸਭ ਤੋਂ ਵਧੀਆ ਨਵੀਨੀਕਰਨ ਨਿਵੇਸ਼ਾਂ ਵਿੱਚੋਂ ਇੱਕ ਹੈ। ਇੱਕ ਸੂਟ ਕਿਰਾਏ ਦੀ ਆਮਦਨ ਵਿੱਚ ਪ੍ਰਤੀ ਮਹੀਨਾ $1,500–2,500 ਪੈਦਾ ਕਰ ਸਕਦਾ ਹੈ। $80,000–120,000 ਦੀਆਂ ਨਵੀਨੀਕਰਨ ਲਾਗਤਾਂ ਨਾਲ, ਨਿਵੇਸ਼ ਆਮ ਤੌਰ 'ਤੇ 3–5 ਸਾਲਾਂ ਵਿੱਚ ਆਪਣੇ ਆਪ ਦੀ ਕੀਮਤ ਚੁਕਾ ਦਿੰਦਾ ਹੈ ਜਦੋਂ ਕਿ ਤੁਹਾਡੀ ਜਾਇਦਾਦ ਦੀ ਕੀਮਤ ਨੂੰ 10–20% ਵੀ ਵਧਾਉਂਦਾ ਹੈ।",
+      "q5": "ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਫਲੋਰਿੰਗ ਕੀ ਹੈ?",
+      "a5": "ਲਗਜ਼ਰੀ ਵਿਨਾਇਲ ਪਲੈਂਕ (LVP) ਆਪਣੀਆਂ ਵਾਟਰਪ੍ਰੂਫ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਅਤੇ ਟਿਕਾਊਪਨ ਕਾਰਨ Vancouver ਵਿੱਚ ਸਭ ਤੋਂ ਵੱਧ ਸਿਫਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਬੇਸਮੈਂਟ ਫਲੋਰਿੰਗ ਹੈ। ਇਸ ਦੀ ਸਥਾਪਨਾ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ $4–8 ਹੁੰਦੀ ਹੈ ਅਤੇ ਇਹ ਹਾਰਡਵੁੱਡ ਜਾਂ ਲੈਮੀਨੇਟ ਨਾਲੋਂ ਨਮੀ ਨੂੰ ਬਿਹਤਰ ਸੰਭਾਲਦਾ ਹੈ। ਤੁਹਾਡੇ ਬਜਟ ਅਤੇ ਸ਼ੈਲੀ ਦੀਆਂ ਤਰਜੀਹਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਇੰਜਨੀਅਰਡ ਹਾਰਡਵੁੱਡ ਅਤੇ ਸਿਰਾਮਿਕ ਟਾਈਲ ਵੀ ਚੰਗੇ ਵਿਕਲਪ ਹਨ।"
     }
   }
 }

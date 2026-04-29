@@ -1,100 +1,100 @@
 {
   "commercialCost": {
-    "breadcrumb": "Commercial Renovation Cost",
+    "breadcrumb": "ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ",
     "hero": {
-      "title": "Commercial Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "What does a commercial renovation really cost in Greater Vancouver? From small office refreshes to full restaurant build-outs, here are the real numbers based on our project experience."
+      "title": "Vancouver BC ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ (2026)",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਇੱਕ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਅਸਲ ਵਿੱਚ ਕਿੰਨੀ ਲਾਗਤ ਆਉਂਦੀ ਹੈ? ਛੋਟੇ ਦਫ਼ਤਰ ਦੀ ਤਾਜ਼ਗੀ ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਰੈਸਟੋਰੈਂਟ ਬਿਲਡ-ਆਊਟ ਤੱਕ, ਇੱਥੇ ਸਾਡੇ ਪ੍ਰੋਜੈਕਟ ਅਨੁਭਵ ਦੇ ਆਧਾਰ ਤੇ ਅਸਲੀ ਅੰਕੜੇ ਹਨ।"
     },
     "stats": {
-      "avgCost": "Average Cost",
-      "range": "Price Range",
-      "sqft": "Cost per Sq Ft",
-      "sqftValue": "$75 – $300/sq ft",
-      "timeline": "Typical Timeline",
-      "timelineValue": "8–20 weeks"
+      "avgCost": "ਔਸਤ ਲਾਗਤ",
+      "range": "ਕੀਮਤ ਦੀ ਰੇਂਜ",
+      "sqft": "ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਲਾਗਤ",
+      "sqftValue": "$75 – $300/ਵਰਗ ਫੁੱਟ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "8–20 ਹਫ਼ਤੇ"
     },
     "tiers": {
-      "title": "Commercial Renovation Cost by Project Scope",
-      "subtitle": "Typical pricing for commercial projects across Greater Vancouver",
+      "title": "ਪ੍ਰੋਜੈਕਟ ਦੇ ਦਾਇਰੇ ਅਨੁਸਾਰ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਪ੍ਰੋਜੈਕਟਾਂ ਲਈ ਆਮ ਕੀਮਤ",
       "budget": {
-        "title": "Small Retail / Office Refresh",
-        "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work."
+        "title": "ਛੋਟਾ ਰਿਟੇਲ / ਦਫ਼ਤਰ ਤਾਜ਼ਗੀ",
+        "description": "ਨਵਾਂ ਪੇਂਟ, ਨਵਾਂ ਫ਼ਰਸ਼, ਅੱਪਡੇਟ ਕੀਤੀ ਲਾਈਟਿੰਗ, ਮੁੱਢਲੇ ਫਿਕਸਚਰ ਅੱਪਗਰੇਡ, ਅਤੇ ਛੋਟੀਆਂ ਲੇਆਊਟ ਤਬਦੀਲੀਆਂ। ਛੋਟੀਆਂ ਰਿਟੇਲ ਦੁਕਾਨਾਂ, ਪੇਸ਼ੇਵਰ ਦਫ਼ਤਰਾਂ, ਅਤੇ ਕੋ-ਵਰਕਿੰਗ ਥਾਵਾਂ ਲਈ ਆਦਰਸ਼ ਜਿਨ੍ਹਾਂ ਨੂੰ ਢਾਂਚਾਗਤ ਕੰਮ ਤੋਂ ਬਿਨਾਂ ਆਧੁਨਿਕ ਅੱਪਡੇਟ ਦੀ ਲੋੜ ਹੈ।"
       },
       "midRange": {
-        "title": "Full Commercial Fit-Out",
-        "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics."
+        "title": "ਪੂਰਾ ਕਮਰਸ਼ੀਅਲ ਫਿੱਟ-ਆਊਟ",
+        "description": "ਨਵੀਆਂ ਕੰਧਾਂ, ਕਸਟਮ ਮਿੱਲਵਰਕ, ਅੱਪਗਰੇਡ ਕੀਤੇ HVAC ਜ਼ੋਨ, ਕਮਰਸ਼ੀਅਲ-ਗ੍ਰੇਡ ਫ਼ਰਸ਼, ਆਧੁਨਿਕ ਲਾਈਟਿੰਗ ਡਿਜ਼ਾਈਨ, ਅਤੇ ਪੂਰੇ ਬਿਜਲੀ ਅੱਪਗਰੇਡ ਸਮੇਤ ਮੁਕੰਮਲ ਅੰਦਰੂਨੀ ਬਿਲਡ-ਆਊਟ। ਮੱਧ-ਆਕਾਰ ਦੇ ਦਫ਼ਤਰਾਂ, ਰਿਟੇਲ ਸਟੋਰਾਂ, ਅਤੇ ਕਲੀਨਿਕਾਂ ਲਈ ਢੁਕਵਾਂ।"
       },
       "highEnd": {
-        "title": "Restaurant / Medical / Premium Retail",
-        "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail spaces."
+        "title": "ਰੈਸਟੋਰੈਂਟ / ਮੈਡੀਕਲ / ਪ੍ਰੀਮੀਅਮ ਰਿਟੇਲ",
+        "description": "ਕਮਰਸ਼ੀਅਲ ਰਸੋਈ ਇੰਸਟਾਲੇਸ਼ਨ, ਵਿਸ਼ੇਸ਼ ਹਵਾਦਾਰੀ, ਕਸਟਮ ਫਿਕਸਚਰ, ਪ੍ਰੀਮੀਅਮ ਫਿਨਿਸ਼, ਵਿਆਪਕ ਪਲੰਬਿੰਗ, ਅਤੇ ਗੁੰਝਲਦਾਰ ਪਰਮਿਟ ਜ਼ਰੂਰਤਾਂ ਨਾਲ ਪੂਰੇ ਪੈਮਾਨੇ ਦੀ ਰੈਨੋਵੇਸ਼ਨ। ਇਸ ਵਿੱਚ ਰੈਸਟੋਰੈਂਟ, ਡੈਂਟਲ ਕਲੀਨਿਕ, ਮੈਡੀਕਲ ਦਫ਼ਤਰ, ਅਤੇ ਫਲੈਗਸ਼ਿਪ ਰਿਟੇਲ ਥਾਵਾਂ ਸ਼ਾਮਲ ਹਨ।"
       }
     },
     "factors": {
-      "title": "What Affects Your Commercial Renovation Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੀ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਨੂੰ ਕੀ ਪ੍ਰਭਾਵਿਤ ਕਰਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਿਮ ਕੀਮਤ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ",
       "permits": {
-        "title": "Permits & Zoning",
-        "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications add $3,000–8,000. The City of Vancouver's development permit process can take 8–16 weeks, so factor in timeline costs."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਜ਼ੋਨਿੰਗ",
+        "description": "Metro Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਪਰਮਿਟ ਦਾਇਰੇ ਅਤੇ ਨਗਰਪਾਲਿਕਾ ਦੇ ਆਧਾਰ ਤੇ $2,000–15,000 ਦੀ ਲਾਗਤ ਆਉਂਦੀ ਹੈ। ਚੇਂਜ-ਆਫ਼-ਯੂਜ਼ ਅਰਜ਼ੀਆਂ $3,000–8,000 ਜੋੜਦੀਆਂ ਹਨ। City of Vancouver ਦੀ ਡਿਵੈਲਪਮੈਂਟ ਪਰਮਿਟ ਪ੍ਰਕਿਰਿਆ 8–16 ਹਫ਼ਤੇ ਲੈ ਸਕਦੀ ਹੈ, ਇਸ ਲਈ ਸਮਾਂ-ਸੀਮਾ ਦੀਆਂ ਲਾਗਤਾਂ ਨੂੰ ਧਿਆਨ ਵਿੱਚ ਰੱਖੋ।"
       },
       "hvac": {
-        "title": "HVAC & Mechanical Systems",
-        "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant hood and make-up air systems alone cost $20,000–50,000. Office spaces need proper zoning for tenant comfort. Vancouver's energy code requires high-efficiency systems."
+        "title": "HVAC ਅਤੇ ਮਕੈਨੀਕਲ ਸਿਸਟਮ",
+        "description": "ਕਮਰਸ਼ੀਅਲ HVAC $15,000–80,000+ ਤੇ ਇੱਕ ਵੱਡਾ ਲਾਗਤ ਚਾਲਕ ਹੈ। ਇਕੱਲੇ ਰੈਸਟੋਰੈਂਟ ਹੁੱਡ ਅਤੇ ਮੇਕ-ਅੱਪ ਏਅਰ ਸਿਸਟਮ ਦੀ ਲਾਗਤ $20,000–50,000 ਆਉਂਦੀ ਹੈ। ਦਫ਼ਤਰ ਦੀਆਂ ਥਾਵਾਂ ਨੂੰ ਕਿਰਾਏਦਾਰ ਆਰਾਮ ਲਈ ਸਹੀ ਜ਼ੋਨਿੰਗ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। Vancouver ਦੇ ਊਰਜਾ ਕੋਡ ਨੂੰ ਉੱਚ-ਕੁਸ਼ਲਤਾ ਵਾਲੇ ਸਿਸਟਮਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
       },
       "fireSafety": {
-        "title": "Fire Safety & Sprinklers",
-        "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify. Fire alarm upgrades run $5,000–20,000. Change-of-use triggers full fire code compliance review. Restaurants and assembly spaces have the most stringent requirements."
+        "title": "ਅੱਗ ਸੁਰੱਖਿਆ ਅਤੇ ਸਪ੍ਰਿੰਕਲਰ",
+        "description": "ਫ਼ਾਇਰ ਸਪ੍ਰਿੰਕਲਰ ਸਿਸਟਮ ਨੂੰ ਇੰਸਟਾਲ ਕਰਨ ਜਾਂ ਸੋਧਣ ਦੀ ਲਾਗਤ $3–8 ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਆਉਂਦੀ ਹੈ। ਫ਼ਾਇਰ ਅਲਾਰਮ ਅੱਪਗਰੇਡ $5,000–20,000 ਚੱਲਦੇ ਹਨ। ਚੇਂਜ-ਆਫ਼-ਯੂਜ਼ ਪੂਰੀ ਫ਼ਾਇਰ ਕੋਡ ਪਾਲਣਾ ਸਮੀਖਿਆ ਨੂੰ ਟਰਿੱਗਰ ਕਰਦਾ ਹੈ। ਰੈਸਟੋਰੈਂਟਾਂ ਅਤੇ ਅਸੈਂਬਲੀ ਥਾਵਾਂ ਦੀਆਂ ਸਭ ਤੋਂ ਸਖ਼ਤ ਜ਼ਰੂਰਤਾਂ ਹੁੰਦੀਆਂ ਹਨ।"
       },
       "accessibility": {
-        "title": "Accessibility Compliance",
-        "description": "BC Building Code requires barrier-free access for commercial spaces. Accessible washrooms, ramps, door widths, and signage add $5,000–25,000. Heritage buildings in Vancouver often need creative solutions to meet accessibility standards."
+        "title": "ਪਹੁੰਚਯੋਗਤਾ ਪਾਲਣਾ",
+        "description": "BC ਬਿਲਡਿੰਗ ਕੋਡ ਨੂੰ ਕਮਰਸ਼ੀਅਲ ਥਾਵਾਂ ਲਈ ਰੁਕਾਵਟ-ਰਹਿਤ ਪਹੁੰਚ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਪਹੁੰਚਯੋਗ ਵਾਸ਼ਰੂਮ, ਰੈਂਪ, ਦਰਵਾਜ਼ੇ ਦੀ ਚੌੜਾਈ, ਅਤੇ ਸਾਈਨੇਜ $5,000–25,000 ਜੋੜਦੇ ਹਨ। Vancouver ਵਿੱਚ ਵਿਰਾਸਤੀ ਇਮਾਰਤਾਂ ਨੂੰ ਅਕਸਰ ਪਹੁੰਚਯੋਗਤਾ ਮਾਪਦੰਡਾਂ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਰਚਨਾਤਮਕ ਹੱਲਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
       },
       "electrical": {
-        "title": "Electrical & IT Infrastructure",
-        "description": "Commercial electrical upgrades cost $10,000–50,000+ depending on service capacity. Restaurants need 200–400 amp services. Modern offices require structured cabling ($3,000–15,000), server room cooling, and dedicated circuits for equipment."
+        "title": "ਬਿਜਲੀ ਅਤੇ IT ਬੁਨਿਆਦੀ ਢਾਂਚਾ",
+        "description": "ਕਮਰਸ਼ੀਅਲ ਬਿਜਲੀ ਅੱਪਗਰੇਡ ਸੇਵਾ ਸਮਰੱਥਾ ਦੇ ਆਧਾਰ ਤੇ $10,000–50,000+ ਦੀ ਲਾਗਤ ਆਉਂਦੀ ਹੈ। ਰੈਸਟੋਰੈਂਟਾਂ ਨੂੰ 200–400 ਐਂਪ ਸੇਵਾਵਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਆਧੁਨਿਕ ਦਫ਼ਤਰਾਂ ਨੂੰ ਸਟ੍ਰਕਚਰਡ ਕੇਬਲਿੰਗ ($3,000–15,000), ਸਰਵਰ ਰੂਮ ਕੂਲਿੰਗ, ਅਤੇ ਉਪਕਰਣਾਂ ਲਈ ਸਮਰਪਿਤ ਸਰਕਟਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
       },
       "disruption": {
-        "title": "Project Timing & Business Disruption",
-        "description": "Working around business hours increases costs 15–25%. Many Vancouver commercial tenants renovate during lease transitions. After-hours work adds premium labor costs. A phased renovation plan can keep portions of the business operational during construction."
+        "title": "ਪ੍ਰੋਜੈਕਟ ਦਾ ਸਮਾਂ ਅਤੇ ਕਾਰੋਬਾਰੀ ਵਿਘਨ",
+        "description": "ਕਾਰੋਬਾਰੀ ਘੰਟਿਆਂ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਕੰਮ ਕਰਨ ਨਾਲ ਲਾਗਤਾਂ 15–25% ਵਧਦੀਆਂ ਹਨ। ਬਹੁਤ ਸਾਰੇ Vancouver ਕਮਰਸ਼ੀਅਲ ਕਿਰਾਏਦਾਰ ਲੀਜ਼ ਤਬਦੀਲੀਆਂ ਦੌਰਾਨ ਰੈਨੋਵੇਟ ਕਰਦੇ ਹਨ। ਕੰਮ ਦੇ ਘੰਟਿਆਂ ਤੋਂ ਬਾਅਦ ਦਾ ਕੰਮ ਪ੍ਰੀਮੀਅਮ ਮਜ਼ਦੂਰੀ ਲਾਗਤਾਂ ਜੋੜਦਾ ਹੈ। ਇੱਕ ਪੜਾਵਾਰ ਰੈਨੋਵੇਸ਼ਨ ਯੋਜਨਾ ਉਸਾਰੀ ਦੌਰਾਨ ਕਾਰੋਬਾਰ ਦੇ ਹਿੱਸਿਆਂ ਨੂੰ ਚਾਲੂ ਰੱਖ ਸਕਦੀ ਹੈ।"
       }
     },
     "realProjects": {
-      "title": "Our Commercial Renovation Projects",
-      "subtitle": "Browse {count} completed commercial projects across Greater Vancouver"
+      "title": "ਸਾਡੇ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ {count} ਮੁਕੰਮਲ ਹੋਏ ਕਮਰਸ਼ੀਅਲ ਪ੍ਰੋਜੈਕਟ ਬ੍ਰਾਊਜ਼ ਕਰੋ"
     },
     "tips": {
-      "title": "Money-Saving Tips for Commercial Renovations",
+      "title": "ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨਾਂ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਦੇ ਸੁਝਾਅ",
       "tip1": {
-        "title": "Plan During Lease Negotiations",
-        "description": "Negotiate a tenant improvement allowance (TIA) with your landlord. Many Vancouver commercial leases include $20–80 per square foot in TIA that can offset renovation costs significantly."
+        "title": "ਲੀਜ਼ ਗੱਲਬਾਤ ਦੌਰਾਨ ਯੋਜਨਾ ਬਣਾਓ",
+        "description": "ਆਪਣੇ ਮਕਾਨ ਮਾਲਕ ਨਾਲ ਟੀਨੈਂਟ ਇੰਪਰੂਵਮੈਂਟ ਅਲਾਊਂਸ (TIA) ਬਾਰੇ ਗੱਲਬਾਤ ਕਰੋ। ਬਹੁਤ ਸਾਰੇ Vancouver ਕਮਰਸ਼ੀਅਲ ਲੀਜ਼ਾਂ ਵਿੱਚ TIA ਵਿੱਚ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ $20–80 ਸ਼ਾਮਲ ਹੁੰਦੇ ਹਨ ਜੋ ਰੈਨੋਵੇਸ਼ਨ ਦੀਆਂ ਲਾਗਤਾਂ ਨੂੰ ਕਾਫ਼ੀ ਹੱਦ ਤੱਕ ਘਟਾ ਸਕਦੇ ਹਨ।"
       },
       "tip2": {
-        "title": "Phase Your Renovation",
-        "description": "Divide the project into phases to spread costs and minimize business disruption. Prioritize customer-facing areas first, then tackle back-of-house improvements in a second phase."
+        "title": "ਆਪਣੀ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਪੜਾਵਾਂ ਵਿੱਚ ਵੰਡੋ",
+        "description": "ਲਾਗਤਾਂ ਨੂੰ ਫੈਲਾਉਣ ਅਤੇ ਕਾਰੋਬਾਰੀ ਵਿਘਨ ਨੂੰ ਘੱਟ ਕਰਨ ਲਈ ਪ੍ਰੋਜੈਕਟ ਨੂੰ ਪੜਾਵਾਂ ਵਿੱਚ ਵੰਡੋ। ਪਹਿਲਾਂ ਗਾਹਕਾਂ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਖੇਤਰਾਂ ਨੂੰ ਪਹਿਲ ਦਿਓ, ਫਿਰ ਦੂਜੇ ਪੜਾਅ ਵਿੱਚ ਪਿਛਲੇ ਪਾਸੇ ਦੀਆਂ ਸੁਧਾਰਾਂ ਨਾਲ ਨਜਿੱਠੋ।"
       },
       "tip3": {
-        "title": "Reuse Existing Infrastructure",
-        "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in costs alone."
+        "title": "ਮੌਜੂਦਾ ਬੁਨਿਆਦੀ ਢਾਂਚੇ ਦੀ ਮੁੜ ਵਰਤੋਂ ਕਰੋ",
+        "description": "ਜਿੱਥੇ ਸੰਭਵ ਹੋਵੇ ਪਲੰਬਿੰਗ ਅਤੇ ਬਿਜਲੀ ਨੂੰ ਮੌਜੂਦਾ ਥਾਵਾਂ ਤੇ ਰੱਖੋ। ਕਮਰਸ਼ੀਅਲ ਰਸੋਈ ਜਾਂ ਵਾਸ਼ਰੂਮ ਨੂੰ ਹਿਲਾਉਣ ਨਾਲ ਇਕੱਲੇ ਰਫ਼-ਇਨ ਲਾਗਤਾਂ ਵਿੱਚ $20,000–50,000 ਜੁੜ ਸਕਦੇ ਹਨ।"
       },
       "tip4": {
-        "title": "Choose Durable Commercial-Grade Materials",
-        "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term. Commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+        "title": "ਟਿਕਾਊ ਕਮਰਸ਼ੀਅਲ-ਗ੍ਰੇਡ ਸਮੱਗਰੀ ਚੁਣੋ",
+        "description": "ਕਮਰਸ਼ੀਅਲ-ਗ੍ਰੇਡ ਫ਼ਰਸ਼, ਫਿਕਸਚਰ, ਅਤੇ ਫਿਨਿਸ਼ ਵਿੱਚ ਨਿਵੇਸ਼ ਕਰੋ। ਉੱਚ ਅਗਾਊਂ ਲਾਗਤ ਲੰਬੇ ਸਮੇਂ ਵਿੱਚ ਪੈਸੇ ਬਚਾਉਂਦੀ ਹੈ। ਉੱਚ-ਆਵਾਜਾਈ ਵਾਲੀਆਂ ਥਾਵਾਂ ਵਿੱਚ ਰਿਹਾਇਸ਼ੀ-ਗ੍ਰੇਡ ਉਤਪਾਦਾਂ ਲਈ 5–8 ਸਾਲਾਂ ਦੇ ਮੁਕਾਬਲੇ ਕਮਰਸ਼ੀਅਲ LVT 15–20 ਸਾਲ ਚੱਲਦੀ ਹੈ।"
       }
     },
     "cta": {
-      "heading": "Get Your Free Commercial Renovation Quote",
-      "subtitle": "Tell us about your commercial project and receive a detailed estimate within 48 hours, no obligation."
+      "heading": "ਆਪਣਾ ਮੁਫ਼ਤ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "subtitle": "ਸਾਨੂੰ ਆਪਣੇ ਕਮਰਸ਼ੀਅਲ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਦੱਸੋ ਅਤੇ 48 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਇੱਕ ਵਿਸਤ੍ਰਿਤ ਅੰਦਾਜ਼ਾ ਪ੍ਰਾਪਤ ਕਰੋ, ਕੋਈ ਜ਼ਿੰਮੇਵਾਰੀ ਨਹੀਂ।"
     },
     "faq": {
-      "q1": "How much does a commercial renovation cost in Vancouver?",
-      "a1": "Commercial renovation costs in Vancouver typically range from $50,000 for a small office refresh to over $1,000,000 for a full restaurant or medical facility build-out. The average commercial renovation costs around $250,000. Cost per square foot ranges from $75 to $300 depending on the type of business, scope of work, and finish level.",
-      "q2": "How long does a commercial renovation take in Vancouver?",
-      "a2": "Most commercial renovations in Vancouver take 8 to 20 weeks depending on scope. A basic office refresh can be completed in 8–10 weeks, while a full restaurant build-out or medical clinic conversion typically takes 16–20 weeks including permit approvals and inspections.",
-      "q3": "Do I need a permit for a commercial renovation in Vancouver?",
-      "a3": "Yes, nearly all commercial renovations in Metro Vancouver require building permits. Any work involving structural changes, electrical, plumbing, HVAC, or fire safety systems needs permits. Change-of-use applications are required when converting between business types. Permit costs range from $2,000 to $15,000 depending on the scope and municipality.",
-      "q4": "What is the cost per square foot for commercial renovation in Vancouver?",
-      "a4": "Commercial renovation costs in Vancouver range from $75 to $300 per square foot. Basic office refreshes run $75–$120/sq ft, mid-range retail or office fit-outs cost $120–$200/sq ft, and specialized spaces like restaurants or medical clinics range from $200–$300+ per square foot due to complex mechanical, plumbing, and ventilation requirements.",
-      "q5": "Can I renovate my commercial space while staying open for business?",
-      "a5": "Yes, phased renovations allow many Vancouver businesses to stay operational during construction. We create detailed phasing plans that section off work areas while keeping customer-facing spaces accessible. After-hours and weekend work is also an option, though it adds 15–25% to labor costs. Many of our clients choose to renovate during seasonal slow periods to minimize impact."
+      "q1": "Vancouver ਵਿੱਚ ਇੱਕ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਕਿੰਨੀ ਲਾਗਤ ਆਉਂਦੀ ਹੈ?",
+      "a1": "Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀਆਂ ਲਾਗਤਾਂ ਆਮ ਤੌਰ ਤੇ ਛੋਟੇ ਦਫ਼ਤਰ ਦੀ ਤਾਜ਼ਗੀ ਲਈ $50,000 ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਰੈਸਟੋਰੈਂਟ ਜਾਂ ਮੈਡੀਕਲ ਸੁਵਿਧਾ ਬਿਲਡ-ਆਊਟ ਲਈ $1,000,000 ਤੋਂ ਵੱਧ ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ। ਔਸਤ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਲਗਭਗ $250,000 ਆਉਂਦੀ ਹੈ। ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਲਾਗਤ ਕਾਰੋਬਾਰ ਦੀ ਕਿਸਮ, ਕੰਮ ਦੇ ਦਾਇਰੇ, ਅਤੇ ਫਿਨਿਸ਼ ਪੱਧਰ ਦੇ ਆਧਾਰ ਤੇ $75 ਤੋਂ $300 ਤੱਕ ਹੁੰਦੀ ਹੈ।",
+      "q2": "Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "Vancouver ਵਿੱਚ ਜ਼ਿਆਦਾਤਰ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨਾਂ ਨੂੰ ਦਾਇਰੇ ਦੇ ਆਧਾਰ ਤੇ 8 ਤੋਂ 20 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ। ਇੱਕ ਮੁੱਢਲੀ ਦਫ਼ਤਰ ਤਾਜ਼ਗੀ 8–10 ਹਫ਼ਤਿਆਂ ਵਿੱਚ ਪੂਰੀ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ, ਜਦਕਿ ਪੂਰੇ ਰੈਸਟੋਰੈਂਟ ਬਿਲਡ-ਆਊਟ ਜਾਂ ਮੈਡੀਕਲ ਕਲੀਨਿਕ ਪਰਿਵਰਤਨ ਨੂੰ ਪਰਮਿਟ ਮਨਜ਼ੂਰੀਆਂ ਅਤੇ ਨਿਰੀਖਣਾਂ ਸਮੇਤ ਆਮ ਤੌਰ ਤੇ 16–20 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ।",
+      "q3": "ਕੀ ਮੈਨੂੰ Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a3": "ਹਾਂ, Metro Vancouver ਵਿੱਚ ਲਗਭਗ ਸਾਰੀਆਂ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨਾਂ ਲਈ ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ, ਬਿਜਲੀ, ਪਲੰਬਿੰਗ, HVAC, ਜਾਂ ਅੱਗ ਸੁਰੱਖਿਆ ਪ੍ਰਣਾਲੀਆਂ ਨੂੰ ਸ਼ਾਮਲ ਕਰਨ ਵਾਲੇ ਕਿਸੇ ਵੀ ਕੰਮ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕਾਰੋਬਾਰੀ ਕਿਸਮਾਂ ਵਿਚਕਾਰ ਪਰਿਵਰਤਨ ਕਰਨ ਵੇਲੇ ਚੇਂਜ-ਆਫ਼-ਯੂਜ਼ ਅਰਜ਼ੀਆਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਪਰਮਿਟ ਦੀਆਂ ਲਾਗਤਾਂ ਦਾਇਰੇ ਅਤੇ ਨਗਰਪਾਲਿਕਾ ਦੇ ਆਧਾਰ ਤੇ $2,000 ਤੋਂ $15,000 ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ।",
+      "q4": "Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਲਾਗਤ ਕੀ ਹੈ?",
+      "a4": "Vancouver ਵਿੱਚ ਕਮਰਸ਼ੀਅਲ ਰੈਨੋਵੇਸ਼ਨ ਦੀਆਂ ਲਾਗਤਾਂ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ $75 ਤੋਂ $300 ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ। ਮੁੱਢਲੀਆਂ ਦਫ਼ਤਰ ਤਾਜ਼ਗੀਆਂ $75–$120/ਵਰਗ ਫੁੱਟ ਚੱਲਦੀਆਂ ਹਨ, ਮੱਧ-ਰੇਂਜ ਰਿਟੇਲ ਜਾਂ ਦਫ਼ਤਰ ਫਿੱਟ-ਆਊਟ $120–$200/ਵਰਗ ਫੁੱਟ ਦੀ ਲਾਗਤ ਆਉਂਦੀ ਹੈ, ਅਤੇ ਰੈਸਟੋਰੈਂਟ ਜਾਂ ਮੈਡੀਕਲ ਕਲੀਨਿਕਾਂ ਵਰਗੀਆਂ ਵਿਸ਼ੇਸ਼ ਥਾਵਾਂ ਗੁੰਝਲਦਾਰ ਮਕੈਨੀਕਲ, ਪਲੰਬਿੰਗ, ਅਤੇ ਹਵਾਦਾਰੀ ਜ਼ਰੂਰਤਾਂ ਕਾਰਨ $200–$300+ ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ।",
+      "q5": "ਕੀ ਮੈਂ ਕਾਰੋਬਾਰ ਲਈ ਖੁੱਲ੍ਹੇ ਰਹਿੰਦਿਆਂ ਆਪਣੀ ਕਮਰਸ਼ੀਅਲ ਥਾਂ ਨੂੰ ਰੈਨੋਵੇਟ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "a5": "ਹਾਂ, ਪੜਾਵਾਰ ਰੈਨੋਵੇਸ਼ਨਾਂ ਬਹੁਤ ਸਾਰੇ Vancouver ਕਾਰੋਬਾਰਾਂ ਨੂੰ ਉਸਾਰੀ ਦੌਰਾਨ ਚਾਲੂ ਰਹਿਣ ਦੀ ਆਗਿਆ ਦਿੰਦੀਆਂ ਹਨ। ਅਸੀਂ ਵਿਸਤ੍ਰਿਤ ਪੜਾਅ ਯੋਜਨਾਵਾਂ ਬਣਾਉਂਦੇ ਹਾਂ ਜੋ ਕੰਮ ਦੇ ਖੇਤਰਾਂ ਨੂੰ ਅਲੱਗ ਕਰਦੀਆਂ ਹਨ ਜਦੋਂ ਕਿ ਗਾਹਕਾਂ ਦੇ ਸਾਹਮਣੇ ਵਾਲੀਆਂ ਥਾਵਾਂ ਨੂੰ ਪਹੁੰਚਯੋਗ ਰੱਖਦੀਆਂ ਹਨ। ਕੰਮ ਦੇ ਘੰਟਿਆਂ ਤੋਂ ਬਾਅਦ ਅਤੇ ਵੀਕਐਂਡ ਦਾ ਕੰਮ ਵੀ ਇੱਕ ਵਿਕਲਪ ਹੈ, ਹਾਲਾਂਕਿ ਇਹ ਮਜ਼ਦੂਰੀ ਲਾਗਤਾਂ ਵਿੱਚ 15–25% ਜੋੜਦਾ ਹੈ। ਸਾਡੇ ਬਹੁਤ ਸਾਰੇ ਗਾਹਕ ਪ੍ਰਭਾਵ ਨੂੰ ਘੱਟ ਕਰਨ ਲਈ ਮੌਸਮੀ ਘੱਟ ਸਮੇਂ ਦੌਰਾਨ ਰੈਨੋਵੇਟ ਕਰਨਾ ਚੁਣਦੇ ਹਨ।"
     }
   }
 }

@@ -1,127 +1,127 @@
 {
   "wholeHouseCost": {
-    "breadcrumb": "Whole House Renovation Cost",
+    "breadcrumb": "ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਾਗਤ",
     "hero": {
-      "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
+      "title": "Vancouver BC ਵਿੱਚ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਾਗਤ (2026)",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਪੂਰੇ ਕੀਤੇ ਗਏ ਪੂਰੇ-ਘਰ ਦੇ ਰੀਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟਾਂ ਤੋਂ ਅਸਲ ਕੀਮਤ। ਕੰਡੋ ਰਿਫਰੈਸ਼ ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਘਰ ਦੀ ਤਬਦੀਲੀ ਤੱਕ। ਹਰ ਨੰਬਰ ਅਸਲੀ ਪ੍ਰੋਜੈਕਟਾਂ ਤੋਂ ਆਉਂਦਾ ਹੈ।"
     },
     "stats": {
-      "avgCost": "Average Cost",
-      "range": "Price Range",
-      "projects": "Projects Completed",
-      "timeline": "Typical Timeline",
-      "timelineValue": "3–8 weeks"
+      "avgCost": "ਔਸਤ ਲਾਗਤ",
+      "range": "ਕੀਮਤ ਦੀ ਰੇਂਜ",
+      "projects": "ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "3–8 ਹਫ਼ਤੇ"
     },
     "tiers": {
-      "title": "Whole House Renovation Cost by Tier",
-      "subtitle": "Based on our completed projects across Greater Vancouver",
+      "title": "ਸ਼੍ਰੇਣੀ ਅਨੁਸਾਰ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਾਗਤ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਸਾਡੇ ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟਾਂ 'ਤੇ ਆਧਾਰਿਤ",
       "budget": {
-        "title": "Cosmetic Refresh",
-        "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+        "title": "ਕਾਸਮੈਟਿਕ ਰਿਫਰੈਸ਼",
+        "description": "ਸਾਰੇ ਪਾਸੇ ਪੇਂਟ, ਨਵੀਂ ਫਲੋਰਿੰਗ, ਅਪਡੇਟ ਕੀਤੇ ਲਾਈਟ ਫਿਕਸਚਰ, ਬਾਥਰੂਮ ਰਿਫਰੈਸ਼ (ਵੈਨਿਟੀ, ਸ਼ੀਸ਼ਾ, ਹਾਰਡਵੇਅਰ), ਅਤੇ ਛੋਟੇ ਰਸੋਈ ਅਪਡੇਟ। ਕੰਡੋ ਅਤੇ ਕਿਰਾਏ ਦੀਆਂ ਜਾਇਦਾਦਾਂ ਲਈ ਆਦਰਸ਼ ਜਿਨ੍ਹਾਂ ਨੂੰ ਢਾਂਚਾਗਤ ਕੰਮ ਤੋਂ ਬਿਨਾਂ ਆਧੁਨਿਕ ਅਪਡੇਟ ਚਾਹੀਦਾ ਹੈ।"
       },
       "midRange": {
-        "title": "Comprehensive Renovation",
-        "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+        "title": "ਵਿਆਪਕ ਰੀਨੋਵੇਸ਼ਨ",
+        "description": "ਨਵੀਆਂ ਅਲਮਾਰੀਆਂ ਅਤੇ ਕਾਊਂਟਰਟਾਪਸ ਨਾਲ ਪੂਰੀ ਰਸੋਈ ਰੀਨੋਵੇਸ਼ਨ, ਬਾਥਰੂਮ ਰੀਮਾਡਲ, ਸਾਰੇ ਪਾਸੇ ਨਵੀਂ ਫਲੋਰਿੰਗ, ਤਾਜ਼ਾ ਪੇਂਟ, ਅਪਡੇਟ ਕੀਤੇ ਬਿਜਲੀ ਅਤੇ ਪਲੰਬਿੰਗ ਫਿਕਸਚਰ, ਅਤੇ ਨਵੀਂ ਰੋਸ਼ਨੀ। ਘਰ ਦੇ ਮਾਲਕਾਂ ਲਈ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਚੋਣ ਜੋ ਲੰਬੇ ਸਮੇਂ ਲਈ ਰਹਿਣ ਦੀ ਯੋਜਨਾ ਬਣਾਉਂਦੇ ਹਨ।"
       },
       "highEnd": {
-        "title": "Premium Transformation",
-        "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+        "title": "ਪ੍ਰੀਮੀਅਮ ਤਬਦੀਲੀ",
+        "description": "ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ, ਓਪਨ-ਕੰਸੈਪਟ ਲੇਆਉਟ, ਉੱਚ-ਪੱਧਰੀ ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ, ਕਸਟਮ ਮਿੱਲਵਰਕ, ਪ੍ਰੀਮੀਅਮ ਫਲੋਰਿੰਗ, ਸਮਾਰਟ ਹੋਮ ਏਕੀਕਰਨ, ਅਤੇ ਡਿਜ਼ਾਈਨਰ ਫਿਨਿਸ਼ ਸਮੇਤ ਪੂਰੀ ਗਟ ਰੀਨੋਵੇਸ਼ਨ। ਉਹਨਾਂ ਘਰ ਮਾਲਕਾਂ ਲਈ ਜੋ ਸੱਚਮੁੱਚ ਕਸਟਮ ਘਰ ਚਾਹੁੰਦੇ ਹਨ।"
       }
     },
     "factors": {
-      "title": "What Affects Your Whole House Renovation Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੀ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਾਗਤ ਨੂੰ ਕੀ ਪ੍ਰਭਾਵਿਤ ਕਰਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਿਮ ਕੀਮਤ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ",
       "scope": {
-        "title": "Scope & Square Footage",
-        "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+        "title": "ਦਾਇਰਾ ਅਤੇ ਵਰਗ ਫੁੱਟੇਜ",
+        "description": "ਸਭ ਤੋਂ ਵੱਡਾ ਇੱਕਲਾ ਕਾਰਕ। 600 ਵਰਗ ਫੁੱਟ ਦੇ ਕੰਡੋ ਰਿਫਰੈਸ਼ ਦੀ ਲਾਗਤ 2,500 ਵਰਗ ਫੁੱਟ ਦੇ ਘਰ ਦੀ ਗਟ ਰੀਨੋਵੇਸ਼ਨ ਨਾਲੋਂ ਬਹੁਤ ਘੱਟ ਹੈ। ਬਜਟ ਨੂੰ ਕੰਟਰੋਲ ਕਰਨ ਲਈ ਆਪਣੀਆਂ ਜ਼ਰੂਰੀ ਚੀਜ਼ਾਂ ਅਤੇ ਚੰਗੀਆਂ-ਚੀਜ਼ਾਂ ਨੂੰ ਜਲਦੀ ਪਰਿਭਾਸ਼ਿਤ ਕਰੋ।"
       },
       "kitchen": {
-        "title": "Kitchen (30–40% of total budget)",
-        "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+        "title": "ਰਸੋਈ (ਕੁੱਲ ਬਜਟ ਦਾ 30–40%)",
+        "description": "ਰਸੋਈਆਂ ਆਮ ਤੌਰ 'ਤੇ ਸਭ ਤੋਂ ਮਹਿੰਗਾ ਕਮਰਾ ਹੁੰਦੀਆਂ ਹਨ। ਕਸਟਮ ਅਲਮਾਰੀਆਂ, ਕੁਆਰਟਜ਼ ਕਾਊਂਟਰਟਾਪਸ, ਅਤੇ ਉਪਕਰਣ ਅੱਪਗਰੇਡ ਆਪਣੇ ਆਪ ਵਿੱਚ $15,000–$72,000 ਖਰਚ ਹੋ ਸਕਦੇ ਹਨ। ਵਿਸਤ੍ਰਿਤ ਵੇਰਵਿਆਂ ਲਈ ਸਾਡੀ ਰਸੋਈ ਲਾਗਤ ਗਾਈਡ ਵੇਖੋ।"
       },
       "bathrooms": {
-        "title": "Bathrooms (15–25% of total budget)",
-        "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+        "title": "ਬਾਥਰੂਮ (ਕੁੱਲ ਬਜਟ ਦਾ 15–25%)",
+        "description": "ਹਰ ਬਾਥਰੂਮ ਰੀਨੋਵੇਸ਼ਨ ਆਕਾਰ ਅਤੇ ਫਿਨਿਸ਼ਾਂ ਦੇ ਅਧਾਰ 'ਤੇ $10,000–$40,000 ਜੋੜਦੀ ਹੈ। ਵਾਟਰਪ੍ਰੂਫਿੰਗ, ਟਾਈਲ ਦਾ ਕੰਮ, ਅਤੇ ਫਿਕਸਚਰ ਦੀ ਗੁਣਵੱਤਾ ਖਰਚਿਆਂ ਨੂੰ ਵਧਾਉਂਦੀ ਹੈ। ਕਈ-ਬਾਥਰੂਮ ਘਰਾਂ ਵਿੱਚ ਪ੍ਰਤੀ ਯੂਨਿਟ ਮਹੱਤਵਪੂਰਨ ਬੱਚਤ ਹੁੰਦੀ ਹੈ।"
       },
       "flooring": {
-        "title": "Flooring (10–15% of total budget)",
-        "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+        "title": "ਫਲੋਰਿੰਗ (ਕੁੱਲ ਬਜਟ ਦਾ 10–15%)",
+        "description": "ਇੰਜੀਨੀਅਰਡ ਹਾਰਡਵੁੱਡ ਇੰਸਟਾਲ ਕੀਤਾ ਗਿਆ $8–$15/ਵਰਗ ਫੁੱਟ ਚੱਲਦਾ ਹੈ। ਲਗਜ਼ਰੀ ਵਿਨਾਇਲ ਪਲੈਂਕ (LVP) $5–$10/ਵਰਗ ਫੁੱਟ 'ਤੇ ਬਜਟ-ਅਨੁਕੂਲ ਵਿਕਲਪ ਪੇਸ਼ ਕਰਦਾ ਹੈ। ਗਿੱਲੇ ਖੇਤਰਾਂ ਲਈ ਟਾਈਲ $12–$25/ਵਰਗ ਫੁੱਟ ਜੋੜਦੀ ਹੈ।"
       },
       "structural": {
-        "title": "Structural Changes",
-        "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+        "title": "ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ",
+        "description": "ਕੰਧਾਂ ਨੂੰ ਹਟਾਉਣਾ, ਖਿੜਕੀਆਂ ਜੋੜਨਾ, ਜਾਂ ਲੇਆਉਟ ਨੂੰ ਮੁੜ-ਵਿਵਸਥਿਤ ਕਰਨਾ $5,000–$25,000+ ਜੋੜਦਾ ਹੈ। ਲੋਡ-ਬੇਅਰਿੰਗ ਕੰਧ ਨੂੰ ਹਟਾਉਣ ਲਈ ਇੰਜੀਨੀਅਰਿੰਗ ਰਿਪੋਰਟਾਂ ਅਤੇ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਓਪਨ-ਕੰਸੈਪਟ ਪਰਿਵਰਤਨ ਪ੍ਰਸਿੱਧ ਪਰ ਮਹਿੰਗੇ ਹਨ।"
       },
       "permits": {
-        "title": "Permits & Professional Fees",
-        "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਪੇਸ਼ੇਵਰ ਫੀਸਾਂ",
+        "description": "Metro Vancouver ਵਿੱਚ ਬਿਲਡਿੰਗ ਪਰਮਿਟਾਂ ਦੀ ਲਾਗਤ ਆਮ ਤੌਰ 'ਤੇ ਪੂਰੇ ਘਰ ਦੀਆਂ ਰੀਨੋਵੇਸ਼ਨਾਂ ਲਈ $500–$2,500 ਹੁੰਦੀ ਹੈ। ਆਰਕੀਟੈਕਚਰਲ ਡਰਾਇੰਗਾਂ, ਇੰਜੀਨੀਅਰਿੰਗ ਰਿਪੋਰਟਾਂ, ਅਤੇ ਨਿਰੀਖਣਾਂ ਲਈ ਵਾਧੂ $2,000–$5,000 ਦਾ ਬਜਟ ਰੱਖੋ।"
       }
     },
     "realProjects": {
-      "title": "Real Whole House Renovation Projects",
-      "subtitle": "Browse {count} completed whole-house projects with actual budgets and timelines"
+      "title": "ਅਸਲ ਪੂਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "ਅਸਲ ਬਜਟ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਨਾਲ {count} ਪੂਰੇ ਕੀਤੇ ਪੂਰੇ-ਘਰ ਦੇ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ ਬ੍ਰਾਊਜ਼ ਕਰੋ"
     },
     "included": {
-      "title": "What's Typically Included in a Whole House Renovation",
-      "subtitle": "A comprehensive renovation touches every room and system",
+      "title": "ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਵਿੱਚ ਆਮ ਤੌਰ 'ਤੇ ਕੀ ਸ਼ਾਮਲ ਹੁੰਦਾ ਹੈ",
+      "subtitle": "ਇੱਕ ਵਿਆਪਕ ਰੀਨੋਵੇਸ਼ਨ ਹਰ ਕਮਰੇ ਅਤੇ ਪ੍ਰਣਾਲੀ ਨੂੰ ਛੂਹਦੀ ਹੈ",
       "item1": {
-        "title": "Kitchen Renovation",
-        "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+        "title": "ਰਸੋਈ ਰੀਨੋਵੇਸ਼ਨ",
+        "description": "ਨਵੀਆਂ ਅਲਮਾਰੀਆਂ, ਕਾਊਂਟਰਟਾਪਸ, ਬੈਕਸਪਲੈਸ਼, ਸਿੰਕ, ਨਲ, ਅਤੇ ਅਪਡੇਟ ਕੀਤੇ ਉਪਕਰਣ ਕਨੈਕਸ਼ਨ। ਮੱਧ-ਰੇਂਜ ਅਤੇ ਪ੍ਰੀਮੀਅਮ ਸ਼੍ਰੇਣੀਆਂ ਲਈ ਲੇਆਉਟ ਤਬਦੀਲੀਆਂ ਉਪਲਬਧ ਹਨ।"
       },
       "item2": {
-        "title": "Bathroom Remodels",
-        "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+        "title": "ਬਾਥਰੂਮ ਰੀਮਾਡਲ",
+        "description": "ਨਵੀਂ ਵੈਨਿਟੀ, ਟਾਇਲਟ, ਸ਼ਾਵਰ ਜਾਂ ਟੱਬ, ਟਾਈਲ ਦਾ ਕੰਮ, ਵਾਟਰਪ੍ਰੂਫਿੰਗ, ਅਤੇ ਅਪਡੇਟ ਕੀਤੇ ਪਲੰਬਿੰਗ ਫਿਕਸਚਰ। ਹਰ ਬਾਥਰੂਮ ਪੂਰੀ ਤਰ੍ਹਾਂ ਤਾਜ਼ਾ ਜਾਂ ਦੁਬਾਰਾ ਬਣਾਇਆ ਗਿਆ।"
       },
       "item3": {
-        "title": "Flooring Throughout",
-        "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+        "title": "ਸਾਰੇ ਪਾਸੇ ਫਲੋਰਿੰਗ",
+        "description": "ਸਾਰੀਆਂ ਰਹਿਣ ਵਾਲੀਆਂ ਥਾਵਾਂ ਵਿੱਚ ਨਵੀਂ ਫਲੋਰਿੰਗ: ਮੁੱਖ ਖੇਤਰਾਂ ਵਿੱਚ ਹਾਰਡਵੁੱਡ, ਇੰਜੀਨੀਅਰਡ ਲੱਕੜ, ਜਾਂ LVP; ਬਾਥਰੂਮਾਂ ਅਤੇ ਪ੍ਰਵੇਸ਼ ਦੁਆਰਾਂ ਵਿੱਚ ਟਾਈਲ।"
       },
       "item4": {
-        "title": "Paint & Trim",
-        "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+        "title": "ਪੇਂਟ ਅਤੇ ਟ੍ਰਿਮ",
+        "description": "ਸਾਰੀਆਂ ਕੰਧਾਂ ਅਤੇ ਛੱਤਾਂ 'ਤੇ ਤਾਜ਼ਾ ਪੇਂਟ, ਨਵੇਂ ਜਾਂ ਮੁੜ-ਫਿਨਿਸ਼ ਕੀਤੇ ਬੇਸਬੋਰਡ, ਦਰਵਾਜ਼ੇ ਦੇ ਕੇਸਿੰਗ, ਅਤੇ ਜਿੱਥੇ ਲਾਗੂ ਹੋਵੇ ਕਰਾਊਨ ਮੋਲਡਿੰਗ।"
       },
       "item5": {
-        "title": "Electrical & Lighting",
-        "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+        "title": "ਬਿਜਲੀ ਅਤੇ ਰੋਸ਼ਨੀ",
+        "description": "ਅਪਡੇਟ ਕੀਤੇ ਲਾਈਟ ਫਿਕਸਚਰ, ਜਿੱਥੇ ਲੋੜ ਹੋਵੇ ਵਾਧੂ ਆਊਟਲੈਟ, ਡਿਮਰ ਸਵਿੱਚ, ਅਤੇ ਪੁਰਾਣੇ ਘਰਾਂ ਲਈ ਪੈਨਲ ਅੱਪਗਰੇਡ।"
       },
       "item6": {
-        "title": "Doors & Hardware",
-        "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+        "title": "ਦਰਵਾਜ਼ੇ ਅਤੇ ਹਾਰਡਵੇਅਰ",
+        "description": "ਨਵੇਂ ਅੰਦਰੂਨੀ ਦਰਵਾਜ਼ੇ, ਅਪਡੇਟ ਕੀਤੇ ਦਰਵਾਜ਼ੇ ਦੇ ਹੈਂਡਲ ਅਤੇ ਕਬਜ਼ੇ, ਅਲਮਾਰੀ ਆਯੋਜਕ, ਅਤੇ ਲੋੜ ਅਨੁਸਾਰ ਕੋਈ ਵੀ ਬਾਹਰੀ ਦਰਵਾਜ਼ੇ ਦੀ ਤਬਦੀਲੀ।"
       }
     },
     "tips": {
-      "title": "Money-Saving Tips for Whole House Renovations",
+      "title": "ਸਾਰੇ ਘਰ ਦੀਆਂ ਰੀਨੋਵੇਸ਼ਨਾਂ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਦੇ ਸੁਝਾਅ",
       "tip1": {
-        "title": "Prioritize and Phase Your Work",
-        "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+        "title": "ਆਪਣੇ ਕੰਮ ਨੂੰ ਤਰਜੀਹ ਦਿਓ ਅਤੇ ਪੜਾਅਵਾਰ ਕਰੋ",
+        "description": "ਤੁਹਾਨੂੰ ਸਭ ਕੁਝ ਇੱਕੋ ਸਮੇਂ ਕਰਨ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਪਹਿਲਾਂ ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮਾਂ ਨੂੰ ਨਜਿੱਠੋ (ਸਭ ਤੋਂ ਵੱਧ ROI), ਫਿਰ ਬਾਅਦ ਦੇ ਪੜਾਵਾਂ ਵਿੱਚ ਕਾਸਮੈਟਿਕ ਅਪਡੇਟਾਂ ਨੂੰ ਸੰਬੋਧਿਤ ਕਰੋ। ਇਹ ਖਰਚਿਆਂ ਨੂੰ ਫੈਲਾਉਂਦਾ ਹੈ ਅਤੇ ਤੁਹਾਨੂੰ ਰੀਨੋਵੇਸ਼ਨਾਂ ਦੌਰਾਨ ਘਰ ਵਿੱਚ ਰਹਿਣ ਦਿੰਦਾ ਹੈ।"
       },
       "tip2": {
-        "title": "Keep Plumbing Where It Is",
-        "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+        "title": "ਪਲੰਬਿੰਗ ਨੂੰ ਜਿੱਥੇ ਹੈ ਉੱਥੇ ਰੱਖੋ",
+        "description": "ਪਲੰਬਿੰਗ ਨੂੰ ਮੁੜ-ਸਥਾਪਿਤ ਕਰਨਾ ਸਭ ਤੋਂ ਮਹਿੰਗੀਆਂ ਤਬਦੀਲੀਆਂ ਵਿੱਚੋਂ ਇੱਕ ਹੈ। ਰਸੋਈਆਂ ਅਤੇ ਬਾਥਰੂਮਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਮੌਜੂਦਾ ਸਥਾਨਾਂ ਵਿੱਚ ਰੱਖਣ ਨਾਲ ਪਲੰਬਿੰਗ ਅਤੇ ਢਾਂਚਾਗਤ ਕੰਮ ਵਿੱਚ $5,000–$15,000 ਦੀ ਬੱਚਤ ਹੁੰਦੀ ਹੈ।"
       },
       "tip3": {
-        "title": "Choose Materials Strategically",
-        "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+        "title": "ਰਣਨੀਤਕ ਤੌਰ 'ਤੇ ਸਮੱਗਰੀ ਚੁਣੋ",
+        "description": "ਉੱਚ-ਪ੍ਰਭਾਵ, ਉੱਚ-ਟੱਚ ਸਤਹਾਂ ਜਿਵੇਂ ਕਿ ਰਸੋਈ ਦੇ ਕਾਊਂਟਰਟਾਪ ਅਤੇ ਬਾਥਰੂਮ ਟਾਈਲ 'ਤੇ ਖਰਚ ਕਰੋ। ਬੈੱਡਰੂਮ ਫਲੋਰਿੰਗ (LVP ਹਾਰਡਵੁੱਡ ਦੀ ਅੱਧੀ ਕੀਮਤ 'ਤੇ ਬਹੁਤ ਵਧੀਆ ਲੱਗਦੀ ਹੈ) ਅਤੇ ਅੰਦਰੂਨੀ ਪੇਂਟ (ਮੱਧ-ਰੇਂਜ ਪੇਂਟ ਪ੍ਰੀਮੀਅਮ ਜਿੰਨਾ ਵਧੀਆ ਪ੍ਰਦਰਸ਼ਨ ਕਰਦੇ ਹਨ) ਵਰਗੇ ਖੇਤਰਾਂ 'ਤੇ ਬੱਚਤ ਕਰੋ।"
       },
       "tip4": {
-        "title": "Bundle for Better Pricing",
-        "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+        "title": "ਬਿਹਤਰ ਕੀਮਤ ਲਈ ਬੰਡਲ ਕਰੋ",
+        "description": "ਸਾਰੇ ਘਰ ਦੀਆਂ ਰੀਨੋਵੇਸ਼ਨਾਂ ਅਕਸਰ ਕਮਰਿਆਂ ਨੂੰ ਵੱਖਰੇ ਤੌਰ 'ਤੇ ਕਰਨ ਨਾਲੋਂ ਪ੍ਰਤੀ ਕਮਰੇ ਘੱਟ ਖਰਚ ਕਰਦੀਆਂ ਹਨ। ਠੇਕੇਦਾਰ ਬਿਹਤਰ ਦਰਾਂ ਪੇਸ਼ ਕਰਦੇ ਹਨ ਜਦੋਂ ਉਹ ਵੱਡੇ ਪ੍ਰੋਜੈਕਟ ਦੌਰਾਨ ਚਾਲਕ ਦਲ ਨੂੰ ਕੁਸ਼ਲਤਾ ਨਾਲ ਨਿਯਤ ਕਰ ਸਕਦੇ ਹਨ।"
       }
     },
     "faq": {
-      "q1": "How much does a whole house renovation cost in Vancouver?",
-      "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
-      "q2": "How long does a whole house renovation take?",
-      "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
-      "q3": "Can I live in my home during a whole house renovation?",
-      "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
-      "q4": "What gives the best return on investment for a whole house renovation?",
-      "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
-      "q5": "Do I need permits for a whole house renovation in Vancouver?",
-      "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+      "q1": "Vancouver ਵਿੱਚ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਕਿੰਨੀ ਹੁੰਦੀ ਹੈ?",
+      "a1": "ਸਾਡੇ ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟਾਂ ਦੇ ਆਧਾਰ 'ਤੇ Vancouver ਵਿੱਚ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਆਮ ਤੌਰ 'ਤੇ $50,000 ਤੋਂ $200,000+ ਤੱਕ ਹੁੰਦੀ ਹੈ। ਕਾਸਮੈਟਿਕ ਰਿਫਰੈਸ਼ (ਪੇਂਟ, ਫਲੋਰਿੰਗ, ਫਿਕਸਚਰ) ਲਗਭਗ $50,000–$80,000 ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੇ ਹਨ, ਨਵੀਂ ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮਾਂ ਨਾਲ ਵਿਆਪਕ ਰੀਨੋਵੇਸ਼ਨ $80,000–$120,000 ਚੱਲਦੀਆਂ ਹਨ, ਅਤੇ ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਨਾਲ ਪ੍ਰੀਮੀਅਮ ਤਬਦੀਲੀਆਂ $120,000 ਤੋਂ ਵੱਧ ਹੋ ਸਕਦੀਆਂ ਹਨ।",
+      "q2": "ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਵਿੱਚ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "ਜ਼ਿਆਦਾਤਰ ਪੂਰੇ ਘਰ ਦੀਆਂ ਰੀਨੋਵੇਸ਼ਨਾਂ ਦਾਇਰੇ ਦੇ ਆਧਾਰ 'ਤੇ 3 ਤੋਂ 8 ਹਫ਼ਤੇ ਲੈਂਦੀਆਂ ਹਨ। ਇੱਕ ਕਾਸਮੈਟਿਕ ਰਿਫਰੈਸ਼ (ਪੇਂਟ, ਫਲੋਰਿੰਗ, ਫਿਕਸਚਰ) 3–4 ਹਫ਼ਤਿਆਂ ਵਿੱਚ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ। ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮਾਂ ਸਮੇਤ ਇੱਕ ਵਿਆਪਕ ਰੀਨੋਵੇਸ਼ਨ ਆਮ ਤੌਰ 'ਤੇ 5–8 ਹਫ਼ਤੇ ਲੈਂਦੀ ਹੈ। ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਜਾਂ ਪਰਮਿਟਾਂ ਵਾਲੇ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ 10–14 ਹਫ਼ਤੇ ਲੱਗ ਸਕਦੇ ਹਨ।",
+      "q3": "ਕੀ ਮੈਂ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਦੌਰਾਨ ਆਪਣੇ ਘਰ ਵਿੱਚ ਰਹਿ ਸਕਦਾ ਹਾਂ?",
+      "a3": "ਇਹ ਦਾਇਰੇ 'ਤੇ ਨਿਰਭਰ ਕਰਦਾ ਹੈ। ਕਾਸਮੈਟਿਕ ਰਿਫਰੈਸ਼ ਲਈ, ਤੁਸੀਂ ਆਮ ਤੌਰ 'ਤੇ ਘਰ ਵਿੱਚ ਰਹਿ ਸਕਦੇ ਹੋ ਕਿਉਂਕਿ ਕੰਮ ਕਮਰੇ-ਦਰ-ਕਮਰੇ ਕੀਤਾ ਜਾਂਦਾ ਹੈ। ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ ਡੈਮੋਲਿਸ਼ਨ ਨਾਲ ਜੁੜੀਆਂ ਵਿਆਪਕ ਰੀਨੋਵੇਸ਼ਨਾਂ ਲਈ, ਅਸੀਂ ਸਭ ਤੋਂ ਵਿਘਨਕਾਰੀ ਪੜਾਵਾਂ ਦੌਰਾਨ ਘੱਟੋ-ਘੱਟ 2–4 ਹਫ਼ਤਿਆਂ ਲਈ ਅਸਥਾਈ ਰਿਹਾਇਸ਼ ਦਾ ਪ੍ਰਬੰਧ ਕਰਨ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ।",
+      "q4": "ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਈ ਨਿਵੇਸ਼ 'ਤੇ ਸਭ ਤੋਂ ਵਧੀਆ ਵਾਪਸੀ ਕੀ ਦਿੰਦੀ ਹੈ?",
+      "a4": "ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ ਰੀਨੋਵੇਸ਼ਨ Vancouver ਮਾਰਕੀਟ ਵਿੱਚ ਲਗਾਤਾਰ ਸਭ ਤੋਂ ਵੱਧ ROI ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਨ। ਅਪਡੇਟ ਕੀਤੀ ਫਲੋਰਿੰਗ ਅਤੇ ਤਾਜ਼ਾ ਪੇਂਟ ਮੁਕਾਬਲਤਨ ਘੱਟ ਲਾਗਤ ਲਈ ਸ਼ਾਨਦਾਰ ਮੁੱਲ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹਨ। ਓਪਨ-ਕੰਸੈਪਟ ਲੇਆਉਟ ਖਰੀਦਦਾਰਾਂ ਨਾਲ ਪ੍ਰਸਿੱਧ ਹਨ ਪਰ ਢਾਂਚਾਗਤ ਕੰਮ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ ਜੋ ਖਰਚੇ ਨੂੰ ਮਹੱਤਵਪੂਰਨ ਤੌਰ 'ਤੇ ਵਧਾਉਂਦੀ ਹੈ।",
+      "q5": "ਕੀ ਮੈਨੂੰ Vancouver ਵਿੱਚ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਈ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਹੈ?",
+      "a5": "ਹਾਂ, ਜ਼ਿਆਦਾਤਰ ਪੂਰੇ ਘਰ ਦੀਆਂ ਰੀਨੋਵੇਸ਼ਨਾਂ ਨੂੰ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਪਲੰਬਿੰਗ, ਬਿਜਲੀ, ਗੈਸ, ਜਾਂ ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਨਾਲ ਜੁੜੇ ਕਿਸੇ ਵੀ ਕੰਮ ਲਈ City of Vancouver ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਸਿਰਫ਼-ਕਾਸਮੈਟਿਕ ਕੰਮ (ਪੇਂਟ, ਫਲੋਰਿੰਗ, ਅਲਮਾਰੀਆਂ) ਨੂੰ ਆਮ ਤੌਰ 'ਤੇ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ। ਪਰਮਿਟ ਫੀਸਾਂ ਲਈ $500–$2,500 ਦਾ ਬਜਟ ਰੱਖੋ।"
     },
     "cta": {
-      "heading": "Ready to Transform Your Entire Home?",
-      "subtitle": "Get a free consultation and detailed quote for your whole house renovation. We'll walk through every room and create a plan that fits your budget."
+      "heading": "ਆਪਣੇ ਪੂਰੇ ਘਰ ਨੂੰ ਬਦਲਣ ਲਈ ਤਿਆਰ ਹੋ?",
+      "subtitle": "ਆਪਣੀ ਸਾਰੇ ਘਰ ਦੀ ਰੀਨੋਵੇਸ਼ਨ ਲਈ ਮੁਫਤ ਸਲਾਹ-ਮਸ਼ਵਰਾ ਅਤੇ ਵਿਸਤ੍ਰਿਤ ਹਵਾਲਾ ਪ੍ਰਾਪਤ ਕਰੋ। ਅਸੀਂ ਹਰ ਕਮਰੇ ਵਿੱਚੋਂ ਲੰਘਾਂਗੇ ਅਤੇ ਇੱਕ ਯੋਜਨਾ ਬਣਾਵਾਂਗੇ ਜੋ ਤੁਹਾਡੇ ਬਜਟ ਵਿੱਚ ਫਿੱਟ ਹੋਵੇ।"
     }
   }
 }

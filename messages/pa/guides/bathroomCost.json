@@ -1,99 +1,99 @@
 {
   "bathroomCost": {
-    "breadcrumb": "Bathroom Renovation Cost",
+    "breadcrumb": "ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ",
     "hero": {
-      "title": "Average Bathroom Renovation Cost in Vancouver (2026 Price Guide)",
-      "subtitle": "The average bathroom renovation cost in Vancouver ranges from $10,000 to $60,000+. These are real prices from 19 completed projects — not industry estimates or national averages."
+      "title": "Vancouver ਵਿੱਚ ਔਸਤ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਲਾਗਤ (2026 ਕੀਮਤ ਗਾਈਡ)",
+      "subtitle": "Vancouver ਵਿੱਚ ਔਸਤ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ $10,000 ਤੋਂ $60,000+ ਤੱਕ ਹੁੰਦੀ ਹੈ। ਇਹ 19 ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਦੀਆਂ ਅਸਲ ਕੀਮਤਾਂ ਹਨ — ਇੰਡਸਟਰੀ ਦੇ ਅਨੁਮਾਨ ਜਾਂ ਰਾਸ਼ਟਰੀ ਔਸਤ ਨਹੀਂ।"
     },
     "stats": {
-      "avgCost": "Average Cost",
-      "range": "Price Range",
-      "projects": "Projects Completed",
-      "timeline": "Typical Timeline",
-      "timelineValue": "2–8 weeks"
+      "avgCost": "ਔਸਤ ਲਾਗਤ",
+      "range": "ਕੀਮਤ ਦਾ ਦਾਇਰਾ",
+      "projects": "ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "2–8 ਹਫ਼ਤੇ"
     },
     "tiers": {
-      "title": "Bathroom Renovation Cost by Tier",
-      "subtitle": "Based on our completed projects across Greater Vancouver",
+      "title": "ਟੀਅਰ ਅਨੁਸਾਰ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਸਾਡੇ ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਦੇ ਆਧਾਰ ਉੱਤੇ",
       "budget": {
-        "title": "Budget-Friendly",
-        "description": "Standard tile, basic vanity, updated fixtures, and fresh paint. Ideal for a single bathroom refresh in condos or townhouses without moving plumbing."
+        "title": "ਬਜਟ-ਅਨੁਕੂਲ",
+        "description": "ਸਟੈਂਡਰਡ ਟਾਈਲ, ਬੇਸਿਕ ਵੈਨਿਟੀ, ਅੱਪਡੇਟ ਕੀਤੇ ਫਿਕਸਚਰ ਅਤੇ ਤਾਜ਼ਾ ਪੇਂਟ। ਪਲੰਬਿੰਗ ਨੂੰ ਹਿਲਾਏ ਬਿਨਾਂ ਕੌਂਡੋ ਜਾਂ ਟਾਊਨਹਾਊਸਾਂ ਵਿੱਚ ਇੱਕ ਸਿੰਗਲ ਬਾਥਰੂਮ ਰੀਫਰੈਸ਼ ਲਈ ਆਦਰਸ਼।"
       },
       "midRange": {
-        "title": "Mid-Range",
-        "description": "Porcelain or large-format tile, custom vanity, frameless glass shower enclosure, modern fixtures, and heated flooring. The most popular choice for family homes."
+        "title": "ਮੱਧ-ਦਰਜਾ",
+        "description": "ਪੋਰਸਲੇਨ ਜਾਂ ਵੱਡੇ-ਫਾਰਮੈਟ ਟਾਈਲ, ਕਸਟਮ ਵੈਨਿਟੀ, ਫਰੇਮਲੈਸ ਗਲਾਸ ਸ਼ਾਵਰ ਐਨਕਲੋਜ਼ਰ, ਆਧੁਨਿਕ ਫਿਕਸਚਰ ਅਤੇ ਹੀਟਡ ਫਲੋਰਿੰਗ। ਪਰਿਵਾਰਕ ਘਰਾਂ ਲਈ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਚੋਣ।"
       },
       "highEnd": {
-        "title": "High-End / Multi-Bathroom",
-        "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
+        "title": "ਹਾਈ-ਐਂਡ / ਮਲਟੀ-ਬਾਥਰੂਮ",
+        "description": "ਪ੍ਰੀਮੀਅਮ ਟਾਈਲ, ਕਰਬਲੈਸ ਸ਼ਾਵਰ, ਫ੍ਰੀਸਟੈਂਡਿੰਗ ਟੱਬ, ਕਸਟਮ ਕੈਬਿਨੇਟਰੀ, ਸਮਾਰਟ ਫਿਕਸਚਰ ਅਤੇ ਢਾਂਚਾਗਤ ਸੋਧਾਂ। ਅਕਸਰ ਇੱਕੋ ਸਮੇਂ 2-3+ ਬਾਥਰੂਮਾਂ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਸ਼ਾਮਲ ਹੁੰਦੀ ਹੈ।"
       }
     },
     "factors": {
-      "title": "What Affects Your Bathroom Renovation Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੇ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਉੱਤੇ ਕੀ ਅਸਰ ਪੈਂਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਮ ਕੀਮਤ ਤੈਅ ਕਰਦੇ ਹਨ",
       "tiles": {
-        "title": "Tile & Flooring (25–35% of budget)",
-        "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+        "title": "ਟਾਈਲ ਅਤੇ ਫਲੋਰਿੰਗ (ਬਜਟ ਦਾ 25–35%)",
+        "description": "ਸਟੈਂਡਰਡ ਸਿਰਾਮਿਕ ਟਾਈਲ $5/ਵਰਗ ਫੁੱਟ ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੀ ਹੈ, ਪੋਰਸਲੇਨ $8–15/ਵਰਗ ਫੁੱਟ ਚੱਲਦੀ ਹੈ, ਅਤੇ ਕੁਦਰਤੀ ਪੱਥਰ $25/ਵਰਗ ਫੁੱਟ ਤੋਂ ਵੱਧ ਹੋ ਸਕਦਾ ਹੈ। ਵੱਡੇ-ਫਾਰਮੈਟ ਟਾਈਲਾਂ ਗ੍ਰਾਊਟ ਲਾਈਨਾਂ ਘਟਾਉਂਦੀਆਂ ਹਨ ਪਰ ਸਥਾਪਨਾ ਮਹਿੰਗੀ ਪੈਂਦੀ ਹੈ।"
       },
       "shower": {
-        "title": "Shower / Tub Configuration",
-        "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+        "title": "ਸ਼ਾਵਰ / ਟੱਬ ਕਨਫਿਗਰੇਸ਼ਨ",
+        "description": "ਟੱਬ ਤੋਂ ਸ਼ਾਵਰ ਵਿੱਚ ਬਦਲਣ ਦੀ ਲਾਗਤ $3,000–8,000 ਹੁੰਦੀ ਹੈ। ਕਰਬਲੈਸ (ਜ਼ੀਰੋ-ਥ੍ਰੈਸ਼ਹੋਲਡ) ਸ਼ਾਵਰਾਂ ਲਈ ਕਸਟਮ ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਅਤੇ ਢਲਾਣ ਵਾਲੀ ਸਬਫਲੋਰ ਚਾਹੀਦੀ ਹੈ, ਜੋ ਸਟੈਂਡਰਡ ਸ਼ਾਵਰ ਬੇਸ ਦੇ ਮੁਕਾਬਲੇ $2,000–5,000 ਜੋੜਦੀ ਹੈ।"
       },
       "vanity": {
-        "title": "Vanity & Countertop",
-        "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+        "title": "ਵੈਨਿਟੀ ਅਤੇ ਕਾਊਂਟਰਟਾਪ",
+        "description": "ਸਟਾਕ ਵੈਨਿਟੀਆਂ $500–1,500 ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੀਆਂ ਹਨ। ਕੁਆਰਟਜ਼ ਟਾਪ ਨਾਲ ਸੈਮੀ-ਕਸਟਮ $2,000–4,000 ਚੱਲਦੀ ਹੈ। ਏਕੀਕ੍ਰਿਤ ਸਿੰਕ ਨਾਲ ਪੂਰੀ ਤਰ੍ਹਾਂ ਕਸਟਮ ਫਲੋਟਿੰਗ ਵੈਨਿਟੀਆਂ $6,000 ਤੋਂ ਵੱਧ ਹੋ ਸਕਦੀਆਂ ਹਨ।"
       },
       "plumbing": {
-        "title": "Plumbing Relocation",
-        "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+        "title": "ਪਲੰਬਿੰਗ ਨੂੰ ਮੁੜ-ਸਥਾਪਿਤ ਕਰਨਾ",
+        "description": "ਡਰੇਨ ਲਾਈਨਾਂ ਜਾਂ ਸਪਲਾਈ ਪਾਈਪਾਂ ਹਿਲਾਉਣ ਨਾਲ $2,000–6,000 ਜੁੜਦੇ ਹਨ। ਪੁਰਾਣੇ ਘਰਾਂ ਨੂੰ ਨਵੇਂ ਸ਼ੱਟ-ਆਫ ਵਾਲਵ ਜਾਂ ਸਪਲਾਈ ਲਾਈਨ ਅੱਪਗਰੇਡ ਦੀ ਲੋੜ ਪੈ ਸਕਦੀ ਹੈ। ਮੌਜੂਦਾ ਪਲੰਬਿੰਗ ਲੇਆਊਟ ਰੱਖਣਾ ਕਾਫ਼ੀ ਬਚਤ ਕਰਦਾ ਹੈ।"
       },
       "waterproofing": {
-        "title": "Waterproofing",
-        "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+        "title": "ਵਾਟਰਪ੍ਰੂਫਿੰਗ",
+        "description": "ਮੈਂਬਰੇਨ ਸਿਸਟਮਾਂ (Schluter, Laticrete) ਨਾਲ ਸਹੀ ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਦੀ ਲਾਗਤ ਸਟੈਂਡਰਡ ਸ਼ਾਵਰ ਲਈ $1,500–3,500 ਹੁੰਦੀ ਹੈ। Vancouver ਦੇ ਮੌਸਮ ਵਿੱਚ ਕੰਧਾਂ ਪਿੱਛੇ ਨਮੀ ਦੇ ਨੁਕਸਾਨ ਨੂੰ ਰੋਕਣ ਲਈ ਜ਼ਰੂਰੀ ਹੈ।"
       },
       "permits": {
-        "title": "Permits & Inspections",
-        "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਨਿਰੀਖਣ",
+        "description": "Metro Vancouver ਵਿੱਚ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨਾਂ ਲਈ ਬਿਲਡਿੰਗ ਪਰਮਿਟ $200–800 ਖਰਚ ਹੁੰਦੇ ਹਨ। ਪਲੰਬਿੰਗ ਹਿਲਾਉਣ, ਨਵੇਂ ਫਿਕਸਚਰ ਜੋੜਨ ਜਾਂ ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਕਰਨ ਵੇਲੇ ਜ਼ਰੂਰੀ ਹਨ।"
       }
     },
     "realProjects": {
-      "title": "Real Bathroom Renovation Projects",
-      "subtitle": "Browse {count} completed bathroom projects with actual budgets and timelines"
+      "title": "ਅਸਲ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "ਅਸਲ ਬਜਟ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਨਾਲ {count} ਪੂਰੇ ਹੋਏ ਬਾਥਰੂਮ ਪ੍ਰੋਜੈਕਟ ਵੇਖੋ"
     },
     "tips": {
-      "title": "Money-Saving Tips for Your Bathroom Renovation",
+      "title": "ਤੁਹਾਡੇ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਵਾਲੇ ਨੁਸਖੇ",
       "tip1": {
-        "title": "Keep Existing Plumbing Layout",
-        "description": "Relocating drain lines is one of the biggest cost drivers. Keeping the toilet, shower, and sink in their current positions can save $3,000–6,000."
+        "title": "ਮੌਜੂਦਾ ਪਲੰਬਿੰਗ ਲੇਆਊਟ ਰੱਖੋ",
+        "description": "ਡਰੇਨ ਲਾਈਨਾਂ ਨੂੰ ਮੁੜ-ਸਥਾਪਿਤ ਕਰਨਾ ਲਾਗਤ ਵਧਾਉਣ ਵਾਲੇ ਸਭ ਤੋਂ ਵੱਡੇ ਕਾਰਕਾਂ ਵਿੱਚੋਂ ਇੱਕ ਹੈ। ਟਾਇਲਟ, ਸ਼ਾਵਰ ਅਤੇ ਸਿੰਕ ਨੂੰ ਉਨ੍ਹਾਂ ਦੀਆਂ ਮੌਜੂਦਾ ਥਾਵਾਂ ਉੱਤੇ ਰੱਖਣ ਨਾਲ $3,000–6,000 ਬਚ ਸਕਦੇ ਹਨ।"
       },
       "tip2": {
-        "title": "Choose Large-Format Porcelain Tile",
-        "description": "Fewer grout lines mean less labour and a cleaner look. 24x24 or 12x24 porcelain tiles are durable, water-resistant, and more affordable than natural stone."
+        "title": "ਵੱਡੇ-ਫਾਰਮੈਟ ਪੋਰਸਲੇਨ ਟਾਈਲ ਚੁਣੋ",
+        "description": "ਘੱਟ ਗ੍ਰਾਊਟ ਲਾਈਨਾਂ ਦਾ ਮਤਲਬ ਘੱਟ ਮਜ਼ਦੂਰੀ ਅਤੇ ਸਾਫ਼-ਸੁਥਰਾ ਲੁੱਕ ਹੁੰਦਾ ਹੈ। 24x24 ਜਾਂ 12x24 ਪੋਰਸਲੇਨ ਟਾਈਲਾਂ ਟਿਕਾਊ, ਪਾਣੀ-ਰੋਧਕ ਅਤੇ ਕੁਦਰਤੀ ਪੱਥਰ ਨਾਲੋਂ ਜ਼ਿਆਦਾ ਕਿਫਾਇਤੀ ਹਨ।"
       },
       "tip3": {
-        "title": "Renovate Multiple Bathrooms Together",
-        "description": "If you need more than one bathroom done, doing them simultaneously saves 10–20% vs separate projects. Contractors can share mobilization costs and bulk-buy materials."
+        "title": "ਕਈ ਬਾਥਰੂਮਾਂ ਨੂੰ ਇਕੱਠੇ ਰੈਨੋਵੇਟ ਕਰੋ",
+        "description": "ਜੇ ਤੁਹਾਨੂੰ ਇੱਕ ਤੋਂ ਵੱਧ ਬਾਥਰੂਮ ਕਰਾਉਣੇ ਹਨ, ਤਾਂ ਉਨ੍ਹਾਂ ਨੂੰ ਇੱਕੋ ਸਮੇਂ ਕਰਾਉਣ ਨਾਲ ਵੱਖਰੇ ਪ੍ਰੋਜੈਕਟਾਂ ਨਾਲੋਂ 10–20% ਬਚਤ ਹੁੰਦੀ ਹੈ। ਠੇਕੇਦਾਰ ਮੋਬਿਲਾਈਜ਼ੇਸ਼ਨ ਖਰਚੇ ਸਾਂਝੇ ਕਰ ਸਕਦੇ ਹਨ ਅਤੇ ਥੋਕ ਵਿੱਚ ਸਮੱਗਰੀ ਖਰੀਦ ਸਕਦੇ ਹਨ।"
       },
       "tip4": {
-        "title": "Invest in Waterproofing",
-        "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
+        "title": "ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਉੱਤੇ ਨਿਵੇਸ਼ ਕਰੋ",
+        "description": "ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਉੱਤੇ ਕੰਜੂਸੀ ਕਰਨ ਨਾਲ ਬਾਅਦ ਵਿੱਚ ਮਹਿੰਗੀ ਮੁਰੰਮਤ ਪੈਂਦੀ ਹੈ। ਸਹੀ ਮੈਂਬਰੇਨ ਸਿਸਟਮ ਪਹਿਲਾਂ $1,500–3,500 ਜੋੜਦੇ ਹਨ ਪਰ ਅੱਗੇ ਜਾ ਕੇ $10,000+ ਦੇ ਪਾਣੀ ਦੇ ਨੁਕਸਾਨ ਨੂੰ ਰੋਕਦੇ ਹਨ।"
       }
     },
     "cta": {
-      "heading": "Get Your Free Bathroom Renovation Quote",
-      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+      "heading": "ਆਪਣੀ ਮੁਫ਼ਤ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "subtitle": "ਆਪਣੇ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਸਾਨੂੰ ਦੱਸੋ ਅਤੇ 48 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਬਿਨਾਂ ਕਿਸੇ ਜ਼ਿੰਮੇਵਾਰੀ ਦੇ ਵਿਸਤ੍ਰਿਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ।"
     },
     "faq": {
-      "q1": "How much does a bathroom renovation cost in Vancouver?",
-      "a1": "Bathroom renovation costs in Vancouver range from $10,000 to $60,000+ based on our completed projects. A single budget-friendly bathroom starts around $10,000–$20,000, mid-range renovations with custom vanity and glass shower run $20,000–$35,000, and high-end or multi-bathroom projects can exceed $40,000.",
-      "q2": "How long does a bathroom renovation take?",
-      "a2": "A single bathroom renovation typically takes 2–5 weeks. Simple cosmetic updates can be done in 2–3 weeks, while projects involving plumbing relocation, curbless showers, or structural changes may take 4–8 weeks. Multi-bathroom projects take 5–11 weeks.",
-      "q3": "Can I convert my bathtub to a walk-in shower?",
-      "a3": "Yes, tub-to-shower conversions are one of our most popular requests. The cost ranges from $3,000–$8,000 depending on whether you choose a standard shower base or curbless design. Curbless showers require custom waterproofing and a sloped subfloor.",
-      "q4": "What is curbless shower and why is it more expensive?",
-      "a4": "A curbless (zero-threshold) shower has no step or lip at the entry, creating a seamless floor transition. It requires custom waterproofing membrane, a precisely sloped subfloor, and linear drain installation, adding $2,000–$5,000 vs a standard shower base. It is popular for accessibility and modern aesthetics.",
-      "q5": "Should I renovate multiple bathrooms at the same time?",
-      "a5": "Yes, renovating multiple bathrooms simultaneously saves 10–20% compared to separate projects. Contractors can share mobilization costs, coordinate trades more efficiently, and buy materials in bulk. We have completed many 2–3 bathroom projects across Greater Vancouver."
+      "q1": "Vancouver ਵਿੱਚ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ ਕਿੰਨੀ ਹੁੰਦੀ ਹੈ?",
+      "a1": "ਸਾਡੇ ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਅਨੁਸਾਰ Vancouver ਵਿੱਚ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਦੀ ਲਾਗਤ $10,000 ਤੋਂ $60,000+ ਤੱਕ ਹੁੰਦੀ ਹੈ। ਇੱਕ ਸਿੰਗਲ ਬਜਟ-ਅਨੁਕੂਲ ਬਾਥਰੂਮ ਲਗਭਗ $10,000–$20,000 ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ, ਕਸਟਮ ਵੈਨਿਟੀ ਅਤੇ ਗਲਾਸ ਸ਼ਾਵਰ ਨਾਲ ਮੱਧ-ਦਰਜੇ ਦੀਆਂ ਰੈਨੋਵੇਸ਼ਨਾਂ $20,000–$35,000 ਚੱਲਦੀਆਂ ਹਨ, ਅਤੇ ਹਾਈ-ਐਂਡ ਜਾਂ ਮਲਟੀ-ਬਾਥਰੂਮ ਪ੍ਰੋਜੈਕਟ $40,000 ਤੋਂ ਵੱਧ ਹੋ ਸਕਦੇ ਹਨ।",
+      "q2": "ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਵਿੱਚ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "ਇੱਕ ਸਿੰਗਲ ਬਾਥਰੂਮ ਰੈਨੋਵੇਸ਼ਨ ਆਮ ਤੌਰ ਉੱਤੇ 2–5 ਹਫ਼ਤੇ ਲੈਂਦੀ ਹੈ। ਸਾਧਾਰਨ ਕਾਸਮੈਟਿਕ ਅੱਪਡੇਟ 2–3 ਹਫ਼ਤਿਆਂ ਵਿੱਚ ਪੂਰੇ ਹੋ ਸਕਦੇ ਹਨ, ਜਦਕਿ ਪਲੰਬਿੰਗ ਮੁੜ-ਸਥਾਪਨਾ, ਕਰਬਲੈਸ ਸ਼ਾਵਰ ਜਾਂ ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਵਾਲੇ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ 4–8 ਹਫ਼ਤੇ ਲੱਗ ਸਕਦੇ ਹਨ। ਮਲਟੀ-ਬਾਥਰੂਮ ਪ੍ਰੋਜੈਕਟਾਂ ਨੂੰ 5–11 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ।",
+      "q3": "ਕੀ ਮੈਂ ਆਪਣੇ ਬਾਥਟੱਬ ਨੂੰ ਵਾਕ-ਇਨ ਸ਼ਾਵਰ ਵਿੱਚ ਬਦਲ ਸਕਦਾ ਹਾਂ?",
+      "a3": "ਹਾਂ, ਟੱਬ-ਤੋਂ-ਸ਼ਾਵਰ ਬਦਲਾਅ ਸਾਡੀਆਂ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਬੇਨਤੀਆਂ ਵਿੱਚੋਂ ਇੱਕ ਹਨ। ਲਾਗਤ $3,000–$8,000 ਤੱਕ ਹੁੰਦੀ ਹੈ, ਇਹ ਨਿਰਭਰ ਕਰਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਸਟੈਂਡਰਡ ਸ਼ਾਵਰ ਬੇਸ ਚੁਣਦੇ ਹੋ ਜਾਂ ਕਰਬਲੈਸ ਡਿਜ਼ਾਈਨ। ਕਰਬਲੈਸ ਸ਼ਾਵਰਾਂ ਲਈ ਕਸਟਮ ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਅਤੇ ਢਲਾਣ ਵਾਲੀ ਸਬਫਲੋਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।",
+      "q4": "ਕਰਬਲੈਸ ਸ਼ਾਵਰ ਕੀ ਹੁੰਦੀ ਹੈ ਅਤੇ ਇਹ ਮਹਿੰਗੀ ਕਿਉਂ ਹੁੰਦੀ ਹੈ?",
+      "a4": "ਕਰਬਲੈਸ (ਜ਼ੀਰੋ-ਥ੍ਰੈਸ਼ਹੋਲਡ) ਸ਼ਾਵਰ ਦੇ ਪ੍ਰਵੇਸ਼ ਉੱਤੇ ਕੋਈ ਪੌੜੀ ਜਾਂ ਕਿਨਾਰਾ ਨਹੀਂ ਹੁੰਦਾ, ਜੋ ਇੱਕ ਨਿਰਵਿਘਨ ਫਲੋਰ ਟਰਾਂਜੀਸ਼ਨ ਬਣਾਉਂਦੀ ਹੈ। ਇਸ ਲਈ ਕਸਟਮ ਵਾਟਰਪ੍ਰੂਫਿੰਗ ਮੈਂਬਰੇਨ, ਸਹੀ ਢੰਗ ਨਾਲ ਢਲਾਣ ਵਾਲੀ ਸਬਫਲੋਰ ਅਤੇ ਲੀਨੀਅਰ ਡਰੇਨ ਸਥਾਪਨਾ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ, ਜੋ ਸਟੈਂਡਰਡ ਸ਼ਾਵਰ ਬੇਸ ਨਾਲੋਂ $2,000–$5,000 ਜੋੜਦੀ ਹੈ। ਇਹ ਪਹੁੰਚਯੋਗਤਾ ਅਤੇ ਆਧੁਨਿਕ ਸੁਹਜ ਲਈ ਪ੍ਰਸਿੱਧ ਹੈ।",
+      "q5": "ਕੀ ਮੈਨੂੰ ਇੱਕੋ ਸਮੇਂ ਕਈ ਬਾਥਰੂਮਾਂ ਦੀ ਰੈਨੋਵੇਸ਼ਨ ਕਰਾਉਣੀ ਚਾਹੀਦੀ ਹੈ?",
+      "a5": "ਹਾਂ, ਇੱਕੋ ਸਮੇਂ ਕਈ ਬਾਥਰੂਮਾਂ ਨੂੰ ਰੈਨੋਵੇਟ ਕਰਨ ਨਾਲ ਵੱਖਰੇ ਪ੍ਰੋਜੈਕਟਾਂ ਦੇ ਮੁਕਾਬਲੇ 10–20% ਬਚਤ ਹੁੰਦੀ ਹੈ। ਠੇਕੇਦਾਰ ਮੋਬਿਲਾਈਜ਼ੇਸ਼ਨ ਖਰਚੇ ਸਾਂਝੇ ਕਰ ਸਕਦੇ ਹਨ, ਟਰੇਡਾਂ ਨੂੰ ਵਧੇਰੇ ਕੁਸ਼ਲਤਾ ਨਾਲ ਤਾਲਮੇਲ ਕਰ ਸਕਦੇ ਹਨ ਅਤੇ ਥੋਕ ਵਿੱਚ ਸਮੱਗਰੀ ਖਰੀਦ ਸਕਦੇ ਹਨ। ਅਸੀਂ Greater Vancouver ਵਿੱਚ ਕਈ 2–3 ਬਾਥਰੂਮ ਪ੍ਰੋਜੈਕਟ ਪੂਰੇ ਕੀਤੇ ਹਨ।"
     }
   }
 }

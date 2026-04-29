@@ -1,99 +1,99 @@
 {
   "kitchenCost": {
-    "breadcrumb": "Kitchen Renovation Cost",
+    "breadcrumb": "ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ",
     "hero": {
-      "title": "Kitchen Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "Real pricing from completed kitchen renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+      "title": "ਵੈਨਕੂਵਰ BC ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ (2026)",
+      "subtitle": "ਗ੍ਰੇਟਰ ਵੈਨਕੂਵਰ ਵਿੱਚ ਪੂਰੇ ਹੋਏ ਰਸੋਈ ਨਵੀਨੀਕਰਨਾਂ ਤੋਂ ਅਸਲੀ ਕੀਮਤਾਂ। ਹੇਠਾਂ ਦਿੱਤਾ ਹਰ ਨੰਬਰ ਅਸਲੀ ਪ੍ਰੋਜੈਕਟਾਂ ਤੋਂ ਆਉਂਦਾ ਹੈ। ਉਦਯੋਗਿਕ ਅਨੁਮਾਨ ਨਹੀਂ।"
     },
     "stats": {
-      "avgCost": "Average Cost",
-      "range": "Price Range",
-      "projects": "Projects Completed",
-      "timeline": "Typical Timeline",
-      "timelineValue": "3–6 weeks"
+      "avgCost": "ਔਸਤ ਲਾਗਤ",
+      "range": "ਕੀਮਤ ਦੀ ਰੇਂਜ",
+      "projects": "ਪੂਰੇ ਕੀਤੇ ਪ੍ਰੋਜੈਕਟ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "3–6 ਹਫ਼ਤੇ"
     },
     "tiers": {
-      "title": "Kitchen Renovation Cost by Tier",
-      "subtitle": "Based on our completed projects across Greater Vancouver",
+      "title": "ਟੀਅਰ ਅਨੁਸਾਰ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ",
+      "subtitle": "ਗ੍ਰੇਟਰ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸਾਡੇ ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਦੇ ਆਧਾਰ 'ਤੇ",
       "budget": {
-        "title": "Budget-Friendly",
-        "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+        "title": "ਬਜਟ-ਅਨੁਕੂਲ",
+        "description": "ਕੈਬਿਨੇਟ ਰੀਫੇਸਿੰਗ ਜਾਂ ਸਟਾਕ ਕੈਬਿਨੇਟ, ਲੈਮੀਨੇਟ ਕਾਊਂਟਰਟਾਪ, ਮੁੱਢਲਾ ਬੈਕਸਪਲੈਸ਼, ਅਤੇ ਮਿਆਰੀ ਫਿਕਸਚਰ। ਢਾਂਚਾਗਤ ਤਬਦੀਲੀਆਂ ਤੋਂ ਬਿਨਾਂ ਨਵਾਂ ਰੂਪ ਚਾਹੁਣ ਵਾਲੇ ਕੋਂਡੋ ਅਤੇ ਟਾਊਨਹਾਊਸਾਂ ਲਈ ਆਦਰਸ਼।"
       },
       "midRange": {
-        "title": "Mid-Range",
-        "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+        "title": "ਮਿਡ-ਰੇਂਜ",
+        "description": "ਕਸਟਮ ਜਾਂ ਸੈਮੀ-ਕਸਟਮ ਕੈਬਿਨੇਟ, ਕੁਆਰਟਜ਼ ਕਾਊਂਟਰਟਾਪ, ਟਾਈਲ ਬੈਕਸਪਲੈਸ਼, ਅੱਪਡੇਟ ਕੀਤੀ ਲਾਈਟਿੰਗ, ਅਤੇ ਨਵਾਂ ਫਲੋਰਿੰਗ। ਪਰਿਵਾਰਕ ਘਰਾਂ ਲਈ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਚੋਣ।"
       },
       "highEnd": {
-        "title": "High-End",
-        "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+        "title": "ਹਾਈ-ਐਂਡ",
+        "description": "ਪੂਰੀ ਤਰ੍ਹਾਂ ਕਸਟਮ ਕੈਬਿਨੇਟਰੀ, ਪ੍ਰੀਮੀਅਮ ਪੱਥਰ ਦੇ ਕਾਊਂਟਰਟਾਪ, ਵਾਟਰਫਾਲ ਆਈਲੈਂਡ, ਉੱਚ-ਪੱਧਰੀ ਉਪਕਰਣ, ਢਾਂਚਾਗਤ ਸੋਧਾਂ, ਅਤੇ ਡਿਜ਼ਾਈਨਰ ਫਿਨਿਸ਼ਾਂ। ਉਨ੍ਹਾਂ ਘਰ ਮਾਲਕਾਂ ਲਈ ਜੋ ਸਭ ਤੋਂ ਵਧੀਆ ਚਾਹੁੰਦੇ ਹਨ।"
       }
     },
     "factors": {
-      "title": "What Affects Your Kitchen Renovation Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੀ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ ਨੂੰ ਕੀ ਪ੍ਰਭਾਵਿਤ ਕਰਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਿਮ ਕੀਮਤ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ",
       "cabinetry": {
-        "title": "Cabinetry (30–40% of budget)",
-        "description": "The biggest cost driver. Stock cabinets start around $150/linear foot, while custom options can exceed $800/linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+        "title": "ਕੈਬਿਨੇਟਰੀ (ਬਜਟ ਦਾ 30–40%)",
+        "description": "ਸਭ ਤੋਂ ਵੱਡਾ ਲਾਗਤ ਚਾਲਕ। ਸਟਾਕ ਕੈਬਿਨੇਟ ਲਗਭਗ $150/ਲੀਨੀਅਰ ਫੁੱਟ ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੇ ਹਨ, ਜਦਕਿ ਕਸਟਮ ਵਿਕਲਪ $800/ਲੀਨੀਅਰ ਫੁੱਟ ਤੋਂ ਵੱਧ ਜਾ ਸਕਦੇ ਹਨ। ਸ਼ੇਕਰ-ਸਟਾਈਲ ਚਿੱਟੇ ਕੈਬਿਨੇਟ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਚੋਣ ਹਨ।"
       },
       "countertops": {
-        "title": "Countertops (10–15% of budget)",
-        "description": "Laminate starts at $30/sq ft, quartz runs $80–150/sq ft, and natural stone can exceed $200/sq ft. Waterfall island edges add $500–2,000 to the total."
+        "title": "ਕਾਊਂਟਰਟਾਪ (ਬਜਟ ਦਾ 10–15%)",
+        "description": "ਲੈਮੀਨੇਟ $30/ਵਰਗ ਫੁੱਟ ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ, ਕੁਆਰਟਜ਼ $80–150/ਵਰਗ ਫੁੱਟ ਚੱਲਦਾ ਹੈ, ਅਤੇ ਕੁਦਰਤੀ ਪੱਥਰ $200/ਵਰਗ ਫੁੱਟ ਤੋਂ ਵੱਧ ਜਾ ਸਕਦਾ ਹੈ। ਵਾਟਰਫਾਲ ਆਈਲੈਂਡ ਕਿਨਾਰੇ ਕੁੱਲ ਵਿੱਚ $500–2,000 ਜੋੜਦੇ ਹਨ।"
       },
       "layout": {
-        "title": "Layout Changes",
-        "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add $3,000–15,000 depending on structural requirements and permits."
+        "title": "ਲੇਆਉਟ ਤਬਦੀਲੀਆਂ",
+        "description": "ਪਲੰਬਿੰਗ, ਗੈਸ ਲਾਈਨਾਂ ਨੂੰ ਮੂਵ ਕਰਨਾ, ਜਾਂ ਕੰਧਾਂ ਹਟਾਉਣਾ ਲਾਗਤ ਨੂੰ ਕਾਫ਼ੀ ਵਧਾ ਦਿੰਦਾ ਹੈ। ਇੱਕ ਲੇਆਉਟ ਤਬਦੀਲੀ ਢਾਂਚਾਗਤ ਲੋੜਾਂ ਅਤੇ ਪਰਮਿਟਾਂ ਦੇ ਆਧਾਰ 'ਤੇ $3,000–15,000 ਜੋੜ ਸਕਦੀ ਹੈ।"
       },
       "appliances": {
-        "title": "Appliances",
-        "description": "Budget-friendly packages start at $3,000–5,000. Mid-range brands like Bosch or KitchenAid run $8,000–15,000. Premium brands like Sub-Zero or Wolf can exceed $30,000."
+        "title": "ਉਪਕਰਣ",
+        "description": "ਬਜਟ-ਅਨੁਕੂਲ ਪੈਕੇਜ $3,000–5,000 ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੇ ਹਨ। Bosch ਜਾਂ KitchenAid ਵਰਗੇ ਮਿਡ-ਰੇਂਜ ਬ੍ਰਾਂਡ $8,000–15,000 ਚੱਲਦੇ ਹਨ। Sub-Zero ਜਾਂ Wolf ਵਰਗੇ ਪ੍ਰੀਮੀਅਮ ਬ੍ਰਾਂਡ $30,000 ਤੋਂ ਵੱਧ ਜਾ ਸਕਦੇ ਹਨ।"
       },
       "plumbing": {
-        "title": "Plumbing & Electrical",
-        "description": "Relocating plumbing or adding circuits adds $2,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+        "title": "ਪਲੰਬਿੰਗ ਅਤੇ ਇਲੈਕਟ੍ਰੀਕਲ",
+        "description": "ਪਲੰਬਿੰਗ ਨੂੰ ਮੁੜ-ਸਥਾਪਿਤ ਕਰਨਾ ਜਾਂ ਸਰਕਟ ਜੋੜਨਾ $2,000–8,000 ਜੋੜਦਾ ਹੈ। ਪੁਰਾਣੇ ਵੈਨਕੂਵਰ ਘਰਾਂ ਨੂੰ ਆਧੁਨਿਕ ਉਪਕਰਣਾਂ ਦਾ ਸਮਰਥਨ ਕਰਨ ਲਈ ਇਲੈਕਟ੍ਰੀਕਲ ਪੈਨਲ ਅੱਪਗ੍ਰੇਡ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ।"
       },
       "permits": {
-        "title": "Permits & Inspections",
-        "description": "City of Vancouver building permits for kitchen renovations typically cost $200–$1,000. Required when changing plumbing, electrical, gas, or structural elements."
+        "title": "ਪਰਮਿਟ ਅਤੇ ਜਾਂਚਾਂ",
+        "description": "ਰਸੋਈ ਨਵੀਨੀਕਰਨਾਂ ਲਈ ਸਿਟੀ ਆਫ਼ ਵੈਨਕੂਵਰ ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਆਮ ਤੌਰ 'ਤੇ $200–$1,000 ਦੇ ਹੁੰਦੇ ਹਨ। ਪਲੰਬਿੰਗ, ਇਲੈਕਟ੍ਰੀਕਲ, ਗੈਸ, ਜਾਂ ਢਾਂਚਾਗਤ ਤੱਤਾਂ ਨੂੰ ਬਦਲਣ ਵੇਲੇ ਲੋੜੀਂਦੇ ਹੁੰਦੇ ਹਨ।"
       }
     },
     "realProjects": {
-      "title": "Real Kitchen Renovation Projects",
-      "subtitle": "Browse {count} completed kitchen projects with actual budgets and timelines"
+      "title": "ਅਸਲੀ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "ਅਸਲੀ ਬਜਟਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਨਾਲ {count} ਪੂਰੇ ਹੋਏ ਰਸੋਈ ਪ੍ਰੋਜੈਕਟ ਬ੍ਰਾਊਜ਼ ਕਰੋ"
     },
     "tips": {
-      "title": "Money-Saving Tips for Your Kitchen Renovation",
+      "title": "ਤੁਹਾਡੀ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਦੇ ਸੁਝਾਅ",
       "tip1": {
-        "title": "Keep the Existing Layout",
-        "description": "Avoiding plumbing and gas line relocations can save $5,000–15,000. Work with your existing kitchen footprint where possible."
+        "title": "ਮੌਜੂਦਾ ਲੇਆਉਟ ਨੂੰ ਬਰਕਰਾਰ ਰੱਖੋ",
+        "description": "ਪਲੰਬਿੰਗ ਅਤੇ ਗੈਸ ਲਾਈਨ ਮੁੜ-ਸਥਾਪਨ ਤੋਂ ਬਚਣਾ $5,000–15,000 ਬਚਾ ਸਕਦਾ ਹੈ। ਜਿੱਥੇ ਸੰਭਵ ਹੋਵੇ ਆਪਣੀ ਮੌਜੂਦਾ ਰਸੋਈ ਫੁੱਟਪ੍ਰਿੰਟ ਨਾਲ ਕੰਮ ਕਰੋ।"
       },
       "tip2": {
-        "title": "Choose Quartz Over Natural Stone",
-        "description": "Quartz countertops are more durable, require no sealing, and cost 20–40% less than granite or marble. Plus, they look stunning."
+        "title": "ਕੁਦਰਤੀ ਪੱਥਰ ਦੀ ਥਾਂ ਕੁਆਰਟਜ਼ ਚੁਣੋ",
+        "description": "ਕੁਆਰਟਜ਼ ਕਾਊਂਟਰਟਾਪ ਜ਼ਿਆਦਾ ਟਿਕਾਊ ਹੁੰਦੇ ਹਨ, ਸੀਲਿੰਗ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ, ਅਤੇ ਗ੍ਰੇਨਾਈਟ ਜਾਂ ਸੰਗਮਰਮਰ ਨਾਲੋਂ 20–40% ਘੱਟ ਖਰਚ ਆਉਂਦਾ ਹੈ। ਨਾਲ ਹੀ, ਉਹ ਸ਼ਾਨਦਾਰ ਦਿਖਦੇ ਹਨ।"
       },
       "tip3": {
-        "title": "Semi-Custom Cabinets",
-        "description": "Semi-custom cabinets offer the look of fully custom at 40–60% of the price. You get to choose door styles, finishes, and configurations."
+        "title": "ਸੈਮੀ-ਕਸਟਮ ਕੈਬਿਨੇਟ",
+        "description": "ਸੈਮੀ-ਕਸਟਮ ਕੈਬਿਨੇਟ ਪੂਰੀ ਤਰ੍ਹਾਂ ਕਸਟਮ ਦੀ ਦਿੱਖ 40–60% ਕੀਮਤ 'ਤੇ ਪੇਸ਼ ਕਰਦੇ ਹਨ। ਤੁਸੀਂ ਦਰਵਾਜ਼ੇ ਦੀਆਂ ਸ਼ੈਲੀਆਂ, ਫਿਨਿਸ਼ਾਂ, ਅਤੇ ਸੰਰਚਨਾਵਾਂ ਚੁਣ ਸਕਦੇ ਹੋ।"
       },
       "tip4": {
-        "title": "Plan During Off-Season",
-        "description": "Winter months (November–February) are slower for renovators in Vancouver. You may get better pricing and faster timelines by starting then."
+        "title": "ਆਫ਼-ਸੀਜ਼ਨ ਦੌਰਾਨ ਯੋਜਨਾ ਬਣਾਓ",
+        "description": "ਸਰਦੀਆਂ ਦੇ ਮਹੀਨੇ (ਨਵੰਬਰ–ਫਰਵਰੀ) ਵੈਨਕੂਵਰ ਵਿੱਚ ਨਵੀਨੀਕਰਨਕਰਤਾਵਾਂ ਲਈ ਹੌਲੀ ਹੁੰਦੇ ਹਨ। ਉਸ ਸਮੇਂ ਸ਼ੁਰੂ ਕਰਕੇ ਤੁਹਾਨੂੰ ਬਿਹਤਰ ਕੀਮਤ ਅਤੇ ਤੇਜ਼ ਸਮਾਂ-ਸੀਮਾ ਮਿਲ ਸਕਦੀ ਹੈ।"
       }
     },
     "cta": {
-      "heading": "Get Your Free Kitchen Renovation Quote",
-      "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."
+      "heading": "ਆਪਣੀ ਮੁਫ਼ਤ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "subtitle": "ਸਾਨੂੰ ਆਪਣੇ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਦੱਸੋ ਅਤੇ 48 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਇੱਕ ਵਿਸਤ੍ਰਿਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ, ਕੋਈ ਜ਼ਿੰਮੇਵਾਰੀ ਨਹੀਂ।"
     },
     "faq": {
-      "q1": "How much does a kitchen renovation cost in Vancouver?",
-      "a1": "Kitchen renovation costs in Vancouver typically range from $15,000 to $72,000+ based on our completed projects. Budget renovations (cabinet updates, basic countertops) start around $15,000–$27,000, mid-range renovations with custom cabinets and quartz countertops run $28,000–$38,000, and high-end transformations with premium materials can exceed $40,000.",
-      "q2": "How long does a kitchen renovation take in Vancouver?",
-      "a2": "Most kitchen renovations in Vancouver take 3 to 6 weeks from demolition to completion. Simple cosmetic updates can be done in 3–4 weeks, while complex renovations involving layout changes, custom cabinetry, or structural work may take 8–10 weeks.",
-      "q3": "Do I need a permit for a kitchen renovation in Vancouver?",
-      "a3": "You need a City of Vancouver building permit if your renovation involves changes to plumbing, electrical, gas lines, or structural elements like removing walls. Cosmetic updates like new cabinets, countertops, and backsplash typically do not require permits. Permit costs range from $200 to $1,000.",
-      "q4": "What is the best countertop material for a kitchen renovation?",
-      "a4": "Quartz is the most popular countertop choice in our Vancouver kitchen renovations. It offers excellent durability, requires no sealing (unlike granite), resists stains, and comes in a wide variety of colours and patterns. Prices range from $80 to $150 per square foot installed.",
-      "q5": "Can I renovate my kitchen while living in my home?",
-      "a5": "Yes, most of our clients continue living in their homes during kitchen renovations. We help set up a temporary kitchen area and schedule work to minimize disruption. Expect to be without a functioning kitchen for 2–4 weeks depending on the scope of work."
+      "q1": "ਵੈਨਕੂਵਰ ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ ਕਿੰਨੀ ਹੁੰਦੀ ਹੈ?",
+      "a1": "ਸਾਡੇ ਪੂਰੇ ਹੋਏ ਪ੍ਰੋਜੈਕਟਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਵੈਨਕੂਵਰ ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ ਆਮ ਤੌਰ 'ਤੇ $15,000 ਤੋਂ $72,000+ ਤੱਕ ਹੁੰਦੀ ਹੈ। ਬਜਟ ਨਵੀਨੀਕਰਨ (ਕੈਬਿਨੇਟ ਅੱਪਡੇਟ, ਮੁੱਢਲੇ ਕਾਊਂਟਰਟਾਪ) ਲਗਭਗ $15,000–$27,000 ਤੋਂ ਸ਼ੁਰੂ ਹੁੰਦੇ ਹਨ, ਕਸਟਮ ਕੈਬਿਨੇਟ ਅਤੇ ਕੁਆਰਟਜ਼ ਕਾਊਂਟਰਟਾਪ ਨਾਲ ਮਿਡ-ਰੇਂਜ ਨਵੀਨੀਕਰਨ $28,000–$38,000 ਚੱਲਦੇ ਹਨ, ਅਤੇ ਪ੍ਰੀਮੀਅਮ ਸਮੱਗਰੀਆਂ ਨਾਲ ਹਾਈ-ਐਂਡ ਪਰਿਵਰਤਨ $40,000 ਤੋਂ ਵੱਧ ਜਾ ਸਕਦੇ ਹਨ।",
+      "q2": "ਵੈਨਕੂਵਰ ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਨੂੰ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "ਵੈਨਕੂਵਰ ਵਿੱਚ ਜ਼ਿਆਦਾਤਰ ਰਸੋਈ ਨਵੀਨੀਕਰਨਾਂ ਨੂੰ ਡੈਮੋਲਿਸ਼ਨ ਤੋਂ ਮੁਕੰਮਲ ਹੋਣ ਤੱਕ 3 ਤੋਂ 6 ਹਫ਼ਤੇ ਲੱਗਦੇ ਹਨ। ਸਧਾਰਨ ਕਾਸਮੈਟਿਕ ਅੱਪਡੇਟ 3–4 ਹਫ਼ਤਿਆਂ ਵਿੱਚ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ, ਜਦਕਿ ਲੇਆਉਟ ਤਬਦੀਲੀਆਂ, ਕਸਟਮ ਕੈਬਿਨੇਟਰੀ, ਜਾਂ ਢਾਂਚਾਗਤ ਕੰਮ ਨੂੰ ਸ਼ਾਮਲ ਕਰਨ ਵਾਲੇ ਗੁੰਝਲਦਾਰ ਨਵੀਨੀਕਰਨਾਂ ਨੂੰ 8–10 ਹਫ਼ਤੇ ਲੱਗ ਸਕਦੇ ਹਨ।",
+      "q3": "ਕੀ ਮੈਨੂੰ ਵੈਨਕੂਵਰ ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਲਈ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ?",
+      "a3": "ਜੇਕਰ ਤੁਹਾਡੇ ਨਵੀਨੀਕਰਨ ਵਿੱਚ ਪਲੰਬਿੰਗ, ਇਲੈਕਟ੍ਰੀਕਲ, ਗੈਸ ਲਾਈਨਾਂ, ਜਾਂ ਕੰਧਾਂ ਹਟਾਉਣ ਵਰਗੇ ਢਾਂਚਾਗਤ ਤੱਤਾਂ ਵਿੱਚ ਤਬਦੀਲੀਆਂ ਸ਼ਾਮਲ ਹਨ ਤਾਂ ਤੁਹਾਨੂੰ ਸਿਟੀ ਆਫ਼ ਵੈਨਕੂਵਰ ਬਿਲਡਿੰਗ ਪਰਮਿਟ ਦੀ ਲੋੜ ਹੈ। ਨਵੇਂ ਕੈਬਿਨੇਟ, ਕਾਊਂਟਰਟਾਪ, ਅਤੇ ਬੈਕਸਪਲੈਸ਼ ਵਰਗੇ ਕਾਸਮੈਟਿਕ ਅੱਪਡੇਟਾਂ ਲਈ ਆਮ ਤੌਰ 'ਤੇ ਪਰਮਿਟਾਂ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ। ਪਰਮਿਟ ਦੀ ਲਾਗਤ $200 ਤੋਂ $1,000 ਤੱਕ ਹੁੰਦੀ ਹੈ।",
+      "q4": "ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਕਾਊਂਟਰਟਾਪ ਸਮੱਗਰੀ ਕਿਹੜੀ ਹੈ?",
+      "a4": "ਕੁਆਰਟਜ਼ ਸਾਡੇ ਵੈਨਕੂਵਰ ਰਸੋਈ ਨਵੀਨੀਕਰਨਾਂ ਵਿੱਚ ਸਭ ਤੋਂ ਪ੍ਰਸਿੱਧ ਕਾਊਂਟਰਟਾਪ ਚੋਣ ਹੈ। ਇਹ ਸ਼ਾਨਦਾਰ ਟਿਕਾਊਪਨ ਪੇਸ਼ ਕਰਦਾ ਹੈ, ਇਸ ਨੂੰ ਸੀਲਿੰਗ ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ (ਗ੍ਰੇਨਾਈਟ ਦੇ ਉਲਟ), ਦਾਗਾਂ ਦਾ ਮੁਕਾਬਲਾ ਕਰਦਾ ਹੈ, ਅਤੇ ਰੰਗਾਂ ਅਤੇ ਪੈਟਰਨਾਂ ਦੀ ਵਿਸ਼ਾਲ ਕਿਸਮ ਵਿੱਚ ਆਉਂਦਾ ਹੈ। ਸਥਾਪਿਤ ਕੀਮਤਾਂ $80 ਤੋਂ $150 ਪ੍ਰਤੀ ਵਰਗ ਫੁੱਟ ਤੱਕ ਹੁੰਦੀਆਂ ਹਨ।",
+      "q5": "ਕੀ ਮੈਂ ਆਪਣੇ ਘਰ ਵਿੱਚ ਰਹਿੰਦੇ ਹੋਏ ਆਪਣੀ ਰਸੋਈ ਦਾ ਨਵੀਨੀਕਰਨ ਕਰ ਸਕਦਾ ਹਾਂ?",
+      "a5": "ਹਾਂ, ਸਾਡੇ ਜ਼ਿਆਦਾਤਰ ਗਾਹਕ ਰਸੋਈ ਨਵੀਨੀਕਰਨਾਂ ਦੌਰਾਨ ਆਪਣੇ ਘਰਾਂ ਵਿੱਚ ਰਹਿੰਦੇ ਹਨ। ਅਸੀਂ ਇੱਕ ਆਰਜ਼ੀ ਰਸੋਈ ਖੇਤਰ ਸਥਾਪਿਤ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦੇ ਹਾਂ ਅਤੇ ਵਿਘਨ ਨੂੰ ਘੱਟ ਕਰਨ ਲਈ ਕੰਮ ਨੂੰ ਸ਼ਡਿਊਲ ਕਰਦੇ ਹਾਂ। ਕੰਮ ਦੇ ਦਾਇਰੇ ਦੇ ਆਧਾਰ 'ਤੇ 2–4 ਹਫ਼ਤਿਆਂ ਲਈ ਕੰਮ ਕਰਨ ਵਾਲੀ ਰਸੋਈ ਤੋਂ ਬਿਨਾਂ ਰਹਿਣ ਦੀ ਉਮੀਦ ਕਰੋ।"
     }
   }
 }

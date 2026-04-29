@@ -1,118 +1,118 @@
 {
   "cabinetCost": {
-    "breadcrumb": "Cabinet Refinishing Cost",
+    "breadcrumb": "ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਦੀ ਲਾਗਤ",
     "hero": {
-      "title": "Cabinet Refinishing & Refacing Cost in Vancouver BC (2026)",
-      "subtitle": "A complete guide to cabinet refinishing, refacing, and replacement costs across Greater Vancouver. Based on our experience completing kitchen renovations with custom cabinetry throughout the region."
+      "title": "Vancouver BC ਵਿੱਚ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਅਤੇ ਰੀਫੇਸਿੰਗ ਦੀ ਲਾਗਤ (2026)",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ, ਰੀਫੇਸਿੰਗ ਅਤੇ ਬਦਲਣ ਦੀਆਂ ਲਾਗਤਾਂ ਲਈ ਇੱਕ ਪੂਰੀ ਗਾਈਡ। ਇਸ ਖੇਤਰ ਵਿੱਚ ਕਸਟਮ ਕੈਬਨਿਟਰੀ ਨਾਲ ਰਸੋਈ ਦੀਆਂ ਮੁਰੰਮਤਾਂ ਪੂਰੀਆਂ ਕਰਨ ਦੇ ਸਾਡੇ ਤਜ਼ਰਬੇ 'ਤੇ ਆਧਾਰਿਤ।"
     },
     "stats": {
-      "avgCost": "Avg. Refinishing",
-      "range": "Price Range",
-      "savings": "vs. Replacement",
-      "savingsValue": "Save 50–70%",
-      "timeline": "Typical Timeline",
-      "timelineValue": "3–5 days"
+      "avgCost": "ਔਸਤ ਰੀਫਿਨਿਸ਼ਿੰਗ",
+      "range": "ਕੀਮਤ ਦੀ ਰੇਂਜ",
+      "savings": "ਬਦਲਣ ਦੇ ਮੁਕਾਬਲੇ",
+      "savingsValue": "50–70% ਦੀ ਬੱਚਤ",
+      "timeline": "ਆਮ ਸਮਾਂ-ਸੀਮਾ",
+      "timelineValue": "3–5 ਦਿਨ"
     },
     "tiers": {
-      "title": "Cabinet Update Options by Cost",
-      "subtitle": "Three approaches to updating your kitchen cabinets in Greater Vancouver",
+      "title": "ਲਾਗਤ ਅਨੁਸਾਰ ਕੈਬਨਿਟ ਅੱਪਡੇਟ ਵਿਕਲਪ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਆਪਣੀ ਰਸੋਈ ਦੇ ਕੈਬਨਿਟਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਦੇ ਤਿੰਨ ਤਰੀਕੇ",
       "refinishing": {
-        "title": "Cabinet Refinishing",
-        "description": "Professional sanding, priming, and repainting or restaining of existing cabinet doors and frames. Best for solid wood cabinets in good structural condition. The most cost-effective way to transform your kitchen."
+        "title": "ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ",
+        "description": "ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਦੇ ਦਰਵਾਜ਼ਿਆਂ ਅਤੇ ਫਰੇਮਾਂ ਦੀ ਪੇਸ਼ੇਵਰ ਸੈਂਡਿੰਗ, ਪ੍ਰਾਈਮਿੰਗ ਅਤੇ ਮੁੜ ਪੇਂਟਿੰਗ ਜਾਂ ਮੁੜ ਸਟੇਨਿੰਗ। ਚੰਗੀ ਢਾਂਚਾਗਤ ਹਾਲਤ ਵਿੱਚ ਠੋਸ ਲੱਕੜ ਦੇ ਕੈਬਨਿਟਾਂ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ। ਆਪਣੀ ਰਸੋਈ ਨੂੰ ਬਦਲਣ ਦਾ ਸਭ ਤੋਂ ਕਿਫ਼ਾਇਤੀ ਤਰੀਕਾ।"
       },
       "refacing": {
-        "title": "Cabinet Refacing",
-        "description": "Replacing cabinet doors and drawer fronts while keeping existing cabinet boxes. Includes new veneer on visible surfaces and new hardware. A mid-range option that gives a completely new look without full demolition."
+        "title": "ਕੈਬਨਿਟ ਰੀਫੇਸਿੰਗ",
+        "description": "ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਬਾਕਸਾਂ ਨੂੰ ਰੱਖਦੇ ਹੋਏ ਕੈਬਨਿਟ ਦੇ ਦਰਵਾਜ਼ਿਆਂ ਅਤੇ ਡ੍ਰਾਅਰ ਫਰੰਟਾਂ ਨੂੰ ਬਦਲਣਾ। ਦਿਖਾਈ ਦੇਣ ਵਾਲੀਆਂ ਸਤਹਾਂ 'ਤੇ ਨਵੀਂ ਵਿਨੀਅਰ ਅਤੇ ਨਵੇਂ ਹਾਰਡਵੇਅਰ ਸ਼ਾਮਲ ਹਨ। ਇੱਕ ਮੱਧ-ਰੇਂਜ ਵਿਕਲਪ ਜੋ ਪੂਰੀ ਤੋੜ-ਫੋੜ ਤੋਂ ਬਿਨਾਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਨਵਾਂ ਰੂਪ ਦਿੰਦਾ ਹੈ।"
       },
       "fullReplacement": {
-        "title": "Full Cabinet Replacement",
-        "description": "Complete removal and installation of new cabinets. Choose from stock, semi-custom, or fully custom options. Best when cabinets are structurally damaged or you want to change the kitchen layout entirely."
+        "title": "ਪੂਰਾ ਕੈਬਨਿਟ ਬਦਲਣਾ",
+        "description": "ਨਵੇਂ ਕੈਬਨਿਟਾਂ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਹਟਾਉਣਾ ਅਤੇ ਲਗਾਉਣਾ। ਸਟਾਕ, ਅਰਧ-ਕਸਟਮ, ਜਾਂ ਪੂਰੀ ਤਰ੍ਹਾਂ ਕਸਟਮ ਵਿਕਲਪਾਂ ਵਿੱਚੋਂ ਚੁਣੋ। ਜਦੋਂ ਕੈਬਨਿਟ ਢਾਂਚਾਗਤ ਤੌਰ 'ਤੇ ਖਰਾਬ ਹੁੰਦੇ ਹਨ ਜਾਂ ਤੁਸੀਂ ਰਸੋਈ ਦੇ ਲੇਆਉਟ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਤਾਂ ਸਭ ਤੋਂ ਵਧੀਆ।"
       }
     },
     "comparison": {
-      "title": "Refinishing vs. Replacement: Which Is Right for You?",
-      "subtitle": "Understanding the trade-offs helps you make the best decision for your kitchen and budget",
+      "title": "ਰੀਫਿਨਿਸ਼ਿੰਗ ਬਨਾਮ ਬਦਲਣਾ: ਤੁਹਾਡੇ ਲਈ ਕਿਹੜਾ ਸਹੀ ਹੈ?",
+      "subtitle": "ਫਾਇਦਿਆਂ ਅਤੇ ਨੁਕਸਾਨਾਂ ਨੂੰ ਸਮਝਣਾ ਤੁਹਾਨੂੰ ਆਪਣੀ ਰਸੋਈ ਅਤੇ ਬਜਟ ਲਈ ਸਭ ਤੋਂ ਵਧੀਆ ਫੈਸਲਾ ਲੈਣ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ",
       "refinishing": {
-        "title": "Refinishing / Refacing",
-        "pro1": "50–70% less expensive than replacement",
-        "pro2": "Completed in 3–5 days with minimal disruption",
-        "pro3": "Eco-friendly, keeping existing cabinets out of landfill",
-        "con1": "Cannot change cabinet layout or configuration"
+        "title": "ਰੀਫਿਨਿਸ਼ਿੰਗ / ਰੀਫੇਸਿੰਗ",
+        "pro1": "ਬਦਲਣ ਨਾਲੋਂ 50–70% ਘੱਟ ਮਹਿੰਗਾ",
+        "pro2": "ਘੱਟ ਤੋਂ ਘੱਟ ਵਿਘਨ ਨਾਲ 3–5 ਦਿਨਾਂ ਵਿੱਚ ਪੂਰਾ",
+        "pro3": "ਵਾਤਾਵਰਣ-ਅਨੁਕੂਲ, ਮੌਜੂਦਾ ਕੈਬਨਿਟਾਂ ਨੂੰ ਲੈਂਡਫਿਲ ਤੋਂ ਬਾਹਰ ਰੱਖਦਾ ਹੈ",
+        "con1": "ਕੈਬਨਿਟ ਲੇਆਉਟ ਜਾਂ ਸੰਰਚਨਾ ਨਹੀਂ ਬਦਲ ਸਕਦੇ"
       },
       "replacement": {
-        "title": "Full Replacement",
-        "pro1": "Completely customize layout, size, and configuration",
-        "pro2": "Address structural issues and water damage",
-        "pro3": "Modern features like soft-close and pull-out organizers",
-        "con1": "2–4 weeks of construction and higher cost"
+        "title": "ਪੂਰਾ ਬਦਲਣਾ",
+        "pro1": "ਲੇਆਉਟ, ਆਕਾਰ ਅਤੇ ਸੰਰਚਨਾ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਕਸਟਮਾਈਜ਼ ਕਰੋ",
+        "pro2": "ਢਾਂਚਾਗਤ ਮੁੱਦਿਆਂ ਅਤੇ ਪਾਣੀ ਦੇ ਨੁਕਸਾਨ ਨੂੰ ਹੱਲ ਕਰੋ",
+        "pro3": "ਸੌਫਟ-ਕਲੋਜ਼ ਅਤੇ ਪੁੱਲ-ਆਊਟ ਆਰਗਨਾਈਜ਼ਰ ਵਰਗੀਆਂ ਆਧੁਨਿਕ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ",
+        "con1": "2–4 ਹਫ਼ਤਿਆਂ ਦਾ ਨਿਰਮਾਣ ਅਤੇ ਵੱਧ ਲਾਗਤ"
       }
     },
     "factors": {
-      "title": "What Affects Your Cabinet Refinishing Cost?",
-      "subtitle": "Six key factors that determine your final price",
+      "title": "ਤੁਹਾਡੀ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਦੀ ਲਾਗਤ ਨੂੰ ਕੀ ਪ੍ਰਭਾਵਿਤ ਕਰਦਾ ਹੈ?",
+      "subtitle": "ਛੇ ਮੁੱਖ ਕਾਰਕ ਜੋ ਤੁਹਾਡੀ ਅੰਤਿਮ ਕੀਮਤ ਨੂੰ ਨਿਰਧਾਰਤ ਕਰਦੇ ਹਨ",
       "cabinetCount": {
-        "title": "Number of Cabinets",
-        "description": "A typical Vancouver kitchen has 20–30 cabinet doors and drawer fronts. More doors means more labour and materials. Expect to pay $150–$300 per door for professional refinishing."
+        "title": "ਕੈਬਨਿਟਾਂ ਦੀ ਗਿਣਤੀ",
+        "description": "ਇੱਕ ਆਮ Vancouver ਰਸੋਈ ਵਿੱਚ 20–30 ਕੈਬਨਿਟ ਦਰਵਾਜ਼ੇ ਅਤੇ ਡ੍ਰਾਅਰ ਫਰੰਟ ਹੁੰਦੇ ਹਨ। ਜ਼ਿਆਦਾ ਦਰਵਾਜ਼ਿਆਂ ਦਾ ਮਤਲਬ ਹੈ ਜ਼ਿਆਦਾ ਮਜ਼ਦੂਰੀ ਅਤੇ ਸਮੱਗਰੀ। ਪੇਸ਼ੇਵਰ ਰੀਫਿਨਿਸ਼ਿੰਗ ਲਈ ਪ੍ਰਤੀ ਦਰਵਾਜ਼ਾ $150–$300 ਅਦਾ ਕਰਨ ਦੀ ਉਮੀਦ ਕਰੋ।"
       },
       "material": {
-        "title": "Cabinet Material",
-        "description": "Solid wood cabinets refinish beautifully. MDF and thermofoil cabinets require different techniques and may cost more. Laminate cabinets need special adhesion primers for lasting results."
+        "title": "ਕੈਬਨਿਟ ਸਮੱਗਰੀ",
+        "description": "ਠੋਸ ਲੱਕੜ ਦੇ ਕੈਬਨਿਟ ਖੂਬਸੂਰਤੀ ਨਾਲ ਰੀਫਿਨਿਸ਼ ਹੁੰਦੇ ਹਨ। MDF ਅਤੇ ਥਰਮੋਫੋਇਲ ਕੈਬਨਿਟਾਂ ਨੂੰ ਵੱਖਰੀਆਂ ਤਕਨੀਕਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ ਅਤੇ ਜ਼ਿਆਦਾ ਖਰਚ ਹੋ ਸਕਦਾ ਹੈ। ਲੈਮੀਨੇਟ ਕੈਬਨਿਟਾਂ ਨੂੰ ਸਥਾਈ ਨਤੀਜਿਆਂ ਲਈ ਵਿਸ਼ੇਸ਼ ਅਡੈਸ਼ਨ ਪ੍ਰਾਈਮਰਾਂ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
       },
       "finishType": {
-        "title": "Finish Type",
-        "description": "Basic paint refinishing costs less than specialty finishes. Staining, glazing, or distressed looks add $500–$1,500 to the project. Two-tone cabinet designs are popular but require extra labour."
+        "title": "ਫਿਨਿਸ਼ ਦੀ ਕਿਸਮ",
+        "description": "ਮੁੱਢਲੀ ਪੇਂਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਦੀ ਲਾਗਤ ਵਿਸ਼ੇਸ਼ ਫਿਨਿਸ਼ਾਂ ਤੋਂ ਘੱਟ ਹੁੰਦੀ ਹੈ। ਸਟੇਨਿੰਗ, ਗਲੇਜ਼ਿੰਗ, ਜਾਂ ਡਿਸਟ੍ਰੈਸਡ ਲੁੱਕ ਪ੍ਰੋਜੈਕਟ ਵਿੱਚ $500–$1,500 ਜੋੜਦੇ ਹਨ। ਦੋ-ਟੋਨ ਕੈਬਨਿਟ ਡਿਜ਼ਾਈਨ ਪ੍ਰਸਿੱਧ ਹਨ ਪਰ ਵਾਧੂ ਮਜ਼ਦੂਰੀ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
       },
       "hardware": {
-        "title": "Hardware Upgrades",
-        "description": "New handles, knobs, and hinges can add $300–$2,000 depending on quality. Upgrading to soft-close hinges is highly recommended and typically costs $5–$15 per hinge installed."
+        "title": "ਹਾਰਡਵੇਅਰ ਅੱਪਗ੍ਰੇਡ",
+        "description": "ਨਵੇਂ ਹੈਂਡਲ, ਨੌਬ ਅਤੇ ਕਬਜ਼ੇ ਗੁਣਵੱਤਾ ਦੇ ਆਧਾਰ 'ਤੇ $300–$2,000 ਜੋੜ ਸਕਦੇ ਹਨ। ਸੌਫਟ-ਕਲੋਜ਼ ਕਬਜ਼ਿਆਂ ਵਿੱਚ ਅੱਪਗ੍ਰੇਡ ਕਰਨ ਦੀ ਜ਼ੋਰਦਾਰ ਸਿਫ਼ਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ ਅਤੇ ਆਮ ਤੌਰ 'ਤੇ ਪ੍ਰਤੀ ਕਬਜ਼ਾ ਲਗਾਉਣ ਦੀ ਕੀਮਤ $5–$15 ਹੁੰਦੀ ਹੈ।"
       },
       "kitchenSize": {
-        "title": "Kitchen Size & Accessibility",
-        "description": "Larger kitchens with upper and lower cabinets, pantry units, and island cabinets cost more. Hard-to-reach cabinets or intricate moulding details increase labour time."
+        "title": "ਰਸੋਈ ਦਾ ਆਕਾਰ ਅਤੇ ਪਹੁੰਚਯੋਗਤਾ",
+        "description": "ਉੱਪਰਲੇ ਅਤੇ ਹੇਠਲੇ ਕੈਬਨਿਟਾਂ, ਪੈਂਟਰੀ ਯੂਨਿਟਾਂ ਅਤੇ ਆਈਲੈਂਡ ਕੈਬਨਿਟਾਂ ਵਾਲੀਆਂ ਵੱਡੀਆਂ ਰਸੋਈਆਂ ਦੀ ਲਾਗਤ ਜ਼ਿਆਦਾ ਹੁੰਦੀ ਹੈ। ਮੁਸ਼ਕਲ ਨਾਲ ਪਹੁੰਚਣ ਯੋਗ ਕੈਬਨਿਟ ਜਾਂ ਗੁੰਝਲਦਾਰ ਮੋਲਡਿੰਗ ਦੇ ਵੇਰਵੇ ਮਜ਼ਦੂਰੀ ਦਾ ਸਮਾਂ ਵਧਾਉਂਦੇ ਹਨ।"
       },
       "condition": {
-        "title": "Current Cabinet Condition",
-        "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical, refacing or replacement becomes the better option."
+        "title": "ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਦੀ ਹਾਲਤ",
+        "description": "ਪਾਣੀ ਦੇ ਨੁਕਸਾਨ, ਡੀਲੈਮੀਨੇਸ਼ਨ, ਜਾਂ ਢਾਂਚਾਗਤ ਮੁੱਦਿਆਂ ਵਾਲੇ ਕੈਬਨਿਟਾਂ ਨੂੰ ਰੀਫਿਨਿਸ਼ਿੰਗ ਤੋਂ ਪਹਿਲਾਂ ਮੁਰੰਮਤ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ। ਮਹੱਤਵਪੂਰਨ ਨੁਕਸਾਨ ਰੀਫਿਨਿਸ਼ਿੰਗ ਨੂੰ ਅਵਿਵਹਾਰਕ ਬਣਾ ਸਕਦਾ ਹੈ, ਰੀਫੇਸਿੰਗ ਜਾਂ ਬਦਲਣਾ ਬਿਹਤਰ ਵਿਕਲਪ ਬਣ ਜਾਂਦਾ ਹੈ।"
       }
     },
     "realProjects": {
-      "title": "Related Kitchen Projects with Cabinet Work",
-      "subtitle": "Browse our completed kitchen renovations featuring custom cabinetry across Greater Vancouver"
+      "title": "ਕੈਬਨਿਟ ਕੰਮ ਨਾਲ ਸਬੰਧਤ ਰਸੋਈ ਪ੍ਰੋਜੈਕਟ",
+      "subtitle": "Greater Vancouver ਵਿੱਚ ਕਸਟਮ ਕੈਬਨਿਟਰੀ ਵਾਲੀਆਂ ਸਾਡੀਆਂ ਪੂਰੀਆਂ ਹੋਈਆਂ ਰਸੋਈ ਮੁਰੰਮਤਾਂ ਨੂੰ ਬ੍ਰਾਊਜ਼ ਕਰੋ"
     },
     "tips": {
-      "title": "Money-Saving Tips for Cabinet Updates",
+      "title": "ਕੈਬਨਿਟ ਅੱਪਡੇਟ ਲਈ ਪੈਸੇ ਬਚਾਉਣ ਦੇ ਸੁਝਾਅ",
       "tip1": {
-        "title": "Consider Refinishing First",
-        "description": "If your cabinet boxes are structurally sound, refinishing saves 50–70% over replacement. A professional paint job on solid wood cabinets can last 10–15 years with proper care."
+        "title": "ਪਹਿਲਾਂ ਰੀਫਿਨਿਸ਼ਿੰਗ 'ਤੇ ਵਿਚਾਰ ਕਰੋ",
+        "description": "ਜੇ ਤੁਹਾਡੇ ਕੈਬਨਿਟ ਬਾਕਸ ਢਾਂਚਾਗਤ ਤੌਰ 'ਤੇ ਮਜ਼ਬੂਤ ​​ਹਨ, ਤਾਂ ਰੀਫਿਨਿਸ਼ਿੰਗ ਬਦਲਣ ਦੇ ਮੁਕਾਬਲੇ 50–70% ਬਚਤ ਕਰਦੀ ਹੈ। ਠੋਸ ਲੱਕੜ ਦੇ ਕੈਬਨਿਟਾਂ 'ਤੇ ਪੇਸ਼ੇਵਰ ਪੇਂਟ ਦਾ ਕੰਮ ਸਹੀ ਦੇਖਭਾਲ ਨਾਲ 10–15 ਸਾਲ ਤੱਕ ਚੱਲ ਸਕਦਾ ਹੈ।"
       },
       "tip2": {
-        "title": "Update Hardware for Instant Impact",
-        "description": "New handles and knobs are the easiest and cheapest upgrade. Modern hardware on freshly painted cabinets can make your kitchen look completely renovated for a fraction of the cost."
+        "title": "ਤੁਰੰਤ ਪ੍ਰਭਾਵ ਲਈ ਹਾਰਡਵੇਅਰ ਅੱਪਡੇਟ ਕਰੋ",
+        "description": "ਨਵੇਂ ਹੈਂਡਲ ਅਤੇ ਨੌਬ ਸਭ ਤੋਂ ਆਸਾਨ ਅਤੇ ਸਸਤਾ ਅੱਪਗ੍ਰੇਡ ਹਨ। ਨਵੇਂ ਪੇਂਟ ਕੀਤੇ ਕੈਬਨਿਟਾਂ 'ਤੇ ਆਧੁਨਿਕ ਹਾਰਡਵੇਅਰ ਤੁਹਾਡੀ ਰਸੋਈ ਨੂੰ ਲਾਗਤ ਦੇ ਇੱਕ ਹਿੱਸੇ ਵਿੱਚ ਪੂਰੀ ਤਰ੍ਹਾਂ ਨਵੀਨੀਕਰਣ ਵਾਲਾ ਦਿਖਾ ਸਕਦਾ ਹੈ।"
       },
       "tip3": {
-        "title": "Choose Durable Finishes",
-        "description": "Invest in high-quality cabinet paint or lacquer. Benjamin Moore Advance or similar cabinet-grade finishes cost more upfront but resist chipping and yellowing far better than standard wall paint."
+        "title": "ਟਿਕਾਊ ਫਿਨਿਸ਼ ਚੁਣੋ",
+        "description": "ਉੱਚ-ਗੁਣਵੱਤਾ ਵਾਲੇ ਕੈਬਨਿਟ ਪੇਂਟ ਜਾਂ ਲੈਕਰ ਵਿੱਚ ਨਿਵੇਸ਼ ਕਰੋ। Benjamin Moore Advance ਜਾਂ ਸਮਾਨ ਕੈਬਨਿਟ-ਗ੍ਰੇਡ ਫਿਨਿਸ਼ਾਂ ਦੀ ਅਗਾਊਂ ਲਾਗਤ ਜ਼ਿਆਦਾ ਹੁੰਦੀ ਹੈ ਪਰ ਇਹ ਆਮ ਕੰਧ ਦੇ ਪੇਂਟ ਨਾਲੋਂ ਚਿਪਿੰਗ ਅਤੇ ਪੀਲੇ ਪੈਣ ਦਾ ਬਹੁਤ ਬਿਹਤਰ ਵਿਰੋਧ ਕਰਦੇ ਹਨ।"
       },
       "tip4": {
-        "title": "Bundle with a Kitchen Renovation",
-        "description": "If you are already planning a kitchen renovation, bundling cabinet work with countertop and backsplash updates often results in better overall pricing and a more cohesive design."
+        "title": "ਰਸੋਈ ਦੀ ਮੁਰੰਮਤ ਨਾਲ ਮਿਲਾਓ",
+        "description": "ਜੇ ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ ਰਸੋਈ ਦੀ ਮੁਰੰਮਤ ਦੀ ਯੋਜਨਾ ਬਣਾ ਰਹੇ ਹੋ, ਤਾਂ ਕਾਊਂਟਰਟਾਪ ਅਤੇ ਬੈਕਸਪਲੈਸ਼ ਅੱਪਡੇਟ ਨਾਲ ਕੈਬਨਿਟ ਦੇ ਕੰਮ ਨੂੰ ਜੋੜਨ ਨਾਲ ਅਕਸਰ ਬਿਹਤਰ ਸਮੁੱਚੀ ਕੀਮਤ ਅਤੇ ਵਧੇਰੇ ਇਕਸੁਰ ਡਿਜ਼ਾਈਨ ਮਿਲਦਾ ਹੈ।"
       }
     },
     "faq": {
-      "q1": "How much does cabinet refinishing cost in Vancouver?",
-      "a1": "Cabinet refinishing in Vancouver typically costs $4,000 to $8,000 for a standard kitchen with 20–30 doors. This includes professional sanding, priming, and painting with cabinet-grade finish. Costs vary based on kitchen size, number of doors, and finish complexity.",
-      "q2": "How long does cabinet refinishing take?",
-      "a2": "Professional cabinet refinishing typically takes 3 to 5 days for a standard kitchen. The process includes removing doors, sanding, priming, applying multiple coats of paint or stain, and reinstalling with new hardware. You can use your kitchen throughout most of the process.",
-      "q3": "Is cabinet refinishing worth it or should I replace?",
-      "a3": "Cabinet refinishing is worth it when your existing cabinets are structurally sound and you are happy with the layout. It costs 50–70% less than replacement and takes days instead of weeks. Replace cabinets only if they have significant water damage, structural issues, or you need to change the kitchen layout.",
-      "q4": "What is the difference between cabinet refinishing and refacing?",
-      "a4": "Refinishing means sanding and repainting or restaining existing cabinet doors and frames. Refacing replaces the doors and drawer fronts entirely while keeping the existing cabinet boxes, adding new veneer to visible surfaces. Refacing costs more ($8,000–$15,000) but gives a more dramatic transformation.",
-      "q5": "Can you refinish laminate or thermofoil cabinets?",
-      "a5": "Yes, but it requires special preparation. Laminate cabinets need thorough deglossing and bonding primer for paint to adhere properly. Thermofoil cabinets can be painted but the thermofoil may peel over time. For these materials, refacing with new solid wood or MDF doors is often a better long-term investment."
+      "q1": "Vancouver ਵਿੱਚ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਦੀ ਕੀਮਤ ਕਿੰਨੀ ਹੈ?",
+      "a1": "Vancouver ਵਿੱਚ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਦੀ ਆਮ ਤੌਰ 'ਤੇ 20–30 ਦਰਵਾਜ਼ਿਆਂ ਵਾਲੀ ਇੱਕ ਮਿਆਰੀ ਰਸੋਈ ਲਈ ਲਾਗਤ $4,000 ਤੋਂ $8,000 ਹੁੰਦੀ ਹੈ। ਇਸ ਵਿੱਚ ਕੈਬਨਿਟ-ਗ੍ਰੇਡ ਫਿਨਿਸ਼ ਨਾਲ ਪੇਸ਼ੇਵਰ ਸੈਂਡਿੰਗ, ਪ੍ਰਾਈਮਿੰਗ ਅਤੇ ਪੇਂਟਿੰਗ ਸ਼ਾਮਲ ਹੈ। ਲਾਗਤ ਰਸੋਈ ਦੇ ਆਕਾਰ, ਦਰਵਾਜ਼ਿਆਂ ਦੀ ਗਿਣਤੀ ਅਤੇ ਫਿਨਿਸ਼ ਦੀ ਜਟਿਲਤਾ ਦੇ ਆਧਾਰ 'ਤੇ ਵੱਖ-ਵੱਖ ਹੁੰਦੀ ਹੈ।",
+      "q2": "ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਵਿੱਚ ਕਿੰਨਾ ਸਮਾਂ ਲੱਗਦਾ ਹੈ?",
+      "a2": "ਪੇਸ਼ੇਵਰ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਆਮ ਤੌਰ 'ਤੇ ਇੱਕ ਮਿਆਰੀ ਰਸੋਈ ਲਈ 3 ਤੋਂ 5 ਦਿਨ ਲੈਂਦੀ ਹੈ। ਪ੍ਰਕਿਰਿਆ ਵਿੱਚ ਦਰਵਾਜ਼ਿਆਂ ਨੂੰ ਹਟਾਉਣਾ, ਸੈਂਡਿੰਗ, ਪ੍ਰਾਈਮਿੰਗ, ਪੇਂਟ ਜਾਂ ਸਟੇਨ ਦੀਆਂ ਕਈ ਪਰਤਾਂ ਲਗਾਉਣਾ, ਅਤੇ ਨਵੇਂ ਹਾਰਡਵੇਅਰ ਨਾਲ ਮੁੜ ਸਥਾਪਤ ਕਰਨਾ ਸ਼ਾਮਲ ਹੈ। ਤੁਸੀਂ ਪ੍ਰਕਿਰਿਆ ਦੇ ਜ਼ਿਆਦਾਤਰ ਸਮੇਂ ਦੌਰਾਨ ਆਪਣੀ ਰਸੋਈ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ।",
+      "q3": "ਕੀ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਫਾਇਦੇਮੰਦ ਹੈ ਜਾਂ ਮੈਨੂੰ ਬਦਲਣਾ ਚਾਹੀਦਾ ਹੈ?",
+      "a3": "ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਉਦੋਂ ਫਾਇਦੇਮੰਦ ਹੁੰਦੀ ਹੈ ਜਦੋਂ ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਢਾਂਚਾਗਤ ਤੌਰ 'ਤੇ ਮਜ਼ਬੂਤ ​​ਹੁੰਦੇ ਹਨ ਅਤੇ ਤੁਸੀਂ ਲੇਆਉਟ ਤੋਂ ਖੁਸ਼ ਹੁੰਦੇ ਹੋ। ਇਸਦੀ ਲਾਗਤ ਬਦਲਣ ਨਾਲੋਂ 50–70% ਘੱਟ ਹੁੰਦੀ ਹੈ ਅਤੇ ਹਫ਼ਤਿਆਂ ਦੀ ਬਜਾਏ ਦਿਨਾਂ ਵਿੱਚ ਪੂਰੀ ਹੁੰਦੀ ਹੈ। ਕੈਬਨਿਟਾਂ ਨੂੰ ਸਿਰਫ਼ ਉਦੋਂ ਬਦਲੋ ਜੇ ਉਨ੍ਹਾਂ ਨੂੰ ਮਹੱਤਵਪੂਰਨ ਪਾਣੀ ਦਾ ਨੁਕਸਾਨ, ਢਾਂਚਾਗਤ ਮੁੱਦੇ ਹਨ, ਜਾਂ ਤੁਹਾਨੂੰ ਰਸੋਈ ਦੇ ਲੇਆਉਟ ਨੂੰ ਬਦਲਣ ਦੀ ਲੋੜ ਹੈ।",
+      "q4": "ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਅਤੇ ਰੀਫੇਸਿੰਗ ਵਿੱਚ ਕੀ ਅੰਤਰ ਹੈ?",
+      "a4": "ਰੀਫਿਨਿਸ਼ਿੰਗ ਦਾ ਮਤਲਬ ਹੈ ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਦੇ ਦਰਵਾਜ਼ਿਆਂ ਅਤੇ ਫਰੇਮਾਂ ਨੂੰ ਸੈਂਡਿੰਗ ਅਤੇ ਮੁੜ ਪੇਂਟਿੰਗ ਜਾਂ ਮੁੜ ਸਟੇਨਿੰਗ ਕਰਨਾ। ਰੀਫੇਸਿੰਗ ਮੌਜੂਦਾ ਕੈਬਨਿਟ ਬਾਕਸਾਂ ਨੂੰ ਰੱਖਦੇ ਹੋਏ ਦਰਵਾਜ਼ਿਆਂ ਅਤੇ ਡ੍ਰਾਅਰ ਫਰੰਟਾਂ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਬਦਲ ਦਿੰਦੀ ਹੈ, ਦਿਖਾਈ ਦੇਣ ਵਾਲੀਆਂ ਸਤਹਾਂ 'ਤੇ ਨਵੀਂ ਵਿਨੀਅਰ ਜੋੜਦੀ ਹੈ। ਰੀਫੇਸਿੰਗ ਦੀ ਲਾਗਤ ਜ਼ਿਆਦਾ ($8,000–$15,000) ਹੁੰਦੀ ਹੈ ਪਰ ਇਹ ਵਧੇਰੇ ਨਾਟਕੀ ਤਬਦੀਲੀ ਦਿੰਦੀ ਹੈ।",
+      "q5": "ਕੀ ਤੁਸੀਂ ਲੈਮੀਨੇਟ ਜਾਂ ਥਰਮੋਫੋਇਲ ਕੈਬਨਿਟਾਂ ਨੂੰ ਰੀਫਿਨਿਸ਼ ਕਰ ਸਕਦੇ ਹੋ?",
+      "a5": "ਹਾਂ, ਪਰ ਇਸ ਨੂੰ ਵਿਸ਼ੇਸ਼ ਤਿਆਰੀ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਲੈਮੀਨੇਟ ਕੈਬਨਿਟਾਂ ਨੂੰ ਪੇਂਟ ਨੂੰ ਸਹੀ ਢੰਗ ਨਾਲ ਚਿਪਕਣ ਲਈ ਪੂਰੀ ਤਰ੍ਹਾਂ ਡੀਗਲੌਸਿੰਗ ਅਤੇ ਬਾਂਡਿੰਗ ਪ੍ਰਾਈਮਰ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਥਰਮੋਫੋਇਲ ਕੈਬਨਿਟਾਂ ਨੂੰ ਪੇਂਟ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ ਪਰ ਥਰਮੋਫੋਇਲ ਸਮੇਂ ਦੇ ਨਾਲ ਉੱਧੜ ਸਕਦੀ ਹੈ। ਇਨ੍ਹਾਂ ਸਮੱਗਰੀਆਂ ਲਈ, ਨਵੇਂ ਠੋਸ ਲੱਕੜ ਜਾਂ MDF ਦਰਵਾਜ਼ਿਆਂ ਨਾਲ ਰੀਫੇਸਿੰਗ ਅਕਸਰ ਇੱਕ ਬਿਹਤਰ ਲੰਬੇ ਸਮੇਂ ਦਾ ਨਿਵੇਸ਼ ਹੁੰਦਾ ਹੈ।"
     },
     "cta": {
-      "heading": "Get Your Free Cabinet Refinishing Quote",
-      "subtitle": "Tell us about your cabinet project and receive a detailed estimate within 48 hours, no obligation."
+      "heading": "ਆਪਣਾ ਮੁਫ਼ਤ ਕੈਬਨਿਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "subtitle": "ਸਾਨੂੰ ਆਪਣੇ ਕੈਬਨਿਟ ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਦੱਸੋ ਅਤੇ 48 ਘੰਟਿਆਂ ਦੇ ਅੰਦਰ ਇੱਕ ਵਿਸਤ੍ਰਿਤ ਅਨੁਮਾਨ ਪ੍ਰਾਪਤ ਕਰੋ, ਕੋਈ ਜ਼ਿੰਮੇਵਾਰੀ ਨਹੀਂ।"
     }
   }
 }

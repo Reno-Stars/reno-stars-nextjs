@@ -1,42 +1,42 @@
 {
   "index": {
     "hero": {
-      "title": "Renovation Cost Guides",
-      "subtitle": "Honest pricing based on real projects we have completed across Greater Vancouver. No guesswork. Just real data."
+      "title": "ਨਵੀਨੀਕਰਨ ਲਾਗਤ ਗਾਈਡਾਂ",
+      "subtitle": "ਗ੍ਰੇਟਰ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸਾਡੇ ਦੁਆਰਾ ਪੂਰੇ ਕੀਤੇ ਅਸਲ ਪ੍ਰੋਜੈਕਟਾਂ 'ਤੇ ਆਧਾਰਿਤ ਇਮਾਨਦਾਰ ਕੀਮਤਾਂ। ਕੋਈ ਅੰਦਾਜ਼ਾ ਨਹੀਂ। ਸਿਰਫ਼ ਅਸਲ ਡਾਟਾ।"
     },
     "kitchen": {
-      "title": "Kitchen Renovation Cost",
-      "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+      "title": "ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਲਾਗਤ",
+      "description": "Vancouver ਵਿੱਚ ਰਸੋਈ ਨਵੀਨੀਕਰਨ ਲਾਗਤਾਂ ਦਾ ਪੂਰਾ ਵੇਰਵਾ, ਬਜਟ-ਅਨੁਕੂਲ ਅੱਪਡੇਟ ਤੋਂ ਲੈ ਕੇ ਉੱਚ-ਪੱਧਰੀ ਤਬਦੀਲੀਆਂ ਤੱਕ।"
     },
     "bathroom": {
-      "title": "Bathroom Renovation Cost",
-      "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+      "title": "ਬਾਥਰੂਮ ਨਵੀਨੀਕਰਨ ਲਾਗਤ",
+      "description": "ਗ੍ਰੇਟਰ Vancouver ਖੇਤਰ ਵਿੱਚ ਬਾਥਰੂਮ ਨਵੀਨੀਕਰਨ ਲਾਗਤਾਂ ਦਾ ਪੂਰਾ ਵੇਰਵਾ, ਇੱਕ-ਬਾਥਰੂਮ ਰਿਫਰੈਸ਼ ਤੋਂ ਲੈ ਕੇ ਬਹੁ-ਬਾਥਰੂਮ ਪ੍ਰੋਜੈਕਟਾਂ ਤੱਕ।"
     },
     "wholeHouse": {
-      "title": "Whole House Renovation Cost",
-      "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+      "title": "ਪੂਰੇ ਘਰ ਦੇ ਨਵੀਨੀਕਰਨ ਦੀ ਲਾਗਤ",
+      "description": "ਰਸੋਈ, ਬਾਥਰੂਮ, ਫਲੋਰਿੰਗ ਅਤੇ ਢਾਂਚਾਗਤ ਕੰਮ ਸਮੇਤ ਪੂਰੇ ਘਰ ਦੇ ਨਵੀਨੀਕਰਨ ਦੀ ਕੀਮਤ।"
     },
-    "comingSoon": "Coming Soon",
-    "readGuide": "Read Guide",
+    "comingSoon": "ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ",
+    "readGuide": "ਗਾਈਡ ਪੜ੍ਹੋ",
     "cta": {
-      "heading": "Ready to Start Your Renovation?",
-      "subtitle": "Get a free consultation and accurate quote based on your specific project needs."
+      "heading": "ਆਪਣਾ ਨਵੀਨੀਕਰਨ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਤਿਆਰ ਹੋ?",
+      "subtitle": "ਆਪਣੇ ਖਾਸ ਪ੍ਰੋਜੈਕਟ ਦੀਆਂ ਲੋੜਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਮੁਫ਼ਤ ਸਲਾਹ ਅਤੇ ਸਟੀਕ ਕੋਟ ਪ੍ਰਾਪਤ ਕਰੋ।"
     },
     "basement": {
-      "title": "Basement Renovation Cost",
-      "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+      "title": "ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਲਾਗਤ",
+      "description": "ਗ੍ਰੇਟਰ Vancouver ਖੇਤਰ ਵਿੱਚ ਬੇਸਮੈਂਟ ਨਵੀਨੀਕਰਨ ਲਾਗਤਾਂ ਦਾ ਪੂਰਾ ਵੇਰਵਾ, ਮੁੱਢਲੀ ਫਿਨਿਸ਼ਿੰਗ ਤੋਂ ਲੈ ਕੇ ਪੂਰੀ ਕਾਨੂੰਨੀ ਸੂਟ ਤਬਦੀਲੀ ਤੱਕ।"
     },
     "commercial": {
-      "title": "Commercial Renovation Cost",
-      "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+      "title": "ਵਪਾਰਕ ਨਵੀਨੀਕਰਨ ਲਾਗਤ",
+      "description": "ਗ੍ਰੇਟਰ Vancouver ਵਿੱਚ ਵਪਾਰਕ ਨਵੀਨੀਕਰਨ ਲਾਗਤਾਂ ਦਾ ਪੂਰਾ ਵੇਰਵਾ, ਛੋਟੇ ਦਫ਼ਤਰ ਰਿਫਰੈਸ਼ ਤੋਂ ਲੈ ਕੇ ਪੂਰੇ ਰੈਸਟੋਰੈਂਟ ਬਿਲਡ-ਆਊਟ ਤੱਕ।"
     },
     "cabinet": {
-      "title": "Cabinet Refinishing Cost",
-      "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+      "title": "ਕੈਬਿਨੇਟ ਰੀਫਿਨਿਸ਼ਿੰਗ ਲਾਗਤ",
+      "description": "ਗ੍ਰੇਟਰ Vancouver ਵਿੱਚ ਕੈਬਿਨੇਟ ਰੀਫਿਨਿਸ਼ਿੰਗ, ਰੀਫੇਸਿੰਗ ਅਤੇ ਬਦਲਣ ਦੀਆਂ ਲਾਗਤਾਂ ਦਾ ਪੂਰਾ ਵੇਰਵਾ।"
     },
     "basementSuite": {
-      "title": "Basement Suite Cost",
-      "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
+      "title": "ਬੇਸਮੈਂਟ ਸੂਟ ਲਾਗਤ",
+      "description": "ਮੈਟਰੋ Vancouver ਲਈ ਕਾਨੂੰਨੀ ਬੇਸਮੈਂਟ ਸੂਟ ਤਬਦੀਲੀ ਲਾਗਤਾਂ, ROI ਵਿਸ਼ਲੇਸ਼ਣ ਅਤੇ ਮਿਉਂਸਪੈਲਟੀ-ਵਿਸ਼ੇਸ਼ ਨਿਯਮ।"
     }
   }
 }
