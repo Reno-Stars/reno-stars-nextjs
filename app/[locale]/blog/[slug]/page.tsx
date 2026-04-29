@@ -46,17 +46,14 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
   return out;
 }
 
+// Build-time prerender: EN slugs only. Other locales lazy-generate on first
+// request (Next.js dynamicParams=true default) and stay cached for 30d via
+// the page-level revalidate. Cuts ~107 × 9 = 963 unnecessary prerenders per
+// build, slashes Vercel build time + ISR-write spend, no SEO hit (search
+// engines trigger generation on first crawl, then cache).
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
-  const params: { locale: string; slug: string }[] = [];
-
-  for (const locale of locales) {
-    for (const post of posts) {
-      params.push({ locale, slug: post.slug });
-    }
-  }
-
-  return params;
+  return posts.map((post) => ({ locale: 'en', slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

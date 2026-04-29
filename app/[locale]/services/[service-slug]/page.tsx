@@ -17,18 +17,13 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
+// Build-time prerender: EN only. Non-EN locales lazy-generate via
+// dynamicParams=true and cache for 7d. ~7 EN pages instead of 70.
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
-  const params: { locale: string; 'service-slug': string }[] = [];
-
-  for (const locale of locales) {
-    for (const service of services) {
-      if (service.showOnServicesPage === false) continue;
-      params.push({ locale, 'service-slug': service.slug });
-    }
-  }
-
-  return params;
+  return services
+    .filter((s) => s.showOnServicesPage !== false)
+    .map((service) => ({ locale: 'en', 'service-slug': service.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

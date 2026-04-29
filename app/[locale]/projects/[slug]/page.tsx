@@ -18,21 +18,19 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
+// Build-time prerender: EN only. Non-EN locales lazy-generate on first
+// request via dynamicParams=true. Saves ~9× the prerender count for projects,
+// sites, and categories. SEO unaffected — crawlers trigger generation on
+// first hit and the page is cached for 7d.
 export async function generateStaticParams() {
   const [projects, sites, categorySlugs] = await Promise.all([
     getProjectsFromDb(),
     getSitesAsProjectsFromDb(),
     getCategorySlugs(),
   ]);
-  const projectParams = projects.flatMap((p) =>
-    locales.map((locale) => ({ locale, slug: p.slug }))
-  );
-  const siteParams = sites.flatMap((s) =>
-    locales.map((locale) => ({ locale, slug: s.slug }))
-  );
-  const categoryParams = categorySlugs.flatMap((slug) =>
-    locales.map((locale) => ({ locale, slug }))
-  );
+  const projectParams = projects.map((p) => ({ locale: 'en', slug: p.slug }));
+  const siteParams = sites.map((s) => ({ locale: 'en', slug: s.slug }));
+  const categoryParams = categorySlugs.map((slug) => ({ locale: 'en', slug }));
   return [...categoryParams, ...projectParams, ...siteParams];
 }
 

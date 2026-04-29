@@ -17,17 +17,11 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
+// Build-time prerender: EN only. Non-EN locales lazy-generate via
+// dynamicParams=true and cache for 7d.
 export async function generateStaticParams() {
   const areas = await getServiceAreasFromDb();
-  const params: { locale: string; city: string }[] = [];
-
-  for (const locale of locales) {
-    for (const area of areas) {
-      params.push({ locale, city: area.slug });
-    }
-  }
-
-  return params;
+  return areas.map((area) => ({ locale: 'en', city: area.slug }));
 }
 
 /**

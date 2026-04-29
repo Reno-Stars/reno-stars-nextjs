@@ -18,19 +18,18 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
+// Build-time prerender: EN only — biggest win on the site (was 7 services
+// × 14 areas × 10 locales = 980 prerenders per build, now ~98). Non-EN
+// locales lazy-generate via dynamicParams=true and cache for 7d.
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
-
-  for (const locale of locales) {
-    for (const service of services) {
-      if (service.showOnServicesPage === false) continue;
-      for (const area of areas) {
-        params.push({ locale, 'service-slug': service.slug, city: area.slug });
-      }
+  for (const service of services) {
+    if (service.showOnServicesPage === false) continue;
+    for (const area of areas) {
+      params.push({ locale: 'en', 'service-slug': service.slug, city: area.slug });
     }
   }
-
   return params;
 }
 
