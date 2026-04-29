@@ -8,6 +8,7 @@ import { eq, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
+import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -86,6 +87,7 @@ export async function createBlogPost(
 
     await db.insert(blogPosts).values(data);
     revalidatePath('/admin/blog');
+    if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
     console.error('Failed to create blog post:', error);
     return { error: 'Failed to create blog post.' };
@@ -135,6 +137,7 @@ export async function updateBlogPost(
       return { error: 'Blog post not found.' };
     }
     revalidatePath('/admin/blog');
+    if (data.isPublished) refreshBlogPost(data.slug);
     return { success: true };
   } catch (error) {
     console.error('Failed to update blog post:', error);
@@ -146,8 +149,12 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid blog post ID.' };
   try {
+    // Capture slug before delete so we can revalidate the public URL.
+    const existing = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+    const slug = existing[0]?.slug;
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
     revalidatePath('/admin/blog');
+    if (slug) refreshBlogPost(slug);
     return {};
   } catch (error) {
     console.error('Failed to delete blog post:', error);
@@ -167,11 +174,12 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
         updatedAt: new Date(),
       })
       .where(eq(blogPosts.id, id))
-      .returning({ id: blogPosts.id });
+      .returning({ id: blogPosts.id, slug: blogPosts.slug });
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
     revalidatePath('/admin/blog');
+    if (updated[0]?.slug) refreshBlogPost(updated[0].slug);
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);

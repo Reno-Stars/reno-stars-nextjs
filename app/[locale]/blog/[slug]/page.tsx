@@ -13,7 +13,11 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+// Blog posts rarely change after publication. 30d ISR window — the admin
+// update flow (app/actions/admin/blog.ts) calls revalidatePath() + IndexNow
+// ping on every save, so editors still see changes within seconds when they
+// actually edit a post.
+export const revalidate = 2592000; // 30d
 
 /**
  * Pull FAQs out of a markdown blog body. Looks for an FAQ section heading
