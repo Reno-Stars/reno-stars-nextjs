@@ -15,6 +15,22 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
 }
 
+/**
+ * Price ranges in CAD per service slug — fed into ServiceSchema's
+ * `hasOfferCatalog.priceSpecification` so Google can render a price snippet
+ * on SERP listings. Numbers come from the in-page pricing tiers + cost guides
+ * (kitchen 14-72, bathroom 15-45, etc.). Update when tier copy changes.
+ */
+const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefined> = {
+  kitchen: { min: 14000, max: 72000 },
+  bathroom: { min: 15000, max: 45000 },
+  basement: { min: 35000, max: 130000 },
+  'whole-house': { min: 50000, max: 250000 },
+  commercial: { min: 30000, max: 200000 },
+  flooring: { min: 5000, max: 25000 },
+  painting: { min: 3000, max: 15000 },
+};
+
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
 // Build-time prerender: EN only. Non-EN locales lazy-generate via
@@ -116,6 +132,8 @@ export default async function Page({ params }: PageProps) {
         }
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
+        priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
+        image={service.image || siteImages.hero}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />

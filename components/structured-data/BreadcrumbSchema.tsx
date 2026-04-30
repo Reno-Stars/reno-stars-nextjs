@@ -9,8 +9,13 @@ interface BreadcrumbSchemaProps {
   items: BreadcrumbItem[];
 }
 
-export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps): React.ReactElement {
+export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps): React.ReactElement | null {
   const baseUrl = getBaseUrl();
+
+  // A single-item BreadcrumbList (just "Home") gives Google nothing to render
+  // and wastes a structured-data slot — emit nothing in that case. The
+  // homepage in particular hits this branch since it only has one breadcrumb.
+  if (items.length < 2) return null;
 
   const schema = {
     '@context': 'https://schema.org',

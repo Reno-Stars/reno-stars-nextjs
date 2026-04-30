@@ -73,7 +73,11 @@ export default function LocalBusinessAreaSchema({
         ratingValue: googleRating,
         bestRating: 5,
         worstRating: 1,
+        // Both fields are needed: ratingCount drives the sitelink rich-result
+        // eligibility, reviewCount drives the ⭐-on-SERP rendering. Setting
+        // them equal because every Google rating is also a review on GBP.
         ratingCount: googleReviewCount,
+        reviewCount: googleReviewCount,
       },
     }),
     priceRange: '$$',

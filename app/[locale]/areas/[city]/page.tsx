@@ -40,27 +40,80 @@ export async function generateStaticParams() {
 const enAreaOverrides: Record<string, { title: string; description: string }> = {
   // Q1 (105 imp pos 31.5) "home renovations coquitlam" + Q9 "home renovation contractor coquitlam"
   coquitlam: {
-    title: 'Home Renovations Coquitlam | Free Quote 2026 | Reno Stars',
+    title: 'Home Renovations Coquitlam (2026) | Free Quote | Reno Stars',
     description:
-      'Home renovations in Coquitlam — kitchens, bathrooms & whole-house remodels. 700+ projects, $5M insured, 3-yr warranty. Burke Mountain to Westwood. Free quote.',
+      'Coquitlam home renovations — kitchens, bathrooms & whole-house remodels. 700+ real projects, $5M insured, 3-yr warranty. Burke Mountain to Westwood. Free quote in 24h.',
   },
   // Q2 (94 imp pos 40.5) "home renovations burnaby"
   burnaby: {
-    title: 'Home Renovations Burnaby | 700+ Projects | Reno Stars',
+    title: 'Home Renovations Burnaby (2026) | 700+ Projects | Reno Stars',
     description:
-      'Home renovations in Burnaby BC — kitchens, bathrooms & basements for SFH, townhouses & Metrotown condos. $5M insured, strata-compliant, 3-yr warranty. Free quote.',
+      'Burnaby home renovations — kitchens, bathrooms & basements for SFH, townhouses & Metrotown condos. $5M insured, strata-compliant, 3-yr warranty. Real costs, free quote.',
   },
   // Q6 (74 imp pos 27.5) "home renovations maple ridge"
   'maple-ridge': {
-    title: 'Home Renovations Maple Ridge | $5M Insured | Reno Stars',
+    title: 'Home Renovations Maple Ridge (2026) | $5M Insured | Reno Stars',
     description:
-      'Home renovations in Maple Ridge — kitchens, bathrooms & basements. Albion, Cottonwood, Hammond. 20+ yrs, $5M insured, 3-yr warranty. Free in-home quote.',
+      'Maple Ridge home renovations — kitchens, bathrooms & basements. Albion, Cottonwood, Hammond. 20+ yrs, $5M insured, 3-yr warranty. Free in-home quote, real prices.',
   },
   // Q8 (60 imp pos 57.4) "home renovation contractor port coquitlam"
   'port-coquitlam': {
-    title: 'Home Renovation Contractor Port Coquitlam | Reno Stars',
+    title: 'Port Coquitlam Renovation Contractor (2026) | Reno Stars',
     description:
-      'Home renovation contractor in Port Coquitlam. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park, Riverwood. 20+ yrs, $5M insured. Free quote.',
+      'Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park, Riverwood. 20+ yrs, $5M insured. Free quote in 24h.',
+  },
+  // 2026-04-30 CTR pass: 10 cities previously falling back to translation namespace.
+  // Lead with city-name + service in title (Google bolds matching keywords),
+  // close with year + click trigger.
+  vancouver: {
+    title: 'Home Renovations Vancouver (2026) | Real Costs | Reno Stars',
+    description:
+      'Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. 18+ yrs, $5M CGL, 3-yr warranty. See real Vancouver projects + free quote.',
+  },
+  richmond: {
+    title: 'Home Renovations Richmond BC (2026) | Free Quote | Reno Stars',
+    description:
+      'Richmond home renovation specialists — kitchens, bathrooms & whole-house remodels. Steveston to Brighouse. 20+ yrs, $5M insured, 3-yr warranty. Real-cost quote.',
+  },
+  surrey: {
+    title: 'Home Renovations Surrey (2026) | Real Projects | Reno Stars',
+    description:
+      'Surrey home renovations — kitchens, bathrooms & legal-suite basements. Fleetwood, Newton, Cloverdale. $5M insured, 3-yr warranty. Free quote, fast turnaround.',
+  },
+  'north-vancouver': {
+    title: 'North Vancouver Renovations (2026) | $5M Insured | Reno Stars',
+    description:
+      'North Vancouver home renovations — kitchens, bathrooms & whole-house. Lynn Valley, Lonsdale, Deep Cove. Mountain-view design expertise. 3-yr warranty, free quote.',
+  },
+  'west-vancouver': {
+    title: 'West Vancouver Renovations (2026) | Luxury Projects | Reno Stars',
+    description:
+      'West Vancouver luxury renovations — Caulfeild, Dundarave, Ambleside. High-end kitchens, bathrooms & whole-house remodels. $5M insured, 3-yr warranty. Free quote.',
+  },
+  'new-westminster': {
+    title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
+    description:
+      'New Westminster home renovations — Quay condos, Sapperton townhouses & character homes. Strata-compliant, $5M insured, 3-yr warranty. Free quote.',
+  },
+  delta: {
+    title: 'Home Renovations Delta BC (2026) | Free Quote | Reno Stars',
+    description:
+      'Delta home renovations — Ladner, Tsawwassen & North Delta. Kitchens, bathrooms & whole-house remodels. 20+ yrs, $5M insured, 3-yr warranty. Real-cost quote.',
+  },
+  langley: {
+    title: 'Langley Home Renovations (2026) | Real Costs | Reno Stars',
+    description:
+      'Langley home renovations — Walnut Grove, Willoughby, Fort Langley. Kitchens, bathrooms & whole-house. New builds & older homes. $5M insured, 3-yr warranty.',
+  },
+  'port-moody': {
+    title: 'Port Moody Renovations (2026) | Heritage Mountain | Reno Stars',
+    description:
+      'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 20+ yrs, $5M insured, 3-yr warranty. Free quote in 24h.',
+  },
+  'white-rock': {
+    title: 'White Rock Renovations (2026) | Coastal Homes | Reno Stars',
+    description:
+      'White Rock & South Surrey home renovations — kitchens, bathrooms & whole-house remodels. Coastal moisture-aware builds, $5M insured, 3-yr warranty. Free quote.',
   },
 };
 

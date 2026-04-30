@@ -1,5 +1,6 @@
 import type { Company } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
+import { parseAddress } from './parse-address';
 
 interface ServiceSchemaProps {
   company: Company;
@@ -11,6 +12,8 @@ interface ServiceSchemaProps {
     min: number;
     max: number;
   };
+  /** Optional representative image URL (absolute). Adds to Service for richer SERP. */
+  image?: string;
   url: string;
   googleRating?: number;
   googleReviewCount?: number;
@@ -23,12 +26,14 @@ export default function ServiceSchema({
   location,
   areaServed,
   priceRange,
+  image,
   url,
   googleRating,
   googleReviewCount,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
+  const addressParts = parseAddress(company.address);
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -42,15 +47,24 @@ export default function ServiceSchema({
       name: company.name,
       url: baseUrl,
       telephone: `+1-${company.phone}`,
+      // Split address into proper PostalAddress sub-fields per Schema.org spec.
+      // Previously the full company.address string was crammed into streetAddress,
+      // which breaks structured-address parsing. Now each part lives in its own field.
       address: {
         '@type': 'PostalAddress',
-        streetAddress: company.address,
-        addressRegion: 'BC',
+        streetAddress: addressParts.streetAddress,
+        addressLocality: addressParts.locality,
+        addressRegion: addressParts.region,
+        postalCode: addressParts.postalCode,
         addressCountry: 'CA',
       },
     },
     url: absoluteUrl,
   };
+
+  if (image) {
+    schema.image = image;
+  }
 
   if (areaServed && areaServed.length > 0) {
     schema.areaServed = areaServed.map((city) => ({
