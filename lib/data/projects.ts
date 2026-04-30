@@ -29,6 +29,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Backsplash'],
       zh: ['橱柜', '台面', '后挡板'],
+      'zh-Hant': ['櫥櫃', '檯面', '後擋板'],
+      ja: ['キャビネット', 'カウンタートップ', 'バックスプラッシュ'],
+      ko: ['캐비닛', '조리대', '백스플래시'],
+      es: ['Gabinetes', 'Encimeras', 'protector contra salpicaduras'],
+      pa: ['ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਬੈਕਸਪਲੇਸ਼'],
+      tl: ['Cabinetry', 'Mga countertop', 'Backsplash'],
+      fa: ['کابینت', 'کانترها', 'بک اسپلش'],
+      vi: ['tủ đựng đồ', 'Mặt bàn', 'Phản ứng ngược'],
     },
     challenge: {
       en: 'The existing kitchen had outdated oak cabinets and limited counter space, making the kitchen feel cramped and dark.',
@@ -66,6 +74,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Flooring', 'Plumbing', 'Tile Work'],
       zh: ['橱柜', '台面', '地板', '水管', '瓷砖'],
+      'zh-Hant': ['櫥櫃', '檯面', '地板', '水暖', '磁磚工程'],
+      ja: ['キャビネット', 'カウンタートップ', '床材', '配管', 'タイル工事'],
+      ko: ['캐비닛', '조리대', '바닥', '연관', '타일작업'],
+      es: ['Gabinetes', 'Encimeras', 'Piso', 'Plomería', 'Trabajo de azulejos'],
+      pa: ['ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਫਲੋਰਿੰਗ', 'ਪਲੰਬਿੰਗ', 'ਟਾਇਲ ਦਾ ਕੰਮ'],
+      tl: ['Cabinetry', 'Mga countertop', 'Sahig', 'Pagtutubero', 'Gawaing Tile'],
+      fa: ['کابینت', 'کانترها', 'کفپوش', 'لوله کشی', 'کاشی کاری'],
+      vi: ['tủ đựng đồ', 'Mặt bàn', 'sàn nhà', 'Hệ thống nước', 'Công việc lát gạch'],
     },
     challenge: {
       en: 'A dated condo with separate outdated kitchen and bathroom needing a cohesive modern update within a tight timeline.',
@@ -101,6 +117,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Kitchen Design', 'Cabinetry', 'Countertops', 'Flooring', 'Painting'],
       zh: ['厨房设计', '橱柜', '台面', '地板', '油漆'],
+      'zh-Hant': ['廚房設計', '櫥櫃', '檯面', '地板', '繪畫'],
+      ja: ['キッチンデザイン', 'キャビネット', 'カウンタートップ', '床材', '絵画'],
+      ko: ['주방 디자인', '캐비닛', '조리대', '바닥', '그림'],
+      es: ['Diseño de cocina', 'Gabinetes', 'Encimeras', 'Piso', 'Cuadro'],
+      pa: ['ਰਸੋਈ ਡਿਜ਼ਾਈਨ', 'ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਫਲੋਰਿੰਗ', 'ਪੇਂਟਿੰਗ'],
+      tl: ['Disenyo ng Kusina', 'Cabinetry', 'Mga countertop', 'Sahig', 'Pagpinta'],
+      fa: ['طراحی آشپزخانه', 'کابینت', 'کانترها', 'کفپوش', 'نقاشی'],
+      vi: ['Thiết Kế Nhà Bếp', 'tủ đựng đồ', 'Mặt bàn', 'sàn nhà', 'Bức vẽ'],
     },
     challenge: {
       en: 'An aging Surrey home required a complete kitchen overhaul while maintaining the structural integrity and flow of the open-concept living area.',
@@ -136,6 +160,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Appliance Installation', 'Lighting'],
       zh: ['橱柜', '台面', '家电安装', '灯光'],
+      'zh-Hant': ['櫥櫃', '檯面', '電器安裝', '燈光'],
+      ja: ['キャビネット', 'カウンタートップ', 'アプライアンスの設置', '点灯'],
+      ko: ['캐비닛', '조리대', '기기 설치', '조명'],
+      es: ['Gabinetes', 'Encimeras', 'Instalación de electrodomésticos', 'Iluminación'],
+      pa: ['ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਉਪਕਰਣ ਸਥਾਪਨਾ', 'ਰੋਸ਼ਨੀ'],
+      tl: ['Cabinetry', 'Mga countertop', 'Pag-install ng Appliance', 'Pag-iilaw'],
+      fa: ['کابینت', 'کانترها', 'نصب لوازم خانگی', 'نورپردازی'],
+      vi: ['tủ đựng đồ', 'Mặt bàn', 'Lắp đặt thiết bị', 'Chiếu sáng'],
     },
     challenge: {
       en: 'The homeowner wanted a bright, airy kitchen but the existing layout had poor lighting and dark-toned finishes.',
@@ -171,6 +203,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Cabinetry', 'Countertops', 'Backsplash', 'Plumbing'],
       zh: ['橱柜', '台面', '后挡板', '水管'],
+      'zh-Hant': ['櫥櫃', '檯面', '後擋板', '水暖'],
+      ja: ['キャビネット', 'カウンタートップ', 'バックスプラッシュ', '配管'],
+      ko: ['캐비닛', '조리대', '백스플래시', '연관'],
+      es: ['Gabinetes', 'Encimeras', 'protector contra salpicaduras', 'Plomería'],
+      pa: ['ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਬੈਕਸਪਲੇਸ਼', 'ਪਲੰਬਿੰਗ'],
+      tl: ['Cabinetry', 'Mga countertop', 'Backsplash', 'Pagtutubero'],
+      fa: ['کابینت', 'کانترها', 'بک اسپلش', 'لوله کشی'],
+      vi: ['tủ đựng đồ', 'Mặt bàn', 'Phản ứng ngược', 'Hệ thống nước'],
     },
     challenge: {
       en: 'Limited counter space and outdated appliances made the kitchen inefficient for a family of five.',
@@ -206,6 +246,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Kitchen Design', 'Cabinetry', 'Countertops', 'Island', 'Fixtures'],
       zh: ['厨房设计', '橱柜', '台面', '岛台', '洁具'],
+      'zh-Hant': ['廚房設計', '櫥櫃', '檯面', '島', '固定裝置'],
+      ja: ['キッチンデザイン', 'キャビネット', 'カウンタートップ', '島', '備品'],
+      ko: ['주방 디자인', '캐비닛', '조리대', '섬', '비품'],
+      es: ['Diseño de cocina', 'Gabinetes', 'Encimeras', 'Isla', 'Accesorios'],
+      pa: ['ਰਸੋਈ ਡਿਜ਼ਾਈਨ', 'ਮੰਤਰੀ ਮੰਡਲ', 'ਕਾਊਂਟਰਟੌਪਸ', 'ਟਾਪੂ', 'ਫਿਕਸਚਰ'],
+      tl: ['Disenyo ng Kusina', 'Cabinetry', 'Mga countertop', 'Isla', 'Mga fixtures'],
+      fa: ['طراحی آشپزخانه', 'کابینت', 'کانترها', 'جزیره', 'وسایل'],
+      vi: ['Thiết Kế Nhà Bếp', 'tủ đựng đồ', 'Mặt bàn', 'Hòn đảo', 'Lịch thi đấu'],
     },
     challenge: {
       en: 'The homeowners wanted a chef-grade kitchen with an island but the existing space had load-bearing walls limiting the layout options.',
@@ -241,6 +289,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Tile Work', 'Vanity', 'Plumbing', 'Lighting'],
       zh: ['瓷砖', '洗手台', '水管', '灯光'],
+      'zh-Hant': ['磁磚工程', '虛榮', '水暖', '燈光'],
+      ja: ['タイル工事', '虚栄心', '配管', '点灯'],
+      ko: ['타일작업', '화장대', '연관', '조명'],
+      es: ['Trabajo de azulejos', 'Vanidad', 'Plomería', 'Iluminación'],
+      pa: ['ਟਾਇਲ ਦਾ ਕੰਮ', 'ਵਿਅਰਥ', 'ਪਲੰਬਿੰਗ', 'ਰੋਸ਼ਨੀ'],
+      tl: ['Gawaing Tile', 'Vanity', 'Pagtutubero', 'Pag-iilaw'],
+      fa: ['کاشی کاری', 'غرور', 'لوله کشی', 'نورپردازی'],
+      vi: ['Công việc lát gạch', 'sự phù phiếm', 'Hệ thống nước', 'Chiếu sáng'],
     },
     challenge: {
       en: 'A small bathroom with water damage and an inefficient layout that wasted valuable floor space.',
@@ -276,6 +332,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Tile Work', 'Plumbing', 'Freestanding Tub', 'Walk-in Shower', 'Vanity'],
       zh: ['瓷砖', '水管', '独立浴缸', '步入式淋浴', '洗手台'],
+      'zh-Hant': ['磁磚工程', '水暖', '獨立式浴缸', '步入式淋浴間', '虛榮'],
+      ja: ['タイル工事', '配管', '自立型浴槽', 'ウォークインシャワー', '虚栄心'],
+      ko: ['타일작업', '연관', '독립형 욕조', '대형 샤워실', '화장대'],
+      es: ['Trabajo de azulejos', 'Plomería', 'Bañera independiente', 'Ducha a ras de suelo', 'Vanidad'],
+      pa: ['ਟਾਇਲ ਦਾ ਕੰਮ', 'ਪਲੰਬਿੰਗ', 'ਫ੍ਰੀਸਟੈਂਡਿੰਗ ਟੱਬ', 'ਵਾਕ-ਇਨ ਸ਼ਾਵਰ', 'ਵਿਅਰਥ'],
+      tl: ['Gawaing Tile', 'Pagtutubero', 'Freestanding Tub', 'Walk-in Shower', 'Vanity'],
+      fa: ['کاشی کاری', 'لوله کشی', 'وان مستقل', 'دوش پیاده روی', 'غرور'],
+      vi: ['Công việc lát gạch', 'Hệ thống nước', 'Bồn tắm đứng', 'Phòng tắm vòi sen mở', 'sự phù phiếm'],
     },
     challenge: {
       en: 'The master bathroom felt cramped and outdated, with a bulky built-in tub taking up too much space.',
@@ -311,6 +375,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Custom Vanity', 'Fixtures', 'Mirror', 'Lighting'],
       zh: ['定制洗手台', '洁具', '镜子', '灯光'],
+      'zh-Hant': ['客製化梳妝台', '固定裝置', '鏡子', '燈光'],
+      ja: ['カスタムバニティ', '備品', '鏡', '点灯'],
+      ko: ['맞춤형 화장대', '비품', '거울', '조명'],
+      es: ['Tocador personalizado', 'Accesorios', 'Espejo', 'Iluminación'],
+      pa: ['ਕਸਟਮ ਵੈਨਿਟੀ', 'ਫਿਕਸਚਰ', 'ਮਿਰਰ', 'ਰੋਸ਼ਨੀ'],
+      tl: ['Custom Vanity', 'Mga fixtures', 'Salamin', 'Pag-iilaw'],
+      fa: ['غرور سفارشی', 'وسایل', 'آینه', 'نورپردازی'],
+      vi: ['Bàn trang điểm tùy chỉnh', 'Lịch thi đấu', 'Gương', 'Chiếu sáng'],
     },
     challenge: {
       en: 'The luxury home required a custom vanity that matched the high-end aesthetic while providing ample storage for a busy family.',
@@ -346,6 +418,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Kitchen', 'Bathrooms', 'Flooring', 'Painting', 'Lighting', 'Living Spaces'],
       zh: ['厨房', '浴室', '地板', '油漆', '灯光', '起居空间'],
+      'zh-Hant': ['廚房', '浴室', '地板', '繪畫', '燈光', '生活空間'],
+      ja: ['台所', 'バスルーム', '床材', '絵画', '点灯', '生活空間'],
+      ko: ['주방', '욕실', '바닥', '그림', '조명', '생활 공간'],
+      es: ['Cocina', 'Baños', 'Piso', 'Cuadro', 'Iluminación', 'Espacios habitables'],
+      pa: ['ਰਸੋਈ', 'ਬਾਥਰੂਮ', 'ਫਲੋਰਿੰਗ', 'ਪੇਂਟਿੰਗ', 'ਰੋਸ਼ਨੀ', 'ਲਿਵਿੰਗ ਸਪੇਸ'],
+      tl: ['Kusina', 'Mga banyo', 'Sahig', 'Pagpinta', 'Pag-iilaw', 'Mga Buhay na Lugar'],
+      fa: ['آشپزخانه', 'حمام ها', 'کفپوش', 'نقاشی', 'نورپردازی', 'فضاهای زندگی'],
+      vi: ['Phòng bếp', 'Phòng tắm', 'sàn nhà', 'Bức vẽ', 'Chiếu sáng', 'Không gian sống'],
     },
     challenge: {
       en: 'A 30-year-old home with outdated finishes throughout, requiring a complete modernization while the family continued to live on-site.',
@@ -382,6 +462,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Kitchen', 'Bathrooms', 'Flooring', 'Painting', 'Electrical'],
       zh: ['厨房', '浴室', '地板', '油漆', '电气'],
+      'zh-Hant': ['廚房', '浴室', '地板', '繪畫', '電力'],
+      ja: ['台所', 'バスルーム', '床材', '絵画', '電気'],
+      ko: ['주방', '욕실', '바닥', '그림', '전기 같은'],
+      es: ['Cocina', 'Baños', 'Piso', 'Cuadro', 'Eléctrico'],
+      pa: ['ਰਸੋਈ', 'ਬਾਥਰੂਮ', 'ਫਲੋਰਿੰਗ', 'ਪੇਂਟਿੰਗ', 'ਇਲੈਕਟ੍ਰੀਕਲ'],
+      tl: ['Kusina', 'Mga banyo', 'Sahig', 'Pagpinta', 'Electrical'],
+      fa: ['آشپزخانه', 'حمام ها', 'کفپوش', 'نقاشی', 'برقی'],
+      vi: ['Phòng bếp', 'Phòng tắm', 'sàn nhà', 'Bức vẽ', 'Điện'],
     },
     challenge: {
       en: 'A neglected property with severely dated interiors, requiring both cosmetic and structural updates to bring it up to modern standards.',
@@ -417,6 +505,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Interior Build-out', 'Plumbing', 'Electrical', 'Custom Millwork', 'Painting'],
       zh: ['室内装修', '水管', '电气', '定制木工', '油漆'],
+      'zh-Hant': ['室內裝修', '水暖', '電力', '客製化木製品', '繪畫'],
+      ja: ['内装のビルドアウト', '配管', '電気', 'カスタム工場', '絵画'],
+      ko: ['인테리어빌드아웃', '연관', '전기 같은', '맞춤형 목공예품', '그림'],
+      es: ['Construcción interior', 'Plomería', 'Eléctrico', 'Carpintería personalizada', 'Cuadro'],
+      pa: ['ਅੰਦਰੂਨੀ ਬਿਲਡ-ਆਊਟ', 'ਪਲੰਬਿੰਗ', 'ਇਲੈਕਟ੍ਰੀਕਲ', 'ਕਸਟਮ ਮਿਲਵਰਕ', 'ਪੇਂਟਿੰਗ'],
+      tl: ['Panloob na Pagbuo', 'Pagtutubero', 'Electrical', 'Custom na Millwork', 'Pagpinta'],
+      fa: ['ساخت داخل', 'لوله کشی', 'برقی', 'آسیاب سفارشی', 'نقاشی'],
+      vi: ['Xây dựng nội thất', 'Hệ thống nước', 'Điện', 'Gia công tùy chỉnh', 'Bức vẽ'],
     },
     challenge: {
       en: 'Converting a raw commercial shell into a premium skincare clinic that meets health code requirements while projecting a luxurious brand image.',
@@ -453,6 +549,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Framing', 'Drywall', 'Flooring', 'Electrical', 'Plumbing', 'Home Theater'],
       zh: ['框架', '石膏板', '地板', '电气', '水管', '家庭影院'],
+      'zh-Hant': ['取景', '乾牆', '地板', '電力', '水暖', '家庭劇院'],
+      ja: ['フレーミング', '乾式壁', '床材', '電気', '配管', 'ホームシアター'],
+      ko: ['프레이밍', '건식 벽체', '바닥', '전기 같은', '연관', '홈시어터'],
+      es: ['Enmarcado', 'paneles de yeso', 'Piso', 'Eléctrico', 'Plomería', 'Cine en casa'],
+      pa: ['ਫਰੇਮਿੰਗ', 'ਡਰਾਈਵਾਲ', 'ਫਲੋਰਿੰਗ', 'ਇਲੈਕਟ੍ਰੀਕਲ', 'ਪਲੰਬਿੰਗ', 'ਹੋਮ ਥੀਏਟਰ'],
+      tl: ['Pag-frame', 'Drywall', 'Sahig', 'Electrical', 'Pagtutubero', 'Home Theater'],
+      fa: ['قاب بندی', 'دیوار خشک', 'کفپوش', 'برقی', 'لوله کشی', 'سینمای خانگی'],
+      vi: ['đóng khung', 'Vách thạch cao', 'sàn nhà', 'Điện', 'Hệ thống nước', 'Rạp hát tại nhà'],
     },
     challenge: {
       en: 'An unfinished concrete basement with low ceilings, moisture issues, and no natural light — needing a complete transformation into usable living space.',
@@ -488,6 +592,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Cabinet Doors', 'Drawer Fronts', 'Hardware', 'Hinges'],
       zh: ['柜门', '抽屉面板', '五金件', '铰链'],
+      'zh-Hant': ['櫥櫃門', '抽屜面板', '硬體', '鉸鏈'],
+      ja: ['キャビネットのドア', '引き出し前部', 'ハードウェア', 'ヒンジ'],
+      ko: ['캐비닛 도어', '서랍앞판', '하드웨어', '경첩'],
+      es: ['Puertas de gabinete', 'Frentes de cajones', 'Hardware', 'Bisagras'],
+      pa: ['ਕੈਬਨਿਟ ਦੇ ਦਰਵਾਜ਼ੇ', 'ਦਰਾਜ਼ ਫਰੰਟ', 'ਹਾਰਡਵੇਅਰ', 'ਕਬਜੇ'],
+      tl: ['Mga Pintuan ng Gabinete', 'Mga Drawer Front', 'Hardware', 'Mga bisagra'],
+      fa: ['درب کابینت', 'جلوهای کشو', 'سخت افزار', 'لولا'],
+      vi: ['Cửa tủ', 'Mặt trước ngăn kéo', 'Phần cứng', 'Bản lề'],
     },
     challenge: {
       en: 'The existing kitchen cabinets were structurally sound but the dated oak finish and worn hardware made the kitchen feel old and uninviting.',
@@ -523,6 +635,14 @@ export const projects: Project[] = [
     service_scope: {
       en: ['Kitchen Remodel', 'Bathroom Renovation', 'Flooring', 'Countertops'],
       zh: ['厨房改造', '浴室装修', '地板', '台面'],
+      'zh-Hant': ['廚房改造', '浴室裝修', '地板', '檯面'],
+      ja: ['キッチンのリフォーム', '浴室の改修', '床材', 'カウンタートップ'],
+      ko: ['주방 리모델링', '욕실 리모델링', '바닥', '조리대'],
+      es: ['Remodelación de cocina', 'Renovación del baño', 'Piso', 'Encimeras'],
+      pa: ['ਰਸੋਈ ਦਾ ਮੁੜ-ਨਿਰਮਾਣ', 'ਬਾਥਰੂਮ ਦੀ ਮੁਰੰਮਤ', 'ਫਲੋਰਿੰਗ', 'ਕਾਊਂਟਰਟੌਪਸ'],
+      tl: ['Remodel ng Kusina', 'Pagkukumpuni ng Banyo', 'Sahig', 'Mga countertop'],
+      fa: ['بازسازی آشپزخانه', 'بازسازی حمام', 'کفپوش', 'کانترها'],
+      vi: ['Sửa sang lại nhà bếp', 'Cải tạo phòng tắm', 'sàn nhà', 'Mặt bàn'],
     },
     challenge: {
       en: 'The homeowner needed both the kitchen and bathroom updated on a moderate budget without compromising on quality.',
