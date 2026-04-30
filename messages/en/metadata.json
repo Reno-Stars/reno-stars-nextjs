@@ -1,8 +1,8 @@
 {
   "metadata": {
     "home": {
-      "title": "Vancouver Home Renovations — {years}+ Yrs, $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom & whole-house renovations in Metro Vancouver. {years}+ years, $5M insured, WCB crews, 3-year warranty. See 100+ projects or get a free quote."
+      "title": "Vancouver Kitchen, Bathroom & Whole-House Renovations | Reno Stars",
+      "description": "Vancouver kitchen, bathroom & whole-house renovations & remodeling. {years}+ yrs, $5M insured, WCB crews, 3-yr warranty. See 100+ real projects or get a free quote."
     },
     "services": {
       "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
@@ -64,32 +64,32 @@
       "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
       "description": "Free renovation cost guides based on real project data from Greater Vancouver. Kitchen, bathroom, and whole-house renovation pricing with actual budgets and timelines.",
       "kitchenCost": {
-        "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a kitchen renovation cost in Vancouver? Real pricing from $15,000 to $72,000 based on 16 completed projects. Get accurate cost breakdowns by tier."
+        "title": "Kitchen Renovation Cost Vancouver 2026: $15K–$72K Real Data",
+        "description": "Vancouver kitchen renovation cost: $15K–$72K from 16 real projects. Detailed price tiers, timelines & what your budget actually buys. Free estimate in 24h."
       },
       "bathroomCost": {
-        "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
-        "description": "What is the average bathroom renovation cost in Vancouver? Real prices from $10K–$60K+ based on 19 completed projects. Full cost breakdown by 3-piece, 4-piece & 5-piece bathrooms."
+        "title": "Bathroom Renovation Cost Vancouver 2026: $10K–$60K Real Data",
+        "description": "Vancouver bathroom renovation cost: $10K–$60K+ from 19 real projects. Real prices by 3-piece, 4-piece & 5-piece. 2026 data, free estimate in 24h."
       },
       "wholeHouseCost": {
-        "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Whole house renovation cost in Vancouver: $50K–$200K+ from real projects. Full breakdown by scope — kitchens, bathrooms, flooring and more. Get a free estimate from Reno Stars."
+        "title": "Whole House Renovation Cost Vancouver 2026: $50K–$200K+",
+        "description": "Vancouver whole-house renovation cost: $50K–$200K+ from real projects. Tier-by-tier breakdown — kitchens, bathrooms, flooring. 2026 prices, free estimate."
       },
       "basementCost": {
-        "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a basement renovation cost in Vancouver? Typical pricing from $30,000 to $120,000+ for Greater Vancouver. Get accurate cost breakdowns by tier, plus money-saving tips."
+        "title": "Basement Renovation Cost Vancouver 2026: $30K–$120K+ Real Data",
+        "description": "Vancouver basement renovation cost: $30K–$120K+ from real projects. Tier breakdowns, permit guide, money-saving tips. 2026 data, free estimate in 24h."
       },
       "commercialCost": {
-        "title": "Commercial Renovation Cost in Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a commercial renovation cost in Vancouver? Typical costs range from $50,000 to $1,000,000+. Detailed breakdown by project type with real data."
+        "title": "Commercial Renovation Cost Vancouver 2026: $50K–$1M+",
+        "description": "Vancouver commercial renovation cost: $50K–$1M+ by project type. Restaurants, clinics, offices, retail. Real data, permit-aware planning. Free estimate in 24h."
       },
       "cabinetCost": {
-        "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does cabinet refinishing cost in Vancouver? Typical pricing from $4,000 to $15,000 for Greater Vancouver. Compare refinishing, refacing, and full replacement options."
+        "title": "Cabinet Refinishing Cost Vancouver 2026: $4K–$15K Real Data",
+        "description": "Vancouver cabinet refinishing cost: $4K–$15K. Refinishing vs refacing vs full replacement compared. 2026 prices, real project data, free estimate in 24h."
       },
       "basementSuiteCost": {
-        "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
-        "description": "How much does a legal basement suite cost in Vancouver? Typical pricing from $60,000 to $150,000. Detailed cost breakdown, ROI analysis, and municipal regulations."
+        "title": "Legal Basement Suite Cost Vancouver 2026: $60K–$150K",
+        "description": "Vancouver legal basement suite conversion cost: $60K–$150K. Cost breakdown, ROI analysis, municipal rules. 2026 data, free estimate in 24h."
       }
     },
     "about": {
