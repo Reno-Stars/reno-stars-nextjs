@@ -44,11 +44,12 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Coquitlam home renovations — kitchens, bathrooms & whole-house remodels. 700+ real projects, $5M insured, 3-yr warranty. Burke Mountain to Westwood. Free quote in 24h.',
   },
-  // Q2 (94 imp pos 40.5) "home renovations burnaby"
+  // Q2 (94 imp pos 40.5) "home renovations burnaby" — positioned as the
+  // CONTRACTOR HUB to disambiguate from /services/{kitchen,bathroom,whole-house}/burnaby
   burnaby: {
-    title: 'Home Renovations Burnaby (2026) | 700+ Projects | Reno Stars',
+    title: 'Burnaby Renovation Contractor | 700+ Projects | Reno Stars',
     description:
-      'Burnaby home renovations — kitchens, bathrooms & basements for SFH, townhouses & Metrotown condos. $5M insured, strata-compliant, 3-yr warranty. Real costs, free quote.',
+      'Burnaby renovation contractor serving Metrotown, Heights & Capitol Hill. Kitchens, bathrooms, basements + whole-house. Strata-compliant, $5M insured, 3-yr warranty.',
   },
   // Q6 (74 imp pos 27.5) "home renovations maple ridge"
   'maple-ridge': {
@@ -96,14 +97,14 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
       'New Westminster home renovations — Quay condos, Sapperton townhouses & character homes. Strata-compliant, $5M insured, 3-yr warranty. Free quote.',
   },
   delta: {
-    title: 'Home Renovations Delta BC (2026) | Free Quote | Reno Stars',
+    title: 'Delta Renovation Contractor | Ladner & Tsawwassen | Reno Stars',
     description:
-      'Delta home renovations — Ladner, Tsawwassen & North Delta. Kitchens, bathrooms & whole-house remodels. 20+ yrs, $5M insured, 3-yr warranty. Real-cost quote.',
+      'Delta renovation contractor — Ladner, Tsawwassen, North Delta. Kitchens, bathrooms, basements + whole-house. Coastal builds, $5M insured, 3-yr warranty. Free quote.',
   },
   langley: {
-    title: 'Langley Home Renovations (2026) | Real Costs | Reno Stars',
+    title: 'Langley Renovation Contractor | Walnut Grove & Willoughby | Reno Stars',
     description:
-      'Langley home renovations — Walnut Grove, Willoughby, Fort Langley. Kitchens, bathrooms & whole-house. New builds & older homes. $5M insured, 3-yr warranty.',
+      'Langley renovation contractor — Walnut Grove, Willoughby, Fort Langley, Aldergrove. Kitchens, bathrooms, whole-house. New & old homes. $5M insured, 3-yr warranty.',
   },
   'port-moody': {
     title: 'Port Moody Renovations (2026) | Heritage Mountain | Reno Stars',
@@ -126,11 +127,15 @@ const enAreaIntros: Record<string, string> = {
   coquitlam:
     'Home renovations in Coquitlam, BC — full-service remodels for homes from Burke Mountain and Westwood Plateau down to Maillardville and Austin Heights. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and a 3-year workmanship warranty.',
   burnaby:
-    'Home renovations in Burnaby — kitchens, bathrooms, basements and whole-house remodels for single-family homes in The Heights and Capitol Hill, condos and townhouses around Metrotown and Brentwood, and properties throughout Burnaby Mountain and South Burnaby. Strata-compliant work, $5M CGL insurance and a 3-year warranty on every project.',
+    'Reno Stars is a full-service home renovation contractor in Burnaby, BC. From The Heights and Capitol Hill to Metrotown, Brentwood and South Burnaby, we handle kitchens, bathrooms, basements and whole-house remodels — strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below to see Burnaby-specific pricing for kitchens, bathrooms or whole-house projects, or browse 700+ completed Lower Mainland renovations.',
   'maple-ridge':
     'Home renovations in Maple Ridge — kitchens, bathrooms, basements and whole-house remodels for properties in Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, with permits handled end-to-end and a 3-year workmanship warranty.',
   'port-coquitlam':
     'Home renovations and contractor services in Port Coquitlam — kitchens, bathrooms, basements and whole-house remodels for homes in Citadel Heights, Lincoln Park, Oxford Heights, Birchland Manor and Riverwood. Permits handled end-to-end, $5M CGL insurance and a 3-year warranty on every project.',
+  delta:
+    'Reno Stars is your local renovation contractor in Delta, BC — serving Ladner, Tsawwassen and North Delta. Coastal-aware builds for shoreline homes, ferry-corridor logistics for materials, and strata-compliant work for Tsawwassen Springs and Ladner Trunk Road condos. Use the service tiles below for Delta-specific kitchen, bathroom and whole-house pricing.',
+  langley:
+    'Reno Stars handles home renovations across Langley — Walnut Grove, Willoughby Heights, Brookswood, Aldergrove and Fort Langley. We work with both new-build townhouses needing first-renovation tune-ups and older Township farmhouses needing structural updates. Click a service tile below for Langley-specific kitchen, bathroom or whole-house pricing, permit timelines, and real project examples.',
 };
 
 export function getAreaIntroOverride(slug: string, locale: Locale): string | undefined {

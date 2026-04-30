@@ -522,7 +522,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                       {firstProject && (
                         <OptimizedImage
                           src={firstProject.hero_image}
-                          alt={pickLocale(category, locale)}
+                          alt={`${pickLocale(category, locale)} renovation projects in Vancouver`}
                           fill
                           sizes="(max-width: 640px) 180px, 220px"
                           className={`object-cover transition-transform duration-300 ${isActive ? 'scale-105' : 'group-hover/cat:scale-105'}`}

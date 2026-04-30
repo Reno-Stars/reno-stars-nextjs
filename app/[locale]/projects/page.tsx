@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ProjectsPage from '@/components/pages/ProjectsPage';
-import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 
 interface PageProps {
@@ -77,10 +77,22 @@ export default async function Page({ params, searchParams }: PageProps) {
     { question: faqT('q3'), answer: faqT('a3') },
   ];
 
+  const loc = locale as Locale;
+  const itemListItems = projects.map((p) => ({
+    name: pickLocale(p.title, loc),
+    url: `/${locale}/projects/${p.slug}/`,
+    image: p.hero_image || p.images?.[0]?.src,
+  }));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
+      <ItemListSchema
+        items={itemListItems}
+        name={`${company.name} — Renovation Projects`}
+        description={`${itemListItems.length} completed renovation projects across Metro Vancouver — kitchens, bathrooms, basements and whole-house remodels.`}
+      />
       <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} initialService={initialService} />
     </>
   );
