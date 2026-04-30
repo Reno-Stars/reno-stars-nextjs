@@ -267,6 +267,40 @@ export default function BlogPostPage({ locale, post, company, services = [], are
         </section>
       )}
 
+      {/* Cost Guides — every blog post should funnel to at least one cost
+          guide. Internal-link audit (2026-04-30) flagged that blog posts
+          don't link to specific guides, breaking the topical-authority
+          pyramid. Labels are English-only because i18n keys aren't wired
+          up; an EN label on a /pa/blog/ page is acceptable vs a missing-
+          key crash, and the URL paths route to localized guide pages
+          regardless. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
+            Real Renovation Costs in Vancouver
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { slug: 'kitchen-renovation-cost-vancouver', label: 'Kitchen Renovation Cost' },
+              { slug: 'bathroom-renovation-cost-vancouver', label: 'Bathroom Renovation Cost' },
+              { slug: 'whole-house-renovation-cost-vancouver', label: 'Whole-House Renovation Cost' },
+              { slug: 'basement-renovation-cost-vancouver', label: 'Basement Renovation Cost' },
+              { slug: 'commercial-renovation-cost-vancouver', label: 'Commercial Renovation Cost' },
+              { slug: 'cabinet-refinishing-cost-vancouver', label: 'Cabinet Refinishing Cost' },
+            ].map((g) => (
+              <Link
+                key={g.slug}
+                href={`/guides/${g.slug}`}
+                className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+              >
+                {g.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto text-center">
