@@ -23,6 +23,7 @@
     "processLinkText": "ببینید چگونه کار می‌کنیم",
     "blogLinkText": "نکات و راهنماهای بازسازی",
     "serviceLinkText": "همه چیز درباره {service}",
+    "areaLinkText": "همه نوسازی‌ها در {area}",
     "nearbyAreas": "ما به مناطق نزدیک نیز خدمات می‌دهیم"
   }
 }

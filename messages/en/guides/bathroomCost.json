@@ -79,6 +79,42 @@
         "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
       }
     },
+    "cityComparison": {
+      "title": "Bathroom Renovation Costs by City",
+      "subtitle": "How budgets vary across Metro Vancouver based on our completed projects",
+      "headerCity": "City",
+      "headerProjects": "Projects",
+      "headerRange": "Budget Range",
+      "footnote": "Cities not listed are still serviced — we just have not completed enough bathroom-only projects there to publish a meaningful range yet."
+    },
+    "questions": {
+      "title": "Questions to Ask Your Bathroom Renovation Contractor",
+      "subtitle": "Use these to compare quotes apples-to-apples and avoid surprises mid-project",
+      "q1": {
+        "title": "Is plumbing relocation included in your quote?",
+        "description": "Moving a drain or supply line typically adds $2,000–$6,000. Contractors who quote without specifying often add it later as a change order. Confirm in writing whether the toilet, shower drain, and vanity supply lines are staying in place."
+      },
+      "q2": {
+        "title": "What waterproofing system do you use?",
+        "description": "Reputable bathroom installs use a tested membrane (Schluter Kerdi, Laticrete Hydro Ban, or equivalent). If the contractor names a generic 'liquid waterproofing' or skips the question, walk away — water damage is the most expensive bathroom failure mode."
+      },
+      "q3": {
+        "title": "Are permits and inspections included?",
+        "description": "Most Metro Vancouver bathrooms need a plumbing permit when fixtures are added or relocated. Permit fees run $200–$800. Confirm whether the contractor handles permit applications and rough-in/final inspections, or whether you are responsible."
+      },
+      "q4": {
+        "title": "Who is the actual installation crew?",
+        "description": "Some companies sub the entire job to a third-party crew you never meet. Ask whether the people doing demolition, framing, plumbing, tile, and finish work are employees, long-term subcontractors, or one-time hires. Continuity affects warranty follow-through."
+      },
+      "q5": {
+        "title": "What is the workmanship warranty and what does it cover?",
+        "description": "Industry standard is 1 year. Quality contractors offer 2–3 years and explicitly cover tile cracking, grout failure, leaking shower pans, vanity drawer alignment, and paint finish. Get warranty terms in writing before signing."
+      },
+      "q6": {
+        "title": "What is your payment schedule and milestone breakdown?",
+        "description": "Avoid contractors asking for >30% upfront. Healthy schedules are 30% deposit, 30% at rough-in, 30% at tile/cabinet install, 10% at final inspection. Milestone payments protect both parties if scope or quality issues arise."
+      }
+    },
     "cta": {
       "heading": "Get Your Free Bathroom Renovation Quote",
       "subtitle": "Tell us about your project and receive a detailed estimate within 48 hours, no obligation."

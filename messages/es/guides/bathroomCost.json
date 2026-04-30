@@ -79,6 +79,42 @@
         "description": "Escatimar en impermeabilización lleva a reparaciones costosas más tarde. Los sistemas de membrana adecuados agregan $1,500-$3,500 al inicio pero evitan $10,000+ en daños por agua a futuro."
       }
     },
+    "cityComparison": {
+      "title": "Costos de renovación de baños por ciudad",
+      "subtitle": "Cómo varían los presupuestos en Metro Vancouver según nuestros proyectos completados",
+      "headerCity": "Ciudad",
+      "headerProjects": "Proyectos",
+      "headerRange": "Rango de presupuesto",
+      "footnote": "Las ciudades que no figuran en la lista todavía cuentan con servicios; simplemente no hemos completado suficientes proyectos solo de baños allí para publicar una gama significativa todavía."
+    },
+    "questions": {
+      "title": "Preguntas para hacerle a su contratista de renovación de baños",
+      "subtitle": "Úselos para comparar cotizaciones de manzanas con manzanas y evitar sorpresas a mitad del proyecto.",
+      "q1": {
+        "title": "¿La reubicación de plomería está incluida en su cotización?",
+        "description": "Mover un drenaje o una línea de suministro generalmente agrega entre $2000 y $6000. Los contratistas que cotizan sin especificar a menudo lo agregan más tarde como una orden de cambio. Confirme por escrito si las líneas de suministro del inodoro, el desagüe de la ducha y el tocador permanecen en su lugar."
+      },
+      "q2": {
+        "title": "¿Qué sistema de impermeabilización utiliza?",
+        "description": "Las instalaciones de baños de buena reputación utilizan una membrana probada (Schluter Kerdi, Laticrete Hydro Ban o equivalente). Si el contratista menciona una 'impermeabilización líquida' genérica o se salta la pregunta, aléjese: el daño por agua es el modo de falla más costoso en el baño."
+      },
+      "q3": {
+        "title": "¿Se incluyen permisos e inspecciones?",
+        "description": "La mayoría de los baños de Metro Vancouver necesitan un permiso de plomería cuando se agregan o reubican accesorios. Las tarifas de los permisos oscilan entre $ 200 y $ 800. Confirme si el contratista maneja las solicitudes de permisos y las inspecciones preliminares/finales, o si usted es responsable."
+      },
+      "q4": {
+        "title": "¿Quién es el equipo de instalación real?",
+        "description": "Algunas empresas encargan todo el trabajo a un equipo de terceros que nunca conoces. Pregunte si las personas que realizan trabajos de demolición, estructuras, plomería, mosaicos y acabados son empleados, subcontratistas a largo plazo o contratados por única vez. La continuidad afecta el seguimiento de la garantía."
+      },
+      "q5": {
+        "title": "¿Qué es la garantía de mano de obra y qué cubre?",
+        "description": "El estándar de la industria es de 1 año. Los contratistas de calidad ofrecen de 2 a 3 años y cubren explícitamente grietas en los azulejos, fallas en la lechada, fugas en los platos de la ducha, alineación de los cajones del tocador y acabado de pintura. Obtenga los términos de la garantía por escrito antes de firmar."
+      },
+      "q6": {
+        "title": "¿Cuál es su cronograma de pagos y desglose de los hitos?",
+        "description": "Evite que los contratistas pidan >30% por adelantado. Los cronogramas saludables son 30 % de depósito, 30 % en la instalación preliminar, 30 % en la instalación de losetas/gabinetes y 10 % en la inspección final. Los pagos por hitos protegen a ambas partes si surgen problemas de alcance o calidad."
+      }
+    },
     "cta": {
       "heading": "Reciba su cotización gratis de remodelación de baño",
       "subtitle": "Cuéntenos sobre su proyecto y reciba una estimación detallada en menos de 48 horas, sin compromiso."

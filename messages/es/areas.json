@@ -23,6 +23,7 @@
     "processLinkText": "Vea cómo trabajamos",
     "blogLinkText": "Consejos y guías de remodelación",
     "serviceLinkText": "Todo sobre {service}",
+    "areaLinkText": "Todas las Renovaciones en {area}",
     "nearbyAreas": "También servimos áreas cercanas"
   }
 }

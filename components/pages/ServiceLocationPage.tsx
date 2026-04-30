@@ -223,6 +223,13 @@ export default function ServiceLocationPage({
           >
             {t('areas.serviceLinkText', { service: localizedService.title })} <ArrowRight className="w-4 h-4" />
           </Link>
+          <Link
+            href={`/areas/${citySlug}`}
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            {t('areas.areaLinkText', { area: localizedArea.name })} <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 

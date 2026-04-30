@@ -79,6 +79,42 @@
         "description": "Ang pagtitipid sa waterproofing ay nagdudulot ng magastos na repairs sa hinaharap. Tamang membrane systems ay $1,500–3,500 sa simula pero pinipigilan ang $10,000+ sa water damage sa hinaharap."
       }
     },
+    "cityComparison": {
+      "title": "Mga Gastos sa Pagkukumpuni ng Banyo ayon sa Lungsod",
+      "subtitle": "Paano nag-iiba-iba ang mga badyet sa Metro Vancouver batay sa aming mga natapos na proyekto",
+      "headerCity": "lungsod",
+      "headerProjects": "Mga proyekto",
+      "headerRange": "Saklaw ng Badyet",
+      "footnote": "Ang mga lungsod na hindi nakalista ay sineserbisyuhan pa rin — hindi pa namin nakumpleto ang sapat na mga proyektong banyo lamang doon upang mag-publish ng makabuluhang hanay."
+    },
+    "questions": {
+      "title": "Mga Tanong na Itatanong sa Iyong Contractor sa Pagkukumpuni ng Banyo",
+      "subtitle": "Gamitin ang mga ito upang ihambing ang mga quote na mansanas-sa-mansanas at maiwasan ang mga sorpresa sa kalagitnaan ng proyekto",
+      "q1": {
+        "title": "Kasama ba sa iyong quote ang paglilipat ng tubo?",
+        "description": "Ang paglipat ng drain o linya ng supply ay karaniwang nagdaragdag ng $2,000–$6,000. Ang mga kontratista na sumipi nang hindi tinukoy ay madalas na idagdag ito sa ibang pagkakataon bilang isang order ng pagbabago. Kumpirmahin sa pamamagitan ng pagsulat kung ang toilet, shower drain, at mga linya ng supply ng vanity ay nananatili sa lugar."
+      },
+      "q2": {
+        "title": "Anong waterproofing system ang ginagamit mo?",
+        "description": "Gumagamit ng nasubok na lamad ang mga mapagkakatiwalaang pag-install sa banyo (Schluter Kerdi, Laticrete Hydro Ban, o katumbas nito). Kung ang pangalan ng kontratista ay isang generic na 'liquid waterproofing' o laktawan ang tanong, lumayo - ang pagkasira ng tubig ay ang pinakamahal na bathroom failure mode."
+      },
+      "q3": {
+        "title": "Kasama ba ang mga permit at inspeksyon?",
+        "description": "Karamihan sa mga banyo sa Metro Vancouver ay nangangailangan ng permiso sa pagtutubero kapag ang mga fixture ay idinagdag o inilipat. Ang mga bayarin sa permit ay $200–$800. Kumpirmahin kung pinangangasiwaan ng kontratista ang mga aplikasyon ng permit at rough-in/final inspection, o kung ikaw ang may pananagutan."
+      },
+      "q4": {
+        "title": "Sino ang aktwal na crew ng pag-install?",
+        "description": "Ang ilang kumpanya ay nagsa-sub ng buong trabaho sa isang third-party na crew na hindi mo kailanman nakikilala. Itanong kung ang mga taong gumagawa ng demolisyon, pag-frame, pagtutubero, baldosa, at pagtatapos ng trabaho ay mga empleyado, pangmatagalang subcontractor, o isang beses na pag-hire. Ang pagpapatuloy ay nakakaapekto sa warranty follow-through."
+      },
+      "q5": {
+        "title": "Ano ang warranty sa pagkakagawa at ano ang saklaw nito?",
+        "description": "Ang pamantayan ng industriya ay 1 taon. Ang mga de-kalidad na kontratista ay nag-aalok ng 2–3 taon at tahasang tinatakpan ang pag-crack ng tile, pagkasira ng grawt, pagtulo ng mga shower pan, pag-align ng vanity drawer, at pagpinta. Kumuha ng nakasulat na mga tuntunin ng warranty bago pumirma."
+      },
+      "q6": {
+        "title": "Ano ang iyong iskedyul ng pagbabayad at milestone breakdown?",
+        "description": "Iwasan ang mga kontratista na humihingi ng higit sa 30% nang maaga. Ang mga malusog na iskedyul ay 30% na deposito, 30% sa rough-in, 30% sa tile/cabinet install, 10% sa huling inspeksyon. Pinoprotektahan ng mga milestone na pagbabayad ang parehong partido kung may mga isyu sa saklaw o kalidad."
+      }
+    },
     "cta": {
       "heading": "Kumuha ng Iyong Libreng Bathroom Renovation Quote",
       "subtitle": "Sabihin sa amin ang tungkol sa iyong proyekto at makatatanggap ng detalyadong estimate sa loob ng 48 oras, walang obligasyon."

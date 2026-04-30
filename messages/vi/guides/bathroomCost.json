@@ -79,6 +79,42 @@
         "description": "Tiết kiệm trên chống thấm dẫn đến sửa chữa tốn kém sau này. Hệ thống màng đúng cách thêm $1,500–3,500 từ đầu nhưng ngăn $10,000+ hư hỏng do nước về sau."
       }
     },
+    "cityComparison": {
+      "title": "Chi phí cải tạo phòng tắm theo thành phố",
+      "subtitle": "Ngân sách khác nhau như thế nào trên khắp Metro Vancouver dựa trên các dự án đã hoàn thành của chúng tôi",
+      "headerCity": "Thành phố",
+      "headerProjects": "Dự án",
+      "headerRange": "Phạm vi ngân sách",
+      "footnote": "Các thành phố không được liệt kê vẫn được phục vụ - chúng tôi chưa hoàn thành đủ dự án chỉ dành cho phòng tắm ở đó để xuất bản một phạm vi có ý nghĩa."
+    },
+    "questions": {
+      "title": "Các câu hỏi để hỏi nhà thầu cải tạo phòng tắm của bạn",
+      "subtitle": "Sử dụng những điều này để so sánh các trích dẫn táo bạo và tránh những bất ngờ giữa dự án",
+      "q1": {
+        "title": "Việc di dời hệ thống ống nước có được bao gồm trong báo giá của bạn không?",
+        "description": "Việc di chuyển đường ống thoát nước hoặc đường cung cấp thường tốn thêm từ 2.000 đến 6.000 USD. Các nhà thầu báo giá mà không nêu rõ thường thêm nó vào sau như một yêu cầu thay đổi. Xác nhận bằng văn bản xem đường ống thoát nước của bồn cầu, vòi hoa sen và bàn trang điểm có còn nguyên tại chỗ hay không."
+      },
+      "q2": {
+        "title": "Bạn sử dụng hệ thống chống thấm nào?",
+        "description": "Các công ty lắp đặt phòng tắm có uy tín sử dụng màng đã được kiểm nghiệm (Schluter Kerdi, Laticrete Hydro Ban hoặc tương đương). Nếu nhà thầu nêu tên chung chung là 'chống thấm chất lỏng' hoặc bỏ qua câu hỏi, hãy bỏ đi - hư hỏng do nước là trường hợp hư hỏng tốn kém nhất trong phòng tắm."
+      },
+      "q3": {
+        "title": "Có bao gồm giấy phép và kiểm tra không?",
+        "description": "Hầu hết các phòng tắm ở Metro Vancouver đều cần có giấy phép sửa ống nước khi lắp thêm hoặc di dời đồ đạc. Lệ phí giấy phép dao động từ $200–$800. Xác nhận xem nhà thầu có xử lý đơn xin giấy phép và kiểm tra sơ bộ/cuối cùng hay không hoặc liệu bạn có chịu trách nhiệm hay không."
+      },
+      "q4": {
+        "title": "Đội ngũ lắp đặt thực sự là ai?",
+        "description": "Một số công ty giao toàn bộ công việc cho một nhóm bên thứ ba mà bạn chưa từng gặp. Hỏi xem những người thực hiện công việc phá dỡ, đóng khung, sửa ống nước, lát gạch và hoàn thiện là nhân viên, nhà thầu phụ dài hạn hay người thuê một lần. Tính liên tục ảnh hưởng đến việc thực hiện bảo hành."
+      },
+      "q5": {
+        "title": "Bảo hành tay nghề là gì và nó bao gồm những gì?",
+        "description": "Tiêu chuẩn ngành là 1 năm. Các nhà thầu chất lượng đề nghị bảo hành từ 2–3 năm và xử lý rõ ràng các vết nứt gạch, hư hỏng vữa, bồn tắm bị rò rỉ, căn chỉnh ngăn kéo trang điểm và lớp sơn hoàn thiện. Nhận các điều khoản bảo hành bằng văn bản trước khi ký kết."
+      },
+      "q6": {
+        "title": "Lịch trình thanh toán và phân tích các mốc quan trọng của bạn là gì?",
+        "description": "Tránh các nhà thầu yêu cầu trả trước >30%. Lịch trình lành mạnh là đặt cọc 30%, 30% khi hoàn thiện thô, 30% khi lắp đặt gạch/tủ, 10% khi kiểm tra lần cuối. Các khoản thanh toán quan trọng sẽ bảo vệ cả hai bên nếu phát sinh vấn đề về phạm vi hoặc chất lượng."
+      }
+    },
     "cta": {
       "heading": "Nhận Báo Giá Cải Tạo Phòng Tắm Miễn Phí",
       "subtitle": "Hãy cho chúng tôi biết về dự án của bạn và nhận ước tính chi tiết trong vòng 48 giờ, không có nghĩa vụ."

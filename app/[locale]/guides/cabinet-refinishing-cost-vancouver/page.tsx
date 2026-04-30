@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import CabinetRefinishingCostGuidePage from '@/components/pages/CabinetRefinishingCostGuidePage';
-import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
+import { ArticleSchema, BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
-import { getCabinetProjectsForGuide } from '@/lib/db/queries';
+import { getCabinetProjectsForGuide, getCompanyFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -57,9 +57,11 @@ export default async function Page({ params }: PageProps) {
     projects = [];
   }
 
-  const [nav, t] = await Promise.all([
+  const [nav, t, mt, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'guides.cabinetCost' }),
+    getTranslations({ locale, namespace: 'metadata.guides.cabinetCost' }),
+    getCompanyFromDb(),
   ]);
 
   const breadcrumbs = [
@@ -80,6 +82,13 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
+      <ArticleSchema
+        company={company}
+        headline={mt('title')}
+        description={mt('description')}
+        url={`/${locale}/guides/cabinet-refinishing-cost-vancouver/`}
+        authorName={`${company.name} Team`}
+      />
       <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} />
     </>
   );

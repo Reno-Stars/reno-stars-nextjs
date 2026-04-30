@@ -23,6 +23,7 @@
     "processLinkText": "공정 보기",
     "blogLinkText": "리노베이션 팁 & 가이드",
     "serviceLinkText": "{service} 자세히 보기",
+    "areaLinkText": "{area}의 모든 리노베이션",
     "nearbyAreas": "인근 지역도 서비스"
   }
 }

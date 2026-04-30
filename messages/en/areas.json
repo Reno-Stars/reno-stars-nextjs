@@ -23,6 +23,7 @@
     "processLinkText": "See How We Work",
     "blogLinkText": "Renovation Tips & Guides",
     "serviceLinkText": "All About {service}",
+    "areaLinkText": "All Renovations in {area}",
     "nearbyAreas": "We Also Serve Nearby Areas"
   }
 }

@@ -23,6 +23,7 @@
     "processLinkText": "了解我们的工作方式",
     "blogLinkText": "装修技巧与指南",
     "serviceLinkText": "了解{service}详情",
+    "areaLinkText": "{area}全部装修服务",
     "nearbyAreas": "我们也服务附近地区"
   }
 }

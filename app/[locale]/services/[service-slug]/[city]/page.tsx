@@ -155,6 +155,46 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Bathroom Remodel Vancouver | $15K–$45K | Reno Stars',
       description: 'Vancouver bathroom remodel from $15K–$45K — walk-in showers, tub conversions, custom vanities. 3–6 wks. 20+ yrs, $5M insured, 3-yr warranty. Free quote.',
     },
+    // 2026-04-30 GSC pass: missing high-impression combos. Each one targets
+    // a specific city+service query Google was matching to a less-relevant
+    // URL (cannibalization). Distinct H1 + city-scoped price range moves
+    // these toward page-1 positioning.
+    'kitchen/burnaby': {
+      title: 'Kitchen Renovation Burnaby | $20K–$60K | Reno Stars',
+      description: 'Burnaby kitchen renovation — Metrotown condos, Heights SFH, townhouse galleys. Custom & prefab cabinets, quartz countertops, full layout. $20K–$60K. Free quote.',
+    },
+    'kitchen/richmond': {
+      title: 'Kitchen Renovation Richmond BC | $20K–$60K | Reno Stars',
+      description: 'Richmond kitchen renovation — Steveston, Brighouse, Terra Nova. Cabinet replacement, quartz countertops, layout reconfiguration. $20K–$60K, 3–5 weeks. Free quote.',
+    },
+    'kitchen/vancouver': {
+      title: 'Kitchen Renovation Vancouver | $25K–$72K | Reno Stars',
+      description: 'Vancouver kitchen renovation — Kitsilano, Mount Pleasant, Dunbar SFH plus condos throughout downtown. Custom cabinets, quartz, layout redesign. Real costs $25K–$72K. Free quote.',
+    },
+    'kitchen/surrey': {
+      title: 'Kitchen Renovation Surrey | $20K–$55K | Reno Stars',
+      description: 'Surrey kitchen renovation — Fleetwood, Newton, Cloverdale, South Surrey. Custom & prefab cabinets, quartz, layout redesign. $20K–$55K, 3–5 weeks. Free quote.',
+    },
+    'bathroom/richmond': {
+      title: 'Bathroom Renovation Richmond BC | $15K–$45K | Reno Stars',
+      description: 'Richmond bathroom renovation — Steveston, Brighouse, Terra Nova, Hamilton. Walk-in showers, tub conversions, custom vanities. $15K–$45K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/north-vancouver': {
+      title: 'Bathroom Renovation North Vancouver | $15K–$45K | Reno Stars',
+      description: 'North Vancouver bathroom renovation — Lynn Valley, Lonsdale, Deep Cove. Walk-in showers, soaker tubs, custom vanities. $15K–$45K, 3–6 weeks. Free quote.',
+    },
+    'whole-house/burnaby': {
+      title: 'Whole-House Renovation Burnaby | $50K–$200K+ | Reno Stars',
+      description: 'Burnaby whole-house renovation — Heights SFH, Metrotown townhouses, Capitol Hill homes. Strata-compliant. $50K–$200K+ from real projects. 18+ yrs, $5M insured.',
+    },
+    'whole-house/richmond': {
+      title: 'Whole-House Renovation Richmond BC | $50K–$200K+ | Reno Stars',
+      description: 'Richmond whole-house renovation — Steveston heritage, Brighouse condos, Terra Nova SFH. $50K–$200K+ from real projects. 18+ yrs, $5M insured, 3-yr warranty.',
+    },
+    'whole-house/surrey': {
+      title: 'Whole-House Renovation Surrey | $50K–$200K+ | Reno Stars',
+      description: 'Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;

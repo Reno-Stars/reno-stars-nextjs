@@ -13,6 +13,7 @@ import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TrustBadgesSection from '@/components/home/TrustBadgesSection';
 import PartnersSection from '@/components/home/PartnersSection';
+import AreasLinkSection from '@/components/home/AreasLinkSection';
 import BlogSection from '@/components/home/BlogSection';
 import ShowroomSection from '@/components/home/ShowroomSection';
 
@@ -102,6 +103,7 @@ export default function HomePage({
       <AboutSection items={aboutItems} translations={t.about} />
       <TrustBadgesSection badges={trustBadges} srTitle={t.trustBadges.srTitle} />
       <PartnersSection partners={partners} translations={t.partners} />
+      <AreasLinkSection />
       <FaqSection faqs={faqs} translations={t.faq} />
       <BlogSection posts={blogPosts} translations={t.blog} />
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />

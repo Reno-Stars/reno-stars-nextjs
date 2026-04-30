@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import BathroomCostGuidePage from '@/components/pages/BathroomCostGuidePage';
-import { BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
+import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
-import { getBathroomProjectsForGuide } from '@/lib/db/queries';
+import { getBathroomProjectsForGuide, getCompanyFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -50,10 +50,12 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, projects] = await Promise.all([
+  const [nav, t, mt, projects, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'guides.bathroomCost' }),
+    getTranslations({ locale, namespace: 'metadata.guides.bathroomCost' }),
     getBathroomProjectsForGuide(),
+    getCompanyFromDb(),
   ]);
 
   const breadcrumbs = [
@@ -107,6 +109,13 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
+      <ArticleSchema
+        company={company}
+        headline={mt('title')}
+        description={mt('description')}
+        url={`/${locale}/guides/bathroom-renovation-cost-vancouver/`}
+        authorName={`${company.name} Team`}
+      />
       <HowToSchema
         name={locale === 'zh' ? '如何规划温哥华浴室装修预算' : 'How to Budget for a Bathroom Renovation in Vancouver'}
         description={locale === 'zh'

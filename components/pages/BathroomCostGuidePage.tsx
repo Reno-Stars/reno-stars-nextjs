@@ -193,6 +193,53 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </section>
       )}
 
+      {projectsByCity.length > 1 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('cityComparison.title')}</h2>
+            <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('cityComparison.subtitle')}</p>
+            <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+              <div className="grid grid-cols-3 gap-3 p-4 font-bold text-sm" style={{ backgroundColor: NAVY_PALE, color: NAVY }}>
+                <span>{t('cityComparison.headerCity')}</span>
+                <span className="text-center">{t('cityComparison.headerProjects')}</span>
+                <span className="text-right">{t('cityComparison.headerRange')}</span>
+              </div>
+              {projectsByCity.map(([city, cityProjects]) => {
+                const ranges = cityProjects.map((p) => parseBudgetRange(p.budgetRange)).filter((r): r is [number, number] => r !== null);
+                if (ranges.length === 0) return null;
+                const lo = Math.min(...ranges.map((r) => r[0]));
+                const hi = Math.max(...ranges.map((r) => r[1]));
+                return (
+                  <div key={city} className="grid grid-cols-3 gap-3 p-4 text-sm border-t" style={{ borderColor: SURFACE_ALT, color: TEXT_MID }}>
+                    <span className="font-semibold" style={{ color: TEXT }}>{city}</span>
+                    <span className="text-center">{cityProjects.length}</span>
+                    <span className="text-right font-semibold" style={{ color: GOLD }}>
+                      {formatCurrency(lo)} – {formatCurrency(hi)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-xs text-center mt-4" style={{ color: TEXT_MUTED }}>{t('cityComparison.footnote')}</p>
+          </div>
+        </section>
+      )}
+
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('questions.title')}</h2>
+          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('questions.subtitle')}</p>
+          <div className="space-y-4">
+            {(['q1', 'q2', 'q3', 'q4', 'q5', 'q6'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold mb-2" style={{ color: TEXT }}>{t(`questions.${key}.title`)}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`questions.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>{t('tips.title')}</h2>

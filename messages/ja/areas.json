@@ -23,6 +23,7 @@
     "processLinkText": "施工フローを見る",
     "blogLinkText": "リノベーションのコツとガイド",
     "serviceLinkText": "{service}について",
+    "areaLinkText": "{area}のすべてのリノベーション",
     "nearbyAreas": "近隣エリアにも対応"
   }
 }
