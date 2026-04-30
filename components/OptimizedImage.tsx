@@ -102,13 +102,19 @@ export default function OptimizedImage({
   // Non-external images (local paths like /logo.png) — simple img, no LQIP
   const isExternal = src.startsWith('http://') || src.startsWith('https://');
   if (!isExternal || placeholder === 'empty') {
+    // For external images we always emit src/srcset on SSR so the W3C
+    // validator (and curl/View Source) sees a complete <img>. The browser's
+    // native loading="lazy" already defers the actual fetch — the previous
+    // isInView gate was redundant and produced invalid HTML for lazy logos.
+    const resolvedSrc = isExternal ? buildOptimizedUrl(src, 828, quality) : src;
+    const resolvedSrcSet = isExternal ? buildSrcSet(src, quality) : undefined;
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         ref={imgRef as React.RefObject<HTMLImageElement>}
-        src={isExternal ? (isInView ? buildOptimizedUrl(src, 828, quality) : undefined) : src}
-        srcSet={isExternal && isInView ? buildSrcSet(src, quality) : undefined}
-        sizes={isExternal ? sizes : undefined}
+        src={resolvedSrc}
+        srcSet={resolvedSrcSet}
+        sizes={resolvedSrcSet ? sizes : undefined}
         alt={alt}
         width={fill ? undefined : width}
         height={fill ? undefined : height}

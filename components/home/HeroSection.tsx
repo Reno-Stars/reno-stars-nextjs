@@ -204,14 +204,14 @@ export default function HeroSection({ company, googleRating, translations: t }: 
           </span>
         </div>
 
-        {/* Slide indicators */}
-        <div className="flex gap-2" role="tablist" aria-label="Hero slides">
+        {/* Slide indicators — carousel pagination, not tabs (no associated tabpanels) */}
+        <div className="flex gap-2" role="group" aria-label="Hero slides">
           {slides.map((_, i) => (
             <button
               key={i}
-              role="tab"
-              aria-selected={i === current}
-              aria-label={slides[i].title}
+              type="button"
+              aria-current={i === current ? 'true' : undefined}
+              aria-label={`Go to slide ${i + 1}: ${slides[i].title}`}
               onClick={() => goTo(i)}
               className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
               style={{
