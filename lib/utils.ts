@@ -50,6 +50,31 @@ export function pickLocaleOptional<T>(field: Localized<T> | undefined, locale: L
   return pickLocale(field, locale);
 }
 
+/**
+ * Returns true when a Localized<string> field has genuine content for the
+ * requested locale (or for `en`/`zh`, which always do — they're the source
+ * columns). Returns false when the locale would silently fall back to `en`.
+ *
+ * Use this to drive a dynamic `noindex` on pages whose body would otherwise
+ * publish English content under a non-EN URL — Google flags those as duplicate
+ * content / soft 404, and the bare /ja/, /ko/, /es/, /pa/, /tl/, /fa/, /vi/,
+ * /zh-Hant/ URLs eat crawl budget without contributing rankings.
+ *
+ * Pass the most "load-bearing" content field (page body, long description) —
+ * not the title or short description, which are often translated even when
+ * the body isn't.
+ */
+export function hasNativeContent(
+  field: Localized<string> | undefined,
+  locale: Locale,
+): boolean {
+  if (locale === 'en' || locale === 'zh') return true;
+  if (!field) return false;
+  const v = (field as Record<string, string | undefined>)[locale];
+  if (!v) return false;
+  return v !== field.en;
+}
+
 // Map non-base locales to the camelCase suffix used in the DB localizations
 // jsonb. e.g. 'ja' → 'Ja', 'zh-Hant' → 'ZhHant'. The base locales (en, zh)
 // have dedicated columns and are not represented in this map.
