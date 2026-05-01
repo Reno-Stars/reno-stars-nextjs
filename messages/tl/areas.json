@@ -24,6 +24,8 @@
     "blogLinkText": "Renovation Tips at Guides",
     "serviceLinkText": "Lahat Tungkol sa {service}",
     "areaLinkText": "Lahat ng Renovations sa {area}",
-    "nearbyAreas": "Sinisilbihan din Namin ang mga Karatig na Lugar"
+    "nearbyAreas": "Sinisilbihan din Namin ang mga Karatig na Lugar",
+    "neighbourhoodsTitle": "Mga Kapitbahayan na Pinaglilingkuran Namin sa {area}",
+    "neighbourhoodsSubtitle": "Mga proyekto sa pagsasaayos sa mga komunidad na ito ng {area}. Banggitin ang iyong kapitbahayan kapag humiling ka ng isang quote — alam namin ang quirks ng bawat isa sa permit at logistik ng supplier."
   }
 }

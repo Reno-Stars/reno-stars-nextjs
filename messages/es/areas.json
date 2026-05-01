@@ -24,6 +24,8 @@
     "blogLinkText": "Consejos y guías de remodelación",
     "serviceLinkText": "Todo sobre {service}",
     "areaLinkText": "Todas las Renovaciones en {area}",
-    "nearbyAreas": "También servimos áreas cercanas"
+    "nearbyAreas": "También servimos áreas cercanas",
+    "neighbourhoodsTitle": "Barrios que servimos en {area}",
+    "neighbourhoodsSubtitle": "Proyectos de renovación en estas comunidades {area}. Mencione su vecindario cuando solicite una cotización: conocemos las peculiaridades de los permisos y la logística de los proveedores de cada uno."
   }
 }

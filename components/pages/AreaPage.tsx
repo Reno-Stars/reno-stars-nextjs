@@ -43,6 +43,27 @@ function cityReviewOffset(slug: string, total: number): number {
   return Math.abs(h) % total;
 }
 
+// Neighbourhoods covered per city. Surface as long-tail keyword hooks
+// (e.g. "kitsilano renovation" → /areas/vancouver/) without needing a
+// programmatic neighbourhood route. Source: GBP service-area definitions
+// + intro override copy. Keep 4–8 per city, ordered by population/search.
+const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
+  vancouver: ['Kitsilano', 'Mount Pleasant', 'Kerrisdale', 'Dunbar', 'West End', 'Yaletown', 'Marpole', 'Oakridge'],
+  burnaby: ['Metrotown', 'The Heights', 'Capitol Hill', 'Brentwood', 'Burnaby Mountain', 'South Burnaby', 'Lougheed'],
+  coquitlam: ['Burke Mountain', 'Westwood Plateau', 'Maillardville', 'Austin Heights', 'Eagle Ridge', 'Ranch Park'],
+  surrey: ['Fleetwood', 'Newton', 'Cloverdale', 'South Surrey', 'Guildford', 'Whalley'],
+  richmond: ['Steveston', 'Brighouse', 'Terra Nova', 'Hamilton', 'Thompson', 'Sea Island'],
+  'north-vancouver': ['Lynn Valley', 'Lonsdale', 'Deep Cove', 'Edgemont', 'Lower Lonsdale', 'Capilano'],
+  'west-vancouver': ['Caulfeild', 'Dundarave', 'Ambleside', 'British Properties', 'Horseshoe Bay'],
+  'new-westminster': ['Quay', 'Sapperton', 'Queens Park', 'Brow of the Hill', 'West End'],
+  'maple-ridge': ['Albion', 'Cottonwood', 'Hammond', 'Haney', 'West Maple Ridge', 'Whonnock'],
+  'port-coquitlam': ['Citadel Heights', 'Lincoln Park', 'Oxford Heights', 'Birchland Manor', 'Riverwood'],
+  'port-moody': ['Heritage Mountain', 'Ioco', 'Newport', 'Glenayre', 'Inlet Centre'],
+  delta: ['Ladner', 'Tsawwassen', 'North Delta', 'Beach Grove', 'Sunshine Hills'],
+  langley: ['Walnut Grove', 'Willoughby Heights', 'Brookswood', 'Aldergrove', 'Fort Langley'],
+  'white-rock': ['East Beach', 'West Beach', 'White Rock Hill', 'South Surrey'],
+};
+
 export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, googleReviews }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
@@ -219,6 +240,32 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </div>
       </section>
+
+      {/* Neighbourhoods — long-tail keyword surface (e.g. "kitsilano renovation"
+          → /areas/vancouver/) without programmatic neighbourhood routes. */}
+      {CITY_NEIGHBOURHOODS[citySlug]?.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>
+              {t('areas.neighbourhoodsTitle', { area: localizedArea.name })}
+            </h2>
+            <p className="text-sm mb-6 max-w-3xl" style={{ color: TEXT_MID }}>
+              {t('areas.neighbourhoodsSubtitle', { area: localizedArea.name })}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {CITY_NEIGHBOURHOODS[citySlug].map((n) => (
+                <span
+                  key={n}
+                  className="px-4 py-2 rounded-xl text-sm font-medium"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {n}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Reviews — 2 reviews rotated by city slug for diversity across the 14 area pages */}
       {cityReviews.length > 0 && (

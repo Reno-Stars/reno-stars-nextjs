@@ -24,6 +24,8 @@
     "blogLinkText": "Mẹo & Hướng Dẫn Cải Tạo",
     "serviceLinkText": "Tất Cả Về {service}",
     "areaLinkText": "Tất Cả Cải Tạo tại {area}",
-    "nearbyAreas": "Chúng Tôi Cũng Phục Vụ Các Khu Vực Lân Cận"
+    "nearbyAreas": "Chúng Tôi Cũng Phục Vụ Các Khu Vực Lân Cận",
+    "neighbourhoodsTitle": "Các khu vực chúng tôi phục vụ ở {area}",
+    "neighbourhoodsSubtitle": "Các dự án cải tạo trên khắp các cộng đồng {area} này. Đề cập đến khu vực lân cận của bạn khi bạn yêu cầu báo giá - chúng tôi biết những điều kỳ quặc về giấy phép của mỗi nơi và dịch vụ hậu cần của nhà cung cấp."
   }
 }

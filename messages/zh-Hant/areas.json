@@ -24,6 +24,8 @@
     "blogLinkText": "裝修技巧與指南",
     "serviceLinkText": "瞭解{service}詳情",
     "areaLinkText": "{area}全部裝修服務",
-    "nearbyAreas": "我們也服務附近地區"
+    "nearbyAreas": "我們也服務附近地區",
+    "neighbourhoodsTitle": "我們在 {area} 服務的社區",
+    "neighbourhoodsSubtitle": "這些 {area} 社區的改造計畫。當您要求報價時，請提及您的鄰居 - 我們了解每個人的許可怪癖和供應商物流。"
   }
 }

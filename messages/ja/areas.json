@@ -24,6 +24,8 @@
     "blogLinkText": "リノベーションのコツとガイド",
     "serviceLinkText": "{service}について",
     "areaLinkText": "{area}のすべてのリノベーション",
-    "nearbyAreas": "近隣エリアにも対応"
+    "nearbyAreas": "近隣エリアにも対応",
+    "neighbourhoodsTitle": "{area}でサービスを提供する地域",
+    "neighbourhoodsSubtitle": "これらの {area} コミュニティ全体の改修プロジェクト。見積もりを依頼する際に、お住まいの地域について言及してください。私たちは、それぞれの許可の癖やサプライヤーの物流状況を理解しています。"
   }
 }
