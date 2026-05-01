@@ -6,15 +6,21 @@
     },
     "kitchen": {
       "title": "Kitchen Renovation Cost",
-      "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations."
+      "description": "Complete breakdown of kitchen renovation costs in Vancouver, from budget-friendly updates to high-end transformations.",
+      "range": "$15K – $72K",
+      "passage": "Kitchen renovations in Vancouver span from $15,000 for cosmetic refreshes (paint, hardware, countertop swap) up to $72,000 for full custom-cabinet rebuilds with quartz islands and appliance upgrades. Material choice drives the biggest cost swing — stock cabinets vs custom millwork can mean $20K of difference on the same footprint."
     },
     "bathroom": {
       "title": "Bathroom Renovation Cost",
-      "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects."
+      "description": "Complete breakdown of bathroom renovation costs in the Greater Vancouver area, from single-bathroom refreshes to multi-bathroom projects.",
+      "range": "$10K – $60K+",
+      "passage": "Bathroom renovations run $10K–$20K for budget-friendly tile + vanity swaps, $20K–$35K for mid-range tub-to-shower conversions with custom vanity and frameless glass, and $40K+ for high-end curbless showers, freestanding tubs, and structural changes. Plumbing relocation alone adds $2K–$6K."
     },
     "wholeHouse": {
       "title": "Whole House Renovation Cost",
-      "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work."
+      "description": "Full-home renovation pricing including kitchen, bathrooms, flooring, and structural work.",
+      "range": "$50K – $200K+",
+      "passage": "Whole-house renovations in Vancouver typically run $150–$400 per square foot, putting most projects between $50K (cosmetic refresh of a 2-bed condo) and $200K+ (full gut + addition on a SFH). Pre-1975 homes add 20–25% for asbestos and lead paint remediation. Design-build saves 10–15% vs hiring designer + contractor separately."
     },
     "comingSoon": "Coming Soon",
     "readGuide": "Read Guide",
@@ -24,19 +30,69 @@
     },
     "basement": {
       "title": "Basement Renovation Cost",
-      "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions."
+      "description": "Complete breakdown of basement renovation costs in the Greater Vancouver area, from basic finishing to full legal suite conversions.",
+      "range": "$30K – $120K+",
+      "passage": "Basement renovations start at $30K for basic finishing (drywall, flooring, lighting), $60K–$80K once you add a full bathroom, and $80K–$120K+ for legal rental suites with separate entry, fire separation, and permit-ready plumbing. Vancouver permit fees alone run $2K–$5K. Ceiling height matters — under 6'8\" needs structural work."
     },
     "commercial": {
       "title": "Commercial Renovation Cost",
-      "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs."
+      "description": "Complete breakdown of commercial renovation costs in Greater Vancouver, from small office refreshes to full restaurant build-outs.",
+      "range": "$50K – $1M+",
+      "passage": "Commercial renovation cost varies by use type and permit complexity: small office refreshes from $50K, retail build-outs $100K–$300K, full restaurant kitchens $300K–$800K, and clinics with medical-grade plumbing $400K–$1M+. Off-hours scheduling and permit-handling are usually included in higher tiers."
     },
     "cabinet": {
       "title": "Cabinet Refinishing Cost",
-      "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver."
+      "description": "Complete breakdown of cabinet refinishing, refacing, and replacement costs in Greater Vancouver.",
+      "range": "$4K – $15K",
+      "passage": "Cabinet refinishing runs $4K–$7K (paint or stain existing cabinets), refacing $7K–$12K (new doors and drawer fronts on existing carcasses), and full replacement $12K–$15K+. Timeline 1–2 weeks vs 4–6 weeks for full kitchen replacement. Best ROI move when the cabinet boxes are still structurally sound."
     },
     "basementSuite": {
       "title": "Basement Suite Cost",
-      "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver."
-    }
+      "description": "Legal basement suite conversion costs, ROI analysis, and municipality-specific regulations for Metro Vancouver.",
+      "range": "$60K – $150K",
+      "passage": "Legal basement suite conversions cost $60K–$150K depending on existing layout, ceiling height, and municipal requirements. Vancouver, Burnaby, and Surrey all have different legalization paths. ROI is strong — typical Metro Vancouver suite generates $1,800–$2,400/month and lifts property value by 10–15%."
+    },
+    "passages": {
+      "title": "Renovation Cost by Project Type",
+      "subtitle": "Quick comparison of typical price ranges across our most-requested project types"
+    },
+    "comparison": {
+      "title": "Price Tiers at a Glance",
+      "subtitle": "Real ranges from our completed projects across Metro Vancouver",
+      "headerProject": "Project Type",
+      "headerBudget": "Budget",
+      "headerMid": "Mid-Range",
+      "headerHigh": "High-End",
+      "kitchen": ["$15K – $25K", "$25K – $45K", "$45K – $72K"],
+      "bathroom": ["$10K – $20K", "$20K – $35K", "$40K – $60K+"],
+      "wholeHouse": ["$50K – $90K", "$90K – $150K", "$150K – $200K+"],
+      "basement": ["$30K – $50K", "$50K – $80K", "$80K – $120K+"],
+      "footnote": "Tier is driven by material choice, layout changes, and permit complexity — not square footage alone."
+    },
+    "faqs": {
+      "title": "Renovation Cost Questions",
+      "subtitle": "Hub-level questions across all renovation types — see each guide for project-specific answers",
+      "q1": {
+        "question": "How much does a renovation cost in Vancouver?",
+        "answer": "Renovation cost in Vancouver depends on project type and tier. Bathroom renovations start at $10K, kitchens at $15K, basements at $30K, and whole-house projects at $50K. The biggest cost drivers are material choice, layout changes (plumbing/electrical relocation), and permit complexity. See the per-project guides for detailed ranges from our 100+ completed Metro Vancouver projects."
+      },
+      "q2": {
+        "question": "Which renovations have the best ROI in Vancouver?",
+        "answer": "Legal basement suite conversions typically have the strongest ROI in Metro Vancouver — generating $1,800–$2,400/month rental income and lifting property value 10–15%. Kitchen and bathroom remodels recover 60–80% of cost at resale. Cosmetic-only refreshes (paint, fixtures) recover the highest percentage but on a smaller absolute spend."
+      },
+      "q3": {
+        "question": "Do I need permits for my renovation?",
+        "answer": "Permits are required when you move plumbing, electrical, or load-bearing structure. Cosmetic work (paint, flooring, cabinet swaps with no plumbing changes) generally does not require permits. Vancouver, Burnaby, Surrey, and other Metro Vancouver municipalities have different fee structures and timelines — typically $200–$800 for residential bathrooms, $2K–$5K for legal basement suites."
+      },
+      "q4": {
+        "question": "How long does a renovation take?",
+        "answer": "Bathroom renovations take 2–8 weeks, kitchens 4–8 weeks, basements 8–16 weeks, and whole-house projects 8–24 weeks. Custom millwork, permit waits, and material lead times are the most common timeline blockers. We provide project-specific timelines in every quote."
+      },
+      "q5": {
+        "question": "Should I get multiple quotes?",
+        "answer": "Yes — get at least 3 detailed quotes. Compare scope of work line by line, not just bottom-line price. Verify $5M CGL insurance, active WCB coverage, and warranty terms (1 year is standard, 2–3 year is quality). Watch for low-ball quotes that omit critical line items like waterproofing, demolition disposal, or permit handling."
+      }
+    },
+    "intro": "Real renovation cost data from 100+ completed projects across Metro Vancouver. Each guide breaks down pricing by tier, what your budget actually buys, and the most common cost drivers."
   }
 }

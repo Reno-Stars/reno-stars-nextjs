@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import GuidesIndexPage from '@/components/pages/GuidesIndexPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 
 interface PageProps {
@@ -45,20 +45,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+const GUIDE_SLUGS = [
+  'kitchen-renovation-cost-vancouver',
+  'bathroom-renovation-cost-vancouver',
+  'whole-house-renovation-cost-vancouver',
+  'basement-renovation-cost-vancouver',
+  'commercial-renovation-cost-vancouver',
+  'cabinet-refinishing-cost-vancouver',
+  'basement-suite-cost-vancouver',
+] as const;
+
+const GUIDE_KEYS = ['kitchen', 'bathroom', 'wholeHouse', 'basement', 'commercial', 'cabinet', 'basementSuite'] as const;
+
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const nav = await getTranslations({ locale, namespace: 'nav' });
+  const [nav, t] = await Promise.all([
+    getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'guides.index' }),
+  ]);
 
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: nav('guides'), url: `/${locale}/guides/` },
   ];
 
+  const itemListItems = GUIDE_SLUGS.map((slug, i) => ({
+    name: t(`${GUIDE_KEYS[i]}.title`),
+    url: `/${locale}/guides/${slug}/`,
+  }));
+
+  const faqs = (['q1', 'q2', 'q3', 'q4', 'q5'] as const).map((k) => ({
+    question: t(`faqs.${k}.question`),
+    answer: t(`faqs.${k}.answer`),
+  }));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
+      <ItemListSchema
+        items={itemListItems}
+        name={t('hero.title')}
+        description={t('hero.subtitle')}
+      />
+      <FAQSchema faqs={faqs} />
       <GuidesIndexPage locale={locale as Locale} />
     </>
   );

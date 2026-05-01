@@ -6,15 +6,21 @@
     },
     "kitchen": {
       "title": "Chi Phí Cải Tạo Phòng Bếp",
-      "description": "Phân tích đầy đủ chi phí cải tạo phòng bếp tại Vancouver, từ những nâng cấp tiết kiệm đến những biến đổi cao cấp."
+      "description": "Phân tích đầy đủ chi phí cải tạo phòng bếp tại Vancouver, từ những nâng cấp tiết kiệm đến những biến đổi cao cấp.",
+      "range": "$15K – $72K",
+      "passage": "Việc cải tạo nhà bếp ở Vancouver dao động từ 15.000 USD cho việc làm mới về mặt thẩm mỹ (sơn, phần cứng, mặt bàn) lên đến 72.000 USD cho việc xây dựng lại toàn bộ tủ tùy chỉnh với đảo thạch anh và nâng cấp thiết bị. Lựa chọn vật liệu dẫn đến sự thay đổi chi phí lớn nhất - tủ có sẵn so với đồ gia công tùy chỉnh có thể có nghĩa là chênh lệch 20 nghìn đô la trên cùng một diện tích."
     },
     "bathroom": {
       "title": "Chi Phí Cải Tạo Phòng Tắm",
-      "description": "Phân tích đầy đủ chi phí cải tạo phòng tắm tại khu vực Greater Vancouver, từ làm mới một phòng tắm đến các dự án nhiều phòng tắm."
+      "description": "Phân tích đầy đủ chi phí cải tạo phòng tắm tại khu vực Greater Vancouver, từ làm mới một phòng tắm đến các dự án nhiều phòng tắm.",
+      "range": "$10K – $60K+",
+      "passage": "Việc cải tạo phòng tắm tốn $10K–$20K cho việc hoán đổi gạch + bàn trang điểm phù hợp với túi tiền, $20K–$35K cho việc chuyển đổi bồn tắm thành vòi sen tầm trung với bàn trang điểm tùy chỉnh và kính không khung, và $40K+ cho vòi sen không lề đường cao cấp, bồn tắm độc lập và các thay đổi về cấu trúc. Chỉ riêng việc di dời hệ thống ống nước đã thêm $2K–$6K."
     },
     "wholeHouse": {
       "title": "Chi Phí Cải Tạo Toàn Bộ Nhà",
-      "description": "Báo giá cải tạo toàn nhà bao gồm phòng bếp, phòng tắm, sàn và công việc kết cấu."
+      "description": "Báo giá cải tạo toàn nhà bao gồm phòng bếp, phòng tắm, sàn và công việc kết cấu.",
+      "range": "$50K – $200K+",
+      "passage": "Việc cải tạo toàn bộ ngôi nhà ở Vancouver thường tốn $150–$400 mỗi foot vuông, khiến hầu hết các dự án nằm trong khoảng từ $50K (làm mới mỹ phẩm cho căn hộ 2 phòng ngủ) đến $200K+ (toàn bộ nội thất + bổ sung trên SFH). Những ngôi nhà trước năm 1975 tăng thêm 20–25% chi phí xử lý amiăng và sơn chì. Thiết kế-thi công tiết kiệm 10–15% so với việc thuê riêng nhà thiết kế + nhà thầu."
     },
     "comingSoon": "Sắp Có",
     "readGuide": "Đọc Hướng Dẫn",
@@ -24,19 +30,85 @@
     },
     "basement": {
       "title": "Chi Phí Cải Tạo Tầng Hầm",
-      "description": "Phân tích đầy đủ chi phí cải tạo tầng hầm tại khu vực Greater Vancouver, từ hoàn thiện cơ bản đến chuyển đổi thành căn hộ hợp pháp đầy đủ."
+      "description": "Phân tích đầy đủ chi phí cải tạo tầng hầm tại khu vực Greater Vancouver, từ hoàn thiện cơ bản đến chuyển đổi thành căn hộ hợp pháp đầy đủ.",
+      "range": "$30K – $120K+",
+      "passage": "Việc cải tạo tầng hầm bắt đầu ở mức $30K–$120K+ cho phần hoàn thiện cơ bản (vách thạch cao, sàn, hệ thống chiếu sáng), $60K–$80K sau khi bạn thêm một phòng tắm đầy đủ và $80K–$120K+ cho các dãy phòng cho thuê hợp pháp có lối vào riêng, hệ thống ngăn lửa và hệ thống ống nước sẵn sàng cho phép. Riêng phí giấy phép ở Vancouver đã lên tới $2K–$5K. Vấn đề về chiều cao trần - dưới 6'8\" cần được cải tạo về mặt kết cấu."
     },
     "commercial": {
       "title": "Chi Phí Cải Tạo Thương Mại",
-      "description": "Phân tích đầy đủ chi phí cải tạo thương mại tại Greater Vancouver, từ làm mới văn phòng nhỏ đến xây dựng nhà hàng đầy đủ."
+      "description": "Phân tích đầy đủ chi phí cải tạo thương mại tại Greater Vancouver, từ làm mới văn phòng nhỏ đến xây dựng nhà hàng đầy đủ.",
+      "range": "$50K – $1M+",
+      "passage": "Chi phí cải tạo thương mại thay đổi tùy theo loại hình sử dụng và độ phức tạp của giấy phép: làm mới văn phòng nhỏ từ $50K, xây dựng cơ sở bán lẻ $100K–$300K, nhà bếp đầy đủ của nhà hàng $300K–$800K và phòng khám với hệ thống ống nước cấp y tế $400K–$1M+. Lập kế hoạch ngoài giờ và xử lý giấy phép thường được bao gồm ở các cấp cao hơn."
     },
     "cabinet": {
       "title": "Chi Phí Sơn Lại Tủ",
-      "description": "Phân tích đầy đủ chi phí sơn lại tủ, thay mặt tủ và thay tủ tại Greater Vancouver."
+      "description": "Phân tích đầy đủ chi phí sơn lại tủ, thay mặt tủ và thay tủ tại Greater Vancouver.",
+      "range": "$4K – $15K",
+      "passage": "Việc tân trang lại tủ tốn $4K–$7K (sơn hoặc nhuộm màu các tủ hiện có), sơn lại $7K–$12K (cửa mới và mặt trước ngăn kéo trên khung hiện có) và thay thế toàn bộ $12K–$15K+. Thời gian 1–2 tuần so với 4–6 tuần để thay thế toàn bộ bếp. Di chuyển ROI tốt nhất khi các hộp tủ vẫn có cấu trúc chắc chắn."
     },
     "basementSuite": {
       "title": "Chi Phí Căn Hộ Tầng Hầm",
-      "description": "Chi phí chuyển đổi căn hộ tầng hầm hợp pháp, phân tích ROI và quy định riêng của từng đô thị tại Metro Vancouver."
-    }
+      "description": "Chi phí chuyển đổi căn hộ tầng hầm hợp pháp, phân tích ROI và quy định riêng của từng đô thị tại Metro Vancouver.",
+      "range": "$60K – $150K",
+      "passage": "Việc chuyển đổi căn hộ tầng hầm hợp pháp có giá từ $60K–$150K tùy thuộc vào cách bố trí hiện tại, chiều cao trần và yêu cầu của thành phố. Vancouver, Burnaby và Surrey đều có những con đường hợp pháp hóa khác nhau. ROI rất cao — khu căn hộ Metro Vancouver điển hình tạo ra $1,800–$2,400/tháng và nâng giá trị tài sản lên 10–15%."
+    },
+    "passages": {
+      "title": "Chi phí cải tạo theo loại dự án",
+      "subtitle": "So sánh nhanh các mức giá điển hình giữa các loại dự án được yêu cầu nhiều nhất của chúng tôi"
+    },
+    "comparison": {
+      "title": "Sơ lược về các mức giá",
+      "subtitle": "Phạm vi thực tế từ các dự án đã hoàn thành của chúng tôi trên khắp Metro Vancouver",
+      "headerProject": "Loại dự án",
+      "headerBudget": "Ngân sách",
+      "headerMid": "Tầm trung",
+      "headerHigh": "Cao cấp",
+      "kitchen": [
+        "$15K – $25K",
+        "$25K – $45K",
+        "$45K – $72K"
+      ],
+      "bathroom": [
+        "$10K – $20K",
+        "$20K – $35K",
+        "$40K – $60K+"
+      ],
+      "wholeHouse": [
+        "$50K – $90K",
+        "$90K – $150K",
+        "$150K – $200K+"
+      ],
+      "basement": [
+        "$30K – $50K",
+        "$50K – $80K",
+        "$80K – $120K+"
+      ],
+      "footnote": "Cấp độ được điều khiển bởi sự lựa chọn vật liệu, thay đổi bố cục và độ phức tạp cho phép - không chỉ riêng cảnh quay vuông."
+    },
+    "faqs": {
+      "title": "Câu hỏi về chi phí cải tạo",
+      "subtitle": "Các câu hỏi cấp trung tâm về tất cả các loại cải tạo - xem từng hướng dẫn để có câu trả lời cho từng dự án cụ thể",
+      "q1": {
+        "question": "Chi phí cải tạo ở Vancouver là bao nhiêu?",
+        "answer": "Chi phí cải tạo ở Vancouver phụ thuộc vào loại và cấp dự án. Việc cải tạo phòng tắm bắt đầu từ $10K, nhà bếp ở mức $15K, tầng hầm ở mức $30K và các dự án toàn bộ ngôi nhà ở mức $50K. Yếu tố chi phí lớn nhất là lựa chọn vật liệu, thay đổi bố cục (di dời hệ thống ống nước/điện) và độ phức tạp của giấy phép. Xem hướng dẫn cho từng dự án để biết phạm vi chi tiết từ hơn 100 dự án Metro Vancouver đã hoàn thành của chúng tôi."
+      },
+      "q2": {
+        "question": "Những cải tạo nào có ROI tốt nhất ở Vancouver?",
+        "answer": "Việc chuyển đổi căn hộ hợp pháp ở tầng hầm thường có ROI cao nhất ở Metro Vancouver — tạo ra thu nhập cho thuê từ $1,800–$2,400/tháng và nâng giá trị tài sản lên 10–15%. Việc sửa sang lại nhà bếp và phòng tắm sẽ thu hồi 60–80% chi phí khi bán lại. Những sản phẩm làm mới chỉ dành cho mỹ phẩm (sơn, đồ đạc) có tỷ lệ phần trăm cao nhất nhưng với mức chi tiêu tuyệt đối nhỏ hơn."
+      },
+      "q3": {
+        "question": "Tôi có cần giấy phép để cải tạo không?",
+        "answer": "Cần có giấy phép khi bạn di chuyển hệ thống ống nước, điện hoặc kết cấu chịu lực. Công việc thẩm mỹ (sơn, sàn, hoán đổi tủ mà không thay đổi hệ thống ống nước) thường không cần giấy phép. Vancouver, Burnaby, Surrey và các thành phố đô thị khác của Metro Vancouver có cơ cấu phí và mốc thời gian khác nhau - thường là $200–$800 cho phòng tắm dân cư, $2K–$5K cho các dãy phòng ở tầng hầm hợp pháp."
+      },
+      "q4": {
+        "question": "Việc cải tạo mất bao lâu?",
+        "answer": "Việc cải tạo phòng tắm mất 2–8 tuần, nhà bếp là 4–8 tuần, tầng hầm là 8–16 tuần và các dự án toàn bộ ngôi nhà là 8–24 tuần. Gia công tùy chỉnh, chờ giấy phép và thời gian giao nguyên liệu là những yếu tố cản trở dòng thời gian phổ biến nhất. Chúng tôi cung cấp các mốc thời gian cụ thể cho từng dự án trong mỗi báo giá."
+      },
+      "q5": {
+        "question": "Tôi có nên nhận được nhiều báo giá không?",
+        "answer": "Có - nhận được ít nhất 3 báo giá chi tiết. So sánh phạm vi công việc theo từng dòng, không chỉ giá cuối cùng. Xác minh bảo hiểm CGL trị giá 5 triệu USD, phạm vi bảo hiểm WCB đang hoạt động và các điều khoản bảo hành (1 năm là tiêu chuẩn, 2–3 năm là chất lượng). Theo dõi các báo giá thấp bỏ qua các hạng mục quan trọng như chống thấm, xử lý phá dỡ hoặc xử lý giấy phép."
+      }
+    },
+    "intro": "Dữ liệu chi phí cải tạo thực tế từ hơn 100 dự án đã hoàn thành trên khắp Metro Vancouver. Mỗi hướng dẫn chia nhỏ mức giá theo cấp độ, ngân sách của bạn thực sự mua những gì và các yếu tố điều khiển chi phí phổ biến nhất."
   }
 }

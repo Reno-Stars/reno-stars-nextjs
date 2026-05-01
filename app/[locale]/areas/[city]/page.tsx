@@ -252,6 +252,7 @@ export default async function Page({ params }: PageProps) {
         faqs={areaFaqs}
         areaProjects={areaProjects}
         introOverride={getAreaIntroOverride(city, locale as Locale)}
+        googleReviews={googleReviews}
       />
     </>
   );

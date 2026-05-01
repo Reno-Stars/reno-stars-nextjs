@@ -6,15 +6,21 @@
     },
     "kitchen": {
       "title": "Costo de remodelación de cocina",
-      "description": "Desglose completo de los costos de remodelación de cocinas en Vancouver, desde actualizaciones económicas hasta transformaciones de alta gama."
+      "description": "Desglose completo de los costos de remodelación de cocinas en Vancouver, desde actualizaciones económicas hasta transformaciones de alta gama.",
+      "range": "$15K – $72K",
+      "passage": "Las renovaciones de cocinas en Vancouver van desde $15,000 para renovaciones cosméticas (pintura, herrajes, cambio de encimera) hasta $72,000 para reconstrucciones completas de gabinetes personalizados con islas de cuarzo y mejoras de electrodomésticos. La elección de materiales genera la mayor variación de costos: los gabinetes en existencia frente a la carpintería personalizada pueden significar $20 mil de diferencia en el mismo espacio."
     },
     "bathroom": {
       "title": "Costo de remodelación de baño",
-      "description": "Desglose completo de los costos de remodelación de baños en el área de Greater Vancouver, desde renovaciones de un solo baño hasta proyectos de múltiples baños."
+      "description": "Desglose completo de los costos de remodelación de baños en el área de Greater Vancouver, desde renovaciones de un solo baño hasta proyectos de múltiples baños.",
+      "range": "$10K – $60K+",
+      "passage": "Las renovaciones de baños cuestan entre $ 10 000 y $ 20 000 para cambios económicos de azulejos y tocadores, de $ 20 000 a $ 35 000 para conversiones de bañera a ducha de gama media con tocador personalizado y vidrio sin marco, y de $ 40 000 o más para duchas sin bordillo de alta gama, bañeras independientes y cambios estructurales. Sólo la reubicación de plomería suma entre 2.000 y 6.000 dólares."
     },
     "wholeHouse": {
       "title": "Costo de remodelación integral",
-      "description": "Precios de remodelación integral del hogar incluyendo cocina, baños, pisos y trabajo estructural."
+      "description": "Precios de remodelación integral del hogar incluyendo cocina, baños, pisos y trabajo estructural.",
+      "range": "$50K – $200K+",
+      "passage": "Las renovaciones de casas completas en Vancouver suelen costar entre $150 y $400 por pie cuadrado, lo que sitúa la mayoría de los proyectos entre $50 000 (renovación estética de un condominio de 2 habitaciones) y $200 000 o más (interior completo + adición a un SFH). Las casas anteriores a 1975 agregan entre un 20% y un 25% para la eliminación de asbesto y pintura con plomo. El diseño y la construcción ahorran entre un 10 % y un 15 % en comparación con la contratación del diseñador y el contratista por separado."
     },
     "comingSoon": "Próximamente",
     "readGuide": "Leer guía",
@@ -24,19 +30,85 @@
     },
     "basement": {
       "title": "Costo de remodelación de sótano",
-      "description": "Desglose completo de los costos de remodelación de sótanos en el área de Greater Vancouver, desde acabado básico hasta conversiones completas de suite legal."
+      "description": "Desglose completo de los costos de remodelación de sótanos en el área de Greater Vancouver, desde acabado básico hasta conversiones completas de suite legal.",
+      "range": "$30K – $120K+",
+      "passage": "Las renovaciones del sótano comienzan en $30 mil para acabados básicos (paneles de yeso, pisos, iluminación), entre $60 mil y $80 mil una vez que agrega un baño completo, y entre $80 mil y $120 mil o más para suites de alquiler legales con entrada independiente, separación contra incendios y plomería lista para permiso. Sólo las tarifas de los permisos de Vancouver cuestan entre 2.000 y 5.000 dólares. La altura del techo importa: los menores de 6'8\" necesitan trabajo estructural."
     },
     "commercial": {
       "title": "Costo de remodelación comercial",
-      "description": "Desglose completo de los costos de remodelación comercial en Greater Vancouver, desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes."
+      "description": "Desglose completo de los costos de remodelación comercial en Greater Vancouver, desde renovaciones de oficinas pequeñas hasta construcciones completas de restaurantes.",
+      "range": "$50K – $1M+",
+      "passage": "El costo de renovación comercial varía según el tipo de uso y la complejidad del permiso: renovación de oficinas pequeñas desde $50 000, construcciones de tiendas minoristas entre $100 000 y $300 000, cocinas completas de restaurantes entre $300 000 y $800 000 y clínicas con plomería de grado médico entre $400 000 y $1 millón o más. La programación fuera del horario laboral y el manejo de permisos generalmente se incluyen en niveles superiores."
     },
     "cabinet": {
       "title": "Costo de renovación de gabinetes",
-      "description": "Desglose completo de los costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver."
+      "description": "Desglose completo de los costos de renovación, refacción y reemplazo de gabinetes en Greater Vancouver.",
+      "range": "$4K – $15K",
+      "passage": "El reacabado de gabinetes cuesta entre $4,000 y $7,000 (pintar o teñir gabinetes existentes), el revestimiento entre $7,000 y $12,000 (puertas y frentes de cajones nuevos en carcasas existentes) y el reemplazo completo, entre $12,000 y $15,000+. Cronograma de 1 a 2 semanas frente a 4 a 6 semanas para el reemplazo completo de la cocina. El mejor movimiento con retorno de la inversión es cuando las cajas del gabinete aún están estructuralmente en buen estado."
     },
     "basementSuite": {
       "title": "Costo de suite de sótano",
-      "description": "Costos de conversión de suite legal de sótano, análisis de ROI y regulaciones específicas de cada municipio para Metro Vancouver."
-    }
+      "description": "Costos de conversión de suite legal de sótano, análisis de ROI y regulaciones específicas de cada municipio para Metro Vancouver.",
+      "range": "$60K – $150K",
+      "passage": "Las conversiones legales de suites en sótanos cuestan entre 60.000 y 150.000 dólares, según la distribución existente, la altura del techo y los requisitos municipales. Vancouver, Burnaby y Surrey tienen diferentes caminos de legalización. El retorno de la inversión es sólido: una suite típica de Metro Vancouver genera entre 1800 y 2400 dólares al mes y aumenta el valor de la propiedad entre un 10 y un 15 %."
+    },
+    "passages": {
+      "title": "Costo de renovación por tipo de proyecto",
+      "subtitle": "Comparación rápida de rangos de precios típicos entre nuestros tipos de proyectos más solicitados"
+    },
+    "comparison": {
+      "title": "Niveles de precios de un vistazo",
+      "subtitle": "Rangos reales de nuestros proyectos completados en Metro Vancouver",
+      "headerProject": "Tipo de proyecto",
+      "headerBudget": "Presupuesto",
+      "headerMid": "gama media",
+      "headerHigh": "gama alta",
+      "kitchen": [
+        "$15K – $25K",
+        "$25K – $45K",
+        "$45K – $72K"
+      ],
+      "bathroom": [
+        "$10K – $20K",
+        "$20K – $35K",
+        "$40K – $60K+"
+      ],
+      "wholeHouse": [
+        "$50K – $90K",
+        "$90K – $150K",
+        "$150K – $200K+"
+      ],
+      "basement": [
+        "$30K – $50K",
+        "$50K – $80K",
+        "$80K – $120K+"
+      ],
+      "footnote": "El nivel depende de la elección de materiales, los cambios de diseño y la complejidad de los permisos, no solo de los metros cuadrados."
+    },
+    "faqs": {
+      "title": "Preguntas sobre costos de renovación",
+      "subtitle": "Preguntas a nivel central sobre todos los tipos de renovación: consulte cada guía para obtener respuestas específicas del proyecto",
+      "q1": {
+        "question": "¿Cuánto cuesta una renovación en Vancouver?",
+        "answer": "El costo de renovación en Vancouver depende del tipo y nivel del proyecto. Las renovaciones de baños comienzan en $10 mil, cocinas en $15 mil, sótanos en $30 mil y proyectos para toda la casa en $50 mil. Los mayores factores de costos son la elección de materiales, los cambios de diseño (reubicación de plomería/electricidad) y la complejidad de los permisos. Consulte las guías por proyecto para conocer los rangos detallados de nuestros más de 100 proyectos completados en Metro Vancouver."
+      },
+      "q2": {
+        "question": "¿Qué renovaciones tienen el mejor retorno de la inversión en Vancouver?",
+        "answer": "Las conversiones de suites de sótanos legales suelen tener el mayor retorno de la inversión en Metro Vancouver: generan ingresos por alquiler de entre $ 1800 y $ 2400 al mes y aumentan el valor de la propiedad entre un 10 y un 15 %. Las remodelaciones de cocinas y baños recuperan entre el 60% y el 80% del costo en la reventa. Las actualizaciones solo cosméticas (pintura, accesorios) recuperan el porcentaje más alto pero con un gasto absoluto menor."
+      },
+      "q3": {
+        "question": "¿Necesito permisos para mi renovación?",
+        "answer": "Se requieren permisos cuando se mueve plomería, electricidad o estructuras de carga. Los trabajos cosméticos (pintura, pisos, cambios de gabinetes sin cambios de plomería) generalmente no requieren permisos. Vancouver, Burnaby, Surrey y otros municipios metropolitanos de Vancouver tienen diferentes estructuras de tarifas y plazos: normalmente entre $200 y $800 para baños residenciales, entre $2.000 y $5.000 para suites legales en sótanos."
+      },
+      "q4": {
+        "question": "¿Cuánto tiempo lleva una renovación?",
+        "answer": "Las renovaciones de baños tardan entre 2 y 8 semanas, las cocinas entre 4 y 8 semanas, los sótanos entre 8 y 16 semanas y los proyectos de toda la casa entre 8 y 24 semanas. Los trabajos de carpintería personalizados, las esperas de permisos y los plazos de entrega de materiales son los obstáculos más comunes en los plazos. Proporcionamos cronogramas específicos del proyecto en cada cotización."
+      },
+      "q5": {
+        "question": "¿Debería obtener varias cotizaciones?",
+        "answer": "Sí, obtenga al menos 3 cotizaciones detalladas. Compare el alcance del trabajo línea por línea, no solo el precio final. Verifique el seguro CGL de $5 millones, la cobertura WCB activa y los términos de la garantía (1 año es estándar, 2 a 3 años es calidad). Esté atento a cotizaciones bajas que omitan elementos críticos como impermeabilización, eliminación de demoliciones o manejo de permisos."
+      }
+    },
+    "intro": "Datos reales de costos de renovación de más de 100 proyectos completados en Metro Vancouver. Cada guía desglosa los precios por nivel, lo que realmente compra con su presupuesto y los factores de costo más comunes."
   }
 }

@@ -6,15 +6,21 @@
     },
     "kitchen": {
       "title": "Kitchen Renovation Cost",
-      "description": "Kompletong breakdown ng kitchen renovation costs sa Vancouver, mula budget-friendly updates hanggang high-end transformations."
+      "description": "Kompletong breakdown ng kitchen renovation costs sa Vancouver, mula budget-friendly updates hanggang high-end transformations.",
+      "range": "$15K – $72K",
+      "passage": "Ang mga pagsasaayos ng kusina sa Vancouver ay mula $15,000 para sa mga cosmetic refresh (pintura, hardware, countertop swap) hanggang $72,000 para sa buong custom-cabinet na muling pagtatayo na may mga quartz island at mga upgrade ng appliance. Ang pagpili ng materyal ay nagdudulot ng pinakamalaking pagbabago sa gastos — ang mga stock cabinet kumpara sa custom na millwork ay maaaring mangahulugan ng $20K na pagkakaiba sa parehong footprint."
     },
     "bathroom": {
       "title": "Bathroom Renovation Cost",
-      "description": "Kompletong breakdown ng bathroom renovation costs sa Greater Vancouver area, mula sa single-bathroom refresh hanggang multi-bathroom projects."
+      "description": "Kompletong breakdown ng bathroom renovation costs sa Greater Vancouver area, mula sa single-bathroom refresh hanggang multi-bathroom projects.",
+      "range": "$10K – $60K+",
+      "passage": "Ang mga pagsasaayos ng banyo ay tumatakbo ng $10K–$20K para sa budget-friendly na tile + vanity swaps, $20K–$35K para sa mid-range na tub-to-shower na mga conversion na may custom na vanity at frameless na salamin, at $40K+ para sa high-end na curbless shower, freestanding tub, at mga pagbabago sa istruktura. Ang paglilipat ng tubo lamang ay nagdaragdag ng $2K–$6K."
     },
     "wholeHouse": {
       "title": "Whole House Renovation Cost",
-      "description": "Full-home renovation pricing kasama ang kitchen, bathrooms, flooring, at structural work."
+      "description": "Full-home renovation pricing kasama ang kitchen, bathrooms, flooring, at structural work.",
+      "range": "$50K – $200K+",
+      "passage": "Ang mga pagsasaayos ng buong bahay sa Vancouver ay karaniwang tumatakbo ng $150–$400 kada square foot, na naglalagay ng karamihan sa mga proyekto sa pagitan ng $50K (cosmetic refresh ng isang 2-bed condo) at $200K+ (full gut + karagdagan sa isang SFH). Ang mga tahanan bago ang 1975 ay nagdaragdag ng 20–25% para sa remediation ng asbestos at lead paint. Makakatipid ng 10–15% ang design-build kumpara sa pagkuha ng designer + contractor nang hiwalay."
     },
     "comingSoon": "Paparating na",
     "readGuide": "Basahin ang Guide",
@@ -24,19 +30,85 @@
     },
     "basement": {
       "title": "Basement Renovation Cost",
-      "description": "Kompletong breakdown ng basement renovation costs sa Greater Vancouver area, mula sa basic finishing hanggang sa full legal suite conversions."
+      "description": "Kompletong breakdown ng basement renovation costs sa Greater Vancouver area, mula sa basic finishing hanggang sa full legal suite conversions.",
+      "range": "$30K – $120K+",
+      "passage": "Ang mga pagsasaayos sa basement ay nagsisimula sa $30K para sa basic finishing (drywall, flooring, lighting), $60K–$80K kapag nagdagdag ka ng buong banyo, at $80K–$120K+ para sa mga legal na paupahang suite na may hiwalay na entry, fire separation, at permit-ready na pagtutubero. Ang mga bayarin sa permiso sa Vancouver lamang ay tumatakbo sa $2K–$5K. Mahalaga ang taas ng kisame — sa ilalim ng 6'8\" ay nangangailangan ng structural work."
     },
     "commercial": {
       "title": "Commercial Renovation Cost",
-      "description": "Kompletong breakdown ng commercial renovation costs sa Greater Vancouver, mula maliit na office refresh hanggang full restaurant build-outs."
+      "description": "Kompletong breakdown ng commercial renovation costs sa Greater Vancouver, mula maliit na office refresh hanggang full restaurant build-outs.",
+      "range": "$50K – $1M+",
+      "passage": "Ang gastos sa komersyal na pagsasaayos ay nag-iiba-iba ayon sa uri ng paggamit at pagiging kumplikado ng permit: ang mga maliliit na opisina ay nagre-refresh mula $50K, retail build-out $100K–$300K, full restaurant kitchens $300K–$800K, at mga klinika na may medical-grade plumbing $400K–$1M+. Karaniwang kasama sa mas matataas na tier ang pag-iiskedyul sa labas ng oras at paghawak ng permit."
     },
     "cabinet": {
       "title": "Cabinet Refinishing Cost",
-      "description": "Kompletong breakdown ng cabinet refinishing, refacing, at replacement costs sa Greater Vancouver."
+      "description": "Kompletong breakdown ng cabinet refinishing, refacing, at replacement costs sa Greater Vancouver.",
+      "range": "$4K – $15K",
+      "passage": "Ang refinishing ng cabinet ay tumatakbo sa $4K–$7K (pintura o mantsa ang mga kasalukuyang cabinet), refacing $7K–$12K (mga bagong pinto at drawer front sa mga umiiral nang bangkay), at full replacement $12K–$15K+. Timeline 1–2 linggo kumpara sa 4–6 na linggo para sa kumpletong pagpapalit ng kusina. Pinakamahusay na paglipat ng ROI kapag ang mga kahon ng cabinet ay maayos pa rin sa istruktura."
     },
     "basementSuite": {
       "title": "Basement Suite Cost",
-      "description": "Legal basement suite conversion costs, ROI analysis, at municipality-specific regulations para sa Metro Vancouver."
-    }
+      "description": "Legal basement suite conversion costs, ROI analysis, at municipality-specific regulations para sa Metro Vancouver.",
+      "range": "$60K – $150K",
+      "passage": "Ang mga conversion ng legal na basement suite ay nagkakahalaga ng $60K–$150K depende sa kasalukuyang layout, taas ng kisame, at mga kinakailangan sa munisipyo. Ang Vancouver, Burnaby, at Surrey ay lahat ay may iba't ibang mga landas ng legalisasyon. Malakas ang ROI — ang karaniwang suite ng Metro Vancouver ay bumubuo ng $1,800–$2,400/buwan at tinataas ang halaga ng property ng 10–15%."
+    },
+    "passages": {
+      "title": "Gastos sa Pagkukumpuni ayon sa Uri ng Proyekto",
+      "subtitle": "Mabilis na paghahambing ng mga tipikal na hanay ng presyo sa aming pinaka-hinihiling na mga uri ng proyekto"
+    },
+    "comparison": {
+      "title": "Mga Tier ng Presyo sa isang Sulyap",
+      "subtitle": "Mga totoong saklaw mula sa aming mga natapos na proyekto sa buong Metro Vancouver",
+      "headerProject": "Uri ng Proyekto",
+      "headerBudget": "Badyet",
+      "headerMid": "Mid-Range",
+      "headerHigh": "High-End",
+      "kitchen": [
+        "$15K – $25K",
+        "$25K – $45K",
+        "$45K – $72K"
+      ],
+      "bathroom": [
+        "$10K – $20K",
+        "$20K – $35K",
+        "$40K – $60K+"
+      ],
+      "wholeHouse": [
+        "$50K – $90K",
+        "$90K – $150K",
+        "$150K – $200K+"
+      ],
+      "basement": [
+        "$30K – $50K",
+        "$50K – $80K",
+        "$80K – $120K+"
+      ],
+      "footnote": "Ang tier ay hinihimok ng materyal na pagpili, mga pagbabago sa layout, at pinahihintulutan ang pagiging kumplikado - hindi square footage lamang."
+    },
+    "faqs": {
+      "title": "Mga Tanong sa Gastos sa Pagkukumpuni",
+      "subtitle": "Mga tanong sa antas ng hub sa lahat ng uri ng pagsasaayos — tingnan ang bawat gabay para sa mga sagot na partikular sa proyekto",
+      "q1": {
+        "question": "Magkano ang isang pagsasaayos sa Vancouver?",
+        "answer": "Ang gastos sa pagsasaayos sa Vancouver ay depende sa uri at antas ng proyekto. Ang mga pagkukumpuni sa banyo ay nagsisimula sa $10K, kusina sa $15K, basement sa $30K, at buong-bahay na proyekto sa $50K. Ang pinakamalaking cost driver ay materyal na pagpili, mga pagbabago sa layout (pagtutubero/electrical relocation), at pinahihintulutan ang pagiging kumplikado. Tingnan ang mga gabay sa bawat proyekto para sa mga detalyadong hanay mula sa aming 100+ nakumpletong proyekto sa Metro Vancouver."
+      },
+      "q2": {
+        "question": "Aling mga renovation ang may pinakamagandang ROI sa Vancouver?",
+        "answer": "Ang mga legal na conversion ng basement suite ay karaniwang may pinakamalakas na ROI sa Metro Vancouver — bumubuo ng $1,800–$2,400/buwan na kita sa pag-upa at nakakataas ng halaga ng ari-arian 10–15%. Nabawi ng mga remodel sa kusina at banyo ang 60–80% ng halaga sa muling pagbebenta. Ang mga cosmetic-only na pag-refresh (pintura, mga fixture) ay nakakakuha ng pinakamataas na porsyento ngunit sa mas maliit na ganap na paggastos."
+      },
+      "q3": {
+        "question": "Kailangan ko ba ng mga permit para sa aking pagsasaayos?",
+        "answer": "Kinakailangan ang mga permiso kapag inilipat mo ang plumbing, electrical, o load-bearing structure. Ang gawaing kosmetiko (pintura, sahig, pagpapalit ng cabinet na walang pagbabago sa pagtutubero) sa pangkalahatan ay hindi nangangailangan ng mga permit. Ang Vancouver, Burnaby, Surrey, at iba pang munisipalidad ng Metro Vancouver ay may iba't ibang istruktura at timeline ng bayad — karaniwang $200–$800 para sa mga banyong tirahan, $2K–$5K para sa mga legal na basement suite."
+      },
+      "q4": {
+        "question": "Gaano katagal ang isang pagsasaayos?",
+        "answer": "Ang pagkukumpuni sa banyo ay tumatagal ng 2–8 linggo, kusina 4–8 linggo, basement 8–16 linggo, at buong bahay na proyekto 8–24 na linggo. Ang custom na millwork, pahintulot na paghihintay, at materyal na lead time ay ang mga pinakakaraniwang timeline blocker. Nagbibigay kami ng mga timeline na partikular sa proyekto sa bawat quote."
+      },
+      "q5": {
+        "question": "Dapat ba akong makakuha ng maraming quote?",
+        "answer": "Oo — makakuha ng hindi bababa sa 3 detalyadong quote. Paghambingin ang saklaw ng trabaho sa bawat linya, hindi lamang sa ilalim na presyo. I-verify ang $5M ​​CGL insurance, aktibong saklaw ng WCB, at mga tuntunin ng warranty (1 taon ang pamantayan, 2–3 taon ang kalidad). Manood ng mga low-ball quotes na nag-aalis ng mga kritikal na line item tulad ng waterproofing, demolition disposal, o permit handling."
+      }
+    },
+    "intro": "Data ng tunay na gastos sa pagsasaayos mula sa 100+ nakumpletong proyekto sa buong Metro Vancouver. Pinaghiwa-hiwalay ng bawat gabay ang pagpepresyo ayon sa antas, kung ano talaga ang binibili ng iyong badyet, at ang pinakakaraniwang mga driver ng gastos."
   }
 }

@@ -3,12 +3,12 @@
 import { useMemo } from 'react';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, ChevronRight, MapPin } from 'lucide-react';
+import { ArrowRight, ChevronRight, MapPin, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import { getLocalizedProject } from '@/lib/data/projects';
-import type { Company, Faq, LocalizedService, Project, ServiceArea } from '@/lib/types';
+import type { Company, Faq, GooglePlaceRating, LocalizedService, Project, ServiceArea } from '@/lib/types';
 import { pickLocale } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
@@ -29,9 +29,21 @@ interface AreaPageProps {
   areaProjects: Project[];
   /** Optional code-driven intro paragraph that wins over the DB description (used for SEO CTR overrides). */
   introOverride?: string;
+  googleReviews?: GooglePlaceRating;
 }
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride }: AreaPageProps) {
+// Stable hash-based offset so each city slug shows a different rotation of reviews.
+// Same city always shows the same set (cached page is stable across rebuilds).
+function cityReviewOffset(slug: string, total: number): number {
+  if (total === 0) return 0;
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) {
+    h = ((h << 5) - h + slug.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h) % total;
+}
+
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, googleReviews }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
 
@@ -60,6 +72,16 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
       .map((a) => getLocalizedArea(a, locale)),
     [allAreas, area.slug, locale],
   );
+
+  // 2 deterministic reviews per area page, rotated by city slug. Avoids
+  // showing the same 2 reviews on every area page (near-duplicate content).
+  const cityReviews = useMemo(() => {
+    const all = googleReviews?.reviews ?? [];
+    if (all.length === 0) return [];
+    const offset = cityReviewOffset(area.slug, all.length);
+    const pick = 2;
+    return Array.from({ length: Math.min(pick, all.length) }, (_, i) => all[(offset + i) % all.length]);
+  }, [googleReviews, area.slug]);
 
   // Use custom highlights when present, fallback to hardcoded i18n benefits
   const benefits = useMemo(() => {
@@ -197,6 +219,44 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </div>
       </section>
+
+      {/* Reviews — 2 reviews rotated by city slug for diversity across the 14 area pages */}
+      {cityReviews.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-5xl mx-auto">
+            <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+              <h2 className="text-2xl font-bold" style={{ color: TEXT }}>
+                {t('section.clientReviews')}
+              </h2>
+              {googleReviews && googleReviews.userRatingCount > 0 && (
+                <div className="flex items-center gap-2 text-sm" style={{ color: TEXT_MID }}>
+                  <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
+                  <span className="font-bold" style={{ color: GOLD }}>{googleReviews.rating.toFixed(1)}</span>
+                  <span>· {googleReviews.userRatingCount} Google reviews</span>
+                </div>
+              )}
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {cityReviews.map((review, idx) => (
+                <div key={`${review.authorName}-${idx}`} className="rounded-2xl p-6" style={{ backgroundColor: CARD, boxShadow: neu(4) }}>
+                  <div className="flex gap-1 mb-3">
+                    {Array.from({ length: review.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" style={{ color: GOLD }} />
+                    ))}
+                  </div>
+                  <p className="text-sm leading-relaxed mb-4 line-clamp-6" style={{ color: TEXT_MID }}>
+                    {(locale === 'zh' && review.textZh) ? review.textZh : review.text}
+                  </p>
+                  <div className="flex items-baseline justify-between text-xs" style={{ color: TEXT_MID }}>
+                    <span className="font-bold" style={{ color: TEXT }}>{review.authorName}</span>
+                    {review.relativePublishTime && <span>{review.relativePublishTime}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Area-specific FAQs */}
       {localizedFaqs.length > 0 && (
