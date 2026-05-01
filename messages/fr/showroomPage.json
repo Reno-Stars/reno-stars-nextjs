@@ -1,0 +1,26 @@
+{
+  "showroomPage": {
+    "heroTitle": "Visitez notre salle d'exposition",
+    "heroSubtitle": "Découvrez les matériaux, les conceptions et les finitions de rénovation",
+    "addressTitle": "Emplacement et horaires",
+    "phoneTitle": "Téléphone",
+    "emailTitle": "E-mail",
+    "hoursTitle": "Heures",
+    "hoursValue": "Sur rendez-vous",
+    "mapTitle": "Trouvez-nous",
+    "ctaTitle": "Prêt à démarrer votre projet ?",
+    "ctaDescription": "Réservez une consultation gratuite dans notre showroom. Notre équipe de conception vous aidera à explorer les options et à planifier votre rénovation.",
+    "bookConsultation": "Réservez une consultation gratuite",
+    "callUs": "Ou appelez-nous au",
+    "faq1q": "Ai-je besoin d’un rendez-vous pour visiter le showroom ?",
+    "faq1a": "Les visites sans rendez-vous sont les bienvenues, mais nous vous recommandons de prendre rendez-vous afin que notre équipe de conception puisse consacrer du temps à discuter de votre projet en détail.",
+    "faq2q": "Que puis-je voir au showroom Reno Stars ?",
+    "faq2a": "Notre salle d'exposition présente des échantillons de matériaux, des présentoirs d'armoires, des options de comptoirs, des sélections de carreaux et des inspirations de conception pour les rénovations de cuisine, de salle de bain et de maison entière.",
+    "faq3q": "Y a-t-il un parking disponible au showroom ?",
+    "faq3a": "Oui, un parking gratuit est disponible directement devant notre salle d’exposition à Richmond.",
+    "faq4q": "Puis-je apporter mes projets de rénovation au showroom ?",
+    "faq4a": "Absolument! Apportez vos plans d'étage, vos photos ou vos images d'inspiration. Notre équipe peut les examiner et vous fournir des recommandations professionnelles lors de votre visite.",
+    "appointmentPrefix": "Bienvenue pour planifier une visite à notre showroom de rénovation",
+    "appointmentBold": "sur rendez-vous !"
+  }
+}

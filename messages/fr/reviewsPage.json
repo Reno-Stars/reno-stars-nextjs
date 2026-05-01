@@ -1,0 +1,40 @@
+{
+  "reviewsPage": {
+    "heroTitle": "Ce que disent nos clients",
+    "heroSubtitle": "De vrais avis de vrais propriétaires du Grand Vancouver",
+    "googleRating": "Note Google",
+    "basedOn": "Basé sur les avis {count}",
+    "verifiedReviews": "Avis Google vérifiés",
+    "verifiedSubtitle": "Chaque avis provient d'un client Google vérifié",
+    "readOnGoogle": "Lire sur Google",
+    "allReviewsTitle": "Tous les avis",
+    "noReviews": "Aucun avis disponible pour le moment.",
+    "whyTrustTitle": "Pourquoi les propriétaires font confiance à Reno Stars",
+    "whyTrustSubtitle": "Notre engagement envers la qualité transparaît à travers les mots de nos clients",
+    "trustItem1Title": "Tarification transparente",
+    "trustItem1Desc": "Des devis clairs et détaillés, sans frais cachés. Nos clients louent constamment notre approche initiale en matière de tarification.",
+    "trustItem2Title": "Artisanat de qualité",
+    "trustItem2Desc": "Une attention méticuleuse aux détails, de la démolition à la visite finale. Nous ne lésinons pas sur les raccourcis.",
+    "trustItem3Title": "Communication réactive",
+    "trustItem3Desc": "Réponses rapides via WeChat, téléphone ou e-mail. Nous vous tenons informé à chaque étape du processus.",
+    "trustItem4Title": "Livraison à temps",
+    "trustItem4Desc": "Nous respectons votre calendrier. Notre équipe se présente tôt et travaille efficacement pour respecter les délais.",
+    "leaveReviewTitle": "Vous avez vécu une belle expérience ?",
+    "leaveReviewSubtitle": "Nous serions ravis de connaître votre parcours de rénovation",
+    "leaveReviewButton": "Laisser un avis sur Google",
+    "faq": {
+      "q1": "S'agit-il de véritables critiques ?",
+      "a1": "Oui, chaque avis sur cette page provient directement de Google Reviews. Ils sont rédigés par des clients vérifiés qui ont utilisé nos services de rénovation.",
+      "q2": "Comment puis-je laisser un avis sur Reno Stars ?",
+      "a2": "Une fois votre projet terminé, vous pouvez laisser un avis sur notre profil Google Business. Cliquez sur le bouton « Laisser un avis » ci-dessus pour accéder directement à notre page d'avis Google.",
+      "q3": "Quelle est votre note globale ?",
+      "a3": "Nous maintenons une note parfaite de 5 étoiles sur Google avec plus de 67 avis vérifiés de propriétaires du Grand Vancouver.",
+      "q4": "Répondez-vous aux avis ?",
+      "a4": "Oui, nous lisons et répondons à chaque avis. Vos commentaires nous aident à améliorer continuellement nos services de rénovation.",
+      "q5": "De quels domaines viennent vos évaluateurs ?",
+      "a5": "Nos avis proviennent de propriétaires de la région du Grand Vancouver, notamment de Vancouver, Richmond, Burnaby, Coquitlam, Surrey et plus encore."
+    },
+    "ctaHeading": "Prêt à commencer votre rénovation ?",
+    "ctaSubtitle": "Rejoignez notre liste croissante de propriétaires satisfaits dans le Grand Vancouver"
+  }
+}

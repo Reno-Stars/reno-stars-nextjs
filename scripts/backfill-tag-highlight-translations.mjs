@@ -25,15 +25,30 @@ const LOCALES = [
   ['tl', 'tl', 'Tl'],
   ['fa', 'fa', 'Fa'],
   ['vi', 'vi', 'Vi'],
+  ['ru', 'ru', 'Ru'],
+  ['ar', 'ar', 'Ar'],
+  ['hi', 'hi', 'Hi'],
+  ['fr', 'fr', 'Fr'],
 ];
 
 const GTX = 'https://translate.googleapis.com/translate_a/single';
 
 async function gtx(text, target) {
   const params = new URLSearchParams({ client: 'gtx', sl: 'en', tl: target, dt: 't', q: text });
-  const r = await fetch(`${GTX}?${params}`, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-  const data = await r.json();
-  return data[0].map(seg => seg[0]).filter(Boolean).join('');
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const r = await fetch(`${GTX}?${params}`, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const text = await r.text();
+      if (text.startsWith('<')) throw new Error('HTML response (rate-limited)');
+      const data = JSON.parse(text);
+      return data[0].map(seg => seg[0]).filter(Boolean).join('');
+    } catch (e) {
+      if (attempt === 4) throw e;
+      const delay = 2000 * Math.pow(2, attempt); // 2s, 4s, 8s, 16s
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
 }
 
 async function backfillTags() {

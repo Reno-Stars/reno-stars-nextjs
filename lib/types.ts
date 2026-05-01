@@ -4,7 +4,8 @@
  */
 
 /** Supported locales for internationalization. Source of truth is i18n/config.ts. */
-export type Locale = 'en' | 'zh' | 'zh-Hant' | 'ja' | 'ko' | 'es' | 'pa' | 'tl' | 'fa' | 'vi';
+export type { Locale } from '@/i18n/config';
+import type { Locale } from '@/i18n/config';
 
 /**
  * Helper type for multilingual content. EN is required (source-of-truth);

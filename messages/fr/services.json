@@ -1,0 +1,41 @@
+{
+  "services": {
+    "kitchen": {
+      "title": "Rénovation de cuisine",
+      "description": "Rénovation complète de la cuisine avec des designs modernes, des armoires personnalisées et des comptoirs haut de gamme.",
+      "longDescription": "Transformez votre cuisine en cœur de votre maison grâce à nos services complets de rénovation. Des armoires sur mesure et des comptoirs haut de gamme aux appareils électroménagers de pointe et aux solutions de rangement innovantes, nous créons des cuisines à la fois belles et fonctionnelles."
+    },
+    "bathroom": {
+      "title": "Rénovation de salle de bain",
+      "description": "Transformez votre salle de bain en un refuge de type spa avec des équipements et des finitions de luxe.",
+      "longDescription": "Créez votre sanctuaire personnel grâce à notre expertise en rénovation de salle de bains. Nous nous spécialisons dans les conceptions de luxe inspirées des spas, les luminaires modernes, les carrelages personnalisés et les solutions de rangement innovantes qui maximisent à la fois le style et la fonctionnalité."
+    },
+    "wholeHouse": {
+      "title": "Rénovation de toute la maison",
+      "description": "Transformations de maison à grande échelle, du concept à l'achèvement.",
+      "longDescription": "Vivez une transformation complète de votre maison grâce à nos services de rénovation de maison entière. Nous gérons tous les aspects de votre projet, depuis les concepts de conception initiaux jusqu'à l'achèvement final, garantissant une expérience de rénovation fluide."
+    },
+    "basement": {
+      "title": "Rénovation du sous-sol",
+      "description": "Transformez votre sous-sol en espace de vie fonctionnel. Classé 3e dans le meilleur de Vancouver.",
+      "longDescription": "Libérez tout le potentiel de votre maison grâce à nos services primés de rénovation de sous-sol. Que vous souhaitiez un cinéma maison, une salle de sport, une suite pour invités ou un bureau à domicile, nous transformons les sous-sols sous-utilisés en espaces de vie magnifiques et fonctionnels."
+    },
+    "cabinet": {
+      "title": "Refaçage d'armoire",
+      "description": "Rafraîchissez l’apparence de votre cuisine avec des services professionnels de réfection d’armoires.",
+      "longDescription": "Donnez à votre cuisine un nouveau look époustouflant sans le coût d'une rénovation complète. Nos services de réfection d'armoires comprennent de nouvelles portes, façades de tiroirs et quincaillerie, transformant l'apparence de votre cuisine tout en préservant vos caissons d'armoires existants."
+    },
+    "commercial": {
+      "title": "Rénovation commerciale",
+      "description": "Rénovation professionnelle d'espaces commerciaux pour bureaux, commerces de détail et restaurants.",
+      "longDescription": "Élevez votre espace commercial grâce à notre expertise en rénovation commerciale. Nous gérons la construction de bureaux, la rénovation de magasins de détail, la refonte de restaurants et bien plus encore, offrant des résultats professionnels qui améliorent votre marque et l'expérience client."
+    },
+    "hubTitle": "Nos prestations",
+    "hubSubtitle": "Des solutions de rénovation professionnelles pour chaque espace",
+    "getQuoteForService": "Obtenez un devis pour {service}",
+    "realtor": {
+      "title": "Consultation avec un agent immobilier",
+      "shortTitle": "Agent immobilier"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "process": {
+    "hero": {
+      "title": "Flux de travail du service de rénovation : 5 étapes",
+      "subtitle": "De la consultation à la réalisation",
+      "googleReviews": "Avis Google",
+      "stepLabel": "ÉTAPE {stepNum}"
+    },
+    "downloadPoster": "Télécharger PNG",
+    "downloadPdf": "Télécharger le PDF",
+    "downloadSuccess": "Téléchargé !",
+    "downloadError": "Échoué",
+    "downloadPosterHint": "Cliquez pour télécharger PNG",
+    "downloadPdfHint": "Cliquez pour télécharger le PDF",
+    "step1": {
+      "title": "Consultation initiale",
+      "subtitle": "Découverte",
+      "points": [
+        "Premier contact par téléphone, e-mail, Whatsapp, WeChat ou SMS",
+        "Confirmer les zones de rénovation : cuisine, salon, salle de bain ou maison entière",
+        "Confirmation des préférences de style",
+        "Budget matériel et positionnement",
+        "Comprendre les besoins et les attentes en matière de rénovation",
+        "Obtenir des plans d'étage et des photos du site (si disponibles)"
+      ],
+      "tags": [
+        {
+          "icon": "téléphone",
+          "label": "Téléphone"
+        },
+        {
+          "icon": "e-mail",
+          "label": "E-mail"
+        },
+        {
+          "icon": "WhatsApp",
+          "label": "WhatsApp"
+        },
+        {
+          "icon": "WeChat",
+          "label": "WeChat"
+        },
+        {
+          "icon": "sms",
+          "label": "SMS"
+        }
+      ],
+      "faqAnswer": "Nous commençons par une première consultation où vous pouvez nous joindre par téléphone, e-mail, WhatsApp, WeChat ou SMS. Nous discuterons de vos besoins en matière de rénovation, de vos préférences en matière de style, de votre budget et rassemblerons tous les plans d'étage ou photos existants."
+    },
+    "step2": {
+      "title": "Évaluation et devis sur mesure",
+      "subtitle": "Mesure sur site (si nécessaire) et tarification transparente",
+      "points": [
+        "Mesure professionnelle sur site pour des dimensions précises (si nécessaire)",
+        "Une proposition de conception complète illustrant votre futur espace",
+        "Portée des travaux, calendrier du projet, exigences en matière de permis et spécifications des matériaux clairement définis",
+        "Un devis clair et transparent aligné sur la conception et la portée proposées, garantissant une clarté et une prévisibilité totales tout au long du processus"
+      ],
+      "tags": [
+        {
+          "icon": "règle",
+          "label": "Mesure précise"
+        },
+        {
+          "icon": "citation",
+          "label": "Tarification transparente"
+        },
+        {
+          "icon": "site",
+          "label": "Proposition de conception"
+        }
+      ],
+      "faqAnswer": "Nous fournissons des mesures professionnelles sur site si nécessaire et créons une proposition de conception complète pour votre espace. Vous recevrez une portée de travail clairement définie avec un calendrier, des exigences en matière de permis et un devis transparent aligné sur la conception proposée."
+    },
+    "step3": {
+      "title": "Confirmation et contrat",
+      "subtitle": "Finalisation des détails et lancement du projet",
+      "points": [
+        "Invitez les clients à la salle d’exposition pour une consultation en personne",
+        "Répondez aux questions et optimisez les détails de conception",
+        "Confirmer la proposition de conception et les échantillons de matériaux",
+        "Finaliser le calendrier de paiement et aider à la planification des livraisons",
+        "Signer le contrat de construction et collecter la caution",
+        "Sécurisez la date de début du projet",
+        "Constituer l'équipe de projet : chef de projet, directeur de construction, coordonnateur"
+      ],
+      "tags": [
+        {
+          "icon": "contracter",
+          "label": "Contracter"
+        },
+        {
+          "icon": "réunion",
+          "label": "Consultation"
+        },
+        {
+          "icon": "équipe",
+          "label": "Équipe de projet"
+        }
+      ],
+      "faqAnswer": "Nous vous invitons à notre salle d'exposition pour examiner des échantillons de matériaux et finaliser les détails de conception. Après avoir confirmé le calendrier de paiement et signé le contrat, nous sécurisons la date de début de votre projet et établissons une équipe de projet dédiée comprenant un chef de projet, un directeur de construction et un coordinateur."
+    },
+    "step4": {
+      "title": "Exécution et gestion",
+      "subtitle": "Communication entièrement coordonnée et facile",
+      "points": [
+        "Une équipe projet unifiée gérant tous les aspects de votre projet",
+        "Aucune interaction directe avec les travailleurs n'est nécessaire",
+        "Avancement coordonné de la construction pour assurer l’efficacité et la cohérence",
+        "Assistance à la planification des livraisons et à la coordination sur site",
+        "Contrôle qualité cohérent tout au long du processus de construction",
+        "Réponse rapide et résolution efficace de tout problème"
+      ],
+      "tags": [
+        {
+          "icon": "gestion",
+          "label": "Gestion unifiée"
+        },
+        {
+          "icon": "progrès",
+          "label": "Suivi des progrès"
+        },
+        {
+          "icon": "réponse",
+          "label": "Réponse rapide"
+        }
+      ],
+      "faqAnswer": "Une équipe de projet unifiée gère tous les aspects de votre projet. Vous n'aurez pas besoin d'interagir directement avec les travailleurs. Nous coordonnons l’avancement de la construction, le calendrier de livraison et maintenons un contrôle de qualité constant tout au long. Tous les problèmes sont résolus rapidement et efficacement."
+    },
+    "step5": {
+      "title": "Procédure pas à pas et suivi",
+      "subtitle": "Vérifications finales et soutien durable",
+      "points": [
+        "Procédure pas à pas finale pour confirmer que tous les travaux répondent aux attentes",
+        "Livraison d'une nouvelle maison",
+        "Assistance continue pour la maintenance pendant la période de garantie"
+      ],
+      "tags": [
+        {
+          "icon": "inspection",
+          "label": "Inspection stricte"
+        },
+        {
+          "icon": "garantie",
+          "label": "Service de garantie"
+        },
+        {
+          "icon": "soutien",
+          "label": "Assistance continue"
+        }
+      ],
+      "faqAnswer": "Nous effectuons avec vous une visite finale pour confirmer que tous les travaux répondent à vos attentes, puis remettons votre nouvelle maison. Nous fournissons une assistance continue pour la maintenance pendant la période de garantie."
+    },
+    "tagline": "Rendre la rénovation vraiment réalisable",
+    "whyMatters": {
+      "title": "Pourquoi c'est important",
+      "description": "Le flux de travail structuré de rénovation de Reno Stars aide les clients à savoir à quoi s'attendre à chaque étape. Notre processus clair en 5 étapes garantit une expérience de rénovation fluide et sans stress, du premier contact à la remise finale."
+    },
+    "footer": {
+      "tagline": "Simple · Sans souci · Sûr · Garanti",
+      "taglineEn": "Simple · Sans souci · Sûr · Garanti",
+      "yearsIndustry": "Années d'expérience dans l'industrie",
+      "googleRating": "Google",
+      "warrantyService": "Service de garantie",
+      "scanLinktree": "Scannez pour nous contacter",
+      "website": "reno-stars.com"
+    }
+  }
+}

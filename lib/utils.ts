@@ -87,6 +87,10 @@ const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = {
   fa: 'Fa',
   vi: 'Vi',
   'zh-Hant': 'ZhHant',
+  ru: 'Ru',
+  ar: 'Ar',
+  hi: 'Hi',
+  fr: 'Fr',
 };
 
 /**

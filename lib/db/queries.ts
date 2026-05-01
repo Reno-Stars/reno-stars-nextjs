@@ -45,6 +45,10 @@ const ARRAY_LOCALE_SUFFIXES = [
   ['Tl', 'tl'],
   ['Fa', 'fa'],
   ['Vi', 'vi'],
+  ['Ru', 'ru'],
+  ['Ar', 'ar'],
+  ['Hi', 'hi'],
+  ['Fr', 'fr'],
 ] as const;
 
 function buildLocalizedArray<R extends { localizations?: unknown }>(
