@@ -254,6 +254,50 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
+      {/* Bathroom Cost Deep-Dives — hub→spoke topic cluster (2026-05-01) */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {locale === 'zh' ? '浴室费用专题深度' : 'Bathroom Cost Deep-Dives'}
+          </h2>
+          <p className="text-center mb-8" style={{ color: TEXT_MID }}>
+            {locale === 'zh' ? '从不同角度切片真实项目数据' : 'The same real-project data sliced different ways for your specific question'}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              {
+                href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-size/`,
+                title: locale === 'zh' ? '按尺寸（3/4/5件套）' : 'By Size (3/4/5-piece)',
+                desc: locale === 'zh' ? '$8K–$60K+ 按洁具件数' : '$8K–$60K+ by piece count',
+              },
+              {
+                href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-style/`,
+                title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
+                desc: locale === 'zh' ? '$15K–$70K+ 按设计风格' : '$15K–$70K+ by design style',
+              },
+              {
+                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
+                title: locale === 'zh' ? '梳妆台费用专题' : 'Vanity Cost Specifically',
+                desc: locale === 'zh' ? '$700–$7,200+ 按等级' : '$700–$7,200+ by tier',
+              },
+            ].map((p) => (
+              <Link
+                key={p.href}
+                href={p.href as '/blog/bathroom-renovation-cost-vancouver-by-size/'}
+                className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="font-bold" style={{ color: TEXT }}>{p.title}</span>
+                <span className="text-sm" style={{ color: GOLD }}>{p.desc}</span>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold mt-auto" style={{ color: NAVY }}>
+                  {tGuides('viewGuide')} <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Related Guides */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto">
