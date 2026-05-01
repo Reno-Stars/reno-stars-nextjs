@@ -8,9 +8,10 @@ export const revalidate = 604800; // 168h — bumped to reduce ISR writes (Verce
 const BASE_URL = getBaseUrl();
 
 /**
- * Build a per-page lastmod from a stable build/revalidation timestamp.
- * Google ignores priority/changefreq (per their public docs), so those are
- * intentionally omitted to keep the sitemap small and signal-clean.
+ * Build a per-page lastmod from DB row timestamps + priority/changefreq
+ * buckets. Google states they ignore priority/changefreq (per public docs)
+ * but Bing, Yandex, and DuckDuckGo do use them. Cost is zero, signal is
+ * real for non-Google search engines and crawl-budget heuristics.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
@@ -41,33 +42,68 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ? allDates.sort().slice(-1)[0]
     : now;
 
+  // Per-area lastmod: latest project updatedAt where the project's location
+  // matches the area name. Falls back to staticLastModified for areas with
+  // no completed projects yet.
+  const areaLastModMap = new Map<string, string>();
+  for (const area of serviceAreas) {
+    const cityName = area.name.en.toLowerCase();
+    const latestProjectDate = projectRows
+      .filter(p => p.locationCity?.toLowerCase() === cityName)
+      .map(p => p.updatedAt?.toISOString() ?? '')
+      .filter(Boolean)
+      .sort()
+      .slice(-1)[0];
+    areaLastModMap.set(area.slug, latestProjectDate || staticLastModified);
+  }
+
   const entries: MetadataRoute.Sitemap = [];
 
-  const staticPages = [
-    '',
-    '/services',
-    '/projects',
-    '/about',
-    '/design',
-    '/features',
-    '/blog',
-    '/contact',
-    '/workflow',
-    '/areas',
-    '/showroom',
-    '/reviews',
-    '/guides',
-    '/guides/kitchen-renovation-cost-vancouver',
-    '/guides/bathroom-renovation-cost-vancouver',
-    '/guides/whole-house-renovation-cost-vancouver',
-    '/guides/basement-renovation-cost-vancouver',
-    '/guides/commercial-renovation-cost-vancouver',
-    '/guides/cabinet-refinishing-cost-vancouver',
-    '/guides/basement-suite-cost-vancouver',
-    '/financing',
-    '/before-after',
-    '/privacy',
-    '/terms',
+  // Priority buckets — see comment at top of file. Cost zero, signal real for non-Google.
+  const PRIORITY = {
+    home: 1.0,
+    hub: 0.9,
+    guide: 0.85,
+    serviceArea: 0.8,
+    area: 0.8,
+    serviceLeaf: 0.75,
+    projectLeaf: 0.7,
+    blog: 0.65,
+    secondary: 0.5,
+  } as const;
+
+  // Pages that change "weekly" (curated content), monthly (catalog), yearly (legal).
+  const CHANGEFREQ = {
+    weekly: 'weekly' as const,
+    monthly: 'monthly' as const,
+    yearly: 'yearly' as const,
+  };
+
+  const staticPages: { path: string; priority: number; changeFrequency: 'weekly' | 'monthly' | 'yearly' }[] = [
+    { path: '',                                                priority: PRIORITY.home,      changeFrequency: CHANGEFREQ.weekly },
+    { path: '/services',                                       priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.weekly },
+    { path: '/projects',                                       priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.weekly },
+    { path: '/blog',                                           priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.weekly },
+    { path: '/areas',                                          priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides',                                         priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.weekly },
+    { path: '/about',                                          priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
+    { path: '/design',                                         priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.monthly },
+    { path: '/features',                                       priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
+    { path: '/contact',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/workflow',                                       priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/showroom',                                       priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
+    { path: '/reviews',                                        priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.weekly },
+    { path: '/guides/kitchen-renovation-cost-vancouver',       priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/bathroom-renovation-cost-vancouver',      priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/whole-house-renovation-cost-vancouver',   priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/basement-renovation-cost-vancouver',      priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/commercial-renovation-cost-vancouver',    priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/cabinet-refinishing-cost-vancouver',      priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/guides/basement-suite-cost-vancouver',           priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
+    { path: '/financing',                                      priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/before-after',                                   priority: PRIORITY.hub,       changeFrequency: CHANGEFREQ.monthly },
+    { path: '/privacy',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/terms',                                          priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
   ];
 
   // Generate hreflang alternates for every supported locale. Driven by
@@ -82,12 +118,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return { languages };
   };
 
-  for (const path of staticPages) {
+  for (const { path, priority, changeFrequency } of staticPages) {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}${path}/`,
         lastModified: staticLastModified,
         alternates: buildAlternates(path),
+        priority,
+        changeFrequency,
       });
     }
   }
@@ -98,6 +136,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/${locale}/services/${slug}/`,
         lastModified: staticLastModified,
         alternates: buildAlternates(`/services/${slug}`),
+        priority: PRIORITY.serviceLeaf,
+        changeFrequency: CHANGEFREQ.monthly,
       });
     }
   }
@@ -107,8 +147,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const locale of locales) {
         entries.push({
           url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
-          lastModified: staticLastModified,
+          lastModified: areaLastModMap.get(area.slug) ?? staticLastModified,
           alternates: buildAlternates(`/services/${slug}/${area.slug}`),
+          priority: PRIORITY.serviceArea,
+          changeFrequency: CHANGEFREQ.monthly,
         });
       }
     }
@@ -120,6 +162,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/${locale}/projects/${category}/`,
         lastModified: staticLastModified,
         alternates: buildAlternates(`/projects/${category}`),
+        priority: PRIORITY.hub,
+        changeFrequency: CHANGEFREQ.monthly,
       });
     }
   }
@@ -131,6 +175,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: projectDateMap.get(slug) ?? now,
         alternates: buildAlternates(`/projects/${slug}`),
+        priority: PRIORITY.projectLeaf,
+        changeFrequency: CHANGEFREQ.yearly,
       });
     }
   }
@@ -142,6 +188,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: siteDateMap.get(slug) ?? now,
         alternates: buildAlternates(`/projects/${slug}`),
+        priority: PRIORITY.projectLeaf,
+        changeFrequency: CHANGEFREQ.yearly,
       });
     }
   }
@@ -152,6 +200,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
         lastModified: blogDateMap.get(slug) ?? now,
         alternates: buildAlternates(`/blog/${slug}`),
+        priority: PRIORITY.blog,
+        changeFrequency: CHANGEFREQ.monthly,
       });
     }
   }
@@ -160,8 +210,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/areas/${area.slug}/`,
-        lastModified: staticLastModified,
+        lastModified: areaLastModMap.get(area.slug) ?? staticLastModified,
         alternates: buildAlternates(`/areas/${area.slug}`),
+        priority: PRIORITY.area,
+        changeFrequency: CHANGEFREQ.monthly,
       });
     }
   }

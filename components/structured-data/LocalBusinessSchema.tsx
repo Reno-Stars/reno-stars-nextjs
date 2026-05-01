@@ -60,7 +60,16 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       opens: '09:00',
       closes: '18:00',
     },
-    sameAs: socialLinks.map((link) => link.url).filter((url) => url !== '#'),
+    // sameAs: social profiles + Google Business Profile (GBP). GBP URL via
+    // place_id is the strongest entity-graph signal — it links the
+    // Organization schema directly to the GBP listing for knowledge-graph
+    // consolidation. Place ID is the same one used for Places API reviews.
+    sameAs: [
+      ...socialLinks.map((link) => link.url).filter((url) => url !== '#'),
+      ...(process.env.GOOGLE_PLACE_ID
+        ? [`https://www.google.com/maps/place/?q=place_id:${process.env.GOOGLE_PLACE_ID}`]
+        : []),
+    ],
     ...(googleRating && googleReviewCount && {
       aggregateRating: {
         '@type': 'AggregateRating',

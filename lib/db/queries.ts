@@ -479,9 +479,9 @@ export async function getAllProjectsAdmin() {
 }
 
 /** Fetch all published project slugs with dates (for sitemap). */
-export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
+export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null }[]> {
   const rows = await db
-    .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt })
+    .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity })
     .from(projectsTable)
     .where(eq(projectsTable.isPublished, true));
   return rows;
