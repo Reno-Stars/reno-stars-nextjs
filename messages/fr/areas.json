@@ -30,6 +30,9 @@
     "neighbourhoodsSubtitle": "Projets de rénovation dans ces communautés {area}. Mentionnez votre quartier lorsque vous demandez un devis – nous connaissons les particularités de chacun en matière de permis et la logistique des fournisseurs.",
     "nearbyAreas": "Nous desservons également les zones à proximité",
     "trustStripPrefix": "{service} les mieux notés à Vancouver",
-    "trustStripReviews": "{rating}★ de {count} avis Google"
+    "trustStripReviews": "{rating}★ de {count} avis Google",
+    "featuredProjectHeading": "Projet récent {service} à {area}",
+    "featuredProjectSubheading": "Budget réel, calendrier réel, étendue réelle de notre portefeuille.",
+    "featuredProjectCta": "Voir le projet complet"
   }
 }

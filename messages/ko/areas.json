@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "실제 예산, 실제 일정, 포트폴리오의 실제 범위.",
     "featuredProjectCta": "전체 프로젝트 보기",
     "trustStripPrefix": "밴쿠버 최고 평점 {service}",
-    "trustStripReviews": "{count}의 {rating}★ Google 리뷰"
+    "trustStripReviews": "{count}의 {rating}★ Google 리뷰",
+    "linkSectionTitle": "메트로 밴쿠버 서비스 지역",
+    "linkSectionSubtitle": "귀하의 도시를 클릭하여 리노베이션 프로젝트, 동네 정보 및 무료 현지 견적을 확인하세요."
   }
 }

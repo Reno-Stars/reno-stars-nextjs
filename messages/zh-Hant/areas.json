@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "我們的投資組合中的真實預算、真實時間表、真實範圍。",
     "featuredProjectCta": "查看完整項目",
     "trustStripPrefix": "溫哥華排名前列的{service}",
-    "trustStripReviews": "{rating}★ 來自 {count} Google 評論"
+    "trustStripReviews": "{rating}★ 來自 {count} Google 評論",
+    "linkSectionTitle": "大溫哥華地區服務城市",
+    "linkSectionSubtitle": "點擊您所在的城市，查看裝修項目、社區詳情，並獲取免費本地報價。"
   }
 }

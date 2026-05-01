@@ -8,7 +8,7 @@
     "budget": "बजट",
     "allBudgets": "सभी बजट",
     "showing": "दिखा",
-    "projects": "{count, plural, one {project} अन्य {projects}}",
+    "projects": "{count, plural, one {परियोजना} other {परियोजनाएं}}",
     "clearAll": "फ़िल्टर साफ़ करें",
     "browseByCategory": "श्रेणी के अनुसार ब्राउज़ करें",
     "swipeToSeeMore": "अधिक देखने के लिए स्वाइप करें →",

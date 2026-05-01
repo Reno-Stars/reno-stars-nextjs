@@ -47,6 +47,15 @@
       "a2": "Да, наша команда имеет опыт работы с нормами коммерческого строительства {area}, требованиями доступности и правилами пожарной безопасности. Мы гарантируем полное соблюдение всех коммерческих стандартов.",
       "q3": "Можете ли вы справиться с улучшениями арендатора в {area}?",
       "a3": "Да, мы специализируемся на улучшении арендаторов (TI) для офисов, торговых помещений и ресторанов в {area}. Мы работаем с арендодателями и управляющими недвижимостью над процессами утверждения."
+    },
+    "title": "Часто задаваемые вопросы",
+    "realtor": {
+      "q1": "What is a realtor consultation in {area}?",
+      "a1": "We meet your realtor (or you and your realtor together) on-site in {area} to assess what renovation work would maximize the resale value of the property. We give an honest scope-and-budget recommendation — not every property needs a full reno to sell well.",
+      "q2": "How much does a pre-listing renovation in {area} cost?",
+      "a2": "Pre-listing renovations in {area} typically run $3,000 (paint + minor repairs) to $40,000 (kitchen + bathroom refresh). We focus on highest-ROI items: paint, flooring, kitchen face-lift, bathroom vanity. We provide a written quote with timeline.",
+      "q3": "How fast can you finish a pre-listing renovation in {area}?",
+      "a3": "Most pre-listing renovations in {area} complete in 1-3 weeks: 1 week for paint-only refreshes, 2-3 weeks for kitchen/bathroom face-lifts. We coordinate with your realtor's listing timeline so the property is staging-ready on schedule."
     }
   }
 }

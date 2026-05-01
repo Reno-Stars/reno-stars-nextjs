@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "Presupuesto real, cronograma real, alcance real de nuestra cartera.",
     "featuredProjectCta": "Ver proyecto completo",
     "trustStripPrefix": "{service} mejor valorado en Vancouver",
-    "trustStripReviews": "{rating}★ de {count} Reseñas de Google"
+    "trustStripReviews": "{rating}★ de {count} Reseñas de Google",
+    "linkSectionTitle": "Áreas de servicio en Metro Vancouver",
+    "linkSectionSubtitle": "Haz clic en tu ciudad para ver proyectos de renovación, detalles del vecindario y un presupuesto local gratuito."
   }
 }

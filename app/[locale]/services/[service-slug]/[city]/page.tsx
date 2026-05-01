@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -18,18 +18,22 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
-// Build-time prerender: ALL locales × all services × all areas (~980 entries).
-// Was EN-only as a build-time optimization, but ISR returned 404 for non-EN
-// (caught by scripts/audit-hreflang.mjs 2026-04-30) — every non-EN combo URL
-// 404'd while hreflang advertised them. The leak outweighs the build-cost
-// savings. ~15 min build vs SEO-clean URLs is the right trade.
+// Build-time prerender: only the locales that drive search/marketing traffic
+// (en, zh, zh-Hant). At 14 locales × 7 services × 14 areas = 1,372 combo
+// entries the Vercel build sandbox runs out of disk (ENOSPC writing
+// /vercel/output/config.json). The dropped locales (ja/ko/es/pa/tl/fa/vi/
+// ru/ar/hi/fr) get on-demand ISR — first request prerenders, then cached.
+// If ISR returns 404 for non-EN combos again (the 2026-04-30 bug), bring
+// those locales back here selectively rather than restoring the full fan-out.
+const PRERENDERED_COMBO_LOCALES = ['en', 'zh', 'zh-Hant'] as const;
+
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
   for (const service of services) {
     if (service.showOnServicesPage === false) continue;
     for (const area of areas) {
-      for (const locale of locales) {
+      for (const locale of PRERENDERED_COMBO_LOCALES) {
         params.push({ locale, 'service-slug': service.slug, city: area.slug });
       }
     }

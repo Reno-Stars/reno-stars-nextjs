@@ -8,7 +8,7 @@
     "budget": "ميزانية",
     "allBudgets": "جميع الميزانيات",
     "showing": "عرض",
-    "projects": "{count, plural, one {project} أخرى {projects}}",
+    "projects": "{count, plural, one {مشروع} other {مشاريع}}",
     "clearAll": "مسح المرشحات",
     "browseByCategory": "تصفح حسب الفئة",
     "swipeToSeeMore": "اسحب لرؤية المزيد ←",

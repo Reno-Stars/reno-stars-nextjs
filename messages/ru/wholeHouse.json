@@ -12,7 +12,7 @@
     "allAreas": "Все области",
     "childProjectsCount": "{count} зоны ремонта",
     "noImagesForArea": "Для этой области нет изображений",
-    "areasCount": "{count, plural, one {# Area} другое {# Areas}}",
+    "areasCount": "{count, plural, one {# зона} other {# зон}}",
     "siteBadge": "Весь дом",
     "areas": "Области"
   }

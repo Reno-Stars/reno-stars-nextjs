@@ -8,7 +8,7 @@
     "budget": "Budget",
     "allBudgets": "Tous les budgets",
     "showing": "Affichage",
-    "projects": "{count, plural, one {project} autre {projects}}",
+    "projects": "{count, plural, one {projet} other {projets}}",
     "clearAll": "Effacer les filtres",
     "browseByCategory": "Parcourir par catégorie",
     "swipeToSeeMore": "Faites glisser pour en voir plus →",

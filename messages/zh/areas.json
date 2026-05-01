@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "我们的投资组合中的真实预算、真实时间表、真实范围。",
     "featuredProjectCta": "查看完整项目",
     "trustStripPrefix": "温哥华排名前列的{service}",
-    "trustStripReviews": "{rating}★ 来自 {count} Google 评论"
+    "trustStripReviews": "{rating}★ 来自 {count} Google 评论",
+    "linkSectionTitle": "大温哥华地区服务城市",
+    "linkSectionSubtitle": "点击您所在的城市，查看装修项目、社区详情，并获取免费本地报价。"
   }
 }

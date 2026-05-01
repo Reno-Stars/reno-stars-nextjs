@@ -12,7 +12,7 @@
     "allAreas": "Tous les domaines",
     "childProjectsCount": "Zones de rénovation {count}",
     "noImagesForArea": "Aucune image disponible pour cette zone",
-    "areasCount": "{count, plural, one {# Area} autre {# Areas}}",
+    "areasCount": "{count, plural, one {# zone} other {# zones}}",
     "siteBadge": "Maison entière",
     "areas": "Domaines"
   }

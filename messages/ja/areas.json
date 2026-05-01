@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "私たちのポートフォリオからの実際の予算、実際のタイムライン、実際の範囲。",
     "featuredProjectCta": "プロジェクト全体を表示",
     "trustStripPrefix": "バンクーバーで最高評価の {service}",
-    "trustStripReviews": "{count} Google レビューからの {rating}★"
+    "trustStripReviews": "{count} Google レビューからの {rating}★",
+    "linkSectionTitle": "メトロバンクーバーのサービスエリア",
+    "linkSectionSubtitle": "お住まいの都市をクリックして、リノベーション事例、地域の特徴、無料の地域別見積もりをご覧ください。"
   }
 }

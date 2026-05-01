@@ -12,7 +12,7 @@
     "allAreas": "सभी क्षेत्र",
     "childProjectsCount": "{count} नवीकरण क्षेत्र",
     "noImagesForArea": "इस क्षेत्र के लिए कोई चित्र उपलब्ध नहीं हैं",
-    "areasCount": "{count, plural, one {# Area} अन्य {# Areas}}",
+    "areasCount": "{count, plural, one {# क्षेत्र} other {# क्षेत्र}}",
     "siteBadge": "पूरा घर",
     "areas": "क्षेत्रों"
   }

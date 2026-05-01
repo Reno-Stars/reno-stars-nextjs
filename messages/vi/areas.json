@@ -31,6 +31,8 @@
     "featuredProjectSubheading": "Ngân sách thực, dòng thời gian thực, phạm vi thực từ danh mục đầu tư của chúng tôi.",
     "featuredProjectCta": "Xem toàn bộ dự án",
     "trustStripPrefix": "{service} được xếp hạng hàng đầu ở Vancouver",
-    "trustStripReviews": "{rating}★ từ {count} Google đánh giá"
+    "trustStripReviews": "{rating}★ từ {count} Google đánh giá",
+    "linkSectionTitle": "Khu vực phục vụ tại Metro Vancouver",
+    "linkSectionSubtitle": "Nhấp vào thành phố của bạn để xem các dự án cải tạo, thông tin khu vực và báo giá miễn phí tại địa phương."
   }
 }
