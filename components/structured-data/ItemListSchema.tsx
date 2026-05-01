@@ -10,12 +10,15 @@ interface ItemListSchemaProps {
   items: ItemListItem[];
   name?: string;
   description?: string;
+  /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
+  locale?: string;
 }
 
 export default function ItemListSchema({
   items,
   name,
   description,
+  locale,
 }: ItemListSchemaProps): React.ReactElement | null {
   if (items.length === 0) return null;
   const baseUrl = getBaseUrl();
@@ -25,6 +28,7 @@ export default function ItemListSchema({
     '@type': 'ItemList',
     ...(name && { name }),
     ...(description && { description }),
+    ...(locale && { inLanguage: locale }),
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',

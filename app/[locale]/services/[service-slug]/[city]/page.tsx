@@ -296,8 +296,9 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/services/${serviceSlug}/${city}/`}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
+        locale={locale}
       />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <ServiceLocationPage
         locale={locale as Locale}
         serviceSlug={serviceSlug as ServiceType}

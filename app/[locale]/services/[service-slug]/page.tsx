@@ -147,8 +147,9 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
         serviceRadiusKm={50}
+        locale={locale}
       />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} faqs={faqs} />
     </>
   );

@@ -108,13 +108,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
         company={company}
         headline={mt('title')}
         description={mt('description')}
         url={`/${locale}/guides/bathroom-renovation-cost-vancouver/`}
         authorName={`${company.name} Team`}
+        locale={locale}
       />
       <HowToSchema
         name={locale === 'zh' ? '如何规划温哥华浴室装修预算' : 'How to Budget for a Bathroom Renovation in Vancouver'}

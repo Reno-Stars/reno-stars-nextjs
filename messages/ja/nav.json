@@ -28,6 +28,11 @@
     "features": "強み",
     "kitchenCostGuide": "キッチンリノベーション費用ガイド",
     "bathroomCostGuide": "バスルームリノベーション費用ガイド",
-    "renovationNearMe": "近くのリノベーション"
+    "renovationNearMe": "近くのリノベーション",
+    "budgetUnder30k": "30,000 ドル未満のプロジェクト",
+    "budgetMid": "プロジェクト $30,000 – $60,000",
+    "budgetHigh": "プロジェクト $60,000 以上",
+    "kitchenVsBathroom": "キッチンとバスルーム: どちらが先?",
+    "condoVsHouse": "マンションと戸建てのリノベーション費用"
   }
 }

@@ -81,13 +81,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
         company={company}
         headline={mt('title')}
         description={mt('description')}
         url={`/${locale}/guides/commercial-renovation-cost-vancouver/`}
         authorName={`${company.name} Team`}
+        locale={locale}
       />
       <CommercialCostGuidePage locale={locale as Locale} projects={projects} />
     </>

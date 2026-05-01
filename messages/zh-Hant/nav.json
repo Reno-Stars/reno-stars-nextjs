@@ -28,6 +28,11 @@
     "features": "特色優勢",
     "kitchenCostGuide": "廚房裝修費用指南",
     "bathroomCostGuide": "浴室裝修費用指南",
-    "renovationNearMe": "附近裝修服務"
+    "renovationNearMe": "附近裝修服務",
+    "budgetUnder30k": "3 萬美元以下的項目",
+    "budgetMid": "項目 3 萬美元 – 6 萬美元",
+    "budgetHigh": "項目 6 萬美元以上",
+    "kitchenVsBathroom": "廚房與浴室：哪一個先？",
+    "condoVsHouse": "公寓與獨立屋裝修成本"
   }
 }

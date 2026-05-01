@@ -5,9 +5,11 @@ interface FAQ {
 
 interface FAQSchemaProps {
   faqs: FAQ[];
+  /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
+  locale?: string;
 }
 
-export default function FAQSchema({ faqs }: FAQSchemaProps): React.ReactElement | null {
+export default function FAQSchema({ faqs, locale }: FAQSchemaProps): React.ReactElement | null {
   if (faqs.length === 0) return null;
 
   const schema = {
@@ -21,6 +23,7 @@ export default function FAQSchema({ faqs }: FAQSchemaProps): React.ReactElement 
         text: faq.answer,
       },
     })),
+    ...(locale && { inLanguage: locale }),
   };
 
   return (

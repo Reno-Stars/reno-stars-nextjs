@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
-import { BreadcrumbSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
-import { getCompanyFromDb, getBlogPostsPaginatedFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
+import { BreadcrumbSchema, ItemListSchema } from '@/components/structured-data';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
+import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -62,10 +62,12 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
 
-  const [t, company, paginatedPosts] = await Promise.all([
+  const [t, mt, company, paginatedPosts, allPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'metadata.blog' }),
     getCompanyFromDb(),
     getBlogPostsPaginatedFromDb(currentPage, BLOG_POSTS_PER_PAGE),
+    getBlogPostsFromDb(),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -83,6 +85,17 @@ export default async function Page({ params, searchParams }: PageProps) {
         <link rel="next" href={`${baseUrl}/${locale}/blog/?page=${currentPage + 1}`} />
       )}
       <BreadcrumbSchema items={breadcrumbs} />
+      {currentPage === 1 && (
+        <ItemListSchema
+          items={allPosts.map((p) => ({
+            name: pickLocale(p.title, locale as Locale),
+            url: `/${locale}/blog/${p.slug}/`,
+            image: p.featured_image ?? undefined,
+          }))}
+          name={mt('title')}
+          description={mt('description')}
+        />
+      )}
       <BlogPage
         locale={locale as Locale}
         company={company}

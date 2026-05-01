@@ -136,7 +136,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      {faqs.length > 0 && <FAQSchema faqs={faqs} />}
+      {faqs.length > 0 && <FAQSchema faqs={faqs} locale={locale} />}
       <ArticleSchema
         company={company}
         headline={localizedPost.title}
@@ -146,6 +146,7 @@ export default async function Page({ params }: PageProps) {
         authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
         image={post.featured_image}
+        locale={locale}
       />
       <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />
     </>

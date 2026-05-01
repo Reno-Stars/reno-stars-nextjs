@@ -22,9 +22,12 @@ interface LocalBusinessSchemaProps {
    *  i18n messages. When omitted we fall back to an EN string so the
    *  schema remains valid even on pages that haven't wired this up. */
   description?: string;
+  /** BCP-47 locale (en, zh, zh-Hant, ja, ko, ...). When provided, emits
+   *  `inLanguage` so Google can match the entity to locale-specific SERPs. */
+  locale?: string;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
   const schema = {
@@ -100,6 +103,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     }),
     description: description
       ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,
+    ...(locale && { inLanguage: locale }),
     // schema.org foundingDate = legal incorporation year, NOT aggregate
     // team experience. The "20+ years" stat on the marketing site reflects
     // team-level renovation experience (foundingYear in company-config.ts);

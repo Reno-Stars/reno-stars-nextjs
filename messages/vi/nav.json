@@ -28,6 +28,11 @@
     "features": "Ưu Điểm",
     "kitchenCostGuide": "Hướng Dẫn Chi Phí Phòng Bếp",
     "bathroomCostGuide": "Hướng Dẫn Chi Phí Phòng Tắm",
-    "renovationNearMe": "Cải Tạo Gần Tôi"
+    "renovationNearMe": "Cải Tạo Gần Tôi",
+    "budgetUnder30k": "Dự án dưới $30K",
+    "budgetMid": "Dự án $30K – $60K",
+    "budgetHigh": "Dự án $60K trở lên",
+    "kitchenVsBathroom": "Nhà bếp và phòng tắm: Cái nào đầu tiên?",
+    "condoVsHouse": "Chi phí cải tạo căn hộ và nhà"
   }
 }

@@ -28,6 +28,11 @@
     "features": "特色优势",
     "kitchenCostGuide": "厨房装修费用指南",
     "bathroomCostGuide": "浴室装修费用指南",
-    "renovationNearMe": "附近装修服务"
+    "renovationNearMe": "附近装修服务",
+    "budgetUnder30k": "3 万美元以下的项目",
+    "budgetMid": "项目 3 万美元 – 6 万美元",
+    "budgetHigh": "项目 6 万美元及以上",
+    "kitchenVsBathroom": "厨房与浴室：哪个先？",
+    "condoVsHouse": "公寓与独立屋装修成本"
   }
 }

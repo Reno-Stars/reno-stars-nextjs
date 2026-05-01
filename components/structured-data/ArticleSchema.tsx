@@ -10,6 +10,8 @@ interface ArticleSchemaProps {
   authorName?: string;
   url: string;
   image?: string;
+  /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
+  locale?: string;
 }
 
 export default function ArticleSchema({
@@ -21,6 +23,7 @@ export default function ArticleSchema({
   authorName,
   url,
   image,
+  locale,
 }: ArticleSchemaProps): React.ReactElement {
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
@@ -60,6 +63,7 @@ export default function ArticleSchema({
         height: 630,
       },
     }),
+    ...(locale && { inLanguage: locale }),
   };
 
   return (

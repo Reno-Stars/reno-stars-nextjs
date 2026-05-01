@@ -28,6 +28,11 @@
     "features": "Features",
     "kitchenCostGuide": "Kitchen Cost Guide",
     "bathroomCostGuide": "Bathroom Cost Guide",
-    "renovationNearMe": "Renovation Near Me"
+    "renovationNearMe": "Renovation Near Me",
+    "budgetUnder30k": "Projects Under $30K",
+    "budgetMid": "Projects $30K – $60K",
+    "budgetHigh": "Projects $60K & Over",
+    "kitchenVsBathroom": "Kitchen vs Bathroom: Which First?",
+    "condoVsHouse": "Condo vs House Renovation Cost"
   }
 }

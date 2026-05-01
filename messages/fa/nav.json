@@ -28,6 +28,11 @@
     "features": "ویژگی‌ها",
     "kitchenCostGuide": "راهنمای هزینه آشپزخانه",
     "bathroomCostGuide": "راهنمای هزینه حمام",
-    "renovationNearMe": "بازسازی نزدیک من"
+    "renovationNearMe": "بازسازی نزدیک من",
+    "budgetUnder30k": "پروژه های زیر 30 هزار دلار",
+    "budgetMid": "پروژه ها 30 تا 60 هزار دلار",
+    "budgetHigh": "پروژه های 60 هزار دلار و بیشتر",
+    "kitchenVsBathroom": "آشپزخانه در مقابل حمام: کدام اول؟",
+    "condoVsHouse": "کاندو در مقابل هزینه بازسازی خانه"
   }
 }
