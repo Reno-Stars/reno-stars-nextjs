@@ -38,11 +38,13 @@ export async function generateStaticParams() {
  * fix can ship without DB writes.
  */
 const enAreaOverrides: Record<string, { title: string; description: string }> = {
-  // Q1 (105 imp pos 31.5) "home renovations coquitlam" + Q9 "home renovation contractor coquitlam"
+  // 2026-05-01 GSC retitle: 1,393 imp pos 50 with 0% CTR. Hub framing
+  // ("Renovation Contractor") to disambiguate from /services/{svc}/coquitlam
+  // combo pages — same fix that worked for burnaby/delta/langley.
   coquitlam: {
-    title: 'Home Renovations Coquitlam (2026) | Free Quote | Reno Stars',
+    title: 'Coquitlam Renovation Contractor | Burke Mountain & Westwood | Reno Stars',
     description:
-      'Coquitlam home renovations — kitchens, bathrooms & whole-house remodels. 700+ real projects, $5M insured, 3-yr warranty. Burke Mountain to Westwood. Free quote in 24h.',
+      'Coquitlam renovation contractor — Burke Mountain, Westwood Plateau, Maillardville, Austin Heights. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
   },
   // Q2 (94 imp pos 40.5) "home renovations burnaby" — positioned as the
   // CONTRACTOR HUB to disambiguate from /services/{kitchen,bathroom,whole-house}/burnaby
@@ -51,11 +53,11 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Burnaby renovation contractor serving Metrotown, Heights & Capitol Hill. Kitchens, bathrooms, basements + whole-house. Strata-compliant, $5M insured, 3-yr warranty.',
   },
-  // Q6 (74 imp pos 27.5) "home renovations maple ridge"
+  // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
   'maple-ridge': {
-    title: 'Home Renovations Maple Ridge (2026) | $5M Insured | Reno Stars',
+    title: 'Maple Ridge Renovation Contractor | Albion & Cottonwood | Reno Stars',
     description:
-      'Maple Ridge home renovations — kitchens, bathrooms & basements. Albion, Cottonwood, Hammond. 20+ yrs, $5M insured, 3-yr warranty. Free in-home quote, real prices.',
+      'Maple Ridge renovation contractor — Albion, Cottonwood, Hammond, Haney, West Maple Ridge. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
   },
   // Q8 (60 imp pos 57.4) "home renovation contractor port coquitlam"
   'port-coquitlam': {
@@ -125,11 +127,11 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
  */
 const enAreaIntros: Record<string, string> = {
   coquitlam:
-    'Home renovations in Coquitlam, BC — full-service remodels for homes from Burke Mountain and Westwood Plateau down to Maillardville and Austin Heights. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and a 3-year workmanship warranty.',
+    'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and a 3-year workmanship warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
   burnaby:
     'Reno Stars is a full-service home renovation contractor in Burnaby, BC. From The Heights and Capitol Hill to Metrotown, Brentwood and South Burnaby, we handle kitchens, bathrooms, basements and whole-house remodels — strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below to see Burnaby-specific pricing for kitchens, bathrooms or whole-house projects, or browse 700+ completed Lower Mainland renovations.',
   'maple-ridge':
-    'Home renovations in Maple Ridge — kitchens, bathrooms, basements and whole-house remodels for properties in Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, with permits handled end-to-end and a 3-year workmanship warranty.',
+    'Reno Stars is a renovation contractor in Maple Ridge — serving Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, handling kitchens, bathrooms, basements and whole-house remodels with permits managed end-to-end and a 3-year workmanship warranty. Use the service tiles below for Maple-Ridge-specific kitchen, bathroom and whole-house pricing.',
   'port-coquitlam':
     'Home renovations and contractor services in Port Coquitlam — kitchens, bathrooms, basements and whole-house remodels for homes in Citadel Heights, Lincoln Park, Oxford Heights, Birchland Manor and Riverwood. Permits handled end-to-end, $5M CGL insurance and a 3-year warranty on every project.',
   delta:

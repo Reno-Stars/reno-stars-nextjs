@@ -24,6 +24,8 @@
     "blogLinkText": "Renovation Tips & Guides",
     "serviceLinkText": "All About {service}",
     "areaLinkText": "All Renovations in {area}",
+    "linkSectionTitle": "Service Areas Across Metro Vancouver",
+    "linkSectionSubtitle": "Click your city for renovation projects, neighbourhood specifics, and a free local quote.",
     "neighbourhoodsTitle": "Neighbourhoods We Serve in {area}",
     "neighbourhoodsSubtitle": "Renovation projects across these {area} communities. Mention your neighbourhood when you request a quote — we know each one's permit quirks and supplier logistics.",
     "nearbyAreas": "We Also Serve Nearby Areas"
