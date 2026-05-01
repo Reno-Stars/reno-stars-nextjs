@@ -1,0 +1,10 @@
+{
+  "serviceBenefits": {
+    "freeConsultation": "Бесплатная консультация и расчет",
+    "licensedInsured": "Лицензировано и полностью застраховано (CGL + WCB)",
+    "coverageAndWarranty": "Страховка CGL на 5 миллионов долларов, активное покрытие WCB, гарантия до 3 лет.",
+    "experience": "{years}+ лет опыта",
+    "rating": "5-звездочный рейтинг Google",
+    "projectsDone": "700+ реализованных проектов"
+  }
+}

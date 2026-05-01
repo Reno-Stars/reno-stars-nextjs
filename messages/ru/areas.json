@@ -1,0 +1,33 @@
+{
+  "areas": {
+    "title": "Зоны обслуживания",
+    "subtitle": "Мы с гордостью обслуживаем сообщества по всему Лоуэр-Мейнленду.",
+    "servingIn": "Ремонт дома в {city}",
+    "cityDescription": "Профессиональные услуги по ремонту доступны в {city}. Свяжитесь с нами для бесплатной консультации.",
+    "viewProjects": "Посмотреть проекты {city}",
+    "requestQuote": "Запросить цену",
+    "whyChooseArea": "Почему стоит выбрать нашу услугу {area}",
+    "areaProjects": "{area} Проекты",
+    "readyToStartIn": "Готовы начать свой проект {service} в {area}?",
+    "serviceInArea": "{service} в {area}",
+    "servicesInArea": "Наши услуги в {area}",
+    "readyToStartRenovation": "Готовы начать ремонт {area}?",
+    "faqTitle": "Часто задаваемые вопросы о ремонте {area}",
+    "aboutArea": "О {area}",
+    "aboutService": "О {service} в {area}",
+    "areaServiceContent": "{service} Услуги в {area}",
+    "otherAreasForService": "{service} в других регионах",
+    "otherServicesInArea": "Другие услуги в {area}",
+    "serviceFaqTitle": "Часто задаваемые вопросы о {service} в {area}",
+    "learnOurProcess": "Узнайте о нашем 5-этапном процессе ремонта",
+    "processLinkText": "Посмотрите, как мы работаем",
+    "blogLinkText": "Советы и руководства по ремонту",
+    "serviceLinkText": "Все о {service}",
+    "areaLinkText": "Все ремонты в {area}",
+    "linkSectionTitle": "Зоны обслуживания в метро Ванкувера",
+    "linkSectionSubtitle": "Нажмите на свой город, чтобы просмотреть проекты реконструкции, особенности района и бесплатную местную расценку.",
+    "neighbourhoodsTitle": "Районы, которые мы обслуживаем в {area}",
+    "neighbourhoodsSubtitle": "Проекты реконструкции в этих сообществах {area}. Упоминайте свой район, когда запрашиваете ценовое предложение — мы знаем особенности разрешений каждого из них и логистику поставщиков.",
+    "nearbyAreas": "Мы также обслуживаем близлежащие районы"
+  }
+}

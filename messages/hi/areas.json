@@ -1,0 +1,33 @@
+{
+  "areas": {
+    "title": "सेवा क्षेत्र",
+    "subtitle": "हम गर्व से निचली मुख्यभूमि के समुदायों की सेवा करते हैं",
+    "servingIn": "{city} में गृह नवीनीकरण",
+    "cityDescription": "{city} में व्यावसायिक नवीनीकरण सेवाएँ उपलब्ध हैं। नि: शुल्क परामर्श के लिए हमसे संपर्क करें।",
+    "viewProjects": "{city} प्रोजेक्ट देखें",
+    "requestQuote": "कोट अनुरोध करें",
+    "whyChooseArea": "हमारी {area} सेवा क्यों चुनें",
+    "areaProjects": "{area} परियोजनाएं",
+    "readyToStartIn": "क्या आप {area} में अपना {service} प्रोजेक्ट शुरू करने के लिए तैयार हैं?",
+    "serviceInArea": "{service} में {area}",
+    "servicesInArea": "{area} में हमारी सेवाएँ",
+    "readyToStartRenovation": "क्या आप अपना {area} नवीनीकरण शुरू करने के लिए तैयार हैं?",
+    "faqTitle": "{area} नवीनीकरण के बारे में अक्सर पूछे जाने वाले प्रश्न",
+    "aboutArea": "{area} के बारे में",
+    "aboutService": "{area} में {service} के बारे में",
+    "areaServiceContent": "{service} सेवाएँ {area} में",
+    "otherAreasForService": "अन्य क्षेत्रों में {service}",
+    "otherServicesInArea": "{area} में अन्य सेवाएँ",
+    "serviceFaqTitle": "{area} में {service} के बारे में अक्सर पूछे जाने वाले प्रश्न",
+    "learnOurProcess": "हमारी 5-चरणीय नवीनीकरण प्रक्रिया के बारे में जानें",
+    "processLinkText": "देखें हम कैसे काम करते हैं",
+    "blogLinkText": "नवीनीकरण युक्तियाँ एवं मार्गदर्शिकाएँ",
+    "serviceLinkText": "{service} के बारे में सब कुछ",
+    "areaLinkText": "{area} में सभी नवीनीकरण",
+    "linkSectionTitle": "मेट्रो वैंकूवर में सेवा क्षेत्र",
+    "linkSectionSubtitle": "नवीनीकरण परियोजनाओं, पड़ोस की विशिष्टताओं और मुफ़्त स्थानीय कोटेशन के लिए अपने शहर पर क्लिक करें।",
+    "neighbourhoodsTitle": "पड़ोस हम {area} में सेवा करते हैं",
+    "neighbourhoodsSubtitle": "इन {area} समुदायों में नवीनीकरण परियोजनाएँ। जब आप कोटेशन का अनुरोध करें तो अपने आस-पड़ोस का उल्लेख करें - हम प्रत्येक की परमिट संबंधी विचित्रताओं और आपूर्तिकर्ता लॉजिस्टिक्स को जानते हैं।",
+    "nearbyAreas": "हम आस-पास के क्षेत्रों में भी सेवा प्रदान करते हैं"
+  }
+}

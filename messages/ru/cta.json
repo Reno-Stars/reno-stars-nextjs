@@ -1,0 +1,27 @@
+{
+  "cta": {
+    "getQuote": "Получить цену",
+    "getFreeQuote": "Получить бесплатную цену",
+    "getYourFreeQuote": "Получите бесплатную цену",
+    "freeQuoteProject": "Получите бесплатное ценовое предложение для вашего проекта!",
+    "freeQuote": "Получить бесплатное предложение",
+    "startProject": "Начни свой проект",
+    "startProjectToday": "Начните свой проект сегодня",
+    "getStarted": "Начать",
+    "viewProjects": "Посмотреть проекты",
+    "viewOurWork": "Посмотреть нашу работу",
+    "ourServices": "Наши услуги",
+    "learnMore": "Узнать больше",
+    "exploreService": "Откройте для себя {service}",
+    "sendMessage": "Отправить сообщение",
+    "submitInquiry": "Получите мою бесплатную цену",
+    "bookAppointment": "Записаться на прием",
+    "callNow": "Позвоните сейчас",
+    "requestConsultation": "Запросить бесплатную консультацию",
+    "viewAllProjects": "Посмотреть все проекты",
+    "viewAllServices": "Просмотреть все услуги",
+    "scheduleConsultation": "Запланировать консультацию",
+    "stickyQuoteFor": "Получить предложение {area} {service}",
+    "stickyCall": "Вызов"
+  }
+}

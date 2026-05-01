@@ -7,5 +7,17 @@
     "basement": "Basement Renovation Cost",
     "bathroom": "Average Bathroom Reno Cost",
     "bathroomGuide": "Bathroom Renovation Cost"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "Kitchen Cost by Metro Vancouver Neighbourhood",
+    "bathroomTitle": "Bathroom Cost by Metro Vancouver Neighbourhood",
+    "wholeHouseTitle": "Whole-House Cost by Metro Vancouver Neighbourhood",
+    "basementTitle": "Basement Cost by Metro Vancouver Neighbourhood",
+    "subtitle": "Real averages from our completed projects — not industry estimates. Cities with 2+ completed projects only.",
+    "headerCity": "City",
+    "headerProjects": "Projects",
+    "headerAvg": "Avg Project Cost",
+    "headerRange": "Range",
+    "footnote": "Data source: Reno Stars portfolio. Aggregated from real project budgets — directories like HomeStars and Houzz can only quote industry averages."
   }
 }

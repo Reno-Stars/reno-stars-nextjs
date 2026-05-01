@@ -7,5 +7,17 @@
     "basement": "Basement Renovation Cost",
     "bathroom": "Average Bathroom Reno Cost",
     "bathroomGuide": "Bathroom Renovation Cost"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "Gastos sa Kusina ayon sa Metro Vancouver Neighborhood",
+    "bathroomTitle": "Gastos sa Banyo ayon sa Metro Vancouver Neighborhood",
+    "wholeHouseTitle": "Gastos ng Buong Bahay ayon sa Metro Vancouver Neighborhood",
+    "basementTitle": "Halaga ng Basement ayon sa Metro Vancouver Neighborhood",
+    "subtitle": "Mga tunay na average mula sa aming mga natapos na proyekto — hindi mga pagtatantya sa industriya. Mga lungsod na may 2+ natapos na proyekto lamang.",
+    "headerCity": "lungsod",
+    "headerProjects": "Mga proyekto",
+    "headerAvg": "Avg na Gastos ng Proyekto",
+    "headerRange": "Saklaw",
+    "footnote": "Pinagmulan ng data: portfolio ng Reno Stars. Pinagsama-sama mula sa mga totoong badyet ng proyekto — ang mga direktoryo tulad ng HomeStars at Houzz ay maaari lamang mag-quote ng mga average ng industriya."
   }
 }

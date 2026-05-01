@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "Nom",
+    "fullName": "Nom et prénom",
+    "email": "E-mail",
+    "emailAddress": "Adresse email",
+    "phone": "Téléphone",
+    "phoneNumber": "Numéro de téléphone",
+    "message": "Message",
+    "projectDetails": "Détails du projet",
+    "service": "Service",
+    "serviceInterestedIn": "Service intéressé par",
+    "selectService": "Sélectionnez une prestation",
+    "namePlaceholder": "Votre nom",
+    "namePlaceholder2": "John Smith",
+    "emailPlaceholder": "votre.email@exemple.com",
+    "emailPlaceholder2": "votre@email.com",
+    "emailPlaceholder3": "john@exemple.com",
+    "phonePlaceholder": "Votre numéro de téléphone",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "Parlez-nous de votre projet...",
+    "messagePlaceholder2": "Parlez-nous de votre projet de rénovation...",
+    "sending": "Envoi...",
+    "success": "Merci! Votre message a été envoyé avec succès.",
+    "successTitle": "Message envoyé !",
+    "error": "Quelque chose s'est mal passé. Veuillez réessayer.",
+    "responsePromise": "Nous vous répondons sous 24 heures avec un devis détaillé."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "सभी श्रेणियाँ",
+    "location": "जगह",
+    "allLocations": "सभी स्थान",
+    "spaceType": "अंतरिक्ष प्रकार",
+    "allSpaceTypes": "सभी स्थान प्रकार",
+    "budget": "बजट",
+    "allBudgets": "सभी बजट",
+    "showing": "दिखा",
+    "projects": "{count, plural, one {project} अन्य {projects}}",
+    "clearAll": "फ़िल्टर साफ़ करें",
+    "browseByCategory": "श्रेणी के अनुसार ब्राउज़ करें",
+    "swipeToSeeMore": "अधिक देखने के लिए स्वाइप करें →",
+    "noProjectsMatch": "कोई भी प्रोजेक्ट आपके फ़िल्टर से मेल नहीं खाता.",
+    "pagination": "प्रोजेक्ट पेजिनेशन",
+    "previous": "पहले का",
+    "next": "अगला",
+    "previousPage": "पिछले पृष्ठ पर जाएं",
+    "nextPage": "अगले पृष्ठ पर जाएँ",
+    "showingProjects": "{total} परियोजनाओं में से {start}-{end} दिखाया जा रहा है",
+    "search": "प्रोजेक्ट खोजें..."
+  }
+}

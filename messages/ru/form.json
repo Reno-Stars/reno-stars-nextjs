@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "Имя",
+    "fullName": "Полное имя",
+    "email": "Электронная почта",
+    "emailAddress": "Адрес электронной почты",
+    "phone": "Телефон",
+    "phoneNumber": "Номер телефона",
+    "message": "Сообщение",
+    "projectDetails": "Детали проекта",
+    "service": "Услуга",
+    "serviceInterestedIn": "Сервис заинтересован в",
+    "selectService": "Выберите услугу",
+    "namePlaceholder": "Ваше имя",
+    "namePlaceholder2": "Джон Смит",
+    "emailPlaceholder": "ваш.электронная почта@example.com",
+    "emailPlaceholder2": "ваш@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "Ваш номер телефона",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "Расскажите о своем проекте...",
+    "messagePlaceholder2": "Расскажите о своем проекте ремонта...",
+    "sending": "Отправка...",
+    "success": "Спасибо! Ваше сообщение успешно отправлено.",
+    "successTitle": "Сообщение отправлено!",
+    "error": "Что-то пошло не так. Пожалуйста, попробуйте еще раз.",
+    "responsePromise": "Мы ответим в течение 24 часов с подробной сметой."
+  }
+}

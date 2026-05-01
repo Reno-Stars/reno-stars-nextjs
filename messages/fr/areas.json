@@ -1,0 +1,33 @@
+{
+  "areas": {
+    "title": "Zones de service",
+    "subtitle": "Nous sommes fiers de servir les communautés du Lower Mainland",
+    "servingIn": "Rénovations domiciliaires à {city}",
+    "cityDescription": "Services de rénovation professionnels disponibles à {city}. Contactez-nous pour une consultation gratuite.",
+    "viewProjects": "Voir les projets {city}",
+    "requestQuote": "Demander un devis",
+    "whyChooseArea": "Pourquoi choisir notre service {area}",
+    "areaProjects": "Projets {area}",
+    "readyToStartIn": "Prêt à démarrer votre projet {service} dans {area} ?",
+    "serviceInArea": "{service} dans {area}",
+    "servicesInArea": "Nos services en {area}",
+    "readyToStartRenovation": "Prêt à commencer votre rénovation {area} ?",
+    "faqTitle": "Foire aux questions sur les rénovations {area}",
+    "aboutArea": "À propos de {area}",
+    "aboutService": "À propos de {service} dans {area}",
+    "areaServiceContent": "Services {service} dans {area}",
+    "otherAreasForService": "{service} dans d'autres zones",
+    "otherServicesInArea": "Autres services dans {area}",
+    "serviceFaqTitle": "Foire aux questions sur {service} dans {area}",
+    "learnOurProcess": "Découvrez notre processus de rénovation en 5 étapes",
+    "processLinkText": "Découvrez comment nous travaillons",
+    "blogLinkText": "Conseils et guides de rénovation",
+    "serviceLinkText": "Tout sur {service}",
+    "areaLinkText": "Toutes les rénovations à {area}",
+    "linkSectionTitle": "Zones de service dans la région métropolitaine de Vancouver",
+    "linkSectionSubtitle": "Cliquez sur votre ville pour connaître les projets de rénovation, les spécificités du quartier et un devis local gratuit.",
+    "neighbourhoodsTitle": "Quartiers que nous servons dans {area}",
+    "neighbourhoodsSubtitle": "Projets de rénovation dans ces communautés {area}. Mentionnez votre quartier lorsque vous demandez un devis – nous connaissons les particularités de chacun en matière de permis et la logistique des fournisseurs.",
+    "nearbyAreas": "Nous desservons également les zones à proximité"
+  }
+}

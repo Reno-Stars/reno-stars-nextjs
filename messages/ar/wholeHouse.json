@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "نظرة عامة على المشروع",
+    "includedAreas": "المناطق المشمولة",
+    "totalBudget": "ميزانية",
+    "totalDuration": "الجدول الزمني",
+    "allServiceScopes": "جميع الخدمات متضمنة",
+    "viewAreaProject": "عرض مشروع {area}",
+    "viewAreaDetails": "عرض التفاصيل",
+    "combinedGallery": "معرض المشروع",
+    "filterByArea": "تصفية حسب المنطقة",
+    "allAreas": "جميع المناطق",
+    "childProjectsCount": "مناطق التجديد {count}",
+    "noImagesForArea": "لا توجد صور متاحة لهذه المنطقة",
+    "areasCount": "{count, plural, one {# Area} أخرى {# Areas}}",
+    "siteBadge": "البيت كله",
+    "areas": "المناطق"
+  }
+}

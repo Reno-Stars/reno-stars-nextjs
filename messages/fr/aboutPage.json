@@ -1,0 +1,146 @@
+{
+  "aboutPage": {
+    "hero": {
+      "title": "À propos de Reno Stars",
+      "subtitle": "Construit sur l'expérience, non seulement dans la construction, mais aussi dans la compréhension du secteur de la rénovation des deux côtés."
+    },
+    "journey": {
+      "title": "À propos de Reno Stars",
+      "body": "Reno Stars s'est construit sur l'expérience. Pas seulement dans la construction, mais aussi dans la compréhension du secteur de la rénovation des deux côtés.\n\nAvant de fonder Reno Stars en 2021, notre équipe a passé des années à travailler sur des plateformes de rénovation, mettant en relation les propriétaires et les entrepreneurs. Nous avons vu des milliers de projets du début à la fin et, plus important encore, nous avons vu où les choses tournent mal.\n\nNous comprenons les frustrations courantes auxquelles les propriétaires sont confrontés : des devis qui augmentent avec des objets cachés, une mauvaise communication et des réponses tardives, des délais incertains et un travail incohérent en raison d'équipes instables. Ce ne sont pas des problèmes rares. Ce sont des normes de l’industrie. C'est exactement pourquoi Reno Stars a été créé.",
+      "lead": "Reno Stars s'est construit sur l'expérience, non seulement dans la construction, mais aussi sur la compréhension du secteur de la rénovation des deux côtés.",
+      "context": "Avant de fonder Reno Stars en 2021, notre équipe a passé des années à travailler sur des plateformes de rénovation, mettant en relation les propriétaires et les entrepreneurs. Nous avons vu des milliers de projets du début à la fin et, plus important encore, nous avons vu où les choses tournent mal.",
+      "painPointsTitle": "Nous comprenons les frustrations courantes auxquelles les propriétaires sont confrontés.",
+      "painPoints": [
+        "Des citations qui semblent attrayantes au début, mais qui se développent ensuite avec des éléments cachés.",
+        "Mauvaise communication et réponses tardives.",
+        "Des délais incertains et des projets qui traînent en longueur.",
+        "Fabrication incohérente en raison d’équipages instables."
+      ],
+      "conclusion": "Ce ne sont pas des problèmes rares. Ce sont des normes de l’industrie. C'est exactement pourquoi Reno Stars a été créé."
+    },
+    "stats": {
+      "years": "Années d'expérience",
+      "projects": "Projets terminés",
+      "team": "Membres de l'équipe",
+      "insurance": "Assurance CGL",
+      "wcbCoverage": "Couverture active de la WCB"
+    },
+    "offer": {
+      "title": "Une approche plus structurée et transparente",
+      "viewAll": "Voir tous les services",
+      "services": {
+        "kitchen": {
+          "title": "Rénovation de cuisine",
+          "desc": "Armoires, comptoirs, dosserets et transformations complètes de cuisine sur mesure adaptés à votre style de vie."
+        },
+        "bathroom": {
+          "title": "Rénovation de salle de bain",
+          "desc": "Luminaires modernes, carrelage, vanités et designs inspirés du spa qui maximisent votre espace."
+        },
+        "wholeHouse": {
+          "title": "Rénovation de toute la maison",
+          "desc": "Rénovation complète de la maison, y compris les travaux de structure, le revêtement de sol, l'éclairage et les finitions."
+        },
+        "commercial": {
+          "title": "Rénovation commerciale",
+          "desc": "Espaces commerciaux professionnels conçus pour la fonctionnalité, la conformité et les impressions durables."
+        }
+      },
+      "body": "Nous développons également continuellement des normes internes de construction et d’inspection pour améliorer encore la cohérence et la qualité.",
+      "lead": "Nous n’avons pas simplement lancé une autre entreprise de rénovation. Nous avons reconstruit le processus.",
+      "goal": "Depuis le début, notre objectif a été simple. Rendre la rénovation prévisible, transparente et sans stress.",
+      "systemTitle": "Chaque projet est soutenu par un système structuré.",
+      "systemItems": [
+        {
+          "title": "Contrats détaillés",
+          "desc": "Nos devis définissent clairement la portée, les responsabilités et les éléments clés. Une rénovation de salle de bains typique peut inclure plus de 20 éléments clairement répertoriés, afin que vous sachiez exactement ce qui est inclus et ce qui ne l'est pas."
+        },
+        {
+          "title": "Effacer les étapes de paiement",
+          "desc": "Les paiements sont liés au progrès. Chaque étape est complétée et revue avant d'avancer, sans surprise."
+        },
+        {
+          "title": "Coordination dédiée",
+          "desc": "Notre équipe de bureau répond rapidement, aide à la sélection des matériaux et veille à ce que rien ne se perde dans la communication."
+        },
+        {
+          "title": "Planification fiable",
+          "desc": "Nous ne faisons pas de surréservation. Votre projet avance comme prévu, pas quand cela nous convient."
+        },
+        {
+          "title": "Normes de qualité et d'étanchéité",
+          "desc": "Nous spécifions clairement les matériaux et les domaines d'application, en particulier pour les éléments critiques comme l'imperméabilisation."
+        }
+      ]
+    },
+    "values": {
+      "title": "Gérer les détails et les attentes",
+      "items": {
+        "integrity": {
+          "title": "Intégrité",
+          "desc": "Nous tenons nos promesses et communiquons honnêtement à chaque étape. Pas de frais cachés, pas de dérive de la portée, juste des accords clairs et un suivi."
+        },
+        "quality": {
+          "title": "Artisanat de qualité",
+          "desc": "Chaque détail compte. Nous spécifions les matériaux dès le départ, appliquons des techniques éprouvées et développons continuellement des normes internes pour fournir des résultats durables."
+        },
+        "transparency": {
+          "title": "Transparence",
+          "desc": "Des contrats détaillés avec plus de 20 éléments de campagne, des étapes de paiement liées à l'avancement et des mises à jour régulières, pour que vous sachiez toujours exactement où en est votre projet."
+        },
+        "satisfaction": {
+          "title": "Satisfaction des clients",
+          "desc": "Nous ne nous contentons pas de réaliser des projets, nous les gérons. Des réponses rapides, une communication proactive et une responsabilité totale du début à la fin."
+        }
+      },
+      "body": "La rénovation implique de nombreux éléments mobiles, des matériaux à la planification. Bien que nous accordions le plus grand soin à la planification et à la coordination, certains facteurs tels que les délais des fournisseurs peuvent parfois échapper à notre contrôle direct.\n\nCe que nous pouvons garantir, c'est notre réponse. Nous communiquons tôt, nous adaptons rapidement et tenons nos clients informés à chaque étape, afin qu'il n'y ait ni surprise ni incertitude. Notre objectif n’est pas de promettre un processus parfait, mais d’en livrer un bien géré.",
+      "lead": "La rénovation implique de nombreux éléments mobiles, des matériaux à la planification. Bien que nous accordions le plus grand soin à la planification et à la coordination, certains facteurs tels que les délais des fournisseurs peuvent parfois échapper à notre contrôle direct.",
+      "guarantee": "Ce que nous pouvons garantir, c'est notre réponse.",
+      "guaranteeItems": [
+        "Nous communiquons tôt, nous adaptons rapidement et tenons nos clients informés à chaque étape, afin qu'il n'y ait ni surprise ni incertitude."
+      ],
+      "closing": "Notre objectif n’est pas de promettre un processus parfait, mais d’en livrer un bien géré."
+    },
+    "whyUs": {
+      "title": "Conçu pour les propriétaires qui apprécient la tranquillité d'esprit",
+      "body": "Nous ne sommes pas l’option la moins chère et nous n’avons pas l’intention de l’être. Nos clients nous choisissent parce qu’ils souhaitent un processus clair, une communication honnête, des délais fiables et une équipe responsable.\n\nNous nous spécialisons dans les rénovations complètes de maisons, de cuisines, de salles de bains et de projets commerciaux, où la coordination, les détails et la fiabilité font toute la différence. Nous abordons chaque projet avec un état d’esprit simple : traiter chaque maison comme si c’était la nôtre. Car en fin de compte, la rénovation, ce n’est pas seulement construire un espace, c’est instaurer la confiance.",
+      "lead": "Nous ne sommes pas l’option la moins chère et nous n’avons pas pour objectif de l’être.",
+      "chooseTitle": "Nos clients nous choisissent parce qu'ils veulent",
+      "chooseItems": [
+        "Un processus clair",
+        "Communication honnête",
+        "Des délais fiables",
+        "Une équipe qui prend ses responsabilités"
+      ],
+      "specialise": "Nous nous spécialisons dans les rénovations complètes de maisons, de cuisines, de salles de bains et de projets commerciaux, où la coordination, les détails et la fiabilité font toute la différence."
+    },
+    "areas": {
+      "title": "Zones de service",
+      "description": "Nous sommes fiers de servir les propriétaires de la région métropolitaine de Vancouver et de la vallée du Fraser, offrant des services de rénovation de qualité aux communautés de toute la Colombie-Britannique."
+    },
+    "faq": {
+      "title": "Foire aux questions",
+      "q1": "Depuis combien de temps Reno Stars existe-t-elle ?",
+      "a1": "Reno Stars possède plus de {years} années d'expérience combinée dans l'industrie de la rénovation de Vancouver. Notre équipe a réalisé des centaines de projets dans la région métropolitaine de Vancouver, allant de petites rénovations de salles de bains à des rénovations à grande échelle de maisons entières.",
+      "q2": "Êtes-vous licencié et assuré?",
+      "a2": "Oui, nous sommes entièrement agréés avec jusqu'à 5 millions de dollars d'assurance CGL (responsabilité générale commerciale) et une couverture active WCB (WorkSafeBC). CGL protège votre propriété pendant la rénovation, tandis que WCB s'assure que tous les travailleurs sur votre chantier sont couverts. Nous offrons également jusqu'à 3 ans de garantie sur nos travaux.",
+      "q3": "Quels domaines desservez-vous ?",
+      "a3": "Nous desservons toute la région métropolitaine de Vancouver et la vallée du Fraser, notamment Vancouver, Richmond, Burnaby, Surrey, Coquitlam, North Vancouver, West Vancouver, Delta, Langley, Maple Ridge, New Westminster et Port Moody.",
+      "q4": "Comment démarrer un projet de rénovation ?",
+      "a4": "Commencer est facile ! Contactez-nous simplement par téléphone, par e-mail ou via notre formulaire en ligne pour planifier une consultation gratuite. Nous discuterons de votre vision, évaluerons votre espace et vous fournirons un devis détaillé adapté à vos besoins et à votre budget.",
+      "q5": "Qu'est-ce qui différencie Reno Stars des autres entrepreneurs en rénovation de Vancouver ?",
+      "a5": "Nous avons reconstruit le processus de rénovation à partir de zéro. Avant de démarrer Reno Stars, notre équipe a passé des années sur des plateformes de rénovation et a vu où les choses allaient constamment mal. Notre approche structurée, nos contrats détaillés, nos paiements par étapes, notre coordination dédiée et notre planification fiable répondent aux véritables problèmes auxquels les propriétaires sont confrontés. Nous ne sommes pas l’option la moins chère, mais nous sommes la plus responsable."
+    },
+    "cta": {
+      "title": "Prêt à commencer votre rénovation ?",
+      "getQuote": "Obtenez un devis gratuit",
+      "body": "Prêt à vivre un processus de rénovation construit autour de la transparence, de la fiabilité et de votre tranquillité d’esprit ? Contactez-nous dès aujourd'hui pour un devis gratuit et détaillé et découvrez pourquoi les propriétaires de la région métropolitaine de Vancouver font confiance à Reno Stars."
+    },
+    "philosophy": {
+      "title": "Notre philosophie",
+      "lead": "Nous abordons chaque projet avec un état d’esprit simple.",
+      "quote": "Traitez chaque maison comme si c'était la nôtre.",
+      "closing": "Car en fin de compte, la rénovation, ce n’est pas seulement construire un espace, c’est instaurer la confiance."
+    }
+  }
+}

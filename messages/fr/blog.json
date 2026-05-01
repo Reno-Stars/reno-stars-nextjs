@@ -1,0 +1,21 @@
+{
+  "blog": {
+    "title": "Conseils et guides de rénovation à Vancouver",
+    "subtitle": "Conseils, tendances et idées pour votre projet de rénovation",
+    "readMore": "En savoir plus",
+    "publishedOn": "Publié le",
+    "updated": "Mis à jour",
+    "backToBlog": "Retour au blog",
+    "comingSoon": "Le contenu complet de l'article sera bientôt disponible. Contactez-nous pour toute question de rénovation en attendant.",
+    "noPosts": "Aucun article de blog pour l'instant. Revenez bientôt pour des conseils et des idées en matière de rénovation.",
+    "relatedProject": "Projet connexe",
+    "pagination": "Mise en page du blog",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "previousPage": "Aller à la page précédente",
+    "nextPage": "Aller à la page suivante",
+    "showingPosts": "Affichage des messages {start}-{end} sur {total}",
+    "relatedServices": "Services connexes",
+    "relatedAreas": "Rénovation dans votre région"
+  }
+}

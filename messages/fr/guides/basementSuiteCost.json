@@ -1,0 +1,146 @@
+{
+  "basementSuiteCost": {
+    "breadcrumb": "Coût de la suite au sous-sol",
+    "hero": {
+      "title": "Coût de conversion d'un appartement au sous-sol à Vancouver, en Colombie-Britannique (2026)",
+      "subtitle": "Combien coûte la construction d’un sous-sol légal dans le Grand Vancouver ? Obtenez des tarifs détaillés pour les conversions de suites secondaires."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "sqft": "Coût par pied carré",
+      "sqftValue": "80 $ – 180 $/pied carré",
+      "timeline": "Chronologie typique",
+      "timelineValue": "10 à 16 semaines"
+    },
+    "tiers": {
+      "title": "Coût de la suite au sous-sol par niveau",
+      "subtitle": "Tarifs typiques pour les conversions de suites juridiques dans le Grand Vancouver",
+      "budget": {
+        "title": "Suite de base pour beaux-parents",
+        "description": "Conversion d'un sous-sol déjà aménagé en suite basique avec kitchenette, salle de bain, chambre avec fenêtre de sortie et entrée intérieure commune. Changements structurels minimes. Idéal pour un usage familial."
+      },
+      "midRange": {
+        "title": "Suite de location standard",
+        "description": "Suite secondaire entièrement légale avec entrée séparée, cuisine complète, salle de bain complète, une chambre avec sortie, séparation coupe-feu et toutes les fonctionnalités requises par le code. Portée la plus courante de revenus locatifs."
+      },
+      "highEnd": {
+        "title": "Suite Premium à 2 Chambres",
+        "description": "Suite juridique haut de gamme avec deux chambres, cuisine complète avec appareils électroménagers de qualité, buanderie dans la suite, finitions améliorées, zone CVC séparée, insonorisation et luminaires haut de gamme."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui détermine les coûts de conversion des suites au sous-sol ?",
+      "subtitle": "Six facteurs clés spécifiques à la construction d'une suite juridique",
+      "separateEntrance": {
+        "title": "Entrée séparée",
+        "description": "La plupart des municipalités exigent une entrée extérieure séparée. L'excavation, les escaliers en béton, le drainage, le palier et la porte coupe-feu coûtent généralement entre 8 000 et 18 000 dollars."
+      },
+      "fireSeparation": {
+        "title": "Séparation coupe-feu et sécurité",
+        "description": "Le code du bâtiment de la Colombie-Britannique exige une séparation coupe-feu d'une heure entre l'appartement et l'habitation principale. Les cloisons sèches coupe-feu, les détecteurs de fumée et les portes coupe-feu coûtent entre 4 000 et 8 000 dollars."
+      },
+      "plumbing": {
+        "title": "Plomberie de cuisine et de salle de bain",
+        "description": "La cuisine complète coûte entre 12 000 $ et 25 000 $, y compris les armoires, les comptoirs, l'évier et les branchements des appareils électroménagers. L'ajout d'une salle de bain coûte entre 8 000 et 15 000 $."
+      },
+      "electrical": {
+        "title": "Panneau électrique et câblage",
+        "description": "Les suites ont besoin d'un sous-panneau dédié (2 500 $ à 5 000 $). Le câblage complet avec les prises et l'éclairage requis par le code coûte entre 5 000 et 10 000 dollars. Les mises à niveau du panneau ajoutent entre 3 000 et 5 000 $."
+      },
+      "egress": {
+        "title": "Fenêtres de sortie et lumière naturelle",
+        "description": "Chaque chambre a besoin d'une fenêtre de sortie (ouverture minimale de 5,7 pieds carrés). L'installation dans des murs de fondation en béton coûte entre 2 500 et 6 000 dollars chacun. Les puits de fenêtre ajoutent entre 1 000 et 2 000 $."
+      },
+      "permits": {
+        "title": "Permis, inspections et légalisation",
+        "description": "Les frais de permis varient de 1 000 à 3 500 dollars. Attendez-vous à 4 à 6 inspections. Vancouver et Burnaby proposent des programmes incitatifs pour les suites compensant des coûts de 5 000 à 10 000 $."
+      }
+    },
+    "roi": {
+      "title": "Retour sur investissement",
+      "subtitle": "Pourquoi un sous-sol légal est l'un des meilleurs investissements en rénovation dans la région métropolitaine de Vancouver",
+      "rentalIncome": {
+        "value": "1 800 $ à 2 800 $/mois",
+        "title": "Revenu de location mensuel",
+        "description": "Les appartements d'une chambre se louent entre 1 800 $ et 2 200 $/mois. Les suites de deux chambres coûtent entre 2 200 $ et 2 800 $/mois."
+      },
+      "propertyValue": {
+        "value": "15 à 25 %",
+        "title": "Augmentation de la valeur de la propriété",
+        "description": "Les maisons avec suites secondaires légales se vendent 15 à 25 % de plus que les propriétés comparables sans."
+      },
+      "paybackPeriod": {
+        "value": "3 à 5 ans",
+        "title": "Période de récupération",
+        "description": "Aux tarifs de location moyens, une conversion de suite de 95 000 $ s'amortit en 3 à 5 ans grâce aux seuls revenus locatifs."
+      }
+    },
+    "realProjects": {
+      "title": "Projets de rénovation connexes",
+      "subtitle": "Parcourez les projets de rénovation réalisés par {count} dans le Grand Vancouver"
+    },
+    "municipalities": {
+      "title": "Règlement sur les suites par municipalité",
+      "subtitle": "Chaque ville de la région métropolitaine de Vancouver a des règles différentes pour les appartements secondaires",
+      "vancouver": {
+        "title": "Ville de Vancouver",
+        "description": "Permet les appartements secondaires dans la plupart des zones unifamiliales (RS). Le programme de logement abordable peut offrir des incitations. Permis entre 1 500 $ et 3 000 $."
+      },
+      "burnaby": {
+        "title": "Ville de Burnaby",
+        "description": "Le programme de suite secondaire offre des subventions allant jusqu'à 10 000 $ pour la légalisation. Nécessite un terrain minimum de 1 850 pieds carrés. Suite max 40% de la surface au sol."
+      },
+      "surrey": {
+        "title": "Ville de Surrey",
+        "description": "Permet des suites dans la plupart des zones unifamiliales. Processus de permis simplifié. Une place de stationnement hors rue supplémentaire requise."
+      },
+      "coquitlam": {
+        "title": "Ville de Coquitlam",
+        "description": "Permet les suites dans les zones RS-1 et RS-2. Nécessite une taille minimale de lot et des compteurs de services publics séparés. Consultations préalables à la candidature disponibles."
+      }
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour votre suite au sous-sol",
+      "tip1": {
+        "title": "Demandez d’abord les incitatifs municipaux",
+        "description": "Vancouver, Burnaby et d'autres villes offrent des subventions pour la création de suites juridiques. Appliquer avant la construction. Certains nécessitent une approbation préalable. Économies : 5 000 $ à 10 000 $."
+      },
+      "tip2": {
+        "title": "Planifier une cuisine à proximité de la plomberie existante",
+        "description": "Placer la cuisine de la suite à proximité des canalisations existantes permet d'économiser des milliers de dollars. Éviter de couper du béton permet d'économiser entre 3 000 et 8 000 dollars."
+      },
+      "tip3": {
+        "title": "Choisissez une entrée latérale",
+        "description": "Les entrées latérales coûtent nettement moins cher que les entrées arrière nécessitant une excavation importante. Économies : 5 000 $ à 10 000 $."
+      },
+      "tip4": {
+        "title": "Investissez dès le départ dans l’insonorisation",
+        "description": "Un canal résilient et une isolation entre les étages coûtent entre 2 000 et 4 000 $ pendant la construction. Après cloison sèche : 3 à 5 fois plus et moins efficace."
+      }
+    },
+    "related": {
+      "title": "Explorez plus de guides de rénovation",
+      "basementGuide": "Guide général de rénovation du sous-sol",
+      "kitchenGuide": "Guide des coûts de rénovation de cuisine",
+      "bathroomGuide": "Guide des coûts de rénovation de salle de bain",
+      "allGuides": "Tous les guides de coûts"
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit pour une suite au sous-sol",
+      "subtitle": "Faites-nous part de votre projet de suite et recevez un devis détaillé sous 48 heures, sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte une suite au sous-sol à Vancouver?",
+      "a1": "La conversion d'un sous-sol légal coûte généralement entre 60 000 et 150 000 dollars. Suite de base pour beaux-parents : 60 000 $ à 85 000 $. Suite de location standard : 85 000 $ à 120 000 $. Premium deux chambres : 120 000 $ à 150 000 $ et plus. Moyenne : ~95 000 $.",
+      "q2": "Ai-je besoin d'un permis pour une suite au sous-sol à Vancouver?",
+      "a2": "Oui, un permis de construire est requis pour toute conversion de suite dans la région métropolitaine de Vancouver. Les permis coûtent entre 1 000 et 3 500 $. Attendez-vous à 4 à 6 inspections. Opérer sans permis risque des amendes, des problèmes d’assurance et des responsabilités.",
+      "q3": "Combien de temps faut-il pour construire un appartement au sous-sol ?",
+      "a3": "Généralement 10 à 16 semaines : traitement des permis (2 à 6 semaines), construction (8 à 12 semaines) et inspections finales. Les projets complexes comportant des travaux de structure peuvent prendre de 16 à 20 semaines.",
+      "q4": "Quelle est la hauteur minimale de plafond pour un appartement au sous-sol en Colombie-Britannique ?",
+      "a4": "Le code du bâtiment de la Colombie-Britannique exige un minimum de 6 pieds 5 pouces (1,95 m) pour les pièces habitables. Si les plafonds sont trop bas, la sous-construction (abaissement du plancher) coûte entre 15 000 et 30 000 dollars.",
+      "q5": "Un appartement au sous-sol est-il un bon investissement à Vancouver?",
+      "a5": "Oui. Des revenus locatifs de 1 800 $ à 2 800 $/mois signifient que l'investissement d'environ 95 000 $ s'amortit en 3 à 5 ans. La valeur de la propriété augmente de 15 à 25 %. Le revenu de la suite contribue également à l’admissibilité au prêt hypothécaire."
+    }
+  }
+}

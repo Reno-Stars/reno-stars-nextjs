@@ -1,0 +1,27 @@
+{
+  "cta": {
+    "getQuote": "Obtenir un devis",
+    "getFreeQuote": "Obtenez un devis gratuit",
+    "getYourFreeQuote": "Obtenez votre devis gratuit",
+    "freeQuoteProject": "Obtenez un devis gratuit pour votre projet !",
+    "freeQuote": "Obtenez un devis gratuit",
+    "startProject": "Démarrez votre projet",
+    "startProjectToday": "Commencez votre projet aujourd'hui",
+    "getStarted": "Commencer",
+    "viewProjects": "Voir les projets",
+    "viewOurWork": "Voir notre travail",
+    "ourServices": "Nos prestations",
+    "learnMore": "Apprendre encore plus",
+    "exploreService": "Explorer {service}",
+    "sendMessage": "Envoyer un message",
+    "submitInquiry": "Obtenez mon devis gratuit",
+    "bookAppointment": "Prendre rendez-vous",
+    "callNow": "Appelez maintenant",
+    "requestConsultation": "Demander une consultation gratuite",
+    "viewAllProjects": "Voir tous les projets",
+    "viewAllServices": "Voir tous les services",
+    "scheduleConsultation": "Planifier une consultation",
+    "stickyQuoteFor": "Obtenez un devis {area} {service}",
+    "stickyCall": "Appel"
+  }
+}

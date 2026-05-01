@@ -7,5 +7,17 @@
     "basement": "Chi Phí Cải Tạo Tầng Hầm",
     "bathroom": "Chi Phí Cải Tạo Phòng Tắm Trung Bình",
     "bathroomGuide": "Chi Phí Cải Tạo Phòng Tắm"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "Chi phí nhà bếp theo vùng lân cận Metro Vancouver",
+    "bathroomTitle": "Chi phí phòng tắm theo vùng lân cận Metro Vancouver",
+    "wholeHouseTitle": "Chi phí cả nhà tính theo khu vực lân cận Metro Vancouver",
+    "basementTitle": "Chi phí tầng hầm theo vùng lân cận Metro Vancouver",
+    "subtitle": "Mức trung bình thực tế từ các dự án đã hoàn thành của chúng tôi — không phải ước tính của ngành. Các thành phố chỉ có trên 2 dự án đã hoàn thành.",
+    "headerCity": "Thành phố",
+    "headerProjects": "Dự án",
+    "headerAvg": "Chi phí dự án trung bình",
+    "headerRange": "Phạm vi",
+    "footnote": "Nguồn dữ liệu: Danh mục Reno Stars. Được tổng hợp từ ngân sách dự án thực tế - các danh mục như HomeStars và Houzz chỉ có thể trích dẫn mức trung bình của ngành."
   }
 }

@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "اسم",
+    "fullName": "الاسم الكامل",
+    "email": "بريد إلكتروني",
+    "emailAddress": "عنوان البريد الإلكتروني",
+    "phone": "هاتف",
+    "phoneNumber": "رقم التليفون",
+    "message": "رسالة",
+    "projectDetails": "تفاصيل المشروع",
+    "service": "خدمة",
+    "serviceInterestedIn": "الخدمة مهتمة",
+    "selectService": "اختر خدمة",
+    "namePlaceholder": "اسمك",
+    "namePlaceholder2": "جون سميث",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "جون@example.com",
+    "phonePlaceholder": "رقم هاتفك",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "أخبرنا عن مشروعك...",
+    "messagePlaceholder2": "حدثنا عن مشروعك للتجديد...",
+    "sending": "إرسال...",
+    "success": "شكرًا لك! لقد تم إرسال رسالتك بنجاح.",
+    "successTitle": "تم إرسال الرسالة!",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "responsePromise": "نقوم بالرد خلال 24 ساعة بتقدير مفصل."
+  }
+}

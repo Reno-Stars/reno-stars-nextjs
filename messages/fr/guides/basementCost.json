@@ -1,0 +1,100 @@
+{
+  "basementCost": {
+    "breadcrumb": "Coût de rénovation du sous-sol",
+    "hero": {
+      "title": "Coût de rénovation du sous-sol à Vancouver BC (2026)",
+      "subtitle": "Combien coûte réellement la finition ou la rénovation d’un sous-sol dans le Grand Vancouver ? Voici les fourchettes de prix typiques basées sur la portée du projet, de la finition de base aux conversions complètes de la suite juridique."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "sqft": "Coût par pied carré",
+      "sqftValue": "35 $ ​​– 120 $/pied carré",
+      "timeline": "Chronologie typique",
+      "timelineValue": "6 à 12 semaines"
+    },
+    "tiers": {
+      "title": "Coût de rénovation du sous-sol par niveau",
+      "subtitle": "Prix ​​​​typiques pour les projets de sous-sol dans le Grand Vancouver",
+      "budget": {
+        "title": "Finition de base",
+        "description": "Charpente, isolation, cloisons sèches, revêtement de sol de base, peinture et éclairage standard. Convient pour une salle de loisirs, un bureau à domicile ou une zone de stockage sans ajout de plomberie."
+      },
+      "midRange": {
+        "title": "Rénovation milieu de gamme",
+        "description": "Finition complète avec un ajout de salle de bain, un revêtement de sol amélioré (planche de vinyle ou stratifié), des luminaires encastrés, un rangement intégré et un bar ou une kitchenette. La portée la plus populaire pour les maisons familiales."
+      },
+      "highEnd": {
+        "title": "Conversion de la suite juridique",
+        "description": "Suite secondaire complète avec entrée séparée, cuisine, salle de bains, chambre avec fenêtres de sortie, séparation coupe-feu et toutes les fonctionnalités requises par le code. Comprend les permis et les inspections pour la légalisation de la location."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui affecte le coût de rénovation de votre sous-sol ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "waterproofing": {
+        "title": "Imperméabilisation et contrôle de l'humidité",
+        "description": "Le climat humide de Vancouver rend l'imperméabilisation essentielle. Les systèmes de drainage intérieur coûtent entre 3 000 et 8 000 dollars, tandis que l'imperméabilisation extérieure peut coûter entre 10 000 et 25 000 dollars. L'installation d'une pompe de puisard ajoute 1 500 à 3 000 $."
+      },
+      "framing": {
+        "title": "Charpente et isolation",
+        "description": "Une charpente en acier ou en bois avec isolation coûte généralement entre 8 et 15 $ le pied carré. Les maisons plus anciennes de Vancouver peuvent avoir besoin de pare-vapeur supplémentaires et d'améliorations de l'isolation pour respecter le code du bâtiment en vigueur."
+      },
+      "plumbing": {
+        "title": "Plomberie (Salle de bain/Cuisine)",
+        "description": "L'ajout d'une salle de bain au sous-sol coûte entre 8 000 et 15 000 $ selon que vous devez ou non casser le béton pour les conduites d'évacuation. L'installation d'une cuisine complète ajoute entre 12 000 et 25 000 $, incluant le brut et les accessoires."
+      },
+      "electrical": {
+        "title": "Électricité et CVC",
+        "description": "L’électricité du sous-sol coûte généralement entre 3 000 et 8 000 $ pour une configuration standard. De nombreuses maisons plus anciennes ont besoin d'une mise à niveau des panneaux (2 000 à 4 000 $). L'extension des conduits CVC ajoute 2 000 à 5 000 $."
+      },
+      "egress": {
+        "title": "Fenêtres de sortie et entrée séparée",
+        "description": "Le code du bâtiment exige des fenêtres de sortie dans les chambres (2 000 à 5 000 $ chacune à installer). L'ajout d'une entrée extérieure séparée pour une suite coûte entre 8 000 et 15 000 $, travaux d'excavation et de béton compris."
+      },
+      "permits": {
+        "title": "Permis et conformité au code",
+        "description": "Les permis de construire pour la finition des sous-sols dans la région métropolitaine de Vancouver coûtent entre 500 et 2 000 $. Les conversions de suites juridiques nécessitent des inspections supplémentaires. Certaines municipalités offrent des subventions pour l'ajout de logements locatifs."
+      }
+    },
+    "realProjects": {
+      "title": "Projets de rénovation de toute la maison connexes",
+      "subtitle": "Parcourez les projets de rénovation réalisés par {count} dans le Grand Vancouver, dont beaucoup incluent des travaux au sous-sol"
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour la rénovation de votre sous-sol",
+      "tip1": {
+        "title": "Commencez par l’imperméabilisation",
+        "description": "Résolvez tout problème d’humidité avant de finir les murs. Résoudre les problèmes d’eau après l’installation des cloisons sèches coûte 3 à 5 fois plus cher que de le faire dès le départ."
+      },
+      "tip2": {
+        "title": "Planifier la plomberie à proximité des lignes existantes",
+        "description": "En plaçant votre salle de bain ou votre cuisine à proximité de canalisations existantes, vous économiserez entre 3 000 et 8 000 $ en évitant les coupes de béton et les nouvelles constructions brutes."
+      },
+      "tip3": {
+        "title": "Envisagez une suite juridique pour le retour sur investissement",
+        "description": "Un appartement secondaire légal à Vancouver peut générer entre 1 500 et 2 500 $/mois de revenus locatifs. La rénovation est souvent amortie en 3 à 5 ans."
+      },
+      "tip4": {
+        "title": "Choisissez le revêtement de sol LVP",
+        "description": "Les planches de vinyle de luxe constituent le meilleur choix de revêtement de sol pour sous-sol. Imperméable, chaud sous les pieds et 30 à 50 % moins cher que le bois dur d'ingénierie. Parfait pour le climat humide de Vancouver."
+      }
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit pour la rénovation de votre sous-sol",
+      "subtitle": "Faites-nous part de votre projet et recevez un devis détaillé sous 48 heures, sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte une rénovation de sous-sol à Vancouver?",
+      "a1": "Les coûts de rénovation de sous-sol à Vancouver varient généralement de 30 000 $ pour une finition de base à 120 000 $ et plus pour une conversion complète d'un bureau juridique. Le coût moyen est d'environ 55 000 $ pour une rénovation de milieu de gamme avec un ajout de salle de bain et des finitions de qualité. Le coût au pied carré varie de 35 $ à 120 $ selon la portée.",
+      "q2": "Combien de temps prend une rénovation de sous-sol à Vancouver ?",
+      "a2": "La plupart des rénovations de sous-sol à Vancouver prennent de 6 à 12 semaines. La finition de base (charpente, cloisons sèches, revêtement de sol) peut être réalisée en 6 à 8 semaines. Une conversion juridique complète avec permis, plomberie, électricité et inspections prend généralement 10 à 14 semaines.",
+      "q3": "Ai-je besoin d'un permis pour une rénovation de sous-sol à Vancouver?",
+      "a3": "Oui, la plupart des rénovations de sous-sol nécessitent un permis de construire dans la région métropolitaine de Vancouver. Tout travail impliquant des modifications à la charpente, à l’électricité, à la plomberie ou aux sorties nécessite un permis. Les conversions de suites juridiques nécessitent une approbation de zonage supplémentaire. Les coûts du permis varient de 500 $ à 2 000 $ selon la municipalité.",
+      "q4": "Un appartement au sous-sol est-il un bon investissement à Vancouver?",
+      "a4": "Oui, l'ajout d'un appartement secondaire légal est l'un des meilleurs investissements en rénovation à Vancouver. Une suite peut générer entre 1 500 et 2 500 $ par mois de revenus locatifs. Avec des coûts de rénovation compris entre 80 000 et 120 000 $, l'investissement est généralement amorti en 3 à 5 ans tout en augmentant la valeur de votre propriété de 10 à 20 %.",
+      "q5": "Quel est le meilleur revêtement de sol pour une rénovation de sous-sol ?",
+      "a5": "La planche de vinyle de luxe (LVP) est le revêtement de sol de sous-sol le plus recommandé à Vancouver en raison de ses propriétés imperméables et de sa durabilité. Il coûte entre 4 et 8 $ par pied carré installé et gère mieux l'humidité que le bois dur ou le stratifié. Le bois franc d’ingénierie et les carreaux de céramique sont également de bonnes options en fonction de votre budget et de vos préférences en matière de style."
+    }
+  }
+}

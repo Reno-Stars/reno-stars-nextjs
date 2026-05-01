@@ -92,7 +92,6 @@ async function audit(path, locale) {
         continue;
       }
       const missing = expect.filter(t => !r.types.includes(t));
-      const extra = r.types.filter(t => !expect.includes(t));
       const status = missing.length === 0 ? '✓' : '⚠';
       const inLangCount = r.inLanguageValues.length;
       console.log(`  ${status} /${locale}${path}`);

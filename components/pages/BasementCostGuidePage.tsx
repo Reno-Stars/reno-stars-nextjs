@@ -10,6 +10,7 @@ import {
 import type { Locale } from '@/i18n/config';
 import type { KitchenGuideProject } from '@/lib/db/queries';
 import CTASection from '@/components/CTASection';
+import CostByCityTable from '@/components/guides/CostByCityTable';
 import {
   NAVY, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
@@ -28,6 +29,7 @@ function formatCurrency(n: number): string {
 export default function BasementCostGuidePage({ locale, projects }: BasementCostGuidePageProps) {
   const t = useTranslations('guides.basementCost');
   const tGuides = useTranslations('guides.relatedGuides');
+  const tCity = useTranslations('guides.cityCostTable');
 
   const stats = useMemo(() => {
     // Basement renovation market estimates for Metro Vancouver (2025-2026)
@@ -128,6 +130,16 @@ export default function BasementCostGuidePage({ locale, projects }: BasementCost
         </div>
       </section>
 
+      <CostByCityTable
+        projects={projects}
+        title={tCity('basementTitle')}
+        subtitle={tCity('subtitle')}
+        headerCity={tCity('headerCity')}
+        headerProjects={tCity('headerProjects')}
+        headerAvg={tCity('headerAvg')}
+        headerRange={tCity('headerRange')}
+        footnote={tCity('footnote')}
+      />
       {projects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-5xl mx-auto">

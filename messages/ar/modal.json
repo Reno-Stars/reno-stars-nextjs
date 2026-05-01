@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "موقع",
+    "category": "فئة",
+    "budget": "نطاق الميزانية",
+    "spaceType": "نوع المساحة",
+    "serviceScope": "نطاق الخدمة",
+    "duration": "مدة",
+    "challenge": "التحدي",
+    "solution": "الحل لدينا",
+    "close": "يغلق",
+    "viewDetails": "عرض التفاصيل الكاملة"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "Обзор проекта",
+    "includedAreas": "Включенные области",
+    "totalBudget": "Бюджет",
+    "totalDuration": "Хронология",
+    "allServiceScopes": "Все услуги включены",
+    "viewAreaProject": "Посмотреть проект {area}",
+    "viewAreaDetails": "Посмотреть детали",
+    "combinedGallery": "Галерея проектов",
+    "filterByArea": "Фильтровать по площади",
+    "allAreas": "Все области",
+    "childProjectsCount": "{count} зоны ремонта",
+    "noImagesForArea": "Для этой области нет изображений",
+    "areasCount": "{count, plural, one {# Area} другое {# Areas}}",
+    "siteBadge": "Весь дом",
+    "areas": "Области"
+  }
+}

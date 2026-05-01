@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "yearsExperience": "سنوات الخبرة",
+    "teamMembers": "أعضاء الفريق",
+    "expertTeamMembers": "أعضاء فريق الخبراء",
+    "expertTeam": "فريق الخبراء",
+    "expertCraftsmen": "حرفيون خبراء",
+    "liabilityCoverage": "تأمين CGL بقيمة 5 ملايين دولار",
+    "fullCoverage": "تأمين CGL بقيمة 5 ملايين دولار · تغطية WCB النشطة · ضمان يصل إلى 3 سنوات",
+    "wcbCoverage": "تغطية WCB النشطة",
+    "projectsCompleted": "المشاريع المنجزة",
+    "projectsDone": "تم إنجاز المشاريع",
+    "happyClients": "عملاء سعداء",
+    "satisfaction": "إشباع",
+    "satisfactionRate": "معدل الرضا",
+    "clientSatisfaction": "رضا العميل",
+    "support": "يدعم",
+    "quality": "جودة",
+    "projects": "المشاريع",
+    "years": "سنين",
+    "averageRating": "متوسط ​​التقييم",
+    "areasServed": "المناطق المخدومة",
+    "rating": "تصنيف",
+    "srStats": "إحصائيات الشركة",
+    "srTrustBadges": "شارات الثقة والشهادات"
+  }
+}

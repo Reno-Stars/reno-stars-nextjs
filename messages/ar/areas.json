@@ -1,0 +1,33 @@
+{
+  "areas": {
+    "title": "مناطق الخدمة",
+    "subtitle": "نحن نخدم بكل فخر المجتمعات في جميع أنحاء البر الرئيسي السفلي",
+    "servingIn": "تجديدات المنزل في {city}",
+    "cityDescription": "تتوفر خدمات التجديد الاحترافية في {city}. اتصل بنا للحصول على استشارة مجانية.",
+    "viewProjects": "عرض مشاريع {city}",
+    "requestQuote": "طلب اقتباس",
+    "whyChooseArea": "لماذا تختار خدمة {area} لدينا",
+    "areaProjects": "مشاريع {area}",
+    "readyToStartIn": "هل أنت مستعد لبدء مشروع {service} الخاص بك في {area}؟",
+    "serviceInArea": "{service} في {area}",
+    "servicesInArea": "خدماتنا في {area}",
+    "readyToStartRenovation": "هل أنت مستعد لبدء تجديد {area}؟",
+    "faqTitle": "الأسئلة المتداولة حول تجديدات {area}",
+    "aboutArea": "حول {area}",
+    "aboutService": "حول {service} في {area}",
+    "areaServiceContent": "خدمات {service} في {area}",
+    "otherAreasForService": "{service} في مناطق أخرى",
+    "otherServicesInArea": "خدمات أخرى في {area}",
+    "serviceFaqTitle": "الأسئلة المتداولة حول {service} في {area}",
+    "learnOurProcess": "تعرّف على عملية التجديد المكونة من 5 خطوات",
+    "processLinkText": "انظر كيف نعمل",
+    "blogLinkText": "نصائح وأدلة التجديد",
+    "serviceLinkText": "كل شيء عن {service}",
+    "areaLinkText": "جميع التجديدات في {area}",
+    "linkSectionTitle": "مناطق الخدمة عبر مترو فانكوفر",
+    "linkSectionSubtitle": "انقر فوق مدينتك للحصول على مشاريع التجديد وتفاصيل الحي وعرض أسعار محلي مجاني.",
+    "neighbourhoodsTitle": "الأحياء التي نخدمها في {area}",
+    "neighbourhoodsSubtitle": "مشاريع التجديد عبر مجتمعات {area} هذه. اذكر الحي الذي تسكن فيه عندما تطلب عرض أسعار - فنحن نعرف متطلبات التصاريح الخاصة بكل فرد والخدمات اللوجستية للموردين.",
+    "nearbyAreas": "نحن نخدم أيضًا المناطق القريبة"
+  }
+}

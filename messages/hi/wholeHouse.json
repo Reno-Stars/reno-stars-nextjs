@@ -1,0 +1,19 @@
+{
+  "wholeHouse": {
+    "projectOverview": "परियोजना अवलोकन",
+    "includedAreas": "सम्मिलित क्षेत्र",
+    "totalBudget": "बजट",
+    "totalDuration": "समय",
+    "allServiceScopes": "सभी सेवाएँ शामिल",
+    "viewAreaProject": "{area} प्रोजेक्ट देखें",
+    "viewAreaDetails": "विवरण देखें",
+    "combinedGallery": "प्रोजेक्ट गैलरी",
+    "filterByArea": "क्षेत्र के अनुसार फ़िल्टर करें",
+    "allAreas": "सभी क्षेत्र",
+    "childProjectsCount": "{count} नवीकरण क्षेत्र",
+    "noImagesForArea": "इस क्षेत्र के लिए कोई चित्र उपलब्ध नहीं हैं",
+    "areasCount": "{count, plural, one {# Area} अन्य {# Areas}}",
+    "siteBadge": "पूरा घर",
+    "areas": "क्षेत्रों"
+  }
+}

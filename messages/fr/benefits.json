@@ -1,0 +1,64 @@
+{
+  "benefits": {
+    "title": "Pourquoi choisir Reno Stars",
+    "subtitle": "S'associer avec nous signifie bien plus que simplement réaliser une rénovation, il s'agit de rendre l'ensemble du processus clair, contrôlé et sans stress.",
+    "foundation": {
+      "heading": "Construit sur la confiance",
+      "items": {
+        "experience": {
+          "title": "Plus de 20 ans d'expérience dans l'industrie",
+          "description": "We bring deep expertise. Pas seulement dans la construction, mais aussi pour comprendre où les projets de rénovation tournent mal et comment les éviter dès le départ."
+        },
+        "coverage": {
+          "title": "Assurance CGL de 5 millions de dollars · Couverture active de la WCB",
+          "description": "Une couverture d’assurance complète protège votre propriété et garantit que chaque travailleur sur place est entièrement couvert."
+        },
+        "rating": {
+          "title": "Avis authentiques 5 étoiles",
+          "description": "Une satisfaction client à long terme soutenue par de vrais projets et de vraies expériences, et non par des promotions ponctuelles."
+        },
+        "team": {
+          "title": "Équipe stable et professionnelle",
+          "description": "Nous travaillons avec une équipe cohérente. Il ne s'agit pas d'embauches temporaires, garantissant que la qualité reste stable dans chaque projet."
+        },
+        "service": {
+          "title": "Service de bout en bout",
+          "description": "De la conception à la réalisation finale, nous gérons chaque étape. Moins de frais de coordination, processus plus fluide."
+        }
+      }
+    },
+    "differentiators": {
+      "heading": "Pourquoi les clients nous choisissent",
+      "items": {
+        "transparent": {
+          "problem": "De nombreuses citations semblent bon marché car des éléments clés sont omis.",
+          "solution": "Nous listons tout à l’avance, la portée détaillée, les responsabilités matérielles et ce qui est inclus. Vous connaissez le coût réel avant de commencer."
+        },
+        "managed": {
+          "problem": "La rénovation ne doit pas dépendre de l'improvisation et de la chance.",
+          "solution": "Nous gérons les projets via un système structuré avec des étapes, des inspections et des jalons de paiement clairs. Chaque étape terminée avant d’avancer."
+        },
+        "responsive": {
+          "problem": "La plupart des frustrations en matière de rénovation proviennent d’une mauvaise communication.",
+          "solution": "Nous disposons d'une équipe de bureau dédiée qui répond rapidement, vous aide à sélectionner les matériaux et vous tient au courant, sans aucun moment « envoyé un message, reçu aucune réponse »."
+        },
+        "scheduled": {
+          "problem": "Certains entrepreneurs surbookent et votre calendrier ne cesse de glisser.",
+          "solution": "Nous contrôlons la charge de notre projet pour garantir que le vôtre avance comme prévu. En cas de retard (fournisseurs, etc.), nous communiquons tôt et nous ajustons de manière transparente."
+        },
+        "consistent": {
+          "problem": "La qualité ne devrait pas dépendre de l'équipage qui se présente.",
+          "solution": "Nous faisons appel à une équipe fixe avec des normes claires, en particulier pour les travaux critiques comme l'étanchéité, où les matériaux et le champ d'application sont spécifiés à l'avance."
+        },
+        "experience": {
+          "problem": "La rénovation est stressante lorsque vous êtes constamment à la recherche de mises à jour.",
+          "solution": "Nous rendons l'ensemble du processus prévisible : vous savez ce qui se passe maintenant, quelle est la prochaine étape et quand vous y attendre, sans avoir besoin de donner suite."
+        }
+      }
+    },
+    "cta": {
+      "heading": "Prêt à démarrer votre projet ?",
+      "subtitle": "Découvrez la différence d’un processus de rénovation construit autour de la transparence, d’une communication claire et de votre tranquillité d’esprit."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "cta": {
+    "getQuote": "उद्धरण प्राप्त करें",
+    "getFreeQuote": "निःशुल्क उद्धरण प्राप्त करें",
+    "getYourFreeQuote": "अपना निःशुल्क उद्धरण प्राप्त करें",
+    "freeQuoteProject": "अपने प्रोजेक्ट के लिए निःशुल्क उद्धरण प्राप्त करें!",
+    "freeQuote": "एक नि: शुल्क उद्धरण प्राप्त",
+    "startProject": "अपना प्रोजेक्ट प्रारंभ करें",
+    "startProjectToday": "अपना प्रोजेक्ट आज ही शुरू करें",
+    "getStarted": "शुरू हो जाओ",
+    "viewProjects": "प्रोजेक्ट देखें",
+    "viewOurWork": "हमारा काम देखें",
+    "ourServices": "हमारी सेवाएँ",
+    "learnMore": "और अधिक जानें",
+    "exploreService": "{service} का अन्वेषण करें",
+    "sendMessage": "मेसेज भेजें",
+    "submitInquiry": "मेरा निःशुल्क उद्धरण प्राप्त करें",
+    "bookAppointment": "अपॉइंटमेंट बुक करें",
+    "callNow": "अब कॉल करें",
+    "requestConsultation": "निःशुल्क परामर्श का अनुरोध करें",
+    "viewAllProjects": "सभी प्रोजेक्ट देखें",
+    "viewAllServices": "सभी सेवाएँ देखें",
+    "scheduleConsultation": "अनुसूची परामर्श",
+    "stickyQuoteFor": "{area} {service} कोटेशन प्राप्त करें",
+    "stickyCall": "पुकारना"
+  }
+}

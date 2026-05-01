@@ -1,0 +1,24 @@
+{
+  "filter": {
+    "allCategories": "Все категории",
+    "location": "Расположение",
+    "allLocations": "Все локации",
+    "spaceType": "Тип пространства",
+    "allSpaceTypes": "Все типы помещений",
+    "budget": "Бюджет",
+    "allBudgets": "Все бюджеты",
+    "showing": "Показаны",
+    "projects": "{count, plural, one {project} другое {projects}}",
+    "clearAll": "Очистить фильтры",
+    "browseByCategory": "Просмотр по категориям",
+    "swipeToSeeMore": "Листайте, чтобы увидеть больше →",
+    "noProjectsMatch": "Нет проектов, соответствующих вашим фильтрам.",
+    "pagination": "Пагинация проектов",
+    "previous": "Предыдущий",
+    "next": "Следующий",
+    "previousPage": "Перейти на предыдущую страницу",
+    "nextPage": "Перейти на следующую страницу",
+    "showingProjects": "Показаны {start}-{end} проектов {total}",
+    "search": "Поиск проектов..."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "जगह",
+    "category": "वर्ग",
+    "budget": "बजट रेंज",
+    "spaceType": "अंतरिक्ष प्रकार",
+    "serviceScope": "सेवा का दायरा",
+    "duration": "अवधि",
+    "challenge": "चुनौती",
+    "solution": "हमारा समाधान",
+    "close": "बंद करना",
+    "viewDetails": "पूर्ण विवरण देखें"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "form": {
+    "name": "नाम",
+    "fullName": "पूरा नाम",
+    "email": "ईमेल",
+    "emailAddress": "मेल पता",
+    "phone": "फ़ोन",
+    "phoneNumber": "फ़ोन नंबर",
+    "message": "संदेश",
+    "projectDetails": "परियोजना विवरण",
+    "service": "सेवा",
+    "serviceInterestedIn": "सेवा में रुचि",
+    "selectService": "एक सेवा चुनें",
+    "namePlaceholder": "आपका नाम",
+    "namePlaceholder2": "जॉन स्मिथ",
+    "emailPlaceholder": "your.email@example.com",
+    "emailPlaceholder2": "your@email.com",
+    "emailPlaceholder3": "john@example.com",
+    "phonePlaceholder": "आपका फोन नंबर",
+    "phonePlaceholder2": "(555) 123-4567",
+    "phonePlaceholder3": "(778) 960-7999",
+    "phonePlaceholder4": "123-456-7890",
+    "messagePlaceholder": "हमें अपनी परियोजना के बारे में बताएं...",
+    "messagePlaceholder2": "हमें अपने नवीकरण प्रोजेक्ट के बारे में बताएं...",
+    "sending": "भेजा जा रहा है...",
+    "success": "धन्यवाद! आपका संदेश सफलतापूर्वक प्रेषित किया गया।",
+    "successTitle": "संदेश भेजा गया!",
+    "error": "कुछ गलत हो गया। कृपया पुन: प्रयास करें।",
+    "responsePromise": "हम विस्तृत अनुमान के साथ 24 घंटे के भीतर जवाब देते हैं।"
+  }
+}

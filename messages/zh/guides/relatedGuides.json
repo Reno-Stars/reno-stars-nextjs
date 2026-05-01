@@ -7,5 +7,17 @@
     "basement": "地下室装修费用",
     "bathroom": "浴室装修平均费用",
     "bathroomGuide": "卫生间装修费用"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "大温哥华地区的厨房成本",
+    "bathroomTitle": "大温哥华地区的浴室费用",
+    "wholeHouseTitle": "大温哥华地区的整栋房屋成本",
+    "basementTitle": "大温哥华地区的地下室成本",
+    "subtitle": "我们已完成项目的实际平均值——而非行业估计。仅限拥有 2 个以上已竣工项目的城市。",
+    "headerCity": "城市",
+    "headerProjects": "项目",
+    "headerAvg": "平均项目成本",
+    "headerRange": "范围",
+    "footnote": "数据来源：Reno Stars 投资组合。根据实际项目预算汇总——HomeStars 和 Houzz 等目录只能引用行业平均水平。"
   }
 }

@@ -1,0 +1,52 @@
+{
+  "faq": {
+    "kitchen": {
+      "q1": "Combien de temps dure généralement une rénovation de cuisine ?",
+      "a1": "Une rénovation de cuisine typique prend 4 à 8 semaines selon l'ampleur. Des mises à jour simples comme la rénovation des armoires peuvent prendre 1 à 2 semaines, tandis que des rénovations complètes avec des armoires personnalisées peuvent prendre 8 à 12 semaines.",
+      "q2": "Quel est le coût moyen d'une rénovation de cuisine à {area} ?",
+      "a2": "Les rénovations de cuisine dans {area} varient généralement entre 15 000 $ et plus de 75 000 $ selon la taille et les finitions. Nous fournissons des devis détaillés gratuits après une consultation à domicile.",
+      "q3": "Ai-je besoin d’un permis pour rénover ma cuisine ?",
+      "a3": "Des permis sont requis pour les modifications électriques, de plomberie et structurelles. Nous traitons toutes les demandes de permis et veillons à ce que votre rénovation soit conforme aux codes du bâtiment {area}."
+    },
+    "bathroom": {
+      "q1": "Combien de temps dure une rénovation de salle de bain à {area} ?",
+      "a1": "La plupart des rénovations de salle de bains à {area} prennent de 2 à 4 semaines. Une simple mise à jour esthétique peut prendre 1 semaine, tandis qu'une rénovation complète avec des changements de disposition peut prendre 4 à 6 semaines.",
+      "q2": "Puis-je utiliser ma salle de bain pendant une rénovation ?",
+      "a2": "Généralement non, mais nous travaillons efficacement pour minimiser les perturbations. Si vous disposez de plusieurs salles de bains, nous pouvons vous aider à planifier le calendrier de rénovation.",
+      "q3": "Quelle imperméabilisation utilisez-vous pour les salles de bains ?",
+      "a3": "Nous utilisons des systèmes d'étanchéité de pointe, notamment Schluter et RedGard, pour garantir que votre salle de bain est correctement protégée contre les dommages causés par l'humidité."
+    },
+    "whole-house": {
+      "q1": "Puis-je vivre dans ma maison pendant une rénovation complète de la maison à {area} ?",
+      "a1": "Cela dépend de la portée. Pour les rénovations majeures à {area}, nous recommandons souvent un déménagement temporaire pour des raisons de sécurité et d'efficacité. Nous pouvons aider à coordonner le travail par étapes si vous préférez rester.",
+      "q2": "Comment gérer un projet de rénovation de maison entière ?",
+      "a2": "Nous affectons un chef de projet dédié qui coordonne tous les métiers, maintient le calendrier et fournit des mises à jour régulières. Vous disposez d’un interlocuteur unique partout.",
+      "q3": "Ai-je besoin d’un permis pour rénover toute une maison à {area} ?",
+      "a3": "Oui, les rénovations de maisons entières nécessitent généralement plusieurs permis pour les travaux de structure, d’électricité et de plomberie. Nous traitons toutes les demandes de permis et inspections {area}."
+    },
+    "basement": {
+      "q1": "Ai-je besoin d'un permis pour finir mon sous-sol à {area} ?",
+      "a1": "Oui, la finition du sous-sol nécessite un permis de construire à {area}. Nous traitons toutes les demandes de permis et les inspections dans le cadre de notre service.",
+      "q2": "Comment gérer les problèmes d’humidité au sous-sol ?",
+      "a2": "Nous évaluons les niveaux d’humidité et mettons en œuvre des solutions appropriées, notamment des améliorations du drainage, des pare-vapeur et une isolation adéquate avant la finition.",
+      "q3": "Puis-je ajouter une salle de bain à mon sous-sol?",
+      "a3": "Oui, nous pouvons ajouter des salles de bains aux sous-sols. Si vous êtes en dessous de la conduite d’égout, nous installons des systèmes d’éjection des eaux usées. Toute la plomberie est conforme aux codes du bâtiment {area}."
+    },
+    "cabinet": {
+      "q1": "Quelle est la différence entre refaire et remplacer des armoires ?",
+      "a1": "Le refaçage conserve vos caissons d'armoires existants et remplace les portes, les façades de tiroirs et la quincaillerie. Cela coûte 40 à 50 % moins cher qu’un remplacement complet et prend moins de temps.",
+      "q2": "Combien de temps prend la rénovation d'une armoire dans {area} ?",
+      "a2": "La rénovation des armoires en {area} prend généralement 3 à 5 jours pour une cuisine moyenne. Votre cuisine reste fonctionnelle pendant la majeure partie du processus.",
+      "q3": "Toutes les armoires peuvent-elles être refaites ?",
+      "a3": "La plupart des caissons d'armoires en bois massif et en contreplaqué peuvent être refaits s'ils sont structurellement solides. Nous évaluons vos armoires lors d’une consultation gratuite à domicile à {area}."
+    },
+    "commercial": {
+      "q1": "Travaillez-vous pendant les heures de bureau ?",
+      "a1": "Nous proposons des horaires flexibles, y compris les soirs et les week-ends, afin de minimiser les perturbations de vos opérations commerciales. Nous pouvons échelonner les travaux pour maintenir certaines parties de votre espace opérationnelles.",
+      "q2": "Connaissez-vous les codes du bâtiment commercial {area} ?",
+      "a2": "Oui, notre équipe est expérimentée avec les codes du bâtiment commercial {area}, les exigences d'accessibilité et les réglementations en matière de sécurité incendie. Nous garantissons le plein respect de toutes les normes commerciales.",
+      "q3": "Pouvez-vous gérer les améliorations des locataires dans {area} ?",
+      "a3": "Oui, nous sommes spécialisés dans les améliorations locatives (TI) pour les bureaux, les espaces commerciaux et les restaurants à {area}. Nous travaillons avec les propriétaires et les gestionnaires immobiliers sur les processus d'approbation."
+    }
+  }
+}

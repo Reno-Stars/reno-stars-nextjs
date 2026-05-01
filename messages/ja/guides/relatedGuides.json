@@ -7,5 +7,17 @@
     "basement": "地下室リノベーション費用",
     "bathroom": "平均バスルームリノベーション費用",
     "bathroomGuide": "バスルームリノベーション費用"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "メトロバンクーバーの近隣地域別のキッチンコスト",
+    "bathroomTitle": "メトロバンクーバーの近隣地域別のトイレ料金",
+    "wholeHouseTitle": "メトロバンクーバーの近隣地域別の家全体の費用",
+    "basementTitle": "メトロバンクーバーの近隣地域別の地下室の費用",
+    "subtitle": "業界の推定値ではなく、完了したプロジェクトの実際の平均値です。 2 つ以上のプロジェクトが完了した都市のみ。",
+    "headerCity": "市",
+    "headerProjects": "プロジェクト",
+    "headerAvg": "平均プロジェクトコスト",
+    "headerRange": "範囲",
+    "footnote": "データソース: Reno Stars ポートフォリオ。実際のプロジェクトの予算から集計されています。HomeStars や Houzz などのディレクトリでは、業界の平均値しか引用できません。"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "locationBenefits": {
+    "localExpertise": "Местная экспертиза в вашем регионе",
+    "freeOnsite": "Бесплатная консультация на месте",
+    "competitivePricing": "Конкурентоспособные местные цены",
+    "quickResponse": "Быстрое время ответа",
+    "experience": "{years}+ лет службы на Нижнем материке",
+    "licensedInsured": "Лицензировано и полностью застраховано (CGL + WCB)"
+  }
+}

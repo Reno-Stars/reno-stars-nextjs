@@ -1,0 +1,118 @@
+{
+  "cabinetCost": {
+    "breadcrumb": "Coût de finition des armoires",
+    "hero": {
+      "title": "Coût de finition et de refaçage d'armoires à Vancouver BC (2026)",
+      "subtitle": "Un guide complet sur les coûts de finition, de refaçage et de remplacement d'armoires dans le Grand Vancouver. Basé sur notre expérience dans la réalisation de rénovations de cuisines avec des armoires personnalisées dans toute la région."
+    },
+    "stats": {
+      "avgCost": "Moy. Finition",
+      "range": "Gamme de prix",
+      "savings": "vs remplacement",
+      "savingsValue": "Économisez 50 à 70 %",
+      "timeline": "Chronologie typique",
+      "timelineValue": "3 à 5 jours"
+    },
+    "tiers": {
+      "title": "Options de mise à jour du cabinet par coût",
+      "subtitle": "Trois approches pour mettre à jour vos armoires de cuisine dans le Grand Vancouver",
+      "refinishing": {
+        "title": "Finition d'armoires",
+        "description": "Ponçage, apprêt et repeinture ou restauration professionnels des portes et cadres d'armoires existants. Idéal pour les armoires en bois massif en bon état structurel. La façon la plus rentable de transformer votre cuisine."
+      },
+      "refacing": {
+        "title": "Refaçage d'armoire",
+        "description": "Remplacement des portes d'armoires et des façades de tiroirs tout en conservant les caissons d'armoires existants. Comprend un nouveau placage sur les surfaces visibles et une nouvelle quincaillerie. Une option milieu de gamme qui donne un tout nouveau look sans démolition complète."
+      },
+      "fullReplacement": {
+        "title": "Remplacement complet de l'armoire",
+        "description": "Dépose complète et installation de nouvelles armoires. Choisissez parmi les options de stock, semi-personnalisées ou entièrement personnalisées. Idéal lorsque les armoires sont structurellement endommagées ou que vous souhaitez modifier complètement l’agencement de la cuisine."
+      }
+    },
+    "comparison": {
+      "title": "Finition ou remplacement : lequel vous convient le mieux ?",
+      "subtitle": "Comprendre les compromis vous aide à prendre la meilleure décision pour votre cuisine et votre budget",
+      "refinishing": {
+        "title": "Finition / Refaçage",
+        "pro1": "50 à 70 % moins cher que le remplacement",
+        "pro2": "Terminé en 3 à 5 jours avec un minimum de perturbations",
+        "pro3": "Respectueux de l'environnement, gardant les armoires existantes hors des décharges",
+        "con1": "Impossible de modifier la disposition ou la configuration de l'armoire"
+      },
+      "replacement": {
+        "title": "Remplacement complet",
+        "pro1": "Personnalisez entièrement la disposition, la taille et la configuration",
+        "pro2": "Résoudre les problèmes structurels et les dégâts des eaux",
+        "pro3": "Des fonctionnalités modernes telles que des organisateurs à fermeture douce et coulissants",
+        "con1": "2 à 4 semaines de construction et coût plus élevé"
+      }
+    },
+    "factors": {
+      "title": "Qu'est-ce qui affecte le coût de finition de vos armoires ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "cabinetCount": {
+        "title": "Nombre d'armoires",
+        "description": "Une cuisine typique de Vancouver compte 20 à 30 portes d’armoires et façades de tiroirs. Plus de portes signifie plus de main d’œuvre et de matériaux. Attendez-vous à payer entre 150 et 300 $ par porte pour une finition professionnelle."
+      },
+      "material": {
+        "title": "Matériau du meuble",
+        "description": "Les armoires en bois massif se rénovent magnifiquement. Les armoires en MDF et en thermoplastique nécessitent des techniques différentes et peuvent coûter plus cher. Les armoires en stratifié nécessitent des apprêts d'adhérence spéciaux pour des résultats durables."
+      },
+      "finishType": {
+        "title": "Type de finition",
+        "description": "La finition de peinture de base coûte moins cher que les finitions spécialisées. Les taches, le vitrage ou l'aspect vieilli ajoutent entre 500 et 1 500 $ au projet. Les modèles d’armoires bicolores sont populaires mais nécessitent une main d’œuvre supplémentaire."
+      },
+      "hardware": {
+        "title": "Mises à niveau matérielles",
+        "description": "Les nouvelles poignées, boutons et charnières peuvent ajouter entre 300 et 2 000 $ selon la qualité. La mise à niveau vers des charnières à fermeture douce est fortement recommandée et coûte généralement entre 5 et 15 $ par charnière installée."
+      },
+      "kitchenSize": {
+        "title": "Taille de la cuisine et accessibilité",
+        "description": "Les grandes cuisines avec armoires supérieures et inférieures, garde-manger et armoires îlot coûtent plus cher. Les armoires difficiles d'accès ou les détails de moulage complexes augmentent le temps de travail."
+      },
+      "condition": {
+        "title": "État actuel du cabinet",
+        "description": "Les armoires présentant des dégâts d'eau, un délaminage ou des problèmes structurels peuvent nécessiter des réparations avant d'être remises en état. Des dommages importants peuvent rendre la finition peu pratique, le refaçage ou le remplacement devient la meilleure option."
+      }
+    },
+    "realProjects": {
+      "title": "Projets de cuisine connexes avec travaux d'armoires",
+      "subtitle": "Parcourez nos rénovations de cuisine terminées avec des armoires personnalisées dans le Grand Vancouver"
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l'argent pour les mises à jour du Cabinet",
+      "tip1": {
+        "title": "Pensez d’abord à la finition",
+        "description": "Si vos caissons d'armoires sont structurellement solides, la finition permet d'économiser 50 à 70 % par rapport au remplacement. Un travail de peinture professionnel sur des armoires en bois massif peut durer 10 à 15 ans avec des soins appropriés."
+      },
+      "tip2": {
+        "title": "Mettre à jour le matériel pour un impact instantané",
+        "description": "Les nouvelles poignées et boutons constituent la mise à niveau la plus simple et la moins chère. La quincaillerie moderne sur les armoires fraîchement peintes peut donner à votre cuisine un aspect entièrement rénové pour une fraction du coût."
+      },
+      "tip3": {
+        "title": "Choisissez des finitions durables",
+        "description": "Investissez dans de la peinture ou de la laque pour armoires de haute qualité. Benjamin Moore Advance ou des finitions similaires de qualité armoire coûtent plus cher au départ, mais résistent bien mieux à l'écaillage et au jaunissement que la peinture murale standard."
+      },
+      "tip4": {
+        "title": "Forfait avec une rénovation de cuisine",
+        "description": "Si vous envisagez déjà de rénover votre cuisine, le fait de regrouper les travaux d'armoires avec la mise à jour des comptoirs et des dosserets aboutit souvent à un meilleur prix global et à une conception plus cohérente."
+      }
+    },
+    "faq": {
+      "q1": "Combien coûte la finition d’armoires à Vancouver?",
+      "a1": "La finition d'armoires à Vancouver coûte généralement entre 4 000 et 8 000 $ pour une cuisine standard comportant 20 à 30 portes. Cela comprend le ponçage, l’apprêt et la peinture professionnels avec une finition de qualité armoire. Les coûts varient en fonction de la taille de la cuisine, du nombre de portes et de la complexité de la finition.",
+      "q2": "Combien de temps prend la finition des armoires ?",
+      "a2": "La finition professionnelle des armoires prend généralement 3 à 5 jours pour une cuisine standard. Le processus comprend le retrait des portes, le ponçage, l'apprêt, l'application de plusieurs couches de peinture ou de teinture et la réinstallation avec une nouvelle quincaillerie. Vous pouvez utiliser votre cuisine pendant la majeure partie du processus.",
+      "q3": "La finition des armoires en vaut-elle la peine ou dois-je la remplacer ?",
+      "a3": "La finition des armoires en vaut la peine lorsque vos armoires existantes sont structurellement solides et que vous êtes satisfait de la disposition. Cela coûte 50 à 70 % de moins que le remplacement et prend des jours au lieu de plusieurs semaines. Remplacez les armoires uniquement si elles présentent des dégâts d’eau importants, des problèmes structurels ou si vous devez modifier l’agencement de la cuisine.",
+      "q4": "Quelle est la différence entre la finition et le refaçage d'armoires ?",
+      "a4": "La finition signifie poncer et repeindre ou restaurer les portes et cadres d'armoires existants. Le refaçage remplace entièrement les portes et les façades de tiroirs tout en conservant les caissons d'armoires existants, en ajoutant un nouveau placage aux surfaces visibles. Le refaçage coûte plus cher (8 000 à 15 000 dollars) mais donne une transformation plus spectaculaire.",
+      "q5": "Pouvez-vous remettre en état des armoires en stratifié ou en thermoplastique ?",
+      "a5": "Oui, mais cela demande une préparation particulière. Les armoires en stratifié nécessitent un déglaçage et un apprêt de liaison complets pour que la peinture adhère correctement. Les armoires en thermoplastique peuvent être peintes, mais le thermoplastique peut se décoller avec le temps. Pour ces matériaux, le revêtement avec de nouvelles portes en bois massif ou en MDF constitue souvent un meilleur investissement à long terme."
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit pour la finition d'armoires",
+      "subtitle": "Faites-nous part de votre projet d'armoire et recevez un devis détaillé sous 48 heures, sans engagement."
+    }
+  }
+}

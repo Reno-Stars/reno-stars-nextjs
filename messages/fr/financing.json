@@ -1,0 +1,108 @@
+{
+  "financing": {
+    "breadcrumb": "Guide de financement et de budget",
+    "hero": {
+      "title": "Financement et guide budgétaire pour la rénovation",
+      "subtitle": "Explorez vos options de financement et planifiez judicieusement votre budget de rénovation. Basé sur les coûts réels du projet de nos rénovations terminées dans la région métropolitaine de Vancouver."
+    },
+    "stats": {
+      "avgKitchen": "Moy. Cuisine Reno",
+      "avgBathroom": "Moy. salle de bain Reno",
+      "financingOptions": "Options de financement"
+    },
+    "options": {
+      "title": "Options de financement pour votre rénovation",
+      "subtitle": "Les façons les plus courantes dont les propriétaires canadiens financent des projets de rénovation en Colombie-Britannique.",
+      "heloc": {
+        "title": "Marge de crédit sur valeur domiciliaire (HELOC)",
+        "rate": "Taux typique : Prime + 0,5% à 2%",
+        "description": "Empruntez sur la valeur nette de votre maison avec des montants de retrait flexibles. Ne payez des intérêts que sur ce que vous utilisez. Disponible auprès de la plupart des banques et coopératives de crédit canadiennes.",
+        "pro": "✓ Des taux d'intérêt bas",
+        "con": "✗ Nécessite la valeur nette de la maison"
+      },
+      "personalLoan": {
+        "title": "Prêt personnel ou marge de crédit",
+        "rate": "Taux typique : 6 % – 12 %",
+        "description": "Prêts non garantis auprès de banques ou de coopératives de crédit. Aucune valeur nette de la maison requise. Les paiements mensuels fixes rendent la budgétisation prévisible.",
+        "pro": "✓ Aucune garantie nécessaire",
+        "con": "✗ Des taux d'intérêt plus élevés"
+      },
+      "refinance": {
+        "title": "Refinancement hypothécaire",
+        "rate": "Taux typique : taux hypothécaires actuels",
+        "description": "Refinancez votre prêt hypothécaire pour inclure les coûts de rénovation. Répartit le coût sur la durée de votre prêt hypothécaire. Peut avoir des pénalités de rupture si à mi-parcours.",
+        "pro": "✓ Tarif le plus bas possible",
+        "con": "✗ Frais de rupture potentiels"
+      },
+      "savings": {
+        "title": "Économies et approche progressive",
+        "rate": "Aucun frais d'intérêt",
+        "description": "Payez avec vos économies ou échelonnez votre rénovation en étapes. Complétez une pièce à la fois pour répartir les coûts. Aucune dette et aucun frais d'intérêt.",
+        "pro": "✓ Aucun coût d'intérêt",
+        "con": "✗ Chronologie plus longue"
+      }
+    },
+    "costs": {
+      "title": "Coûts de rénovation typiques dans la région métropolitaine de Vancouver",
+      "subtitle": "Basé sur des projets réels réalisés de notre portefeuille.",
+      "bathroom": "Rénovation de salle de bain",
+      "kitchen": "Rénovation de cuisine",
+      "basement": "Rénovation du sous-sol",
+      "wholeHouse": "Rénovation de toute la maison",
+      "commercial": "Rénovation commerciale",
+      "disclaimer": "* Gammes basées sur nos projets réalisés dans le Grand Vancouver. Les coûts réels varient selon la portée, les matériaux et l'emplacement."
+    },
+    "tips": {
+      "title": "Conseils de planification budgétaire",
+      "subtitle": "Des stratégies intelligentes pour tirer le meilleur parti de votre investissement en rénovation.",
+      "prioritize": {
+        "title": "Prioriser les zones à fort impact",
+        "description": "Les cuisines et salles de bains offrent le meilleur retour sur investissement. Concentrez votre budget sur les espaces qui comptent le plus pour la vie quotidienne et la valeur de revente."
+      },
+      "contingency": {
+        "title": "Mettre de côté 10 à 15 % de contingence",
+        "description": "Les découvertes inattendues lors de la rénovation sont courantes : vieille plomberie, moisissures cachées ou problèmes structurels. Un fonds de prévoyance évite le stress budgétaire."
+      },
+      "phased": {
+        "title": "Envisagez une approche progressive",
+        "description": "Si votre rénovation totale dépasse votre budget, priorisez et complétez les pièces par étapes. Cela répartit les coûts tout en atteignant vos objectifs."
+      },
+      "quotes": {
+        "title": "Obtenez des devis écrits détaillés",
+        "description": "Demandez toujours des devis détaillés aux entrepreneurs. Comparez l’étendue des travaux, pas seulement le prix total. Un devis inférieur peut exclure les articles dont vous avez besoin."
+      },
+      "permits": {
+        "title": "Budget pour les permis et les inspections",
+        "description": "Les permis de construire dans la région métropolitaine de Vancouver coûtent généralement entre 200 et 2 000 dollars et plus, selon la portée. Sauter les permis peut entraîner des problèmes coûteux lors de la revente."
+      },
+      "roi": {
+        "title": "Pensez au retour sur investissement",
+        "description": "Les rénovations de cuisine peuvent rapporter 75 à 100 % des coûts à la revente. Les rénovations de salles de bains rapportent 60 à 70 %. Les appartements au sous-sol peuvent générer des revenus de location pour compenser les coûts."
+      }
+    },
+    "faqSection": {
+      "title": "Foire aux questions"
+    },
+    "faq": {
+      "q1": "Quel budget dois-je prévoir pour une rénovation à Vancouver ?",
+      "a1": "Le budget dépend de l'ampleur : les rénovations de salle de bains varient de 10 000 $ à 60 000 $, les cuisines de 15 000 $ à 72 000 $ et les projets de maison entière de 50 000 $ et plus. Nous fournissons des devis détaillés gratuits en fonction de vos besoins spécifiques.",
+      "q1Answer": "Le budget dépend de l'ampleur : les rénovations de salle de bains varient de 10 000 $ à 60 000 $, les cuisines de 15 000 $ à 72 000 $ et les projets de maison entière de 50 000 $ et plus. Nous fournissons des devis détaillés gratuits en fonction de vos besoins spécifiques.",
+      "q2": "Puis-je rénover avec un petit budget ?",
+      "a2": "Oui! Nous travaillons avec différents niveaux de budget. Une approche progressive vous permet de terminer les domaines prioritaires en premier. La finition des armoires (3 000 $ à 8 000 $) est une alternative rentable au remplacement complet d'une cuisine.",
+      "q2Answer": "Oui! Nous travaillons avec différents niveaux de budget. Une approche progressive vous permet de terminer les domaines prioritaires en premier. La finition des armoires (3 000 $ à 8 000 $) est une alternative rentable au remplacement complet d'une cuisine.",
+      "q3": "Proposez-vous des plans de paiement ?",
+      "a3": "Nous suivons un calendrier de paiement standard : un dépôt pour garantir la date de votre projet, des paiements progressifs aux étapes clés et un paiement final une fois terminé et à votre satisfaction.",
+      "q3Answer": "Nous suivons un calendrier de paiement standard : un dépôt pour garantir la date de votre projet, des paiements progressifs aux étapes clés et un paiement final une fois terminé et à votre satisfaction.",
+      "q4": "Que comprend un devis de rénovation ?",
+      "a4": "Nos devis comprennent la main-d'œuvre, les matériaux, la gestion de projet, les permis (le cas échéant) et le nettoyage. Nous fournissons des ventilations détaillées afin que vous compreniez exactement où va votre budget.",
+      "q4Answer": "Nos devis comprennent la main-d'œuvre, les matériaux, la gestion de projet, les permis (le cas échéant) et le nettoyage. Nous fournissons des ventilations détaillées afin que vous compreniez exactement où va votre budget.",
+      "q5": "Comment puis-je maximiser le retour sur investissement de ma rénovation ?",
+      "a5": "Concentrez-vous sur les cuisines et les salles de bains pour obtenir le meilleur retour sur investissement. Utilisez des matériaux de qualité qui durent. Envisagez un appartement au sous-sol pour les revenus locatifs. Nous vous aidons à planifier des rénovations qui équilibrent vos besoins de style de vie avec une valeur à long terme.",
+      "q5Answer": "Concentrez-vous sur les cuisines et les salles de bains pour obtenir le meilleur retour sur investissement. Utilisez des matériaux de qualité qui durent. Envisagez un appartement au sous-sol pour les revenus locatifs. Nous vous aidons à planifier des rénovations qui équilibrent vos besoins de style de vie avec une valeur à long terme."
+    },
+    "cta": {
+      "heading": "Prêt à planifier votre budget de rénovation ?",
+      "subtitle": "Obtenez une consultation gratuite avec une estimation détaillée des coûts adaptée à votre projet et à vos objectifs."
+    }
+  }
+}

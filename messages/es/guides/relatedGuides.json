@@ -7,5 +7,17 @@
     "basement": "Costo de remodelación de sótano",
     "bathroom": "Costo promedio de remodelación de baño",
     "bathroomGuide": "Costo de remodelación de baño"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "Costo de la cocina por vecindario metropolitano de Vancouver",
+    "bathroomTitle": "Costo del baño por vecindario metropolitano de Vancouver",
+    "wholeHouseTitle": "Costo de toda la casa por vecindario metropolitano de Vancouver",
+    "basementTitle": "Costo del sótano por vecindario metropolitano de Vancouver",
+    "subtitle": "Promedios reales de nuestros proyectos completados, no estimaciones de la industria. Ciudades con más de 2 proyectos completados únicamente.",
+    "headerCity": "Ciudad",
+    "headerProjects": "Proyectos",
+    "headerAvg": "Costo promedio del proyecto",
+    "headerRange": "Rango",
+    "footnote": "Fuente de datos: cartera de Reno Stars. Agregados a partir de presupuestos de proyectos reales: directorios como HomeStars y Houzz solo pueden citar promedios de la industria."
   }
 }

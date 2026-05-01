@@ -1,0 +1,14 @@
+{
+  "footer": {
+    "allRightsReserved": "Все права защищены",
+    "allRights": "Все права защищены.",
+    "licensedInsured": "Лицензировано и полностью застраховано (CGL + WCB)",
+    "freeEstimates": "Бесплатные оценки",
+    "mapLocation": "Расположение на карте",
+    "wechatId": "Идентификатор WeChat: {id}",
+    "quickLinks": "Быстрые ссылки",
+    "scanToConnect": "Сканируйте для подключения",
+    "privacyPolicy": "политика конфиденциальности",
+    "termsOfService": "Условия использования"
+  }
+}

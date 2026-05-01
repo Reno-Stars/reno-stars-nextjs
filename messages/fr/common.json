@@ -1,0 +1,10 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "notFound": "Page introuvable",
+    "notFoundDescription": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "backToHome": "Retour à la maison",
+    "tryAgain": "Essayer à nouveau"
+  }
+}

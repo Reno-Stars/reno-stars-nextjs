@@ -1,0 +1,10 @@
+{
+  "serviceBenefits": {
+    "freeConsultation": "استشارة مجانية والاقتباس",
+    "licensedInsured": "مرخصة ومؤمنة بالكامل (CGL + WCB)",
+    "coverageAndWarranty": "تأمين CGL بقيمة 5 ملايين دولار، وتغطية WCB نشطة، وضمان يصل إلى 3 سنوات",
+    "experience": "{years} + سنوات من الخبرة",
+    "rating": "تصنيف جوجل 5 نجوم",
+    "projectsDone": "تم الانتهاء من أكثر من 700 مشروع"
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "bathroomCost": {
+    "breadcrumb": "Coût de rénovation de salle de bain",
+    "hero": {
+      "title": "Coût moyen de rénovation d’une salle de bain à Vancouver (Guide des prix 2026)",
+      "subtitle": "Le coût moyen de rénovation d'une salle de bain à Vancouver varie de 10 000 $ à plus de 60 000 $. Il s’agit des prix réels de 19 projets achevés – et non d’estimations industrielles ou de moyennes nationales."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "projects": "Projets terminés",
+      "timeline": "Chronologie typique",
+      "timelineValue": "2 à 8 semaines"
+    },
+    "tiers": {
+      "title": "Coût de rénovation de salle de bain par niveau",
+      "subtitle": "Basé sur nos projets réalisés dans le Grand Vancouver",
+      "budget": {
+        "title": "Économique",
+        "description": "Carrelage standard, vanité de base, luminaires mis à jour et peinture fraîche. Idéal pour rafraîchir une seule salle de bain dans un condo ou une maison de ville sans déplacer la plomberie."
+      },
+      "midRange": {
+        "title": "Milieu de gamme",
+        "description": "Carrelage en porcelaine ou grand format, vanité sur mesure, cabine de douche en verre sans cadre, luminaires modernes et plancher chauffant. Le choix le plus populaire pour les maisons familiales."
+      },
+      "highEnd": {
+        "title": "Haut de gamme / Multi-salles de bain",
+        "description": "Carrelage haut de gamme, douches sans seuil, baignoires autoportantes, armoires personnalisées, luminaires intelligents et modifications structurelles. Comprend souvent la rénovation de 2 à 3 salles de bains simultanément."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui affecte le coût de rénovation de votre salle de bain ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "tiles": {
+        "title": "Carrelage et revêtement de sol (25 à 35 % du budget)",
+        "description": "Les carreaux de céramique standard commencent à 5 $/pied carré, la porcelaine coûte entre 8 et 15 $/pied carré et la pierre naturelle peut dépasser 25 $/pied carré. Les carreaux grand format réduisent les lignes de coulis mais coûtent plus cher à installer."
+      },
+      "shower": {
+        "title": "Configuration douche/baignoire",
+        "description": "Une conversion de baignoire en douche coûte entre 3 000 et 8 000 $. Les douches sans seuil (seuil zéro) nécessitent une imperméabilisation personnalisée et un sous-plancher incliné, ce qui ajoute 2 000 à 5 000 $ par rapport à une base de douche standard."
+      },
+      "vanity": {
+        "title": "Vanité et comptoir",
+        "description": "Les vanités en stock commencent entre 500 et 1 500 $. Semi-personnalisé avec dessus en quartz coûte entre 2 000 et 4 000 $. Les vanités flottantes entièrement personnalisées avec lavabos intégrés peuvent dépasser 6 000 $."
+      },
+      "plumbing": {
+        "title": "Déménagement de plomberie",
+        "description": "Le déplacement des conduites de drainage ou des tuyaux d'alimentation ajoute 2 000 à 6 000 $. Les maisons plus anciennes peuvent avoir besoin de nouvelles vannes d’arrêt ou d’une mise à niveau des conduites d’alimentation. Conserver l’aménagement de plomberie existant permet d’économiser considérablement."
+      },
+      "waterproofing": {
+        "title": "Imperméabilisation",
+        "description": "Une bonne imperméabilisation avec des systèmes à membrane (Schluter, Laticrete) coûte entre 1 500 et 3 500 $ pour une douche standard. Indispensable dans le climat de Vancouver pour prévenir les dommages causés par l'humidité derrière les murs."
+      },
+      "permits": {
+        "title": "Permis et inspections",
+        "description": "Les permis de construire pour la rénovation de salles de bains coûtent entre 200 et 800 $ dans la région métropolitaine de Vancouver. Requis lors du déplacement de la plomberie, de l’ajout de nouveaux appareils ou de modifications structurelles."
+      }
+    },
+    "realProjects": {
+      "title": "De vrais projets de rénovation de salle de bains",
+      "subtitle": "Parcourez les projets de salle de bains réalisés par {count} avec les budgets et les délais réels"
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour la rénovation de votre salle de bain",
+      "tip1": {
+        "title": "Conserver la disposition de plomberie existante",
+        "description": "Le déplacement des conduites d’évacuation est l’un des principaux facteurs de coûts. Garder les toilettes, la douche et le lavabo dans leur position actuelle peut permettre d'économiser entre 3 000 et 6 000 $."
+      },
+      "tip2": {
+        "title": "Choisissez des carreaux de porcelaine grand format",
+        "description": "Moins de lignes de coulis signifient moins de travail et un aspect plus propre. Les carreaux de porcelaine 24x24 ou 12x24 sont durables, résistants à l'eau et plus abordables que la pierre naturelle."
+      },
+      "tip3": {
+        "title": "Rénover plusieurs salles de bains ensemble",
+        "description": "Si vous avez besoin de réaliser plusieurs salles de bains, les réaliser simultanément permet d'économiser 10 à 20 % par rapport à des projets séparés. Les entrepreneurs peuvent partager les coûts de mobilisation et acheter des matériaux en gros."
+      },
+      "tip4": {
+        "title": "Investissez dans l’imperméabilisation",
+        "description": "Lésiner sur l’imperméabilisation entraîne des réparations coûteuses plus tard. Des systèmes de membrane appropriés ajoutent entre 1 500 et 3 500 $ au départ, mais évitent plus de 10 000 $ de dégâts d'eau par la suite."
+      }
+    },
+    "cityComparison": {
+      "title": "Coûts de rénovation de salle de bain par ville",
+      "subtitle": "Comment les budgets varient dans la région métropolitaine de Vancouver en fonction de nos projets terminés",
+      "headerCity": "Ville",
+      "headerProjects": "Projets",
+      "headerRange": "Gamme budgétaire",
+      "footnote": "Les villes non répertoriées sont toujours desservies – nous n’y avons tout simplement pas réalisé suffisamment de projets réservés aux salles de bains pour publier une gamme significative pour l’instant."
+    },
+    "questions": {
+      "title": "Questions à poser à votre entrepreneur en rénovation de salle de bain",
+      "subtitle": "Utilisez-les pour comparer les devis entre eux et éviter les surprises en cours de projet.",
+      "q1": {
+        "title": "Le déménagement de la plomberie est-il inclus dans votre devis ?",
+        "description": "Le déplacement d'une conduite d'évacuation ou d'alimentation ajoute généralement entre 2 000 et 6 000 dollars. Les entrepreneurs qui proposent un devis sans le préciser l’ajoutent souvent plus tard en tant qu’ordre de modification. Confirmez par écrit si les conduites d’alimentation des toilettes, de la douche et du meuble-lavabo restent en place."
+      },
+      "q2": {
+        "title": "Quel système d'étanchéité utilisez-vous ?",
+        "description": "Les installations de salle de bains réputées utilisent une membrane testée (Schluter Kerdi, Laticrete Hydro Ban ou équivalent). Si l'entrepreneur nomme une « imperméabilisation liquide » générique ou saute la question, éloignez-vous : les dégâts des eaux sont le mode de défaillance de salle de bains le plus coûteux."
+      },
+      "q3": {
+        "title": "Les permis et les inspections sont-ils inclus ?",
+        "description": "La plupart des salles de bains de la région métropolitaine de Vancouver nécessitent un permis de plomberie lorsque des appareils sanitaires sont ajoutés ou déplacés. Les frais de permis varient de 200 à 800 dollars. Confirmez si l'entrepreneur gère les demandes de permis et les inspections préliminaires/finales, ou si vous en êtes responsable."
+      },
+      "q4": {
+        "title": "Qui est l’équipe d’installation réelle ?",
+        "description": "Certaines entreprises confient l’intégralité du travail à une équipe tierce que vous ne rencontrez jamais. Demandez si les personnes effectuant des travaux de démolition, de charpente, de plomberie, de carrelage et de finition sont des employés, des sous-traitants à long terme ou des employés ponctuels. La continuité affecte le suivi de la garantie."
+      },
+      "q5": {
+        "title": "Qu'est-ce que la garantie de fabrication et que couvre-t-elle ?",
+        "description": "La norme de l’industrie est de 1 an. Les entrepreneurs de qualité offrent 2 à 3 ans et couvrent explicitement les fissures des carreaux, les défauts de coulis, les fuites dans les bacs de douche, l'alignement des tiroirs de vanité et la finition de la peinture. Obtenez les conditions de garantie par écrit avant de signer."
+      },
+      "q6": {
+        "title": "Quel est votre échéancier de paiement et la répartition des étapes ?",
+        "description": "Évitez que les entrepreneurs demandent > 30 % à l'avance. Les horaires sains sont de 30 % de dépôt, 30 % à la mise en place, 30 % à l'installation des carreaux/armoires, 10 % à l'inspection finale. Les paiements d’étape protègent les deux parties en cas de problèmes de portée ou de qualité."
+      }
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit pour la rénovation de votre salle de bain",
+      "subtitle": "Faites-nous part de votre projet et recevez un devis détaillé sous 48 heures, sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte une rénovation de salle de bain à Vancouver?",
+      "a1": "Les coûts de rénovation de salle de bain à Vancouver varient de 10 000 $ à 60 000 $+ en fonction de nos projets réalisés. Une seule salle de bains économique commence entre 10 000 et 20 000 dollars, les rénovations de milieu de gamme avec vanité personnalisée et douche en verre coûtent entre 20 000 et 35 000 dollars, et les projets haut de gamme ou multi-salles de bains peuvent dépasser 40 000 dollars.",
+      "q2": "Combien de temps dure une rénovation de salle de bain ?",
+      "a2": "Une rénovation de salle de bains prend généralement entre 2 et 5 semaines. De simples mises à jour esthétiques peuvent être effectuées en 2 à 3 semaines, tandis que les projets impliquant le déplacement de la plomberie, des douches sans seuil ou des changements structurels peuvent prendre 4 à 8 semaines. Les projets multi-salles de bains prennent 5 à 11 semaines.",
+      "q3": "Puis-je transformer ma baignoire en douche à l'italienne ?",
+      "a3": "Oui, les conversions de baignoire en douche sont l’une de nos demandes les plus populaires. Le coût varie de 3 000 $ à 8 000 $ selon que vous choisissez une base de douche standard ou une conception sans bordure. Les douches sans seuil nécessitent une imperméabilisation personnalisée et un sous-plancher en pente.",
+      "q4": "Qu’est-ce qu’une douche sans seuil et pourquoi est-elle plus chère ?",
+      "a4": "Une douche sans seuil (seuil zéro) n’a ni marche ni rebord à l’entrée, créant ainsi une transition fluide avec le sol. Cela nécessite une membrane d'étanchéité personnalisée, un sous-plancher à pente précise et une installation de drain linéaire, ce qui ajoute 2 000 à 5 000 $ par rapport à une base de douche standard. Il est populaire pour son accessibilité et son esthétique moderne.",
+      "q5": "Dois-je rénover plusieurs salles de bains en même temps ?",
+      "a5": "Oui, la rénovation simultanée de plusieurs salles de bains permet d'économiser 10 à 20 % par rapport à des projets séparés. Les entrepreneurs peuvent partager les coûts de mobilisation, coordonner les échanges plus efficacement et acheter des matériaux en gros. Nous avons réalisé de nombreux projets de 2 à 3 salles de bains dans le Grand Vancouver."
+    }
+  }
+}

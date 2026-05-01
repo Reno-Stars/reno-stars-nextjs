@@ -1,0 +1,67 @@
+{
+  "beforeAfterPage": {
+    "hero": {
+      "title": "Galerie Avant et Après",
+      "subtitle": "Découvrez les transformations spectaculaires de nos projets de rénovation dans la région métropolitaine de Vancouver. De vraies photos de vraies maisons."
+    },
+    "stats": {
+      "transformations": "Transformations",
+      "projects": "Projets",
+      "cities": "Villes desservies"
+    },
+    "filters": {
+      "all": "Tous",
+      "bathroom": "Salle de bain",
+      "kitchen": "Cuisine",
+      "whole-house": "Maison entière",
+      "commercial": "Commercial"
+    },
+    "labels": {
+      "before": "Avant",
+      "after": "Après",
+      "viewProject": "Voir le projet"
+    },
+    "noResults": "Aucune photo avant/après trouvée pour cette catégorie.",
+    "whySection": {
+      "title": "Pourquoi nous partageons des photos avant et après",
+      "transparency": {
+        "title": "Transparence totale",
+        "description": "Nous croyons qu'il est important de vous montrer exactement à quoi vous attendre. Nos photos avant et après sont inédites, vous donnant un aperçu honnête de la qualité de notre travail."
+      },
+      "quality": {
+        "title": "Qualité éprouvée",
+        "description": "Chaque transformation parle d'elle-même. Des cuisines désuètes aux chefs-d’œuvre modernes, notre savoir-faire est évident dans chaque détail."
+      },
+      "inspiration": {
+        "title": "Inspiration de conception",
+        "description": "Parcourez de vraies rénovations pour trouver des idées pour votre propre projet. Découvrez comment différents styles, matériaux et agencements s'agencent dans des maisons comme la vôtre."
+      }
+    },
+    "faqSection": {
+      "title": "Foire aux questions"
+    },
+    "faq": {
+      "q1": "S'agit-il de vraies photos avant et après ?",
+      "a1": "Oui, chaque photo sur cette page provient directement de nos projets de rénovation réalisés dans la région métropolitaine de Vancouver. Nous n’utilisons pas de photos d’archives et ne modifions pas numériquement nos images.",
+      "q2": "Combien de temps dure une rénovation typique ?",
+      "a2": "Les délais de rénovation varient selon la portée du projet. Une rénovation de salle de bain prend généralement 2 à 4 semaines, une rénovation de cuisine 4 à 8 semaines et une rénovation de maison entière 2 à 4 mois. Nous fournissons des délais détaillés lors de notre consultation gratuite.",
+      "q3": "Puis-je visiter un projet terminé en personne ?",
+      "a3": "Nous pouvons organiser des visites à notre showroom où vous pourrez voir des échantillons de matériaux et des finitions en personne. Pour des références de projets spécifiques, nous pouvons vous mettre en contact avec d’anciens clients disposés à partager leur expérience.",
+      "q4": "Quels domaines desservez-vous ?",
+      "a4": "Nous desservons toute la région métropolitaine de Vancouver, notamment Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Delta, Langley et Maple Ridge.",
+      "q5": "Comment démarrer ma rénovation ?",
+      "a5": "Contactez-nous simplement pour une consultation gratuite. Nous visiterons votre espace, discuterons de votre vision et de votre budget et vous fournirons un devis détaillé. Notre équipe s'occupe de tout, de la conception à la réalisation."
+    },
+    "cta": {
+      "heading": "Prêt à transformer votre espace ?",
+      "subtitle": "Contactez-nous dès aujourd'hui pour une consultation gratuite et voyez ce que Reno Stars peut faire pour votre maison."
+    },
+    "pagination": {
+      "label": "Pagination de la galerie",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "previousPage": "Aller à la page précédente",
+      "nextPage": "Aller à la page suivante"
+    }
+  }
+}

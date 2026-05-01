@@ -1,0 +1,27 @@
+{
+  "cta": {
+    "getQuote": "الحصول على الاقتباس",
+    "getFreeQuote": "احصل على عرض أسعار مجاني",
+    "getYourFreeQuote": "احصل على عرض الأسعار المجاني الخاص بك",
+    "freeQuoteProject": "احصل على عرض أسعار مجاني لمشروعك!",
+    "freeQuote": "احصل على عرض أسعار مجاني",
+    "startProject": "ابدأ مشروعك",
+    "startProjectToday": "ابدأ مشروعك اليوم",
+    "getStarted": "ابدأ",
+    "viewProjects": "عرض المشاريع",
+    "viewOurWork": "عرض عملنا",
+    "ourServices": "خدماتنا",
+    "learnMore": "يتعلم أكثر",
+    "exploreService": "اكتشف {service}",
+    "sendMessage": "أرسل رسالة",
+    "submitInquiry": "احصل على عرض الأسعار المجاني الخاص بي",
+    "bookAppointment": "حجز موعد",
+    "callNow": "اتصل الآن",
+    "requestConsultation": "طلب استشارة مجانية",
+    "viewAllProjects": "عرض جميع المشاريع",
+    "viewAllServices": "عرض جميع الخدمات",
+    "scheduleConsultation": "جدولة التشاور",
+    "stickyQuoteFor": "احصل على عرض أسعار {area} {service}",
+    "stickyCall": "يتصل"
+  }
+}
