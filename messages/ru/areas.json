@@ -31,6 +31,8 @@
     "nearbyAreas": "Мы также обслуживаем близлежащие районы",
     "featuredProjectHeading": "Недавний проект {area} {service}",
     "featuredProjectSubheading": "Реальный бюджет, реальные сроки, реальный объем из нашего портфолио.",
-    "featuredProjectCta": "Посмотреть полный проект"
+    "featuredProjectCta": "Посмотреть полный проект",
+    "trustStripPrefix": "{service} с самым высоким рейтингом в Ванкувере",
+    "trustStripReviews": "{rating}★ из обзоров {count} Google"
   }
 }

@@ -31,6 +31,8 @@
     "nearbyAreas": "نحن نخدم أيضًا المناطق القريبة",
     "featuredProjectHeading": "مشروع {area} {service} الأخير",
     "featuredProjectSubheading": "ميزانية حقيقية، جدول زمني حقيقي، نطاق حقيقي من محفظتنا.",
-    "featuredProjectCta": "عرض المشروع كاملا"
+    "featuredProjectCta": "عرض المشروع كاملا",
+    "trustStripPrefix": "{service} الأعلى تقييمًا في فانكوفر",
+    "trustStripReviews": "{rating}★ من مراجعات جوجل {count}"
   }
 }

@@ -29,9 +29,11 @@ interface ServiceDetailPageProps {
   service: Service;
   areas?: ServiceArea[];
   faqs?: FAQ[];
+  googleRating?: number;
+  googleReviewCount?: number;
 }
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [] }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -88,6 +90,15 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
               <p className="text-lg text-white/70 max-w-2xl">
                 {localizedService.description}
               </p>
+              {/* Trust strip — GBP-friendly language to strengthen Map-Pack
+                  matching for "{service} remodeler in Vancouver" queries. */}
+              {googleRating !== undefined && googleReviewCount !== undefined && googleReviewCount > 0 && (
+                <div className="mt-5 inline-flex items-center gap-3 flex-wrap text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                  <span aria-hidden style={{ color: '#FFD166' }}>{'★'.repeat(Math.round(googleRating))}</span>
+                  <span className="font-semibold">{t('areas.trustStripPrefix', { service: localizedService.title })}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.7)' }}>· {t('areas.trustStripReviews', { rating: googleRating.toFixed(1), count: googleReviewCount })}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

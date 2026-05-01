@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "پروژه های نوسازی در سراسر این جوامع {area}. هنگام درخواست قیمت، محله خود را ذکر کنید - ما از ویژگی های مجوز هر یک و تدارکات تامین کننده مطلع هستیم.",
     "featuredProjectHeading": "پروژه اخیر {area} {service}",
     "featuredProjectSubheading": "بودجه واقعی، جدول زمانی واقعی، دامنه واقعی از نمونه کارها ما.",
-    "featuredProjectCta": "مشاهده پروژه کامل"
+    "featuredProjectCta": "مشاهده پروژه کامل",
+    "trustStripPrefix": "{service} دارای رتبه برتر در ونکوور",
+    "trustStripReviews": "{rating}★ از بررسی {count} گوگل"
   }
 }

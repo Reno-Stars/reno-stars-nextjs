@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "これらの {area} コミュニティ全体の改修プロジェクト。見積もりを依頼する際に、お住まいの地域について言及してください。私たちは、それぞれの許可の癖やサプライヤーの物流状況を理解しています。",
     "featuredProjectHeading": "最近の {area} {service} プロジェクト",
     "featuredProjectSubheading": "私たちのポートフォリオからの実際の予算、実際のタイムライン、実際の範囲。",
-    "featuredProjectCta": "プロジェクト全体を表示"
+    "featuredProjectCta": "プロジェクト全体を表示",
+    "trustStripPrefix": "バンクーバーで最高評価の {service}",
+    "trustStripReviews": "{count} Google レビューからの {rating}★"
   }
 }

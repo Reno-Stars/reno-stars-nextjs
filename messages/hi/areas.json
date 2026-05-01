@@ -31,6 +31,8 @@
     "nearbyAreas": "हम आस-पास के क्षेत्रों में भी सेवा प्रदान करते हैं",
     "featuredProjectHeading": "हालिया {area} {service} प्रोजेक्ट",
     "featuredProjectSubheading": "हमारे पोर्टफोलियो से वास्तविक बजट, वास्तविक समयरेखा, वास्तविक दायरा।",
-    "featuredProjectCta": "पूरा प्रोजेक्ट देखें"
+    "featuredProjectCta": "पूरा प्रोजेक्ट देखें",
+    "trustStripPrefix": "वैंकूवर में टॉप रेटेड {service}",
+    "trustStripReviews": "{rating}★ {count} Google समीक्षाओं से"
   }
 }

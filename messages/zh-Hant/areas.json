@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "這些 {area} 社區的改造計畫。當您要求報價時，請提及您的鄰居 - 我們了解每個人的許可怪癖和供應商物流。",
     "featuredProjectHeading": "最近的 {area} {service} 項目",
     "featuredProjectSubheading": "我們的投資組合中的真實預算、真實時間表、真實範圍。",
-    "featuredProjectCta": "查看完整項目"
+    "featuredProjectCta": "查看完整項目",
+    "trustStripPrefix": "溫哥華排名前列的{service}",
+    "trustStripReviews": "{rating}★ 來自 {count} Google 評論"
   }
 }

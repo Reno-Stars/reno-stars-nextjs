@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "Các dự án cải tạo trên khắp các cộng đồng {area} này. Đề cập đến khu vực lân cận của bạn khi bạn yêu cầu báo giá - chúng tôi biết những điều kỳ quặc về giấy phép của mỗi nơi và dịch vụ hậu cần của nhà cung cấp.",
     "featuredProjectHeading": "Dự án {area} {service} gần đây",
     "featuredProjectSubheading": "Ngân sách thực, dòng thời gian thực, phạm vi thực từ danh mục đầu tư của chúng tôi.",
-    "featuredProjectCta": "Xem toàn bộ dự án"
+    "featuredProjectCta": "Xem toàn bộ dự án",
+    "trustStripPrefix": "{service} được xếp hạng hàng đầu ở Vancouver",
+    "trustStripReviews": "{rating}★ từ {count} Google đánh giá"
   }
 }

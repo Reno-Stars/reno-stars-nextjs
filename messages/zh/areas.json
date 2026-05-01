@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "这些 {area} 社区的改造项目。当您请求报价时，请提及您的邻居 - 我们了解每个人的许可怪癖和供应商物流。",
     "featuredProjectHeading": "最近的 {area} {service} 项目",
     "featuredProjectSubheading": "我们的投资组合中的真实预算、真实时间表、真实范围。",
-    "featuredProjectCta": "查看完整项目"
+    "featuredProjectCta": "查看完整项目",
+    "trustStripPrefix": "温哥华排名前列的{service}",
+    "trustStripReviews": "{rating}★ 来自 {count} Google 评论"
   }
 }

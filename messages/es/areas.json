@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "Proyectos de renovación en estas comunidades {area}. Mencione su vecindario cuando solicite una cotización: conocemos las peculiaridades de los permisos y la logística de los proveedores de cada uno.",
     "featuredProjectHeading": "Proyecto {area} {service} reciente",
     "featuredProjectSubheading": "Presupuesto real, cronograma real, alcance real de nuestra cartera.",
-    "featuredProjectCta": "Ver proyecto completo"
+    "featuredProjectCta": "Ver proyecto completo",
+    "trustStripPrefix": "{service} mejor valorado en Vancouver",
+    "trustStripReviews": "{rating}★ de {count} Reseñas de Google"
   }
 }

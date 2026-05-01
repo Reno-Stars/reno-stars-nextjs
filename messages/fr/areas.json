@@ -28,6 +28,8 @@
     "linkSectionSubtitle": "Cliquez sur votre ville pour connaître les projets de rénovation, les spécificités du quartier et un devis local gratuit.",
     "neighbourhoodsTitle": "Quartiers que nous servons dans {area}",
     "neighbourhoodsSubtitle": "Projets de rénovation dans ces communautés {area}. Mentionnez votre quartier lorsque vous demandez un devis – nous connaissons les particularités de chacun en matière de permis et la logistique des fournisseurs.",
-    "nearbyAreas": "Nous desservons également les zones à proximité"
+    "nearbyAreas": "Nous desservons également les zones à proximité",
+    "trustStripPrefix": "{service} les mieux notés à Vancouver",
+    "trustStripReviews": "{rating}★ de {count} avis Google"
   }
 }

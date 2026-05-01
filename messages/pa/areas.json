@@ -29,6 +29,8 @@
     "neighbourhoodsSubtitle": "ਇਹਨਾਂ {area} ਭਾਈਚਾਰਿਆਂ ਵਿੱਚ ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟ। ਜਦੋਂ ਤੁਸੀਂ ਇੱਕ ਹਵਾਲਾ ਦੀ ਬੇਨਤੀ ਕਰਦੇ ਹੋ ਤਾਂ ਆਪਣੇ ਆਂਢ-ਗੁਆਂਢ ਦਾ ਜ਼ਿਕਰ ਕਰੋ — ਅਸੀਂ ਹਰ ਇੱਕ ਦੇ ਪਰਮਿਟ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਅਤੇ ਸਪਲਾਇਰ ਲੌਜਿਸਟਿਕਸ ਨੂੰ ਜਾਣਦੇ ਹਾਂ।",
     "featuredProjectHeading": "ਹਾਲੀਆ {area} {service} ਪ੍ਰੋਜੈਕਟ",
     "featuredProjectSubheading": "ਸਾਡੇ ਪੋਰਟਫੋਲੀਓ ਤੋਂ ਅਸਲ ਬਜਟ, ਅਸਲ ਸਮਾਂਰੇਖਾ, ਅਸਲ ਸਕੋਪ।",
-    "featuredProjectCta": "ਪੂਰਾ ਪ੍ਰੋਜੈਕਟ ਦੇਖੋ"
+    "featuredProjectCta": "ਪੂਰਾ ਪ੍ਰੋਜੈਕਟ ਦੇਖੋ",
+    "trustStripPrefix": "ਵੈਨਕੂਵਰ ਵਿੱਚ ਸਿਖਰ ਦਾ ਦਰਜਾ ਪ੍ਰਾਪਤ {service}",
+    "trustStripReviews": "{count} Google ਸਮੀਖਿਆਵਾਂ ਤੋਂ {rating}★"
   }
 }

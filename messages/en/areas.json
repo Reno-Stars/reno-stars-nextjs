@@ -24,6 +24,8 @@
     "blogLinkText": "Renovation Tips & Guides",
     "serviceLinkText": "All About {service}",
     "areaLinkText": "All Renovations in {area}",
+    "trustStripPrefix": "Top-rated {service} in Vancouver",
+    "trustStripReviews": "{rating}★ from {count} Google reviews",
     "featuredProjectHeading": "Recent {area} {service} Project",
     "featuredProjectSubheading": "Real budget, real timeline, real scope from our portfolio.",
     "featuredProjectCta": "View Full Project",
