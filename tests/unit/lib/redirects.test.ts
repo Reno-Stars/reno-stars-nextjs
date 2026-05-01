@@ -99,13 +99,13 @@ describe('next.config.ts redirects', () => {
     it('should redirect /project/:slug (singular) to /projects/:slug', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/project/:slug');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/:slug');
+      expect(r!.destination).toBe('/:locale/projects/:slug/');
     });
 
     it('should redirect /have-a-project to /contact', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/have-a-project');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/contact');
+      expect(r!.destination).toBe('/:locale/contact/');
     });
 
     it('should redirect /features-benefits to /features', () => {
@@ -115,19 +115,19 @@ describe('next.config.ts redirects', () => {
       // the rename context — left here for the original WP-rename test path.
       const r = findRedirect(redirects, '/:locale(en|zh)/features-benefits');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/features');
+      expect(r!.destination).toBe('/:locale/features/');
     });
 
     it('should redirect /vancouver-renovation-blog to /blog', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/vancouver-renovation-blog');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/blog');
+      expect(r!.destination).toBe('/:locale/blog/');
     });
 
     it('should redirect /renovation_article/:slug to /blog/:slug', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/renovation_article/:slug');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/blog/:slug');
+      expect(r!.destination).toBe('/:locale/blog/:slug/');
     });
   });
 
@@ -135,19 +135,19 @@ describe('next.config.ts redirects', () => {
     it('should redirect kitchen sub-path', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/vancouver-renovation-projects/kitchen');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/kitchen');
+      expect(r!.destination).toBe('/:locale/projects/kitchen/');
     });
 
     it('should redirect full-house to whole-house', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/vancouver-renovation-projects/full-house');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/whole-house');
+      expect(r!.destination).toBe('/:locale/projects/whole-house/');
     });
 
     it('should redirect base path to projects hub', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/vancouver-renovation-projects');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects');
+      expect(r!.destination).toBe('/:locale/projects/');
     });
   });
 
@@ -155,7 +155,7 @@ describe('next.config.ts redirects', () => {
     it('should redirect projects/full-house to projects/whole-house', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/projects/full-house');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/whole-house');
+      expect(r!.destination).toBe('/:locale/projects/whole-house/');
     });
   });
 
@@ -163,7 +163,7 @@ describe('next.config.ts redirects', () => {
     it('should redirect /category/:path* to /projects', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/category/:path*');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects');
+      expect(r!.destination).toBe('/:locale/projects/');
     });
   });
 
@@ -171,39 +171,41 @@ describe('next.config.ts redirects', () => {
     it('should redirect Langley home reno to correct project', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/home-renovation-in-langley-kitchen-bathroom-basement');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/modern-kitchen-renovation-langley');
+      expect(r!.destination).toBe('/:locale/projects/modern-kitchen-renovation-langley/');
     });
 
     it('should redirect Surrey home reno to correct project', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/surrey-home-renovation-kitchen-bathroom-stairs');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/surrey-whole-house-renovation');
+      expect(r!.destination).toBe('/:locale/projects/surrey-whole-house-renovation/');
     });
 
     it('should redirect beauty clinic to commercial project', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/beauty-clinic-remodel-in-vancouver-commercial-project');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/projects/vancouver-skin-lab-commercial-renovation');
+      expect(r!.destination).toBe('/:locale/projects/vancouver-skin-lab-commercial-renovation/');
     });
   });
 
   describe('9c. Old WP service page slugs', () => {
-    it('should redirect /kitchen-renovation to /services/kitchen', () => {
+    // next.config.ts has trailingSlash: true — redirect destinations
+    // include the trailing slash so the proxy doesn't double-redirect.
+    it('should redirect /kitchen-renovation to /services/kitchen/', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/kitchen-renovation');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/services/kitchen');
+      expect(r!.destination).toBe('/:locale/services/kitchen/');
     });
 
-    it('should redirect /bathroom-remodel to /services/bathroom', () => {
+    it('should redirect /bathroom-remodel to /services/bathroom/', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/bathroom-remodel');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/services/bathroom');
+      expect(r!.destination).toBe('/:locale/services/bathroom/');
     });
 
-    it('should redirect /basement-renovation to /services/basement', () => {
+    it('should redirect /basement-renovation to /services/basement/', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/basement-renovation');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/services/basement');
+      expect(r!.destination).toBe('/:locale/services/basement/');
     });
   });
 
@@ -211,7 +213,7 @@ describe('next.config.ts redirects', () => {
     it('should redirect /about-us to about page', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/about-us');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/about');
+      expect(r!.destination).toBe('/:locale/about/');
     });
   });
 
@@ -220,16 +222,16 @@ describe('next.config.ts redirects', () => {
     // benefits/page.tsx was renamed to features/page.tsx without updating
     // the legacy redirects: Google kept hitting /benefits, got 404, and
     // GSC's "Indexed pages" count dropped while "Not found (404)" rose.
-    it('localized /benefits should redirect to /features', () => {
+    it('localized /benefits should redirect to /features/', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/benefits');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/features');
+      expect(r!.destination).toBe('/:locale/features/');
     });
 
-    it('legacy /features-benefits should redirect to /features (NOT /benefits)', () => {
+    it('legacy /features-benefits should redirect to /features/ (NOT /benefits)', () => {
       const r = findRedirect(redirects, '/:locale(en|zh)/features-benefits');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/:locale/features');
+      expect(r!.destination).toBe('/:locale/features/');
     });
 
     it('non-localized /benefits should redirect to /en/features/', () => {
