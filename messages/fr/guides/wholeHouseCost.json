@@ -1,0 +1,127 @@
+{
+  "wholeHouseCost": {
+    "breadcrumb": "Coût de rénovation de toute la maison",
+    "hero": {
+      "title": "Coût de rénovation de toute la maison à Vancouver, Colombie-Britannique (2026)",
+      "subtitle": "Prix ​​réels pour les rénovations de maisons entières terminées dans le Grand Vancouver. Des rafraîchissements de condos aux transformations complètes de la maison. Chaque numéro provient de projets réels."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "projects": "Projets terminés",
+      "timeline": "Chronologie typique",
+      "timelineValue": "3 à 8 semaines"
+    },
+    "tiers": {
+      "title": "Coût de rénovation de toute la maison par niveau",
+      "subtitle": "Basé sur nos projets réalisés dans le Grand Vancouver",
+      "budget": {
+        "title": "Actualisation cosmétique",
+        "description": "Peinture partout, nouveau revêtement de sol, luminaires mis à jour, rafraîchissement de la salle de bain (vanité, miroir, quincaillerie) et mises à jour mineures de la cuisine. Idéal pour les condos et les immeubles locatifs nécessitant une mise à jour moderne sans travaux de structure."
+      },
+      "midRange": {
+        "title": "Rénovation globale",
+        "description": "Rénovation complète de la cuisine avec de nouvelles armoires et comptoirs, rénovation de la salle de bain, nouveau revêtement de sol partout, peinture fraîche, appareils électriques et de plomberie mis à jour et nouvel éclairage. Le choix le plus populaire pour les propriétaires qui envisagent de rester à long terme."
+      },
+      "highEnd": {
+        "title": "Transformation haut de gamme",
+        "description": "Rénovation complète de l'intestin comprenant des changements structurels, des aménagements à aire ouverte, une cuisine et des salles de bains haut de gamme, des menuiseries personnalisées, des revêtements de sol haut de gamme, une intégration de maison intelligente et des finitions design partout. Pour les propriétaires qui souhaitent une maison véritablement personnalisée."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui affecte le coût de rénovation de toute votre maison ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "scope": {
+        "title": "Portée et superficie",
+        "description": "Le facteur le plus important. La rénovation d'un condo de 600 pieds carrés coûte beaucoup moins cher qu'une rénovation de l'intestin d'une maison de 2 500 pieds carrés. Définissez tôt vos incontournables et vos incontournables pour contrôler votre budget."
+      },
+      "kitchen": {
+        "title": "Cuisine (30 à 40 % du budget total)",
+        "description": "Les cuisines sont généralement la pièce la plus chère. Les armoires personnalisées, les comptoirs en quartz et les mises à niveau d'appareils électroménagers peuvent coûter entre 15 000 et 72 000 dollars à eux seuls. Consultez notre guide des coûts de cuisine pour connaître les détails détaillés."
+      },
+      "bathrooms": {
+        "title": "Salles de bains (15 à 25 % du budget total)",
+        "description": "Chaque rénovation de salle de bain ajoute entre 10 000 et 40 000 $ selon la taille et les finitions. L’imperméabilisation, les travaux de carrelage et la qualité des luminaires déterminent les coûts. Les maisons à plusieurs salles de bains réalisent des économies significatives par unité."
+      },
+      "flooring": {
+        "title": "Revêtement de sol (10 à 15 % du budget total)",
+        "description": "Le bois dur d'ingénierie coûte entre 8 et 15 $/pied carré installé. Les planches de vinyle de luxe (LVP) offrent une alternative économique entre 5 $ et 10 $/pied carré. Les carreaux pour les zones humides ajoutent entre 12 $ et 25 $/pied carré."
+      },
+      "structural": {
+        "title": "Changements structurels",
+        "description": "La suppression de murs, l'ajout de fenêtres ou la reconfiguration des dispositions ajoutent entre 5 000 et 25 000 $. L’enlèvement des murs porteurs nécessite des rapports d’ingénierie et des permis. Les conversions à concept ouvert sont populaires mais coûteuses."
+      },
+      "permits": {
+        "title": "Permis et frais professionnels",
+        "description": "Les permis de construire dans la région métropolitaine de Vancouver coûtent généralement entre 500 et 2 500 $ pour la rénovation d'une maison entière. Prévoyez entre 2 000 $ et 5 000 $ supplémentaires pour les dessins architecturaux, les rapports techniques et les inspections."
+      }
+    },
+    "realProjects": {
+      "title": "De vrais projets de rénovation de maison entière",
+      "subtitle": "Parcourez les projets de maison entière réalisés par {count} avec les budgets et les délais réels"
+    },
+    "included": {
+      "title": "Ce qui est généralement inclus dans une rénovation de maison entière",
+      "subtitle": "Une rénovation complète touche chaque pièce et chaque système",
+      "item1": {
+        "title": "Rénovation de cuisine",
+        "description": "Nouvelles armoires, comptoirs, dosseret, évier, robinet et connexions d'appareils mises à jour. Modifications de mise en page disponibles pour les niveaux milieu de gamme et premium."
+      },
+      "item2": {
+        "title": "Rénovations de salle de bains",
+        "description": "Nouvelle vanité, toilettes, douche ou baignoire, carrelage, imperméabilisation et appareils de plomberie mis à jour. Chaque salle de bain entièrement rafraîchie ou reconstruite."
+      },
+      "item3": {
+        "title": "Revêtement de sol partout",
+        "description": "Nouveau revêtement de sol dans tous les espaces de vie : bois franc, bois d'ingénierie ou LVP dans les pièces principales ; carrelage dans les salles de bains et les entrées."
+      },
+      "item4": {
+        "title": "Peinture et garniture",
+        "description": "Peinture fraîche sur tous les murs et plafonds, plinthes neuves ou remises à neuf, encadrements de portes et moulures, le cas échéant."
+      },
+      "item5": {
+        "title": "Électricité et éclairage",
+        "description": "Luminaires mis à jour, prises supplémentaires si nécessaire, gradateurs et améliorations de panneaux pour les maisons plus anciennes."
+      },
+      "item6": {
+        "title": "Portes et quincaillerie",
+        "description": "Nouvelles portes intérieures, poignées et charnières de porte mises à jour, organisateurs de placards et tout remplacement de porte extérieure si nécessaire."
+      }
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour les rénovations de toute la maison",
+      "tip1": {
+        "title": "Priorisez et échelonnez votre travail",
+        "description": "Vous n'êtes pas obligé de tout faire en même temps. Abordez d'abord la cuisine et la salle de bain (retour sur investissement le plus élevé), puis abordez les mises à jour esthétiques dans les phases ultérieures. Cela répartit les coûts et vous permet de vivre dans la maison pendant les rénovations."
+      },
+      "tip2": {
+        "title": "Gardez la plomberie là où elle se trouve",
+        "description": "Le déménagement de la plomberie est l’un des changements les plus coûteux. Garder les cuisines et les salles de bains à leur emplacement actuel permet d'économiser entre 5 000 et 15 000 dollars en travaux de plomberie et de structure."
+      },
+      "tip3": {
+        "title": "Choisissez les matériaux de manière stratégique",
+        "description": "Faites des folies sur des surfaces à fort impact et très tactiles comme les comptoirs de cuisine et les carreaux de salle de bain. Économisez sur des domaines tels que le revêtement de sol des chambres (le LVP est superbe à la moitié du prix du bois dur) et la peinture intérieure (les peintures de milieu de gamme fonctionnent presque aussi bien que les peintures haut de gamme)."
+      },
+      "tip4": {
+        "title": "Offre groupée pour un meilleur prix",
+        "description": "Les rénovations de maisons entières coûtent souvent moins cher par pièce que les rénovations de pièces individuelles. Les entrepreneurs offrent de meilleurs tarifs lorsqu'ils peuvent planifier efficacement les équipes sur un projet plus vaste."
+      }
+    },
+    "faq": {
+      "q1": "Combien coûte la rénovation d’une maison entière à Vancouver?",
+      "a1": "Les coûts de rénovation de toute une maison à Vancouver varient généralement de 50 000 $ à 200 000 $ et plus, en fonction de nos projets terminés. Les rafraîchissements cosmétiques (peinture, revêtements de sol, luminaires) commencent entre 50 000 et 80 000 dollars, les rénovations complètes avec de nouvelles cuisines et salles de bains coûtent entre 80 000 et 120 000 dollars, et les transformations haut de gamme avec des changements structurels peuvent dépasser 120 000 dollars.",
+      "q2": "Combien de temps prend une rénovation complète d’une maison ?",
+      "a2": "La plupart des rénovations de maisons entières prennent de 3 à 8 semaines selon l'ampleur. Un rafraîchissement esthétique (peinture, revêtement de sol, luminaires) peut être effectué en 3 à 4 semaines. Une rénovation complète comprenant la cuisine et les salles de bains prend généralement 5 à 8 semaines. Les projets comportant des changements structurels ou des permis peuvent prendre de 10 à 14 semaines.",
+      "q3": "Puis-je vivre dans ma maison pendant une rénovation complète de la maison ?",
+      "a3": "Cela dépend de la portée. Pour des rafraîchissements cosmétiques, vous pouvez généralement rester à la maison car le travail se fait pièce par pièce. Pour les rénovations complètes impliquant la démolition de cuisines et de salles de bains, nous recommandons de prévoir un hébergement temporaire pendant au moins 2 à 4 semaines pendant les phases les plus perturbatrices.",
+      "q4": "Qu’est-ce qui donne le meilleur retour sur investissement pour une rénovation complète d’une maison ?",
+      "a4": "Les rénovations de cuisines et de salles de bains génèrent systématiquement le retour sur investissement le plus élevé du marché de Vancouver. Le revêtement de sol mis à jour et la peinture fraîche offrent un excellent rapport qualité-prix pour un coût relativement faible. Les aménagements à aire ouverte sont populaires auprès des acheteurs mais nécessitent des travaux de structure qui augmentent considérablement les coûts.",
+      "q5": "Ai-je besoin d'un permis pour rénover toute une maison à Vancouver?",
+      "a5": "Oui, la plupart des rénovations de maisons entières nécessitent un permis. Tout travail impliquant des modifications de plomberie, d'électricité, de gaz ou de structure nécessite un permis de construire de la ville de Vancouver. Les travaux purement esthétiques (peinture, revêtements de sol, armoires) ne nécessitent généralement pas de permis. Prévoyez entre 500 $ et 2 500 $ pour les frais de permis."
+    },
+    "cta": {
+      "heading": "Prêt à transformer toute votre maison ?",
+      "subtitle": "Obtenez une consultation gratuite et un devis détaillé pour la rénovation complète de votre maison. Nous examinerons chaque pièce et créerons un plan adapté à votre budget."
+    }
+  }
+}

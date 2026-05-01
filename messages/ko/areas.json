@@ -26,6 +26,9 @@
     "areaLinkText": "{area}의 모든 리노베이션",
     "nearbyAreas": "인근 지역도 서비스",
     "neighbourhoodsTitle": "{area}에서 우리가 봉사하는 이웃",
-    "neighbourhoodsSubtitle": "이러한 {area} 커뮤니티 전반에 걸친 혁신 프로젝트. 견적을 요청할 때 귀하의 이웃을 언급하십시오. 우리는 각 지역의 허가증 특이사항과 공급업체 물류를 알고 있습니다."
+    "neighbourhoodsSubtitle": "이러한 {area} 커뮤니티 전반에 걸친 혁신 프로젝트. 견적을 요청할 때 귀하의 이웃을 언급하십시오. 우리는 각 지역의 허가증 특이사항과 공급업체 물류를 알고 있습니다.",
+    "featuredProjectHeading": "최근 {area} {service} 프로젝트",
+    "featuredProjectSubheading": "실제 예산, 실제 일정, 포트폴리오의 실제 범위.",
+    "featuredProjectCta": "전체 프로젝트 보기"
   }
 }

@@ -16,6 +16,7 @@ import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
+import FeaturedCityProject from '@/components/FeaturedCityProject';
 import FaqSection from '@/components/home/FaqSection';
 import StickyComboCta from '@/components/StickyComboCta';
 import {
@@ -59,6 +60,14 @@ export default function ServiceLocationPage({
     const others = localized.filter((p) => p.service_type !== serviceSlug);
     return [...serviceMatch, ...others].slice(0, 3);
   }, [areaProjects, locale, serviceSlug]);
+
+  // Single best matching project for the featured-case-study card. Prefers
+  // service-type AND city match; falls back to first relatedProjects entry.
+  const featuredProject = useMemo(() => {
+    if (relatedProjects.length === 0) return null;
+    const exactMatch = relatedProjects.find((p) => p.service_type === serviceSlug);
+    return exactMatch ?? relatedProjects[0];
+  }, [relatedProjects, serviceSlug]);
 
   // Other areas offering the same service (exclude current), pre-localized
   const otherAreas = useMemo(
@@ -185,6 +194,22 @@ export default function ServiceLocationPage({
           <BenefitList benefits={(localizedArea.highlights?.length ?? 0) > 0 ? localizedArea.highlights! : benefits} />
         </div>
       </section>
+
+      {/* Featured case-study card — pushes combo pages from pos 21-33 to
+          page 1 by adding city-named, budget-named, scope-named depth that
+          generic service pages lack. Same SEO move competitors (Adept, Enzo)
+          use to dominate combo queries. */}
+      {featuredProject && (
+        <FeaturedCityProject
+          project={featuredProject}
+          heading={t('areas.featuredProjectHeading', {
+            area: localizedArea.name,
+            service: localizedService.title,
+          })}
+          subheading={t('areas.featuredProjectSubheading')}
+          viewCta={t('areas.featuredProjectCta')}
+        />
+      )}
 
       <RelatedProjectsSection
         heading={t('areas.areaProjects', { area: localizedArea.name })}

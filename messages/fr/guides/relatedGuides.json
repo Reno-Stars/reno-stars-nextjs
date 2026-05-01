@@ -1,0 +1,23 @@
+{
+  "relatedGuides": {
+    "title": "Guides des coûts de rénovation connexes",
+    "viewGuide": "Voir le guide",
+    "kitchen": "Coût de rénovation de cuisine",
+    "wholeHouse": "Coût de rénovation de toute la maison",
+    "basement": "Coût de rénovation du sous-sol",
+    "bathroom": "Coût moyen de rénovation de salle de bain",
+    "bathroomGuide": "Coût de rénovation de salle de bain"
+  },
+  "cityCostTable": {
+    "kitchenTitle": "Coût de la cuisine par quartier de la région métropolitaine de Vancouver",
+    "bathroomTitle": "Coût de la salle de bain par quartier de la région métropolitaine de Vancouver",
+    "wholeHouseTitle": "Coût de l'ensemble de la maison par quartier de la région métropolitaine de Vancouver",
+    "basementTitle": "Coût du sous-sol par quartier de la région métropolitaine de Vancouver",
+    "subtitle": "Moyennes réelles de nos projets terminés – et non des estimations de l’industrie. Villes avec plus de 2 projets terminés uniquement.",
+    "headerCity": "Ville",
+    "headerProjects": "Projets",
+    "headerAvg": "Coût moyen du projet",
+    "headerRange": "Gamme",
+    "footnote": "Source de données : portefeuille Reno Stars. Agrégés à partir des budgets réels des projets, les annuaires comme HomeStars et Houzz ne peuvent citer que les moyennes du secteur."
+  }
+}

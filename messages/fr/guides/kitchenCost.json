@@ -1,0 +1,99 @@
+{
+  "kitchenCost": {
+    "breadcrumb": "Coût de rénovation de cuisine",
+    "hero": {
+      "title": "Coût de rénovation de cuisine à Vancouver BC (2026)",
+      "subtitle": "Prix ​​réels pour les rénovations de cuisine terminées dans le Grand Vancouver. Chaque numéro ci-dessous provient de projets réels. Pas les estimations de l’industrie."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "projects": "Projets terminés",
+      "timeline": "Chronologie typique",
+      "timelineValue": "3 à 6 semaines"
+    },
+    "tiers": {
+      "title": "Coût de rénovation de cuisine par niveau",
+      "subtitle": "Basé sur nos projets réalisés dans le Grand Vancouver",
+      "budget": {
+        "title": "Économique",
+        "description": "Refaçage d'armoires ou armoires de stock, comptoirs en stratifié, dosseret de base et luminaires standard. Idéal pour les condos et les maisons de ville qui recherchent un nouveau look sans changements structurels."
+      },
+      "midRange": {
+        "title": "Milieu de gamme",
+        "description": "Armoires sur mesure ou semi-personnalisées, comptoirs en quartz, dosseret en carrelage, éclairage mis à jour et nouveau revêtement de sol. Le choix le plus populaire pour les maisons familiales."
+      },
+      "highEnd": {
+        "title": "Haut de gamme",
+        "description": "Armoires entièrement personnalisées, comptoirs en pierre de qualité supérieure, îlots en cascade, appareils électroménagers haut de gamme, modifications structurelles et finitions design. Pour les propriétaires qui veulent le meilleur."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui affecte le coût de rénovation de votre cuisine ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "cabinetry": {
+        "title": "Armoires (30 à 40 % du budget)",
+        "description": "Le plus gros facteur de coûts. Les armoires en stock commencent à environ 150 $/pied linéaire, tandis que les options personnalisées peuvent dépasser 800 $/pied linéaire. Les armoires blanches de style Shaker sont le choix le plus populaire à Vancouver."
+      },
+      "countertops": {
+        "title": "Comptoirs (10 à 15 % du budget)",
+        "description": "Le stratifié commence à 30 $/pied carré, le quartz coûte entre 80 et 150 $/pied carré et la pierre naturelle peut dépasser 200 $/pied carré. Les bords des îles en cascade ajoutent 500 à 2 000 $ au total."
+      },
+      "layout": {
+        "title": "Modifications de mise en page",
+        "description": "Le déplacement de la plomberie, des conduites de gaz ou la suppression des murs augmentent considérablement les coûts. Un changement de configuration peut ajouter 3 000 à 15 000 $ en fonction des exigences structurelles et des permis."
+      },
+      "appliances": {
+        "title": "Appareils électroménagers",
+        "description": "Les forfaits économiques commencent entre 3 000 et 5 000 $. Les marques de milieu de gamme comme Bosch ou KitchenAid coûtent entre 8 000 et 15 000 $. Les marques premium comme Sub-Zero ou Wolf peuvent dépasser les 30 000 $."
+      },
+      "plumbing": {
+        "title": "Plomberie et électricité",
+        "description": "Le déplacement de la plomberie ou l'ajout de circuits ajoute 2 000 à 8 000 $. Les maisons plus anciennes de Vancouver pourraient avoir besoin d'une mise à niveau de leurs panneaux électriques pour prendre en charge les appareils modernes."
+      },
+      "permits": {
+        "title": "Permis et inspections",
+        "description": "Les permis de construire de la ville de Vancouver pour la rénovation de cuisines coûtent généralement entre 200 et 1 000 dollars. Nécessaire lors du changement d'éléments de plomberie, d'électricité, de gaz ou de structure."
+      }
+    },
+    "realProjects": {
+      "title": "De vrais projets de rénovation de cuisine",
+      "subtitle": "Parcourez les projets de cuisine réalisés par {count} avec les budgets et les délais réels"
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour la rénovation de votre cuisine",
+      "tip1": {
+        "title": "Conserver la mise en page existante",
+        "description": "Éviter les déplacements de plomberie et de conduites de gaz peut permettre d’économiser entre 5 000 et 15 000 $. Travaillez avec l’empreinte de votre cuisine existante lorsque cela est possible."
+      },
+      "tip2": {
+        "title": "Choisissez le quartz plutôt que la pierre naturelle",
+        "description": "Les comptoirs en quartz sont plus durables, ne nécessitent aucun scellement et coûtent 20 à 40 % moins cher que le granit ou le marbre. De plus, ils sont superbes."
+      },
+      "tip3": {
+        "title": "Armoires semi-personnalisées",
+        "description": "Les armoires semi-personnalisées offrent un aspect entièrement personnalisé à 40 à 60 % du prix. Vous pouvez choisir les styles, les finitions et les configurations de portes."
+      },
+      "tip4": {
+        "title": "Planifier hors saison",
+        "description": "Les mois d'hiver (novembre-février) sont plus lents pour les rénovateurs de Vancouver. Vous pouvez obtenir de meilleurs prix et des délais plus rapides en commençant à ce moment-là."
+      }
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit pour la rénovation de votre cuisine",
+      "subtitle": "Faites-nous part de votre projet et recevez un devis détaillé sous 48 heures, sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte une rénovation de cuisine à Vancouver?",
+      "a1": "Les coûts de rénovation de cuisine à Vancouver varient généralement de 15 000 $ à 72 000 $ et plus, en fonction de nos projets terminés. Les rénovations budgétaires (mises à jour des armoires, comptoirs de base) commencent entre 15 000 et 27 000 dollars, les rénovations de milieu de gamme avec des armoires personnalisées et des comptoirs en quartz coûtent entre 28 000 et 38 000 dollars, et les transformations haut de gamme avec des matériaux haut de gamme peuvent dépasser 40 000 dollars.",
+      "q2": "Combien de temps prend une rénovation de cuisine à Vancouver ?",
+      "a2": "La plupart des rénovations de cuisines à Vancouver prennent de 3 à 6 semaines entre la démolition et l'achèvement. De simples mises à jour esthétiques peuvent être effectuées en 3 à 4 semaines, tandis que des rénovations complexes impliquant des changements de disposition, des armoires personnalisées ou des travaux de structure peuvent prendre 8 à 10 semaines.",
+      "q3": "Ai-je besoin d'un permis pour une rénovation de cuisine à Vancouver?",
+      "a3": "Vous avez besoin d'un permis de construire de la ville de Vancouver si votre rénovation implique des modifications à la plomberie, à l'électricité, aux conduites de gaz ou à des éléments structurels comme la suppression de murs. Les mises à jour esthétiques telles que les nouvelles armoires, comptoirs et dosserets ne nécessitent généralement pas de permis. Les coûts du permis varient de 200 $ à 1 000 $.",
+      "q4": "Quel est le meilleur matériau de plan de travail pour une rénovation de cuisine ?",
+      "a4": "Le quartz est le choix de comptoir le plus populaire dans nos rénovations de cuisine à Vancouver. Il offre une excellente durabilité, ne nécessite aucun scellement (contrairement au granit), résiste aux taches et se décline dans une grande variété de couleurs et de motifs. Les prix varient de 80 $ à 150 $ par pied carré installé.",
+      "q5": "Puis-je rénover ma cuisine tout en vivant chez moi ?",
+      "a5": "Oui, la plupart de nos clients continuent de vivre dans leur maison pendant les rénovations de cuisine. Nous aidons à aménager un espace cuisine temporaire et planifions les travaux pour minimiser les perturbations. Attendez-vous à ne pas avoir de cuisine fonctionnelle pendant 2 à 4 semaines, selon l'étendue des travaux."
+    }
+  }
+}

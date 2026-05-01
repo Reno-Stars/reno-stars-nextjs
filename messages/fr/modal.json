@@ -1,0 +1,14 @@
+{
+  "modal": {
+    "location": "Emplacement",
+    "category": "Catégorie",
+    "budget": "Gamme budgétaire",
+    "spaceType": "Type d'espace",
+    "serviceScope": "Portée du service",
+    "duration": "Durée",
+    "challenge": "Le défi",
+    "solution": "Notre solution",
+    "close": "Fermer",
+    "viewDetails": "Afficher tous les détails"
+  }
+}

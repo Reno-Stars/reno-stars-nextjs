@@ -1,0 +1,18 @@
+{
+  "label": {
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "address": "Adresse",
+    "location": "Emplacement",
+    "contact": "Contact",
+    "quality": "Qualité",
+    "whyChooseUs": "Pourquoi nous choisir",
+    "verifiedCustomer": "Client vérifié",
+    "new": "NOUVEAU",
+    "new2": "Nouveau",
+    "businessHours": "Heures d'ouverture",
+    "businessHoursShort": "Du lundi au vendredi de 8h00 à 18h00, le samedi de 9h00 à 16h00",
+    "businessHoursDetail": "Du lundi au vendredi : 8h00 - 18h00\nSamedi : 9h00 - 16h00\nDimanche : Fermé",
+    "featured": "En vedette"
+  }
+}

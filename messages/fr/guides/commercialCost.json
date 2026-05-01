@@ -1,0 +1,100 @@
+{
+  "commercialCost": {
+    "breadcrumb": "Coût de rénovation commerciale",
+    "hero": {
+      "title": "Coût de la rénovation commerciale à Vancouver BC (2026)",
+      "subtitle": "Combien coûte réellement une rénovation commerciale dans le Grand Vancouver? Du rafraîchissement de petits bureaux à la construction complète d'un restaurant, voici les chiffres réels basés sur notre expérience en matière de projets."
+    },
+    "stats": {
+      "avgCost": "Coût moyen",
+      "range": "Gamme de prix",
+      "sqft": "Coût par pied carré",
+      "sqftValue": "75 $ – 300 $/pied carré",
+      "timeline": "Chronologie typique",
+      "timelineValue": "8 à 20 semaines"
+    },
+    "tiers": {
+      "title": "Coût de la rénovation commerciale par portée du projet",
+      "subtitle": "Tarification typique pour les projets commerciaux dans le Grand Vancouver",
+      "budget": {
+        "title": "Rafraîchissement des petits commerces de détail et des bureaux",
+        "description": "Peinture fraîche, nouveau revêtement de sol, éclairage mis à jour, améliorations de base des luminaires et modifications mineures de la disposition. Idéal pour les petits magasins de détail, les bureaux professionnels et les espaces de coworking qui nécessitent une mise à jour moderne sans travaux structurels."
+      },
+      "midRange": {
+        "title": "Aménagement commercial complet",
+        "description": "Aménagement intérieur complet comprenant de nouveaux murs, des menuiseries personnalisées, des zones CVC améliorées, un revêtement de sol de qualité commerciale, une conception d'éclairage moderne et des mises à niveau électriques complètes. Convient aux bureaux de taille moyenne, aux magasins de détail et aux cliniques."
+      },
+      "highEnd": {
+        "title": "Restaurant / Médical / Vente au détail haut de gamme",
+        "description": "Rénovation à grande échelle avec installation de cuisine commerciale, ventilation spécialisée, luminaires personnalisés, finitions haut de gamme, plomberie étendue et exigences de permis complexes. Comprend les restaurants, les cliniques dentaires, les cabinets médicaux et les espaces de vente au détail phares."
+      }
+    },
+    "factors": {
+      "title": "Qu’est-ce qui affecte votre coût de rénovation commerciale ?",
+      "subtitle": "Six facteurs clés qui déterminent votre prix final",
+      "permits": {
+        "title": "Permis et zonage",
+        "description": "Les permis commerciaux dans la région métropolitaine de Vancouver coûtent entre 2 000 et 15 000 $ selon la portée et la municipalité. Les demandes de changement d'utilisation ajoutent entre 3 000 et 8 000 $. Le processus de permis d'aménagement de la ville de Vancouver peut prendre de 8 à 16 semaines, alors tenez compte des coûts liés aux délais."
+      },
+      "hvac": {
+        "title": "CVC et systèmes mécaniques",
+        "description": "Le CVC commercial représente un facteur de coûts majeur, entre 15 000 et 80 000 $ et plus. Les hottes de restaurant et les systèmes d'air d'appoint coûtent à eux seuls entre 20 000 et 50 000 dollars. Les espaces de bureaux nécessitent un zonage approprié pour le confort des locataires. Le code de l'énergie de Vancouver exige des systèmes à haute efficacité."
+      },
+      "fireSafety": {
+        "title": "Sécurité incendie et gicleurs",
+        "description": "Les systèmes de gicleurs d'incendie coûtent entre 3 et 8 $ par pied carré à installer ou à modifier. Les mises à niveau des alarmes incendie coûtent entre 5 000 et 20 000 $. Le changement d'utilisation déclenche un examen complet de la conformité au code de prévention des incendies. Les restaurants et les espaces de rassemblement ont les exigences les plus strictes."
+      },
+      "accessibility": {
+        "title": "Conformité en matière d'accessibilité",
+        "description": "Le code du bâtiment de la Colombie-Britannique exige un accès sans obstacle aux espaces commerciaux. Les toilettes accessibles, les rampes, la largeur des portes et la signalisation ajoutent entre 5 000 et 25 000 $. Les bâtiments patrimoniaux de Vancouver ont souvent besoin de solutions créatives pour répondre aux normes d'accessibilité."
+      },
+      "electrical": {
+        "title": "Infrastructure électrique et informatique",
+        "description": "Les mises à niveau électriques commerciales coûtent entre 10 000 et 50 000 $ et plus, selon la capacité du service. Les restaurants ont besoin de services de 200 à 400 ampères. Les bureaux modernes nécessitent un câblage structuré (3 000 à 15 000 $), un refroidissement de la salle des serveurs et des circuits dédiés pour l'équipement."
+      },
+      "disruption": {
+        "title": "Calendrier du projet et perturbation des activités",
+        "description": "Travailler pendant les heures de bureau augmente les coûts de 15 à 25 %. De nombreux locataires commerciaux de Vancouver rénovent pendant les transitions de bail. Le travail en dehors des heures normales ajoute des coûts de main-d'œuvre élevés. Un plan de rénovation par étapes peut maintenir certaines parties de l'entreprise opérationnelles pendant la construction."
+      }
+    },
+    "realProjects": {
+      "title": "Nos projets de rénovation commerciale",
+      "subtitle": "Parcourir les projets commerciaux réalisés par {count} dans le Grand Vancouver"
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour les rénovations commerciales",
+      "tip1": {
+        "title": "Planifier pendant les négociations de bail",
+        "description": "Négociez une allocation d’amélioration locative (TIA) avec votre propriétaire. De nombreux baux commerciaux à Vancouver incluent entre 20 et 80 $ par pied carré en TIA, ce qui peut compenser considérablement les coûts de rénovation."
+      },
+      "tip2": {
+        "title": "Phasez votre rénovation",
+        "description": "Divisez le projet en phases pour répartir les coûts et minimiser les perturbations des activités. Donnez d’abord la priorité aux zones en contact avec les clients, puis abordez les améliorations en interne dans une deuxième phase."
+      },
+      "tip3": {
+        "title": "Réutiliser l'infrastructure existante",
+        "description": "Gardez la plomberie et l’électricité dans les emplacements existants lorsque cela est possible. Le déménagement d'une cuisine ou de toilettes commerciales peut ajouter de 20 000 à 50 000 $ en coûts bruts à eux seuls."
+      },
+      "tip4": {
+        "title": "Choisissez des matériaux durables de qualité commerciale",
+        "description": "Investissez dans des revêtements de sol, des luminaires et des finitions de qualité commerciale. Un coût initial plus élevé permet d’économiser de l’argent à long terme. Le LVT commercial dure 15 à 20 ans contre 5 à 8 ans pour les produits de qualité résidentielle dans les espaces à fort trafic."
+      }
+    },
+    "cta": {
+      "heading": "Obtenez votre devis gratuit de rénovation commerciale",
+      "subtitle": "Faites-nous part de votre projet commercial et recevez un devis détaillé sous 48 heures, sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte une rénovation commerciale à Vancouver?",
+      "a1": "Les coûts de rénovation commerciale à Vancouver varient généralement de 50 000 $ pour la rénovation d'un petit bureau à plus de 1 000 000 $ pour la construction d'un restaurant complet ou d'un établissement médical. La rénovation commerciale moyenne coûte environ 250 000 $. Le coût au pied carré varie de 75 $ à 300 $ selon le type d'entreprise, l'étendue des travaux et le niveau de finition.",
+      "q2": "Combien de temps prend une rénovation commerciale à Vancouver?",
+      "a2": "La plupart des rénovations commerciales à Vancouver prennent de 8 à 20 semaines selon l'ampleur. La rénovation de base d'un bureau peut être effectuée en 8 à 10 semaines, tandis que la construction complète d'un restaurant ou la conversion d'une clinique médicale prend généralement 16 à 20 semaines, approbations et inspections des permis comprises.",
+      "q3": "Ai-je besoin d'un permis pour une rénovation commerciale à Vancouver?",
+      "a3": "Oui, presque toutes les rénovations commerciales dans la région métropolitaine de Vancouver nécessitent un permis de construire. Tout travail impliquant des changements structurels, des systèmes électriques, de plomberie, de CVC ou de sécurité incendie nécessite un permis. Des demandes de changement d’utilisation sont requises lors de la conversion entre les types d’entreprises. Les coûts des permis varient de 2 000 $ à 15 000 $ selon la portée et la municipalité.",
+      "q4": "Quel est le coût au pied carré d’une rénovation commerciale à Vancouver?",
+      "a4": "Les coûts de rénovation commerciale à Vancouver varient de 75 $ à 300 $ le pied carré. Les rafraîchissements de bureau de base coûtent entre 75 $ et 120 $/pied carré, les aménagements de commerces de détail ou de bureaux de milieu de gamme coûtent entre 120 $ et 200 $/pied carré, et les espaces spécialisés comme les restaurants ou les cliniques médicales varient entre 200 $ et plus de 300 $ par pied carré en raison des exigences complexes en matière de mécanique, de plomberie et de ventilation.",
+      "q5": "Puis-je rénover mon espace commercial tout en restant ouvert aux affaires ?",
+      "a5": "Oui, des rénovations progressives permettent à de nombreuses entreprises de Vancouver de rester opérationnelles pendant la construction. Nous créons des plans de phases détaillés qui séparent les zones de travail tout en gardant accessibles les espaces destinés aux clients. Le travail en dehors des heures normales et le week-end est également une option, même s'il ajoute 15 à 25 % aux coûts de main-d'œuvre. Beaucoup de nos clients choisissent de rénover pendant les périodes creuses saisonnières afin de minimiser l’impact."
+    }
+  }
+}

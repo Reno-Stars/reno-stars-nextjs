@@ -1,0 +1,105 @@
+{
+  "nearMe": {
+    "breadcrumb": "Rénovation à proximité",
+    "hero": {
+      "eyebrow": "Au service de la région métropolitaine de Vancouver depuis 2020",
+      "h1": "Vous recherchez une entreprise de rénovation près de chez vous ?",
+      "subtitle": "Reno Stars dessert Vancouver et 14 villes métropolitaines de Vancouver avec des équipes de rénovation domiciliaire agréées et assurées. Rénovations de cuisines, de salles de bains, de sous-sols et de toute la maison : une équipe locale de la conception à la remise, pas un marché.",
+      "ctaPrimary": "Obtenez mon devis gratuit"
+    },
+    "trust": {
+      "reviews": {
+        "stat": "70+",
+        "label": "Avis Google 5★"
+      },
+      "insured": {
+        "stat": "5 millions de dollars",
+        "label": "Responsabilité + WCB"
+      },
+      "experience": {
+        "stat": "20+",
+        "label": "Années à Vancouver"
+      },
+      "coverage": {
+        "stat": "14",
+        "label": "Villes de la région métropolitaine de Vancouver"
+      }
+    },
+    "areas": {
+      "heading": "Aires de service rénovation près de chez vous",
+      "subtitle": "Choisissez votre quartier pour des photos de projets locaux, des fourchettes de prix et des équipes travaillant déjà dans votre région."
+    },
+    "services": {
+      "heading": "Ce que nous rénovons près de chez vous",
+      "learnMore": "Apprendre encore plus",
+      "kitchen": {
+        "title": "Rénovation de cuisine à proximité",
+        "desc": "Armoires, comptoirs de quartz, dosseret, plancher, électricité. Actualisation économique pour une personnalisation complète. Typique 4 à 8 semaines, 25 000 $ à 90 000 $."
+      },
+      "bathroom": {
+        "title": "Rénovation de salle de bain à proximité",
+        "desc": "Murs carrelés, imperméabilisation Schluter, douches carrelées ou conversions baignoire-douche, vanités, luminaires. 3 à 6 semaines typiques, 15 000 $ à 45 000 $."
+      },
+      "wholeHouse": {
+        "title": "Rénovation de toute la maison à proximité",
+        "desc": "Rénovations intérieures complètes – cuisine, salles de bains, revêtements de sol, peinture, éclairage, parfois structurels. 2 à 6 mois, 80 000 $ à 400 000 $+."
+      },
+      "basement": {
+        "title": "Rénovation de sous-sol à proximité",
+        "desc": "Conversions de suites, salles familiales, cinémas maison, salles de bains. Approche axée sur le permis à Vancouver, Burnaby, Richmond et au-delà."
+      },
+      "cabinet": {
+        "title": "Réfection d'armoire à proximité",
+        "desc": "Alternative moins coûteuse au remplacement complet des armoires : nouvelles portes, quincaillerie et quartz pour le même encombrement. 1 à 2 semaines, 8 000 $ à 20 000 $."
+      },
+      "commercial": {
+        "title": "Rénovation commerciale à proximité",
+        "desc": "Restaurants, cliniques, salons, vente au détail. Planification en dehors des heures d'ouverture, en fonction des permis, perturbation minimale des activités dans la région métropolitaine de Vancouver."
+      }
+    },
+    "why": {
+      "heading": "Pourquoi choisir Reno Stars pour une rénovation près de chez vous",
+      "point1": {
+        "title": "Une équipe locale – pas un marché",
+        "body": "Contrairement aux sites d'annuaire qui vous transmettent à des inconnus, chaque projet Reno Stars est géré par notre propre équipe. Même MP du devis à la remise."
+      },
+      "point2": {
+        "title": "Autorisé, assuré, couvert par la WCB",
+        "body": "Assurance responsabilité civile de 5 millions de dollars et couverture active de la WCB pour chaque travail. Nous partagerons les certificats avant le début des travaux."
+      },
+      "point3": {
+        "title": "Tarification transparente, pas de surprises",
+        "body": "Devis écrits détaillés avec des spécifications matérielles réelles. Modifiez les commandes uniquement lorsque vous les approuvez. Garantie de fabrication de 3 ans."
+      },
+      "point4": {
+        "title": "Service bilingue (anglais + mandarin)",
+        "body": "Les chefs de projet et les commerciaux parlent anglais et mandarin. Contrats, ordres de modification et mises à jour dans votre langue préférée."
+      },
+      "point5": {
+        "title": "Véritable portfolio local près de chez vous",
+        "body": "Des centaines de projets à Vancouver, Richmond, Burnaby, Surrey, Coquitlam et au-delà. Nous partagerons des photos + références de votre quartier."
+      }
+    },
+    "faq": {
+      "heading": "Rénovation à proximité — FAQ",
+      "q1": "Comment trouver une entreprise de rénovation de confiance près de chez moi à Vancouver ?",
+      "a1": "Vérifiez trois choses : licence + assurance (demandez des certificats, pas des promesses), de vrais avis Google en volume (100+ est significatif, 10 ne l'est pas) et un portefeuille de votre quartier. Reno Stars compte plus de 70 avis Google cinq étoiles, une assurance responsabilité civile de 5 millions de dollars, une couverture WCB et un portefeuille de projets dans chaque ville de la région métropolitaine de Vancouver que nous servons.",
+      "q2": "Quel est le coût d'une rénovation de salle de bain ou de cuisine près de chez moi ?",
+      "a2": "Dans la région métropolitaine de Vancouver, les rénovations de salles de bains coûtent généralement entre 15 000 et 45 000 $ et les cuisines, entre 25 000 et 90 000 $. Le prix exact dépend de la superficie en pieds carrés, du niveau de finition et du déplacement éventuel des murs. Chaque devis de Reno Stars est détaillé (main-d'œuvre, matériaux, permis) afin que vous voyiez où va chaque dollar.",
+      "q3": "Combien de temps prend une rénovation près de chez moi ?",
+      "a3": "Salles de bains : 3 à 6 semaines entre la démonstration et la livraison. Cuisines : 4 à 8 semaines. Maison entière : 2 à 6 mois selon la portée. Refaçage du meuble : 1 à 2 semaines. Nous vous fournissons un calendrier semaine par semaine lors de la signature du contrat et des mises à jour textuelles au fur et à mesure que les étapes franchies.",
+      "q4": "Gérez-vous les permis de rénovation près de chez moi ?",
+      "a4": "Oui. Pour tout travail impliquant le déplacement de murs, de plomberie ou d'électricité, nous obtenons des permis auprès de la municipalité appropriée (Vancouver, Richmond, Burnaby, Surrey, etc.). Les travaux cosmétiques comme la peinture, les revêtements de sol et la rénovation d'armoires ne nécessitent généralement pas de permis – nous vous donnons la réponse honnête avant de vous proposer un devis.",
+      "q5": "Proposez-vous des estimations gratuites près de chez moi ?",
+      "a5": "Oui – consultation gratuite à domicile et devis écrit dans les 14 villes de la région métropolitaine de Vancouver que nous servons. Nous mesurerons, discuterons des matériaux, examinerons la portée et enverrons un devis détaillé dans un délai de 2 à 3 jours ouvrables. Aucun dépôt requis pour devis.",
+      "q6": "Quels quartiers desservez-vous ?",
+      "a6": "Nous sommes basés à Richmond en Colombie-Britannique et desservons Vancouver, Burnaby, Richmond, Surrey, Coquitlam, Port Coquitlam, Port Moody, North Vancouver, West Vancouver, Langley, Delta, Tsawwassen, Maple Ridge, New Westminster et White Rock. Si vous êtes en dehors de ce rayon, renseignez-vous : nous voyageons occasionnellement pour des projets dans toute la maison."
+    },
+    "finalCta": {
+      "heading": "Prêt à trouver une équipe de rénovation près de chez vous ?",
+      "subtitle": "Consultation gratuite à domicile, devis détaillé écrit en 2-3 jours ouvrables. Aucun dépôt requis pour devis.",
+      "quote": "Obtenez mon devis gratuit",
+      "call": "Appelez le 778-960-7999"
+    }
+  }
+}

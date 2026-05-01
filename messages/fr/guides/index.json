@@ -1,0 +1,114 @@
+{
+  "index": {
+    "hero": {
+      "title": "Guides des coûts de rénovation",
+      "subtitle": "Des prix honnêtes basés sur des projets réels que nous avons réalisés dans le Grand Vancouver. Aucune conjecture. Juste de vraies données."
+    },
+    "kitchen": {
+      "title": "Coût de rénovation de cuisine",
+      "description": "Répartition complète des coûts de rénovation de cuisine à Vancouver, des mises à jour économiques aux transformations haut de gamme.",
+      "range": "15 000 $ – 72 000 $",
+      "passage": "Les rénovations de cuisine à Vancouver vont de 15 000 $ pour des rafraîchissements esthétiques (peinture, quincaillerie, remplacement de comptoir) jusqu'à 72 000 $ pour une reconstruction complète d'armoires sur mesure avec des îlots de quartz et des améliorations d'appareils électroménagers. Le choix des matériaux entraîne la plus grande variation de coûts : les armoires en stock par rapport aux menuiseries personnalisées peuvent signifier 20 000 $ de différence sur la même empreinte au sol."
+    },
+    "bathroom": {
+      "title": "Coût de rénovation de salle de bain",
+      "description": "Répartition complète des coûts de rénovation de salle de bains dans la région du Grand Vancouver, du rafraîchissement d'une seule salle de bain aux projets multi-salles de bains.",
+      "range": "10 000 $ – 60 000 $ +",
+      "passage": "Les rénovations de salle de bains coûtent entre 10 000 et 20 000 $ pour des échanges de carrelage et de vanité économiques, entre 20 000 et 35 000 $ pour des conversions de baignoire en douche de milieu de gamme avec vanité personnalisée et verre sans cadre, et 40 000 $ et plus pour des douches haut de gamme sans seuil, des baignoires autoportantes et des changements structurels. Le déménagement de la plomberie à lui seul ajoute entre 2 000 et 6 000 $."
+    },
+    "wholeHouse": {
+      "title": "Coût de rénovation de toute la maison",
+      "description": "Tarifs de rénovation complète de la maison, y compris la cuisine, les salles de bains, le revêtement de sol et les travaux de structure.",
+      "range": "50 000 $ – 200 000 $ +",
+      "passage": "Les rénovations complètes d'une maison à Vancouver coûtent généralement entre 150 et 400 $ le pied carré, ce qui place la plupart des projets entre 50 000 $ (rafraîchissement esthétique d'un condo à 2 chambres) et plus de 200 000 $ (vide complet + ajout sur un SFH). Les maisons d'avant 1975 ajoutent 20 à 25 % pour l'assainissement de la peinture à l'amiante et au plomb. La conception-construction permet d'économiser 10 à 15 % par rapport à l'embauche séparée d'un concepteur et d'un entrepreneur."
+    },
+    "comingSoon": "À venir",
+    "readGuide": "Lire le guide",
+    "cta": {
+      "heading": "Prêt à commencer votre rénovation ?",
+      "subtitle": "Obtenez une consultation gratuite et un devis précis en fonction des besoins spécifiques de votre projet."
+    },
+    "basement": {
+      "title": "Coût de rénovation du sous-sol",
+      "description": "Ventilation complète des coûts de rénovation de sous-sol dans la région du Grand Vancouver, de la finition de base à la conversion complète d'un bureau juridique.",
+      "range": "30 000 $ – 120 000 $ +",
+      "passage": "Les rénovations de sous-sol commencent à 30 000 $ pour la finition de base (cloison sèche, revêtement de sol, éclairage), entre 60 000 $ et 80 000 $ une fois que vous avez ajouté une salle de bain complète, et entre 80 000 $ et plus pour les appartements en location légale avec entrée séparée, séparation coupe-feu et plomberie prête pour le permis. Les frais de permis de Vancouver varient à eux seuls entre 2 000 et 5 000 $. La hauteur du plafond est importante : moins de 6'8\" nécessitent des travaux structurels."
+    },
+    "commercial": {
+      "title": "Coût de rénovation commerciale",
+      "description": "Ventilation complète des coûts de rénovation commerciale dans le Grand Vancouver, depuis la rénovation de petits bureaux jusqu'à la construction d'un restaurant complet.",
+      "range": "50 000 $ – 1 M$+",
+      "passage": "Le coût de la rénovation commerciale varie selon le type d'utilisation et la complexité du permis : rénovation de petits bureaux de 50 000 $, constructions de commerces de détail de 100 000 $ à 300 000 $, cuisines de restaurant complètes de 300 000 $ à 800 000 $ et cliniques dotées d'une plomberie de qualité médicale de 400 000 $ à plus de 1 000 $. La planification en dehors des heures d'ouverture et la gestion des permis sont généralement incluses dans les niveaux supérieurs."
+    },
+    "cabinet": {
+      "title": "Coût de finition des armoires",
+      "description": "Répartition complète des coûts de finition, de refaçage et de remplacement d'armoires dans le Grand Vancouver.",
+      "range": "4 000 $ – 15 000 $",
+      "passage": "La finition des armoires coûte entre 4 000 $ et 7 000 $ (peinture ou teinture des armoires existantes), la rénovation de 7 000 $ à 12 000 $ (nouvelles portes et façades de tiroirs sur les carcasses existantes) et le remplacement complet entre 12 000 $ et plus de 15 000 $. Délai 1 à 2 semaines contre 4 à 6 semaines pour le remplacement complet de la cuisine. Meilleur retour sur investissement lorsque les caissons d’armoires sont encore structurellement solides."
+    },
+    "basementSuite": {
+      "title": "Coût de la suite au sous-sol",
+      "description": "Coûts de conversion des sous-sols légaux, analyse du retour sur investissement et réglementations spécifiques aux municipalités pour la région métropolitaine de Vancouver.",
+      "range": "60 000 $ – 150 000 $",
+      "passage": "Les conversions légales en sous-sol coûtent entre 60 000 $ et 150 000 $ selon la disposition existante, la hauteur du plafond et les exigences municipales. Vancouver, Burnaby et Surrey suivent toutes des voies de légalisation différentes. Le retour sur investissement est élevé : une suite typique de la région métropolitaine de Vancouver génère 1 800 $ à 2 400 $/mois et augmente la valeur de la propriété de 10 à 15 %."
+    },
+    "passages": {
+      "title": "Coût de rénovation par type de projet",
+      "subtitle": "Comparaison rapide des fourchettes de prix typiques pour nos types de projets les plus demandés"
+    },
+    "comparison": {
+      "title": "Aperçu des niveaux de prix",
+      "subtitle": "Gammes réelles de nos projets réalisés dans la région métropolitaine de Vancouver",
+      "headerProject": "Type de projet",
+      "headerBudget": "Budget",
+      "headerMid": "Milieu de gamme",
+      "headerHigh": "Haut de gamme",
+      "kitchen": [
+        "15 000 $ – 25 000 $",
+        "25 000 $ – 45 000 $",
+        "45 000 $ – 72 000 $"
+      ],
+      "bathroom": [
+        "10 000 $ – 20 000 $",
+        "20 000 $ – 35 000 $",
+        "40 000 $ – 60 000 $ +"
+      ],
+      "wholeHouse": [
+        "50 000 $ – 90 000 $",
+        "90 000 $ – 150 000 $",
+        "150 000 $ – 200 000 $ +"
+      ],
+      "basement": [
+        "30 000 $ – 50 000 $",
+        "50 000 $ – 80 000 $",
+        "80 000 $ – 120 000 $ +"
+      ],
+      "footnote": "Le niveau dépend du choix des matériaux, des modifications de la disposition et de la complexité des permis, et non seulement de la superficie en pieds carrés."
+    },
+    "faqs": {
+      "title": "Questions sur les coûts de rénovation",
+      "subtitle": "Questions au niveau du hub pour tous les types de rénovation – voir chaque guide pour des réponses spécifiques au projet",
+      "q1": {
+        "question": "Combien coûte une rénovation à Vancouver?",
+        "answer": "Le coût de rénovation à Vancouver dépend du type et du niveau du projet. Les rénovations de salles de bains commencent à 10 000 $, les cuisines à 15 000 $, les sous-sols à 30 000 $ et les projets de maison entière à 50 000 $. Les principaux facteurs de coûts sont le choix des matériaux, les modifications de la disposition (déménagement de plomberie/électricité) et la complexité des permis. Consultez les guides par projet pour connaître les gammes détaillées de nos plus de 100 projets réalisés dans la région métropolitaine de Vancouver."
+      },
+      "q2": {
+        "question": "Quelles rénovations ont le meilleur retour sur investissement à Vancouver ?",
+        "answer": "Les conversions d'appartements en sous-sol légal ont généralement le retour sur investissement le plus élevé dans la région métropolitaine de Vancouver : générant des revenus locatifs de 1 800 $ à 2 400 $/mois et augmentant la valeur de la propriété de 10 à 15 %. Les rénovations de cuisines et de salles de bains récupèrent 60 à 80 % de leur coût à la revente. Les rafraîchissements uniquement cosmétiques (peinture, luminaires) récupèrent le pourcentage le plus élevé mais avec une dépense absolue plus faible."
+      },
+      "q3": {
+        "question": "Ai-je besoin d’un permis pour ma rénovation ?",
+        "answer": "Un permis est requis lorsque vous déplacez des installations de plomberie, d’électricité ou une structure porteuse. Les travaux esthétiques (peinture, revêtement de sol, remplacement d'armoires sans changement de plomberie) ne nécessitent généralement pas de permis. Vancouver, Burnaby, Surrey et d'autres municipalités de la région métropolitaine de Vancouver ont des structures tarifaires et des délais différents : généralement 200 $ à 800 $ pour les salles de bains résidentielles, 2 000 $ à 5 000 $ pour les appartements légaux au sous-sol."
+      },
+      "q4": {
+        "question": "Combien de temps dure une rénovation ?",
+        "answer": "Les rénovations de salles de bains prennent de 2 à 8 semaines, les cuisines de 4 à 8 semaines, les sous-sols de 8 à 16 semaines et les projets de maison entière de 8 à 24 semaines. Les menuiseries personnalisées, les attentes pour les permis et les délais de livraison des matériaux sont les obstacles les plus courants aux délais. Nous fournissons des délais spécifiques au projet dans chaque devis."
+      },
+      "q5": {
+        "question": "Dois-je obtenir plusieurs devis ?",
+        "answer": "Oui, obtenez au moins 3 devis détaillés. Comparez l’étendue des travaux ligne par ligne, et pas seulement le prix final. Vérifiez l'assurance CGL de 5 millions de dollars, la couverture WCB active et les conditions de garantie (1 an est la norme, 2 à 3 ans est la qualité). Surveillez les devis bas de gamme qui omettent des éléments critiques tels que l’imperméabilisation, l’élimination des démolition ou la manipulation des permis."
+      }
+    },
+    "intro": "Données réelles sur les coûts de rénovation provenant de plus de 100 projets terminés dans la région métropolitaine de Vancouver. Chaque guide détaille les prix par niveau, ce que votre budget achète réellement et les facteurs de coûts les plus courants."
+  }
+}

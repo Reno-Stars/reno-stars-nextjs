@@ -26,6 +26,9 @@
     "areaLinkText": "Lahat ng Renovations sa {area}",
     "nearbyAreas": "Sinisilbihan din Namin ang mga Karatig na Lugar",
     "neighbourhoodsTitle": "Mga Kapitbahayan na Pinaglilingkuran Namin sa {area}",
-    "neighbourhoodsSubtitle": "Mga proyekto sa pagsasaayos sa mga komunidad na ito ng {area}. Banggitin ang iyong kapitbahayan kapag humiling ka ng isang quote — alam namin ang quirks ng bawat isa sa permit at logistik ng supplier."
+    "neighbourhoodsSubtitle": "Mga proyekto sa pagsasaayos sa mga komunidad na ito ng {area}. Banggitin ang iyong kapitbahayan kapag humiling ka ng isang quote — alam namin ang quirks ng bawat isa sa permit at logistik ng supplier.",
+    "featuredProjectHeading": "Kamakailang {area} {service} Project",
+    "featuredProjectSubheading": "Tunay na badyet, totoong timeline, totoong saklaw mula sa aming portfolio.",
+    "featuredProjectCta": "Tingnan ang Buong Proyekto"
   }
 }
