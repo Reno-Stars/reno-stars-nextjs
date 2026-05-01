@@ -168,6 +168,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Budget-tier filter pages — programmatic, catch budget-intent queries
+  // ("affordable kitchen reno vancouver", "high end renovation vancouver").
+  for (const tier of ['under-30k', '30k-60k', '60k-plus']) {
+    for (const locale of locales) {
+      entries.push({
+        url: `${BASE_URL}/${locale}/projects/budget/${tier}/`,
+        lastModified: staticLastModified,
+        alternates: buildAlternates(`/projects/budget/${tier}`),
+        priority: PRIORITY.guide,
+        changeFrequency: CHANGEFREQ.monthly,
+      });
+    }
+  }
+
   const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
     for (const locale of locales) {

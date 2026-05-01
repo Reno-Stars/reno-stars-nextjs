@@ -20,6 +20,8 @@
     "requestConsultation": "Solicitar consulta gratis",
     "viewAllProjects": "Ver todos los proyectos",
     "viewAllServices": "Ver todos los servicios",
-    "scheduleConsultation": "Agendar consulta"
+    "scheduleConsultation": "Agendar consulta",
+    "stickyQuoteFor": "Obtenga una cotización {area} {service}",
+    "stickyCall": "Llamar"
   }
 }

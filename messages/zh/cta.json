@@ -20,6 +20,8 @@
     "requestConsultation": "预约免费咨询",
     "viewAllProjects": "查看所有项目",
     "viewAllServices": "查看所有服务",
-    "scheduleConsultation": "预约咨询"
+    "scheduleConsultation": "预约咨询",
+    "stickyQuoteFor": "获取 {area} {service} 报价",
+    "stickyCall": "致电"
   }
 }

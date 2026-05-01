@@ -20,6 +20,8 @@
     "requestConsultation": "無料相談を依頼",
     "viewAllProjects": "すべての施工事例を見る",
     "viewAllServices": "すべてのサービスを見る",
-    "scheduleConsultation": "相談を予約"
+    "scheduleConsultation": "相談を予約",
+    "stickyQuoteFor": "{area} {service} の見積もりを取得する",
+    "stickyCall": "電話"
   }
 }

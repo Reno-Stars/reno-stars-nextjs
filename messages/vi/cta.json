@@ -20,6 +20,8 @@
     "requestConsultation": "Yêu Cầu Tư Vấn Miễn Phí",
     "viewAllProjects": "Xem Tất Cả Dự Án",
     "viewAllServices": "Xem Tất Cả Dịch Vụ",
-    "scheduleConsultation": "Đặt Lịch Tư Vấn"
+    "scheduleConsultation": "Đặt Lịch Tư Vấn",
+    "stickyQuoteFor": "Nhận báo giá {area} {service}",
+    "stickyCall": "Gọi"
   }
 }

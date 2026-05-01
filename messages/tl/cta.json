@@ -20,6 +20,8 @@
     "requestConsultation": "Humingi ng Libreng Konsultasyon",
     "viewAllProjects": "Tingnan Lahat ng Proyekto",
     "viewAllServices": "Tingnan Lahat ng Serbisyo",
-    "scheduleConsultation": "Mag-schedule ng Konsultasyon"
+    "scheduleConsultation": "Mag-schedule ng Konsultasyon",
+    "stickyQuoteFor": "Kumuha ng {area} {service} Quote",
+    "stickyCall": "Tumawag"
   }
 }

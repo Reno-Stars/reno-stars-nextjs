@@ -20,6 +20,8 @@
     "requestConsultation": "ਮੁਫ਼ਤ ਸਲਾਹ-ਮਸ਼ਵਰੇ ਦੀ ਬੇਨਤੀ ਕਰੋ",
     "viewAllProjects": "ਸਾਰੇ ਪ੍ਰੋਜੈਕਟ ਦੇਖੋ",
     "viewAllServices": "ਸਾਰੀਆਂ ਸੇਵਾਵਾਂ ਦੇਖੋ",
-    "scheduleConsultation": "ਸਲਾਹ-ਮਸ਼ਵਰਾ ਨਿਰਧਾਰਤ ਕਰੋ"
+    "scheduleConsultation": "ਸਲਾਹ-ਮਸ਼ਵਰਾ ਨਿਰਧਾਰਤ ਕਰੋ",
+    "stickyQuoteFor": "ਇੱਕ {area} {service} ਹਵਾਲਾ ਪ੍ਰਾਪਤ ਕਰੋ",
+    "stickyCall": "ਕਾਲ ਕਰੋ"
   }
 }

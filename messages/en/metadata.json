@@ -12,6 +12,10 @@
       "title": "100+ Renovation Projects Vancouver | Before & After | Reno Stars",
       "description": "See 100+ real renovation projects across Metro Vancouver with before/after photos, actual costs, and timelines. Kitchen, bathroom, basement & whole-house transformations."
     },
+    "projectsBudget": {
+      "title": "{tier} Renovation Projects Vancouver | Reno Stars",
+      "description": "Real {tier} renovation projects across Metro Vancouver — actual costs, before/after photos, and timelines. Filter by kitchen, bathroom, basement or whole-house."
+    },
     "contact": {
       "title": "Free Renovation Quote Vancouver | Contact Reno Stars",
       "description": "Get a free renovation quote from Reno Stars — Vancouver's trusted reno company. Kitchen, bathroom, basement & whole house renovations in Metro Vancouver. Call 778-960-7999."

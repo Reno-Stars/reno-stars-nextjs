@@ -20,6 +20,8 @@
     "requestConsultation": "무료 상담 신청",
     "viewAllProjects": "전체 프로젝트 보기",
     "viewAllServices": "전체 서비스 보기",
-    "scheduleConsultation": "상담 일정 잡기"
+    "scheduleConsultation": "상담 일정 잡기",
+    "stickyQuoteFor": "{area} {service} 견적 받기",
+    "stickyCall": "전화하기"
   }
 }

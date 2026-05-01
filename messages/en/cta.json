@@ -20,6 +20,8 @@
     "requestConsultation": "Request Free Consultation",
     "viewAllProjects": "View All Projects",
     "viewAllServices": "View All Services",
-    "scheduleConsultation": "Schedule Consultation"
+    "scheduleConsultation": "Schedule Consultation",
+    "stickyQuoteFor": "Get a {area} {service} Quote",
+    "stickyCall": "Call"
   }
 }

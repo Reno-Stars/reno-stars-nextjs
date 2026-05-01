@@ -20,6 +20,8 @@
     "requestConsultation": "預約免費諮詢",
     "viewAllProjects": "查看所有項目",
     "viewAllServices": "查看所有服務",
-    "scheduleConsultation": "預約諮詢"
+    "scheduleConsultation": "預約諮詢",
+    "stickyQuoteFor": "取得 {area} {service} 報價",
+    "stickyCall": "致電"
   }
 }

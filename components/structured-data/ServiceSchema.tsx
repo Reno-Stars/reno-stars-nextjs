@@ -17,6 +17,10 @@ interface ServiceSchemaProps {
   url: string;
   googleRating?: number;
   googleReviewCount?: number;
+  /** Service-area radius in km centred on company.geo. When set, emits a
+   *  GeoCircle alongside the City `areaServed` list — Google reads both as
+   *  complementary geographic-coverage signals for local pack eligibility. */
+  serviceRadiusKm?: number;
 }
 
 export default function ServiceSchema({
@@ -30,6 +34,7 @@ export default function ServiceSchema({
   url,
   googleRating,
   googleReviewCount,
+  serviceRadiusKm,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
@@ -66,16 +71,29 @@ export default function ServiceSchema({
     schema.image = image;
   }
 
-  if (areaServed && areaServed.length > 0) {
-    schema.areaServed = areaServed.map((city) => ({
-      '@type': 'City',
-      name: city,
-    }));
-  } else if (location) {
-    schema.areaServed = {
-      '@type': 'City',
-      name: location,
-    };
+  // Build areaServed: prefer the City list, fall back to single location.
+  // When serviceRadiusKm is provided, append a GeoCircle node so Google
+  // gets both City names AND a geo-bounded radius signal.
+  const cityNodes = areaServed && areaServed.length > 0
+    ? areaServed.map((city) => ({ '@type': 'City', name: city }))
+    : location ? [{ '@type': 'City', name: location }] : [];
+
+  const geoCircle = serviceRadiusKm
+    ? {
+        '@type': 'GeoCircle',
+        geoMidpoint: {
+          '@type': 'GeoCoordinates',
+          latitude: company.geo.latitude,
+          longitude: company.geo.longitude,
+        },
+        // Schema.org expects geoRadius in metres for unambiguous interpretation.
+        geoRadius: serviceRadiusKm * 1000,
+      }
+    : null;
+
+  const areaServedNodes = geoCircle ? [...cityNodes, geoCircle] : cityNodes;
+  if (areaServedNodes.length > 0) {
+    schema.areaServed = areaServedNodes.length === 1 ? areaServedNodes[0] : areaServedNodes;
   }
 
   if (googleRating && googleReviewCount) {

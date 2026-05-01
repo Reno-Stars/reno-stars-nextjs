@@ -18,16 +18,20 @@ interface PageProps {
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
-// Build-time prerender: EN only — biggest win on the site (was 7 services
-// × 14 areas × 10 locales = 980 prerenders per build, now ~98). Non-EN
-// locales lazy-generate via dynamicParams=true and cache for 7d.
+// Build-time prerender: ALL locales × all services × all areas (~980 entries).
+// Was EN-only as a build-time optimization, but ISR returned 404 for non-EN
+// (caught by scripts/audit-hreflang.mjs 2026-04-30) — every non-EN combo URL
+// 404'd while hreflang advertised them. The leak outweighs the build-cost
+// savings. ~15 min build vs SEO-clean URLs is the right trade.
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
   for (const service of services) {
     if (service.showOnServicesPage === false) continue;
     for (const area of areas) {
-      params.push({ locale: 'en', 'service-slug': service.slug, city: area.slug });
+      for (const locale of locales) {
+        params.push({ locale, 'service-slug': service.slug, city: area.slug });
+      }
     }
   }
   return params;

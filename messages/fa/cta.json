@@ -20,6 +20,8 @@
     "requestConsultation": "درخواست مشاوره رایگان",
     "viewAllProjects": "مشاهده تمام پروژه‌ها",
     "viewAllServices": "مشاهده تمام خدمات",
-    "scheduleConsultation": "تعیین وقت مشاوره"
+    "scheduleConsultation": "تعیین وقت مشاوره",
+    "stickyQuoteFor": "یک نقل قول {area} {service} دریافت کنید",
+    "stickyCall": "تماس بگیرید"
   }
 }

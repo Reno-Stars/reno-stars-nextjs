@@ -12,6 +12,10 @@
       "title": "Más de 100 proyectos en Vancouver | Antes y después | Reno Stars",
       "description": "Vea más de 100 proyectos reales de remodelación en Metro Vancouver con fotos antes/después, costos reales y plazos. Transformaciones de cocina, baño, sótano y casa completa."
     },
+    "projectsBudget": {
+      "title": "{tier} Proyectos de renovación Vancouver | Estrellas de Reno",
+      "description": "Proyectos reales de renovación {tier} en Metro Vancouver: costos reales, fotografías de antes y después y cronogramas. Filtrar por cocina, baño, sótano o toda la casa."
+    },
     "contact": {
       "title": "Cotización gratis de remodelación en Vancouver | Contacto Reno Stars",
       "description": "Reciba una cotización gratis de Reno Stars, la empresa de remodelación de confianza en Vancouver. Remodelación de cocina, baño, sótano y casa completa en Metro Vancouver. Llame al 778-960-7999."

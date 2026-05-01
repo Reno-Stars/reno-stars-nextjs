@@ -17,6 +17,7 @@ import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import FaqSection from '@/components/home/FaqSection';
+import StickyComboCta from '@/components/StickyComboCta';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
@@ -285,6 +286,15 @@ export default function ServiceLocationPage({
         bg={SURFACE_ALT}
         phone={company.phone}
       />
+      {/* Mobile-only sticky bottom CTA — combo pages have impressions but
+          low CTR; this gives a persistent one-tap quote/call path. */}
+      <StickyComboCta
+        area={localizedArea.name}
+        service={localizedService.title}
+        phone={company.phone}
+      />
+      {/* Spacer so the sticky bar doesn't cover the footer on mobile. */}
+      <div aria-hidden className="h-20 sm:hidden" />
     </div>
   );
 }

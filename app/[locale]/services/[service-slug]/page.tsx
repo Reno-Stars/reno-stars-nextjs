@@ -33,13 +33,23 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate via
-// dynamicParams=true and cache for 7d. ~7 EN pages instead of 70.
+// Build-time prerender: ALL locales. ISR was returning 404 for non-EN at
+// runtime (caught by scripts/audit-hreflang.mjs 2026-04-30) — every
+// /zh/services/{svc}/ etc. 404'd, while hreflang advertised them as valid,
+// directly bleeding crawl budget and eligibility. Other dynamicParams routes
+// (projects, blog) ISR fine; the services route specifically fails. Until
+// the runtime-only bug is root-caused, prerender all locales at build.
+// Cost: 70 entries (~7 services × 10 locales) — trivial.
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
-  return services
-    .filter((s) => s.showOnServicesPage !== false)
-    .map((service) => ({ locale: 'en', 'service-slug': service.slug }));
+  const params: { locale: string; 'service-slug': string }[] = [];
+  for (const service of services) {
+    if (service.showOnServicesPage === false) continue;
+    for (const locale of locales) {
+      params.push({ locale, 'service-slug': service.slug });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -136,6 +146,7 @@ export default async function Page({ params }: PageProps) {
         image={service.image || siteImages.hero}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
+        serviceRadiusKm={50}
       />
       <FAQSchema faqs={faqs} />
       <ServiceDetailPage locale={locale as Locale} serviceSlug={serviceSlug as ServiceType} company={company} service={service} areas={areas} faqs={faqs} />
