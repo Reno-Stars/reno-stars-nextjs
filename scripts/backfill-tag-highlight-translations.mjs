@@ -116,7 +116,43 @@ async function backfillAreaHighlights() {
   console.log(`  → ${written} rows ${APPLY ? 'updated' : 'would update'}`);
 }
 
+async function backfillProjectScopes() {
+  const rows = await sql`SELECT id, scope_en, localizations FROM project_scopes ORDER BY scope_en, id`;
+  console.log(`\nproject_scopes: ${rows.length} rows`);
+
+  // Dedupe by scope_en — translate each unique string ONCE.
+  const uniqueScopes = [...new Set(rows.map(r => r.scope_en))];
+  console.log(`  ${uniqueScopes.length} unique scope strings`);
+  const translations = {};
+  for (const s of uniqueScopes) {
+    translations[s] = {};
+    for (const [, tgt, suffix] of LOCALES) {
+      const t = await gtx(s, tgt);
+      translations[s][`scope${suffix}`] = t;
+      await new Promise(r => setTimeout(r, 250));
+    }
+  }
+
+  let written = 0;
+  for (const row of rows) {
+    const loc = row.localizations || {};
+    const tx = translations[row.scope_en];
+    const updates = {};
+    for (const k of Object.keys(tx)) {
+      if (!loc[k]) updates[k] = tx[k];
+    }
+    if (Object.keys(updates).length === 0) continue;
+    const merged = { ...loc, ...updates };
+    if (APPLY) {
+      await sql`UPDATE project_scopes SET localizations = ${merged}::jsonb WHERE id = ${row.id}`;
+    }
+    written++;
+  }
+  console.log(`  → ${written} rows ${APPLY ? 'updated' : 'would update'}`);
+}
+
 await backfillTags();
 await backfillBenefits();
 await backfillAreaHighlights();
+await backfillProjectScopes();
 console.log(`\nDone. ${APPLY ? '' : 'Dry run — pass --apply to write.'}`);
