@@ -36,17 +36,28 @@ import { buildLocalized, buildLocalizedOptional } from '../utils';
  * the requested locale fall back to the EN value, so locale arrays are always
  * the same length as the source array.
  */
+const ARRAY_LOCALE_SUFFIXES = [
+  ['ZhHant', 'zh-Hant'],
+  ['Ja', 'ja'],
+  ['Ko', 'ko'],
+  ['Es', 'es'],
+  ['Pa', 'pa'],
+  ['Tl', 'tl'],
+  ['Fa', 'fa'],
+  ['Vi', 'vi'],
+] as const;
+
 function buildLocalizedArray<R extends { localizations?: unknown }>(
   rows: R[],
   enField: keyof R,
   zhField: keyof R,
   jsonbBaseName: string,
-): { en: string[]; zh: string[]; ja?: string[]; ko?: string[]; es?: string[] } {
-  const result: { en: string[]; zh: string[]; ja?: string[]; ko?: string[]; es?: string[] } = {
+): import('../types').Localized<string[]> {
+  const result: import('../types').Localized<string[]> = {
     en: rows.map((r) => r[enField] as string),
     zh: rows.map((r) => r[zhField] as string),
   };
-  for (const [suffix, key] of [['Ja', 'ja'] as const, ['Ko', 'ko'] as const, ['Es', 'es'] as const]) {
+  for (const [suffix, key] of ARRAY_LOCALE_SUFFIXES) {
     const arr = rows.map((r) => {
       const loc = r.localizations as Record<string, unknown> | null | undefined;
       const v = loc?.[`${jsonbBaseName}${suffix}`];
@@ -56,6 +67,32 @@ function buildLocalizedArray<R extends { localizations?: unknown }>(
     // pickLocale would already fall back to en — no need to duplicate).
     if (arr.some((v, i) => v !== rows[i][enField])) {
       result[key] = arr;
+    }
+  }
+  return result;
+}
+
+/** Build a Localized<string[]> for a single row's newline-list field with
+ *  per-locale variants in the row's localizations jsonb (e.g. highlightsJa).
+ *  Used for service_areas.highlights where each row has its own list. */
+function buildSingleRowLocalizedArray(
+  row: { localizations?: unknown },
+  enList: string[] | null | undefined,
+  zhList: string[] | null | undefined,
+  jsonbBaseName: string,
+): import('../types').Localized<string[]> | undefined {
+  if (!enList && !zhList) return undefined;
+  const result: import('../types').Localized<string[]> = {
+    en: enList ?? [],
+    zh: zhList ?? [],
+  };
+  const loc = row.localizations as Record<string, unknown> | null | undefined;
+  for (const [suffix, key] of ARRAY_LOCALE_SUFFIXES) {
+    const raw = loc?.[`${jsonbBaseName}${suffix}`];
+    if (typeof raw === 'string' && raw.trim()) {
+      result[key] = parseNewlineList(raw) ?? [];
+    } else if (Array.isArray(raw)) {
+      result[key] = raw.filter((v): v is string => typeof v === 'string');
     }
   }
   return result;
@@ -718,10 +755,7 @@ export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
       name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
       description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
       content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
-      highlights:
-        highlightsEn || highlightsZh
-          ? { en: highlightsEn ?? [], zh: highlightsZh ?? [] }
-          : undefined,
+      highlights: buildSingleRowLocalizedArray(row, highlightsEn, highlightsZh, 'highlights'),
       metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
       metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
     };
