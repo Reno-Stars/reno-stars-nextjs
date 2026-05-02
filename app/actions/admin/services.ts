@@ -7,6 +7,7 @@ import { services, serviceTags, serviceBenefits, projects, contactSubmissions } 
 import { eq, count, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 
 const MAX_TAGS = 50;
@@ -105,6 +106,8 @@ export async function createService(
     const conflictingSlugs = await db.select({ slug: services.slug }).from(services).where(like(services.slug, `${slug}%`));
     const uniqueSlug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
+    const localizations = parseLocalizations(formData);
+
     const [inserted] = await db.insert(services).values({
       slug: uniqueSlug,
       titleEn,
@@ -118,6 +121,7 @@ export async function createService(
       displayOrder,
       showOnServicesPage,
       isProjectType,
+      ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     }).returning({ id: services.id });
 
     // Insert tags (already parsed and validated above)
@@ -208,6 +212,7 @@ export async function updateService(
     if (!slug) return { error: 'Slug is required.' };
     if (!isValidSlug(slug)) return { error: 'Slug must contain only lowercase letters, numbers, and hyphens.' };
 
+    const localizations = parseLocalizations(formData);
     const data = {
       slug,
       titleEn: getString(formData, 'titleEn').trim(),
@@ -220,6 +225,9 @@ export async function updateService(
       imageUrl: getString(formData, 'imageUrl') || null,
       showOnServicesPage: formData.get('showOnServicesPage') === 'on',
       isProjectType: formData.get('isProjectType') === 'on',
+      // Replace localizations jsonb wholesale — the form provider sends every
+      // non-en/zh value it tracks, so an empty payload is a real "clear all".
+      localizations,
       updatedAt: new Date(),
     };
 

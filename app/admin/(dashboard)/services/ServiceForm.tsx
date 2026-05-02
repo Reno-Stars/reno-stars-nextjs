@@ -1,9 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useActionState } from 'react';
-import BilingualInput from '@/components/admin/BilingualInput';
-import BilingualTextarea from '@/components/admin/BilingualTextarea';
+import LocalizedInput from '@/components/admin/LocalizedInput';
+import LocalizedTextarea from '@/components/admin/LocalizedTextarea';
+import { LocalizedFormProvider } from '@/components/admin/LocalizedFormContext';
+import LocaleSwitcher from '@/components/admin/LocaleSwitcher';
+import TranslateAllButton from '@/components/admin/TranslateAllButton';
 import FormField from '@/components/admin/FormField';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
@@ -44,6 +47,8 @@ interface ServiceFormProps {
     displayOrder: number;
     showOnServicesPage: boolean;
     isProjectType: boolean;
+    /** localizations jsonb — keys like `titleJa`, `descriptionFr`, etc. */
+    localizations?: Record<string, string> | null;
     tags?: { id: string; en: string; zh: string }[];
     benefits?: { id: string; en: string; zh: string }[];
   };
@@ -83,7 +88,21 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
     displayOrder: 0,
     showOnServicesPage: true,
     isProjectType: true,
+    localizations: {} as Record<string, string>,
   };
+
+  // Seed the LocalizedFormProvider with native EN/ZH values + the
+  // localizations jsonb. Keys are `${field}${LocaleSuffix}` (titleEn,
+  // titleZh, titleJa, ..., descriptionFr).
+  const initialLocaleValues = useMemo(() => ({
+    titleEn: defaults.titleEn ?? '',
+    titleZh: defaults.titleZh ?? '',
+    descriptionEn: defaults.descriptionEn ?? '',
+    descriptionZh: defaults.descriptionZh ?? '',
+    longDescriptionEn: defaults.longDescriptionEn ?? '',
+    longDescriptionZh: defaults.longDescriptionZh ?? '',
+    ...(initialData?.localizations ?? {}),
+  }), [defaults.titleEn, defaults.titleZh, defaults.descriptionEn, defaults.descriptionZh, defaults.longDescriptionEn, defaults.longDescriptionZh, initialData?.localizations]);
 
   const addTag = () => {
     setTags((prev) => [...prev, { id: crypto.randomUUID(), en: '', zh: '' }]);
@@ -119,6 +138,7 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
 
   return (
     <form action={formAction}>
+      <LocalizedFormProvider initialValues={initialLocaleValues}>
       <div
         className="admin-form-card"
         style={{
@@ -132,14 +152,19 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
         {!isNew && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <LocaleSwitcher />
+          <TranslateAllButton />
+        </div>
+
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.services.slug} htmlFor="slug">
             <input id="slug" name="slug" defaultValue={defaults.slug} required style={fieldStyle} placeholder={t.services.slugPlaceholder} />
           </FormField>
 
-          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.services.nameLabel} defaultValueEn={defaults.titleEn} defaultValueZh={defaults.titleZh} required />
-          <BilingualTextarea nameEn="descriptionEn" nameZh="descriptionZh" label={t.services.shortDescription} defaultValueEn={defaults.descriptionEn} defaultValueZh={defaults.descriptionZh} required rows={3} />
-          <BilingualTextarea nameEn="longDescriptionEn" nameZh="longDescriptionZh" label={t.services.longDescription} defaultValueEn={defaults.longDescriptionEn ?? ''} defaultValueZh={defaults.longDescriptionZh ?? ''} rows={5} />
+          <LocalizedInput name="title" label={t.services.nameLabel} required />
+          <LocalizedTextarea name="description" label={t.services.shortDescription} required rows={3} />
+          <LocalizedTextarea name="longDescription" label={t.services.longDescription} rows={5} />
 
           <ImageUrlInput name="iconUrl" label={t.services.iconImage} defaultValue={defaults.iconUrl ?? ''} slug={defaults.slug || undefined} imageRole="icon" disabled={!editing} />
 
@@ -319,6 +344,7 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
           )}
         </fieldset>
       </div>
+      </LocalizedFormProvider>
     </form>
   );
 }
