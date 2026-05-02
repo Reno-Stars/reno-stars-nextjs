@@ -56,6 +56,7 @@ export default async function EditBlogPostPage({ params }: PageProps) {
           seoKeywordsEn: post.seoKeywordsEn ?? undefined,
           seoKeywordsZh: post.seoKeywordsZh ?? undefined,
           readingTimeMinutes: post.readingTimeMinutes ?? undefined,
+          localizations: (post.localizations ?? null) as Record<string, string> | null,
         }}
       />
     </div>

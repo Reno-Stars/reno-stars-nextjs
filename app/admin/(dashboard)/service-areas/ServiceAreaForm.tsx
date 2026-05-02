@@ -1,10 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
-import BilingualTextarea from '@/components/admin/BilingualTextarea';
-import BilingualInput from '@/components/admin/BilingualInput';
+import LocalizedInput from '@/components/admin/LocalizedInput';
+import LocalizedTextarea from '@/components/admin/LocalizedTextarea';
+import { LocalizedFormProvider } from '@/components/admin/LocalizedFormContext';
+import LocaleSwitcher from '@/components/admin/LocaleSwitcher';
+import TranslateAllButton from '@/components/admin/TranslateAllButton';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import { useFormToast } from '@/components/admin/useFormToast';
@@ -34,6 +37,8 @@ interface ServiceAreaFormProps {
     metaDescriptionZh: string;
     displayOrder: number;
     isActive: boolean;
+    /** localizations jsonb — keys like `nameJa`, `descriptionFr`, etc. */
+    localizations?: Record<string, string> | null;
   };
   isNew?: boolean;
 }
@@ -64,8 +69,25 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
     isActive: true,
   };
 
+  const initialLocaleValues = useMemo(() => ({
+    nameEn: defaults.nameEn ?? '',
+    nameZh: defaults.nameZh ?? '',
+    descriptionEn: defaults.descriptionEn ?? '',
+    descriptionZh: defaults.descriptionZh ?? '',
+    contentEn: defaults.contentEn ?? '',
+    contentZh: defaults.contentZh ?? '',
+    highlightsEn: defaults.highlightsEn ?? '',
+    highlightsZh: defaults.highlightsZh ?? '',
+    metaTitleEn: defaults.metaTitleEn ?? '',
+    metaTitleZh: defaults.metaTitleZh ?? '',
+    metaDescriptionEn: defaults.metaDescriptionEn ?? '',
+    metaDescriptionZh: defaults.metaDescriptionZh ?? '',
+    ...(initialData?.localizations ?? {}),
+  }), [defaults.nameEn, defaults.nameZh, defaults.descriptionEn, defaults.descriptionZh, defaults.contentEn, defaults.contentZh, defaults.highlightsEn, defaults.highlightsZh, defaults.metaTitleEn, defaults.metaTitleZh, defaults.metaDescriptionEn, defaults.metaDescriptionZh, initialData?.localizations]);
+
   return (
     <form action={formAction}>
+      <LocalizedFormProvider initialValues={initialLocaleValues}>
       <div
         className="admin-form-card"
         style={{
@@ -79,6 +101,11 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
         {!isNew && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <LocaleSwitcher />
+          <TranslateAllButton />
+        </div>
+
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.serviceAreas.slug} htmlFor="slug" tooltip={isNew ? undefined : t.serviceAreas.slugTooltip}>
             {isNew ? (
@@ -88,43 +115,13 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
             )}
           </FormField>
 
-          <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
-            <FormField label={t.serviceAreas.nameEn} htmlFor="nameEn">
-              <input id="nameEn" name="nameEn" defaultValue={defaults.nameEn} required style={fieldStyle} />
-            </FormField>
-            <FormField label={t.serviceAreas.nameZh} htmlFor="nameZh">
-              <input id="nameZh" name="nameZh" defaultValue={defaults.nameZh} required style={fieldStyle} />
-            </FormField>
-          </div>
+          <LocalizedInput name="name" label={t.serviceAreas.nameEn.replace(/\s*\(EN\).*$/i, '').trim()} required />
 
-          <BilingualTextarea
-            nameEn="descriptionEn"
-            nameZh="descriptionZh"
-            label={t.serviceAreas.descriptionLabel}
-            defaultValueEn={defaults.descriptionEn}
-            defaultValueZh={defaults.descriptionZh}
-            rows={4}
-          />
+          <LocalizedTextarea name="description" label={t.serviceAreas.descriptionLabel} rows={4} />
 
-          <BilingualTextarea
-            nameEn="contentEn"
-            nameZh="contentZh"
-            label={t.serviceAreas.contentLabel}
-            defaultValueEn={defaults.contentEn}
-            defaultValueZh={defaults.contentZh}
-            rows={8}
-            tooltip={t.serviceAreas.contentHelp}
-          />
+          <LocalizedTextarea name="content" label={t.serviceAreas.contentLabel} rows={8} tooltip={t.serviceAreas.contentHelp} />
 
-          <BilingualTextarea
-            nameEn="highlightsEn"
-            nameZh="highlightsZh"
-            label={t.serviceAreas.highlightsLabel}
-            defaultValueEn={defaults.highlightsEn}
-            defaultValueZh={defaults.highlightsZh}
-            rows={5}
-            tooltip={t.serviceAreas.highlightsHelp}
-          />
+          <LocalizedTextarea name="highlights" label={t.serviceAreas.highlightsLabel} rows={5} tooltip={t.serviceAreas.highlightsHelp} />
 
           {/* SEO Settings */}
           <div style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>
@@ -134,23 +131,9 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
             </p>
           </div>
 
-          <BilingualInput
-            nameEn="metaTitleEn"
-            nameZh="metaTitleZh"
-            label={t.serviceAreas.metaTitleLabel}
-            defaultValueEn={defaults.metaTitleEn}
-            defaultValueZh={defaults.metaTitleZh}
-            maxLength={120}
-          />
+          <LocalizedInput name="metaTitle" label={t.serviceAreas.metaTitleLabel} maxLength={120} />
 
-          <BilingualInput
-            nameEn="metaDescriptionEn"
-            nameZh="metaDescriptionZh"
-            label={t.serviceAreas.metaDescriptionLabel}
-            defaultValueEn={defaults.metaDescriptionEn}
-            defaultValueZh={defaults.metaDescriptionZh}
-            maxLength={320}
-          />
+          <LocalizedInput name="metaDescription" label={t.serviceAreas.metaDescriptionLabel} maxLength={320} />
 
           <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 1rem' }}>
             <FormField label={t.serviceAreas.displayOrder} htmlFor="displayOrder">
@@ -170,6 +153,7 @@ export default function ServiceAreaForm({ action, initialData, isNew = false }: 
           )}
         </fieldset>
       </div>
+      </LocalizedFormProvider>
     </form>
   );
 }

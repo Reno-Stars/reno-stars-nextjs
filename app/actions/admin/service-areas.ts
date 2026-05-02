@@ -7,6 +7,7 @@ import { serviceAreas, contactSubmissions, faqs } from '@/lib/db/schema';
 import { eq, count, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 
 export async function createServiceArea(
@@ -51,6 +52,8 @@ export async function createServiceArea(
     const conflictingSlugs = await db.select({ slug: serviceAreas.slug }).from(serviceAreas).where(like(serviceAreas.slug, `${slug}%`));
     const uniqueSlug = ensureUniqueSlug(slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
+    const localizations = parseLocalizations(formData);
+
     await db.insert(serviceAreas).values({
       slug: uniqueSlug,
       nameEn,
@@ -67,6 +70,7 @@ export async function createServiceArea(
       metaDescriptionZh,
       displayOrder,
       isActive,
+      ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     });
 
     revalidatePath('/admin/service-areas');
@@ -138,6 +142,7 @@ export async function updateServiceArea(
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid service area ID.' };
   try {
+    const localizations = parseLocalizations(formData);
     const data = {
       nameEn: getString(formData, 'nameEn').trim(),
       nameZh: getString(formData, 'nameZh').trim(),
@@ -153,6 +158,7 @@ export async function updateServiceArea(
       metaDescriptionZh: getString(formData, 'metaDescriptionZh') || null,
       displayOrder: parseInt(getString(formData, 'displayOrder'), 10),
       isActive: formData.get('isActive') === 'on',
+      localizations,
       updatedAt: new Date(),
     };
 

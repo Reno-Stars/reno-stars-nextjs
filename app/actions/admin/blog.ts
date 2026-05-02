@@ -7,6 +7,7 @@ import { blogPosts } from '@/lib/db/schema';
 import { eq, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
 
@@ -85,7 +86,11 @@ export async function createBlogPost(
     const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
     data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug));
 
-    await db.insert(blogPosts).values(data);
+    const localizations = parseLocalizations(formData);
+    await db.insert(blogPosts).values({
+      ...data,
+      ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
+    });
     revalidatePath('/admin/blog');
     if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
@@ -132,7 +137,8 @@ export async function updateBlogPost(
     const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
     data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
-    const updated = await db.update(blogPosts).set(data).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
+    const localizations = parseLocalizations(formData);
+    const updated = await db.update(blogPosts).set({ ...data, localizations }).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }

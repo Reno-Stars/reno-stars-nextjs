@@ -41,6 +41,7 @@ export default async function EditServiceAreaPage({ params }: PageProps) {
           metaDescriptionZh: area.metaDescriptionZh ?? '',
           displayOrder: area.displayOrder,
           isActive: area.isActive,
+          localizations: (area.localizations ?? null) as Record<string, string> | null,
         }}
       />
     </div>

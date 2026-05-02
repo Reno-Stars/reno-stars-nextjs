@@ -3,7 +3,10 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useActionState } from 'react';
 import FormField from '@/components/admin/FormField';
-import BilingualInput from '@/components/admin/BilingualInput';
+import LocalizedInput from '@/components/admin/LocalizedInput';
+import { LocalizedFormProvider } from '@/components/admin/LocalizedFormContext';
+import LocaleSwitcher from '@/components/admin/LocaleSwitcher';
+import TranslateAllButton from '@/components/admin/TranslateAllButton';
 import AIContentEditor from '@/components/admin/AIContentEditor';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
 import EditModeToggle from '@/components/admin/EditModeToggle';
@@ -54,6 +57,8 @@ interface BlogPostFormProps {
     seoKeywordsEn?: string;
     seoKeywordsZh?: string;
     readingTimeMinutes?: number;
+    /** localizations jsonb — title (and any other future localized fields) keyed `${field}${LocaleSuffix}` */
+    localizations?: Record<string, string> | null;
   };
   /** Available projects for the related project dropdown */
   projects?: ProjectOption[];
@@ -108,8 +113,20 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
 
   const fieldStyle = editing ? inputStyle : readOnlyStyle;
 
+  // Title is the only field migrated to 14-locale here. Body content +
+  // SEO fields stay EN/ZH only — those flow through AIContentEditor whose
+  // dual-language workflow predates this change. Future migration: lift
+  // those fields into LocalizedInput too once the AIContentEditor refactor
+  // settles.
+  const initialLocaleValues = useMemo(() => ({
+    titleEn: initialData?.titleEn ?? '',
+    titleZh: initialData?.titleZh ?? '',
+    ...(initialData?.localizations ?? {}),
+  }), [initialData?.titleEn, initialData?.titleZh, initialData?.localizations]);
+
   return (
     <form onSubmit={handleSubmit} onChange={() => setDirty(true)}>
+      <LocalizedFormProvider initialValues={initialLocaleValues}>
       <ConfirmDialog
         open={showWarning}
         title={t.common.saveWarningTitle}
@@ -133,12 +150,17 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
         {isEdit && <EditModeToggle editing={editing} setEditing={setEditing} />}
         <FormAlerts state={state} />
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <LocaleSwitcher />
+          <TranslateAllButton />
+        </div>
+
         <fieldset disabled={!editing} style={{ border: 'none', padding: 0, margin: 0 }}>
           <FormField label={t.blog.slugLabel} htmlFor="slug">
             <input id="slug" name="slug" defaultValue={initialData?.slug ?? ''} required style={fieldStyle} placeholder={t.blog.slugPlaceholder} />
           </FormField>
 
-          <BilingualInput nameEn="titleEn" nameZh="titleZh" label={t.blog.titleLabel} defaultValueEn={initialData?.titleEn} defaultValueZh={initialData?.titleZh} required />
+          <LocalizedInput name="title" label={t.blog.titleLabel} required />
 
           <AIContentEditor
             nameContentEn="contentEn"
@@ -203,6 +225,7 @@ export default function BlogPostForm({ action, initialData, projects = [], submi
           )}
         </fieldset>
       </div>
+      </LocalizedFormProvider>
     </form>
   );
 }
