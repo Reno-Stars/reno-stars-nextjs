@@ -42,6 +42,7 @@ export default async function EditServicePage({ params }: PageProps) {
           displayOrder: service.displayOrder,
           showOnServicesPage: service.showOnServicesPage,
           isProjectType: service.isProjectType,
+          localizations: (service.localizations ?? null) as Record<string, string> | null,
           tags: tagRows.map((t: DbServiceTag) => ({ id: t.id, en: t.tagEn, zh: t.tagZh })),
           benefits: benefitRows.map((b: DbServiceBenefit) => ({ id: b.id, en: b.benefitEn, zh: b.benefitZh })),
         }}
