@@ -127,6 +127,38 @@ export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T)
 }
 
 // ============================================================================
+// DB RESILIENCE HELPER
+// ============================================================================
+
+/**
+ * Wrap a DB-bound query with a fallback so a transient infra failure (Neon
+ * quota exhaustion, transport error, timeout) renders an empty/graceful
+ * page instead of cascading a 500 across an entire ISR-backed route. This
+ * matters most for listing pages whose 500s would waste Googlebot crawl
+ * budget across hundreds of locale variants.
+ */
+async function safeQuery<T>(label: string, fn: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await fn();
+  } catch (err) {
+    console.error(`[db:${label}] query failed, returning fallback:`, err);
+    return fallback;
+  }
+}
+
+const COMPANY_FALLBACK: Company = (() => {
+  const { foundingYear, teamSize, projectsCompleted, liabilityCoverage } = COMPANY_STATS;
+  return {
+    name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
+    logo: '', quoteUrl: '/contact/',
+    yearsExperience: getYearsExperience(),
+    foundingYear, teamSize, projectsCompleted, liabilityCoverage,
+    heroVideoUrl: '', heroImageUrl: '',
+    geo: { latitude: 0, longitude: 0 },
+  };
+})();
+
+// ============================================================================
 // COMPANY QUERIES
 // ============================================================================
 
@@ -136,43 +168,33 @@ export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T)
  * `lib/company-config.ts`, not the database.
  */
 export const getCompanyFromDb = cache(async (): Promise<Company> => {
-  const rows = await db.select().from(companyInfo).limit(1);
-  const row = rows[0];
+  return safeQuery('getCompanyFromDb', async () => {
+    const rows = await db.select().from(companyInfo).limit(1);
+    const row = rows[0];
 
-  const { foundingYear, teamSize, projectsCompleted, liabilityCoverage } = COMPANY_STATS;
-  const yearsExperience = getYearsExperience();
+    if (!row) return COMPANY_FALLBACK;
 
-  if (!row) {
-    // Return sensible defaults instead of crashing the app/build
     return {
-      name: 'Reno Stars', tagline: '', phone: '', email: '', address: '',
-      logo: '', quoteUrl: '/contact/',
-      yearsExperience, foundingYear, teamSize, projectsCompleted, liabilityCoverage,
-      heroVideoUrl: '', heroImageUrl: '',
-      geo: { latitude: 0, longitude: 0 },
+      name: row.name,
+      tagline: row.tagline ?? '',
+      phone: row.phone ?? '',
+      email: row.email ?? '',
+      address: row.address ?? '',
+      logo: getAssetUrl(row.logoUrl ?? ''),
+      quoteUrl: row.quoteUrl ?? '/contact/',
+      yearsExperience: COMPANY_FALLBACK.yearsExperience,
+      foundingYear: COMPANY_FALLBACK.foundingYear,
+      teamSize: COMPANY_FALLBACK.teamSize,
+      projectsCompleted: COMPANY_FALLBACK.projectsCompleted,
+      liabilityCoverage: COMPANY_FALLBACK.liabilityCoverage,
+      heroVideoUrl: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : '',
+      heroImageUrl: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : '',
+      geo: {
+        latitude: parseFloat(row.geoLatitude ?? '') || 0,
+        longitude: parseFloat(row.geoLongitude ?? '') || 0,
+      },
     };
-  }
-
-  return {
-    name: row.name,
-    tagline: row.tagline ?? '',
-    phone: row.phone ?? '',
-    email: row.email ?? '',
-    address: row.address ?? '',
-    logo: getAssetUrl(row.logoUrl ?? ''),
-    quoteUrl: row.quoteUrl ?? '/contact/',
-    yearsExperience,
-    foundingYear,
-    teamSize,
-    projectsCompleted,
-    liabilityCoverage,
-    heroVideoUrl: row.heroVideoUrl ? getAssetUrl(row.heroVideoUrl) : '',
-    heroImageUrl: row.heroImageUrl ? getAssetUrl(row.heroImageUrl) : '',
-    geo: {
-      latitude: parseFloat(row.geoLatitude ?? '') || 0,
-      longitude: parseFloat(row.geoLongitude ?? '') || 0,
-    },
-  };
+  }, COMPANY_FALLBACK);
 });
 
 /**
@@ -455,28 +477,30 @@ async function fetchProjectRelations(projectIds: string[]): Promise<{
 
 /** Fetch all published projects from DB, mapped to `Project[]`. */
 export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
-  const rows: DbProjectRow[] = await db
-    .select()
-    .from(projectsTable)
-    .where(eq(projectsTable.isPublished, true))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getProjectsFromDb', async () => {
+    const rows: DbProjectRow[] = await db
+      .select()
+      .from(projectsTable)
+      .where(eq(projectsTable.isPublished, true))
+      .orderBy(desc(projectsTable.createdAt));
 
-  const ids = rows.map((r: DbProjectRow) => r.id);
-  const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
+    const ids = rows.map((r: DbProjectRow) => r.id);
+    const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
 
-  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
-  const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
-  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
-  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+    // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
+    const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
+    const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+    const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
 
-  return rows.map((row: DbProjectRow) =>
-    mapDbProjectToProject(
-      row,
-      scopesByProject.get(row.id) ?? [],
-      epByProject.get(row.id) ?? [],
-      imagePairsByProject.get(row.id) ?? []
-    )
-  );
+    return rows.map((row: DbProjectRow) =>
+      mapDbProjectToProject(
+        row,
+        scopesByProject.get(row.id) ?? [],
+        epByProject.get(row.id) ?? [],
+        imagePairsByProject.get(row.id) ?? []
+      )
+    );
+  }, []);
 });
 
 /** Fetch a single published project by slug from DB. */
@@ -660,6 +684,7 @@ export const getSiteBySlugFromDb = cache(
 
 /** Fetch all published sites that should show as projects, with projects and aggregated data. */
 export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects[]> => {
+  return safeQuery('getSitesAsProjectsFromDb', async () => {
   const rows = await db
     .select()
     .from(sitesTable)
@@ -728,6 +753,7 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
   }
 
   return results;
+  }, []);
 });
 
 // ============================================================================
@@ -783,54 +809,12 @@ export interface PaginatedBlogPosts {
 
 /** Fetch all published blog posts ordered by publishedAt desc. */
 export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
-  // Listing-only projection — exclude content_en/content_zh and the entire
-  // localizations jsonb. Once Phase A blog content is fully populated, each
-  // localizations payload is ~30 KB (3 langs × ~10 KB content). With 113
-  // posts that's ~3 MB extra wire per list query that the listing UI
-  // doesn't render. Slim projection keeps blog-list pages fast.
-  const rows = await db
-    .select({
-      slug: blogPostsTable.slug,
-      titleEn: blogPostsTable.titleEn,
-      titleZh: blogPostsTable.titleZh,
-      excerptEn: blogPostsTable.excerptEn,
-      excerptZh: blogPostsTable.excerptZh,
-      featuredImageUrl: blogPostsTable.featuredImageUrl,
-      publishedAt: blogPostsTable.publishedAt,
-      updatedAt: blogPostsTable.updatedAt,
-      localizations: blogPostsTable.localizations,
-    })
-    .from(blogPostsTable)
-    .where(eq(blogPostsTable.isPublished, true))
-    .orderBy(desc(blogPostsTable.publishedAt));
-
-  return rows.map((row: typeof rows[number]) => ({
-    slug: row.slug,
-    title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
-    excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
-    content: undefined,
-    featured_image: getOptionalAssetUrl(row.featuredImageUrl),
-    published_at: row.publishedAt ?? undefined,
-    updated_at: row.updatedAt ?? undefined,
-  }));
-});
-
-/** Fetch paginated published blog posts ordered by publishedAt desc. */
-export const getBlogPostsPaginatedFromDb = cache(
-  async (page: number = 1, perPage: number = BLOG_POSTS_PER_PAGE): Promise<PaginatedBlogPosts> => {
-    // Get total count using SQL COUNT for efficiency
-    const countResult = await db
-      .select({ value: count() })
-      .from(blogPostsTable)
-      .where(eq(blogPostsTable.isPublished, true));
-
-    const totalCount = countResult[0]?.value ?? 0;
-    const totalPages = Math.ceil(totalCount / perPage);
-    const currentPage = Math.max(1, Math.min(page, totalPages || 1));
-    const offset = (currentPage - 1) * perPage;
-
-    // Slim projection — see getBlogPostsFromDb comment. Excludes content
-    // fields entirely (listing UI uses excerpt only).
+  return safeQuery('getBlogPostsFromDb', async () => {
+    // Listing-only projection — exclude content_en/content_zh and the entire
+    // localizations jsonb. Once Phase A blog content is fully populated, each
+    // localizations payload is ~30 KB (3 langs × ~10 KB content). With 113
+    // posts that's ~3 MB extra wire per list query that the listing UI
+    // doesn't render. Slim projection keeps blog-list pages fast.
     const rows = await db
       .select({
         slug: blogPostsTable.slug,
@@ -845,11 +829,9 @@ export const getBlogPostsPaginatedFromDb = cache(
       })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true))
-      .orderBy(desc(blogPostsTable.publishedAt))
-      .limit(perPage)
-      .offset(offset);
+      .orderBy(desc(blogPostsTable.publishedAt));
 
-    const posts = rows.map((row: typeof rows[number]) => ({
+    return rows.map((row: typeof rows[number]) => ({
       slug: row.slug,
       title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
       excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
@@ -858,8 +840,56 @@ export const getBlogPostsPaginatedFromDb = cache(
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
     }));
+  }, []);
+});
 
-    return { posts, totalCount, totalPages, currentPage };
+/** Fetch paginated published blog posts ordered by publishedAt desc. */
+export const getBlogPostsPaginatedFromDb = cache(
+  async (page: number = 1, perPage: number = BLOG_POSTS_PER_PAGE): Promise<PaginatedBlogPosts> => {
+    return safeQuery('getBlogPostsPaginatedFromDb', async () => {
+      // Get total count using SQL COUNT for efficiency
+      const countResult = await db
+        .select({ value: count() })
+        .from(blogPostsTable)
+        .where(eq(blogPostsTable.isPublished, true));
+
+      const totalCount = countResult[0]?.value ?? 0;
+      const totalPages = Math.ceil(totalCount / perPage);
+      const currentPage = Math.max(1, Math.min(page, totalPages || 1));
+      const offset = (currentPage - 1) * perPage;
+
+      // Slim projection — see getBlogPostsFromDb comment. Excludes content
+      // fields entirely (listing UI uses excerpt only).
+      const rows = await db
+        .select({
+          slug: blogPostsTable.slug,
+          titleEn: blogPostsTable.titleEn,
+          titleZh: blogPostsTable.titleZh,
+          excerptEn: blogPostsTable.excerptEn,
+          excerptZh: blogPostsTable.excerptZh,
+          featuredImageUrl: blogPostsTable.featuredImageUrl,
+          publishedAt: blogPostsTable.publishedAt,
+          updatedAt: blogPostsTable.updatedAt,
+          localizations: blogPostsTable.localizations,
+        })
+        .from(blogPostsTable)
+        .where(eq(blogPostsTable.isPublished, true))
+        .orderBy(desc(blogPostsTable.publishedAt))
+        .limit(perPage)
+        .offset(offset);
+
+      const posts = rows.map((row: typeof rows[number]) => ({
+        slug: row.slug,
+        title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
+        excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+        content: undefined,
+        featured_image: getOptionalAssetUrl(row.featuredImageUrl),
+        published_at: row.publishedAt ?? undefined,
+        updated_at: row.updatedAt ?? undefined,
+      }));
+
+      return { posts, totalCount, totalPages, currentPage };
+    }, { posts: [], totalCount: 0, totalPages: 0, currentPage: 1 });
   }
 );
 
