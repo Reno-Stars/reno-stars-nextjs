@@ -510,17 +510,19 @@ export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
 /** Fetch a single published project by slug from DB. */
 export const getProjectBySlugFromDb = cache(
   async (slug: string): Promise<Project | null> => {
-    const rows = await db
-      .select()
-      .from(projectsTable)
-      .where(and(eq(projectsTable.slug, slug), eq(projectsTable.isPublished, true)))
-      .limit(1);
+    return safeQuery('getProjectBySlugFromDb', async () => {
+      const rows = await db
+        .select()
+        .from(projectsTable)
+        .where(and(eq(projectsTable.slug, slug), eq(projectsTable.isPublished, true)))
+        .limit(1);
 
-    const row = rows[0];
-    if (!row) return null;
+      const row = rows[0];
+      if (!row) return null;
 
-    const { imagePairs, scopes, externalProducts } = await fetchProjectRelations([row.id]);
-    return mapDbProjectToProject(row, scopes, externalProducts, imagePairs);
+      const { imagePairs, scopes, externalProducts } = await fetchProjectRelations([row.id]);
+      return mapDbProjectToProject(row, scopes, externalProducts, imagePairs);
+    }, null);
   }
 );
 
@@ -657,36 +659,38 @@ export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]
 /** Fetch a site by slug with its projects and aggregated data. */
 export const getSiteBySlugFromDb = cache(
   async (slug: string): Promise<SiteWithProjects | null> => {
-    const rows = await db
-      .select()
-      .from(sitesTable)
-      .where(and(eq(sitesTable.slug, slug), eq(sitesTable.isPublished, true)))
-      .limit(1);
+    return safeQuery('getSiteBySlugFromDb', async () => {
+      const rows = await db
+        .select()
+        .from(sitesTable)
+        .where(and(eq(sitesTable.slug, slug), eq(sitesTable.isPublished, true)))
+        .limit(1);
 
-    const row = rows[0];
-    if (!row) return null;
+      const row = rows[0];
+      if (!row) return null;
 
-    // Fetch site image pairs, external products, and projects in parallel
-    const [siteImagePairRows, siteEpRows, projects] = await Promise.all([
-      db.select().from(siteImagePairsTable).where(eq(siteImagePairsTable.siteId, row.id)) as Promise<DbSiteImagePairRow[]>,
-      db.select().from(siteExternalProductsTable).where(eq(siteExternalProductsTable.siteId, row.id)) as Promise<DbSiteExternalProductRow[]>,
-      getProjectsOfSite(row.id),
-    ]);
+      // Fetch site image pairs, external products, and projects in parallel
+      const [siteImagePairRows, siteEpRows, projects] = await Promise.all([
+        db.select().from(siteImagePairsTable).where(eq(siteImagePairsTable.siteId, row.id)) as Promise<DbSiteImagePairRow[]>,
+        db.select().from(siteExternalProductsTable).where(eq(siteExternalProductsTable.siteId, row.id)) as Promise<DbSiteExternalProductRow[]>,
+        getProjectsOfSite(row.id),
+      ]);
 
-    const site = mapDbSiteToSite(row, siteImagePairRows, siteEpRows);
+      const site = mapDbSiteToSite(row, siteImagePairRows, siteEpRows);
 
-    // Build aggregated data (budget/duration come from site itself, not summed from projects)
-    const aggregated: SiteWithProjects['aggregated'] = {
-      allServiceScopes: mergeServiceScopes(projects),
-      allImages: collectAllImages(projects, site),
-      allExternalProducts: collectAllExternalProducts(projects, site),
-    };
+      // Build aggregated data (budget/duration come from site itself, not summed from projects)
+      const aggregated: SiteWithProjects['aggregated'] = {
+        allServiceScopes: mergeServiceScopes(projects),
+        allImages: collectAllImages(projects, site),
+        allExternalProducts: collectAllExternalProducts(projects, site),
+      };
 
-    return {
-      ...site,
-      projects,
-      aggregated,
-    };
+      return {
+        ...site,
+        projects,
+        aggregated,
+      };
+    }, null);
   }
 );
 
@@ -906,6 +910,7 @@ export const getBlogPostsPaginatedFromDb = cache(
 /** Fetch a single published blog post by slug, with related project if linked. */
 export const getBlogPostBySlugFromDb = cache(
   async (slug: string): Promise<BlogPost | null> => {
+    return safeQuery('getBlogPostBySlugFromDb', async () => {
     const rows = await db
       .select()
       .from(blogPostsTable)
@@ -966,6 +971,7 @@ export const getBlogPostBySlugFromDb = cache(
         : undefined,
       related_project: relatedProject,
     };
+    }, null);
   }
 );
 
