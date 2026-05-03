@@ -549,20 +549,24 @@ export async function getAllProjectsAdmin() {
 
 /** Fetch all published project slugs with dates (for sitemap). */
 export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null }[]> {
-  const rows = await db
-    .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity })
-    .from(projectsTable)
-    .where(eq(projectsTable.isPublished, true));
-  return rows;
+  return safeQuery('getProjectSlugsFromDb', async () => {
+    const rows = await db
+      .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity })
+      .from(projectsTable)
+      .where(eq(projectsTable.isPublished, true));
+    return rows;
+  }, []);
 }
 
 /** Fetch all published site slugs with dates (for sitemap). */
 export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
-  const rows = await db
-    .select({ slug: sitesTable.slug, updatedAt: sitesTable.updatedAt })
-    .from(sitesTable)
-    .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)));
-  return rows;
+  return safeQuery('getSiteSlugsFromDb', async () => {
+    const rows = await db
+      .select({ slug: sitesTable.slug, updatedAt: sitesTable.updatedAt })
+      .from(sitesTable)
+      .where(and(eq(sitesTable.isPublished, true), eq(sitesTable.showAsProject, true)));
+    return rows;
+  }, []);
 }
 
 // ============================================================================
@@ -967,11 +971,13 @@ export const getBlogPostBySlugFromDb = cache(
 
 /** Fetch all published blog post slugs with dates (for sitemap). */
 export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null }[]> {
-  const rows = await db
-    .select({ slug: blogPostsTable.slug, updatedAt: blogPostsTable.updatedAt })
-    .from(blogPostsTable)
-    .where(eq(blogPostsTable.isPublished, true));
-  return rows;
+  return safeQuery('getBlogPostSlugsFromDb', async () => {
+    const rows = await db
+      .select({ slug: blogPostsTable.slug, updatedAt: blogPostsTable.updatedAt })
+      .from(blogPostsTable)
+      .where(eq(blogPostsTable.isPublished, true));
+    return rows;
+  }, []);
 }
 
 // ============================================================================
