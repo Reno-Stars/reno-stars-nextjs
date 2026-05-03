@@ -201,23 +201,26 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
  * Fetch active social links ordered by display_order.
  */
 export const getSocialLinksFromDb = cache(async (): Promise<SocialLink[]> => {
-  const rows = await db
-    .select()
-    .from(socialLinksTable)
-    .where(eq(socialLinksTable.isActive, true))
-    .orderBy(asc(socialLinksTable.displayOrder));
+  return safeQuery('getSocialLinksFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(socialLinksTable)
+      .where(eq(socialLinksTable.isActive, true))
+      .orderBy(asc(socialLinksTable.displayOrder));
 
-  return rows.map((row: typeof socialLinksTable.$inferSelect) => ({
-    platform: row.platform as SocialLink['platform'],
-    url: row.url,
-    label: row.label ?? row.platform,
-  }));
+    return rows.map((row: typeof socialLinksTable.$inferSelect) => ({
+      platform: row.platform as SocialLink['platform'],
+      url: row.url,
+      label: row.label ?? row.platform,
+    }));
+  }, []);
 });
 
 /**
  * Fetch services from DB, mapped to the `Service` type with bilingual content.
  */
 export const getServicesFromDb = cache(async (): Promise<Service[]> => {
+  return safeQuery('getServicesFromDb', async () => {
   const rows = await db
     .select()
     .from(servicesTable)
@@ -254,6 +257,7 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
       isProjectType: row.isProjectType,
     };
   });
+  }, []);
 });
 
 /**
@@ -769,27 +773,29 @@ function parseNewlineList(text: string | null): string[] | undefined {
 
 /** Fetch active service areas ordered by display_order. */
 export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
-  const rows = await db
-    .select()
-    .from(serviceAreasTable)
-    .where(eq(serviceAreasTable.isActive, true))
-    .orderBy(asc(serviceAreasTable.displayOrder));
+  return safeQuery('getServiceAreasFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(serviceAreasTable)
+      .where(eq(serviceAreasTable.isActive, true))
+      .orderBy(asc(serviceAreasTable.displayOrder));
 
-  return rows.map((row: typeof serviceAreasTable.$inferSelect) => {
-    const highlightsEn = parseNewlineList(row.highlightsEn);
-    const highlightsZh = parseNewlineList(row.highlightsZh);
+    return rows.map((row: typeof serviceAreasTable.$inferSelect) => {
+      const highlightsEn = parseNewlineList(row.highlightsEn);
+      const highlightsZh = parseNewlineList(row.highlightsZh);
 
-    return {
-      id: row.id,
-      slug: row.slug,
-      name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
-      description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
-      content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
-      highlights: buildSingleRowLocalizedArray(row, highlightsEn, highlightsZh, 'highlights'),
-      metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
-      metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
-    };
-  });
+      return {
+        id: row.id,
+        slug: row.slug,
+        name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
+        description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
+        content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
+        highlights: buildSingleRowLocalizedArray(row, highlightsEn, highlightsZh, 'highlights'),
+        metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
+        metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
+      };
+    });
+  }, []);
 });
 
 // ============================================================================
