@@ -986,16 +986,18 @@ export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedA
 
 /** Fetch published design items ordered by display_order. */
 export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
-  const rows = await db
-    .select()
-    .from(designsTable)
-    .where(eq(designsTable.isPublished, true))
-    .orderBy(asc(designsTable.displayOrder));
+  return safeQuery('getDesignsFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(designsTable)
+      .where(eq(designsTable.isPublished, true))
+      .orderBy(asc(designsTable.displayOrder));
 
-  return rows.map((row: typeof designsTable.$inferSelect) => ({
-    image: getAssetUrl(row.imageUrl),
-    title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
-  }));
+    return rows.map((row: typeof designsTable.$inferSelect) => ({
+      image: getAssetUrl(row.imageUrl),
+      title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
+    }));
+  }, []);
 });
 
 // ============================================================================
@@ -1004,15 +1006,17 @@ export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
 
 /** Fetch active trust badges ordered by display_order. */
 export const getTrustBadgesFromDb = cache(async (): Promise<import('../types').Localized<string>[]> => {
-  const rows = await db
-    .select()
-    .from(trustBadgesTable)
-    .where(eq(trustBadgesTable.isActive, true))
-    .orderBy(asc(trustBadgesTable.displayOrder));
+  return safeQuery('getTrustBadgesFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(trustBadgesTable)
+      .where(eq(trustBadgesTable.isActive, true))
+      .orderBy(asc(trustBadgesTable.displayOrder));
 
-  return rows.map((row: typeof trustBadgesTable.$inferSelect) =>
-    buildLocalized('badge', row.badgeEn, row.badgeZh, row.localizations)
-  );
+    return rows.map((row: typeof trustBadgesTable.$inferSelect) =>
+      buildLocalized('badge', row.badgeEn, row.badgeZh, row.localizations)
+    );
+  }, []);
 });
 
 
@@ -1048,22 +1052,26 @@ async function mapFaqRows(rows: (typeof faqsTable.$inferSelect)[]): Promise<Faq[
 
 /** Fetch active global FAQs (no area scope) ordered by display_order. */
 export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
-  const rows = await db
-    .select()
-    .from(faqsTable)
-    .where(and(eq(faqsTable.isActive, true), isNull(faqsTable.serviceAreaId)))
-    .orderBy(asc(faqsTable.displayOrder));
-  return mapFaqRows(rows);
+  return safeQuery('getFaqsFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(faqsTable)
+      .where(and(eq(faqsTable.isActive, true), isNull(faqsTable.serviceAreaId)))
+      .orderBy(asc(faqsTable.displayOrder));
+    return mapFaqRows(rows);
+  }, []);
 });
 
 /** Fetch active FAQs for a specific service area, ordered by display_order. */
 export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> => {
-  const rows = await db
-    .select()
-    .from(faqsTable)
-    .where(and(eq(faqsTable.isActive, true), eq(faqsTable.serviceAreaId, areaId)))
-    .orderBy(asc(faqsTable.displayOrder));
-  return mapFaqRows(rows);
+  return safeQuery('getFaqsByAreaFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(faqsTable)
+      .where(and(eq(faqsTable.isActive, true), eq(faqsTable.serviceAreaId, areaId)))
+      .orderBy(asc(faqsTable.displayOrder));
+    return mapFaqRows(rows);
+  }, []);
 });
 
 // ============================================================================
@@ -1076,33 +1084,35 @@ export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> 
  * projects inside any site (including individual-projects with showAsProject=false).
  */
 export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<Project[]> => {
-  const matchingRows: DbProjectRow[] = await db
-    .select()
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      sql`LOWER(${projectsTable.locationCity}) = LOWER(${cityName})`
-    ))
-    .orderBy(desc(projectsTable.createdAt))
-    .limit(6);
+  return safeQuery('getProjectsByAreaFromDb', async () => {
+    const matchingRows: DbProjectRow[] = await db
+      .select()
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        sql`LOWER(${projectsTable.locationCity}) = LOWER(${cityName})`
+      ))
+      .orderBy(desc(projectsTable.createdAt))
+      .limit(6);
 
-  if (matchingRows.length === 0) return [];
+    if (matchingRows.length === 0) return [];
 
-  const ids = matchingRows.map((r: DbProjectRow) => r.id);
-  const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
+    const ids = matchingRows.map((r: DbProjectRow) => r.id);
+    const { imagePairs, scopes, externalProducts } = await fetchProjectRelations(ids);
 
-  const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
-  const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
-  const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
+    const imagePairsByProject = groupBy(imagePairs, (ip: DbImagePairRow) => ip.projectId);
+    const scopesByProject = groupBy(scopes, (s: DbScopeRow) => s.projectId);
+    const epByProject = groupBy(externalProducts, (ep: DbExternalProductRow) => ep.projectId);
 
-  return matchingRows.map((row: DbProjectRow) =>
-    mapDbProjectToProject(
-      row,
-      scopesByProject.get(row.id) ?? [],
-      epByProject.get(row.id) ?? [],
-      imagePairsByProject.get(row.id) ?? []
-    )
-  );
+    return matchingRows.map((row: DbProjectRow) =>
+      mapDbProjectToProject(
+        row,
+        scopesByProject.get(row.id) ?? [],
+        epByProject.get(row.id) ?? [],
+        imagePairsByProject.get(row.id) ?? []
+      )
+    );
+  }, []);
 });
 
 // ============================================================================
@@ -1130,104 +1140,110 @@ export interface KitchenGuideProject {
 }
 
 export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
-  const rows = await db
-    .select({
-      titleEn: projectsTable.titleEn,
-      titleZh: projectsTable.titleZh,
-      locationCity: projectsTable.locationCity,
-      budgetRange: projectsTable.budgetRange,
-      durationEn: projectsTable.durationEn,
-      durationZh: projectsTable.durationZh,
-      spaceTypeEn: projectsTable.spaceTypeEn,
-      spaceTypeZh: projectsTable.spaceTypeZh,
-      localizations: projectsTable.localizations,
-      slug: projectsTable.slug,
-    })
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      eq(projectsTable.serviceType, 'kitchen')
-    ))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getKitchenProjectsForGuide', async () => {
+    const rows = await db
+      .select({
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        localizations: projectsTable.localizations,
+        slug: projectsTable.slug,
+      })
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        eq(projectsTable.serviceType, 'kitchen')
+      ))
+      .orderBy(desc(projectsTable.createdAt));
 
-  return rows.map((r: typeof rows[number]) => ({
-    ...r,
-    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
-    duration: r.durationEn && r.durationZh
-      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-    spaceType: r.spaceTypeEn && r.spaceTypeZh
-      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-  }));
+    return rows.map((r: typeof rows[number]) => ({
+      ...r,
+      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      duration: r.durationEn && r.durationZh
+        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+      spaceType: r.spaceTypeEn && r.spaceTypeZh
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+    }));
+  }, []);
 });
 
 
 export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
-  const rows = await db
-    .select({
-      titleEn: projectsTable.titleEn,
-      titleZh: projectsTable.titleZh,
-      locationCity: projectsTable.locationCity,
-      budgetRange: projectsTable.budgetRange,
-      durationEn: projectsTable.durationEn,
-      durationZh: projectsTable.durationZh,
-      spaceTypeEn: projectsTable.spaceTypeEn,
-      spaceTypeZh: projectsTable.spaceTypeZh,
-      localizations: projectsTable.localizations,
-      slug: projectsTable.slug,
-    })
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      eq(projectsTable.serviceType, 'bathroom')
-    ))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getBathroomProjectsForGuide', async () => {
+    const rows = await db
+      .select({
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        localizations: projectsTable.localizations,
+        slug: projectsTable.slug,
+      })
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        eq(projectsTable.serviceType, 'bathroom')
+      ))
+      .orderBy(desc(projectsTable.createdAt));
 
-  return rows.map((r: typeof rows[number]) => ({
-    ...r,
-    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
-    duration: r.durationEn && r.durationZh
-      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-    spaceType: r.spaceTypeEn && r.spaceTypeZh
-      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-  }));
+    return rows.map((r: typeof rows[number]) => ({
+      ...r,
+      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      duration: r.durationEn && r.durationZh
+        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+      spaceType: r.spaceTypeEn && r.spaceTypeZh
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+    }));
+  }, []);
 });
 
 
 export const getWholeHouseProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
-  const rows = await db
-    .select({
-      titleEn: projectsTable.titleEn,
-      titleZh: projectsTable.titleZh,
-      locationCity: projectsTable.locationCity,
-      budgetRange: projectsTable.budgetRange,
-      durationEn: projectsTable.durationEn,
-      durationZh: projectsTable.durationZh,
-      spaceTypeEn: projectsTable.spaceTypeEn,
-      spaceTypeZh: projectsTable.spaceTypeZh,
-      localizations: projectsTable.localizations,
-      slug: projectsTable.slug,
-    })
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      eq(projectsTable.serviceType, 'whole-house')
-    ))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getWholeHouseProjectsForGuide', async () => {
+    const rows = await db
+      .select({
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        localizations: projectsTable.localizations,
+        slug: projectsTable.slug,
+      })
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        eq(projectsTable.serviceType, 'whole-house')
+      ))
+      .orderBy(desc(projectsTable.createdAt));
 
-  return rows.map((r: typeof rows[number]) => ({
-    ...r,
-    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
-    duration: r.durationEn && r.durationZh
-      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-    spaceType: r.spaceTypeEn && r.spaceTypeZh
-      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-  }));
+    return rows.map((r: typeof rows[number]) => ({
+      ...r,
+      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      duration: r.durationEn && r.durationZh
+        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+      spaceType: r.spaceTypeEn && r.spaceTypeZh
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+    }));
+  }, []);
 });
 
 // ============================================================================
@@ -1445,18 +1461,20 @@ export async function getProjectByIdAdmin(id: string) {
 
 /** Fetch active partners ordered by display_order. */
 export const getPartnersFromDb = cache(async (): Promise<Partner[]> => {
-  const rows = await db
-    .select()
-    .from(partnersTable)
-    .where(eq(partnersTable.isActive, true))
-    .orderBy(asc(partnersTable.displayOrder));
+  return safeQuery('getPartnersFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(partnersTable)
+      .where(eq(partnersTable.isActive, true))
+      .orderBy(asc(partnersTable.displayOrder));
 
-  return rows.map((row: typeof partnersTable.$inferSelect) => ({
-    name: { en: row.nameEn, zh: row.nameZh },
-    logo: getAssetUrl(row.logoUrl),
-    url: row.websiteUrl ?? undefined,
-    isHiddenVisually: row.isHiddenVisually,
-  }));
+    return rows.map((row: typeof partnersTable.$inferSelect) => ({
+      name: { en: row.nameEn, zh: row.nameZh },
+      logo: getAssetUrl(row.logoUrl),
+      url: row.websiteUrl ?? undefined,
+      isHiddenVisually: row.isHiddenVisually,
+    }));
+  }, []);
 });
 
 /** Fetch all partners (admin — includes inactive). */
@@ -1466,74 +1484,78 @@ export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$infe
 
 
 export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
-  const rows = await db
-    .select({
-      titleEn: projectsTable.titleEn,
-      titleZh: projectsTable.titleZh,
-      locationCity: projectsTable.locationCity,
-      budgetRange: projectsTable.budgetRange,
-      durationEn: projectsTable.durationEn,
-      durationZh: projectsTable.durationZh,
-      spaceTypeEn: projectsTable.spaceTypeEn,
-      spaceTypeZh: projectsTable.spaceTypeZh,
-      localizations: projectsTable.localizations,
-      slug: projectsTable.slug,
-    })
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      eq(projectsTable.serviceType, 'commercial')
-    ))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getCommercialProjectsForGuide', async () => {
+    const rows = await db
+      .select({
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        localizations: projectsTable.localizations,
+        slug: projectsTable.slug,
+      })
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        eq(projectsTable.serviceType, 'commercial')
+      ))
+      .orderBy(desc(projectsTable.createdAt));
 
-  return rows.map((r: typeof rows[number]) => ({
-    ...r,
-    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
-    duration: r.durationEn && r.durationZh
-      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-    spaceType: r.spaceTypeEn && r.spaceTypeZh
-      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-  }));
+    return rows.map((r: typeof rows[number]) => ({
+      ...r,
+      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      duration: r.durationEn && r.durationZh
+        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+      spaceType: r.spaceTypeEn && r.spaceTypeZh
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+    }));
+  }, []);
 });
 
 
 
 export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
-  const rows = await db
-    .select({
-      titleEn: projectsTable.titleEn,
-      titleZh: projectsTable.titleZh,
-      locationCity: projectsTable.locationCity,
-      budgetRange: projectsTable.budgetRange,
-      durationEn: projectsTable.durationEn,
-      durationZh: projectsTable.durationZh,
-      spaceTypeEn: projectsTable.spaceTypeEn,
-      spaceTypeZh: projectsTable.spaceTypeZh,
-      localizations: projectsTable.localizations,
-      slug: projectsTable.slug,
-    })
-    .from(projectsTable)
-    .where(and(
-      eq(projectsTable.isPublished, true),
-      or(
-        eq(projectsTable.serviceType, 'cabinet'),
-        like(projectsTable.titleEn, '%Cabinet%')
-      )
-    ))
-    .orderBy(desc(projectsTable.createdAt));
+  return safeQuery('getCabinetProjectsForGuide', async () => {
+    const rows = await db
+      .select({
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        localizations: projectsTable.localizations,
+        slug: projectsTable.slug,
+      })
+      .from(projectsTable)
+      .where(and(
+        eq(projectsTable.isPublished, true),
+        or(
+          eq(projectsTable.serviceType, 'cabinet'),
+          like(projectsTable.titleEn, '%Cabinet%')
+        )
+      ))
+      .orderBy(desc(projectsTable.createdAt));
 
-  return rows.map((r: typeof rows[number]) => ({
-    ...r,
-    title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
-    duration: r.durationEn && r.durationZh
-      ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-    spaceType: r.spaceTypeEn && r.spaceTypeZh
-      ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
-      : undefined,
-  }));
+    return rows.map((r: typeof rows[number]) => ({
+      ...r,
+      title: buildLocalized('title', r.titleEn, r.titleZh, r.localizations as Record<string, unknown> | null),
+      duration: r.durationEn && r.durationZh
+        ? buildLocalized('duration', r.durationEn, r.durationZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+      spaceType: r.spaceTypeEn && r.spaceTypeZh
+        ? buildLocalized('spaceType', r.spaceTypeEn, r.spaceTypeZh, r.localizations as Record<string, unknown> | null)
+        : undefined,
+    }));
+  }, []);
 });
 
 // ============================================================================
