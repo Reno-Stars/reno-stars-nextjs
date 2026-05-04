@@ -232,6 +232,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title = enOverrides[overrideKey].title;
     description = enOverrides[overrideKey].description;
   }
+  // ZH overrides — parallel of the EN cabinet city CTR fix (commit 55f6962).
+  // Mandarin Vancouver homeowners search 厨柜翻新 / 厨柜喷漆 / 厨柜重新喷漆
+  // for cabinet refinishing work — terms not surfaced by the generic combo
+  // template. Mirrors the EN "Cabinet Resurfacing & Refinishing {City}" pattern.
+  const zhOverrides: Record<string, { title: string; description: string }> = {
+    'cabinet/port-coquitlam': {
+      title: '高贵林港厨柜翻新喷漆 | $1.5K–$15K | Reno Stars',
+      description: '高贵林港厨柜翻新、重新喷漆与门板更换。喷漆从$1.5K，门板更换$4K起，整体翻新$8K–$15K。1–2周完工。免费报价。',
+    },
+    'cabinet/maple-ridge': {
+      title: '枫树岭厨柜翻新喷漆 | $1.5K–$15K | Reno Stars',
+      description: '枫树岭厨柜翻新与重新喷漆——喷漆$1.5K起，整体翻新$4K–$15K。1–2周完工。覆盖Albion、Thornhill、Haney。免费报价。',
+    },
+    'cabinet/port-moody': {
+      title: '满地宝厨柜翻新喷漆 | $1.5K–$15K | Reno Stars',
+      description: '满地宝厨柜翻新、重新喷漆与门板更换——Heritage Mountain、Newport Village、Inlet Centre。喷漆$1.5K起，翻新$4K–$15K。免费报价。',
+    },
+    'cabinet/delta': {
+      title: 'Delta厨柜翻新喷漆 | $1.5K–$15K | Reno Stars',
+      description: 'Delta厨柜翻新与重新喷漆——Ladner、Tsawwassen、北Delta。喷漆$1.5K起，整体翻新$4K起。免费上门估价。',
+    },
+  };
+  if (locale === 'zh' && zhOverrides[overrideKey]) {
+    title = zhOverrides[overrideKey].title;
+    description = zhOverrides[overrideKey].description;
+  }
   const ogImage = service.image || siteImages.hero;
 
   return {
