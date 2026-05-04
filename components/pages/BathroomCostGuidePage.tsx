@@ -106,6 +106,33 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
+      {/* Above-the-fold fixture-cost callout — captures long-tail searchers
+          who landed here for "vanity/bathtub/toilet renovation cost" before
+          they bounce. Sits between the hero and the cost-tier section. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-xl p-5 flex flex-wrap items-center gap-3 justify-center text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+            <span className="font-semibold" style={{ color: TEXT }}>
+              {locale === 'zh' ? '只想看单项洁具费用？' : 'Looking for a specific fixture cost?'}
+            </span>
+            {[
+              { href: `/${locale}/blog/vanity-renovation-cost-vancouver/`, label: locale === 'zh' ? '梳妆台' : 'Vanity' },
+              { href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`, label: locale === 'zh' ? '浴缸' : 'Bathtub' },
+              { href: `/${locale}/blog/toilet-renovation-cost-vancouver/`, label: locale === 'zh' ? '马桶' : 'Toilet' },
+            ].map((p) => (
+              <Link
+                key={p.href}
+                href={p.href as '/blog/vanity-renovation-cost-vancouver/'}
+                className="px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105"
+                style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+              >
+                {p.label} <ArrowRight size={12} className="inline ml-1" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('tiers.title')}</h2>
@@ -254,17 +281,35 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
-      {/* Bathroom Cost Deep-Dives — hub→spoke topic cluster (2026-05-01) */}
+      {/* Bathroom Cost Deep-Dives — hub→spoke topic cluster.
+          Ordered by GSC opportunity (2026-05-04): vanity / bathtub / toilet
+          are striking-distance commercial-intent queries. By-size / by-style
+          stay as the broader-question slices. */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
             {locale === 'zh' ? '浴室费用专题深度' : 'Bathroom Cost Deep-Dives'}
           </h2>
           <p className="text-center mb-8" style={{ color: TEXT_MID }}>
             {locale === 'zh' ? '从不同角度切片真实项目数据' : 'The same real-project data sliced different ways for your specific question'}
           </p>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {[
+              {
+                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
+                title: locale === 'zh' ? '梳妆台费用' : 'Vanity Cost',
+                desc: locale === 'zh' ? '$700–$7,200+ 按等级' : '$700–$7,200+ by tier',
+              },
+              {
+                href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
+                title: locale === 'zh' ? '浴缸费用' : 'Bathtub Cost',
+                desc: locale === 'zh' ? '$800–$8,500+ 按形态' : '$800–$8,500+ by format',
+              },
+              {
+                href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
+                title: locale === 'zh' ? '马桶费用' : 'Toilet Cost',
+                desc: locale === 'zh' ? '$400–$8,500+ 按等级' : '$400–$8,500+ by tier',
+              },
               {
                 href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-size/`,
                 title: locale === 'zh' ? '按尺寸（3/4/5件套）' : 'By Size (3/4/5-piece)',
@@ -274,11 +319,6 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
                 href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-style/`,
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
                 desc: locale === 'zh' ? '$15K–$70K+ 按设计风格' : '$15K–$70K+ by design style',
-              },
-              {
-                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
-                title: locale === 'zh' ? '梳妆台费用专题' : 'Vanity Cost Specifically',
-                desc: locale === 'zh' ? '$700–$7,200+ 按等级' : '$700–$7,200+ by tier',
               },
             ].map((p) => (
               <Link
