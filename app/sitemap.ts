@@ -208,13 +208,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Cost-guide blog posts share the topic-cluster role of the /guides/{slug}
+  // pages — they're permanent reference content, not time-sensitive blog. Bump
+  // them to PRIORITY.guide so Google crawls them on the same cadence.
+  const COST_GUIDE_BLOG_SLUGS = new Set([
+    'vanity-renovation-cost-vancouver',
+    'bathtub-renovation-cost-vancouver',
+    'toilet-renovation-cost-vancouver',
+    'average-bathroom-renovation-cost-vancouver',
+    'basement-renovation-vancouver-complete-guide',
+    'cabinet-resurfacing-port-moody-cost-guide',
+    'cabinet-refinishing-coquitlam-cost-guide',
+    'cabinet-refinishing-maple-ridge-cost-guide',
+    'cabinet-resurfacing-langley-cost-guide',
+  ]);
+
   for (const slug of blogPostSlugs) {
+    const isCostGuide = COST_GUIDE_BLOG_SLUGS.has(slug);
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
         lastModified: blogDateMap.get(slug) ?? now,
         alternates: buildAlternates(`/blog/${slug}`),
-        priority: PRIORITY.blog,
+        priority: isCostGuide ? PRIORITY.guide : PRIORITY.blog,
         changeFrequency: CHANGEFREQ.monthly,
       });
     }
