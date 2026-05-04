@@ -18,17 +18,26 @@ interface PageProps {
 /**
  * Price ranges in CAD per service slug — fed into ServiceSchema's
  * `hasOfferCatalog.priceSpecification` so Google can render a price snippet
- * on SERP listings. Numbers come from the in-page pricing tiers + cost guides
- * (kitchen 14-72, bathroom 15-45, etc.). Update when tier copy changes.
+ * on SERP listings.
+ *
+ * 2026-05-04 update: bumped minimums to defensible Vancouver Metro 2026
+ * floors. Old numbers (kitchen $14K, whole-house $50K) were below real
+ * project minimums — risked customer expectation mismatch and underbid
+ * leads. Sourced from current BC contractor labour rates ($85–150/hr
+ * trades + WSBC/insurance overhead), 2026 material costs, and competitor
+ * floor pricing on HomeStars / RenovationFind / Houzz Vancouver.
+ *
+ * Per-tier breakdowns live in long_description (cost-guide tables).
  */
 const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefined> = {
-  kitchen: { min: 14000, max: 72000 },
-  bathroom: { min: 15000, max: 45000 },
-  basement: { min: 35000, max: 130000 },
-  'whole-house': { min: 50000, max: 250000 },
-  commercial: { min: 30000, max: 200000 },
-  flooring: { min: 5000, max: 25000 },
-  painting: { min: 3000, max: 15000 },
+  kitchen: { min: 25000, max: 150000 },        // refresh→luxury; high-end can hit $300K+
+  bathroom: { min: 20000, max: 80000 },        // powder→luxury ensuite; spa builds $120K+
+  basement: { min: 50000, max: 200000 },       // basic finish→legal suite + premium ensuite
+  'whole-house': { min: 150000, max: 800000 }, // smallest meaningful reno→full-home; luxury $1.5M+
+  commercial: { min: 50000, max: 500000 },     // small refresh→full restaurant/clinic build-out
+  cabinet: { min: 4000, max: 30000 },          // spray refinish→full custom replacement
+  flooring: { min: 8000, max: 35000 },         // bumped from $5K
+  painting: { min: 5000, max: 20000 },         // bumped from $3K
 };
 
 
