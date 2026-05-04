@@ -85,6 +85,37 @@ export default function ServiceLocationPage({
     [services, serviceSlug, locale],
   );
 
+  // City+service-scoped cost summary from completed-project budget_range values.
+  // Targets "{service} renovation {city}" queries (combo pages collectively at
+  // pos 14-27 across the {svc}+{city} grid). Real DB data only — never
+  // fabricated. Section hides itself if <2 matching projects exist.
+  const cityServiceCostSummary = useMemo(() => {
+    const ranges = areaProjects
+      .filter((p) => p.service_type === serviceSlug)
+      .map((p) => {
+        const r = p.budget_range;
+        if (!r) return null;
+        const nums = r.match(/[\d,]+/g);
+        if (!nums || nums.length < 1) return null;
+        const lo = parseInt(nums[0].replace(/,/g, ''), 10);
+        const hi = nums.length > 1 ? parseInt(nums[1].replace(/,/g, ''), 10) : lo;
+        if (Number.isNaN(lo) || Number.isNaN(hi)) return null;
+        return { lo, hi, mid: Math.round((lo + hi) / 2) };
+      })
+      .filter((r): r is { lo: number; hi: number; mid: number } => r !== null);
+
+    if (ranges.length < 2) return null;
+    const allMin = Math.min(...ranges.map((r) => r.lo));
+    const allMax = Math.max(...ranges.map((r) => r.hi));
+    const avg = Math.round(ranges.reduce((s, r) => s + r.mid, 0) / ranges.length);
+    return { count: ranges.length, allMin, allMax, avg };
+  }, [areaProjects, serviceSlug]);
+
+  const formatPrice = (n: number): string => {
+    if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+    return '$' + n.toLocaleString('en-CA');
+  };
+
   const title = t('areas.serviceInArea', { service: localizedService.title, area: localizedArea.name });
 
   const benefits = [
@@ -130,6 +161,55 @@ export default function ServiceLocationPage({
           </p>
         </div>
       </section>
+
+      {/* Real {service} costs in {city} — DB-backed cost stat block. Sits
+          immediately under the hero so users + Google see real $-data above
+          the fold. Targets the "{service} renovation {city}" query intent. */}
+      {cityServiceCostSummary && (
+        <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-bold mb-2" style={{ color: TEXT }}>
+              {locale === 'zh' || locale === 'zh-Hant'
+                ? `${localizedArea.name}${localizedService.title}真实费用`
+                : `Real ${localizedService.title} Costs in ${localizedArea.name}`}
+            </h2>
+            <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
+              {locale === 'zh' || locale === 'zh-Hant'
+                ? `基于 ${cityServiceCostSummary.count} 个已完工 ${localizedArea.name} ${localizedService.title}项目`
+                : locale === 'ja'
+                  ? `${localizedArea.name}で完了した${cityServiceCostSummary.count}件の${localizedService.title}プロジェクトに基づく`
+                  : locale === 'ko'
+                    ? `${localizedArea.name}에서 완료된 ${cityServiceCostSummary.count}개 ${localizedService.title} 프로젝트 기준`
+                    : `Based on ${cityServiceCostSummary.count} completed ${localizedService.title.toLowerCase()} projects in ${localizedArea.name}`}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Price Range',
+                  value: `${formatPrice(cityServiceCostSummary.allMin)} – ${formatPrice(cityServiceCostSummary.allMax)}`,
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '中位数' : 'Average',
+                  value: formatPrice(cityServiceCostSummary.avg),
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '已完成项目' : 'Projects',
+                  value: String(cityServiceCostSummary.count),
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '保修' : 'Warranty',
+                  value: locale === 'zh' || locale === 'zh-Hant' ? '3 年' : '3 yrs',
+                },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                  <div className="text-lg md:text-xl font-bold" style={{ color: GOLD }}>{stat.value}</div>
+                  <div className="text-xs mt-1" style={{ color: TEXT_MID }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Service Description — accepts markdown OR HTML */}
       {localizedService.long_description && (
