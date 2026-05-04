@@ -749,6 +749,50 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         </div>
       </section>
 
+      {/* Fixture cost guides — pass equity from this 253-imp/mo crawl-magnet
+          page to the striking-distance fixture-cost posts (each at pos 9-10
+          GSC). Real research-stage links — visitors browsing /projects/ are
+          mid-funnel and the cost-by-fixture posts answer "how much will my
+          part cost". */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-lg font-bold mb-4 text-center" style={{ color: TEXT }}>
+            {locale === 'zh' || locale === 'zh-Hant'
+              ? '研究单项费用？'
+              : 'Researching specific costs?'}
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              {
+                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
+                label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : 'Vanity cost',
+                range: '$700–$7.2K+',
+              },
+              {
+                href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
+                label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : 'Bathtub cost',
+                range: '$800–$8.5K+',
+              },
+              {
+                href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
+                label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : 'Toilet cost',
+                range: '$400–$8.5K+',
+              },
+            ].map((p) => (
+              <Link
+                key={p.href}
+                href={p.href as '/blog/vanity-renovation-cost-vancouver/'}
+                className="rounded-xl p-4 flex flex-col gap-1 transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: SURFACE_ALT }}
+              >
+                <span className="font-semibold" style={{ color: TEXT }}>{p.label}</span>
+                <span className="text-sm font-bold" style={{ color: GOLD }}>{p.range}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTASection
         heading={t('projects.readyToStart2')}
         subtitle={t('projects.ctaSubtitle7', { years: company.yearsExperience })}
