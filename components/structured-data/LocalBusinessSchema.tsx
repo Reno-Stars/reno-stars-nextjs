@@ -35,6 +35,11 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     '@type': 'HomeAndConstructionBusiness',
     '@id': `${BASE_URL}/#organization`,
     name: company.name,
+    // alternateName: brand-variant capture so Google reconciles user queries
+    // for the singular "Reno Star", concatenated "RenoStars", and lowercase
+    // "renostars" with this entity. GSC 2026-05-04 showed "reno star" (sing.)
+    // ranking pos 7 with 99 imp / 12 clicks — should be pos 1 since brand.
+    alternateName: ['Reno Stars', 'Reno Star', 'RenoStars', 'Renostars'],
     image: company.logo,
     url: BASE_URL,
     telephone: `+1-${company.phone}`,

@@ -16,6 +16,9 @@ export default function WebSiteSchema({ locale = 'en' }: WebSiteSchemaProps): Re
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
     name: SITE_NAME,
+    // Match alternateName on the Organization node so Google reconciles brand
+    // variants ("reno star" sing., "RenoStars", "renostars") with this site.
+    alternateName: ['Reno Stars', 'Reno Star', 'RenoStars', 'Renostars'],
     inLanguage: locale,
     publisher: { '@id': `${baseUrl}/#organization` },
     potentialAction: {
