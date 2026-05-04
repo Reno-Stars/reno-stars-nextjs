@@ -17,7 +17,7 @@ interface PageProps {
 // we ARE the pros — so this page anchors the query to our brand + links
 // out to all 14 area sub-pages for geo-specific follow-up.
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

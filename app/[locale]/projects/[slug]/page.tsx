@@ -16,7 +16,7 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 // Build-time prerender: EN only. Non-EN locales lazy-generate on first
 // request via dynamicParams=true. Saves ~9× the prerender count for projects,

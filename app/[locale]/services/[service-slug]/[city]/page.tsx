@@ -16,7 +16,7 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 // Build-time prerender: only the locales that drive search/marketing traffic
 // (en, zh, zh-Hant). At 14 locales × 7 services × 14 areas = 1,372 combo

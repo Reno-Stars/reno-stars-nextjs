@@ -31,7 +31,7 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
   painting: { min: 3000, max: 15000 },
 };
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 // Build-time prerender: ALL locales. ISR was returning 404 for non-EN at
 // runtime (caught by scripts/audit-hreflang.mjs 2026-04-30) — every

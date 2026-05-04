@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { NAVY, GOLD, SURFACE, TEXT_MID } from '@/lib/theme';
 import { SITE_NAME } from '@/lib/utils';
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export const metadata: Metadata = {
   title: `Page Not Found | ${SITE_NAME}`,

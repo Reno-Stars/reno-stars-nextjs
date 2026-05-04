@@ -7,7 +7,7 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/u
 import { getServiceAreasFromDb } from '@/lib/db/queries';
 
 interface PageProps { params: Promise<{ locale: string }>; }
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 export function generateStaticParams() { return locales.map((locale) => ({ locale })); }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

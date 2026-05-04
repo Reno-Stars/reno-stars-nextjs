@@ -12,7 +12,7 @@ interface PageProps {
   params: Promise<{ locale: string; tier: string }>;
 }
 
-export const revalidate = 604800; // 7d
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 const TIERS = ['under-30k', '30k-60k', '60k-plus'] as const;
 type Tier = (typeof TIERS)[number];

@@ -10,7 +10,7 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export const revalidate = 604800; // 7d — Vercel quota optimization
+export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
