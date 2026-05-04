@@ -647,7 +647,7 @@ export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> =>
 }, ['getProjectsListFromDb'], { tags: ['projects'] });
 
 /** Fetch a single published project by slug from DB. */
-export const getProjectBySlugFromDb = cache(
+export const getProjectBySlugFromDb = cachedQueryWithArgs(
   async (slug: string): Promise<Project | null> => {
     return safeQuery('getProjectBySlugFromDb', async () => {
       const rows = await db
@@ -662,7 +662,9 @@ export const getProjectBySlugFromDb = cache(
       const { imagePairs, scopes, externalProducts } = await fetchProjectRelations([row.id]);
       return mapDbProjectToProject(row, scopes, externalProducts, imagePairs);
     }, null);
-  }
+  },
+  ['getProjectBySlugFromDb', 'v1'],
+  { revalidate: 3600, tags: ['projects'] }
 );
 
 /** Fetch all projects including unpublished (for admin). */
@@ -796,7 +798,7 @@ export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]
 });
 
 /** Fetch a site by slug with its projects and aggregated data. */
-export const getSiteBySlugFromDb = cache(
+export const getSiteBySlugFromDb = cachedQueryWithArgs(
   async (slug: string): Promise<SiteWithProjects | null> => {
     return safeQuery('getSiteBySlugFromDb', async () => {
       const rows = await db
@@ -830,7 +832,9 @@ export const getSiteBySlugFromDb = cache(
         aggregated,
       };
     }, null);
-  }
+  },
+  ['getSiteBySlugFromDb', 'v1'],
+  { revalidate: 3600, tags: ['sites', 'projects'] }
 );
 
 /** Fetch all published sites that should show as projects, with projects and aggregated data. */
@@ -1060,7 +1064,7 @@ export const getBlogPostsPaginatedFromDb = cache(
 );
 
 /** Fetch a single published blog post by slug, with related project if linked. */
-export const getBlogPostBySlugFromDb = cache(
+export const getBlogPostBySlugFromDb = cachedQueryWithArgs(
   async (slug: string): Promise<BlogPost | null> => {
     return safeQuery('getBlogPostBySlugFromDb', async () => {
     const rows = await db
@@ -1124,7 +1128,9 @@ export const getBlogPostBySlugFromDb = cache(
       related_project: relatedProject,
     };
     }, null);
-  }
+  },
+  ['getBlogPostBySlugFromDb', 'v1'],
+  { revalidate: 3600, tags: ['blog'] }
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). */
