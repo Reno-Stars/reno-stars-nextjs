@@ -104,6 +104,55 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
     return Array.from({ length: Math.min(pick, all.length) }, (_, i) => all[(offset + i) % all.length]);
   }, [googleReviews, area.slug]);
 
+  // City-scoped cost summary computed from completed-project budget_range values.
+  // Shows "real costs in {City}" — Google's ranking signal for "home renovations
+  // {city}" queries (currently pos 27-50, ~5K imp/mo at zero clicks across MR/
+  // White Rock/Coquitlam/PoCo/NV). Uses DB data only — never fabricated.
+  const cityCostSummary = useMemo(() => {
+    const ranges = areaProjects
+      .map((p) => {
+        const r = p.budget_range;
+        if (!r) return null;
+        const nums = r.match(/[\d,]+/g);
+        if (!nums || nums.length < 1) return null;
+        const lo = parseInt(nums[0].replace(/,/g, ''), 10);
+        const hi = nums.length > 1 ? parseInt(nums[1].replace(/,/g, ''), 10) : lo;
+        if (Number.isNaN(lo) || Number.isNaN(hi)) return null;
+        return { lo, hi, mid: Math.round((lo + hi) / 2), service: p.service_type };
+      })
+      .filter((r): r is { lo: number; hi: number; mid: number; service: string | undefined } => r !== null);
+
+    if (ranges.length < 2) return null; // need >=2 projects for a range to be meaningful
+
+    const allMin = Math.min(...ranges.map((r) => r.lo));
+    const allMax = Math.max(...ranges.map((r) => r.hi));
+    const avg = Math.round(ranges.reduce((s, r) => s + r.mid, 0) / ranges.length);
+
+    // Per-service breakdown when at least 2 projects of that service exist
+    const byService = new Map<string, number[]>();
+    for (const r of ranges) {
+      if (!r.service) continue;
+      if (!byService.has(r.service)) byService.set(r.service, []);
+      byService.get(r.service)!.push(r.mid);
+    }
+    const breakdown = Array.from(byService.entries())
+      .filter(([, mids]) => mids.length >= 2)
+      .map(([service, mids]) => ({
+        service,
+        min: Math.min(...mids),
+        max: Math.max(...mids),
+        count: mids.length,
+      }))
+      .sort((a, b) => b.count - a.count);
+
+    return { count: ranges.length, allMin, allMax, avg, breakdown };
+  }, [areaProjects]);
+
+  const formatPrice = (n: number): string => {
+    if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+    return '$' + n.toLocaleString('en-CA');
+  };
+
   // Use custom highlights when present, fallback to hardcoded i18n benefits
   const benefits = useMemo(() => {
     if (localizedArea.highlights && localizedArea.highlights.length > 0) {
@@ -141,6 +190,78 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </p>
         </div>
       </section>
+
+      {/* Real renovation costs in {City} — DB-backed cost summary.
+          Targets the "home renovations {city}" query cluster (~5K imp/mo
+          at pos 27-50, zero clicks). Surfaces real $-range from completed
+          projects + per-service breakdown. Bilingual via city-names left
+          in $-formatted strings (universal). */}
+      {cityCostSummary && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: TEXT }}>
+              {locale === 'zh' || locale === 'zh-Hant'
+                ? `${localizedArea.name}装修真实费用`
+                : `Real Renovation Costs in ${localizedArea.name}`}
+            </h2>
+            <p className="text-sm mb-8" style={{ color: TEXT_MID }}>
+              {locale === 'zh' || locale === 'zh-Hant'
+                ? `基于 ${cityCostSummary.count} 个已完工 ${localizedArea.name} 项目的真实预算数据`
+                : locale === 'ja'
+                  ? `${localizedArea.name}で完了した${cityCostSummary.count}件の実プロジェクトに基づく予算データ`
+                  : locale === 'ko'
+                    ? `${localizedArea.name}에서 완료된 ${cityCostSummary.count}개 실제 프로젝트의 예산 데이터`
+                    : `Based on ${cityCostSummary.count} completed Reno Stars projects in ${localizedArea.name}`}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {[
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Price Range',
+                  value: `${formatPrice(cityCostSummary.allMin)} – ${formatPrice(cityCostSummary.allMax)}`,
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '中位数' : 'Average',
+                  value: formatPrice(cityCostSummary.avg),
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '已完成项目' : 'Projects',
+                  value: String(cityCostSummary.count),
+                },
+                {
+                  label: locale === 'zh' || locale === 'zh-Hant' ? '保修' : 'Warranty',
+                  value: locale === 'zh' || locale === 'zh-Hant' ? '3 年' : '3 yrs',
+                },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                  <div className="text-lg md:text-xl font-bold" style={{ color: GOLD }}>{stat.value}</div>
+                  <div className="text-xs mt-1" style={{ color: TEXT_MID }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+            {cityCostSummary.breakdown.length > 0 && (
+              <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <div className="grid grid-cols-3 gap-3 p-4 font-bold text-sm" style={{ backgroundColor: NAVY, color: '#fff' }}>
+                  <span>{locale === 'zh' || locale === 'zh-Hant' ? '类别' : 'Service'}</span>
+                  <span className="text-center">{locale === 'zh' || locale === 'zh-Hant' ? '项目数' : 'Projects'}</span>
+                  <span className="text-right">{locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Range'}</span>
+                </div>
+                {cityCostSummary.breakdown.map((row) => {
+                  const svcLabel = services.find((s) => s.slug === row.service)?.title || row.service;
+                  return (
+                    <div key={row.service} className="grid grid-cols-3 gap-3 p-4 text-sm border-t" style={{ borderColor: SURFACE_ALT, color: TEXT_MID }}>
+                      <span className="font-semibold" style={{ color: TEXT }}>{svcLabel}</span>
+                      <span className="text-center">{row.count}</span>
+                      <span className="text-right font-semibold" style={{ color: GOLD }}>
+                        {formatPrice(row.min)} – {formatPrice(row.max)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Related Projects from DB */}
       {localizedProjects.length > 0 && (
