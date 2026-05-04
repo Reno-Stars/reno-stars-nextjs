@@ -24,6 +24,11 @@ function cachedQuery<T>(
   keyParts: string[],
   options: { revalidate?: number; tags?: string[] } = {},
 ): () => Promise<T> {
+  // unstable_cache reads from Next's AsyncLocalStorage incrementalCache.
+  // tsx scripts (seed jobs, migrations, CLI tools) run outside that context
+  // and would crash with "Invariant: incrementalCache missing". Fall back
+  // to react.cache() — single-process dedup is fine for one-shot scripts.
+  if (!process.env.NEXT_RUNTIME) return cache(fn);
   const wrapped = unstable_cache(fn, keyParts, {
     revalidate: options.revalidate ?? 3600,
     tags: options.tags,
@@ -42,6 +47,7 @@ function cachedQueryWithArgs<A extends string, T>(
   keyParts: string[],
   options: { revalidate?: number; tags?: string[] } = {},
 ): (arg: A) => Promise<T> {
+  if (!process.env.NEXT_RUNTIME) return cache(fn);
   const wrapped = unstable_cache(fn, keyParts, {
     revalidate: options.revalidate ?? 3600,
     tags: options.tags,
@@ -71,6 +77,7 @@ function cachedQueryPerSlug<T>(
   baseKey: string,
   options: { revalidate?: number; broadTags?: string[]; tagPrefix?: string } = {},
 ): (slug: string) => Promise<T> {
+  if (!process.env.NEXT_RUNTIME) return cache(fn);
   return cache(async (slug: string) => {
     const wrapped = unstable_cache(
       () => fn(slug),
