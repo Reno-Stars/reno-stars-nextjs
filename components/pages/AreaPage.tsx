@@ -104,6 +104,30 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
     return Array.from({ length: Math.min(pick, all.length) }, (_, i) => all[(offset + i) % all.length]);
   }, [googleReviews, area.slug]);
 
+  // Most-recent completed project date in this city — surfaces a freshness
+  // signal both to visitors ("active in {City} as of last month") and to
+  // Google (date-stamped content updates rank higher than static pages on
+  // city-renovation queries).
+  const latestProjectDate = useMemo(() => {
+    const dates = areaProjects
+      .map((p) => p.published_at ? new Date(p.published_at) : null)
+      .filter((d): d is Date => d !== null && !Number.isNaN(d.getTime()));
+    if (dates.length === 0) return null;
+    return new Date(Math.max(...dates.map((d) => d.getTime())));
+  }, [areaProjects]);
+
+  const formatMonthYear = (d: Date, loc: Locale): string => {
+    const monthNames: Record<string, string[]> = {
+      en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      zh: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      'zh-Hant': ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      ja: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      ko: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    };
+    const months = monthNames[loc] || monthNames.en;
+    return `${months[d.getMonth()]} ${d.getFullYear()}`;
+  };
+
   // City-scoped cost summary computed from completed-project budget_range values.
   // Shows "real costs in {City}" — Google's ranking signal for "home renovations
   // {city}" queries (currently pos 27-50, ~5K imp/mo at zero clicks across MR/
@@ -227,10 +251,15 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                   label: locale === 'zh' || locale === 'zh-Hant' ? '已完成项目' : 'Projects',
                   value: String(cityCostSummary.count),
                 },
-                {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '保修' : 'Warranty',
-                  value: locale === 'zh' || locale === 'zh-Hant' ? '3 年' : '3 yrs',
-                },
+                latestProjectDate
+                  ? {
+                      label: locale === 'zh' || locale === 'zh-Hant' ? '最近完工' : 'Latest',
+                      value: formatMonthYear(latestProjectDate, locale),
+                    }
+                  : {
+                      label: locale === 'zh' || locale === 'zh-Hant' ? '保修' : 'Warranty',
+                      value: locale === 'zh' || locale === 'zh-Hant' ? '3 年' : '3 yrs',
+                    },
               ].map((stat) => (
                 <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                   <div className="text-lg md:text-xl font-bold" style={{ color: GOLD }}>{stat.value}</div>
