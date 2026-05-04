@@ -125,6 +125,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Cabinet Resurfacing & Refinishing Delta BC | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing & refinishing in Delta — Ladner, Tsawwassen, North Delta. Painting from $1.5K, full refacing from $4K. Free in-home quote.',
     },
+    // Specialty services launched 2026-05-04. Title overrides for the
+    // highest-volume cities in Metro Vancouver — Burnaby/Richmond/Surrey/
+    // Vancouver are the major aging-in-place markets for accessible
+    // bathroom work, and Burnaby/Coquitlam/Richmond have the densest
+    // 1985-97 SFH stock for Poly-B replacement demand.
+    'accessible-bathroom/vancouver': {
+      title: 'Accessible Bathroom Vancouver | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Vancouver accessible & aging-in-place bathroom renovations — curbless showers, grab bars, comfort-height toilets, wheelchair vanities. CSA B651 compliant. $3K–$60K. Free quote.',
+    },
+    'accessible-bathroom/burnaby': {
+      title: 'Accessible Bathroom Burnaby | Wheelchair Walk-in | $3K–$60K | Reno Stars',
+      description: 'Burnaby accessible bathroom renovations — Metrotown, Heights, Capitol Hill. Walk-in showers, grab bars, roll-in seating, wheelchair-accessible vanities. $3K–$60K.',
+    },
+    'accessible-bathroom/richmond': {
+      title: 'Accessible Bathroom Richmond BC | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Richmond accessible bathroom renovations — Steveston, Brighouse, Terra Nova. Curbless showers, grab bars, comfort-height fixtures, walker/wheelchair access. $3K–$60K.',
+    },
+    'accessible-bathroom/surrey': {
+      title: 'Accessible Bathroom Surrey | Wheelchair Walk-in | $3K–$60K | Reno Stars',
+      description: 'Surrey accessible bathroom renovations — Fleetwood, Newton, South Surrey, Cloverdale. Aging-in-place + wheelchair-accessible builds. $3K–$60K. Free in-home quote.',
+    },
+    'accessible-bathroom/west-vancouver': {
+      title: 'Accessible Bathroom West Vancouver | Premium Aging in Place | Reno Stars',
+      description: 'West Vancouver accessible bathroom renovations — premium aging-in-place builds in Caulfeild, Dundarave, British Properties. CSA B651 compliant, occupational-therapist coordinated.',
+    },
+    'poly-b-replacement/burnaby': {
+      title: 'Poly-B Replacement Burnaby | $4K–$22K | Insurance-Ready | Reno Stars',
+      description: 'Burnaby Poly-B pipe replacement — Metrotown condos, Heights SFH, Burnaby Mountain townhouses. PEX re-pipe, 50-year warranty, insurer-ready documentation. $4K–$22K.',
+    },
+    'poly-b-replacement/coquitlam': {
+      title: 'Poly-B Replacement Coquitlam | $8K–$22K | Insurance-Ready | Reno Stars',
+      description: 'Coquitlam Poly-B pipe replacement — Burke Mountain, Westwood Plateau, Maillardville SFH. PEX re-pipe, 50-year warranty, insurance renewal documentation. $8K–$22K.',
+    },
+    'poly-b-replacement/richmond': {
+      title: 'Poly-B Replacement Richmond BC | $4K–$25K | Insurance-Ready | Reno Stars',
+      description: 'Richmond Poly-B pipe replacement — Steveston, Brighouse, Terra Nova SFH. PEX re-pipe, 50-year warranty, BC permit + inspection. $4K–$25K. Free quote.',
+    },
+    'poly-b-replacement/maple-ridge': {
+      title: 'Poly-B Replacement Maple Ridge | $10K–$25K | Insurance-Ready | Reno Stars',
+      description: 'Maple Ridge Poly-B pipe replacement — Albion, Cottonwood, Haney SFH. 1985-97 building stock dense in this area. PEX re-pipe + 50-year warranty. $10K–$25K.',
+    },
+    'poly-b-replacement/surrey': {
+      title: 'Poly-B Replacement Surrey | $10K–$25K | Insurance-Ready | Reno Stars',
+      description: 'Surrey Poly-B pipe replacement — Fleetwood, Newton, Cloverdale SFH. PEX re-pipe with 50-year warranty + insurance-renewal documentation. $10K–$25K.',
+    },
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
       title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',

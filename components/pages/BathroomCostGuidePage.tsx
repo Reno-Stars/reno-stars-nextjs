@@ -293,7 +293,7 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
           <p className="text-center mb-8" style={{ color: TEXT_MID }}>
             {locale === 'zh' ? '从不同角度切片真实项目数据' : 'The same real-project data sliced different ways for your specific question'}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
@@ -309,6 +309,11 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
                 href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
                 title: locale === 'zh' ? '马桶费用' : 'Toilet Cost',
                 desc: locale === 'zh' ? '$400–$8,500+ 按等级' : '$400–$8,500+ by tier',
+              },
+              {
+                href: `/${locale}/services/accessible-bathroom/`,
+                title: locale === 'zh' ? '无障碍 / 老人浴室' : 'Accessible / Aging-in-Place',
+                desc: locale === 'zh' ? '$3K–$60K 老人 + 轮椅' : '$3K–$60K aging-in-place + wheelchair',
               },
               {
                 href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-size/`,
