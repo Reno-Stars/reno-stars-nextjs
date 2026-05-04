@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { faqs } from '@/lib/db/schema';
@@ -43,6 +43,7 @@ export async function createFaq(
     });
 
     revalidatePath('/admin/faqs');
+    updateTag('faqs');
   } catch (error) {
     console.error('Failed to create FAQ:', error);
     return { error: 'Failed to create FAQ.' };
@@ -71,6 +72,7 @@ export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: strin
     );
 
     revalidatePath('/admin/faqs');
+    updateTag('faqs');
     return {};
   } catch (error) {
     console.error('Failed to reorder FAQs:', error);
@@ -110,6 +112,7 @@ export async function updateFaq(
     if (updated.length === 0) return { error: 'FAQ not found.' };
 
     revalidatePath('/admin/faqs');
+    updateTag('faqs');
     return { success: true };
   } catch (error) {
     console.error('Failed to update FAQ:', error);
@@ -124,6 +127,7 @@ export async function toggleFaqActive(id: string, current: boolean): Promise<{ e
     const updated = await db.update(faqs).set({ isActive: !current, updatedAt: new Date() }).where(eq(faqs.id, id)).returning({ id: faqs.id });
     if (updated.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
+    updateTag('faqs');
     return {};
   } catch (error) {
     console.error('Failed to toggle FAQ active:', error);
@@ -138,6 +142,7 @@ export async function deleteFaq(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(faqs).where(eq(faqs.id, id)).returning({ id: faqs.id });
     if (deleted.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
+    updateTag('faqs');
     return {};
   } catch (error) {
     console.error('Failed to delete FAQ:', error);

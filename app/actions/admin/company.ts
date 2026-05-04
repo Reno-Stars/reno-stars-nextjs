@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { companyInfo } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -74,6 +74,7 @@ export async function updateCompanyInfo(
       console.error('S3 cleanup failed:', err);
     });
 
+    updateTag('company');
     return { success: true };
   } catch (error) {
     console.error('Failed to update company info:', error);

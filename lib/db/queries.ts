@@ -1125,7 +1125,7 @@ export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedA
 // ============================================================================
 
 /** Fetch published design items ordered by display_order. */
-export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
+export const getDesignsFromDb = cachedQuery(async (): Promise<DesignItem[]> => {
   return safeQuery('getDesignsFromDb', async () => {
     const rows = await db
       .select()
@@ -1138,7 +1138,7 @@ export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
       title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
     }));
   }, []);
-});
+}, ['getDesignsFromDb'], { tags: ['designs'] });
 
 // ============================================================================
 // TRUST BADGE QUERIES
@@ -1191,7 +1191,7 @@ async function mapFaqRows(rows: (typeof faqsTable.$inferSelect)[]): Promise<Faq[
 }
 
 /** Fetch active global FAQs (no area scope) ordered by display_order. */
-export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
+export const getFaqsFromDb = cachedQuery(async (): Promise<Faq[]> => {
   return safeQuery('getFaqsFromDb', async () => {
     const rows = await db
       .select()
@@ -1200,7 +1200,7 @@ export const getFaqsFromDb = cache(async (): Promise<Faq[]> => {
       .orderBy(asc(faqsTable.displayOrder));
     return mapFaqRows(rows);
   }, []);
-});
+}, ['getFaqsFromDb'], { tags: ['faqs'] });
 
 /** Fetch active FAQs for a specific service area, ordered by display_order. */
 export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> => {

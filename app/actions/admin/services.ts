@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { services, serviceTags, serviceBenefits, projects, contactSubmissions } from '@/lib/db/schema';
@@ -139,6 +139,7 @@ export async function createService(
     }
 
     revalidatePath('/admin/services');
+    updateTag('services');
   } catch (error) {
     console.error('Failed to create service:', error);
     return { error: 'Failed to create service.' };
@@ -165,6 +166,7 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(services).where(eq(services.id, id)).returning({ id: services.id });
     if (deleted.length === 0) return { error: 'Service not found.' };
     revalidatePath('/admin/services');
+    updateTag('services');
     return {};
   } catch (error) {
     console.error('Failed to delete service:', error);
@@ -192,6 +194,7 @@ export async function reorderServices(orderedIds: string[]): Promise<{ error?: s
     );
 
     revalidatePath('/admin/services');
+    updateTag('services');
     return {};
   } catch (error) {
     console.error('Failed to reorder services:', error);
@@ -301,6 +304,7 @@ export async function updateService(
     }
 
     revalidatePath('/admin/services');
+    updateTag('services');
     return { success: true };
   } catch (error) {
     console.error('Failed to update service:', error);

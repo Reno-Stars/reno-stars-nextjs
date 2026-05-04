@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { partners } from '@/lib/db/schema';
@@ -56,6 +56,7 @@ export async function createPartner(
     await db.insert(partners).values(result.data);
 
     revalidatePath('/admin/partners');
+    updateTag('partners');
   } catch (error) {
     console.error('Failed to create partner:', error);
     return { error: 'Failed to create partner.' };
@@ -82,6 +83,7 @@ export async function updatePartner(
     if (updated.length === 0) return { error: 'Partner not found.' };
 
     revalidatePath('/admin/partners');
+    updateTag('partners');
     return { success: true };
   } catch (error) {
     console.error('Failed to update partner:', error);
@@ -96,6 +98,7 @@ export async function deletePartner(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(partners).where(eq(partners.id, id)).returning({ id: partners.id });
     if (deleted.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    updateTag('partners');
     return {};
   } catch (error) {
     console.error('Failed to delete partner:', error);
@@ -113,6 +116,7 @@ export async function togglePartnerActive(id: string, current: boolean): Promise
       .returning({ id: partners.id });
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    updateTag('partners');
     return {};
   } catch (error) {
     console.error('Failed to toggle partner active:', error);
@@ -130,6 +134,7 @@ export async function togglePartnerHidden(id: string, current: boolean): Promise
       .returning({ id: partners.id });
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    updateTag('partners');
     return {};
   } catch (error) {
     console.error('Failed to toggle partner visibility:', error);
@@ -157,6 +162,7 @@ export async function reorderPartners(orderedIds: string[]): Promise<{ error?: s
     );
 
     revalidatePath('/admin/partners');
+    updateTag('partners');
     return {};
   } catch (error) {
     console.error('Failed to reorder partners:', error);

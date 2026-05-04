@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { serviceAreas, contactSubmissions, faqs } from '@/lib/db/schema';
@@ -74,6 +74,7 @@ export async function createServiceArea(
     });
 
     revalidatePath('/admin/service-areas');
+    updateTag('service-areas');
   } catch (error) {
     console.error('Failed to create service area:', error);
     return { error: 'Failed to create service area.' };
@@ -100,6 +101,7 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
     const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (deleted.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
+    updateTag('service-areas');
     return {};
   } catch (error) {
     console.error('Failed to delete service area:', error);
@@ -127,6 +129,7 @@ export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error
     );
 
     revalidatePath('/admin/service-areas');
+    updateTag('service-areas');
     return {};
   } catch (error) {
     console.error('Failed to reorder service areas:', error);
@@ -179,6 +182,7 @@ export async function updateServiceArea(
     if (updated.length === 0) return { error: 'Service area not found.' };
 
     revalidatePath('/admin/service-areas');
+    updateTag('service-areas');
     return { success: true };
   } catch (error) {
     console.error('Failed to update service area:', error);
@@ -193,6 +197,7 @@ export async function toggleServiceAreaActive(id: string, current: boolean): Pro
     const updated = await db.update(serviceAreas).set({ isActive: !current, updatedAt: new Date() }).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (updated.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
+    updateTag('service-areas');
     return {};
   } catch (error) {
     console.error('Failed to toggle service area active:', error);
