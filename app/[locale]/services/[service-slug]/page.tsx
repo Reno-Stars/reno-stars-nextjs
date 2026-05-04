@@ -32,37 +32,29 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 };
 
 
-// Hybrid SSG + on-demand ISR (2026-05-04 redesign):
-// Prerender just the 3 high-traffic locales (en/zh/zh-Hant) at build time;
-// the other 11 locales render on first visit via on-demand ISR and cache
-// forever at the edge.
+// EN-only prerender; non-EN locales lazy-generate on first request via
+// dynamicParams=true (Next 16 default). Same pattern as /projects/[slug],
+// /blog/[slug], /areas/[city].
 //
-// IMPORTANT: do NOT export `revalidate` or `dynamicParams` here. Next 16
-// has a regression on routes with nested dynamic segments (`[locale]/
-// services/[service-slug]/[city]`) where exporting `revalidate +
-// dynamicParams` causes the on-demand Lambda to receive params as their
-// raw segment templates (`'[locale]'`, `'[service-slug]'`, `'[city]'`)
-// instead of the URL-resolved values. The 404 then comes from the
-// `services.find(s => s.slug === '[service-slug]')` returning undefined.
-// Confirmed via debug logs on 2026-05-04 (deploy aw56nc2qd):
-//   serviceSlug: '%5Bservice-slug%5D' (= '[service-slug]')
-// Default behavior (no exports) works correctly — same as /projects/
-// [slug] and /areas/[city] which never had this issue.
+// Why single-locale: returning multi-locale entries from
+// `generateStaticParams` triggered a Next 16 regression where the
+// on-demand Lambda for non-prerendered URLs received params as URL-encoded
+// segment templates (`'%5Blocale%5D'` = `'[locale]'`) instead of the
+// URL-resolved values, then `services.find(s => s.slug === '[service-slug]')`
+// returned undefined and called notFound(). The bug only triggered when
+// BOTH the [locale] layout AND the [service-slug] page returned multiple
+// locales from generateStaticParams. Single-locale on the page side avoids
+// the duplicate-prerender shell that Vercel was serving for unknown URLs.
+// Confirmed via debug3 logs on 2026-05-04 deploy b6oujjk9v.
 //
-// Earlier "non-EN ISR returns 404" bug had a separate cause: `faqT(
-// `${slug}.q1`)` threw MISSING_MESSAGE for slugs without their FAQ
-// keys. The safeFaq() wrapper below catches that path defensively.
+// `safeFaq()` below is a separate defensive fix for `faqT(`${slug}.q1`)`
+// throwing MISSING_MESSAGE on new services before their FAQ keys land.
 
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
-  const params: { locale: string; 'service-slug': string }[] = [];
-  for (const service of services) {
-    if (service.showOnServicesPage === false) continue;
-    for (const locale of PRERENDERED_LOCALES) {
-      params.push({ locale, 'service-slug': service.slug });
-    }
-  }
-  return params;
+  return services
+    .filter((s) => s.showOnServicesPage !== false)
+    .map((service) => ({ locale: 'en', 'service-slug': service.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -109,17 +101,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
-  console.error('[debug3:/services/[svc]/page] ENTER', JSON.stringify({ locale, serviceSlug }));
   setRequestLocale(locale);
 
   const [company, services, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
   const service = services.find((s) => s.slug === serviceSlug);
-  console.error('[debug3:/services/[svc]/page] LOOKUP', JSON.stringify({
-    locale, serviceSlug,
-    hasService: !!service,
-    showOnServicesPage: service?.showOnServicesPage ?? null,
-    servicesCount: services.length,
-  }));
 
   if (!service || service.showOnServicesPage === false) {
     notFound();

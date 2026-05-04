@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, PRERENDERED_LOCALES, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -16,20 +16,16 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-// Hybrid SSG + on-demand ISR (2026-05-04 redesign — see /services/{svc}/page.tsx
-// for the full root-cause notes). Prerender just the 3 high-traffic locales;
-// the other 11 render on-demand on first visit and cache forever.
+// EN-only prerender; non-EN locales lazy-generate on first request via
+// dynamicParams=true (Next 16 default). See /services/{svc}/page.tsx for
+// the full root-cause notes — multi-locale generateStaticParams triggered
+// a Next 16 prerender-shell regression where on-demand Lambda received
+// URL-encoded segment templates as params.
 //
 // Cost shift:
 //   Before: 8 services × 14 cities × 14 locales = 1,568 entries (ENOSPC'd Vercel build)
-//   Now:    6 project_type services × 14 cities × 3 locales = 252 entries
-//   Saved:  ~1,316 prerenders, plus the 11 missing locales now actually render
-//           via on-demand instead of 404'ing.
-//
-// IMPORTANT: do NOT export `revalidate` or `dynamicParams` here. Next 16
-// regression on nested dynamic segments — see the parent /services/{svc}/
-// page.tsx for the full debug trace. Default behavior (no exports) gives
-// us the on-demand Lambda fallback we want, with params correctly bound.
+//   Now:    6 project_type services × 14 cities × 1 locale = 84 entries
+//   The other 13 locales render on-demand via dynamicParams=true.
 
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
@@ -38,9 +34,7 @@ export async function generateStaticParams() {
     if (service.showOnServicesPage === false) continue;
     if (service.isProjectType === false) continue;
     for (const area of areas) {
-      for (const locale of PRERENDERED_LOCALES) {
-        params.push({ locale, 'service-slug': service.slug, city: area.slug });
-      }
+      params.push({ locale: 'en', 'service-slug': service.slug, city: area.slug });
     }
   }
   return params;
@@ -360,7 +354,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
-  console.error('[debug3:/services/[svc]/[city]/page] ENTER', JSON.stringify({ locale, serviceSlug, city }));
   setRequestLocale(locale);
 
   const [company, services, areas, googleReviews] = await Promise.all([
@@ -371,14 +364,6 @@ export default async function Page({ params }: PageProps) {
   ]);
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
-  console.error('[debug3:/services/[svc]/[city]/page] LOOKUP', JSON.stringify({
-    locale, serviceSlug, city,
-    hasService: !!service,
-    hasArea: !!area,
-    showOnServicesPage: service?.showOnServicesPage ?? null,
-    servicesCount: services.length,
-    areasCount: areas.length,
-  }));
 
   if (!service || !area || service.showOnServicesPage === false) {
     notFound();
