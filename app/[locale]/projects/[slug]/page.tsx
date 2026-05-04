@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';

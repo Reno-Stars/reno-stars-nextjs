@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';

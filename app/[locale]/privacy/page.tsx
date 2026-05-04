@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { locales, type Locale } from '@/i18n/config';
+import { type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
@@ -13,7 +13,7 @@ interface PageProps {
 export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export async function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

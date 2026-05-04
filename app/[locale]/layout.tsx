@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, type Locale, isRtl } from '@/i18n/config';
+import { locales, type Locale, isRtl, PRERENDERED_LOCALES } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import MicrosoftClarity from '@/components/MicrosoftClarity';
@@ -20,7 +20,7 @@ import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } fro
 export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 interface LocaleLayoutProps {

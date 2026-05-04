@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { PRERENDERED_LOCALES } from '@/i18n/config';
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
 import HomePage from "@/components/pages/HomePage";
@@ -25,7 +26,7 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({

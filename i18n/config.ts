@@ -13,6 +13,20 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'en';
 
+/**
+ * Locales that get prerendered at build time. Other locales work via
+ * on-demand ISR (default `dynamicParams: true`) — the first request to
+ * /ja/, /ko/, etc. generates and caches the page for the revalidate
+ * window. Cuts Vercel ISR write count by ~3-4× across the static-route
+ * surface (was 14× per route for marginal traffic locales).
+ *
+ * en + zh + zh-Hant chosen because:
+ * - en: primary search market (BC + Metro Vancouver)
+ * - zh + zh-Hant: 70%+ of bilingual traffic per GA4
+ * - everything else: <2% combined session share, served on-demand
+ */
+export const PRERENDERED_LOCALES = ['en', 'zh', 'zh-Hant'] as const satisfies readonly Locale[];
+
 export const localePrefix = 'always' as const;
 
 export const localeNames: Record<Locale, string> = {

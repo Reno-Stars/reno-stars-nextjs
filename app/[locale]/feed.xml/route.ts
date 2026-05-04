@@ -1,11 +1,11 @@
 import { getBlogPostsFromDb } from '@/lib/db/queries';
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
-import { locales } from '@/i18n/config';
+import { PRERENDERED_LOCALES } from '@/i18n/config';
 
 export const revalidate = 604800; // 7d — Vercel quota optimization
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 function escapeXml(str: string): string {
