@@ -360,6 +360,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug, city } = await params;
+  console.error('[debug3:/services/[svc]/[city]/page] ENTER', JSON.stringify({ locale, serviceSlug, city }));
   setRequestLocale(locale);
 
   const [company, services, areas, googleReviews] = await Promise.all([
@@ -370,16 +371,16 @@ export default async function Page({ params }: PageProps) {
   ]);
   const service = services.find((s) => s.slug === serviceSlug);
   const area = areas.find((a) => a.slug === city);
+  console.error('[debug3:/services/[svc]/[city]/page] LOOKUP', JSON.stringify({
+    locale, serviceSlug, city,
+    hasService: !!service,
+    hasArea: !!area,
+    showOnServicesPage: service?.showOnServicesPage ?? null,
+    servicesCount: services.length,
+    areasCount: areas.length,
+  }));
 
   if (!service || !area || service.showOnServicesPage === false) {
-    console.error('[debug2:/services/[svc]/[city]/page]', JSON.stringify({
-      locale, serviceSlug, city,
-      hasService: !!service,
-      hasArea: !!area,
-      showOnServicesPage: service?.showOnServicesPage ?? null,
-      servicesCount: services.length,
-      areasCount: areas.length,
-    }));
     notFound();
   }
 

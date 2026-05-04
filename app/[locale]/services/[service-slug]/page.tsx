@@ -109,19 +109,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
+  console.error('[debug3:/services/[svc]/page] ENTER', JSON.stringify({ locale, serviceSlug }));
   setRequestLocale(locale);
 
   const [company, services, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
   const service = services.find((s) => s.slug === serviceSlug);
+  console.error('[debug3:/services/[svc]/page] LOOKUP', JSON.stringify({
+    locale, serviceSlug,
+    hasService: !!service,
+    showOnServicesPage: service?.showOnServicesPage ?? null,
+    servicesCount: services.length,
+  }));
 
   if (!service || service.showOnServicesPage === false) {
-    console.error('[debug2:/services/[svc]/page]', JSON.stringify({
-      locale, serviceSlug,
-      hasService: !!service,
-      showOnServicesPage: service?.showOnServicesPage ?? null,
-      servicesCount: services.length,
-      slugSample: services.slice(0, 3).map((s) => s.slug),
-    }));
     notFound();
   }
   const localizedService = getLocalizedService(service, locale as Locale);
