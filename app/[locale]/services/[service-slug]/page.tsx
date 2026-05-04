@@ -115,6 +115,13 @@ export default async function Page({ params }: PageProps) {
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service || service.showOnServicesPage === false) {
+    console.error('[debug2:/services/[svc]/page]', JSON.stringify({
+      locale, serviceSlug,
+      hasService: !!service,
+      showOnServicesPage: service?.showOnServicesPage ?? null,
+      servicesCount: services.length,
+      slugSample: services.slice(0, 3).map((s) => s.slug),
+    }));
     notFound();
   }
   const localizedService = getLocalizedService(service, locale as Locale);

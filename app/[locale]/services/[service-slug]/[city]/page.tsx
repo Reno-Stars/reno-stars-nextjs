@@ -372,6 +372,14 @@ export default async function Page({ params }: PageProps) {
   const area = areas.find((a) => a.slug === city);
 
   if (!service || !area || service.showOnServicesPage === false) {
+    console.error('[debug2:/services/[svc]/[city]/page]', JSON.stringify({
+      locale, serviceSlug, city,
+      hasService: !!service,
+      hasArea: !!area,
+      showOnServicesPage: service?.showOnServicesPage ?? null,
+      servicesCount: services.length,
+      areasCount: areas.length,
+    }));
     notFound();
   }
 
