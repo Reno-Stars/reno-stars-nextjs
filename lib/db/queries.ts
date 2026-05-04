@@ -30,6 +30,24 @@ function cachedQuery<T>(
   });
   return cache(wrapped);
 }
+
+/**
+ * Same caching contract as `cachedQuery` but for queries that take an
+ * argument (slug, id, city name). unstable_cache automatically appends
+ * runtime args to the cache key, so `getProjectsByAreaFromDb('Burnaby')`
+ * and `getProjectsByAreaFromDb('Vancouver')` end up in distinct entries.
+ */
+function cachedQueryWithArgs<A extends string, T>(
+  fn: (arg: A) => Promise<T>,
+  keyParts: string[],
+  options: { revalidate?: number; tags?: string[] } = {},
+): (arg: A) => Promise<T> {
+  const wrapped = unstable_cache(fn, keyParts, {
+    revalidate: options.revalidate ?? 3600,
+    tags: options.tags,
+  });
+  return cache(wrapped);
+}
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
   companyInfo,
@@ -816,7 +834,7 @@ export const getSiteBySlugFromDb = cache(
 );
 
 /** Fetch all published sites that should show as projects, with projects and aggregated data. */
-export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects[]> => {
+export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithProjects[]> => {
   return safeQuery('getSitesAsProjectsFromDb', async () => {
   const rows = await db
     .select()
@@ -887,7 +905,7 @@ export const getSitesAsProjectsFromDb = cache(async (): Promise<SiteWithProjects
 
   return results;
   }, []);
-});
+}, ['getSitesAsProjectsFromDb'], { tags: ['sites', 'projects'] });
 
 // ============================================================================
 // SERVICE AREA QUERIES
@@ -1203,7 +1221,7 @@ export const getFaqsFromDb = cachedQuery(async (): Promise<Faq[]> => {
 }, ['getFaqsFromDb'], { tags: ['faqs'] });
 
 /** Fetch active FAQs for a specific service area, ordered by display_order. */
-export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> => {
+export const getFaqsByAreaFromDb = cachedQueryWithArgs<string, Faq[]>(async (areaId: string): Promise<Faq[]> => {
   return safeQuery('getFaqsByAreaFromDb', async () => {
     const rows = await db
       .select()
@@ -1212,7 +1230,7 @@ export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> 
       .orderBy(asc(faqsTable.displayOrder));
     return mapFaqRows(rows);
   }, []);
-});
+}, ['getFaqsByAreaFromDb'], { tags: ['faqs'] });
 
 // ============================================================================
 // AREA PROJECT QUERIES
@@ -1223,7 +1241,7 @@ export const getFaqsByAreaFromDb = cache(async (areaId: string): Promise<Faq[]> 
  * Returns up to 6 Project[] for area pages. Queries the projects table directly so it captures
  * projects inside any site (including individual-projects with showAsProject=false).
  */
-export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<Project[]> => {
+export const getProjectsByAreaFromDb = cachedQueryWithArgs<string, Project[]>(async (cityName: string): Promise<Project[]> => {
   return safeQuery('getProjectsByAreaFromDb', async () => {
     const matchingRows: DbProjectRow[] = await db
       .select()
@@ -1253,7 +1271,7 @@ export const getProjectsByAreaFromDb = cache(async (cityName: string): Promise<P
       )
     );
   }, []);
-});
+}, ['getProjectsByAreaFromDb'], { tags: ['projects'] });
 
 // ============================================================================
 // GUIDE PAGE QUERIES
@@ -1279,7 +1297,7 @@ export interface KitchenGuideProject {
   spaceType?: import('../types').Localized<string>;
 }
 
-export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+export const getKitchenProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
   return safeQuery('getKitchenProjectsForGuide', async () => {
     const rows = await db
       .select({
@@ -1312,10 +1330,10 @@ export const getKitchenProjectsForGuide = cache(async (): Promise<KitchenGuidePr
         : undefined,
     }));
   }, []);
-});
+}, ['getKitchenProjectsForGuide'], { tags: ['projects'] });
 
 
-export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+export const getBathroomProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
   return safeQuery('getBathroomProjectsForGuide', async () => {
     const rows = await db
       .select({
@@ -1348,10 +1366,10 @@ export const getBathroomProjectsForGuide = cache(async (): Promise<KitchenGuideP
         : undefined,
     }));
   }, []);
-});
+}, ['getBathroomProjectsForGuide'], { tags: ['projects'] });
 
 
-export const getWholeHouseProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+export const getWholeHouseProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
   return safeQuery('getWholeHouseProjectsForGuide', async () => {
     const rows = await db
       .select({
@@ -1384,7 +1402,7 @@ export const getWholeHouseProjectsForGuide = cache(async (): Promise<KitchenGuid
         : undefined,
     }));
   }, []);
-});
+}, ['getWholeHouseProjectsForGuide'], { tags: ['projects'] });
 
 // ============================================================================
 // ADMIN-ONLY QUERIES
@@ -1623,7 +1641,7 @@ export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$infe
 }
 
 
-export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+export const getCommercialProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
   return safeQuery('getCommercialProjectsForGuide', async () => {
     const rows = await db
       .select({
@@ -1656,11 +1674,11 @@ export const getCommercialProjectsForGuide = cache(async (): Promise<KitchenGuid
         : undefined,
     }));
   }, []);
-});
+}, ['getCommercialProjectsForGuide'], { tags: ['projects'] });
 
 
 
-export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuideProject[]> => {
+export const getCabinetProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
   return safeQuery('getCabinetProjectsForGuide', async () => {
     const rows = await db
       .select({
@@ -1696,7 +1714,7 @@ export const getCabinetProjectsForGuide = cache(async (): Promise<KitchenGuidePr
         : undefined,
     }));
   }, []);
-});
+}, ['getCabinetProjectsForGuide'], { tags: ['projects'] });
 
 // ============================================================================
 // SOCIAL MEDIA POST QUERIES (ADMIN)

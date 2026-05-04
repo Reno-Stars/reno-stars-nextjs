@@ -247,6 +247,7 @@ export async function createProject(
 
     revalidatePath('/admin/projects');
     updateTag('projects');
+    updateTag('sites');
   } catch (error) {
     console.error('Failed to create project:', error);
     return { error: 'Failed to create project.' };
@@ -391,6 +392,7 @@ export async function updateProject(
 
     revalidatePath('/admin/projects');
     updateTag('projects');
+    updateTag('sites');
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update project:', error);
@@ -407,6 +409,7 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
     updateTag('projects');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error('Failed to delete project:', error);
@@ -424,6 +427,7 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
     }
     revalidatePath('/admin/projects');
     updateTag('projects');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error('Failed to toggle featured:', error);
@@ -449,6 +453,7 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
     }
     revalidatePath('/admin/projects');
     updateTag('projects');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);
@@ -496,6 +501,7 @@ export async function moveProjectToSite(
 
     revalidatePath('/admin/sites');
     updateTag('projects');
+    updateTag('sites');
     return { success: true };
   } catch (error) {
     console.error('Failed to move project:', error);
@@ -528,6 +534,7 @@ export async function reorderProjectsInSite(
 
     revalidatePath('/admin/sites');
     updateTag('projects');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error('Failed to reorder projects:', error);

@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
@@ -131,6 +131,7 @@ export async function createSite(
     }
 
     revalidatePath('/admin/sites');
+    updateTag('sites');
   } catch (error) {
     console.error('Failed to create site:', error);
     return { error: 'Failed to create site.' };
@@ -227,6 +228,7 @@ export async function updateSite(
     ]);
 
     revalidatePath('/admin/sites');
+    updateTag('sites');
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update site:', error);
@@ -243,6 +245,7 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
     // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error('Failed to delete site:', error);
@@ -279,6 +282,7 @@ async function toggleSiteField(
     }
 
     revalidatePath('/admin/sites');
+    updateTag('sites');
     return {};
   } catch (error) {
     console.error(`Failed to toggle ${field}:`, error);
