@@ -16,8 +16,6 @@ import { ASSET_ORIGIN } from '@/lib/storage';
 import { NAVY } from '@/lib/theme';
 import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } from '@/lib/image';
 
-// Revalidate layout data every hour (ISR)
-export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

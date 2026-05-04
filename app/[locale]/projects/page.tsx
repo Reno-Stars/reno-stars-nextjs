@@ -11,7 +11,6 @@ interface PageProps {
   searchParams: Promise<{ service?: string }>;
 }
 
-export const revalidate = 2592000; // 30d — admin updateTag('projects'|'sites') invalidates on edits
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

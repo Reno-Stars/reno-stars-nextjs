@@ -15,7 +15,6 @@ interface PageProps {
   params: Promise<{ locale: string; city: string }>;
 }
 
-export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 // Build-time prerender: EN only. Non-EN locales lazy-generate via
 // dynamicParams=true and cache for 7d.

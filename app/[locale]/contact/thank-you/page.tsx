@@ -7,7 +7,6 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export const revalidate = 2592000; // 30d — Vercel ISR write reduction
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

@@ -31,18 +31,11 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
   painting: { min: 3000, max: 15000 },
 };
 
-// 90d — same reasoning as combo route: this page's data changes only on
-// admin service edits, which fire updateTag('services') for immediate
-// invalidation. Scheduled revalidate is the long-stop fallback.
-export const revalidate = 7776000; // 90d
 
-// Build-time prerender: ALL locales. ISR was returning 404 for non-EN at
-// runtime (caught by scripts/audit-hreflang.mjs 2026-04-30) — every
-// /zh/services/{svc}/ etc. 404'd, while hreflang advertised them as valid,
-// directly bleeding crawl budget and eligibility. Other dynamicParams routes
-// (projects, blog) ISR fine; the services route specifically fails. Until
-// the runtime-only bug is root-caused, prerender all locales at build.
-// Cost: 70 entries (~7 services × 10 locales) — trivial.
+// Build-time prerender: ALL locales. Site is fully-static (no ISR — see
+// CLAUDE.md "Architecture: SSG + admin redeploy webhook"); every URL must
+// be in this list at build time or it 404s.
+// Cost: ~7 services × 14 locales ≈ 98 entries — trivial.
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
   const params: { locale: string; 'service-slug': string }[] = [];

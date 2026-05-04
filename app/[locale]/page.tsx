@@ -18,10 +18,6 @@ import {
 } from "@/lib/db/queries";
 import { getGoogleReviews } from "@/lib/google-reviews";
 
-// Long ISR window — admin actions fire updateTag('projects'|'services'|'company'|'faqs'|...)
-// so cache stays fresh on edits without scheduled revalidation churn.
-// Google Reviews / blog list refresh on their own ISR cadence inside the lib.
-export const revalidate = 2592000; // 30d
 
 interface PageProps {
   params: Promise<{ locale: string }>;

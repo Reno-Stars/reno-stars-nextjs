@@ -16,32 +16,16 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-// 90d revalidate. Combo content changes only when a project is added/edited
-// in that city — and admin actions/projects.ts already fires updateTag('projects')
-// on every CRUD path, which invalidates this page's data cache immediately.
-// The scheduled revalidate is just the long-stop fallback, so 90d > 30d is
-// safe and cuts scheduled re-writes by 3× across the ~1K-entry combo grid.
-export const revalidate = 7776000; // 90d
-
-// Build-time prerender: ALL locales × is_project_type services only. Same
-// runtime ISR-404 bug that affected the parent /services/{svc}/ route
-// (task #93, fixed 2026-04-30) ALSO hits the combo /services/{svc}/{city}/
-// route — confirmed by user 2026-05-04 reporting /tl/services/kitchen/
-// vancouver/ returning 404. Until the runtime ISR bug is root-caused,
-// prerender every (locale × service × city) tuple at build time so
-// on-demand ISR is never relied on for these URLs.
+// Build-time prerender: ALL locales × is_project_type services only. The
+// site is now fully-static (no ISR — see CLAUDE.md "Architecture: SSG +
+// admin redeploy webhook"); every URL must be in this list at build time
+// or it 404s. Filter to `is_project_type = true` drops realtor-style
+// services that aren't real renovation categories.
 //
-// Two cost-offset levers applied alongside the all-locale revert:
-//   1. Filter to `is_project_type = true` — drops realtor-style services
-//      that aren't true renovation categories. 6 of 7 services qualify
-//      → -196 entries vs naive 7-service revert.
-//   2. 90d revalidate (above) — scheduled writes per URL drop 3×.
-//
-// Final cost: 6 services × ~14 cities × 14 locales ≈ 1,176 entries. The
-// earlier 2026-05-04 ENOSPC concern (commit 75ea5d1) was at 1,372 entries;
-// 1,176 fits with margin. If the ceiling is hit again, drop the
-// least-trafficked locales (pa/tl/fa) selectively rather than reverting
-// to 3-locale prerender (which directly causes the bug we're fixing here).
+// Cost: 6 services × ~14 cities × 14 locales ≈ 1,176 entries. Earlier
+// ENOSPC concern (commit 75ea5d1) was at 1,372 entries; 1,176 fits with
+// margin. If the build ceiling is hit again, drop pa/tl/fa locales
+// selectively rather than reverting to a partial-locale prerender.
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
