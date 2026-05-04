@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, PRERENDERED_LOCALES, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -32,30 +32,30 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 };
 
 
-// EN-only prerender; non-EN locales lazy-generate on first request via
-// dynamicParams=true (Next 16 default). Same pattern as /projects/[slug],
-// /blog/[slug], /areas/[city].
+// FULLY DYNAMIC — every request runs the Lambda fresh, bypassing the
+// Next 16 prerender-shell regression that was returning URL-encoded
+// segment templates as params for non-prerendered locale URLs.
 //
-// Why single-locale: returning multi-locale entries from
-// `generateStaticParams` triggered a Next 16 regression where the
-// on-demand Lambda for non-prerendered URLs received params as URL-encoded
-// segment templates (`'%5Blocale%5D'` = `'[locale]'`) instead of the
-// URL-resolved values, then `services.find(s => s.slug === '[service-slug]')`
-// returned undefined and called notFound(). The bug only triggered when
-// BOTH the [locale] layout AND the [service-slug] page returned multiple
-// locales from generateStaticParams. Single-locale on the page side avoids
-// the duplicate-prerender shell that Vercel was serving for unknown URLs.
-// Confirmed via debug3 logs on 2026-05-04 deploy b6oujjk9v.
+// Trade-off: every request is a Lambda invocation (no edge cache for
+// the response HTML). Vercel function quota cost ~1 invocation per page
+// view; on a renovation marketing site this is well within budget. EN
+// pages STILL get the prerender boost via the parent [locale] layout's
+// generateStaticParams (en/zh/zh-Hant), but the page-level HTML always
+// runs through the Lambda.
+//
+// Why not `dynamicParams = true` + multi-locale generateStaticParams:
+// confirmed via debug3 logs on 2026-05-04 deploy b6oujjk9v —
+// non-prerendered locales hit a "shell" prerender at the route template
+// path with URL-encoded segment templates as params, which fails in
+// `services.find(s => s.slug === '[service-slug]')` and triggers
+// notFound(). Single-locale generateStaticParams (matching working
+// /projects/[slug] /blog/[slug] /areas/[city]) was insufficient to
+// suppress the shell. force-dynamic is the only reliable workaround.
 //
 // `safeFaq()` below is a separate defensive fix for `faqT(`${slug}.q1`)`
 // throwing MISSING_MESSAGE on new services before their FAQ keys land.
 
-export async function generateStaticParams() {
-  const services = await getServicesFromDb();
-  return services
-    .filter((s) => s.showOnServicesPage !== false)
-    .map((service) => ({ locale: 'en', 'service-slug': service.slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;

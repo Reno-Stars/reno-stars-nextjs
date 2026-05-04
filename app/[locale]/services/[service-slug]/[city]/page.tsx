@@ -16,29 +16,9 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-// EN-only prerender; non-EN locales lazy-generate on first request via
-// dynamicParams=true (Next 16 default). See /services/{svc}/page.tsx for
-// the full root-cause notes — multi-locale generateStaticParams triggered
-// a Next 16 prerender-shell regression where on-demand Lambda received
-// URL-encoded segment templates as params.
-//
-// Cost shift:
-//   Before: 8 services × 14 cities × 14 locales = 1,568 entries (ENOSPC'd Vercel build)
-//   Now:    6 project_type services × 14 cities × 1 locale = 84 entries
-//   The other 13 locales render on-demand via dynamicParams=true.
-
-export async function generateStaticParams() {
-  const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
-  const params: { locale: string; 'service-slug': string; city: string }[] = [];
-  for (const service of services) {
-    if (service.showOnServicesPage === false) continue;
-    if (service.isProjectType === false) continue;
-    for (const area of areas) {
-      params.push({ locale: 'en', 'service-slug': service.slug, city: area.slug });
-    }
-  }
-  return params;
-}
+// FULLY DYNAMIC — see /services/{svc}/page.tsx for full root-cause
+// notes. Same Next 16 prerender-shell regression; same workaround.
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug, city } = await params;
