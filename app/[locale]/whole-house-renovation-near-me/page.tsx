@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isZh = locale === 'zh';
   const title = isZh ? '附近全屋翻新 | 大温哥华 | Reno Stars' : 'Whole House Renovation Near Me | Vancouver Metro | Reno Stars';
   const description = isZh
-    ? '大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修。$80K-$400K+，2-6个月。$500万保险，免费估价。'
-    : 'Whole house renovation near you in Metro Vancouver. Kitchen + bath + flooring + paint + lighting — one team, one timeline. $80K-$400K+, 2-6 months. Free quotes.';
+    ? '大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修。$150K-$800K+，含许可与保险。免费估价。'
+    : 'Whole house renovation near you in Metro Vancouver. Kitchen + bath + flooring + paint + lighting — one team, one timeline. $150K-$800K+ typical, permits + insurance included. Free quotes.';
   const baseUrl = getBaseUrl();
   return {
     title, description,

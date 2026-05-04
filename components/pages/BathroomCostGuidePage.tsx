@@ -298,32 +298,32 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
               {
                 href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
                 title: locale === 'zh' ? '梳妆台费用' : 'Vanity Cost',
-                desc: locale === 'zh' ? '$700–$7,200+ 按等级' : '$700–$7,200+ by tier',
+                desc: locale === 'zh' ? '$2K–$9K+ 按等级' : '$2K–$9K+ by tier',
               },
               {
                 href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
                 title: locale === 'zh' ? '浴缸费用' : 'Bathtub Cost',
-                desc: locale === 'zh' ? '$800–$8,500+ 按形态' : '$800–$8,500+ by format',
+                desc: locale === 'zh' ? '$2.5K–$12K+ 按形态' : '$2.5K–$12K+ by format',
               },
               {
                 href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
                 title: locale === 'zh' ? '马桶费用' : 'Toilet Cost',
-                desc: locale === 'zh' ? '$400–$8,500+ 按等级' : '$400–$8,500+ by tier',
+                desc: locale === 'zh' ? '$800–$5K+ 按等级' : '$800–$5K+ by tier',
               },
               {
                 href: `/${locale}/services/accessible-bathroom/`,
                 title: locale === 'zh' ? '无障碍 / 老人浴室' : 'Accessible / Aging-in-Place',
-                desc: locale === 'zh' ? '$3K–$60K 老人 + 轮椅' : '$3K–$60K aging-in-place + wheelchair',
+                desc: locale === 'zh' ? '老人 + 轮椅无障碍方案' : 'Aging-in-place + wheelchair access',
               },
               {
                 href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-size/`,
                 title: locale === 'zh' ? '按尺寸（3/4/5件套）' : 'By Size (3/4/5-piece)',
-                desc: locale === 'zh' ? '$8K–$60K+ 按洁具件数' : '$8K–$60K+ by piece count',
+                desc: locale === 'zh' ? '$20K–$80K+ 按洁具件数' : '$20K–$80K+ by piece count',
               },
               {
                 href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-style/`,
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
-                desc: locale === 'zh' ? '$15K–$70K+ 按设计风格' : '$15K–$70K+ by design style',
+                desc: locale === 'zh' ? '$25K–$120K+ 按设计风格' : '$25K–$120K+ by design style',
               },
             ].map((p) => (
               <Link

@@ -87,8 +87,8 @@ export default async function Page({ params }: PageProps) {
     {
       name: locale === 'zh' ? '制定详细预算' : 'Build a Detailed Budget',
       text: locale === 'zh'
-        ? '温哥华全屋装修通常在$50,000-$200,000+。每平方英尺$150-$400取决于范围。包括设计费、许可费和15-20%应急款。'
-        : 'Vancouver whole-house renovations typically range $50,000-$200,000+. Per square foot costs run $150-$400 depending on scope. Include design fees, permits, and 15-20% contingency.',
+        ? '温哥华全屋装修真实区间 $150,000-$800,000+（豪华或大型结构改造可达 $1M+）。每平方英尺 $250-$700 取决于范围与饰面等级。预算需含设计费、市政许可费、结构工程师费、和 15-20% 应急款。'
+        : 'Vancouver whole-house renovations realistically range $150,000-$800,000+ (luxury or major structural changes hit $1M+). Per-square-foot costs run $250-$700 depending on scope and finish tier. Budget must include design fees, City permit fees, structural engineer fees, and 15-20% contingency.',
     },
     {
       name: locale === 'zh' ? '选择设计-施工团队' : 'Choose a Design-Build Team',

@@ -766,17 +766,17 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               {
                 href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
                 label: locale === 'zh' || locale === 'zh-Hant' ? '梳妆台费用' : 'Vanity cost',
-                range: '$700–$7.2K+',
+                range: '$2K–$9K+',
               },
               {
                 href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
                 label: locale === 'zh' || locale === 'zh-Hant' ? '浴缸费用' : 'Bathtub cost',
-                range: '$800–$8.5K+',
+                range: '$2.5K–$12K+',
               },
               {
                 href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
                 label: locale === 'zh' || locale === 'zh-Hant' ? '马桶费用' : 'Toilet cost',
-                range: '$400–$8.5K+',
+                range: '$800–$5K+',
               },
             ].map((p) => (
               <Link
