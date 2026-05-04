@@ -56,6 +56,38 @@
       "a2": "Pre-listing renovations in {area} typically run $3,000 (paint + minor repairs) to $40,000 (kitchen + bathroom refresh). We focus on highest-ROI items: paint, flooring, kitchen face-lift, bathroom vanity. We provide a written quote with timeline.",
       "q3": "How fast can you finish a pre-listing renovation in {area}?",
       "a3": "Most pre-listing renovations in {area} complete in 1-3 weeks: 1 week for paint-only refreshes, 2-3 weeks for kitchen/bathroom face-lifts. We coordinate with your realtor's listing timeline so the property is staging-ready on schedule."
+    },
+    "poly-b-replacement": {
+      "q1": "Làm cách nào để biết liệu tôi có hệ thống ống nước Poly-B hay không?",
+      "a1": "Poly-B (polybutylene) được sử dụng trong các ngôi nhà ở khu vực Vancouver được xây dựng từ năm 1985 đến năm 1997. Các đường ống thường bằng nhựa màu xám hoặc màu be, có nhãn hiệu như \"PB-2110\" hoặc \"QEST\". Nếu nhà của bạn có từ thời đó và có đường dây cung cấp nhựa, rất có thể một số hoặc tất cả hệ thống ống nước là Poly-B.",
+      "q2": "Bảo hiểm của tôi có chi trả cho việc thay thế Poly-B ở {area} không?",
+      "a2": "Hầu hết các công ty bảo hiểm BC sẽ không trả tiền để thay thế Poly-B đang hoạt động, nhưng họ sẽ từ chối gia hạn hoặc tăng phí bảo hiểm cho đến khi bạn thay thế nó. Chúng tôi cung cấp tài liệu sẵn sàng cho công ty bảo hiểm sau khi dự án {area} hoàn thành — kết quả kiểm tra áp suất, giấy phép BC, bảo hành PEX — để bạn có thể quay lại công ty bảo hiểm của mình để gia hạn với mức giá tiêu chuẩn.",
+      "q3": "Tôi có thể ở nhà trong thời gian làm lại đường ống Poly-B không?",
+      "a3": "Đúng. Chúng tôi nối lại đường ống từng phần để bạn có nước được phục hồi vào cuối mỗi ngày làm việc. Lập kế hoạch ngắt điện trong thời gian ngắn (2-4 giờ) khi mỗi nhóm thiết bị cố định được kết nối với PEX. Chúng tôi phối hợp thời gian với bạn trước."
+    },
+    "heat-pump-hvac": {
+      "q1": "Hiện tại có những khoản giảm giá máy bơm nhiệt nào ở BC?",
+      "a1": "BC Hydro cung cấp tới 3.000 đô la cho việc lắp đặt máy bơm nhiệt, Trợ cấp Ngôi nhà Xanh của liên bang bổ sung tới 5.000 đô la và các hộ gia đình có thu nhập thấp đủ điều kiện về thu nhập có thể nạp thêm 3.000 đô la BC Hydro — tổng tiềm năng lên tới 11.000 đô la. Khả năng hội đủ điều kiện phụ thuộc vào kết quả kiểm toán năng lượng gia đình và thu nhập. Chúng tôi giúp đỡ về giấy tờ.",
+      "q2": "Liệu máy bơm nhiệt ở {area} có thực sự hoạt động được trong mùa đông không?",
+      "a2": "Máy bơm nhiệt khí hậu lạnh hiện đại duy trì công suất sưởi tối đa xuống -25°C — thấp hơn nhiều so với mức thấp nhất trong mùa đông {area}. Chúng tôi xác định kích thước hệ thống dựa trên tính toán tổn thất nhiệt của ngôi nhà bạn, không chỉ theo mét vuông. Đối với những ngôi nhà bị mất nhiệt nhanh (cách nhiệt kém, nhiều kính), chúng tôi bổ sung nhiệt dự phòng cho những ngày lạnh nhất trong 5-10 ngày trong năm.",
+      "q3": "Tôi có thể giữ lò gas của mình để dự phòng không?",
+      "a3": "Có - đây được gọi là thiết lập nhiên liệu kép hoặc hybrid. Máy bơm nhiệt hoạt động như nguồn nhiệt chính và lò gas chỉ hoạt động vào những ngày lạnh nhất. Nó có chi phí trả trước cao hơn nhưng tránh bị phạt thuế carbon trong hầu hết những ngày sưởi ấm trong khi vẫn có một khoản dự phòng. Chúng tôi khuyên dùng nhiên liệu kép cho những ngôi nhà đã có lò gas đang hoạt động."
+    },
+    "accessible-bathroom": {
+      "q1": "Chi phí cải tạo phòng tắm dành cho người khuyết tật là bao nhiêu?",
+      "a1": "Chi phí tùy thuộc vào phạm vi: $3.000-$8.000 cho những điều cơ bản về an toàn (thanh vịn, bồn cầu có chiều cao thoải mái, sàn chống trơn trượt), $10.000-$25.000 cho việc chuyển đổi bồn tắm thành phòng tắm không cửa ngăn và $35.000-$60.000+ cho phòng tắm riêng hoàn chỉnh dành cho xe lăn với vòi sen không lề đường và bàn trang điểm có bánh lăn. Chúng tôi cung cấp báo giá chi tiết sau khi đánh giá không gian hiện có.",
+      "q2": "Việc cải tạo phòng tắm dành cho người khuyết tật ở {area} có đủ điều kiện nhận trợ cấp không?",
+      "a2": "Chương trình Thích ứng tại nhà để giành độc lập (HAFI) của BC chi trả tới 20.000 đô la cho người cao tuổi đủ điều kiện về thu nhập ở {area}. Bộ Cựu chiến binh Canada có nguồn tài trợ tiếp cận riêng biệt. Chúng tôi hỗ trợ nộp đơn xin tài trợ và cung cấp các tài liệu cần thiết cho nhà thầu.",
+      "q3": "Bạn có thể làm việc với nhà trị liệu nghề nghiệp của chúng tôi không?",
+      "a3": "Có - chúng tôi thường xuyên phối hợp với các nhà trị liệu nghề nghiệp khi có người tham gia. Họ chỉ rõ các khoảng trống và thiết bị cần thiết; chúng tôi chuyển điều đó thành kế hoạch xây dựng, tuân thủ Quy tắc xây dựng BC và triển khai tiêu chuẩn khả năng tiếp cận CSA B651."
+    },
+    "critical-load-panel": {
+      "q1": "Tôi có cần bảng tải quan trọng cho máy phát điện dự phòng không?",
+      "a1": "Có — một bảng điều khiển phụ tải quan trọng (phụ) ngăn cách các mạch thiết yếu của bạn với phần còn lại của ngôi nhà để máy phát điện chỉ có thể cấp nguồn cho các mạch đó mà không cần cố gắng sao lưu toàn bộ tải. Nếu không có nó, bạn có nguy cơ làm máy phát điện bị quá tải trong lần mất điện đầu tiên. Điều tương tự cũng áp dụng cho các hệ thống pin dự phòng như Tesla Powerwall.",
+      "q2": "Tôi có thể thêm bảng tải quan trọng mà không cần nâng cấp bảng chính của mình trong {area} không?",
+      "a2": "Thường thì có, nếu bảng điều khiển chính của bạn có các vị trí cầu dao dự phòng và tổng công suất tải. Đối với những ngôi nhà {area} trước năm 2000 có dịch vụ 100A đã chạy máy bơm nhiệt, bộ sạc xe điện hoặc các thiết bị lớn, trước tiên thường phải nâng cấp bảng điều khiển chính 200A. Chúng tôi đánh giá năng lực hiện có trong chuyến thăm thực địa.",
+      "q3": "Việc lắp đặt bảng tải quan trọng mất bao lâu?",
+      "a3": "Quá trình cài đặt bảng phụ độc lập mất 1 ngày. Việc nâng cấp bảng điều khiển chính kết hợp (100A→200A) cộng với bảng điều khiển phụ mất 2-3 ngày, bao gồm cả việc kiểm tra của Cơ quan An toàn Kỹ thuật BC. Chúng tôi phối hợp với bạn về việc ngắt điện tạm thời (thường là 4-6 giờ trong quá trình trao đổi)."
     }
   }
 }

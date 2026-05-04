@@ -56,6 +56,38 @@
       "a2": "Pre-listing renovations in {area} typically run $3,000 (paint + minor repairs) to $40,000 (kitchen + bathroom refresh). We focus on highest-ROI items: paint, flooring, kitchen face-lift, bathroom vanity. We provide a written quote with timeline.",
       "q3": "How fast can you finish a pre-listing renovation in {area}?",
       "a3": "Most pre-listing renovations in {area} complete in 1-3 weeks: 1 week for paint-only refreshes, 2-3 weeks for kitchen/bathroom face-lifts. We coordinate with your realtor's listing timeline so the property is staging-ready on schedule."
+    },
+    "poly-b-replacement": {
+      "q1": "Comment savoir si j’ai une plomberie Poly-B ?",
+      "a1": "Le poly-B (polybutylène) a été utilisé dans les maisons de la région de Vancouver construites entre 1985 et 1997. Les tuyaux sont généralement en plastique gris ou beige, portant des marques telles que « PB-2110 » ou « QEST ». Si votre maison date de cette époque et dispose de conduites d’alimentation en plastique, il y a de fortes chances qu’une partie ou la totalité de la plomberie soit en Poly-B.",
+      "q2": "Mon assurance couvrira-t-elle le remplacement du Poly-B dans {area} ?",
+      "a2": "La plupart des assureurs de la Colombie-Britannique ne paieront pas pour remplacer le Poly-B fonctionnel, mais ils refuseront le renouvellement ou augmenteront les primes jusqu'à ce que vous le remplaciez. Nous fournissons une documentation prête à l'assureur une fois le projet {area} terminé (résultats des tests de pression, permis BC, garantie PEX) afin que vous puissiez retourner à votre assureur pour un renouvellement aux tarifs standard.",
+      "q3": "Puis-je rester chez moi pendant une refonte Poly-B ?",
+      "a3": "Oui. Nous refaites les canalisations section par section afin que vous ayez de l'eau à nouveau à la fin de chaque journée de travail. Prévoyez des arrêts courts (2 à 4 heures) lorsque chaque groupe de luminaires est connecté au PEX. Nous coordonnons le timing avec vous à l'avance."
+    },
+    "heat-pump-hvac": {
+      "q1": "Quels rabais sur les pompes à chaleur sont actuellement disponibles en Colombie-Britannique ?",
+      "a1": "BC Hydro offre jusqu'à 3 000 $ pour l'installation de pompes à chaleur, la subvention fédérale pour des maisons plus vertes s'ajoute à 5 000 $, et les ménages à faible revenu admissibles peuvent cumuler un complément supplémentaire de 3 000 $ de BC Hydro – un potentiel combiné allant jusqu'à 11 000 $. L’éligibilité dépend des résultats de l’audit énergétique de la maison et des revenus. Nous aidons avec la paperasse.",
+      "q2": "Une pompe à chaleur dans {area} tiendra-t-elle vraiment le coup en hiver ?",
+      "a2": "Les pompes à chaleur modernes pour climat froid maintiennent leur pleine capacité de chauffage jusqu'à -25 °C, soit bien en dessous des minimums hivernaux {area}. Nous dimensionnons le système en fonction du calcul des pertes de chaleur de votre maison, et pas seulement de la superficie en pieds carrés. Pour les maisons qui perdent rapidement de la chaleur (mauvaise isolation, beaucoup de vitrage), nous ajoutons du chauffage d'appoint pour les 5 à 10 jours les plus froids de l'année.",
+      "q3": "Puis-je garder ma fournaise à gaz comme secours ?",
+      "a3": "Oui, c’est ce qu’on appelle une configuration bi-carburant ou hybride. La thermopompe fonctionne comme source de chaleur principale et la fournaise à gaz ne démarre que les jours les plus froids. Cela coûte plus cher au départ, mais évite la pénalité de la taxe carbone la plupart des jours de chauffage tout en gardant une réserve. Nous recommandons le bicarburant pour les maisons qui disposent déjà d’une chaudière à gaz en état de marche."
+    },
+    "accessible-bathroom": {
+      "q1": "Combien coûte une rénovation de salle de bain accessible ?",
+      "a1": "Les coûts dépendent de l'étendue : 3 000 $ à 8 000 $ pour les éléments de sécurité de base (barres d'appui, toilettes à hauteur confortable, revêtement de sol antidérapant), 10 000 $ à 25 000 $ pour une conversion de baignoire en douche à l'italienne et 35 000 $ à 60 000 $ + pour une salle de bains entièrement accessible aux fauteuils roulants avec douche sans seuil et meuble-lavabo roulant. Nous fournissons un devis détaillé après évaluation de l'espace existant.",
+      "q2": "Les rénovations de salles de bains accessibles dans {area} sont-elles éligibles à des subventions ?",
+      "a2": "Le programme Home Adaptation for Independence (HAFI) de la Colombie-Britannique couvre jusqu'à 20 000 $ pour les personnes âgées ayant un revenu admissible dans {area}. Anciens Combattants Canada dispose d'un financement distinct pour l'accessibilité. Nous aidons avec les demandes de subvention et fournissons la documentation nécessaire aux entrepreneurs.",
+      "q3": "Pouvez-vous travailler avec notre ergothérapeute?",
+      "a3": "Oui, nous nous coordonnons régulièrement avec les ergothérapeutes lorsqu'il y en a un qui est impliqué. Ils précisent les autorisations et les équipements nécessaires ; nous traduisons cela en un plan de construction, en conformité avec le code du bâtiment de la Colombie-Britannique et en mise en œuvre de la norme d'accessibilité CSA B651."
+    },
+    "critical-load-panel": {
+      "q1": "Ai-je besoin d’un panneau de charge critique pour un générateur de secours ?",
+      "a1": "Oui, un (sous-)panneau de charge critique sépare vos circuits essentiels du reste de la maison afin que le générateur puisse alimenter uniquement ces circuits sans essayer de sauvegarder toute la charge. Sans cela, vous risquez de surcharger le générateur dès la première panne. Il en va de même pour les systèmes de batterie de secours comme Tesla Powerwall.",
+      "q2": "Puis-je ajouter un panneau de charge critique sans mettre à niveau mon panneau principal dans {area} ?",
+      "a2": "Souvent oui, si votre panneau principal dispose de positions de disjoncteurs de rechange et d'une capacité de charge totale. Pour les maisons {area} antérieures à 2000 avec un service de 100 A et qui font déjà fonctionner des pompes à chaleur, des chargeurs de véhicules électriques ou de gros appareils électroménagers, une mise à niveau du panneau principal de 200 A est généralement requise en premier. Nous évaluons les capacités existantes lors de la visite sur place.",
+      "q3": "Combien de temps prend l’installation d’un panneau pour charges critiques ?",
+      "a3": "Une installation de sous-panneau autonome prend 1 jour. Une mise à niveau combinée du panneau principal (100 A → 200 A) et du sous-panneau prend 2 à 3 jours, y compris l'inspection de l'autorité de sécurité technique de la Colombie-Britannique. Nous coordonnons avec vous la coupure de courant temporaire (généralement 4 à 6 heures pendant l'échange)."
     }
   }
 }

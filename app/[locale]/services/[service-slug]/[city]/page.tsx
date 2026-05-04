@@ -16,16 +16,26 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-// Build-time prerender: ALL locales × is_project_type services only. The
-// site is now fully-static (no ISR — see CLAUDE.md "Architecture: SSG +
+// Build-time prerender: 11 of 14 locales × is_project_type services only.
+// The site is fully-static (no ISR — see CLAUDE.md "Architecture: SSG +
 // admin redeploy webhook"); every URL must be in this list at build time
-// or it 404s. Filter to `is_project_type = true` drops realtor-style
-// services that aren't real renovation categories.
+// or it 404s.
 //
-// Cost: 6 services × ~14 cities × 14 locales ≈ 1,176 entries. Earlier
-// ENOSPC concern (commit 75ea5d1) was at 1,372 entries; 1,176 fits with
-// margin. If the build ceiling is hit again, drop pa/tl/fa locales
-// selectively rather than reverting to a partial-locale prerender.
+// 2026-05-04: dropped pa/tl/fa from combo prerender after ENOSPC at
+// /vercel/output/config.json with 8 services × 14 cities × 14 locales
+// = 1,568 entries. The escape hatch documented in earlier rounds:
+// pa/tl/fa are the 3 lowest-traffic locales per GSC, so cutting them
+// from combos saves 8 × 14 × 3 = 336 entries → ~1,232 entries which
+// fits with margin. Parent /services/{svc}/ pages (without city) still
+// get all 14 locales — pa/tl/fa users still land on a localized service
+// page, just without the city-scoped variant.
+//
+// Filter to `is_project_type = true` drops realtor-style services
+// that aren't real renovation categories.
+const COMBO_PRERENDER_LOCALES = locales.filter(
+  (l) => l !== 'pa' && l !== 'tl' && l !== 'fa',
+);
+
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
@@ -33,7 +43,7 @@ export async function generateStaticParams() {
     if (service.showOnServicesPage === false) continue;
     if (service.isProjectType === false) continue;
     for (const area of areas) {
-      for (const locale of locales) {
+      for (const locale of COMBO_PRERENDER_LOCALES) {
         params.push({ locale, 'service-slug': service.slug, city: area.slug });
       }
     }

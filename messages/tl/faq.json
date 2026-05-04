@@ -56,6 +56,38 @@
       "a2": "Pre-listing renovations in {area} typically run $3,000 (paint + minor repairs) to $40,000 (kitchen + bathroom refresh). We focus on highest-ROI items: paint, flooring, kitchen face-lift, bathroom vanity. We provide a written quote with timeline.",
       "q3": "How fast can you finish a pre-listing renovation in {area}?",
       "a3": "Most pre-listing renovations in {area} complete in 1-3 weeks: 1 week for paint-only refreshes, 2-3 weeks for kitchen/bathroom face-lifts. We coordinate with your realtor's listing timeline so the property is staging-ready on schedule."
+    },
+    "poly-b-replacement": {
+      "q1": "Paano ko malalaman kung mayroon akong Poly-B na pagtutubero?",
+      "a1": "Ginamit ang Poly-B (polybutylene) sa mga bahay sa lugar ng Vancouver na itinayo sa pagitan ng 1985 at 1997. Karaniwang kulay abo o beige na plastik ang mga tubo, na may tatak na may mga marka tulad ng \"PB-2110\" o \"QEST\". Kung ang iyong tahanan ay mula sa panahong iyon at may mga linya ng suplay ng plastik, malaki ang posibilidad na ang ilan o lahat ng pagtutubero ay Poly-B.",
+      "q2": "Sasakupin ba ng aking insurance ang pagpapalit ng Poly-B sa {area}?",
+      "a2": "Karamihan sa mga insurer ng BC ay hindi magbabayad upang palitan ang gumaganang Poly-B, ngunit tatanggihan nila ang pag-renew o pagtaas ng mga premium hanggang sa palitan mo ito. Nagbibigay kami ng dokumentasyong handa ng insurer pagkatapos makumpleto ang proyekto ng {area} — mga resulta ng pressure test, BC permit, PEX warranty — para makabalik ka sa iyong insurer para sa pag-renew sa mga karaniwang rate.",
+      "q3": "Maaari ba akong manatili sa aking tahanan sa panahon ng isang Poly-B re-pipe?",
+      "a3": "Oo. Muli naming pinipipe ang bawat seksyon upang maibalik ang tubig sa pagtatapos ng bawat araw ng trabaho. Magplano para sa maikling shut-off (2-4 na oras) kapag ang bawat grupo ng fixture ay konektado sa PEX. Icoordinate namin ang oras sa iyo nang maaga."
+    },
+    "heat-pump-hvac": {
+      "q1": "Anong mga rebate ng heat pump ang available sa BC ngayon?",
+      "a1": "Nag-aalok ang BC Hydro ng hanggang $3,000 para sa mga pag-install ng heat pump, ang pederal na Greener Homes Grant ay nagdaragdag ng hanggang $5,000, at ang mga kuwalipikadong sambahayan na mababa ang kita ay maaaring mag-stack ng karagdagang $3,000 BC Hydro top-up — pinagsamang potensyal na hanggang $11,000. Ang pagiging karapat-dapat ay nakasalalay sa mga resulta ng pag-audit ng enerhiya sa bahay at kita. Tumutulong kami sa mga papeles.",
+      "q2": "Ang isang heat pump sa {area} ay talagang magpapatuloy sa taglamig?",
+      "a2": "Ang mga modernong cold-climate heat pump ay nagpapanatili ng buong kapasidad ng pag-init hanggang -25°C — mas mababa sa {area} winter lows. Sinusukat namin ang system batay sa pagkalkula ng pagkawala ng init ng iyong tahanan, hindi lamang square footage. Para sa mga bahay na mabilis mawalan ng init (mahinang insulation, maraming glazing), nagdaragdag kami ng backup na init para sa pinakamalamig na 5-10 araw bawat taon.",
+      "q3": "Maaari ko bang panatilihin ang aking gas furnace bilang backup?",
+      "a3": "Oo — ito ay tinatawag na dual-fuel o hybrid setup. Ang heat pump ay tumatakbo bilang pangunahing pinagmumulan ng init at ang gas furnace ay pumapasok lamang sa mga pinakamalamig na araw. Mas mahal ito sa harap ngunit iniiwasan ang parusa sa carbon-tax sa karamihan ng mga araw ng pag-init habang nag-iingat ng backup. Inirerekomenda namin ang dual-fuel para sa mga bahay na mayroon nang gumaganang gas furnace."
+    },
+    "accessible-bathroom": {
+      "q1": "Magkano ang isang accessible na pagkukumpuni ng banyo?",
+      "a1": "Ang mga gastos ay depende sa saklaw: $3,000-$8,000 para sa mga pangunahing kaalaman sa kaligtasan (grab bars, comfort-height toilet, slip-resistant flooring), $10,000-$25,000 para sa isang tub-to-walk-in-shower na conversion, at $35,000-$60,000+ para sa isang full-access na vansuite na pang-gulong na pang-gulong na shower. Nagbibigay kami ng detalyadong quote pagkatapos masuri ang umiiral na espasyo.",
+      "q2": "Ang mga naa-access na pagkukumpuni ng banyo sa {area} ay kwalipikado para sa mga gawad?",
+      "a2": "Ang programa ng BC's Home Adaptation for Independence (HAFI) ay sumasaklaw ng hanggang $20,000 para sa mga nakatatanda na kwalipikado sa kita sa {area}. Ang Veterans Affairs Canada ay may hiwalay na pagpopondo sa accessibility. Tumutulong kami sa mga aplikasyon ng grant at nagbibigay ng kinakailangang dokumentasyon ng kontratista.",
+      "q3": "Maaari ka bang makipagtulungan sa aming occupational therapist?",
+      "a3": "Oo — regular kaming nakikipag-ugnayan sa mga occupational therapist kapag may kasama. Tinukoy nila ang mga clearance at kagamitan na kailangan; isinasalin namin iyon sa isang build plan, pagsunod sa BC Building Code, at CSA B651 accessibility standard na pagpapatupad."
+    },
+    "critical-load-panel": {
+      "q1": "Kailangan ko ba ng kritikal na load panel para sa backup generator?",
+      "a1": "Oo — isang kritikal na load (sub-)panel ang naghihiwalay sa iyong mga mahahalagang circuit mula sa iba pang bahagi ng bahay upang ang generator ay makapagpapatakbo lamang ng mga circuit na iyon nang hindi sinusubukang i-back up ang buong load. Kung wala ito, mapanganib mong ma-overload ang generator sa unang pagkawala. Ang parehong naaangkop sa mga backup system ng baterya tulad ng Tesla Powerwall.",
+      "q2": "Maaari ba akong magdagdag ng kritikal na load panel nang hindi ina-upgrade ang aking pangunahing panel sa {area}?",
+      "a2": "Kadalasan ay oo, kung ang iyong pangunahing panel ay may mga ekstrang posisyon ng breaker at kabuuang kapasidad ng pagkarga. Para sa pre-2000 {area} na mga tahanan na may 100A na serbisyo na nagpapatakbo na ng mga heat pump, EV charger, o malalaking appliances, karaniwang kailangan muna ng 200A main panel upgrade. Tinatasa namin ang kasalukuyang kapasidad sa panahon ng pagbisita sa lugar.",
+      "q3": "Gaano katagal ang pag-install ng kritikal na load panel?",
+      "a3": "Ang isang nakapag-iisang sub-panel na pag-install ay tumatagal ng 1 araw. Ang pinagsamang pag-upgrade ng pangunahing panel (100A→200A) kasama ang sub-panel ay tumatagal ng 2-3 araw, kasama ang inspeksyon ng BC Technical Safety Authority. Icoordinate namin ang pansamantalang power shut-off sa iyo (karaniwang 4-6 na oras sa panahon ng swap)."
     }
   }
 }

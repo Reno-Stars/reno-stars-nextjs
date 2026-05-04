@@ -56,6 +56,38 @@
       "a2": "Pre-listing renovations in {area} typically run $3,000 (paint + minor repairs) to $40,000 (kitchen + bathroom refresh). We focus on highest-ROI items: paint, flooring, kitchen face-lift, bathroom vanity. We provide a written quote with timeline.",
       "q3": "How fast can you finish a pre-listing renovation in {area}?",
       "a3": "Most pre-listing renovations in {area} complete in 1-3 weeks: 1 week for paint-only refreshes, 2-3 weeks for kitchen/bathroom face-lifts. We coordinate with your realtor's listing timeline so the property is staging-ready on schedule."
+    },
+    "poly-b-replacement": {
+      "q1": "¿Cómo sé si tengo plomería Poly-B?",
+      "a1": "Poly-B (polibutileno) se utilizó en casas del área de Vancouver construidas entre 1985 y 1997. Las tuberías suelen ser de plástico gris o beige, con marcas como \"PB-2110\" o \"QEST\". Si su casa es de esa época y tiene líneas de suministro de plástico, es muy probable que parte o toda la plomería sea Poly-B.",
+      "q2": "¿Mi seguro cubrirá el reemplazo de Poly-B en {area}?",
+      "a2": "La mayoría de las aseguradoras de BC no pagarán por reemplazar el Poly-B en funcionamiento, pero negarán la renovación o aumentarán las primas hasta que lo reemplace. Proporcionamos documentación lista para la aseguradora una vez finalizado el proyecto {area} (resultados de la prueba de presión, permiso BC, garantía PEX) para que pueda regresar a su aseguradora para renovarlo a tarifas estándar.",
+      "q3": "¿Puedo permanecer en mi casa durante una nueva tubería de Poly-B?",
+      "a3": "Sí. Renovamos las tuberías sección por sección para que usted tenga agua restaurada al final de cada jornada laboral. Planifique apagones breves (de 2 a 4 horas) cuando cada grupo de accesorios esté conectado a PEX. Coordinamos el tiempo con usted con antelación."
+    },
+    "heat-pump-hvac": {
+      "q1": "¿Qué reembolsos por bombas de calor están disponibles en BC en este momento?",
+      "a1": "BC Hydro ofrece hasta $3,000 para instalaciones de bombas de calor, la subvención federal Greener Homes Grant suma hasta $5,000 y los hogares de bajos ingresos que califiquen por sus ingresos pueden acumular una recarga adicional de $3,000 de BC Hydro: un potencial combinado de hasta $11,000. La elegibilidad depende de los resultados y los ingresos de la auditoría energética del hogar. Ayudamos con el papeleo.",
+      "q2": "¿Una bomba de calor en {area} realmente aguantará el invierno?",
+      "a2": "Las bombas de calor modernas para climas fríos mantienen la capacidad de calefacción total hasta -25 °C, muy por debajo de los mínimos invernales {area}. Dimensionamos el sistema según el cálculo de pérdida de calor de su hogar, no solo en pies cuadrados. Para las casas que pierden calor rápidamente (mal aislamiento, mucho acristalamiento), agregamos calor de respaldo durante los 5 a 10 días más fríos del año.",
+      "q3": "¿Puedo conservar mi caldera de gas como respaldo?",
+      "a3": "Sí, esto se llama configuración híbrida o de combustible dual. La bomba de calor funciona como fuente principal de calor y la caldera de gas solo se activa en los días más fríos. Cuesta más por adelantado, pero evita la multa del impuesto al carbono en la mayoría de los días de calefacción y mantiene una copia de seguridad. Recomendamos el combustible dual para hogares que ya tienen una caldera de gas en funcionamiento."
+    },
+    "accessible-bathroom": {
+      "q1": "¿Cuánto cuesta la reforma de un baño accesible?",
+      "a1": "Los costos dependen del alcance: entre $3,000 y $8,000 para conceptos básicos de seguridad (barras de apoyo, inodoro de altura cómoda, piso antideslizante), entre $10,000 y $25,000 para una conversión de bañera a ducha independiente, y entre $35,000 y $60,000 o más para un baño completo accesible para sillas de ruedas con ducha sin borde y tocador con ruedas. Proporcionamos un presupuesto detallado después de evaluar el espacio existente.",
+      "q2": "¿Las renovaciones de baños accesibles en {area} son elegibles para subvenciones?",
+      "a2": "El programa Home Adaptation for Independence (HAFI) de BC cubre hasta $20,000 para personas mayores con ingresos calificados en {area}. Asuntos de Veteranos de Canadá tiene fondos de accesibilidad separados. Ayudamos con las solicitudes de subvenciones y proporcionamos la documentación necesaria para el contratista.",
+      "q3": "¿Puedes trabajar con nuestro terapeuta ocupacional?",
+      "a3": "Sí, habitualmente coordinamos con terapeutas ocupacionales cuando hay uno involucrado. Especifican las autorizaciones y el equipo necesarios; lo traducimos en un plan de construcción, cumplimiento del Código de Construcción de BC e implementación del estándar de accesibilidad CSA B651."
+    },
+    "critical-load-panel": {
+      "q1": "¿Necesito un panel de carga crítica para un generador de respaldo?",
+      "a1": "Sí, un (sub)panel de carga crítica separa los circuitos esenciales del resto de la casa para que el generador pueda alimentar solo esos circuitos sin intentar respaldar toda la carga. Sin él, corre el riesgo de sobrecargar el generador en el primer corte. Lo mismo se aplica a los sistemas de respaldo de batería como Tesla Powerwall.",
+      "q2": "¿Puedo agregar un panel de carga crítica sin actualizar mi panel principal en {area}?",
+      "a2": "A menudo sí, si su panel principal tiene posiciones de disyuntores de repuesto y capacidad de carga total. Para hogares {area} anteriores al 2000 con servicio de 100 A que ya funcionan con bombas de calor, cargadores de vehículos eléctricos o electrodomésticos grandes, generalmente se requiere primero una actualización del panel principal de 200 A. Evaluamos la capacidad existente durante la visita in situ.",
+      "q3": "¿Cuánto tiempo lleva la instalación de un panel de carga crítica?",
+      "a3": "La instalación de un subpanel independiente tarda 1 día. Una actualización combinada del panel principal (100 A→200 A) más un subpanel tarda entre 2 y 3 días, incluida la inspección de la Autoridad Técnica de Seguridad de BC. Coordinamos con usted el corte temporal de energía (normalmente de 4 a 6 horas durante el intercambio)."
     }
   }
 }
