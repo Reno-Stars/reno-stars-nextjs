@@ -40,6 +40,18 @@ pnpm test:e2e             # Playwright headless
 
 ## Key Architecture Decisions
 
+- **Rendering: SSG + admin-triggered redeploy webhook (since 2026-05-04).**
+  Marketing pages are fully static — no ISR. Every URL is prerendered at
+  build time via `generateStaticParams`. Admin content edits fire
+  `triggerDeploy()` (lib/deploy-hook.ts) which calls Vercel's deploy hook;
+  Vercel queues a fresh build, new content is live in ~2-4 minutes. ISR
+  was removed from 36 page routes in commit 91d43e4 because the cost of
+  scheduled re-writes (~$8.53/mo Vercel ISR Writes line) exceeded the
+  benefit for a renovation marketing site where content updates run on a
+  weekly cadence. The deploy webhook URL must be set as
+  `VERCEL_DEPLOY_HOOK_URL` in Vercel production env vars (NOT preview/dev,
+  which should leave it unset). Sitemap.ts and feed.xml/route.ts retain
+  weekly ISR for crawler/RSS-subscriber freshness.
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing, admin auth, security headers.
 - **Lazy DB proxy:** `db` export uses a Proxy — safe to import at build time.
@@ -69,6 +81,7 @@ pnpm test:e2e             # Playwright headless
 | `RESEND_API_KEY` | No | Contact form email |
 | `EMAIL_FROM` / `EMAIL_TO` | No | Email sender/recipient |
 | `OPENAI_API_KEY` | No | AI content optimization |
+| `VERCEL_DEPLOY_HOOK_URL` | Prod-only | Vercel deploy hook URL — fired by admin actions to rebuild after content edits. Set in Vercel Production env only (leave preview/dev unset). |
 
 ## Known Issues
 
