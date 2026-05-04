@@ -48,6 +48,44 @@ function cachedQueryWithArgs<A extends string, T>(
   });
   return cache(wrapped);
 }
+
+/**
+ * Per-slug cached query with FINE-GRAINED tags.
+ *
+ * Each slug gets its own unstable_cache instance tagged with both the
+ * broad invalidation tag(s) (e.g. 'projects') AND a narrow per-slug tag
+ * (e.g. 'project:burnaby-whole-house-renovation'). Admin actions can
+ * fire `updateTag('project:${slug}')` on edits and only invalidate the
+ * affected detail page's cache, instead of blowing away every cached
+ * project page on every edit.
+ *
+ * Implementation note: unstable_cache's `tags` option is static at
+ * factory-call time — there's no per-call tag function in the Next.js
+ * API. To get dynamic tags we build the unstable_cache instance lazily
+ * inside the wrapper, keyed by [...keyParts, slug] so all Lambdas hit
+ * the same cache entry for the same slug. The factory call itself is
+ * cheap; the actual cache lookup happens inside the returned wrapped().
+ */
+function cachedQueryPerSlug<T>(
+  fn: (slug: string) => Promise<T>,
+  baseKey: string,
+  options: { revalidate?: number; broadTags?: string[]; tagPrefix?: string } = {},
+): (slug: string) => Promise<T> {
+  return cache(async (slug: string) => {
+    const wrapped = unstable_cache(
+      () => fn(slug),
+      [baseKey, slug],
+      {
+        revalidate: options.revalidate ?? 3600,
+        tags: [
+          ...(options.broadTags ?? []),
+          `${options.tagPrefix ?? baseKey}:${slug}`,
+        ],
+      },
+    );
+    return wrapped();
+  });
+}
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
   companyInfo,
@@ -647,7 +685,7 @@ export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> =>
 }, ['getProjectsListFromDb'], { tags: ['projects'] });
 
 /** Fetch a single published project by slug from DB. */
-export const getProjectBySlugFromDb = cachedQueryWithArgs(
+export const getProjectBySlugFromDb = cachedQueryPerSlug(
   async (slug: string): Promise<Project | null> => {
     return safeQuery('getProjectBySlugFromDb', async () => {
       const rows = await db
@@ -663,8 +701,12 @@ export const getProjectBySlugFromDb = cachedQueryWithArgs(
       return mapDbProjectToProject(row, scopes, externalProducts, imagePairs);
     }, null);
   },
-  ['getProjectBySlugFromDb', 'v1'],
-  { revalidate: 3600, tags: ['projects'] }
+  'getProjectBySlugFromDb',
+  // Narrow tag only — admin actions fire updateTag('project:${slug}') to
+  // invalidate just THIS detail page, not the other 50+ projects' caches.
+  // List queries (getProjectsListFromDb) carry the broad 'projects' tag and
+  // are still invalidated by the admin's broad updateTag('projects') call.
+  { revalidate: 3600, tagPrefix: 'project' }
 );
 
 /** Fetch all projects including unpublished (for admin). */
@@ -798,7 +840,7 @@ export const getProjectsOfSite = cache(async (siteId: string): Promise<Project[]
 });
 
 /** Fetch a site by slug with its projects and aggregated data. */
-export const getSiteBySlugFromDb = cachedQueryWithArgs(
+export const getSiteBySlugFromDb = cachedQueryPerSlug(
   async (slug: string): Promise<SiteWithProjects | null> => {
     return safeQuery('getSiteBySlugFromDb', async () => {
       const rows = await db
@@ -833,8 +875,9 @@ export const getSiteBySlugFromDb = cachedQueryWithArgs(
       };
     }, null);
   },
-  ['getSiteBySlugFromDb', 'v1'],
-  { revalidate: 3600, tags: ['sites', 'projects'] }
+  'getSiteBySlugFromDb',
+  // Narrow tag only — admin fires updateTag('site:${slug}') on edits.
+  { revalidate: 3600, tagPrefix: 'site' }
 );
 
 /** Fetch all published sites that should show as projects, with projects and aggregated data. */
@@ -1064,7 +1107,7 @@ export const getBlogPostsPaginatedFromDb = cache(
 );
 
 /** Fetch a single published blog post by slug, with related project if linked. */
-export const getBlogPostBySlugFromDb = cachedQueryWithArgs(
+export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
   async (slug: string): Promise<BlogPost | null> => {
     return safeQuery('getBlogPostBySlugFromDb', async () => {
     const rows = await db
@@ -1129,8 +1172,9 @@ export const getBlogPostBySlugFromDb = cachedQueryWithArgs(
     };
     }, null);
   },
-  ['getBlogPostBySlugFromDb', 'v1'],
-  { revalidate: 3600, tags: ['blog'] }
+  'getBlogPostBySlugFromDb',
+  // Narrow tag only — admin fires updateTag('blog:${slug}') on edits.
+  { revalidate: 3600, tagPrefix: 'blog' }
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). */

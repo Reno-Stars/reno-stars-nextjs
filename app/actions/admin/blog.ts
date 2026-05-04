@@ -92,6 +92,7 @@ export async function createBlogPost(
       ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     });
     updateTag('blog');
+    updateTag(`blog:${data.slug}`);
     revalidatePath('/admin/blog');
     if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
@@ -144,6 +145,10 @@ export async function updateBlogPost(
       return { error: 'Blog post not found.' };
     }
     updateTag('blog');
+    updateTag(`blog:${data.slug}`);
+    // If slug was renamed, the old slug's cached entry also needs invalidation
+    // — otherwise stale content survives at old URL until next 1h revalidate.
+    if (currentSlug && currentSlug !== data.slug) updateTag(`blog:${currentSlug}`);
     revalidatePath('/admin/blog');
     if (data.isPublished) refreshBlogPost(data.slug);
     return { success: true };
@@ -162,6 +167,7 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
     const slug = existing[0]?.slug;
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
     updateTag('blog');
+    if (slug) updateTag(`blog:${slug}`);
     revalidatePath('/admin/blog');
     if (slug) refreshBlogPost(slug);
     return {};
@@ -188,6 +194,7 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
       return { error: 'Blog post not found.' };
     }
     updateTag('blog');
+    if (updated[0]?.slug) updateTag(`blog:${updated[0].slug}`);
     revalidatePath('/admin/blog');
     if (updated[0]?.slug) refreshBlogPost(updated[0].slug);
     return {};

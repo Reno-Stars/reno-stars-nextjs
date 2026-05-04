@@ -3,7 +3,7 @@
 import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
+import { projectSites, projects, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { eq, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
@@ -132,6 +132,7 @@ export async function createSite(
 
     revalidatePath('/admin/sites');
     updateTag('sites');
+    updateTag(`site:${data.slug}`);
   } catch (error) {
     console.error('Failed to create site:', error);
     return { error: 'Failed to create site.' };
@@ -229,6 +230,8 @@ export async function updateSite(
 
     revalidatePath('/admin/sites');
     updateTag('sites');
+    updateTag(`site:${data.slug}`);
+    if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update site:', error);
@@ -242,10 +245,19 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
   if (!isValidUUID(id)) return { error: 'Invalid site ID.' };
 
   try {
+    // Capture slug + child project slugs before delete so per-slug tags can be invalidated.
+    const [existing, childProjects] = await Promise.all([
+      db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1),
+      db.select({ slug: projects.slug }).from(projects).where(eq(projects.siteId, id)),
+    ]);
+    const slug = existing[0]?.slug;
     // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
     updateTag('sites');
+    updateTag('projects'); // child projects cascaded — list cache must refetch
+    if (slug) updateTag(`site:${slug}`);
+    for (const p of childProjects) updateTag(`project:${p.slug}`);
     return {};
   } catch (error) {
     console.error('Failed to delete site:', error);
@@ -275,7 +287,7 @@ async function toggleSiteField(
       .update(projectSites)
       .set(updateData)
       .where(eq(projectSites.id, id))
-      .returning({ id: projectSites.id });
+      .returning({ id: projectSites.id, slug: projectSites.slug });
 
     if (updated.length === 0) {
       return { error: 'Site not found.' };
@@ -283,6 +295,7 @@ async function toggleSiteField(
 
     revalidatePath('/admin/sites');
     updateTag('sites');
+    if (updated[0]?.slug) updateTag(`site:${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error(`Failed to toggle ${field}:`, error);

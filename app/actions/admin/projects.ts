@@ -248,6 +248,7 @@ export async function createProject(
     revalidatePath('/admin/projects');
     updateTag('projects');
     updateTag('sites');
+    updateTag(`project:${data.slug}`);
   } catch (error) {
     console.error('Failed to create project:', error);
     return { error: 'Failed to create project.' };
@@ -393,6 +394,8 @@ export async function updateProject(
     revalidatePath('/admin/projects');
     updateTag('projects');
     updateTag('sites');
+    updateTag(`project:${data.slug}`);
+    if (currentSlug && currentSlug !== data.slug) updateTag(`project:${currentSlug}`);
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update project:', error);
@@ -406,10 +409,14 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
   try {
+    // Capture slug before delete so we can fire the per-slug invalidation tag.
+    const existing = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
+    const slug = existing[0]?.slug;
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
     updateTag('projects');
     updateTag('sites');
+    if (slug) updateTag(`project:${slug}`);
     return {};
   } catch (error) {
     console.error('Failed to delete project:', error);
@@ -421,13 +428,14 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid project ID.' };
   try {
-    const updated = await db.update(projects).set({ featured: !current, updatedAt: new Date() }).where(eq(projects.id, id)).returning({ id: projects.id });
+    const updated = await db.update(projects).set({ featured: !current, updatedAt: new Date() }).where(eq(projects.id, id)).returning({ id: projects.id, slug: projects.slug });
     if (updated.length === 0) {
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
     updateTag('projects');
     updateTag('sites');
+    if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error('Failed to toggle featured:', error);
@@ -447,13 +455,14 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
         updatedAt: new Date(),
       })
       .where(eq(projects.id, id))
-      .returning({ id: projects.id });
+      .returning({ id: projects.id, slug: projects.slug });
     if (updated.length === 0) {
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
     updateTag('projects');
     updateTag('sites');
+    if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);
