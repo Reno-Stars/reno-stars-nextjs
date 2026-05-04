@@ -104,18 +104,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Home Renovations West Vancouver | Luxury Renos | Reno Stars',
       description: 'West Vancouver renovations — kitchens, bathrooms and whole-house remodels. Serving Caulfeild, Dundarave, Ambleside and British Properties. $5M CGL, 3-year warranty. Free quote.',
     },
-    // Cabinet resurfacing — high-volume cluster (127+82+66 imp)
+    // Cabinet — high-volume geo cluster. GSC 2026-05-04 shows the actual
+    // search terms are "cabinet resurfacing {city}" (most common) and
+    // "cabinet refinishing {city}" — NOT "refacing" (the title used to say
+    // refacing). 360+ imp at pos 5-12 with 0 clicks across 3 cities — the
+    // fix is exact-match query in the title for SERP relevance.
     'cabinet/port-coquitlam': {
-      title: 'Cabinet Refacing Port Coquitlam | $4K–$15K | Reno Stars',
-      description: 'Cabinet refacing in Port Coquitlam — painting, door replacement & full cabinet swap. Real costs $4K–$15K. Transform your kitchen in 1–2 weeks. Free quote.',
+      title: 'Cabinet Resurfacing & Refinishing Port Coquitlam | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing, refinishing & refacing in Port Coquitlam. Painting from $1.5K, door replacement from $4K, full refacing $8–$15K. 1–2 week timeline. Free quote.',
     },
     'cabinet/maple-ridge': {
-      title: 'Cabinet Refacing Maple Ridge | $4K–$15K | Reno Stars',
-      description: 'Cabinet refacing in Maple Ridge — painting, refacing & replacement from $4K–$15K. 1–2 week timeline. Albion, Thornhill, Haney. Free quote.',
+      title: 'Cabinet Resurfacing & Refinishing Maple Ridge | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Maple Ridge — painting from $1.5K, full refacing $4–$15K. 1–2 week timeline. Albion, Thornhill, Haney. Free quote.',
+    },
+    'cabinet/port-moody': {
+      title: 'Cabinet Resurfacing & Refinishing Port Moody | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing, refinishing & refacing in Port Moody — Heritage Mountain, Newport Village, Inlet Centre. Painting from $1.5K, refacing $4–$15K. Free quote.',
     },
     'cabinet/delta': {
-      title: 'Cabinet Refacing Delta BC | $4K–$15K | Reno Stars',
-      description: 'Cabinet refacing in Delta — Ladner, Tsawwassen & North Delta. Painting, door refacing & full replacement from $4K. Free in-home quote.',
+      title: 'Cabinet Resurfacing & Refinishing Delta BC | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Delta — Ladner, Tsawwassen, North Delta. Painting from $1.5K, full refacing from $4K. Free in-home quote.',
     },
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
