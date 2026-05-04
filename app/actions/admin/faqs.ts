@@ -7,6 +7,7 @@ import { faqs } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 function parseServiceAreaId(formData: FormData): string | null {
   const raw = getString(formData, 'serviceAreaId').trim();
@@ -43,6 +44,7 @@ export async function createFaq(
     });
 
     revalidatePath('/admin/faqs');
+    triggerDeploy('faqs');
     updateTag('faqs');
   } catch (error) {
     console.error('Failed to create FAQ:', error);
@@ -72,6 +74,7 @@ export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: strin
     );
 
     revalidatePath('/admin/faqs');
+    triggerDeploy('faqs');
     updateTag('faqs');
     return {};
   } catch (error) {
@@ -112,6 +115,7 @@ export async function updateFaq(
     if (updated.length === 0) return { error: 'FAQ not found.' };
 
     revalidatePath('/admin/faqs');
+    triggerDeploy('faqs');
     updateTag('faqs');
     return { success: true };
   } catch (error) {
@@ -127,6 +131,7 @@ export async function toggleFaqActive(id: string, current: boolean): Promise<{ e
     const updated = await db.update(faqs).set({ isActive: !current, updatedAt: new Date() }).where(eq(faqs.id, id)).returning({ id: faqs.id });
     if (updated.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
+    triggerDeploy('faqs');
     updateTag('faqs');
     return {};
   } catch (error) {
@@ -142,6 +147,7 @@ export async function deleteFaq(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(faqs).where(eq(faqs.id, id)).returning({ id: faqs.id });
     if (deleted.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
+    triggerDeploy('faqs');
     updateTag('faqs');
     return {};
   } catch (error) {

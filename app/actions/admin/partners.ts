@@ -7,6 +7,7 @@ import { partners } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidUrl, validateTextLengths, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 interface PartnerData {
   nameEn: string;
@@ -56,6 +57,7 @@ export async function createPartner(
     await db.insert(partners).values(result.data);
 
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
   } catch (error) {
     console.error('Failed to create partner:', error);
@@ -83,6 +85,7 @@ export async function updatePartner(
     if (updated.length === 0) return { error: 'Partner not found.' };
 
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
     return { success: true };
   } catch (error) {
@@ -98,6 +101,7 @@ export async function deletePartner(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(partners).where(eq(partners.id, id)).returning({ id: partners.id });
     if (deleted.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
     return {};
   } catch (error) {
@@ -116,6 +120,7 @@ export async function togglePartnerActive(id: string, current: boolean): Promise
       .returning({ id: partners.id });
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
     return {};
   } catch (error) {
@@ -134,6 +139,7 @@ export async function togglePartnerHidden(id: string, current: boolean): Promise
       .returning({ id: partners.id });
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
     return {};
   } catch (error) {
@@ -162,6 +168,7 @@ export async function reorderPartners(orderedIds: string[]): Promise<{ error?: s
     );
 
     revalidatePath('/admin/partners');
+    triggerDeploy('partners');
     updateTag('partners');
     return {};
   } catch (error) {

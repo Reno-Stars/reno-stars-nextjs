@@ -19,6 +19,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
@@ -246,6 +247,7 @@ export async function createProject(
     }
 
     revalidatePath('/admin/projects');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     updateTag(`project:${data.slug}`);
@@ -392,6 +394,7 @@ export async function updateProject(
     ]);
 
     revalidatePath('/admin/projects');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     updateTag(`project:${data.slug}`);
@@ -414,6 +417,7 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     const slug = existing[0]?.slug;
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     if (slug) updateTag(`project:${slug}`);
@@ -433,6 +437,7 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
@@ -460,6 +465,7 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
@@ -509,6 +515,7 @@ export async function moveProjectToSite(
       .where(eq(projects.id, projectId));
 
     revalidatePath('/admin/sites');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     return { success: true };
@@ -542,6 +549,7 @@ export async function reorderProjectsInSite(
     );
 
     revalidatePath('/admin/sites');
+    triggerDeploy('projects');
     updateTag('projects');
     updateTag('sites');
     return {};

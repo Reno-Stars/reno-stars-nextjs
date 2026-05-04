@@ -9,6 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 const MAX_TAGS = 50;
 const MAX_TAG_LENGTH = 200;
@@ -139,6 +140,7 @@ export async function createService(
     }
 
     revalidatePath('/admin/services');
+    triggerDeploy('services');
     updateTag('services');
   } catch (error) {
     console.error('Failed to create service:', error);
@@ -166,6 +168,7 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(services).where(eq(services.id, id)).returning({ id: services.id });
     if (deleted.length === 0) return { error: 'Service not found.' };
     revalidatePath('/admin/services');
+    triggerDeploy('services');
     updateTag('services');
     return {};
   } catch (error) {
@@ -194,6 +197,7 @@ export async function reorderServices(orderedIds: string[]): Promise<{ error?: s
     );
 
     revalidatePath('/admin/services');
+    triggerDeploy('services');
     updateTag('services');
     return {};
   } catch (error) {
@@ -304,6 +308,7 @@ export async function updateService(
     }
 
     revalidatePath('/admin/services');
+    triggerDeploy('services');
     updateTag('services');
     return { success: true };
   } catch (error) {

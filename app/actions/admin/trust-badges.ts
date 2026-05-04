@@ -7,6 +7,7 @@ import { trustBadges } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, validateTextLengths, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 export async function createTrustBadge(
   _prevState: { success?: boolean; error?: string },
@@ -29,6 +30,7 @@ export async function createTrustBadge(
     await db.insert(trustBadges).values({ badgeEn, badgeZh, displayOrder, isActive });
 
     revalidatePath('/admin/trust-badges');
+    triggerDeploy('trust-badges');
     updateTag('trust-badges');
   } catch (error) {
     console.error('Failed to create trust badge:', error);
@@ -57,6 +59,7 @@ export async function reorderTrustBadges(orderedIds: string[]): Promise<{ error?
     );
 
     revalidatePath('/admin/trust-badges');
+    triggerDeploy('trust-badges');
     updateTag('trust-badges');
     return {};
   } catch (error) {
@@ -72,6 +75,7 @@ export async function deleteTrustBadge(id: string): Promise<{ error?: string }> 
     const deleted = await db.delete(trustBadges).where(eq(trustBadges.id, id)).returning({ id: trustBadges.id });
     if (deleted.length === 0) return { error: 'Trust badge not found.' };
     revalidatePath('/admin/trust-badges');
+    triggerDeploy('trust-badges');
     updateTag('trust-badges');
     return {};
   } catch (error) {
@@ -106,6 +110,7 @@ export async function updateTrustBadge(
     if (updated.length === 0) return { error: 'Trust badge not found.' };
 
     revalidatePath('/admin/trust-badges');
+    triggerDeploy('trust-badges');
     updateTag('trust-badges');
     return { success: true };
   } catch (error) {
@@ -121,6 +126,7 @@ export async function toggleTrustBadgeActive(id: string, current: boolean): Prom
     const updated = await db.update(trustBadges).set({ isActive: !current }).where(eq(trustBadges.id, id)).returning({ id: trustBadges.id });
     if (updated.length === 0) return { error: 'Trust badge not found.' };
     revalidatePath('/admin/trust-badges');
+    triggerDeploy('trust-badges');
     updateTag('trust-badges');
     return {};
   } catch (error) {

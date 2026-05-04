@@ -9,6 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 export async function createServiceArea(
   _prevState: { success?: boolean; error?: string },
@@ -74,6 +75,7 @@ export async function createServiceArea(
     });
 
     revalidatePath('/admin/service-areas');
+    triggerDeploy('service-areas');
     updateTag('service-areas');
   } catch (error) {
     console.error('Failed to create service area:', error);
@@ -101,6 +103,7 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
     const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (deleted.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
+    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {
@@ -129,6 +132,7 @@ export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error
     );
 
     revalidatePath('/admin/service-areas');
+    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {
@@ -182,6 +186,7 @@ export async function updateServiceArea(
     if (updated.length === 0) return { error: 'Service area not found.' };
 
     revalidatePath('/admin/service-areas');
+    triggerDeploy('service-areas');
     updateTag('service-areas');
     return { success: true };
   } catch (error) {
@@ -197,6 +202,7 @@ export async function toggleServiceAreaActive(id: string, current: boolean): Pro
     const updated = await db.update(serviceAreas).set({ isActive: !current, updatedAt: new Date() }).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (updated.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
+    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {

@@ -10,6 +10,7 @@ import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGT
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -94,6 +95,7 @@ export async function createBlogPost(
     updateTag('blog');
     updateTag(`blog:${data.slug}`);
     revalidatePath('/admin/blog');
+    triggerDeploy('blog');
     if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
     console.error('Failed to create blog post:', error);
@@ -150,6 +152,7 @@ export async function updateBlogPost(
     // — otherwise stale content survives at old URL until next 1h revalidate.
     if (currentSlug && currentSlug !== data.slug) updateTag(`blog:${currentSlug}`);
     revalidatePath('/admin/blog');
+    triggerDeploy('blog');
     if (data.isPublished) refreshBlogPost(data.slug);
     return { success: true };
   } catch (error) {
@@ -169,6 +172,7 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
     updateTag('blog');
     if (slug) updateTag(`blog:${slug}`);
     revalidatePath('/admin/blog');
+    triggerDeploy('blog');
     if (slug) refreshBlogPost(slug);
     return {};
   } catch (error) {
@@ -196,6 +200,7 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
     updateTag('blog');
     if (updated[0]?.slug) updateTag(`blog:${updated[0].slug}`);
     revalidatePath('/admin/blog');
+    triggerDeploy('blog');
     if (updated[0]?.slug) refreshBlogPost(updated[0].slug);
     return {};
   } catch (error) {

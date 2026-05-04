@@ -13,6 +13,7 @@ import {
   projectSites as sitesTable,
   siteImagePairs as siteImagePairsTable,
 } from '@/lib/db/schema';
+import { triggerDeploy } from '@/lib/deploy-hook';
 import type { DbProject, DbProjectImagePair, DbProjectScope, DbProjectExternalProduct } from '@/lib/db/schema';
 import { eq, asc, inArray } from 'drizzle-orm';
 import { groupBy } from '@/lib/db/queries';
@@ -142,6 +143,7 @@ export async function createSocialMediaPost(
       publishedAt: data.status === 'published' ? new Date() : null,
     });
     revalidatePath('/admin/social-posts');
+    triggerDeploy('social-posts');
   } catch (error) {
     console.error('Failed to create social media post:', error);
     return { error: 'Failed to create social media post.' };
@@ -188,6 +190,7 @@ export async function updateSocialMediaPost(
       return { error: 'Social media post not found.' };
     }
     revalidatePath('/admin/social-posts');
+    triggerDeploy('social-posts');
     return { success: true };
   } catch (error) {
     console.error('Failed to update social media post:', error);
@@ -203,6 +206,7 @@ export async function deleteSocialMediaPost(id: string): Promise<{ error?: strin
       .returning({ id: socialMediaPosts.id });
     if (deleted.length === 0) return { error: 'Social media post not found.' };
     revalidatePath('/admin/social-posts');
+    triggerDeploy('social-posts');
     return {};
   } catch (error) {
     console.error('Failed to delete social media post:', error);
@@ -242,6 +246,7 @@ export async function updateSocialPostStatus(
       return { error: 'Social media post not found.' };
     }
     revalidatePath('/admin/social-posts');
+    triggerDeploy('social-posts');
     return {};
   } catch (error) {
     console.error('Failed to update status:', error);

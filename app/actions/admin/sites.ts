@@ -9,6 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 const MAX_EXTERNAL_PRODUCTS = 50;
 
@@ -131,6 +132,7 @@ export async function createSite(
     }
 
     revalidatePath('/admin/sites');
+    triggerDeploy('sites');
     updateTag('sites');
     updateTag(`site:${data.slug}`);
   } catch (error) {
@@ -229,6 +231,7 @@ export async function updateSite(
     ]);
 
     revalidatePath('/admin/sites');
+    triggerDeploy('sites');
     updateTag('sites');
     updateTag(`site:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
@@ -254,6 +257,7 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
     // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
+    triggerDeploy('sites');
     updateTag('sites');
     updateTag('projects'); // child projects cascaded — list cache must refetch
     if (slug) updateTag(`site:${slug}`);
@@ -294,6 +298,7 @@ async function toggleSiteField(
     }
 
     revalidatePath('/admin/sites');
+    triggerDeploy('sites');
     updateTag('sites');
     if (updated[0]?.slug) updateTag(`site:${updated[0].slug}`);
     return {};

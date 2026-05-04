@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm';
 import { requireAuth } from '@/lib/admin/auth';
 import { getString } from '@/lib/admin/form-utils';
 import { deleteS3Object } from '@/lib/admin/s3';
+import { triggerDeploy } from '@/lib/deploy-hook';
 
 export async function updateCompanyInfo(
   _prevState: { success?: boolean; error?: string },
@@ -75,6 +76,7 @@ export async function updateCompanyInfo(
     });
 
     updateTag('company');
+    triggerDeploy('company');
     return { success: true };
   } catch (error) {
     console.error('Failed to update company info:', error);
