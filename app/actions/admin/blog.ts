@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
@@ -91,6 +91,7 @@ export async function createBlogPost(
       ...data,
       ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     });
+    updateTag('blog');
     revalidatePath('/admin/blog');
     if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
@@ -142,6 +143,7 @@ export async function updateBlogPost(
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
+    updateTag('blog');
     revalidatePath('/admin/blog');
     if (data.isPublished) refreshBlogPost(data.slug);
     return { success: true };
@@ -159,6 +161,7 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
     const existing = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const slug = existing[0]?.slug;
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    updateTag('blog');
     revalidatePath('/admin/blog');
     if (slug) refreshBlogPost(slug);
     return {};
@@ -184,6 +187,7 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
+    updateTag('blog');
     revalidatePath('/admin/blog');
     if (updated[0]?.slug) refreshBlogPost(updated[0].slug);
     return {};

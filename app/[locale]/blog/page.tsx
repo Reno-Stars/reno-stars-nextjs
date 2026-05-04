@@ -13,8 +13,10 @@ interface PageProps {
 
 // Blog list refreshes daily via ISR; admin blog actions explicitly
 // revalidate this path + ping IndexNow on every post save, so newly
-// published content shows up immediately. 24h is the slow-fallback path.
-export const revalidate = 86400; // 24h
+// published content shows up immediately. Admin/blog.ts now also fires
+// updateTag('blog') which invalidates the cached query layer in queries.ts,
+// so the slow-fallback path can be a long ISR window.
+export const revalidate = 2592000; // 30d
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

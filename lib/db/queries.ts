@@ -978,7 +978,7 @@ const stripBlogContentLocalizations = sql`
 `;
 
 /** Fetch all published blog posts ordered by publishedAt desc. */
-export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
+export const getBlogPostsFromDb = cachedQuery(async (): Promise<BlogPost[]> => {
   return safeQuery('getBlogPostsFromDb', async () => {
     const rows = await db
       .select({
@@ -1006,7 +1006,7 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
       updated_at: row.updatedAt ?? undefined,
     }));
   }, []);
-});
+}, ['getBlogPostsFromDb', 'v1'], { revalidate: 3600, tags: ['blog'] });
 
 /** Fetch paginated published blog posts ordered by publishedAt desc. */
 export const getBlogPostsPaginatedFromDb = cache(

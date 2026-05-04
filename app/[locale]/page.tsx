@@ -18,8 +18,10 @@ import {
 } from "@/lib/db/queries";
 import { getGoogleReviews } from "@/lib/google-reviews";
 
-// Revalidate homepage every hour (ISR) - serves cached HTML instantly
-export const revalidate = 86400; // 24h — Vercel quota optimization
+// Long ISR window — admin actions fire updateTag('projects'|'services'|'company'|'faqs'|...)
+// so cache stays fresh on edits without scheduled revalidation churn.
+// Google Reviews / blog list refresh on their own ISR cadence inside the lib.
+export const revalidate = 2592000; // 30d
 
 interface PageProps {
   params: Promise<{ locale: string }>;
