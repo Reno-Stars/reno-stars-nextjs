@@ -8,7 +8,7 @@ import { WORKSAFE_BC_LOGO } from "@/lib/data";
 import {
   getCompanyFromDb,
   getServicesFromDb,
-  getProjectsFromDb,
+  getProjectsListFromDb,
   getTrustBadgesFromDb,
   getFaqsFromDb,
   getBlogPostsFromDb,
@@ -88,7 +88,7 @@ export default async function Page({ params }: PageProps) {
     getCompanyFromDb(),
     getServicesFromDb(),
     getGoogleReviews(),
-    getProjectsFromDb(),
+    getProjectsListFromDb(),
     getTrustBadgesFromDb(),
     getFaqsFromDb(),
     getBlogPostsFromDb(),

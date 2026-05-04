@@ -5,7 +5,7 @@ import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
-import { getCompanyFromDb, getProjectsFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import type { Project } from '@/lib/types';
 
 interface PageProps {
@@ -94,7 +94,7 @@ export default async function Page({ params }: PageProps) {
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'metadata.projectsBudget' }),
     getCompanyFromDb(),
-    getProjectsFromDb(),
+    getProjectsListFromDb(),
     getSitesAsProjectsFromDb(),
     getCategoriesLocalized(),
   ]);

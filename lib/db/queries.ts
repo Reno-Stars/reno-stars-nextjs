@@ -1,6 +1,35 @@
 import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 import { eq, asc, desc, and, or, like, inArray, count, isNull, sql } from 'drizzle-orm';
 import { db } from './index';
+
+/**
+ * Wrap a layout-level / high-traffic query in BOTH layers of caching:
+ * - `unstable_cache` shares the result across all Lambda invocations
+ *   within the revalidate window (deduplicates Neon hits across requests).
+ * - `cache` (from react) dedupes within a single render tree (covers
+ *   the case where the same function gets called from layout + page).
+ *
+ * Order matters: react `cache()` must be the OUTER wrapper so it sees
+ * each render-pass invocation; `unstable_cache` is the INNER store
+ * that persists across renders.
+ *
+ * Default revalidate is 1h (3600s) — appropriate for content like
+ * services / areas / company info that changes via the admin a few
+ * times a day. Admin server actions call `revalidatePath` which
+ * invalidates the unstable_cache entries on the affected paths.
+ */
+function cachedQuery<T>(
+  fn: () => Promise<T>,
+  keyParts: string[],
+  options: { revalidate?: number; tags?: string[] } = {},
+): () => Promise<T> {
+  const wrapped = unstable_cache(fn, keyParts, {
+    revalidate: options.revalidate ?? 3600,
+    tags: options.tags,
+  });
+  return cache(wrapped);
+}
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
   companyInfo,
@@ -167,7 +196,7 @@ const COMPANY_FALLBACK: Company = (() => {
  * Stats (yearsExperience, teamSize, warranty, liabilityCoverage) come from
  * `lib/company-config.ts`, not the database.
  */
-export const getCompanyFromDb = cache(async (): Promise<Company> => {
+export const getCompanyFromDb = cachedQuery(async (): Promise<Company> => {
   return safeQuery('getCompanyFromDb', async () => {
     const rows = await db.select().from(companyInfo).limit(1);
     const row = rows[0];
@@ -195,12 +224,12 @@ export const getCompanyFromDb = cache(async (): Promise<Company> => {
       },
     };
   }, COMPANY_FALLBACK);
-});
+}, ['getCompanyFromDb'], { tags: ['company'] });
 
 /**
  * Fetch active social links ordered by display_order.
  */
-export const getSocialLinksFromDb = cache(async (): Promise<SocialLink[]> => {
+export const getSocialLinksFromDb = cachedQuery(async (): Promise<SocialLink[]> => {
   return safeQuery('getSocialLinksFromDb', async () => {
     const rows = await db
       .select()
@@ -214,12 +243,12 @@ export const getSocialLinksFromDb = cache(async (): Promise<SocialLink[]> => {
       label: row.label ?? row.platform,
     }));
   }, []);
-});
+}, ['getSocialLinksFromDb'], { tags: ['social-links'] });
 
 /**
  * Fetch services from DB, mapped to the `Service` type with bilingual content.
  */
-export const getServicesFromDb = cache(async (): Promise<Service[]> => {
+export const getServicesFromDb = cachedQuery(async (): Promise<Service[]> => {
   return safeQuery('getServicesFromDb', async () => {
   const rows = await db
     .select()
@@ -258,7 +287,7 @@ export const getServicesFromDb = cache(async (): Promise<Service[]> => {
     };
   });
   }, []);
-});
+}, ['getServicesFromDb'], { tags: ['services'] });
 
 /**
  * Fetch a slug → { en, zh } title map from the services table.
@@ -506,6 +535,98 @@ export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
     );
   }, []);
 });
+
+/**
+ * Lightweight version of getProjectsFromDb for listing pages: skips the
+ * image_pairs / scopes / external_products joins (243 + 321 + N rows on
+ * the relations side) and strips heavy long-form keys from the
+ * localizations jsonb (description / project_story / challenge / solution
+ * / meta_description across 12 locales).
+ *
+ * Used on homepage gallery, /projects/ index, /projects/budget/[tier]/,
+ * /before-after/ list — pages that only need title / hero / category /
+ * slug / location / featured-flag. Detail pages (/projects/[slug]/) use
+ * the full getProjectsFromDb / getProjectBySlugFromDb.
+ *
+ * Verified payload reduction: 890 KB → ~120 KB per call.
+ */
+const stripProjectListLocalizations = sql`
+  COALESCE(${projectsTable.localizations}, '{}'::jsonb)
+    - 'descriptionAr' - 'descriptionEs' - 'descriptionFa' - 'descriptionFr'
+    - 'descriptionHi' - 'descriptionJa' - 'descriptionKo' - 'descriptionPa'
+    - 'descriptionRu' - 'descriptionTl' - 'descriptionVi' - 'descriptionZhHant'
+    - 'projectStoryAr' - 'projectStoryEs' - 'projectStoryFa' - 'projectStoryFr'
+    - 'projectStoryHi' - 'projectStoryJa' - 'projectStoryKo' - 'projectStoryPa'
+    - 'projectStoryRu' - 'projectStoryTl' - 'projectStoryVi' - 'projectStoryZhHant'
+    - 'challengeAr' - 'challengeEs' - 'challengeFa' - 'challengeFr'
+    - 'challengeHi' - 'challengeJa' - 'challengeKo' - 'challengePa'
+    - 'challengeRu' - 'challengeTl' - 'challengeVi' - 'challengeZhHant'
+    - 'solutionAr' - 'solutionEs' - 'solutionFa' - 'solutionFr'
+    - 'solutionHi' - 'solutionJa' - 'solutionKo' - 'solutionPa'
+    - 'solutionRu' - 'solutionTl' - 'solutionVi' - 'solutionZhHant'
+    - 'metaDescriptionAr' - 'metaDescriptionEs' - 'metaDescriptionFa' - 'metaDescriptionFr'
+    - 'metaDescriptionHi' - 'metaDescriptionJa' - 'metaDescriptionKo' - 'metaDescriptionPa'
+    - 'metaDescriptionRu' - 'metaDescriptionTl' - 'metaDescriptionVi' - 'metaDescriptionZhHant'
+    - 'seoKeywordsZhHant' - 'focusKeywordZhHant'
+`;
+
+export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> => {
+  return safeQuery('getProjectsListFromDb', async () => {
+    const rows = await db
+      .select({
+        id: projectsTable.id,
+        slug: projectsTable.slug,
+        titleEn: projectsTable.titleEn,
+        titleZh: projectsTable.titleZh,
+        descriptionEn: projectsTable.descriptionEn,
+        descriptionZh: projectsTable.descriptionZh,
+        excerptEn: projectsTable.excerptEn,
+        excerptZh: projectsTable.excerptZh,
+        projectStoryEn: sql<string | null>`NULL`,
+        projectStoryZh: sql<string | null>`NULL`,
+        serviceId: projectsTable.serviceId,
+        serviceType: projectsTable.serviceType,
+        categoryEn: projectsTable.categoryEn,
+        categoryZh: projectsTable.categoryZh,
+        locationCity: projectsTable.locationCity,
+        budgetRange: projectsTable.budgetRange,
+        durationEn: projectsTable.durationEn,
+        durationZh: projectsTable.durationZh,
+        spaceTypeEn: projectsTable.spaceTypeEn,
+        spaceTypeZh: projectsTable.spaceTypeZh,
+        heroImageUrl: projectsTable.heroImageUrl,
+        challengeEn: sql<string | null>`NULL`,
+        challengeZh: sql<string | null>`NULL`,
+        solutionEn: sql<string | null>`NULL`,
+        solutionZh: sql<string | null>`NULL`,
+        badgeEn: projectsTable.badgeEn,
+        badgeZh: projectsTable.badgeZh,
+        featured: projectsTable.featured,
+        isPublished: projectsTable.isPublished,
+        publishedAt: projectsTable.publishedAt,
+        createdAt: projectsTable.createdAt,
+        updatedAt: projectsTable.updatedAt,
+        siteId: projectsTable.siteId,
+        displayOrderInSite: projectsTable.displayOrderInSite,
+        metaTitleEn: projectsTable.metaTitleEn,
+        metaTitleZh: projectsTable.metaTitleZh,
+        metaDescriptionEn: projectsTable.metaDescriptionEn,
+        metaDescriptionZh: projectsTable.metaDescriptionZh,
+        focusKeywordEn: projectsTable.focusKeywordEn,
+        focusKeywordZh: projectsTable.focusKeywordZh,
+        seoKeywordsEn: projectsTable.seoKeywordsEn,
+        seoKeywordsZh: projectsTable.seoKeywordsZh,
+        poNumber: projectsTable.poNumber,
+        heroVideoUrl: projectsTable.heroVideoUrl,
+        localizations: stripProjectListLocalizations.as('localizations'),
+      })
+      .from(projectsTable)
+      .where(eq(projectsTable.isPublished, true))
+      .orderBy(desc(projectsTable.createdAt));
+
+    return rows.map((row: typeof rows[number]) => mapDbProjectToProject(row as DbProjectRow, [], [], []));
+  }, []);
+}, ['getProjectsListFromDb'], { tags: ['projects'] });
 
 /** Fetch a single published project by slug from DB. */
 export const getProjectBySlugFromDb = cache(
@@ -780,7 +901,7 @@ function parseNewlineList(text: string | null): string[] | undefined {
 }
 
 /** Fetch active service areas ordered by display_order. */
-export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
+export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]> => {
   return safeQuery('getServiceAreasFromDb', async () => {
     const rows = await db
       .select()
@@ -804,7 +925,7 @@ export const getServiceAreasFromDb = cache(async (): Promise<ServiceArea[]> => {
       };
     });
   }, []);
-});
+}, ['getServiceAreasFromDb'], { tags: ['service-areas'] });
 
 // ============================================================================
 // BLOG POST QUERIES
@@ -1024,7 +1145,7 @@ export const getDesignsFromDb = cache(async (): Promise<DesignItem[]> => {
 // ============================================================================
 
 /** Fetch active trust badges ordered by display_order. */
-export const getTrustBadgesFromDb = cache(async (): Promise<import('../types').Localized<string>[]> => {
+export const getTrustBadgesFromDb = cachedQuery(async (): Promise<import('../types').Localized<string>[]> => {
   return safeQuery('getTrustBadgesFromDb', async () => {
     const rows = await db
       .select()
@@ -1036,7 +1157,7 @@ export const getTrustBadgesFromDb = cache(async (): Promise<import('../types').L
       buildLocalized('badge', row.badgeEn, row.badgeZh, row.localizations)
     );
   }, []);
-});
+}, ['getTrustBadgesFromDb'], { tags: ['trust-badges'] });
 
 
 
@@ -1479,7 +1600,7 @@ export async function getProjectByIdAdmin(id: string) {
 // ============================================================================
 
 /** Fetch active partners ordered by display_order. */
-export const getPartnersFromDb = cache(async (): Promise<Partner[]> => {
+export const getPartnersFromDb = cachedQuery(async (): Promise<Partner[]> => {
   return safeQuery('getPartnersFromDb', async () => {
     const rows = await db
       .select()
@@ -1494,7 +1615,7 @@ export const getPartnersFromDb = cache(async (): Promise<Partner[]> => {
       isHiddenVisually: row.isHiddenVisually,
     }));
   }, []);
-});
+}, ['getPartnersFromDb'], { tags: ['partners'] });
 
 /** Fetch all partners (admin — includes inactive). */
 export async function getAllPartnersAdmin(): Promise<(typeof partnersTable.$inferSelect)[]> {
