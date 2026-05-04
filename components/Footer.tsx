@@ -234,13 +234,9 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/contact', label: t('nav.contact') },
     { href: '/blog', label: t('nav.blogAndNews') },
     { href: '/guides', label: t('nav.guides') },
-    { href: '/guides/kitchen-renovation-cost-vancouver', label: t('nav.kitchenCostGuide') },
-    { href: '/guides/bathroom-renovation-cost-vancouver', label: t('nav.bathroomCostGuide') },
-    { href: '/projects/budget/under-30k', label: t('nav.budgetUnder30k') },
-    { href: '/projects/budget/30k-60k', label: t('nav.budgetMid') },
-    { href: '/projects/budget/60k-plus', label: t('nav.budgetHigh') },
-    { href: '/blog/kitchen-vs-bathroom-which-renovation-first-vancouver', label: t('nav.kitchenVsBathroom') },
-    { href: '/blog/condo-vs-house-renovation-cost-vancouver', label: t('nav.condoVsHouse') },
+    // 2026-05-04: removed sub-guide / budget-tier / comparison-page links
+    // from footer per user request — clutter without proportional click yield.
+    // The /guides/ hub (above) is now the single entry point to those pages.
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
