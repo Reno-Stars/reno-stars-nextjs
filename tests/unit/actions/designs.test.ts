@@ -45,6 +45,8 @@ vi.mock('@/lib/admin/auth', () => ({
 
 vi.mock('next/cache', () => ({
   revalidatePath: vi.fn(),
+  updateTag: vi.fn(),
+  revalidateTag: vi.fn(),
 }));
 
 vi.mock('next/navigation', () => ({
