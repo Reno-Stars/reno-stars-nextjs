@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, PRERENDERED_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -16,25 +16,23 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-// Build-time prerender: 11 of 14 locales × is_project_type services only.
-// The site is fully-static (no ISR — see CLAUDE.md "Architecture: SSG +
-// admin redeploy webhook"); every URL must be in this list at build time
-// or it 404s.
+// Hybrid SSG + on-demand ISR (2026-05-04 redesign — see /services/{svc}/page.tsx
+// for the full root-cause notes). Prerender just the 3 high-traffic locales;
+// the other 11 render on-demand on first visit and cache forever.
 //
-// 2026-05-04: dropped pa/tl/fa from combo prerender after ENOSPC at
-// /vercel/output/config.json with 8 services × 14 cities × 14 locales
-// = 1,568 entries. The escape hatch documented in earlier rounds:
-// pa/tl/fa are the 3 lowest-traffic locales per GSC, so cutting them
-// from combos saves 8 × 14 × 3 = 336 entries → ~1,232 entries which
-// fits with margin. Parent /services/{svc}/ pages (without city) still
-// get all 14 locales — pa/tl/fa users still land on a localized service
-// page, just without the city-scoped variant.
+// Cost shift:
+//   Before: 8 services × 14 cities × 14 locales = 1,568 entries (ENOSPC'd Vercel build)
+//   Now:    6 project_type services × 14 cities × 3 locales = 252 entries
+//   Saved:  ~1,316 prerenders, plus the 11 missing locales now actually render
+//           via on-demand instead of 404'ing.
 //
-// Filter to `is_project_type = true` drops realtor-style services
-// that aren't real renovation categories.
-const COMBO_PRERENDER_LOCALES = locales.filter(
-  (l) => l !== 'pa' && l !== 'tl' && l !== 'fa',
-);
+// `revalidate = 31536000` (1y) + `dynamicParams = true` is what enables the
+// on-demand fallback. Without revalidate set, Next 16 treats the route as
+// fully-static and dynamicParams has no Lambda to invoke. The `safeFaq`
+// wrapper above also defends against the throw-on-missing-message path that
+// was causing 404s for new services before their FAQ keys landed.
+export const revalidate = 31536000; // 1 year
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
@@ -43,7 +41,7 @@ export async function generateStaticParams() {
     if (service.showOnServicesPage === false) continue;
     if (service.isProjectType === false) continue;
     for (const area of areas) {
-      for (const locale of COMBO_PRERENDER_LOCALES) {
+      for (const locale of PRERENDERED_LOCALES) {
         params.push({ locale, 'service-slug': service.slug, city: area.slug });
       }
     }
@@ -398,13 +396,19 @@ export default async function Page({ params }: PageProps) {
     answer: pickLocale(faq.answer, loc),
   }));
 
-  // Service-type FAQs from i18n (with {area} placeholder replaced by actual city name)
+  // Service-type FAQs from i18n (with {area} placeholder replaced by actual city name).
+  // Wrap in safeFaq so a missing key degrades to empty rather than throwing
+  // MISSING_MESSAGE — see /services/{svc}/page.tsx for why.
   const faqParams = { area: localizedArea.name };
+  const safeFaq = (key: string): string => {
+    try { return faqT(key, faqParams); }
+    catch { return ''; }
+  };
   const serviceFaqs = [
-    { id: `${serviceSlug}-1`, question: faqT(`${serviceSlug}.q1`, faqParams), answer: faqT(`${serviceSlug}.a1`, faqParams) },
-    { id: `${serviceSlug}-2`, question: faqT(`${serviceSlug}.q2`, faqParams), answer: faqT(`${serviceSlug}.a2`, faqParams) },
-    { id: `${serviceSlug}-3`, question: faqT(`${serviceSlug}.q3`, faqParams), answer: faqT(`${serviceSlug}.a3`, faqParams) },
-  ];
+    { id: `${serviceSlug}-1`, question: safeFaq(`${serviceSlug}.q1`), answer: safeFaq(`${serviceSlug}.a1`) },
+    { id: `${serviceSlug}-2`, question: safeFaq(`${serviceSlug}.q2`), answer: safeFaq(`${serviceSlug}.a2`) },
+    { id: `${serviceSlug}-3`, question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
+  ].filter((f) => f.question && f.answer);
 
   // Combine: area-specific first, then service-level
   const faqs = [...dbFaqs, ...serviceFaqs];

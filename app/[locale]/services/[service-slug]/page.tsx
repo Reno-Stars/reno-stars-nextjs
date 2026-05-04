@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
+import { locales, ogLocaleMap, PRERENDERED_LOCALES, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -32,16 +32,28 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 };
 
 
-// Build-time prerender: ALL locales. Site is fully-static (no ISR — see
-// CLAUDE.md "Architecture: SSG + admin redeploy webhook"); every URL must
-// be in this list at build time or it 404s.
-// Cost: ~7 services × 14 locales ≈ 98 entries — trivial.
+// Hybrid SSG + on-demand ISR (2026-05-04 redesign):
+//   - revalidate = 1 year (effectively never auto-rev — costs nothing scheduled)
+//   - dynamicParams = true (default, made explicit) — non-prerendered URLs
+//     render on-demand and cache forever at the edge
+// Combined effect: prerender just the 3 high-traffic locales (en/zh/zh-Hant)
+// at build time; the other 11 locales render on first visit and cache.
+//
+// Root-cause of the earlier "non-EN ISR returns 404" bug (task #93,
+// 2026-04-30): `faqT(`${slug}.q1`)` below threw MISSING_MESSAGE for
+// locales/slugs without a corresponding faq.{slug}.q1 key, and Next
+// converted that uncaught throw into a 404. Workaround in this commit:
+// wrap the dynamic FAQ lookups in safeFaq() so a missing message degrades
+// to a sensible fallback instead of throwing the whole render.
+export const revalidate = 31536000; // 1 year
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
   const params: { locale: string; 'service-slug': string }[] = [];
   for (const service of services) {
     if (service.showOnServicesPage === false) continue;
-    for (const locale of locales) {
+    for (const locale of PRERENDERED_LOCALES) {
       params.push({ locale, 'service-slug': service.slug });
     }
   }
@@ -113,13 +125,21 @@ export default async function Page({ params }: PageProps) {
     { name: localizedService.title, url: `/${locale}/services/${serviceSlug}/` },
   ];
 
-  // Build FAQs for this service type (general page defaults to Vancouver)
+  // Build FAQs for this service type (general page defaults to Vancouver).
+  // Wrap in safeFaq so a missing key (new service added to DB before its
+  // i18n FAQ entries land) degrades to an empty string instead of throwing
+  // MISSING_MESSAGE — Next converts uncaught throws into 404, which broke
+  // every non-prerendered /services/{svc}/ render before this fix.
   const faqParams = { area: locale === 'zh' ? '温哥华' : 'Vancouver' };
+  const safeFaq = (key: string): string => {
+    try { return faqT(key, faqParams); }
+    catch { return ''; }
+  };
   const faqs = [
-    { question: faqT(`${serviceSlug}.q1`, faqParams), answer: faqT(`${serviceSlug}.a1`, faqParams) },
-    { question: faqT(`${serviceSlug}.q2`, faqParams), answer: faqT(`${serviceSlug}.a2`, faqParams) },
-    { question: faqT(`${serviceSlug}.q3`, faqParams), answer: faqT(`${serviceSlug}.a3`, faqParams) },
-  ];
+    { question: safeFaq(`${serviceSlug}.q1`), answer: safeFaq(`${serviceSlug}.a1`) },
+    { question: safeFaq(`${serviceSlug}.q2`), answer: safeFaq(`${serviceSlug}.a2`) },
+    { question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
+  ].filter((f) => f.question && f.answer);
 
   return (
     <>
