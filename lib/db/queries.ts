@@ -821,14 +821,26 @@ export interface PaginatedBlogPosts {
   currentPage: number;
 }
 
+/**
+ * Strip content* keys from the localizations jsonb at the SQL layer for
+ * listing queries. The columns content_en/content_zh aren't selected, but
+ * the localizations jsonb embeds content for the other 12 locales — about
+ * 6.5 MB of body text across 116 posts that listings never render.
+ *
+ * Verified 2026-05-04: full row payload 7.3 MB → 776 KB after strip
+ * (9.4× reduction). Quota-eating culprit on Neon when layout + homepage
+ * each call this on every Vercel ISR refresh / Lambda cold start.
+ */
+const stripBlogContentLocalizations = sql`
+  COALESCE(${blogPostsTable.localizations}, '{}'::jsonb)
+    - 'contentZhHant' - 'contentJa' - 'contentKo' - 'contentEs'
+    - 'contentPa'    - 'contentTl' - 'contentFa' - 'contentVi'
+    - 'contentRu'    - 'contentAr' - 'contentHi' - 'contentFr'
+`;
+
 /** Fetch all published blog posts ordered by publishedAt desc. */
 export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
   return safeQuery('getBlogPostsFromDb', async () => {
-    // Listing-only projection — exclude content_en/content_zh and the entire
-    // localizations jsonb. Once Phase A blog content is fully populated, each
-    // localizations payload is ~30 KB (3 langs × ~10 KB content). With 113
-    // posts that's ~3 MB extra wire per list query that the listing UI
-    // doesn't render. Slim projection keeps blog-list pages fast.
     const rows = await db
       .select({
         slug: blogPostsTable.slug,
@@ -839,7 +851,7 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
         featuredImageUrl: blogPostsTable.featuredImageUrl,
         publishedAt: blogPostsTable.publishedAt,
         updatedAt: blogPostsTable.updatedAt,
-        localizations: blogPostsTable.localizations,
+        localizations: stripBlogContentLocalizations.as('localizations'),
       })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true))
@@ -847,8 +859,8 @@ export const getBlogPostsFromDb = cache(async (): Promise<BlogPost[]> => {
 
     return rows.map((row: typeof rows[number]) => ({
       slug: row.slug,
-      title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
-      excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+      title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations as Record<string, unknown>),
+      excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations as Record<string, unknown>),
       content: undefined,
       featured_image: getOptionalAssetUrl(row.featuredImageUrl),
       published_at: row.publishedAt ?? undefined,
@@ -872,8 +884,9 @@ export const getBlogPostsPaginatedFromDb = cache(
       const currentPage = Math.max(1, Math.min(page, totalPages || 1));
       const offset = (currentPage - 1) * perPage;
 
-      // Slim projection — see getBlogPostsFromDb comment. Excludes content
-      // fields entirely (listing UI uses excerpt only).
+      // Slim projection — see getBlogPostsFromDb comment. Strips content*
+      // keys from localizations jsonb at SQL layer (the 12 non-en/zh body
+      // texts that listings never render).
       const rows = await db
         .select({
           slug: blogPostsTable.slug,
@@ -884,7 +897,7 @@ export const getBlogPostsPaginatedFromDb = cache(
           featuredImageUrl: blogPostsTable.featuredImageUrl,
           publishedAt: blogPostsTable.publishedAt,
           updatedAt: blogPostsTable.updatedAt,
-          localizations: blogPostsTable.localizations,
+          localizations: stripBlogContentLocalizations.as('localizations'),
         })
         .from(blogPostsTable)
         .where(eq(blogPostsTable.isPublished, true))
@@ -894,8 +907,8 @@ export const getBlogPostsPaginatedFromDb = cache(
 
       const posts = rows.map((row: typeof rows[number]) => ({
         slug: row.slug,
-        title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations),
-        excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
+        title: buildLocalized('title', row.titleEn, row.titleZh, row.localizations as Record<string, unknown>),
+        excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations as Record<string, unknown>),
         content: undefined,
         featured_image: getOptionalAssetUrl(row.featuredImageUrl),
         published_at: row.publishedAt ?? undefined,
