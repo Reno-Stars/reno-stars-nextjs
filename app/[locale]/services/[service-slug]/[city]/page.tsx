@@ -26,13 +26,10 @@ interface PageProps {
 //   Saved:  ~1,316 prerenders, plus the 11 missing locales now actually render
 //           via on-demand instead of 404'ing.
 //
-// `revalidate = 31536000` (1y) + `dynamicParams = true` is what enables the
-// on-demand fallback. Without revalidate set, Next 16 treats the route as
-// fully-static and dynamicParams has no Lambda to invoke. The `safeFaq`
-// wrapper above also defends against the throw-on-missing-message path that
-// was causing 404s for new services before their FAQ keys landed.
-export const revalidate = 31536000; // 1 year
-export const dynamicParams = true;
+// IMPORTANT: do NOT export `revalidate` or `dynamicParams` here. Next 16
+// regression on nested dynamic segments — see the parent /services/{svc}/
+// page.tsx for the full debug trace. Default behavior (no exports) gives
+// us the on-demand Lambda fallback we want, with params correctly bound.
 
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
@@ -375,15 +372,6 @@ export default async function Page({ params }: PageProps) {
   const area = areas.find((a) => a.slug === city);
 
   if (!service || !area || service.showOnServicesPage === false) {
-    console.error('[debug:/services/[svc]/[city]/page]', {
-      locale, serviceSlug, city,
-      hasService: !!service,
-      hasArea: !!area,
-      showOnServicesPage: service?.showOnServicesPage,
-      servicesCount: services.length,
-      areasCount: areas.length,
-      areaSlugs: areas.map((a) => a.slug),
-    });
     notFound();
   }
 

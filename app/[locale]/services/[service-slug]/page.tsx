@@ -33,20 +33,25 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 
 
 // Hybrid SSG + on-demand ISR (2026-05-04 redesign):
-//   - revalidate = 1 year (effectively never auto-rev — costs nothing scheduled)
-//   - dynamicParams = true (default, made explicit) — non-prerendered URLs
-//     render on-demand and cache forever at the edge
-// Combined effect: prerender just the 3 high-traffic locales (en/zh/zh-Hant)
-// at build time; the other 11 locales render on first visit and cache.
+// Prerender just the 3 high-traffic locales (en/zh/zh-Hant) at build time;
+// the other 11 locales render on first visit via on-demand ISR and cache
+// forever at the edge.
 //
-// Root-cause of the earlier "non-EN ISR returns 404" bug (task #93,
-// 2026-04-30): `faqT(`${slug}.q1`)` below threw MISSING_MESSAGE for
-// locales/slugs without a corresponding faq.{slug}.q1 key, and Next
-// converted that uncaught throw into a 404. Workaround in this commit:
-// wrap the dynamic FAQ lookups in safeFaq() so a missing message degrades
-// to a sensible fallback instead of throwing the whole render.
-export const revalidate = 31536000; // 1 year
-export const dynamicParams = true;
+// IMPORTANT: do NOT export `revalidate` or `dynamicParams` here. Next 16
+// has a regression on routes with nested dynamic segments (`[locale]/
+// services/[service-slug]/[city]`) where exporting `revalidate +
+// dynamicParams` causes the on-demand Lambda to receive params as their
+// raw segment templates (`'[locale]'`, `'[service-slug]'`, `'[city]'`)
+// instead of the URL-resolved values. The 404 then comes from the
+// `services.find(s => s.slug === '[service-slug]')` returning undefined.
+// Confirmed via debug logs on 2026-05-04 (deploy aw56nc2qd):
+//   serviceSlug: '%5Bservice-slug%5D' (= '[service-slug]')
+// Default behavior (no exports) works correctly — same as /projects/
+// [slug] and /areas/[city] which never had this issue.
+//
+// Earlier "non-EN ISR returns 404" bug had a separate cause: `faqT(
+// `${slug}.q1`)` threw MISSING_MESSAGE for slugs without their FAQ
+// keys. The safeFaq() wrapper below catches that path defensively.
 
 export async function generateStaticParams() {
   const services = await getServicesFromDb();
@@ -110,12 +115,6 @@ export default async function Page({ params }: PageProps) {
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service || service.showOnServicesPage === false) {
-    console.error('[debug:/services/[svc]/page]', {
-      locale, serviceSlug, hasService: !!service,
-      showOnServicesPage: service?.showOnServicesPage,
-      servicesCount: services.length,
-      slugs: services.map((s) => s.slug),
-    });
     notFound();
   }
   const localizedService = getLocalizedService(service, locale as Locale);
