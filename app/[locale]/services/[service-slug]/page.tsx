@@ -31,7 +31,10 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
   painting: { min: 3000, max: 15000 },
 };
 
-export const revalidate = 2592000; // 30d — Vercel ISR write reduction
+// 90d — same reasoning as combo route: this page's data changes only on
+// admin service edits, which fire updateTag('services') for immediate
+// invalidation. Scheduled revalidate is the long-stop fallback.
+export const revalidate = 7776000; // 90d
 
 // Build-time prerender: ALL locales. ISR was returning 404 for non-EN at
 // runtime (caught by scripts/audit-hreflang.mjs 2026-04-30) — every

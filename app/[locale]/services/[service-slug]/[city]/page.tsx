@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -16,24 +16,40 @@ interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
 }
 
-export const revalidate = 2592000; // 30d — Vercel ISR write reduction
+// 90d revalidate. Combo content changes only when a project is added/edited
+// in that city — and admin actions/projects.ts already fires updateTag('projects')
+// on every CRUD path, which invalidates this page's data cache immediately.
+// The scheduled revalidate is just the long-stop fallback, so 90d > 30d is
+// safe and cuts scheduled re-writes by 3× across the ~1K-entry combo grid.
+export const revalidate = 7776000; // 90d
 
-// Build-time prerender: only the locales that drive search/marketing traffic
-// (en, zh, zh-Hant). At 14 locales × 7 services × 14 areas = 1,372 combo
-// entries the Vercel build sandbox runs out of disk (ENOSPC writing
-// /vercel/output/config.json). The dropped locales (ja/ko/es/pa/tl/fa/vi/
-// ru/ar/hi/fr) get on-demand ISR — first request prerenders, then cached.
-// If ISR returns 404 for non-EN combos again (the 2026-04-30 bug), bring
-// those locales back here selectively rather than restoring the full fan-out.
-const PRERENDERED_COMBO_LOCALES = ['en', 'zh', 'zh-Hant'] as const;
-
+// Build-time prerender: ALL locales × is_project_type services only. Same
+// runtime ISR-404 bug that affected the parent /services/{svc}/ route
+// (task #93, fixed 2026-04-30) ALSO hits the combo /services/{svc}/{city}/
+// route — confirmed by user 2026-05-04 reporting /tl/services/kitchen/
+// vancouver/ returning 404. Until the runtime ISR bug is root-caused,
+// prerender every (locale × service × city) tuple at build time so
+// on-demand ISR is never relied on for these URLs.
+//
+// Two cost-offset levers applied alongside the all-locale revert:
+//   1. Filter to `is_project_type = true` — drops realtor-style services
+//      that aren't true renovation categories. 6 of 7 services qualify
+//      → -196 entries vs naive 7-service revert.
+//   2. 90d revalidate (above) — scheduled writes per URL drop 3×.
+//
+// Final cost: 6 services × ~14 cities × 14 locales ≈ 1,176 entries. The
+// earlier 2026-05-04 ENOSPC concern (commit 75ea5d1) was at 1,372 entries;
+// 1,176 fits with margin. If the ceiling is hit again, drop the
+// least-trafficked locales (pa/tl/fa) selectively rather than reverting
+// to 3-locale prerender (which directly causes the bug we're fixing here).
 export async function generateStaticParams() {
   const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
   const params: { locale: string; 'service-slug': string; city: string }[] = [];
   for (const service of services) {
     if (service.showOnServicesPage === false) continue;
+    if (service.isProjectType === false) continue;
     for (const area of areas) {
-      for (const locale of PRERENDERED_COMBO_LOCALES) {
+      for (const locale of locales) {
         params.push({ locale, 'service-slug': service.slug, city: area.slug });
       }
     }
