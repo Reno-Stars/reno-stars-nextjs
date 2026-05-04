@@ -282,6 +282,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Delta厨柜翻新喷漆 | $1.5K–$15K | Reno Stars',
       description: 'Delta厨柜翻新与重新喷漆——Ladner、Tsawwassen、北Delta。喷漆$1.5K起，整体翻新$4K起。免费上门估价。',
     },
+    // 老人/无障碍浴室 + Poly-B 更换 ZH 城市组合标题——与 EN 端 CTR 优化覆盖一致。
+    'accessible-bathroom/vancouver': {
+      title: '温哥华无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars',
+      description: '温哥华无障碍 / 老人浴室改造——无门槛淋浴、扶手、舒适高度马桶、轮椅可入梳妆台。CSA B651 合规。$3K–$60K。免费报价。',
+    },
+    'accessible-bathroom/burnaby': {
+      title: '本拿比无障碍浴室改造 | 轮椅步入式 | $3K–$60K | Reno Stars',
+      description: '本拿比无障碍浴室改造——Metrotown、Heights、Capitol Hill。步入式淋浴、扶手、可滚入式座椅、轮椅可入梳妆台。$3K–$60K。',
+    },
+    'accessible-bathroom/richmond': {
+      title: '列治文无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars',
+      description: '列治文无障碍浴室改造——Steveston、Brighouse、Terra Nova。无门槛淋浴、扶手、舒适高度洁具、助行器/轮椅通行。$3K–$60K。',
+    },
+    'accessible-bathroom/surrey': {
+      title: 'Surrey无障碍浴室改造 | 轮椅步入式 | $3K–$60K | Reno Stars',
+      description: 'Surrey无障碍浴室改造——Fleetwood、Newton、South Surrey、Cloverdale。老人就地养老 + 轮椅可入施工。$3K–$60K。免费上门报价。',
+    },
+    'accessible-bathroom/west-vancouver': {
+      title: '西温无障碍浴室改造 | 高端老人浴室 | Reno Stars',
+      description: '西温无障碍浴室改造——Caulfeild、Dundarave、British Properties 高端老人就地养老施工。CSA B651 合规，与职业治疗师协调对接。',
+    },
+    'poly-b-replacement/burnaby': {
+      title: '本拿比 Poly-B 水管更换 | $4K–$22K | 保险续保 | Reno Stars',
+      description: '本拿比 Poly-B 水管更换——Metrotown 公寓、Heights 独立屋、本拿比山联排。PEX 重新走管、50 年保修、保险公司认可文件。$4K–$22K。',
+    },
+    'poly-b-replacement/coquitlam': {
+      title: '高贵林 Poly-B 水管更换 | $8K–$22K | 保险续保 | Reno Stars',
+      description: '高贵林 Poly-B 水管更换——Burke Mountain、Westwood Plateau、Maillardville 独立屋。PEX 重新走管、50 年保修、保险续保文件。$8K–$22K。',
+    },
+    'poly-b-replacement/richmond': {
+      title: '列治文 Poly-B 水管更换 | $4K–$25K | 保险续保 | Reno Stars',
+      description: '列治文 Poly-B 水管更换——Steveston、Brighouse、Terra Nova 独立屋。PEX 重新走管、50 年保修、BC 许可证 + 检验。$4K–$25K。免费报价。',
+    },
+    'poly-b-replacement/maple-ridge': {
+      title: '枫树岭 Poly-B 水管更换 | $10K–$25K | 保险续保 | Reno Stars',
+      description: '枫树岭 Poly-B 水管更换——Albion、Cottonwood、Haney 独立屋。该区域 1985-97 年间建房密集。PEX 重新走管 + 50 年保修。$10K–$25K。',
+    },
+    'poly-b-replacement/surrey': {
+      title: 'Surrey Poly-B 水管更换 | $10K–$25K | 保险续保 | Reno Stars',
+      description: 'Surrey Poly-B 水管更换——Fleetwood、Newton、Cloverdale 独立屋。PEX 重新走管，50 年保修 + 保险续保文件。$10K–$25K。',
+    },
   };
   if (locale === 'zh' && zhOverrides[overrideKey]) {
     title = zhOverrides[overrideKey].title;
