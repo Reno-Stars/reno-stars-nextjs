@@ -37,6 +37,16 @@ export default function BlogPostPage({ locale, post, company, services = [], are
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
   const localizedServices = useMemo(() => services.map((s) => getLocalizedService(s, locale)), [services, locale]);
   const localizedAreas = useMemo(() => areas.map((a) => getLocalizedArea(a, locale)), [areas, locale]);
+  // unstable_cache JSON-serializes results so Date columns arrive as strings
+  // on cache hits; rehydrate before formatting to avoid TypeError at runtime.
+  const publishedAt = useMemo(
+    () => (post.published_at ? new Date(post.published_at) : null),
+    [post.published_at],
+  );
+  const updatedAt = useMemo(
+    () => (post.updated_at ? new Date(post.updated_at) : null),
+    [post.updated_at],
+  );
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -70,11 +80,11 @@ export default function BlogPostPage({ locale, post, company, services = [], are
 
             {/* Article meta: date + author */}
             <div className="flex flex-wrap items-center gap-4 mb-6 text-sm" style={{ color: TEXT_MID }}>
-              {post.published_at && (
+              {publishedAt && (
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
-                  <time dateTime={post.published_at.toISOString()}>
-                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(post.published_at)}
+                  <time dateTime={publishedAt.toISOString()}>
+                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(publishedAt)}
                   </time>
                 </span>
               )}
@@ -84,11 +94,11 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   {post.author}
                 </span>
               )}
-              {post.updated_at && post.published_at && post.updated_at.getTime() > post.published_at.getTime() + 86400000 && (
+              {updatedAt && publishedAt && updatedAt.getTime() > publishedAt.getTime() + 86400000 && (
                 <span className="flex items-center gap-1.5" style={{ color: TEXT_MID }}>
                   {t('blog.updated')}{' '}
-                  <time dateTime={post.updated_at.toISOString()}>
-                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(post.updated_at)}
+                  <time dateTime={updatedAt.toISOString()}>
+                    {new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(updatedAt)}
                   </time>
                 </span>
               )}
