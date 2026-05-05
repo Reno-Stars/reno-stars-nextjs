@@ -13,6 +13,13 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+// Cached results from `unstable_cache` are JSON-serialized, so Date columns
+// come back as strings on cache hits. Coerce defensively before formatting.
+function toIsoString(value: Date | string | null | undefined): string | undefined {
+  if (!value) return undefined;
+  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+}
+
 
 /**
  * Pull FAQs out of a markdown blog body. Looks for an FAQ section heading
@@ -89,8 +96,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'article',
-      publishedTime: post.published_at?.toISOString(),
-      modifiedTime: post.updated_at?.toISOString(),
+      publishedTime: toIsoString(post.published_at),
+      modifiedTime: toIsoString(post.updated_at),
       images: [{ url: ogImage, width: 1200, height: 630, alt: localizedPost.title }],
     },
     twitter: {
@@ -136,8 +143,8 @@ export default async function Page({ params }: PageProps) {
         company={company}
         headline={localizedPost.title}
         description={localizedPost.excerpt}
-        datePublished={post.published_at?.toISOString()}
-        dateModified={post.updated_at?.toISOString()}
+        datePublished={toIsoString(post.published_at)}
+        dateModified={toIsoString(post.updated_at)}
         authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
         image={post.featured_image}
