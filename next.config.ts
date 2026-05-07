@@ -530,6 +530,71 @@ const nextConfig: NextConfig = {
       },
 
       // ================================================================
+      // 9b1. Cost-guide blog → cost-guide page consolidation
+      //
+      // Per SEO audit (May 2026, GSC top-pages report): the DB-driven
+      // /blog/<topic>-cost-vancouver/ posts and the static
+      // /guides/<topic>-cost-vancouver/ pages cover the same intent and
+      // were competing for the same query clusters. The /guides/* version
+      // consistently outranks the blog version, so the blog versions are
+      // 301'd into the guides to consolidate link equity and stop Google
+      // from picking the wrong canonical.
+      //
+      // Pairs (blog slug → guide slug):
+      //   average-bathroom-renovation-cost-vancouver       → bathroom-renovation-cost-vancouver
+      //   basement-renovation-cost-vancouver-2026          → basement-renovation-cost-vancouver
+      //   basement-suite-renovation-cost-vancouver         → basement-suite-cost-vancouver
+      //   basement-suite-renovation-cost-vancouver-zh      → basement-suite-cost-vancouver
+      //   bathroom-renovation-cost-vancouver-by-size       → bathroom-renovation-cost-vancouver
+      //   bathroom-renovation-cost-vancouver-by-style      → bathroom-renovation-cost-vancouver
+      //   renovation-cost-vancouver-2026-complete-guide    → whole-house-renovation-cost-vancouver
+      //
+      // Locale matcher covers all 14 supported locales (see i18n/config.ts).
+      // Blog posts on cost-vancouver topics with no matching /guides/ page
+      // (bathtub, toilet, vanity, kitchen-backsplash, laundry-room,
+      // townhouse, condo-vs-house, restaurant, 3-piece-vs-4-piece) are
+      // intentionally NOT redirected — they hold their own keyword
+      // niches and there's no guide to consolidate into. Follow-up:
+      // consider unpublishing the redirected blog posts so they fall out
+      // of the sitemap (currently still emitted, will 301 on crawl).
+      // ================================================================
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/average-bathroom-renovation-cost-vancouver',
+        destination: '/:locale/guides/bathroom-renovation-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/basement-renovation-cost-vancouver-2026',
+        destination: '/:locale/guides/basement-renovation-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/basement-suite-renovation-cost-vancouver',
+        destination: '/:locale/guides/basement-suite-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/basement-suite-renovation-cost-vancouver-zh',
+        destination: '/:locale/guides/basement-suite-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/bathroom-renovation-cost-vancouver-by-size',
+        destination: '/:locale/guides/bathroom-renovation-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/bathroom-renovation-cost-vancouver-by-style',
+        destination: '/:locale/guides/bathroom-renovation-cost-vancouver/',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr)/blog/renovation-cost-vancouver-2026-complete-guide',
+        destination: '/:locale/guides/whole-house-renovation-cost-vancouver/',
+        permanent: true,
+      },
+
+      // ================================================================
       // 9c. Old WP root-level service page slugs
       // ================================================================
       { source: '/:locale(en|zh)/kitchen-renovation', destination: '/:locale/services/kitchen/', permanent: true },
