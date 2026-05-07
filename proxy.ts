@@ -101,6 +101,17 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.redirect(target, 301));
   }
 
+  // /signup is the GeoClockr Universal Link landing — see
+  // app/signup/page.tsx. The companion mobile app + Apple App Site
+  // Association declare `/signup?invite=*` as the deep-link target.
+  // The redirect chain `/signup → /en/signup` would (a) lose the
+  // `?invite=` param on some Vercel edge cases and (b) require
+  // duplicating the page under `[locale]/` for no SEO upside (the
+  // page is `noindex`). Skip locale routing for this path entirely.
+  if (pathname === '/signup' || pathname === '/signup/') {
+    return addSecurityHeaders(NextResponse.next());
+  }
+
   // Redirect non-locale paths to /en/ with 308 (permanent) so Google consolidates
   // link equity on the canonical /en/... URL instead of the bare path.
   // next-intl would handle these with a 307 (temporary), which doesn't pass equity.
