@@ -113,12 +113,14 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
       'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 20+ yrs, $5M insured, 3-yr warranty. Free quote in 24h.',
   },
   // 2026-05-07 GSC retitle: "reno white rock" 228 imp pos 1.35 with 0% CTR.
-  // AI Overview eating the click — leading with 76 five-star reviews + concrete
+  // AI Overview eating the click — leading with 5★ Google rating + concrete
   // services so the snippet has a concrete hook beyond what the AI can summarize.
+  // Evergreen phrasing (no pinned count) since the live Google review count
+  // fluctuates week-to-week.
   'white-rock': {
-    title: 'White Rock Renovations | 76 Five-Star Reviews | Reno Stars',
+    title: 'White Rock Renovations | 5★ Top-Rated | Reno Stars',
     description:
-      'White Rock home renovations — kitchens, bathrooms & whole-house. 20+ yrs, 76 five-star Google reviews, $5M insured, 3-yr warranty. Free quote in 24h.',
+      'White Rock home renovations — kitchens, bathrooms & whole-house. 20+ yrs, 5★ Google rated, $5M insured, 3-yr warranty. Free quote in 24h.',
   },
 };
 
