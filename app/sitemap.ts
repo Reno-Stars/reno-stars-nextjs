@@ -142,9 +142,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Drop minor-locale × service × city — duplicate-by-content per GSC
+  // 2026-05-07 audit; only EN+ZH have organic traffic on these long-tail
+  // combos. Other 12 locales were emitting ~3,400 thin templated pages
+  // (514 stuck in "Crawled - currently not indexed") that diluted crawl
+  // budget away from EN/ZH winners.
+  const SERVICE_CITY_LOCALES = ['en', 'zh'] as const;
   for (const slug of serviceSlugs) {
     for (const area of serviceAreas) {
-      for (const locale of locales) {
+      for (const locale of SERVICE_CITY_LOCALES) {
         entries.push({
           url: `${BASE_URL}/${locale}/services/${slug}/${area.slug}/`,
           lastModified: areaLastModMap.get(area.slug) ?? staticLastModified,
@@ -182,9 +188,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Drop minor-locale × projects/[slug] — same rationale as service×city:
+  // duplicate-by-content per GSC 2026-05-07 audit; only EN+ZH have organic
+  // traffic on these long-tail combos.
+  const PROJECT_LEAF_LOCALES = ['en', 'zh'] as const;
   const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
-    for (const locale of locales) {
+    for (const locale of PROJECT_LEAF_LOCALES) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: projectDateMap.get(slug) ?? now,
@@ -197,7 +207,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const projectSlugSet = new Set(projectSlugs);
   for (const slug of siteSlugs.filter(s => !projectSlugSet.has(s))) {
-    for (const locale of locales) {
+    for (const locale of PROJECT_LEAF_LOCALES) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
         lastModified: siteDateMap.get(slug) ?? now,
