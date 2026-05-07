@@ -50,6 +50,11 @@ test-results/
 *.pem
 Thumbs.db
 
+# Google Reviews cache — moved to Postgres (google_reviews_cache table).
+# Kept locally as the legacy seed input for scripts/seed-google-reviews-cache.ts;
+# tracking it in git was triggering Vercel auto-deploys on every dev refresh.
+google-reviews-cache.json
+
 # Claude Code
 .claude/
 .agents/

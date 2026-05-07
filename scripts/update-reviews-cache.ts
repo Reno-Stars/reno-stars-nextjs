@@ -1,24 +1,30 @@
 /**
- * Refresh the Google Reviews fallback cache file.
+ * Refresh the Google Reviews fallback cache row in Postgres.
  *
  * Usage: pnpm reviews:cache
  *
  * This fetches live reviews from the Google Places API, translates them
- * to Chinese using OpenAI, and writes the result to google-reviews-cache.json.
+ * to Chinese using OpenAI, and upserts the result into the
+ * `google_reviews_cache` table (single row keyed by `cache_key='default'`).
+ *
+ * Replaces the old write-to-`google-reviews-cache.json` flow that was
+ * triggering a fresh Vercel auto-deploy on every dev-server refresh.
+ *
  * Run before deploys or periodically in CI to ensure the cache stays fresh.
  *
- * Requires GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID env vars.
+ * Requires GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID, and DATABASE_URL env vars.
  * Optional: OPENAI_API_KEY for Chinese translation (skipped if not set).
  */
 
-import { writeFileSync, existsSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { eq } from 'drizzle-orm';
+import { db } from '../lib/db';
+import { googleReviewsCache } from '../lib/db/schema';
 import type { GoogleReview, GooglePlaceRating } from '../lib/types';
 import type { RawReview } from '../lib/google-reviews';
 import { mapReview } from '../lib/google-reviews';
 import { AI_CONFIG, parseJsonResponse } from '../lib/ai/openai';
 
-const CACHE_PATH = join(process.cwd(), 'google-reviews-cache.json');
+const CACHE_KEY = 'default';
 
 async function fetchReviews(
   placeId: string,
@@ -41,6 +47,21 @@ async function fetchReviews(
   return res.json();
 }
 
+/** Read the existing cached payload, or null on miss/error. */
+async function readExistingCache(): Promise<GooglePlaceRating | null> {
+  try {
+    const rows = await db
+      .select({ payload: googleReviewsCache.payload })
+      .from(googleReviewsCache)
+      .where(eq(googleReviewsCache.cacheKey, CACHE_KEY))
+      .limit(1);
+    return (rows[0]?.payload as GooglePlaceRating | undefined) ?? null;
+  } catch (err) {
+    console.warn('[reviews:cache] Failed to read existing cache row:', err);
+    return null;
+  }
+}
+
 /**
  * Translate review texts to Chinese using OpenAI.
  * Sends all reviews in a single batch request for efficiency.
@@ -52,17 +73,11 @@ async function translateReviews(reviews: GoogleReview[]): Promise<void> {
     return;
   }
 
-  // Load existing cache to reuse translations for unchanged reviews
+  // Reuse translations from the existing DB cache row for unchanged reviews.
+  const existing = await readExistingCache();
   const existingTranslations = new Map<string, string>();
-  if (existsSync(CACHE_PATH)) {
-    try {
-      const cached = JSON.parse(readFileSync(CACHE_PATH, 'utf-8')) as GooglePlaceRating;
-      for (const r of cached.reviews ?? []) {
-        if (r.textZh) {
-          existingTranslations.set(r.text, r.textZh);
-        }
-      }
-    } catch { /* ignore parse errors */ }
+  for (const r of existing?.reviews ?? []) {
+    if (r.textZh) existingTranslations.set(r.text, r.textZh);
   }
 
   // Only translate reviews that don't already have a cached translation
@@ -156,10 +171,18 @@ async function main() {
     reviews: fiveStarReviews,
   };
 
-  writeFileSync(CACHE_PATH, JSON.stringify(result, null, 2) + '\n');
+  await db
+    .insert(googleReviewsCache)
+    .values({ cacheKey: CACHE_KEY, payload: result, updatedAt: new Date() })
+    .onConflictDoUpdate({
+      target: googleReviewsCache.cacheKey,
+      set: { payload: result, updatedAt: new Date() },
+    });
 
-  console.log(`Cached ${fiveStarReviews.length} five-star reviews (${allReviews.length} total, ${result.rating}/5 rating, ${result.userRatingCount} total reviews).`);
-  console.log(`Written to ${CACHE_PATH}`);
+  console.log(
+    `Cached ${fiveStarReviews.length} five-star reviews (${allReviews.length} total, ${result.rating}/5 rating, ${result.userRatingCount} total reviews).`,
+  );
+  console.log(`Upserted to google_reviews_cache (cache_key='${CACHE_KEY}').`);
 }
 
 main().catch((err) => {

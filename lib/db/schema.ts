@@ -1324,3 +1324,29 @@ export const invoiceTermsTemplates = pgTable(
 
 export type DbInvoiceTermsTemplate = typeof invoiceTermsTemplates.$inferSelect;
 export type NewDbInvoiceTermsTemplate = typeof invoiceTermsTemplates.$inferInsert;
+
+// ============================================================================
+// GOOGLE REVIEWS CACHE (Singleton)
+// ============================================================================
+
+/**
+ * Persistent fallback cache for Google Places API reviews.
+ *
+ * Single-row table keyed by `cache_key = 'default'`. Stores the most recent
+ * successful Places API response (rating, count, reviews) plus AI-generated
+ * Chinese translations from `pnpm reviews:cache`.
+ *
+ * Replaces the old `google-reviews-cache.json` file at the repo root, which
+ * was getting committed every time the dev server refreshed it (triggering
+ * unnecessary Vercel auto-deploys). Build-time `getGoogleReviews()` reads
+ * this row when the live Places API call fails; the script writes to it.
+ */
+export const googleReviewsCache = pgTable('google_reviews_cache', {
+  cacheKey: varchar('cache_key', { length: 50 }).primaryKey().default('default'),
+  /** Full GooglePlaceRating payload (rating, userRatingCount, reviews[]). */
+  payload: jsonb('payload').notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export type DbGoogleReviewsCache = typeof googleReviewsCache.$inferSelect;
+export type NewDbGoogleReviewsCache = typeof googleReviewsCache.$inferInsert;
