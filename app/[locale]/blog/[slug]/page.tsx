@@ -15,9 +15,13 @@ interface PageProps {
 
 // Cached results from `unstable_cache` are JSON-serialized, so Date columns
 // come back as strings on cache hits. Coerce defensively before formatting.
+// Also tolerant of unparseable strings (returns undefined instead of throwing
+// "Invalid time value" — that bug surfaced as a 5xx in May 2026 GSC).
 function toIsoString(value: Date | string | null | undefined): string | undefined {
   if (!value) return undefined;
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+  const d = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toISOString();
 }
 
 
