@@ -24,9 +24,17 @@ interface RedirectRule {
 // Mirror of the static redirects in next.config.ts:524-636.
 // Keep this list in sync with next.config.ts when redirects are added.
 const REDIRECTS: RedirectRule[] = [
+  // Bathroom variants → bathroom-renovation-cost-vancouver
   { oldSlug: 'average-bathroom-renovation-cost-vancouver', newGuideSlug: 'bathroom-renovation-cost-vancouver' },
   { oldSlug: 'bathroom-renovation-cost-vancouver-by-size', newGuideSlug: 'bathroom-renovation-cost-vancouver' },
   { oldSlug: 'bathroom-renovation-cost-vancouver-by-style', newGuideSlug: 'bathroom-renovation-cost-vancouver' },
+  // Basement variants → basement-renovation-cost-vancouver
+  { oldSlug: 'basement-renovation-cost-vancouver-2026', newGuideSlug: 'basement-renovation-cost-vancouver' },
+  // Basement-suite variants → basement-suite-cost-vancouver
+  { oldSlug: 'basement-suite-renovation-cost-vancouver', newGuideSlug: 'basement-suite-cost-vancouver' },
+  { oldSlug: 'basement-suite-renovation-cost-vancouver-zh', newGuideSlug: 'basement-suite-cost-vancouver' },
+  // Whole-house variants → whole-house-renovation-cost-vancouver
+  { oldSlug: 'renovation-cost-vancouver-2026-complete-guide', newGuideSlug: 'whole-house-renovation-cost-vancouver' },
 ];
 
 const APPLY = process.argv.includes('--apply');
