@@ -79,7 +79,8 @@ pnpm test:e2e             # Playwright headless
 | `GOOGLE_PLACE_ID` | No | Google Place ID |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | GA4 Measurement ID |
 | `RESEND_API_KEY` | No | Contact form email |
-| `EMAIL_FROM` / `EMAIL_TO` | No | Email sender/recipient |
+| `EMAIL_FROM` / `EMAIL_TO` | No | Email sender/recipient (TO supports comma-separated list) |
+| `EMAIL_CC` | No | Comma-separated CC list. Defaults to `renostars.sylvia@gmail.com` so Sylvia sees new leads. Set to empty string to disable CC. |
 | `OPENAI_API_KEY` | No | AI content optimization |
 | `VERCEL_DEPLOY_HOOK_URL` | Prod-only | Vercel deploy hook URL — fired by admin actions to rebuild after content edits. Set in Vercel Production env only (leave preview/dev unset). |
 

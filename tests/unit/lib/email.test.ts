@@ -130,4 +130,78 @@ describe('sendContactNotification', () => {
     delete process.env.RESEND_API_KEY;
     delete process.env.EMAIL_TO;
   });
+
+  it('should default CC to renostars.sylvia@gmail.com when EMAIL_CC is unset', async () => {
+    process.env.RESEND_API_KEY = 're_test_key';
+    delete process.env.EMAIL_CC;
+
+    mockSend.mockResolvedValue({ error: null });
+
+    const { sendContactNotification } = await import('@/lib/email');
+
+    await sendContactNotification({
+      name: 'Test',
+      email: null,
+      phone: '604-555-1234',
+      message: 'Test',
+    });
+
+    expect(mockSend).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cc: ['renostars.sylvia@gmail.com'],
+      })
+    );
+
+    delete process.env.RESEND_API_KEY;
+  });
+
+  it('should support comma-separated EMAIL_CC override', async () => {
+    process.env.RESEND_API_KEY = 're_test_key';
+    process.env.EMAIL_CC = 'a@example.com, b@example.com';
+
+    mockSend.mockResolvedValue({ error: null });
+
+    const { sendContactNotification } = await import('@/lib/email');
+
+    await sendContactNotification({
+      name: 'Test',
+      email: null,
+      phone: '604-555-1234',
+      message: 'Test',
+    });
+
+    expect(mockSend).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cc: ['a@example.com', 'b@example.com'],
+      })
+    );
+
+    delete process.env.RESEND_API_KEY;
+    delete process.env.EMAIL_CC;
+  });
+
+  it('should omit cc field when EMAIL_CC is empty string', async () => {
+    process.env.RESEND_API_KEY = 're_test_key';
+    process.env.EMAIL_CC = '';
+
+    mockSend.mockResolvedValue({ error: null });
+
+    const { sendContactNotification } = await import('@/lib/email');
+
+    await sendContactNotification({
+      name: 'Test',
+      email: null,
+      phone: '604-555-1234',
+      message: 'Test',
+    });
+
+    expect(mockSend).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cc: undefined,
+      })
+    );
+
+    delete process.env.RESEND_API_KEY;
+    delete process.env.EMAIL_CC;
+  });
 });

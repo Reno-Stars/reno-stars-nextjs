@@ -20,6 +20,10 @@ let emailConfigWarningsLogged = false;
 function getEmailConfig() {
   const from = process.env.EMAIL_FROM || 'Contact Form <onboarding@resend.dev>';
   const to = process.env.EMAIL_TO || 'info@reno-stars.com';
+  // CC Sylvia by default so she sees new leads alongside the main inbox.
+  // Override with EMAIL_CC=email1,email2 (comma-separated) or set to empty
+  // string to disable CC entirely.
+  const cc = process.env.EMAIL_CC ?? 'renostars.sylvia@gmail.com';
 
   // Warn once if using fallback values (the Resend test sender won't deliver in production)
   if (!emailConfigWarningsLogged) {
@@ -32,7 +36,7 @@ function getEmailConfig() {
     }
   }
 
-  return { from, to };
+  return { from, to, cc };
 }
 
 /** Contact form submission data for email */
@@ -104,10 +108,12 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
 
     // Parse recipients (supports comma-separated list)
     const recipients = emailConfig.to.split(',').map((e) => e.trim()).filter(Boolean);
+    const ccRecipients = emailConfig.cc.split(',').map((e) => e.trim()).filter(Boolean);
 
     const { error } = await resend.emails.send({
       from: emailConfig.from,
       to: recipients,
+      cc: ccRecipients.length > 0 ? ccRecipients : undefined,
       subject,
       text: textContent,
       html: htmlContent,
