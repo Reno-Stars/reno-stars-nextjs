@@ -21,6 +21,11 @@ interface PageProps {
 // request via dynamicParams=true. Saves ~9× the prerender count for projects,
 // sites, and categories. SEO unaffected — crawlers trigger generation on
 // first hit and the page is cached for 7d.
+//
+// Admin edits call `revalidatePath('/<locale>/projects/<slug>')` to bust on
+// content updates — the 7d TTL is the "no edit, no traffic" floor.
+export const revalidate = 604800; // 7d
+
 export async function generateStaticParams() {
   const [projects, sites, categorySlugs] = await Promise.all([
     getProjectsFromDb(),

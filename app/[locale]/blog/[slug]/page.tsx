@@ -57,6 +57,12 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
 // the page-level revalidate. Cuts ~107 × 9 = 963 unnecessary prerenders per
 // build, slashes Vercel build time + ISR-write spend, no SEO hit (search
 // engines trigger generation on first crawl, then cache).
+//
+// Admin edits call `revalidatePath('/<locale>/blog/<slug>')` to bust the
+// cache instantly on content updates — the 30d TTL is the "no edit, no
+// traffic" floor that prevents background regeneration churn.
+export const revalidate = 2592000; // 30d
+
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
   return posts.map((post) => ({ locale: 'en', slug: post.slug }));
