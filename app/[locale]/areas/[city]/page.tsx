@@ -50,10 +50,14 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   },
   // Q2 (94 imp pos 40.5) "home renovations burnaby" — positioned as the
   // CONTRACTOR HUB to disambiguate from /services/{kitchen,bathroom,whole-house}/burnaby
+  // 2026-05-09 retune: page sat at pos 53.8 / 849 imp for 7d. Lead description
+  // with verified Burnaby project budgets ($30-40K kitchens, $20-32K bathrooms
+  // — DB-checked across 6 bathroom + 3 kitchen Burnaby completions) instead
+  // of generic copy.
   burnaby: {
-    title: 'Burnaby Renovation Contractor | 700+ Projects | Reno Stars',
+    title: 'Burnaby Renovation Contractor | 700+ Projects, 5★ | Reno Stars',
     description:
-      'Burnaby renovation contractor serving Metrotown, Heights & Capitol Hill. Kitchens, bathrooms, basements + whole-house. Strata-compliant, $5M insured, 3-yr warranty.',
+      'Burnaby renovation contractor — 700+ projects. Kitchens $30K–$40K, bathrooms $20K–$32K (real budgets). Metrotown, Heights, Capitol Hill. $5M insured, 5★ rated.',
   },
   // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
   'maple-ridge': {
@@ -150,6 +154,27 @@ const enAreaIntros: Record<string, string> = {
 export function getAreaIntroOverride(slug: string, locale: Locale): string | undefined {
   if (locale !== 'en') return undefined;
   return enAreaIntros[slug];
+}
+
+/**
+ * EN-only H1 overrides for low-rank area pages. The default H1 is the
+ * generic "Home Renovations in {city}" — for cities stuck on page 4+ in
+ * GSC (Burnaby pos 53.8 / 849 imp at the time of this writing) we want
+ * the H1 to match the meta title's "{city} Renovation Contractor" framing
+ * so the on-page heading aligns with what users searched for and what
+ * Google sees in the title tag. Same overrides as enAreaOverrides — keep
+ * them in lock-step.
+ */
+const enAreaH1Overrides: Record<string, string> = {
+  burnaby: 'Burnaby Renovation Contractor — 700+ Projects Across Metro Vancouver',
+  coquitlam: 'Coquitlam Renovation Contractor — Burke Mountain & Westwood',
+  'maple-ridge': 'Maple Ridge Renovation Contractor — Albion, Cottonwood & Hammond',
+  'port-coquitlam': 'Port Coquitlam Renovation Contractor — Citadel Heights & Riverwood',
+};
+
+export function getAreaH1Override(slug: string, locale: Locale): string | undefined {
+  if (locale !== 'en') return undefined;
+  return enAreaH1Overrides[slug];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -261,6 +286,7 @@ export default async function Page({ params }: PageProps) {
         faqs={areaFaqs}
         areaProjects={areaProjects}
         introOverride={getAreaIntroOverride(city, locale as Locale)}
+        h1Override={getAreaH1Override(city, locale as Locale)}
         googleReviews={googleReviews}
       />
     </>

@@ -80,6 +80,49 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
     { key: 'permits', icon: AlertTriangle },
   ];
 
+  // Featured-snippet "quick answer" copy by locale. Tight, factual, and front-
+  // loaded with the focus keyword + price range so Google AI Overviews and
+  // SERP "Position 0" boxes have a clean passage to extract. Page is currently
+  // pos 26 / 1.7K imp / 0.11% CTR (2026-05-09 GSC) — passage-level extraction
+  // is the highest-leverage CTR lever before backlinks move us into top-10.
+  const quickAnswer = (() => {
+    const range = `${formatCurrency(stats.min)}–${formatCurrency(stats.max)}+`;
+    const avg = formatCurrency(stats.avg);
+    const n = stats.count;
+    switch (locale) {
+      case 'zh':
+        return {
+          label: '快速回答',
+          body: `2026 年温哥华浴室装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实项目：经济型 $10K–$20K（保留水电布局、标准瓷砖+成品梳妆台）；中端 $20K–$35K（定制梳妆台、无框玻璃淋浴、地暖）；高端或多浴室 $40K+（无门槛淋浴、独立浴缸、定制柜体）。施工周期通常 2–8 周。`,
+        };
+      case 'zh-Hant':
+        return {
+          label: '快速回答',
+          body: `2026 年溫哥華浴室裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實項目：經濟型 $10K–$20K（保留水電佈局、標準磁磚+成品梳妝台）；中端 $20K–$35K（定製梳妝台、無框玻璃淋浴、地暖）；高端或多浴室 $40K+（無門檻淋浴、獨立浴缸、定製櫃體）。施工週期通常 2–8 週。`,
+        };
+      case 'ja':
+        return {
+          label: 'クイックアンサー',
+          body: `2026年バンクーバーのバスルーム改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー $10K–$20K（既存配管維持、標準タイル+完成バニティ）／ミッドレンジ $20K–$35K（カスタムバニティ、フレームレスガラスシャワー、床暖房）／ハイエンド・複数バスルーム $40K+（カーブレスシャワー、独立浴槽、造作キャビネット）。工期は通常 2〜8 週間。`,
+        };
+      case 'ko':
+        return {
+          label: '빠른 답변',
+          body: `2026년 밴쿠버 욕실 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 프로젝트 기준: 예산형 $10K–$20K (기존 배관 유지, 표준 타일+기성 바니티) / 중급 $20K–$35K (맞춤 바니티, 프레임리스 유리 샤워, 바닥 난방) / 고급·다중 욕실 $40K+ (커브리스 샤워, 독립형 욕조, 맞춤 캐비닛). 공사 기간은 보통 2–8주.`,
+        };
+      case 'es':
+        return {
+          label: 'Respuesta rápida',
+          body: `Una renovación de baño en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de Reno Stars: económico $10K–$20K (plomería existente, azulejo estándar + mueble prefabricado); gama media $20K–$35K (mueble a medida, ducha de vidrio sin marco, piso radiante); alta gama o varios baños $40K+ (ducha sin escalón, bañera exenta, gabinetería a medida). La obra dura normalmente 2–8 semanas.`,
+        };
+      default:
+        return {
+          label: 'Quick Answer',
+          body: `A bathroom renovation in Vancouver costs ${range} in 2026, averaging ${avg}. Based on ${n} completed Reno Stars projects: budget-friendly runs $10K–$20K (existing plumbing, standard tile + stock vanity); mid-range $20K–$35K (custom vanity, frameless glass shower, heated floor); high-end or multi-bathroom $40K+ (curbless shower, freestanding tub, custom cabinetry). Most projects take 2–8 weeks.`,
+        };
+    }
+  })();
+
   return (
     <main>
       <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
@@ -102,6 +145,24 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
                 <div className="text-xs mt-1" style={{ color: TEXT_MUTED }}>{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured-snippet "Quick Answer" — placed immediately after the hero
+          stats so the focus keyword + price range + project count appear in
+          one tight passage that AI Overviews and Google's "Position 0" box
+          can extract verbatim. Bilingual EN + ZH + zh-Hant + JA + KO + ES;
+          other locales fall to EN until proper translations ship. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu(), borderLeft: `4px solid ${GOLD}` }}>
+            <div className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: GOLD }}>
+              {quickAnswer.label}
+            </div>
+            <p className="text-base leading-relaxed" style={{ color: TEXT }}>
+              {quickAnswer.body}
+            </p>
           </div>
         </div>
       </section>

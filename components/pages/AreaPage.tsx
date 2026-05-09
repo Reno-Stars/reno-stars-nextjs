@@ -29,6 +29,8 @@ interface AreaPageProps {
   areaProjects: Project[];
   /** Optional code-driven intro paragraph that wins over the DB description (used for SEO CTR overrides). */
   introOverride?: string;
+  /** Optional code-driven H1 that wins over the generic "Home Renovations in {city}" string. EN-only, used to align H1 with the meta-title for low-rank cities (Burnaby pos 53, etc.). */
+  h1Override?: string;
   googleReviews?: GooglePlaceRating;
 }
 
@@ -64,7 +66,7 @@ const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
   'white-rock': ['East Beach', 'West Beach', 'White Rock Hill', 'South Surrey'],
 };
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, googleReviews }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews }: AreaPageProps) {
   const t = useTranslations();
   const citySlug = area.slug;
 
@@ -207,7 +209,7 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             <span className="text-lg font-medium" style={{ color: GOLD }}>{localizedArea.name}</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {t('areas.servingIn', { city: localizedArea.name })}
+            {h1Override || t('areas.servingIn', { city: localizedArea.name })}
           </h1>
           <p className="text-lg text-white/70 max-w-2xl">
             {introOverride || localizedArea.description || t('areas.cityDescription', { city: localizedArea.name })}
