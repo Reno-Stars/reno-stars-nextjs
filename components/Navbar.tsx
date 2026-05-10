@@ -49,13 +49,15 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
   }, [pathname]);
 
   // Locale dropdown — close on outside click + Escape
+  // (desktop + mobile both use [data-locale-switcher]; querySelectorAll handles both)
   useEffect(() => {
     if (!isLocaleMenuOpen) return;
     const handleClick = (e: MouseEvent) => {
       const target = e.target as Node | null;
       if (!target) return;
-      const root = document.querySelector('[data-locale-switcher]');
-      if (root && !root.contains(target)) setIsLocaleMenuOpen(false);
+      const switchers = document.querySelectorAll('[data-locale-switcher]');
+      const insideAny = Array.from(switchers).some((el) => el.contains(target));
+      if (!insideAny) setIsLocaleMenuOpen(false);
     };
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { setIsLocaleMenuOpen(false); }
@@ -297,19 +299,60 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
             </div>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            ref={toggleRef}
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-            className="lg:hidden p-2 rounded-lg cursor-pointer"
-            style={{ boxShadow: neu(3) }}
-            aria-expanded={isMenuOpen}
-            aria-label={isMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
-          >
-            {isMenuOpen
-              ? <X className="w-5 h-5" style={{ color: TEXT }} aria-hidden="true" />
-              : <Menu className="w-5 h-5" style={{ color: TEXT }} aria-hidden="true" />}
-          </button>
+          {/* Mobile controls (locale switcher + hamburger) — always visible on mobile */}
+          <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile locale switcher — always visible so Chinese users can switch
+                without opening the hamburger menu first. Bug fix 2026-05-09. */}
+            <div className="relative" data-locale-switcher>
+              <button
+                type="button"
+                onClick={() => setIsLocaleMenuOpen((p) => !p)}
+                className="px-2.5 py-2 rounded-lg cursor-pointer flex items-center gap-1"
+                style={{ boxShadow: neu(3), color: TEXT }}
+                aria-haspopup="listbox"
+                aria-expanded={isLocaleMenuOpen}
+                aria-label={t('nav.switchLanguage')}
+              >
+                <Globe className="w-4 h-4" aria-hidden="true" />
+                <span className="text-xs font-semibold">{(locale as string).toUpperCase()}</span>
+              </button>
+              {isLocaleMenuOpen && (
+                <ul
+                  role="listbox"
+                  className="absolute right-0 top-full mt-2 min-w-[120px] rounded-lg overflow-hidden z-50"
+                  style={{ backgroundColor: SURFACE, boxShadow: neu(6) }}
+                >
+                  {locales.map((l) => (
+                    <li key={l} role="option" aria-selected={l === locale}>
+                      <Link
+                        href={pathname || '/'}
+                        locale={l}
+                        onClick={() => setIsLocaleMenuOpen(false)}
+                        className="block px-4 py-2 text-sm font-medium hover:bg-black/5 transition-colors"
+                        style={{ color: TEXT, fontWeight: l === locale ? 700 : 500 }}
+                      >
+                        {localeNames[l]}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Hamburger toggle */}
+            <button
+              ref={toggleRef}
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              className="p-2 rounded-lg cursor-pointer"
+              style={{ boxShadow: neu(3) }}
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
+            >
+              {isMenuOpen
+                ? <X className="w-5 h-5" style={{ color: TEXT }} aria-hidden="true" />
+                : <Menu className="w-5 h-5" style={{ color: TEXT }} aria-hidden="true" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
