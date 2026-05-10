@@ -81,6 +81,51 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
     { key: 'permits', icon: AlertTriangle },
   ];
 
+  // Featured-snippet "quick answer" copy by locale. Same pattern that shipped
+  // for bathroom-cost on 2026-05-09 — front-loads the focus keyword + price
+  // range + 16-project anchor in one tight passage AI Overviews and SERP
+  // "Position 0" boxes can extract verbatim. Page is currently pos 11.4 /
+  // 1228 imp / 0.08% CTR (2026-05-10 GSC). Top query is "average cost of
+  // kitchen remodel" (751 imp pos 10.9) — passage leads with that exact
+  // phrasing alongside the Vancouver hook.
+  const quickAnswer = (() => {
+    const range = `${formatCurrency(stats.min)}–${formatCurrency(stats.max)}+`;
+    const avg = formatCurrency(stats.avg);
+    const n = stats.count;
+    switch (locale) {
+      case 'zh':
+        return {
+          label: '快速回答',
+          body: `2026 年温哥华厨房装修费用为 ${range}，平均约 ${avg}。基于 Reno Stars 已完工的 ${n} 个真实厨房项目：经济型 $15K–$27K（保留布局、成品橱柜、层压台面）；中端 $28K–$38K（半定制 Shaker 橱柜、石英石台面、新地砖 + 灯光）；高端 $40K+（全定制橱柜、瀑布岛、高端电器、可能改动布局）。施工周期通常 3–6 周。`,
+        };
+      case 'zh-Hant':
+        return {
+          label: '快速回答',
+          body: `2026 年溫哥華廚房裝修費用為 ${range}，平均約 ${avg}。基於 Reno Stars 已完工的 ${n} 個真實廚房項目：經濟型 $15K–$27K（保留佈局、成品櫥櫃、層壓台面）；中端 $28K–$38K（半定製 Shaker 櫥櫃、石英石台面、新地磚 + 燈光）；高端 $40K+（全定製櫥櫃、瀑布島、高端電器、可能改動佈局）。施工週期通常 3–6 週。`,
+        };
+      case 'ja':
+        return {
+          label: 'クイックアンサー',
+          body: `2026年バンクーバーのキッチン改装費用は ${range}、平均は約 ${avg} です。Reno Stars が完了した ${n} 件の実プロジェクトに基づく：エコノミー $15K–$27K（既存レイアウト、ストックキャビネット、ラミネート天板）／ミッドレンジ $28K–$38K（セミカスタム Shaker キャビネット、クォーツ天板、新規床タイル＋照明）／ハイエンド $40K+（フルカスタム造作、ウォーターフォールアイランド、ハイエンド家電、レイアウト変更可能）。工期は通常 3〜6 週間。`,
+        };
+      case 'ko':
+        return {
+          label: '빠른 답변',
+          body: `2026년 밴쿠버 주방 리노베이션 비용은 ${range}이며 평균 약 ${avg}입니다. Reno Stars가 완료한 ${n}개 실제 주방 프로젝트 기준: 예산형 $15K–$27K (기존 레이아웃 유지, 기성 캐비닛, 라미네이트 상판) / 중급 $28K–$38K (세미커스텀 셰이커 캐비닛, 쿼츠 상판, 신규 바닥 타일 + 조명) / 고급 $40K+ (풀커스텀 캐비닛, 워터폴 아일랜드, 고급 가전, 레이아웃 변경 가능). 공사 기간은 보통 3–6주.`,
+        };
+      case 'es':
+        return {
+          label: 'Respuesta rápida',
+          body: `Una renovación de cocina en Vancouver en 2026 cuesta ${range}, con un promedio de ${avg}. Basado en ${n} proyectos reales de cocina de Reno Stars: económico $15K–$27K (layout existente, gabinetes de stock, encimera laminada); gama media $28K–$38K (gabinetes Shaker semipersonalizados, encimera de cuarzo, piso nuevo + iluminación); alta gama $40K+ (gabinetería a medida, isla con cascada, electrodomésticos premium, posible cambio de layout). La obra dura normalmente 3–6 semanas.`,
+        };
+      default:
+        return {
+          label: 'Quick Answer',
+          body: `A kitchen renovation in Vancouver costs ${range} in 2026, with an average kitchen remodel running about ${avg}. Based on ${n} completed Reno Stars kitchen projects: budget-friendly runs $15K–$27K (keep existing layout, stock cabinets, laminate counters); mid-range $28K–$38K (semi-custom Shaker cabinets, quartz counters, new floor tile + lighting); high-end $40K+ (fully custom cabinetry, waterfall island, premium appliances, possible layout changes). Most projects take 3–6 weeks.`,
+        };
+    }
+  })();
+
   return (
     <main>
       <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
@@ -103,6 +148,24 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
                 <div className="text-xs mt-1" style={{ color: TEXT_MUTED }}>{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured-snippet "Quick Answer" — placed immediately after the hero
+          stats so the focus keyword + price range + project count appear in
+          one tight passage that AI Overviews and Google's "Position 0" box
+          can extract verbatim. Bilingual EN + ZH + zh-Hant + JA + KO + ES;
+          other locales fall to EN until proper translations ship. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu(), borderLeft: `4px solid ${GOLD}` }}>
+            <div className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: GOLD }}>
+              {quickAnswer.label}
+            </div>
+            <p className="text-base leading-relaxed" style={{ color: TEXT }}>
+              {quickAnswer.body}
+            </p>
           </div>
         </div>
       </section>

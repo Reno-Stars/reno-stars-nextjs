@@ -79,10 +79,17 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. 18+ yrs, $5M CGL, 3-yr warranty. See real Vancouver projects + free quote.',
   },
+  // 2026-05-10 GSC retune: page sat at pos 23.4 / 106 imp for 7d.
+  // Top non-brand query is "bathroom renovation richmond" (23 imp pos 43.7).
+  // Lead description with verified Richmond bathroom + kitchen budgets
+  // (DB-checked: 5 Richmond bathrooms $15K–$35K, 3 Richmond kitchens
+  // $20K–$32K) and surface "bathroom" in the title's lead position
+  // alongside "Home Renovations" so the page can pick up the bathroom
+  // long-tail without losing the home-renovations head term.
   richmond: {
-    title: 'Home Renovations Richmond BC (2026) | Free Quote | Reno Stars',
+    title: 'Richmond Home & Bathroom Renovations (2026) | 11 Local Projects | Reno Stars',
     description:
-      'Richmond home renovation specialists — kitchens, bathrooms & whole-house remodels. Steveston to Brighouse. 20+ yrs, $5M insured, 3-yr warranty. Real-cost quote.',
+      'Richmond renovation contractor — bathrooms $15K–$35K, kitchens $20K–$32K (11 real Richmond projects). Steveston, Brighouse, Terra Nova. $5M insured, 3-yr warranty. Free quote.',
   },
   surrey: {
     title: 'Home Renovations Surrey (2026) | Real Projects | Reno Stars',
@@ -149,6 +156,8 @@ const enAreaIntros: Record<string, string> = {
     'Reno Stars is your local renovation contractor in Delta, BC — serving Ladner, Tsawwassen and North Delta. Coastal-aware builds for shoreline homes, ferry-corridor logistics for materials, and strata-compliant work for Tsawwassen Springs and Ladner Trunk Road condos. Use the service tiles below for Delta-specific kitchen, bathroom and whole-house pricing.',
   langley:
     'Reno Stars handles home renovations across Langley — Walnut Grove, Willoughby Heights, Brookswood, Aldergrove and Fort Langley. We work with both new-build townhouses needing first-renovation tune-ups and older Township farmhouses needing structural updates. Click a service tile below for Langley-specific kitchen, bathroom or whole-house pricing, permit timelines, and real project examples.',
+  richmond:
+    'Reno Stars is a renovation contractor in Richmond, BC — serving Steveston, Brighouse, Terra Nova, Seafair, Hamilton and across the rest of Lulu Island. With 11 completed Richmond projects on the books, Richmond bathroom renovations typically run $15,000–$35,000 (5 real bathrooms in our portfolio), Richmond kitchen renovations $20,000–$32,000 (3 real kitchens), and full condo renovations from around $26,000. We handle strata-compliant condo work, single-family homes and townhouses with permits managed end-to-end, $5M CGL coverage and a 3-year workmanship warranty.',
 };
 
 export function getAreaIntroOverride(slug: string, locale: Locale): string | undefined {
@@ -170,6 +179,9 @@ const enAreaH1Overrides: Record<string, string> = {
   coquitlam: 'Coquitlam Renovation Contractor — Burke Mountain & Westwood',
   'maple-ridge': 'Maple Ridge Renovation Contractor — Albion, Cottonwood & Hammond',
   'port-coquitlam': 'Port Coquitlam Renovation Contractor — Citadel Heights & Riverwood',
+  // 2026-05-10: align H1 with the retuned title that leads with bathroom +
+  // home renovations. Keeps the city name first so Google bolds it in SERP.
+  richmond: 'Richmond Renovation Contractor — Bathrooms, Kitchens & Whole-House Across Lulu Island',
 };
 
 export function getAreaH1Override(slug: string, locale: Locale): string | undefined {
