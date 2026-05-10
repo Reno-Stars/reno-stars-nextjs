@@ -1,5 +1,16 @@
-/** Responsive breakpoints for image srcSet generation (shared between component and API) */
-export const SRCSET_WIDTHS = [320, 640, 828, 1080, 1200, 1920] as const;
+/**
+ * Responsive breakpoints for image srcSet generation (shared between component and API).
+ *
+ * Why no 1920w: image-process.ts skips widths larger than the source × 1.1 to avoid
+ * upscaling. Most R2 source images are < 2112px wide, so the 1920w variant doesn't get
+ * generated, but srcSet was advertising it anyway → 404s on high-DPI devices that picked
+ * 1920w → broken-image flash before the onError fallback could fire (reported by 红兔子
+ * via WeChat 2026-05-09). Dropping 1920w means high-DPI mobile picks 1200w max, which
+ * still gives 400 effective px on a 3x screen — plenty for a 100vw mobile hero. If a
+ * future image actually needs 1920w, upload a higher-res source and regenerate variants
+ * via scripts/process-all-images.ts, then add the width back here.
+ */
+export const SRCSET_WIDTHS = [320, 640, 828, 1080, 1200] as const;
 
 /**
  * R2 public URL base — set via NEXT_PUBLIC_STORAGE_PROVIDER env var.
