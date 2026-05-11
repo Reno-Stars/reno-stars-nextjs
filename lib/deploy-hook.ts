@@ -23,17 +23,24 @@
  */
 
 let lastTrigger = 0;
-const COALESCE_WINDOW_MS = 30_000;
+// 10 min coalesce window — bumped from 30s on 2026-05-11 after audit found
+// admin sessions firing 5-15 deploys/day, each one prerendering ~600 pages
+// → millions of cache writes/week. 10min still collapses bursts within a
+// single SEO sprint session but lets distinct sessions (morning edits +
+// afternoon edits) each get their deploy.
+//
+// Known limitation: `lastTrigger` is per-Lambda-instance memory, so Vercel
+// cold-starts reset it. The deploy hook is still best-effort dedup, not
+// strict rate-limit. If we ever see this isn't enough, persist
+// `last_deploy_at` in a Neon row or call Vercel's deployments API to read
+// the actual last-deploy timestamp before firing.
+const COALESCE_WINDOW_MS = 600_000;
 
 export function triggerDeploy(reason: string): void {
   const url = process.env.VERCEL_DEPLOY_HOOK_URL;
   if (!url) return;
 
-  // Coalesce bursts: an admin saving 3 forms back-to-back should only
-  // produce one deploy, not three. 30s window is short enough that
-  // staggered edits within the same UI session collapse, long enough
-  // that a quick "save → refresh → save again" still triggers a second
-  // build.
+  // Coalesce bursts. See COALESCE_WINDOW_MS comment above for tradeoffs.
   const now = Date.now();
   if (now - lastTrigger < COALESCE_WINDOW_MS) return;
   lastTrigger = now;
