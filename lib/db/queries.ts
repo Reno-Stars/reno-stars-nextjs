@@ -30,7 +30,7 @@ function cachedQuery<T>(
   // to react.cache() — single-process dedup is fine for one-shot scripts.
   if (!process.env.NEXT_RUNTIME) return cache(fn);
   const wrapped = unstable_cache(fn, keyParts, {
-    revalidate: options.revalidate ?? 3600,
+    revalidate: options.revalidate ?? 86400,
     tags: options.tags,
   });
   return cache(wrapped);
@@ -49,7 +49,7 @@ function cachedQueryWithArgs<A extends string, T>(
 ): (arg: A) => Promise<T> {
   if (!process.env.NEXT_RUNTIME) return cache(fn);
   const wrapped = unstable_cache(fn, keyParts, {
-    revalidate: options.revalidate ?? 3600,
+    revalidate: options.revalidate ?? 86400,
     tags: options.tags,
   });
   return cache(wrapped);
@@ -83,7 +83,7 @@ function cachedQueryPerSlug<T>(
       () => fn(slug),
       [baseKey, slug],
       {
-        revalidate: options.revalidate ?? 3600,
+        revalidate: options.revalidate ?? 86400,
         tags: [
           ...(options.broadTags ?? []),
           `${options.tagPrefix ?? baseKey}:${slug}`,
@@ -713,7 +713,7 @@ export const getProjectBySlugFromDb = cachedQueryPerSlug(
   // invalidate just THIS detail page, not the other 50+ projects' caches.
   // List queries (getProjectsListFromDb) carry the broad 'projects' tag and
   // are still invalidated by the admin's broad updateTag('projects') call.
-  { revalidate: 3600, tagPrefix: 'project' }
+  { revalidate: 86400, tagPrefix: 'project' }
 );
 
 /** Fetch all projects including unpublished (for admin). */
@@ -884,7 +884,7 @@ export const getSiteBySlugFromDb = cachedQueryPerSlug(
   },
   'getSiteBySlugFromDb',
   // Narrow tag only — admin fires updateTag('site:${slug}') on edits.
-  { revalidate: 3600, tagPrefix: 'site' }
+  { revalidate: 86400, tagPrefix: 'site' }
 );
 
 /** Fetch all published sites that should show as projects, with projects and aggregated data. */
@@ -1060,7 +1060,7 @@ export const getBlogPostsFromDb = cachedQuery(async (): Promise<BlogPost[]> => {
       updated_at: row.updatedAt ?? undefined,
     }));
   }, []);
-}, ['getBlogPostsFromDb', 'v1'], { revalidate: 3600, tags: ['blog'] });
+}, ['getBlogPostsFromDb', 'v1'], { revalidate: 86400, tags: ['blog'] });
 
 /** Fetch paginated published blog posts ordered by publishedAt desc. */
 export const getBlogPostsPaginatedFromDb = cache(
@@ -1181,7 +1181,7 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
   },
   'getBlogPostBySlugFromDb',
   // Narrow tag only — admin fires updateTag('blog:${slug}') on edits.
-  { revalidate: 3600, tagPrefix: 'blog' }
+  { revalidate: 86400, tagPrefix: 'blog' }
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). */
