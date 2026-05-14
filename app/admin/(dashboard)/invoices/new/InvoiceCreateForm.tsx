@@ -116,7 +116,8 @@ export default function InvoiceCreateForm({ type }: Props) {
         {/* Payment Schedule */}
         <div style={fieldGroup}>
           <label style={labelStyle}>{t.invoices.paymentSchedule}</label>
-          <select name="paymentScheduleKey" defaultValue="70/30" style={inputStyle}>
+          <select name="paymentScheduleKey" defaultValue="100%" style={inputStyle}>
+            <option value="100%">100% (single line — customise below)</option>
             <option value="70/30">70/30 (Deposit + Completion)</option>
             <option value="milestone-5">5 Milestones</option>
             <option value="milestone-large">6 Milestones (Large Project)</option>

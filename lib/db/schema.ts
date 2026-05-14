@@ -1111,7 +1111,7 @@ export const invoices = pgTable(
     language: varchar('language', { length: 10 }).default('english').notNull(),
     taxRate: integer('tax_rate').default(5).notNull(),
     gstNumber: varchar('gst_number', { length: 30 }).default('748434285RT0001').notNull(),
-    paymentScheduleKey: varchar('payment_schedule_key', { length: 30 }).default('70/30').notNull(),
+    paymentScheduleKey: varchar('payment_schedule_key', { length: 30 }).default('100%').notNull(),
 
     // Totals (stored in cents)
     subtotalCents: integer('subtotal_cents').default(0).notNull(),

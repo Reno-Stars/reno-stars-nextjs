@@ -44,6 +44,11 @@ async function generateInvoiceNumber(type: 'estimate' | 'invoice'): Promise<stri
 /** Default payment milestones for each schedule key */
 function getDefaultMilestones(key: string): Array<{ label: string; labelZh: string; percentage: number; displayOrder: number }> {
   switch (key) {
+    case '70/30':
+      return [
+        { label: 'Deposit (70%)', labelZh: '定金 (70%)', percentage: 70, displayOrder: 0 },
+        { label: 'Completion (30%)', labelZh: '尾款 (30%)', percentage: 30, displayOrder: 1 },
+      ];
     case 'milestone-5':
       return [
         { label: 'Deposit', labelZh: '定金', percentage: 30, displayOrder: 0 },
@@ -61,11 +66,13 @@ function getDefaultMilestones(key: string): Array<{ label: string; labelZh: stri
         { label: 'Finishing started', labelZh: '精装开始', percentage: 15, displayOrder: 4 },
         { label: 'Project completion', labelZh: '项目完工', percentage: 15, displayOrder: 5 },
       ];
-    case '70/30':
+    case '100%':
     default:
+      // Single-line default. Forces the salesperson to either accept a single
+      // full-payment line or explicitly design milestones — no canned split
+      // assumed at creation time.
       return [
-        { label: 'Deposit (70%)', labelZh: '定金 (70%)', percentage: 70, displayOrder: 0 },
-        { label: 'Completion (30%)', labelZh: '尾款 (30%)', percentage: 30, displayOrder: 1 },
+        { label: 'Full payment', labelZh: '全款', percentage: 100, displayOrder: 0 },
       ];
   }
 }
