@@ -221,7 +221,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     return { slug: s.slug, title };
   }), [services, locale, t]);
 
-  const quickLinks = useMemo(() => [
+  const quickLinks = useMemo<Array<{ href: string; label: string; external?: boolean }>>(() => [
     { href: '/', label: t('nav.home') },
     { href: '/services', label: t('nav.services') },
     { href: '/projects', label: t('nav.projects') },
@@ -240,6 +240,8 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
+    // Renovation supply storefront (separate B2B catalog on supply.reno-stars.com)
+    { href: 'https://supply.reno-stars.com', label: t('nav.supplies'), external: true },
   ], [t]);
 
   const whyUsStats = useMemo(() => [
@@ -270,13 +272,27 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
           <div>
             <h2 className="text-white font-semibold text-sm mb-4">{t('footer.quickLinks')}</h2>
             <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href as '/'} className="text-sm text-white/80 hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {quickLinks.map((link) =>
+                link.external ? (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="text-sm text-white/80 hover:text-white transition-colors inline-flex items-center gap-1"
+                    >
+                      {link.label}
+                      <span aria-hidden="true" className="text-xs" style={{ color: GOLD }}>↗</span>
+                    </a>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <Link href={link.href as '/'} className="text-sm text-white/80 hover:text-white transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
