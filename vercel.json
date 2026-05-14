@@ -1,5 +1,4 @@
 {
-  "//": "ignoreCommand: skip Vercel deploy when commit only touches docs/scripts/tests/CI/CLAUDE.md. Added 2026-05-11 after deploy-frequency audit found ~17% of commits never change a rendered URL but still trigger a full prerender of ~600 pages = thousands of cache writes per ignored deploy. Vercel runs this in repo root; exit-0 means SKIP, exit-1 means BUILD.",
   "git": {
     "deploymentEnabled": { "main": true }
   },
