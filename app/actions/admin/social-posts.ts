@@ -36,6 +36,22 @@ type SocialPostStatus = typeof VALID_SOCIAL_POST_STATUSES[number];
 
 const selectedImageUrlsSchema = z.array(z.string().url()).max(50);
 
+const PUBLISHED_URL_PLATFORMS = [
+  'instagram',
+  'facebook',
+  'xiaohongshu',
+  'tiktok',
+  'youtube',
+  'linkedin',
+  'twitter',
+  'reddit',
+  'google_posts',
+] as const;
+const publishedUrlsSchema = z.record(
+  z.enum(PUBLISHED_URL_PLATFORMS),
+  z.string().url(),
+);
+
 function getSocialPostData(formData: FormData) {
   const rawStatus = getString(formData, 'status') || 'draft';
   if (!(VALID_SOCIAL_POST_STATUSES as readonly string[]).includes(rawStatus)) {
@@ -83,6 +99,40 @@ function getSocialPostData(formData: FormData) {
   const xiaohongshuTopicTagsZh = getString(formData, 'xiaohongshuTopicTagsZh') || null;
   const notes = getString(formData, 'notes') || null;
 
+  // Per-platform live post URLs. The social-media-poster cron records these
+  // after publishing; admins can also edit them by hand. Stored as JSONB
+  // { platform: url } in `social_media_posts.published_urls`. Form sends
+  // either the JSON blob ("publishedUrls") or individual fields
+  // ("publishedUrl.instagram", "publishedUrl.x", etc.) — we accept both.
+  let publishedUrls: Record<string, string> = {};
+  const publishedUrlsRaw = getString(formData, 'publishedUrls');
+  if (publishedUrlsRaw) {
+    try {
+      const parsed = JSON.parse(publishedUrlsRaw);
+      const validated = publishedUrlsSchema.safeParse(parsed);
+      if (!validated.success) {
+        return { error: 'Invalid published URLs. Each value must be a full URL on a supported platform.' } as const;
+      }
+      publishedUrls = validated.data;
+    } catch (err) {
+      console.error('Failed to parse publishedUrls JSON:', err);
+      return { error: 'Invalid published URLs JSON.' } as const;
+    }
+  } else {
+    const collected: Record<string, string> = {};
+    for (const platform of PUBLISHED_URL_PLATFORMS) {
+      const v = getString(formData, `publishedUrl.${platform}`).trim();
+      if (v) collected[platform] = v;
+    }
+    if (Object.keys(collected).length > 0) {
+      const validated = publishedUrlsSchema.safeParse(collected);
+      if (!validated.success) {
+        return { error: 'Invalid published URL — each must be a full URL.' } as const;
+      }
+      publishedUrls = validated.data;
+    }
+  }
+
   const shortTextError = validateTextLengths({ titleEn, titleZh }, MAX_SHORT_TEXT_LENGTH);
   if (shortTextError) return { error: shortTextError } as const;
 
@@ -114,6 +164,7 @@ function getSocialPostData(formData: FormData) {
     status,
     scheduledAt: scheduledAt && !isNaN(scheduledAt.getTime()) ? scheduledAt : null,
     notes,
+    publishedUrls,
     updatedAt: new Date(),
   };
 }

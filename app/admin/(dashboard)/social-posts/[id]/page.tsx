@@ -53,6 +53,7 @@ export default async function EditSocialPostPage({ params }: PageProps) {
           status: post.status,
           scheduledAt: post.scheduledAt?.toISOString() ?? null,
           notes: post.notes,
+          publishedUrls: post.publishedUrls,
         }}
       />
     </div>

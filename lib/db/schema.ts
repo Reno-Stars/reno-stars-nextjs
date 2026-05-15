@@ -1016,6 +1016,14 @@ export const socialMediaPosts = pgTable(
     scheduledAt: timestamp('scheduled_at'),
     publishedAt: timestamp('published_at'),
 
+    // Per-platform live post URLs. Recorded by the social-media-poster cron
+    // (or by admins editing the form) so we can navigate back to each post
+    // for caption edits / deletion / engagement metrics. Keys are platform
+    // identifiers from socialPlatformEnum — values are the canonical post
+    // URL. Example: { instagram: 'https://www.instagram.com/p/XXX',
+    //                 x: 'https://x.com/user/status/123', ... }
+    publishedUrls: jsonb('published_urls').$type<Record<string, string>>().default({}).notNull(),
+
     // Internal notes
     notes: text('notes'),
 

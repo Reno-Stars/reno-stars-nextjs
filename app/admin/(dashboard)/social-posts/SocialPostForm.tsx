@@ -57,6 +57,7 @@ interface SocialPostFormProps {
     status: string;
     scheduledAt: string | null;
     notes: string | null;
+    publishedUrls?: Record<string, string> | null;
   };
   blogPosts?: SourceOption[];
   projects?: SourceOption[];
@@ -67,6 +68,18 @@ interface SocialPostFormProps {
 type SourceType = 'none' | 'blog' | 'project' | 'site';
 type PlatformTab = 'instagram' | 'facebook' | 'xiaohongshu';
 const PLATFORM_TABS: PlatformTab[] = ['instagram', 'facebook', 'xiaohongshu'];
+
+const PUBLISHED_URL_PLATFORMS = [
+  { key: 'instagram', label: 'Instagram' },
+  { key: 'facebook', label: 'Facebook' },
+  { key: 'xiaohongshu', label: 'Xiaohongshu (小红书)' },
+  { key: 'tiktok', label: 'TikTok' },
+  { key: 'youtube', label: 'YouTube' },
+  { key: 'linkedin', label: 'LinkedIn' },
+  { key: 'twitter', label: 'X / Twitter' },
+  { key: 'reddit', label: 'Reddit' },
+  { key: 'google_posts', label: 'Google Business Posts' },
+] as const;
 
 function getInitialSourceType(data?: SocialPostFormProps['initialData']): SourceType {
   if (!data) return 'none';
@@ -491,6 +504,35 @@ export default function SocialPostForm({
               style={fieldStyle}
             />
           </FormField>
+
+          {/* Per-platform Published URLs — recorded by the social-media-poster
+              cron after a successful publish, editable here. Used for cleanup
+              edits / engagement tracking / deletion. */}
+          <fieldset style={{ border: `1px dashed ${SURFACE_ALT}`, padding: '0.75rem 1rem', borderRadius: 6, marginTop: '0.5rem' }}>
+            <legend style={{ padding: '0 0.5rem', color: TEXT_MID, fontSize: 13, fontWeight: 600 }}>Published URLs</legend>
+            <div style={{ fontSize: 12, color: TEXT_MID, marginBottom: '0.5rem' }}>
+              Live post URL for each platform. The poster cron fills these in automatically; edit by hand if needed.
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.5rem 1rem' }}>
+              {PUBLISHED_URL_PLATFORMS.map((p) => {
+                const fieldId = `publishedUrl-${p.key}`;
+                const fieldName = `publishedUrl.${p.key}`;
+                return (
+                  <FormField key={p.key} label={p.label} htmlFor={fieldId}>
+                    <input
+                      id={fieldId}
+                      name={fieldName}
+                      type="url"
+                      defaultValue={initialData?.publishedUrls?.[p.key] ?? ''}
+                      placeholder={`https://...`}
+                      readOnly={!editing}
+                      style={editing ? fieldStyle : readOnlyStyle}
+                    />
+                  </FormField>
+                );
+              })}
+            </div>
+          </fieldset>
 
           {editing && (
             <SubmitButton isPending={isPending} label={submitLabelKey ? t.socialPosts[submitLabelKey] : undefined} />
