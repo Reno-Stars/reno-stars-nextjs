@@ -370,7 +370,8 @@ export async function deleteLineItemAction(
 export async function updateLineItemStepsAction(
   invoiceId: string,
   lineItemId: string,
-  steps: Array<{ text: string; remarks: string[] }>
+  steps: Array<{ text: string; remarks: string[] }>,
+  footerLines?: string[]
 ): Promise<{ error?: string }> {
   try {
     await requireAuth();
@@ -385,9 +386,20 @@ export async function updateLineItemStepsAction(
       }
     });
 
+    // Build the update set. Only touch footerLines when the caller passed an
+    // array (undefined = leave alone; empty array = explicit clear).
+    const cleanedFooter = footerLines?.map((l) => l.trim()).filter(Boolean);
+    const updateSet: Partial<typeof invoiceLineItems.$inferInsert> = {
+      steps,
+      description: descriptionLines.join('\n'),
+    };
+    if (cleanedFooter !== undefined) {
+      updateSet.footerLines = cleanedFooter;
+    }
+
     await db
       .update(invoiceLineItems)
-      .set({ steps, description: descriptionLines.join('\n') })
+      .set(updateSet)
       .where(eq(invoiceLineItems.id, lineItemId));
 
     revalidatePath('/admin/invoices');

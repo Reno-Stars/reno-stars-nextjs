@@ -135,11 +135,13 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editSteps, setEditSteps] = useState<StepData[]>([]);
+  const [editFooterLines, setEditFooterLines] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
   const hasSteps = item.steps && item.steps.length > 0;
 
   function startEdit() {
     setEditSteps(item.steps ? JSON.parse(JSON.stringify(item.steps)) : []);
+    setEditFooterLines(item.footerLines ? [...item.footerLines] : []);
     setEditing(true);
     setExpanded(true);
   }
@@ -147,11 +149,12 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
   function cancelEdit() {
     setEditing(false);
     setEditSteps([]);
+    setEditFooterLines([]);
   }
 
   function saveEdit() {
     startTransition(async () => {
-      const result = await updateLineItemStepsAction(invoiceId, item.id, editSteps);
+      const result = await updateLineItemStepsAction(invoiceId, item.id, editSteps, editFooterLines);
       if (result.error) {
         alert(result.error);
       } else {
@@ -172,6 +175,20 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
 
   function addStep() {
     setEditSteps([...editSteps, { text: '', remarks: [] }]);
+  }
+
+  function updateFooterLine(idx: number, value: string) {
+    const next = [...editFooterLines];
+    next[idx] = value;
+    setEditFooterLines(next);
+  }
+
+  function removeFooterLine(idx: number) {
+    setEditFooterLines(editFooterLines.filter((_, i) => i !== idx));
+  }
+
+  function addFooterLine() {
+    setEditFooterLines([...editFooterLines, '']);
   }
 
   return (
@@ -261,6 +278,39 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
               >
                 <Plus size={14} /> Add Step
               </button>
+
+              {/* Section note (footerLines) editor */}
+              <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: `1px solid ${GOLD}33` }}>
+                <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.04em', color: TEXT_MID, marginBottom: '0.25rem' }}>
+                  Note (one bullet per line)
+                </div>
+                {editFooterLines.map((line, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '0.25rem', alignItems: 'flex-start', marginBottom: '0.25rem' }}>
+                    <input
+                      type="text"
+                      value={line}
+                      onChange={(e) => updateFooterLine(i, e.target.value)}
+                      placeholder="e.g. Client provides backsplash tile, kitchen sink, kitchen faucet"
+                      style={{ flex: 1, fontSize: '0.75rem', padding: '4px 6px', border: '1px solid rgba(27,54,93,0.15)', borderRadius: '4px', fontStyle: 'italic', color: TEXT_MID }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeFooterLine(i)}
+                      style={{ ...iconBtn, color: '#c44' }}
+                      aria-label="Remove note line"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={addFooterLine}
+                  style={{ ...iconBtn, color: NAVY, fontSize: '0.75rem', gap: '4px', padding: '4px 8px', border: `1px dashed ${NAVY}33`, borderRadius: '4px', width: '100%', justifyContent: 'center', marginTop: '0.25rem' }}
+                >
+                  <Plus size={14} /> Add Note Line
+                </button>
+              </div>
             </div>
           ) : hasSteps ? (
             <div style={{ marginTop: '0.25rem' }}>
