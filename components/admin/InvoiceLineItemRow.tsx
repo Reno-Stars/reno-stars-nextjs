@@ -15,6 +15,7 @@ interface LineItem {
   label: string;
   description: string;
   steps?: StepData[] | null;
+  footerLines?: string[] | null;
   amountCents: number;
   displayOrder: number;
   sectionType: string | null;
@@ -266,11 +267,37 @@ export default function InvoiceLineItemRow({ item, invoiceId, index }: InvoiceLi
               {item.steps!.map((step, i) => (
                 <StepRow key={i} step={step} stepNum={i + 1} />
               ))}
+              {item.footerLines && item.footerLines.length > 0 && (
+                <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: `1px solid ${GOLD}33`, paddingLeft: '2.25rem' }}>
+                  <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.04em', color: TEXT_MID, marginBottom: '0.25rem' }}>
+                    Note
+                  </div>
+                  {item.footerLines.map((line, i) => (
+                    <div key={i} style={{ fontSize: '0.75rem', color: TEXT_MID, lineHeight: 1.4, fontStyle: 'italic', marginBottom: '1px' }}>
+                      {line}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
-            <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.8125rem', color: TEXT_MID, lineHeight: 1.5, margin: '0.5rem 0 0', fontFamily: 'inherit' }}>
-              {item.description}
-            </pre>
+            <>
+              <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.8125rem', color: TEXT_MID, lineHeight: 1.5, margin: '0.5rem 0 0', fontFamily: 'inherit' }}>
+                {item.description}
+              </pre>
+              {item.footerLines && item.footerLines.length > 0 && (
+                <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: `1px solid ${GOLD}33` }}>
+                  <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', letterSpacing: '0.04em', color: TEXT_MID, marginBottom: '0.25rem' }}>
+                    Note
+                  </div>
+                  {item.footerLines.map((line, i) => (
+                    <div key={i} style={{ fontSize: '0.75rem', color: TEXT_MID, lineHeight: 1.4, fontStyle: 'italic', marginBottom: '1px' }}>
+                      {line}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
