@@ -60,10 +60,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
       'Burnaby renovation contractor — 700+ projects. Kitchens $30K–$40K, bathrooms $20K–$32K (real budgets). Metrotown, Heights, Capitol Hill. $5M insured, 5★ rated.',
   },
   // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
+  // 2026-05-15: also picking up "general contractor maple ridge" (29 imp
+  // pos 42.4). Add "General Contractor" to the title so that long-tail
+  // shares the same SERP entry — the page already covers GC scope.
   'maple-ridge': {
-    title: 'Maple Ridge Renovation Contractor | Albion & Cottonwood | Reno Stars',
+    title: 'Maple Ridge General Contractor & Home Renovations | Reno Stars',
     description:
-      'Maple Ridge renovation contractor — Albion, Cottonwood, Hammond, Haney, West Maple Ridge. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
+      'Maple Ridge general contractor + home renovations — Albion, Cottonwood, Hammond, Haney, West Maple Ridge. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
   },
   // Q8 (60 imp pos 57.4) "home renovation contractor port coquitlam"
   'port-coquitlam': {
@@ -91,30 +94,54 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Richmond renovation contractor — bathrooms $15K–$35K, kitchens $20K–$32K (11 real Richmond projects). Steveston, Brighouse, Terra Nova. $5M insured, 3-yr warranty. Free quote.',
   },
+  // 2026-05-15 GSC retune: page sat at pos 23.3 / 99 imp for 7d. Top
+  // non-brand query is "reno surrey" (42 imp pos 7.1) — already near top,
+  // brand-adjacent. Tightening the description with DB-verified Surrey
+  // budgets (1 bathroom $28K–$32K, 2 kitchens $25K–$38K, 1 whole-house
+  // $29K–$31K) so the snippet competes harder for the longer-tail
+  // "house renovation surrey" / "basement renovations surrey" queries that
+  // sit at pos 26–30.
   surrey: {
-    title: 'Home Renovations Surrey (2026) | Real Projects | Reno Stars',
+    title: 'Home Renovations Surrey (2026) | 4 Real Projects | Reno Stars',
     description:
-      'Surrey home renovations — kitchens, bathrooms & legal-suite basements. Fleetwood, Newton, Cloverdale. $5M insured, 3-yr warranty. Free quote, fast turnaround.',
+      'Surrey renovation contractor — kitchens $25K–$38K (2 projects), bathrooms $28K–$32K, whole-house $29K–$31K (4 verified Surrey projects). Fleetwood, Newton, Cloverdale. $5M insured.',
   },
+  // 2026-05-15 GSC retune: page sat at pos 24.4 / 65 imp for 7d. Top intent
+  // is unambiguously BASEMENT: "basement renovation services north vancouver"
+  // (9 imp pos 7), "basement renovation north vancouver" (12 imp pos 15.3),
+  // "basement renovations north vancouver" (9 imp pos 13.3), "basement
+  // renovation companies north vancouver" (7 imp pos 28.1). Lead the title
+  // with basement to consolidate the cluster's signal. DB has 1 verified
+  // North Vancouver bathroom completion at $42K–$45K.
   'north-vancouver': {
-    title: 'North Vancouver Renovations (2026) | $5M Insured | Reno Stars',
+    title: 'North Vancouver Basement & Home Renovations | $5M Insured | Reno Stars',
     description:
-      'North Vancouver home renovations — kitchens, bathrooms & whole-house. Lynn Valley, Lonsdale, Deep Cove. Mountain-view design expertise. 3-yr warranty, free quote.',
+      'North Vancouver basement renovations + bathrooms (verified $42K–$45K) and whole-house. Lynn Valley, Lonsdale, Deep Cove. Mountain-view design, $5M insured, 3-yr warranty.',
   },
+  // 2026-05-15 GSC retune: page sat at pos 24.8 / 176 imp for 7d. Top
+  // non-brand query is "bathroom renovation west vancouver" (89 imp pos 22.7)
+  // — surface "Home & Bathroom Renovations" in the title to capture that
+  // long-tail. DB has one West Vancouver bathroom completion at $57K–$60K
+  // and one kitchen at $29K–$33K (verified before publish; no fabrication).
   'west-vancouver': {
-    title: 'West Vancouver Renovations (2026) | Luxury Projects | Reno Stars',
+    title: 'West Vancouver Home & Bathroom Renovations | Luxury Builds | Reno Stars',
     description:
-      'West Vancouver luxury renovations — Caulfeild, Dundarave, Ambleside. High-end kitchens, bathrooms & whole-house remodels. $5M insured, 3-yr warranty. Free quote.',
+      'West Vancouver renovation contractor — bathrooms (verified $57K–$60K), kitchens ($29K–$33K) and whole-house. Caulfeild, Dundarave, Ambleside. $5M insured, 3-yr warranty.',
   },
   'new-westminster': {
     title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
     description:
       'New Westminster home renovations — Quay condos, Sapperton townhouses & character homes. Strata-compliant, $5M insured, 3-yr warranty. Free quote.',
   },
+  // 2026-05-15 GSC retune: page sat at pos 19.9 / 276 imp for 7d.
+  // Top intent queries are bathroom + basement: "bathroom renovation delta"
+  // (6 imp pos 9.8), "basement finishing delta bc" (2 imp pos 8), "commercial
+  // renovation contractor tsawwassen" (5 imp pos 12.8). All sub-page-1; the
+  // page is positioned to crack top 10 with sharper bathroom-first framing.
   delta: {
-    title: 'Delta Renovation Contractor | Ladner & Tsawwassen | Reno Stars',
+    title: 'Delta Renovation Contractor | Bathrooms, Basements & Whole-House | Reno Stars',
     description:
-      'Delta renovation contractor — Ladner, Tsawwassen, North Delta. Kitchens, bathrooms, basements + whole-house. Coastal builds, $5M insured, 3-yr warranty. Free quote.',
+      'Delta renovation contractor — bathrooms (DB-verified $40K–$43K), basement finishing, kitchens + whole-house. Ladner, Tsawwassen, North Delta. Coastal builds, $5M insured, 3-yr warranty.',
   },
   langley: {
     title: 'Langley Renovation Contractor | Walnut Grove & Willoughby | Reno Stars',
@@ -126,15 +153,14 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Port Moody home renovations — Heritage Mountain, Ioco, Newport. Kitchens, bathrooms & whole-house. 20+ yrs, $5M insured, 3-yr warranty. Free quote in 24h.',
   },
-  // 2026-05-07 GSC retitle: "reno white rock" 228 imp pos 1.35 with 0% CTR.
-  // AI Overview eating the click — leading with 5★ Google rating + concrete
-  // services so the snippet has a concrete hook beyond what the AI can summarize.
-  // Evergreen phrasing (no pinned count) since the live Google review count
-  // fluctuates week-to-week.
+  // 2026-05-15 GSC retune: page sat at pos 19.0 / 394 imp for 7d.
+  // Top non-brand query is "home renovations white rock" (86 imp pos 17.3) —
+  // retitle to lead with that exact phrase so the head term is in the first
+  // slot Google bolds. Retains 5★ trust signal but moves it past the keyword.
   'white-rock': {
-    title: 'White Rock Renovations | 5★ Top-Rated | Reno Stars',
+    title: 'Home Renovations White Rock | 5★ Top-Rated Contractor | Reno Stars',
     description:
-      'White Rock home renovations — kitchens, bathrooms & whole-house. 20+ yrs, 5★ Google rated, $5M insured, 3-yr warranty. Free quote in 24h.',
+      'White Rock home renovations — kitchens, bathrooms & whole-house. South Surrey, East Beach, Hillside. 5★ Google rated, $5M insured, 3-yr workmanship warranty. Free quote in 24h.',
   },
 };
 
@@ -152,12 +178,26 @@ const enAreaIntros: Record<string, string> = {
     'Reno Stars is a renovation contractor in Maple Ridge — serving Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, handling kitchens, bathrooms, basements and whole-house remodels with permits managed end-to-end and a 3-year workmanship warranty. Use the service tiles below for Maple-Ridge-specific kitchen, bathroom and whole-house pricing.',
   'port-coquitlam':
     'Home renovations and contractor services in Port Coquitlam — kitchens, bathrooms, basements and whole-house remodels for homes in Citadel Heights, Lincoln Park, Oxford Heights, Birchland Manor and Riverwood. Permits handled end-to-end, $5M CGL insurance and a 3-year warranty on every project.',
+  // 2026-05-15: refresh adds bathroom-first emphasis ("bathroom renovation
+  // delta" sits at pos 9.8) plus the DB-verified $40K–$43K Delta bathroom
+  // budget. Keeps prior coastal/ferry framing.
   delta:
-    'Reno Stars is your local renovation contractor in Delta, BC — serving Ladner, Tsawwassen and North Delta. Coastal-aware builds for shoreline homes, ferry-corridor logistics for materials, and strata-compliant work for Tsawwassen Springs and Ladner Trunk Road condos. Use the service tiles below for Delta-specific kitchen, bathroom and whole-house pricing.',
+    'Reno Stars is your local renovation contractor in Delta, BC — serving Ladner, Tsawwassen and North Delta. Delta bathroom renovations have completed in the $40,000–$43,000 range (1 verified Delta bathroom in our portfolio); basements and whole-house work coordinate the same crew across Ladner Trunk Road condos, Tsawwassen Springs SFH and shoreline builds. Coastal-aware framing, ferry-corridor logistics for materials, strata-compliant where it applies, $5M CGL coverage and a 3-year workmanship warranty.',
   langley:
     'Reno Stars handles home renovations across Langley — Walnut Grove, Willoughby Heights, Brookswood, Aldergrove and Fort Langley. We work with both new-build townhouses needing first-renovation tune-ups and older Township farmhouses needing structural updates. Click a service tile below for Langley-specific kitchen, bathroom or whole-house pricing, permit timelines, and real project examples.',
   richmond:
     'Reno Stars is a renovation contractor in Richmond, BC — serving Steveston, Brighouse, Terra Nova, Seafair, Hamilton and across the rest of Lulu Island. With 11 completed Richmond projects on the books, Richmond bathroom renovations typically run $15,000–$35,000 (5 real bathrooms in our portfolio), Richmond kitchen renovations $20,000–$32,000 (3 real kitchens), and full condo renovations from around $26,000. We handle strata-compliant condo work, single-family homes and townhouses with permits managed end-to-end, $5M CGL coverage and a 3-year workmanship warranty.',
+  // 2026-05-15 intros for white-rock, delta refresh, west-vancouver, surrey,
+  // north-vancouver. Each leads with the top GSC query for its page so the
+  // first paragraph below the H1 reinforces the title's keyword.
+  'white-rock':
+    'Reno Stars handles home renovations across White Rock and South Surrey — South Slope, East Beach, Hillside and the uphill character homes off Marine Drive. Kitchens, bathrooms, basements and whole-house remodels with permits managed end-to-end, $5M CGL coverage and a 3-year workmanship warranty. We coordinate strata-compliant condo work along Marine Drive and oceanfront SFH renovations with the same crew that handles the rest of the Lower Mainland — 700+ completed projects across Metro Vancouver.',
+  'west-vancouver':
+    'Reno Stars is a renovation contractor in West Vancouver — Ambleside, Dundarave, Caulfeild, Cypress Park and up into the British Properties. The West Vancouver bathroom renovation we completed most recently ran $57,000–$60,000 (1 verified West Vancouver bathroom in our portfolio), and the kitchen we completed alongside ran $29,000–$33,000. Most West Vancouver projects involve view-corridor framing, ocean-air-resistant fixture selection and strata coordination for the Marine Drive condo bands. $5M CGL coverage, 3-year workmanship warranty.',
+  surrey:
+    'Reno Stars handles home renovations across Surrey — Fleetwood, Newton, Cloverdale, South Surrey and Guildford. We have 4 completed Surrey projects on the books: 1 bathroom in the $28,000–$32,000 range, 2 kitchens spanning $25,000–$38,000, and 1 whole-house at $29,000–$31,000. Strata-compliant condo work, legal-suite basement conversions, and SFH renovations with permits handled end-to-end, $5M CGL coverage and a 3-year workmanship warranty.',
+  'north-vancouver':
+    'Reno Stars is a renovation contractor in North Vancouver — Lynn Valley, Lonsdale, Deep Cove, Edgemont and Capilano. Basement renovations are the most-asked-about service for this area; we coordinate suite conversions, layout reconfigurations and waterproofing alongside kitchens and bathrooms (DB-verified: 1 North Vancouver bathroom at $42,000–$45,000). Mountain-view design awareness, $5M CGL coverage, 3-year workmanship warranty.',
 };
 
 export function getAreaIntroOverride(slug: string, locale: Locale): string | undefined {
@@ -182,6 +222,14 @@ const enAreaH1Overrides: Record<string, string> = {
   // 2026-05-10: align H1 with the retuned title that leads with bathroom +
   // home renovations. Keeps the city name first so Google bolds it in SERP.
   richmond: 'Richmond Renovation Contractor — Bathrooms, Kitchens & Whole-House Across Lulu Island',
+  // 2026-05-15 batch: lead each H1 with the city + the page's leverage
+  // service (basement for North Van, bathroom for West Van, etc.) so the
+  // on-page heading aligns with what users searched for.
+  'white-rock': 'White Rock Renovation Contractor — Home, Kitchen & Bathroom Renovations',
+  delta: 'Delta Renovation Contractor — Bathrooms, Basements & Whole-House Across Ladner & Tsawwassen',
+  'west-vancouver': 'West Vancouver Home & Bathroom Renovations — Caulfeild, Dundarave & Ambleside',
+  surrey: 'Surrey Renovation Contractor — Kitchens, Bathrooms & Basement Suites',
+  'north-vancouver': 'North Vancouver Basement & Home Renovation Contractor — Lynn Valley to Deep Cove',
 };
 
 export function getAreaH1Override(slug: string, locale: Locale): string | undefined {
