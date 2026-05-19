@@ -11,6 +11,7 @@ import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import VideoUrlInput from './VideoUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
+import DynamicBlocksEditor from './DynamicBlocksEditor';
 import Tooltip from './Tooltip';
 import SearchableSelect from './SearchableSelect';
 import { useFormToast } from './useFormToast';
@@ -101,6 +102,8 @@ interface ProjectFormProps {
     imagePairs?: Omit<ImagePairEntry, 'id'>[];
     scopes: Omit<ScopeEntry, 'id'>[];
     externalProducts?: Omit<ExternalProductEntry, 'id'>[];
+    /** JSON-serialized dynamic_blocks array. See lib/blocks/types.ts. */
+    dynamicBlocksJson?: string;
   };
   /** Available service types from the DB */
   services?: ServiceOption[];
@@ -435,6 +438,17 @@ export default function ProjectForm({
 
           <BilingualTextarea nameEn="challengeEn" nameZh="challengeZh" label={t.projects.challenge} valueEn={challengeEn} onChangeEn={setChallengeEn} valueZh={challengeZh} onChangeZh={setChallengeZh} rows={3} tooltip={t.projects.tooltips.challenge} disabled={!editing} />
           <BilingualTextarea nameEn="solutionEn" nameZh="solutionZh" label={t.projects.solution} valueEn={solutionEn} onChangeEn={setSolutionEn} valueZh={solutionZh} onChangeZh={setSolutionZh} rows={3} tooltip={t.projects.tooltips.solution} disabled={!editing} />
+
+          {/* Dynamic Content Blocks — rich bilingual content + auto JSON-LD for SEO/AI search */}
+          <div style={{ marginBottom: '1rem' }}>
+            <DynamicBlocksEditor
+              initialValue={initialData?.dynamicBlocksJson ?? '[]'}
+              name="dynamicBlocks"
+              editing={editing}
+              onChange={() => setDirty(true)}
+            />
+          </div>
+
           <BilingualInput nameEn="badgeEn" nameZh="badgeZh" label={t.projects.badge} valueEn={badgeEn} onChangeEn={setBadgeEn} valueZh={badgeZh} onChangeZh={setBadgeZh} tooltip={t.projects.tooltips.badge} />
 
           {/* SEO Settings */}

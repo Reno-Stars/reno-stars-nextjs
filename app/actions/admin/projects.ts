@@ -37,6 +37,27 @@ function formatBudgetRange(min: string, max: string): string | null {
   return `$${lo.toLocaleString()} - $${hi.toLocaleString()}`;
 }
 
+/**
+ * Parse and shallow-validate the dynamic_blocks JSON payload from the admin
+ * form. Returns [] on empty/invalid input so a malformed payload never wipes
+ * the entire field — the admin should see the validation error in the editor
+ * (red border + message) before they submit, but this is the belt+braces.
+ */
+const ALLOWED_BLOCK_TYPES = new Set([
+  'heading', 'paragraph', 'list', 'faq', 'howto',
+  'image', 'video', 'callout', 'quote', 'html',
+]);
+function parseDynamicBlocks(raw: string): unknown[] {
+  if (!raw || !raw.trim()) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((b) => b && typeof b === 'object' && typeof (b as { type?: unknown }).type === 'string' && ALLOWED_BLOCK_TYPES.has((b as { type: string }).type));
+  } catch {
+    return [];
+  }
+}
+
 function parseScopes(formData: FormData) {
   const scopes: { scopeEn: string; scopeZh: string; displayOrder: number }[] = [];
   let i = 0;
@@ -116,6 +137,7 @@ function getProjectData(formData: FormData) {
     isPublished: formData.get('isPublished') === 'on',
     siteId: siteId && isValidUUID(siteId) ? siteId : '',
     displayOrderInSite: displayOrderInSiteStr ? parseInt(displayOrderInSiteStr, 10) || 0 : 0,
+    dynamicBlocks: parseDynamicBlocks(getString(formData, 'dynamicBlocks')),
     updatedAt: new Date(),
   };
 }

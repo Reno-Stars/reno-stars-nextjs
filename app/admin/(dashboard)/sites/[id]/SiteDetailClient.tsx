@@ -94,6 +94,8 @@ interface ProjectWithDetails {
   imagePairs: ProjectImagePair[];
   scopes: ProjectScope[];
   externalProducts: ProjectExternalProduct[];
+  /** dynamic_blocks jsonb column from the projects table. */
+  dynamicBlocks?: unknown[] | null;
 }
 
 interface SiteData {
@@ -280,6 +282,7 @@ export default function SiteDetailClient({ site, projects, cities, allSites, ser
         labelEn: ep.labelEn,
         labelZh: ep.labelZh,
       })),
+      dynamicBlocksJson: JSON.stringify(project.dynamicBlocks ?? [], null, 2),
     };
   };
 
