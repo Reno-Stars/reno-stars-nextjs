@@ -1,6 +1,7 @@
 import type { Project, ServiceType, Locale, LocalizedProject, LocalizedImagePair, SiteWithProjects, LocalizedSiteWithProjects, LocalizedSiteAggregated, LocalizedSiteImage, Site, LocalizedSite } from '../types';
 import { getAssetUrl } from '../storage';
 import { pickLocale, pickLocaleOptional } from '../utils';
+import { extractTeaser } from '../blocks/teaser';
 
 
 export const projects: Project[] = [
@@ -721,6 +722,7 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     po_number: project.po_number,
     site_id: project.site_id,
     display_order_in_site: project.display_order_in_site,
+    teaser: extractTeaser(project.dynamic_blocks, locale),
   };
 }
 

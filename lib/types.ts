@@ -434,6 +434,12 @@ export interface LocalizedProject {
   po_number?: string;
   site_id?: string;
   display_order_in_site?: number;
+  /**
+   * Optional teaser string extracted from dynamic_blocks (first paragraph
+   * or first callout). When present, project listing cards prefer this over
+   * the auto-description field. Set by getLocalizedProject().
+   */
+  teaser?: string;
 }
 
 /** A site with content resolved to a single locale */
