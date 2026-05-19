@@ -16,7 +16,7 @@ import {
 } from '@/lib/db/schema';
 import { eq, and, inArray, sql, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import { triggerDeploy } from '@/lib/deploy-hook';
@@ -35,27 +35,6 @@ function formatBudgetRange(min: string, max: string): string | null {
   const lo = Math.min(minNum, maxNum);
   const hi = Math.max(minNum, maxNum);
   return `$${lo.toLocaleString()} - $${hi.toLocaleString()}`;
-}
-
-/**
- * Parse and shallow-validate the dynamic_blocks JSON payload from the admin
- * form. Returns [] on empty/invalid input so a malformed payload never wipes
- * the entire field — the admin should see the validation error in the editor
- * (red border + message) before they submit, but this is the belt+braces.
- */
-const ALLOWED_BLOCK_TYPES = new Set([
-  'heading', 'paragraph', 'list', 'faq', 'howto',
-  'image', 'video', 'callout', 'quote', 'html',
-]);
-function parseDynamicBlocks(raw: string): unknown[] {
-  if (!raw || !raw.trim()) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((b) => b && typeof b === 'object' && typeof (b as { type?: unknown }).type === 'string' && ALLOWED_BLOCK_TYPES.has((b as { type: string }).type));
-  } catch {
-    return [];
-  }
 }
 
 function parseScopes(formData: FormData) {

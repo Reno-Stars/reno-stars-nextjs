@@ -11,6 +11,7 @@ import FormField from './FormField';
 import ImageUrlInput from './ImageUrlInput';
 import VideoUrlInput from './VideoUrlInput';
 import ImagePairEditor, { ImagePairEntry } from './ImagePairEditor';
+import DynamicBlocksEditor from './DynamicBlocksEditor';
 import Tooltip from './Tooltip';
 import { useFormToast } from './useFormToast';
 import { inputStyle, readOnlyStyle } from './shared-styles';
@@ -75,6 +76,7 @@ interface SiteFormProps {
     isPublished: boolean;
     imagePairs?: Omit<ImagePairEntry, 'id'>[];
     externalProducts?: Omit<ExternalProductEntry, 'id'>[];
+    dynamicBlocksJson?: string;
   };
   submitLabel?: string;
 }
@@ -463,6 +465,13 @@ export default function SiteForm({
               tooltip={t.sites.tooltips.seoKeywords}
             />
             <BilingualTextarea nameEn="excerptEn" nameZh="excerptZh" label={t.sites.excerpt} valueEn={excerptEn} onChangeEn={setExcerptEn} valueZh={excerptZh} onChangeZh={setExcerptZh} rows={2} tooltip={t.sites.tooltips.excerpt} disabled={!editing} />
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <DynamicBlocksEditor
+              initialValue={initialData?.dynamicBlocksJson ?? '[]'}
+              editing={editing}
+            />
           </div>
 
           {/* Checkboxes */}

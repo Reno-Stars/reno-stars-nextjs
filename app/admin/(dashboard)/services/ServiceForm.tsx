@@ -9,6 +9,7 @@ import LocaleSwitcher from '@/components/admin/LocaleSwitcher';
 import TranslateAllButton from '@/components/admin/TranslateAllButton';
 import FormField from '@/components/admin/FormField';
 import ImageUrlInput from '@/components/admin/ImageUrlInput';
+import DynamicBlocksEditor from '@/components/admin/DynamicBlocksEditor';
 import EditModeToggle from '@/components/admin/EditModeToggle';
 import FormAlerts from '@/components/admin/FormAlerts';
 import SubmitButton from '@/components/admin/SubmitButton';
@@ -51,6 +52,7 @@ interface ServiceFormProps {
     localizations?: Record<string, string> | null;
     tags?: { id: string; en: string; zh: string }[];
     benefits?: { id: string; en: string; zh: string }[];
+    dynamicBlocksJson?: string;
   };
   isNew?: boolean;
 }
@@ -337,6 +339,13 @@ export default function ServiceForm({ action, initialData, isNew = false }: Serv
                 {t.services.addBenefit}
               </button>
             </div>
+          </FormField>
+
+          <FormField label="Dynamic Content Blocks" htmlFor="dynamicBlocks">
+            <DynamicBlocksEditor
+              initialValue={initialData?.dynamicBlocksJson ?? '[]'}
+              editing={editing}
+            />
           </FormField>
 
           {editing && (

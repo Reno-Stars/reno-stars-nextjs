@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
 import { MapPin, Calendar, DollarSign, Layers, Home, ZoomIn, X, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -9,6 +9,7 @@ import type { Company, LocalizedSiteWithProjects, LocalizedProject, LocalizedIma
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import ProductLink from '@/components/ProductLink';
+import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { SITE_IMAGE_SLUG } from '@/lib/db/helpers';
 import { useDragScroll } from '@/hooks/useDragScroll';
 import { useFullscreenModal } from '@/hooks/useFullscreenModal';
@@ -33,6 +34,7 @@ const SWIPE_THRESHOLD = 50;
 
 export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const [activePairIndex, setActivePairIndex] = useState(0);
   const [showBefore, setShowBefore] = useState(false);
   const [areaFilter, setAreaFilter] = useState<string>('all');
@@ -632,6 +634,14 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                 <AreaDetailCard key={project.slug} project={project} t={t} isEven={index % 2 === 0} />
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {site.dynamic_blocks && site.dynamic_blocks.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <BlockRenderer blocks={site.dynamic_blocks as Parameters<typeof BlockRenderer>[0]['blocks']} locale={locale} />
           </div>
         </section>
       )}

@@ -207,3 +207,25 @@ export function parseImagePairs(
   }
   return pairs;
 }
+
+const ALLOWED_BLOCK_TYPES = new Set([
+  'heading', 'paragraph', 'list', 'faq', 'howto',
+  'image', 'video', 'callout', 'quote', 'html',
+]);
+
+/**
+ * Parse and shallow-validate a dynamic_blocks JSON payload submitted via
+ * FormData. Returns [] on empty/invalid input so a malformed payload never
+ * wipes the column — the admin sees the validation error in the editor
+ * before submit, this is belt+braces.
+ */
+export function parseDynamicBlocks(raw: string): unknown[] {
+  if (!raw || !raw.trim()) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((b) => b && typeof b === 'object' && typeof (b as { type?: unknown }).type === 'string' && ALLOWED_BLOCK_TYPES.has((b as { type: string }).type));
+  } catch {
+    return [];
+  }
+}

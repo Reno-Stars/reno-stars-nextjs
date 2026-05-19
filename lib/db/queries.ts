@@ -369,6 +369,27 @@ export const getServiceTypeMap = cache(async (): Promise<Record<string, import('
 });
 
 /**
+ * Fetch the raw `dynamic_blocks` for a service category slug. Returns
+ * `[]` if the service has none, or for synthetic categories ("All",
+ * "whole-house") that don't map to a service row. Cached per-slug.
+ */
+export const getServiceBlocksBySlug = cachedQueryPerSlug(
+  async (slug: string): Promise<unknown[]> => {
+    return safeQuery('getServiceBlocksBySlug', async () => {
+      const rows = await db
+        .select({ dynamicBlocks: servicesTable.dynamicBlocks })
+        .from(servicesTable)
+        .where(eq(servicesTable.slug, slug))
+        .limit(1);
+      const row = rows[0];
+      if (!row) return [];
+      return Array.isArray(row.dynamicBlocks) ? row.dynamicBlocks : [];
+    }, []);
+  },
+  'getServiceBlocksBySlug',
+);
+
+/**
  * Get the service type → category name mapping from the DB.
  * Replaces the old hardcoded `serviceTypeToCategory`.
  * Includes 'whole-house' for Sites displayed as projects.
@@ -816,6 +837,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
           label: { en: ep.labelEn, zh: ep.labelZh },
         }))
       : undefined,
+    dynamic_blocks: Array.isArray(row.dynamicBlocks) ? (row.dynamicBlocks as unknown[]) : undefined,
   };
 }
 

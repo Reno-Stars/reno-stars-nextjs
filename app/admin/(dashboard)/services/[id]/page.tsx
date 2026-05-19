@@ -45,6 +45,7 @@ export default async function EditServicePage({ params }: PageProps) {
           localizations: (service.localizations ?? null) as Record<string, string> | null,
           tags: tagRows.map((t: DbServiceTag) => ({ id: t.id, en: t.tagEn, zh: t.tagZh })),
           benefits: benefitRows.map((b: DbServiceBenefit) => ({ id: b.id, en: b.benefitEn, zh: b.benefitZh })),
+          dynamicBlocksJson: JSON.stringify(service.dynamicBlocks ?? [], null, 2),
         }}
       />
     </div>

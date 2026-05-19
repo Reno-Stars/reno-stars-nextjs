@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 import { services, serviceTags, serviceBenefits, projects, contactSubmissions } from '@/lib/db/schema';
 import { eq, count, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { triggerDeploy } from '@/lib/deploy-hook';
@@ -109,6 +109,8 @@ export async function createService(
 
     const localizations = parseLocalizations(formData);
 
+    const dynamicBlocks = parseDynamicBlocks(getString(formData, 'dynamicBlocks'));
+
     const [inserted] = await db.insert(services).values({
       slug: uniqueSlug,
       titleEn,
@@ -122,6 +124,7 @@ export async function createService(
       displayOrder,
       showOnServicesPage,
       isProjectType,
+      dynamicBlocks,
       ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     }).returning({ id: services.id });
 
@@ -232,6 +235,7 @@ export async function updateService(
       imageUrl: getString(formData, 'imageUrl') || null,
       showOnServicesPage: formData.get('showOnServicesPage') === 'on',
       isProjectType: formData.get('isProjectType') === 'on',
+      dynamicBlocks: parseDynamicBlocks(getString(formData, 'dynamicBlocks')),
       // Replace localizations jsonb wholesale — the form provider sends every
       // non-en/zh value it tracks, so an empty payload is a real "clear all".
       localizations,

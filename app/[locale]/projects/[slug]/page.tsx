@@ -11,7 +11,7 @@ import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -201,6 +201,14 @@ export default async function Page({ params }: PageProps) {
     ];
 
     const categoryProjects = allProjects.filter((p) => p.service_type === slug);
+    const categoryBlocks = await getServiceBlocksBySlug(slug);
+
+    // Auto-emit FAQ/HowTo/ItemList JSON-LD from category dynamic_blocks.
+    const categoryBlockSchema = getJsonLdFromBlocks(
+      (categoryBlocks as Block[] | undefined) ?? null,
+      locale,
+      `${getBaseUrl()}/${locale}/projects/${slug}/`,
+    );
 
     return (
       <>
@@ -210,7 +218,16 @@ export default async function Page({ params }: PageProps) {
           locale={locale as Locale}
           projects={categoryProjects}
         />
-        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} categories={categories} />
+        {categoryBlockSchema.faqs.map((faq, i) => (
+          <FAQSchema key={`cat-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
+        ))}
+        {categoryBlockSchema.howtos.map((howto, i) => (
+          <HowToSchema key={`cat-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+        ))}
+        {categoryBlockSchema.imageList && (
+          <ItemListSchema items={categoryBlockSchema.imageList.items} name={categoryBlockSchema.imageList.name} description={categoryBlockSchema.imageList.description} locale={categoryBlockSchema.imageList.locale} />
+        )}
+        <ProjectCategoryPage locale={locale as Locale} categorySlug={slug} company={company} projects={allProjects} categories={categories} categoryBlocks={categoryBlocks} />
       </>
     );
   }
@@ -283,6 +300,13 @@ export default async function Page({ params }: PageProps) {
       { name: pickLocale(siteData.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
+    // Auto-emit FAQ/HowTo/ItemList JSON-LD from site dynamic_blocks.
+    const siteBlockSchema = getJsonLdFromBlocks(
+      (siteData.dynamic_blocks as Block[] | undefined) ?? null,
+      locale,
+      `${getBaseUrl()}/${locale}/projects/${slug}/`,
+    );
+
     return (
       <>
         <BreadcrumbSchema items={breadcrumbs} />
@@ -298,6 +322,15 @@ export default async function Page({ params }: PageProps) {
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
         />
+        {siteBlockSchema.faqs.map((faq, i) => (
+          <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
+        ))}
+        {siteBlockSchema.howtos.map((howto, i) => (
+          <HowToSchema key={`site-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+        ))}
+        {siteBlockSchema.imageList && (
+          <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />
+        )}
         <SiteDetailPage site={localizedSite} company={company} />
       </>
     );

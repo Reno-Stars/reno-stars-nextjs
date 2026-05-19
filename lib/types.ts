@@ -126,6 +126,8 @@ export interface Site {
   image_pairs?: ImagePair[];
   /** External product links (site-level) */
   external_products?: { url: string; image_url?: string; label: Localized<string> }[];
+  /** Dynamic content blocks (see lib/blocks/types.ts). Rendered below the main content. */
+  dynamic_blocks?: unknown[];
 }
 
 /**
@@ -461,6 +463,10 @@ export interface LocalizedSite {
   images?: { src: string; alt: string; is_before?: boolean }[];
   /** Before/after image pairs with localized SEO metadata */
   image_pairs?: LocalizedImagePair[];
+  /** Dynamic content blocks (raw, locale-resolution happens in BlockRenderer). */
+  dynamic_blocks?: unknown[];
+  /** Teaser extracted from first paragraph block (or callout fallback). */
+  teaser?: string;
 }
 
 /** A localized image with project attribution (for site views) */

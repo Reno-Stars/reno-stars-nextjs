@@ -69,6 +69,7 @@ export default async function EditSitePage({ params }: PageProps) {
       labelEn: ep.labelEn,
       labelZh: ep.labelZh,
     })),
+    dynamicBlocksJson: JSON.stringify(site.dynamicBlocks ?? [], null, 2),
   };
 
   return (
