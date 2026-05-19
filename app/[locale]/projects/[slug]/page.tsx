@@ -6,7 +6,9 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema } from '@/components/structured-data';
+import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
+import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs } from '@/lib/db/queries';
@@ -229,6 +231,14 @@ export default async function Page({ params }: PageProps) {
       { name: pickLocale(project.title, locale as Locale), url: `/${locale}/projects/${slug}/` },
     ];
 
+    // Auto-emit FAQ/HowTo/ItemList JSON-LD from dynamic content blocks.
+    // No-op when project.dynamic_blocks is empty/undefined.
+    const blockSchema = getJsonLdFromBlocks(
+      (project.dynamic_blocks as Block[] | undefined) ?? null,
+      locale,
+      `${getBaseUrl()}/${locale}/projects/${slug}/`,
+    );
+
     return (
       <>
         <BreadcrumbSchema items={breadcrumbs} />
@@ -247,6 +257,15 @@ export default async function Page({ params }: PageProps) {
           budgetRange={project.budget_range}
           spaceType={localizedProject.space_type}
         />
+        {blockSchema.faqs.map((faq, i) => (
+          <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
+        ))}
+        {blockSchema.howtos.map((howto, i) => (
+          <HowToSchema key={`howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+        ))}
+        {blockSchema.imageList && (
+          <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
+        )}
         <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
       </>
     );
