@@ -117,7 +117,8 @@ export default function ProjectCard({
         </h3>
         {showDescription && (
           <p className="text-sm mb-2 line-clamp-2" style={{ color: TEXT_MID }}>
-            {project.description}
+            {/* Prefer the dynamic-blocks teaser (crafted) over the auto description. */}
+            {project.teaser || project.description}
           </p>
         )}
         <div className="flex items-center justify-between">
