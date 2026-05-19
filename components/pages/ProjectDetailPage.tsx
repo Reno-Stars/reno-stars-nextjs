@@ -11,6 +11,7 @@ import { getLocalizedProject, imagesToPairs } from '@/lib/data/projects';
 import { formatSlug } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
+import BlockRenderer from '@/components/blocks/BlockRenderer';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import { useDragScroll } from '@/hooks/useDragScroll';
 import { useFullscreenModal } from '@/hooks/useFullscreenModal';
@@ -578,6 +579,13 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
                   <p className="text-base" style={{ color: TEXT_MID }}>
                     {localizedProject.solution}
                   </p>
+                </div>
+              )}
+
+              {/* Dynamic content blocks (FAQ, HowTo, callouts, images, etc.) */}
+              {project.dynamic_blocks && project.dynamic_blocks.length > 0 && (
+                <div className="mb-8">
+                  <BlockRenderer blocks={project.dynamic_blocks as Parameters<typeof BlockRenderer>[0]['blocks']} locale={locale} />
                 </div>
               )}
 

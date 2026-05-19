@@ -554,6 +554,7 @@ function mapDbProjectToProject(
     // Site relationship (mandatory)
     site_id: row.siteId,
     display_order_in_site: row.displayOrderInSite,
+    dynamic_blocks: Array.isArray(row.dynamicBlocks) ? (row.dynamicBlocks as Project['dynamic_blocks']) : undefined,
   };
 }
 

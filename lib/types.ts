@@ -227,6 +227,14 @@ export interface Project {
   site_id?: string;
   /** Display order within a site */
   display_order_in_site?: number;
+  /**
+   * Dynamic content blocks — rich content + auto-emit FAQ/HowTo/ItemList JSON-LD.
+   * See lib/blocks/types.ts for the Block discriminated union and
+   * components/blocks/BlockRenderer.tsx for the renderer.
+   * Typed as `unknown[]` here to avoid pulling block-specific types into the
+   * top-level data model; cast to `Block[]` at the renderer boundary.
+   */
+  dynamic_blocks?: unknown[];
 }
 
 /**
