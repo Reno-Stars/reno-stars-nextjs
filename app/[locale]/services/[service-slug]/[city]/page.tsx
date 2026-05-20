@@ -235,6 +235,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Whole-House Renovation Surrey | $50K–$200K+ | Reno Stars',
       description: 'Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
     },
+    // 2026-05-19 GSC pass: missing high-impression combos. Each entry below
+    // targets a specific city+service query where the generic template was
+    // shown but no clicks earned. Order = descending monthly impressions.
+    // (Skipped combos that already exist above — those were tuned earlier.)
+    'bathroom/west-vancouver': {
+      title: 'Bathroom Renovation West Vancouver | $20K–$60K | Reno Stars',
+      description: 'West Vancouver bathroom renovation — Ambleside, British Properties, Caulfeild. Curbless showers, premium tile, custom vanities. $20K–$60K, 3–6 weeks. Free quote.',
+    },
+    'basement/vancouver': {
+      title: 'Basement Renovation Vancouver | $30K–$120K+ | Reno Stars',
+      description: 'Vancouver basement renovation — finishing, suite conversions, family rooms. Kitsilano to Killarney. Permit-aware, egress-compliant. $30K–$120K+ from real projects.',
+    },
+    'basement/burnaby': {
+      title: 'Basement Renovation Burnaby | $30K–$120K+ | Reno Stars',
+      description: 'Burnaby basement renovation — Metrotown, Heights, Capitol Hill. Finishing, secondary suites, family rooms. Strata-compliant, permit-aware. $30K–$120K+. Free quote.',
+    },
+    'basement/port-coquitlam': {
+      title: 'Basement Renovation Port Coquitlam | $30K–$120K+ | Reno Stars',
+      description: 'Port Coquitlam basement renovation — finishing, suite conversions, family rooms. Permit-aware, egress-compliant. $30K–$120K+ from real projects. Free quote.',
+    },
+    'basement/port-moody': {
+      title: 'Basement Renovation Port Moody | $30K–$120K+ | Reno Stars',
+      description: 'Port Moody basement renovation — finishing, suite conversions, family rooms. Inlet to Heritage Mountain. Permit-aware, $5M insured. $30K–$120K+. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
