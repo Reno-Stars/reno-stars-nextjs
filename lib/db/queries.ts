@@ -900,10 +900,15 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
   const siteIds = rows.map((r: DbSiteRow) => r.id);
   if (siteIds.length === 0) return [];
 
-  // Fetch all site image pairs, site external products, and all projects for these sites in parallel (avoids N+1)
-  const [allSiteImagePairs, allSiteExternalProducts, allProjects] = await Promise.all([
+  // LISTING-LITE shape: this query feeds `/projects/`, `/projects/budget/*`,
+  // and category routing on `/projects/[slug]/`. None of those render
+  // child-project image_pairs, scopes, or external products — they show
+  // site-level cards. Skipping the per-project relation fetches drops the
+  // serialized payload by ~60% (was 3.1 MB per locale on /projects/, well
+  // over Semrush's 2 MB threshold). Detail pages call getSiteBySlugFromDb
+  // separately and still get the full data.
+  const [allSiteImagePairs, allProjects] = await Promise.all([
     db.select().from(siteImagePairsTable).where(inArray(siteImagePairsTable.siteId, siteIds)) as Promise<DbSiteImagePairRow[]>,
-    db.select().from(siteExternalProductsTable).where(inArray(siteExternalProductsTable.siteId, siteIds)) as Promise<DbSiteExternalProductRow[]>,
     db
       .select()
       .from(projectsTable)
@@ -911,37 +916,26 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
       .orderBy(asc(projectsTable.displayOrderInSite)) as Promise<DbProjectRow[]>,
   ]);
 
-  // Fetch relations for all projects in one batch
-  const projectIds = allProjects.map((p: DbProjectRow) => p.id);
-  const { imagePairs: allProjectImagePairs, scopes: allScopes, externalProducts: allExternalProducts } = await fetchProjectRelations(projectIds);
-
-  // Pre-group relations by projectId for O(1) lookup (avoids O(n*m) filtering)
-  const imagePairsByProject = groupBy(allProjectImagePairs, (ip: DbImagePairRow) => ip.projectId);
-  const scopesByProject = groupBy(allScopes, (s: DbScopeRow) => s.projectId);
-  const epByProject = groupBy(allExternalProducts, (ep: DbExternalProductRow) => ep.projectId);
   const siteImagePairsBySite = groupBy(allSiteImagePairs, (ip: DbSiteImagePairRow) => ip.siteId);
-  const siteEpBySite = groupBy(allSiteExternalProducts, (ep: DbSiteExternalProductRow) => ep.siteId);
 
-  // Group projects by siteId for efficient lookup
+  // Group projects by siteId; child projects are intentionally bare —
+  // empty image_pairs/scopes/external_products. Listing only reads slug,
+  // title, category, hero_image off each child for the "childAreas" badge.
   const projectsBySite = new Map<string, Project[]>();
   for (const row of allProjects) {
-    const project = mapDbProjectToProject(
-      row,
-      scopesByProject.get(row.id) ?? [],
-      epByProject.get(row.id) ?? [],
-      imagePairsByProject.get(row.id) ?? []
-    );
+    const project = mapDbProjectToProject(row, [], [], []);
     const arr = projectsBySite.get(row.siteId) ?? [];
     arr.push(project);
     projectsBySite.set(row.siteId, arr);
   }
 
-  // Build results
+  // Build results. aggregated.allImages is computed off site-level pairs
+  // only (child projects have empty image_pairs in this shape), and
+  // aggregated.allExternalProducts is empty since neither side has them.
   const results: SiteWithProjects[] = [];
   for (const row of rows) {
     const rowImagePairs = siteImagePairsBySite.get(row.id) ?? [];
-    const rowEps = siteEpBySite.get(row.id) ?? [];
-    const site = mapDbSiteToSite(row, rowImagePairs, rowEps);
+    const site = mapDbSiteToSite(row, rowImagePairs, []);
     const projects = projectsBySite.get(row.id) ?? [];
 
     const aggregated: SiteWithProjects['aggregated'] = {
@@ -960,7 +954,7 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
 
   return results;
   }, []);
-}, ['getSitesAsProjectsFromDb-v2'], { tags: ['sites', 'projects'] });
+}, ['getSitesAsProjectsFromDb-v3'], { tags: ['sites', 'projects'] });
 
 // ============================================================================
 // SERVICE AREA QUERIES
