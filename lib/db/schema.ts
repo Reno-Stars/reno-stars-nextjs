@@ -81,6 +81,7 @@ export const services = pgTable(
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
+  dynamicBlocks: jsonb('dynamic_blocks').$type<unknown[]>().default([]).notNull(),
   },
   (table) => [uniqueIndex('services_slug_idx').on(table.slug)]
 );
@@ -252,6 +253,7 @@ export const projectSites = pgTable(
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
+  dynamicBlocks: jsonb('dynamic_blocks').$type<unknown[]>().default([]).notNull(),
   },
   (table) => [
     uniqueIndex('project_sites_slug_idx').on(table.slug),

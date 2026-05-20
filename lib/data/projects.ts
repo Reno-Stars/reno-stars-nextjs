@@ -763,6 +763,8 @@ export function getLocalizedSite(site: Site, locale: Locale): LocalizedSite {
       photographerCredit: pair.photographerCredit,
       keywords: pair.keywords,
     })),
+    dynamic_blocks: site.dynamic_blocks,
+    teaser: extractTeaser(site.dynamic_blocks, locale),
   };
 }
 

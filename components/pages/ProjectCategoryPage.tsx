@@ -11,6 +11,7 @@ import { pickLocale } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
+import BlockRenderer from '@/components/blocks/BlockRenderer';
 import {
   NAVY, GOLD, SURFACE, TEXT_MID,
 } from '@/lib/theme';
@@ -21,9 +22,11 @@ interface ProjectCategoryPageProps {
   company: Company;
   projects: Project[];
   categories: ({ serviceType?: string } & import('@/lib/types').Localized<string>)[];
+  /** Optional category-level dynamic content blocks (rendered below the project grid). */
+  categoryBlocks?: unknown[];
 }
 
-export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories }: ProjectCategoryPageProps) {
+export default function ProjectCategoryPage({ locale, categorySlug, company, projects, categories, categoryBlocks }: ProjectCategoryPageProps) {
   const t = useTranslations();
   const allProjects = useMemo(() => projects.map((p) => getLocalizedProject(p, locale)), [projects, locale]);
 
@@ -89,6 +92,14 @@ export default function ProjectCategoryPage({ locale, categorySlug, company, pro
           )}
         </div>
       </section>
+
+      {categoryBlocks && categoryBlocks.length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <BlockRenderer blocks={categoryBlocks as Parameters<typeof BlockRenderer>[0]['blocks']} locale={locale} />
+          </div>
+        </section>
+      )}
 
       <CTASection
         heading={t('projects.readyToStart2')}

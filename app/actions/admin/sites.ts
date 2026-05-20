@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 import { projectSites, projects, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
 import { eq, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
-import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls } from '@/lib/admin/form-utils';
+import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import { triggerDeploy } from '@/lib/deploy-hook';
@@ -60,6 +60,7 @@ function getSiteData(formData: FormData) {
     showAsProject: formData.get('showAsProject') === 'on',
     featured: formData.get('featured') === 'on',
     isPublished: formData.get('isPublished') === 'on',
+    dynamicBlocks: parseDynamicBlocks(getString(formData, 'dynamicBlocks')),
     updatedAt: new Date(),
   };
 }

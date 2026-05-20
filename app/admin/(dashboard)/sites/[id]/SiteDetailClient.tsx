@@ -141,6 +141,7 @@ interface SiteData {
     photographerCredit: string;
     keywords: string;
   }[];
+  dynamicBlocksJson?: string;
 }
 
 interface SiteOption {
