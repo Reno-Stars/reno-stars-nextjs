@@ -39,7 +39,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     alternateName: ['Reno Stars', 'Reno Star', 'RenoStars', 'Renostars'],
     image: company.logo,
     url: BASE_URL,
-    telephone: `+1-${company.phone}`,
+    telephone: `+1${company.phone.replace(/\D/g, '')}`,
     email: company.email,
     address: {
       '@type': 'PostalAddress',
