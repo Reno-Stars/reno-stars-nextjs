@@ -54,7 +54,7 @@ export default function ServiceSchema({
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,
       url: baseUrl,
-      telephone: `+1-${company.phone}`,
+      telephone: `+1${company.phone.replace(/\D/g, '')}`,
       // Split address into proper PostalAddress sub-fields per Schema.org spec.
       // Previously the full company.address string was crammed into streetAddress,
       // which breaks structured-address parsing. Now each part lives in its own field.

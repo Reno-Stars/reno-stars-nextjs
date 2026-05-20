@@ -40,7 +40,7 @@ export default function ProjectSchema({
     '@type': 'HomeAndConstructionBusiness' as const,
     name: company.name,
     url: baseUrl,
-    telephone: `+1-${company.phone}`,
+    telephone: `+1${company.phone.replace(/\D/g, '')}`,
     ...(googleRating && googleReviewCount && {
       aggregateRating: {
         '@type': 'AggregateRating',

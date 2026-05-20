@@ -23,7 +23,7 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       name: company.name,
       image: company.logo,
       url: BASE_URL,
-      telephone: `+1-${company.phone}`,
+      telephone: `+1${company.phone.replace(/\D/g, '')}`,
       email: company.email,
       address: {
         '@type': 'PostalAddress',
@@ -35,7 +35,7 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: `+1-${company.phone}`,
+        telephone: `+1${company.phone.replace(/\D/g, '')}`,
         email: company.email,
         contactType: 'customer service',
         availableLanguage: ['English', 'Chinese'],

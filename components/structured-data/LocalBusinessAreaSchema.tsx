@@ -32,7 +32,7 @@ export default function LocalBusinessAreaSchema({
     name: `${company.name} - ${areaName}`,
     description: `Professional home renovation services in ${areaName}. Kitchen, bathroom, whole house renovations by ${company.name}.`,
     url: `${baseUrl}/${locale}/areas/${areaSlug}/`,
-    telephone: `+1-${company.phone}`,
+    telephone: `+1${company.phone.replace(/\D/g, '')}`,
     email: company.email,
     image: company.logo,
     address: {
