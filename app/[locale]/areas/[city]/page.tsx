@@ -43,10 +43,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // 2026-05-01 GSC retitle: 1,393 imp pos 50 with 0% CTR. Hub framing
   // ("Renovation Contractor") to disambiguate from /services/{svc}/coquitlam
   // combo pages — same fix that worked for burnaby/delta/langley.
+  // 2026-05-21 SEO trim: title was 72 chars (Google truncates ~60), desc 172
+  // (truncates ~155). Title now keeps Burke Mountain as the lead neighborhood;
+  // desc keeps the 3 top neighborhoods + service breadth + trust signals.
   coquitlam: {
-    title: 'Coquitlam Renovation Contractor | Burke Mountain & Westwood | Reno Stars',
+    title: 'Coquitlam Renovation Contractor Burke Mountain | Reno Stars',
     description:
-      'Coquitlam renovation contractor — Burke Mountain, Westwood Plateau, Maillardville, Austin Heights. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
+      'Coquitlam renovation contractor — Burke Mountain, Westwood Plateau. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
   },
   // Q2 (94 imp pos 40.5) "home renovations burnaby" — positioned as the
   // CONTRACTOR HUB to disambiguate from /services/{kitchen,bathroom,whole-house}/burnaby
@@ -89,10 +92,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // $20K–$32K) and surface "bathroom" in the title's lead position
   // alongside "Home Renovations" so the page can pick up the bathroom
   // long-tail without losing the home-renovations head term.
+  // 2026-05-21 SEO trim: title was 76 chars (truncates ~60), desc 175 (truncates ~155).
+  // Keeps the 11-project trust signal and the bathroom/kitchen budgets; drops the
+  // neighborhood list from the title and the "Free quote" tail from the desc.
   richmond: {
-    title: 'Richmond Home & Bathroom Renovations (2026) | 11 Local Projects | Reno Stars',
+    title: 'Richmond Renovation Contractor | 11 Projects | Reno Stars',
     description:
-      'Richmond renovation contractor — bathrooms $15K–$35K, kitchens $20K–$32K (11 real Richmond projects). Steveston, Brighouse, Terra Nova. $5M insured, 3-yr warranty. Free quote.',
+      'Richmond renovation contractor — bathrooms $15K–$35K, kitchens $20K–$32K (11 real Richmond projects). Steveston, Brighouse, Terra Nova. $5M insured.',
   },
   // 2026-05-15 GSC retune: page sat at pos 23.3 / 99 imp for 7d. Top
   // non-brand query is "reno surrey" (42 imp pos 7.1) — already near top,
@@ -101,10 +107,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // $29K–$31K) so the snippet competes harder for the longer-tail
   // "house renovation surrey" / "basement renovations surrey" queries that
   // sit at pos 26–30.
+  // 2026-05-21 SEO trim: title was already in range (63); desc was 180 (truncates
+  // ~155). Keeps all 3 budget bands + project count; drops the neighborhood
+  // list (already in the on-page H2s) to make room.
   surrey: {
-    title: 'Home Renovations Surrey (2026) | 4 Real Projects | Reno Stars',
+    title: 'Home Renovations Surrey | 4 Real Projects | Reno Stars',
     description:
-      'Surrey renovation contractor — kitchens $25K–$38K (2 projects), bathrooms $28K–$32K, whole-house $29K–$31K (4 verified Surrey projects). Fleetwood, Newton, Cloverdale. $5M insured.',
+      'Surrey renovation contractor — kitchens $25K–$38K (2), bathrooms $28K–$32K, whole-house $29K–$31K. 4 verified Surrey projects. $5M insured.',
   },
   // 2026-05-15 GSC retune: page sat at pos 24.4 / 65 imp for 7d. Top intent
   // is unambiguously BASEMENT: "basement renovation services north vancouver"
@@ -113,20 +122,26 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // renovation companies north vancouver" (7 imp pos 28.1). Lead the title
   // with basement to consolidate the cluster's signal. DB has 1 verified
   // North Vancouver bathroom completion at $42K–$45K.
+  // 2026-05-21 SEO trim: title was 70 (truncates ~60), desc 170 (truncates ~155).
+  // Title drops "$5M Insured" (lives in desc); desc keeps the verified bathroom
+  // budget + basement focus + 3 top neighborhoods.
   'north-vancouver': {
-    title: 'North Vancouver Basement & Home Renovations | $5M Insured | Reno Stars',
+    title: 'North Vancouver Basement & Home Renovations | Reno Stars',
     description:
-      'North Vancouver basement renovations + bathrooms (verified $42K–$45K) and whole-house. Lynn Valley, Lonsdale, Deep Cove. Mountain-view design, $5M insured, 3-yr warranty.',
+      'North Vancouver basement renovations + bathrooms (verified $42K–$45K) and whole-house. Lynn Valley, Lonsdale, Deep Cove. $5M insured, 3-yr warranty.',
   },
   // 2026-05-15 GSC retune: page sat at pos 24.8 / 176 imp for 7d. Top
   // non-brand query is "bathroom renovation west vancouver" (89 imp pos 22.7)
   // — surface "Home & Bathroom Renovations" in the title to capture that
   // long-tail. DB has one West Vancouver bathroom completion at $57K–$60K
   // and one kitchen at $29K–$33K (verified before publish; no fabrication).
+  // 2026-05-21 SEO trim: title was 71 (truncates ~60), desc 169 (truncates ~155).
+  // Title drops "Luxury Builds" qualifier; desc drops "renovation contractor"
+  // prefix and the warranty tail to fit.
   'west-vancouver': {
-    title: 'West Vancouver Home & Bathroom Renovations | Luxury Builds | Reno Stars',
+    title: 'West Vancouver Home & Bathroom Renovations | Reno Stars',
     description:
-      'West Vancouver renovation contractor — bathrooms (verified $57K–$60K), kitchens ($29K–$33K) and whole-house. Caulfeild, Dundarave, Ambleside. $5M insured, 3-yr warranty.',
+      'West Vancouver renovations — bathrooms (verified $57K–$60K), kitchens ($29K–$33K) and whole-house. Caulfeild, Dundarave, Ambleside. $5M insured.',
   },
   'new-westminster': {
     title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
@@ -138,10 +153,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // (6 imp pos 9.8), "basement finishing delta bc" (2 imp pos 8), "commercial
   // renovation contractor tsawwassen" (5 imp pos 12.8). All sub-page-1; the
   // page is positioned to crack top 10 with sharper bathroom-first framing.
+  // 2026-05-21 SEO trim: title was 77 (truncates ~60), desc 185 (truncates ~155).
+  // Title uses ":" instead of "|" for the first separator and drops "Whole-House"
+  // to fit; desc drops "Coastal builds, 3-yr warranty" — both already on-page.
   delta: {
-    title: 'Delta Renovation Contractor | Bathrooms, Basements & Whole-House | Reno Stars',
+    title: 'Delta Bathroom & Basement Renovation Contractor | Reno Stars',
     description:
-      'Delta renovation contractor — bathrooms (DB-verified $40K–$43K), basement finishing, kitchens + whole-house. Ladner, Tsawwassen, North Delta. Coastal builds, $5M insured, 3-yr warranty.',
+      'Delta renovation contractor — bathrooms (verified $40K–$43K), basement finishing, kitchens + whole-house. Ladner, Tsawwassen, North Delta. $5M insured.',
   },
   langley: {
     title: 'Langley Renovation Contractor | Walnut Grove & Willoughby | Reno Stars',

@@ -35,6 +35,22 @@ export default function NearMePage({ locale, areas }: Props) {
 
   const services = ["kitchen", "bathroom", "wholeHouse", "basement", "cabinet", "commercial"] as const;
 
+  // Per-service hrefs — deep-link the 4 services that have dedicated
+  // near-me sub-pages so each near-me page acquires inbound internal links
+  // from its sister pages (2026-05-21 on-page scan flagged the 4 service
+  // near-me pages as having weak_inbound_internal_links_within_audit_set).
+  // cabinet + commercial fall back to /services/ since they don't have
+  // near-me sub-pages.
+  const serviceHref = (s: typeof services[number]): string => {
+    switch (s) {
+      case "kitchen": return `/${locale}/kitchen-renovation-near-me/`;
+      case "bathroom": return `/${locale}/bathroom-renovation-near-me/`;
+      case "wholeHouse": return `/${locale}/whole-house-renovation-near-me/`;
+      case "basement": return `/${locale}/basement-renovation-near-me/`;
+      default: return `/${locale}/services/`;
+    }
+  };
+
   return (
     <div style={{ backgroundColor: SURFACE, color: TEXT }}>
       {/* Hero */}
@@ -150,7 +166,7 @@ export default function NearMePage({ locale, areas }: Props) {
                   {t(`services.${s}.desc`)}
                 </p>
                 <Link
-                  href={`/${locale}/services/`}
+                  href={serviceHref(s)}
                   className="inline-flex items-center gap-1 font-semibold text-sm"
                   style={{ color: GOLD }}
                 >
