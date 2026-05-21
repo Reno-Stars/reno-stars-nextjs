@@ -96,5 +96,13 @@
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.54.0",
     "vitest": "^2.1.0"
+  },
+  "_comments": {
+    "pnpm.overrides.jsdom": "2026-05-21 — pin to v25 because jsdom@28+ pulls @exodus/bytes (ESM-only) via html-encoding-sniffer@6, which Next.js externalizes and Node's require() then crashes with ERR_REQUIRE_ESM at runtime on /[locale]/projects/[slug] (isomorphic-dompurify@3.5.1 declares jsdom@^29). v25 still has the full DOMPurify-compatible API and uses html-encoding-sniffer@4 (pure CJS)."
+  },
+  "pnpm": {
+    "overrides": {
+      "jsdom": "^25.0.0"
+    }
   }
 }
