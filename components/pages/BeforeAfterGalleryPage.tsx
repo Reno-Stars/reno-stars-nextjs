@@ -195,7 +195,7 @@ export default function BeforeAfterGalleryPage({ locale, projects, company: _com
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3 className="text-sm font-bold line-clamp-1 mb-1" style={{ color: TEXT }}>{pairTitle}</h3>
+                        <h2 className="text-sm font-bold line-clamp-1 mb-1" style={{ color: TEXT }}>{pairTitle}</h2>
                         <div className="flex items-center gap-1 text-xs" style={{ color: TEXT_MUTED }}>
                           <MapPin className="w-3 h-3" />{item.locationCity}
                         </div>
