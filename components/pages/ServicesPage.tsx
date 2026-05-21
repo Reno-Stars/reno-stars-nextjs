@@ -137,8 +137,39 @@ export default function ServicesPage({ locale: _locale, company, services, areas
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Renovation Near You — links to service-specific geo landing pages */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8" style={{ color: TEXT }}>
+            {t('nearMe.services.heading')}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {([
+              { key: 'kitchen', href: '/kitchen-renovation-near-me' },
+              { key: 'bathroom', href: '/bathroom-renovation-near-me' },
+              { key: 'basement', href: '/basement-renovation-near-me' },
+              { key: 'wholeHouse', href: '/whole-house-renovation-near-me' },
+            ] as const).map(({ key, href }) => (
+              <Link
+                key={key}
+                href={href}
+                className="rounded-xl p-5 group transition-transform hover:-translate-y-0.5"
+                style={{ boxShadow: neu(4), backgroundColor: CARD }}
+              >
+                <h3 className="font-bold text-base mb-2" style={{ color: TEXT }}>
+                  {t(`nearMe.services.${key}.title`)}
+                </h3>
+                <span className="text-sm font-semibold flex items-center gap-1" style={{ color: GOLD }}>
+                  {t('nearMe.services.learnMore')} <ChevronRight className="w-4 h-4" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
             {t('projects.readyToStart2')}
