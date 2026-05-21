@@ -29,7 +29,11 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'HomeAndConstructionBusiness',
+    // Multi-typed: HomeAndConstructionBusiness IS-A LocalBusiness IS-A Organization
+    // per Schema.org. Listing all three keeps the most-specific type while
+    // satisfying literal @type checks for "Organization" and "LocalBusiness"
+    // without duplicating the entity into separate nodes.
+    '@type': ['Organization', 'LocalBusiness', 'HomeAndConstructionBusiness'],
     '@id': `${BASE_URL}/#organization`,
     name: company.name,
     // alternateName: brand-variant capture so Google reconciles user queries

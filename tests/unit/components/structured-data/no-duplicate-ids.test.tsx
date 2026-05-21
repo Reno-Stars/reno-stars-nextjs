@@ -61,7 +61,16 @@ function collectIdConflicts(nodes: unknown[]): Map<string, Set<string>> {
     if (value && typeof value === 'object') {
       const obj = value as Record<string, unknown>;
       const id = typeof obj['@id'] === 'string' ? (obj['@id'] as string) : null;
-      const type = typeof obj['@type'] === 'string' ? (obj['@type'] as string) : null;
+      // @type may be a string or an array (multi-typed nodes). Canonicalize
+      // arrays to a sorted+joined key so distinct nodes sharing the same
+      // multi-type set still register as one logical type per @id.
+      const rawType = obj['@type'];
+      const type: string | null =
+        typeof rawType === 'string'
+          ? rawType
+          : Array.isArray(rawType)
+            ? [...rawType.filter((t): t is string => typeof t === 'string')].sort().join('+')
+            : null;
       if (id && type) {
         if (!idToTypes.has(id)) idToTypes.set(id, new Set());
         idToTypes.get(id)!.add(type);
