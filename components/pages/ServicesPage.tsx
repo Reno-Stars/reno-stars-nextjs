@@ -66,9 +66,9 @@ export default function ServicesPage({ locale: _locale, company, services, areas
                       <img src={service.icon} alt="" className="w-7 h-7" style={{ filter: GOLD_ICON_FILTER }} />
                     </div>
                   )}
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
+                  <h2 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
                     {service.title}
-                  </h3>
+                  </h2>
                   <p className="text-sm leading-relaxed mb-3" style={{ color: TEXT_MID }}>
                     {service.description}
                   </p>

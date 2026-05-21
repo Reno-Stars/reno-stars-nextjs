@@ -132,9 +132,9 @@ export default function BlogPage({
                       )}
                       <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
                         <div>
-                          <h3 className="text-lg font-bold mb-1.5 transition-colors" style={{ color: TEXT }}>
+                          <h2 className="text-lg font-bold mb-1.5 transition-colors" style={{ color: TEXT }}>
                             {post.title}
-                          </h3>
+                          </h2>
                           {post.excerpt && (
                             <p className="text-sm line-clamp-2" style={{ color: TEXT_MID }}>
                               {post.excerpt}
