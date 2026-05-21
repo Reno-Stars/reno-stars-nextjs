@@ -27,7 +27,9 @@ export default function LocalBusinessAreaSchema({
 
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'HomeAndConstructionBusiness',
+    // Multi-typed: per-area facet of the org marked as LocalBusiness so
+    // literal @type checks pass on area pages.
+    '@type': ['LocalBusiness', 'HomeAndConstructionBusiness'],
     '@id': `${baseUrl}/#${areaSlug}-business`,
     name: `${company.name} - ${areaName}`,
     description: `Professional home renovation services in ${areaName}. Kitchen, bathroom, whole house renovations by ${company.name}.`,
