@@ -157,7 +157,7 @@ export default async function Page({ params }: PageProps) {
         dateModified={toIsoString(post.updated_at)}
         authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
-        image={post.featured_image}
+        image={ogImage}
         locale={locale}
       />
       <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />
