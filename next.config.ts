@@ -208,7 +208,7 @@ const nextConfig: NextConfig = {
       // Unicode comma blog slug → clean slug
       {
         source: '/:locale(en|zh)/renovation_article/the-story-of-reno-stars\uFF0C-vancouver-local-renovation-company',
-        destination: '/:locale/blog/the-story-of-reno-stars-vancouver-local-renovation-company/',
+        destination: '/:locale/blog/',
         permanent: true,
       },
       // /renovation_article/:slug → /blog/:slug
@@ -475,7 +475,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/:locale(en|zh)/commercial-emergency-renovation-rescue',
-        destination: '/:locale/blog/emergency-renovation-rescue/',
+        destination: '/:locale/blog/',
         permanent: true,
       },
       {
