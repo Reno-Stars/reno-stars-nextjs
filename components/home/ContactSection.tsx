@@ -6,6 +6,7 @@ import type { Company } from '@/lib/types';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
 import { GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import { trackPhoneClick } from '@/lib/analytics';
 
 interface ContactSectionProps {
   company: Company;
@@ -44,7 +45,14 @@ export default function ContactSection({ company, areasText, translations: t }: 
                 <div className="min-w-0">
                   <div className="text-sm font-semibold uppercase tracking-wider mb-1" style={{ color: TEXT_MUTED }}>{c.title}</div>
                   {c.href ? (
-                    <a href={c.href} className="text-base font-medium cursor-pointer transition-colors hover:underline" style={{ color: TEXT }}>{c.value}</a>
+                    <a
+                      href={c.href}
+                      onClick={c.href.startsWith('tel:') ? () => trackPhoneClick(company.phone) : undefined}
+                      className="text-base font-medium cursor-pointer transition-colors hover:underline"
+                      style={{ color: TEXT }}
+                    >
+                      {c.value}
+                    </a>
                   ) : (
                     <p className="text-base" style={{ color: TEXT_MID }}>{c.value}</p>
                   )}
