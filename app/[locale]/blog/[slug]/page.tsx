@@ -130,6 +130,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
+  const ogImage = post.featured_image || siteImages.hero;
 
   const [t, company, services, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
