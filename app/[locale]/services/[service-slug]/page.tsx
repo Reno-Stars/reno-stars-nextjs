@@ -81,9 +81,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = service.image || siteImages.hero;
 
+  // Title length: keep under Google's ~60-char SERP truncation cap. Dropping
+  // "Free Quote, " (and the ZH equivalent "免费报价, ") brings each service title
+  // to 57–61 chars vs the prior 69–73. "3-Yr Warranty" stays as the strongest
+  // trust differentiator — same pattern used in the area-page overrides.
   const title = locale === 'zh'
-    ? `${localizedService.title} 温哥华 — 免费报价, 3年保修 | Reno Stars`
-    : `${localizedService.title} Vancouver — Free Quote, 3-Yr Warranty | Reno Stars`;
+    ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
+    : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
 
   return {
     title,
