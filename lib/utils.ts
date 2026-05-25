@@ -209,16 +209,33 @@ export function truncate(text: string, length: number): string {
 /**
  * Truncates text for meta descriptions at word boundaries.
  * Optimized for SEO with a default max length of 155 characters.
- * @param text - The text to truncate
+ *
+ * Strips markdown link syntax `[label](url)` → `label` before measuring +
+ * truncating, because service / area `long_description` fields are authored
+ * in markdown for rich body rendering but Google SERPs render the raw
+ * description string verbatim — leaking brackets+URLs into search results
+ * (verified live 2026-05-25: `/en/services/kitchen/` was emitting
+ * `<meta name="description" content="[Vancouver](/en/areas/vancouver/) ...">`).
+ *
+ * Bold/italic/code markers are NOT stripped — they don't appear in current
+ * source data and adding them would complicate behavior for callers that
+ * pass already-plain text.
+ *
+ * @param text - The text to truncate (may contain markdown link syntax)
  * @param maxLength - Maximum length (default: 155)
- * @returns Truncated text ending at a word boundary with ellipsis if needed
- * @example truncateMetaDescription('This is a very long description text') // Full text or truncated at word boundary
+ * @returns Plain-text, truncated at a word boundary with ellipsis if needed
+ * @example truncateMetaDescription('[Vancouver](/en/areas/vancouver/) renovations') // 'Vancouver renovations'
  */
 export function truncateMetaDescription(text: string, maxLength: number = 155): string {
-  if (!text || text.length <= maxLength) return text;
+  if (!text) return text;
+
+  // Strip markdown link syntax: [label](url) → label
+  const plain = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+
+  if (plain.length <= maxLength) return plain;
 
   // Find the last space before maxLength
-  const truncated = text.slice(0, maxLength);
+  const truncated = plain.slice(0, maxLength);
   const lastSpace = truncated.lastIndexOf(' ');
 
   // If no space found, just cut at maxLength
