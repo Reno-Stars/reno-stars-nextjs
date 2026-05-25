@@ -249,8 +249,8 @@ export async function createProject(
 
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     updateTag(`project:${data.slug}`);
   } catch (error) {
     console.error('Failed to create project:', error);
@@ -396,8 +396,8 @@ export async function updateProject(
 
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     updateTag(`project:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`project:${currentSlug}`);
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
@@ -419,8 +419,8 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     if (slug) updateTag(`project:${slug}`);
     return {};
   } catch (error) {
@@ -439,8 +439,8 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
     }
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     return {};
   } catch (error) {
@@ -467,8 +467,8 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
     }
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     return {};
   } catch (error) {
@@ -517,8 +517,8 @@ export async function moveProjectToSite(
 
     revalidatePath('/admin/sites');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     return { success: true };
   } catch (error) {
     console.error('Failed to move project:', error);
@@ -551,8 +551,8 @@ export async function reorderProjectsInSite(
 
     revalidatePath('/admin/sites');
     triggerDeploy('projects');
-    updateTag('projects');
-    updateTag('sites');
+    updateTag('projects:listing');
+    updateTag('sites:listing');
     return {};
   } catch (error) {
     console.error('Failed to reorder projects:', error);

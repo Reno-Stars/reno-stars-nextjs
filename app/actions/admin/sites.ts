@@ -134,7 +134,7 @@ export async function createSite(
 
     revalidatePath('/admin/sites');
     triggerDeploy('sites');
-    updateTag('sites');
+    updateTag('sites:listing');
     updateTag(`site:${data.slug}`);
   } catch (error) {
     console.error('Failed to create site:', error);
@@ -233,7 +233,7 @@ export async function updateSite(
 
     revalidatePath('/admin/sites');
     triggerDeploy('sites');
-    updateTag('sites');
+    updateTag('sites:listing');
     updateTag(`site:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
@@ -259,8 +259,8 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
     triggerDeploy('sites');
-    updateTag('sites');
-    updateTag('projects'); // child projects cascaded — list cache must refetch
+    updateTag('sites:listing');
+    updateTag('projects:listing'); // child projects cascaded — list cache must refetch
     if (slug) updateTag(`site:${slug}`);
     for (const p of childProjects) updateTag(`project:${p.slug}`);
     return {};
@@ -300,7 +300,7 @@ async function toggleSiteField(
 
     revalidatePath('/admin/sites');
     triggerDeploy('sites');
-    updateTag('sites');
+    updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`site:${updated[0].slug}`);
     return {};
   } catch (error) {
