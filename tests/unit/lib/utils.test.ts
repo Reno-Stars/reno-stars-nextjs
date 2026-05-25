@@ -4,6 +4,7 @@ import {
   formatSlug,
   ensureUniqueSlug,
   truncate,
+  truncateMetaDescription,
   capitalize,
   formatCurrency,
   clamp,
@@ -77,6 +78,51 @@ describe('String Utilities', () => {
 
     it('should handle exact length', () => {
       expect(truncate('Exact', 5)).toBe('Exact');
+    });
+  });
+
+  describe('truncateMetaDescription', () => {
+    it('should return plain text unchanged when under maxLength', () => {
+      expect(truncateMetaDescription('Short plain text')).toBe('Short plain text');
+    });
+
+    it('should strip markdown link syntax', () => {
+      expect(
+        truncateMetaDescription('[Vancouver](/en/areas/vancouver/) renovations')
+      ).toBe('Vancouver renovations');
+    });
+
+    it('should strip multiple markdown links in one string', () => {
+      expect(
+        truncateMetaDescription(
+          '[Vancouver](/en/areas/vancouver/) [kitchen renovations](/en/guides/kitchen/) — full-service'
+        )
+      ).toBe('Vancouver kitchen renovations — full-service');
+    });
+
+    it('should leave plain brackets and parens untouched', () => {
+      // Common in real copy: "(2026)" or "[note]" without paired URL
+      expect(truncateMetaDescription('Renovations (2026) [note]')).toBe('Renovations (2026) [note]');
+    });
+
+    it('should truncate at word boundary after stripping markdown', () => {
+      // Pre-strip: 244 chars. Post-strip: ~171 chars. Should truncate to ~155.
+      const text =
+        '[Vancouver](/en/areas/vancouver/) [kitchen renovations](/en/guides/kitchen-renovation-cost-vancouver/) — full-service design, demolition, cabinetry, countertops, tile, lighting, appliances. One team, one contract. Vancouver kitchen specialists.';
+      const out = truncateMetaDescription(text);
+      expect(out.length).toBeLessThanOrEqual(158); // 155 + '...'
+      expect(out).not.toContain('[');
+      expect(out).not.toContain('](');
+      expect(out.endsWith('...')).toBe(true);
+      expect(out.startsWith('Vancouver kitchen renovations')).toBe(true);
+    });
+
+    it('should respect a custom maxLength', () => {
+      expect(truncateMetaDescription('one two three four five', 10)).toBe('one two...');
+    });
+
+    it('should pass through empty / nullish input', () => {
+      expect(truncateMetaDescription('')).toBe('');
     });
   });
 
