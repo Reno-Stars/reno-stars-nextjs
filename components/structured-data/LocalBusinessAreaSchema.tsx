@@ -83,12 +83,17 @@ export default function LocalBusinessAreaSchema({
       },
     }),
     priceRange: '$$',
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
+    // Schema.org requires openingHoursSpecification to be an array even when
+    // there is only one time slot — Google's Rich Results validator flags
+    // the singular-object form as a structured-data error.
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+    ],
     inLanguage: locale,
   };
 

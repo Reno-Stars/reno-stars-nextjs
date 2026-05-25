@@ -46,7 +46,9 @@ export default function ProjectSchema({
         '@type': 'AggregateRating',
         ratingValue: googleRating,
         bestRating: 5,
+        worstRating: 1,
         ratingCount: googleReviewCount,
+        reviewCount: googleReviewCount,
       },
     }),
   };

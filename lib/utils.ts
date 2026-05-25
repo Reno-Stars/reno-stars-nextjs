@@ -453,8 +453,16 @@ export function buildAlternates(path: string, locale: string): {
   // canonical `locales` array so adding a new locale doesn't require editing
   // every page's metadata helper.
   const languages: Record<string, string> = {};
+  // Hreflang key mapping: zh-Hant uses script subtag in URL paths but Google
+  // and Semrush expect region-qualified BCP-47 codes (zh-TW for Traditional
+  // Chinese). The URL stays /zh-Hant/ while the hreflang emits zh-TW.
+  // See: https://developers.google.com/search/docs/specialty/international/localization-and-internationalization
+  const hreflangKeyMap: Partial<Record<string, string>> = {
+    'zh-Hant': 'zh-TW',
+  };
   for (const loc of locales) {
-    languages[loc] = `${baseUrl}/${loc}${path}`;
+    const hreflangKey = hreflangKeyMap[loc] ?? loc;
+    languages[hreflangKey] = `${baseUrl}/${loc}${path}`;
   }
   languages['x-default'] = `${baseUrl}/en${path}`;
   return {

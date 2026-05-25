@@ -40,8 +40,9 @@ export default function ArticleSchema({
     ...(datePublished && { datePublished }),
     ...(dateModified ? { dateModified } : datePublished ? { dateModified: datePublished } : {}),
     author: {
-      '@type': authorName ? 'Person' : 'Organization',
+      '@type': 'Organization',
       name: resolvedAuthorName,
+      url: baseUrl,
     },
     publisher: {
       '@type': 'Organization',

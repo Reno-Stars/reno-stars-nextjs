@@ -130,6 +130,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
+  const ogImage = post.featured_image || siteImages.hero;
 
   const [t, company, services, areas] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
@@ -157,7 +158,7 @@ export default async function Page({ params }: PageProps) {
         dateModified={toIsoString(post.updated_at)}
         authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
-        image={post.featured_image}
+        image={ogImage}
         locale={locale}
       />
       <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />

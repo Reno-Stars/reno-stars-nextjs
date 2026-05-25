@@ -240,8 +240,10 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
-    // Renovation supply storefront (separate B2B catalog on supply.reno-stars.com)
-    { href: 'https://supply.reno-stars.com', label: t('nav.supplies'), external: true },
+    // supply.reno-stars.com link removed 2026-05-22: subdomain is in a redirect
+    // loop (307 → /ca → 307 → loop) and was flagged by Semrush as a broken
+    // external link on all 14 homepage language variants. Re-add when the
+    // supply site is operational and returns 200.
   ], [t]);
 
   const whyUsStats = useMemo(() => [

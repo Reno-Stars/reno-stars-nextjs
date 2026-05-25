@@ -63,12 +63,17 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       name: area.name.en,
     })),
     priceRange: '$$',
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
+    // Schema.org requires openingHoursSpecification to be an array even when
+    // there is only one time slot — Google's Rich Results validator flags
+    // the singular-object form as a structured-data error.
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+    ],
     // sameAs: social profiles + Google Business Profile (GBP). GBP URL via
     // place_id is the strongest entity-graph signal — it links the
     // Organization schema directly to the GBP listing for knowledge-graph
