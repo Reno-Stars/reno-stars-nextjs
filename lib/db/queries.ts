@@ -711,7 +711,7 @@ export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> =>
 
     return rows.map((row: typeof rows[number]) => mapDbProjectToProject(row as DbProjectRow, [], [], []));
   }, []);
-}, ['getProjectsListFromDb-v2'], { tags: ['projects'] });
+}, ['getProjectsListFromDb-v2'], { tags: ['projects:listing'] });
 
 /** Fetch a single published project by slug from DB. */
 export const getProjectBySlugFromDb = cachedQueryPerSlug(
@@ -976,7 +976,7 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
 
   return results;
   }, []);
-}, ['getSitesAsProjectsFromDb-v3'], { tags: ['sites', 'projects'] });
+}, ['getSitesAsProjectsFromDb-v3'], { tags: ['sites:listing', 'projects:listing'] });
 
 // ============================================================================
 // SERVICE AREA QUERIES
@@ -1077,7 +1077,7 @@ export const getBlogPostsFromDb = cachedQuery(async (): Promise<BlogPost[]> => {
       updated_at: row.updatedAt ?? undefined,
     }));
   }, []);
-}, ['getBlogPostsFromDb', 'v1'], { revalidate: 86400, tags: ['blog'] });
+}, ['getBlogPostsFromDb', 'v1'], { revalidate: 86400, tags: ['blog:listing'] });
 
 /** Fetch paginated published blog posts ordered by publishedAt desc. */
 export const getBlogPostsPaginatedFromDb = cache(
@@ -1345,7 +1345,7 @@ export const getProjectsByAreaFromDb = cachedQueryWithArgs<string, Project[]>(as
       )
     );
   }, []);
-}, ['getProjectsByAreaFromDb'], { tags: ['projects'] });
+}, ['getProjectsByAreaFromDb'], { tags: ['projects:by-area'] });
 
 // ============================================================================
 // GUIDE PAGE QUERIES
@@ -1404,7 +1404,7 @@ export const getKitchenProjectsForGuide = cachedQuery(async (): Promise<KitchenG
         : undefined,
     }));
   }, []);
-}, ['getKitchenProjectsForGuide'], { tags: ['projects'] });
+}, ['getKitchenProjectsForGuide'], { tags: ['projects:by-guide'] });
 
 
 export const getBathroomProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
@@ -1440,7 +1440,7 @@ export const getBathroomProjectsForGuide = cachedQuery(async (): Promise<Kitchen
         : undefined,
     }));
   }, []);
-}, ['getBathroomProjectsForGuide'], { tags: ['projects'] });
+}, ['getBathroomProjectsForGuide'], { tags: ['projects:by-guide'] });
 
 
 export const getWholeHouseProjectsForGuide = cachedQuery(async (): Promise<KitchenGuideProject[]> => {
@@ -1476,7 +1476,7 @@ export const getWholeHouseProjectsForGuide = cachedQuery(async (): Promise<Kitch
         : undefined,
     }));
   }, []);
-}, ['getWholeHouseProjectsForGuide'], { tags: ['projects'] });
+}, ['getWholeHouseProjectsForGuide'], { tags: ['projects:by-guide'] });
 
 // ============================================================================
 // ADMIN-ONLY QUERIES
@@ -1748,7 +1748,7 @@ export const getCommercialProjectsForGuide = cachedQuery(async (): Promise<Kitch
         : undefined,
     }));
   }, []);
-}, ['getCommercialProjectsForGuide'], { tags: ['projects'] });
+}, ['getCommercialProjectsForGuide'], { tags: ['projects:by-guide'] });
 
 
 
@@ -1788,7 +1788,7 @@ export const getCabinetProjectsForGuide = cachedQuery(async (): Promise<KitchenG
         : undefined,
     }));
   }, []);
-}, ['getCabinetProjectsForGuide'], { tags: ['projects'] });
+}, ['getCabinetProjectsForGuide'], { tags: ['projects:by-guide'] });
 
 // ============================================================================
 // SOCIAL MEDIA POST QUERIES (ADMIN)

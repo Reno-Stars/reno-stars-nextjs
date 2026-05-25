@@ -92,7 +92,7 @@ export async function createBlogPost(
       ...data,
       ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     });
-    updateTag('blog');
+    updateTag('blog:listing');
     updateTag(`blog:${data.slug}`);
     revalidatePath('/admin/blog');
     triggerDeploy('blog');
@@ -146,7 +146,7 @@ export async function updateBlogPost(
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
-    updateTag('blog');
+    updateTag('blog:listing');
     updateTag(`blog:${data.slug}`);
     // If slug was renamed, the old slug's cached entry also needs invalidation
     // — otherwise stale content survives at old URL until next 1h revalidate.
@@ -169,7 +169,7 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
     const existing = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const slug = existing[0]?.slug;
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
-    updateTag('blog');
+    updateTag('blog:listing');
     if (slug) updateTag(`blog:${slug}`);
     revalidatePath('/admin/blog');
     triggerDeploy('blog');
@@ -197,7 +197,7 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
-    updateTag('blog');
+    updateTag('blog:listing');
     if (updated[0]?.slug) updateTag(`blog:${updated[0].slug}`);
     revalidatePath('/admin/blog');
     triggerDeploy('blog');
