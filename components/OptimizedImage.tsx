@@ -183,12 +183,21 @@ export default function OptimizedImage({
         />
       )}
 
-      {/* Thumb — blurred preview, shows as soon as it loads, fades out when full image ready */}
+      {/* Thumb — blurred LQIP preview. THIS is the only `<img>` guaranteed to
+          land in SSR HTML; the full image below is gated on `isInView` (set by
+          an IntersectionObserver that only runs client-side), so search-engine
+          first-pass crawls (which don't execute JS) see only this element.
+          → Carry the descriptive `alt` HERE so SSR HTML is properly captioned,
+            and make the post-hydration full image aria-hidden so screen readers
+            don't double-announce. Pre-2026-05-26 this was `alt="" aria-hidden`
+            which left every gallery image with empty alt in first-pass crawls.
+          → If the caller explicitly passes `aria-hidden`, respect that (truly
+            decorative use cases like icons stay decorative). */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={thumbSrc}
-        alt=""
-        aria-hidden="true"
+        alt={ariaHidden ? '' : alt}
+        aria-hidden={ariaHidden ? 'true' : undefined}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         // Match the full image's fetch priority so the thumb arrives BEFORE
@@ -224,7 +233,11 @@ export default function OptimizedImage({
           src={fullSrc}
           srcSet={fullSrcSet}
           sizes={fullSrcSet ? sizes : undefined}
-          alt={alt}
+          // Thumb already carries the descriptive alt in SSR HTML (see comment
+          // on the thumb img). Once the full image fades in client-side, mark
+          // it aria-hidden so screen readers don't announce the same alt twice.
+          alt=""
+          aria-hidden="true"
           width={fill ? undefined : width}
           height={fill ? undefined : height}
           loading={resolvedLoading}
