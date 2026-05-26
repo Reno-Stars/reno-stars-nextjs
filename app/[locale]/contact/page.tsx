@@ -4,7 +4,7 @@ import { ogLocaleMap, type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
 import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
-import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -56,14 +56,33 @@ export default async function Page({ params }: PageProps) {
     { name: t('contact'), url: `/${locale}/contact/` },
   ];
 
-  const [company, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
+  const [company, areas, propertyTypes, googleReviews] = await Promise.all([
+    getCompanyFromDb(),
+    getServiceAreasFromDb(),
+    getPropertyTypesFromDb(),
+    getGoogleReviews(),
+  ]);
   const areaNames = areas.map((a) => pickLocale(a.name, locale as Locale));
+  const cityOptions = areas.map((a) => ({
+    slug: a.slug,
+    name: pickLocale(a.name, locale as Locale),
+  }));
+  const propertyTypeOptions = propertyTypes.map((p) => ({
+    slug: p.slug,
+    name: locale === 'zh' ? p.name.zh : p.name.en,
+  }));
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
       <ContactPageSchema company={company} areaNames={areaNames} locale={locale} />
-      <ContactPage company={company} areaNames={areaNames} googleRating={googleReviews.rating} />
+      <ContactPage
+        company={company}
+        areaNames={areaNames}
+        cityOptions={cityOptions}
+        propertyTypeOptions={propertyTypeOptions}
+        googleRating={googleReviews.rating}
+      />
     </>
   );
 }

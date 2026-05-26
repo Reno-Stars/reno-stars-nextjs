@@ -7,6 +7,12 @@ import { submitContactForm } from '@/app/actions/contact';
 import { trackFormSubmission } from '@/lib/analytics';
 import { GOLD, SURFACE, TEXT, TEXT_MID, SUCCESS, ERROR, ERROR_BG, neuIn, neu, CARD } from '@/lib/theme';
 
+/** Slug + localized label option for the city / property-type dropdowns. */
+export interface FormSelectOption {
+  slug: string;
+  name: string;
+}
+
 interface ContactFormProps {
   /** Called after a successful submission */
   onSuccess?: () => void;
@@ -14,6 +20,10 @@ interface ContactFormProps {
   submitLabel?: string;
   /** Larger text and inputs for better readability */
   large?: boolean;
+  /** City dropdown options (slug+localized name). Hidden if empty. */
+  cityOptions?: FormSelectOption[];
+  /** Property-type dropdown options (slug+localized name). Hidden if empty. */
+  propertyTypeOptions?: FormSelectOption[];
 }
 
 /** Field configuration for the contact form - defined outside component to avoid recreation */
@@ -23,10 +33,10 @@ const FORM_FIELDS = [
   { id: 'phone', type: 'tel', labelKey: 'form.phone', placeholderKey: 'form.phonePlaceholder2', required: true },
 ] as const;
 
-export default function ContactForm({ onSuccess, submitLabel, large }: ContactFormProps) {
+export default function ContactForm({ onSuccess, submitLabel, large, cityOptions, propertyTypeOptions }: ContactFormProps) {
   const t = useTranslations();
 
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', propertyType: '', message: '' });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -36,7 +46,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
     return () => { if (successTimerRef.current) clearTimeout(successTimerRef.current); };
   }, []);
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }, []);
@@ -71,7 +81,7 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
     startTransition(async () => {
       const result = await submitContactForm(formData);
       if (result.success) {
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', city: '', propertyType: '', message: '' });
         trackFormSubmission('contact');
         setShowSuccessModal(true);
         // Auto-close modal after 4 seconds
@@ -158,6 +168,48 @@ export default function ContactForm({ onSuccess, submitLabel, large }: ContactFo
             />
           </div>
         ))}
+      {cityOptions && cityOptions.length > 0 && (
+        <div>
+          <label htmlFor="city" className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
+            {t('form.city')}
+          </label>
+          <select
+            id="city"
+            name="city"
+            value={formData.city}
+            onChange={handleInputChange}
+            className={`w-full rounded-xl border-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 appearance-none cursor-pointer ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
+            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
+            disabled={isPending}
+          >
+            <option value="">{t('form.cityPlaceholder')}</option>
+            {cityOptions.map((opt) => (
+              <option key={opt.slug} value={opt.slug}>{opt.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      {propertyTypeOptions && propertyTypeOptions.length > 0 && (
+        <div>
+          <label htmlFor="propertyType" className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
+            {t('form.propertyType')}
+          </label>
+          <select
+            id="propertyType"
+            name="propertyType"
+            value={formData.propertyType}
+            onChange={handleInputChange}
+            className={`w-full rounded-xl border-none transition-all duration-200 outline-0 focus:outline-2 focus:outline-offset-1 appearance-none cursor-pointer ${large ? 'px-5 py-4 text-lg' : 'px-4 py-3 text-base'}`}
+            style={{ boxShadow: neuIn(3), backgroundColor: SURFACE, color: TEXT, outlineColor: GOLD } as React.CSSProperties}
+            disabled={isPending}
+          >
+            <option value="">{t('form.propertyTypePlaceholder')}</option>
+            {propertyTypeOptions.map((opt) => (
+              <option key={opt.slug} value={opt.slug}>{opt.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
       <div>
         <label htmlFor="message" className={`block font-bold uppercase tracking-wider ${large ? 'text-base mb-2' : 'text-sm mb-1.5'}`} style={{ color: TEXT }}>
           {t('form.message')} *

@@ -694,6 +694,25 @@ export const designs = pgTable(
 // CONTACT SUBMISSIONS
 // ============================================================================
 
+/** Bilingual lookup table for the property-type dropdown on the contact form
+ *  (House / Condo / Townhouse / Commercial …). Admins can add new types
+ *  without a code change — the contact form fetches active rows ordered by
+ *  displayOrder. */
+export const propertyTypes = pgTable(
+  'property_types',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    slug: varchar('slug', { length: 50 }).notNull().unique(),
+    nameEn: varchar('name_en', { length: 50 }).notNull(),
+    nameZh: varchar('name_zh', { length: 50 }).notNull(),
+    isActive: boolean('is_active').default(true).notNull(),
+    displayOrder: integer('display_order').default(0).notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [uniqueIndex('property_types_slug_idx').on(table.slug)]
+);
+
 /** Contact form submissions for CRM */
 export const contactSubmissions = pgTable(
   'contact_submissions',
@@ -707,6 +726,7 @@ export const contactSubmissions = pgTable(
       () => services.id
     ),
     preferredAreaId: uuid('preferred_area_id').references(() => serviceAreas.id),
+    propertyTypeId: uuid('property_type_id').references(() => propertyTypes.id),
     status: contactStatusEnum('status').default('new').notNull(),
     notes: text('notes'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
@@ -728,6 +748,10 @@ export const contactSubmissionsRelations = relations(
     preferredArea: one(serviceAreas, {
       fields: [contactSubmissions.preferredAreaId],
       references: [serviceAreas.id],
+    }),
+    propertyType: one(propertyTypes, {
+      fields: [contactSubmissions.propertyTypeId],
+      references: [propertyTypes.id],
     }),
   })
 );

@@ -2,8 +2,13 @@
 
 import { headers } from 'next/headers';
 import { waitUntil } from '@vercel/functions';
+import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { contactSubmissions } from '@/lib/db/schema';
+import {
+  contactSubmissions,
+  propertyTypes,
+  serviceAreas,
+} from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 
@@ -13,6 +18,10 @@ export interface ContactFormData {
   email: string;
   phone: string;
   message: string;
+  /** Slug from service_areas (e.g. "vancouver", "richmond"). Optional. */
+  city?: string;
+  /** Slug from property_types (e.g. "house", "condo"). Optional. */
+  propertyType?: string;
 }
 
 /** Result of contact form submission */
@@ -207,12 +216,43 @@ export async function submitContactForm(
     const sanitizedPhone = sanitizeField(data.phone, MAX_LENGTHS.phone);
     const sanitizedMessage = sanitizeField(data.message, MAX_LENGTHS.message);
 
+    // Look up optional city + property type by slug. Unknown slugs are
+    // dropped silently rather than 400'd — the form drives the dropdowns from
+    // the DB so a mismatch only happens on direct API calls or stale clients.
+    const citySlug = data.city?.trim().toLowerCase().slice(0, 50) || null;
+    const propertyTypeSlug =
+      data.propertyType?.trim().toLowerCase().slice(0, 50) || null;
+
+    const [areaRow, propertyTypeRow] = await Promise.all([
+      citySlug
+        ? db
+            .select({ id: serviceAreas.id, nameEn: serviceAreas.nameEn })
+            .from(serviceAreas)
+            .where(eq(serviceAreas.slug, citySlug))
+            .limit(1)
+        : Promise.resolve([] as { id: string; nameEn: string }[]),
+      propertyTypeSlug
+        ? db
+            .select({ id: propertyTypes.id, nameEn: propertyTypes.nameEn })
+            .from(propertyTypes)
+            .where(eq(propertyTypes.slug, propertyTypeSlug))
+            .limit(1)
+        : Promise.resolve([] as { id: string; nameEn: string }[]),
+    ]);
+
+    const preferredAreaId = areaRow[0]?.id ?? null;
+    const propertyTypeId = propertyTypeRow[0]?.id ?? null;
+    const cityNameEn = areaRow[0]?.nameEn ?? null;
+    const propertyTypeNameEn = propertyTypeRow[0]?.nameEn ?? null;
+
     // Save to database
     await db.insert(contactSubmissions).values({
       name: sanitizedName,
       email: sanitizedEmail,
       phone: sanitizedPhone,
       message: sanitizedMessage,
+      preferredAreaId,
+      propertyTypeId,
       status: 'new',
     });
 
@@ -226,6 +266,8 @@ export async function submitContactForm(
         email: sanitizedEmail,
         phone: sanitizedPhone,
         message: sanitizedMessage,
+        city: cityNameEn,
+        propertyType: propertyTypeNameEn,
       }).catch((err) => {
         console.error('Background email notification failed:', err);
       })
