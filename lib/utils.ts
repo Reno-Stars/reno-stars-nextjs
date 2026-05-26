@@ -245,6 +245,44 @@ export function truncateMetaDescription(text: string, maxLength: number = 155): 
 }
 
 /**
+ * Expands residual markdown link syntax `[label](url)` → `<a href="url">label</a>`
+ * inside heading tags (h1-h6) only.
+ *
+ * Why: `marked.parse()` passes HTML blocks through unchanged (its
+ * documented design choice). When blog body content is authored as HTML
+ * that contains markdown link syntax inside the HTML — e.g.
+ * `<h1>Vanity Renovation Cost [Vancouver](/en/areas/vancouver/) 2026</h1>` —
+ * the markdown stays raw, leaking brackets+parens into the rendered DOM
+ * (verified live 2026-05-26 on every `/en/blog/*-cost-vancouver/` page).
+ * Sibling fix to PR #57's `truncateMetaDescription` markdown strip.
+ *
+ * Scope is intentionally limited to heading tags only — body paragraphs
+ * may legitimately contain literal `[text](url)` (e.g. tutorials about
+ * markdown), but headings essentially never do. If literal brackets ever
+ * need to appear in a heading, author the heading as plain markdown
+ * (`## Heading [literal] (paren)`) so marked converts the wrapping tag
+ * itself instead of relying on HTML pass-through.
+ *
+ * @param html - HTML string (typically `marked.parse()` output)
+ * @returns same HTML with markdown links inside h1-h6 expanded to `<a>` tags
+ * @example expandMarkdownLinksInHeadings('<h1>Cost [VAN](/v/) 2026</h1>')
+ *          // '<h1>Cost <a href="/v/">VAN</a> 2026</h1>'
+ */
+export function expandMarkdownLinksInHeadings(html: string): string {
+  if (!html) return html;
+  return html.replace(
+    /(<h[1-6][^>]*>)([\s\S]*?)(<\/h[1-6]>)/gi,
+    (_match, open: string, content: string, close: string) => {
+      const fixed = content.replace(
+        /\[([^\]]+)\]\(([^)\s]+)\)/g,
+        '<a href="$2">$1</a>',
+      );
+      return open + fixed + close;
+    },
+  );
+}
+
+/**
  * Capitalizes the first letter of a string.
  * @param text - The text to capitalize
  * @returns Text with first letter capitalized
