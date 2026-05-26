@@ -5,6 +5,7 @@ import {
   ensureUniqueSlug,
   truncate,
   truncateMetaDescription,
+  expandMarkdownLinksInHeadings,
   capitalize,
   formatCurrency,
   clamp,
@@ -123,6 +124,72 @@ describe('String Utilities', () => {
 
     it('should pass through empty / nullish input', () => {
       expect(truncateMetaDescription('')).toBe('');
+    });
+  });
+
+  describe('expandMarkdownLinksInHeadings', () => {
+    it('should expand markdown link inside h1 to an <a> tag', () => {
+      expect(
+        expandMarkdownLinksInHeadings(
+          '<h1>Vanity Renovation Cost [Vancouver](/en/areas/vancouver/) 2026</h1>',
+        ),
+      ).toBe(
+        '<h1>Vanity Renovation Cost <a href="/en/areas/vancouver/">Vancouver</a> 2026</h1>',
+      );
+    });
+
+    it('should expand markdown links inside h2-h6', () => {
+      expect(expandMarkdownLinksInHeadings('<h2>See [pricing](/p/)</h2>')).toBe(
+        '<h2>See <a href="/p/">pricing</a></h2>',
+      );
+      expect(expandMarkdownLinksInHeadings('<h6>See [pricing](/p/)</h6>')).toBe(
+        '<h6>See <a href="/p/">pricing</a></h6>',
+      );
+    });
+
+    it('should handle multiple markdown links in one heading', () => {
+      expect(
+        expandMarkdownLinksInHeadings(
+          '<h1>[Kitchen](/k/) and [Bathroom](/b/) Costs</h1>',
+        ),
+      ).toBe(
+        '<h1><a href="/k/">Kitchen</a> and <a href="/b/">Bathroom</a> Costs</h1>',
+      );
+    });
+
+    it('should leave heading without markdown link untouched', () => {
+      expect(expandMarkdownLinksInHeadings('<h1>Plain Heading</h1>')).toBe(
+        '<h1>Plain Heading</h1>',
+      );
+    });
+
+    it('should NOT expand markdown links outside heading tags (e.g. paragraphs)', () => {
+      // Body paragraphs may legitimately contain literal [text](url) syntax
+      // (e.g. markdown tutorials). Leave them alone.
+      const input = '<p>Use [link](/url/) like this</p>';
+      expect(expandMarkdownLinksInHeadings(input)).toBe(input);
+    });
+
+    it('should preserve heading attributes', () => {
+      expect(
+        expandMarkdownLinksInHeadings(
+          '<h1 id="x" class="big">A [B](/c/) D</h1>',
+        ),
+      ).toBe('<h1 id="x" class="big">A <a href="/c/">B</a> D</h1>');
+    });
+
+    it('should handle full URLs in markdown links', () => {
+      expect(
+        expandMarkdownLinksInHeadings(
+          '<h1>See [our site](https://www.reno-stars.com/)</h1>',
+        ),
+      ).toBe(
+        '<h1>See <a href="https://www.reno-stars.com/">our site</a></h1>',
+      );
+    });
+
+    it('should pass through empty / nullish input', () => {
+      expect(expandMarkdownLinksInHeadings('')).toBe('');
     });
   });
 
