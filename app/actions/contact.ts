@@ -1,6 +1,7 @@
 'use server';
 
 import { headers } from 'next/headers';
+import { waitUntil } from '@vercel/functions';
 import { db } from '@/lib/db';
 import { contactSubmissions } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
@@ -215,15 +216,20 @@ export async function submitContactForm(
       status: 'new',
     });
 
-    // Send email notification (non-blocking - don't fail form submission if email fails)
-    sendContactNotification({
-      name: sanitizedName,
-      email: sanitizedEmail,
-      phone: sanitizedPhone,
-      message: sanitizedMessage,
-    }).catch((err) => {
-      console.error('Background email notification failed:', err);
-    });
+    // Send email notification in the background. Wrapped in waitUntil() so
+    // Vercel keeps the serverless isolate alive until the HTTP call to Resend
+    // completes — without it, the fire-and-forget promise was being dropped
+    // mid-flight (~30% silent failure rate observed in production).
+    waitUntil(
+      sendContactNotification({
+        name: sanitizedName,
+        email: sanitizedEmail,
+        phone: sanitizedPhone,
+        message: sanitizedMessage,
+      }).catch((err) => {
+        console.error('Background email notification failed:', err);
+      })
+    );
 
     return {
       success: true,
