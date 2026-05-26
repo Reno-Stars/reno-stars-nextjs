@@ -169,6 +169,8 @@ describe('submitContactForm', () => {
       email: 'email@test.com',
       phone,
       message: 'Testing email notification.',
+      city: null,
+      propertyType: null,
     });
   });
 
@@ -188,6 +190,8 @@ describe('submitContactForm', () => {
       email: null,
       phone,
       message: 'No email provided.',
+      city: null,
+      propertyType: null,
     });
   });
 });

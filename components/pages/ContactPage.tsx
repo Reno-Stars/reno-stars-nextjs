@@ -12,13 +12,25 @@ import {
   CARD, TEXT, TEXT_MID, GOLD, neu,
 } from '@/lib/theme';
 
+/** Form dropdown option populated from the DB (service_areas / property_types). */
+export interface FormSelectOption {
+  /** Stable identifier sent to the server (e.g. service-area slug). */
+  slug: string;
+  /** Localized label shown in the dropdown. */
+  name: string;
+}
+
 interface ContactPageProps {
   company: Company;
   areaNames: string[];
+  /** City options for the form (slug+localized name). */
+  cityOptions: FormSelectOption[];
+  /** Property-type options for the form (slug+localized name). */
+  propertyTypeOptions: FormSelectOption[];
   googleRating?: number;
 }
 
-export default function ContactPage({ company, areaNames, googleRating }: ContactPageProps) {
+export default function ContactPage({ company, areaNames, cityOptions, propertyTypeOptions, googleRating }: ContactPageProps) {
   const t = useTranslations();
   const router = useRouter();
 
@@ -124,6 +136,8 @@ export default function ContactPage({ company, areaNames, googleRating }: Contac
               <ContactForm
                 submitLabel={t('cta.submitInquiry')}
                 onSuccess={handleFormSuccess}
+                cityOptions={cityOptions}
+                propertyTypeOptions={propertyTypeOptions}
               />
             </div>
 

@@ -111,6 +111,7 @@ import {
   blogPosts as blogPostsTable,
   contactSubmissions as contactSubmissionsTable,
   serviceAreas as serviceAreasTable,
+  propertyTypes as propertyTypesTable,
   designs as designsTable,
   trustBadges as trustBadgesTable,
 
@@ -1015,6 +1016,29 @@ export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]
     });
   }, []);
 }, ['getServiceAreasFromDb'], { tags: ['service-areas'] });
+
+/** Bilingual property-type options for the contact form dropdown. */
+export interface PropertyType {
+  id: string;
+  slug: string;
+  name: { en: string; zh: string };
+}
+
+export const getPropertyTypesFromDb = cachedQuery(async (): Promise<PropertyType[]> => {
+  return safeQuery('getPropertyTypesFromDb', async () => {
+    const rows = await db
+      .select()
+      .from(propertyTypesTable)
+      .where(eq(propertyTypesTable.isActive, true))
+      .orderBy(asc(propertyTypesTable.displayOrder));
+
+    return rows.map((row: typeof propertyTypesTable.$inferSelect) => ({
+      id: row.id,
+      slug: row.slug,
+      name: { en: row.nameEn, zh: row.nameZh },
+    }));
+  }, []);
+}, ['getPropertyTypesFromDb'], { tags: ['property-types'] });
 
 // ============================================================================
 // BLOG POST QUERIES

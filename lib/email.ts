@@ -45,6 +45,10 @@ export interface ContactEmailData {
   email: string | null;
   phone: string;
   message: string;
+  /** Human-readable English city name (e.g. "Vancouver"). null if not provided. */
+  city?: string | null;
+  /** Human-readable English property type (e.g. "House"). null if not provided. */
+  propertyType?: string | null;
 }
 
 /**
@@ -61,24 +65,38 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
   }
 
   try {
-    const { name, email, phone, message } = data;
+    const { name, email, phone, message, city, propertyType } = data;
 
     // Build email content
     const subject = `New Contact Form Submission from ${name}`;
 
-    const textContent = [
+    const textLines = [
       `New contact form submission received:`,
       ``,
       `Name: ${name}`,
       `Email: ${email || 'Not provided'}`,
       `Phone: ${phone}`,
+    ];
+    if (city) textLines.push(`City: ${city}`);
+    if (propertyType) textLines.push(`Property Type: ${propertyType}`);
+    textLines.push(
       ``,
       `Message:`,
       `${message}`,
       ``,
       `---`,
-      `This email was sent from the Reno Stars website contact form.`,
-    ].join('\n');
+      `This email was sent from the Reno Stars website contact form.`
+    );
+    const textContent = textLines.join('\n');
+
+    const projectFieldsHtml = [
+      city
+        ? `<p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">City:</strong> ${escapeHtml(city)}</p>`
+        : '',
+      propertyType
+        ? `<p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">Property Type:</strong> ${escapeHtml(propertyType)}</p>`
+        : '',
+    ].filter(Boolean).join('');
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -89,7 +107,8 @@ export async function sendContactNotification(data: ContactEmailData): Promise<b
         <div style="background-color: #f0ede8; padding: 16px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #C8922A;">
           <p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">Name:</strong> ${escapeHtml(name)}</p>
           <p style="margin: 0 0 8px 0;"><strong style="color: #1B365D;">Email:</strong> ${email ? `<a href="mailto:${escapeHtml(email)}" style="color: #C8922A;">${escapeHtml(email)}</a>` : '<em style="color: #888;">Not provided</em>'}</p>
-          <p style="margin: 0;"><strong style="color: #1B365D;">Phone:</strong> <a href="tel:${escapeHtml(phone)}" style="color: #C8922A;">${escapeHtml(phone)}</a></p>
+          <p style="margin: 0${projectFieldsHtml ? ' 0 8px 0' : ''};"><strong style="color: #1B365D;">Phone:</strong> <a href="tel:${escapeHtml(phone)}" style="color: #C8922A;">${escapeHtml(phone)}</a></p>
+          ${projectFieldsHtml}
         </div>
 
         <div style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; margin: 20px 0;">
