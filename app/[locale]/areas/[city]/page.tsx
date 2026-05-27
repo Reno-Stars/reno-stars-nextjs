@@ -57,33 +57,46 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // with verified Burnaby project budgets ($30-40K kitchens, $20-32K bathrooms
   // — DB-checked across 6 bathroom + 3 kitchen Burnaby completions) instead
   // of generic copy.
+  // 2026-05-27 SEO trim: desc was 159 (truncates ~155); drops "Capitol Hill"
+  // + trailing "5★ rated" (lives in title), keeps the 700+ project count +
+  // verified budgets + Metrotown/Heights neighborhoods.
   burnaby: {
     title: 'Burnaby Renovation Contractor | 700+ Projects, 5★ | Reno Stars',
     description:
-      'Burnaby renovation contractor — 700+ projects. Kitchens $30K–$40K, bathrooms $20K–$32K (real budgets). Metrotown, Heights, Capitol Hill. $5M insured, 5★ rated.',
+      'Burnaby renovation contractor — 700+ projects. Kitchens $30K–$40K, bathrooms $20K–$32K (real budgets). Metrotown, Heights. $5M insured.',
   },
   // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
   // 2026-05-15: also picking up "general contractor maple ridge" (29 imp
   // pos 42.4). Add "General Contractor" to the title so that long-tail
   // shares the same SERP entry — the page already covers GC scope.
+  // 2026-05-27 SEO trim: desc was 179 (truncates ~155). GSC also flags
+  // "reno maple ridge" at pos 3.47 / 0% CTR / 157 imp — meta desc is the
+  // SERP snippet; tightening it improves click conditions. Drops "Haney" +
+  // "West Maple Ridge" (already in on-page H2s); keeps the 3 highest-search-
+  // volume neighborhoods.
   'maple-ridge': {
     title: 'Maple Ridge General Contractor & Home Renovations | Reno Stars',
     description:
-      'Maple Ridge general contractor + home renovations — Albion, Cottonwood, Hammond, Haney, West Maple Ridge. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
+      'Maple Ridge general contractor — Albion, Cottonwood, Hammond. Kitchens, bathrooms, basements + whole-house. $5M insured, 3-yr warranty.',
   },
   // Q8 (60 imp pos 57.4) "home renovation contractor port coquitlam"
+  // 2026-05-27 SEO trim: desc was 159 (truncates ~155); drops "Riverwood"
+  // + the "Free quote in 24h" tail (visible on-page CTA + already in title).
   'port-coquitlam': {
     title: 'Port Coquitlam Renovation Contractor (2026) | Reno Stars',
     description:
-      'Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park, Riverwood. 20+ yrs, $5M insured. Free quote in 24h.',
+      'Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. 20+ yrs, $5M insured.',
   },
   // 2026-04-30 CTR pass: 10 cities previously falling back to translation namespace.
   // Lead with city-name + service in title (Google bolds matching keywords),
   // close with year + click trigger.
+  // 2026-05-27 SEO trim: desc was 157 (just over the 155 truncation point);
+  // drops the "See real Vancouver projects + free quote" tail (both signals
+  // are on-page CTAs).
   vancouver: {
     title: 'Home Renovations Vancouver (2026) | Real Costs | Reno Stars',
     description:
-      'Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. 18+ yrs, $5M CGL, 3-yr warranty. See real Vancouver projects + free quote.',
+      'Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. 18+ yrs, $5M CGL, 3-yr warranty. Free quote.',
   },
   // 2026-05-10 GSC retune: page sat at pos 23.4 / 106 imp for 7d.
   // Top non-brand query is "bathroom renovation richmond" (23 imp pos 43.7).
@@ -161,10 +174,14 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'Delta renovation contractor — bathrooms (verified $40K–$43K), basement finishing, kitchens + whole-house. Ladner, Tsawwassen, North Delta. $5M insured.',
   },
+  // 2026-05-27 SEO trim: title was 70 (truncates ~60); desc 162 (truncates
+  // ~155). Title drops "& Willoughby" (still listed in the desc). Desc
+  // drops "Aldergrove" + "New & old homes" framing (those messages live on
+  // page); keeps top 3 neighborhoods + service breadth + trust signals.
   langley: {
-    title: 'Langley Renovation Contractor | Walnut Grove & Willoughby | Reno Stars',
+    title: 'Langley Renovation Contractor — Walnut Grove | Reno Stars',
     description:
-      'Langley renovation contractor — Walnut Grove, Willoughby, Fort Langley, Aldergrove. Kitchens, bathrooms, whole-house. New & old homes. $5M insured, 3-yr warranty.',
+      'Langley renovation contractor — Walnut Grove, Willoughby, Fort Langley. Kitchens, bathrooms, whole-house. $5M insured, 3-yr warranty.',
   },
   'port-moody': {
     title: 'Port Moody Renovations (2026) | Heritage Mountain | Reno Stars',
@@ -175,10 +192,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // Top non-brand query is "home renovations white rock" (86 imp pos 17.3) —
   // retitle to lead with that exact phrase so the head term is in the first
   // slot Google bolds. Retains 5★ trust signal but moves it past the keyword.
+  // 2026-05-27 SEO trim: title was 66 (truncates ~60); desc 176 (truncates
+  // ~155). Title compresses "5★ Top-Rated Contractor" → "5★ Rated"; desc
+  // drops "Google rated" + "workmanship" + the "Free quote in 24h" tail.
   'white-rock': {
-    title: 'Home Renovations White Rock | 5★ Top-Rated Contractor | Reno Stars',
+    title: 'Home Renovations White Rock | 5★ Rated | Reno Stars',
     description:
-      'White Rock home renovations — kitchens, bathrooms & whole-house. South Surrey, East Beach, Hillside. 5★ Google rated, $5M insured, 3-yr workmanship warranty. Free quote in 24h.',
+      'White Rock renovations — kitchens, bathrooms & whole-house. South Surrey, East Beach, Hillside. 5★ rated, $5M insured, 3-yr warranty.',
   },
 };
 
