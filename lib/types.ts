@@ -346,22 +346,10 @@ export interface BlogPost {
   published_at?: Date;
   /** Last updated date */
   updated_at?: Date;
-  /** SEO meta title (max 70 chars) — content-team authored */
+  /** SEO meta title (max 70 chars) */
   meta_title?: Localized<string>;
-  /** SEO meta description (max 155 chars) — content-team authored */
+  /** SEO meta description (max 155 chars) */
   meta_description?: Localized<string>;
-  /**
-   * SEO-agent-managed meta overrides. When `title[locale]` (or
-   * `description[locale]`) is set, the blog page's `generateMetadata`
-   * prefers it over the authored `meta_title` / `meta_description`. Lets the
-   * agent A/B-test SERP titles/descriptions without overwriting authored
-   * content; stays `{}` for posts the agent hasn't touched. Added
-   * 2026-05-26 per Hongming directive.
-   */
-  meta_overrides?: {
-    title?: { en?: string; zh?: string };
-    description?: { en?: string; zh?: string };
-  };
   /** Primary focus keyword for SEO */
   focus_keyword?: Localized<string>;
   /** Additional SEO keywords (comma-separated) */

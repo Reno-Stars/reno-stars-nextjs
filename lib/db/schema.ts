@@ -611,21 +611,6 @@ export const blogPosts = pgTable(
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
   localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
-  // SEO-agent-managed meta overrides. Authored meta_title_* / meta_description_*
-  // remain the content-team's source of truth; this column is the agent's
-  // write surface so it can A/B-test SERP titles / descriptions without
-  // touching authored content. Read path in app/[locale]/blog/[slug]/page.tsx
-  // prefers meta_overrides → falls back to authored meta → falls back to the
-  // post's title/excerpt. Shape kept minimal (no version history) — the agent
-  // overwrites in place; daily git history of seo-agent commits is the audit
-  // trail. Added 2026-05-26 per Hongming directive.
-  metaOverrides: jsonb('meta_overrides')
-    .$type<{
-      title?: { en?: string; zh?: string };
-      description?: { en?: string; zh?: string };
-    }>()
-    .default({})
-    .notNull(),
   },
   (table) => [
     uniqueIndex('blog_posts_slug_idx').on(table.slug),

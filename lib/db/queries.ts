@@ -1210,9 +1210,6 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
       meta_description: (row.metaDescriptionEn || row.metaDescriptionZh)
         ? buildLocalized('metaDescription', row.metaDescriptionEn ?? '', row.metaDescriptionZh ?? '', row.localizations)
         : undefined,
-      meta_overrides: row.metaOverrides && Object.keys(row.metaOverrides).length > 0
-        ? row.metaOverrides
-        : undefined,
       focus_keyword: (row.focusKeywordEn || row.focusKeywordZh)
         ? buildLocalized('focusKeyword', row.focusKeywordEn ?? '', row.focusKeywordZh ?? '', row.localizations)
         : undefined,

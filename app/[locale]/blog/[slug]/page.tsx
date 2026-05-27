@@ -79,20 +79,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
   const baseUrl = getBaseUrl();
   const ogImage = post.featured_image || siteImages.hero;
-  // Resolution order:
-  //   1. SEO-agent override (meta_overrides.{title,description}[locale]) —
-  //      lets the agent A/B-test SERP titles without touching authored content
-  //   2. Content-team authored meta_title / meta_description
-  //   3. Fallback: composed from the post's title / excerpt
-  const localeKey = locale as 'en' | 'zh';
-  const metaTitle =
-    post.meta_overrides?.title?.[localeKey]
-    || post.meta_title?.[locale as Locale]
-    || `${localizedPost.title} | ${SITE_NAME}`;
-  const metaDescription =
-    post.meta_overrides?.description?.[localeKey]
-    || post.meta_description?.[locale as Locale]
-    || truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
+  // Use dedicated SEO fields, fallback to excerpt/title if not set
+  const metaTitle = post.meta_title?.[locale as Locale] || `${localizedPost.title} | ${SITE_NAME}`;
+  const metaDescription = post.meta_description?.[locale as Locale] || truncateMetaDescription(localizedPost.excerpt || localizedPost.title);
 
   // Blog post bodies are not yet translated for ja/ko/es. Pickling EN content
   // under a /ja/blog/[slug] URL with hreflang declarations creates duplicate-
