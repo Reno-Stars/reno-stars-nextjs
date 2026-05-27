@@ -1158,11 +1158,64 @@ export const getBlogPostsPaginatedFromDb = cache(
 export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
   async (slug: string): Promise<BlogPost | null> => {
     return safeQuery('getBlogPostBySlugFromDb', async () => {
-    const rows = await db
-      .select()
-      .from(blogPostsTable)
-      .where(and(eq(blogPostsTable.slug, slug), eq(blogPostsTable.isPublished, true)))
-      .limit(1);
+    // Defensive SELECT — see 2026-05-26 PR #62 outage: when a Drizzle schema
+    // adds a column that the DB hasn't received yet (db:push didn't run), the
+    // default `select()` includes the new column in the column list and
+    // Postgres errors with `42703 column does not exist`, killing every
+    // `/en/blog/[slug]` route. The deploy-hook in vercel.json now runs
+    // `pnpm db:push` before `next build` so this scenario shouldn't recur —
+    // but this guard is belt-and-suspenders: on `42703`, retry with an
+    // explicit column list excluding `metaOverrides` and synthesize the
+    // missing field as undefined.
+    let rows: typeof blogPostsTable.$inferSelect[];
+    try {
+      rows = await db
+        .select()
+        .from(blogPostsTable)
+        .where(and(eq(blogPostsTable.slug, slug), eq(blogPostsTable.isPublished, true)))
+        .limit(1);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const isMissingColumn = msg.includes('42703') || msg.toLowerCase().includes('column') && msg.toLowerCase().includes('does not exist');
+      if (!isMissingColumn) throw err;
+      console.warn(`[getBlogPostBySlugFromDb] schema/DB drift detected (42703); retrying with explicit columns. msg=${msg.slice(0, 200)}`);
+      const fallbackRows = await db
+        .select({
+          id: blogPostsTable.id,
+          slug: blogPostsTable.slug,
+          titleEn: blogPostsTable.titleEn,
+          titleZh: blogPostsTable.titleZh,
+          excerptEn: blogPostsTable.excerptEn,
+          excerptZh: blogPostsTable.excerptZh,
+          contentEn: blogPostsTable.contentEn,
+          contentZh: blogPostsTable.contentZh,
+          featuredImageUrl: blogPostsTable.featuredImageUrl,
+          author: blogPostsTable.author,
+          metaTitleEn: blogPostsTable.metaTitleEn,
+          metaTitleZh: blogPostsTable.metaTitleZh,
+          metaDescriptionEn: blogPostsTable.metaDescriptionEn,
+          metaDescriptionZh: blogPostsTable.metaDescriptionZh,
+          focusKeywordEn: blogPostsTable.focusKeywordEn,
+          focusKeywordZh: blogPostsTable.focusKeywordZh,
+          seoKeywordsEn: blogPostsTable.seoKeywordsEn,
+          seoKeywordsZh: blogPostsTable.seoKeywordsZh,
+          readingTimeMinutes: blogPostsTable.readingTimeMinutes,
+          isPublished: blogPostsTable.isPublished,
+          publishedAt: blogPostsTable.publishedAt,
+          projectId: blogPostsTable.projectId,
+          createdAt: blogPostsTable.createdAt,
+          updatedAt: blogPostsTable.updatedAt,
+          localizations: blogPostsTable.localizations,
+        })
+        .from(blogPostsTable)
+        .where(and(eq(blogPostsTable.slug, slug), eq(blogPostsTable.isPublished, true)))
+        .limit(1);
+      // Synthesize missing metaOverrides as empty so the mapper below can run
+      // unchanged. The cast is required because Drizzle infers the explicit
+      // select shape without metaOverrides; pages reading post.meta_overrides
+      // will simply see undefined post-mapping.
+      rows = fallbackRows.map((r: Record<string, unknown>) => ({ ...r, metaOverrides: {} } as typeof blogPostsTable.$inferSelect));
+    }
 
     const row = rows[0];
     if (!row) return null;
@@ -1209,6 +1262,9 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
         : undefined,
       meta_description: (row.metaDescriptionEn || row.metaDescriptionZh)
         ? buildLocalized('metaDescription', row.metaDescriptionEn ?? '', row.metaDescriptionZh ?? '', row.localizations)
+        : undefined,
+      meta_overrides: row.metaOverrides && Object.keys(row.metaOverrides).length > 0
+        ? row.metaOverrides
         : undefined,
       focus_keyword: (row.focusKeywordEn || row.focusKeywordZh)
         ? buildLocalized('focusKeyword', row.focusKeywordEn ?? '', row.focusKeywordZh ?? '', row.localizations)
