@@ -53,6 +53,10 @@
     "designInspirations": "Design Inspirations",
     "designSubtitle": "Explore beautiful renovation ideas for your home",
     "benefitsTitle": "Why Choose Reno Stars",
-    "benefitsSubtitle": "The advantages of working with our professional team"
+    "benefitsSubtitle": "The advantages of working with our professional team",
+    "whatDoesRenoStarsDo": "What does Reno Stars do?",
+    "renoStarsAnswerTemplate": "Reno Stars is a Metro Vancouver renovation contractor founded in {year}. We handle kitchen, bathroom, basement, and whole-home renovations end-to-end — design through completion. $5M CGL insurance, active WCB coverage, and up to a 3-year workmanship warranty on every project.",
+    "servicesWeCover": "Services we cover",
+    "viewServiceLink": "View {service}"
   }
 }

@@ -6,6 +6,7 @@ import { SURFACE } from '@/lib/theme';
 
 // Server components - no client JS needed
 import HeroSection from '@/components/home/HeroSection';
+import AnswerBlockSection from '@/components/home/AnswerBlockSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import GallerySection from '@/components/home/GallerySection';
 import ServicesSection from '@/components/home/ServicesSection';
@@ -66,6 +67,12 @@ interface HomePageProps {
     faq: { title: string; subtitle: string };
     blog: { title: string; subtitle: string };
     showroom: { title: string; appointmentPrefix: string; appointmentBold: string; bookAppointment: string };
+    answerBlock: {
+      question: string;
+      answer: string;
+      servicesTitle: string;
+      viewServiceLabel: string;
+    };
     contact: {
       title: string;
       subtitle: string;
@@ -96,6 +103,14 @@ export default function HomePage({
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
+      <AnswerBlockSection
+        foundingYear={company.foundingYear}
+        services={services.map((s) => ({
+          slug: s.slug,
+          title: (s.title as Record<string, string>)[locale] ?? s.title.en,
+        }))}
+        translations={t.answerBlock}
+      />
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />
       <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />

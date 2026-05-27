@@ -200,6 +200,12 @@ export default async function Page({ params }: PageProps) {
       appointmentBold: t("showroomPage.appointmentBold"),
       bookAppointment: t("cta.bookAppointment"),
     },
+    answerBlock: {
+      question: t("section.whatDoesRenoStarsDo"),
+      answer: t("section.renoStarsAnswerTemplate"),
+      servicesTitle: t("section.servicesWeCover"),
+      viewServiceLabel: t("section.viewServiceLink"),
+    },
     contact: {
       title: t("section.getInTouch"),
       subtitle: t("section.contactSubtitle"),
