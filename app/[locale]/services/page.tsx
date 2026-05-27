@@ -76,24 +76,34 @@ export default async function Page({ params }: PageProps) {
   // keys resolve for the locale — keys exist for `en` + `zh` today; other
   // locales fall through gracefully (no broken-string SSR until proper
   // translations are backfilled).
+  //
+  // 2026-05-27T19:30Z fix-forward from PR #69 §7 monitoring: next-intl's
+  // `getTranslations()` does NOT throw on MISSING_MESSAGE — it logs a
+  // warning and returns the namespaced key as a string (e.g.
+  // `"section.whatDoesRenoStarsDo"`). My earlier try/catch caught nothing.
+  // Detection is now string-equality against the namespaced key. Verified
+  // live regression on /ja/services/ + /ko/services/ post-PR #69 deploy
+  // before this fix landed.
   function answerBlockTranslations(): {
     question: string;
     answer: string;
     servicesTitle: string;
     viewServiceLabel: string;
   } | null {
-    try {
-      return {
-        question: sectionT('whatDoesRenoStarsDo'),
-        answer: sectionT('renoStarsAnswerTemplate'),
-        servicesTitle: sectionT('servicesWeCover'),
-        viewServiceLabel: sectionT('viewServiceLink'),
-      };
-    } catch {
-      // next-intl throws MISSING_MESSAGE if any key is absent for this locale.
-      // Don't ship a partially-rendered Q+A block.
-      return null;
-    }
+    const lookup = (key: string): string | null => {
+      const value = sectionT(key);
+      // Missing translation falls back to namespaced key in next-intl's
+      // default config. Treat that as absent so we don't render literal
+      // "section.whatDoesRenoStarsDo" as an h2 in production HTML.
+      if (value === `section.${key}`) return null;
+      return value;
+    };
+    const question = lookup('whatDoesRenoStarsDo');
+    const answer = lookup('renoStarsAnswerTemplate');
+    const servicesTitle = lookup('servicesWeCover');
+    const viewServiceLabel = lookup('viewServiceLink');
+    if (!question || !answer || !servicesTitle || !viewServiceLabel) return null;
+    return { question, answer, servicesTitle, viewServiceLabel };
   }
 
   const answerBlockT = answerBlockTranslations();
