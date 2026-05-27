@@ -53,6 +53,10 @@
     "designInspirations": "디자인 영감",
     "designSubtitle": "주택을 위한 아름다운 리노베이션 아이디어",
     "benefitsTitle": "Reno Stars를 선택하는 이유",
-    "benefitsSubtitle": "전문 팀과 협력하는 이점"
+    "benefitsSubtitle": "전문 팀과 협력하는 이점",
+    "whatDoesRenoStarsDo": "Reno Stars는 어떤 서비스를 제공하나요?",
+    "renoStarsAnswerTemplate": "Reno Stars는 {year}년에 설립된 메트로 밴쿠버 지역의 리노베이션 업체입니다. 주방, 욕실, 지하실, 전체 주택 리노베이션을 설계부터 완공까지 일괄 처리합니다. 모든 프로젝트에 500만 캐나다 달러 CGL 보험, 유효한 WCB 산재보험, 최대 3년 시공 보증을 제공합니다.",
+    "servicesWeCover": "서비스 안내",
+    "viewServiceLink": "{service} 보기"
   }
 }

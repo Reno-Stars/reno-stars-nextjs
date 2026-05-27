@@ -53,6 +53,10 @@
     "designInspirations": "デザインのインスピレーション",
     "designSubtitle": "あなたの家のための美しいリノベーションのアイデア",
     "benefitsTitle": "Reno Starsが選ばれる理由",
-    "benefitsSubtitle": "プロフェッショナルチームと働く利点"
+    "benefitsSubtitle": "プロフェッショナルチームと働く利点",
+    "whatDoesRenoStarsDo": "Reno Stars のサービス内容は？",
+    "renoStarsAnswerTemplate": "Reno Stars は{year}年創業のメトロバンクーバーのリノベーション業者です。キッチン、バスルーム、地下室、住宅全体のリノベーションを設計から施工完了まで一貫対応。全プロジェクトに500万カナダドルのCGL保険、有効なWCB労災保険、最大3年間の施工保証付き。",
+    "servicesWeCover": "対応サービス",
+    "viewServiceLink": "{service}を見る"
   }
 }

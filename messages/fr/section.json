@@ -53,6 +53,10 @@
     "designInspirations": "Inspirations de conception",
     "designSubtitle": "Explorez de belles idées de rénovation pour votre maison",
     "benefitsTitle": "Pourquoi choisir Reno Stars",
-    "benefitsSubtitle": "Les avantages de travailler avec notre équipe professionnelle"
+    "benefitsSubtitle": "Les avantages de travailler avec notre équipe professionnelle",
+    "whatDoesRenoStarsDo": "Que fait Reno Stars ?",
+    "renoStarsAnswerTemplate": "Reno Stars est un entrepreneur en rénovation du Grand Vancouver, fondé en {year}. Nous prenons en charge les rénovations de cuisines, salles de bain, sous-sols et maisons complètes, de la conception jusqu'à l'achèvement. Chaque projet bénéficie d'une assurance CGL de 5 M$, d'une couverture WCB en règle et d'une garantie d'exécution allant jusqu'à 3 ans.",
+    "servicesWeCover": "Nos prestations",
+    "viewServiceLink": "Voir {service}"
   }
 }
