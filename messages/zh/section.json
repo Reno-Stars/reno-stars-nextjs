@@ -53,6 +53,10 @@
     "designInspirations": "设计灵感",
     "designSubtitle": "探索美丽的家居装修创意",
     "benefitsTitle": "为什么选择Reno Stars",
-    "benefitsSubtitle": "与我们专业团队合作的优势"
+    "benefitsSubtitle": "与我们专业团队合作的优势",
+    "whatDoesRenoStarsDo": "Reno Stars 提供什么服务？",
+    "renoStarsAnswerTemplate": "Reno Stars 是大温哥华地区的装修承包商，{year} 年成立。我们承接厨房、卫生间、地下室和整体住宅翻新——从设计到完工。每个项目均提供 500 万加元 CGL 保险、有效 WCB 工伤保障和最长 3 年工艺质保。",
+    "servicesWeCover": "我们的服务范围",
+    "viewServiceLink": "查看{service}"
   }
 }
