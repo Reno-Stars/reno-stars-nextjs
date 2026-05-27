@@ -5,6 +5,11 @@ import { invoiceTermsTemplates } from '@/lib/db/schema';
 import { getInvoiceById } from '@/lib/db/invoice-queries';
 import { generateInvoicePdf } from '@/lib/pdf/generate';
 import { verifyToken } from '@/lib/admin/auth';
+import { invoiceClient, isNotFoundError } from '@/lib/clients/invoice';
+
+function isServiceMode(): boolean {
+  return process.env.INVOICE_SOURCE === 'service';
+}
 
 // ============================================================================
 // AUTH — accepts either Bearer token (MCP) or admin session cookie (browser)
@@ -37,6 +42,33 @@ export async function GET(
   }
 
   const { id } = await params;
+  const download = req.nextUrl.searchParams.get('download') === 'true';
+
+  if (isServiceMode()) {
+    try {
+      const detail = await invoiceClient.get(id);
+      const pdfBuffer = await invoiceClient.getPdf(id);
+      const filename = `${detail.invoice.invoiceNumber}.pdf`;
+      const disposition = download
+        ? `attachment; filename="${filename}"`
+        : `inline; filename="${filename}"`;
+      return new NextResponse(new Uint8Array(pdfBuffer), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': disposition,
+          'Content-Length': String(pdfBuffer.length),
+          'Cache-Control': 'private, no-cache',
+        },
+      });
+    } catch (err) {
+      if (isNotFoundError(err)) {
+        return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
+      }
+      console.error('Failed to render PDF via invoice service:', err);
+      return NextResponse.json({ error: 'Failed to render PDF' }, { status: 502 });
+    }
+  }
 
   // 1. Fetch invoice with all details
   const invoice = await getInvoiceById(id);
@@ -99,11 +131,8 @@ export async function GET(
   // 4. Generate PDF
   const pdfBuffer = await generateInvoicePdf(pdfProps);
 
-  // 5. Determine filename
+  // 5. Determine filename (download flag captured at top of handler)
   const filename = `${invoice.invoiceNumber}.pdf`;
-
-  // Check if download was requested
-  const download = req.nextUrl.searchParams.get('download') === 'true';
   const disposition = download
     ? `attachment; filename="${filename}"`
     : `inline; filename="${filename}"`;

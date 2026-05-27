@@ -517,7 +517,7 @@ export default function InvoiceDetailClient({ invoice }: Props) {
               <p style={{ color: TEXT_MID, fontSize: '0.875rem' }}>{t.invoices.noMilestones}</p>
             ) : (
               invoice.paymentMilestones.map((m) => (
-                <PaymentMilestoneCard key={m.id} milestone={m} />
+                <PaymentMilestoneCard key={m.id} invoiceId={invoice.id} milestone={m} />
               ))
             )}
           </div>

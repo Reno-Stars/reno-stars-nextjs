@@ -19,6 +19,7 @@ interface Milestone {
 }
 
 interface PaymentMilestoneCardProps {
+  invoiceId: string;
   milestone: Milestone;
 }
 
@@ -26,7 +27,7 @@ function formatCents(cents: number): string {
   return `$${(cents / 100).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-export default function PaymentMilestoneCard({ milestone }: PaymentMilestoneCardProps) {
+export default function PaymentMilestoneCard({ invoiceId, milestone }: PaymentMilestoneCardProps) {
   const t = useAdminTranslations();
   const { toast } = useToast();
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +35,7 @@ export default function PaymentMilestoneCard({ milestone }: PaymentMilestoneCard
 
   const handleRecordPayment = (formData: FormData) => {
     startTransition(async () => {
-      const result = await recordPaymentAction(milestone.id, formData);
+      const result = await recordPaymentAction(invoiceId, milestone.id, formData);
       if (result.error) {
         toast(result.error, 'error');
       } else {
