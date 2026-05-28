@@ -91,7 +91,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
         // (PR #13 — full edit: line items, milestones, status, PDF, soft delete).
         // The Twenty Invoice tab is a denormalized read-only mirror; the
         // editor is what we actually want to click.
-        { href: 'https://invoice-api.reno-stars.com/admin', label: t.nav.invoices, external: true },
+        { href: 'https://invoice.reno-stars.com/admin', label: t.nav.invoices, external: true },
       ],
       defaultExpanded: true,
     },
