@@ -200,12 +200,28 @@ export default async function Page({ params }: PageProps) {
       appointmentBold: t("showroomPage.appointmentBold"),
       bookAppointment: t("cta.bookAppointment"),
     },
-    answerBlock: {
-      question: t("section.whatDoesRenoStarsDo"),
-      answer: t("section.renoStarsAnswerTemplate"),
-      servicesTitle: t("section.servicesWeCover"),
-      viewServiceLabel: t("section.viewServiceLink"),
-    },
+    // AnswerBlockSection translations — same defensive pattern as
+    // app/[locale]/services/page.tsx (PR #70 fix-forward for the
+    // 2026-05-27T1930Z next-intl postmortem). When a locale lacks the
+    // namespaced key, next-intl returns the key string (e.g.
+    // `section.whatDoesRenoStarsDo`) instead of throwing. Detect that and
+    // return null so HomePage skips rendering — better than shipping
+    // `section.whatDoesRenoStarsDo` as an h2 heading on the homepage of
+    // the 6 deferred locales (tl/vi/pa/fa/ar/hi). Verified live 2026-05-28
+    // §7 monitoring caught the leak on those 6 locales.
+    answerBlock: (() => {
+      const lookup = (key: string): string | null => {
+        const value = t(`section.${key}` as 'section.whatDoesRenoStarsDo');
+        if (value === `section.${key}`) return null;
+        return value;
+      };
+      const question = lookup('whatDoesRenoStarsDo');
+      const answer = lookup('renoStarsAnswerTemplate');
+      const servicesTitle = lookup('servicesWeCover');
+      const viewServiceLabel = lookup('viewServiceLink');
+      if (!question || !answer || !servicesTitle || !viewServiceLabel) return null;
+      return { question, answer, servicesTitle, viewServiceLabel };
+    })(),
     contact: {
       title: t("section.getInTouch"),
       subtitle: t("section.contactSubtitle"),

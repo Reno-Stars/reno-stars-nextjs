@@ -67,12 +67,22 @@ interface HomePageProps {
     faq: { title: string; subtitle: string };
     blog: { title: string; subtitle: string };
     showroom: { title: string; appointmentPrefix: string; appointmentBold: string; bookAppointment: string };
+    /**
+     * AnswerBlockSection translations. Nullable: when the current locale
+     * lacks the namespaced section.* keys (the 6 deferred locales
+     * tl/vi/pa/fa/ar/hi as of 2026-05-28), the page.tsx server component
+     * detects the missing-key fallback and passes null here so HomePage
+     * skips rendering AnswerBlockSection entirely. Better than shipping
+     * `section.whatDoesRenoStarsDo` as a literal h2 heading on those
+     * locales' homepages. Same defensive pattern as
+     * app/[locale]/services/page.tsx (PR #70).
+     */
     answerBlock: {
       question: string;
       answer: string;
       servicesTitle: string;
       viewServiceLabel: string;
-    };
+    } | null;
     contact: {
       title: string;
       subtitle: string;
@@ -103,14 +113,16 @@ export default function HomePage({
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
-      <AnswerBlockSection
-        foundingYear={company.foundingYear}
-        services={services.map((s) => ({
-          slug: s.slug,
-          title: (s.title as Record<string, string>)[locale] ?? s.title.en,
-        }))}
-        translations={t.answerBlock}
-      />
+      {t.answerBlock && (
+        <AnswerBlockSection
+          foundingYear={company.foundingYear}
+          services={services.map((s) => ({
+            slug: s.slug,
+            title: (s.title as Record<string, string>)[locale] ?? s.title.en,
+          }))}
+          translations={t.answerBlock}
+        />
+      )}
       <GallerySection gallery={gallery} translations={t.gallery} />
       <ServicesSection services={services} locale={locale} translations={t.services} />
       <TestimonialsSection googleReviews={googleReviews} locale={locale} translations={t.testimonials} />
