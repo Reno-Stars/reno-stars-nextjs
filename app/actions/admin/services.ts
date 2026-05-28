@@ -3,7 +3,7 @@
 import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { services, serviceTags, serviceBenefits, projects, contactSubmissions } from '@/lib/db/schema';
+import { services, serviceTags, serviceBenefits, projects } from '@/lib/db/schema';
 import { eq, count, inArray, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH, parseDynamicBlocks } from '@/lib/admin/form-utils';
@@ -157,13 +157,10 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid service ID.' };
   try {
-    const [[{ value: contactRefCount }], [{ value: projectRefCount }]] = await Promise.all([
-      db.select({ value: count() }).from(contactSubmissions).where(eq(contactSubmissions.preferredServiceId, id)),
-      db.select({ value: count() }).from(projects).where(eq(projects.serviceId, id)),
-    ]);
-    if (contactRefCount > 0) {
-      return { error: `Cannot delete: ${contactRefCount} contact(s) reference this service.` };
-    }
+    const [{ value: projectRefCount }] = await db
+      .select({ value: count() })
+      .from(projects)
+      .where(eq(projects.serviceId, id));
     if (projectRefCount > 0) {
       return { error: `Cannot delete: ${projectRefCount} project(s) reference this service.` };
     }

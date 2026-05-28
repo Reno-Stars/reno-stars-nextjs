@@ -10,17 +10,20 @@ vi.mock('@/lib/admin/translations', () => ({
       subtitle: 'Manage your content',
       groupPortfolio: 'Portfolio',
       groupContent: 'Content',
-      groupCrm: 'CRM',
+      groupSettings: 'Settings',
       projects: 'Projects',
       services: 'Services',
       serviceAreas: 'Service Areas',
       blogPosts: 'Blog Posts',
+      socialPosts: 'Social Posts',
       designs: 'Designs',
       faqs: 'FAQs',
       socialLinks: 'Social Links',
       trustBadges: 'Trust Badges',
-      contacts: 'Contacts',
-      newContacts: 'New Contacts',
+      partners: 'Partners',
+      company: 'Company',
+      showroom: 'Showroom',
+      about: 'About',
     },
   }),
 }));
@@ -29,14 +32,14 @@ describe('DashboardClient', () => {
   const defaultStats = {
     projects: 10,
     services: 6,
-    contacts: 25,
-    newContacts: 0,
     blogPosts: 15,
     faqs: 8,
     designs: 42,
     areas: 12,
     socialLinks: 5,
     badges: 3,
+    partners: 4,
+    socialPosts: 9,
   };
 
   beforeEach(() => {
@@ -55,7 +58,15 @@ describe('DashboardClient', () => {
 
     expect(screen.getByText('Portfolio')).toBeInTheDocument();
     expect(screen.getByText('Content')).toBeInTheDocument();
-    expect(screen.getByText('CRM')).toBeInTheDocument();
+    expect(screen.getByText('Settings')).toBeInTheDocument();
+  });
+
+  it('does not render a CRM section (Twenty CRM owns leads now)', () => {
+    render(<DashboardClient stats={defaultStats} />);
+
+    expect(screen.queryByText('CRM')).not.toBeInTheDocument();
+    expect(screen.queryByText('Contacts')).not.toBeInTheDocument();
+    expect(screen.queryByText('New Contacts')).not.toBeInTheDocument();
   });
 
   it('renders stat cards with correct values', () => {
@@ -65,7 +76,6 @@ describe('DashboardClient', () => {
     expect(screen.getByText('6')).toBeInTheDocument(); // services
     expect(screen.getByText('15')).toBeInTheDocument(); // blogPosts
     expect(screen.getByText('42')).toBeInTheDocument(); // designs
-    expect(screen.getByText('25')).toBeInTheDocument(); // contacts
   });
 
   it('renders cards as links', () => {
@@ -76,24 +86,6 @@ describe('DashboardClient', () => {
 
     const blogLink = screen.getByRole('link', { name: /blog posts/i });
     expect(blogLink).toHaveAttribute('href', '/admin/blog');
-  });
-
-  it('shows new contacts value when newContacts > 0', () => {
-    const statsWithNewContacts = { ...defaultStats, newContacts: 7, socialLinks: 5 };
-    render(<DashboardClient stats={statsWithNewContacts} />);
-
-    // The new contacts card should show the value
-    // Check within the New Contacts card context
-    const newContactsCard = screen.getByRole('link', { name: /new contacts/i });
-    expect(newContactsCard).toHaveTextContent('7');
-  });
-
-  it('shows 0 when there are no new contacts', () => {
-    render(<DashboardClient stats={defaultStats} />);
-
-    // New contacts card exists but with value 0
-    const newContactsCard = screen.getByRole('link', { name: /new contacts/i });
-    expect(newContactsCard).toHaveTextContent('0');
   });
 
   it('renders portfolio section cards', () => {
@@ -112,12 +104,5 @@ describe('DashboardClient', () => {
     expect(screen.getByText('FAQs')).toBeInTheDocument();
     expect(screen.getByText('Social Links')).toBeInTheDocument();
     expect(screen.getByText('Trust Badges')).toBeInTheDocument();
-  });
-
-  it('renders crm section cards', () => {
-    render(<DashboardClient stats={defaultStats} />);
-
-    expect(screen.getByText('Contacts')).toBeInTheDocument();
-    expect(screen.getByText('New Contacts')).toBeInTheDocument();
   });
 });
