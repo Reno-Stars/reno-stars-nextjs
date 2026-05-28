@@ -85,11 +85,13 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
       key: 'crm',
       label: t.nav.groups.crm,
       items: [
-        // CRM lives in Twenty (https://crm.reno-stars.com) since 2026-05-28.
-        // The Next.js admin no longer owns invoice/contact UIs — these are
-        // external links that open Twenty in a new tab.
+        // Contacts live in Twenty CRM (https://crm.reno-stars.com).
         { href: 'https://crm.reno-stars.com/objects/people', label: t.nav.contacts, external: true },
-        { href: 'https://crm.reno-stars.com/objects/invoices', label: t.nav.invoices, external: true },
+        // Invoices: point at the dedicated editor in reno-stars-invoice-service
+        // (PR #13 — full edit: line items, milestones, status, PDF, soft delete).
+        // The Twenty Invoice tab is a denormalized read-only mirror; the
+        // editor is what we actually want to click.
+        { href: 'https://invoice-api.reno-stars.com/admin', label: t.nav.invoices, external: true },
       ],
       defaultExpanded: true,
     },
