@@ -22,6 +22,37 @@ interface FAQ {
   answer: string;
 }
 
+/**
+ * Mapping from service-slug → corresponding /guides/<slug>/ cost-guide URL.
+ *
+ * The cost-guide pages exist under app/[locale]/guides/<slug>/page.tsx and sit at
+ * striking-distance positions (pos 8-14) for high-impression cost queries:
+ *   "kitchen renovation cost", "bathroom renovation cost", "renovation costs vancouver",
+ *   "average cost of kitchen remodel", "vanity renovation cost", etc.
+ *
+ * Cross-linking from the matching service page passes internal-link equity to lift
+ * the cost-guides into top-7. Only services with a guide here render the cross-link
+ * section in ServiceDetailPage; others (`flooring`, `painting`) currently have no
+ * dedicated guide and will not render a dead link.
+ *
+ * Per the 2026-05-27T2045Z corrected diagnostic in the hub repo
+ * (data/seo-agent-diagnostics/2026-05-27T2045Z-striking-distance-cluster-...) —
+ * internal-link lift from related-traffic pages is the recommended SEO approach
+ * (option 4 of that diagnostic).
+ *
+ * To add a new mapping: add the kebab-case service-slug here pointing at the matching
+ * /guides/.../page.tsx URL. Keep the values as literal string literals so the next-intl
+ * Link's typed-route assertion in ServiceDetailPage continues to type-check.
+ */
+const COST_GUIDE_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
+  kitchen: '/guides/kitchen-renovation-cost-vancouver',
+  bathroom: '/guides/bathroom-renovation-cost-vancouver',
+  basement: '/guides/basement-renovation-cost-vancouver',
+  'whole-house': '/guides/whole-house-renovation-cost-vancouver',
+  cabinet: '/guides/cabinet-refinishing-cost-vancouver',
+  commercial: '/guides/commercial-renovation-cost-vancouver',
+};
+
 interface ServiceDetailPageProps {
   locale: Locale;
   serviceSlug: ServiceType;
@@ -33,10 +64,59 @@ interface ServiceDetailPageProps {
   googleReviewCount?: number;
 }
 
+// Per-locale copy for the Cost Guide cross-link section. Only render when an entry
+// exists for the current locale — avoids the PR #69 raw-key-leak class of bug
+// (where next-intl returns the namespaced key on miss). Locales covered: the same
+// 8 that the AnswerBlock i18n backfill landed (en/zh/zh-Hant/ja/ko/es/fr/ru); other
+// locales gracefully skip the section until proper translations land.
+const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: string; cta: string }>> = {
+  en: {
+    heading: 'See the {service} cost guide',
+    subtitle: 'Real Vancouver pricing tiers, project examples, and what drives cost — all in one place.',
+    cta: 'View cost guide',
+  },
+  zh: {
+    heading: '查看{service}费用指南',
+    subtitle: '真实的温哥华价位分层、项目案例与费用驱动因素一站汇总。',
+    cta: '查看费用指南',
+  },
+  'zh-Hant': {
+    heading: '查看{service}費用指南',
+    subtitle: '真實的溫哥華價位分層、項目案例與費用驅動因素一站匯總。',
+    cta: '查看費用指南',
+  },
+  ja: {
+    heading: '{service}の費用ガイドを見る',
+    subtitle: 'バンクーバーの実勢価格帯、施工事例、費用の主な決定要因を一つにまとめて掲載。',
+    cta: '費用ガイドを見る',
+  },
+  ko: {
+    heading: '{service} 비용 가이드 보기',
+    subtitle: '밴쿠버 실제 가격대, 프로젝트 사례, 비용 결정 요인을 한 곳에 정리.',
+    cta: '비용 가이드 보기',
+  },
+  es: {
+    heading: 'Ver la guía de costos de {service}',
+    subtitle: 'Niveles de precios reales de Vancouver, ejemplos de proyectos y los factores que más influyen en el costo, todo en un solo lugar.',
+    cta: 'Ver guía de costos',
+  },
+  fr: {
+    heading: 'Consulter le guide des coûts {service}',
+    subtitle: 'Tranches de prix réelles à Vancouver, exemples de projets et facteurs qui influencent le coût, regroupés au même endroit.',
+    cta: 'Voir le guide des coûts',
+  },
+  ru: {
+    heading: 'Смотреть гид по стоимости: {service}',
+    subtitle: 'Реальные ценовые уровни Ванкувера, примеры проектов и факторы, влияющие на стоимость — всё в одном месте.',
+    cta: 'Открыть гид по стоимости',
+  },
+};
+
 export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
+  const costGuideCopy = COST_GUIDE_LINK_COPY[locale];
   const allProjects = useMemo(() => getAllProjectsLocalized(locale), [locale]);
   const relatedProjects = useMemo(() => allProjects.filter((p) => p.service_type === serviceSlug).slice(0, 3), [allProjects, serviceSlug]);
   const benefits = localizedService.benefits && localizedService.benefits.length > 0
@@ -156,6 +236,38 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         projects={relatedProjects}
         categorySlug={serviceSlug}
       />
+
+      {/* Cost Guide cross-link — surfaces the matching /guides/<service>-renovation-cost-vancouver/ page
+          to (a) help the user answer "what does this cost?" in-context, (b) pass internal-link equity to
+          cost-guide pages that GSC shows at striking-distance pos 8-14 for high-impression queries
+          ("kitchen renovation cost", "bathroom renovation cost", etc.). Per the 2026-05-27T2045Z
+          corrected diagnostic on the cost-cluster cluster, internal-link lift from related-traffic pages
+          is the recommended approach to move these pages into top-7. Only renders when serviceSlug has a
+          known guide mapping (avoids dead links on services without a guide page). */}
+      {COST_GUIDE_BY_SERVICE_SLUG[serviceSlug] && costGuideCopy && (
+        <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-4xl mx-auto">
+            <div className="rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ backgroundColor: CARD, boxShadow: neu(3) }}>
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold mb-1" style={{ color: NAVY }}>
+                  {costGuideCopy.heading.replace('{service}', localizedService.title)}
+                </h2>
+                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>
+                  {costGuideCopy.subtitle}
+                </p>
+              </div>
+              <Link
+                href={COST_GUIDE_BY_SERVICE_SLUG[serviceSlug] as '/guides/kitchen-renovation-cost-vancouver'}
+                className="inline-flex items-center gap-1 text-sm font-semibold px-4 py-2 rounded-full transition-transform hover:scale-105 shrink-0"
+                style={{ backgroundColor: SURFACE, boxShadow: neu(), color: NAVY }}
+              >
+                {costGuideCopy.cta}
+                <span aria-hidden>→</span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Areas We Serve */}
       {areas.length > 0 && (
