@@ -28,6 +28,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
+      // `server-only` is a Next.js runtime marker shipped inside the Next
+      // bundle — it doesn't resolve outside `next build`. Alias to an empty
+      // shim so test imports of server-only modules don't error during
+      // Vite's transform pass.
+      'server-only': path.resolve(__dirname, './tests/shims/server-only.ts'),
     },
   },
 });
