@@ -1,13 +1,5 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { eq, and } from 'drizzle-orm';
-import { db } from '@/lib/db';
-import { invoiceTermsTemplates } from '@/lib/db/schema';
-import type { DbInvoice, DbInvoiceLineItem, DbInvoicePaymentMilestone } from '@/lib/db/schema';
-import {
-  getInvoiceByShareToken,
-  markInvoiceViewed,
-} from '@/lib/db/invoice-queries';
 import { getCompanyFromDb } from '@/lib/db/queries';
 import { SITE_NAME } from '@/lib/utils';
 import {
@@ -68,61 +60,7 @@ interface ShareInvoiceData {
   }>;
 }
 
-function isServiceMode(): boolean {
-  return process.env.INVOICE_SOURCE === 'service';
-}
-
-/** Normalize a legacy DB invoice (Date objects) to the shared share-data shape. */
-function fromLegacy(
-  invoice: DbInvoice & {
-    lineItems: DbInvoiceLineItem[];
-    paymentMilestones: DbInvoicePaymentMilestone[];
-  }
-): ShareInvoiceData {
-  return {
-    id: invoice.id,
-    invoiceNumber: invoice.invoiceNumber,
-    type: invoice.type,
-    status: invoice.status,
-    clientName: invoice.clientName,
-    clientEmail: invoice.clientEmail,
-    clientPhone: invoice.clientPhone,
-    clientAddress: invoice.clientAddress,
-    language: invoice.language,
-    taxRate: invoice.taxRate,
-    gstNumber: invoice.gstNumber,
-    subtotalCents: invoice.subtotalCents,
-    taxCents: invoice.taxCents,
-    totalCents: invoice.totalCents,
-    notes: invoice.notes,
-    shareToken: invoice.shareToken,
-    invoiceDate: invoice.invoiceDate,
-    dueDate: invoice.dueDate,
-    approvedAt: invoice.approvedAt,
-    viewedAt: invoice.viewedAt,
-    lineItems: invoice.lineItems.map((item) => ({
-      id: item.id,
-      sectionType: item.sectionType,
-      label: item.label,
-      description: item.description,
-      rateCents: item.rateCents,
-      quantity: item.quantity,
-      amountCents: item.amountCents,
-      footerLines: item.footerLines ?? [],
-    })),
-    paymentMilestones: invoice.paymentMilestones.map((ms) => ({
-      id: ms.id,
-      label: ms.label,
-      labelZh: ms.labelZh,
-      percentage: ms.percentage,
-      amountCents: ms.amountCents,
-      isPaid: ms.isPaid,
-      paidAt: ms.paidAt,
-    })),
-  };
-}
-
-/** Normalize a service share response (ISO strings) to the same shape. */
+/** Normalize a service share response (ISO strings) to the page shape. */
 function fromService(payload: {
   invoice: ServiceInvoice;
   lineItems: ServiceLineItem[];
@@ -179,18 +117,13 @@ function fromService(payload: {
 }
 
 async function loadShareInvoice(shareToken: string): Promise<ShareInvoiceData | null> {
-  if (isServiceMode()) {
-    try {
-      const payload = await invoiceClient.getShare(shareToken);
-      return fromService(payload);
-    } catch (err) {
-      if (isNotFoundError(err)) return null;
-      throw err;
-    }
+  try {
+    const payload = await invoiceClient.getShare(shareToken);
+    return fromService(payload);
+  } catch (err) {
+    if (isNotFoundError(err)) return null;
+    throw err;
   }
-  const legacy = await getInvoiceByShareToken(shareToken);
-  if (!legacy) return null;
-  return fromLegacy(legacy);
 }
 
 // ============================================================================
@@ -233,32 +166,16 @@ export default async function InvoiceSharePage({ params }: PageProps) {
     notFound();
   }
 
-  // Mark as viewed on first visit (sent → viewed).
-  // The standalone service already does this server-side on every share
-  // fetch — only run it for the legacy path so we don't double-write.
-  if (!isServiceMode() && invoice.status === 'sent' && !invoice.viewedAt) {
-    await markInvoiceViewed(invoice.id);
-    invoice.status = 'viewed';
-    invoice.viewedAt = new Date();
-  }
+  // NOTE: the service auto-tracks viewedAt and flips sent → viewed inside
+  // getShare() — no client-side write needed here.
 
-  // Fetch company info and terms (still served from the marketing DB —
-  // terms templates and company info are not part of the invoice service).
-  const [company, termsRows] = await Promise.all([
-    getCompanyFromDb(),
-    db
-      .select()
-      .from(invoiceTermsTemplates)
-      .where(
-        and(
-          eq(invoiceTermsTemplates.language, invoice.language),
-          eq(invoiceTermsTemplates.isDefault, true)
-        )
-      )
-      .limit(1),
-  ]);
-
-  const terms = termsRows[0]?.content ?? '';
+  // Fetch company info from the marketing DB. Terms & conditions used to be
+  // rendered as a collapsible HTML section here (from the
+  // invoice_terms_templates Neon table) but that table was removed when
+  // invoice ops were extracted to the standalone service. The PDF the client
+  // downloads still includes full T&C, rendered by the service from its own
+  // terms files — only the on-share-page HTML preview is gone.
+  const company = await getCompanyFromDb();
 
   // Determine if the client can approve
   const canApprove = invoice.status === 'sent' || invoice.status === 'viewed';
@@ -305,7 +222,7 @@ export default async function InvoiceSharePage({ params }: PageProps) {
         isPaid: ms.isPaid,
         paidAt: ms.paidAt?.toISOString() ?? null,
       }))}
-      terms={terms}
+      terms=""
       company={{
         name: company.name,
         phone: company.phone,

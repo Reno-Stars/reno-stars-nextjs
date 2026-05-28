@@ -1,11 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import {
-  getInvoiceByShareToken,
-  approveInvoice as approveInvoiceDb,
-  createInvoiceVersion,
-} from '@/lib/db/invoice-queries';
+import { invoiceClient, isNotFoundError } from '@/lib/clients/invoice';
 
 export interface ApprovalResult {
   success: boolean;
@@ -24,10 +20,20 @@ export async function approveInvoice(
     return { success: false, message: 'Invalid token.' };
   }
 
-  const invoice = await getInvoiceByShareToken(shareToken);
-  if (!invoice) {
-    return { success: false, message: 'Document not found.' };
+  // Resolve the share token to an invoice (the service auto-tracks viewedAt
+  // and flips sent → viewed on this call — same behavior as the legacy path).
+  let payload;
+  try {
+    payload = await invoiceClient.getShare(shareToken);
+  } catch (err) {
+    if (isNotFoundError(err)) {
+      return { success: false, message: 'Document not found.' };
+    }
+    console.error('approveInvoice: failed to resolve share token:', err);
+    return { success: false, message: 'Failed to approve. Please try again.' };
   }
+
+  const invoice = payload.invoice;
 
   if (invoice.status !== 'sent' && invoice.status !== 'viewed') {
     if (invoice.status === 'approved') {
@@ -36,18 +42,12 @@ export async function approveInvoice(
     return { success: false, message: 'This document cannot be approved in its current state.' };
   }
 
-  const updated = await approveInvoiceDb(invoice.id);
-  if (!updated) {
+  try {
+    await invoiceClient.setStatus(invoice.id, 'approved', 'client');
+  } catch (err) {
+    console.error('approveInvoice: setStatus failed:', err);
     return { success: false, message: 'Failed to approve. Please try again.' };
   }
-
-  // Create version record for audit trail
-  await createInvoiceVersion(
-    invoice.id,
-    'approved',
-    `${invoice.type === 'estimate' ? 'Estimate' : 'Invoice'} approved by client`,
-    'client'
-  );
 
   // Revalidate the share page so it reflects the new status
   revalidatePath(`/en/invoice/${shareToken}`);
