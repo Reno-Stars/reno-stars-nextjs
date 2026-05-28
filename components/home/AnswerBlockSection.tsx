@@ -1,5 +1,4 @@
 import { Link } from '@/navigation';
-import type { Service } from '@/lib/types';
 import { GOLD, SURFACE, TEXT, NAVY, CARD, neu } from '@/lib/theme';
 
 /**
@@ -46,7 +45,7 @@ export default function AnswerBlockSection({
       className="py-12 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: SURFACE }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div
           className="rounded-2xl p-6 md:p-10"
           style={{ boxShadow: neu(5), backgroundColor: CARD }}
@@ -59,7 +58,7 @@ export default function AnswerBlockSection({
             {t.question}
           </h2>
           <p
-            className="text-base md:text-lg leading-relaxed mb-8"
+            className="text-base md:text-lg leading-relaxed mb-8 max-w-3xl"
             style={{ color: TEXT }}
           >
             {answer}
