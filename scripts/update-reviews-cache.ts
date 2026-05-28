@@ -63,73 +63,136 @@ async function readExistingCache(): Promise<GooglePlaceRating | null> {
 }
 
 /**
- * Translate review texts to Chinese using OpenAI.
- * Sends all reviews in a single batch request for efficiency.
+ * Per-locale display labels for the translation prompt. Keys are BCP-47 codes
+ * matching the site's locale set in i18n/config.ts (minus `en` which is the
+ * source). Order matches roughly priority for cost-bounded incremental
+ * backfills: zh first because it's the largest non-EN market segment.
+ *
+ * If a tenant deploys a different locale set, update this map AND the
+ * Locale union in i18n/config.ts in the same change.
+ */
+const TRANSLATION_TARGETS: Array<{ locale: import('../i18n/config').Locale; languageLabel: string }> = [
+  { locale: 'zh', languageLabel: 'Simplified Chinese' },
+  { locale: 'zh-Hant', languageLabel: 'Traditional Chinese (Taiwan variant)' },
+  { locale: 'ja', languageLabel: 'Japanese' },
+  { locale: 'ko', languageLabel: 'Korean' },
+  { locale: 'es', languageLabel: 'Spanish (Latin American)' },
+  { locale: 'fr', languageLabel: 'French (Canadian)' },
+  { locale: 'ru', languageLabel: 'Russian' },
+  { locale: 'tl', languageLabel: 'Tagalog' },
+  { locale: 'vi', languageLabel: 'Vietnamese' },
+  { locale: 'pa', languageLabel: 'Punjabi (Gurmukhi script)' },
+  { locale: 'fa', languageLabel: 'Persian/Farsi' },
+  { locale: 'ar', languageLabel: 'Arabic (Modern Standard)' },
+  { locale: 'hi', languageLabel: 'Hindi (Devanagari script)' },
+];
+
+/**
+ * Translate review texts into all configured locales using OpenAI.
+ *
+ * Per-review × per-locale write-once: if a review already has a translation
+ * cached for a locale, we skip that pair. Each missing pair becomes one
+ * batched API call (batched per LOCALE — we translate all reviews to zh in
+ * one call, then all to ja in one call, etc.).
+ *
+ * Backward compat: continues to populate `review.textZh` from
+ * `review.translations.zh` so older client code (`TestimonialsSection`'s
+ * current zh-only filter) keeps working until the read-path PR drops it.
+ *
+ * Authorization for the LLM spend was granted by Hongming 2026-05-28 in
+ * response to the cross-locale-parity audit (delegation 3cb8548f). Estimate:
+ * ~$0.14 one-time for the initial backfill of ~10 reviews × 13 target locales
+ * at gpt-4o-mini pricing; ~$0.01 per new review at steady state.
  */
 async function translateReviews(reviews: GoogleReview[]): Promise<void> {
   const openaiKey = process.env.OPENAI_API_KEY;
   if (!openaiKey) {
-    console.warn('[translate] OPENAI_API_KEY not set, skipping Chinese translation.');
+    console.warn('[translate] OPENAI_API_KEY not set, skipping translation pass.');
     return;
   }
 
   // Reuse translations from the existing DB cache row for unchanged reviews.
+  // Key by review.text + locale; value is the cached translated string.
   const existing = await readExistingCache();
   const existingTranslations = new Map<string, string>();
   for (const r of existing?.reviews ?? []) {
-    if (r.textZh) existingTranslations.set(r.text, r.textZh);
+    if (r.translations) {
+      for (const [locale, translated] of Object.entries(r.translations)) {
+        if (translated) existingTranslations.set(`${r.text}|${locale}`, translated);
+      }
+    }
+    // Migration path: previous cache rows used only textZh. Treat it as
+    // translations.zh for the resume-from-cache logic.
+    if (r.textZh && !existingTranslations.has(`${r.text}|zh`)) {
+      existingTranslations.set(`${r.text}|zh`, r.textZh);
+    }
   }
 
-  // Only translate reviews that don't already have a cached translation
-  const needsTranslation = reviews.filter((r) => !existingTranslations.has(r.text));
-
-  // Apply existing translations
+  // Apply existing cached translations to the in-memory reviews list.
   for (const r of reviews) {
-    const cached = existingTranslations.get(r.text);
-    if (cached) r.textZh = cached;
+    r.translations = r.translations ?? {};
+    for (const { locale } of TRANSLATION_TARGETS) {
+      const cached = existingTranslations.get(`${r.text}|${locale}`);
+      if (cached) r.translations[locale] = cached;
+    }
+    // Keep textZh in sync for the deprecated read path (dropped in a follow-up PR).
+    if (r.translations.zh) r.textZh = r.translations.zh;
   }
-
-  if (needsTranslation.length === 0) {
-    console.log('[translate] All reviews already have cached translations.');
-    return;
-  }
-
-  console.log(`[translate] Translating ${needsTranslation.length} review(s) to Chinese...`);
 
   const { default: OpenAI } = await import('openai');
   const client = new OpenAI({ apiKey: openaiKey });
 
-  // Batch all texts into a single API call
-  const textsToTranslate = needsTranslation.map((r, i) => `[${i}] ${r.text}`).join('\n---\n');
-
-  const response = await client.chat.completions.create({
-    model: AI_CONFIG.model,
-    temperature: AI_CONFIG.temperature,
-    messages: [
-      {
-        role: 'system',
-        content:
-          'You are a professional translator. Translate the following customer reviews from English to Simplified Chinese. ' +
-          'Keep the tone natural and conversational. Preserve any proper nouns (company names, person names). ' +
-          'Return a JSON array of translated strings in the same order. Only return the JSON array, no other text.',
-      },
-      { role: 'user', content: textsToTranslate },
-    ],
-  });
-
-  const content = response.choices[0]?.message?.content?.trim() ?? '';
-  try {
-    const translations = parseJsonResponse<string[]>(content);
-    if (translations.length !== needsTranslation.length) {
-      console.warn(`[translate] Expected ${needsTranslation.length} translations, got ${translations.length}`);
+  for (const target of TRANSLATION_TARGETS) {
+    const needs = reviews.filter((r) => !r.translations?.[target.locale]);
+    if (needs.length === 0) {
+      console.log(`[translate:${target.locale}] all reviews already have cached translations.`);
+      continue;
     }
-    for (let i = 0; i < Math.min(translations.length, needsTranslation.length); i++) {
-      needsTranslation[i].textZh = translations[i];
+    console.log(`[translate:${target.locale}] translating ${needs.length} review(s) to ${target.languageLabel}…`);
+
+    const textsToTranslate = needs.map((r, i) => `[${i}] ${r.text}`).join('\n---\n');
+    let response;
+    try {
+      response = await client.chat.completions.create({
+        model: AI_CONFIG.model,
+        temperature: AI_CONFIG.temperature,
+        messages: [
+          {
+            role: 'system',
+            content:
+              `You are a professional translator. Translate the following customer reviews from English to ${target.languageLabel}. ` +
+              'Keep the tone natural and conversational. Preserve any proper nouns (company names, person names). ' +
+              'Return a JSON array of translated strings in the same order. Only return the JSON array, no other text.',
+          },
+          { role: 'user', content: textsToTranslate },
+        ],
+      });
+    } catch (err) {
+      // One locale failing should NOT block the others — partial-success is
+      // valuable (e.g. all 14 locales get translations except `pa` because of
+      // a transient API error).
+      console.error(`[translate:${target.locale}] API call failed:`, err);
+      continue;
     }
-    console.log(`[translate] Successfully translated ${Math.min(translations.length, needsTranslation.length)} review(s).`);
-  } catch (err) {
-    console.error('[translate] Failed to parse translation response:', err);
-    console.error('[translate] Raw response:', content.slice(0, 200));
+
+    const content = response.choices[0]?.message?.content?.trim() ?? '';
+    try {
+      const translations = parseJsonResponse<string[]>(content);
+      if (translations.length !== needs.length) {
+        console.warn(`[translate:${target.locale}] expected ${needs.length} translations, got ${translations.length}`);
+      }
+      for (let i = 0; i < Math.min(translations.length, needs.length); i++) {
+        needs[i].translations = needs[i].translations ?? {};
+        needs[i].translations![target.locale] = translations[i];
+        // Mirror to deprecated textZh for the transitional period.
+        if (target.locale === 'zh') needs[i].textZh = translations[i];
+      }
+      console.log(`[translate:${target.locale}] ${Math.min(translations.length, needs.length)} review(s) translated.`);
+    } catch (err) {
+      console.error(`[translate:${target.locale}] failed to parse response:`, err);
+      console.error(`[translate:${target.locale}] raw response (first 200 chars):`, content.slice(0, 200));
+      // Don't propagate — continue to next locale.
+    }
   }
 }
 
