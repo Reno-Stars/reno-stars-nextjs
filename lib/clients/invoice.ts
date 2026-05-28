@@ -152,6 +152,30 @@ export interface InvoiceDetailResult {
   paymentMilestones: ServicePaymentMilestone[];
 }
 
+/** Rendered Terms & Conditions for a share view. */
+export interface ShareTermsResult {
+  language: string;
+  /** Plain-text form — safe for `whitespace-pre-line` rendering. */
+  text: string;
+  /** Pre-escaped HTML (paragraphs split on blank lines, `<br/>` between single newlines). */
+  html: string;
+}
+
+/** Single audit-log entry returned by GET /api/invoices/:id/versions. */
+export interface ServiceInvoiceVersion {
+  id: string;
+  version: number;
+  changeType: string;
+  changeSummary: string;
+  changedBy: string;
+  snapshot: unknown;
+  createdAt: string;
+}
+
+export interface ListVersionsResult {
+  versions: ServiceInvoiceVersion[];
+}
+
 export interface CreateInvoiceBody {
   type?: InvoiceType;
   clientName: string;
@@ -495,6 +519,24 @@ export const invoiceClient = {
     return request<InvoiceDetailResult>({
       method: 'GET',
       path: `/api/share/${encodeURIComponent(token)}`,
+    });
+  },
+
+  getShareTerms(token: string): Promise<ShareTermsResult> {
+    // Public share endpoint — returns T&C text + pre-rendered HTML for the
+    // invoice's language. No auth required on the service side.
+    return request<ShareTermsResult>({
+      method: 'GET',
+      path: `/api/share/${encodeURIComponent(token)}/terms`,
+    });
+  },
+
+  listVersions(id: string): Promise<ListVersionsResult> {
+    // Returns invoice_versions rows newest-first. Used by the admin detail
+    // page to render the audit log.
+    return request<ListVersionsResult>({
+      method: 'GET',
+      path: `/api/invoices/${encodeURIComponent(id)}/versions`,
     });
   },
 };
