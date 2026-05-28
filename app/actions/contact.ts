@@ -11,6 +11,8 @@ import {
 } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
+import { crmClient, type CrmPropertyType } from '@/lib/clients/crm';
+import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 
 /** Contact form input data */
 export interface ContactFormData {
@@ -136,6 +138,50 @@ function sanitizeField(value: string, maxLength: number): string {
 }
 
 // ============================================================================
+// CRM SLUG MAPPING
+// ============================================================================
+
+/**
+ * Maps a `property_types.slug` (free-form admin-controlled string) to a Twenty
+ * CRM `Person.propertyType` enum value. The CRM rejects unknown enum values
+ * with a 400, so unmapped slugs fall through to `OTHER` (safest default).
+ *
+ * Keep in sync with `Person.propertyType` enum in
+ * https://github.com/Reno-Stars/reno-stars-crm (Phase B T3).
+ */
+function mapPropertyTypeSlugToCrm(
+  slug: string | null
+): CrmPropertyType | undefined {
+  if (!slug) return undefined;
+  const normalized = slug.trim().toLowerCase();
+  if (normalized.includes('single') || normalized.includes('house')) {
+    return 'SINGLE_FAMILY';
+  }
+  if (normalized.includes('condo') || normalized.includes('apartment')) {
+    return 'CONDO';
+  }
+  if (normalized.includes('town')) return 'TOWNHOUSE';
+  if (normalized.includes('commercial') || normalized.includes('office')) {
+    return 'COMMERCIAL';
+  }
+  return 'OTHER';
+}
+
+/**
+ * Splits a free-form name into a Twenty Person `{firstName, lastName}` pair.
+ * The form has a single "name" input — first whitespace-delimited token becomes
+ * firstName, the rest joins as lastName. Single-word names get an empty
+ * lastName, which Twenty accepts.
+ */
+function splitFullName(name: string): { firstName: string; lastName: string } {
+  const parts = name.trim().split(/\s+/);
+  return {
+    firstName: parts[0] ?? name,
+    lastName: parts.slice(1).join(' '),
+  };
+}
+
+// ============================================================================
 // SUBMIT ACTION
 // ============================================================================
 
@@ -245,7 +291,7 @@ export async function submitContactForm(
     const cityNameEn = areaRow[0]?.nameEn ?? null;
     const propertyTypeNameEn = propertyTypeRow[0]?.nameEn ?? null;
 
-    // Save to database
+    // Save to database (primary source of truth until Phase B T11 cleanup).
     await db.insert(contactSubmissions).values({
       name: sanitizedName,
       email: sanitizedEmail,
@@ -255,6 +301,40 @@ export async function submitContactForm(
       propertyTypeId,
       status: 'new',
     });
+
+    // Phase B T6: ALSO write the lead to Twenty CRM as a Person + Note + Task.
+    // The Neon insert above already succeeded, so the lead is safe even if
+    // every line below fails. We wrap the whole CRM chain in waitUntil so it
+    // runs in the background — the form action returns its success response
+    // immediately, and the user doesn't pay the CRM round-trip latency.
+    //
+    // On failure the deadletter logs to stderr + alerts Telegram so the user
+    // can investigate.
+    const { firstName, lastName } = splitFullName(sanitizedName);
+    const crmPayload = {
+      firstName,
+      lastName: lastName || undefined,
+      email: sanitizedEmail ?? undefined,
+      phone: sanitizedPhone || undefined,
+      leadSource: 'OTHER' as const,
+      preferredAreaId: preferredAreaId ?? undefined,
+      propertyType: mapPropertyTypeSlugToCrm(propertyTypeSlug),
+      notesFromForm: sanitizedMessage,
+    };
+    waitUntil(
+      (async () => {
+        try {
+          const person = await crmClient.createPerson(crmPayload);
+          await crmClient.createNoteOnPerson(person.id, sanitizedMessage);
+          await crmClient.createTaskForPerson(
+            person.id,
+            `Follow up on new lead from ${sanitizedName}`
+          );
+        } catch (err) {
+          await recordCrmDeadLetter(crmPayload, err);
+        }
+      })()
+    );
 
     // Send email notification in the background. Wrapped in waitUntil() so
     // Vercel keeps the serverless isolate alive until the HTTP call to Resend
