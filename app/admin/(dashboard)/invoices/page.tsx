@@ -1,6 +1,11 @@
-import { listInvoices, type ListInvoicesFilters } from '@/lib/db/invoice-queries';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import InvoiceListClient from './InvoiceListClient';
+import {
+  invoiceClient,
+  type InvoiceStatus,
+  type InvoiceType,
+  type ListInvoicesQuery,
+} from '@/lib/clients/invoice';
 
 interface SearchParams {
   status?: string;
@@ -15,23 +20,23 @@ export default async function InvoicesAdminPage({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const filters: ListInvoicesFilters = {
+  const filters: ListInvoicesQuery = {
     page: params.page ? parseInt(params.page, 10) : 1,
     limit: 20,
   };
 
   if (params.status && params.status !== 'all') {
-    filters.status = params.status as ListInvoicesFilters['status'];
+    filters.status = params.status as InvoiceStatus;
   }
   const activeType = params.type || 'estimate';
   if (activeType !== 'all') {
-    filters.type = activeType as ListInvoicesFilters['type'];
+    filters.type = activeType as InvoiceType;
   }
   if (params.q) {
     filters.clientName = params.q;
   }
 
-  const result = await listInvoices(filters);
+  const result = await invoiceClient.list(filters);
 
   return (
     <div>

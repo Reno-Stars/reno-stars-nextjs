@@ -1,36 +1,21 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { db } from '@/lib/db';
-import { invoices, invoiceLineItems, invoicePaymentMilestones } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString } from '@/lib/admin/form-utils';
-import { createInvoiceVersion } from '@/lib/db/invoice-queries';
 import {
   invoiceClient,
   InvoiceServiceError,
   type InvoiceStatus,
   type PaymentMethod,
 } from '@/lib/clients/invoice';
-import crypto from 'crypto';
 
 // ============================================================================
-// FEATURE FLAG
+// All invoice operations route through the standalone reno-stars-invoice
+// service. Direct-DB code paths were removed in T22 of the Phase A
+// extraction (see docs/superpowers/plans/2026-05-27-phase-a-...) after the
+// service was verified live in production.
 // ============================================================================
-//
-// INVOICE_SOURCE controls which backend handles invoice operations:
-//   - 'legacy'   → direct Drizzle queries against Neon (default, today)
-//   - 'service'  → HTTPS calls to the standalone reno-stars-invoice-service
-//
-// The two paths MUST return identical shapes — callers downstream (admin
-// components, share view, PDF route) must not be able to tell which ran.
-// Phase A extraction (see docs/superpowers/plans/2026-05-27-phase-a-...).
-
-function isServiceMode(): boolean {
-  return process.env.INVOICE_SOURCE === 'service';
-}
 
 function describeServiceError(err: unknown, fallback: string): string {
   if (err instanceof InvoiceServiceError) {
@@ -61,27 +46,6 @@ const VALID_TYPES = ['estimate', 'invoice'] as const;
 const VALID_PAYMENT_METHODS = [
   'e_transfer', 'cheque', 'cash', 'wire', 'credit_card',
 ] as const;
-
-/** Generate a sequential invoice number like EST-0001 or INV-0001 */
-async function generateInvoiceNumber(type: 'estimate' | 'invoice'): Promise<string> {
-  const prefix = type === 'estimate' ? 'EST' : 'INV';
-  const existing = await db
-    .select({ invoiceNumber: invoices.invoiceNumber })
-    .from(invoices)
-    .where(eq(invoices.type, type))
-    .orderBy(invoices.invoiceNumber);
-
-  let maxNum = 0;
-  for (const row of existing) {
-    const match = row.invoiceNumber.match(new RegExp(`^${prefix}-(\\d+)$`));
-    if (match) {
-      const num = parseInt(match[1], 10);
-      if (num > maxNum) maxNum = num;
-    }
-  }
-
-  return `${prefix}-${String(maxNum + 1).padStart(4, '0')}`;
-}
 
 /** Default payment milestones for each schedule key */
 function getDefaultMilestones(key: string): Array<{ label: string; labelZh: string; percentage: number; displayOrder: number }> {
@@ -138,100 +102,48 @@ export async function createInvoiceAction(
   const taxRateStr = getString(formData, 'taxRate');
   const taxRate = taxRateStr ? parseInt(taxRateStr, 10) : 5;
   const paymentScheduleKey = getString(formData, 'paymentScheduleKey') || '70/30';
-  const invoiceDateStr = getString(formData, 'invoiceDate');
   const dueDateStr = getString(formData, 'dueDate');
 
-  if (isServiceMode()) {
-    try {
-      const milestonesInput = getDefaultMilestones(paymentScheduleKey).map((m) => ({
-        label: m.label,
-        labelZh: m.labelZh,
-        percentage: m.percentage,
-        displayOrder: m.displayOrder,
-      }));
-
-      const created = await invoiceClient.create({
-        type,
-        clientName,
-        clientEmail: getString(formData, 'clientEmail').trim() || null,
-        clientPhone: getString(formData, 'clientPhone').trim() || null,
-        clientAddress: getString(formData, 'clientAddress').trim() || null,
-        language,
-        taxRate,
-        paymentScheduleKey,
-        paymentMilestones: milestonesInput,
-      });
-
-      // The service doesn't accept invoiceDate/dueDate on create today;
-      // patch them in if provided so behavior matches legacy.
-      if (invoiceDateStr || dueDateStr) {
-        // Note: service PATCH allowlist accepts dueDate. invoiceDate is
-        // set to "now" by the service. The Next.js admin form historically
-        // accepts both; we honor dueDate here and leave invoiceDate as
-        // server-now to keep the contract simple. If a custom invoiceDate
-        // proves necessary, add it to the service's PATCH allowlist.
-        if (dueDateStr) {
-          try {
-            await invoiceClient.update(created.id, {
-              dueDate: new Date(dueDateStr).toISOString(),
-            });
-          } catch (patchErr) {
-            console.error('createInvoiceAction: failed to patch dueDate:', patchErr);
-          }
-        }
-      }
-
-      revalidatePath('/admin/invoices');
-      return { id: created.id };
-    } catch (err) {
-      return { error: describeServiceError(err, 'Failed to create invoice.') };
-    }
-  }
-
   try {
-    const invoiceNumber = await generateInvoiceNumber(type);
-    const shareToken = crypto.randomBytes(32).toString('hex');
+    const milestonesInput = getDefaultMilestones(paymentScheduleKey).map((m) => ({
+      label: m.label,
+      labelZh: m.labelZh,
+      percentage: m.percentage,
+      displayOrder: m.displayOrder,
+    }));
 
-    const [created] = await db
-      .insert(invoices)
-      .values({
-        invoiceNumber,
-        type,
-        status: 'draft',
-        clientName,
-        clientEmail: getString(formData, 'clientEmail').trim() || null,
-        clientPhone: getString(formData, 'clientPhone').trim() || null,
-        clientAddress: getString(formData, 'clientAddress').trim() || null,
-        language,
-        taxRate,
-        paymentScheduleKey,
-        shareToken,
-        invoiceDate: invoiceDateStr ? new Date(invoiceDateStr) : new Date(),
-        dueDate: dueDateStr ? new Date(dueDateStr) : null,
-      })
-      .returning();
+    const created = await invoiceClient.create({
+      type,
+      clientName,
+      clientEmail: getString(formData, 'clientEmail').trim() || null,
+      clientPhone: getString(formData, 'clientPhone').trim() || null,
+      clientAddress: getString(formData, 'clientAddress').trim() || null,
+      language,
+      taxRate,
+      paymentScheduleKey,
+      paymentMilestones: milestonesInput,
+    });
 
-    // Create default milestones
-    const milestones = getDefaultMilestones(paymentScheduleKey);
-    for (const m of milestones) {
-      await db.insert(invoicePaymentMilestones).values({
-        invoiceId: created.id,
-        label: m.label,
-        labelZh: m.labelZh,
-        percentage: m.percentage,
-        amountCents: 0,
-        displayOrder: m.displayOrder,
-      });
+    // The service doesn't accept invoiceDate/dueDate on create today;
+    // patch dueDate in if provided so behavior matches legacy. invoiceDate
+    // is set to "now" by the service — the Next.js admin form historically
+    // accepts a custom invoiceDate but we leave that as server-now to keep
+    // the contract simple. Add it to the service's PATCH allowlist if/when
+    // a custom invoice date proves necessary.
+    if (dueDateStr) {
+      try {
+        await invoiceClient.update(created.id, {
+          dueDate: new Date(dueDateStr).toISOString(),
+        });
+      } catch (patchErr) {
+        console.error('createInvoiceAction: failed to patch dueDate:', patchErr);
+      }
     }
-
-    // Create initial version
-    await createInvoiceVersion(created.id, 'created', 'Invoice created', 'admin');
 
     revalidatePath('/admin/invoices');
     return { id: created.id };
-  } catch (error) {
-    console.error('Failed to create invoice:', error);
-    return { error: 'Failed to create invoice.' };
+  } catch (err) {
+    return { error: describeServiceError(err, 'Failed to create invoice.') };
   }
 }
 
@@ -251,54 +163,23 @@ export async function updateInvoiceAction(
   const dueDateStr = getString(formData, 'dueDate');
   const notes = getString(formData, 'notes');
 
-  if (isServiceMode()) {
-    try {
-      await invoiceClient.update(id, {
-        clientName,
-        clientEmail: getString(formData, 'clientEmail').trim() || null,
-        clientPhone: getString(formData, 'clientPhone').trim() || null,
-        clientAddress: getString(formData, 'clientAddress').trim() || null,
-        language,
-        taxRate,
-        notes: notes || null,
-        dueDate: dueDateStr ? new Date(dueDateStr).toISOString() : null,
-        changedBy: 'admin',
-      });
-      revalidatePath('/admin/invoices');
-      revalidatePath(`/admin/invoices/${id}`);
-      return {};
-    } catch (err) {
-      return { error: describeServiceError(err, 'Failed to update invoice.') };
-    }
-  }
-
   try {
-    const updated = await db
-      .update(invoices)
-      .set({
-        clientName,
-        clientEmail: getString(formData, 'clientEmail').trim() || null,
-        clientPhone: getString(formData, 'clientPhone').trim() || null,
-        clientAddress: getString(formData, 'clientAddress').trim() || null,
-        language,
-        taxRate,
-        notes: notes || null,
-        dueDate: dueDateStr ? new Date(dueDateStr) : null,
-        updatedAt: new Date(),
-      })
-      .where(eq(invoices.id, id))
-      .returning({ id: invoices.id });
-
-    if (updated.length === 0) return { error: 'Invoice not found.' };
-
-    await createInvoiceVersion(id, 'header_updated', 'Invoice header updated', 'admin');
-
+    await invoiceClient.update(id, {
+      clientName,
+      clientEmail: getString(formData, 'clientEmail').trim() || null,
+      clientPhone: getString(formData, 'clientPhone').trim() || null,
+      clientAddress: getString(formData, 'clientAddress').trim() || null,
+      language,
+      taxRate,
+      notes: notes || null,
+      dueDate: dueDateStr ? new Date(dueDateStr).toISOString() : null,
+      changedBy: 'admin',
+    });
     revalidatePath('/admin/invoices');
     revalidatePath(`/admin/invoices/${id}`);
     return {};
-  } catch (error) {
-    console.error('Failed to update invoice:', error);
-    return { error: 'Failed to update invoice.' };
+  } catch (err) {
+    return { error: describeServiceError(err, 'Failed to update invoice.') };
   }
 }
 
@@ -308,38 +189,15 @@ export async function deleteInvoiceAction(
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid invoice ID.' };
 
-  // NOTE: This is a SOFT delete (status='void'), not a hard DELETE. To
-  // preserve behavior under INVOICE_SOURCE=service, route through the
-  // service's status endpoint rather than its DELETE endpoint (which is a
-  // hard delete that cascades to line items + milestones + versions).
-  if (isServiceMode()) {
-    try {
-      await invoiceClient.setStatus(id, 'void', 'admin');
-      revalidatePath('/admin/invoices');
-      revalidatePath(`/admin/invoices/${id}`);
-      return {};
-    } catch (err) {
-      return { error: describeServiceError(err, 'Failed to void invoice.') };
-    }
-  }
-
+  // NOTE: This is a SOFT delete (status='void'), not a hard DELETE — the
+  // service's DELETE endpoint cascades to line items + milestones + versions.
   try {
-    const updated = await db
-      .update(invoices)
-      .set({ status: 'void', updatedAt: new Date() })
-      .where(eq(invoices.id, id))
-      .returning({ id: invoices.id });
-
-    if (updated.length === 0) return { error: 'Invoice not found.' };
-
-    await createInvoiceVersion(id, 'voided', 'Invoice voided', 'admin');
-
+    await invoiceClient.setStatus(id, 'void', 'admin');
     revalidatePath('/admin/invoices');
     revalidatePath(`/admin/invoices/${id}`);
     return {};
-  } catch (error) {
-    console.error('Failed to void invoice:', error);
-    return { error: 'Failed to void invoice.' };
+  } catch (err) {
+    return { error: describeServiceError(err, 'Failed to void invoice.') };
   }
 }
 
@@ -353,43 +211,13 @@ export async function updateStatusAction(
     return { error: 'Invalid status.' };
   }
 
-  if (isServiceMode()) {
-    try {
-      await invoiceClient.setStatus(id, status as InvoiceStatus, 'admin');
-      revalidatePath('/admin/invoices');
-      revalidatePath(`/admin/invoices/${id}`);
-      return {};
-    } catch (err) {
-      return { error: describeServiceError(err, 'Failed to update status.') };
-    }
-  }
-
   try {
-    const updateData: Record<string, unknown> = {
-      status,
-      updatedAt: new Date(),
-    };
-
-    // Set timestamps for certain statuses
-    if (status === 'approved') updateData.approvedAt = new Date();
-    if (status === 'viewed') updateData.viewedAt = new Date();
-
-    const updated = await db
-      .update(invoices)
-      .set(updateData)
-      .where(eq(invoices.id, id))
-      .returning({ id: invoices.id });
-
-    if (updated.length === 0) return { error: 'Invoice not found.' };
-
-    await createInvoiceVersion(id, 'status_changed', `Status changed to ${status}`, 'admin');
-
+    await invoiceClient.setStatus(id, status as InvoiceStatus, 'admin');
     revalidatePath('/admin/invoices');
     revalidatePath(`/admin/invoices/${id}`);
     return {};
-  } catch (error) {
-    console.error('Failed to update status:', error);
-    return { error: 'Failed to update status.' };
+  } catch (err) {
+    return { error: describeServiceError(err, 'Failed to update status.') };
   }
 }
 
@@ -410,51 +238,19 @@ export async function recordPaymentAction(
   const paidAtStr = getString(formData, 'paidAt');
   const reference = getString(formData, 'paymentReference').trim();
 
-  if (isServiceMode()) {
-    try {
-      await invoiceClient.recordPayment(invoiceId, milestoneId, {
-        isPaid: true,
-        paidAt: paidAtStr ? new Date(paidAtStr).toISOString() : new Date().toISOString(),
-        paymentMethod: (method as PaymentMethod) || null,
-        paymentReference: reference || null,
-        changedBy: 'admin',
-      });
-      revalidatePath('/admin/invoices');
-      revalidatePath(`/admin/invoices/${invoiceId}`);
-      return {};
-    } catch (err) {
-      return { error: describeServiceError(err, 'Failed to record payment.') };
-    }
-  }
-
   try {
-    const [milestone] = await db
-      .update(invoicePaymentMilestones)
-      .set({
-        isPaid: true,
-        paidAt: paidAtStr ? new Date(paidAtStr) : new Date(),
-        paymentMethod: method as typeof VALID_PAYMENT_METHODS[number] || null,
-        paymentReference: reference || null,
-        updatedAt: new Date(),
-      })
-      .where(eq(invoicePaymentMilestones.id, milestoneId))
-      .returning();
-
-    if (!milestone) return { error: 'Milestone not found.' };
-
-    await createInvoiceVersion(
-      milestone.invoiceId,
-      'payment_recorded',
-      `Payment recorded for "${milestone.label}"`,
-      'admin'
-    );
-
+    await invoiceClient.recordPayment(invoiceId, milestoneId, {
+      isPaid: true,
+      paidAt: paidAtStr ? new Date(paidAtStr).toISOString() : new Date().toISOString(),
+      paymentMethod: (method as PaymentMethod) || null,
+      paymentReference: reference || null,
+      changedBy: 'admin',
+    });
     revalidatePath('/admin/invoices');
-    revalidatePath(`/admin/invoices/${milestone.invoiceId}`);
+    revalidatePath(`/admin/invoices/${invoiceId}`);
     return {};
-  } catch (error) {
-    console.error('Failed to record payment:', error);
-    return { error: 'Failed to record payment.' };
+  } catch (err) {
+    return { error: describeServiceError(err, 'Failed to record payment.') };
   }
 }
 
@@ -477,49 +273,27 @@ export async function addLineItemAction(
       }
     });
 
-    if (isServiceMode()) {
-      try {
-        // The service defaults displayOrder to 0 when omitted, which would
-        // collide with existing items. Preserve legacy "append to end" by
-        // computing max+1 from the current line items.
-        const detail = await invoiceClient.get(invoiceId);
-        const maxOrder = detail.lineItems.length > 0
-          ? Math.max(...detail.lineItems.map((li) => li.displayOrder))
-          : -1;
+    try {
+      // The service defaults displayOrder to 0 when omitted, which would
+      // collide with existing items. Preserve legacy "append to end" by
+      // computing max+1 from the current line items.
+      const detail = await invoiceClient.get(invoiceId);
+      const maxOrder = detail.lineItems.length > 0
+        ? Math.max(...detail.lineItems.map((li) => li.displayOrder))
+        : -1;
 
-        await invoiceClient.addLineItem(invoiceId, {
-          label: label.trim(),
-          description: descriptionLines.join('\n'),
-          steps,
-          displayOrder: maxOrder + 1,
-        });
-        revalidatePath('/admin/invoices');
-        revalidatePath(`/admin/invoices/${invoiceId}`);
-        return {};
-      } catch (err) {
-        return { error: describeServiceError(err, 'Failed to add line item.') };
-      }
+      await invoiceClient.addLineItem(invoiceId, {
+        label: label.trim(),
+        description: descriptionLines.join('\n'),
+        steps,
+        displayOrder: maxOrder + 1,
+      });
+      revalidatePath('/admin/invoices');
+      revalidatePath(`/admin/invoices/${invoiceId}`);
+      return {};
+    } catch (err) {
+      return { error: describeServiceError(err, 'Failed to add line item.') };
     }
-
-    // Get max display order
-    const existing = await db
-      .select({ displayOrder: invoiceLineItems.displayOrder })
-      .from(invoiceLineItems)
-      .where(eq(invoiceLineItems.invoiceId, invoiceId))
-      .orderBy(invoiceLineItems.displayOrder);
-    const maxOrder = existing.length > 0 ? existing[existing.length - 1].displayOrder : -1;
-
-    await db.insert(invoiceLineItems).values({
-      invoiceId,
-      label: label.trim(),
-      description: descriptionLines.join('\n'),
-      steps,
-      displayOrder: maxOrder + 1,
-    });
-
-    revalidatePath('/admin/invoices');
-    revalidatePath(`/admin/invoices/${invoiceId}`);
-    return {};
   } catch (error) {
     console.error('Failed to add line item:', error);
     return { error: 'Failed to add line item.' };
@@ -534,24 +308,14 @@ export async function deleteLineItemAction(
     await requireAuth();
     if (!isValidUUID(invoiceId) || !isValidUUID(lineItemId)) return { error: 'Invalid ID.' };
 
-    if (isServiceMode()) {
-      try {
-        await invoiceClient.removeLineItem(invoiceId, lineItemId);
-        revalidatePath('/admin/invoices');
-        revalidatePath(`/admin/invoices/${invoiceId}`);
-        return {};
-      } catch (err) {
-        return { error: describeServiceError(err, 'Failed to delete line item.') };
-      }
+    try {
+      await invoiceClient.removeLineItem(invoiceId, lineItemId);
+      revalidatePath('/admin/invoices');
+      revalidatePath(`/admin/invoices/${invoiceId}`);
+      return {};
+    } catch (err) {
+      return { error: describeServiceError(err, 'Failed to delete line item.') };
     }
-
-    await db
-      .delete(invoiceLineItems)
-      .where(eq(invoiceLineItems.id, lineItemId));
-
-    revalidatePath('/admin/invoices');
-    revalidatePath(`/admin/invoices/${invoiceId}`);
-    return {};
   } catch (error) {
     console.error('Failed to delete line item:', error);
     return { error: 'Failed to delete line item.' };
@@ -579,46 +343,25 @@ export async function updateLineItemStepsAction(
 
     const cleanedFooter = footerLines?.map((l) => l.trim()).filter(Boolean);
 
-    if (isServiceMode()) {
-      try {
-        const body: {
-          steps: typeof steps;
-          description: string;
-          footerLines?: string[];
-        } = {
-          steps,
-          description: descriptionLines.join('\n'),
-        };
-        if (cleanedFooter !== undefined) {
-          body.footerLines = cleanedFooter;
-        }
-        await invoiceClient.updateLineItem(invoiceId, lineItemId, body);
-        revalidatePath('/admin/invoices');
-        revalidatePath(`/admin/invoices/${invoiceId}`);
-        return {};
-      } catch (err) {
-        return { error: describeServiceError(err, 'Failed to update steps.') };
+    try {
+      const body: {
+        steps: typeof steps;
+        description: string;
+        footerLines?: string[];
+      } = {
+        steps,
+        description: descriptionLines.join('\n'),
+      };
+      if (cleanedFooter !== undefined) {
+        body.footerLines = cleanedFooter;
       }
+      await invoiceClient.updateLineItem(invoiceId, lineItemId, body);
+      revalidatePath('/admin/invoices');
+      revalidatePath(`/admin/invoices/${invoiceId}`);
+      return {};
+    } catch (err) {
+      return { error: describeServiceError(err, 'Failed to update steps.') };
     }
-
-    // Build the update set. Only touch footerLines when the caller passed an
-    // array (undefined = leave alone; empty array = explicit clear).
-    const updateSet: Partial<typeof invoiceLineItems.$inferInsert> = {
-      steps,
-      description: descriptionLines.join('\n'),
-    };
-    if (cleanedFooter !== undefined) {
-      updateSet.footerLines = cleanedFooter;
-    }
-
-    await db
-      .update(invoiceLineItems)
-      .set(updateSet)
-      .where(eq(invoiceLineItems.id, lineItemId));
-
-    revalidatePath('/admin/invoices');
-    revalidatePath(`/admin/invoices/${invoiceId}`);
-    return {};
   } catch (error) {
     console.error('Failed to update line item steps:', error);
     return { error: 'Failed to update steps.' };
