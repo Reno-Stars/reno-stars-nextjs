@@ -11,8 +11,14 @@ export default async function InvoiceDetailPage({
   const { id } = await params;
 
   let detail;
+  let versionsResult: Awaited<ReturnType<typeof invoiceClient.listVersions>>;
   try {
-    detail = await invoiceClient.get(id);
+    [detail, versionsResult] = await Promise.all([
+      invoiceClient.get(id),
+      // Graceful degradation: if the versions endpoint is briefly unreachable
+      // the rest of the admin detail page still renders.
+      invoiceClient.listVersions(id).catch(() => ({ versions: [] })),
+    ]);
   } catch (err) {
     if (isNotFoundError(err)) notFound();
     throw err;
@@ -20,9 +26,7 @@ export default async function InvoiceDetailPage({
 
   const { invoice, lineItems, paymentMilestones } = detail;
 
-  // Build the serialized payload the admin client expects. The standalone
-  // invoice service doesn't expose the versions audit log over HTTP, so pass
-  // an empty array — the UI handles versions.length === 0 gracefully.
+  // Build the serialized payload the admin client expects.
   const serialized = {
     id: invoice.id,
     invoiceNumber: invoice.invoiceNumber,
@@ -78,7 +82,14 @@ export default async function InvoiceDetailPage({
         createdAt: pm.createdAt,
         updatedAt: pm.updatedAt,
       })),
-    versions: [],
+    versions: versionsResult.versions.map((v) => ({
+      id: v.id,
+      version: v.version,
+      changeType: v.changeType,
+      changeSummary: v.changeSummary,
+      changedBy: v.changedBy,
+      createdAt: v.createdAt,
+    })),
   };
 
   return (

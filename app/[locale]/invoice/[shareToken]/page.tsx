@@ -169,13 +169,16 @@ export default async function InvoiceSharePage({ params }: PageProps) {
   // NOTE: the service auto-tracks viewedAt and flips sent → viewed inside
   // getShare() — no client-side write needed here.
 
-  // Fetch company info from the marketing DB. Terms & conditions used to be
-  // rendered as a collapsible HTML section here (from the
-  // invoice_terms_templates Neon table) but that table was removed when
-  // invoice ops were extracted to the standalone service. The PDF the client
-  // downloads still includes full T&C, rendered by the service from its own
-  // terms files — only the on-share-page HTML preview is gone.
-  const company = await getCompanyFromDb();
+  // Fetch company info from the marketing DB. Terms & conditions are served
+  // from the standalone invoice service (sourced from terms-english.ts /
+  // terms-chinese.ts — same strings used for PDF rendering). We tolerate
+  // failure here so a transient terms outage doesn't break the whole page.
+  const [company, termsResult] = await Promise.all([
+    getCompanyFromDb(),
+    invoiceClient
+      .getShareTerms(shareToken)
+      .catch(() => ({ language: invoice.language, text: '', html: '' })),
+  ]);
 
   // Determine if the client can approve
   const canApprove = invoice.status === 'sent' || invoice.status === 'viewed';
@@ -222,7 +225,7 @@ export default async function InvoiceSharePage({ params }: PageProps) {
         isPaid: ms.isPaid,
         paidAt: ms.paidAt?.toISOString() ?? null,
       }))}
-      terms=""
+      terms={termsResult.text}
       company={{
         name: company.name,
         phone: company.phone,
