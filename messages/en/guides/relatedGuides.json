@@ -6,7 +6,8 @@
     "wholeHouse": "Whole House Renovation Cost",
     "basement": "Basement Renovation Cost",
     "bathroom": "Average Bathroom Reno Cost",
-    "bathroomGuide": "Bathroom Renovation Cost"
+    "bathroomGuide": "Bathroom Renovation Cost",
+    "flooring": "Flooring Installation Cost"
   },
   "cityCostTable": {
     "kitchenTitle": "Kitchen Cost by Metro Vancouver Neighbourhood",

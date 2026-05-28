@@ -6,7 +6,8 @@
     "wholeHouse": "Costo de remodelación de casa completa",
     "basement": "Costo de remodelación de sótano",
     "bathroom": "Costo promedio de remodelación de baño",
-    "bathroomGuide": "Costo de remodelación de baño"
+    "bathroomGuide": "Costo de remodelación de baño",
+    "flooring": "Costo de instalación de pisos"
   },
   "cityCostTable": {
     "kitchenTitle": "Costo de la cocina por vecindario metropolitano de Vancouver",

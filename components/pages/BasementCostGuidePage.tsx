@@ -204,11 +204,12 @@ export default function BasementCostGuidePage({ locale, projects }: BasementCost
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
             {tGuides('title')}
           </h2>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
               { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
               { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
               { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
+              { href: '/blog/hardwood-flooring-vancouver-installation-cost-2026', label: tGuides('flooring'), range: '$8K–$35K' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>

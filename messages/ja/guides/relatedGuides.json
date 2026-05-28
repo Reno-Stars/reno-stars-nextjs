@@ -6,7 +6,8 @@
     "wholeHouse": "家全体リノベーション費用",
     "basement": "地下室リノベーション費用",
     "bathroom": "平均バスルームリノベーション費用",
-    "bathroomGuide": "バスルームリノベーション費用"
+    "bathroomGuide": "バスルームリノベーション費用",
+    "flooring": "床材設置費用"
   },
   "cityCostTable": {
     "kitchenTitle": "メトロバンクーバーの近隣地域別のキッチンコスト",
