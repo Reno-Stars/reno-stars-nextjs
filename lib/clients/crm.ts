@@ -5,9 +5,9 @@ import 'server-only';
  *
  * Talks to the self-hosted Twenty CRM REST API at https://crm.reno-stars.com
  * using a workspace-scoped bearer API key. Used by the contact form server
- * action (and future call sites) to dual-write leads to CRM after the
- * Neon `contact_submissions` insert. The Neon table remains the primary
- * source of truth until Phase B T11 drops it.
+ * action (and future call sites) to write leads to CRM. Since the Phase B
+ * cleanup (2026-05-28) Twenty CRM is the sole system of record for leads —
+ * the legacy Neon `contact_submissions` table was dropped.
  *
  * Phase B T5 — see docs/superpowers/plans/2026-05-27-phase-b-crm-twenty-rollout.md
  *

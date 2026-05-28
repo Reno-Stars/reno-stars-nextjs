@@ -16,17 +16,26 @@ vi.mock('next/headers', () => ({
   })),
 }));
 
-// Mock the database module before importing the action
+// Mock the database module before importing the action. The action only
+// queries `service_areas` and `property_types` for slug→id lookup; it does
+// NOT write to Neon since the Phase B cleanup (2026-05-28) — Twenty CRM is
+// the sole system of record. The mock returns empty result sets for both
+// SELECTs, which is the common test case (no city/propertyType passed).
 vi.mock('@/lib/db', () => ({
   db: {
-    insert: vi.fn().mockReturnValue({
-      values: vi.fn().mockResolvedValue(undefined),
+    select: vi.fn().mockReturnValue({
+      from: vi.fn().mockReturnValue({
+        where: vi.fn().mockReturnValue({
+          limit: vi.fn().mockResolvedValue([]),
+        }),
+      }),
     }),
   },
 }));
 
 vi.mock('@/lib/db/schema', () => ({
-  contactSubmissions: {},
+  propertyTypes: {},
+  serviceAreas: {},
 }));
 
 // Mock the email module
@@ -166,7 +175,7 @@ describe('submitContactForm', () => {
   });
 
   it('should strip HTML from inputs', async () => {
-    const { db } = await import('@/lib/db');
+    mockSendContactNotification.mockClear();
     const result = await submitContactForm({
       name: '<script>alert("xss")</script>John',
       email: 'john@example.com',
@@ -174,8 +183,19 @@ describe('submitContactForm', () => {
       message: '<b>Bold</b> message',
     });
     expect(result.success).toBe(true);
-    // Verify the insert was called (sanitized values are handled internally)
-    expect(db.insert).toHaveBeenCalled();
+    // Verify the sanitized values are forwarded to downstream consumers
+    // (email notification + CRM). HTML *tags* must be stripped before they
+    // reach an email body or CRM note (script-tag content itself is retained
+    // as inert text — XSS is impossible once tags are gone).
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    const callArg = mockSendContactNotification.mock.calls[0]?.[0] as {
+      name: string;
+      message: string;
+    };
+    expect(callArg.name).not.toContain('<');
+    expect(callArg.name).not.toContain('>');
+    expect(callArg.name).toContain('John');
+    expect(callArg.message).toBe('Bold message');
   });
 
   it('should call email notification on successful submission', async () => {
