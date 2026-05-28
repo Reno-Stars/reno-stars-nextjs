@@ -1,6 +1,6 @@
 import { Link } from '@/navigation';
 import type { Service } from '@/lib/types';
-import { GOLD, SURFACE, TEXT, TEXT_MID, NAVY, neu } from '@/lib/theme';
+import { GOLD, SURFACE, TEXT, NAVY, CARD, neu } from '@/lib/theme';
 
 /**
  * AnswerBlockSection — placed immediately after the hero so the page's first
@@ -49,7 +49,7 @@ export default function AnswerBlockSection({
       <div className="max-w-4xl mx-auto">
         <div
           className="rounded-2xl p-6 md:p-10"
-          style={{ boxShadow: neu(5), backgroundColor: '#fff' }}
+          style={{ boxShadow: neu(5), backgroundColor: CARD }}
         >
           <h2
             id="what-we-do-title"
@@ -76,17 +76,21 @@ export default function AnswerBlockSection({
               </h3>
               <ul
                 aria-labelledby="services-at-a-glance"
-                className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 list-disc pl-5"
-                style={{ color: TEXT_MID }}
+                className="flex flex-wrap gap-2.5 sm:gap-3 list-none p-0"
               >
                 {services.map((s) => (
                   <li key={s.slug}>
                     <Link
                       href={`/services/${s.slug}`}
-                      className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
-                      style={{ color: GOLD }}
+                      className="inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm md:text-base font-medium transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                      style={{ boxShadow: neu(3), backgroundColor: CARD, color: NAVY }}
                       aria-label={t.viewServiceLabel.replace('{service}', s.title)}
                     >
+                      <span
+                        aria-hidden="true"
+                        className="w-1.5 h-1.5 rounded-full shrink-0"
+                        style={{ backgroundColor: GOLD }}
+                      />
                       {s.title}
                     </Link>
                   </li>
