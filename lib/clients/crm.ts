@@ -241,43 +241,135 @@ async function request<T>(opts: RequestOptions): Promise<T> {
 // ============================================================================
 
 /**
- * Builds the Twenty Person request body from our flat input shape.
- * Composite fields (name, emails, phones) get wrapped here.
+ * Builds the base Twenty Person request body — everything EXCEPT phones.
+ * Composite fields (name, emails) get wrapped here. The phones field is added
+ * separately by `createPerson` so the fallback chain can drop or rewrite it
+ * without rebuilding the whole payload.
  */
-function buildPersonBody(input: CreatePersonInput): Record<string, unknown> {
+function buildPersonBodyWithoutPhones(
+  input: CreatePersonInput,
+  notesOverride?: string
+): Record<string, unknown> {
   const body: Record<string, unknown> = {
     name: { firstName: input.firstName, lastName: input.lastName ?? '' },
   };
   if (input.email) {
     body.emails = { primaryEmail: input.email };
   }
-  if (input.phone) {
-    body.phones = {
-      primaryPhoneNumber: input.phone,
-      primaryPhoneCountryCode: input.phoneCountryCode ?? 'CA',
-      primaryPhoneCallingCode: input.phoneCallingCode ?? '+1',
-    };
-  }
   if (input.leadSource) body.leadSource = input.leadSource;
   if (input.preferredAreaId) body.preferredAreaId = input.preferredAreaId;
   if (input.preferredService) body.preferredService = input.preferredService;
   if (input.propertyType) body.propertyType = input.propertyType;
-  if (input.notesFromForm) body.notesFromForm = input.notesFromForm;
+  const notes = notesOverride ?? input.notesFromForm;
+  if (notes) body.notesFromForm = notes;
   return body;
+}
+
+/**
+ * Detects whether a CrmServiceError is Twenty's phone-validator rejection.
+ *
+ * Twenty returns 400 with a body like:
+ *   {"statusCode":400,"error":"Error","messages":["Provided phone number is invalid call me"],"code":"INVALID_PHONE_NUMBER"}
+ *   {"statusCode":400,"error":"Error","messages":["Provided and inferred country code are conflicting"],"code":"CONFLICTING_PHONE_COUNTRY_CODE"}
+ *
+ * We string-match on the raw body since the response is a flat JSON object,
+ * not GraphQL. Matches the regex used by the T7 migration script
+ * (scripts/migrate-contacts-from-neon.ts in reno-stars-crm).
+ */
+function isPhoneValidationError(err: unknown): boolean {
+  if (!(err instanceof CrmServiceError)) return false;
+  if (err.status !== 400) return false;
+  return /INVALID_PHONE_NUMBER|CONFLICTING_PHONE_COUNTRY_CODE|phone number is invalid|conflicting/i.test(
+    err.body
+  );
+}
+
+async function postPerson(
+  body: Record<string, unknown>
+): Promise<{ id: string }> {
+  const res = await request<{ data: { createPerson: { id: string } } }>({
+    method: 'POST',
+    path: '/people',
+    body,
+  });
+  return { id: res.data.createPerson.id };
 }
 
 export const crmClient = {
   /**
    * Creates a new Person record. Returns just `{ id }` since callers typically
    * only need the id to chain a Note/Task linkage.
+   *
+   * Phone-validator fallback chain (ported from T7 migration script — Twenty's
+   * phone validator is strict and the live contact form can't pre-validate
+   * everything users type into the phone field):
+   *
+   *   1. Try with primaryPhoneCountryCode (default 'CA') and
+   *      primaryPhoneCallingCode (default '+1'). Matches what the live form
+   *      sends today.
+   *   2. On CONFLICTING_PHONE_COUNTRY_CODE / INVALID_PHONE_NUMBER, retry
+   *      WITHOUT country/calling codes — Twenty will infer them from the
+   *      number itself (fixes +44, +86, etc. numbers tagged as CA).
+   *   3. If still rejected, retry WITHOUT the phones field entirely and
+   *      prepend "Original phone (rejected by Twenty validator): <raw>" to
+   *      notesFromForm so the data survives in a free-text field. The
+   *      contact-form submission still lands in CRM rather than the
+   *      deadletter; humans can triage the malformed phone.
+   *
+   * Non-phone errors still throw on the first attempt. Happy path (phone
+   * parses normally) is one POST, no extra latency.
    */
   async createPerson(input: CreatePersonInput): Promise<{ id: string }> {
-    const res = await request<{ data: { createPerson: { id: string } } }>({
-      method: 'POST',
-      path: '/people',
-      body: buildPersonBody(input),
-    });
-    return { id: res.data.createPerson.id };
+    // No phone in input → single POST, no fallback chain needed.
+    if (!input.phone) {
+      return postPerson(buildPersonBodyWithoutPhones(input));
+    }
+
+    const baseBody = buildPersonBodyWithoutPhones(input);
+
+    // Attempt 1: phone with country + calling codes (CA / +1 by default).
+    const attempt1Body: Record<string, unknown> = {
+      ...baseBody,
+      phones: {
+        primaryPhoneNumber: input.phone,
+        primaryPhoneCountryCode: input.phoneCountryCode ?? 'CA',
+        primaryPhoneCallingCode: input.phoneCallingCode ?? '+1',
+      },
+    };
+    try {
+      return await postPerson(attempt1Body);
+    } catch (err) {
+      if (!isPhoneValidationError(err)) throw err;
+      console.warn(
+        '[crm] createPerson: phone rejected with country code, retrying without country/calling codes',
+        { phone: input.phone, error: (err as CrmServiceError).body }
+      );
+    }
+
+    // Attempt 2: omit country/calling codes, let Twenty infer.
+    const attempt2Body: Record<string, unknown> = {
+      ...baseBody,
+      phones: { primaryPhoneNumber: input.phone },
+    };
+    try {
+      return await postPerson(attempt2Body);
+    } catch (err) {
+      if (!isPhoneValidationError(err)) throw err;
+      console.warn(
+        '[crm] createPerson: phone rejected without country code, falling back to no-phone + notes',
+        { phone: input.phone, error: (err as CrmServiceError).body }
+      );
+    }
+
+    // Attempt 3: drop phones, preserve raw value in notesFromForm.
+    const stashedNotes = [
+      `Original phone (rejected by Twenty validator): ${input.phone}`,
+      input.notesFromForm ?? '',
+    ]
+      .filter((s) => s.length > 0)
+      .join('\n\n');
+    const attempt3Body = buildPersonBodyWithoutPhones(input, stashedNotes);
+    return await postPerson(attempt3Body);
   },
 
   /**
