@@ -410,12 +410,13 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
             {tGuides('title')}
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {[
               { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
               { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
               { href: '/blog/average-bathroom-renovation-cost-vancouver', label: tGuides('bathroom'), range: '$18K–$45K+' },
+              { href: '/blog/hardwood-flooring-vancouver-installation-cost-2026', label: tGuides('flooring'), range: '$8K–$35K' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>

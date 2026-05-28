@@ -6,7 +6,8 @@
     "wholeHouse": "Coût de rénovation de toute la maison",
     "basement": "Coût de rénovation du sous-sol",
     "bathroom": "Coût moyen de rénovation de salle de bain",
-    "bathroomGuide": "Coût de rénovation de salle de bain"
+    "bathroomGuide": "Coût de rénovation de salle de bain",
+    "flooring": "Coût d'installation de revêtement de sol"
   },
   "cityCostTable": {
     "kitchenTitle": "Coût de la cuisine par quartier de la région métropolitaine de Vancouver",
