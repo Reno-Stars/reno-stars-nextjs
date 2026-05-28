@@ -51,6 +51,13 @@ const COST_GUIDE_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
   'whole-house': '/guides/whole-house-renovation-cost-vancouver',
   cabinet: '/guides/cabinet-refinishing-cost-vancouver',
   commercial: '/guides/commercial-renovation-cost-vancouver',
+  // Flooring has a blog-post cost guide (not a /guides/ page). 2026-05-27 GSC
+  // shows /en/blog/hardwood-flooring-vancouver-installation-cost-2026/ at
+  // pos 9.8 / 109 impr / 0% CTR for "flooring renovation cost" — striking
+  // distance lift candidate. Cross-link applies the same internal-link-equity
+  // approach used for the dedicated /guides/ pages above. When a dedicated
+  // /guides/flooring-renovation-cost-vancouver/ ships, swap to that.
+  flooring: '/blog/hardwood-flooring-vancouver-installation-cost-2026',
 };
 
 interface ServiceDetailPageProps {
