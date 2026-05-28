@@ -23,6 +23,7 @@ vi.mock('@/lib/admin/translations', () => ({
       faqs: 'FAQs',
       trustBadges: 'Trust Badges',
       contacts: 'Contacts',
+      invoices: 'Invoices',
       company: 'Company',
       socialLinks: 'Social Links',
       partners: 'Partners',

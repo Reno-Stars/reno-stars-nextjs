@@ -22,13 +22,6 @@ export const MAX_TEXT_LENGTH = 50_000;
 /** Maximum length for short text fields (titles, excerpts, names). */
 export const MAX_SHORT_TEXT_LENGTH = 1_000;
 
-/** Maximum length for contact notes. */
-export const MAX_NOTES_LENGTH = 5_000;
-
-/** Valid contact statuses. */
-export const CONTACT_STATUSES = ['new', 'contacted', 'converted', 'rejected'] as const;
-export type ContactStatus = typeof CONTACT_STATUSES[number];
-
 /**
  * Validate that a string is a valid URL (http, https, or relative path).
  * Returns true for empty strings (optional fields).

@@ -8,27 +8,16 @@ import {
   blogPosts,
   testimonials,
   designs,
-  contactSubmissions,
   companyInfo,
 
   trustBadges,
   socialLinks,
   faqs,
-  contactStatusEnum,
   socialPlatformEnum,
 } from '@/lib/db/schema';
 
 describe('Database Schema', () => {
   describe('Enums', () => {
-    it('should have correct contact statuses', () => {
-      const enumValues = contactStatusEnum.enumValues;
-      expect(enumValues).toContain('new');
-      expect(enumValues).toContain('contacted');
-      expect(enumValues).toContain('converted');
-      expect(enumValues).toContain('rejected');
-      expect(enumValues).toHaveLength(4);
-    });
-
     it('should have correct social platforms', () => {
       const enumValues = socialPlatformEnum.enumValues;
       expect(enumValues).toContain('facebook');
@@ -167,17 +156,6 @@ describe('Database Schema', () => {
       expect(columns).toContain('id');
       expect(columns).toContain('imageUrl');
       expect(columns).toContain('isPublished');
-    });
-  });
-
-  describe('Contact Submissions Table', () => {
-    it('should have required columns', () => {
-      const columns = Object.keys(contactSubmissions);
-      expect(columns).toContain('id');
-      expect(columns).toContain('name');
-      expect(columns).toContain('email');
-      expect(columns).toContain('message');
-      expect(columns).toContain('status');
     });
   });
 

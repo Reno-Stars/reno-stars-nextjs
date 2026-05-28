@@ -33,14 +33,6 @@ export const SEO_FOCUS_KEYWORD_MAX = 50;
 // ENUMS
 // ============================================================================
 
-/** Status tracking for contact form submissions */
-export const contactStatusEnum = pgEnum('contact_status', [
-  'new',
-  'contacted',
-  'converted',
-  'rejected',
-]);
-
 /** Supported social media platforms */
 export const socialPlatformEnum = pgEnum('social_platform', [
   'facebook',
@@ -728,49 +720,6 @@ export const propertyTypes = pgTable(
   (table) => [uniqueIndex('property_types_slug_idx').on(table.slug)]
 );
 
-/** Contact form submissions for CRM */
-export const contactSubmissions = pgTable(
-  'contact_submissions',
-  {
-    id: uuid('id').defaultRandom().primaryKey(),
-    name: varchar('name', { length: 100 }).notNull(),
-    email: varchar('email', { length: 255 }),
-    phone: varchar('phone', { length: 30 }).notNull(),
-    message: text('message').notNull(),
-    preferredServiceId: uuid('preferred_service_id').references(
-      () => services.id
-    ),
-    preferredAreaId: uuid('preferred_area_id').references(() => serviceAreas.id),
-    propertyTypeId: uuid('property_type_id').references(() => propertyTypes.id),
-    status: contactStatusEnum('status').default('new').notNull(),
-    notes: text('notes'),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
-  },
-  (table) => [
-    index('contact_submissions_status_idx').on(table.status),
-    index('contact_submissions_created_at_idx').on(table.createdAt),
-  ]
-);
-
-export const contactSubmissionsRelations = relations(
-  contactSubmissions,
-  ({ one }) => ({
-    preferredService: one(services, {
-      fields: [contactSubmissions.preferredServiceId],
-      references: [services.id],
-    }),
-    preferredArea: one(serviceAreas, {
-      fields: [contactSubmissions.preferredAreaId],
-      references: [serviceAreas.id],
-    }),
-    propertyType: one(propertyTypes, {
-      fields: [contactSubmissions.propertyTypeId],
-      references: [propertyTypes.id],
-    }),
-  })
-);
-
 // ============================================================================
 // COMPANY INFO (Singleton)
 // ============================================================================
@@ -903,9 +852,6 @@ export type NewDbTestimonial = typeof testimonials.$inferInsert;
 
 export type DbDesign = typeof designs.$inferSelect;
 export type NewDbDesign = typeof designs.$inferInsert;
-
-export type DbContactSubmission = typeof contactSubmissions.$inferSelect;
-export type NewDbContactSubmission = typeof contactSubmissions.$inferInsert;
 
 export type DbCompanyInfo = typeof companyInfo.$inferSelect;
 export type NewDbCompanyInfo = typeof companyInfo.$inferInsert;

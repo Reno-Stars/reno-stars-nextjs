@@ -13,6 +13,8 @@ interface SidebarProps {
 interface NavItem {
   href: string;
   label: string;
+  /** When true, render as an external `<a target="_blank">` instead of a Next.js `<Link>`. */
+  external?: boolean;
 }
 
 interface NavGroup {
@@ -83,8 +85,11 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
       key: 'crm',
       label: t.nav.groups.crm,
       items: [
-        { href: '/admin/contacts', label: t.nav.contacts },
-        { href: '/admin/invoices', label: t.nav.invoices },
+        // CRM lives in Twenty (https://crm.reno-stars.com) since 2026-05-28.
+        // The Next.js admin no longer owns invoice/contact UIs — these are
+        // external links that open Twenty in a new tab.
+        { href: 'https://crm.reno-stars.com/objects/people', label: t.nav.contacts, external: true },
+        { href: 'https://crm.reno-stars.com/objects/invoices', label: t.nav.invoices, external: true },
       ],
       defaultExpanded: true,
     },
@@ -127,6 +132,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
 
     for (const group of navGroups) {
       const hasActiveItem = group.items.some((item) => {
+        if (item.external) return false;
         const normalizedHref = item.href.replace(/\/$/, '');
         return normalizedPath.startsWith(normalizedHref + '/') || normalizedPath === normalizedHref;
       });
@@ -260,23 +266,40 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
                 aria-labelledby={headerId}
               >
                 {group.items.map((item) => {
-                  const active = isActive(item.href);
+                  const active = !item.external && isActive(item.href);
+                  const style: React.CSSProperties = {
+                    display: 'block',
+                    padding: '0.625rem 1.25rem 0.625rem 2.25rem',
+                    color: active ? GOLD : SURFACE,
+                    backgroundColor: active ? NAVY_LIGHT : 'transparent',
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: active ? 600 : 400,
+                    borderLeft: active ? `3px solid ${GOLD}` : '3px solid transparent',
+                  };
+                  // External links open in a new tab (CRM lives outside this app).
+                  if (item.external) {
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={onNavigate}
+                        style={style}
+                      >
+                        {item.label}
+                        <span aria-hidden="true" style={{ marginLeft: '0.4rem', opacity: 0.6 }}>↗</span>
+                      </a>
+                    );
+                  }
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={onNavigate}
                       aria-current={active ? 'page' : undefined}
-                      style={{
-                        display: 'block',
-                        padding: '0.625rem 1.25rem 0.625rem 2.25rem',
-                        color: active ? GOLD : SURFACE,
-                        backgroundColor: active ? NAVY_LIGHT : 'transparent',
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        fontWeight: active ? 600 : 400,
-                        borderLeft: active ? `3px solid ${GOLD}` : '3px solid transparent',
-                      }}
+                      style={style}
                     >
                       {item.label}
                     </Link>

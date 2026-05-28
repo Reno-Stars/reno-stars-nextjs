@@ -4,11 +4,7 @@ import { headers } from 'next/headers';
 import { waitUntil } from '@vercel/functions';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import {
-  contactSubmissions,
-  propertyTypes,
-  serviceAreas,
-} from '@/lib/db/schema';
+import { propertyTypes, serviceAreas } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 import { crmClient, type CrmPropertyType } from '@/lib/clients/crm';
@@ -287,29 +283,20 @@ export async function submitContactForm(
     ]);
 
     const preferredAreaId = areaRow[0]?.id ?? null;
-    const propertyTypeId = propertyTypeRow[0]?.id ?? null;
     const cityNameEn = areaRow[0]?.nameEn ?? null;
     const propertyTypeNameEn = propertyTypeRow[0]?.nameEn ?? null;
 
-    // Save to database (primary source of truth until Phase B T11 cleanup).
-    await db.insert(contactSubmissions).values({
-      name: sanitizedName,
-      email: sanitizedEmail,
-      phone: sanitizedPhone,
-      message: sanitizedMessage,
-      preferredAreaId,
-      propertyTypeId,
-      status: 'new',
-    });
-
-    // Phase B T6: ALSO write the lead to Twenty CRM as a Person + Note + Task.
-    // The Neon insert above already succeeded, so the lead is safe even if
-    // every line below fails. We wrap the whole CRM chain in waitUntil so it
-    // runs in the background — the form action returns its success response
-    // immediately, and the user doesn't pay the CRM round-trip latency.
+    // Phase B cleanup (2026-05-28): Twenty CRM is the sole system of record
+    // for leads. The Neon `contact_submissions` dual-write was removed and
+    // the table dropped. We still look up the area/property type slug for
+    // human-readable email notification context + CRM payload.
     //
-    // On failure the deadletter logs to stderr + alerts Telegram so the user
-    // can investigate.
+    // We wrap the CRM chain in waitUntil so it runs in the background — the
+    // form action returns its success response immediately, and the user
+    // doesn't pay the CRM round-trip latency.
+    //
+    // On failure the deadletter logs to stderr + alerts Telegram so manual
+    // recovery is possible (the alert includes the full payload).
     const { firstName, lastName } = splitFullName(sanitizedName);
     const crmPayload = {
       firstName,

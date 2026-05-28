@@ -3,13 +3,16 @@ import 'server-only';
 /**
  * CRM dead-letter handler.
  *
- * Called when a server action's dual-write to Twenty CRM fails. The lead is
- * still safely in Neon `contact_submissions` (the dual-write writes there
- * FIRST, then attempts CRM), so the user has not lost data — they just need
- * to know CRM is unreachable so they can investigate.
+ * Called when a server action's write to Twenty CRM fails. Since the Phase B
+ * cleanup (2026-05-28) Twenty CRM is the SOLE system of record for leads —
+ * the legacy Neon `contact_submissions` table was dropped, so a failed CRM
+ * write means the lead is NOT yet stored anywhere durable. The Telegram
+ * alert includes the full sanitized payload so the lead can be recreated
+ * manually from the message.
  *
  * On failure, this:
- *  1. Logs a structured JSON event to stderr (visible in Vercel runtime logs).
+ *  1. Logs a structured JSON event to stderr (visible in Vercel runtime logs)
+ *     — the payload is included so the lead is recoverable from log search.
  *  2. Posts a Telegram alert to the Reno Stars work group, if the
  *     `TELEGRAM_BOT_TOKEN` env var is set. If it's not set, this is a no-op
  *     (graceful degradation — the stderr log still fires).
@@ -57,7 +60,7 @@ export async function recordCrmDeadLetter(
 
   const text = [
     '⚠️ *Contact form CRM-write failed*',
-    'Lead is saved in Neon `contact_submissions` as fallback — no data lost.',
+    'Lead is NOT in CRM — manual recovery needed from the payload below.',
     '',
     `*Error (${errorName}):*`,
     '```',

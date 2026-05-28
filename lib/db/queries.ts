@@ -109,7 +109,6 @@ import {
   projectScopes as projectScopesTable,
   projectExternalProducts as projectExternalProductsTable,
   blogPosts as blogPostsTable,
-  contactSubmissions as contactSubmissionsTable,
   serviceAreas as serviceAreasTable,
   propertyTypes as propertyTypesTable,
   designs as designsTable,
@@ -1584,11 +1583,6 @@ export async function getAllServicesAdmin() {
 /** Fetch all blog posts (admin — includes unpublished). */
 export async function getAllBlogPostsAdmin() {
   return db.select().from(blogPostsTable).orderBy(desc(blogPostsTable.createdAt));
-}
-
-/** Fetch all contact submissions (admin). */
-export async function getAllContactsAdmin() {
-  return db.select().from(contactSubmissionsTable).orderBy(desc(contactSubmissionsTable.createdAt));
 }
 
 /** Fetch all service areas (admin — includes inactive). */
