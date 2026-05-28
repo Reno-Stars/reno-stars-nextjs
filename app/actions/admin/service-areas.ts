@@ -3,7 +3,7 @@
 import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { serviceAreas, contactSubmissions, faqs } from '@/lib/db/schema';
+import { serviceAreas, faqs } from '@/lib/db/schema';
 import { eq, count, like } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
@@ -89,13 +89,10 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid service area ID.' };
   try {
-    const [[{ value: contactRefCount }], [{ value: faqRefCount }]] = await Promise.all([
-      db.select({ value: count() }).from(contactSubmissions).where(eq(contactSubmissions.preferredAreaId, id)),
-      db.select({ value: count() }).from(faqs).where(eq(faqs.serviceAreaId, id)),
-    ]);
-    if (contactRefCount > 0) {
-      return { error: `Cannot delete: ${contactRefCount} contact(s) reference this area.` };
-    }
+    const [{ value: faqRefCount }] = await db
+      .select({ value: count() })
+      .from(faqs)
+      .where(eq(faqs.serviceAreaId, id));
     if (faqRefCount > 0) {
       return { error: `Cannot delete: ${faqRefCount} FAQ(s) are assigned to this area. Reassign them first.` };
     }

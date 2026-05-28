@@ -43,7 +43,6 @@ vi.mock('@/lib/db/schema', () => ({
   serviceTags: { id: 'id', serviceId: 'serviceId' },
   serviceBenefits: { id: 'id', serviceId: 'serviceId' },
   projects: { serviceId: 'serviceId' },
-  contactSubmissions: { preferredServiceId: 'preferredServiceId' },
 }));
 
 vi.mock('@/lib/admin/auth', () => ({

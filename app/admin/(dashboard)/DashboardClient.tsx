@@ -15,8 +15,6 @@ import {
   ShieldCheck,
   Handshake,
   Megaphone,
-  Mail,
-  BellRing,
   Building2,
   Store,
   BookOpen,
@@ -26,8 +24,6 @@ import {
 interface DashboardStats {
   projects: number;
   services: number;
-  contacts: number;
-  newContacts: number;
   blogPosts: number;
   faqs: number;
   designs: number;
@@ -165,13 +161,6 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
         { label: t.dashboard.socialLinks, value: stats.socialLinks, href: '/admin/social-links', icon: Share2, accent: INFO },
         { label: t.dashboard.trustBadges, value: stats.badges, href: '/admin/trust-badges', icon: ShieldCheck, accent: INFO },
         { label: t.dashboard.partners, value: stats.partners, href: '/admin/partners', icon: Handshake, accent: INFO },
-      ],
-    },
-    {
-      title: t.dashboard.groupCrm,
-      cards: [
-        { label: t.dashboard.contacts, value: stats.contacts, href: '/admin/contacts', icon: Mail, accent: NAVY },
-        { label: t.dashboard.newContacts, value: stats.newContacts, href: '/admin/contacts?status=new', icon: BellRing, accent: GOLD, highlight: stats.newContacts > 0, notify: stats.newContacts > 0 },
       ],
     },
     {

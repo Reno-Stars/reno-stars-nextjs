@@ -2,7 +2,6 @@ import { db } from '@/lib/db';
 import {
   projects,
   services,
-  contactSubmissions,
   blogPosts,
   faqs,
   designs,
@@ -12,15 +11,13 @@ import {
   partners,
   socialMediaPosts,
 } from '@/lib/db/schema';
-import { count, eq } from 'drizzle-orm';
+import { count } from 'drizzle-orm';
 import DashboardClient from './DashboardClient';
 
 async function getStats() {
   const [
     projectCount,
     serviceCount,
-    contactCount,
-    newContactCount,
     blogCount,
     faqCount,
     designCount,
@@ -32,8 +29,6 @@ async function getStats() {
   ] = await Promise.all([
     db.select({ value: count() }).from(projects),
     db.select({ value: count() }).from(services),
-    db.select({ value: count() }).from(contactSubmissions),
-    db.select({ value: count() }).from(contactSubmissions).where(eq(contactSubmissions.status, 'new')),
     db.select({ value: count() }).from(blogPosts),
     db.select({ value: count() }).from(faqs),
     db.select({ value: count() }).from(designs),
@@ -47,8 +42,6 @@ async function getStats() {
   return {
     projects: projectCount[0].value,
     services: serviceCount[0].value,
-    contacts: contactCount[0].value,
-    newContacts: newContactCount[0].value,
     blogPosts: blogCount[0].value,
     faqs: faqCount[0].value,
     designs: designCount[0].value,
