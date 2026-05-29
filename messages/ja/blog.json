@@ -1,21 +1,30 @@
 {
   "blog": {
-    "title": "バンクーバーのリノベーション情報・ガイド",
-    "subtitle": "プロジェクトに役立つコツ、トレンド、洞察",
+    "title": "バンクーバーの改修に関するヒントとガイド",
+    "subtitle": "改修プロジェクトのヒント、トレンド、洞察",
     "readMore": "続きを読む",
     "publishedOn": "公開日",
-    "updated": "更新日",
+    "updated": "更新されました",
     "backToBlog": "ブログに戻る",
-    "comingSoon": "詳細記事は間もなく公開予定です。リノベーションのご質問はお気軽にお問い合わせください。",
-    "noPosts": "現在ブログ記事はありません。リノベーションのコツや情報は近日中に公開予定です。",
+    "comingSoon": "記事の全内容は近日公開予定です。それまでの間、改修に関するご質問がございましたらお問い合わせください。",
+    "noPosts": "まだブログ投稿はありません。リノベーションのヒントや洞察については、近々チェックしてください。",
     "relatedProject": "関連プロジェクト",
     "pagination": "ブログのページネーション",
-    "previous": "前へ",
-    "next": "次へ",
-    "previousPage": "前のページへ",
+    "previous": "前の",
+    "next": "次",
+    "previousPage": "前のページに戻る",
     "nextPage": "次のページへ",
-    "showingPosts": "{total}件中 {start}〜{end}件を表示",
+    "showingPosts": "{total} 件中 {start} ～ {end} 件の投稿を表示しています",
     "relatedServices": "関連サービス",
-    "relatedAreas": "あなたのエリアのリノベーション"
+    "relatedAreas": "お住まいの地域のリノベーション"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:04:55Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

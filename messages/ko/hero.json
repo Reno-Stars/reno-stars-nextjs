@@ -1,17 +1,26 @@
 {
   "hero": {
-    "whereRenovationStarts": "리노베이션이\n시작되는\n곳",
-    "yearsOfExcellence": "탁월한 경력",
-    "transformYourSpace": "밴쿠버 주택 리노베이션 전문가",
-    "renovationRemodeling": "리노베이션 & 리모델링",
-    "thoughtfulSpaces": "정성을 다해 만드는 사려 깊은 공간",
+    "whereRenovationStarts": "어디서\n혁신\n시작",
+    "yearsOfExcellence": "수년간의 우수성",
+    "transformYourSpace": "밴쿠버 주택 개조 전문가",
+    "renovationRemodeling": "리노베이션 및 리모델링",
+    "thoughtfulSpaces": "세심하게 제작된 사려 깊은 공간",
     "premiumRenovations": "프리미엄 리노베이션",
-    "elevateYourSpace": "당신의 공간을",
+    "elevateYourSpace": "당신의 공간을 향상시키세요",
     "toLuxury": "럭셔리하게",
-    "buildingBetterSpaces": "더 나은 공간 만들기",
-    "professionalExcellence": "전문 리노베이션의 차이",
-    "professionalExcellenceDesc": "{experience}년 이상의 경력, {coverage} CGL 보험, 활성 WCB 커버, 최대 3년 보증을 갖춘 밴쿠버 주택 리노베이션 회사. 메트로 밴쿠버 전역의 주방, 욕실, 주택 전체 리노베이션.",
-    "realEstateTitle": "원스톱 서비스: 리노베이션 + 부동산 + 촬영",
-    "realEstateDesc": "주택 종합 리노베이션부터 부동산 중개와 전문 사진까지. 신뢰할 수 있는 전문가들과 협력하여 모든 것을 한 지붕 아래에서 제공합니다."
+    "buildingBetterSpaces": "더 나은 공간 구축",
+    "professionalExcellence": "전문적인 혁신의 우수성",
+    "professionalExcellenceDesc": "{experience}+년의 경험, {coverage} CGL 보험, 활성 WCB 보장 및 최대 3년 보증을 갖춘 밴쿠버 주택 개조 회사입니다. 메트로 밴쿠버 전역의 주방, 욕실 및 집 전체를 개조합니다.",
+    "realEstateTitle": "원스톱 서비스: 리모델링 + 부동산 + 사진",
+    "realEstateDesc": "완전한 주택 개조부터 부동산 중개인 및 전문 사진 촬영까지. 우리는 신뢰할 수 있는 전문가들과 협력하여 모든 것을 한 지붕 아래에서 제공합니다."
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:11:16Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

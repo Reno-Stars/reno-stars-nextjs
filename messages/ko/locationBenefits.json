@@ -1,10 +1,19 @@
 {
   "locationBenefits": {
-    "localExpertise": "지역에 특화된 전문성",
+    "localExpertise": "해당 지역의 현지 전문 지식",
     "freeOnsite": "무료 현장 상담",
-    "competitivePricing": "경쟁력 있는 지역 가격",
-    "quickResponse": "빠른 응답",
-    "experience": "로우어 메인랜드 {years}년+ 서비스",
-    "licensedInsured": "면허 보유 및 완전 보험 (CGL + WCB)"
+    "competitivePricing": "경쟁력 있는 현지 가격",
+    "quickResponse": "빠른 응답 시간",
+    "experience": "{year}년 이상 Lower Mainland에서 복무",
+    "licensedInsured": "라이센스 및 완전 보험(CGL + WCB)"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:11:54Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

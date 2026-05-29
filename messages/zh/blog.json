@@ -1,21 +1,30 @@
 {
   "blog": {
-    "title": "温哥华装修技巧与指南",
-    "subtitle": "装修项目的技巧、趋势和见解",
+    "title": "温哥华装修技巧和指南",
+    "subtitle": "针对您的改造项目的提示、趋势和见解",
     "readMore": "阅读更多",
-    "publishedOn": "发布于",
-    "updated": "更新于",
+    "publishedOn": "发表于",
+    "updated": "已更新",
     "backToBlog": "返回博客",
-    "comingSoon": "完整文章内容即将上线。如有任何装修问题，请随时联系我们。",
-    "noPosts": "暂无博客文章。请稍后查看装修技巧和见解。",
+    "comingSoon": "完整的文章内容即将推出。如有任何装修问题，请同时联系我们。",
+    "noPosts": "还没有博客文章。请尽快回来查看装修技巧和见解。",
     "relatedProject": "相关项目",
     "pagination": "博客分页",
-    "previous": "上一页",
-    "next": "下一页",
+    "previous": "以前的",
+    "next": "下一个",
     "previousPage": "转到上一页",
     "nextPage": "转到下一页",
-    "showingPosts": "显示第 {start}-{end} 篇，共 {total} 篇文章",
+    "showingPosts": "显示 {start}-{end} 个帖子（共 {total} 个）",
     "relatedServices": "相关服务",
-    "relatedAreas": "您所在地区的装修服务"
+    "relatedAreas": "您所在地区的装修"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:04:32Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

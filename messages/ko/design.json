@@ -1,14 +1,23 @@
 {
   "design": {
-    "seoTitle": "전문 리노베이션 디자인 & 3D 렌더링",
-    "seoParagraph1": "Reno Stars에서는 모든 리노베이션이 상세한 디자인 단계로 시작됩니다. 사내 디자이너가 사진처럼 사실적인 3D 렌더링을 제작하여 시공 시작 전에 최종 결과를 시각화할 수 있습니다. 주방 레이아웃과 욕실 리모델링부터 주택 전체 변화까지, 정밀함과 창의성으로 비전을 실현합니다.",
-    "seoParagraph2": "주방, 욕실, 거실 공간 및 상업 인테리어를 아우르는 인테리어 디자인 컨셉 컬렉션을 둘러보세요. 각 렌더링은 현대적인 미학과 실용적인 기능성을 결합한 우리의 약속을 반영하며, 밴쿠버와 로우어 메인랜드 전역의 주택과 사업체에 맞춤화됩니다.",
-    "designFeature1Title": "3D 비주얼라이제이션",
-    "designFeature1Desc": "시공 시작 전에 모든 디테일 ― 자재, 조명, 배치 ― 을 사진처럼 사실적인 렌더링으로 확인하세요.",
-    "designFeature2Title": "고객 맞춤형",
-    "designFeature2Desc": "모든 디자인을 공간, 라이프스타일, 예산에 맞게 맞춤화합니다. 천편일률적 솔루션은 없습니다.",
-    "designFeature3Title": "디자인부터 시공까지",
-    "designFeature3Desc": "콘셉트부터 완공까지 우리 팀이 전 과정을 관리하며 비전이 그대로 실현되도록 합니다.",
-    "noDesigns": "디자인 갤러리는 곧 공개됩니다. 추후 다시 확인해 주세요."
+    "seoTitle": "전문적인 혁신 디자인 및 3D 렌더링",
+    "seoParagraph1": "Reno Stars에서는 모든 리노베이션이 세부적인 설계 단계부터 시작됩니다. 당사의 내부 디자이너는 사실적인 3D 렌더링을 생성하므로 공사가 시작되기 전에 최종 결과를 시각화할 수 있습니다. 주방 레이아웃과 욕실 리모델링부터 집 전체의 변화까지, 저희는 정확하고 창의성을 바탕으로 귀하의 비전을 현실로 만들어 드립니다.",
+    "seoParagraph2": "주방, 욕실, 생활 공간, 상업용 인테리어를 아우르는 인테리어 디자인 컨셉 컬렉션을 찾아보세요. 각 렌더링은 밴쿠버와 Lower Mainland 전역의 가정과 기업에 맞게 현대적인 미학과 실용적인 기능을 혼합하려는 우리의 노력을 반영합니다.",
+    "designFeature1Title": "3D 시각화",
+    "designFeature1Desc": "사실적인 렌더링을 통해 공사가 시작되기 전에 재료, 조명, 레이아웃 등 모든 세부 사항을 확인할 수 있습니다.",
+    "designFeature2Title": "당신에게 맞춤",
+    "designFeature2Desc": "모든 디자인은 귀하의 공간, 라이프 스타일 및 예산에 맞게 맞춤화됩니다. 틀에 박힌 솔루션은 없습니다.",
+    "designFeature3Title": "구축을 위한 설계",
+    "designFeature3Desc": "우리 팀은 컨셉부터 완료까지 전체 과정을 처리하여 최종 결과가 비전과 일치하도록 보장합니다.",
+    "noDesigns": "디자인 갤러리가 곧 오픈됩니다. 나중에 다시 확인해 주세요."
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:07:24Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

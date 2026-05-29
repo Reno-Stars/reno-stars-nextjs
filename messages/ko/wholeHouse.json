@@ -1,19 +1,28 @@
 {
   "wholeHouse": {
     "projectOverview": "프로젝트 개요",
-    "includedAreas": "포함 지역",
+    "includedAreas": "포함된 지역",
     "totalBudget": "예산",
-    "totalDuration": "기간",
-    "allServiceScopes": "포함된 모든 서비스",
+    "totalDuration": "타임라인",
+    "allServiceScopes": "모든 서비스 포함",
     "viewAreaProject": "{area} 프로젝트 보기",
-    "viewAreaDetails": "상세 보기",
+    "viewAreaDetails": "세부정보 보기",
     "combinedGallery": "프로젝트 갤러리",
-    "filterByArea": "지역별 필터",
+    "filterByArea": "지역별로 필터링",
     "allAreas": "모든 지역",
-    "childProjectsCount": "{count} 리노베이션 영역",
-    "noImagesForArea": "이 지역의 이미지가 없습니다",
-    "areasCount": "{count, plural, one {# 영역} other {# 영역}}",
-    "siteBadge": "주택 전체",
-    "areas": "영역"
+    "childProjectsCount": "{count}개 개조 지역",
+    "noImagesForArea": "이 지역에 사용할 수 있는 이미지가 없습니다.",
+    "areasCount": "{count, plural, one {# Area} other {# Areas}}",
+    "siteBadge": "전원",
+    "areas": "지역"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:19:22Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

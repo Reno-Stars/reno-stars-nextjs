@@ -1,10 +1,19 @@
 {
   "designFaqs": {
     "q1": "設計諮詢包括哪些內容？",
-    "a1": "設計諮詢包括討論您的構想、空間評估、材料推薦、適用時的3D可視化效果，以及包含時間表和預算估算的詳細項目方案。",
-    "q2": "你們提供裝修設計的3D效果圖嗎？",
-    "a2": "是的，我們爲許多項目提供3D可視化效果圖，讓您在施工前就能看到翻新空間的實際效果。",
+    "a1": "我們的設計諮詢包括討論您的願景、空間評估、材料建議、適用的 3D 視覺化以及包含時間表和預算估算的詳細專案計劃。",
+    "q2": "你們有提供裝潢設計的 3D 效果圖嗎？",
+    "a2": "是的，我們為許多項目提供 3D 視覺化，因此您可以在任何工作開始之前準確地看到翻新空間的外觀。",
     "q3": "設計諮詢費用是多少？",
-    "a3": "我們的初次設計諮詢是免費的。我們希望在您做出任何承諾之前，幫助您充分探索各種方案。"
+    "a3": "我們的初步設計諮詢是免費的。我們相信在做出任何承諾之前可以幫助您探索您的選擇。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:07:33Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

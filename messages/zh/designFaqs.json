@@ -1,10 +1,19 @@
 {
   "designFaqs": {
     "q1": "设计咨询包括哪些内容？",
-    "a1": "设计咨询包括讨论您的构想、空间评估、材料推荐、适用时的3D可视化效果，以及包含时间表和预算估算的详细项目方案。",
-    "q2": "你们提供装修设计的3D效果图吗？",
-    "a2": "是的，我们为许多项目提供3D可视化效果图，让您在施工前就能看到翻新空间的实际效果。",
+    "a1": "我们的设计咨询包括讨论您的愿景、空间评估、材料建议、适用的 3D 可视化以及包含时间表和预算估算的详细项目计划。",
+    "q2": "你们提供装修设计的 3D 效果图吗？",
+    "a2": "是的，我们为许多项目提供 3D 可视化，因此您可以在任何工作开始之前准确地看到翻新空间的外观。",
     "q3": "设计咨询费用是多少？",
-    "a3": "我们的初次设计咨询是免费的。我们希望在您做出任何承诺之前，帮助您充分探索各种方案。"
+    "a3": "我们的初步设计咨询是免费的。我们相信在做出任何承诺之前可以帮助您探索您的选择。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:07:29Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

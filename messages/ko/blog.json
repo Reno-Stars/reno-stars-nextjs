@@ -1,21 +1,30 @@
 {
   "blog": {
-    "title": "밴쿠버 리노베이션 팁 & 가이드",
-    "subtitle": "리노베이션 프로젝트를 위한 팁, 트렌드, 인사이트",
-    "readMore": "더 보기",
-    "publishedOn": "게시일",
-    "updated": "업데이트",
-    "backToBlog": "블로그로",
-    "comingSoon": "전체 기사가 곧 공개됩니다. 그동안 리노베이션 관련 문의는 언제든 연락해 주세요.",
-    "noPosts": "아직 블로그 게시물이 없습니다. 리노베이션 팁과 인사이트는 곧 공개됩니다.",
+    "title": "밴쿠버 혁신 팁 및 가이드",
+    "subtitle": "리노베이션 프로젝트에 대한 팁, 동향 및 통찰력",
+    "readMore": "자세히 알아보기",
+    "publishedOn": "게시 날짜",
+    "updated": "업데이트됨",
+    "backToBlog": "블로그로 돌아가기",
+    "comingSoon": "전체 기사 내용이 곧 제공될 예정입니다. 그동안 개조 관련 질문이 있으면 저희에게 연락하세요.",
+    "noPosts": "아직 블로그 게시물이 없습니다. 곧 다시 방문해 혁신 팁과 통찰력을 확인하세요.",
     "relatedProject": "관련 프로젝트",
-    "pagination": "블로그 페이지네이션",
-    "previous": "이전",
+    "pagination": "블로그 페이지 매김",
+    "previous": "이전의",
     "next": "다음",
-    "previousPage": "이전 페이지",
-    "nextPage": "다음 페이지",
-    "showingPosts": "총 {total}개 중 {start}-{end}개 표시",
+    "previousPage": "이전 페이지로 이동",
+    "nextPage": "다음 페이지로 이동",
+    "showingPosts": "게시물 {total}개 중 {start}-{end} 표시 중",
     "relatedServices": "관련 서비스",
-    "relatedAreas": "내 지역의 리노베이션"
+    "relatedAreas": "해당 지역의 혁신"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:05:06Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

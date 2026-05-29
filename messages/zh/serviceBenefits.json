@@ -1,10 +1,19 @@
 {
   "serviceBenefits": {
-    "freeConsultation": "免费咨询和报价",
-    "licensedInsured": "持证和全面保险（CGL + WCB）",
-    "coverageAndWarranty": "500万CGL保险、有效WCB保障、至多3年质保",
-    "experience": "{years}年以上经验",
-    "rating": "谷歌五星好评",
-    "projectsDone": "已完成700+项目"
+    "freeConsultation": "免费咨询及报价",
+    "licensedInsured": "获得许可并全面投保（CGL + WCB）",
+    "coverageAndWarranty": "500 万美元 CGL 保险、有效的 WCB 保险、长达 3 年保修",
+    "experience": "{年}+ 年经验",
+    "rating": "5 星 Google 评级",
+    "projectsDone": "已完成700多个项目"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:16:13Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

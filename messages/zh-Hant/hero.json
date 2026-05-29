@@ -1,17 +1,26 @@
 {
   "hero": {
-    "whereRenovationStarts": "裝修\n從這裏\n開始",
-    "yearsOfExcellence": "年卓越經驗",
-    "transformYourSpace": "大溫哥華地區專業裝修",
-    "renovationRemodeling": "裝修與改造",
-    "thoughtfulSpaces": "用心打造，精心設計",
-    "premiumRenovations": "高端裝修",
+    "whereRenovationStarts": "哪裡\n裝潢\n開始",
+    "yearsOfExcellence": "多年的卓越表現",
+    "transformYourSpace": "溫哥華家居裝修專家",
+    "renovationRemodeling": "翻新及改造",
+    "thoughtfulSpaces": "深思熟慮的空間，精心打造",
+    "premiumRenovations": "高級裝修",
     "elevateYourSpace": "提升您的空間",
-    "toLuxury": "臻於奢華",
-    "buildingBetterSpaces": "打造更美好的空間",
-    "professionalExcellence": "專業卓越的裝修服務",
-    "professionalExcellenceDesc": "憑藉超過{experience}年的經驗、500萬CGL保險、有效WCB工傷保障及至多三年質保，我們爲大溫哥華地區提供卓越的住宅及商業裝修服務。",
-    "realEstateTitle": "一站式服務：裝修 + 房產經紀 + 攝影",
-    "realEstateDesc": "從專業裝修到房產經紀與攝影服務，我們與專業經紀人合作，爲您提供真正的一站式服務，讓您的房子以最佳狀態呈現。"
+    "toLuxury": "至奢華",
+    "buildingBetterSpaces": "建造更好的空間",
+    "professionalExcellence": "專業裝潢卓越",
+    "professionalExcellenceDesc": "Vancouver home renovation company with {experience}+ years of experience, {coverage} CGL insurance, active WCB coverage, and up to 3 years warranty. Kitchen, bathroom and whole house renovations across Metro Vancouver.",
+    "realEstateTitle": "一站式服務：裝修+房產+攝影",
+    "realEstateDesc": "從完整的家居裝修到房地產經紀人和專業攝影。我們與值得信賴的專業人士合作，一站式提供一切服務。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:10:46Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

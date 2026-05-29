@@ -1,10 +1,19 @@
 {
   "areaBenefits": {
-    "localTeam": "エリアに精通した地元チーム",
-    "quickResponse": "迅速な対応",
-    "buildingCodes": "地域の建築基準への精通",
-    "supplierRelationships": "確立された仕入先との関係",
-    "freeOnsite": "無料の現地相談",
-    "competitivePricing": "地域に競争力のある価格"
+    "localTeam": "地域に精通した地元チーム",
+    "quickResponse": "素早い応答時間",
+    "buildingCodes": "現地の建築基準に関する知識",
+    "supplierRelationships": "確立されたサプライヤー関係",
+    "freeOnsite": "無料現地相談",
+    "competitivePricing": "競争力のある現地価格設定"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:02:04Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

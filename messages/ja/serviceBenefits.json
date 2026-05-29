@@ -1,10 +1,19 @@
 {
   "serviceBenefits": {
-    "freeConsultation": "無料相談・見積もり",
-    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)",
-    "coverageAndWarranty": "$5M CGL保険、有効なWCBカバー、最大3年間の保証",
-    "experience": "{years}年以上の経験",
-    "rating": "Google 5つ星評価",
-    "projectsDone": "700件以上の施工実績"
+    "freeConsultation": "ご相談・お見積りは無料です",
+    "licensedInsured": "認可済み、完全保険付き (CGL + WCB)",
+    "coverageAndWarranty": "500 万ドルの CGL 保険、アクティブな WCB 補償、最長 3 年間の保証",
+    "experience": "{年}+ 年の経験",
+    "rating": "Google の 5 つ星評価",
+    "projectsDone": "700以上のプロジェクトが完了"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:16:25Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

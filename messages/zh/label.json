@@ -1,18 +1,27 @@
 {
   "label": {
     "phone": "电话",
-    "email": "邮箱",
+    "email": "电子邮件",
     "address": "地址",
-    "location": "位置",
-    "contact": "联系方式",
-    "quality": "品质保证",
+    "location": "地点",
+    "contact": "接触",
+    "quality": "质量",
     "whyChooseUs": "为什么选择我们",
-    "verifiedCustomer": "认证客户",
-    "new": "新",
-    "new2": "新",
+    "verifiedCustomer": "已验证客户",
+    "new": "新的",
+    "new2": "新的",
     "businessHours": "营业时间",
-    "businessHoursShort": "周一至五 8–18时，周六 9–16时",
-    "businessHoursDetail": "周一至周五：上午8:00 - 下午6:00\n周六：上午9:00 - 下午4:00\n周日：休息",
+    "businessHoursShort": "周一至周五上午 8 点至下午 6 点，周六上午 9 点至下午 4 点",
+    "businessHoursDetail": "周一至周五：上午 8:00 至下午 6:00\n周六：上午 9:00 - 下午 4:00\n周日：休息",
     "featured": "精选"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:11:21Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

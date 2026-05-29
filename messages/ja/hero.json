@@ -1,17 +1,26 @@
 {
   "hero": {
-    "whereRenovationStarts": "リノベーションが\n始まる場所",
-    "yearsOfExcellence": "卓越した実績の年数",
-    "transformYourSpace": "バンクーバーの住宅リノベーションのプロ",
-    "renovationRemodeling": "リノベーション・リモデリング",
-    "thoughtfulSpaces": "心を込めて作る、思い遣りの空間",
+    "whereRenovationStarts": "どこで\n改修\n始まります",
+    "yearsOfExcellence": "長年にわたる卓越性",
+    "transformYourSpace": "バンクーバーの住宅リフォームの専門家",
+    "renovationRemodeling": "改修・改築",
+    "thoughtfulSpaces": "丁寧に作られた思慮深い空間",
     "premiumRenovations": "プレミアムリノベーション",
-    "elevateYourSpace": "あなたの空間を",
-    "toLuxury": "ラグジュアリーへ",
-    "buildingBetterSpaces": "より良い空間づくり",
-    "professionalExcellence": "プロフェッショナルなリノベーション",
-    "professionalExcellenceDesc": "{experience}年以上の経験、{coverage}のCGL保険、有効なWCBカバー、最大3年間の保証を備えたバンクーバーの住宅リノベーション会社。メトロバンクーバー全域でキッチン、バスルーム、住宅全体のリノベーションを手掛けています。",
-    "realEstateTitle": "ワンストップサービス: リノベーション + 不動産 + 撮影",
-    "realEstateDesc": "住宅の総合リノベーションから不動産仲介、プロカメラマンの撮影まで。信頼できるプロフェッショナルと連携し、すべてをワンストップで提供します。"
+    "elevateYourSpace": "あなたの空間を向上させましょう",
+    "toLuxury": "贅沢へ",
+    "buildingBetterSpaces": "より良い空間の構築",
+    "professionalExcellence": "プロフェッショナルな優れたリノベーション",
+    "professionalExcellenceDesc": "バンクーバーの住宅リフォーム会社。{experience}+ 年以上の経験、{coverage} の CGL 保険、アクティブな WCB 補償、最長 3 年の保証を備えています。メトロバンクーバー全域でのキッチン、バスルーム、家全体の改修工事。",
+    "realEstateTitle": "リノベーション＋不動産＋写真撮影のワンストップサービス",
+    "realEstateDesc": "住宅の全面改装から不動産業者、プロの写真撮影まで。私たちは信頼できる専門家と提携して、すべてを 1 つ屋根の下で提供します。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:11:01Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

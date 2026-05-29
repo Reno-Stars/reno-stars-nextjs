@@ -5,10 +5,19 @@
     "budget": "預算範圍",
     "spaceType": "空間類型",
     "serviceScope": "服務範圍",
-    "duration": "工期",
-    "challenge": "項目挑戰",
-    "solution": "我們的方案",
+    "duration": "期間",
+    "challenge": "挑戰",
+    "solution": "我們的解決方案",
     "close": "關閉",
-    "viewDetails": "查看完整詳情"
+    "viewDetails": "看完整詳情"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:12:00Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }
