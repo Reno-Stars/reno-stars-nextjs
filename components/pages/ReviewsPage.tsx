@@ -52,7 +52,9 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg
 function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }) {
   const t = useTranslations("reviewsPage");
   const [expanded, setExpanded] = useState(false);
-  const text = locale === "zh" && review.textZh ? review.textZh : review.text;
+  // Per-locale translated text from `review.translations?.[locale]` (populated
+  // by `pnpm reviews:cache` per PR #83). EN fallback when translation absent.
+  const text = review.translations?.[locale] ?? review.text;
   const isLong = text.length > 300;
 
   return (

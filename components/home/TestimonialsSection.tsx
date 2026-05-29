@@ -60,7 +60,7 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
           ))}
         </div>
         <p className="text-sm leading-relaxed italic mb-4 line-clamp-5 flex-1" style={{ color: TEXT_MID }}>
-          &ldquo;{locale === 'zh' && review.textZh ? review.textZh : review.text}&rdquo;
+          &ldquo;{review.translations?.[locale] ?? review.text}&rdquo;
         </p>
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-3 min-w-0">
@@ -84,10 +84,15 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
 }
 
 export default function TestimonialsSection({ googleReviews, locale, translations: t }: TestimonialsSectionProps) {
-  // On Chinese locale, only show reviews that have Chinese translations
-  const reviews = locale === 'zh'
-    ? googleReviews.reviews.filter((r) => r.textZh)
-    : googleReviews.reviews;
+  // Show all five-star reviews on every locale. Per-locale translated text
+  // comes from `review.translations?.[locale]` populated by `pnpm reviews:cache`
+  // (Stage 1 of Hongming Option 1, shipped in PR #83). When a locale lacks a
+  // translation for a given review, we render the EN source (`review.text`) —
+  // better than hiding the section entirely. The earlier `locale === 'zh'`
+  // filter (drop reviews lacking `textZh`) was the structural root cause of
+  // the /zh/ testimonials-section blank diagnosed 2026-05-28T1340Z; this
+  // refactor closes that finding.
+  const reviews = googleReviews.reviews;
   if (reviews.length === 0) return null;
 
   // CARD_WIDTH = sm:w-80 (320px) + gap-5 (20px)
