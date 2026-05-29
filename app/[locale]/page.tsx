@@ -23,12 +23,14 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// ISR: revalidate homepage every hour. The hero, testimonials, and
-// stats blocks pull from the DB (`company`, `googleReviews`, `services`,
-// `projects`, etc.); without revalidate they're frozen until next deploy.
-// Hourly cadence balances freshness (new Google reviews, new projects,
-// updated company stats) against build cost. Same pattern as /reviews/.
-export const revalidate = 3600;
+// ISR: revalidate homepage daily. The hero, testimonials, and stats blocks
+// pull from the DB (`company`, `googleReviews`, `services`, `projects`, etc.);
+// without revalidate they're frozen until next deploy. DAILY cadence (not
+// hourly) per Hongming 2026-05-29 — reviews/translations don't change hourly,
+// so 86400 cuts regen cost ~24x while still auto-surfacing without a manual
+// deploy. This + /reviews/ are the documented ISR exceptions to the otherwise
+// SSG-only architecture (see CLAUDE.md "Rendering").
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

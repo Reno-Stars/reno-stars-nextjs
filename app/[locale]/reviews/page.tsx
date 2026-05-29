@@ -12,13 +12,15 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// ISR: revalidate /reviews/ every hour so new Google reviews + cache-row
+// ISR: revalidate /reviews/ daily so new Google reviews + cache-row
 // translation updates (e.g. backfilling via `pnpm reviews:cache` per §5.2)
-// surface within 1h instead of requiring a redeploy. The underlying
-// fetch in `getGoogleReviews()` already has its own 24h cache on the
-// Places API call; this revalidate controls the page-level SSG snapshot,
-// not the API hit rate.
-export const revalidate = 3600;
+// surface without requiring a redeploy. DAILY cadence (86400, not hourly)
+// per Hongming 2026-05-29 — reviews don't change hourly, so this cuts regen
+// cost ~24x. The underlying fetch in `getGoogleReviews()` already has its own
+// 24h cache on the Places API call; this revalidate controls the page-level
+// SSG snapshot, not the API hit rate. This + the homepage are the documented
+// ISR exceptions to the otherwise SSG-only architecture (see CLAUDE.md).
+export const revalidate = 86400;
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));

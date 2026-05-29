@@ -52,6 +52,14 @@ pnpm test:e2e             # Playwright headless
   `VERCEL_DEPLOY_HOOK_URL` in Vercel production env vars (NOT preview/dev,
   which should leave it unset). Sitemap.ts and feed.xml/route.ts retain
   weekly ISR for crawler/RSS-subscriber freshness.
+  **Documented ISR exceptions (intentional, not drift):** the homepage
+  (`app/[locale]/page.tsx`) and `/reviews/` (`app/[locale]/reviews/page.tsx`)
+  carry `export const revalidate = 86400` (daily ISR) — added 2026-05-29 so
+  new Google reviews + machine-translated review bodies (backfilled via
+  `pnpm reviews:cache`, free Google Translate per the SEO agent's §5.2)
+  auto-surface without a manual deploy. Daily (not hourly) keeps the regen
+  cost negligible (2 routes). Any NEW ISR additions beyond these must be
+  flagged against this SSG-default decision, not added silently.
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing, admin auth, security headers.
 - **Lazy DB proxy:** `db` export uses a Proxy — safe to import at build time.
