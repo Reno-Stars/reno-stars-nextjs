@@ -3,8 +3,9 @@
  *
  * Usage: pnpm reviews:cache
  *
- * This fetches live reviews from the Google Places API, translates them
- * to Chinese using OpenAI, and upserts the result into the
+ * This fetches live reviews from the Google Places API, machine-translates
+ * them to all configured locales using the FREE `translate.googleapis.com`
+ * unauthenticated endpoint, and upserts the result into the
  * `google_reviews_cache` table (single row keyed by `cache_key='default'`).
  *
  * Replaces the old write-to-`google-reviews-cache.json` flow that was
@@ -13,7 +14,9 @@
  * Run before deploys or periodically in CI to ensure the cache stays fresh.
  *
  * Requires GOOGLE_PLACES_API_KEY, GOOGLE_PLACE_ID, and DATABASE_URL env vars.
- * Optional: OPENAI_API_KEY for Chinese translation (skipped if not set).
+ * No API key needed for translation — uses the public Google Translate
+ * single-segment endpoint (per Reno Stars policy §5.2 added 2026-05-29:
+ * translations are a FREE-TIER capability, not paid).
  */
 
 import { eq } from 'drizzle-orm';
@@ -22,7 +25,6 @@ import { googleReviewsCache } from '../lib/db/schema';
 import type { GoogleReview, GooglePlaceRating } from '../lib/types';
 import type { RawReview } from '../lib/google-reviews';
 import { mapReview } from '../lib/google-reviews';
-import { AI_CONFIG, parseJsonResponse } from '../lib/ai/openai';
 
 const CACHE_KEY = 'default';
 
@@ -63,54 +65,87 @@ async function readExistingCache(): Promise<GooglePlaceRating | null> {
 }
 
 /**
- * Per-locale display labels for the translation prompt. Keys are BCP-47 codes
- * matching the site's locale set in i18n/config.ts (minus `en` which is the
- * source). Order matches roughly priority for cost-bounded incremental
- * backfills: zh first because it's the largest non-EN market segment.
+ * Per-locale display labels + Google Translate target-language (tl) codes.
+ * Keys are BCP-47 codes matching the site's locale set in i18n/config.ts
+ * (minus `en` which is the source). `tlCode` is the value passed in the
+ * `&tl=` query param of the translate.googleapis.com endpoint — for
+ * Chinese variants this differs from the BCP-47 code (zh → zh-CN,
+ * zh-Hant → zh-TW).
  *
  * If a tenant deploys a different locale set, update this map AND the
  * Locale union in i18n/config.ts in the same change.
  */
-const TRANSLATION_TARGETS: Array<{ locale: import('../i18n/config').Locale; languageLabel: string }> = [
-  { locale: 'zh', languageLabel: 'Simplified Chinese' },
-  { locale: 'zh-Hant', languageLabel: 'Traditional Chinese (Taiwan variant)' },
-  { locale: 'ja', languageLabel: 'Japanese' },
-  { locale: 'ko', languageLabel: 'Korean' },
-  { locale: 'es', languageLabel: 'Spanish (Latin American)' },
-  { locale: 'fr', languageLabel: 'French (Canadian)' },
-  { locale: 'ru', languageLabel: 'Russian' },
-  { locale: 'tl', languageLabel: 'Tagalog' },
-  { locale: 'vi', languageLabel: 'Vietnamese' },
-  { locale: 'pa', languageLabel: 'Punjabi (Gurmukhi script)' },
-  { locale: 'fa', languageLabel: 'Persian/Farsi' },
-  { locale: 'ar', languageLabel: 'Arabic (Modern Standard)' },
-  { locale: 'hi', languageLabel: 'Hindi (Devanagari script)' },
+const TRANSLATION_TARGETS: Array<{
+  locale: import('../i18n/config').Locale;
+  languageLabel: string;
+  tlCode: string;
+}> = [
+  { locale: 'zh',      languageLabel: 'Simplified Chinese',              tlCode: 'zh-CN' },
+  { locale: 'zh-Hant', languageLabel: 'Traditional Chinese (Taiwan)',    tlCode: 'zh-TW' },
+  { locale: 'ja',      languageLabel: 'Japanese',                        tlCode: 'ja' },
+  { locale: 'ko',      languageLabel: 'Korean',                          tlCode: 'ko' },
+  { locale: 'es',      languageLabel: 'Spanish (Latin American)',        tlCode: 'es' },
+  { locale: 'fr',      languageLabel: 'French (Canadian)',               tlCode: 'fr' },
+  { locale: 'ru',      languageLabel: 'Russian',                         tlCode: 'ru' },
+  { locale: 'tl',      languageLabel: 'Tagalog',                         tlCode: 'tl' },
+  { locale: 'vi',      languageLabel: 'Vietnamese',                      tlCode: 'vi' },
+  { locale: 'pa',      languageLabel: 'Punjabi (Gurmukhi script)',       tlCode: 'pa' },
+  { locale: 'fa',      languageLabel: 'Persian/Farsi',                   tlCode: 'fa' },
+  { locale: 'ar',      languageLabel: 'Arabic (Modern Standard)',        tlCode: 'ar' },
+  { locale: 'hi',      languageLabel: 'Hindi (Devanagari script)',       tlCode: 'hi' },
 ];
 
 /**
- * Translate review texts into all configured locales using OpenAI.
+ * Translate one source text into one target language using the FREE
+ * `translate.googleapis.com/translate_a/single` endpoint. No API key
+ * required. Response is a nested array where `[0]` is a list of
+ * `[translated, source, ...]` tuples — we join the translated segments
+ * back into a single string to handle long-text segmentation.
+ *
+ * Returns `null` on HTTP error / parse failure so the caller can decide
+ * to skip this (review × locale) pair without aborting the whole pass.
+ */
+async function translateOne(text: string, tlCode: string): Promise<string | null> {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(tlCode)}&dt=t&q=${encodeURIComponent(text)}`;
+  try {
+    const res = await fetch(url, {
+      // The endpoint is unauthenticated but expects a User-Agent that
+      // doesn't look like a script. Use a generic Mozilla string.
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ReviewsCacheBot/1.0)' },
+    });
+    if (!res.ok) {
+      console.warn(`[translate:${tlCode}] HTTP ${res.status} ${res.statusText}`);
+      return null;
+    }
+    const data = (await res.json()) as Array<Array<[string, string, ...unknown[]]>>;
+    // data[0] = [['translated segment', 'source segment', null, null, ...], ...]
+    const segments = data?.[0];
+    if (!Array.isArray(segments) || segments.length === 0) return null;
+    return segments.map((seg) => (Array.isArray(seg) ? seg[0] : '')).join('').trim() || null;
+  } catch (err) {
+    console.warn(`[translate:${tlCode}] fetch failed:`, err);
+    return null;
+  }
+}
+
+/**
+ * Translate review texts into all configured locales using the FREE
+ * `translate.googleapis.com/translate_a/single` endpoint. No API key,
+ * no usage cost (per Reno Stars policy §5.2 added 2026-05-29).
  *
  * Per-review × per-locale write-once: if a review already has a translation
- * cached for a locale, we skip that pair. Each missing pair becomes one
- * batched API call (batched per LOCALE — we translate all reviews to zh in
- * one call, then all to ja in one call, etc.).
+ * cached for a (text|locale) pair, we skip that pair. Each missing pair is
+ * one unauthenticated HTTPS request to translate.googleapis.com.
  *
  * Backward compat: continues to populate `review.textZh` from
- * `review.translations.zh` so older client code (`TestimonialsSection`'s
- * current zh-only filter) keeps working until the read-path PR drops it.
+ * `review.translations.zh` so the deprecated read path (still referenced by
+ * components/blocks during the transition) keeps working.
  *
- * Authorization for the LLM spend was granted by Hongming 2026-05-28 in
- * response to the cross-locale-parity audit (delegation 3cb8548f). Estimate:
- * ~$0.14 one-time for the initial backfill of ~10 reviews × 13 target locales
- * at gpt-4o-mini pricing; ~$0.01 per new review at steady state.
+ * Resilience: a single locale failure does NOT abort the pass — partial
+ * success across 12/13 locales is valuable. We also throttle slightly
+ * (50ms between requests) to avoid tripping the endpoint's burst limits.
  */
 async function translateReviews(reviews: GoogleReview[]): Promise<void> {
-  const openaiKey = process.env.OPENAI_API_KEY;
-  if (!openaiKey) {
-    console.warn('[translate] OPENAI_API_KEY not set, skipping translation pass.');
-    return;
-  }
-
   // Reuse translations from the existing DB cache row for unchanged reviews.
   // Key by review.text + locale; value is the cached translated string.
   const existing = await readExistingCache();
@@ -139,8 +174,7 @@ async function translateReviews(reviews: GoogleReview[]): Promise<void> {
     if (r.translations.zh) r.textZh = r.translations.zh;
   }
 
-  const { default: OpenAI } = await import('openai');
-  const client = new OpenAI({ apiKey: openaiKey });
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   for (const target of TRANSLATION_TARGETS) {
     const needs = reviews.filter((r) => !r.translations?.[target.locale]);
@@ -150,49 +184,20 @@ async function translateReviews(reviews: GoogleReview[]): Promise<void> {
     }
     console.log(`[translate:${target.locale}] translating ${needs.length} review(s) to ${target.languageLabel}…`);
 
-    const textsToTranslate = needs.map((r, i) => `[${i}] ${r.text}`).join('\n---\n');
-    let response;
-    try {
-      response = await client.chat.completions.create({
-        model: AI_CONFIG.model,
-        temperature: AI_CONFIG.temperature,
-        messages: [
-          {
-            role: 'system',
-            content:
-              `You are a professional translator. Translate the following customer reviews from English to ${target.languageLabel}. ` +
-              'Keep the tone natural and conversational. Preserve any proper nouns (company names, person names). ' +
-              'Return a JSON array of translated strings in the same order. Only return the JSON array, no other text.',
-          },
-          { role: 'user', content: textsToTranslate },
-        ],
-      });
-    } catch (err) {
-      // One locale failing should NOT block the others — partial-success is
-      // valuable (e.g. all 14 locales get translations except `pa` because of
-      // a transient API error).
-      console.error(`[translate:${target.locale}] API call failed:`, err);
-      continue;
-    }
-
-    const content = response.choices[0]?.message?.content?.trim() ?? '';
-    try {
-      const translations = parseJsonResponse<string[]>(content);
-      if (translations.length !== needs.length) {
-        console.warn(`[translate:${target.locale}] expected ${needs.length} translations, got ${translations.length}`);
-      }
-      for (let i = 0; i < Math.min(translations.length, needs.length); i++) {
-        needs[i].translations = needs[i].translations ?? {};
-        needs[i].translations![target.locale] = translations[i];
+    let successCount = 0;
+    for (const r of needs) {
+      const translated = await translateOne(r.text, target.tlCode);
+      if (translated) {
+        r.translations = r.translations ?? {};
+        r.translations[target.locale] = translated;
         // Mirror to deprecated textZh for the transitional period.
-        if (target.locale === 'zh') needs[i].textZh = translations[i];
+        if (target.locale === 'zh') r.textZh = translated;
+        successCount++;
       }
-      console.log(`[translate:${target.locale}] ${Math.min(translations.length, needs.length)} review(s) translated.`);
-    } catch (err) {
-      console.error(`[translate:${target.locale}] failed to parse response:`, err);
-      console.error(`[translate:${target.locale}] raw response (first 200 chars):`, content.slice(0, 200));
-      // Don't propagate — continue to next locale.
+      // Light throttle to avoid burst-limit on the public endpoint.
+      await sleep(50);
     }
+    console.log(`[translate:${target.locale}] ${successCount}/${needs.length} review(s) translated successfully.`);
   }
 }
 
