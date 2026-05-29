@@ -444,7 +444,11 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                     ))}
                   </div>
                   <p className="text-sm leading-relaxed mb-4 line-clamp-6" style={{ color: TEXT_MID }}>
-                    {(locale === 'zh' && review.textZh) ? review.textZh : review.text}
+                    {/* Per-locale translated text via the JSONB translations map
+                        populated by pnpm reviews:cache (PR #83). EN fallback when
+                        the locale lacks a translation — same pattern as
+                        TestimonialsSection + ReviewsPage (Stage 2). */}
+                    {review.translations?.[locale] ?? review.text}
                   </p>
                   <div className="flex items-baseline justify-between text-xs" style={{ color: TEXT_MID }}>
                     <span className="font-bold" style={{ color: TEXT }}>{review.authorName}</span>

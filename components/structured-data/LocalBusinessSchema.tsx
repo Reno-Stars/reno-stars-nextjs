@@ -1,4 +1,5 @@
 import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
+import type { Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 import { COMPANY_STATS } from '@/lib/company-config';
@@ -22,9 +23,15 @@ interface LocalBusinessSchemaProps {
    *  i18n messages. When omitted we fall back to an EN string so the
    *  schema remains valid even on pages that haven't wired this up. */
   description?: string;
+  /** Page locale. When supplied, each Review's `reviewBody` is rendered
+   *  in the matching locale via `review.translations?.[locale] ?? review.text`,
+   *  keeping structured-data review text consistent with the visible
+   *  testimonials marquee (PR #83 schema + Stage 2 read-path). Optional —
+   *  when omitted, the EN source text is emitted. */
+  locale?: Locale;
 }
 
-export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description }: LocalBusinessSchemaProps): React.ReactElement {
+export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
   const schema = {
@@ -108,7 +115,11 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
           bestRating: 5,
           worstRating: 1,
         },
-        reviewBody: r.text,
+        // reviewBody follows the visible testimonial text: use the locale
+        // translation when available, fall back to the EN source. Keeps the
+        // JSON-LD locale-consistent with the rendered marquee on each
+        // /[locale]/* path. translations map is populated by pnpm reviews:cache.
+        reviewBody: (locale && r.translations?.[locale]) ?? r.text,
         ...(r.publishTime && { datePublished: r.publishTime }),
       })),
     }),

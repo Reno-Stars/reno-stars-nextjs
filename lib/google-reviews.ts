@@ -138,19 +138,32 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       return EMPTY_RESULT;
     }
 
-    // Merge cached Chinese translations into fresh reviews
-    const cachedTranslations = new Map<string, string>();
+    // Merge cached per-locale translations into fresh reviews. The cached
+    // row is the source of AI-generated translations (populated by
+    // `pnpm reviews:cache`); a live Google Places API hit returns only the
+    // source text. Without this merge, the API path strips translations on
+    // every request and the subsequent updateCache() would overwrite the
+    // DB row with translations=undefined — a Stage 1 (PR #83) data-plumbing
+    // regression. Carries the full translations map (every locale) plus
+    // keeps textZh in sync for the transitional deprecated read path.
+    type CachedTrans = { translations?: GoogleReview['translations']; textZh?: string };
+    const cachedTranslationsByKey = new Map<string, CachedTrans>();
     for (const r of cached?.reviews ?? []) {
-      if (r.textZh) {
-        const key = r.authorUri || r.authorName;
-        if (key) cachedTranslations.set(key, r.textZh);
-      }
+      const key = r.authorUri || r.authorName;
+      if (!key) continue;
+      const entry: CachedTrans = {};
+      if (r.translations && Object.keys(r.translations).length > 0) entry.translations = r.translations;
+      if (r.textZh) entry.textZh = r.textZh;
+      if (entry.translations || entry.textZh) cachedTranslationsByKey.set(key, entry);
     }
     for (const r of fiveStarReviews) {
       const key = r.authorUri || r.authorName;
-      if (key && cachedTranslations.has(key)) {
-        r.textZh = cachedTranslations.get(key);
-      }
+      const cachedEntry = key ? cachedTranslationsByKey.get(key) : undefined;
+      if (!cachedEntry) continue;
+      if (cachedEntry.translations) r.translations = cachedEntry.translations;
+      // textZh backward-compat: prefer translations.zh, fall back to legacy textZh.
+      if (cachedEntry.translations?.zh) r.textZh = cachedEntry.translations.zh;
+      else if (cachedEntry.textZh) r.textZh = cachedEntry.textZh;
     }
 
     const result: GooglePlaceRating = {

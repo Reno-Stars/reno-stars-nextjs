@@ -102,6 +102,7 @@ export default async function LocaleLayout({
             googleReviewCount={googleReviews.userRatingCount}
             reviews={googleReviews.reviews.slice(0, 5)}
             description={localBusinessDescription}
+            locale={locale as Locale}
           />
           <a
             href="#main-content"
