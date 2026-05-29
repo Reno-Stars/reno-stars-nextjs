@@ -12,6 +12,13 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+// ISR: revalidate /reviews/ every hour so new Google reviews + cache-row
+// translation updates (e.g. backfilling via `pnpm reviews:cache` per §5.2)
+// surface within 1h instead of requiring a redeploy. The underlying
+// fetch in `getGoogleReviews()` already has its own 24h cache on the
+// Places API call; this revalidate controls the page-level SSG snapshot,
+// not the API hit rate.
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));
