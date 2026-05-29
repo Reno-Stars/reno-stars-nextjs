@@ -23,6 +23,13 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+// ISR: revalidate homepage every hour. The hero, testimonials, and
+// stats blocks pull from the DB (`company`, `googleReviews`, `services`,
+// `projects`, etc.); without revalidate they're frozen until next deploy.
+// Hourly cadence balances freshness (new Google reviews, new projects,
+// updated company stats) against build cost. Same pattern as /reviews/.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
