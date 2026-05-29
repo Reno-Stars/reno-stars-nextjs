@@ -2,40 +2,49 @@
   "services": {
     "kitchen": {
       "title": "廚房裝修",
-      "description": "全面的廚房改造，融合現代設計、定製櫥櫃和高端檯面。",
-      "longDescription": "將您的廚房打造成家的核心空間。從定製櫥櫃和高端檯面到先進家電和創新儲物解決方案，我們創造既美觀又實用的廚房。"
+      "description": "採用現代設計、訂製櫥櫃和優質檯面的完整廚房改造。",
+      "longDescription": "Transform your kitchen into the heart of your home with our comprehensive renovation services. From custom cabinetry and premium countertops to state-of-the-art appliances and innovative storage solutions, we create kitchens that are both beautiful and functional."
     },
     "bathroom": {
-      "title": "衛浴裝修",
-      "description": "將您的浴室打造成水療般的休憩空間，配備豪華潔具和精美飾面。",
-      "longDescription": "通過我們的浴室裝修專業知識，創造您的私人休憩空間。我們專注於豪華水療風格設計、現代潔具、定製瓷磚工藝和創新儲物解決方案。"
+      "title": "浴室裝修",
+      "description": "將您的浴室變成水療中心般的休閒場所，配有豪華的固定裝置和飾面。",
+      "longDescription": "利用我們的浴室裝修專業知識打造您的個人庇護所。我們專注於豪華水療風格的設計、現代固定裝置、定製瓷磚工作以及最大限度地提高風格和功能的創新存儲解決方案。"
     },
     "wholeHouse": {
       "title": "全屋裝修",
-      "description": "從概念到完工的全方位家居改造。",
-      "longDescription": "通過我們的全屋裝修服務體驗完整的家居改造。我們管理項目的每個方面，從初始設計概念到最終完成，確保無縫的裝修體驗。"
+      "description": "從概念到竣工的全面家居改造。",
+      "longDescription": "透過我們的全屋翻新服務體驗完整的家居改造。我們管理您專案的各個方面，從最初的設計概念到最終完成，確保無縫的裝修體驗。"
     },
     "basement": {
       "title": "地下室改造",
-      "description": "將地下室改造爲功能性生活空間。溫哥華最佳排名第三。",
-      "longDescription": "通過我們屢獲殊榮的地下室改造服務，釋放您家的全部潛力。無論您想要家庭影院、健身房、客房套間還是家庭辦公室，我們都能將閒置的地下室改造成美麗實用的生活空間。"
+      "description": "Convert your basement into functional living space. Ranked 3rd in Best of Vancouver.",
+      "longDescription": "透過我們屢獲殊榮的地下室改造服務釋放您家的全部潛力。無論您想要家庭劇院、健身房、客房套房或家庭辦公室，我們都能將未充分利用的地下室改造成美麗、實用的生活空間。"
     },
     "cabinet": {
-      "title": "櫥櫃翻新",
-      "description": "通過專業的櫥櫃翻新服務煥新您的廚房面貌。",
-      "longDescription": "無需全面裝修的成本，即可讓您的廚房煥然一新。我們的櫥櫃翻新服務包括新門板、抽屜面板和五金件，在保留現有櫥櫃箱體的同時改變廚房的外觀。"
+      "title": "Cabinet Refacing",
+      "description": "透過專業的櫥櫃翻新服務讓您的廚房煥然一新。",
+      "longDescription": "無需全面翻新，即可讓您的廚房煥然一新。我們的櫥櫃翻新服務包括新門、抽屜前板和硬件，改變您廚房的外觀，同時保留您現有的櫥櫃盒。"
     },
     "commercial": {
       "title": "商業裝修",
-      "description": "專業的商業空間裝修，包括辦公室、零售店和餐廳。",
-      "longDescription": "通過我們的商業裝修專業知識提升您的商業空間。我們處理辦公室建設、零售店裝修、餐廳重新設計等，提供專業成果，提升您的品牌和客戶體驗。"
+      "description": "專業為辦公室、零售店和餐廳提供商業空間改造。",
+      "longDescription": "運用我們的商業裝修專業知識提升您的商業空間。我們負責辦公室擴建、零售店翻新、餐廳重新設計等，提供專業的成果，增強您的品牌和客戶體驗。"
     },
     "hubTitle": "我們的服務",
-    "hubSubtitle": "爲每個空間提供專業的裝修解決方案",
-    "getQuoteForService": "獲取{service}報價",
+    "hubSubtitle": "為每個空間提供專業的裝修解決方案",
+    "getQuoteForService": "取得{service}的報價",
     "realtor": {
-      "title": "地產經紀諮詢",
-      "shortTitle": "地產經紀"
+      "title": "房地產經紀人諮詢",
+      "shortTitle": "房地產經紀人"
     }
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T22:09:32Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }
