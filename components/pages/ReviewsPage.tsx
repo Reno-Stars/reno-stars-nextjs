@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Star, ExternalLink, ShieldCheck, DollarSign, Paintbrush, MessageSquare, Clock } from "lucide-react";
 import type { Locale, Company, GoogleReview, GooglePlaceRating } from "@/lib/types";
@@ -114,11 +114,13 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
   const t = useTranslations("reviewsPage");
   // CTA uses section-specific translations
 
-  const reviews = useMemo(() => {
-    return locale === "zh"
-      ? googleReviews.reviews.filter((r) => r.textZh)
-      : googleReviews.reviews;
-  }, [locale, googleReviews.reviews]);
+  // Show every five-star review on every locale. ReviewCard's text-rendering
+  // picks the locale translation when available and falls back to EN — same
+  // pattern as TestimonialsSection (Hongming Option 1 stage 2). Removing the
+  // `locale === "zh"` filter closes the dedicated /reviews/ page's instance of
+  // the same structural gap that cross-locale parity scan flagged (-91.4%
+  // word delta on /zh/reviews/ at 2026-05-29T03:30Z scan).
+  const reviews = googleReviews.reviews;
 
   const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJT0f2zbHhhVQRhHrIAuFh0y4";
 
