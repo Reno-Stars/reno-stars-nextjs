@@ -157,6 +157,25 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       'Renovation Cost Estimation',
       'Renovation Financing',
     ],
+    // contactPoint: explicit "how to reach customer service" entry for AI
+    // engines + Google knowledge-graph. Distinct from the top-level
+    // `telephone` / `email` fields because contactPoint can scope by
+    // contactType (customer service, sales, technical support, etc.) and
+    // by availableLanguage. The 7 languages listed match the site's
+    // primary translation targets — en/zh/zh-Hant/ja/ko/es/fr — and
+    // signal to Google that the business can serve queries in those
+    // locales without needing a separate locale-specific contactPoint
+    // node per language.
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: `+1${company.phone.replace(/\D/g, '')}`,
+        email: company.email,
+        contactType: 'customer service',
+        areaServed: 'CA',
+        availableLanguage: ['English', 'Mandarin Chinese', 'Cantonese', 'Japanese', 'Korean', 'Spanish', 'French'],
+      },
+    ],
   };
 
   return (
