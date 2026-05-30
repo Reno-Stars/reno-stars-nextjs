@@ -110,37 +110,44 @@ export default async function InviteLandingPage({ searchParams }: PageProps) {
               </a>
             </div>
 
-            <details style={{ textAlign: 'left', marginTop: 24 }}>
-              <summary
-                style={{
-                  cursor: 'pointer',
-                  color: '#a5b4c8',
-                  fontSize: 14,
-                  marginBottom: 8,
-                }}
-              >
-                Already have the app? Show invite token
-              </summary>
-              <p style={{ fontSize: 13, color: '#c7d2fe', marginTop: 12, marginBottom: 8 }}>
-                Open the app, go to <strong>Onboarding → Join with Invite</strong>, and paste this
-                token:
+            {/* Invite code — shown prominently (not hidden), because the
+                deep link doesn't always open the app (Android App Links /
+                stale iOS install), and testers install via TestFlight /
+                Play internal track, not the public stores above. */}
+            <div
+              style={{
+                textAlign: 'left',
+                marginTop: 8,
+                background: '#0d0d1a',
+                padding: '16px',
+                borderRadius: 12,
+                border: '1px solid #2e2e4e',
+              }}
+            >
+              <p style={{ fontSize: 14, color: '#fff', fontWeight: 600, marginBottom: 6 }}>
+                Already have GeoClockr installed?
+              </p>
+              <p style={{ fontSize: 13, color: '#c7d2fe', marginBottom: 10, lineHeight: 1.5 }}>
+                In the app, tap <strong>“Have an invite code?”</strong> and paste this code (or paste
+                this whole page link):
               </p>
               <code
                 style={{
                   display: 'block',
-                  background: '#0d0d1a',
+                  background: '#000',
                   padding: '12px 14px',
                   borderRadius: 8,
                   fontSize: 12,
                   wordBreak: 'break-all',
                   fontFamily: 'ui-monospace, Menlo, monospace',
-                  color: '#a5b4c8',
+                  color: '#5eead4',
                   border: '1px solid #2e2e4e',
+                  userSelect: 'all',
                 }}
               >
                 {token}
               </code>
-            </details>
+            </div>
           </>
         )}
 
