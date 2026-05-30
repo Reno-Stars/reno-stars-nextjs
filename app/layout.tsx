@@ -24,8 +24,20 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseUrl()),
-  title: `${SITE_NAME} - Where Renovation Starts`,
-  description: "Professional renovation services in Vancouver and the Lower Mainland",
+  // Root layout title + description are FALLBACKs — used on routes that
+  // don't override metadata (404 page via app/not-found.tsx inherits the
+  // description; global error page; the bare /page.tsx redirect surface).
+  // Per-locale routes under app/[locale]/ override with richer
+  // generateMetadata() pulling from messages/<locale>/metadata.json.
+  //
+  // Pre-2026-05-30 the fallback was a generic 12-word filler. Now it
+  // mirrors the structure of metadata.home (Trusted-Vancouver hook +
+  // quantified credibility signals + service breadth + CTA) using static
+  // numbers so it can render without runtime data access. Boosts the 404
+  // page's SERP description and any future route that forgets to define
+  // its own metadata.
+  title: `${SITE_NAME} — Vancouver Renovation | Kitchen, Bath & Whole-House`,
+  description: "Trusted Vancouver renovation & remodeling contractor — 20+ yrs, 700+ projects, 5★ Google, $5M insured, 3-yr warranty. Kitchen, bathroom & whole-house renovations across Metro Vancouver. Free quote 24h.",
   authors: [{ name: 'Reno Stars' }],
   // formatDetection: telephone:true makes iOS Safari auto-link any phone
   // number in body text into a tap-to-call link. The contractor business
