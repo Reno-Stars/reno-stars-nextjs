@@ -508,6 +508,47 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
         </div>
       </section>
 
+      {/* Cost Guides — every area page should funnel to the cost guides
+          to (a) help the user discover concrete pricing for the work
+          they're researching in their city, and (b) lift the cost
+          guides' internal-link equity from the area-page surface. The
+          GSC queue (2026-05-30) shows /en/guides/{kitchen,bathroom,
+          basement}-renovation-cost-vancouver/ sitting at striking-
+          distance pos 8-14 for high-impression cost queries (300-750
+          impr/28d, 0% CTR), and area pages like /en/areas/{surrey,
+          port-coquitlam,white-rock}/ ranking pos 6-7 for "reno {city}"
+          queries with similar 100-200 impr/28d. Linking them tops the
+          topical-authority pyramid for renovation-in-Vancouver. Labels
+          are English-only because i18n keys aren't wired up; mirrors
+          the precedent in BlogPostPage (added 2026-04-30). The URL
+          paths route to localized guide pages regardless. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
+            Real Renovation Costs in Vancouver
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { slug: 'kitchen-renovation-cost-vancouver', label: 'Kitchen Renovation Cost' },
+              { slug: 'bathroom-renovation-cost-vancouver', label: 'Bathroom Renovation Cost' },
+              { slug: 'whole-house-renovation-cost-vancouver', label: 'Whole-House Renovation Cost' },
+              { slug: 'basement-renovation-cost-vancouver', label: 'Basement Renovation Cost' },
+              { slug: 'commercial-renovation-cost-vancouver', label: 'Commercial Renovation Cost' },
+              { slug: 'cabinet-refinishing-cost-vancouver', label: 'Cabinet Refinishing Cost' },
+            ].map((g) => (
+              <Link
+                key={g.slug}
+                href={`/guides/${g.slug}`}
+                className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+              >
+                {g.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Nearby Service Areas */}
       {otherAreas.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
