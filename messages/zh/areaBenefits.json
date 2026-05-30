@@ -1,10 +1,19 @@
 {
   "areaBenefits": {
-    "localTeam": "熟悉当地的本地团队",
+    "localTeam": "熟悉该地区的本地团队",
     "quickResponse": "快速响应时间",
     "buildingCodes": "了解当地建筑规范",
-    "supplierRelationships": "稳定的供应商关系",
+    "supplierRelationships": "已建立供应商关系",
     "freeOnsite": "免费现场咨询",
     "competitivePricing": "有竞争力的本地价格"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:01:48Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

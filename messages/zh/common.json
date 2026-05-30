@@ -2,9 +2,18 @@
   "common": {
     "loading": "加载中...",
     "error": "发生错误",
-    "notFound": "页面未找到",
-    "notFoundDescription": "您访问的页面不存在或已被移动。",
+    "notFound": "找不到页面",
+    "notFoundDescription": "您要查找的页面不存在或已被移动。",
     "backToHome": "返回首页",
-    "tryAgain": "重试"
+    "tryAgain": "再试一次"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:05:07Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

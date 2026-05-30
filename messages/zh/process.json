@@ -1,169 +1,178 @@
 {
   "process": {
     "hero": {
-      "title": "装修服务流程, 5 步走",
-      "subtitle": "从咨询到完工",
-      "googleReviews": "Google 评价",
-      "stepLabel": "第{stepNum}步"
+      "title": "装修服务工作流程：5 个步骤",
+      "subtitle": "从咨询到完成",
+      "googleReviews": "谷歌评论",
+      "stepLabel": "步骤 {步数}"
     },
-    "downloadPoster": "下载 PNG",
-    "downloadPdf": "下载 PDF",
-    "downloadSuccess": "下载成功!",
-    "downloadError": "下载失败",
-    "downloadPosterHint": "点击下载 PNG 图片",
-    "downloadPdfHint": "点击下载 PDF 文件",
+    "downloadPoster": "下载PNG",
+    "downloadPdf": "下载PDF",
+    "downloadSuccess": "已下载！",
+    "downloadError": "失败的",
+    "downloadPosterHint": "点击下载PNG",
+    "downloadPdfHint": "点击下载PDF",
     "step1": {
-      "title": "前期沟通",
-      "subtitle": "探索",
+      "title": "初步咨询",
+      "subtitle": "发现",
       "points": [
-        "客户初步联系（电话 / 邮件 / Whatsapp / 微信 / 短信）",
-        "确认翻新区域（厨房 / 客厅 / 洗手间 / 全屋）",
+        "通过电话、电子邮件、Whatsapp、微信或短信进行初步联系",
+        "确认装修区域：厨房、客厅、浴室或整个房子",
         "风格偏好确认",
-        "材料预算与定位",
-        "了解装修需求与期望",
-        "获取平面图与现场照片（如有）"
+        "材料预算和定位",
+        "了解装修需求和期望",
+        "获取平面图和现场照片（如果有）"
       ],
       "tags": [
         {
-          "icon": "phone",
+          "icon": "电话",
           "label": "电话"
         },
         {
-          "icon": "email",
-          "label": "邮件"
+          "icon": "电子邮件",
+          "label": "电子邮件"
         },
         {
-          "icon": "whatsapp",
+          "icon": "WhatsApp",
           "label": "WhatsApp"
         },
         {
-          "icon": "wechat",
+          "icon": "微信",
           "label": "微信"
         },
         {
-          "icon": "sms",
+          "icon": "短信",
           "label": "短信"
         }
       ],
-      "faqAnswer": "我们首先进行初步咨询，您可以通过电话、邮件、WhatsApp、微信或短信联系我们。我们将讨论您的装修需求、风格偏好、预算，并收集现有的平面图或照片。"
+      "faqAnswer": "我们从初步咨询开始，您可以通过电话、电子邮件、WhatsApp、微信或短信联系我们。我们将讨论您的装修需求、风格偏好、预算，并收集任何现有的平面图或照片。"
     },
     "step2": {
-      "title": "定制评估与报价",
-      "subtitle": "现场测量（如需）与透明定价",
+      "title": "量身定制的评估和报价",
+      "subtitle": "现场测量（如果需要）和透明定价",
       "points": [
-        "专业现场测量，获取精准尺寸数据（如需）",
-        "提供全面的设计方案，展示未来空间效果",
-        "明确施工范围、项目时间线、许可要求与材料规格",
-        "提供清晰透明的报价方案，与设计和施工范围完全对应，确保全程清晰可预期"
+        "专业现场测量精确尺寸（如果需要）",
+        "全面的设计方案展示您的未来空间",
+        "明确定义的工作范围、项目时间表、许可证要求和材料规格",
+        "与拟议设计和范围一致的清晰透明的报价，确保整个过程完全清晰和可预测"
       ],
       "tags": [
         {
-          "icon": "ruler",
-          "label": "精准测量"
+          "icon": "统治者",
+          "label": "精确测量"
         },
         {
-          "icon": "quote",
+          "icon": "引用",
           "label": "透明定价"
         },
         {
-          "icon": "site",
+          "icon": "地点",
           "label": "设计方案"
         }
       ],
-      "faqAnswer": "我们根据需要提供专业现场测量，并为您的空间创建全面的设计方案。您将获得明确的施工范围、时间线、许可要求，以及与设计方案完全对应的透明报价。"
+      "faqAnswer": "我们在需要时提供专业的现场测量，并为您的空间制定全面的设计方案。您将收到明确定义的工作范围、时间表、许可要求以及与拟议设计一致的透明报价。"
     },
     "step3": {
-      "title": "确认与签约",
-      "subtitle": "细节确认与项目启动",
+      "title": "确认及合同",
+      "subtitle": "敲定细节和项目启动",
       "points": [
-        "邀请客户到 Showroom 面谈确认方案",
-        "解答疑问并优化方案细节",
-        "确认设计方案与材料样品",
-        "确定付款计划并协助配送安排",
-        "签订施工合同并收取定金",
-        "确认开工日期",
-        "建立项目团队（项目经理 / 工程管理 / 协调员）"
+        "邀请客户到展厅现场咨询",
+        "解决问题并优化设计细节",
+        "确认设计方案和材料样品",
+        "确定付款计划并协助安排交货时间",
+        "签订施工合同并收取押金",
+        "确保项目开始日期",
+        "建立项目团队：项目经理、施工经理、协调员"
       ],
       "tags": [
         {
-          "icon": "contract",
-          "label": "签约"
+          "icon": "合同",
+          "label": "合同"
         },
         {
-          "icon": "meeting",
-          "label": "面谈"
+          "icon": "会议",
+          "label": "Consultation"
         },
         {
-          "icon": "team",
+          "icon": "团队",
           "label": "项目团队"
         }
       ],
-      "faqAnswer": "我们邀请您到展厅查看材料样品并确认设计细节。确定付款计划并签订合同后，我们将确认开工日期，并建立包括项目经理、工程管理和协调员在内的专属项目团队。"
+      "faqAnswer": "我们邀请您来到我们的陈列室查看材料样品并最终确定设计细节。在确认付款计划并签署合同后，我们会确定您的项目开始日期，并建立一个专门的项目团队，包括项目经理、施工经理和协调员。"
     },
     "step4": {
-      "title": "施工与管理",
-      "subtitle": "全程协调 · 沟通无忧",
+      "title": "执行与管理",
+      "subtitle": "充分协调、轻松沟通",
       "points": [
-        "统一项目团队管理项目全部环节",
-        "客户无需直接对接施工人员",
-        "施工进度统一协调，确保效率与一致性",
-        "协助配送安排与现场协调",
-        "全程一致的质量管控",
+        "统一的项目团队管理项目的各个方面",
+        "无需与工人直接互动",
+        "协调施工进度，确保效率和一致性",
+        "协助交货安排和现场协调",
+        "整个施工过程中始终如一的质量控制",
         "快速响应并高效解决任何问题"
       ],
       "tags": [
         {
-          "icon": "management",
+          "icon": "管理",
           "label": "统一管理"
         },
         {
-          "icon": "progress",
-          "label": "进度管控"
+          "icon": "进步",
+          "label": "进度追踪"
         },
         {
-          "icon": "response",
-          "label": "快速响应"
+          "icon": "回复",
+          "label": "快速反应"
         }
       ],
-      "faqAnswer": "统一项目团队管理项目全部环节。您无需直接与施工人员对接，我们协调施工进度、配送安排，并全程保持一致的质量管控。任何问题都将快速高效地解决。"
+      "faqAnswer": "统一的项目团队管理项目的各个方面。您不需要直接与工作人员互动。我们协调施工进度、交付计划，并始终保持一致的质量控制。任何问题都会得到快速有效的解决。"
     },
     "step5": {
-      "title": "验收与售后",
-      "subtitle": "最终检查与持续保障",
+      "title": "演练和善后",
+      "subtitle": "最终检查和持久支持",
       "points": [
-        "最终验收，确认所有工程符合预期",
-        "新家交付",
-        "质保期内持续提供维护支持"
+        "最终演练以确认所有工作符合预期",
+        "新房移交",
+        "保修期内持续维护支持"
       ],
       "tags": [
         {
-          "icon": "inspection",
-          "label": "严格验收"
+          "icon": "检查",
+          "label": "严格检验"
         },
         {
-          "icon": "warranty",
-          "label": "质保服务"
+          "icon": "保修单",
+          "label": "保修服务"
         },
         {
-          "icon": "support",
+          "icon": "支持",
           "label": "持续支持"
         }
       ],
-      "faqAnswer": "我们与您一起进行最终验收，确认所有工程符合预期，然后交付您的新家。质保期内我们持续提供维护支持。"
+      "faqAnswer": "我们与您一起进行最后的演练，以确认所有工作符合您的期望，然后移交您的新家。我们在保修期内提供持续的维护支持。"
     },
-    "tagline": "让装修简单无忧",
+    "tagline": "让改造真正成为可能",
     "whyMatters": {
       "title": "为什么这很重要",
-      "description": "Reno Stars 的标准化装修流程让客户在每个阶段都清楚了解进度。我们清晰的5步流程确保从首次联系到最终交付的整个装修过程顺畅无忧。"
+      "description": "Reno Stars 结构化的装修工作流程可帮助客户了解每个阶段的期望。我们明确的 5 步流程可确保从第一次接触到最终移交的整个过程顺利、无压力的装修体验。"
     },
     "footer": {
-      "tagline": "简单 · 省心 · 安全 · 有保障",
-      "taglineEn": "Simple · Worry-Free · Safe · Guaranteed",
+      "tagline": "简单·无忧·安全·有保障",
+      "taglineEn": "简单·无忧·安全·有保障",
       "yearsIndustry": "年行业经验",
       "googleRating": "谷歌",
-      "warrantyService": "质保服务",
-      "scanLinktree": "扫码联系我们",
-      "website": "reno-stars.com"
+      "warrantyService": "保修服务",
+      "scanLinktree": "扫描联系我们",
+      "website": "雷诺明星网"
     }
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T21:01:59Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

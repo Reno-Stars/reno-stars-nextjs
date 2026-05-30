@@ -1,10 +1,19 @@
 {
   "projectsFaqs": {
-    "q1": "如何开始一个装修项目？",
-    "a1": "从免费咨询开始，请联系我们或参观展厅。我们将讨论您的想法、评估空间，并提供详细报价和时间表。",
-    "q2": "可以看到你们过去的作品吗？",
-    "a2": "当然可以！浏览上方的作品集，查看大温哥华地区已完成的厨房、浴室和全屋装修项目的改造前后对比照片。",
+    "q1": "我如何开始改造项目？",
+    "a1": "从免费咨询开始。在线联系我们或参观我们的陈列室。我们将讨论您的愿景、评估空间并提供详细的报价和时间表。",
+    "q2": "我可以看一下你过去工作的例子吗？",
+    "a2": "是的！浏览我们上面的作品集，查看大温哥华地区已完成的厨房、浴室和全屋翻新项目的前后照片。",
     "q3": "你们负责办理许可证和检查吗？",
-    "a3": "是的，作为全方位装修服务的一部分，我们负责办理所有必要的许可证并协调检查，让您无需操心任何手续。"
+    "a3": "是的，作为我们全方位服务翻新流程的一部分，我们管理所有必要的许可证并协调检查，因此您不必担心任何文书工作。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:15:52Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

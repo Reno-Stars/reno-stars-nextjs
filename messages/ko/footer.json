@@ -2,13 +2,22 @@
   "footer": {
     "allRightsReserved": "모든 권리 보유",
     "allRights": "모든 권리 보유.",
-    "licensedInsured": "면허 보유 & 완전 보험 가입 (CGL + WCB)",
+    "licensedInsured": "라이센스 및 완전 보험(CGL + WCB)",
     "freeEstimates": "무료 견적",
     "mapLocation": "지도 위치",
     "wechatId": "위챗 ID: {id}",
-    "quickLinks": "바로가기",
+    "quickLinks": "빠른 링크",
     "scanToConnect": "스캔하여 연결",
-    "privacyPolicy": "개인정보 처리방침",
-    "termsOfService": "이용약관"
+    "privacyPolicy": "개인 정보 보호 정책",
+    "termsOfService": "서비스 약관"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:09:03Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

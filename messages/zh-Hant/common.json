@@ -1,10 +1,19 @@
 {
   "common": {
-    "loading": "加載中...",
+    "loading": "載入中...",
     "error": "發生錯誤",
-    "notFound": "頁面未找到",
-    "notFoundDescription": "您訪問的頁面不存在或已被移動。",
-    "backToHome": "返回首頁",
-    "tryAgain": "重試"
+    "notFound": "找不到頁面",
+    "notFoundDescription": "您要尋找的頁面不存在或已被移動。",
+    "backToHome": "回首頁",
+    "tryAgain": "再試一次"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:05:09Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

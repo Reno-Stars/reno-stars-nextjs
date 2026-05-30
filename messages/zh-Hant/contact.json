@@ -1,9 +1,18 @@
 {
   "contact": {
-    "title": "獲取溫哥華免費裝修報價",
-    "subtitle": "大溫地區信賴的裝修公司——廚房、浴室、地下室及全屋裝修一站式服務，電話 778-960-7999。",
-    "thankYouTitle": "感謝您！",
-    "thankYouMessage": "您的信息已成功發送。我們將在24小時內與您聯繫。",
-    "returnHome": "返回首頁"
+    "title": "Get a Free Renovation Quote in Vancouver",
+    "subtitle": "Vancouver's trusted renovation company — kitchen, bathroom, basement & whole house renovations across the Lower Mainland.",
+    "thankYouTitle": "謝謝你！",
+    "thankYouMessage": "您的訊息已成功發送。我們將在 24 小時內回覆您。",
+    "returnHome": "回首頁"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:05:23Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

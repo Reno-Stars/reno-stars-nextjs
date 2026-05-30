@@ -1,14 +1,23 @@
 {
   "footer": {
-    "allRightsReserved": "全著作権所有",
-    "allRights": "全著作権所有。",
-    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)",
-    "freeEstimates": "無料見積もり",
-    "mapLocation": "地図",
-    "wechatId": "WeChat ID：{id}",
+    "allRightsReserved": "無断転載を禁じます",
+    "allRights": "無断転載を禁じます。",
+    "licensedInsured": "認可および完全保険（CGL + WCB）",
+    "freeEstimates": "無料お見積り",
+    "mapLocation": "地図の位置",
+    "wechatId": "WeChat ID: {id}",
     "quickLinks": "クイックリンク",
-    "scanToConnect": "スキャンしてつながる",
+    "scanToConnect": "スキャンして接続する",
     "privacyPolicy": "プライバシーポリシー",
     "termsOfService": "利用規約"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:08:54Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

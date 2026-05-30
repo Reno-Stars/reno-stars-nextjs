@@ -1,19 +1,28 @@
 {
   "wholeHouse": {
-    "projectOverview": "項目概覽",
-    "includedAreas": "包含區域",
+    "projectOverview": "項目概況",
+    "includedAreas": "Included Areas",
     "totalBudget": "預算",
-    "totalDuration": "工期",
-    "allServiceScopes": "全部服務項目",
-    "viewAreaProject": "查看{area}項目",
-    "viewAreaDetails": "查看詳情",
-    "combinedGallery": "項目圖庫",
-    "filterByArea": "按區域篩選",
-    "allAreas": "全部區域",
-    "childProjectsCount": "{count}個裝修區域",
-    "noImagesForArea": "該區域暫無圖片",
-    "areasCount": "{count} 個區域",
-    "siteBadge": "整屋項目",
-    "areas": "個區域"
+    "totalDuration": "時間軸",
+    "allServiceScopes": "包含所有服務",
+    "viewAreaProject": "看看{area}項目",
+    "viewAreaDetails": "看詳情",
+    "combinedGallery": "專案畫廊",
+    "filterByArea": "按區域過濾",
+    "allAreas": "所有區域",
+    "childProjectsCount": "{count} 個翻新區域",
+    "noImagesForArea": "該區域沒有可用的影像",
+    "areasCount": "{count，複數，一 {# 區域} other {# 區域}}",
+    "siteBadge": "全屋",
+    "areas": "領域"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:18:58Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

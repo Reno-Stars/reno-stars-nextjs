@@ -1,9 +1,18 @@
 {
   "contact": {
-    "title": "밴쿠버 리노베이션 무료 견적",
-    "subtitle": "밴쿠버에서 신뢰받는 리노베이션 회사 — 로우어 메인랜드 전역의 주방, 욕실, 지하실, 주택 전체 리노베이션.",
+    "title": "밴쿠버에서 무료 혁신 견적을 받아보세요",
+    "subtitle": "밴쿠버의 신뢰할 수 있는 개조 회사 - Lower Mainland 전역의 주방, 욕실, 지하실 및 집 전체 개조.",
     "thankYouTitle": "감사합니다!",
-    "thankYouMessage": "메시지가 성공적으로 전송되었습니다. 24시간 이내에 답변 드리겠습니다.",
-    "returnHome": "홈으로"
+    "thankYouMessage": "귀하의 메시지가 성공적으로 전송되었습니다. 24시간 이내에 연락드리겠습니다.",
+    "returnHome": "홈으로 돌아가기"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ko",
+    "target_tl_code": "ko",
+    "translated_at": "2026-05-29T23:05:30Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

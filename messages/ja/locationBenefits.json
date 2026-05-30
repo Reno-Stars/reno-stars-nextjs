@@ -1,10 +1,19 @@
 {
   "locationBenefits": {
-    "localExpertise": "地域に精通したプロ",
-    "freeOnsite": "無料の現地相談",
-    "competitivePricing": "地域に競争力のある価格",
-    "quickResponse": "迅速な対応",
-    "experience": "ロウアー・メインランドで{years}年以上の実績",
-    "licensedInsured": "ライセンス・完全保険加入 (CGL + WCB)"
+    "localExpertise": "お住まいの地域の地元の専門知識",
+    "freeOnsite": "無料現地相談",
+    "competitivePricing": "競争力のある現地価格設定",
+    "quickResponse": "素早い応答時間",
+    "experience": "{years}+ 年以上、ロウアー・メインランドで奉仕",
+    "licensedInsured": "認可済み、完全保険付き (CGL + WCB)"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:11:48Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

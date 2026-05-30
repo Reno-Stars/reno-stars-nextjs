@@ -1,14 +1,23 @@
 {
   "design": {
-    "seoTitle": "专业装修设计与3D效果图",
-    "seoParagraph1": "在Reno Stars，每一次装修都始于精细的设计阶段。我们的设计师团队创建逼真的3D效果图，让您在施工开始前就能直观感受最终效果。从厨房布局、浴室改造到全屋翻新，我们以精湛工艺和创意将您的愿景变为现实。",
-    "seoParagraph2": "浏览我们的室内设计作品集，涵盖厨房、浴室、客厅及商业空间。每幅效果图都体现了我们将现代美学与实用功能完美融合的承诺，为温哥华及大温地区的住宅和商业客户量身定制。",
+    "seoTitle": "专业装修设计及3D渲染",
+    "seoParagraph1": "在 Reno Stars，每次翻修都从详细设计阶段开始。我们的内部设计师创建逼真的 3D 渲染图，以便您可以在施工开始前直观地看到最终结果。从厨房布局和浴室改造到整个房屋改造，我们以精确和创造力将您的愿景变为现实。",
+    "seoParagraph2": "浏览我们涵盖厨房、浴室、起居空间和商业室内设计的室内设计概念集合。每幅效果图都体现了我们将现代美学与实用功能融为一体的承诺，为温哥华和低陆平原的家庭和企业量身定制。",
     "designFeature1Title": "3D可视化",
-    "designFeature1Desc": "逼真的效果图让您在施工前就能看到每个细节：材质、灯光和空间布局。",
-    "designFeature2Title": "量身定制",
-    "designFeature2Desc": "每个设计方案都根据您的空间、生活方式和预算量身打造，绝非千篇一律。",
-    "designFeature3Title": "从设计到施工",
-    "designFeature3Desc": "我们的团队负责从概念到完工的全过程，确保最终成果与设计愿景一致。",
-    "noDesigns": "设计画廊即将上线，请稍后再来查看。"
+    "designFeature1Desc": "逼真的渲染让您在施工开始之前看到每个细节：材料、照明和布局。",
+    "designFeature2Title": "为您量身定制",
+    "designFeature2Desc": "每个设计都是根据您的空间、生活方式和预算定制的。没有千篇一律的解决方案。",
+    "designFeature3Title": "设计建造",
+    "designFeature3Desc": "我们的团队负责从概念到完成的整个过程，确保最终结果符合愿景。",
+    "noDesigns": "设计画廊即将推出。请稍后再回来查看。"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:06:49Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

@@ -1,10 +1,19 @@
 {
   "locationBenefits": {
-    "localExpertise": "本地专业服务",
+    "localExpertise": "您所在地区的本地专业知识",
     "freeOnsite": "免费现场咨询",
     "competitivePricing": "有竞争力的本地价格",
-    "quickResponse": "快速响应",
-    "experience": "服务低陆平原{years}年以上",
-    "licensedInsured": "持证且CGL + WCB双重保障"
+    "quickResponse": "快速响应时间",
+    "experience": "服务低陆平原 {year}+ 年",
+    "licensedInsured": "获得许可并全面投保（CGL + WCB）"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:11:40Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

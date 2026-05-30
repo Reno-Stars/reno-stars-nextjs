@@ -1,9 +1,18 @@
 {
   "contact": {
-    "title": "バンクーバーのリノベーション無料見積もり",
-    "subtitle": "バンクーバーで信頼されるリノベーション会社 ― キッチン、バスルーム、地下室、住宅全体のリノベーションをロウアー・メインランド全域で展開。",
-    "thankYouTitle": "ありがとうございます!",
-    "thankYouMessage": "メッセージを正常に送信しました。24時間以内にご返信いたします。",
+    "title": "バンクーバーで無料の改修見積もりを取得する",
+    "subtitle": "バンクーバーの信頼できるリフォーム会社。ローワー メインランド全域でキッチン、バスルーム、地下室、家全体のリフォームを行っています。",
+    "thankYouTitle": "ありがとう！",
+    "thankYouMessage": "メッセージは正常に送信されました。 24 時間以内にご連絡いたします。",
     "returnHome": "ホームに戻る"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:05:27Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

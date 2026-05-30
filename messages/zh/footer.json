@@ -2,13 +2,22 @@
   "footer": {
     "allRightsReserved": "版权所有",
     "allRights": "版权所有。",
-    "licensedInsured": "持证经营，CGL + WCB双重保障",
+    "licensedInsured": "获得许可且完全保险 (CGL + WCB)",
     "freeEstimates": "免费估价",
     "mapLocation": "地图位置",
-    "wechatId": "微信号: {id}",
-    "quickLinks": "快捷链接",
-    "scanToConnect": "扫码联系我们",
+    "wechatId": "微信ID：{id}",
+    "quickLinks": "快速链接",
+    "scanToConnect": "扫描连接",
     "privacyPolicy": "隐私政策",
     "termsOfService": "服务条款"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:08:42Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

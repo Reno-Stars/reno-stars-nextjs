@@ -1,21 +1,30 @@
 {
   "blog": {
-    "title": "溫哥華裝修技巧與指南",
-    "subtitle": "裝修項目的技巧、趨勢和見解",
+    "title": "溫哥華裝修技巧和指南",
+    "subtitle": "針對您的改造專案的提示、趨勢和見解",
     "readMore": "閱讀更多",
-    "publishedOn": "發佈於",
-    "updated": "更新於",
+    "publishedOn": "發表於",
+    "updated": "已更新",
     "backToBlog": "返回博客",
-    "comingSoon": "完整文章內容即將上線。如有任何裝修問題，請隨時聯繫我們。",
-    "noPosts": "暫無博客文章。請稍後查看裝修技巧和見解。",
+    "comingSoon": "完整的文章內容即將推出。如有任何裝修問題，請同時與我們聯絡。",
+    "noPosts": "還沒有部落格文章。請盡快回來查看裝修技巧和見解。",
     "relatedProject": "相關項目",
-    "pagination": "博客分頁",
-    "previous": "上一頁",
-    "next": "下一頁",
-    "previousPage": "轉到上一頁",
+    "pagination": "部落格分頁",
+    "previous": "以前的",
+    "next": "下一個",
+    "previousPage": "前往上一頁",
     "nextPage": "轉到下一頁",
-    "showingPosts": "顯示第 {start}-{end} 篇，共 {total} 篇文章",
+    "showingPosts": "顯示 {start}-{end} 個貼文（共 {total} 個）",
     "relatedServices": "相關服務",
-    "relatedAreas": "您所在地區的裝修服務"
+    "relatedAreas": "Renovation in Your Area"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh-Hant",
+    "target_tl_code": "zh-TW",
+    "translated_at": "2026-05-29T23:04:41Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

@@ -1,19 +1,28 @@
 {
   "wholeHouse": {
-    "projectOverview": "项目概览",
+    "projectOverview": "项目概况",
     "includedAreas": "包含区域",
     "totalBudget": "预算",
-    "totalDuration": "工期",
-    "allServiceScopes": "全部服务项目",
+    "totalDuration": "时间轴",
+    "allServiceScopes": "包含所有服务",
     "viewAreaProject": "查看{area}项目",
     "viewAreaDetails": "查看详情",
-    "combinedGallery": "项目图库",
-    "filterByArea": "按区域筛选",
-    "allAreas": "全部区域",
-    "childProjectsCount": "{count}个装修区域",
-    "noImagesForArea": "该区域暂无图片",
-    "areasCount": "{count} 个区域",
-    "siteBadge": "整屋项目",
-    "areas": "个区域"
+    "combinedGallery": "项目画廊",
+    "filterByArea": "按区域过滤",
+    "allAreas": "所有区域",
+    "childProjectsCount": "{count} 个翻新区域",
+    "noImagesForArea": "该区域没有可用的图像",
+    "areasCount": "{count，复数，一个 {# 区域} other {# 区域}}",
+    "siteBadge": "全屋",
+    "areas": "领域"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "zh",
+    "target_tl_code": "zh-CN",
+    "translated_at": "2026-05-29T23:18:46Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }

@@ -1,14 +1,23 @@
 {
   "modal": {
-    "location": "所在地",
+    "location": "位置",
     "category": "カテゴリ",
-    "budget": "予算",
-    "spaceType": "空間タイプ",
+    "budget": "予算範囲",
+    "spaceType": "スペースタイプ",
     "serviceScope": "サービス範囲",
-    "duration": "期間",
-    "challenge": "課題",
-    "solution": "ソリューション",
-    "close": "閉じる",
-    "viewDetails": "詳細を見る"
+    "duration": "間隔",
+    "challenge": "挑戦",
+    "solution": "私たちのソリューション",
+    "close": "近い",
+    "viewDetails": "詳細を表示"
+  },
+  "_translation_meta": {
+    "source": "translate.googleapis.com (free, no API key)",
+    "source_lang": "en",
+    "target_lang": "ja",
+    "target_tl_code": "ja",
+    "translated_at": "2026-05-29T23:12:06Z",
+    "tier": "machine-translation-first-pass",
+    "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
   }
 }
