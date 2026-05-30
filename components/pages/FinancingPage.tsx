@@ -12,6 +12,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import { Link } from "@/navigation";
 import CTASection from "@/components/CTASection";
 import {
   NAVY,
@@ -367,6 +368,43 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
                   {t(`faq.${key}Answer`)}
                 </p>
               </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cost Guides — the highest-intent inbound surface for the cost-guide
+          cluster. A user reading /financing/ is explicitly thinking about
+          how to PAY for a renovation; the most logical next step is "what
+          does it actually cost?". Mirrors the BlogPostPage + AreaPage +
+          HomePage cost-guide cross-link pattern. Closes the
+          finance-page-to-cost-guide funnel gap. Labels EN-only matches the
+          BlogPostPage precedent. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            See Real Vancouver Renovation Costs
+          </h2>
+          <p className="text-base text-center mb-8 max-w-2xl mx-auto" style={{ color: TEXT_MID }}>
+            Before you finalize financing, know the real price tier — from 100+ completed Metro Vancouver projects.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { slug: "kitchen-renovation-cost-vancouver", label: "Kitchen Renovation Cost" },
+              { slug: "bathroom-renovation-cost-vancouver", label: "Bathroom Renovation Cost" },
+              { slug: "basement-renovation-cost-vancouver", label: "Basement Renovation Cost" },
+              { slug: "whole-house-renovation-cost-vancouver", label: "Whole-House Renovation Cost" },
+              { slug: "commercial-renovation-cost-vancouver", label: "Commercial Renovation Cost" },
+              { slug: "cabinet-refinishing-cost-vancouver", label: "Cabinet Refinishing Cost" },
+            ].map((g) => (
+              <Link
+                key={g.slug}
+                href={`/guides/${g.slug}` as "/guides/kitchen-renovation-cost-vancouver"}
+                className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+              >
+                {g.label}
+              </Link>
             ))}
           </div>
         </div>
