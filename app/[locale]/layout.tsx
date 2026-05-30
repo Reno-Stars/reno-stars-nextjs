@@ -57,6 +57,14 @@ export default async function LocaleLayout({
       <head>
         {/* Preconnect for faster asset loading (implies dns-prefetch) */}
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
+        {/* Google user-content CDN serves the reviewer avatar PNGs that the
+            TestimonialsSection marquee (homepage) + ReviewsPage render from
+            `review.authorPhotoUri`. Preconnecting saves ~150–300ms on the
+            first avatar fetch since the TLS+DNS+TCP for googleusercontent.com
+            happens in parallel with HTML parsing instead of after the
+            <img> tags resolve. crossOrigin=anonymous because Google's CDN
+            requires it and the avatar URLs do not carry credentials. */}
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="anonymous" />
         {/* Preload hero image for faster LCP. When the hero lives on R2 with
             pre-processed variants, use a responsive imagesrcset preload so
             mobile fetches the 21KB 640w WebP instead of the 173KB legacy JPG
