@@ -5,6 +5,14 @@ import { SITE_NAME, getBaseUrl } from '@/lib/utils';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  // themeColor populates <meta name="theme-color"> — controls the mobile
+  // browser tab/UI chrome (URL bar background on iOS Safari, status bar tint
+  // on Android Chrome) so the site frame matches the brand instead of
+  // defaulting to the OS gray. Value mirrors NAVY in lib/theme.ts (#1B365D),
+  // which is the same color the footer + hero NAVY accent + sticky CTA bar
+  // already use. Also doubles as a PWA / add-to-home-screen color when the
+  // site is installed.
+  themeColor: '#1B365D',
 };
 
 export const metadata: Metadata = {
