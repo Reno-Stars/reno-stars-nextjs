@@ -13,6 +13,13 @@ export const viewport: Viewport = {
   // already use. Also doubles as a PWA / add-to-home-screen color when the
   // site is installed.
   themeColor: '#1B365D',
+  // colorScheme populates <meta name="color-scheme" content="light">. The
+  // site has no dark-mode (no `dark:` Tailwind variants, no
+  // `prefers-color-scheme` CSS, no toggle UI). Declaring 'light' tells the
+  // browser to render native UI chrome (form controls, scrollbars, default
+  // text fields) in light variants instead of attempting OS-level dark
+  // adaptation that produces inverted controls inside a light page.
+  colorScheme: 'light',
 };
 
 export const metadata: Metadata = {
@@ -20,6 +27,17 @@ export const metadata: Metadata = {
   title: `${SITE_NAME} - Where Renovation Starts`,
   description: "Professional renovation services in Vancouver and the Lower Mainland",
   authors: [{ name: 'Reno Stars' }],
+  // formatDetection: telephone:true makes iOS Safari auto-link any phone
+  // number in body text into a tap-to-call link. The contractor business
+  // wants this — most users discover the phone number in the footer or
+  // service-area body copy. Default iOS behavior also does this, but
+  // declaring it explicitly clarifies intent and stops some accessibility
+  // tools from overriding. date/address/email left undefined (defaults
+  // are conservative; we don't want every iso-date string in a project
+  // description auto-linked into the Calendar app).
+  formatDetection: {
+    telephone: true,
+  },
   verification: {
     google: 'FuaUhlygBAgGgvbRm4saQDfrnX9EBkdo98ZSQU3B4Oo',
   },
