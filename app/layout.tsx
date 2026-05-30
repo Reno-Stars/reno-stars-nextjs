@@ -50,6 +50,26 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: true,
   },
+  // Root-level OpenGraph fallback — used by 404 page (inherits) and any
+  // other route without an explicit OG override. Per-locale routes set
+  // their own richer OG in generateMetadata. Setting siteName + locale +
+  // type at root means accidentally-followed dead links share with a
+  // recognisable preview instead of an empty/default one.
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    locale: 'en_US',
+  },
+  // appleWebApp pairs with the PWA manifest (app/manifest.ts) to enable
+  // a proper "Add to Home Screen" experience on iOS. capable:true tells
+  // Safari the site can run as a standalone app; title is what shows
+  // under the home-screen icon; default status-bar style matches the
+  // light NAVY-themed chrome (vs black-translucent which suits dark UIs).
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: 'default',
+  },
   verification: {
     google: 'FuaUhlygBAgGgvbRm4saQDfrnX9EBkdo98ZSQU3B4Oo',
   },
