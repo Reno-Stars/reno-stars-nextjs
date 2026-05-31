@@ -350,6 +350,23 @@ export default function BlogPostPage({ locale, post, company, services = [], are
           >
             {t('cta.getFreeQuote')}
           </Link>
+          {/* /reviews/ inbound — completes the 4th surface of the /reviews/
+              rollout (after ServiceDetailPage 7a8d289, AreaPage 62350e1,
+              HomePage 8503156). BlogPostPage already has body content from
+              cost-guides + financing-link sections; this adds a secondary
+              trust-signal CTA below the primary contact CTA. Pre-fix
+              BlogPostPage had zero /reviews/ references; ~100 posts × 14
+              locales = ~1400 surfaces now pass body-content link equity. */}
+          <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
+            Or read{' '}
+            <Link
+              href="/reviews"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              what our 70+ Vancouver clients say →
+            </Link>
+          </p>
         </div>
       </section>
 
