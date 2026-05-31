@@ -259,6 +259,30 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             {t('section.whyUs')}
           </h2>
           <BenefitList benefits={benefits} />
+          {/* /workflow/ inbound CTA — kicks off the /workflow/ rollout
+              (currently only AreaPage links to /workflow/ via
+              processLinkText). Pre-fix ServiceDetailPage had ZERO
+              /workflow/ body-content references. Semantic fit: the
+              "Why choose us" benefits answer "why" — readers' natural
+              next question is "how does it actually happen?" — exactly
+              what /workflow/ documents (7-step quote → handover
+              process). ~126 surfaces (9 services × 14 locales) now
+              pass body-content link equity to /workflow/.
+
+              Label is English-only — matches the precedent set by the
+              Related Services /about/ CTA below in the same file, and
+              the Cost-Guides section above. i18n keys not wired up;
+              URL routes to localized /[locale]/workflow/ via the
+              navigation Link helper. */}
+          <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+            <Link
+              href="/workflow"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our renovation process step-by-step →
+            </Link>
+          </p>
         </div>
       </section>
 
