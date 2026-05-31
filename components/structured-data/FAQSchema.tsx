@@ -18,9 +18,16 @@ export default function FAQSchema({ faqs, locale }: FAQSchemaProps): React.React
     mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
+      // inLanguage propagated per-Question (and per-Answer below) so
+      // Google + Bing AI Overview can locale-target individual Q&A pairs
+      // even if a page were ever to render mixed-locale FAQs. Current
+      // tenant doesn't mix locales, but emitting per-node is the more
+      // robust signal and adds <5 KB of JSON-LD per page at worst.
+      ...(locale && { inLanguage: locale }),
       acceptedAnswer: {
         '@type': 'Answer',
         text: faq.answer,
+        ...(locale && { inLanguage: locale }),
       },
     })),
     // Speakable spec — marks FAQ Q+A pairs as voice-readable. Voice
