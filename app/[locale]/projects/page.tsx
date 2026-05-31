@@ -86,7 +86,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <ItemListSchema
         items={itemListItems}
         name={`${company.name} — Renovation Projects`}

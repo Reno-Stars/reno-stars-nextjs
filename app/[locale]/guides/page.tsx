@@ -88,7 +88,7 @@ export default async function Page({ params }: PageProps) {
         name={t('hero.title')}
         description={t('hero.subtitle')}
       />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <GuidesIndexPage locale={locale as Locale} />
     </>
   );

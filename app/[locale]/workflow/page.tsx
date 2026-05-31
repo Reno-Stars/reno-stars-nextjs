@@ -83,7 +83,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <HowToSchema
         name={locale === 'zh' ? '温哥华装修流程：5个步骤' : 'Vancouver Home Renovation: 5-Step Process'}
         description={locale === 'zh'
