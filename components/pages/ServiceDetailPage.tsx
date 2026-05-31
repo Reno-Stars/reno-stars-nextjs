@@ -67,6 +67,16 @@ interface ServiceDetailPageProps {
   faqs?: FAQ[];
   googleRating?: number;
   googleReviewCount?: number;
+  /**
+   * Optional list of all services (from DB) for rendering a Related Services
+   * cross-link section. When provided, the page emits a 6-chip grid linking
+   * to up to 6 sibling services (excluding `serviceSlug`), giving body-level
+   * internal-link equity to the service cluster — important because nav-area
+   * service links (header/footer) carry less PageRank weight than body-content
+   * links. Closes a 2026-05-31 audit finding (header was the only inbound
+   * surface from each /services/<x>/ page to other services).
+   */
+  allServices?: Service[];
 }
 
 // Per-locale copy for the Cost Guide cross-link section. Only render when an entry
@@ -117,7 +127,7 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
   },
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -269,6 +279,46 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 {costGuideCopy.cta}
                 <span aria-hidden>→</span>
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Related Services — body-level cross-links to sibling /services/<x>/
+          pages. Pre-fix: only the global header/footer linked each service to
+          the others (1 inbound link per other-service per page, all in nav
+          chrome). PageRank weighting puts body-content links well above
+          nav-area links, so adding a body-level Related Services section
+          materially increases the internal-link equity flowing across the
+          service cluster. Mirrors the pattern of the Cost Guide cross-link
+          section above + the Real-Renovation-Costs sections in BlogPostPage /
+          AreaPage / FinancingPage / HomePage. Labels use service.title
+          (already localized) so the chip text is meaningful in every locale.
+          Conditional render — only shows when caller passes the allServices
+          prop AND at least 1 sibling exists. */}
+      {allServices && allServices.filter(s => s.slug !== serviceSlug && s.showOnServicesPage !== false).length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('section.relatedServices', { defaultValue: 'Related Services' })}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {allServices
+                .filter(s => s.slug !== serviceSlug && s.showOnServicesPage !== false)
+                .slice(0, 6)
+                .map((s) => {
+                  const localizedSibling = getLocalizedService(s, locale);
+                  return (
+                    <Link
+                      key={s.slug}
+                      href={`/services/${s.slug}` as '/services/kitchen'}
+                      className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                      style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                    >
+                      {localizedSibling.title}
+                    </Link>
+                  );
+                })}
             </div>
           </div>
         </section>

@@ -185,6 +185,7 @@ export default async function Page({ params }: PageProps) {
         faqs={faqs}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
+        allServices={services}
       />
     </>
   );
