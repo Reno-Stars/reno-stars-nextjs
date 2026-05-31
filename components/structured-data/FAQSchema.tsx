@@ -23,6 +23,16 @@ export default function FAQSchema({ faqs, locale }: FAQSchemaProps): React.React
         text: faq.answer,
       },
     })),
+    // Speakable spec — marks FAQ Q+A pairs as voice-readable. Voice
+    // assistants (Google Assistant, Alexa via Bing) use this to pick FAQ
+    // content to read aloud when a query matches one of the questions.
+    // cssSelector targets the matching button + answer-div elements
+    // emitted by FaqSection (see id=faq-question-* / id=faq-answer-* in
+    // components/home/FaqSection.tsx, paired in the same commit).
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['[id^="faq-question-"]', '[id^="faq-answer-"]'],
+    },
     ...(locale && { inLanguage: locale }),
   };
 

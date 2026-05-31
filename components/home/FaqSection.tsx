@@ -45,6 +45,7 @@ export default function FaqSection({ faqs, translations: t }: FaqSectionProps) {
               >
                 <button
                   type="button"
+                  id={`faq-question-${faq.id}`}
                   onClick={() => toggleFaq(faq.id)}
                   className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
                   aria-expanded={isOpen}
