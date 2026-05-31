@@ -106,22 +106,32 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
           >
             {t("hero.subtitle")}
           </p>
-          {/* Trust signals below hero subtitle. Twin pivots both
-              feeding the financing-page conversion path:
-              (1) /reviews/ — completed the /reviews/ rollout 5/5
-                  (siblings 7a8d289 ServiceDetailPage, 62350e1 AreaPage,
-                  8503156 HomePage, 7f354b7 BlogPostPage). Reviews
-                  drive the high-friction decision to borrow money to
-                  renovate.
-              (2) /about/ — added on seo/daily-2026-06-01 as the 5th
-                  and FINAL surface in the /about/ inbound rollout
-                  (siblings e1b3193 Home, 5260a96 Service, b115e67
-                  Area, d0b9572 Blog). Pre-fix FinancingPage had ZERO
-                  /about/ body references. Closing this completes the
-                  /about/ rollout 5/5.
-              Both links share one paragraph separated by `·` so the
+          {/* Trust signals below hero subtitle. Three pivots feeding
+              the financing-page conversion path — before a reader
+              borrows money to renovate they want to evaluate the
+              business along three dimensions:
+              (1) /reviews/ — 5/5 rollout complete (siblings 7a8d289
+                  ServiceDetailPage, 62350e1 AreaPage, 8503156
+                  HomePage, 7f354b7 BlogPostPage). Reviews drive the
+                  high-friction borrowing decision.
+              (2) /about/ — 5/5 rollout complete (siblings e1b3193
+                  Home, 5260a96 Service, b115e67 Area, d0b9572 Blog).
+                  Company credibility.
+              (3) /showroom/ — added on seo/daily-2026-06-01 as the
+                  5th and FINAL surface in the /showroom/ inbound
+                  rollout (siblings: HomePage ShowroomSection
+                  baseline, AreaPage 50ed7e1, ServiceDetailPage
+                  d308538, BlogPostPage e72b6f2). Pre-rollout audit
+                  found /showroom/ had ONLY 1 inbound site-wide.
+                  "Visit our showroom" is high-conversion local-SEO
+                  trust signal — pre-borrowing readers often want to
+                  see physical evidence before committing to a quote.
+                  CLOSES /showroom/ rollout 5/5 and marks the 5-of-5-
+                  rollouts milestone on seo/daily-2026-06-01.
+              All three share one paragraph separated by `·` so the
               hero stays compact — same density pattern as the chips
-              row in AreaPage Contextual Internal Links. */}
+              row in AreaPage Contextual Internal Links and the
+              BlogPostPage secondary CTA (e72b6f2). */}
           <p className="text-sm mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
             <Link
               href="/reviews"
@@ -137,6 +147,14 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               style={{ color: GOLD }}
             >
               Learn more about Reno Stars →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/showroom"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              Visit our Burnaby showroom →
             </Link>
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
