@@ -106,6 +106,22 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
           >
             {t("hero.subtitle")}
           </p>
+          {/* Trust signal + /reviews/ link below hero subtitle.
+              Completes the /reviews/ inbound rollout 5/5 surfaces — sibling
+              commits 7a8d289 ServiceDetailPage, 62350e1 AreaPage, 8503156
+              HomePage, 7f354b7 BlogPostPage. Pre-fix FinancingPage had ZERO
+              /reviews/ references. Reviews are particularly relevant on a
+              financing page because trust drives the high-friction
+              decision of borrowing money to renovate. */}
+          <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
+            <Link
+              href="/reviews"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See what our 70+ Vancouver renovation clients say →
+            </Link>
+          </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
             {[
               { label: t("stats.avgKitchen"), value: "$30K" },
