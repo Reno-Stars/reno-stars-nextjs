@@ -421,6 +421,32 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 );
               })}
             </div>
+            {/* /showroom/ inbound CTA — kicks /showroom/ rollout to 3/5
+                (siblings: HomePage ShowroomSection baseline, AreaPage
+                Contextual Internal Links 50ed7e1). Pre-rollout audit
+                found /showroom/ had ONLY 1 inbound site-wide; on the
+                most equity-passing surface type (9 services × 14
+                locales) this was a significant gap. Semantic fit:
+                Areas-We-Serve names the local context; the natural
+                follow-up is "visit us in person in that area" — exactly
+                what /showroom/ offers. Material-evaluation CTA also
+                bridges the "online research → in-person conversion"
+                funnel that drives service-page bookings.
+
+                Label English-only matches same-file precedent (Related
+                Services /about/ CTA 5260a96, Benefits /workflow/ CTA
+                0e6a6e8). URL routes to localized /[locale]/showroom/
+                via @/navigation Link. */}
+            <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+              Want to see materials and finishes in person?{' '}
+              <Link
+                href="/showroom"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                Visit our Burnaby showroom →
+              </Link>
+            </p>
           </div>
         </section>
       )}
