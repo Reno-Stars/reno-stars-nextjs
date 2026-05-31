@@ -1,3 +1,4 @@
+import { Link } from '@/navigation';
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface AboutSectionProps {
@@ -25,6 +26,21 @@ export default function AboutSection({ items, translations: t }: AboutSectionPro
             </div>
           ))}
         </div>
+        {/* /about/ inbound — kicks off the /about/ rollout (sibling to the
+            /financing/ 4/4 and /reviews/ 5/5 rollouts shipped earlier on
+            this same daily branch). HomePage previously had ZERO body-
+            content references to /about/. Adds discoverable CTA below
+            the value-cards grid: just absorbed the company values →
+            "tell me more about who they are". */}
+        <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+          <Link
+            href="/about"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            Learn more about Reno Stars →
+          </Link>
+        </p>
       </div>
     </section>
   );
