@@ -171,6 +171,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/blog/${slug}/`}
         image={ogImage}
         locale={locale}
+        keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
       />
       <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />
     </>

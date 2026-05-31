@@ -12,6 +12,16 @@ interface ArticleSchemaProps {
   image?: string;
   /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
   locale?: string;
+  /**
+   * Optional list of focus + supporting keywords for the article. Emitted as
+   * Schema.org `keywords` (BlogPosting/Article). Already populated to
+   * `<meta name="keywords">` for the blog/[slug] route via Next.js Metadata,
+   * but JSON-LD `keywords` is a stronger signal for AI search engines'
+   * topical-clustering (Perplexity, Claude Search, Google AI Overview).
+   * Pass the pre-split + pre-trimmed string array — the schema emits an
+   * array, not the comma-joined string.
+   */
+  keywords?: string[];
 }
 
 export default function ArticleSchema({
@@ -24,6 +34,7 @@ export default function ArticleSchema({
   url,
   image,
   locale,
+  keywords,
 }: ArticleSchemaProps): React.ReactElement {
   const resolvedAuthorName = authorName ?? `${company.name} Team`;
   const baseUrl = getBaseUrl();
@@ -81,6 +92,7 @@ export default function ArticleSchema({
       },
     }),
     ...(locale && { inLanguage: locale }),
+    ...(keywords && keywords.length > 0 && { keywords }),
   };
 
   return (
