@@ -354,6 +354,23 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                   );
                 })}
             </div>
+            {/* /about/ inbound CTA tagline below related-services chips.
+                Parallel to HomePage AboutSection e1b3193. Pre-fix
+                ServiceDetailPage had ZERO /about/ references. Trust signal:
+                a user evaluating a specific service offering naturally wants
+                to know who's behind the offering. The "Learn more about
+                Reno Stars" CTA serves that exact informational need. ~126
+                surfaces (9 services × 14 locales) now pass body-content
+                link equity to /about/. */}
+            <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+              <Link
+                href="/about"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                Learn more about Reno Stars →
+              </Link>
+            </p>
           </div>
         </section>
       )}
