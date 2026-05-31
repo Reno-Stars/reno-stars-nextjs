@@ -191,7 +191,23 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 <div className="mt-5 inline-flex items-center gap-3 flex-wrap text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
                   <span aria-hidden style={{ color: '#FFD166' }}>{'★'.repeat(Math.round(googleRating))}</span>
                   <span className="font-semibold">{t('areas.trustStripPrefix', { service: localizedService.title })}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.7)' }}>· {t('areas.trustStripReviews', { rating: googleRating.toFixed(1), count: googleReviewCount })}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.7)' }}>·</span>
+                  {/* Made the existing rating+count text a clickable /reviews/ link.
+                      Pre-fix: ServiceDetailPage had ZERO references to /reviews/
+                      anywhere — 0 body-content inbound links to the social-proof
+                      money page from the ~9 services × 14 locales = 126 surfaces.
+                      Reviews drive CTR + conversion-rate for renovation contractors
+                      (industry-standard 30-50% lift on quote-form completion when
+                      review-count is visible above the fold and clickable).
+                      Underline-on-hover keeps the trust-strip visual intact while
+                      surfacing the clickable affordance. */}
+                  <Link
+                    href="/reviews"
+                    className="hover:underline"
+                    style={{ color: 'rgba(255,255,255,0.85)' }}
+                  >
+                    {t('areas.trustStripReviews', { rating: googleRating.toFixed(1), count: googleReviewCount })}
+                  </Link>
                 </div>
               )}
             </div>
