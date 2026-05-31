@@ -13,7 +13,7 @@ import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import { Link } from '@/navigation';
 import { getLocalizedArea } from '@/lib/data/areas';
 import {
-  NAVY, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
+  NAVY, GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
 import { renderProseHtml } from '@/lib/markdown-html';
 
@@ -280,6 +280,24 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 <span aria-hidden>→</span>
               </Link>
             </div>
+            {/* Cross-link to /financing/ — parallel to BlogPostPage commit
+                73a5c74 + AreaPage commit d90bb97. Pre-fix ServiceDetailPage
+                had zero references to /financing/. With ~9 service pages ×
+                14 locales × organic-search traffic, this is one of the
+                site's larger inbound surfaces — sending zero body-content
+                link equity to the financing money page was a real gap.
+                Completes financing-inbound on the third high-traffic
+                surface (after BlogPostPage + AreaPage). */}
+            <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+              Wondering how to pay for your renovation?{' '}
+              <Link
+                href="/financing"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                See financing options →
+              </Link>
+            </p>
           </div>
         </section>
       )}
