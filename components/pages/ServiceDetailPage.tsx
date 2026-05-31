@@ -447,6 +447,24 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 Visit our Burnaby showroom →
               </Link>
             </p>
+            {/* /areas/ aggregation link — 3rd surface of /areas/ inbound
+                rollout (siblings: HomePage AreasLinkSection adbe51b,
+                AreaPage Contextual Internal Links chip 3f7920a). Pre-
+                rollout audit found /areas/ canonical directory had
+                ZERO body refs site-wide. ServiceDetailPage is a high-
+                equity surface (9 services × 14 locales = ~126 surfaces)
+                and the Areas We Serve grid is the semantically-perfect
+                placement — readers seeing the served-areas list naturally
+                ask "what other areas?" — exactly what /areas/ answers. */}
+            <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+              <Link
+                href="/areas"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                See all service areas →
+              </Link>
+            </p>
           </div>
         </section>
       )}
