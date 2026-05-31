@@ -22,7 +22,7 @@ import { getLocalizedBlogPost, getLocalizedService, getLocalizedArea } from '@/l
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
-  CARD, TEXT, TEXT_MID, neu,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
 interface BlogPostPageProps {
@@ -373,21 +373,37 @@ export default function BlogPostPage({ locale, post, company, services = [], are
           >
             {t('cta.getFreeQuote')}
           </Link>
-          {/* /reviews/ inbound — completes the 4th surface of the /reviews/
-              rollout (after ServiceDetailPage 7a8d289, AreaPage 62350e1,
-              HomePage 8503156). BlogPostPage already has body content from
-              cost-guides + financing-link sections; this adds a secondary
-              trust-signal CTA below the primary contact CTA. Pre-fix
-              BlogPostPage had zero /reviews/ references; ~100 posts × 14
-              locales = ~1400 surfaces now pass body-content link equity. */}
-          <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
-            Or read{' '}
+          {/* Twin secondary CTAs below the primary "Get Free Quote":
+              (1) /reviews/ — 4th surface of /reviews/ rollout
+                  (siblings: ServiceDetailPage 7a8d289, AreaPage
+                  62350e1, HomePage 8503156). Trust signal.
+              (2) /workflow/ — added on seo/daily-2026-06-01 as 4th
+                  surface of /workflow/ rollout (siblings: AreaPage
+                  processLinkText baseline, ServiceDetailPage 0e6a6e8,
+                  HomePage ServicesSection 568128d). Pre-fix
+                  BlogPostPage had ZERO /workflow/ refs. Process
+                  documentation is also a trust-builder — a reader
+                  unsure about committing wants to see "how it
+                  actually works" before quoting.
+              ~100 posts × 14 locales = ~1400 surfaces now pass body-
+              content link equity to BOTH /reviews/ and /workflow/.
+              Two-link paragraph with `·` separator mirrors the
+              FinancingPage hero pattern (commit 5121b5c). */}
+          <p className="text-sm mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
             <Link
               href="/reviews"
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              what our 70+ Vancouver clients say →
+              Read what our 70+ Vancouver clients say →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/workflow"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              See our renovation process →
             </Link>
           </p>
         </div>
