@@ -246,6 +246,26 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               );
             })}
           </div>
+          {/* /workflow/ inbound CTA — CLOSES the /workflow/ inbound
+              rollout 5/5 (siblings: AreaPage processLinkText baseline,
+              ServiceDetailPage 0e6a6e8, HomePage ServicesSection
+              568128d, BlogPostPage be1d0d5). Pre-fix FinancingPage had
+              ZERO /workflow/ body refs. Semantic fit: this section
+              answers "how to pay"; the natural next question after
+              choosing a financing option is "what happens once I'm
+              approved?" — exactly what /workflow/ documents (7-step
+              quote → handover process). Bridges the payment-to-
+              execution flow on the financing money page. */}
+          <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+            Approved? See{' '}
+            <Link
+              href="/workflow"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              how our renovation process delivers your project →
+            </Link>
+          </p>
         </div>
       </section>
 
