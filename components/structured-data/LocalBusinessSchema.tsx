@@ -132,6 +132,50 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     foundingDate: String(COMPANY_STATS.companyFoundingYear),
     numberOfEmployees: company.teamSize,
     slogan: company.tagline,
+    // knowsAbout: topical-expertise signal for AI search engines (Perplexity,
+    // Claude Search, ChatGPT Search, Google AI Overview). Lists the topical
+    // entities this organization has demonstrated expertise in. Combined with
+    // the existing services + reviews + project portfolio, this gives AI
+    // citation engines explicit hooks to map "vancouver kitchen renovation
+    // contractor" → this entity. Topics are the same noun-phrases that anchor
+    // the cost-guide cluster, blog cluster, and service-detail pages — so the
+    // AI engine's verification crawl finds matching deep content for each
+    // claim. Order matches commercial-intent volume.
+    knowsAbout: [
+      'Kitchen Renovation',
+      'Bathroom Renovation',
+      'Whole-House Renovation',
+      'Basement Renovation',
+      'Basement Suite Conversion',
+      'Cabinet Refinishing',
+      'Commercial Renovation',
+      'Heritage Home Renovation',
+      'Multi-Family Renovation',
+      'Vancouver Building Permits',
+      'BC Building Code Compliance',
+      'Energy-Efficient Home Renovation',
+      'Renovation Cost Estimation',
+      'Renovation Financing',
+    ],
+    // contactPoint: explicit "how to reach customer service" entry for AI
+    // engines + Google knowledge-graph. Distinct from the top-level
+    // `telephone` / `email` fields because contactPoint can scope by
+    // contactType (customer service, sales, technical support, etc.) and
+    // by availableLanguage. The 7 languages listed match the site's
+    // primary translation targets — en/zh/zh-Hant/ja/ko/es/fr — and
+    // signal to Google that the business can serve queries in those
+    // locales without needing a separate locale-specific contactPoint
+    // node per language.
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: `+1${company.phone.replace(/\D/g, '')}`,
+        email: company.email,
+        contactType: 'customer service',
+        areaServed: 'CA',
+        availableLanguage: ['English', 'Mandarin Chinese', 'Cantonese', 'Japanese', 'Korean', 'Spanish', 'French'],
+      },
+    ],
   };
 
   return (
