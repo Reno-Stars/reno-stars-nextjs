@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { GoogleReview, GooglePlaceRating } from '@/lib/types';
 import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
@@ -103,6 +104,24 @@ export default function TestimonialsSection({ googleReviews, locale, translation
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <h2 id="testimonials-title" className="text-2xl font-bold mb-1" style={{ color: TEXT }}>{t.title}</h2>
         <p className="text-base" style={{ color: TEXT_MID }}>{t.subtitle}</p>
+        {/* /reviews/ inbound link — parallel to AreaPage 62350e1 +
+            ServiceDetailPage 7a8d289. Homepage is the #1-indexed page on the
+            site; pre-fix it had ZERO body-content references to /reviews/.
+            The marquee below renders ~5-10 sampled review cards but doesn't
+            link to the full collection. This adds the discoverable "See all
+            ${count} Google reviews →" CTA next to the section subtitle. */}
+        {googleReviews.userRatingCount > 0 && (
+          <p className="text-sm mt-2">
+            <Link
+              href="/reviews"
+              className="font-semibold underline hover:no-underline inline-flex items-center gap-1"
+              style={{ color: GOLD }}
+            >
+              <Star className="w-3.5 h-3.5" style={{ fill: GOLD, color: GOLD }} aria-hidden />
+              {googleReviews.rating.toFixed(1)} · See all {googleReviews.userRatingCount} Google reviews →
+            </Link>
+          </p>
+        )}
       </div>
       <div
         className="overflow-hidden"
