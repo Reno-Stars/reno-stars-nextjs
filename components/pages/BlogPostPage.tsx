@@ -315,6 +315,22 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </Link>
             ))}
           </div>
+          {/* Cross-link to financing — natural follow-up for a reader who's
+              just absorbed cost ranges. Pre-fix BlogPostPage had zero links
+              to /financing/, leaving the money page with no inbound flow
+              from the blog cluster (~100 posts). Body-content inline link
+              carries materially more PageRank weight than nav-area links;
+              gives /financing/ real internal-link equity. */}
+          <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+            Wondering how to pay for your renovation?{' '}
+            <Link
+              href="/financing"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See financing options →
+            </Link>
+          </p>
         </div>
       </section>
 
