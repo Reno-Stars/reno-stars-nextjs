@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/navigation';
-import { CARD, NAVY, SURFACE_ALT, TEXT, neu } from '@/lib/theme';
+import { CARD, GOLD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
 import type { Locale } from '@/i18n/config';
 import { getServiceAreasFromDb } from '@/lib/db/queries';
 import { getLocalizedArea } from '@/lib/data/areas';
@@ -74,6 +74,27 @@ export default async function AreasLinkSection({ locale }: AreasLinkSectionProps
             </Link>
           ))}
         </div>
+        {/* "See all service areas" tagline-link to the /areas/ directory
+            page. Pre-fix audit (2026-05-31, this same daily branch)
+            found the canonical /areas/ aggregation page had ZERO body-
+            content inbound links site-wide — a major gap given /services/
+            has 4 inbound. The 14 city tiles above link to specific
+            /areas/<slug>/ pages, but until this commit there was no
+            link to the directory page itself. Adding one closes the
+            site-architecture gap that left the topical "renovation
+            services in Vancouver areas" hub starved of internal-link
+            equity. Mirrors how /services/ is linked from /areas/page
+            via cta.viewAllServices in the Contextual Internal Links
+            chip row. */}
+        <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+          <Link
+            href="/areas"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            See all service areas →
+          </Link>
+        </p>
       </div>
     </section>
   );
