@@ -75,7 +75,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </div>
             )}
 
-            <h1 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
+            <h1 id="article-headline" className="text-2xl md:text-3xl font-bold mb-4" style={{ color: TEXT }}>
               {localizedPost.title}
             </h1>
 
@@ -106,7 +106,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
             </div>
 
             {localizedPost.excerpt && (
-              <p className="text-lg mb-8 leading-relaxed" style={{ color: TEXT_MID }}>
+              <p id="article-lead" className="text-lg mb-8 leading-relaxed" style={{ color: TEXT_MID }}>
                 {localizedPost.excerpt}
               </p>
             )}

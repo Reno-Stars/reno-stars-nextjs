@@ -56,6 +56,22 @@ export default function ArticleSchema({
       '@type': 'WebPage',
       '@id': absoluteUrl,
     },
+    // Speakable spec: marks the article's headline + lead paragraph as
+    // voice-readable. Targets the BlogPostPage hero h1 + excerpt p that
+    // render under <article> at the top of every blog post route. Voice
+    // assistants (Google Assistant, Alexa via Bing partnership) use this
+    // to pick which content to read aloud when a user asks for a query
+    // matching the blog topic. Eligibility for the Speakable rich-result
+    // doesn't cost anything to assert, and matches the existing rendered
+    // HTML structure of components/pages/BlogPostPage.tsx.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      xpath: [
+        '/html/head/title',
+        "//*[@id='article-headline']",
+        "//*[@id='article-lead']",
+      ],
+    },
     ...(image && {
       image: {
         '@type': 'ImageObject',
