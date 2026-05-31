@@ -546,6 +546,22 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
               </Link>
             ))}
           </div>
+          {/* Cross-link to financing — parallel to BlogPostPage commit 73a5c74.
+              Pre-fix AreaPage had zero references to /financing/. ~35 area
+              pages × 14 locales × organic-search traffic sent zero body-
+              content link equity to the financing money page. Body-link
+              carries materially more PageRank weight than nav-area links;
+              gives /financing/ another major inbound surface. */}
+          <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+            Wondering how to pay for your renovation?{' '}
+            <Link
+              href="/financing"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See financing options →
+            </Link>
+          </p>
         </div>
       </section>
 
