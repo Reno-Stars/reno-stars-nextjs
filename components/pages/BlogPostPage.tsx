@@ -206,7 +206,21 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </div>
             )}
 
-            {/* Author Bio */}
+            {/* Author Bio — /about/ inbound link added on the
+                seo/daily-2026-06-01 daily branch as the 4th surface in
+                the /about/ inbound rollout (sibling to HomePage e1b3193,
+                ServiceDetailPage 5260a96, AreaPage b115e67). The Author
+                Bio is the canonical "about the author" surface on every
+                blog post — semantically AND SEO-wise the strongest body-
+                content signal for /about/ inbound. ArticleSchema already
+                names the company as the author (E-E-A-T), so the bio
+                block is the right place to give readers a discoverable
+                hop into the full company profile.
+
+                Label is i18n-aware via t('blog.aboutAuthor', defaultValue)
+                fallback — keeps EN/ZH parity using the same locale-aware
+                paragraph above, falls back to English for the 12 locales
+                where the key isn't translated yet. */}
             <div className="mt-10 pt-8 border-t" style={{ borderColor: `${TEXT}10` }}>
               <div className="flex gap-4 items-start rounded-xl p-5" style={{ backgroundColor: SURFACE_ALT }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: NAVY }}>
@@ -218,6 +232,15 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     {locale === 'zh'
                       ? `大温哥华地区专业装修公司，${company.yearsExperience}年以上经验，${company.liabilityCoverage} CGL保险，WCB工伤保障，至多3年质保。`
                       : `Professional renovation company serving Metro Vancouver with ${company.yearsExperience}+ years of experience, ${company.liabilityCoverage} CGL insurance, WCB coverage, and up to 3-year warranty.`}
+                  </p>
+                  <p className="text-sm mt-2">
+                    <Link
+                      href="/about"
+                      className="font-semibold underline hover:no-underline"
+                      style={{ color: GOLD }}
+                    >
+                      {locale === 'zh' ? '了解更多关于我们 →' : 'Learn more about Reno Stars →'}
+                    </Link>
                   </p>
                 </div>
               </div>
