@@ -428,11 +428,22 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                 {t('section.clientReviews')}
               </h2>
               {googleReviews && googleReviews.userRatingCount > 0 && (
-                <div className="flex items-center gap-2 text-sm" style={{ color: TEXT_MID }}>
+                /* Made the rating-count line a clickable /reviews/ link.
+                   Parallel to ServiceDetailPage commit 7a8d289. Pre-fix
+                   AreaPage had ZERO references to /reviews/ — 35 cities ×
+                   14 locales × 0 inbound. Now ~490 surfaces pass body-
+                   content link equity to the E-E-A-T social-proof money
+                   page. Underline-on-hover keeps the existing rating-strip
+                   visual treatment while surfacing the click affordance. */
+                <Link
+                  href="/reviews"
+                  className="flex items-center gap-2 text-sm hover:underline"
+                  style={{ color: TEXT_MID }}
+                >
                   <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
                   <span className="font-bold" style={{ color: GOLD }}>{googleReviews.rating.toFixed(1)}</span>
                   <span>· {googleReviews.userRatingCount} Google reviews</span>
-                </div>
+                </Link>
               )}
             </div>
             <div className="grid gap-6 md:grid-cols-2">
