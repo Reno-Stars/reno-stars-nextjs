@@ -373,21 +373,27 @@ export default function BlogPostPage({ locale, post, company, services = [], are
           >
             {t('cta.getFreeQuote')}
           </Link>
-          {/* Twin secondary CTAs below the primary "Get Free Quote":
+          {/* Triple secondary CTAs below the primary "Get Free Quote":
               (1) /reviews/ — 4th surface of /reviews/ rollout
                   (siblings: ServiceDetailPage 7a8d289, AreaPage
                   62350e1, HomePage 8503156). Trust signal.
-              (2) /workflow/ — added on seo/daily-2026-06-01 as 4th
-                  surface of /workflow/ rollout (siblings: AreaPage
-                  processLinkText baseline, ServiceDetailPage 0e6a6e8,
-                  HomePage ServicesSection 568128d). Pre-fix
+              (2) /workflow/ — 4th surface of /workflow/ rollout
+                  (siblings: AreaPage baseline, ServiceDetailPage
+                  0e6a6e8, HomePage ServicesSection 568128d). Pre-fix
                   BlogPostPage had ZERO /workflow/ refs. Process
-                  documentation is also a trust-builder — a reader
-                  unsure about committing wants to see "how it
-                  actually works" before quoting.
+                  documentation is a trust-builder for committing.
+              (3) /showroom/ — added on seo/daily-2026-06-01 as 4th
+                  surface of /showroom/ rollout (siblings: HomePage
+                  ShowroomSection baseline, AreaPage 50ed7e1,
+                  ServiceDetailPage d308538). Pre-rollout audit found
+                  /showroom/ had only 1 inbound site-wide. "Visit our
+                  showroom" is a high-conversion local-SEO CTA on the
+                  blog cluster — readers researching renovations
+                  before booking often want to see materials in
+                  person before quoting.
               ~100 posts × 14 locales = ~1400 surfaces now pass body-
-              content link equity to BOTH /reviews/ and /workflow/.
-              Two-link paragraph with `·` separator mirrors the
+              content link equity to /reviews/ + /workflow/ + /showroom/.
+              Three-link paragraph with `·` separators continues the
               FinancingPage hero pattern (commit 5121b5c). */}
           <p className="text-sm mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
             <Link
@@ -404,6 +410,14 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               style={{ color: NAVY }}
             >
               See our renovation process →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/showroom"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              Visit our Burnaby showroom →
             </Link>
           </p>
         </div>
