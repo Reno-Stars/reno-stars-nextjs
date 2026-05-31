@@ -106,20 +106,37 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
           >
             {t("hero.subtitle")}
           </p>
-          {/* Trust signal + /reviews/ link below hero subtitle.
-              Completes the /reviews/ inbound rollout 5/5 surfaces — sibling
-              commits 7a8d289 ServiceDetailPage, 62350e1 AreaPage, 8503156
-              HomePage, 7f354b7 BlogPostPage. Pre-fix FinancingPage had ZERO
-              /reviews/ references. Reviews are particularly relevant on a
-              financing page because trust drives the high-friction
-              decision of borrowing money to renovate. */}
-          <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
+          {/* Trust signals below hero subtitle. Twin pivots both
+              feeding the financing-page conversion path:
+              (1) /reviews/ — completed the /reviews/ rollout 5/5
+                  (siblings 7a8d289 ServiceDetailPage, 62350e1 AreaPage,
+                  8503156 HomePage, 7f354b7 BlogPostPage). Reviews
+                  drive the high-friction decision to borrow money to
+                  renovate.
+              (2) /about/ — added on seo/daily-2026-06-01 as the 5th
+                  and FINAL surface in the /about/ inbound rollout
+                  (siblings e1b3193 Home, 5260a96 Service, b115e67
+                  Area, d0b9572 Blog). Pre-fix FinancingPage had ZERO
+                  /about/ body references. Closing this completes the
+                  /about/ rollout 5/5.
+              Both links share one paragraph separated by `·` so the
+              hero stays compact — same density pattern as the chips
+              row in AreaPage Contextual Internal Links. */}
+          <p className="text-sm mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
             <Link
               href="/reviews"
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
               See what our 70+ Vancouver renovation clients say →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/about"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              Learn more about Reno Stars →
             </Link>
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
