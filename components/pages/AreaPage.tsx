@@ -492,9 +492,17 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
         </div>
       </section>
 
-      {/* Contextual Internal Links */}
+      {/* Contextual Internal Links — /about/ added on the seo/daily-2026-
+          06-01 daily branch as the 3rd surface in the /about/ inbound
+          rollout (sibling to HomePage AboutSection e1b3193 and
+          ServiceDetailPage 5260a96). AreaPage is the second-highest
+          internal-link target on the site after HomePage; pre-fix it had
+          ZERO body-content references to /about/. Label is English-only
+          (matches the precedent set by Cost Guides section below) — i18n
+          keys aren't wired up and adding to 14 locale files is out of
+          scope for a single cap-free offensive. */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8">
           <Link
             href="/workflow"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
@@ -515,6 +523,13 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             style={{ color: GOLD }}
           >
             {t('cta.viewAllServices')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            About Reno Stars <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
