@@ -26,6 +26,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const blogDateMap = new Map(blogPostRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+
+  // Image-URL maps for image-sitemap support. Next.js MetadataRoute.Sitemap
+  // accepts an `images: string[]` field per entry — the renderer adds the
+  // `xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"` namespace
+  // and emits `<image:image><image:loc>URL</image:loc></image:image>` per
+  // image. Lifts image-search traffic (Google Images, Bing Visual Search)
+  // for renovation project galleries + blog hero images + service-area
+  // city photos. Verified Next.js sitemap renderer supports this at
+  // node_modules/next/dist/build/webpack/loaders/metadata/resolve-route-data.js:109.
+  const projectImageMap = new Map(projectRows.filter(r => r.heroImageUrl).map(r => [r.slug, r.heroImageUrl!]));
+  const siteImageMap = new Map(siteRows.filter(r => r.heroImageUrl).map(r => [r.slug, r.heroImageUrl!]));
+  const blogImageMap = new Map(blogPostRows.filter(r => r.featuredImageUrl).map(r => [r.slug, r.featuredImageUrl!]));
   const projectSlugs = projectRows.map(r => r.slug);
   const siteSlugs = siteRows.map(r => r.slug);
   const blogPostSlugs = blogPostRows.map(r => r.slug);
@@ -194,6 +206,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const PROJECT_LEAF_LOCALES = ['en', 'zh'] as const;
   const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
+    const projectImage = projectImageMap.get(slug);
     for (const locale of PROJECT_LEAF_LOCALES) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
@@ -201,12 +214,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: buildAlternates(`/projects/${slug}`),
         priority: PRIORITY.projectLeaf,
         changeFrequency: CHANGEFREQ.yearly,
+        ...(projectImage && { images: [projectImage] }),
       });
     }
   }
 
   const projectSlugSet = new Set(projectSlugs);
   for (const slug of siteSlugs.filter(s => !projectSlugSet.has(s))) {
+    const siteImage = siteImageMap.get(slug);
     for (const locale of PROJECT_LEAF_LOCALES) {
       entries.push({
         url: `${BASE_URL}/${locale}/projects/${slug}/`,
@@ -214,6 +229,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: buildAlternates(`/projects/${slug}`),
         priority: PRIORITY.projectLeaf,
         changeFrequency: CHANGEFREQ.yearly,
+        ...(siteImage && { images: [siteImage] }),
       });
     }
   }
@@ -235,6 +251,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const slug of blogPostSlugs) {
     const isCostGuide = COST_GUIDE_BLOG_SLUGS.has(slug);
+    const blogImage = blogImageMap.get(slug);
     for (const locale of locales) {
       entries.push({
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
@@ -242,6 +259,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: buildAlternates(`/blog/${slug}`),
         priority: isCostGuide ? PRIORITY.guide : PRIORITY.blog,
         changeFrequency: CHANGEFREQ.monthly,
+        ...(blogImage && { images: [blogImage] }),
       });
     }
   }
