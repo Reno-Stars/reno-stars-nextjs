@@ -181,20 +181,38 @@ def main():
     parser.add_argument("--force", nargs="*", default=[],
                         help="slugs to re-translate even if not thin")
     parser.add_argument("--services-only", action="store_true",
-                        help="Skip service_areas")
+                        help="Only services table")
     parser.add_argument("--areas-only", action="store_true",
-                        help="Skip services")
+                        help="Only service_areas table")
+    parser.add_argument("--about-only", action="store_true",
+                        help="Only about_sections table (5 narrative fields × 1 row)")
+    parser.add_argument("--faqs-only", action="store_true",
+                        help="Only faqs table (answer_zh per row)")
     args = parser.parse_args()
 
     SERVICE_SLUGS = [
         "kitchen", "bathroom", "basement", "whole-house",
         "commercial", "cabinet", "basement-suite-conversion",
     ]
+    ABOUT_FIELDS = [
+        ("our_journey_en", "our_journey_zh"),
+        ("what_we_offer_en", "what_we_offer_zh"),
+        ("our_values_en", "our_values_zh"),
+        ("why_choose_us_en", "why_choose_us_zh"),
+        ("lets_build_together_en", "lets_build_together_zh"),
+    ]
+
+    # Mode flags: when any --*-only is set, run JUST that table.
+    only_modes = [args.services_only, args.areas_only, args.about_only, args.faqs_only]
+    run_services = args.services_only or not any(only_modes)
+    run_areas = args.areas_only or not any(only_modes)
+    run_about = args.about_only or not any(only_modes)
+    run_faqs = args.faqs_only or not any(only_modes)
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             updated = 0
-            if not args.areas_only:
+            if run_services:
                 print("\n=== services ===")
                 for slug in SERVICE_SLUGS:
                     for field_en, field_zh in [
@@ -207,7 +225,7 @@ def main():
                             updated += 1
                             time.sleep(0.3)  # gtx rate-limit politeness
 
-            if not args.services_only:
+            if run_areas:
                 print("\n=== service_areas ===")
                 cur.execute("SELECT slug FROM service_areas WHERE is_active = true ORDER BY display_order")
                 area_slugs = [r[0] for r in cur.fetchall()]
@@ -221,6 +239,36 @@ def main():
                                           slug in args.force, args.dry_run):
                             updated += 1
                             time.sleep(0.3)
+
+            if run_about:
+                # about_sections is a singleton table — usually 1 row.
+                # 5 narrative fields per row. Run via id rather than slug since
+                # the table has no slug column.
+                print("\n=== about_sections ===")
+                cur.execute("SELECT id FROM about_sections")
+                ids = [r[0] for r in cur.fetchall()]
+                for row_id in ids:
+                    for field_en, field_zh in ABOUT_FIELDS:
+                        if maybe_backfill(cur, "about_sections", "id", str(row_id),
+                                          field_en, field_zh,
+                                          False, args.dry_run):
+                            updated += 1
+                            time.sleep(0.3)
+
+            if run_faqs:
+                # faqs: one answer_zh per row. Scan finding showed 73/76 active
+                # rows had zh<55% of en. question_zh tends to be parity since
+                # questions are short — only translate the answer field.
+                print("\n=== faqs ===")
+                cur.execute("SELECT id FROM faqs WHERE is_active = true ORDER BY display_order")
+                faq_ids = [r[0] for r in cur.fetchall()]
+                for row_id in faq_ids:
+                    if maybe_backfill(cur, "faqs", "id", str(row_id),
+                                      "answer_en", "answer_zh",
+                                      False, args.dry_run):
+                        updated += 1
+                        time.sleep(0.3)
+
             if not args.dry_run:
                 conn.commit()
             print(f"\n{'[dry-run] would update' if args.dry_run else 'committed'} {updated} field(s)")
