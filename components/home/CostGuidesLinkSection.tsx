@@ -1,5 +1,5 @@
 import { Link } from '@/navigation';
-import { CARD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { CARD, GOLD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 /**
  * Hub of clickable cost-guide links on the homepage. Mirrors the
@@ -58,6 +58,23 @@ export default function CostGuidesLinkSection() {
             </Link>
           ))}
         </div>
+        {/* Cross-link to /financing/ — completes the financing-inbound rollout
+            across the 4 cost-guide-chip-rendering surfaces (sibling commits
+            73a5c74 BlogPostPage, d90bb97 AreaPage, 9a4a398 ServiceDetailPage).
+            HomePage is the #1-indexed page on the site; this gives /financing/
+            its single most-authoritative inbound edge. CTA-tagline form
+            matches the other 3 surfaces — reads as a transition (just
+            absorbed cost ranges → "how do I pay?"). */}
+        <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+          Wondering how to pay for your renovation?{' '}
+          <Link
+            href="/financing"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            See financing options →
+          </Link>
+        </p>
       </div>
     </section>
   );

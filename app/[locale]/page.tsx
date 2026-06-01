@@ -248,7 +248,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqSchemaItems} />
+      <FAQSchema faqs={faqSchemaItems} locale={locale} />
       <HomePage
         locale={locale}
         company={company}

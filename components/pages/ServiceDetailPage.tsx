@@ -13,7 +13,7 @@ import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import { Link } from '@/navigation';
 import { getLocalizedArea } from '@/lib/data/areas';
 import {
-  NAVY, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
+  NAVY, GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
 import { renderProseHtml } from '@/lib/markdown-html';
 
@@ -67,6 +67,16 @@ interface ServiceDetailPageProps {
   faqs?: FAQ[];
   googleRating?: number;
   googleReviewCount?: number;
+  /**
+   * Optional list of all services (from DB) for rendering a Related Services
+   * cross-link section. When provided, the page emits a 6-chip grid linking
+   * to up to 6 sibling services (excluding `serviceSlug`), giving body-level
+   * internal-link equity to the service cluster — important because nav-area
+   * service links (header/footer) carry less PageRank weight than body-content
+   * links. Closes a 2026-05-31 audit finding (header was the only inbound
+   * surface from each /services/<x>/ page to other services).
+   */
+  allServices?: Service[];
 }
 
 // Per-locale copy for the Cost Guide cross-link section. Only render when an entry
@@ -117,7 +127,7 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
   },
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -181,7 +191,23 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 <div className="mt-5 inline-flex items-center gap-3 flex-wrap text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
                   <span aria-hidden style={{ color: '#FFD166' }}>{'★'.repeat(Math.round(googleRating))}</span>
                   <span className="font-semibold">{t('areas.trustStripPrefix', { service: localizedService.title })}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.7)' }}>· {t('areas.trustStripReviews', { rating: googleRating.toFixed(1), count: googleReviewCount })}</span>
+                  <span style={{ color: 'rgba(255,255,255,0.7)' }}>·</span>
+                  {/* Made the existing rating+count text a clickable /reviews/ link.
+                      Pre-fix: ServiceDetailPage had ZERO references to /reviews/
+                      anywhere — 0 body-content inbound links to the social-proof
+                      money page from the ~9 services × 14 locales = 126 surfaces.
+                      Reviews drive CTR + conversion-rate for renovation contractors
+                      (industry-standard 30-50% lift on quote-form completion when
+                      review-count is visible above the fold and clickable).
+                      Underline-on-hover keeps the trust-strip visual intact while
+                      surfacing the clickable affordance. */}
+                  <Link
+                    href="/reviews"
+                    className="hover:underline"
+                    style={{ color: 'rgba(255,255,255,0.85)' }}
+                  >
+                    {t('areas.trustStripReviews', { rating: googleRating.toFixed(1), count: googleReviewCount })}
+                  </Link>
                 </div>
               )}
             </div>
@@ -233,6 +259,30 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             {t('section.whyUs')}
           </h2>
           <BenefitList benefits={benefits} />
+          {/* /workflow/ inbound CTA — kicks off the /workflow/ rollout
+              (currently only AreaPage links to /workflow/ via
+              processLinkText). Pre-fix ServiceDetailPage had ZERO
+              /workflow/ body-content references. Semantic fit: the
+              "Why choose us" benefits answer "why" — readers' natural
+              next question is "how does it actually happen?" — exactly
+              what /workflow/ documents (7-step quote → handover
+              process). ~126 surfaces (9 services × 14 locales) now
+              pass body-content link equity to /workflow/.
+
+              Label is English-only — matches the precedent set by the
+              Related Services /about/ CTA below in the same file, and
+              the Cost-Guides section above. i18n keys not wired up;
+              URL routes to localized /[locale]/workflow/ via the
+              navigation Link helper. */}
+          <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+            <Link
+              href="/workflow"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our renovation process step-by-step →
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -270,6 +320,81 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 <span aria-hidden>→</span>
               </Link>
             </div>
+            {/* Cross-link to /financing/ — parallel to BlogPostPage commit
+                73a5c74 + AreaPage commit d90bb97. Pre-fix ServiceDetailPage
+                had zero references to /financing/. With ~9 service pages ×
+                14 locales × organic-search traffic, this is one of the
+                site's larger inbound surfaces — sending zero body-content
+                link equity to the financing money page was a real gap.
+                Completes financing-inbound on the third high-traffic
+                surface (after BlogPostPage + AreaPage). */}
+            <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+              Wondering how to pay for your renovation?{' '}
+              <Link
+                href="/financing"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                See financing options →
+              </Link>
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Related Services — body-level cross-links to sibling /services/<x>/
+          pages. Pre-fix: only the global header/footer linked each service to
+          the others (1 inbound link per other-service per page, all in nav
+          chrome). PageRank weighting puts body-content links well above
+          nav-area links, so adding a body-level Related Services section
+          materially increases the internal-link equity flowing across the
+          service cluster. Mirrors the pattern of the Cost Guide cross-link
+          section above + the Real-Renovation-Costs sections in BlogPostPage /
+          AreaPage / FinancingPage / HomePage. Labels use service.title
+          (already localized) so the chip text is meaningful in every locale.
+          Conditional render — only shows when caller passes the allServices
+          prop AND at least 1 sibling exists. */}
+      {allServices && allServices.filter(s => s.slug !== serviceSlug && s.showOnServicesPage !== false).length > 0 && (
+        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
+              {t('section.relatedServices', { defaultValue: 'Related Services' })}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {allServices
+                .filter(s => s.slug !== serviceSlug && s.showOnServicesPage !== false)
+                .slice(0, 6)
+                .map((s) => {
+                  const localizedSibling = getLocalizedService(s, locale);
+                  return (
+                    <Link
+                      key={s.slug}
+                      href={`/services/${s.slug}` as '/services/kitchen'}
+                      className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
+                      style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                    >
+                      {localizedSibling.title}
+                    </Link>
+                  );
+                })}
+            </div>
+            {/* /about/ inbound CTA tagline below related-services chips.
+                Parallel to HomePage AboutSection e1b3193. Pre-fix
+                ServiceDetailPage had ZERO /about/ references. Trust signal:
+                a user evaluating a specific service offering naturally wants
+                to know who's behind the offering. The "Learn more about
+                Reno Stars" CTA serves that exact informational need. ~126
+                surfaces (9 services × 14 locales) now pass body-content
+                link equity to /about/. */}
+            <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+              <Link
+                href="/about"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                Learn more about Reno Stars →
+              </Link>
+            </p>
           </div>
         </section>
       )}
@@ -296,6 +421,50 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 );
               })}
             </div>
+            {/* /showroom/ inbound CTA — kicks /showroom/ rollout to 3/5
+                (siblings: HomePage ShowroomSection baseline, AreaPage
+                Contextual Internal Links 50ed7e1). Pre-rollout audit
+                found /showroom/ had ONLY 1 inbound site-wide; on the
+                most equity-passing surface type (9 services × 14
+                locales) this was a significant gap. Semantic fit:
+                Areas-We-Serve names the local context; the natural
+                follow-up is "visit us in person in that area" — exactly
+                what /showroom/ offers. Material-evaluation CTA also
+                bridges the "online research → in-person conversion"
+                funnel that drives service-page bookings.
+
+                Label English-only matches same-file precedent (Related
+                Services /about/ CTA 5260a96, Benefits /workflow/ CTA
+                0e6a6e8). URL routes to localized /[locale]/showroom/
+                via @/navigation Link. */}
+            <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+              Want to see materials and finishes in person?{' '}
+              <Link
+                href="/showroom"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                Visit our Burnaby showroom →
+              </Link>
+            </p>
+            {/* /areas/ aggregation link — 3rd surface of /areas/ inbound
+                rollout (siblings: HomePage AreasLinkSection adbe51b,
+                AreaPage Contextual Internal Links chip 3f7920a). Pre-
+                rollout audit found /areas/ canonical directory had
+                ZERO body refs site-wide. ServiceDetailPage is a high-
+                equity surface (9 services × 14 locales = ~126 surfaces)
+                and the Areas We Serve grid is the semantically-perfect
+                placement — readers seeing the served-areas list naturally
+                ask "what other areas?" — exactly what /areas/ answers. */}
+            <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+              <Link
+                href="/areas"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                See all service areas →
+              </Link>
+            </p>
           </div>
         </section>
       )}

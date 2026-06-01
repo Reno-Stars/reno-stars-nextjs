@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} locale={locale} />
       <DesignPage locale={locale as Locale} company={company} designs={designs} />
     </>
   );

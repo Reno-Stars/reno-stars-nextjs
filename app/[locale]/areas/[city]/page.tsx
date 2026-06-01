@@ -374,7 +374,7 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />
-      {localizedFaqs.length > 0 && <FAQSchema faqs={localizedFaqs} />}
+      {localizedFaqs.length > 0 && <FAQSchema faqs={localizedFaqs} locale={locale} />}
       <AreaPage
         locale={locale as Locale}
         area={area}

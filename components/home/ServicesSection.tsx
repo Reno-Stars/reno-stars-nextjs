@@ -2,7 +2,7 @@ import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Service } from '@/lib/types';
 import { pickLocale } from '@/lib/utils';
-import { GOLD_PALE, GOLD_ICON_FILTER, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { GOLD, GOLD_PALE, GOLD_ICON_FILTER, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 
 interface ServicesSectionProps {
   services: Service[];
@@ -46,6 +46,26 @@ export default function ServicesSection({ services, locale, translations: t }: S
             );
           })}
         </div>
+        {/* /workflow/ inbound CTA — kicks /workflow/ rollout to 3/5
+            (siblings: AreaPage processLinkText baseline, ServiceDetailPage
+            0e6a6e8). HomePage is the #1-indexed page on the site;
+            pre-fix it had ZERO body-content references to /workflow/.
+            Semantic fit: this section answers WHAT we do; the natural
+            next question is HOW does it happen — exactly what /workflow/
+            documents (7-step quote → handover process). Adding a single
+            tagline-link below the services grid is the lowest-noise
+            insertion (mirrors the AboutSection /about/ CTA e1b3193 and
+            TestimonialsSection /reviews/ CTA 8503156 patterns on this
+            same homepage). */}
+        <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+          <Link
+            href="/workflow"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            See our renovation process step-by-step →
+          </Link>
+        </p>
       </div>
     </section>
   );

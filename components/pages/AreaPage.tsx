@@ -428,11 +428,22 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                 {t('section.clientReviews')}
               </h2>
               {googleReviews && googleReviews.userRatingCount > 0 && (
-                <div className="flex items-center gap-2 text-sm" style={{ color: TEXT_MID }}>
+                /* Made the rating-count line a clickable /reviews/ link.
+                   Parallel to ServiceDetailPage commit 7a8d289. Pre-fix
+                   AreaPage had ZERO references to /reviews/ — 35 cities ×
+                   14 locales × 0 inbound. Now ~490 surfaces pass body-
+                   content link equity to the E-E-A-T social-proof money
+                   page. Underline-on-hover keeps the existing rating-strip
+                   visual treatment while surfacing the click affordance. */
+                <Link
+                  href="/reviews"
+                  className="flex items-center gap-2 text-sm hover:underline"
+                  style={{ color: TEXT_MID }}
+                >
                   <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
                   <span className="font-bold" style={{ color: GOLD }}>{googleReviews.rating.toFixed(1)}</span>
                   <span>· {googleReviews.userRatingCount} Google reviews</span>
-                </div>
+                </Link>
               )}
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -481,9 +492,17 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
         </div>
       </section>
 
-      {/* Contextual Internal Links */}
+      {/* Contextual Internal Links — /about/ added on the seo/daily-2026-
+          06-01 daily branch as the 3rd surface in the /about/ inbound
+          rollout (sibling to HomePage AboutSection e1b3193 and
+          ServiceDetailPage 5260a96). AreaPage is the second-highest
+          internal-link target on the site after HomePage; pre-fix it had
+          ZERO body-content references to /about/. Label is English-only
+          (matches the precedent set by Cost Guides section below) — i18n
+          keys aren't wired up and adding to 14 locale files is out of
+          scope for a single cap-free offensive. */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8">
           <Link
             href="/workflow"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
@@ -504,6 +523,27 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             style={{ color: GOLD }}
           >
             {t('cta.viewAllServices')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            About Reno Stars <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/showroom"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            Visit Our Showroom <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/areas"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            All Service Areas <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -546,6 +586,22 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
               </Link>
             ))}
           </div>
+          {/* Cross-link to financing — parallel to BlogPostPage commit 73a5c74.
+              Pre-fix AreaPage had zero references to /financing/. ~35 area
+              pages × 14 locales × organic-search traffic sent zero body-
+              content link equity to the financing money page. Body-link
+              carries materially more PageRank weight than nav-area links;
+              gives /financing/ another major inbound surface. */}
+          <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+            Wondering how to pay for your renovation?{' '}
+            <Link
+              href="/financing"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See financing options →
+            </Link>
+          </p>
         </div>
       </section>
 

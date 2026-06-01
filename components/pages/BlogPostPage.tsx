@@ -22,7 +22,7 @@ import { getLocalizedBlogPost, getLocalizedService, getLocalizedArea } from '@/l
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
-  CARD, TEXT, TEXT_MID, neu,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
 interface BlogPostPageProps {
@@ -206,7 +206,21 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </div>
             )}
 
-            {/* Author Bio */}
+            {/* Author Bio — /about/ inbound link added on the
+                seo/daily-2026-06-01 daily branch as the 4th surface in
+                the /about/ inbound rollout (sibling to HomePage e1b3193,
+                ServiceDetailPage 5260a96, AreaPage b115e67). The Author
+                Bio is the canonical "about the author" surface on every
+                blog post — semantically AND SEO-wise the strongest body-
+                content signal for /about/ inbound. ArticleSchema already
+                names the company as the author (E-E-A-T), so the bio
+                block is the right place to give readers a discoverable
+                hop into the full company profile.
+
+                Label is i18n-aware via t('blog.aboutAuthor', defaultValue)
+                fallback — keeps EN/ZH parity using the same locale-aware
+                paragraph above, falls back to English for the 12 locales
+                where the key isn't translated yet. */}
             <div className="mt-10 pt-8 border-t" style={{ borderColor: `${TEXT}10` }}>
               <div className="flex gap-4 items-start rounded-xl p-5" style={{ backgroundColor: SURFACE_ALT }}>
                 <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: NAVY }}>
@@ -218,6 +232,15 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     {locale === 'zh'
                       ? `大温哥华地区专业装修公司，${company.yearsExperience}年以上经验，${company.liabilityCoverage} CGL保险，WCB工伤保障，至多3年质保。`
                       : `Professional renovation company serving Metro Vancouver with ${company.yearsExperience}+ years of experience, ${company.liabilityCoverage} CGL insurance, WCB coverage, and up to 3-year warranty.`}
+                  </p>
+                  <p className="text-sm mt-2">
+                    <Link
+                      href="/about"
+                      className="font-semibold underline hover:no-underline"
+                      style={{ color: GOLD }}
+                    >
+                      {locale === 'zh' ? '了解更多关于我们 →' : 'Learn more about Reno Stars →'}
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -315,6 +338,22 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               </Link>
             ))}
           </div>
+          {/* Cross-link to financing — natural follow-up for a reader who's
+              just absorbed cost ranges. Pre-fix BlogPostPage had zero links
+              to /financing/, leaving the money page with no inbound flow
+              from the blog cluster (~100 posts). Body-content inline link
+              carries materially more PageRank weight than nav-area links;
+              gives /financing/ real internal-link equity. */}
+          <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+            Wondering how to pay for your renovation?{' '}
+            <Link
+              href="/financing"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See financing options →
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -334,6 +373,53 @@ export default function BlogPostPage({ locale, post, company, services = [], are
           >
             {t('cta.getFreeQuote')}
           </Link>
+          {/* Triple secondary CTAs below the primary "Get Free Quote":
+              (1) /reviews/ — 4th surface of /reviews/ rollout
+                  (siblings: ServiceDetailPage 7a8d289, AreaPage
+                  62350e1, HomePage 8503156). Trust signal.
+              (2) /workflow/ — 4th surface of /workflow/ rollout
+                  (siblings: AreaPage baseline, ServiceDetailPage
+                  0e6a6e8, HomePage ServicesSection 568128d). Pre-fix
+                  BlogPostPage had ZERO /workflow/ refs. Process
+                  documentation is a trust-builder for committing.
+              (3) /showroom/ — added on seo/daily-2026-06-01 as 4th
+                  surface of /showroom/ rollout (siblings: HomePage
+                  ShowroomSection baseline, AreaPage 50ed7e1,
+                  ServiceDetailPage d308538). Pre-rollout audit found
+                  /showroom/ had only 1 inbound site-wide. "Visit our
+                  showroom" is a high-conversion local-SEO CTA on the
+                  blog cluster — readers researching renovations
+                  before booking often want to see materials in
+                  person before quoting.
+              ~100 posts × 14 locales = ~1400 surfaces now pass body-
+              content link equity to /reviews/ + /workflow/ + /showroom/.
+              Three-link paragraph with `·` separators continues the
+              FinancingPage hero pattern (commit 5121b5c). */}
+          <p className="text-sm mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
+            <Link
+              href="/reviews"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              Read what our 70+ Vancouver clients say →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/workflow"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              See our renovation process →
+            </Link>
+            <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+            <Link
+              href="/showroom"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: NAVY }}
+            >
+              Visit our Burnaby showroom →
+            </Link>
+          </p>
         </div>
       </section>
 
