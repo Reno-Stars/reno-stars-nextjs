@@ -124,6 +124,7 @@ export default async function Page({ params }: PageProps) {
         totalTime="P6W"
         estimatedCost={{ currency: 'CAD', minValue: 10000, maxValue: 60000 }}
         steps={howToSteps}
+        locale={locale}
       />
       <BathroomCostGuidePage locale={locale as Locale} projects={projects} />
     </>

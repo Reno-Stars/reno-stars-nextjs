@@ -222,7 +222,7 @@ export default async function Page({ params }: PageProps) {
           <FAQSchema key={`cat-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
         ))}
         {categoryBlockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`cat-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+          <HowToSchema key={`cat-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {categoryBlockSchema.imageList && (
           <ItemListSchema items={categoryBlockSchema.imageList.items} name={categoryBlockSchema.imageList.name} description={categoryBlockSchema.imageList.description} locale={categoryBlockSchema.imageList.locale} />
@@ -278,7 +278,7 @@ export default async function Page({ params }: PageProps) {
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
         ))}
         {blockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+          <HowToSchema key={`howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {blockSchema.imageList && (
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
@@ -326,7 +326,7 @@ export default async function Page({ params }: PageProps) {
           <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
         ))}
         {siteBlockSchema.howtos.map((howto, i) => (
-          <HowToSchema key={`site-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} />
+          <HowToSchema key={`site-howto-${i}`} name={howto.name} description={howto.description} totalTime={howto.totalTime} steps={howto.steps} image={howto.image} locale={howto.locale} />
         ))}
         {siteBlockSchema.imageList && (
           <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />

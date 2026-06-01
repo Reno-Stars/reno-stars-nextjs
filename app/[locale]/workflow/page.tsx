@@ -91,6 +91,7 @@ export default async function Page({ params }: PageProps) {
           : 'Complete renovation workflow from free consultation to project handover. Learn how to plan, design, and execute your Vancouver home renovation.'}
         totalTime="P8W"
         steps={howToSteps}
+        locale={locale}
       />
       <ProcessPage company={company} locale={locale as Locale} googleRating={googleReviews.rating} />
     </>

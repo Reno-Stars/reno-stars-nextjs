@@ -16,6 +16,21 @@ interface HowToSchemaProps {
   };
   steps: HowToStep[];
   image?: string;
+  /**
+   * BCP-47 locale code (e.g. 'en', 'zh', 'fr'). When passed, emits the
+   * Schema.org `inLanguage` property at both the HowTo top level and on
+   * each HowToStep. Per Schema.org HowTo spec, `inLanguage` is the
+   * recommended way to declare the natural language of multilingual
+   * how-to content so Google can pick the right localized rich-result
+   * variant in localized SERPs. Mirrors the FAQSchema per-Question +
+   * per-Answer inLanguage pattern shipped in PR #102 (e3cc590) +
+   * caller backfill d56760d.
+   *
+   * Optional for backwards compatibility — callers that don't pass it
+   * still emit valid (locale-agnostic) HowTo JSON-LD. All 8 in-tree
+   * callers updated to pass locale in this same commit.
+   */
+  locale?: string;
 }
 
 export default function HowToSchema({
@@ -25,6 +40,7 @@ export default function HowToSchema({
   estimatedCost,
   steps,
   image,
+  locale,
 }: HowToSchemaProps): React.ReactElement | null {
   if (steps.length === 0) return null;
 
@@ -42,10 +58,12 @@ export default function HowToSchema({
       };
       if (step.url) stepObj.url = step.url;
       if (step.image) stepObj.image = step.image;
+      if (locale) stepObj.inLanguage = locale;
       return stepObj;
     }),
   };
 
+  if (locale) schema.inLanguage = locale;
   if (totalTime) schema.totalTime = totalTime;
   if (image) schema.image = image;
 
