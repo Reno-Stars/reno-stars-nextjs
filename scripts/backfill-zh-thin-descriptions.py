@@ -271,6 +271,9 @@ def main():
     parser.add_argument("--multi-locale-areas", action="store_true",
                         help="Backfill service_areas.localizations JSONB content* "
                              "and description* keys for the 12 non-en/non-zh locales")
+    parser.add_argument("--blog-posts-short", action="store_true",
+                        help="Backfill blog_posts.excerpt_zh + meta_description_zh "
+                             "for thin rows (~138 + 155 of 162 published posts)")
     args = parser.parse_args()
 
     SERVICE_SLUGS = [
@@ -288,13 +291,14 @@ def main():
     # Mode flags: when any --*-only is set, run JUST that mode.
     only_modes = [args.services_only, args.areas_only, args.about_only,
                   args.faqs_only, args.multi_locale_services,
-                  args.multi_locale_areas]
+                  args.multi_locale_areas, args.blog_posts_short]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
     run_faqs = args.faqs_only or not any(only_modes)
     run_multi_locale_services = args.multi_locale_services
     run_multi_locale_areas = args.multi_locale_areas
+    run_blog_posts_short = args.blog_posts_short
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -355,6 +359,28 @@ def main():
                                       False, args.dry_run):
                         updated += 1
                         time.sleep(0.3)
+
+            if run_blog_posts_short:
+                # blog_posts.excerpt_zh + meta_description_zh — short SEO
+                # fields without embedded JSON-LD (unlike content_zh which
+                # is deferred for safety since content_en often embeds
+                # <script type="application/ld+json"> blocks that would
+                # corrupt under naive translation).
+                # Audit (2026-06-01T13:00Z): 138 of 162 published blog
+                # posts have thin excerpt_zh, 155 have thin meta_description_zh.
+                print("\n=== blog_posts (short SEO fields) ===")
+                cur.execute("SELECT id FROM blog_posts WHERE is_published=true ORDER BY published_at DESC NULLS LAST")
+                blog_ids = [r[0] for r in cur.fetchall()]
+                for row_id in blog_ids:
+                    for field_en, field_zh in [
+                        ("excerpt_en", "excerpt_zh"),
+                        ("meta_description_en", "meta_description_zh"),
+                    ]:
+                        if maybe_backfill(cur, "blog_posts", "id", str(row_id),
+                                          field_en, field_zh,
+                                          False, args.dry_run):
+                            updated += 1
+                            time.sleep(0.3)
 
             if run_multi_locale_areas:
                 # service_areas.localizations JSONB: each non-en/non-zh
