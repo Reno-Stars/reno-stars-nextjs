@@ -76,7 +76,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <BeforeAfterGalleryPage
         locale={locale as Locale}

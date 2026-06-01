@@ -153,7 +153,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* Use long_description in schema only when the current locale has a
           genuine translation (not a pickLocale en-fallback). Otherwise use
           the short description, which IS localized via the localizations jsonb.

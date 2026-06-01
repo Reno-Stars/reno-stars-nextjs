@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps) {
     : 'Basement renovation across Metro Vancouver — legal suites, family rooms, home theatres, waterproofing. $35K-$130K+, 8-16 wks. Permits handled.';
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
         company={company}

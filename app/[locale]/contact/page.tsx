@@ -74,7 +74,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ContactPageSchema company={company} areaNames={areaNames} locale={locale} />
       <ContactPage
         company={company}

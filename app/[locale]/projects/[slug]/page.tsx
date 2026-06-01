@@ -212,7 +212,7 @@ export default async function Page({ params }: PageProps) {
 
     return (
       <>
-        <BreadcrumbSchema items={breadcrumbs} />
+        <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectCategorySchema
           categoryName={categoryName}
           locale={locale as Locale}
@@ -258,7 +258,7 @@ export default async function Page({ params }: PageProps) {
 
     return (
       <>
-        <BreadcrumbSchema items={breadcrumbs} />
+        <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectSchema
           company={company}
           name={localizedProject.title}
@@ -309,7 +309,7 @@ export default async function Page({ params }: PageProps) {
 
     return (
       <>
-        <BreadcrumbSchema items={breadcrumbs} />
+        <BreadcrumbSchema items={breadcrumbs} locale={locale} />
         <ProjectSchema
           company={company}
           name={localizedSite.title}
