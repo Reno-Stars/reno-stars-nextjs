@@ -421,10 +421,14 @@ def main():
 
             if run_blog_posts_content:
                 # blog_posts.content_zh — JSON-LD-aware chunked translation.
-                # Only translates rows where existing zh ratio < 0.55 of EN
-                # length. Iterates highest-EN-length posts first (biggest gap
-                # = biggest SEO impact). --limit caps the batch for tick-
-                # budget management (each post 6-10 gtx calls × 0.3s).
+                # Threshold 0.45: targets posts at the original ~40-44%
+                # ratio (genuinely-never-translated content). Posts at
+                # 45-55% are likely already first-MT-pass output (Chinese
+                # density makes that the achievable parity ceiling); don't
+                # waste gtx budget re-translating those — a second-pass
+                # would yield diminishing returns. Iterates highest-EN-
+                # length posts first (biggest gap = biggest SEO impact).
+                # --limit caps the batch for tick-budget management.
                 print("\n=== blog_posts.content_zh (JSON-LD-aware) ===")
                 limit_clause = f"LIMIT {args.limit}" if args.limit else ""
                 cur.execute(f"""
@@ -432,7 +436,7 @@ def main():
                     FROM blog_posts
                     WHERE is_published = true
                       AND length(content_en) > 500
-                      AND (length(content_zh)::float / NULLIF(length(content_en), 0)) < 0.55
+                      AND (length(content_zh)::float / NULLIF(length(content_en), 0)) < 0.45
                     ORDER BY length(content_en) DESC
                     {limit_clause}
                 """)
