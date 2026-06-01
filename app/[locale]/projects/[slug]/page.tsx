@@ -273,6 +273,7 @@ export default async function Page({ params }: PageProps) {
           duration={localizedProject.duration}
           budgetRange={project.budget_range}
           spaceType={localizedProject.space_type}
+          locale={locale}
         />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
@@ -321,6 +322,7 @@ export default async function Page({ params }: PageProps) {
           url={`/${locale}/projects/${slug}/`}
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
+          locale={locale}
         />
         {siteBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`site-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />

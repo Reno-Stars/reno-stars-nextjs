@@ -15,6 +15,13 @@ interface ProjectSchemaProps {
   duration?: string;
   budgetRange?: string;
   spaceType?: string;
+  /** BCP-47 locale code (e.g. 'en', 'zh'). When provided, emits
+   *  Schema.org `inLanguage` on the WebPage node so Google can match
+   *  the project page to localized SERPs. Extends the i18n-aware
+   *  schema cluster shipped earlier on this daily branch (FAQ, Article,
+   *  HowTo, Breadcrumb, ContactPage, LocalBusiness). Optional for
+   *  backwards compatibility — 2 in-tree callers updated in same commit. */
+  locale?: string;
 }
 
 export default function ProjectSchema({
@@ -31,6 +38,7 @@ export default function ProjectSchema({
   duration,
   budgetRange,
   spaceType,
+  locale,
 }: ProjectSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const allImages = [image, ...images].filter(Boolean);
@@ -59,6 +67,7 @@ export default function ProjectSchema({
     name,
     description,
     url: fullUrl,
+    ...(locale && { inLanguage: locale }),
     image: allImages,
     mainEntity: {
       '@type': 'Service',
