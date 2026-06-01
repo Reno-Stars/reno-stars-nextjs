@@ -203,11 +203,19 @@ def maybe_backfill(cur, table: str, slug_col: str, slug: str,
 
 def maybe_backfill_jsonb(cur, table: str, slug_col: str, slug: str,
                           en_field: str, jsonb_col: str, jsonb_key: str,
-                          gtx_target: str, dry_run: bool):
+                          gtx_target: str, dry_run: bool,
+                          thin_ratio: float = 0.45):
     """Translate an EN column → write into `localizations` JSONB key.
 
-    Idempotent: only writes if the JSONB key is missing or near-empty
-    (< 100 chars — non-trivial mass-translation surface).
+    Idempotent: skip the row if existing JSONB value is already
+    >= thin_ratio of EN source length. For multi-locale where some
+    locales already have partial content (e.g. 1000 chars of 4000 EN)
+    we still want to re-translate up to fuller parity.
+
+    The thin_ratio of 0.45 captures both the genuinely-empty case
+    (existing 0-100 chars vs 4000 EN = ~2.5%) AND the partially-
+    translated case (existing 1000 chars vs 4000 EN = 25%). Locales
+    already at >=45% (typical first-MT-pass result) are left alone.
     """
     cur.execute(
         f"SELECT {en_field}, {jsonb_col} FROM {table} WHERE {slug_col} = %s",
@@ -222,9 +230,10 @@ def maybe_backfill_jsonb(cur, table: str, slug_col: str, slug: str,
     loc = loc or {}
     existing = loc.get(jsonb_key, "")
     existing_len = len(existing) if isinstance(existing, str) else 0
-    if existing_len >= 100:  # already has substantial content
-        return False
-    print(f"  {table}/{slug}/{jsonb_key}: en={en_len} existing={existing_len} → translating to {gtx_target}...")
+    existing_ratio = existing_len / en_len if en_len else 0
+    if existing_ratio >= thin_ratio:
+        return False  # already at or above threshold
+    print(f"  {table}/{slug}/{jsonb_key}: en={en_len} existing={existing_len} ({existing_ratio*100:.0f}%) → translating to {gtx_target}...")
     try:
         new_val = gtx_translate(en, target=gtx_target)
     except Exception as e:
@@ -259,6 +268,9 @@ def main():
     parser.add_argument("--multi-locale-services", action="store_true",
                         help="Backfill services.localizations JSONB longDescription* "
                              "and description* keys for the 12 non-en/non-zh locales")
+    parser.add_argument("--multi-locale-areas", action="store_true",
+                        help="Backfill service_areas.localizations JSONB content* "
+                             "and description* keys for the 12 non-en/non-zh locales")
     args = parser.parse_args()
 
     SERVICE_SLUGS = [
@@ -275,12 +287,14 @@ def main():
 
     # Mode flags: when any --*-only is set, run JUST that mode.
     only_modes = [args.services_only, args.areas_only, args.about_only,
-                  args.faqs_only, args.multi_locale_services]
+                  args.faqs_only, args.multi_locale_services,
+                  args.multi_locale_areas]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
     run_faqs = args.faqs_only or not any(only_modes)
     run_multi_locale_services = args.multi_locale_services
+    run_multi_locale_areas = args.multi_locale_areas
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -341,6 +355,29 @@ def main():
                                       False, args.dry_run):
                         updated += 1
                         time.sleep(0.3)
+
+            if run_multi_locale_areas:
+                # service_areas.localizations JSONB: each non-en/non-zh
+                # locale has content{Suf} and description{Suf} keys. Audit
+                # 2026-06-01T12:30Z found Ja/Ko at 4-7% of EN, Es at 10-16%,
+                # Fr/Vi varying. Same pattern as multi-locale-services.
+                print("\n=== service_areas.localizations (multi-locale) ===")
+                cur.execute("SELECT slug FROM service_areas WHERE is_active=true ORDER BY display_order")
+                area_slugs = [r[0] for r in cur.fetchall()]
+                for slug in area_slugs:
+                    for loc in NON_ZH_LOCALES:
+                        suf = loc["suffix"]
+                        for en_field, jsonb_key in [
+                            ("description_en", f"description{suf}"),
+                            ("content_en", f"content{suf}"),
+                        ]:
+                            if maybe_backfill_jsonb(
+                                cur, "service_areas", "slug", slug,
+                                en_field, "localizations", jsonb_key,
+                                loc["gtx"], args.dry_run,
+                            ):
+                                updated += 1
+                                time.sleep(0.4)
 
             if run_multi_locale_services:
                 # services.localizations JSONB: each non-EN-non-ZH locale
