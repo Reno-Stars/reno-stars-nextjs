@@ -306,6 +306,27 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
         </div>
       </section>
 
+      {/* /kitchen-renovation-near-me/ inbound — extends the /X-renovation-
+          near-me/ rollout from ServiceDetailPage af552d8 to the matching
+          cost-guide page. The cost-guide page and the near-me page share
+          the same query intent (high-intent "kitchen renovation" search)
+          so cross-linking passes maximum PageRank equity. Single
+          tagline-link insertion before the CTASection mirrors the
+          existing tagline-link patterns elsewhere on the site. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            Searching &ldquo;kitchen renovation near me&rdquo;?{' '}
+            <Link
+              href="/kitchen-renovation-near-me"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our service area + booking page →
+            </Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
     </main>
   );

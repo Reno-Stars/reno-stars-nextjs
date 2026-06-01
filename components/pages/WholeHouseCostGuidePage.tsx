@@ -250,6 +250,24 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
         </div>
       </section>
 
+      {/* /whole-house-renovation-near-me/ inbound — extends the /X-renovation-
+          near-me/ rollout from ServiceDetailPage af552d8 to the matching
+          cost-guide page. Shares query intent with the near-me page so
+          cross-linking passes maximum PageRank equity. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            Searching &ldquo;whole-house renovation near me&rdquo;?{' '}
+            <Link
+              href="/whole-house-renovation-near-me"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our service area + booking page →
+            </Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
     </main>
   );
