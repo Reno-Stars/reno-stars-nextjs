@@ -5,6 +5,13 @@ description/long_description fields in the services + service_areas
 tables to close the cross-locale content-depth gap surfaced by the
 2026-06-01T08:00Z cross-locale parity scan.
 
+EXTENDED 2026-06-01T12:00Z: now also handles multi-locale backfill
+of localizations JSONB fields (longDescriptionJa, longDescriptionKo,
+descriptionEs, etc.) for the 12 non-EN-non-ZH supported locales.
+Audit found ALL services.longDescription* fields were empty across
+ja/ko/es/fr/vi/etc — meaning /[locale]/services/* pages outside en/zh
+rendered ONLY the short description with no body content.
+
 Why this exists
 ---------------
 Scan finding (data/seo-scans/2026-06-01/cross-locale-08-00z.json):
@@ -113,6 +120,26 @@ def restore_glossary(text: str) -> str:
     return out
 
 
+# Non-EN, non-ZH supported locales. Suffix is the camelCase key inside
+# the `localizations` JSONB; gtx is the language code we pass to
+# translate.googleapis.com. Pattern mirrors scripts/translate-service-
+# tags-benefits.ts.
+NON_ZH_LOCALES = [
+    {"locale": "ja", "gtx": "ja", "suffix": "Ja"},
+    {"locale": "ko", "gtx": "ko", "suffix": "Ko"},
+    {"locale": "es", "gtx": "es", "suffix": "Es"},
+    {"locale": "fr", "gtx": "fr", "suffix": "Fr"},
+    {"locale": "vi", "gtx": "vi", "suffix": "Vi"},
+    {"locale": "ru", "gtx": "ru", "suffix": "Ru"},
+    {"locale": "ar", "gtx": "ar", "suffix": "Ar"},
+    {"locale": "hi", "gtx": "hi", "suffix": "Hi"},
+    {"locale": "pa", "gtx": "pa", "suffix": "Pa"},
+    {"locale": "tl", "gtx": "tl", "suffix": "Tl"},
+    {"locale": "fa", "gtx": "fa", "suffix": "Fa"},
+    {"locale": "zh-Hant", "gtx": "zh-TW", "suffix": "ZhHant"},
+]
+
+
 def gtx_translate(text: str, target: str = "zh-CN", source: str = "en") -> str:
     """Free translate.googleapis.com gtx endpoint. No auth required."""
     if not text or not text.strip():
@@ -174,6 +201,47 @@ def maybe_backfill(cur, table: str, slug_col: str, slug: str,
     return True
 
 
+def maybe_backfill_jsonb(cur, table: str, slug_col: str, slug: str,
+                          en_field: str, jsonb_col: str, jsonb_key: str,
+                          gtx_target: str, dry_run: bool):
+    """Translate an EN column → write into `localizations` JSONB key.
+
+    Idempotent: only writes if the JSONB key is missing or near-empty
+    (< 100 chars — non-trivial mass-translation surface).
+    """
+    cur.execute(
+        f"SELECT {en_field}, {jsonb_col} FROM {table} WHERE {slug_col} = %s",
+        (slug,))
+    row = cur.fetchone()
+    if not row:
+        return False
+    en, loc = row
+    en_len = len(en or "")
+    if en_len < 100:
+        return False  # source too short
+    loc = loc or {}
+    existing = loc.get(jsonb_key, "")
+    existing_len = len(existing) if isinstance(existing, str) else 0
+    if existing_len >= 100:  # already has substantial content
+        return False
+    print(f"  {table}/{slug}/{jsonb_key}: en={en_len} existing={existing_len} → translating to {gtx_target}...")
+    try:
+        new_val = gtx_translate(en, target=gtx_target)
+    except Exception as e:
+        print(f"    ERROR: {e}")
+        return False
+    new_len = len(new_val)
+    print(f"    new len={new_len}")
+    if dry_run:
+        print(f"    [dry-run] would write")
+        return True
+    # JSONB update: set the single key, preserving other keys
+    cur.execute(
+        f"UPDATE {table} SET {jsonb_col} = jsonb_set({jsonb_col}, %s, to_jsonb(%s::text)), updated_at = NOW() WHERE {slug_col} = %s",
+        ('{' + jsonb_key + '}', new_val, slug))
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true",
@@ -181,13 +249,16 @@ def main():
     parser.add_argument("--force", nargs="*", default=[],
                         help="slugs to re-translate even if not thin")
     parser.add_argument("--services-only", action="store_true",
-                        help="Only services table")
+                        help="Only services table (zh fields)")
     parser.add_argument("--areas-only", action="store_true",
-                        help="Only service_areas table")
+                        help="Only service_areas table (zh fields)")
     parser.add_argument("--about-only", action="store_true",
-                        help="Only about_sections table (5 narrative fields × 1 row)")
+                        help="Only about_sections table (zh fields)")
     parser.add_argument("--faqs-only", action="store_true",
-                        help="Only faqs table (answer_zh per row)")
+                        help="Only faqs table (zh field)")
+    parser.add_argument("--multi-locale-services", action="store_true",
+                        help="Backfill services.localizations JSONB longDescription* "
+                             "and description* keys for the 12 non-en/non-zh locales")
     args = parser.parse_args()
 
     SERVICE_SLUGS = [
@@ -202,12 +273,14 @@ def main():
         ("lets_build_together_en", "lets_build_together_zh"),
     ]
 
-    # Mode flags: when any --*-only is set, run JUST that table.
-    only_modes = [args.services_only, args.areas_only, args.about_only, args.faqs_only]
+    # Mode flags: when any --*-only is set, run JUST that mode.
+    only_modes = [args.services_only, args.areas_only, args.about_only,
+                  args.faqs_only, args.multi_locale_services]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
     run_faqs = args.faqs_only or not any(only_modes)
+    run_multi_locale_services = args.multi_locale_services
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -268,6 +341,34 @@ def main():
                                       False, args.dry_run):
                         updated += 1
                         time.sleep(0.3)
+
+            if run_multi_locale_services:
+                # services.localizations JSONB: each non-EN-non-ZH locale
+                # has a key per field (descriptionJa, longDescriptionJa, ...).
+                # Audit 2026-06-01T11:00Z found ALL services have ZERO
+                # longDescription* in localizations across 12 supported
+                # locales — meaning /ja/services/*, /ko/services/*, etc.
+                # render only the short description with no body content.
+                #
+                # This loop translates EN long_description → each locale's
+                # longDescription{Suffix} key, and EN description → each
+                # locale's description{Suffix} key. 12 locales × 6 services
+                # × 2 fields = up to 144 gtx calls.
+                print("\n=== services.localizations (multi-locale) ===")
+                for slug in SERVICE_SLUGS:
+                    for loc in NON_ZH_LOCALES:
+                        suf = loc["suffix"]
+                        for en_field, jsonb_key in [
+                            ("description_en", f"description{suf}"),
+                            ("long_description_en", f"longDescription{suf}"),
+                        ]:
+                            if maybe_backfill_jsonb(
+                                cur, "services", "slug", slug,
+                                en_field, "localizations", jsonb_key,
+                                loc["gtx"], args.dry_run,
+                            ):
+                                updated += 1
+                                time.sleep(0.4)  # slightly longer for multi-locale loop
 
             if not args.dry_run:
                 conn.commit()
