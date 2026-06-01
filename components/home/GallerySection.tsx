@@ -33,6 +33,26 @@ export default function GallerySection({ gallery, translations: t }: GallerySect
           cardClassName="rounded-xl"
           cardStyle={{ boxShadow: neu(5) }}
         />
+        {/* /before-after/ inbound — kicks off the /before-after/ rollout.
+            Pre-rollout audit (2026-05-31) found this visual-portfolio
+            page had ZERO body-content inbound links site-wide despite
+            being a strong renovation-results trust signal (image pairs
+            of before/after states across ~50 projects). HomePage
+            GallerySection is the natural surface — readers engaging
+            with the TetrisGallery above are already in visual-portfolio
+            consumption mode. Existing /projects/ link in the section
+            header still wins for primary engagement; this adds a
+            secondary tagline below the grid for the dedicated before/
+            after view. */}
+        <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+          <Link
+            href="/before-after"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            See our before / after renovation gallery →
+          </Link>
+        </p>
       </div>
     </section>
   );
