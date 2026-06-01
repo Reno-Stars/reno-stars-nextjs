@@ -329,6 +329,9 @@ def main():
     parser.add_argument("--blog-posts-content", action="store_true",
                         help="Backfill blog_posts.content_zh for thin rows using "
                              "JSON-LD-aware translator (preserves <script> blocks).")
+    parser.add_argument("--multi-locale-blog-posts-short", action="store_true",
+                        help="Backfill blog_posts.localizations JSONB excerpt* and "
+                             "metaDescription* keys across 12 non-en/non-zh locales")
     parser.add_argument("--limit", type=int, default=None,
                         help="Limit number of rows processed (use with --blog-posts-*)")
     args = parser.parse_args()
@@ -349,7 +352,7 @@ def main():
     only_modes = [args.services_only, args.areas_only, args.about_only,
                   args.faqs_only, args.multi_locale_services,
                   args.multi_locale_areas, args.blog_posts_short,
-                  args.blog_posts_content]
+                  args.blog_posts_content, args.multi_locale_blog_posts_short]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
@@ -358,6 +361,7 @@ def main():
     run_multi_locale_areas = args.multi_locale_areas
     run_blog_posts_short = args.blog_posts_short
     run_blog_posts_content = args.blog_posts_content
+    run_multi_locale_blog_posts_short = args.multi_locale_blog_posts_short
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -482,6 +486,40 @@ def main():
                                           False, args.dry_run):
                             updated += 1
                             time.sleep(0.3)
+
+            if run_multi_locale_blog_posts_short:
+                # blog_posts.localizations JSONB: excerpt{Suf} and
+                # metaDescription{Suf} keys across 12 non-en/non-zh locales.
+                # Audit 2026-06-01T14:00Z: mixed coverage — Ja/Ko partial
+                # (~80-130 chars on 230-480 EN baseline), Es at parity, Fr/Vi
+                # often ZERO. ~162 posts × 12 locales × 2 fields = ~3900 max
+                # gtx calls but threshold-filtered (skip already-at-parity).
+                print("\n=== blog_posts.localizations (multi-locale short fields) ===")
+                limit_clause = f"LIMIT {args.limit}" if args.limit else ""
+                cur.execute(f"""
+                    SELECT id, slug
+                    FROM blog_posts
+                    WHERE is_published = true
+                      AND length(excerpt_en) > 100
+                    ORDER BY length(content_en) DESC
+                    {limit_clause}
+                """)
+                blog_ids_slugs = cur.fetchall()
+                print(f"  iterating {len(blog_ids_slugs)} posts × 12 locales × 2 fields")
+                for row_id, slug in blog_ids_slugs:
+                    for loc in NON_ZH_LOCALES:
+                        suf = loc["suffix"]
+                        for en_field, jsonb_key in [
+                            ("excerpt_en", f"excerpt{suf}"),
+                            ("meta_description_en", f"metaDescription{suf}"),
+                        ]:
+                            if maybe_backfill_jsonb(
+                                cur, "blog_posts", "id", str(row_id),
+                                en_field, "localizations", jsonb_key,
+                                loc["gtx"], args.dry_run,
+                            ):
+                                updated += 1
+                                time.sleep(0.3)
 
             if run_multi_locale_areas:
                 # service_areas.localizations JSONB: each non-en/non-zh
