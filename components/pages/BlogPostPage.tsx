@@ -225,6 +225,26 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     Visit our before / after gallery →
                   </Link>
                 </p>
+                {/* /design/ inbound — CLOSES /design/ rollout 5/5
+                    (siblings: HomePage GallerySection 8e8eade,
+                    ProjectsPage 8e8eade, ServiceDetailPage cbf3423,
+                    AreaPage cbf3423). Pairs with the /before-after/
+                    tagline above for visual-mode follow-up: results
+                    vs inspiration. Only renders inside the related-
+                    project block (no related project = no visual-
+                    follow-up needed). With this commit, /design/ joins
+                    the 9-of-9 closed internal-link rollouts on this
+                    daily branch + PR #103 combined. */}
+                <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+                  Looking for design inspiration?{' '}
+                  <Link
+                    href="/design"
+                    className="font-semibold underline hover:no-underline"
+                    style={{ color: GOLD }}
+                  >
+                    Browse our design gallery →
+                  </Link>
+                </p>
               </div>
             )}
 
