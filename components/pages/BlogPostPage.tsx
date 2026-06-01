@@ -303,6 +303,26 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                 </Link>
               ))}
             </div>
+            {/* /areas/ aggregation link — 4th surface of /areas/ inbound
+                rollout (siblings: HomePage AreasLinkSection adbe51b
+                shipped in PR #103, AreaPage Contextual Internal Links
+                chip 3f7920a, ServiceDetailPage Areas We Serve 1d5e88c).
+                Pre-rollout audit found /areas/ canonical directory had
+                ZERO body refs site-wide. BlogPostPage Related Areas
+                grid is the semantically-perfect placement — readers
+                seeing the post-specific related-areas chips naturally
+                ask "what other areas?" — exactly what /areas/ answers.
+                ~100 posts × 14 locales = ~1400 surfaces now pass
+                body-content link equity to the /areas/ directory. */}
+            <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
+              <Link
+                href="/areas"
+                className="font-semibold underline hover:no-underline"
+                style={{ color: GOLD }}
+              >
+                See all service areas →
+              </Link>
+            </p>
           </div>
         </section>
       )}
