@@ -761,6 +761,13 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           >
             Before / After Gallery <ArrowRight className="w-4 h-4" />
           </Link>
+          <Link
+            href="/design"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            Design Inspiration <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
