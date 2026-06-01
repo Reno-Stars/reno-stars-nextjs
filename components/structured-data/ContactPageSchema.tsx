@@ -13,11 +13,21 @@ interface ContactPageSchemaProps {
 export default function ContactPageSchema({ company, areaNames, locale = 'en' }: ContactPageSchemaProps) {
   const addr = parseAddress(company.address);
 
+  // inLanguage declares the natural language of the ContactPage so Google
+  // can match it to localized SERPs (e.g. show the /zh/contact/ schema
+  // signal to zh-CN searchers, not the /en/ one). Completes the
+  // i18n-aware schema cluster: FAQ ✅ Article ✅ HowTo ✅ Breadcrumb ✅
+  // ContactPage (THIS COMMIT). The `availableLanguage` ['English',
+  // 'Chinese'] inside contactPoint stays — it describes the LANGUAGES
+  // SUPPORTED by customer service; `inLanguage` describes the language
+  // of THIS DOCUMENT instance. Distinct Schema.org properties with
+  // different semantics.
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: `Contact ${company.name}`,
     url: `${BASE_URL}/${locale}/contact/`,
+    inLanguage: locale,
     mainEntity: {
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,
