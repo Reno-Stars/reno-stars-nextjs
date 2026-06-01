@@ -203,6 +203,28 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     </div>
                   </div>
                 )}
+
+                {/* /before-after/ inbound — 5th surface CLOSES the
+                    /before-after/ rollout (siblings: HomePage
+                    GallerySection 3c1998d, ProjectsPage 427078c, AreaPage
+                    427078c, ServiceDetailPage RelatedProjects). The
+                    Related Project block above shows ONE related
+                    project's metadata; readers wanting to see more
+                    visual renovation results across all projects are
+                    exactly the audience for the dedicated before/after
+                    gallery. Only renders inside the related-project
+                    conditional block (no related project = no visual-
+                    follow-up needed). */}
+                <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
+                  Want to see more renovation results?{' '}
+                  <Link
+                    href="/before-after"
+                    className="font-semibold underline hover:no-underline"
+                    style={{ color: GOLD }}
+                  >
+                    Visit our before / after gallery →
+                  </Link>
+                </p>
               </div>
             )}
 

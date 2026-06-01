@@ -320,6 +320,29 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         categorySlug={serviceSlug}
       />
 
+      {/* /before-after/ inbound — 4th surface of /before-after/ rollout
+          (siblings: HomePage GallerySection 3c1998d, ProjectsPage 427078c,
+          AreaPage 427078c). RelatedProjectsSection above shows ~3 service-
+          specific projects; the natural follow-up for the user wanting to
+          see more visual results is the dedicated before/after gallery
+          (same project pool, different visual framing). Tight semantic
+          fit — readers in service-evaluation mode are exactly the
+          target audience for the renovation-results trust signal. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            Want more visual results?{' '}
+            <Link
+              href="/before-after"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our before / after renovation gallery →
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* Cost Guide cross-link — surfaces the matching /guides/<service>-renovation-cost-vancouver/ page
           to (a) help the user answer "what does this cost?" in-context, (b) pass internal-link equity to
           cost-guide pages that GSC shows at striking-distance pos 8-14 for high-impression queries
