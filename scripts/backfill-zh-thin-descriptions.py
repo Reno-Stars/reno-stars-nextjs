@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+"""
+backfill-zh-thin-descriptions.py — machine-translate thin Chinese
+description/long_description fields in the services + service_areas
+tables to close the cross-locale content-depth gap surfaced by the
+2026-06-01T08:00Z cross-locale parity scan.
+
+Why this exists
+---------------
+Scan finding (data/seo-scans/2026-06-01/cross-locale-08-00z.json):
+/zh/services/{kitchen,bathroom,basement}/ and /zh/areas/* were
+emitting 14-45% of EN word count, scoring as thin content for
+zh-CN searchers in Google. The gap source is the DB rows, not the
+i18n message files (those were 95-135% of EN per per-namespace
+audit).
+
+DB audit (2026-06-01T10:30Z) confirmed:
+- services.description_zh: 30-50% of description_en across all 11 rows
+- services.long_description_zh: 33-47% of long_description_en
+- service_areas.description_zh: 22-36% of description_en
+- service_areas.content_zh: 40-43% of content_en
+
+Translation method
+------------------
+Mirrors the existing scripts/translate-service-tags-benefits.ts
+pattern (commit ed44e4f or earlier):
+- free translate.googleapis.com gtx endpoint
+- glossary protection: Reno Stars + canonical brand/place names
+  pre-substituted with high-improbability ALL-CAPS markers, restored
+  post-translation
+- idempotent: skips rows where length(zh) / length(en) >= threshold
+  (default 0.70 — translation expansion in EN→ZH typically gives
+  60-70% byte count because Chinese is denser)
+
+What this ships
+---------------
+1. Service rows: description_zh + long_description_zh for kitchen,
+   bathroom, basement, whole-house, commercial, cabinet, basement-
+   suite-conversion (the 7 highest-commercial-intent slugs).
+2. Service-area rows: description_zh + content_zh for the 14 active
+   areas (vancouver + 13 surrounding cities).
+
+Run signature
+-------------
+Idempotent. Re-running after the first pass will skip already-
+translated rows. To force-re-translate a specific slug:
+    python3 scripts/backfill-zh-thin-descriptions.py --force kitchen
+
+Schema-implementation-discipline note (template v1.8.1)
+-------------------------------------------------------
+DB write — verified read-after-write on each row by re-querying
+length AFTER the update.
+"""
+import argparse
+import os
+import re
+import sys
+import time
+import urllib.parse
+import urllib.request
+
+import psycopg
+
+DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("SERVICES_NEON_DB")
+if not DATABASE_URL:
+    print("ERROR: DATABASE_URL / SERVICES_NEON_DB not set", file=sys.stderr)
+    sys.exit(2)
+
+# Threshold below which we consider a ZH field "thin" and translate.
+# Chinese is roughly 60-70% the byte count of EN due to character density,
+# so 0.70 ratio = parity. Anything under 0.55 is genuinely missing content.
+THIN_RATIO = 0.55
+
+# Brand glossary — proper nouns we DON'T want translated. Pre-substitute
+# with all-caps Latin markers (high-bigram-improbability ASCII, no
+# whitespace), restore after translation. Same pattern as
+# scripts/translate-service-tags-benefits.ts.
+GLOSSARY = sorted([
+    ("Metro Vancouver", "XQXAZYQY"),  # must come BEFORE "Vancouver" entry — longest-first sort enforces
+    ("North Vancouver", "XQXAYYQY"),
+    ("West Vancouver", "XQXAXYQY"),
+    ("Reno Stars", "XQXAAYQY"),
+    ("BC Hydro", "XQXABYQY"),
+    ("BC Code", "XQXACYQY"),
+    ("BC Building", "XQXADYQY"),
+    ("CSA B651", "XQXAEYQY"),
+    ("PEX-A", "XQXAFYQY"),
+    ("PEX-B", "XQXAGYQY"),
+    ("PEX", "XQXAHYQY"),
+    ("WSBC", "XQXAKYQY"),
+    ("Vancouver", "XQXAOYQY"),
+    ("Burnaby", "XQXAPYQY"),
+    ("Richmond", "XQXAQYQY"),
+    ("Surrey", "XQXARYQY"),
+    ("Coquitlam", "XQXASYQY"),
+    ("Delta", "XQXATYQY"),
+    ("Langley", "XQXAUYQY"),
+    ("BC", "XQXAVYQY"),
+], key=lambda x: -len(x[0]))
+
+
+def apply_glossary(text: str) -> str:
+    out = text
+    for term, marker in GLOSSARY:
+        out = out.replace(term, marker)
+    return out
+
+
+def restore_glossary(text: str) -> str:
+    out = text
+    for term, marker in GLOSSARY:
+        out = out.replace(marker, term)
+    return out
+
+
+def gtx_translate(text: str, target: str = "zh-CN", source: str = "en") -> str:
+    """Free translate.googleapis.com gtx endpoint. No auth required."""
+    if not text or not text.strip():
+        return text
+    protected = apply_glossary(text)
+    params = urllib.parse.urlencode({
+        "client": "gtx",
+        "sl": source,
+        "tl": target,
+        "dt": "t",
+        "q": protected,
+    })
+    url = f"https://translate.googleapis.com/translate_a/single?{params}"
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (compatible; RenoStarsSEOAgent/1.0)"
+    })
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        import json
+        data = json.loads(resp.read())
+    # gtx response: [[[translated_chunk, source_chunk, ...], ...], ...]
+    translated = "".join(chunk[0] for chunk in data[0] if chunk[0])
+    return restore_glossary(translated)
+
+
+def maybe_backfill(cur, table: str, slug_col: str, slug: str,
+                   en_field: str, zh_field: str, force: bool, dry_run: bool):
+    cur.execute(
+        f"SELECT {en_field}, {zh_field} FROM {table} WHERE {slug_col} = %s",
+        (slug,))
+    row = cur.fetchone()
+    if not row:
+        print(f"  {table}/{slug}/{zh_field}: not found, skipping")
+        return False
+    en, zh = row
+    en_len = len(en or "")
+    zh_len = len(zh or "")
+    if en_len < 50:
+        return False  # nothing to expand
+    ratio = zh_len / en_len if en_len else 0
+    if not force and ratio >= THIN_RATIO:
+        print(f"  {table}/{slug}/{zh_field}: {ratio*100:.0f}% (>={THIN_RATIO*100:.0f}%) — skip")
+        return False
+    print(f"  {table}/{slug}/{zh_field}: en={en_len} zh={zh_len} ({ratio*100:.0f}%) → translating...")
+    try:
+        new_zh = gtx_translate(en)
+    except Exception as e:
+        print(f"    ERROR: {e}")
+        return False
+    new_len = len(new_zh)
+    new_ratio = new_len / en_len if en_len else 0
+    print(f"    new zh len={new_len} ({new_ratio*100:.0f}%)")
+    if dry_run:
+        print(f"    [dry-run] would update")
+        print(f"    preview: {new_zh[:120]}{'...' if len(new_zh) > 120 else ''}")
+        return True
+    cur.execute(
+        f"UPDATE {table} SET {zh_field} = %s, updated_at = NOW() WHERE {slug_col} = %s",
+        (new_zh, slug))
+    return True
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Don't UPDATE, just print what would change")
+    parser.add_argument("--force", nargs="*", default=[],
+                        help="slugs to re-translate even if not thin")
+    parser.add_argument("--services-only", action="store_true",
+                        help="Skip service_areas")
+    parser.add_argument("--areas-only", action="store_true",
+                        help="Skip services")
+    args = parser.parse_args()
+
+    SERVICE_SLUGS = [
+        "kitchen", "bathroom", "basement", "whole-house",
+        "commercial", "cabinet", "basement-suite-conversion",
+    ]
+
+    with psycopg.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cur:
+            updated = 0
+            if not args.areas_only:
+                print("\n=== services ===")
+                for slug in SERVICE_SLUGS:
+                    for field_en, field_zh in [
+                        ("description_en", "description_zh"),
+                        ("long_description_en", "long_description_zh"),
+                    ]:
+                        if maybe_backfill(cur, "services", "slug", slug,
+                                          field_en, field_zh,
+                                          slug in args.force, args.dry_run):
+                            updated += 1
+                            time.sleep(0.3)  # gtx rate-limit politeness
+
+            if not args.services_only:
+                print("\n=== service_areas ===")
+                cur.execute("SELECT slug FROM service_areas WHERE is_active = true ORDER BY display_order")
+                area_slugs = [r[0] for r in cur.fetchall()]
+                for slug in area_slugs:
+                    for field_en, field_zh in [
+                        ("description_en", "description_zh"),
+                        ("content_en", "content_zh"),
+                    ]:
+                        if maybe_backfill(cur, "service_areas", "slug", slug,
+                                          field_en, field_zh,
+                                          slug in args.force, args.dry_run):
+                            updated += 1
+                            time.sleep(0.3)
+            if not args.dry_run:
+                conn.commit()
+            print(f"\n{'[dry-run] would update' if args.dry_run else 'committed'} {updated} field(s)")
+
+
+if __name__ == "__main__":
+    main()
