@@ -58,6 +58,34 @@ const COST_GUIDE_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
   // If a flooring service page is added to the DB later, restore the entry.
 };
 
+/**
+ * Service-slug → /X-renovation-near-me/ programmatic landing page. Added on
+ * the seo/daily-2026-06-02 daily branch after a 2026-05-31 route-inbound
+ * audit found the four `*-renovation-near-me/` pages (kitchen, bathroom,
+ * basement, whole-house) had ZERO body-content inbound links site-wide.
+ * These pages are EXPLICITLY designed for high-intent "X renovation near
+ * me" search queries — leaving them un-linked from the service-page cluster
+ * was a major SEO gap.
+ *
+ * ServiceDetailPage is the highest-equity surface to link from (9 services
+ * × 14 locales). The /<X>-renovation-near-me/ page is the topical twin of
+ * the /services/<X>/ page (same service, different search-intent framing),
+ * so cross-linking them passes maximum PageRank equity.
+ *
+ * Only the 4 mapped slugs render a link. cabinet + commercial don't have
+ * matching near-me pages (lower local-search demand).
+ *
+ * To add a mapping: pair the kebab-case service-slug with the matching
+ * /<X>-renovation-near-me/ URL literal. Keep values as literal string
+ * literals so the next-intl Link's typed-route assertion type-checks.
+ */
+const NEAR_ME_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
+  kitchen: '/kitchen-renovation-near-me',
+  bathroom: '/bathroom-renovation-near-me',
+  basement: '/basement-renovation-near-me',
+  'whole-house': '/whole-house-renovation-near-me',
+};
+
 interface ServiceDetailPageProps {
   locale: Locale;
   serviceSlug: ServiceType;
@@ -338,6 +366,31 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 See financing options →
               </Link>
             </p>
+            {/* /<X>-renovation-near-me/ programmatic-landing-page cross-link
+                — kicks off the /renovation-near-me/ family rollout (4 pages
+                with 0 inbound each per 2026-05-31 route audit). These
+                landing pages are EXPLICITLY designed for high-intent "X
+                renovation near me" search queries, and the /services/<X>/
+                page is their topical twin — same service, different
+                search-intent framing — so cross-linking them passes maximum
+                PageRank equity. Only renders when the current service has
+                a matching near-me page (kitchen/bathroom/basement/whole-
+                house mapped; cabinet + commercial don't have near-me pages
+                yet). ~9 services × 14 locales = ~50 surfaces (4 mapped
+                slugs × 14 locales) now pass body-content equity to the 4
+                near-me landing pages. */}
+            {NEAR_ME_BY_SERVICE_SLUG[serviceSlug] && (
+              <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+                Searching &ldquo;{localizedService.title.toLowerCase()} near me&rdquo;?{' '}
+                <Link
+                  href={NEAR_ME_BY_SERVICE_SLUG[serviceSlug] as '/kitchen-renovation-near-me'}
+                  className="font-semibold underline hover:no-underline"
+                  style={{ color: GOLD }}
+                >
+                  See our service area + booking page →
+                </Link>
+              </p>
+            )}
           </div>
         </section>
       )}
