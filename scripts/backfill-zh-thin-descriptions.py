@@ -68,6 +68,58 @@ import urllib.request
 
 import psycopg
 
+# JSON-LD-aware: match <script type="application/ld+json">...</script>
+# blocks that blog_posts.content_en embeds for per-post Article schema.
+# Naive translation would mangle the JSON keys ('@context', '@type',
+# 'headline'); this lets us strip them before gtx and re-insert verbatim.
+JSONLD_SCRIPT_RE = re.compile(
+    r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>',
+    re.DOTALL,
+)
+
+
+def translate_with_jsonld_preserved(content_en: str, target: str = "zh-CN",
+                                     max_chunk: int = 4000) -> str:
+    """Translate long-form content_en that may contain inline JSON-LD
+    `<script>` blocks. Strips scripts, batch-translates the prose at
+    paragraph boundaries, then re-inserts scripts byte-identical.
+
+    Used for blog_posts.content_zh backfill (each post may have 1-3
+    JSON-LD blocks for Article + FAQPage + HowTo schemas).
+    """
+    scripts = []
+    def _take(m):
+        scripts.append(m.group(0))
+        return f"\n\n__JSONLD_BLOCK_{len(scripts)-1}__\n\n"
+    cleaned = JSONLD_SCRIPT_RE.sub(_take, content_en)
+    paragraphs = cleaned.split('\n\n')
+    batches = []
+    cur, cur_len = [], 0
+    for p in paragraphs:
+        if cur_len + len(p) + 2 > max_chunk and cur:
+            batches.append('\n\n'.join(cur)); cur = [p]; cur_len = len(p)
+        else:
+            cur.append(p); cur_len += len(p) + 2
+    if cur: batches.append('\n\n'.join(cur))
+    translated_chunks = []
+    for i, b in enumerate(batches):
+        translated_chunks.append(gtx_translate(b, target=target))
+        time.sleep(0.3)
+    translated = '\n\n'.join(translated_chunks)
+    # Restore script blocks. Markers tend to survive gtx but be defensive
+    # against whitespace insertions inside the underscores/digits.
+    for i, script in enumerate(scripts):
+        candidates = [f"__JSONLD_BLOCK_{i}__", f"__JSONLD_BLOCK_ {i} __",
+                      f"__JSONLD_BLOCK_ {i}__", f"__JSONLD_BLOCK_{i} __"]
+        replaced = False
+        for c in candidates:
+            if c in translated:
+                translated = translated.replace(c, script, 1); replaced = True; break
+        if not replaced:
+            pattern = re.compile(r'_+\s*JSONLD\s*_*\s*BLOCK\s*_*\s*' + str(i) + r'\s*_+')
+            translated = pattern.sub(script, translated, count=1)
+    return translated
+
 DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("SERVICES_NEON_DB")
 if not DATABASE_URL:
     print("ERROR: DATABASE_URL / SERVICES_NEON_DB not set", file=sys.stderr)
@@ -274,6 +326,11 @@ def main():
     parser.add_argument("--blog-posts-short", action="store_true",
                         help="Backfill blog_posts.excerpt_zh + meta_description_zh "
                              "for thin rows (~138 + 155 of 162 published posts)")
+    parser.add_argument("--blog-posts-content", action="store_true",
+                        help="Backfill blog_posts.content_zh for thin rows using "
+                             "JSON-LD-aware translator (preserves <script> blocks).")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Limit number of rows processed (use with --blog-posts-*)")
     args = parser.parse_args()
 
     SERVICE_SLUGS = [
@@ -291,7 +348,8 @@ def main():
     # Mode flags: when any --*-only is set, run JUST that mode.
     only_modes = [args.services_only, args.areas_only, args.about_only,
                   args.faqs_only, args.multi_locale_services,
-                  args.multi_locale_areas, args.blog_posts_short]
+                  args.multi_locale_areas, args.blog_posts_short,
+                  args.blog_posts_content]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
@@ -299,6 +357,7 @@ def main():
     run_multi_locale_services = args.multi_locale_services
     run_multi_locale_areas = args.multi_locale_areas
     run_blog_posts_short = args.blog_posts_short
+    run_blog_posts_content = args.blog_posts_content
 
     with psycopg.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
@@ -359,6 +418,44 @@ def main():
                                       False, args.dry_run):
                         updated += 1
                         time.sleep(0.3)
+
+            if run_blog_posts_content:
+                # blog_posts.content_zh — JSON-LD-aware chunked translation.
+                # Only translates rows where existing zh ratio < 0.55 of EN
+                # length. Iterates highest-EN-length posts first (biggest gap
+                # = biggest SEO impact). --limit caps the batch for tick-
+                # budget management (each post 6-10 gtx calls × 0.3s).
+                print("\n=== blog_posts.content_zh (JSON-LD-aware) ===")
+                limit_clause = f"LIMIT {args.limit}" if args.limit else ""
+                cur.execute(f"""
+                    SELECT id, slug, content_en, length(content_zh) AS zh_len, length(content_en) AS en_len
+                    FROM blog_posts
+                    WHERE is_published = true
+                      AND length(content_en) > 500
+                      AND (length(content_zh)::float / NULLIF(length(content_en), 0)) < 0.55
+                    ORDER BY length(content_en) DESC
+                    {limit_clause}
+                """)
+                rows = cur.fetchall()
+                print(f"  {len(rows)} rows under threshold; processing...")
+                for row_id, slug, content_en, zh_len, en_len in rows:
+                    pct = round((zh_len or 0) / en_len * 100, 0)
+                    print(f"  {slug[:42]:<44}  en={en_len} zh={zh_len} ({pct:.0f}%) → translating with JSON-LD preservation...")
+                    if args.dry_run:
+                        print(f"    [dry-run] would translate + write")
+                        updated += 1
+                        continue
+                    try:
+                        new_zh = translate_with_jsonld_preserved(content_en)
+                    except Exception as e:
+                        print(f"    ERROR: {e}")
+                        continue
+                    new_pct = round(len(new_zh) / en_len * 100, 0)
+                    print(f"    new zh len={len(new_zh)} ({new_pct:.0f}%)")
+                    cur.execute(
+                        "UPDATE blog_posts SET content_zh = %s, updated_at = NOW() WHERE id = %s",
+                        (new_zh, str(row_id)))
+                    updated += 1
 
             if run_blog_posts_short:
                 # blog_posts.excerpt_zh + meta_description_zh — short SEO
