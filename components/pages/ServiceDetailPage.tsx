@@ -340,6 +340,23 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
               See our before / after renovation gallery →
             </Link>
           </p>
+          {/* /design/ inbound — 3rd surface of /design/ rollout
+              (siblings: HomePage GallerySection 8e8eade, ProjectsPage
+              8e8eade). Pairs with the /before-after/ tagline above to
+              cover both visual-mode follow-ups: results vs inspiration.
+              Service-evaluation readers wanting to scope a project
+              naturally bounce between "what could it look like" (design)
+              and "what does the finished result look like" (before/after). */}
+          <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+            Looking for inspiration?{' '}
+            <Link
+              href="/design"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              Browse our design ideas →
+            </Link>
+          </p>
         </div>
       </section>
 
