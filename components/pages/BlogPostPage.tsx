@@ -35,6 +35,7 @@ interface BlogPostPageProps {
 
 export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
   const t = useTranslations();
+  const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
   const localizedServices = useMemo(() => services.map((s) => getLocalizedService(s, locale)), [services, locale]);
   const localizedAreas = useMemo(() => areas.map((a) => getLocalizedArea(a, locale)), [areas, locale]);
@@ -379,16 +380,16 @@ export default function BlogPostPage({ locale, post, company, services = [], are
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
-            Real Renovation Costs in Vancouver
+            {tCostGuides('title')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { slug: 'kitchen-renovation-cost-vancouver', label: 'Kitchen Renovation Cost' },
-              { slug: 'bathroom-renovation-cost-vancouver', label: 'Bathroom Renovation Cost' },
-              { slug: 'whole-house-renovation-cost-vancouver', label: 'Whole-House Renovation Cost' },
-              { slug: 'basement-renovation-cost-vancouver', label: 'Basement Renovation Cost' },
-              { slug: 'commercial-renovation-cost-vancouver', label: 'Commercial Renovation Cost' },
-              { slug: 'cabinet-refinishing-cost-vancouver', label: 'Cabinet Refinishing Cost' },
+              { slug: 'kitchen-renovation-cost-vancouver', labelKey: 'kitchen' },
+              { slug: 'bathroom-renovation-cost-vancouver', labelKey: 'bathroom' },
+              { slug: 'whole-house-renovation-cost-vancouver', labelKey: 'wholeHouse' },
+              { slug: 'basement-renovation-cost-vancouver', labelKey: 'basement' },
+              { slug: 'commercial-renovation-cost-vancouver', labelKey: 'commercial' },
+              { slug: 'cabinet-refinishing-cost-vancouver', labelKey: 'cabinet' },
             ].map((g) => (
               <Link
                 key={g.slug}
@@ -396,7 +397,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                 className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
                 style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
               >
-                {g.label}
+                {tCostGuides(`labels.${g.labelKey}`)}
               </Link>
             ))}
           </div>
@@ -405,15 +406,17 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               to /financing/, leaving the money page with no inbound flow
               from the blog cluster (~100 posts). Body-content inline link
               carries materially more PageRank weight than nav-area links;
-              gives /financing/ real internal-link equity. */}
+              gives /financing/ real internal-link equity.
+              2026-06-02: title + labels + cta now localized via
+              costGuidesSection namespace (was hardcoded EN). */}
           <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
-            Wondering how to pay for your renovation?{' '}
+            {tCostGuides('financingPrompt')}{' '}
             <Link
               href="/financing"
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              See financing options →
+              {tCostGuides('financingCta')}
             </Link>
           </p>
         </div>

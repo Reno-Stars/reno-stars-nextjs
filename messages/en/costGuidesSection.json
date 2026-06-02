@@ -1,0 +1,16 @@
+{
+  "costGuidesSection": {
+    "title": "Real Renovation Costs in Vancouver",
+    "subtitle": "Real project pricing by service — from 100+ completed Metro Vancouver renovations. No estimates, no filler.",
+    "labels": {
+      "kitchen": "Kitchen Renovation Cost",
+      "bathroom": "Bathroom Renovation Cost",
+      "basement": "Basement Renovation Cost",
+      "wholeHouse": "Whole-House Renovation Cost",
+      "commercial": "Commercial Renovation Cost",
+      "cabinet": "Cabinet Refinishing Cost"
+    },
+    "financingPrompt": "Wondering how to pay for your renovation?",
+    "financingCta": "See financing options →"
+  }
+}

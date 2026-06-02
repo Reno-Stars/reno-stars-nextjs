@@ -1,0 +1,16 @@
+{
+  "costGuidesSection": {
+    "title": "温哥华 的实际装修成本",
+    "subtitle": "按服务实际项目定价 — 来自 100 多个已完成的 大温哥华 改造。没有估计，没有填充物。",
+    "labels": {
+      "kitchen": "厨房装修费用",
+      "bathroom": "浴室装修费用",
+      "basement": "地下室装修费用",
+      "wholeHouse": "全屋装修费用",
+      "commercial": "商业装修费用",
+      "cabinet": "橱柜整修费用"
+    },
+    "financingPrompt": "想知道如何支付装修费用吗？",
+    "financingCta": "查看融资选项 →"
+  }
+}
