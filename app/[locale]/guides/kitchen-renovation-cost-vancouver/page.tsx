@@ -69,6 +69,13 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q3'), answer: t('faq.a3') },
     { question: t('faq.q4'), answer: t('faq.a4') },
     { question: t('faq.q5'), answer: t('faq.a5') },
+    // q6 added 2026-06-02 to capture exact-match for the 630-imp top
+    // GSC striking-distance query "average cost of kitchen remodel"
+    // (pos 10.8 on /guides/kitchen-renovation-cost-vancouver/). Existing
+    // q1 used "renovation" terminology; q6 uses "remodel" exact-match
+    // for the higher-impression variant. Same project-data backing as
+    // the quickAnswer passage above. All 14 locales populated.
+    { question: t('faq.q6'), answer: t('faq.a6') },
   ];
 
   const howToSteps = [
