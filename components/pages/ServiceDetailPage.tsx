@@ -430,13 +430,13 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 near-me landing pages. */}
             {NEAR_ME_BY_SERVICE_SLUG[serviceSlug] && (
               <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
-                Searching &ldquo;{localizedService.title.toLowerCase()} near me&rdquo;?{' '}
+                {tCostGuides('nearMeCtaPrompt', { service: localizedService.title.toLowerCase() })}{' '}
                 <Link
                   href={NEAR_ME_BY_SERVICE_SLUG[serviceSlug] as '/kitchen-renovation-near-me'}
                   className="font-semibold underline hover:no-underline"
                   style={{ color: GOLD }}
                 >
-                  See our service area + booking page →
+                  {tCostGuides('nearMeCtaLink')}
                 </Link>
               </p>
             )}
@@ -565,7 +565,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 className="font-semibold underline hover:no-underline"
                 style={{ color: GOLD }}
               >
-                Visit our Burnaby showroom →
+                {tCostGuides('showroomCta')}
               </Link>
             </p>
             {/* /areas/ aggregation link — 3rd surface of /areas/ inbound

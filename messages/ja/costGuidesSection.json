@@ -11,6 +11,9 @@
       "cabinet": "キャビネットの再仕上げ費用"
     },
     "financingPrompt": "リノベーション費用の支払い方法を知りたいですか?",
-    "financingCta": "資金調達オプションを参照→"
+    "financingCta": "資金調達オプションを参照→",
+    "nearMeCtaPrompt": "「近くの{service}」を検索していますか?",
+    "nearMeCtaLink": "サービスエリア+予約ページはこちら →",
+    "showroomCta": "バーナビー ショールームをご覧ください →"
   }
 }

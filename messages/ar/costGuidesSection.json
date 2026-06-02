@@ -11,6 +11,9 @@
       "cabinet": "تكلفة إعادة طلاء مجلس الوزراء"
     },
     "financingPrompt": "هل تتساءل عن كيفية دفع تكاليف التجديد؟",
-    "financingCta": "انظر خيارات التمويل →"
+    "financingCta": "انظر خيارات التمويل →",
+    "nearMeCtaPrompt": "البحث عن \"{service} بالقرب مني\"؟",
+    "nearMeCtaLink": "راجع منطقة خدمتنا + صفحة الحجز →",
+    "showroomCta": "تفضل بزيارة صالة عرض Burnaby →"
   }
 }

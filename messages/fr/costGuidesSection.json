@@ -11,6 +11,9 @@
       "cabinet": "Coût de finition des armoires"
     },
     "financingPrompt": "Vous vous demandez comment financer votre rénovation ?",
-    "financingCta": "Voir les options de financement →"
+    "financingCta": "Voir les options de financement →",
+    "nearMeCtaPrompt": "Vous recherchez \"{service} près de chez moi\" ?",
+    "nearMeCtaLink": "Voir notre zone de service + page de réservation →",
+    "showroomCta": "Visitez notre showroom Burnaby →"
   }
 }

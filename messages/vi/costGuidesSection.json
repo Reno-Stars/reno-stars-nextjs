@@ -11,6 +11,9 @@
       "cabinet": "Chi phí hoàn thiện tủ"
     },
     "financingPrompt": "Bạn đang thắc mắc làm thế nào để trả tiền cho việc cải tạo của mình?",
-    "financingCta": "Xem các lựa chọn tài chính →"
+    "financingCta": "Xem các lựa chọn tài chính →",
+    "nearMeCtaPrompt": "Đang tìm kiếm \"{service} gần tôi\"?",
+    "nearMeCtaLink": "Xem khu vực dịch vụ + trang đặt chỗ của chúng tôi →",
+    "showroomCta": "Ghé thăm phòng trưng bày Burnaby của chúng tôi →"
   }
 }

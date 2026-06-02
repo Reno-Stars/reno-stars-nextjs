@@ -11,6 +11,9 @@
       "cabinet": "櫥櫃整修費用"
     },
     "financingPrompt": "想知道如何支付裝修費用嗎？",
-    "financingCta": "查看融資選項 →"
+    "financingCta": "查看融資選項 →",
+    "nearMeCtaPrompt": "正在搜尋“我附近的 {service}”？",
+    "nearMeCtaLink": "查看我們的服務區域+預訂頁面→",
+    "showroomCta": "參觀我們的 本拿比 展廳 →"
   }
 }

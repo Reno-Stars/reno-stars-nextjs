@@ -11,6 +11,9 @@
       "cabinet": "Costo de reacabado del gabinete"
     },
     "financingPrompt": "¿Se pregunta cómo pagar su renovación?",
-    "financingCta": "Ver opciones de financiación →"
+    "financingCta": "Ver opciones de financiación →",
+    "nearMeCtaPrompt": "¿Buscando \"{service} cerca de mí\"?",
+    "nearMeCtaLink": "Ver nuestra área de servicios + página de reservas →",
+    "showroomCta": "Visita nuestro showroom Burnaby →"
   }
 }

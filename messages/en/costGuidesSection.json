@@ -11,6 +11,9 @@
       "cabinet": "Cabinet Refinishing Cost"
     },
     "financingPrompt": "Wondering how to pay for your renovation?",
-    "financingCta": "See financing options →"
+    "financingCta": "See financing options →",
+    "nearMeCtaPrompt": "Searching \"{service} near me\"?",
+    "nearMeCtaLink": "See our service area + booking page →",
+    "showroomCta": "Visit our Burnaby showroom →"
   }
 }

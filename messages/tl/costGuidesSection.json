@@ -11,6 +11,9 @@
       "cabinet": "Gastos sa Pag-aayos ng Gabinete"
     },
     "financingPrompt": "Nag-iisip kung paano babayaran ang iyong renovation?",
-    "financingCta": "Tingnan ang mga opsyon sa financing →"
+    "financingCta": "Tingnan ang mga opsyon sa financing →",
+    "nearMeCtaPrompt": "Hinahanap ang \"{service} malapit sa akin\"?",
+    "nearMeCtaLink": "Tingnan ang aming lugar ng serbisyo + pahina ng booking →",
+    "showroomCta": "Bisitahin ang aming Burnaby showroom →"
   }
 }
