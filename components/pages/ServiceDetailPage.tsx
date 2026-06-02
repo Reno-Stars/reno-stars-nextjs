@@ -165,6 +165,7 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
 
 export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, h1Override }: ServiceDetailPageProps) {
   const t = useTranslations();
+  const tCostGuides = useTranslations('costGuidesSection');
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const costGuideCopy = COST_GUIDE_LINK_COPY[locale];
@@ -405,13 +406,13 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 Completes financing-inbound on the third high-traffic
                 surface (after BlogPostPage + AreaPage). */}
             <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
-              Wondering how to pay for your renovation?{' '}
+              {tCostGuides('financingPrompt')}{' '}
               <Link
                 href="/financing"
                 className="font-semibold underline hover:no-underline"
                 style={{ color: GOLD }}
               >
-                See financing options →
+                {tCostGuides('financingCta')}
               </Link>
             </p>
             {/* /<X>-renovation-near-me/ programmatic-landing-page cross-link
