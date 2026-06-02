@@ -566,6 +566,30 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 See all service areas →
               </Link>
             </p>
+            {/* 2026-06-02: featured-area cross-link, EN + bathroom-only for
+                now. GSC striking-distance scan (2026-06-01) showed
+                "bathroom renovation richmond" at pos 16.2 / 204 imp ranks
+                the homepage /en/ instead of the topical /en/areas/richmond/
+                page (misdirected ranking — homepage outranks topical due to
+                weak inbound signal on /areas/richmond/). This snippet adds
+                an anchor-text-rich inbound link from this high-equity
+                surface (/services/bathroom/) → /areas/richmond/ with the
+                exact-match query phrase as anchor text. Same pattern for
+                West Vancouver bathroom (309 imp pos 18.8). Will expand
+                per-service after 3-4 week crawl-reweight confirms lift. */}
+            {locale === 'en' && serviceSlug === 'bathroom' && (
+              <p className="text-center mt-3 text-sm max-w-3xl mx-auto" style={{ color: TEXT_MID }}>
+                For neighborhood-specific bathroom renovation expertise see our{' '}
+                <Link href="/areas/richmond" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  bathroom renovation in Richmond
+                </Link>{' '}
+                and{' '}
+                <Link href="/areas/west-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  bathroom renovation in West Vancouver
+                </Link>{' '}
+                neighborhood pages — each with real Reno Stars project costs and area-specific notes.
+              </p>
+            )}
           </div>
         </section>
       )}
