@@ -210,8 +210,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
 const enAreaIntros: Record<string, string> = {
   coquitlam:
     'Reno Stars is a full-service renovation contractor in Coquitlam, BC — serving homes from Burke Mountain and Westwood Plateau down through Maillardville, Austin Heights, Eagle Ridge and Ranch Park. With 20+ years and 700+ completed projects, we handle kitchens, bathrooms, basements and whole-house renovations end-to-end with $5M CGL coverage and a 3-year workmanship warranty. Use the service tiles below for Coquitlam-specific kitchen, bathroom and whole-house pricing.',
+  // 2026-06-02 GSC retune: "basement renovations burnaby" pos 16.3 / 55 imp
+  // and "basement remodeling burnaby" pos 19.4 / 31 imp — 86 imp combined
+  // at striking distance. Lead with basement renovation (was buried 3rd in
+  // the prior "kitchens, bathrooms, basements" framing) so the on-page
+  // intro reinforces the searched keyword.
   burnaby:
-    'Reno Stars is a full-service home renovation contractor in Burnaby, BC. From The Heights and Capitol Hill to Metrotown, Brentwood and South Burnaby, we handle kitchens, bathrooms, basements and whole-house remodels — strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below to see Burnaby-specific pricing for kitchens, bathrooms or whole-house projects, or browse 700+ completed Lower Mainland renovations.',
+    'Reno Stars is a renovation contractor in Burnaby, BC, with deep specialization in basement renovations across The Heights, Capitol Hill, Metrotown, Brentwood and South Burnaby. Burnaby basement work spans legal-suite conversions (suite legalization for laneway-house income or family inlaw suites), waterproofing for the older Capitol Hill split-level housing stock built on slope grades, and full-cosmetic basement finishing for newer Metrotown townhouse builds. Kitchens, bathrooms and whole-house renovations on the same crew — 700+ completed Lower Mainland projects, $5M CGL coverage, 3-year workmanship warranty. Strata-compliant for condos and townhouses, permit-ready for SFH. Use the service tiles below for Burnaby-specific basement, kitchen, bathroom and whole-house pricing.',
   'maple-ridge':
     'Reno Stars is a renovation contractor in Maple Ridge — serving Albion, Cottonwood, Hammond, Haney and West Maple Ridge. We work with both newer suburban builds and older split-level and rancher homes across the community, handling kitchens, bathrooms, basements and whole-house remodels with permits managed end-to-end and a 3-year workmanship warranty. Use the service tiles below for Maple-Ridge-specific kitchen, bathroom and whole-house pricing.',
   'port-coquitlam':
