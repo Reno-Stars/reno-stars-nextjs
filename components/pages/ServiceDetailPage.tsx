@@ -609,6 +609,31 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 neighborhood pages — each with real Reno Stars project costs and area-specific notes.
               </p>
             )}
+            {/* 2026-06-02 (parallel to the bathroom snippet above):
+                /services/basement/ Featured-Areas cross-link targeting
+                North Vancouver + Burnaby basement queries. GSC scan shows:
+                - /areas/north-vancouver/ pos 10.1-13.2 / 116 imp combined
+                  for "basement renovation north vancouver" + variants
+                - /areas/burnaby/ pos 16.3-19.4 / 86 imp combined for
+                  "basement renovations burnaby" + variants
+                Both pages already correctly-targeted (unlike Richmond
+                bathroom which was misdirected to /en/) but at striking
+                distance. Anchor-text-rich inbound from this high-equity
+                /services/basement/ surface compounds topical authority
+                with exact-match query phrasing. */}
+            {locale === 'en' && serviceSlug === 'basement' && (
+              <p className="text-center mt-3 text-sm max-w-3xl mx-auto" style={{ color: TEXT_MID }}>
+                For neighborhood-specific basement renovation expertise see our{' '}
+                <Link href="/areas/north-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  basement renovation in North Vancouver
+                </Link>{' '}
+                and{' '}
+                <Link href="/areas/burnaby" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  basement renovation in Burnaby
+                </Link>{' '}
+                neighborhood pages — each with real Reno Stars project costs and area-specific notes including waterproofing, legalization, and hillside considerations.
+              </p>
+            )}
           </div>
         </section>
       )}
