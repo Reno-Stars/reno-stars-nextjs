@@ -325,6 +325,22 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
               See our service area + booking page →
             </Link>
           </p>
+          {/* 2026-06-02: backsplash blog inbound. GSC scan 2026-06-01 shows
+              /blog/kitchen-backsplash-cost-vancouver-2026/ at pos 15.7 /
+              37 imp on "backsplash vancouver" with ZERO existing source-
+              tree inbound. The kitchen cost-guide page is the canonical
+              high-equity surface for kitchen-cost queries; cross-linking
+              passes equity to the topical backsplash deep-dive. */}
+          <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+            Just need backsplash pricing?{' '}
+            <Link
+              href="/blog/kitchen-backsplash-cost-vancouver-2026"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              Read our Vancouver backsplash cost guide →
+            </Link>
+          </p>
         </div>
       </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />

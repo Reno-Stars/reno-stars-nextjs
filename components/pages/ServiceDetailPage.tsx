@@ -439,6 +439,25 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 </Link>
               </p>
             )}
+            {/* 2026-06-02: backsplash blog inbound for the kitchen-specific
+                pos-15.7 / 37-imp striking-distance query "backsplash
+                vancouver". /blog/kitchen-backsplash-cost-vancouver-2026/
+                had ZERO inbound site-wide per source-tree grep. This is the
+                natural cross-link surface (kitchen service page → kitchen
+                backsplash deep-dive). EN+kitchen-only gate mirrors the
+                near-me block's pattern. */}
+            {locale === 'en' && serviceSlug === 'kitchen' && (
+              <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+                Just planning a backsplash refresh?{' '}
+                <Link
+                  href="/blog/kitchen-backsplash-cost-vancouver-2026"
+                  className="font-semibold underline hover:no-underline"
+                  style={{ color: GOLD }}
+                >
+                  See our Vancouver backsplash cost guide →
+                </Link>
+              </p>
+            )}
           </div>
         </section>
       )}
