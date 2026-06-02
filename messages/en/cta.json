@@ -22,6 +22,18 @@
     "viewAllServices": "View All Services",
     "scheduleConsultation": "Schedule Consultation",
     "stickyQuoteFor": "Get a {area} {service} Quote",
-    "stickyCall": "Call"
+    "stickyCall": "Call",
+    "aboutChip": "About Reno Stars",
+    "showroomChip": "Visit Our Showroom",
+    "allAreasChip": "All Service Areas",
+    "nearMeChip": "Renovation Near Me",
+    "beforeAfterChip": "Before / After Gallery",
+    "designChip": "Design Inspiration",
+    "designGalleryTagline": "Browse our design gallery →",
+    "serviceAreasTagline": "See all service areas →",
+    "renovationProcessTagline": "See our renovation process →",
+    "showroomTagline": "Visit our Burnaby showroom →",
+    "aboutTagline": "Learn more about Reno Stars →",
+    "realCostsTagline": "See Real Vancouver Renovation Costs"
   }
 }

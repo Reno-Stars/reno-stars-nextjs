@@ -22,7 +22,19 @@
     "viewAllServices": "查看所有服務",
     "scheduleConsultation": "日程諮詢",
     "stickyQuoteFor": "取得 {area} {service} 報價",
-    "stickyCall": "稱呼"
+    "stickyCall": "稱呼",
+    "aboutChip": "關於Reno Stars",
+    "showroomChip": "參觀我們的陳列室",
+    "allAreasChip": "所有服務區域",
+    "nearMeChip": "我附近的裝修",
+    "beforeAfterChip": "之前/之後畫廊",
+    "designChip": "設計靈感",
+    "designGalleryTagline": "瀏覽我們的設計圖庫 →",
+    "serviceAreasTagline": "查看所有服務區域 →",
+    "renovationProcessTagline": "看看我們的裝修流程 →",
+    "showroomTagline": "參觀我們的 本拿比 展廳 →",
+    "aboutTagline": "了解有關 Reno Stars 的更多資訊 →",
+    "realCostsTagline": "查看真實的 溫哥華 裝修成本"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

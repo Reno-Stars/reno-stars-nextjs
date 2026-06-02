@@ -530,42 +530,42 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            About Reno Stars <ArrowRight className="w-4 h-4" />
+            {t('cta.aboutChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/showroom"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Visit Our Showroom <ArrowRight className="w-4 h-4" />
+            {t('cta.showroomChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/areas"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            All Service Areas <ArrowRight className="w-4 h-4" />
+            {t('cta.allAreasChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/renovation-near-me"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Renovation Near Me <ArrowRight className="w-4 h-4" />
+            {t('cta.nearMeChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/before-after"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Before / After Gallery <ArrowRight className="w-4 h-4" />
+            {t('cta.beforeAfterChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/design"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Design Inspiration <ArrowRight className="w-4 h-4" />
+            {t('cta.designChip')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

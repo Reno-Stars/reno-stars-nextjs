@@ -243,7 +243,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     className="font-semibold underline hover:no-underline"
                     style={{ color: GOLD }}
                   >
-                    Browse our design gallery →
+                    {t('cta.designGalleryTagline')}
                   </Link>
                 </p>
               </div>
@@ -363,7 +363,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                 className="font-semibold underline hover:no-underline"
                 style={{ color: GOLD }}
               >
-                See all service areas →
+                {t('cta.serviceAreasTagline')}
               </Link>
             </p>
           </div>
@@ -474,7 +474,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              See our renovation process →
+              {t('cta.renovationProcessTagline')}
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link
@@ -482,7 +482,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              Visit our Burnaby showroom →
+              {t('cta.showroomTagline')}
             </Link>
           </p>
         </div>
