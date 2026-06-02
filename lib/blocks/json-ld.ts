@@ -28,6 +28,11 @@ export type HowToSchemaInput = {
   totalTime?: string;
   steps: Array<{ name: string; text: string; image?: string }>;
   image?: string;
+  /** BCP-47 locale, e.g. 'en' / 'zh'. Populated by howtoToInput from
+   *  the parent block-conversion locale; consumed by HowToSchema to
+   *  emit Schema.org `inLanguage` at HowTo + per-step. Mirrors the
+   *  FaqSchemaInput.locale pattern shipped in PR #102. */
+  locale: string;
 };
 
 export type ItemListSchemaInput = {
@@ -76,6 +81,7 @@ function howtoToInput(block: HowToBlock, locale: string): HowToSchemaInput {
       text: pickEnZh(step.textEn, step.textZh, locale),
       image: step.image,
     })),
+    locale,
   };
 }
 

@@ -284,6 +284,31 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               how our renovation process delivers your project →
             </Link>
           </p>
+          {/* /areas/ aggregation link — CLOSES /areas/ inbound rollout
+              5/5 on the seo/daily-2026-06-02 daily branch. Sibling
+              commits: HomePage AreasLinkSection adbe51b (PR #103),
+              AreaPage Contextual Internal Links chip 3f7920a (PR #103),
+              ServiceDetailPage Areas We Serve 1d5e88c (PR #103),
+              BlogPostPage Related Areas 8f345f9 (this daily branch).
+              Pre-rollout audit (2026-05-31) found /areas/ canonical
+              directory had ZERO body refs site-wide. Semantic fit:
+              financing-page readers planning their renovation often
+              want to confirm we serve their specific area before
+              committing to a quote — exactly what /areas/ answers.
+              This marks the 6-of-6 INTERNAL-LINK ROLLOUTS MILESTONE
+              now that all 6 dimensions (financing, reviews, about,
+              workflow, showroom, areas) are at 5/5 across body
+              content. */}
+          <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+            Wondering which areas we serve?{' '}
+            <Link
+              href="/areas"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See all service areas →
+            </Link>
+          </p>
         </div>
       </section>
 

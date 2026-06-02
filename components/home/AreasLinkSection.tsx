@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/navigation';
-import { CARD, GOLD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { CARD, GOLD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import type { Locale } from '@/i18n/config';
 import { getServiceAreasFromDb } from '@/lib/db/queries';
 import { getLocalizedArea } from '@/lib/data/areas';
@@ -86,13 +86,29 @@ export default async function AreasLinkSection({ locale }: AreasLinkSectionProps
             equity. Mirrors how /services/ is linked from /areas/page
             via cta.viewAllServices in the Contextual Internal Links
             chip row. */}
-        <p className="text-center mt-8 text-sm" style={{ color: TEXT_MID }}>
+        {/* /renovation-near-me/ generic landing page — added on
+            seo/daily-2026-06-02. Pre-rollout audit found this generic
+            programmatic landing page had ZERO body-content inbound site-
+            wide despite being EXPLICITLY designed for "renovation near
+            me" search queries. HomePage AreasLinkSection is the natural
+            pair surface to the /areas/ aggregation link (both answer
+            "where do you serve?"). Two-link `·`-separated paragraph
+            mirrors the FinancingPage hero pattern (5121b5c). */}
+        <p className="text-center mt-8 text-sm flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
           <Link
             href="/areas"
             className="font-semibold underline hover:no-underline"
             style={{ color: GOLD }}
           >
             See all service areas →
+          </Link>
+          <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+          <Link
+            href="/renovation-near-me"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            Renovation near me →
           </Link>
         </p>
       </div>

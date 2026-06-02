@@ -106,7 +106,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema
         company={company}
@@ -124,6 +124,7 @@ export default async function Page({ params }: PageProps) {
         totalTime="P8W"
         estimatedCost={{ currency: 'CAD', minValue: 15000, maxValue: 72000 }}
         steps={howToSteps}
+        locale={locale}
       />
       <KitchenCostGuidePage locale={locale as Locale} projects={projects} />
     </>

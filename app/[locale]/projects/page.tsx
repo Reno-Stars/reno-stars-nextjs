@@ -85,7 +85,7 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ItemListSchema
         items={itemListItems}

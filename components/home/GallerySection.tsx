@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from '@/navigation';
 import TetrisGallery, { type TetrisGalleryItem } from '@/components/TetrisGallery';
-import { GOLD, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { GOLD, SURFACE_ALT, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 
 interface GallerySectionProps {
   gallery: TetrisGalleryItem[];
@@ -33,6 +33,37 @@ export default function GallerySection({ gallery, translations: t }: GallerySect
           cardClassName="rounded-xl"
           cardStyle={{ boxShadow: neu(5) }}
         />
+        {/* Twin visual-hub taglines below the TetrisGallery:
+            (1) /before-after/ — added on seo/daily-2026-06-02 (3c1998d).
+                Renovation-results trust signal (image pairs of before/
+                after states across ~50 projects).
+            (2) /design/ — added on seo/daily-2026-06-02 (this commit) as
+                kickoff of /design/ rollout. Pre-rollout audit found
+                /design/ had ZERO body refs site-wide despite being a
+                strong design-research surface (TetrisGallery layouts
+                showing renovation design ideas). Natural pair to
+                /before-after/ (results) — both are visual hubs that
+                readers in inspiration mode want to navigate between.
+            Existing /projects/ link in the section header wins for
+            primary engagement; these taglines add secondary discoverability
+            for the dedicated visual-mode views. */}
+        <p className="text-center mt-8 text-sm flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ color: TEXT_MID }}>
+          <Link
+            href="/before-after"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            See our before / after renovation gallery →
+          </Link>
+          <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
+          <Link
+            href="/design"
+            className="font-semibold underline hover:no-underline"
+            style={{ color: GOLD }}
+          >
+            Browse design inspiration →
+          </Link>
+        </p>
       </div>
     </section>
   );

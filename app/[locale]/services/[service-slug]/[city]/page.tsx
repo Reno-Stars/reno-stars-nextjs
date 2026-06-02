@@ -420,7 +420,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ServiceSchema
         company={company}
         serviceName={serviceTitle}

@@ -82,7 +82,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <HowToSchema
         name={locale === 'zh' ? '温哥华装修流程：5个步骤' : 'Vancouver Home Renovation: 5-Step Process'}
@@ -91,6 +91,7 @@ export default async function Page({ params }: PageProps) {
           : 'Complete renovation workflow from free consultation to project handover. Learn how to plan, design, and execute your Vancouver home renovation.'}
         totalTime="P8W"
         steps={howToSteps}
+        locale={locale}
       />
       <ProcessPage company={company} locale={locale as Locale} googleRating={googleReviews.rating} />
     </>

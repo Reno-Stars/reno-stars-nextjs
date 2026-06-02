@@ -79,7 +79,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       {currentPage < paginatedPosts.totalPages && (
         <link rel="next" href={`${baseUrl}/${locale}/blog/?page=${currentPage + 1}`} />
       )}
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {currentPage === 1 && (
         <ItemListSchema
           items={allPosts.map((p) => ({

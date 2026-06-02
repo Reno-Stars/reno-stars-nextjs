@@ -58,6 +58,34 @@ const COST_GUIDE_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
   // If a flooring service page is added to the DB later, restore the entry.
 };
 
+/**
+ * Service-slug → /X-renovation-near-me/ programmatic landing page. Added on
+ * the seo/daily-2026-06-02 daily branch after a 2026-05-31 route-inbound
+ * audit found the four `*-renovation-near-me/` pages (kitchen, bathroom,
+ * basement, whole-house) had ZERO body-content inbound links site-wide.
+ * These pages are EXPLICITLY designed for high-intent "X renovation near
+ * me" search queries — leaving them un-linked from the service-page cluster
+ * was a major SEO gap.
+ *
+ * ServiceDetailPage is the highest-equity surface to link from (9 services
+ * × 14 locales). The /<X>-renovation-near-me/ page is the topical twin of
+ * the /services/<X>/ page (same service, different search-intent framing),
+ * so cross-linking them passes maximum PageRank equity.
+ *
+ * Only the 4 mapped slugs render a link. cabinet + commercial don't have
+ * matching near-me pages (lower local-search demand).
+ *
+ * To add a mapping: pair the kebab-case service-slug with the matching
+ * /<X>-renovation-near-me/ URL literal. Keep values as literal string
+ * literals so the next-intl Link's typed-route assertion type-checks.
+ */
+const NEAR_ME_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
+  kitchen: '/kitchen-renovation-near-me',
+  bathroom: '/bathroom-renovation-near-me',
+  basement: '/basement-renovation-near-me',
+  'whole-house': '/whole-house-renovation-near-me',
+};
+
 interface ServiceDetailPageProps {
   locale: Locale;
   serviceSlug: ServiceType;
@@ -292,6 +320,46 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         categorySlug={serviceSlug}
       />
 
+      {/* /before-after/ inbound — 4th surface of /before-after/ rollout
+          (siblings: HomePage GallerySection 3c1998d, ProjectsPage 427078c,
+          AreaPage 427078c). RelatedProjectsSection above shows ~3 service-
+          specific projects; the natural follow-up for the user wanting to
+          see more visual results is the dedicated before/after gallery
+          (same project pool, different visual framing). Tight semantic
+          fit — readers in service-evaluation mode are exactly the
+          target audience for the renovation-results trust signal. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            Want more visual results?{' '}
+            <Link
+              href="/before-after"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our before / after renovation gallery →
+            </Link>
+          </p>
+          {/* /design/ inbound — 3rd surface of /design/ rollout
+              (siblings: HomePage GallerySection 8e8eade, ProjectsPage
+              8e8eade). Pairs with the /before-after/ tagline above to
+              cover both visual-mode follow-ups: results vs inspiration.
+              Service-evaluation readers wanting to scope a project
+              naturally bounce between "what could it look like" (design)
+              and "what does the finished result look like" (before/after). */}
+          <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+            Looking for inspiration?{' '}
+            <Link
+              href="/design"
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              Browse our design ideas →
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* Cost Guide cross-link — surfaces the matching /guides/<service>-renovation-cost-vancouver/ page
           to (a) help the user answer "what does this cost?" in-context, (b) pass internal-link equity to
           cost-guide pages that GSC shows at striking-distance pos 8-14 for high-impression queries
@@ -338,6 +406,31 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 See financing options →
               </Link>
             </p>
+            {/* /<X>-renovation-near-me/ programmatic-landing-page cross-link
+                — kicks off the /renovation-near-me/ family rollout (4 pages
+                with 0 inbound each per 2026-05-31 route audit). These
+                landing pages are EXPLICITLY designed for high-intent "X
+                renovation near me" search queries, and the /services/<X>/
+                page is their topical twin — same service, different
+                search-intent framing — so cross-linking them passes maximum
+                PageRank equity. Only renders when the current service has
+                a matching near-me page (kitchen/bathroom/basement/whole-
+                house mapped; cabinet + commercial don't have near-me pages
+                yet). ~9 services × 14 locales = ~50 surfaces (4 mapped
+                slugs × 14 locales) now pass body-content equity to the 4
+                near-me landing pages. */}
+            {NEAR_ME_BY_SERVICE_SLUG[serviceSlug] && (
+              <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+                Searching &ldquo;{localizedService.title.toLowerCase()} near me&rdquo;?{' '}
+                <Link
+                  href={NEAR_ME_BY_SERVICE_SLUG[serviceSlug] as '/kitchen-renovation-near-me'}
+                  className="font-semibold underline hover:no-underline"
+                  style={{ color: GOLD }}
+                >
+                  See our service area + booking page →
+                </Link>
+              </p>
+            )}
           </div>
         </section>
       )}

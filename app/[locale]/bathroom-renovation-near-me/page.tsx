@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps) {
     : 'Bathroom renovation across Metro Vancouver — walk-in showers, tub-to-shower conversions, custom vanities, full retile. $15K-$45K, 3-6 wks.';
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
         company={company}

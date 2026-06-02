@@ -49,7 +49,7 @@ export default async function Page({ params }: PageProps) {
     : 'Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. $150K-$800K+ typical. Permits handled.';
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
         company={company}

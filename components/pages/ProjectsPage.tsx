@@ -722,9 +722,17 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
         </div>
       </section>
 
-      {/* Internal Cross-Links */}
+      {/* Internal Cross-Links — /before-after/ chip added on
+          seo/daily-2026-06-02 as 2nd surface in the /before-after/
+          rollout (sibling: HomePage GallerySection 3c1998d). ProjectsPage
+          is the natural cross-link surface for the alternative visual-
+          portfolio view — /projects/ shows project cards with full
+          metadata; /before-after/ is the same project pool but
+          dedicated to the before/after image-pair experience. Adding
+          the chip closes a UX gap where two visual-portfolio routes
+          existed without bidirectional discoverability. */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-8">
           <Link
             href="/services"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
@@ -745,6 +753,20 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             style={{ color: GOLD }}
           >
             {t('areas.blogLinkText')} <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/before-after"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            Before / After Gallery <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/design"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            Design Inspiration <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

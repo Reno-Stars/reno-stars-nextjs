@@ -50,7 +50,7 @@ export default async function Page({ params }: PageProps) {
     : 'Full design-build kitchen renovation across Metro Vancouver — custom cabinets, quartz countertops, appliance integration. $25K-$90K, 4-8 wks.';
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceSchema
         company={company}

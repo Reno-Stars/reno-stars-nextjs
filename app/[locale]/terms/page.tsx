@@ -42,7 +42,7 @@ export default async function TermsPage({ params }: PageProps) {
 
   return (
     <>
-      <BreadcrumbSchema items={breadcrumbs} />
+      <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <main id="main-content" className="min-h-screen py-16 px-4" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold mb-8" style={{ color: NAVY }}>
