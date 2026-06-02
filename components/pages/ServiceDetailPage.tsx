@@ -105,6 +105,14 @@ interface ServiceDetailPageProps {
    * surface from each /services/<x>/ page to other services).
    */
   allServices?: Service[];
+  /**
+   * Optional code-driven H1 that wins over `service.title_en`. Used for
+   * EN-only geo-anchoring on service pages where GSC shows striking-
+   * distance ranking for "{service} renovation vancouver" queries but
+   * the H1 lacks any geo modifier (e.g. basement service page at pos
+   * 13-19 / 373 imp combined). Mirrors the same-named prop on AreaPage.
+   */
+  h1Override?: string;
 }
 
 // Per-locale copy for the Cost Guide cross-link section. Only render when an entry
@@ -155,7 +163,7 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
   },
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, h1Override }: ServiceDetailPageProps) {
   const t = useTranslations();
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
@@ -206,7 +214,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             )}
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {localizedService.title}
+                {h1Override || localizedService.title}
               </h1>
               {/* Hero subtitle uses the short description only — the long-form
                   marketing/SEO copy is rendered as prose further down. */}
