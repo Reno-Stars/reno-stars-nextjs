@@ -16,10 +16,19 @@ import { getBaseUrl } from '@/lib/utils';
 const BASE_URL = getBaseUrl();
 const INDEXNOW_KEY = 'deb16e016b38665b452c0ee3f58c1d15';
 
-/** Revalidate the blog list and the specific post across every locale. */
-export function revalidateBlogPaths(slug?: string | null): void {
+/**
+ * Revalidate the specific post across every locale, and (by default) the blog
+ * list page too. Pass `includeIndex: false` when only the post body/meta
+ * changed — the list cards are unaffected, so there's no reason to regenerate
+ * the index across all 14 locales.
+ */
+export function revalidateBlogPaths(
+  slug?: string | null,
+  opts: { includeIndex?: boolean } = {},
+): void {
+  const includeIndex = opts.includeIndex ?? true;
   for (const loc of locales) {
-    revalidatePath(`/${loc}/blog`);
+    if (includeIndex) revalidatePath(`/${loc}/blog`);
     if (slug) revalidatePath(`/${loc}/blog/${slug}`);
   }
 }
@@ -55,9 +64,19 @@ export async function pingSearchEngines(slug?: string | null): Promise<void> {
   await Promise.all([indexnowPromise, googlePromise]);
 }
 
-/** Combined: revalidate ISR + ping search engines after a blog post change. */
-export function refreshBlogPost(slug?: string | null): void {
-  revalidateBlogPaths(slug);
+/**
+ * Combined: revalidate ISR + ping search engines after a blog post change.
+ *
+ * `listingChanged` defaults to true so create / delete / publish-toggle callers
+ * (which always change the listing) keep their existing behavior. Plain edits
+ * pass the computed value so the blog index is only revalidated when a card
+ * field actually changed.
+ */
+export function refreshBlogPost(
+  slug?: string | null,
+  opts: { listingChanged?: boolean } = {},
+): void {
+  revalidateBlogPaths(slug, { includeIndex: opts.listingChanged ?? true });
   // Don't await — we don't want to block the admin save flow on third-party
   // pings. Errors are logged inside pingSearchEngines.
   void pingSearchEngines(slug);

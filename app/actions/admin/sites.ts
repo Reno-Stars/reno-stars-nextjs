@@ -10,6 +10,7 @@ import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGT
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import { triggerDeploy } from '@/lib/deploy-hook';
+import { listingCardChanged, SITE_CARD_FIELDS } from '@/lib/admin/listing-cache';
 
 const MAX_EXTERNAL_PRODUCTS = 50;
 
@@ -178,7 +179,26 @@ export async function updateSite(
 
     // Ensure slug is unique (exclude current site's own slug)
     const submittedSlug = data.slug;
-    const currentSite = await db.select({ slug: projectSites.slug }).from(projectSites).where(eq(projectSites.id, id)).limit(1);
+    const currentSite = await db.select({
+      slug: projectSites.slug,
+      isPublished: projectSites.isPublished,
+      showAsProject: projectSites.showAsProject,
+      featured: projectSites.featured,
+      titleEn: projectSites.titleEn,
+      titleZh: projectSites.titleZh,
+      excerptEn: projectSites.excerptEn,
+      excerptZh: projectSites.excerptZh,
+      heroImageUrl: projectSites.heroImageUrl,
+      heroVideoUrl: projectSites.heroVideoUrl,
+      locationCity: projectSites.locationCity,
+      badgeEn: projectSites.badgeEn,
+      badgeZh: projectSites.badgeZh,
+      budgetRange: projectSites.budgetRange,
+      durationEn: projectSites.durationEn,
+      durationZh: projectSites.durationZh,
+      spaceTypeEn: projectSites.spaceTypeEn,
+      spaceTypeZh: projectSites.spaceTypeZh,
+    }).from(projectSites).where(eq(projectSites.id, id)).limit(1);
     const currentSlug = currentSite[0]?.slug;
     const conflictingSlugs = await db.select({ slug: projectSites.slug }).from(projectSites).where(like(projectSites.slug, `${data.slug}%`));
     data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
@@ -233,9 +253,14 @@ export async function updateSite(
 
     revalidatePath('/admin/sites');
     triggerDeploy('sites');
-    updateTag('sites:listing');
+    // The detail page always refreshes via its narrow per-slug tag.
     updateTag(`site:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
+    // The listing tag feeds the projects index + project detail (sites render
+    // as projects). Only bust it when a card-visible field changed.
+    if (listingCardChanged(currentSite[0], data, SITE_CARD_FIELDS)) {
+      updateTag('sites:listing');
+    }
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update site:', error);
