@@ -20,6 +20,7 @@ import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGT
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
 import { triggerDeploy } from '@/lib/deploy-hook';
+import { listingCardChanged, PROJECT_CARD_FIELDS } from '@/lib/admin/listing-cache';
 
 const MAX_SCOPES = 50;
 const MAX_EXTERNAL_PRODUCTS = 20;
@@ -334,7 +335,25 @@ export async function updateProject(
     // Ensure slug is unique (exclude current project's own slug)
     // Retry on unique constraint violation (race condition between check and update)
     const baseSlug = data.slug; // preserve original slug for retries
-    const currentProject = await db.select({ slug: projects.slug }).from(projects).where(eq(projects.id, id)).limit(1);
+    const currentProject = await db.select({
+      slug: projects.slug,
+      isPublished: projects.isPublished,
+      featured: projects.featured,
+      titleEn: projects.titleEn,
+      titleZh: projects.titleZh,
+      excerptEn: projects.excerptEn,
+      excerptZh: projects.excerptZh,
+      heroImageUrl: projects.heroImageUrl,
+      heroVideoUrl: projects.heroVideoUrl,
+      locationCity: projects.locationCity,
+      badgeEn: projects.badgeEn,
+      badgeZh: projects.badgeZh,
+      budgetRange: projects.budgetRange,
+      durationEn: projects.durationEn,
+      durationZh: projects.durationZh,
+      spaceTypeEn: projects.spaceTypeEn,
+      spaceTypeZh: projects.spaceTypeZh,
+    }).from(projects).where(eq(projects.id, id)).limit(1);
     const currentSlug = currentProject[0]?.slug;
     const conflictingSlugs = await db.select({ slug: projects.slug }).from(projects).where(like(projects.slug, `${baseSlug}%`));
     data.slug = ensureUniqueSlug(baseSlug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
@@ -396,10 +415,16 @@ export async function updateProject(
 
     revalidatePath('/admin/projects');
     triggerDeploy('projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    // The detail page always refreshes via its narrow per-slug tag.
     updateTag(`project:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`project:${currentSlug}`);
+    // The listing tags feed the home page + projects index + project detail
+    // (related-projects). Only bust them when a card-visible field changed —
+    // not on meta/SEO, description, or dynamic-block edits.
+    if (listingCardChanged(currentProject[0], data, PROJECT_CARD_FIELDS)) {
+      updateTag('projects:listing');
+      updateTag('sites:listing');
+    }
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
     console.error('Failed to update project:', error);

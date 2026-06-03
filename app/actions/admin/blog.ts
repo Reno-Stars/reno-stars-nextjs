@@ -11,6 +11,7 @@ import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
 import { triggerDeploy } from '@/lib/deploy-hook';
+import { listingCardChanged, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED } from '@/lib/admin/listing-cache';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -135,8 +136,20 @@ export async function updateBlogPost(
     );
     if (textError) return { error: textError };
 
-    // Ensure slug is unique (exclude current post's own slug)
-    const currentPost = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+    // Ensure slug is unique (exclude current post's own slug). Also load the
+    // listing-card-visible fields so we can tell whether the broad
+    // `blog:listing` tag (home page + index + RSS feed) actually needs busting.
+    const currentPost = await db.select({
+      slug: blogPosts.slug,
+      isPublished: blogPosts.isPublished,
+      publishedAt: blogPosts.publishedAt,
+      titleEn: blogPosts.titleEn,
+      titleZh: blogPosts.titleZh,
+      excerptEn: blogPosts.excerptEn,
+      excerptZh: blogPosts.excerptZh,
+      featuredImageUrl: blogPosts.featuredImageUrl,
+      localizations: blogPosts.localizations,
+    }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const currentSlug = currentPost[0]?.slug;
     const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
     data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
@@ -146,14 +159,25 @@ export async function updateBlogPost(
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
-    updateTag('blog:listing');
+    // The detail page itself always refreshes via the narrow per-slug tag.
     updateTag(`blog:${data.slug}`);
     // If slug was renamed, the old slug's cached entry also needs invalidation
-    // — otherwise stale content survives at old URL until next 1h revalidate.
+    // — otherwise stale content survives at old URL until next revalidate.
     if (currentSlug && currentSlug !== data.slug) updateTag(`blog:${currentSlug}`);
+    // The broad listing tag (home page + index + RSS feed across 14 locales)
+    // only needs busting when a card-visible field changed. Pure content-body,
+    // meta/SEO, or non-title/excerpt translation edits leave the cards
+    // untouched, so skipping the bust avoids regenerating the home page + feed.
+    const listingChanged = listingCardChanged(
+      currentPost[0],
+      { ...data, localizations },
+      BLOG_CARD_FIELDS,
+      BLOG_CARD_LOCALIZED,
+    );
+    if (listingChanged) updateTag('blog:listing');
     revalidatePath('/admin/blog');
     triggerDeploy('blog');
-    if (data.isPublished) refreshBlogPost(data.slug);
+    if (data.isPublished) refreshBlogPost(data.slug, { listingChanged });
     return { success: true };
   } catch (error) {
     console.error('Failed to update blog post:', error);
