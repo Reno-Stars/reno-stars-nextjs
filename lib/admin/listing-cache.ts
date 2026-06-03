@@ -38,10 +38,12 @@ function valuesEqual(a: unknown, b: unknown): boolean {
  * (`oldRow`, selected before the update) and the incoming update (`next`).
  *
  * @param directFields      column/property names that appear on the card
- * @param localizedPrefixes field name prefixes inside the `localizations`
+ * @param localizedPrefixes field-name prefixes inside the `localizations`
  *                          jsonb that appear on the card (e.g. `title`,
- *                          `excerpt`). Keys look like `title_ja`; the field
- *                          name is the part before the first underscore.
+ *                          `excerpt`). Keys are camelCase `${field}${Suffix}`
+ *                          — e.g. `titleJa`, `excerptZhHant` — so we match by
+ *                          prefix. `title` matches `titleJa` but not
+ *                          `metaTitleJa` (which starts with `meta`).
  */
 export function listingCardChanged(
   oldRow: Record<string, unknown> | null | undefined,
@@ -61,9 +63,7 @@ export function listingCardChanged(
     const newLoc = (next.localizations ?? {}) as Record<string, unknown>;
     const keys = new Set([...Object.keys(oldLoc), ...Object.keys(newLoc)]);
     for (const key of keys) {
-      const underscore = key.indexOf('_');
-      const fieldName = underscore === -1 ? key : key.slice(0, underscore);
-      if (localizedPrefixes.includes(fieldName) && !valuesEqual(oldLoc[key], newLoc[key])) {
+      if (localizedPrefixes.some((p) => key.startsWith(p)) && !valuesEqual(oldLoc[key], newLoc[key])) {
         return true;
       }
     }

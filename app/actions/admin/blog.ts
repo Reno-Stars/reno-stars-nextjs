@@ -12,6 +12,8 @@ import { ensureUniqueSlug } from '@/lib/utils';
 import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
 import { triggerDeploy } from '@/lib/deploy-hook';
 import { listingCardChanged, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED } from '@/lib/admin/listing-cache';
+import { blogChangedLocales } from '@/lib/admin/locale-invalidation';
+import { locales } from '@/i18n/config';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -136,9 +138,10 @@ export async function updateBlogPost(
     );
     if (textError) return { error: textError };
 
-    // Ensure slug is unique (exclude current post's own slug). Also load the
-    // listing-card-visible fields so we can tell whether the broad
-    // `blog:listing` tag (home page + index + RSS feed) actually needs busting.
+    // Ensure slug is unique (exclude current post's own slug). Also load every
+    // field that affects the rendered page so we can compute (a) whether the
+    // broad `blog:listing` tag needs busting and (b) exactly which locales'
+    // pages changed — so a single-locale edit doesn't regenerate all 14.
     const currentPost = await db.select({
       slug: blogPosts.slug,
       isPublished: blogPosts.isPublished,
@@ -147,7 +150,19 @@ export async function updateBlogPost(
       titleZh: blogPosts.titleZh,
       excerptEn: blogPosts.excerptEn,
       excerptZh: blogPosts.excerptZh,
+      contentEn: blogPosts.contentEn,
+      contentZh: blogPosts.contentZh,
+      metaTitleEn: blogPosts.metaTitleEn,
+      metaTitleZh: blogPosts.metaTitleZh,
+      metaDescriptionEn: blogPosts.metaDescriptionEn,
+      metaDescriptionZh: blogPosts.metaDescriptionZh,
+      seoKeywordsEn: blogPosts.seoKeywordsEn,
+      seoKeywordsZh: blogPosts.seoKeywordsZh,
       featuredImageUrl: blogPosts.featuredImageUrl,
+      author: blogPosts.author,
+      readingTimeMinutes: blogPosts.readingTimeMinutes,
+      projectId: blogPosts.projectId,
+      metaOverrides: blogPosts.metaOverrides,
       localizations: blogPosts.localizations,
     }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const currentSlug = currentPost[0]?.slug;
@@ -159,25 +174,35 @@ export async function updateBlogPost(
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
-    // The detail page itself always refreshes via the narrow per-slug tag.
-    updateTag(`blog:${data.slug}`);
-    // If slug was renamed, the old slug's cached entry also needs invalidation
-    // — otherwise stale content survives at old URL until next revalidate.
+    // Determine which locales' rendered pages actually changed. An EN edit hits
+    // every locale that falls back to EN; an MT backfill of one locale hits only
+    // that locale; metadata-only edits hit a subset. metaOverrides isn't edited
+    // here, so carry it forward unchanged for the diff.
+    const newRow = { ...data, localizations, metaOverrides: currentPost[0]?.metaOverrides };
+    const changedLocales = blogChangedLocales(currentPost[0] ?? {}, newRow);
+
+    // Invalidate only the changed locales' detail pages (narrow per-locale tag).
+    // All 14 → one broad bust; a subset → per-locale busts.
+    if (changedLocales.length >= locales.length) {
+      updateTag(`blog:${data.slug}`);
+    } else {
+      for (const loc of changedLocales) updateTag(`blog:${data.slug}:${loc}`);
+    }
+    // Slug rename → every locale of the old URL must be invalidated (broad).
     if (currentSlug && currentSlug !== data.slug) updateTag(`blog:${currentSlug}`);
-    // The broad listing tag (home page + index + RSS feed across 14 locales)
-    // only needs busting when a card-visible field changed. Pure content-body,
-    // meta/SEO, or non-title/excerpt translation edits leave the cards
-    // untouched, so skipping the bust avoids regenerating the home page + feed.
+
+    // The broad listing tag (home page + index + RSS feed) only needs busting
+    // when a card-visible field changed — not on pure content/meta edits.
     const listingChanged = listingCardChanged(
       currentPost[0],
-      { ...data, localizations },
+      newRow,
       BLOG_CARD_FIELDS,
       BLOG_CARD_LOCALIZED,
     );
     if (listingChanged) updateTag('blog:listing');
     revalidatePath('/admin/blog');
     triggerDeploy('blog');
-    if (data.isPublished) refreshBlogPost(data.slug, { listingChanged });
+    if (data.isPublished) refreshBlogPost(data.slug, { listingChanged, locales: changedLocales });
     return { success: true };
   } catch (error) {
     console.error('Failed to update blog post:', error);
