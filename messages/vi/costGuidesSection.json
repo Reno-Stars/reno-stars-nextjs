@@ -1,0 +1,19 @@
+{
+  "costGuidesSection": {
+    "title": "Chi phí cải tạo thực tế ở Vancouver",
+    "subtitle": "Định giá dự án thực tế theo dịch vụ — từ hơn 100 công trình cải tạo đã hoàn thành ở Metro Vancouver. Không có ước tính, không có phụ.",
+    "labels": {
+      "kitchen": "Chi phí cải tạo nhà bếp",
+      "bathroom": "Chi phí cải tạo phòng tắm",
+      "basement": "Chi phí cải tạo tầng hầm",
+      "wholeHouse": "Chi phí cải tạo toàn bộ ngôi nhà",
+      "commercial": "Chi phí cải tạo thương mại",
+      "cabinet": "Chi phí hoàn thiện tủ"
+    },
+    "financingPrompt": "Bạn đang thắc mắc làm thế nào để trả tiền cho việc cải tạo của mình?",
+    "financingCta": "Xem các lựa chọn tài chính →",
+    "nearMeCtaPrompt": "Đang tìm kiếm \"{service} gần tôi\"?",
+    "nearMeCtaLink": "Xem khu vực dịch vụ + trang đặt chỗ của chúng tôi →",
+    "showroomCta": "Ghé thăm phòng trưng bày Burnaby của chúng tôi →"
+  }
+}

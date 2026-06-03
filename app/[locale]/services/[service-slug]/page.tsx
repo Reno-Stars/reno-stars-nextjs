@@ -66,6 +66,26 @@ const SERVICE_PRICE_RANGES: Record<string, { min: number; max: number } | undefi
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * EN-only H1 overrides for service pages where GSC shows striking-distance
+ * ranking on "{service} renovation vancouver" queries but the DB-driven H1
+ * lacks any geo modifier. Source data: 2026-06-01 GSC scan
+ * (data/seo-scans/2026-06-01/gsc-striking-distance.json on hub) shows:
+ *   - basement: 373 imp/28d combined at pos 13.1-19.4 (3 queries)
+ *
+ * Mirrors the AreaPage `enAreaH1Overrides` pattern. EN-only so we don't
+ * override the localized titles for zh/ja/etc. where the DB title is
+ * already region-appropriate.
+ */
+const enServiceH1Overrides: Partial<Record<string, string>> = {
+  basement: 'Basement Renovation in Vancouver — Legal Suites, Waterproofing & Permits',
+};
+
+function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
+  if (locale !== 'en') return undefined;
+  return enServiceH1Overrides[serviceSlug];
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -186,6 +206,7 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
         allServices={services}
+        h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
       />
     </>
   );

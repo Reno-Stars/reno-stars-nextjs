@@ -22,6 +22,18 @@
     "viewAllServices": "Xem Tất Cả Dịch Vụ",
     "scheduleConsultation": "Đặt Lịch Tư Vấn",
     "stickyQuoteFor": "Nhận báo giá {area} {service}",
-    "stickyCall": "Gọi"
+    "stickyCall": "Gọi",
+    "aboutChip": "Giới thiệu về Reno Stars",
+    "showroomChip": "Ghé thăm phòng trưng bày của chúng tôi",
+    "allAreasChip": "Tất cả các lĩnh vực dịch vụ",
+    "nearMeChip": "Cải tạo gần tôi",
+    "beforeAfterChip": "Thư viện ảnh trước/sau",
+    "designChip": "Cảm hứng thiết kế",
+    "designGalleryTagline": "Duyệt qua thư viện thiết kế của chúng tôi →",
+    "serviceAreasTagline": "Xem tất cả các khu vực dịch vụ →",
+    "renovationProcessTagline": "Xem quá trình cải tạo của chúng tôi →",
+    "showroomTagline": "Ghé thăm phòng trưng bày Burnaby của chúng tôi →",
+    "aboutTagline": "Tìm hiểu thêm về Reno Stars →",
+    "realCostsTagline": "Xem chi phí cải tạo thực tế ở Vancouver"
   }
 }

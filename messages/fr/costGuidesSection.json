@@ -1,0 +1,19 @@
+{
+  "costGuidesSection": {
+    "title": "Coûts réels de rénovation à Vancouver",
+    "subtitle": "Tarification réelle des projets par service – à partir de plus de 100 rénovations terminées dans la région métropolitaine de Vancouver. Pas d'estimation, pas de remplissage.",
+    "labels": {
+      "kitchen": "Coût de rénovation de cuisine",
+      "bathroom": "Coût de rénovation de salle de bain",
+      "basement": "Coût de rénovation du sous-sol",
+      "wholeHouse": "Coût de rénovation de toute la maison",
+      "commercial": "Coût de rénovation commerciale",
+      "cabinet": "Coût de finition des armoires"
+    },
+    "financingPrompt": "Vous vous demandez comment financer votre rénovation ?",
+    "financingCta": "Voir les options de financement →",
+    "nearMeCtaPrompt": "Vous recherchez \"{service} près de chez moi\" ?",
+    "nearMeCtaLink": "Voir notre zone de service + page de réservation →",
+    "showroomCta": "Visitez notre showroom Burnaby →"
+  }
+}

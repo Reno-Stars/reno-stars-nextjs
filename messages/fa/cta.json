@@ -22,6 +22,18 @@
     "viewAllServices": "مشاهده تمام خدمات",
     "scheduleConsultation": "تعیین وقت مشاوره",
     "stickyQuoteFor": "یک نقل قول {area} {service} دریافت کنید",
-    "stickyCall": "تماس بگیرید"
+    "stickyCall": "تماس بگیرید",
+    "aboutChip": "درباره Reno Stars",
+    "showroomChip": "از نمایشگاه ما دیدن کنید",
+    "allAreasChip": "کلیه مناطق خدماتی",
+    "nearMeChip": "بازسازی نزدیک من",
+    "beforeAfterChip": "گالری قبل / بعد",
+    "designChip": "الهام بخش طراحی",
+    "designGalleryTagline": "گالری طراحی ما را مرور کنید →",
+    "serviceAreasTagline": "مشاهده همه مناطق خدمات →",
+    "renovationProcessTagline": "روند بازسازی ما را ببینید →",
+    "showroomTagline": "از نمایشگاه Burnaby ما دیدن کنید →",
+    "aboutTagline": "بیشتر درباره Reno Stars بدانید →",
+    "realCostsTagline": "هزینه های بازسازی واقعی ونکوور را ببینید"
   }
 }

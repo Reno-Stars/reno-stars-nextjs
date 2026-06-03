@@ -22,6 +22,18 @@
     "viewAllServices": "عرض جميع الخدمات",
     "scheduleConsultation": "جدولة التشاور",
     "stickyQuoteFor": "احصل على عرض أسعار {area} {service}",
-    "stickyCall": "يتصل"
+    "stickyCall": "يتصل",
+    "aboutChip": "حول Reno Stars",
+    "showroomChip": "قم بزيارة معرضنا",
+    "allAreasChip": "جميع مناطق الخدمة",
+    "nearMeChip": "تجديد بالقرب مني",
+    "beforeAfterChip": "قبل / بعد المعرض",
+    "designChip": "إلهام التصميم",
+    "designGalleryTagline": "تصفح معرض التصميم الخاص بنا →",
+    "serviceAreasTagline": "شاهد كافة مجالات الخدمة →",
+    "renovationProcessTagline": "انظر عملية التجديد لدينا →",
+    "showroomTagline": "تفضل بزيارة صالة عرض برنابي →",
+    "aboutTagline": "تعرف على المزيد حول Reno Stars →",
+    "realCostsTagline": "انظر تكاليف التجديد الحقيقية في فانكوفر"
   }
 }

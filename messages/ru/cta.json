@@ -22,6 +22,18 @@
     "viewAllServices": "Просмотреть все услуги",
     "scheduleConsultation": "Запланировать консультацию",
     "stickyQuoteFor": "Получить предложение {area} {service}",
-    "stickyCall": "Вызов"
+    "stickyCall": "Вызов",
+    "aboutChip": "О Reno Stars",
+    "showroomChip": "Посетите наш выставочный зал",
+    "allAreasChip": "Все зоны обслуживания",
+    "nearMeChip": "Ремонт рядом со мной",
+    "beforeAfterChip": "Галерея «До/После»",
+    "designChip": "Вдохновение для дизайна",
+    "designGalleryTagline": "Просмотрите нашу галерею дизайна →",
+    "serviceAreasTagline": "Посмотреть все направления обслуживания →",
+    "renovationProcessTagline": "Посмотрите наш процесс ремонта →",
+    "showroomTagline": "Посетите наш выставочный зал Burnaby →",
+    "aboutTagline": "Узнать больше о Reno Stars →",
+    "realCostsTagline": "Посмотрите реальные затраты на ремонт в Ванкувере"
   }
 }

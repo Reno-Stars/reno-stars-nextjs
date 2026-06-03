@@ -22,6 +22,18 @@
     "viewAllServices": "Tingnan Lahat ng Serbisyo",
     "scheduleConsultation": "Mag-schedule ng Konsultasyon",
     "stickyQuoteFor": "Kumuha ng {area} {service} Quote",
-    "stickyCall": "Tumawag"
+    "stickyCall": "Tumawag",
+    "aboutChip": "Tungkol sa Reno Stars",
+    "showroomChip": "Bisitahin ang Aming Showroom",
+    "allAreasChip": "Lahat ng Lugar ng Serbisyo",
+    "nearMeChip": "Pagkukumpuni Malapit sa Akin",
+    "beforeAfterChip": "Bago / Pagkatapos ng Gallery",
+    "designChip": "Inspirasyon sa Disenyo",
+    "designGalleryTagline": "I-browse ang aming gallery ng disenyo →",
+    "serviceAreasTagline": "Tingnan ang lahat ng lugar ng serbisyo →",
+    "renovationProcessTagline": "Tingnan ang aming proseso ng pagsasaayos →",
+    "showroomTagline": "Bisitahin ang aming Burnaby showroom →",
+    "aboutTagline": "Matuto pa tungkol sa Reno Stars →",
+    "realCostsTagline": "Tingnan ang Tunay na Mga Gastos sa Pagkukumpuni sa Vancouver"
   }
 }

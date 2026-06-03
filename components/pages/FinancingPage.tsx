@@ -41,6 +41,7 @@ interface FinancingPageProps {
 
 export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
   const t = useTranslations("financing");
+  const tCta = useTranslations("cta");
 
   const financingOptions = [
     {
@@ -146,7 +147,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              Learn more about Reno Stars →
+              {tCta('aboutTagline')}
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link
@@ -154,7 +155,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              Visit our Burnaby showroom →
+              {tCta('showroomTagline')}
             </Link>
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
@@ -306,7 +307,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              See all service areas →
+              {tCta('serviceAreasTagline')}
             </Link>
           </p>
         </div>
@@ -479,7 +480,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
-            See Real Vancouver Renovation Costs
+            {tCta('realCostsTagline')}
           </h2>
           <p className="text-base text-center mb-8 max-w-2xl mx-auto" style={{ color: TEXT_MID }}>
             Before you finalize financing, know the real price tier — from 100+ completed Metro Vancouver projects.

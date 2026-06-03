@@ -132,7 +132,7 @@ export default function HomePage({
       <TrustBadgesSection badges={trustBadges} srTitle={t.trustBadges.srTitle} />
       <PartnersSection partners={partners} translations={t.partners} />
       <AreasLinkSection locale={locale} />
-      <CostGuidesLinkSection />
+      <CostGuidesLinkSection locale={locale} />
       <FaqSection faqs={faqs} translations={t.faq} />
       <BlogSection posts={blogPosts} translations={t.blog} />
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />

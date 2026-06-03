@@ -1,0 +1,19 @@
+{
+  "costGuidesSection": {
+    "title": "Costos reales de renovación en Vancouver",
+    "subtitle": "Precios reales de proyectos por servicio: de más de 100 renovaciones completadas de Metro Vancouver. Sin estimaciones, sin relleno.",
+    "labels": {
+      "kitchen": "Costo de renovación de la cocina",
+      "bathroom": "Costo de renovación del baño",
+      "basement": "Costo de renovación del sótano",
+      "wholeHouse": "Costo de renovación de toda la casa",
+      "commercial": "Costo de renovación comercial",
+      "cabinet": "Costo de reacabado del gabinete"
+    },
+    "financingPrompt": "¿Se pregunta cómo pagar su renovación?",
+    "financingCta": "Ver opciones de financiación →",
+    "nearMeCtaPrompt": "¿Buscando \"{service} cerca de mí\"?",
+    "nearMeCtaLink": "Ver nuestra área de servicios + página de reservas →",
+    "showroomCta": "Visita nuestro showroom Burnaby →"
+  }
+}

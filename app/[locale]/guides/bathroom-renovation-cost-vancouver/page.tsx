@@ -69,6 +69,15 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q3'), answer: t('faq.a3') },
     { question: t('faq.q4'), answer: t('faq.a4') },
     { question: t('faq.q5'), answer: t('faq.a5') },
+    // q6 added 2026-06-02 — mirrors kitchen cost-guide commit 48f60e3.
+    // 2026-06-01 GSC scan all_rows shows "remodel" terminology demand
+    // across bathroom-cost queries (separate Google-treated lexicon from
+    // "renovation"): "bathroom remodel cost" (32 imp), "bathroom remodel
+    // vancouver" (~13 imp on guide), "bathroom remodeling cost" (12 imp),
+    // "bath remodel cost" (8 imp), "average cost of a master bathroom
+    // remodel" (6 imp). ~71 imp/28d combined exact-match opportunity that
+    // existing q1 (renovation-terminology) misses. All 14 locales populated.
+    { question: t('faq.q6'), answer: t('faq.a6') },
   ];
 
   const howToSteps = [

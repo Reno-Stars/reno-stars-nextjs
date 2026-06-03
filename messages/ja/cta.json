@@ -22,7 +22,19 @@
     "viewAllServices": "すべてのサービスを見る",
     "scheduleConsultation": "相談のスケジュールを立てる",
     "stickyQuoteFor": "{エリア} {サービス} の見積もりを取得する",
-    "stickyCall": "電話"
+    "stickyCall": "電話",
+    "aboutChip": "Reno Starsについて",
+    "showroomChip": "ショールームにお越しください",
+    "allAreasChip": "すべてのサービスエリア",
+    "nearMeChip": "近くのリノベーション",
+    "beforeAfterChip": "ビフォー・アフターギャラリー",
+    "designChip": "デザインのインスピレーション",
+    "designGalleryTagline": "デザインギャラリーをご覧ください→",
+    "serviceAreasTagline": "すべてのサービスエリアを見る →",
+    "renovationProcessTagline": "リノベーションのプロセスをご覧ください→",
+    "showroomTagline": "バーナビーショールームをご覧ください →",
+    "aboutTagline": "Reno Starsについて詳しくはこちら→",
+    "realCostsTagline": "実際の バンクーバー 改修コストを見る"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

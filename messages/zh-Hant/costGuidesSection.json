@@ -1,0 +1,19 @@
+{
+  "costGuidesSection": {
+    "title": "溫哥華 的實際裝修成本",
+    "subtitle": "依服務實際項目定價 — 來自 100 多個已完成的 大溫哥華 改造。沒有估計，沒有填充物。",
+    "labels": {
+      "kitchen": "廚房裝修費用",
+      "bathroom": "浴室裝修費用",
+      "basement": "地下室裝修費用",
+      "wholeHouse": "全屋裝修費用",
+      "commercial": "商業裝修費用",
+      "cabinet": "櫥櫃整修費用"
+    },
+    "financingPrompt": "想知道如何支付裝修費用嗎？",
+    "financingCta": "查看融資選項 →",
+    "nearMeCtaPrompt": "正在搜尋“我附近的 {service}”？",
+    "nearMeCtaLink": "查看我們的服務區域+預訂頁面→",
+    "showroomCta": "參觀我們的 本拿比 展廳 →"
+  }
+}

@@ -68,6 +68,7 @@ const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
 
 export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews }: AreaPageProps) {
   const t = useTranslations();
+  const tCostGuides = useTranslations('costGuidesSection');
   const citySlug = area.slug;
 
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
@@ -529,42 +530,42 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            About Reno Stars <ArrowRight className="w-4 h-4" />
+            {t('cta.aboutChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/showroom"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Visit Our Showroom <ArrowRight className="w-4 h-4" />
+            {t('cta.showroomChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/areas"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            All Service Areas <ArrowRight className="w-4 h-4" />
+            {t('cta.allAreasChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/renovation-near-me"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Renovation Near Me <ArrowRight className="w-4 h-4" />
+            {t('cta.nearMeChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/before-after"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Before / After Gallery <ArrowRight className="w-4 h-4" />
+            {t('cta.beforeAfterChip')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/design"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
             style={{ color: GOLD }}
           >
-            Design Inspiration <ArrowRight className="w-4 h-4" />
+            {t('cta.designChip')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -586,16 +587,16 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl font-bold mb-6" style={{ color: TEXT }}>
-            Real Renovation Costs in Vancouver
+            {tCostGuides('title')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { slug: 'kitchen-renovation-cost-vancouver', label: 'Kitchen Renovation Cost' },
-              { slug: 'bathroom-renovation-cost-vancouver', label: 'Bathroom Renovation Cost' },
-              { slug: 'whole-house-renovation-cost-vancouver', label: 'Whole-House Renovation Cost' },
-              { slug: 'basement-renovation-cost-vancouver', label: 'Basement Renovation Cost' },
-              { slug: 'commercial-renovation-cost-vancouver', label: 'Commercial Renovation Cost' },
-              { slug: 'cabinet-refinishing-cost-vancouver', label: 'Cabinet Refinishing Cost' },
+              { slug: 'kitchen-renovation-cost-vancouver', labelKey: 'kitchen' },
+              { slug: 'bathroom-renovation-cost-vancouver', labelKey: 'bathroom' },
+              { slug: 'whole-house-renovation-cost-vancouver', labelKey: 'wholeHouse' },
+              { slug: 'basement-renovation-cost-vancouver', labelKey: 'basement' },
+              { slug: 'commercial-renovation-cost-vancouver', labelKey: 'commercial' },
+              { slug: 'cabinet-refinishing-cost-vancouver', labelKey: 'cabinet' },
             ].map((g) => (
               <Link
                 key={g.slug}
@@ -603,7 +604,7 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                 className="block px-4 py-3 rounded-xl text-center text-sm font-medium transition-all duration-200 hover:shadow-md"
                 style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
               >
-                {g.label}
+                {tCostGuides(`labels.${g.labelKey}`)}
               </Link>
             ))}
           </div>
@@ -612,15 +613,17 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
               pages × 14 locales × organic-search traffic sent zero body-
               content link equity to the financing money page. Body-link
               carries materially more PageRank weight than nav-area links;
-              gives /financing/ another major inbound surface. */}
+              gives /financing/ another major inbound surface.
+              2026-06-02: title + labels + cta now localized via
+              costGuidesSection namespace (was hardcoded EN). */}
           <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
-            Wondering how to pay for your renovation?{' '}
+            {tCostGuides('financingPrompt')}{' '}
             <Link
               href="/financing"
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              See financing options →
+              {tCostGuides('financingCta')}
             </Link>
           </p>
         </div>

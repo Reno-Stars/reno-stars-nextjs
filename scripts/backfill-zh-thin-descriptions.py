@@ -317,6 +317,8 @@ def main():
                         help="Only about_sections table (zh fields)")
     parser.add_argument("--faqs-only", action="store_true",
                         help="Only faqs table (zh field)")
+    parser.add_argument("--projects-only", action="store_true",
+                        help="Only projects table (zh fields: description, excerpt, challenge, solution)")
     parser.add_argument("--multi-locale-services", action="store_true",
                         help="Backfill services.localizations JSONB longDescription* "
                              "and description* keys for the 12 non-en/non-zh locales")
@@ -350,13 +352,14 @@ def main():
 
     # Mode flags: when any --*-only is set, run JUST that mode.
     only_modes = [args.services_only, args.areas_only, args.about_only,
-                  args.faqs_only, args.multi_locale_services,
+                  args.faqs_only, args.projects_only, args.multi_locale_services,
                   args.multi_locale_areas, args.blog_posts_short,
                   args.blog_posts_content, args.multi_locale_blog_posts_short]
     run_services = args.services_only or not any(only_modes)
     run_areas = args.areas_only or not any(only_modes)
     run_about = args.about_only or not any(only_modes)
     run_faqs = args.faqs_only or not any(only_modes)
+    run_projects = args.projects_only
     run_multi_locale_services = args.multi_locale_services
     run_multi_locale_areas = args.multi_locale_areas
     run_blog_posts_short = args.blog_posts_short
@@ -422,6 +425,32 @@ def main():
                                       False, args.dry_run):
                         updated += 1
                         time.sleep(0.3)
+
+            if run_projects:
+                # projects: 48 published rows. 4 narrative fields each (description,
+                # excerpt, challenge, solution). 2026-06-02 audit found avg zh:en
+                # ratios at 0.25-0.30 (~28% across all 4 fields). This is the
+                # biggest unaddressed gap after yesterday's services/areas/about/
+                # faqs/blog_posts MT-backfill (PR #104). Projects render on
+                # AreaPage + ServiceDetailPage in 3-chip + featured-grid layouts,
+                # so backfilling these drives the cross-locale word-count gap
+                # down meaningfully on the highest-traffic templates.
+                print("\n=== projects (4 fields × 48 rows = up to 192 writes) ===")
+                cur.execute("SELECT slug FROM projects WHERE is_published = true ORDER BY slug")
+                project_slugs = [r[0] for r in cur.fetchall()]
+                PROJECT_FIELDS = [
+                    ("description_en", "description_zh"),
+                    ("excerpt_en", "excerpt_zh"),
+                    ("challenge_en", "challenge_zh"),
+                    ("solution_en", "solution_zh"),
+                ]
+                for slug in project_slugs:
+                    for field_en, field_zh in PROJECT_FIELDS:
+                        if maybe_backfill(cur, "projects", "slug", slug,
+                                          field_en, field_zh,
+                                          slug in args.force, args.dry_run):
+                            updated += 1
+                            time.sleep(0.3)
 
             if run_blog_posts_content:
                 # blog_posts.content_zh — JSON-LD-aware chunked translation.

@@ -22,6 +22,18 @@
     "viewAllServices": "सभी सेवाएँ देखें",
     "scheduleConsultation": "अनुसूची परामर्श",
     "stickyQuoteFor": "{area} {service} कोटेशन प्राप्त करें",
-    "stickyCall": "पुकारना"
+    "stickyCall": "पुकारना",
+    "aboutChip": "Reno Stars के बारे में",
+    "showroomChip": "हमारे शोरूम पर आएं",
+    "allAreasChip": "सभी सेवा क्षेत्र",
+    "nearMeChip": "मेरे निकट नवीनीकरण",
+    "beforeAfterChip": "गैलरी से पहले/बाद में",
+    "designChip": "डिज़ाइन प्रेरणा",
+    "designGalleryTagline": "हमारी डिज़ाइन गैलरी ब्राउज़ करें →",
+    "serviceAreasTagline": "सभी सेवा क्षेत्र देखें →",
+    "renovationProcessTagline": "हमारी नवीनीकरण प्रक्रिया देखें →",
+    "showroomTagline": "हमारे बर्नाबी शोरूम पर जाएँ →",
+    "aboutTagline": "Reno Stars के बारे में और जानें →",
+    "realCostsTagline": "वास्तविक वैंकूवर नवीनीकरण लागत देखें"
   }
 }

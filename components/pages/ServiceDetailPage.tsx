@@ -105,6 +105,14 @@ interface ServiceDetailPageProps {
    * surface from each /services/<x>/ page to other services).
    */
   allServices?: Service[];
+  /**
+   * Optional code-driven H1 that wins over `service.title_en`. Used for
+   * EN-only geo-anchoring on service pages where GSC shows striking-
+   * distance ranking for "{service} renovation vancouver" queries but
+   * the H1 lacks any geo modifier (e.g. basement service page at pos
+   * 13-19 / 373 imp combined). Mirrors the same-named prop on AreaPage.
+   */
+  h1Override?: string;
 }
 
 // Per-locale copy for the Cost Guide cross-link section. Only render when an entry
@@ -155,8 +163,9 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
   },
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, h1Override }: ServiceDetailPageProps) {
   const t = useTranslations();
+  const tCostGuides = useTranslations('costGuidesSection');
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const costGuideCopy = COST_GUIDE_LINK_COPY[locale];
@@ -206,7 +215,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
             )}
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {localizedService.title}
+                {h1Override || localizedService.title}
               </h1>
               {/* Hero subtitle uses the short description only — the long-form
                   marketing/SEO copy is rendered as prose further down. */}
@@ -397,13 +406,13 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 Completes financing-inbound on the third high-traffic
                 surface (after BlogPostPage + AreaPage). */}
             <p className="text-center mt-6 text-sm" style={{ color: TEXT_MID }}>
-              Wondering how to pay for your renovation?{' '}
+              {tCostGuides('financingPrompt')}{' '}
               <Link
                 href="/financing"
                 className="font-semibold underline hover:no-underline"
                 style={{ color: GOLD }}
               >
-                See financing options →
+                {tCostGuides('financingCta')}
               </Link>
             </p>
             {/* /<X>-renovation-near-me/ programmatic-landing-page cross-link
@@ -421,13 +430,32 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 near-me landing pages. */}
             {NEAR_ME_BY_SERVICE_SLUG[serviceSlug] && (
               <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
-                Searching &ldquo;{localizedService.title.toLowerCase()} near me&rdquo;?{' '}
+                {tCostGuides('nearMeCtaPrompt', { service: localizedService.title.toLowerCase() })}{' '}
                 <Link
                   href={NEAR_ME_BY_SERVICE_SLUG[serviceSlug] as '/kitchen-renovation-near-me'}
                   className="font-semibold underline hover:no-underline"
                   style={{ color: GOLD }}
                 >
-                  See our service area + booking page →
+                  {tCostGuides('nearMeCtaLink')}
+                </Link>
+              </p>
+            )}
+            {/* 2026-06-02: backsplash blog inbound for the kitchen-specific
+                pos-15.7 / 37-imp striking-distance query "backsplash
+                vancouver". /blog/kitchen-backsplash-cost-vancouver-2026/
+                had ZERO inbound site-wide per source-tree grep. This is the
+                natural cross-link surface (kitchen service page → kitchen
+                backsplash deep-dive). EN+kitchen-only gate mirrors the
+                near-me block's pattern. */}
+            {locale === 'en' && serviceSlug === 'kitchen' && (
+              <p className="text-center mt-2 text-sm" style={{ color: TEXT_MID }}>
+                Just planning a backsplash refresh?{' '}
+                <Link
+                  href="/blog/kitchen-backsplash-cost-vancouver-2026"
+                  className="font-semibold underline hover:no-underline"
+                  style={{ color: GOLD }}
+                >
+                  See our Vancouver backsplash cost guide →
                 </Link>
               </p>
             )}
@@ -537,7 +565,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 className="font-semibold underline hover:no-underline"
                 style={{ color: GOLD }}
               >
-                Visit our Burnaby showroom →
+                {tCostGuides('showroomCta')}
               </Link>
             </p>
             {/* /areas/ aggregation link — 3rd surface of /areas/ inbound
@@ -558,6 +586,55 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 See all service areas →
               </Link>
             </p>
+            {/* 2026-06-02: featured-area cross-link, EN + bathroom-only for
+                now. GSC striking-distance scan (2026-06-01) showed
+                "bathroom renovation richmond" at pos 16.2 / 204 imp ranks
+                the homepage /en/ instead of the topical /en/areas/richmond/
+                page (misdirected ranking — homepage outranks topical due to
+                weak inbound signal on /areas/richmond/). This snippet adds
+                an anchor-text-rich inbound link from this high-equity
+                surface (/services/bathroom/) → /areas/richmond/ with the
+                exact-match query phrase as anchor text. Same pattern for
+                West Vancouver bathroom (309 imp pos 18.8). Will expand
+                per-service after 3-4 week crawl-reweight confirms lift. */}
+            {locale === 'en' && serviceSlug === 'bathroom' && (
+              <p className="text-center mt-3 text-sm max-w-3xl mx-auto" style={{ color: TEXT_MID }}>
+                For neighborhood-specific bathroom renovation expertise see our{' '}
+                <Link href="/areas/richmond" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  bathroom renovation in Richmond
+                </Link>{' '}
+                and{' '}
+                <Link href="/areas/west-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  bathroom renovation in West Vancouver
+                </Link>{' '}
+                neighborhood pages — each with real Reno Stars project costs and area-specific notes.
+              </p>
+            )}
+            {/* 2026-06-02 (parallel to the bathroom snippet above):
+                /services/basement/ Featured-Areas cross-link targeting
+                North Vancouver + Burnaby basement queries. GSC scan shows:
+                - /areas/north-vancouver/ pos 10.1-13.2 / 116 imp combined
+                  for "basement renovation north vancouver" + variants
+                - /areas/burnaby/ pos 16.3-19.4 / 86 imp combined for
+                  "basement renovations burnaby" + variants
+                Both pages already correctly-targeted (unlike Richmond
+                bathroom which was misdirected to /en/) but at striking
+                distance. Anchor-text-rich inbound from this high-equity
+                /services/basement/ surface compounds topical authority
+                with exact-match query phrasing. */}
+            {locale === 'en' && serviceSlug === 'basement' && (
+              <p className="text-center mt-3 text-sm max-w-3xl mx-auto" style={{ color: TEXT_MID }}>
+                For neighborhood-specific basement renovation expertise see our{' '}
+                <Link href="/areas/north-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  basement renovation in North Vancouver
+                </Link>{' '}
+                and{' '}
+                <Link href="/areas/burnaby" className="underline hover:no-underline" style={{ color: GOLD }}>
+                  basement renovation in Burnaby
+                </Link>{' '}
+                neighborhood pages — each with real Reno Stars project costs and area-specific notes including waterproofing, legalization, and hillside considerations.
+              </p>
+            )}
           </div>
         </section>
       )}
