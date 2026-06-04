@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, locales, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
@@ -19,11 +19,11 @@ interface PageProps {
 }
 
 
-// Build-time prerender: ALL locales (changed 2026-06-04). EN-only previously
-// left the other 13 locales to lazy-generate + regenerate on every deploy as
-// bots crawled them (sitemap advertises all 14) — the dominant ISR-write cost
-// ($83.93/mo). Projects is the largest route, so this is the biggest single
-// contributor. Prerendering every locale makes them CDN-served static.
+// Build-time prerender: EN only. Non-EN locales lazy-generate on first
+// request via dynamicParams=true. Saves ~9× the prerender count for projects,
+// sites, and categories. SEO unaffected — crawlers trigger generation on
+// first hit and the page is cached for 7d.
+//
 // Admin edits call `revalidatePath('/<locale>/projects/<slug>')` to bust on
 // content updates — the 7d TTL is the "no edit, no traffic" floor.
 export const revalidate = 604800; // 7d
@@ -34,12 +34,10 @@ export async function generateStaticParams() {
     getSitesAsProjectsFromDb(),
     getCategorySlugs(),
   ]);
-  const slugs = [
-    ...categorySlugs,
-    ...projects.map((p) => p.slug),
-    ...sites.map((s) => s.slug),
-  ];
-  return slugs.flatMap((slug) => locales.map((locale) => ({ locale, slug })));
+  const projectParams = projects.map((p) => ({ locale: 'en', slug: p.slug }));
+  const siteParams = sites.map((s) => ({ locale: 'en', slug: s.slug }));
+  const categoryParams = categorySlugs.map((slug) => ({ locale: 'en', slug }));
+  return [...categoryParams, ...projectParams, ...siteParams];
 }
 
 async function isCategory(slug: string): Promise<boolean> {
