@@ -100,14 +100,23 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
 
   // Dedupe + apply. revalidatePath/Tag are synchronous cache-mark operations.
-  // revalidateTag(tag, 'max') is the route-handler-safe API (updateTag is
-  // Server-Action-only and throws here). 'max' = invalidate immediately.
-  for (const p of [...new Set(revalidatedPaths)]) revalidatePath(p);
-  for (const t of [...new Set(revalidatedTags)]) revalidateTag(t, 'max');
+  // Apply each invalidation independently so one failing call can't 500 the
+  // whole request. revalidatePath reliably refreshes a path's cached data
+  // (Next: "invalidates all cached data associated with a route path"), which
+  // is sufficient on its own since we revalidate every locale path. Tag
+  // invalidation is best-effort (some tag APIs are Server-Action-only); any
+  // failure is reported in `errors`, never fatal.
+  const okPaths: string[] = [];
+  const okTags: string[] = [];
+  const errors: string[] = [];
+  for (const p of [...new Set(revalidatedPaths)]) {
+    try { revalidatePath(p); okPaths.push(p); }
+    catch (e) { errors.push(`path ${p}: ${e instanceof Error ? e.message : String(e)}`); }
+  }
+  for (const t of [...new Set(revalidatedTags)]) {
+    try { revalidateTag(t, 'max'); okTags.push(t); }
+    catch (e) { errors.push(`tag ${t}: ${e instanceof Error ? e.message : String(e)}`); }
+  }
 
-  return NextResponse.json({
-    revalidated: true,
-    paths: [...new Set(revalidatedPaths)],
-    tags: [...new Set(revalidatedTags)],
-  });
+  return NextResponse.json({ revalidated: okPaths.length > 0, paths: okPaths, tags: okTags, errors });
 }
