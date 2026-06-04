@@ -1023,6 +1023,22 @@ function parseNewlineList(text: string | null): string[] | undefined {
 }
 
 /** Fetch active service areas ordered by display_order. */
+function mapServiceAreaRow(row: typeof serviceAreasTable.$inferSelect): ServiceArea {
+  const highlightsEn = parseNewlineList(row.highlightsEn);
+  const highlightsZh = parseNewlineList(row.highlightsZh);
+
+  return {
+    id: row.id,
+    slug: row.slug,
+    name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
+    description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
+    content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
+    highlights: buildSingleRowLocalizedArray(row, highlightsEn, highlightsZh, 'highlights'),
+    metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
+    metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
+  };
+}
+
 export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]> => {
   return safeQuery('getServiceAreasFromDb', async () => {
     const rows = await db
@@ -1031,23 +1047,33 @@ export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]
       .where(eq(serviceAreasTable.isActive, true))
       .orderBy(asc(serviceAreasTable.displayOrder));
 
-    return rows.map((row: typeof serviceAreasTable.$inferSelect) => {
-      const highlightsEn = parseNewlineList(row.highlightsEn);
-      const highlightsZh = parseNewlineList(row.highlightsZh);
-
-      return {
-        id: row.id,
-        slug: row.slug,
-        name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
-        description: buildLocalizedOptional('description', row.descriptionEn, row.descriptionZh, row.localizations),
-        content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
-        highlights: buildSingleRowLocalizedArray(row, highlightsEn, highlightsZh, 'highlights'),
-        metaTitle: buildLocalizedOptional('metaTitle', row.metaTitleEn, row.metaTitleZh, row.localizations),
-        metaDescription: buildLocalizedOptional('metaDescription', row.metaDescriptionEn, row.metaDescriptionZh, row.localizations),
-      };
-    });
+    return rows.map(mapServiceAreaRow);
   }, []);
 }, ['getServiceAreasFromDb'], { tags: ['service-areas'] });
+
+/**
+ * A single service area by slug, cached PER-SLUG. An area-page detail read
+ * goes through this instead of slicing the shared `getServiceAreasFromDb`
+ * blob, so a content/meta edit to ONE city busts only that city's page
+ * (`area:${slug}`) rather than all ~180 area pages. The broad `service-areas`
+ * tag is also attached so list-level changes (rename / reorder / toggle /
+ * add / delete) still refresh every detail page. Mirrors the blog per-slug
+ * pattern from #107.
+ */
+export const getServiceAreaBySlugFromDb = cachedQueryPerSlug<ServiceArea | null>(
+  async (slug: string): Promise<ServiceArea | null> => {
+    return safeQuery('getServiceAreaBySlugFromDb', async () => {
+      const rows = await db
+        .select()
+        .from(serviceAreasTable)
+        .where(and(eq(serviceAreasTable.isActive, true), eq(serviceAreasTable.slug, slug)))
+        .limit(1);
+      return rows[0] ? mapServiceAreaRow(rows[0]) : null;
+    }, null);
+  },
+  'getServiceAreaBySlugFromDb',
+  { broadTags: ['service-areas'], tagPrefix: 'area' },
+);
 
 /** Bilingual property-type options for the contact form dropdown. */
 export interface PropertyType {
@@ -1406,8 +1432,15 @@ export const getFaqsFromDb = cachedQuery(async (): Promise<Faq[]> => {
   }, []);
 }, ['getFaqsFromDb'], { tags: ['faqs'] });
 
-/** Fetch active FAQs for a specific service area, ordered by display_order. */
-export const getFaqsByAreaFromDb = cachedQueryWithArgs<string, Faq[]>(async (areaId: string): Promise<Faq[]> => {
+/**
+ * Fetch active FAQs for a specific service area, ordered by display_order.
+ * Cached PER-AREA and tagged `faqs:area:${areaId}` (NOT the broad `faqs`),
+ * so an edit to one area's FAQ — or to a global FAQ — busts only the pages
+ * that actually show it, instead of every area page at once. The admin FAQ
+ * actions bust the matching `faqs:area:${id}` / `faqs` tag (see
+ * `lib/admin/area-invalidation.ts`).
+ */
+export const getFaqsByAreaFromDb = cachedQueryPerSlug<Faq[]>(async (areaId: string): Promise<Faq[]> => {
   return safeQuery('getFaqsByAreaFromDb', async () => {
     const rows = await db
       .select()
@@ -1416,7 +1449,7 @@ export const getFaqsByAreaFromDb = cachedQueryWithArgs<string, Faq[]>(async (are
       .orderBy(asc(faqsTable.displayOrder));
     return mapFaqRows(rows);
   }, []);
-}, ['getFaqsByAreaFromDb'], { tags: ['faqs'] });
+}, 'getFaqsByAreaFromDb', { tagPrefix: 'faqs:area' });
 
 // ============================================================================
 // AREA PROJECT QUERIES
