@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, locales, type Locale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
@@ -19,13 +19,13 @@ interface PageProps {
 }
 
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate on first
-// request via dynamicParams=true. Saves ~9× the prerender count for projects,
-// sites, and categories. SEO unaffected — crawlers trigger generation on
-// first hit and the page is cached for 7d.
+// Build-time prerender: ALL locales (re-landed with #109). Every (locale, slug)
+// for projects, sites, and categories is generated at build so non-EN pages
+// don't lazy-generate at runtime after each deploy — the per-deploy ISR-write
+// drain we're killing. SEO unaffected; crawlers hit a warm static page.
 //
-// Admin edits call `revalidatePath('/<locale>/projects/<slug>')` to bust on
-// content updates — the 7d TTL is the "no edit, no traffic" floor.
+// Admin edits call `revalidatePath('/<locale>/projects/<slug>')` (or POST
+// /api/revalidate) to bust on content updates — the 7d TTL is the no-edit floor.
 export const revalidate = 604800; // 7d
 
 export async function generateStaticParams() {
@@ -34,9 +34,9 @@ export async function generateStaticParams() {
     getSitesAsProjectsFromDb(),
     getCategorySlugs(),
   ]);
-  const projectParams = projects.map((p) => ({ locale: 'en', slug: p.slug }));
-  const siteParams = sites.map((s) => ({ locale: 'en', slug: s.slug }));
-  const categoryParams = categorySlugs.map((slug) => ({ locale: 'en', slug }));
+  const projectParams = projects.flatMap((p) => locales.map((locale) => ({ locale, slug: p.slug })));
+  const siteParams = sites.flatMap((s) => locales.map((locale) => ({ locale, slug: s.slug })));
+  const categoryParams = categorySlugs.flatMap((slug) => locales.map((locale) => ({ locale, slug })));
   return [...categoryParams, ...projectParams, ...siteParams];
 }
 

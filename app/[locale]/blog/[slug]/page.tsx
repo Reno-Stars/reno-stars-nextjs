@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, locales, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
@@ -52,20 +52,23 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
   return out;
 }
 
-// Build-time prerender: EN slugs only. Other locales lazy-generate on first
-// request (Next.js dynamicParams=true default) and stay cached for 30d via
-// the page-level revalidate. Cuts ~107 × 9 = 963 unnecessary prerenders per
-// build, slashes Vercel build time + ISR-write spend, no SEO hit (search
-// engines trigger generation on first crawl, then cache).
+// Build-time prerender: ALL locales. Each (locale, slug) is generated at build
+// and written to the deployment's static output. The alternative — EN-only +
+// dynamicParams lazy-gen — means every non-EN page regenerates at RUNTIME on
+// the first crawl after each deploy (deploys wipe the ISR cache), which is the
+// per-deploy ISR-write drain we're killing. Prerendering at build moves that
+// generation out of billed runtime ISR writes. Trade: slower builds + heavier
+// build-time DB load. Re-landed after #109/#111 once the missing-translation
+// crashes were fixed (#114) and an EN fallback made missing keys non-fatal.
 //
-// Admin edits call `revalidatePath('/<locale>/blog/<slug>')` to bust the
-// cache instantly on content updates — the 30d TTL is the "no edit, no
-// traffic" floor that prevents background regeneration churn.
+// Admin edits call `revalidatePath('/<locale>/blog/<slug>')` (or POST
+// /api/revalidate) to bust the cache instantly on content updates — the 30d
+// TTL is the "no edit, no traffic" floor that prevents regeneration churn.
 export const revalidate = 2592000; // 30d
 
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
-  return posts.map((post) => ({ locale: 'en', slug: post.slug }));
+  return posts.flatMap((post) => locales.map((locale) => ({ locale, slug: post.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
