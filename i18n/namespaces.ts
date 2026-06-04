@@ -9,6 +9,7 @@ export const namespaces = [
   'category',
   'common',
   'contact',
+  'costGuidesSection',
   'cta',
   'design',
   'designFaqs',
