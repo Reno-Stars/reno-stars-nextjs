@@ -78,7 +78,7 @@ export function hasNativeContent(
 // Map non-base locales to the camelCase suffix used in the DB localizations
 // jsonb. e.g. 'ja' → 'Ja', 'zh-Hant' → 'ZhHant'. The base locales (en, zh)
 // have dedicated columns and are not represented in this map.
-const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = {
+export const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = {
   ja: 'Ja',
   ko: 'Ko',
   es: 'Es',

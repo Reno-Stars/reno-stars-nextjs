@@ -70,7 +70,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = await getBlogPostBySlugFromDb(slug);
+  const post = await getBlogPostBySlugFromDb(slug, locale);
 
   if (!post) {
     return { title: 'Blog Post Not Found', robots: { index: false, follow: false } };
@@ -134,7 +134,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const post = await getBlogPostBySlugFromDb(slug);
+  const post = await getBlogPostBySlugFromDb(slug, locale);
 
   if (!post) {
     notFound();

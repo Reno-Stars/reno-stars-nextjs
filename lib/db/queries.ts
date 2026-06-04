@@ -93,6 +93,39 @@ function cachedQueryPerSlug<T>(
     return wrapped();
   });
 }
+
+/**
+ * Per-(slug, locale) cached query with locale-scoped tags.
+ *
+ * Like `cachedQueryPerSlug` but partitions the cache by locale so a single
+ * locale's page can be invalidated without regenerating the other 13. Each
+ * entry carries TWO tags:
+ *   - `${tagPrefix}:${slug}`          — broad: busts all locales (create/delete)
+ *   - `${tagPrefix}:${slug}:${locale}` — narrow: busts just this locale
+ *
+ * `fn` still receives only the slug (the row is locale-independent; the page
+ * localizes the returned value). The locale only partitions the cache + tags,
+ * so an MT backfill that touches one locale no longer fans out to all 14.
+ */
+function cachedQueryPerSlugLocale<T>(
+  fn: (slug: string) => Promise<T>,
+  baseKey: string,
+  options: { revalidate?: number; tagPrefix?: string } = {},
+): (slug: string, locale: string) => Promise<T> {
+  if (!process.env.NEXT_RUNTIME) return cache((slug: string, _locale: string) => fn(slug));
+  return cache(async (slug: string, locale: string) => {
+    const prefix = options.tagPrefix ?? baseKey;
+    const wrapped = unstable_cache(
+      () => fn(slug),
+      [baseKey, slug, locale],
+      {
+        revalidate: options.revalidate ?? 86400,
+        tags: [`${prefix}:${slug}`, `${prefix}:${slug}:${locale}`],
+      },
+    );
+    return wrapped();
+  });
+}
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
   companyInfo,
@@ -1154,7 +1187,7 @@ export const getBlogPostsPaginatedFromDb = cache(
 );
 
 /** Fetch a single published blog post by slug, with related project if linked. */
-export const getBlogPostBySlugFromDb = cachedQueryPerSlug(
+export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
   async (slug: string): Promise<BlogPost | null> => {
     return safeQuery('getBlogPostBySlugFromDb', async () => {
     // Defensive SELECT — see 2026-05-26 PR #62 outage: when a Drizzle schema

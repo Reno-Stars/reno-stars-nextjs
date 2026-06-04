@@ -21,7 +21,7 @@ describe('listingCardChanged', () => {
     contentZh: '正文...',
     metaTitleEn: 'SEO title',
     seoKeywordsEn: 'kitchen, reno',
-    localizations: { title_ja: 'キッチン', content_ja: '本文...' },
+    localizations: { titleJa: 'キッチン', contentJa: '本文...', metaTitleJa: 'メタ' },
   };
 
   it('returns true when the previous row is unknown (fail-safe)', () => {
@@ -39,8 +39,14 @@ describe('listingCardChanged', () => {
     expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(false);
   });
 
-  it('returns false when only a non-card translation (content_ja) changes', () => {
-    const next = { ...baseBlog, localizations: { title_ja: 'キッチン', content_ja: 'DIFFERENT BODY' } };
+  it('returns false when only a non-card translation (contentJa) changes', () => {
+    const next = { ...baseBlog, localizations: { titleJa: 'キッチン', contentJa: 'DIFFERENT BODY', metaTitleJa: 'メタ' } };
+    expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(false);
+  });
+
+  it('returns false when only a non-card localized meta field (metaTitleJa) changes', () => {
+    // `metaTitleJa` starts with "meta", not "title"/"excerpt" — must NOT match.
+    const next = { ...baseBlog, localizations: { titleJa: 'キッチン', contentJa: '本文...', metaTitleJa: 'NEW META' } };
     expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(false);
   });
 
@@ -69,13 +75,13 @@ describe('listingCardChanged', () => {
     expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(true);
   });
 
-  it('returns true when a card translation (title_ja) changes', () => {
-    const next = { ...baseBlog, localizations: { title_ja: '新キッチン', content_ja: '本文...' } };
+  it('returns true when a card translation (titleJa) changes', () => {
+    const next = { ...baseBlog, localizations: { titleJa: '新キッチン', contentJa: '本文...', metaTitleJa: 'メタ' } };
     expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(true);
   });
 
-  it('returns true when a card translation is newly added', () => {
-    const next = { ...baseBlog, localizations: { title_ja: 'キッチン', content_ja: '本文...', title_ko: '주방' } };
+  it('returns true when a card translation is newly added (titleKo)', () => {
+    const next = { ...baseBlog, localizations: { titleJa: 'キッチン', contentJa: '本文...', metaTitleJa: 'メタ', titleKo: '주방' } };
     expect(listingCardChanged(baseBlog, next, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED)).toBe(true);
   });
 

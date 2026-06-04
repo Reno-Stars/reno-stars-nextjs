@@ -17,19 +17,26 @@ const BASE_URL = getBaseUrl();
 const INDEXNOW_KEY = 'deb16e016b38665b452c0ee3f58c1d15';
 
 /**
- * Revalidate the specific post across every locale, and (by default) the blog
- * list page too. Pass `includeIndex: false` when only the post body/meta
- * changed — the list cards are unaffected, so there's no reason to regenerate
- * the index across all 14 locales.
+ * Revalidate the post detail page and (by default) the blog list page.
+ *
+ * - `includeIndex: false` skips the list pages — pass when only the post
+ *   body/meta changed (the list cards are unaffected).
+ * - `locales` scopes the post-path revalidation to the locales whose rendered
+ *   content actually changed; defaults to all locales. The index, when
+ *   included, always covers all locales (a new/removed/retitled post shows on
+ *   every locale's list).
  */
 export function revalidateBlogPaths(
   slug?: string | null,
-  opts: { includeIndex?: boolean } = {},
+  opts: { includeIndex?: boolean; locales?: readonly string[] } = {},
 ): void {
   const includeIndex = opts.includeIndex ?? true;
-  for (const loc of locales) {
-    if (includeIndex) revalidatePath(`/${loc}/blog`);
-    if (slug) revalidatePath(`/${loc}/blog/${slug}`);
+  const postLocales = opts.locales ?? locales;
+  if (includeIndex) {
+    for (const loc of locales) revalidatePath(`/${loc}/blog`);
+  }
+  if (slug) {
+    for (const loc of postLocales) revalidatePath(`/${loc}/blog/${slug}`);
   }
 }
 
@@ -74,9 +81,12 @@ export async function pingSearchEngines(slug?: string | null): Promise<void> {
  */
 export function refreshBlogPost(
   slug?: string | null,
-  opts: { listingChanged?: boolean } = {},
+  opts: { listingChanged?: boolean; locales?: readonly string[] } = {},
 ): void {
-  revalidateBlogPaths(slug, { includeIndex: opts.listingChanged ?? true });
+  revalidateBlogPaths(slug, {
+    includeIndex: opts.listingChanged ?? true,
+    locales: opts.locales,
+  });
   // Don't await — we don't want to block the admin save flow on third-party
   // pings. Errors are logged inside pingSearchEngines.
   void pingSearchEngines(slug);
