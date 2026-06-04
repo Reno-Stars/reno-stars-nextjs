@@ -130,3 +130,20 @@ export const SITE_CARD_FIELDS = [
   'spaceTypeEn',
   'spaceTypeZh',
 ] as const;
+
+/**
+ * Service-area fields that appear OUTSIDE the city's own detail page — in the
+ * cross-page areas nav, the areas index, and `generateStaticParams` (`nameEn`/
+ * `nameZh` render as link text, `isActive` controls presence, `displayOrder`
+ * controls nav order). A change to any of these must bust the broad
+ * `service-areas` tag (refreshes every area page); everything else
+ * (description, content, highlights, meta) is detail-only and busts just
+ * `area:${slug}`. The `slug` is set at create time and never edited in the
+ * update form, so it's intentionally absent here.
+ */
+export const SERVICE_AREA_LIST_FIELDS = [
+  'nameEn',
+  'nameZh',
+  'isActive',
+  'displayOrder',
+] as const;

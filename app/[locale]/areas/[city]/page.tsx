@@ -8,7 +8,7 @@ import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/componen
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -282,8 +282,7 @@ export function getAreaH1Override(slug: string, locale: Locale): string | undefi
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, city } = await params;
-  const areas = await getServiceAreasFromDb();
-  const area = areas.find((a) => a.slug === city);
+  const area = await getServiceAreaBySlugFromDb(city);
 
   if (!area) {
     return { title: 'Area Not Found', robots: { index: false, follow: false } };
@@ -332,8 +331,14 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   // Resolve area first so we can fire all dependent queries in a single Promise.all.
-  const areas = await getServiceAreasFromDb();
-  const area = areas.find((a) => a.slug === city);
+  // `area` comes from the PER-SLUG query (tagged `area:${city}`) so a content
+  // edit to this city busts only this page; `areas` is the full list, still
+  // needed for the cross-area nav (`allAreas` below) and only busts on
+  // list-level changes (broad `service-areas` tag).
+  const [areas, area] = await Promise.all([
+    getServiceAreasFromDb(),
+    getServiceAreaBySlugFromDb(city),
+  ]);
 
   if (!area) {
     notFound();

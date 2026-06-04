@@ -10,6 +10,8 @@ import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { triggerDeploy } from '@/lib/deploy-hook';
+import { listingCardChanged, SERVICE_AREA_LIST_FIELDS } from '@/lib/admin/listing-cache';
+import { areaTag } from '@/lib/admin/area-invalidation';
 
 export async function createServiceArea(
   _prevState: { success?: boolean; error?: string },
@@ -179,12 +181,35 @@ export async function updateServiceArea(
       return { error: 'Display order must be a non-negative number.' };
     }
 
+    // Snapshot the list-visible fields + slug BEFORE the update so we can tell
+    // whether this edit needs the broad `service-areas` bust or just the
+    // narrow per-city one.
+    const before = await db
+      .select({
+        slug: serviceAreas.slug,
+        nameEn: serviceAreas.nameEn,
+        nameZh: serviceAreas.nameZh,
+        isActive: serviceAreas.isActive,
+        displayOrder: serviceAreas.displayOrder,
+      })
+      .from(serviceAreas)
+      .where(eq(serviceAreas.id, id))
+      .limit(1);
+    if (before.length === 0) return { error: 'Service area not found.' };
+
     const updated = await db.update(serviceAreas).set(data).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (updated.length === 0) return { error: 'Service area not found.' };
 
     revalidatePath('/admin/service-areas');
     triggerDeploy('service-areas');
-    updateTag('service-areas');
+    // Always refresh this city's own page via its narrow tag. Only bust the
+    // broad `service-areas` tag (which refreshes ALL ~180 area pages + the
+    // areas nav/index) when a list-visible field changed — not for a
+    // description / content / meta-only edit. (slug is not editable here.)
+    updateTag(areaTag(before[0].slug));
+    if (listingCardChanged(before[0], data, SERVICE_AREA_LIST_FIELDS)) {
+      updateTag('service-areas');
+    }
     return { success: true };
   } catch (error) {
     console.error('Failed to update service area:', error);
