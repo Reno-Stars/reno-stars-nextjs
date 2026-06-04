@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, locales, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
@@ -52,11 +52,14 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
   return out;
 }
 
-// Build-time prerender: EN slugs only. Other locales lazy-generate on first
-// request (Next.js dynamicParams=true default) and stay cached for 30d via
-// the page-level revalidate. Cuts ~107 × 9 = 963 unnecessary prerenders per
-// build, slashes Vercel build time + ISR-write spend, no SEO hit (search
-// engines trigger generation on first crawl, then cache).
+// Build-time prerender: ALL locales (changed 2026-06-04). Previously EN-only,
+// which made the other 13 locales lazy-generate on first request — and because
+// the sitemap advertises all 14 locales, bots crawled ~13 × (#posts) cold pages
+// that regenerated on every deploy. THAT was the dominant ISR-write cost
+// ($83.93/mo, 20.98M writes — not the edit-driven tag fan-out we chased in
+// #106/107/108). Prerendering every locale makes them build-time static and
+// CDN-served, so deploys + crawls no longer regenerate them. Trade: longer
+// build; gain: the lazy-non-EN regeneration writes go to ~0.
 //
 // Admin edits call `revalidatePath('/<locale>/blog/<slug>')` to bust the
 // cache instantly on content updates — the 30d TTL is the "no edit, no
@@ -65,7 +68,7 @@ export const revalidate = 2592000; // 30d
 
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
-  return posts.map((post) => ({ locale: 'en', slug: post.slug }));
+  return posts.flatMap((post) => locales.map((locale) => ({ locale, slug: post.slug })));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

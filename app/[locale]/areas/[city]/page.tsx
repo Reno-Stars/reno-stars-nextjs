@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, locales, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
@@ -16,14 +16,16 @@ interface PageProps {
 }
 
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate via
-// dynamicParams=true and cache for 7d. Admin edits call
-// `revalidatePath('/<locale>/areas/<city>')` to bust on edits.
+// Build-time prerender: ALL locales (changed 2026-06-04). EN-only previously
+// left the other 13 locales to lazy-generate + regenerate on every deploy as
+// bots crawled them (sitemap advertises all 14) — the dominant ISR-write cost.
+// Prerendering every locale makes them CDN-served static. Admin edits call
+// `revalidatePath('/<locale>/areas/<city>')` to bust on edits; 7d revalidate floor.
 export const revalidate = 604800; // 7d
 
 export async function generateStaticParams() {
   const areas = await getServiceAreasFromDb();
-  return areas.map((area) => ({ locale: 'en', city: area.slug }));
+  return areas.flatMap((area) => locales.map((locale) => ({ locale, city: area.slug })));
 }
 
 /**
