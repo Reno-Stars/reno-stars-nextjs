@@ -36,8 +36,12 @@ export async function generateStaticParams() {
  *  - First 80 chars of description carry the keyword + a concrete value
  *    (project count, insurance, warranty) and end with a soft CTA.
  *
- * These code overrides win over DB-stored meta_title/meta_description so the
- * fix can ship without DB writes.
+ * NOTE (2026-06-04): DB-stored meta now WINS over this map (see generateMetadata).
+ * These current values were migrated into `service_areas.meta_title_en /
+ * meta_description_en`, so area meta tuning happens in the DB (admin +
+ * /api/revalidate, NO deploy) instead of editing this file. This map is now a
+ * dormant fallback for any city not yet populated in the DB — do not edit it for
+ * routine SEO tuning; edit the DB row instead.
  */
 const enAreaOverrides: Record<string, { title: string; description: string }> = {
   // 2026-05-01 GSC retitle: 1,393 imp pos 50 with 0% CTR. Hub framing
@@ -300,13 +304,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const t = await getTranslations({ locale, namespace: 'metadata.area' });
 
-  // EN code overrides win over DB meta for the cities we're actively tuning.
+  // DB-stored meta wins — tunable in /admin and surfaced via /api/revalidate with
+  // NO deploy (ISR-cost work, 2026-06-04). The EN code map is a dormant fallback
+  // for cities not yet populated in the DB.
   const enOverride = locale === 'en' ? enAreaOverrides[city] : undefined;
-  const title = enOverride?.title
-    || localizedArea.metaTitle
+  const title = localizedArea.metaTitle
+    || enOverride?.title
     || t('title', { area: localizedArea.name });
-  const description = enOverride?.description
-    || localizedArea.metaDescription
+  const description = localizedArea.metaDescription
+    || enOverride?.description
     || localizedArea.description
     || t('description', { area: localizedArea.name });
 
