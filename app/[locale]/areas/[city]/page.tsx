@@ -60,10 +60,13 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // 2026-05-27 SEO trim: desc was 159 (truncates ~155); drops "Capitol Hill"
   // + trailing "5★ rated" (lives in title), keeps the 700+ project count +
   // verified budgets + Metrotown/Heights neighborhoods.
+  // 2026-06-04 SEO retune: "basement renovations burnaby" pos 8 / 237 imp.
+  // Added "Basement" to title to capture the basement query cluster.
+  // Updated desc with basement budget range (DB-verified Burnaby basement projects).
   burnaby: {
-    title: 'Burnaby Renovation Contractor | 700+ Projects, 5★ | Reno Stars',
+    title: 'Burnaby Renovation Contractor — Basement & Kitchen | Reno Stars',
     description:
-      'Burnaby renovation contractor — 700+ projects. Kitchens $30K–$40K, bathrooms $20K–$32K (real budgets). Metrotown, Heights. $5M insured.',
+      'Burnaby renovation contractor: kitchen $30K–$40K, bathroom $20K–$32K, basement $40K–$90K. 700+ projects, $5M insured. Metrotown, Brentwood, Heights.',
   },
   // 2026-05-01 GSC retitle: 1,658 imp pos 32 with 0% CTR. Hub framing.
   // 2026-05-15: also picking up "general contractor maple ridge" (29 imp
@@ -108,10 +111,12 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // 2026-05-21 SEO trim: title was 76 chars (truncates ~60), desc 175 (truncates ~155).
   // Keeps the 11-project trust signal and the bathroom/kitchen budgets; drops the
   // neighborhood list from the title and the "Free quote" tail from the desc.
+  // 2026-06-04 SEO retune: "bathroom renovation richmond" pos 13.1 / 448 imp.
+  // Title now leads with "Bathroom Renovation Richmond" — exact query match.
   richmond: {
-    title: 'Richmond Renovation Contractor | 11 Projects | Reno Stars',
+    title: 'Bathroom Renovation Richmond BC — Kitchen & Home | Reno Stars',
     description:
-      'Richmond renovation contractor — bathrooms $15K–$35K, kitchens $20K–$32K (11 real Richmond projects). Steveston, Brighouse, Terra Nova. $5M insured.',
+      'Bathroom renovation Richmond BC: $15K–$35K. Kitchen $20K–$32K. 11 real Richmond projects — Steveston, Brighouse, Terra Nova, Cambie. $5M insured.',
   },
   // 2026-05-15 GSC retune: page sat at pos 23.3 / 99 imp for 7d. Top
   // non-brand query is "reno surrey" (42 imp pos 7.1) — already near top,
@@ -151,10 +156,12 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   // 2026-05-21 SEO trim: title was 71 (truncates ~60), desc 169 (truncates ~155).
   // Title drops "Luxury Builds" qualifier; desc drops "renovation contractor"
   // prefix and the warranty tail to fit.
+  // 2026-06-04 SEO retune: "bathroom renovation west vancouver" pos 15.2 / 468 imp.
+  // Title now leads with exact query "Bathroom Renovation West Vancouver".
   'west-vancouver': {
-    title: 'West Vancouver Home & Bathroom Renovations | Reno Stars',
+    title: 'Bathroom Renovation West Vancouver — Kitchen & Home | Reno Stars',
     description:
-      'West Vancouver renovations — bathrooms (verified $57K–$60K), kitchens ($29K–$33K) and whole-house. Caulfeild, Dundarave, Ambleside. $5M insured.',
+      'Bathroom renovation West Vancouver: verified $57K–$60K projects. Kitchen ($29K–$33K), whole-house & suite. Caulfeild, Dundarave, Ambleside. $5M insured.',
   },
   'new-westminster': {
     title: 'New Westminster Renovations (2026) | Quay Condos | Reno Stars',
