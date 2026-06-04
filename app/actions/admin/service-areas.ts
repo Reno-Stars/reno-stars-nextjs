@@ -9,7 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
-import { triggerDeploy } from '@/lib/deploy-hook';
+import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, SERVICE_AREA_LIST_FIELDS } from '@/lib/admin/listing-cache';
 import { areaTag } from '@/lib/admin/area-invalidation';
 
@@ -77,8 +77,10 @@ export async function createServiceArea(
     });
 
     revalidatePath('/admin/service-areas');
-    triggerDeploy('service-areas');
     updateTag('service-areas');
+    // Area detail is tag-covered (getServiceAreaBySlugFromDb), but path-
+    // revalidate the new city page across locales too (handoff §5c/§6).
+    revalidatePathAllLocales(`/areas/${uniqueSlug}`);
   } catch (error) {
     console.error('Failed to create service area:', error);
     return { error: 'Failed to create service area.' };
@@ -102,7 +104,6 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
     const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (deleted.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
-    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {
@@ -131,7 +132,6 @@ export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error
     );
 
     revalidatePath('/admin/service-areas');
-    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {
@@ -201,12 +201,14 @@ export async function updateServiceArea(
     if (updated.length === 0) return { error: 'Service area not found.' };
 
     revalidatePath('/admin/service-areas');
-    triggerDeploy('service-areas');
     // Always refresh this city's own page via its narrow tag. Only bust the
     // broad `service-areas` tag (which refreshes ALL ~180 area pages + the
     // areas nav/index) when a list-visible field changed — not for a
     // description / content / meta-only edit. (slug is not editable here.)
     updateTag(areaTag(before[0].slug));
+    // Belt-and-suspenders: also revalidate the area path across locales
+    // (handoff §5c — area detail is tag-covered, but cheap to be safe).
+    revalidatePathAllLocales(`/areas/${before[0].slug}`);
     if (listingCardChanged(before[0], data, SERVICE_AREA_LIST_FIELDS)) {
       updateTag('service-areas');
     }
@@ -224,7 +226,6 @@ export async function toggleServiceAreaActive(id: string, current: boolean): Pro
     const updated = await db.update(serviceAreas).set({ isActive: !current, updatedAt: new Date() }).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
     if (updated.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
-    triggerDeploy('service-areas');
     updateTag('service-areas');
     return {};
   } catch (error) {
