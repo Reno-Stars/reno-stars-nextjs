@@ -1,4 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
+import { IntlErrorCode } from 'next-intl';
 import { locales, defaultLocale, type Locale } from './config';
 import { namespaces } from './namespaces';
 import { guideSections } from './guideSections';
@@ -50,8 +51,38 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = defaultLocale;
   }
 
+  const messages = await loadMessages(locale as Locale);
+  // EN is the source of truth for keys. Non-EN locales can lag on newly-added
+  // keys, and a single missing key must NOT throw — that hard-crashed the
+  // all-locale prerender build (`MISSING_MESSAGE: costGuidesSection (fa)`).
+  // Fall back to the EN string instead. Both message sets are cached, so the
+  // extra lookup costs nothing on warm requests.
+  const fallbackMessages =
+    locale === defaultLocale ? messages : await loadMessages(defaultLocale);
+
   return {
     locale,
-    messages: await loadMessages(locale as Locale),
+    messages,
+    // A missing translation is non-fatal — getMessageFallback serves EN below.
+    // Every other intl error (bad ICU syntax, format failure) stays fatal so
+    // real bugs still surface in dev and at build time.
+    onError(error) {
+      if (error.code === IntlErrorCode.MISSING_MESSAGE) return;
+      throw error;
+    },
+    getMessageFallback({ namespace, key }) {
+      const path = namespace ? `${namespace}.${key}` : key;
+      const enValue = path
+        .split('.')
+        .reduce<unknown>(
+          (node, part) =>
+            node && typeof node === 'object'
+              ? (node as Record<string, unknown>)[part]
+              : undefined,
+          fallbackMessages,
+        );
+      // EN string if we have it (ICU args still interpolate), else the key path.
+      return typeof enValue === 'string' ? enValue : path;
+    },
   };
 });

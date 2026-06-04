@@ -26,6 +26,10 @@
     "success": "شكرًا لك! لقد تم إرسال رسالتك بنجاح.",
     "successTitle": "تم إرسال الرسالة!",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
-    "responsePromise": "نقوم بالرد خلال 24 ساعة بتقدير مفصل."
+    "responsePromise": "نقوم بالرد خلال 24 ساعة بتقدير مفصل.",
+    "city": "مدينة",
+    "cityPlaceholder": "اختر مدينة",
+    "propertyType": "نوع العقار",
+    "propertyTypePlaceholder": "اختر نوع العقار"
   }
 }

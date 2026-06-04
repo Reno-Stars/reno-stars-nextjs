@@ -26,6 +26,10 @@
     "success": "Salamat! Matagumpay na naipadala ang iyong mensahe.",
     "successTitle": "Naipadala ang Mensahe!",
     "error": "May nangyaring mali. Subukan muli.",
-    "responsePromise": "Sumasagot kami sa loob ng 24 oras na may detalyadong estimate."
+    "responsePromise": "Sumasagot kami sa loob ng 24 oras na may detalyadong estimate.",
+    "city": "lungsod",
+    "cityPlaceholder": "Pumili ng lungsod",
+    "propertyType": "Uri ng Ari-arian",
+    "propertyTypePlaceholder": "Pumili ng uri ng property"
   }
 }
