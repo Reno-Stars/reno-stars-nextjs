@@ -26,6 +26,10 @@
     "success": "Merci! Votre message a été envoyé avec succès.",
     "successTitle": "Message envoyé !",
     "error": "Quelque chose s'est mal passé. Veuillez réessayer.",
-    "responsePromise": "Nous vous répondons sous 24 heures avec un devis détaillé."
+    "responsePromise": "Nous vous répondons sous 24 heures avec un devis détaillé.",
+    "city": "Ville",
+    "cityPlaceholder": "Sélectionnez une ville",
+    "propertyType": "Type de propriété",
+    "propertyTypePlaceholder": "Sélectionnez un type de propriété"
   }
 }

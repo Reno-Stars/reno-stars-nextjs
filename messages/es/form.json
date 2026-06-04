@@ -26,6 +26,10 @@
     "success": "¡Gracias! Su mensaje ha sido enviado.",
     "successTitle": "¡Mensaje enviado!",
     "error": "Algo salió mal. Por favor, inténtelo de nuevo.",
-    "responsePromise": "Respondemos en menos de 24 horas con una cotización detallada."
+    "responsePromise": "Respondemos en menos de 24 horas con una cotización detallada.",
+    "city": "Ciudad",
+    "cityPlaceholder": "Selecciona una ciudad",
+    "propertyType": "Tipo de propiedad",
+    "propertyTypePlaceholder": "Seleccione un tipo de propiedad"
   }
 }

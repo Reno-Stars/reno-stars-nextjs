@@ -53,6 +53,10 @@
     "designInspirations": "الهام‌بخش‌های طراحی",
     "designSubtitle": "ایده‌های زیبای بازسازی برای منزل خود را کشف کنید",
     "benefitsTitle": "چرا Reno Stars را انتخاب کنید",
-    "benefitsSubtitle": "مزایای همکاری با تیم حرفه‌ای ما"
+    "benefitsSubtitle": "مزایای همکاری با تیم حرفه‌ای ما",
+    "whatDoesRenoStarsDo": "Reno Stars چه می کند؟",
+    "renoStarsAnswerTemplate": "Reno Stars یک پیمانکار نوسازی مترو ونکوور است که در {year} تاسیس شده است. ما بازسازی آشپزخانه، حمام، زیرزمین و کل خانه را به طور کامل انجام می دهیم - طراحی تا پایان. بیمه 5 میلیون دلاری CGL، پوشش فعال WCB، و ضمانت کار تا 3 سال در هر پروژه.",
+    "servicesWeCover": "خدماتی که ما پوشش می دهیم",
+    "viewServiceLink": "مشاهده {service}"
   }
 }

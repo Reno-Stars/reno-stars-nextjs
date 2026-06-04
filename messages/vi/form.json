@@ -26,6 +26,10 @@
     "success": "Cảm ơn bạn! Tin nhắn của bạn đã được gửi thành công.",
     "successTitle": "Đã Gửi Tin Nhắn!",
     "error": "Có lỗi xảy ra. Vui lòng thử lại.",
-    "responsePromise": "Chúng tôi phản hồi trong vòng 24 giờ với ước tính chi tiết."
+    "responsePromise": "Chúng tôi phản hồi trong vòng 24 giờ với ước tính chi tiết.",
+    "city": "Thành phố",
+    "cityPlaceholder": "Chọn một thành phố",
+    "propertyType": "Loại tài sản",
+    "propertyTypePlaceholder": "Chọn loại tài sản"
   }
 }
