@@ -9,7 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
-import { triggerDeploy } from '@/lib/deploy-hook';
+import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, SITE_CARD_FIELDS } from '@/lib/admin/listing-cache';
 
 const MAX_EXTERNAL_PRODUCTS = 50;
@@ -134,9 +134,11 @@ export async function createSite(
     }
 
     revalidatePath('/admin/sites');
-    triggerDeploy('sites');
     updateTag('sites:listing');
     updateTag(`site:${data.slug}`);
+    // Sites render publicly at /projects/${slug}; revalidate that path across
+    // every locale (handoff §6 sites row).
+    revalidatePathAllLocales(`/projects/${data.slug}`);
   } catch (error) {
     console.error('Failed to create site:', error);
     return { error: 'Failed to create site.' };
@@ -252,10 +254,13 @@ export async function updateSite(
     ]);
 
     revalidatePath('/admin/sites');
-    triggerDeploy('sites');
-    // The detail page always refreshes via its narrow per-slug tag.
+    // Site detail uses the tagged getSiteBySlugFromDb, so the per-slug tag
+    // refreshes it; path-revalidate too (belt-and-suspenders, handoff §5c) and
+    // cover the old URL on rename.
     updateTag(`site:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
+    revalidatePathAllLocales(`/projects/${data.slug}`);
+    if (currentSlug && currentSlug !== data.slug) revalidatePathAllLocales(`/projects/${currentSlug}`);
     // The listing tag feeds the projects index + project detail (sites render
     // as projects). Only bust it when a card-visible field changed.
     if (listingCardChanged(currentSite[0], data, SITE_CARD_FIELDS)) {
@@ -283,11 +288,14 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
     // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
-    triggerDeploy('sites');
     updateTag('sites:listing');
     updateTag('projects:listing'); // child projects cascaded — list cache must refetch
     if (slug) updateTag(`site:${slug}`);
     for (const p of childProjects) updateTag(`project:${p.slug}`);
+    // The site + its cascaded child projects all render under /projects/, and
+    // project detail reads UNTAGGED data (handoff 5c#1) — revalidate each path.
+    if (slug) revalidatePathAllLocales(`/projects/${slug}`);
+    for (const p of childProjects) revalidatePathAllLocales(`/projects/${p.slug}`);
     return {};
   } catch (error) {
     console.error('Failed to delete site:', error);
@@ -324,9 +332,9 @@ async function toggleSiteField(
     }
 
     revalidatePath('/admin/sites');
-    triggerDeploy('sites');
     updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`site:${updated[0].slug}`);
+    if (updated[0]?.slug) revalidatePathAllLocales(`/projects/${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error(`Failed to toggle ${field}:`, error);

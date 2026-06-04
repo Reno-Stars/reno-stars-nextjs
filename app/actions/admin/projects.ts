@@ -19,7 +19,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
-import { triggerDeploy } from '@/lib/deploy-hook';
+import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, PROJECT_CARD_FIELDS } from '@/lib/admin/listing-cache';
 
 const MAX_SCOPES = 50;
@@ -249,10 +249,13 @@ export async function createProject(
     }
 
     revalidatePath('/admin/projects');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     updateTag(`project:${data.slug}`);
+    // The project detail page body + generateMetadata read UNTAGGED
+    // getProjectsFromDb (handoff 5c#1), so the per-slug tag can't refresh them —
+    // revalidate the detail path across every locale.
+    revalidatePathAllLocales(`/projects/${data.slug}`);
   } catch (error) {
     console.error('Failed to create project:', error);
     return { error: 'Failed to create project.' };
@@ -414,10 +417,13 @@ export async function updateProject(
     ]);
 
     revalidatePath('/admin/projects');
-    triggerDeploy('projects');
-    // The detail page always refreshes via its narrow per-slug tag.
     updateTag(`project:${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) updateTag(`project:${currentSlug}`);
+    // The detail page body + generateMetadata read UNTAGGED getProjectsFromDb
+    // (handoff 5c#1), so the per-slug tag above can't refresh them — revalidate
+    // the detail path across every locale. On rename, the old URL too.
+    revalidatePathAllLocales(`/projects/${data.slug}`);
+    if (currentSlug && currentSlug !== data.slug) revalidatePathAllLocales(`/projects/${currentSlug}`);
     // The listing tags feed the home page + projects index + project detail
     // (related-projects). Only bust them when a card-visible field changed —
     // not on meta/SEO, description, or dynamic-block edits.
@@ -443,10 +449,12 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     const slug = existing[0]?.slug;
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     if (slug) updateTag(`project:${slug}`);
+    // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1) — revalidate
+    // the deleted project's path so its page stops serving stale content.
+    if (slug) revalidatePathAllLocales(`/projects/${slug}`);
     return {};
   } catch (error) {
     console.error('Failed to delete project:', error);
@@ -463,10 +471,13 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
+    // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
+    // feature toggle changes the detail render (and visibility), so revalidate
+    // its path across every locale, not just the per-slug tag.
+    if (updated[0]?.slug) revalidatePathAllLocales(`/projects/${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error('Failed to toggle featured:', error);
@@ -491,10 +502,13 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
+    // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
+    // feature toggle changes the detail render (and visibility), so revalidate
+    // its path across every locale, not just the per-slug tag.
+    if (updated[0]?.slug) revalidatePathAllLocales(`/projects/${updated[0].slug}`);
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);
@@ -541,7 +555,6 @@ export async function moveProjectToSite(
       .where(eq(projects.id, projectId));
 
     revalidatePath('/admin/sites');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     return { success: true };
@@ -575,7 +588,6 @@ export async function reorderProjectsInSite(
     );
 
     revalidatePath('/admin/sites');
-    triggerDeploy('projects');
     updateTag('projects:listing');
     updateTag('sites:listing');
     return {};

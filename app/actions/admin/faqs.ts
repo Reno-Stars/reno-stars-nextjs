@@ -7,7 +7,6 @@ import { faqs } from '@/lib/db/schema';
 import { eq, inArray } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
-import { triggerDeploy } from '@/lib/deploy-hook';
 import { faqTag, faqAffectedTags, faqTagsForAreas } from '@/lib/admin/area-invalidation';
 
 function parseServiceAreaId(formData: FormData): string | null {
@@ -45,10 +44,12 @@ export async function createFaq(
     });
 
     revalidatePath('/admin/faqs');
-    triggerDeploy('faqs');
     // Bust only the surface that shows this FAQ: an area FAQ busts that city's
     // page (`faqs:area:${id}`); a global FAQ busts `faqs`.
     updateTag(faqTag(serviceAreaId));
+    // Also bust the homepage FAQ tag (handoff gap 5c#2): the homepage reads
+    // getFaqsFromDb (tag `faqs`), so this guarantees a FAQ change surfaces there.
+    updateTag('faqs');
   } catch (error) {
     console.error('Failed to create FAQ:', error);
     return { error: 'Failed to create FAQ.' };
@@ -84,8 +85,8 @@ export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: strin
     );
 
     revalidatePath('/admin/faqs');
-    triggerDeploy('faqs');
     for (const tag of faqTagsForAreas(affected.map((r: { serviceAreaId: string | null }) => r.serviceAreaId))) updateTag(tag);
+    updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
     return {};
   } catch (error) {
     console.error('Failed to reorder FAQs:', error);
@@ -133,8 +134,8 @@ export async function updateFaq(
     if (updated.length === 0) return { error: 'FAQ not found.' };
 
     revalidatePath('/admin/faqs');
-    triggerDeploy('faqs');
     for (const tag of faqAffectedTags(before[0]?.serviceAreaId, serviceAreaId)) updateTag(tag);
+    updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
     return { success: true };
   } catch (error) {
     console.error('Failed to update FAQ:', error);
@@ -149,8 +150,8 @@ export async function toggleFaqActive(id: string, current: boolean): Promise<{ e
     const updated = await db.update(faqs).set({ isActive: !current, updatedAt: new Date() }).where(eq(faqs.id, id)).returning({ id: faqs.id, serviceAreaId: faqs.serviceAreaId });
     if (updated.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
-    triggerDeploy('faqs');
     updateTag(faqTag(updated[0].serviceAreaId));
+    updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
     return {};
   } catch (error) {
     console.error('Failed to toggle FAQ active:', error);
@@ -165,8 +166,8 @@ export async function deleteFaq(id: string): Promise<{ error?: string }> {
     const deleted = await db.delete(faqs).where(eq(faqs.id, id)).returning({ id: faqs.id, serviceAreaId: faqs.serviceAreaId });
     if (deleted.length === 0) return { error: 'FAQ not found.' };
     revalidatePath('/admin/faqs');
-    triggerDeploy('faqs');
     updateTag(faqTag(deleted[0].serviceAreaId));
+    updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
     return {};
   } catch (error) {
     console.error('Failed to delete FAQ:', error);

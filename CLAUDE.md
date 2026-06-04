@@ -40,26 +40,32 @@ pnpm test:e2e             # Playwright headless
 
 ## Key Architecture Decisions
 
-- **Rendering: SSG + admin-triggered redeploy webhook (since 2026-05-04).**
-  Marketing pages are fully static — no ISR. Every URL is prerendered at
-  build time via `generateStaticParams`. Admin content edits fire
-  `triggerDeploy()` (lib/deploy-hook.ts) which calls Vercel's deploy hook;
-  Vercel queues a fresh build, new content is live in ~2-4 minutes. ISR
-  was removed from 36 page routes in commit 91d43e4 because the cost of
-  scheduled re-writes (~$8.53/mo Vercel ISR Writes line) exceeded the
-  benefit for a renovation marketing site where content updates run on a
-  weekly cadence. The deploy webhook URL must be set as
-  `VERCEL_DEPLOY_HOOK_URL` in Vercel production env vars (NOT preview/dev,
-  which should leave it unset). Sitemap.ts and feed.xml/route.ts retain
-  weekly ISR for crawler/RSS-subscriber freshness.
-  **Documented ISR exceptions (intentional, not drift):** the homepage
+- **Rendering: ISR-on-visit + targeted on-demand revalidation (since 2026-06-04).**
+  EN pages are prerendered at build time via `generateStaticParams`; the ~13k
+  non-EN locale pages render lazily on first visit (`dynamicParams=true`) and
+  detail routes carry `export const revalidate` so they refresh on a TTL floor.
+  **Admin content edits do NOT trigger a deploy** — each server action fires
+  *targeted* on-demand revalidation that touches only the pages the edit
+  changed: `updateTag(...)` for tagged global/listing/detail data and
+  `revalidatePathAllLocales('/projects/<slug>' | '/areas/<slug>')` (helper:
+  `lib/seo/revalidate-paths.ts`) for the project/site detail pages, which read
+  *untagged* `getProjectsFromDb` and so can only be refreshed by path. This
+  replaced the old `triggerDeploy()` sledgehammer (removed with
+  `lib/deploy-hook.ts` on 2026-06-04): every deploy wipes the entire ISR cache
+  and forced all ~13k non-EN pages to regenerate on the next crawl — the
+  dominant driver of the ~$84/mo ISR-Writes bill. Deploys now happen only on
+  real code pushes. The external `/api/revalidate` endpoint (Bearer
+  `REVALIDATE_SECRET`) gives the SEO agent the same per-page revalidation for
+  direct-DB edits. `VERCEL_DEPLOY_HOOK_URL` is no longer fired by app code
+  (leaving it set is harmless). Sitemap.ts and feed.xml/route.ts retain weekly
+  ISR for crawler/RSS-subscriber freshness.
+  **Documented ISR TTL floors (intentional, not drift):** the homepage
   (`app/[locale]/page.tsx`) and `/reviews/` (`app/[locale]/reviews/page.tsx`)
-  carry `export const revalidate = 86400` (daily ISR) — added 2026-05-29 so
-  new Google reviews + machine-translated review bodies (backfilled via
-  `pnpm reviews:cache`, free Google Translate per the SEO agent's §5.2)
-  auto-surface without a manual deploy. Daily (not hourly) keeps the regen
-  cost negligible (2 routes). Any NEW ISR additions beyond these must be
-  flagged against this SSG-default decision, not added silently.
+  carry `export const revalidate = 86400` (daily); blog 30d; projects/areas 7d.
+  These are the no-edit refresh floors — on an actual edit the page surfaces
+  immediately via the on-demand revalidation above. Any NEW build-time
+  prerender-all-locales change must be flagged against this ISR-on-visit
+  decision (it was tried 3× and rejected — see PR #115), not added silently.
 - **Locale prefix always:** Every URL includes `/en/` or `/zh/`.
 - **Proxy (replaces middleware):** `proxy.ts` handles i18n routing, admin auth, security headers.
 - **Lazy DB proxy:** `db` export uses a Proxy — safe to import at build time.
@@ -90,7 +96,8 @@ pnpm test:e2e             # Playwright headless
 | `EMAIL_FROM` / `EMAIL_TO` | No | Email sender/recipient (TO supports comma-separated list) |
 | `EMAIL_CC` | No | Comma-separated CC list. Defaults to `renostars.sylvia@gmail.com` so Sylvia sees new leads. Set to empty string to disable CC. |
 | `OPENAI_API_KEY` | No | AI content optimization |
-| `VERCEL_DEPLOY_HOOK_URL` | Prod-only | Vercel deploy hook URL — fired by admin actions to rebuild after content edits. Set in Vercel Production env only (leave preview/dev unset). |
+| `VERCEL_DEPLOY_HOOK_URL` | Unused | Legacy Vercel deploy-hook URL. No longer fired by app code as of 2026-06-04 (admin edits now use on-demand revalidation, not redeploy). Safe to leave set or remove. |
+| `REVALIDATE_SECRET` | Prod-only | Bearer token for `POST /api/revalidate` — lets the SEO agent revalidate specific pages after direct-DB edits without a deploy. |
 
 ## Known Issues
 

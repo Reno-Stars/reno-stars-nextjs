@@ -9,7 +9,6 @@ import { designs } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidUrl, validateTextLengths, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
-import { triggerDeploy } from '@/lib/deploy-hook';
 
 interface DesignItemData {
   imageUrl: string;
@@ -50,7 +49,6 @@ export async function createDesignItem(
     await db.insert(designs).values(result.data);
 
     revalidatePath('/admin/designs');
-    triggerDeploy('designs');
     updateTag('designs');
   } catch (error) {
     console.error('Failed to create design item:', error);
@@ -75,7 +73,6 @@ export async function updateDesignItem(
     if (updated.length === 0) return { error: 'Design item not found.' };
 
     revalidatePath('/admin/designs');
-    triggerDeploy('designs');
     updateTag('designs');
     return { success: true };
   } catch (error) {
@@ -91,7 +88,6 @@ export async function toggleDesignItemPublished(id: string, current: boolean): P
     const updated = await db.update(designs).set({ isPublished: !current }).where(eq(designs.id, id)).returning({ id: designs.id });
     if (updated.length === 0) return { error: 'Design item not found.' };
     revalidatePath('/admin/designs');
-    triggerDeploy('designs');
     updateTag('designs');
     return {};
   } catch (error) {
@@ -107,7 +103,6 @@ export async function deleteDesignItem(id: string): Promise<{ error?: string }> 
     const deleted = await db.delete(designs).where(eq(designs.id, id)).returning({ id: designs.id });
     if (deleted.length === 0) return { error: 'Design item not found.' };
     revalidatePath('/admin/designs');
-    triggerDeploy('designs');
     updateTag('designs');
     return {};
   } catch (error) {
@@ -137,7 +132,6 @@ export async function reorderDesignItems(
     );
 
     revalidatePath('/admin/designs');
-    triggerDeploy('designs');
     updateTag('designs');
     return {};
   } catch (error) {
