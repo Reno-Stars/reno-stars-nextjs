@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { locales } from '@/i18n/config';
 
 /**
@@ -100,8 +100,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
 
   // Dedupe + apply. revalidatePath/Tag are synchronous cache-mark operations.
+  // revalidateTag(tag, 'max') is the route-handler-safe API (updateTag is
+  // Server-Action-only and throws here). 'max' = invalidate immediately.
   for (const p of [...new Set(revalidatedPaths)]) revalidatePath(p);
-  for (const t of [...new Set(revalidatedTags)]) updateTag(t);
+  for (const t of [...new Set(revalidatedTags)]) revalidateTag(t, 'max');
 
   return NextResponse.json({
     revalidated: true,
