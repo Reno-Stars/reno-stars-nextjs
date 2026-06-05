@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { routing, locales, defaultLocale, type Locale } from './i18n/config';
+import { routing, locales, INACTIVE_LOCALES, defaultLocale, type Locale } from './i18n/config';
 import { verifyToken } from './lib/admin/auth';
 import { ASSET_ORIGIN, PROD_ORIGIN } from './lib/storage';
 
@@ -110,6 +110,21 @@ export default function proxy(request: NextRequest): NextResponse {
   // page is `noindex`). Skip locale routing for this path entirely.
   if (pathname === '/signup' || pathname === '/signup/') {
     return addSecurityHeaders(NextResponse.next());
+  }
+
+  // Inactive-locale prefixes (content kept in DB but not currently served — see
+  // ALL_LOCALES vs locales in i18n/config). STRIP the locale and 307-redirect to
+  // the English equivalent: /fr/areas/burnaby → /en/areas/burnaby. 307 (temporary,
+  // not 308) because the removal is provisional — Google keeps the long-tail URL
+  // parked for when the locale is re-enabled instead of consolidating it away.
+  // MUST run before the generic non-locale block below, which would otherwise
+  // PREPEND /en (→ /en/fr/areas/burnaby, a 404) instead of replacing the locale.
+  if (segments.length > 0 && INACTIVE_LOCALES.includes(segments[0] as Locale)) {
+    const rest = segments.slice(1).join('/');
+    const targetPath = rest ? `/en/${rest}/` : '/en/';
+    const target = new URL(targetPath, request.url);
+    target.search = request.nextUrl.search;
+    return addSecurityHeaders(NextResponse.redirect(target, 307));
   }
 
   // Redirect non-locale paths to /en/ with 308 (permanent) so Google consolidates
