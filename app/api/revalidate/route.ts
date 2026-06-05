@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { locales } from '@/i18n/config';
+import { db } from '@/lib/db';
+import { sql } from 'drizzle-orm';
 
 /**
  * On-demand revalidation endpoint — the cheap alternative to a full redeploy.
@@ -104,6 +106,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   // Server-Action-only and throws here). 'max' = invalidate immediately.
   for (const p of [...new Set(revalidatedPaths)]) revalidatePath(p);
   for (const t of [...new Set(revalidatedTags)]) revalidateTag(t, 'max');
+
+  // DIAGNOSTIC (2026-06-05, temporary): log every revalidation call to Neon so we
+  // can measure how much ISR write activity is edit-driven vs crawl-after-deploy.
+  // Awaited in try/catch so a logging failure never breaks revalidation. REMOVE
+  // once the cause is confirmed (drop table revalidation_log).
+  try {
+    const kind = (typeof body.type === 'string' && typeof body.slug === 'string')
+      ? 'type-slug'
+      : Array.isArray(body.tags) && body.tags.length ? 'tags'
+      : Array.isArray(body.paths) && body.paths.length ? 'paths' : 'other';
+    await db.execute(sql`INSERT INTO revalidation_log (kind, type, slug, tags, paths_count, ua)
+      VALUES (
+        ${kind},
+        ${typeof body.type === 'string' ? body.type : null},
+        ${typeof body.slug === 'string' ? body.slug : null},
+        ${JSON.stringify([...new Set(revalidatedTags)])}::jsonb,
+        ${[...new Set(revalidatedPaths)].length},
+        ${(req.headers.get('user-agent') ?? '').slice(0, 200)}
+      )`);
+  } catch { /* logging is best-effort */ }
 
   return NextResponse.json({
     revalidated: true,
