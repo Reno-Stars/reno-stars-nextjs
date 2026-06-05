@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { projectSites, projects, siteImagePairs, siteExternalProducts, SEO_META_TITLE_MAX, SEO_META_DESCRIPTION_MAX, SEO_FOCUS_KEYWORD_MAX } from '@/lib/db/schema';
@@ -134,7 +134,8 @@ export async function createSite(
     }
 
     revalidatePath('/admin/sites');
-    revalidatePathAllLocales('/projects'); // listing index (sites render under /projects)
+    updateTag('sites:listing');
+    updateTag(`site:${data.slug}`);
     // Sites render publicly at /projects/${slug}; revalidate that path across
     // every locale (handoff §6 sites row).
     revalidatePathAllLocales(`/projects/${data.slug}`);
@@ -256,12 +257,14 @@ export async function updateSite(
     // Site detail uses the tagged getSiteBySlugFromDb, so the per-slug tag
     // refreshes it; path-revalidate too (belt-and-suspenders, handoff §5c) and
     // cover the old URL on rename.
+    updateTag(`site:${data.slug}`);
+    if (currentSlug && currentSlug !== data.slug) updateTag(`site:${currentSlug}`);
     revalidatePathAllLocales(`/projects/${data.slug}`);
     if (currentSlug && currentSlug !== data.slug) revalidatePathAllLocales(`/projects/${currentSlug}`);
     // The listing tag feeds the projects index + project detail (sites render
     // as projects). Only bust it when a card-visible field changed.
     if (listingCardChanged(currentSite[0], data, SITE_CARD_FIELDS)) {
-      revalidatePathAllLocales('/projects'); // listing index (sites render under /projects)
+      updateTag('sites:listing');
     }
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
@@ -285,7 +288,10 @@ export async function deleteSite(id: string): Promise<{ error?: string }> {
     // Site deletion cascades to projects (which cascade to image pairs, scopes, external products)
     await db.delete(projectSites).where(eq(projectSites.id, id));
     revalidatePath('/admin/sites');
-    revalidatePathAllLocales('/projects'); // listing index (sites + cascaded child projects)
+    updateTag('sites:listing');
+    updateTag('projects:listing'); // child projects cascaded — list cache must refetch
+    if (slug) updateTag(`site:${slug}`);
+    for (const p of childProjects) updateTag(`project:${p.slug}`);
     // The site + its cascaded child projects all render under /projects/, and
     // project detail reads UNTAGGED data (handoff 5c#1) — revalidate each path.
     if (slug) revalidatePathAllLocales(`/projects/${slug}`);
@@ -326,7 +332,8 @@ async function toggleSiteField(
     }
 
     revalidatePath('/admin/sites');
-    revalidatePathAllLocales('/projects'); // listing index (sites render under /projects)
+    updateTag('sites:listing');
+    if (updated[0]?.slug) updateTag(`site:${updated[0].slug}`);
     if (updated[0]?.slug) revalidatePathAllLocales(`/projects/${updated[0].slug}`);
     return {};
   } catch (error) {

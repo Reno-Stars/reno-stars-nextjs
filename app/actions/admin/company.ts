@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePath, updateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { companyInfo } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -74,10 +74,7 @@ export async function updateCompanyInfo(
       console.error('S3 cleanup failed:', err);
     });
 
-    // Company info shows in the footer/nav (tag `nav:globals`, ≤24h TTL) and on
-    // /contact. Revalidate the contact page directly; the footer + other pages
-    // refresh on their TTL. (No broad tag — it over-invalidates the whole site.)
-    revalidatePathAllLocales('/contact');
+    updateTag('company');
     return { success: true };
   } catch (error) {
     console.error('Failed to update company info:', error);
