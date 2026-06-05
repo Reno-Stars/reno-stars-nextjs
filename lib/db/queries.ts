@@ -292,7 +292,7 @@ const COMPANY_FALLBACK: Company = (() => {
  * Stats (yearsExperience, teamSize, warranty, liabilityCoverage) come from
  * `lib/company-config.ts`, not the database.
  */
-export const getCompanyFromDb = cachedQuery(async (): Promise<Company> => {
+const fetchCompany = async (): Promise<Company> => {
   return safeQuery('getCompanyFromDb', async () => {
     const rows = await db.select().from(companyInfo).limit(1);
     const row = rows[0];
@@ -320,12 +320,18 @@ export const getCompanyFromDb = cachedQuery(async (): Promise<Company> => {
       },
     };
   }, COMPANY_FALLBACK);
-}, ['getCompanyFromDb'], { tags: ['company'] });
+};
+// Content-tagged: busted by company edits → updates feature pages (e.g. /contact).
+export const getCompanyFromDb = cachedQuery(fetchCompany, ['getCompanyFromDb'], { tags: ['company'] });
+// Nav-tagged: read ONLY by the global layout/footer. Decoupled from `company` so a
+// company edit no longer regenerates every page — refreshes on TTL (≤24h) or a
+// `nav:globals` bust. See ISR Phase 2 (2026-06-05). Same pattern for the 3 globals below.
+export const getCompanyForNav = cachedQuery(fetchCompany, ['getCompanyForNav'], { tags: ['nav:globals'] });
 
 /**
  * Fetch active social links ordered by display_order.
  */
-export const getSocialLinksFromDb = cachedQuery(async (): Promise<SocialLink[]> => {
+const fetchSocialLinks = async (): Promise<SocialLink[]> => {
   return safeQuery('getSocialLinksFromDb', async () => {
     const rows = await db
       .select()
@@ -339,12 +345,14 @@ export const getSocialLinksFromDb = cachedQuery(async (): Promise<SocialLink[]> 
       label: row.label ?? row.platform,
     }));
   }, []);
-}, ['getSocialLinksFromDb'], { tags: ['social-links'] });
+};
+export const getSocialLinksFromDb = cachedQuery(fetchSocialLinks, ['getSocialLinksFromDb'], { tags: ['social-links'] });
+export const getSocialLinksForNav = cachedQuery(fetchSocialLinks, ['getSocialLinksForNav'], { tags: ['nav:globals'] });
 
 /**
  * Fetch services from DB, mapped to the `Service` type with bilingual content.
  */
-export const getServicesFromDb = cachedQuery(async (): Promise<Service[]> => {
+const fetchServices = async (): Promise<Service[]> => {
   return safeQuery('getServicesFromDb', async () => {
   const rows = await db
     .select()
@@ -383,7 +391,9 @@ export const getServicesFromDb = cachedQuery(async (): Promise<Service[]> => {
     };
   });
   }, []);
-}, ['getServicesFromDb'], { tags: ['services'] });
+};
+export const getServicesFromDb = cachedQuery(fetchServices, ['getServicesFromDb'], { tags: ['services'] });
+export const getServicesForNav = cachedQuery(fetchServices, ['getServicesForNav'], { tags: ['nav:globals'] });
 
 /**
  * Fetch a slug → { en, zh } title map from the services table.
@@ -1039,7 +1049,7 @@ function mapServiceAreaRow(row: typeof serviceAreasTable.$inferSelect): ServiceA
   };
 }
 
-export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]> => {
+const fetchServiceAreas = async (): Promise<ServiceArea[]> => {
   return safeQuery('getServiceAreasFromDb', async () => {
     const rows = await db
       .select()
@@ -1049,7 +1059,9 @@ export const getServiceAreasFromDb = cachedQuery(async (): Promise<ServiceArea[]
 
     return rows.map(mapServiceAreaRow);
   }, []);
-}, ['getServiceAreasFromDb'], { tags: ['service-areas'] });
+};
+export const getServiceAreasFromDb = cachedQuery(fetchServiceAreas, ['getServiceAreasFromDb'], { tags: ['service-areas'] });
+export const getServiceAreasForNav = cachedQuery(fetchServiceAreas, ['getServiceAreasForNav'], { tags: ['nav:globals'] });
 
 /**
  * A single service area by slug, cached PER-SLUG. An area-page detail read
