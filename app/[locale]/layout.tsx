@@ -1,7 +1,8 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, type Locale, isRtl, PRERENDERED_LOCALES } from '@/i18n/config';
+import { connection } from 'next/server';
+import { locales, type Locale, isRtl, PRERENDERED_LOCALES, isCachedLocale } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import { Analytics } from '@vercel/analytics/next';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
@@ -43,6 +44,16 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
+
+  // Long-tail locales (not in CACHED_LOCALES) render DYNAMICALLY — calling a
+  // dynamic API here opts the whole route subtree out of the ISR/Full-Route
+  // Cache, so these pages SSR per request and write NOTHING to the ISR cache.
+  // This stops the ~13k-page non-EN surface from churning the cache (the
+  // dominant ISR-Write cost). Cached locales (en/zh/zh-Hant/ko) skip this and
+  // keep ISR. Build/prerender is unaffected — these locales were never built.
+  if (!isCachedLocale(locale)) {
+    await connection();
+  }
 
   const [messages, t, company, socialLinks, services, areas, googleReviews] = await Promise.all([
     getMessages(),
