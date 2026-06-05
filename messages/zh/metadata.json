@@ -37,20 +37,20 @@
       "description": "探索我们在温哥华和低陆平原的{category}改造项目。查看前后照片和设计灵感。"
     },
     "projectDetail": {
-      "titleWithLocation": "{城市}的{标题} |Reno Stars"
+      "titleWithLocation": "{title}的{city} |Reno Stars"
     },
     "serviceLocation": {
-      "title": "{区域}的{服务} |Reno Stars",
-      "titleWithTagline": "{区域}的{服务} – {标语} |Reno Stars",
-      "description": "Reno Stars在{区域}提供专家{服务}。 {年}+ 年经验、500 万美元 CGL 保险、有效的 WCB 保险、长达 3 年的保修。今天免费报价。"
+      "title": "{service}的{area} |Reno Stars",
+      "titleWithTagline": "{service}的{area} – {tagline} |Reno Stars",
+      "description": "Reno Stars在{service}提供专家{area}。 {years}+ 年经验、500 万美元 CGL 保险、有效的 WCB 保险、长达 3 年的保修。今天免费报价。"
     },
     "areas": {
       "title": "您附近的装修 | 17 个大温哥华地区 |Reno Stars",
       "description": "Reno Stars 为大温哥华地区和菲沙河谷的 17 个社区提供服务。查找您所在城市的装修服务并获得免费报价。"
     },
     "area": {
-      "title": "{地区} 的装修承包商 |厨房和浴室 |Reno Stars",
-      "description": "{地区}专业装修服务。厨房、卫生间、全屋翻新。联系我们获取免费报价。"
+      "title": "{area} 的装修承包商 |厨房和浴室 |Reno Stars",
+      "description": "{area}专业装修服务。厨房、卫生间、全屋翻新。联系我们获取免费报价。"
     },
     "thankYou": {
       "title": "谢谢你|Reno Stars",

@@ -2,7 +2,7 @@
   "metadata": {
     "home": {
       "title": "バンクーバーのリノベーション |キッチン＆バス 5つ星 |Reno Stars",
-      "description": "バンクーバーの信頼できるリノベーションおよび改造請負業者 — {年} 以上、700 以上のプロジェクト、5 つ星の Google、500 万ドルの保険、3 年間の保証。キッチン、バスルーム、家全体。 24時間お見積り無料。"
+      "description": "バンクーバーの信頼できるリノベーションおよび改造請負業者 — {years} 以上、700 以上のプロジェクト、5 つ星の Google、500 万ドルの保険、3 年間の保証。キッチン、バスルーム、家全体。 24時間お見積り無料。"
     },
     "services": {
       "title": "バンクーバーの改修サービス — 500 万ドルの保険付き |Reno Stars",
@@ -40,17 +40,17 @@
       "titleWithLocation": "{city} の {title} |Reno Stars"
     },
     "serviceLocation": {
-      "title": "{エリア}の{サービス} |Reno Stars",
-      "titleWithTagline": "{エリア} の {サービス} – {タグライン} |Reno Stars",
-      "description": "Reno Stars による {エリア} の専門家 {サービス}。 {年} 年以上の経験、500 万ドルの CGL 保険、有効な WCB 補償、最大 3 年間の保証。今すぐ無料お見積り。"
+      "title": "{service}の{area} |Reno Stars",
+      "titleWithTagline": "{service} の {area} – {tagline} |Reno Stars",
+      "description": "Reno Stars による {service} の専門家 {area}。 {years} 年以上の経験、500 万ドルの CGL 保険、有効な WCB 補償、最大 3 年間の保証。今すぐ無料お見積り。"
     },
     "areas": {
       "title": "お近くのリノベーション | 17 のバンクーバー都市圏 |Reno Stars",
       "description": "Reno Starsは、メトロ バンクーバーとフレイザー バレーの 17 のコミュニティにサービスを提供しています。あなたの街のリノベーションサービスを見つけて、無料の見積もりを入手してください。"
     },
     "area": {
-      "title": "{エリア}のリフォーム請負業者 |キッチン＆バスルーム |Reno Stars",
-      "description": "{エリア} のプロフェッショナルなリノベーション サービス。キッチン、バスルーム、家全体のリノベーション。無料お見積りについてはお問い合わせください。"
+      "title": "{area}のリフォーム請負業者 |キッチン＆バスルーム |Reno Stars",
+      "description": "{area} のプロフェッショナルなリノベーション サービス。キッチン、バスルーム、家全体のリノベーション。無料お見積りについてはお問い合わせください。"
     },
     "thankYou": {
       "title": "ありがとう |Reno Stars",

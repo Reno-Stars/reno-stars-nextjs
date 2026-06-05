@@ -4,7 +4,7 @@
       "title": "装修服务工作流程：5 个步骤",
       "subtitle": "从咨询到完成",
       "googleReviews": "谷歌评论",
-      "stepLabel": "步骤 {步数}"
+      "stepLabel": "步骤 {stepNum}"
     },
     "downloadPoster": "下载PNG",
     "downloadPdf": "下载PDF",

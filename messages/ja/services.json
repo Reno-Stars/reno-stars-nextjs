@@ -32,7 +32,7 @@
     },
     "hubTitle": "当社のサービス",
     "hubSubtitle": "あらゆる空間に対応するプロフェッショナルなリノベーション ソリューション",
-    "getQuoteForService": "{サービス} の見積もりを取得する",
+    "getQuoteForService": "{service} の見積もりを取得する",
     "realtor": {
       "title": "不動産業者への相談",
       "shortTitle": "不動産業者"

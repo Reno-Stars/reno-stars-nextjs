@@ -4,7 +4,7 @@
       "title": "リフォームサービスのワークフロー: 5 つのステップ",
       "subtitle": "ご相談から完成まで",
       "googleReviews": "Googleのレビュー",
-      "stepLabel": "ステップ {ステップ番号}"
+      "stepLabel": "ステップ {stepNum}"
     },
     "downloadPoster": "PNGをダウンロード",
     "downloadPdf": "PDFをダウンロード",

@@ -8,7 +8,7 @@
     "budget": "بودجه",
     "allBudgets": "همه بودجه‌ها",
     "showing": "نمایش",
-    "projects": "{count, plural, one {پروژه} other {پروژه}}",
+    "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "حذف فیلترها",
     "browseByCategory": "مرور بر اساس دسته‌بندی",
     "swipeToSeeMore": "برای مشاهده بیشتر بکشید ←",

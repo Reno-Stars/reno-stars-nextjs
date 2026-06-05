@@ -8,7 +8,7 @@
     "budget": "ਬਜਟ",
     "allBudgets": "ਸਾਰੇ ਬਜਟ",
     "showing": "ਦਿਖਾਈ ਜਾ ਰਹੀ",
-    "projects": "{count, plural, one {ਪ੍ਰੋਜੈਕਟ} other {ਪ੍ਰੋਜੈਕਟ}}",
+    "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ",
     "browseByCategory": "ਸ਼੍ਰੇਣੀ ਅਨੁਸਾਰ ਵੇਖੋ",
     "swipeToSeeMore": "ਹੋਰ ਦੇਖਣ ਲਈ ਸਵਾਈਪ ਕਰੋ →",

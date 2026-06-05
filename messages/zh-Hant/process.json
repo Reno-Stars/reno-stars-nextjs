@@ -4,7 +4,7 @@
       "title": "裝修服務工作流程：5 個步驟",
       "subtitle": "從諮詢到完成",
       "googleReviews": "谷歌評論",
-      "stepLabel": "步驟 {步數}"
+      "stepLabel": "步驟 {stepNum}"
     },
     "downloadPoster": "下載PNG",
     "downloadPdf": "下載PDF",

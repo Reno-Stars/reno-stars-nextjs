@@ -2,7 +2,7 @@
   "metadata": {
     "home": {
       "title": "밴쿠버 리노베이션 | 주방 & 욕실 5★ | Reno Stars",
-      "description": "신뢰할 수 있는 밴쿠버 개조 및 리모델링 계약자 — {년}년 이상, 700개 이상의 프로젝트, 별 5개 Google, $5M 보험, 3년 보증. 주방, 욕실, 집 전체. 24시간 무료 견적."
+      "description": "신뢰할 수 있는 밴쿠버 개조 및 리모델링 계약자 — {years}년 이상, 700개 이상의 프로젝트, 별 5개 Google, $5M 보험, 3년 보증. 주방, 욕실, 집 전체. 24시간 무료 견적."
     },
     "services": {
       "title": "밴쿠버 리노베이션 서비스 - 500만 달러 보장 | Reno Stars",
@@ -14,7 +14,7 @@
     },
     "projectsBudget": {
       "title": "{tier} 혁신 프로젝트 밴쿠버 | Reno Stars",
-      "description": "메트로 밴쿠버 전역의 실제 {계층} 개조 프로젝트 — 실제 비용, 전후 사진 및 일정. 부엌, 욕실, 지하실 또는 집 전체로 필터링하세요."
+      "description": "메트로 밴쿠버 전역의 실제 {tier} 개조 프로젝트 — 실제 비용, 전후 사진 및 일정. 부엌, 욕실, 지하실 또는 집 전체로 필터링하세요."
     },
     "contact": {
       "title": "Reno Stars에 문의하세요 - 무료 견적 | 밴쿠버 778-960-7999",
@@ -33,16 +33,16 @@
       "description": "100개 이상의 실제 메트로 밴쿠버 프로젝트에서 혁신 설계 아이디어를 찾아보세요. 실제 비용으로 주방, 욕실, 지하실 및 집 전체 영감을 얻으세요."
     },
     "projectCategory": {
-      "title": "{카테고리} 혁신 프로젝트 | Reno Stars스 밴쿠버",
-      "description": "밴쿠버와 Lower Mainland 전역의 {카테고리} 개조 프로젝트를 살펴보세요. 전후 사진을 보고 디자인 영감을 받으세요."
+      "title": "{category} 혁신 프로젝트 | Reno Stars스 밴쿠버",
+      "description": "밴쿠버와 Lower Mainland 전역의 {category} 개조 프로젝트를 살펴보세요. 전후 사진을 보고 디자인 영감을 받으세요."
     },
     "projectDetail": {
       "titleWithLocation": "{city}의 {title} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{area}의 {서비스} | Reno Stars",
+      "title": "{area}의 {area} | Reno Stars",
       "titleWithTagline": "{area}의 {service} – {tagline} | Reno Stars",
-      "description": "Reno Stars의 {area} 지역 전문가 {service}. {년}년 이상의 경험, $5M CGL 보험, 활성 WCB 보장, 최대 3년 보증. 오늘 무료 견적을 받으세요."
+      "description": "Reno Stars의 {area} 지역 전문가 {service}. {years}년 이상의 경험, $5M CGL 보험, 활성 WCB 보장, 최대 3년 보증. 오늘 무료 견적을 받으세요."
     },
     "areas": {
       "title": "가까운 혁신 | 17개 메트로 밴쿠버 지역 | Reno Stars",
