@@ -37,20 +37,20 @@
       "description": "探索我們在溫哥華和低陸平原的{category}改造專案。查看前後照片和設計靈感。"
     },
     "projectDetail": {
-      "titleWithLocation": "{城市}的{標題} |Reno Stars"
+      "titleWithLocation": "{title}的{city} |Reno Stars"
     },
     "serviceLocation": {
-      "title": "{區域}的{服務} |Reno Stars",
-      "titleWithTagline": "{區域}的{服務} – {標語} |Reno Stars",
-      "description": "Reno Stars在{區域}提供專家{服務}。 {年}+ 年經驗、500 萬美元 CGL 保險、有效的 WCB 保險、長達 3 年的保固。今天免費報價。"
+      "title": "{service}的{area} |Reno Stars",
+      "titleWithTagline": "{service}的{area} – {tagline} |Reno Stars",
+      "description": "Reno Stars在{service}提供專家{area}。 {years}+ 年經驗、500 萬美元 CGL 保險、有效的 WCB 保險、長達 3 年的保固。今天免費報價。"
     },
     "areas": {
       "title": "您附近的裝潢 | 17 個大溫哥華地區 |Reno Stars",
       "description": "Reno Stars 為大溫哥華地區和弗雷澤河谷的 17 個社區提供服務。尋找您所在城市的裝修服務並獲得免費報價。"
     },
     "area": {
-      "title": "{地區} 的裝修承包商 |廚房和浴室 |Reno Stars",
-      "description": "{地區}專業裝修服務。廚房、衛浴、全屋翻新。聯絡我們以取得免費報價。"
+      "title": "{area} 的裝修承包商 |廚房和浴室 |Reno Stars",
+      "description": "{area}專業裝修服務。廚房、衛浴、全屋翻新。聯絡我們以取得免費報價。"
     },
     "thankYou": {
       "title": "謝謝你|Reno Stars",

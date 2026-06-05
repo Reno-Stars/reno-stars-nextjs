@@ -8,7 +8,7 @@
     "budget": "Бюджет",
     "allBudgets": "Все бюджеты",
     "showing": "Показаны",
-    "projects": "{count, plural, one {проект} other {проекта/ов}}",
+    "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Очистить фильтры",
     "browseByCategory": "Просмотр по категориям",
     "swipeToSeeMore": "Листайте, чтобы увидеть больше →",

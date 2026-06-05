@@ -8,7 +8,7 @@
     "budget": "Ngân Sách",
     "allBudgets": "Tất Cả Mức Ngân Sách",
     "showing": "Đang hiển thị",
-    "projects": "{count, plural, one {dự án} other {dự án}}",
+    "projects": "{count, plural, one {project} other {projects}}",
     "clearAll": "Xóa Bộ Lọc",
     "browseByCategory": "Duyệt Theo Danh Mục",
     "swipeToSeeMore": "Vuốt để xem thêm →",

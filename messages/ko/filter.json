@@ -8,7 +8,7 @@
     "budget": "예산",
     "allBudgets": "모든 예산",
     "showing": "전시",
-    "projects": "{개수, 복수형, 하나의 {프로젝트} 기타 {프로젝트}}",
+    "projects": "{개수, 복수형, 하나의 {project} 기타 {projects}}",
     "clearAll": "필터 지우기",
     "browseByCategory": "카테고리별로 찾아보기",
     "swipeToSeeMore": "더 보려면 스와이프하세요 →",

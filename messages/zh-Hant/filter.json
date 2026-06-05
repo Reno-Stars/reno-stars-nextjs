@@ -8,7 +8,7 @@
     "budget": "預算",
     "allBudgets": "所有預算",
     "showing": "顯示中",
-    "projects": "{計數，複數，一個 {項目} 其他 {項目}}",
+    "projects": "{計數，複數，一個 {project} 其他 {projects}}",
     "clearAll": "清除過濾器",
     "browseByCategory": "按類別瀏覽",
     "swipeToSeeMore": "左右滑動看更多→",

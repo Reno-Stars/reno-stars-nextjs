@@ -8,7 +8,7 @@
     "budget": "预算",
     "allBudgets": "所有预算",
     "showing": "显示中",
-    "projects": "{计数，复数，一个 {项目} 其他 {项目}}",
+    "projects": "{计数，复数，一个 {project} 其他 {projects}}",
     "clearAll": "清除过滤器",
     "browseByCategory": "按类别浏览",
     "swipeToSeeMore": "左右滑动查看更多→",

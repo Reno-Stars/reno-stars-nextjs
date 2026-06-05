@@ -40,7 +40,7 @@
     "noImages": "沒有可用的圖像",
     "viewFullscreen": "全螢幕檢視",
     "aboutService": "關於我們的{service}服務",
-    "serviceInCity": "{城市}的{服務}"
+    "serviceInCity": "{service}的{city}"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

@@ -49,7 +49,7 @@
     "sendUsMessage": "给我们留言",
     "contactInfo": "联系信息",
     "quickLinks": "快速链接",
-    "servingAreas": "以卓越和奉献精神服务{领域}",
+    "servingAreas": "以卓越和奉献精神服务{areas}",
     "designInspirations": "设计灵感",
     "designSubtitle": "为您的家探索美丽的装修创意",
     "benefitsTitle": "为什么选择Reno Stars",
@@ -57,7 +57,7 @@
     "whatDoesRenoStarsDo": "Reno Stars是做什么的？",
     "renoStarsAnswerTemplate": "Reno Stars 是一家于 {year} 成立的大温哥华地区装修承包商。我们从设计到完成，全程处理厨房、浴室、地下室和整个家庭的装修。每个项目均享有 500 万美元的 CGL 保险、有效的 WCB 保险以及长达 3 年的工艺保修。",
     "servicesWeCover": "我们涵盖的服务",
-    "viewServiceLink": "查看{服务}"
+    "viewServiceLink": "查看{service}"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

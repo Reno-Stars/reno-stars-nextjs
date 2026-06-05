@@ -49,15 +49,15 @@
     "sendUsMessage": "メッセージを送ってください",
     "contactInfo": "連絡先",
     "quickLinks": "クイックリンク",
-    "servingAreas": "卓越性と献身をもって {エリア} にサービスを提供する",
+    "servingAreas": "卓越性と献身をもって {areas} にサービスを提供する",
     "designInspirations": "デザインのインスピレーション",
     "designSubtitle": "あなたの家のための美しいリノベーションのアイデアを探索してください",
     "benefitsTitle": "Reno Starsを選ぶ理由",
     "benefitsSubtitle": "当社の専門チームと協力する利点",
     "whatDoesRenoStarsDo": "Reno Starsは何をするのですか？",
-    "renoStarsAnswerTemplate": "Reno Stars は、{年} に設立されたメトロ バンクーバーの改修請負業者です。当社は、キッチン、バスルーム、地下室、家全体の改修を設計から完成までエンドツーエンドで対応します。 500 万ドルの CGL 保険、有効な WCB 補償、およびすべてのプロジェクトに対する最大 3 年間の仕上がり保証。",
+    "renoStarsAnswerTemplate": "Reno Stars は、{year} に設立されたメトロ バンクーバーの改修請負業者です。当社は、キッチン、バスルーム、地下室、家全体の改修を設計から完成までエンドツーエンドで対応します。 500 万ドルの CGL 保険、有効な WCB 補償、およびすべてのプロジェクトに対する最大 3 年間の仕上がり保証。",
     "servicesWeCover": "私たちがカバーするサービス",
-    "viewServiceLink": "{サービス}を表示する"
+    "viewServiceLink": "{service}を表示する"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",
