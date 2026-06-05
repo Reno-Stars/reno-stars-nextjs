@@ -44,19 +44,6 @@ pnpm test:e2e             # Playwright headless
   EN pages are prerendered at build time via `generateStaticParams`; the ~13k
   non-EN locale pages render lazily on first visit (`dynamicParams=true`) and
   detail routes carry `export const revalidate` so they refresh on a TTL floor.
-  **Long-tail-locale detail pages render dynamically (since 2026-06-05).** The
-  three high-volume detail routes (`areas/[city]`, `projects/[slug]`,
-  `blog/[slug]`) call `optOutISRForLongTailLocale(locale)`
-  (`lib/seo/dynamic-locale.ts`): cached locales (`CACHED_LOCALES` =
-  en/zh/zh-Hant/ko, ~86.5% of GSC clicks) keep ISR; the other 10 locales touch
-  `connection()` → SSR per request, **zero ISR writes**. This kills the eviction
-  churn from the ~5k+ long-tail detail pages (the proven top ISR-Write routes).
-  Those three routes therefore **no longer export `revalidate`** — a dynamic API
-  on an ISR (`revalidate`) route throws `DYNAMIC_SERVER_USAGE` on Vercel's
-  background regen (PR #129/#131). They surface edits purely via on-demand
-  revalidation (below), which was already their primary path. Homepage,
-  `/reviews/`, indexes, and static pages are untouched (tiny surface, keep ISR +
-  their daily review-freshness floor).
   **Admin content edits do NOT trigger a deploy** — each server action fires
   *targeted* on-demand revalidation that touches only the pages the edit
   changed: `updateTag(...)` for tagged global/listing/detail data and
@@ -74,9 +61,7 @@ pnpm test:e2e             # Playwright headless
   ISR for crawler/RSS-subscriber freshness.
   **Documented ISR TTL floors (intentional, not drift):** the homepage
   (`app/[locale]/page.tsx`) and `/reviews/` (`app/[locale]/reviews/page.tsx`)
-  carry `export const revalidate = 86400` (daily). The detail routes
-  (areas/projects/blog) **no longer carry `revalidate`** (removed 2026-06-05 for
-  the long-tail-dynamic change above) — they refresh on-demand only.
+  carry `export const revalidate = 86400` (daily); blog 30d; projects/areas 7d.
   These are the no-edit refresh floors — on an actual edit the page surfaces
   immediately via the on-demand revalidation above. Any NEW build-time
   prerender-all-locales change must be flagged against this ISR-on-visit
