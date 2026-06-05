@@ -13,20 +13,20 @@ import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLo
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { optOutISRForLongTailLocale } from '@/lib/seo/dynamic-locale';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate on first
-// request via dynamicParams=true. Saves ~9× the prerender count for projects,
-// sites, and categories. SEO unaffected — crawlers trigger generation on
-// first hit and the page is cached for 7d.
-//
-// Admin edits call `revalidatePath('/<locale>/projects/<slug>')` to bust on
-// content updates — the 7d TTL is the "no edit, no traffic" floor.
-export const revalidate = 604800; // 7d
+// Build-time prerender: EN only (PRERENDERED_LOCALES). Cached locales
+// (en/zh/zh-Hant/ko) lazy-generate + ISR-cache; long-tail locales render
+// DYNAMICALLY via optOutISRForLongTailLocale (no ISR write). NO
+// `export const revalidate` here — a dynamic API on an ISR route throws
+// DYNAMIC_SERVER_USAGE (PR #129). Edits surface via on-demand revalidation:
+// admin actions fire `revalidatePathAllLocales('/projects/<slug>')` +
+// `/api/revalidate {type:'project'}`.
 
 export async function generateStaticParams() {
   const [projects, sites, categorySlugs] = await Promise.all([
@@ -178,6 +178,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  await optOutISRForLongTailLocale(locale); // long-tail locales SSR, no ISR write
 
   const [t, company, allProjects, googleReviews, serviceTypeMap, categories] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
