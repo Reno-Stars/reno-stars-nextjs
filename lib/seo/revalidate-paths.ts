@@ -20,20 +20,3 @@ import { locales } from '@/i18n/config';
 export function revalidatePathAllLocales(relPath: string): void {
   for (const loc of locales) revalidatePath(`/${loc}${relPath}`);
 }
-
-/**
- * Revalidate several relative paths across every locale.
- *
- * Use this in admin server actions INSTEAD of `updateTag(...)`: on this Next 16 /
- * Vercel setup tag revalidation OVER-INVALIDATES (busting one tag regenerates
- * unrelated pages — ~a full-cache wipe), whereas `revalidatePath` is surgical.
- * So name the exact pages an edit touches (its detail page + the listing
- * index/feature page); footer/global blocks and long-tail cross-links refresh on
- * their own ISR TTL (≤24h, approved) rather than being force-regenerated. Empty
- * / falsy entries are skipped so callers can pass conditional paths inline.
- */
-export function revalidatePathsAllLocales(...relPaths: Array<string | null | undefined | false>): void {
-  for (const rel of relPaths) {
-    if (rel) for (const loc of locales) revalidatePath(`/${loc}${rel}`);
-  }
-}

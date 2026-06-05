@@ -30,20 +30,15 @@ import { locales } from '@/i18n/config';
  * `type` ∈ blog | project | area  (maps to /blog, /projects, /areas).
  */
 
-// Per content type: the URL base for building all-locale paths.
-//
-// We deliberately revalidate by PATH only (no cache tags). On this Next 16 /
-// Vercel setup `revalidateTag` OVER-INVALIDATES: busting one tag regenerates
-// pages that don't use it — empirically a `services` tag bust regenerated a
-// project detail page that reads no services data — i.e. ~a full-cache wipe per
-// call. That broad regeneration was the dominant ISR-write cost. `revalidatePath`
-// is surgical (only the given path regenerates; verified an unrelated page stayed
-// HIT through a port-moody path bust). So {type,slug} expands to the exact
-// all-locale detail + index paths and fires ZERO tags.
-const TYPE_CONFIG: Record<string, { base: string }> = {
-  blog: { base: 'blog' },
-  project: { base: 'projects' },
-  area: { base: 'areas' },
+// Per content type: the URL base + the data-cache tags an edit must bust.
+// revalidatePath fixes the route cache; these tags fix the `unstable_cache`
+// data entries the page reads (else a re-render serves stale data). These
+// mirror what the admin server actions fire (blog-revalidate.ts, projects.ts,
+// service-areas.ts) so the SEO agent's direct-DB edits get the same coverage.
+const TYPE_CONFIG: Record<string, { base: string; tags: (slug: string) => string[] }> = {
+  blog: { base: 'blog', tags: (slug) => [`blog:${slug}`, 'blog:listing'] },
+  project: { base: 'projects', tags: (slug) => [`project:${slug}`, 'projects:listing', 'sites:listing'] },
+  area: { base: 'areas', tags: (slug) => [`area:${slug}`] },
 };
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -68,9 +63,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const revalidatedPaths: string[] = [];
   const revalidatedTags: string[] = [];
 
-  // 1. Convenience: { type, slug } -> all-locale detail + index PATHS (no tags;
-  //    see TYPE_CONFIG note). The homepage's gallery/sections refresh on their
-  //    own daily ISR TTL — not worth a per-edit regen of the homepage × locales.
+  // 1. Convenience: { type, slug } -> all-locale detail paths + the index +
+  //    the data-cache tags that back those pages.
   if (typeof body.type === 'string' && typeof body.slug === 'string') {
     const cfg = TYPE_CONFIG[body.type];
     if (!cfg) {
@@ -84,6 +78,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       revalidatedPaths.push(`/${loc}/${cfg.base}/${slug}`);
       revalidatedPaths.push(`/${loc}/${cfg.base}`); // the listing index
     }
+    revalidatedTags.push(...cfg.tags(slug));
   }
 
   // 2. Explicit paths.
@@ -93,10 +88,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // 3. Explicit tags — DELIBERATE broad busts only (e.g. `nav:globals` to refresh
-  //    the footer/nav site-wide). Because revalidateTag over-invalidates here, a
-  //    tag bust ≈ a full-cache regen — do NOT use for routine content edits; use
-  //    {type,slug} or {paths} for those.
+  // 3. Explicit tags.
   if (Array.isArray(body.tags)) {
     for (const t of body.tags) {
       if (typeof t === 'string' && t.length > 0 && t.length < 256) revalidatedTags.push(t);
@@ -107,20 +99,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: 'Nothing to revalidate. Provide paths, tags, or type+slug.' }, { status: 400 });
   }
 
-  // Apply each invalidation independently so one failing call can't 500 the whole
-  // request (PR #113). revalidatePath is surgical and sufficient. revalidateTag
-  // (explicit tags only now) is best-effort + intentionally broad.
-  const okPaths: string[] = [];
-  const okTags: string[] = [];
-  const errors: string[] = [];
-  for (const p of [...new Set(revalidatedPaths)]) {
-    try { revalidatePath(p); okPaths.push(p); }
-    catch (e) { errors.push(`path ${p}: ${e instanceof Error ? e.message : String(e)}`); }
-  }
-  for (const t of [...new Set(revalidatedTags)]) {
-    try { revalidateTag(t, 'max'); okTags.push(t); }
-    catch (e) { errors.push(`tag ${t}: ${e instanceof Error ? e.message : String(e)}`); }
-  }
+  // Dedupe + apply. revalidatePath/Tag are synchronous cache-mark operations.
+  // revalidateTag(tag, 'max') is the route-handler-safe API (updateTag is
+  // Server-Action-only and throws here). 'max' = invalidate immediately.
+  for (const p of [...new Set(revalidatedPaths)]) revalidatePath(p);
+  for (const t of [...new Set(revalidatedTags)]) revalidateTag(t, 'max');
 
-  return NextResponse.json({ revalidated: okPaths.length > 0 || okTags.length > 0, paths: okPaths, tags: okTags, errors });
+  return NextResponse.json({
+    revalidated: true,
+    paths: [...new Set(revalidatedPaths)],
+    tags: [...new Set(revalidatedTags)],
+  });
 }

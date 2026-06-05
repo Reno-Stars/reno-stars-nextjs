@@ -1,7 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { revalidatePathsAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { services, serviceTags, serviceBenefits, projects } from '@/lib/db/schema';
@@ -143,7 +142,7 @@ export async function createService(
     }
 
     revalidatePath('/admin/services');
-    revalidatePathsAllLocales('/services', `/services/${uniqueSlug}`);
+    updateTag('services');
   } catch (error) {
     console.error('Failed to create service:', error);
     return { error: 'Failed to create service.' };
@@ -164,10 +163,10 @@ export async function deleteService(id: string): Promise<{ error?: string }> {
       return { error: `Cannot delete: ${projectRefCount} project(s) reference this service.` };
     }
 
-    const deleted = await db.delete(services).where(eq(services.id, id)).returning({ id: services.id, slug: services.slug });
+    const deleted = await db.delete(services).where(eq(services.id, id)).returning({ id: services.id });
     if (deleted.length === 0) return { error: 'Service not found.' };
     revalidatePath('/admin/services');
-    revalidatePathsAllLocales('/services', deleted[0]?.slug ? `/services/${deleted[0].slug}` : undefined);
+    updateTag('services');
     return {};
   } catch (error) {
     console.error('Failed to delete service:', error);
@@ -195,7 +194,7 @@ export async function reorderServices(orderedIds: string[]): Promise<{ error?: s
     );
 
     revalidatePath('/admin/services');
-    revalidatePathsAllLocales('/services');
+    updateTag('services');
     return {};
   } catch (error) {
     console.error('Failed to reorder services:', error);
@@ -306,11 +305,7 @@ export async function updateService(
     }
 
     revalidatePath('/admin/services');
-    revalidatePathsAllLocales(
-      '/services',
-      `/services/${data.slug}`,
-      currentSlug && currentSlug !== data.slug ? `/services/${currentSlug}` : undefined,
-    );
+    updateTag('services');
     return { success: true };
   } catch (error) {
     console.error('Failed to update service:', error);

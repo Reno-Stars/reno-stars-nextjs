@@ -1,7 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
@@ -13,6 +12,7 @@ import { ensureUniqueSlug } from '@/lib/utils';
 import { refreshBlogPost } from '@/lib/seo/blog-revalidate';
 import { listingCardChanged, BLOG_CARD_FIELDS, BLOG_CARD_LOCALIZED } from '@/lib/admin/listing-cache';
 import { blogChangedLocales } from '@/lib/admin/locale-invalidation';
+import { locales } from '@/i18n/config';
 
 function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
@@ -94,9 +94,9 @@ export async function createBlogPost(
       ...data,
       ...(Object.keys(localizations).length > 0 ? { localizations } : {}),
     });
+    updateTag('blog:listing');
+    updateTag(`blog:${data.slug}`);
     revalidatePath('/admin/blog');
-    // refreshBlogPost revalidates the post path + /blog index (all locales). No
-    // tags — they over-invalidate the whole site.
     if (data.isPublished) refreshBlogPost(data.slug);
   } catch (error) {
     console.error('Failed to create blog post:', error);
@@ -179,22 +179,27 @@ export async function updateBlogPost(
     const newRow = { ...data, localizations, metaOverrides: currentPost[0]?.metaOverrides };
     const changedLocales = blogChangedLocales(currentPost[0] ?? {}, newRow);
 
-    // The blog index/home/RSS card only needs refreshing when a card-visible
-    // field changed — not on pure content/meta edits.
+    // Invalidate only the changed locales' detail pages (narrow per-locale tag).
+    // All 14 → one broad bust; a subset → per-locale busts.
+    if (changedLocales.length >= locales.length) {
+      updateTag(`blog:${data.slug}`);
+    } else {
+      for (const loc of changedLocales) updateTag(`blog:${data.slug}:${loc}`);
+    }
+    // Slug rename → every locale of the old URL must be invalidated (broad).
+    if (currentSlug && currentSlug !== data.slug) updateTag(`blog:${currentSlug}`);
+
+    // The broad listing tag (home page + index + RSS feed) only needs busting
+    // when a card-visible field changed — not on pure content/meta edits.
     const listingChanged = listingCardChanged(
       currentPost[0],
       newRow,
       BLOG_CARD_FIELDS,
       BLOG_CARD_LOCALIZED,
     );
+    if (listingChanged) updateTag('blog:listing');
     revalidatePath('/admin/blog');
-    if (data.isPublished) {
-      // refreshBlogPost path-revalidates the post (scoped to the changed locales)
-      // + the /blog index when listingChanged. No tags — they over-invalidate.
-      refreshBlogPost(data.slug, { listingChanged, locales: changedLocales });
-      // Slug rename → revalidate the OLD post URL so it stops serving stale.
-      if (currentSlug && currentSlug !== data.slug) revalidatePathAllLocales(`/blog/${currentSlug}`);
-    }
+    if (data.isPublished) refreshBlogPost(data.slug, { listingChanged, locales: changedLocales });
     return { success: true };
   } catch (error) {
     console.error('Failed to update blog post:', error);
@@ -210,8 +215,10 @@ export async function deleteBlogPost(id: string): Promise<{ error?: string }> {
     const existing = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
     const slug = existing[0]?.slug;
     await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    updateTag('blog:listing');
+    if (slug) updateTag(`blog:${slug}`);
     revalidatePath('/admin/blog');
-    if (slug) refreshBlogPost(slug); // path-revalidates the post + /blog index
+    if (slug) refreshBlogPost(slug);
     return {};
   } catch (error) {
     console.error('Failed to delete blog post:', error);
@@ -235,8 +242,10 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
+    updateTag('blog:listing');
+    if (updated[0]?.slug) updateTag(`blog:${updated[0].slug}`);
     revalidatePath('/admin/blog');
-    if (updated[0]?.slug) refreshBlogPost(updated[0].slug); // paths only (no tags)
+    if (updated[0]?.slug) refreshBlogPost(updated[0].slug);
     return {};
   } catch (error) {
     console.error('Failed to toggle published:', error);
