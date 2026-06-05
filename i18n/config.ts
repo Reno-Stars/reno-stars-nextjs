@@ -27,27 +27,6 @@ export const defaultLocale: Locale = 'en';
  */
 export const PRERENDERED_LOCALES = ['en', 'zh', 'zh-Hant'] as const satisfies readonly Locale[];
 
-/**
- * Locales that keep ISR caching. EVERY OTHER locale renders DYNAMICALLY (SSR per
- * request, no ISR cache write) — see `app/[locale]/layout.tsx`.
- *
- * Why: the ~13k non-EN ISR pages are too large to stay warm in cache, so the
- * long-tail locales were constantly evicted and re-generated on crawl → the
- * dominant ISR-Write cost (continuous baseline + full re-gen on every deploy).
- * Per GSC (28d), these 4 locales own ~86.5% of organic clicks; the other 10
- * (ja/es/pa/tl/fa/vi/ru/ar/hi/fr) together get ~13% — fr alone got 2,393
- * impressions for 1 click. Those go dynamic: crawlers still get full SSR HTML
- * (SEO-neutral) but generate ZERO ISR writes. NOTE: dynamic ≠ build-time work —
- * dynamic pages render at request time, so this does NOT affect build time
- * (these locales already lazy-generated, never prerendered).
- */
-export const CACHED_LOCALES = ['en', 'zh', 'zh-Hant', 'ko'] as const satisfies readonly Locale[];
-
-/** True if a locale keeps ISR caching; false → render dynamically (no ISR write). */
-export function isCachedLocale(locale: string): boolean {
-  return (CACHED_LOCALES as readonly string[]).includes(locale);
-}
-
 export const localePrefix = 'always' as const;
 
 export const localeNames: Record<Locale, string> = {
