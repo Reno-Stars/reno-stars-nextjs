@@ -27,28 +27,6 @@ export const defaultLocale: Locale = 'en';
  */
 export const PRERENDERED_LOCALES = ['en', 'zh', 'zh-Hant'] as const satisfies readonly Locale[];
 
-/**
- * Locales that keep ISR caching on the high-volume DETAIL routes
- * (areas/[city], projects/[slug], blog/[slug]). EVERY OTHER locale renders
- * those routes DYNAMICALLY (SSR per request, no ISR cache write) — see
- * `lib/seo/dynamic-locale.ts` + `optOutISRForLongTailLocale`.
- *
- * Scope note: this only governs the three detail routes (the ~5k+ pages that
- * dominate the ISR-Write bill). The homepage, /reviews/, indexes, and static
- * pages stay ISR for all locales (tiny surface, no eviction churn — and the
- * homepage/reviews keep their daily-revalidate review-freshness floor).
- *
- * en + zh + zh-Hant + ko chosen because per GSC (28d) they own ~86.5% of
- * organic clicks; the other 10 (ja/es/pa/tl/fa/vi/ru/ar/hi/fr) together get
- * ~13% and churn the cache far more than they earn.
- */
-export const CACHED_LOCALES = ['en', 'zh', 'zh-Hant', 'ko'] as const satisfies readonly Locale[];
-
-/** True if a locale keeps ISR on detail routes; false → render dynamically (no ISR write). */
-export function isCachedLocale(locale: string): boolean {
-  return (CACHED_LOCALES as readonly string[]).includes(locale);
-}
-
 export const localePrefix = 'always' as const;
 
 export const localeNames: Record<Locale, string> = {

@@ -10,20 +10,16 @@ import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
-import { optOutISRForLongTailLocale } from '@/lib/seo/dynamic-locale';
 
 interface PageProps {
   params: Promise<{ locale: string; city: string }>;
 }
 
 
-// Build-time prerender: EN only (PRERENDERED_LOCALES). Cached locales
-// (en/zh/zh-Hant/ko) lazy-generate + ISR-cache; long-tail locales render
-// DYNAMICALLY via optOutISRForLongTailLocale (no ISR write). NO
-// `export const revalidate` here — a dynamic API on an ISR route throws
-// DYNAMIC_SERVER_USAGE (PR #129). Edits surface via on-demand revalidation:
-// admin actions fire `revalidatePathAllLocales('/areas/<city>')` +
-// `/api/revalidate {type:'area'}`.
+// Build-time prerender: EN only. Non-EN locales lazy-generate via
+// dynamicParams=true and cache for 7d. Admin edits call
+// `revalidatePath('/<locale>/areas/<city>')` to bust on edits.
+export const revalidate = 604800; // 7d
 
 export async function generateStaticParams() {
   const areas = await getServiceAreasFromDb();
@@ -346,7 +342,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale, city } = await params;
   setRequestLocale(locale);
-  await optOutISRForLongTailLocale(locale); // long-tail locales SSR, no ISR write
 
   // Resolve area first so we can fire all dependent queries in a single Promise.all.
   // `area` comes from the PER-SLUG query (tagged `area:${city}`) so a content
