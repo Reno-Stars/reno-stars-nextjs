@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import {
@@ -249,9 +249,7 @@ export async function createProject(
     }
 
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
-    updateTag(`project:${data.slug}`);
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     // The project detail page body + generateMetadata read UNTAGGED
     // getProjectsFromDb (handoff 5c#1), so the per-slug tag can't refresh them —
     // revalidate the detail path across every locale.
@@ -417,8 +415,6 @@ export async function updateProject(
     ]);
 
     revalidatePath('/admin/projects');
-    updateTag(`project:${data.slug}`);
-    if (currentSlug && currentSlug !== data.slug) updateTag(`project:${currentSlug}`);
     // The detail page body + generateMetadata read UNTAGGED getProjectsFromDb
     // (handoff 5c#1), so the per-slug tag above can't refresh them — revalidate
     // the detail path across every locale. On rename, the old URL too.
@@ -428,8 +424,7 @@ export async function updateProject(
     // (related-projects). Only bust them when a card-visible field changed —
     // not on meta/SEO, description, or dynamic-block edits.
     if (listingCardChanged(currentProject[0], data, PROJECT_CARD_FIELDS)) {
-      updateTag('projects:listing');
-      updateTag('sites:listing');
+      revalidatePathAllLocales('/projects');
     }
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
@@ -449,9 +444,7 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     const slug = existing[0]?.slug;
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
-    if (slug) updateTag(`project:${slug}`);
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1) — revalidate
     // the deleted project's path so its page stops serving stale content.
     if (slug) revalidatePathAllLocales(`/projects/${slug}`);
@@ -471,9 +464,7 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
-    if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
     // feature toggle changes the detail render (and visibility), so revalidate
     // its path across every locale, not just the per-slug tag.
@@ -502,9 +493,7 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
-    if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
     // feature toggle changes the detail render (and visibility), so revalidate
     // its path across every locale, not just the per-slug tag.
@@ -555,8 +544,7 @@ export async function moveProjectToSite(
       .where(eq(projects.id, projectId));
 
     revalidatePath('/admin/sites');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     return { success: true };
   } catch (error) {
     console.error('Failed to move project:', error);
@@ -588,8 +576,7 @@ export async function reorderProjectsInSite(
     );
 
     revalidatePath('/admin/sites');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidatePathAllLocales('/projects'); // listing index (projects + sites render here)
     return {};
   } catch (error) {
     console.error('Failed to reorder projects:', error);

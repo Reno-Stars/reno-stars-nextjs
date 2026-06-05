@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { serviceAreas, faqs } from '@/lib/db/schema';
@@ -9,9 +9,8 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePathAllLocales, revalidatePathsAllLocales } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, SERVICE_AREA_LIST_FIELDS } from '@/lib/admin/listing-cache';
-import { areaTag } from '@/lib/admin/area-invalidation';
 
 export async function createServiceArea(
   _prevState: { success?: boolean; error?: string },
@@ -77,10 +76,9 @@ export async function createServiceArea(
     });
 
     revalidatePath('/admin/service-areas');
-    updateTag('service-areas');
-    // Area detail is tag-covered (getServiceAreaBySlugFromDb), but path-
-    // revalidate the new city page across locales too (handoff §5c/§6).
-    revalidatePathAllLocales(`/areas/${uniqueSlug}`);
+    // Revalidate the new city page + the areas index (no broad `service-areas`
+    // tag — it over-invalidates the whole site). Footer/cross-links → TTL.
+    revalidatePathsAllLocales(`/areas/${uniqueSlug}`, '/areas');
   } catch (error) {
     console.error('Failed to create service area:', error);
     return { error: 'Failed to create service area.' };
@@ -101,10 +99,10 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
       return { error: `Cannot delete: ${faqRefCount} FAQ(s) are assigned to this area. Reassign them first.` };
     }
 
-    const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
+    const deleted = await db.delete(serviceAreas).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id, slug: serviceAreas.slug });
     if (deleted.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
-    updateTag('service-areas');
+    revalidatePathsAllLocales('/areas', deleted[0]?.slug ? `/areas/${deleted[0].slug}` : undefined);
     return {};
   } catch (error) {
     console.error('Failed to delete service area:', error);
@@ -132,7 +130,7 @@ export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error
     );
 
     revalidatePath('/admin/service-areas');
-    updateTag('service-areas');
+    revalidatePathAllLocales('/areas');
     return {};
   } catch (error) {
     console.error('Failed to reorder service areas:', error);
@@ -201,17 +199,14 @@ export async function updateServiceArea(
     if (updated.length === 0) return { error: 'Service area not found.' };
 
     revalidatePath('/admin/service-areas');
-    // Always refresh this city's own page via its narrow tag. Only bust the
-    // broad `service-areas` tag (which refreshes ALL ~180 area pages + the
-    // areas nav/index) when a list-visible field changed — not for a
-    // description / content / meta-only edit. (slug is not editable here.)
-    updateTag(areaTag(before[0].slug));
-    // Belt-and-suspenders: also revalidate the area path across locales
-    // (handoff §5c — area detail is tag-covered, but cheap to be safe).
-    revalidatePathAllLocales(`/areas/${before[0].slug}`);
-    if (listingCardChanged(before[0], data, SERVICE_AREA_LIST_FIELDS)) {
-      updateTag('service-areas');
-    }
+    // Revalidate this city's own page (path, surgical). Only refresh the areas
+    // index when a list-visible field changed — not for description/content/meta
+    // edits. No broad `service-areas` tag (it over-invalidates the whole site);
+    // footer/cross-link area lists refresh on their TTL. (slug isn't editable.)
+    revalidatePathsAllLocales(
+      `/areas/${before[0].slug}`,
+      listingCardChanged(before[0], data, SERVICE_AREA_LIST_FIELDS) ? '/areas' : undefined,
+    );
     return { success: true };
   } catch (error) {
     console.error('Failed to update service area:', error);
@@ -223,10 +218,11 @@ export async function toggleServiceAreaActive(id: string, current: boolean): Pro
   await requireAuth();
   if (!isValidUUID(id)) return { error: 'Invalid service area ID.' };
   try {
-    const updated = await db.update(serviceAreas).set({ isActive: !current, updatedAt: new Date() }).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id });
+    const updated = await db.update(serviceAreas).set({ isActive: !current, updatedAt: new Date() }).where(eq(serviceAreas.id, id)).returning({ id: serviceAreas.id, slug: serviceAreas.slug });
     if (updated.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
-    updateTag('service-areas');
+    // Activating/deactivating changes the listing + the city page's availability.
+    revalidatePathsAllLocales('/areas', updated[0]?.slug ? `/areas/${updated[0].slug}` : undefined);
     return {};
   } catch (error) {
     console.error('Failed to toggle service area active:', error);

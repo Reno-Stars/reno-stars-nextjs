@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath, updateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { socialLinks } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -37,7 +37,8 @@ export async function updateSocialLink(
     if (updated.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    updateTag('social-links');
+    // Social links render only in the footer/nav (tag `nav:globals`, ≤24h TTL) —
+    // no per-edit public path to revalidate; the footer refreshes on its TTL.
     return { success: true };
   } catch (error) {
     console.error('Failed to update social link:', error);
@@ -57,7 +58,8 @@ export async function deleteSocialLink(id: string): Promise<{ error?: string }> 
     if (deleted.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    updateTag('social-links');
+    // Social links render only in the footer/nav (tag `nav:globals`, ≤24h TTL) —
+    // no per-edit public path to revalidate; the footer refreshes on its TTL.
     return {};
   } catch (error) {
     console.error('Failed to delete social link:', error);
@@ -81,7 +83,8 @@ export async function toggleSocialLinkActive(
     if (updated.length === 0) return { error: 'Social link not found.' };
 
     revalidatePath('/admin/social-links');
-    updateTag('social-links');
+    // Social links render only in the footer/nav (tag `nav:globals`, ≤24h TTL) —
+    // no per-edit public path to revalidate; the footer refreshes on its TTL.
     return {};
   } catch (error) {
     console.error('Failed to toggle social link active:', error);
