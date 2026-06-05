@@ -8,6 +8,7 @@ import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { optOutISRForLongTailLocale } from '@/lib/seo/dynamic-locale';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -59,9 +60,10 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
 // engines trigger generation on first crawl, then cache).
 //
 // Admin edits call `revalidatePath('/<locale>/blog/<slug>')` to bust the
-// cache instantly on content updates — the 30d TTL is the "no edit, no
-// traffic" floor that prevents background regeneration churn.
-export const revalidate = 2592000; // 30d
+// cache instantly on content updates. NO `export const revalidate` — cached
+// locales (en/zh/zh-Hant/ko) ISR-cache; long-tail locales render DYNAMICALLY
+// via optOutISRForLongTailLocale (no ISR write). A dynamic API on an ISR route
+// throws DYNAMIC_SERVER_USAGE (PR #129), so route-level ISR is gone here.
 
 export async function generateStaticParams() {
   const posts = await getBlogPostSlugsFromDb();
@@ -133,6 +135,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  await optOutISRForLongTailLocale(locale); // long-tail locales SSR, no ISR write
 
   const post = await getBlogPostBySlugFromDb(slug, locale);
 
