@@ -10,7 +10,12 @@ import MetaPixel from '@/components/MetaPixel';
 import GoogleAdsConversion from '@/components/GoogleAdsConversion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { getCompanyFromDb, getSocialLinksFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+// Nav-scoped reads (tag `nav:globals`, ≤24h TTL): the footer/nav shows globals on
+// EVERY page, so reading the per-content tags (company/services/service-areas/
+// social-links) here meant any global edit regenerated all ~13k pages. These
+// variants decouple the shell so a global edit only refreshes the page that
+// FEATURES it (services page, contact, areas index), not the whole site. ISR Phase 2.
+import { getCompanyForNav, getSocialLinksForNav, getServicesForNav, getServiceAreasForNav } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { images } from '@/lib/data';
 import { ASSET_ORIGIN } from '@/lib/storage';
@@ -42,10 +47,10 @@ export default async function LocaleLayout({
   const [messages, t, company, socialLinks, services, areas, googleReviews] = await Promise.all([
     getMessages(),
     getTranslations({ locale, namespace: 'metadata' }),
-    getCompanyFromDb(),
-    getSocialLinksFromDb(),
-    getServicesFromDb(),
-    getServiceAreasFromDb(),
+    getCompanyForNav(),
+    getSocialLinksForNav(),
+    getServicesForNav(),
+    getServiceAreasForNav(),
     getGoogleReviews(),
   ]);
   const localBusinessDescription = t('localBusinessDescription');
