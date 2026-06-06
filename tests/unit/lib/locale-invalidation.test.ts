@@ -28,16 +28,21 @@ describe('blogChangedLocales', () => {
     expect(blogChangedLocales(base, clone(base))).toEqual([]);
   });
 
-  // 2026-06-05: only en/zh/zh-Hant are served (i18n/config `locales`); the other
-  // 11 locales 307-redirect to /en. So a change touching only an inactive
-  // locale's override revalidates nothing — there is no served page for it.
-  it('a backfill of an INACTIVE locale (ja) revalidates nothing — it is not served', () => {
+  it('scopes an MT backfill of one locale to just that locale', () => {
     const next = clone(base);
     next.localizations = { titleJa: 'タイトル', contentJa: '本文' };
-    expect(blogChangedLocales(base, next)).toEqual([]);
+    expect(blogChangedLocales(base, next)).toEqual(['ja']);
   });
 
-  it('returns ALL active locales on a global (non-localized) change', () => {
+  it('scopes a content-only translation edit to that locale', () => {
+    const withJa = clone(base);
+    withJa.localizations = { titleJa: 'タイトル', contentJa: '本文' };
+    const next = clone(withJa);
+    next.localizations = { titleJa: 'タイトル', contentJa: '本文（改訂）' };
+    expect(blogChangedLocales(withJa, next)).toEqual(['ja']);
+  });
+
+  it('returns ALL locales on a global (non-localized) change', () => {
     expect(blogChangedLocales(base, { ...clone(base), featuredImageUrl: 'https://img/new.jpg' }).sort())
       .toEqual([...locales].sort());
     expect(blogChangedLocales(base, { ...clone(base), publishedAt: new Date('2026-02-02T00:00:00Z') }))
@@ -45,46 +50,48 @@ describe('blogChangedLocales', () => {
     expect(blogChangedLocales(base, { ...clone(base), slug: 'renamed' })).toHaveLength(locales.length);
   });
 
-  it('an EN body edit hits en only — active zh/zh-Hant render the ZH base', () => {
+  it('an EN body edit hits en + the fallback locales, but not zh (zh has its own body)', () => {
     const res = blogChangedLocales(base, { ...clone(base), contentEn: 'New body' });
     expect(res).toContain('en');
+    expect(res).toContain('ja');
+    expect(res).toContain('fr');
     expect(res).not.toContain('zh');
-    expect(res).not.toContain('zh-Hant'); // falls back to the present ZH base, not EN
   });
 
-  it('zh-Hant fallback chain: an EN edit regenerates zh-Hant ONLY when the ZH base is absent', () => {
-    // ZH base present → zh-Hant renders zh → immune to an EN change
-    const res1 = blogChangedLocales(base, { ...clone(base), contentEn: 'New body' });
-    expect(res1).not.toContain('zh-Hant');
-    // ZH base absent → zh-Hant falls back to EN, so an EN change hits it
-    const noZh = { ...clone(base), contentZh: null };
-    const res2 = blogChangedLocales(noZh, { ...clone(noZh), contentEn: 'New body' });
-    expect(res2).toContain('en');
-    expect(res2).toContain('zh-Hant');
-    expect(res2).not.toContain('zh');
+  it('an EN body edit does NOT regenerate a locale that has its own native body', () => {
+    const withNativeJa = clone(base);
+    withNativeJa.localizations = { contentJa: '日本語の本文' };
+    const next = clone(withNativeJa);
+    next.contentEn = 'New EN body';
+    const res = blogChangedLocales(withNativeJa, next);
+    expect(res).toContain('en');
+    expect(res).not.toContain('ja'); // ja renders its own contentJa, unaffected by EN
+    expect(res).toContain('ko');     // ko falls back to EN
   });
 
-  it('a ZH body edit hits zh + zh-Hant, not en', () => {
+  it('a ZH body edit hits zh + zh-Hant, not en/other locales', () => {
     const res = blogChangedLocales(base, { ...clone(base), contentZh: '新的正文' });
     expect(res).toContain('zh');
     expect(res).toContain('zh-Hant');
     expect(res).not.toContain('en');
+    expect(res).not.toContain('ja');
   });
 
   it('a meta_overrides edit hits en + zh', () => {
     const res = blogChangedLocales(base, { ...clone(base), metaOverrides: { title: { en: 'A/B title' } } });
     expect(res).toContain('en');
     expect(res).toContain('zh');
+    expect(res).not.toContain('ja');
   });
 
   it('ignores focus keyword (admin-only, not rendered)', () => {
     expect(blogChangedLocales(base, { ...clone(base), focusKeywordEn: 'kitchen reno' })).toEqual([]);
   });
 
-  it('an EN title edit hits en only while the ZH base is present', () => {
+  it('an EN title edit hits en + fallback locales', () => {
     const res = blogChangedLocales(base, { ...clone(base), titleEn: 'New Title' });
     expect(res).toContain('en');
+    expect(res).toContain('vi');
     expect(res).not.toContain('zh');
-    expect(res).not.toContain('zh-Hant');
   });
 });

@@ -8,30 +8,8 @@ import { defineRouting } from 'next-intl/routing';
 // Russian (West Van, Burnaby, North Van), Arabic (Burnaby, Coquitlam),
 // Hindi (Surrey, Delta — distinct from Punjabi, different script), and
 // French (federal-employee bilingual market + Quebec transplants).
-//
-// ALL_LOCALES is the full CATALOG — it defines the `Locale` type and the
-// per-locale data maps (localeNames/ogLocaleMap/rtlLocales below). Content for
-// every locale here still lives in the DB + `messages/`. It is the union of
-// what the site CAN serve, not what it currently DOES.
-export const ALL_LOCALES = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr'] as const;
-export type Locale = (typeof ALL_LOCALES)[number];
-
-// ACTIVE locales — the ONLY ones the site builds, routes, sitemaps, hreflangs,
-// and shows in the language switcher. Everything that loops `locales` (routing
-// in proxy.ts, sitemap.ts, hreflang in lib/utils.ts, on-demand revalidation,
-// the public LocaleSwitcher) follows this list automatically.
-//
-// 2026-06-05: temporarily reduced to English + Chinese (Simplified +
-// Traditional) to collapse the ISR cache surface (~13k non-EN pages → the
-// dominant ISR-Write cost). The other 11 locales' content is UNTOUCHED in the
-// DB/messages — re-enable any of them by moving its code back into this array.
-// Inactive-locale URLs 307-redirect to the English equivalent (see proxy.ts),
-// so already-indexed long-tail URLs keep their equity for re-enabling.
-export const locales: readonly Locale[] = ['en', 'zh', 'zh-Hant'];
-
-// Locales present in the catalog but NOT currently served. Used by proxy.ts to
-// 307-redirect their URLs to /en/... instead of 404-ing.
-export const INACTIVE_LOCALES: readonly Locale[] = ALL_LOCALES.filter((l) => !locales.includes(l));
+export const locales = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr'] as const;
+export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = 'en';
 
