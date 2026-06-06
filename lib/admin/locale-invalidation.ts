@@ -1,29 +1,23 @@
 /**
  * Locale-scoped cache invalidation for blog edits.
  *
- * A blog post is one DB row whose locale pages all render from it, with
+ * A blog post is one DB row whose 14 locale pages all render from it, with
  * per-locale overrides in the `localizations` jsonb (`titleJa`, `contentZhHant`,
  * …) falling back to the EN/ZH base columns. The fallback chain (lib/utils
  * `pickLocale`) is: most locales → `en`; `zh-Hant` → `zh` → `en`.
  *
- * Previously every blog edit regenerated all locale pages — even a
- * single-locale MT backfill (e.g. writing `contentJa`). That fan-out is
+ * Previously every blog edit regenerated all 14 locale pages — even a
+ * single-locale MT backfill (e.g. writing `contentJa`). That 14× fan-out is
  * the dominant write source on `/[locale]/blog/[slug]`. `blogChangedLocales`
  * returns only the locales whose *rendered* output actually changed, so the
  * admin action can invalidate just those (per-locale cache tag + path).
  *
- * Scope: this iterates the ACTIVE `locales` (the ones actually served — see
- * ALL_LOCALES vs locales in i18n/config). A change that only touches an
- * inactive locale's override (e.g. `contentJa` while `ja` is not served)
- * returns nothing — there is no served `ja` page to revalidate (it 307s to
- * /en). When that locale is re-enabled its content is already in the DB.
- *
  * Correctness over savings: when in doubt we include the locale (a missed
  * inclusion would leave stale content; an extra inclusion only costs one
  * regeneration). Global field changes (image, publish state, slug, …) return
- * all active locales.
+ * all locales.
  */
-import { locales, type Locale } from '@/i18n/config';
+import { locales as ALL_LOCALES, type Locale } from '@/i18n/config';
 import { LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
 
 type Row = Record<string, unknown>;
@@ -69,7 +63,7 @@ const GLOBAL_FIELDS = [
 export function blogChangedLocales(oldRow: Row, newRow: Row): Locale[] {
   // Any non-localized change → every locale page changed.
   if (GLOBAL_FIELDS.some((f) => neq(oldRow[f], newRow[f]))) {
-    return [...locales];
+    return [...ALL_LOCALES];
   }
 
   const oldLoc = (oldRow.localizations ?? {}) as Record<string, unknown>;
@@ -80,7 +74,7 @@ export function blogChangedLocales(oldRow: Row, newRow: Row): Locale[] {
     const enChanged = neq(oldRow[`${field}En`], newRow[`${field}En`]);
     const zhChanged = neq(oldRow[`${field}Zh`], newRow[`${field}Zh`]);
 
-    for (const locale of locales) {
+    for (const locale of ALL_LOCALES) {
       if (changed.has(locale)) continue;
 
       if (locale === 'en') {
