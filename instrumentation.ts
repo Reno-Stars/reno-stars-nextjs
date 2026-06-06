@@ -1,11 +1,12 @@
-// TEMPORARY DIAGNOSTIC (2026-06-05): capture server render errors (e.g. the
-// prod-only /ja/ + /ko/ homepage 500s that don't reproduce locally) into a Neon
-// `error_log` table we can query directly. Next's onRequestError hook receives
-// every server error with the request path + route context. Remove this file +
-// drop table error_log once the cause is confirmed.
-import { db } from '@/lib/db';
-import { sql } from 'drizzle-orm';
+import { logEvent, localeFromPath } from '@/lib/log';
 
+/**
+ * Next.js error instrumentation. `onRequestError` fires for every server-side
+ * render/route error with the request path + route context. We persist them to
+ * Neon `app_log` (see lib/log.ts) because Vercel does not retain runtime logs —
+ * this is how prod-only failures (which never reproduce locally) become
+ * diagnosable. Query with `scripts/logs.mjs --level error`.
+ */
 type ReqErr = Error & { digest?: string };
 
 export async function onRequestError(
@@ -13,16 +14,22 @@ export async function onRequestError(
   request: { path?: string; method?: string },
   context: { routePath?: string; routeType?: string; renderSource?: string },
 ): Promise<void> {
-  try {
-    const e = error as ReqErr;
-    await db.execute(sql`INSERT INTO error_log (path, route, msg, stack, digest) VALUES (
-      ${request?.path ?? null},
-      ${context?.routePath ?? null},
-      ${(e?.message ?? String(error)).slice(0, 500)},
-      ${(e?.stack ?? '').slice(0, 3000)},
-      ${e?.digest ?? null}
-    )`);
-  } catch {
-    /* diagnostic logging is best-effort */
-  }
+  const e = error as ReqErr;
+  const path = request?.path ?? null;
+  await logEvent({
+    level: 'error',
+    event: 'render_error',
+    source: 'instrumentation',
+    path,
+    locale: localeFromPath(path),
+    digest: e?.digest ?? null,
+    msg: e?.message ?? String(error),
+    stack: e?.stack ?? null,
+    meta: {
+      method: request?.method,
+      routePath: context?.routePath,
+      routeType: context?.routeType,
+      renderSource: context?.renderSource,
+    },
+  });
 }
