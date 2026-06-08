@@ -107,7 +107,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       const link = document.createElement('link');
       link.rel = 'prefetch';
       link.as = 'image';
-      link.href = `/api/image?url=${encodeURIComponent(src)}&w=1200&q=70&f=webp`;
+      link.href = `/api/image/?url=${encodeURIComponent(src)}&w=1200&q=70&f=webp`;
       document.head.appendChild(link);
       // Clean up after a short delay to avoid memory leak
       setTimeout(() => link.remove(), 5000);
