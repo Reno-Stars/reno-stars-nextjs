@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
@@ -11,17 +11,6 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// Target queries: "renovation near me", "home renovation near me",
-// "bathroom/kitchen renovation near me", "renovation companies near me".
-// Competitor pattern (Angi/HomeGuide): generic "near me" landing that
-// lists local pros + FAQ + service area matcher. We don't aggregate pros;
-// we ARE the pros — so this page anchors the query to our brand + links
-// out to all 14 area sub-pages for geo-specific follow-up.
-
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;

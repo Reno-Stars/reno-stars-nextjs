@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import KitchenCostGuidePage from '@/components/pages/KitchenCostGuidePage';
 import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
@@ -8,11 +8,6 @@ import { getCompanyFromDb, getKitchenProjectsForGuide } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-}
-
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

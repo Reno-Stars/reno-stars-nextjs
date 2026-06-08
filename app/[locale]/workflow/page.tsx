@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ProcessPage from '@/components/pages/ProcessPage';
 import { BreadcrumbSchema, FAQSchema, HowToSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
@@ -9,11 +9,6 @@ import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-}
-
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { PRERENDERED_LOCALES } from '@/i18n/config';
+
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
+import { ogLocaleMap, type Locale } from "@/i18n/config";
 import ReviewsPage from "@/components/pages/ReviewsPage";
 import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
@@ -12,19 +12,6 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// ISR: revalidate /reviews/ daily so new Google reviews + cache-row
-// translation updates (e.g. backfilling via `pnpm reviews:cache` per §5.2)
-// surface without requiring a redeploy. DAILY cadence (86400, not hourly)
-// per Hongming 2026-05-29 — reviews don't change hourly, so this cuts regen
-// cost ~24x. The underlying fetch in `getGoogleReviews()` already has its own
-// 24h cache on the Places API call; this revalidate controls the page-level
-// SSG snapshot, not the API hit rate. This + the homepage are the documented
-// ISR exceptions to the otherwise SSG-only architecture (see CLAUDE.md).
-export const revalidate = 86400;
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import { buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
@@ -8,11 +8,6 @@ import { NAVY, TEXT_MID, SURFACE } from '@/lib/theme';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-}
-
-
-export async function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

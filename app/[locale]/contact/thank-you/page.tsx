@@ -1,15 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 import ThankYouPage from '@/components/pages/ThankYouPage';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-}
-
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
