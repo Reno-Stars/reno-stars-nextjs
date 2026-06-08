@@ -5,17 +5,27 @@
  *
  * Crawls a representative set of prerendered URLs against the live site,
  * parses the rendered HTML, extracts every `<link rel="alternate" hreflang>`,
- * and verifies all 10 locales + x-default are present and self-canonical.
+ * and verifies all 14 locales + x-default are present and self-canonical.
  *
  * Usage:
  *   node scripts/audit-hreflang.mjs                      # production
  *   BASE=https://reno-stars-nextjs.vercel.app node scripts/audit-hreflang.mjs
  *
  * Exits 1 if any URL is missing locales or has self-canonical mismatch.
+ *
+ * Note: buildAlternates() maps zh-Hant (URL prefix) → zh-TW (hreflang key)
+ * per Google's BCP-47 recommendation. EXPECTED_LOCALES uses hreflang keys,
+ * and HREFLANG_TO_URL_PREFIX maps back to URL path prefixes for href checks.
  */
 
 const BASE = process.env.BASE || 'https://www.reno-stars.com';
-const EXPECTED_LOCALES = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi'];
+// Hreflang keys as they appear in the emitted HTML (not URL path prefixes).
+// zh-Hant locale emits hreflang="zh-TW" (see buildAlternates in lib/utils.ts).
+// ru/ar/hi/fr added 2026-05-01 for Metro Vancouver demographic expansion.
+const EXPECTED_LOCALES = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr'];
+
+// Maps hreflang key → URL path prefix when they differ.
+const HREFLANG_TO_URL_PREFIX = { 'zh-TW': 'zh-Hant' };
 
 // Pages worth auditing — one of each route shape. If these are correct, the
 // generators are correct.
@@ -80,8 +90,9 @@ async function audit(path, locale) {
 
   // 3. Each locale's href contains the matching locale prefix
   for (const loc of EXPECTED_LOCALES) {
-    if (tags[loc] && !tags[loc].includes(`/${loc}/`) && !tags[loc].endsWith(`/${loc}`)) {
-      issues.push(`hreflang=${loc} href does not contain /${loc}/: ${tags[loc]}`);
+    const urlPrefix = HREFLANG_TO_URL_PREFIX[loc] ?? loc;
+    if (tags[loc] && !tags[loc].includes(`/${urlPrefix}/`) && !tags[loc].endsWith(`/${urlPrefix}`)) {
+      issues.push(`hreflang=${loc} href does not contain /${urlPrefix}/: ${tags[loc]}`);
     }
   }
 
@@ -97,7 +108,7 @@ async function audit(path, locale) {
 
 (async () => {
   console.log(`Auditing ${BASE}`);
-  console.log(`Expected: ${EXPECTED_LOCALES.length} locales + x-default = ${EXPECTED_LOCALES.length + 1} link tags per page\n`);
+  console.log(`Expected: ${EXPECTED_LOCALES.length} locales + x-default = ${EXPECTED_LOCALES.length + 1} hreflang tags per page\n`);
 
   let totalOk = 0;
   let totalFail = 0;
