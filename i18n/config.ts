@@ -71,4 +71,10 @@ export const routing = defineRouting({
   locales,
   defaultLocale,
   localePrefix,
+  // No NEXT_LOCALE cookie. localePrefix='always' already keeps the locale in
+  // every URL, so the cookie is redundant — and a Set-Cookie on the response
+  // makes it UNCACHEABLE at the CDN. Dropping it lets Vercel's edge cache the
+  // SSR HTML (see proxy.ts `Vercel-CDN-Cache-Control`): fast TTFB + low origin
+  // transfer, still zero ISR writes.
+  localeCookie: false,
 });
