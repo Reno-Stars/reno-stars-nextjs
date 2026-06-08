@@ -143,24 +143,8 @@ export default function proxy(request: NextRequest): NextResponse {
   const locale = locales.includes(pathLocale as Locale) ? pathLocale : defaultLocale;
   response.headers.set('x-locale', locale);
 
-  // CDN edge caching for public GET pages (2026-06-08). The pages render
-  // dynamically (SSR — no ISR Full-Route-Cache write), but we let Vercel's CDN
-  // cache the rendered HTML so repeat hits (crawlers + users) are served from the
-  // edge: fast TTFB + near-zero Fast-Origin-Transfer, still ZERO ISR write units.
-  // `Vercel-CDN-Cache-Control` targets Vercel's edge only — it overrides the
-  // `no-store` Next sets for dynamic routes and is NOT forwarded to the browser
-  // (so personalized/admin assumptions downstream are unaffected). Content edits
-  // surface within s-maxage (5 min); stale-while-revalidate serves the cached copy
-  // while it refreshes in the background. Admin routes returned earlier and /api
-  // is excluded by the matcher, so only public pages get this. Requires the
-  // NEXT_LOCALE cookie to be off (see i18n/config `localeCookie: false`) — a
-  // Set-Cookie would make the response uncacheable.
-  if (request.method === 'GET') {
-    response.headers.set(
-      'Vercel-CDN-Cache-Control',
-      'public, s-maxage=300, stale-while-revalidate=3600',
-    );
-  }
+  // (CDN edge-cache header is set at the platform layer in next.config.ts
+  // `headers()` — middleware runs too late to influence the edge cache decision.)
 
   return response;
 }

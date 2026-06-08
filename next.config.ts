@@ -27,6 +27,22 @@ if (storageUrl) {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: true,
+  // CDN edge caching for the public (locale-prefixed) SSR pages. Pages render
+  // dynamically (force-dynamic — no ISR Full-Route-Cache write), but
+  // `Vercel-CDN-Cache-Control` tells Vercel's edge to cache the rendered HTML so
+  // repeat hits are served from the edge: fast TTFB + low Fast-Origin-Transfer,
+  // still ZERO ISR write units. Applied at the platform layer (not middleware, which
+  // is too late for the cache decision). Only matches the 14 locale prefixes, so
+  // /admin and /api are untouched. Needs localeCookie:false (i18n/config) — a
+  // Set-Cookie would make responses uncacheable. Edits surface within s-maxage.
+  async headers() {
+    const L = 'en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr';
+    const cdn = [{ key: 'Vercel-CDN-Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=3600' }];
+    return [
+      { source: `/:locale(${L})`, headers: cdn },
+      { source: `/:locale(${L})/:path*`, headers: cdn },
+    ];
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: '50mb',
