@@ -536,7 +536,7 @@ export function buildOgImageUrl(title: string, subtitle?: string): string {
   const baseUrl = getBaseUrl();
   const params = new URLSearchParams({ title });
   if (subtitle) params.set('subtitle', subtitle);
-  return `${baseUrl}/api/og?${params.toString()}`;
+  return `${baseUrl}/api/og/?${params.toString()}`;
 }
 
 // ============================================================================

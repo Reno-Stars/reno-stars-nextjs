@@ -102,7 +102,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
       const link = document.createElement('link');
       link.rel = 'prefetch';
       link.as = 'image';
-      link.href = `/api/image?url=${encodeURIComponent(src)}&w=1200&q=70&f=webp`;
+      link.href = `/api/image/?url=${encodeURIComponent(src)}&w=1200&q=70&f=webp`;
       document.head.appendChild(link);
       setTimeout(() => link.remove(), 5000);
     });

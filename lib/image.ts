@@ -79,7 +79,7 @@ export function buildProcessedSrcSet(src: string, quality = DEFAULT_QUALITY): st
 export const DEFAULT_QUALITY = 70;
 
 export function buildOptimizedUrl(src: string, width: number, quality = DEFAULT_QUALITY, format: 'webp' | 'avif' = 'webp'): string {
-  return `/api/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}&f=${format}`;
+  return `/api/image/?url=${encodeURIComponent(src)}&w=${width}&q=${quality}&f=${format}`;
 }
 
 export function buildSrcSet(src: string, quality = DEFAULT_QUALITY): string {
