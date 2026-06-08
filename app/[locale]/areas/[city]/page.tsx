@@ -16,15 +16,6 @@ interface PageProps {
 }
 
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate via
-// dynamicParams=true and cache for 7d. Admin edits call
-// `revalidatePath('/<locale>/areas/<city>')` to bust on edits.
-export const revalidate = 604800; // 7d
-
-export async function generateStaticParams() {
-  const areas = await getServiceAreasFromDb();
-  return areas.map((area) => ({ locale: 'en', city: area.slug }));
-}
 
 /**
  * EN-only CTR overrides for area landing pages, driven by GSC query data

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale, PRERENDERED_LOCALES } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ServicesPage from '@/components/pages/ServicesPage';
 import AnswerBlockSection from '@/components/home/AnswerBlockSection';
 import { BreadcrumbSchema } from '@/components/structured-data';
@@ -10,11 +10,6 @@ import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/li
 
 interface PageProps {
   params: Promise<{ locale: string }>;
-}
-
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

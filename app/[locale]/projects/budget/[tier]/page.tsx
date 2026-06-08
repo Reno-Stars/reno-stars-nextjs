@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { PRERENDERED_LOCALES, ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
@@ -37,16 +37,6 @@ function projectInTier(project: Project, tier: Tier): boolean {
   if (mid === null) return false;
   const [lo, hi] = TIER_LABELS[tier].range;
   return mid >= lo && mid < hi;
-}
-
-export function generateStaticParams() {
-  const params: { locale: string; tier: string }[] = [];
-  for (const locale of PRERENDERED_LOCALES) {
-    for (const tier of TIERS) {
-      params.push({ locale, tier });
-    }
-  }
-  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

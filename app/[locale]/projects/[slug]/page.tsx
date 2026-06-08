@@ -11,7 +11,7 @@ import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getSitesAsProjectsFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -19,26 +19,6 @@ interface PageProps {
 }
 
 
-// Build-time prerender: EN only. Non-EN locales lazy-generate on first
-// request via dynamicParams=true. Saves ~9× the prerender count for projects,
-// sites, and categories. SEO unaffected — crawlers trigger generation on
-// first hit and the page is cached for 7d.
-//
-// Admin edits call `revalidatePath('/<locale>/projects/<slug>')` to bust on
-// content updates — the 7d TTL is the "no edit, no traffic" floor.
-export const revalidate = 604800; // 7d
-
-export async function generateStaticParams() {
-  const [projects, sites, categorySlugs] = await Promise.all([
-    getProjectsFromDb(),
-    getSitesAsProjectsFromDb(),
-    getCategorySlugs(),
-  ]);
-  const projectParams = projects.map((p) => ({ locale: 'en', slug: p.slug }));
-  const siteParams = sites.map((s) => ({ locale: 'en', slug: s.slug }));
-  const categoryParams = categorySlugs.map((slug) => ({ locale: 'en', slug }));
-  return [...categoryParams, ...projectParams, ...siteParams];
-}
 
 async function isCategory(slug: string): Promise<boolean> {
   const categorySlugs = await getCategorySlugs();

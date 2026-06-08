@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { locales, type Locale, isRtl, PRERENDERED_LOCALES } from '@/i18n/config';
+import { locales, type Locale, isRtl } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
 import { Analytics } from '@vercel/analytics/next';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
@@ -23,9 +23,16 @@ import { NAVY } from '@/lib/theme';
 import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } from '@/lib/image';
 
 
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
-}
+// SSR for the entire site (2026-06-08). `force-dynamic` cascades to every route
+// under /[locale], so pages render on-demand and NOTHING is written to the ISR
+// Full-Route Cache (the ISR-Write-Units bill). Rationale: this is a low-traffic
+// site, so per-request SSR (~12ms renders, with all DB reads still served from
+// the cheap Data Cache) is cheaper than ISR — which was paying a write unit on
+// every crawl-driven cache-miss/eviction for pages that were never hit enough to
+// benefit from caching. SEO is unchanged: crawlers get identical fully-rendered
+// HTML. Bonus: content edits surface instantly (no cache to revalidate). High
+// traffic pages can be reverted to ISR later if the site grows.
+export const dynamic = 'force-dynamic';
 
 interface LocaleLayoutProps {
   children: React.ReactNode;

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { PRERENDERED_LOCALES } from '@/i18n/config';
+
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { locales, ogLocaleMap, type Locale } from "@/i18n/config";
+import { ogLocaleMap, type Locale } from "@/i18n/config";
 import HomePage from "@/components/pages/HomePage";
 import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
@@ -23,18 +23,6 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// ISR: revalidate homepage daily. The hero, testimonials, and stats blocks
-// pull from the DB (`company`, `googleReviews`, `services`, `projects`, etc.);
-// without revalidate they're frozen until next deploy. DAILY cadence (not
-// hourly) per Hongming 2026-05-29 — reviews/translations don't change hourly,
-// so 86400 cuts regen cost ~24x while still auto-surfacing without a manual
-// deploy. This + /reviews/ are the documented ISR exceptions to the otherwise
-// SSG-only architecture (see CLAUDE.md "Rendering").
-export const revalidate = 86400;
-
-export function generateStaticParams() {
-  return PRERENDERED_LOCALES.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({
   params,

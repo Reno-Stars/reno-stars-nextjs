@@ -7,7 +7,7 @@ import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getBlogPostBySlugFromDb, getBlogPostSlugsFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -52,21 +52,6 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
   return out;
 }
 
-// Build-time prerender: EN slugs only. Other locales lazy-generate on first
-// request (Next.js dynamicParams=true default) and stay cached for 30d via
-// the page-level revalidate. Cuts ~107 × 9 = 963 unnecessary prerenders per
-// build, slashes Vercel build time + ISR-write spend, no SEO hit (search
-// engines trigger generation on first crawl, then cache).
-//
-// Admin edits call `revalidatePath('/<locale>/blog/<slug>')` to bust the
-// cache instantly on content updates — the 30d TTL is the "no edit, no
-// traffic" floor that prevents background regeneration churn.
-export const revalidate = 2592000; // 30d
-
-export async function generateStaticParams() {
-  const posts = await getBlogPostSlugsFromDb();
-  return posts.map((post) => ({ locale: 'en', slug: post.slug }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
