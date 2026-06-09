@@ -261,8 +261,14 @@ async function seed() {
       quoteUrl: '/contact/',
       // foundingYear, teamSize, warranty, liabilityCoverage in lib/company-config.ts
       // rating/reviewCount now fetched from Google Reviews API
-      geoLatitude: '49.1666',
-      geoLongitude: '-123.1336',
+      // Coordinates of the actual Google Business Profile pin (21300 Gordon
+      // Way, east Richmond / Hamilton, FSA V6W). The previous value
+      // (49.1666, -123.1336) was a central-Richmond centroid ~10 km west of
+      // the real office and conflicted with the GBP pin — a NAP/geo
+      // inconsistency that weakens local-pack trust. Source: Places API
+      // place ChIJT0f2zbHhhVQRhHrIAuFh0y4.
+      geoLatitude: '49.1658907',
+      geoLongitude: '-122.9872706',
     });
     console.log('Company info seeded');
   } else {
