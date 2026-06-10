@@ -21,6 +21,7 @@ import { images } from '@/lib/data';
 import { ASSET_ORIGIN } from '@/lib/storage';
 import { NAVY } from '@/lib/theme';
 import { buildPreloadUrl, buildProcessedUrl, buildProcessedSrcSet, isR2Url } from '@/lib/image';
+import { minimalLocalized } from '@/lib/utils';
 
 
 // SSR for the entire site (2026-06-08). `force-dynamic` cascades to every route
@@ -61,6 +62,24 @@ export default async function LocaleLayout({
     getGoogleReviews(),
   ]);
   const localBusinessDescription = t('localBusinessDescription');
+
+  // Strip the rich, all-locale Service/ServiceArea objects down to the minimal
+  // { slug, title|name } shape the CLIENT Navbar/Footer actually render. The
+  // full rows carry multi-paragraph `content`/`long_description`/meta fields ×
+  // up to 14 locales; because Navbar/Footer are `'use client'`, the WHOLE prop
+  // is serialized into the RSC flight payload on every page — the ~2.45MB
+  // global baseline that drove Fast Origin Transfer (pages are force-dynamic, so
+  // each cache-miss re-ships it origin→edge). pickLocale renders identically off
+  // the slimmed { en, <locale> } field. LocalBusinessSchema keeps the full
+  // `areas` (it's a server component — only its JSON-LD output hits the flight).
+  const loc = locale as Locale;
+  const navServices = services
+    .filter((s) => s.isProjectType !== false)
+    .map((s) => ({ slug: s.slug, title: minimalLocalized(s.title, loc) }));
+  const footerServices = services
+    .filter((s) => s.showOnServicesPage !== false)
+    .map((s) => ({ slug: s.slug, title: minimalLocalized(s.title, loc) }));
+  const footerAreas = areas.map((a) => ({ slug: a.slug, name: minimalLocalized(a.name, loc) }));
 
   // suppressHydrationWarning: locale from URL params may differ during initial hydration;
   // also handles browser extensions (Grammarly, etc.) modifying the DOM
@@ -131,11 +150,11 @@ export default async function LocaleLayout({
           >
             {locale === 'zh' ? '跳到主要内容' : locale === 'zh-Hant' ? '跳到主要內容' : 'Skip to main content'}
           </a>
-          <Navbar company={company} services={services.filter(s => s.isProjectType !== false)} />
+          <Navbar company={company} services={navServices} />
           <main id="main-content">
             {children}
           </main>
-          <Footer company={company} socialLinks={socialLinks} services={services.filter(s => s.showOnServicesPage !== false)} areas={areas} googleRating={googleReviews.rating} />
+          <Footer company={company} socialLinks={socialLinks} services={footerServices} areas={footerAreas} googleRating={googleReviews.rating} />
         </NextIntlClientProvider>
         <Analytics />
       </body>
