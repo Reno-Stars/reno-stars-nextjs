@@ -51,6 +51,24 @@ export function pickLocaleOptional<T>(field: Localized<T> | undefined, locale: L
 }
 
 /**
+ * Collapses a Localized<T> down to only the values needed to render for the
+ * CURRENT locale: `en` (the required fallback root) plus the resolved current
+ * locale (already fallback-applied via pickLocale). Rendering the result with
+ * `pickLocale(result, locale)` returns the identical value as the full field.
+ *
+ * Why: client components (Navbar/Footer) receive these objects as props, so the
+ * WHOLE object is serialized into the RSC flight payload. The full field carries
+ * up to 14 locales; shipping only `{ en, <locale> }` cuts that ~7-14×. Used by
+ * the layout to strip the nav/footer service+area lists before they cross the
+ * server→client boundary (the dominant Fast-Origin-Transfer driver, since pages
+ * are force-dynamic and every cache-miss re-ships the payload origin→edge).
+ */
+export function minimalLocalized<T>(field: Localized<T>, locale: Locale): Localized<T> {
+  if (locale === 'en') return { en: field.en };
+  return { en: field.en, [locale]: pickLocale(field, locale) } as Localized<T>;
+}
+
+/**
  * Returns true when a Localized<string> field has genuine content for the
  * requested locale (or for `en`/`zh`, which always do — they're the source
  * columns). Returns false when the locale would silently fall back to `en`.

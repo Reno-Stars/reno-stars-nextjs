@@ -21,7 +21,42 @@ import {
   buildUrl,
   cleanObject,
   deepClone,
+  pickLocale,
+  minimalLocalized,
 } from '@/lib/utils';
+import type { Localized } from '@/lib/types';
+
+describe('minimalLocalized', () => {
+  const full: Localized<string> = {
+    en: 'Kitchen', zh: '厨房', 'zh-Hant': '廚房', fr: 'Cuisine', ja: 'キッチン',
+  };
+
+  it('keeps only en for the en locale', () => {
+    expect(minimalLocalized(full, 'en')).toEqual({ en: 'Kitchen' });
+  });
+
+  it('keeps en + the requested locale', () => {
+    expect(minimalLocalized(full, 'fr')).toEqual({ en: 'Kitchen', fr: 'Cuisine' });
+  });
+
+  it('renders identically to the full field via pickLocale', () => {
+    for (const loc of ['en', 'zh', 'zh-Hant', 'fr', 'ja'] as const) {
+      expect(pickLocale(minimalLocalized(full, loc), loc)).toBe(pickLocale(full, loc));
+    }
+  });
+
+  it('bakes in the fallback value for a locale missing from the source', () => {
+    // ko is absent → pickLocale falls back to en; the slim copy must preserve that
+    const slim = minimalLocalized(full, 'ko');
+    expect(pickLocale(slim, 'ko')).toBe('Kitchen');
+  });
+
+  it('preserves zh-Hant → zh fallback resolution', () => {
+    const noHant: Localized<string> = { en: 'Bath', zh: '浴室' };
+    // pickLocale('zh-Hant') falls back to zh; the slim copy stores that under zh-Hant
+    expect(pickLocale(minimalLocalized(noHant, 'zh-Hant'), 'zh-Hant')).toBe('浴室');
+  });
+});
 
 describe('Environment Utilities', () => {
   describe('getBaseUrl', () => {

@@ -12,7 +12,10 @@ import { neu, SURFACE, SH_DARK, TEXT } from '@/lib/theme';
 
 interface NavbarProps {
   company: Company;
-  services?: Service[];
+  // Only slug + title are rendered (project links + labels). The layout passes a
+  // slimmed projection (minimalLocalized title) to keep the rich Service rows out
+  // of the client RSC flight payload.
+  services?: Pick<Service, 'slug' | 'title'>[];
 }
 
 interface NavLink {

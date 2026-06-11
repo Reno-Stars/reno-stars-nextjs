@@ -187,8 +187,11 @@ function WechatModal({ onClose }: { onClose: () => void }) {
 interface FooterProps {
   company: Company;
   socialLinks: SocialLink[];
-  services: Service[];
-  areas: ServiceArea[];
+  // Footer renders only slug + title/name. The layout passes slimmed projections
+  // (minimalLocalized) so the rich, all-locale Service/ServiceArea rows are not
+  // serialized into the client RSC flight payload.
+  services: Pick<Service, 'slug' | 'title'>[];
+  areas: Pick<ServiceArea, 'slug' | 'name'>[];
   googleRating?: number;
 }
 
