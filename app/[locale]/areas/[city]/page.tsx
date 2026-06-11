@@ -5,7 +5,7 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
@@ -376,6 +376,26 @@ export default async function Page({ params }: PageProps) {
     answer: pickLocale(faq.answer, locale as Locale),
   }));
 
+  // <AreaPage> is a client component, so every prop is serialized into the RSC
+  // flight payload. Collapse the all-locale rich fields to { en, <locale> } the
+  // same way the layout shell does (#142). `allAreas` is only used for the
+  // nearby-area links (slug + name) → drop its rich/optional fields entirely;
+  // `area` is localized internally via getLocalizedArea → keep all fields but
+  // strip each to the current locale. getLocalizedArea / pickLocale render
+  // byte-identically off the slimmed objects. This removed the ~1.37 MB
+  // all-locale ServiceArea[] that was the bulk of the area page's payload.
+  const loc = locale as Locale;
+  const slimAllAreas = areas.map((a) => ({ id: a.id, slug: a.slug, name: minimalLocalized(a.name, loc) }));
+  const slimArea = {
+    ...area,
+    name: minimalLocalized(area.name, loc),
+    description: area.description && minimalLocalized(area.description, loc),
+    content: area.content && minimalLocalized(area.content, loc),
+    highlights: area.highlights && minimalLocalized(area.highlights, loc),
+    metaTitle: area.metaTitle && minimalLocalized(area.metaTitle, loc),
+    metaDescription: area.metaDescription && minimalLocalized(area.metaDescription, loc),
+  };
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -391,8 +411,8 @@ export default async function Page({ params }: PageProps) {
       {localizedFaqs.length > 0 && <FAQSchema faqs={localizedFaqs} locale={locale} />}
       <AreaPage
         locale={locale as Locale}
-        area={area}
-        allAreas={areas}
+        area={slimArea}
+        allAreas={slimAllAreas}
         company={company}
         services={localizedServices}
         faqs={areaFaqs}
