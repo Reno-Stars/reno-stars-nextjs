@@ -3,7 +3,7 @@
     "breadcrumb": "Commercial Renovation Cost",
     "hero": {
       "title": "Commercial Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "What does a commercial renovation really cost in Greater Vancouver? From small office refreshes to full restaurant build-outs, here are the real numbers based on our project experience."
+      "subtitle": "What does a commercial renovation really cost in Greater Vancouver? Commercial renovation budgets range from $50,000 for a small retail refresh to over $1,000,000 for a full restaurant or medical facility build-out. Here are the real cost ranges by space type, the six biggest cost drivers, and practical tips for managing your budget — based on completed commercial projects across Metro Vancouver."
     },
     "stats": {
       "avgCost": "Average Cost",
@@ -18,15 +18,15 @@
       "subtitle": "Typical pricing for commercial projects across Greater Vancouver",
       "budget": {
         "title": "Small Retail / Office Refresh",
-        "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work."
+        "description": "Fresh paint, new flooring, updated lighting, basic fixture upgrades, and minor layout changes. Ideal for small retail shops, professional offices, and co-working spaces that need a modern update without structural work. At $75–$120 per square foot, this scope typically takes 8–10 weeks and does not require extensive permits beyond a basic building permit."
       },
       "midRange": {
         "title": "Full Commercial Fit-Out",
-        "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics."
+        "description": "Complete interior build-out including new walls, custom millwork, upgraded HVAC zones, commercial-grade flooring, modern lighting design, and full electrical upgrades. Suitable for mid-sized offices, retail stores, and clinics. At $120–$200 per square foot, this scope includes a full permit package and typically takes 12–16 weeks. Tenant improvement allowances (TIA) from landlords often offset a significant portion of these costs."
       },
       "highEnd": {
         "title": "Restaurant / Medical / Premium Retail",
-        "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation, custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail spaces."
+        "description": "Full-scale renovation with commercial kitchen installation, specialized ventilation (Type I hood, make-up air), custom fixtures, premium finishes, extensive plumbing, and complex permit requirements. Includes restaurants, dental clinics, medical offices, and flagship retail. At $200–$300+ per square foot, this scope triggers the most extensive BC Building Code review including fire safety, accessibility compliance, and change-of-use permitting. Timelines of 16–20 weeks are typical due to permit complexity."
       }
     },
     "factors": {
@@ -34,7 +34,7 @@
       "subtitle": "Six key factors that determine your final price",
       "permits": {
         "title": "Permits & Zoning",
-        "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications add $3,000–8,000. The City of Vancouver's development permit process can take 8–16 weeks, so factor in timeline costs."
+        "description": "Commercial permits in Metro Vancouver cost $2,000–15,000 depending on scope and municipality. Change-of-use applications (converting a retail space to a restaurant, or an office to a medical clinic) add $3,000–8,000 and require a separate zoning review. The City of Vancouver's development permit process can take 8–16 weeks; Surrey and Burnaby are typically faster at 4–8 weeks for straightforward commercial projects. Factor permit timelines into your lease start date — opening delays are one of the most common commercial renovation budget surprises."
       },
       "hvac": {
         "title": "HVAC & Mechanical Systems",
@@ -64,8 +64,8 @@
     "tips": {
       "title": "Money-Saving Tips for Commercial Renovations",
       "tip1": {
-        "title": "Plan During Lease Negotiations",
-        "description": "Negotiate a tenant improvement allowance (TIA) with your landlord. Many Vancouver commercial leases include $20–80 per square foot in TIA that can offset renovation costs significantly."
+        "title": "Negotiate a Tenant Improvement Allowance",
+        "description": "A Tenant Improvement Allowance (TIA) is money the landlord contributes toward your renovation in exchange for a longer lease. Many Metro Vancouver commercial leases include $20–80 per square foot in TIA for spaces over 1,500 sq ft. Always negotiate TIA before signing the lease — it's much harder to add after. Bring your contractor's preliminary estimate to negotiations to anchor the ask."
       },
       "tip2": {
         "title": "Phase Your Renovation",
