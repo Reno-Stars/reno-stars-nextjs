@@ -76,6 +76,8 @@ export default async function Page({ params }: PageProps) {
         description={mt('description')}
         url={`/${locale}/guides/basement-suite-cost-vancouver/`}
         authorName={`${company.name} Team`}
+        datePublished="2026-02-03"
+        dateModified="2026-06-08"
         locale={locale}
       />
       <BasementSuiteCostGuidePage locale={locale as Locale} projects={projects} />

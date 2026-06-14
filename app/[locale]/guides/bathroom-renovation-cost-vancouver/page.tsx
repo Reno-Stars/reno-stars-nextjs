@@ -118,6 +118,8 @@ export default async function Page({ params }: PageProps) {
         description={mt('description')}
         url={`/${locale}/guides/bathroom-renovation-cost-vancouver/`}
         authorName={`${company.name} Team`}
+        datePublished="2026-02-03"
+        dateModified="2026-06-08"
         locale={locale}
       />
       <HowToSchema
