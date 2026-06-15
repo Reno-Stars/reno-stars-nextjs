@@ -82,6 +82,8 @@ export default async function Page({ params }: PageProps) {
         description={mt('description')}
         url={`/${locale}/guides/cabinet-refinishing-cost-vancouver/`}
         authorName={`${company.name} Team`}
+        datePublished="2026-02-03"
+        dateModified="2026-06-08"
         locale={locale}
       />
       <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} />

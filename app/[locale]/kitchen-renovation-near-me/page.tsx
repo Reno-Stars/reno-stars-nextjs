@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -20,10 +20,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。$25K-$90K，4-8周完工。70+五星好评，免费估价。'
     : 'Kitchen renovation near you across Metro Vancouver — custom cabinets, quartz countertops, full design-build. $25K-$90K, 4-8 wks. $5M insured.';
   const baseUrl = getBaseUrl();
+  const ogImage = buildOgImageUrl(title, description);
   return {
     title, description,
     alternates: buildAlternates('/kitchen-renovation-near-me/', locale),
-    openGraph: { title, description, url: `${baseUrl}/${locale}/kitchen-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website' },
+    openGraph: { title, description, url: `${baseUrl}/${locale}/kitchen-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
   };
 }
 

@@ -8,7 +8,7 @@ import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
 import { GOLD } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
 import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
-import { trackPhoneClick } from '@/lib/analytics';
+import { trackPhoneClick, trackCtaClick } from '@/lib/analytics';
 
 interface HeroSectionProps {
   company: Company;
@@ -172,6 +172,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             <Link href="/contact"
               className="px-5 sm:px-7 py-3.5 rounded-xl text-base font-semibold cursor-pointer transition-all duration-200 text-white hover:brightness-110"
               style={{ backgroundColor: GOLD, boxShadow: `0 4px 20px ${GOLD}55` }}
+              onClick={() => trackCtaClick('get_free_quote', 'hero')}
             >
               {t.getFreeQuote}
             </Link>

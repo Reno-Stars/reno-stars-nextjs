@@ -198,8 +198,26 @@ export default function BasementCostGuidePage({ locale, projects }: BasementCost
         </div>
       </section>
 
-      {/* Related Guides */}
+      {/* FAQ */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>Frequently Asked Questions — Basement Renovation Cost Vancouver</h2>
+          <div className="space-y-4">
+            {(['q1', 'q2', 'q3', 'q4', 'q5'] as const).map((key) => (
+              <details key={key} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <summary className="font-bold cursor-pointer list-none flex justify-between items-center" style={{ color: TEXT }}>
+                  {t(`faq.${key}`)}
+                  <span className="ml-4 shrink-0 text-lg" style={{ color: GOLD }}>+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${key.slice(1)}`)}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guides */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
             {tGuides('title')}

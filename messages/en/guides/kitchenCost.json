@@ -3,7 +3,7 @@
     "breadcrumb": "Kitchen Renovation Cost",
     "hero": {
       "title": "Average Kitchen Remodel Cost in Vancouver BC (2026)",
-      "subtitle": "Real pricing from completed kitchen remodels and renovations across Greater Vancouver. Every number below comes from actual projects. Not industry estimates."
+      "subtitle": "Real pricing from completed kitchen remodels and renovations across Greater Vancouver. Kitchen renovation costs in Vancouver typically range from $15,000 for a cosmetic refresh to $72,000+ for a full custom build. Every number below comes from actual Reno Stars projects — not industry estimates. Here's a complete breakdown by tier, cost factor, and timeline to help you plan your budget."
     },
     "stats": {
       "avgCost": "Average Cost",
@@ -17,15 +17,15 @@
       "subtitle": "Based on our completed projects across Greater Vancouver",
       "budget": {
         "title": "Budget-Friendly",
-        "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash, and standard fixtures. Ideal for condos and townhouses looking for a fresh look without structural changes."
+        "description": "Cabinet refacing or stock cabinets, laminate countertops, basic backsplash tile, and standard fixtures. Ideal for condos and townhouses looking for a fresh, modern look without structural changes. This scope typically does not require building permits (no plumbing or electrical moves), which reduces cost and timeline. Most budget kitchen refreshes complete in 3–4 weeks."
       },
       "midRange": {
         "title": "Mid-Range",
-        "description": "Custom or semi-custom cabinets, quartz countertops, tile backsplash, updated lighting, and new flooring. The most popular choice for family homes."
+        "description": "Custom or semi-custom Shaker-style cabinets, quartz countertops, subway or large-format tile backsplash, pot-light upgrades, and new LVP flooring. The most popular choice for family homes in Metro Vancouver. Includes a building permit (if plumbing is relocated) and typically takes 4–6 weeks. This scope delivers the best value-to-cost ratio for resale in Vancouver's market."
       },
       "highEnd": {
         "title": "High-End",
-        "description": "Fully custom cabinetry, premium stone countertops, waterfall islands, high-end appliances, structural modifications, and designer finishes. For homeowners who want the best."
+        "description": "Fully custom cabinetry with dovetail boxes and soft-close hardware, premium quartz or natural stone countertops, waterfall island edges, built-in panel-ready appliances, structural wall removal, and designer finishes. For homeowners who want the best and may be planning to sell in 1–3 years. These projects require full permit packages and take 6–10 weeks. Return on investment is strongest in detached homes in Vancouver, West Vancouver, and Richmond."
       }
     },
     "factors": {
@@ -33,27 +33,27 @@
       "subtitle": "Six key factors that determine your final price",
       "cabinetry": {
         "title": "Cabinetry (30–40% of budget)",
-        "description": "The biggest cost driver. Stock cabinets start around $150/linear foot, while custom options can exceed $800/linear foot. Shaker-style white cabinets are the most popular choice in Vancouver."
+        "description": "Cabinetry is the biggest cost driver in any kitchen renovation. Stock cabinets from big-box stores start around $150/linear foot installed, semi-custom (the most popular choice in Vancouver) runs $250–$450/linear foot, and fully custom with dovetail boxes can exceed $800/linear foot. Shaker-style white or off-white cabinets are the most in-demand finish in Metro Vancouver because they photograph well and appeal to a wide resale market."
       },
       "countertops": {
         "title": "Countertops (10–15% of budget)",
-        "description": "Laminate starts at $30/sq ft, quartz runs $80–150/sq ft, and natural stone can exceed $200/sq ft. Waterfall island edges add $500–2,000 to the total."
+        "description": "Laminate countertops start at $30/sq ft installed and work well for budget renovations. Quartz runs $80–$150/sq ft installed — it's low maintenance, doesn't require sealing, and resists stains and UV better than natural stone. Granite and marble can exceed $200/sq ft and require annual sealing. Waterfall island edges (where the countertop flows down the side of the island) add $500–$2,000 and are popular in high-end Vancouver kitchen renovations."
       },
       "layout": {
         "title": "Layout Changes",
-        "description": "Moving plumbing, gas lines, or removing walls significantly increases costs. A layout change can add $3,000–15,000 depending on structural requirements and permits."
+        "description": "Moving plumbing, gas lines, or removing load-bearing walls significantly increases costs. Relocating a sink or dishwasher adds $2,000–5,000. Removing a wall for an open-concept kitchen runs $3,000–15,000 depending on whether it's load-bearing (requires a structural engineer and beam). Keeping the same layout is the single most effective way to stay on budget."
       },
       "appliances": {
         "title": "Appliances",
-        "description": "Budget-friendly packages start at $3,000–5,000. Mid-range brands like Bosch or KitchenAid run $8,000–15,000. Premium brands like Sub-Zero or Wolf can exceed $30,000."
+        "description": "Entry-level appliance packages (fridge, stove, dishwasher) start at $3,000–$5,000. Mid-range brands like Bosch, KitchenAid, and Café run $8,000–$15,000 for a matching set. Premium panel-ready or pro-style brands like Sub-Zero, Wolf, or Miele can exceed $30,000. For condos and rental suites, staying in the $4,000–$8,000 appliance range typically delivers the best ROI."
       },
       "plumbing": {
         "title": "Plumbing & Electrical",
-        "description": "Relocating plumbing or adding circuits adds $2,000–8,000. Older Vancouver homes may need electrical panel upgrades to support modern appliances."
+        "description": "Relocating plumbing adds $2,000–$5,000 for simple moves and $5,000–$8,000 if concrete cutting is required. Adding dedicated 240V circuits for appliances or under-cabinet lighting adds $1,000–$3,000. Many Vancouver homes built before 1990 have 100-amp panels that need upgrading to 200 amps ($2,000–$4,000) before installing modern induction cooktops or double ovens."
       },
       "permits": {
         "title": "Permits & Inspections",
-        "description": "City of Vancouver building permits for kitchen renovations typically cost $200–$1,000. Required when changing plumbing, electrical, gas, or structural elements."
+        "description": "Building permits for kitchen renovations typically cost $200–$1,000 in Metro Vancouver (varies by municipality and scope). Permits are required when changing plumbing, electrical, gas lines, or structural elements. Cosmetic updates like new cabinets, countertops, and backsplash do not need permits. The permit process for a standard kitchen renovation takes 2–4 weeks in most Metro Vancouver municipalities."
       }
     },
     "realProjects": {

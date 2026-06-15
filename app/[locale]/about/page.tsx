@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import AboutPage from '@/components/pages/AboutPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales } from '@/lib/utils';
 import { getCompanyFromDb, getTrustBadgesFromDb } from '@/lib/db/queries';
 import { getYearsExperience } from '@/lib/company-config';
 
@@ -64,8 +64,23 @@ export default async function Page({ params }: PageProps) {
     answer: t(`faq.a${i}`),
   }));
 
+  const baseUrl = getBaseUrl();
+  const aboutPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `About ${company.name} — ${company.yearsExperience}+ Years of Vancouver Renovations`,
+    description: `Learn about ${company.name}, Metro Vancouver's renovation contractor with ${company.yearsExperience}+ years experience, $5M CGL insurance, and active WCB coverage.`,
+    url: `${baseUrl}/${locale}/about/`,
+    inLanguage: locale,
+    mainEntity: { '@id': `${baseUrl}/#organization` },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema).replace(/</g, '\\u003c') }}
+      />
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <AboutPage

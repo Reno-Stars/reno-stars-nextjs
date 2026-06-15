@@ -46,12 +46,23 @@ export function trackEvent(
 
 /**
  * Track a form submission event.
+ * Fires both 'form_submission' (custom) and 'generate_lead' (recommended GA4
+ * event) so GA4 counts form fills as conversions without additional console
+ * configuration. 'generate_lead' is a GA4 recommended event that surfaces in
+ * the Conversions report automatically.
  */
 export function trackFormSubmission(
   formName: string,
   params?: Record<string, string | number | boolean>
 ): void {
   trackEvent('form_submission', {
+    form_name: formName,
+    ...params,
+  });
+  // Fire generate_lead so GA4 records this as a conversion automatically.
+  // Pair: 2026-06-14 SEO agent — ga4-2ac3971a4100 (0 conversions despite
+  // 137 sessions / 63% engagement; form_submission was not mapped to conversion).
+  trackEvent('generate_lead', {
     form_name: formName,
     ...params,
   });

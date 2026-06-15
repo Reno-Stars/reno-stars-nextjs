@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -19,10 +19,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? '大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。$15K-$45K，3-6周完工。70+五星好评，免费估价。'
     : 'Bathroom renovation near you across Metro Vancouver — walk-in showers, tub conversions, custom vanities. $15K-$45K, 3-6 wks. $5M insured.';
   const baseUrl = getBaseUrl();
+  const ogImage = buildOgImageUrl(title, description);
   return {
     title, description,
     alternates: buildAlternates('/bathroom-renovation-near-me/', locale),
-    openGraph: { title, description, url: `${baseUrl}/${locale}/bathroom-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website' },
+    openGraph: { title, description, url: `${baseUrl}/${locale}/bathroom-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
   };
 }
 

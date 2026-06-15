@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -19,10 +19,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? '大温哥华附近专业地下室装修：suite改造、家庭影院、活动室。$35K-$130K+，8-16周。许可证代办，防水保障。免费估价。'
     : 'Basement renovation near you in Metro Vancouver. Legal suites, family rooms, home theatres. $35K-$130K+, 8-16 wks. Permits handled, $5M insured.';
   const baseUrl = getBaseUrl();
+  const ogImage = buildOgImageUrl(title, description);
   return {
     title, description,
     alternates: buildAlternates('/basement-renovation-near-me/', locale),
-    openGraph: { title, description, url: `${baseUrl}/${locale}/basement-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website' },
+    openGraph: { title, description, url: `${baseUrl}/${locale}/basement-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
   };
 }
 
