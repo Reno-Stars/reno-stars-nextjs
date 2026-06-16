@@ -243,6 +243,10 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
     { href: '/before-after', label: t('nav.beforeAfter') },
+    // Network Partner backlink — Vancouver Construction Network directory listing.
+    // Reciprocal dofollow footer link for their partner program (badge + higher
+    // directory placement). Added 2026-06-16.
+    { href: 'https://vancouverconstructionnetwork.com/directory/listing/reno-stars', label: 'Vancouver Construction Network', external: true },
     // supply.reno-stars.com link removed 2026-05-22: subdomain is in a redirect
     // loop (307 → /ca → 307 → loop) and was flagged by Semrush as a broken
     // external link on all 14 homepage language variants. Re-add when the
