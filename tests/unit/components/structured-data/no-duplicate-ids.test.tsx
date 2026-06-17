@@ -145,6 +145,29 @@ describe('structured-data: no duplicate @id collisions', () => {
     expect(node.aggregateRating).toBeDefined();
   });
 
+  it('never emits review[] without aggregateRating (GSC WNC-10030322 regression)', () => {
+    // Upstream Places API can return reviews with a zeroed rating/count
+    // (lib/google-reviews.ts makes two independent requests; if MOST_RELEVANT
+    // fails but NEWEST succeeds the result is { rating: 0, userRatingCount: 0,
+    // reviews: [...] }). Emitting those Review objects without an
+    // aggregateRating triggers Google's "Multiple reviews without
+    // aggregateRating object" structured-data error. The component must drop
+    // the review array entirely in that case.
+    const html = renderToStaticMarkup(
+      <LocalBusinessSchema
+        company={company}
+        socialLinks={socialLinks}
+        areas={areas}
+        googleRating={0}
+        googleReviewCount={0}
+        reviews={reviews}
+      />,
+    );
+    const [node] = extractJsonLd(html) as [Record<string, unknown>];
+    expect(node.aggregateRating).toBeUndefined();
+    expect(node.review).toBeUndefined();
+  });
+
   it('area page (LocalBusinessAreaSchema) uses a distinct @id from the layout organization', () => {
     const layoutTree = (
       <LocalBusinessSchema
