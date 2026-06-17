@@ -34,6 +34,16 @@ interface LocalBusinessSchemaProps {
 export default function LocalBusinessSchema({ company, socialLinks, areas, googleRating, googleReviewCount, reviews, description, locale }: LocalBusinessSchemaProps): React.ReactElement {
   const addressParts = parseAddress(company.address);
 
+  // Google requires an aggregateRating on any node that carries one or more
+  // Review objects — otherwise GSC flags "Multiple reviews without
+  // aggregateRating object" (WNC-10030322, 2026-06-17). The two blocks below
+  // MUST stay coupled to this single flag: never emit `review[]` without
+  // `aggregateRating`. This guards against the upstream Places API returning
+  // reviews with a zeroed rating/count (lib/google-reviews.ts makes two
+  // independent requests — if MOST_RELEVANT fails but NEWEST succeeds, the
+  // result is `{ rating: 0, userRatingCount: 0, reviews: [...] }`).
+  const hasAggregateRating = Boolean(googleRating && googleReviewCount);
+
   const schema = {
     '@context': 'https://schema.org',
     // Multi-typed: HomeAndConstructionBusiness IS-A LocalBusiness IS-A Organization
@@ -101,7 +111,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         ? [`https://www.google.com/maps/place/?q=place_id:${process.env.GOOGLE_PLACE_ID}`]
         : []),
     ],
-    ...(googleRating && googleReviewCount && {
+    ...(hasAggregateRating && {
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: googleRating,
@@ -111,7 +121,9 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         reviewCount: googleReviewCount,
       },
     }),
-    ...(reviews && reviews.length > 0 && {
+    // Gated on hasAggregateRating (NOT just reviews.length) so the review
+    // array is never emitted without the aggregateRating above it.
+    ...(hasAggregateRating && reviews && reviews.length > 0 && {
       review: reviews.map((r) => ({
         '@type': 'Review',
         author: {
