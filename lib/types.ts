@@ -199,6 +199,8 @@ export interface Project {
   image_pairs?: ImagePair[];
   /** Primary display image URL */
   hero_image: string;
+  /** Hero image alt text (SEO-agent managed, stored in localizations JSONB) */
+  hero_image_alt?: Localized<string>;
   /** Hero video URL (optional) */
   hero_video?: string;
   /** List of work scope items */
@@ -358,6 +360,8 @@ export interface BlogPost {
   content?: Localized<string>;
   /** Featured image URL for OG/social sharing */
   featured_image?: string;
+  /** Featured image alt text (SEO-agent managed, stored in localizations JSONB) */
+  featured_image_alt?: string;
   /** Author name */
   author?: string;
   /** Publication date */
@@ -452,6 +456,8 @@ export interface LocalizedProject {
   duration?: string;
   space_type?: string;
   hero_image: string;
+  /** Hero image alt text (SEO-agent managed) */
+  hero_image_alt?: string;
   hero_video?: string;
   /** @deprecated Use image_pairs instead. Will be removed in v2.0. */
   images: { src: string; alt: string; is_before?: boolean }[];

@@ -67,7 +67,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               <div className="relative w-full aspect-[2/1] rounded-xl overflow-hidden mb-6">
                 <OptimizedImage
                   src={post.featured_image}
-                  alt={localizedPost.title}
+                  alt={post.featured_image_alt || localizedPost.title}
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 800px"
