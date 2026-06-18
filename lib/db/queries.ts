@@ -577,6 +577,14 @@ function mapDbProjectToProject(
       ? buildLocalized('spaceType', row.spaceTypeEn ?? '', row.spaceTypeZh ?? '', row.localizations)
       : undefined,
     hero_image: getAssetUrl(row.heroImageUrl ?? ''),
+    hero_image_alt: (() => {
+      const locs = row.localizations as Record<string, unknown> | null;
+      const en = typeof locs?.['heroImageAltEn'] === 'string' ? locs['heroImageAltEn'] : '';
+      const zh = typeof locs?.['heroImageAltZh'] === 'string' ? locs['heroImageAltZh'] : '';
+      const zhHant = typeof locs?.['heroImageAltZhHant'] === 'string' ? locs['heroImageAltZhHant'] : '';
+      if (!en && !zh && !zhHant) return undefined;
+      return buildLocalized('heroImageAlt', en, zh, locs as Record<string, unknown> | null);
+    })(),
     hero_video: getOptionalAssetUrl(row.heroVideoUrl),
     images: [], // Legacy field - kept for type compatibility (removal planned for v2.0)
     image_pairs: sortByDisplayOrder(imagePairs).map(mapDbImagePairRowToImagePair),
@@ -1324,6 +1332,7 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
       excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
       content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
       featured_image: getOptionalAssetUrl(row.featuredImageUrl),
+      featured_image_alt: (row.localizations as Record<string, unknown> | null)?.['featuredImageAltEn'] as string | undefined ?? undefined,
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,

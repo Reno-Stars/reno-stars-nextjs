@@ -689,6 +689,7 @@ export function getLocalizedProject(project: Project, locale: Locale): Localized
     duration: pickLocaleOptional(project.duration, locale),
     space_type: pickLocaleOptional(project.space_type, locale),
     hero_image: project.hero_image,
+    hero_image_alt: project.hero_image_alt ? pickLocaleOptional(project.hero_image_alt, locale) : undefined,
     hero_video: project.hero_video,
     images: project.images.map((img) => ({
       src: img.src,

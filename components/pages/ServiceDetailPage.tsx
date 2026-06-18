@@ -210,7 +210,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                 style={{ backgroundColor: GOLD_PALE }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={service.icon} alt="" className="w-8 h-8" style={{ filter: GOLD_ICON_FILTER }} />
+                <img src={service.icon} alt={`${localizedService.title} service icon`} className="w-8 h-8" style={{ filter: GOLD_ICON_FILTER }} />
               </div>
             )}
             <div>
