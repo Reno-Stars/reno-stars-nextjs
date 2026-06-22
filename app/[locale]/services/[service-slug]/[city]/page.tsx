@@ -180,6 +180,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Commercial Renovation Maple Ridge | Reno Stars',
       description: 'Maple Ridge commercial renovation — restaurants, clinics, stores. Off-hours scheduling, permit management. Free consultation.',
     },
+    // 2026-06-21 on-page scan: generic template meta on these two commercial pages.
+    // Other commercial cities (west-van, delta, maple-ridge) already have localized
+    // descriptions with business types + neighbourhoods. Adding parity entries.
+    'commercial/coquitlam': {
+      title: 'Commercial Renovation Coquitlam | Reno Stars',
+      description: 'Coquitlam commercial renovation — office, retail & restaurant fit-outs in Town Centre, Austin Heights & Burke Mountain. Permits handled, minimal disruption. Free quote.',
+    },
+    'commercial/langley': {
+      title: 'Commercial Renovation Langley BC | Reno Stars',
+      description: 'Langley commercial renovation — office, retail & restaurant fit-outs in Langley City, Willoughby & Walnut Grove. Permits handled, minimal disruption. Free quote.',
+    },
     // Bathroom — high impressions
     'bathroom/burnaby': {
       title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
@@ -234,6 +245,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'whole-house/surrey': {
       title: 'Whole-House Renovation Surrey | $50K–$200K+ | Reno Stars',
       description: 'Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    // 2026-06-21 GSC scan: white-rock whole-house at pos 6.35 / 83 impressions / 0 clicks.
+    // Generic template showing — adding localized override to match surrey/burnaby/richmond pattern.
+    'whole-house/white-rock': {
+      title: 'Whole-House Renovation White Rock | $50K–$200K+ | Reno Stars',
+      description: 'White Rock whole-house renovation — East Beach, West Beach & South Surrey. SFH & character home projects. $50K–$200K+ from real projects. $5M insured. Free quote.',
     },
     // 2026-05-19 GSC pass: missing high-impression combos. Each entry below
     // targets a specific city+service query where the generic template was
