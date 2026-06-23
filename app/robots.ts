@@ -9,9 +9,14 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
+        // NOTE: /_next/ and /api/image, /api/og are intentionally crawlable.
+        // Blocking /_next/ stops Google/Bing from fetching the JS/CSS needed to
+        // render the page; blocking /api/ hid all images (served via /api/image)
+        // and OG previews (/api/og). Only the genuinely private API routes are
+        // disallowed below.
         disallow: [
-          '/api/',
-          '/_next/',
+          '/api/revalidate',
+          '/api/indexnow',
           '/admin/',
           '*/contact/thank-you/',
           '*/invoice/',
@@ -36,7 +41,13 @@ export default function robots(): MetadataRoute.Robots {
           'Bingbot',
         ],
         allow: '/',
-        disallow: ['/api/', '/_next/', '/admin/', '*/invoice/', '*/contact/thank-you/'],
+        disallow: [
+          '/api/revalidate',
+          '/api/indexnow',
+          '/admin/',
+          '*/invoice/',
+          '*/contact/thank-you/',
+        ],
       },
       // Training-only crawlers — no citation/retrieval benefit. Block them.
       {

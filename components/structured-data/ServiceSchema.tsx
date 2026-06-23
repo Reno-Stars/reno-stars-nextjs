@@ -21,8 +21,6 @@ interface ServiceSchemaProps {
    *  GeoCircle alongside the City `areaServed` list — Google reads both as
    *  complementary geographic-coverage signals for local pack eligibility. */
   serviceRadiusKm?: number;
-  /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
-  locale?: string;
 }
 
 export default function ServiceSchema({
@@ -37,7 +35,6 @@ export default function ServiceSchema({
   googleRating,
   googleReviewCount,
   serviceRadiusKm,
-  locale,
 }: ServiceSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const absoluteUrl = `${baseUrl}${url}`;
@@ -74,9 +71,9 @@ export default function ServiceSchema({
     schema.image = image;
   }
 
-  if (locale) {
-    schema.inLanguage = locale;
-  }
+  // NOTE: inLanguage is intentionally NOT set. It is a CreativeWork property
+  // and is invalid on a Service node. Page language is conveyed via
+  // <html lang> + hreflang, not a schema field.
 
   // Build areaServed: prefer the City list, fall back to single location.
   // When serviceRadiusKm is provided, append a GeoCircle node so Google

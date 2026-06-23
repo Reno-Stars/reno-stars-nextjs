@@ -94,7 +94,6 @@ export default function LocalBusinessAreaSchema({
         closes: '18:00',
       },
     ],
-    inLanguage: locale,
   };
 
   return (
