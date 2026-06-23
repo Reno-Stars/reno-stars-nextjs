@@ -7,7 +7,7 @@ import { db } from '@/lib/db';
 import { propertyTypes, serviceAreas } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
-import { crmClient, type CrmPropertyType } from '@/lib/clients/crm';
+import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/crm';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 
 /** Contact form input data */
@@ -286,14 +286,15 @@ export async function submitContactForm(
     const cityNameEn = areaRow[0]?.nameEn ?? null;
     const propertyTypeNameEn = propertyTypeRow[0]?.nameEn ?? null;
 
-    // Phase B cleanup (2026-05-28): Twenty CRM is the sole system of record
-    // for leads. The Neon `contact_submissions` dual-write was removed and
-    // the table dropped. We still look up the area/property type slug for
-    // human-readable email notification context + CRM payload.
+    // Task 10 (2026-06-23): Odoo is now the sole CRM system of record for
+    // leads. The contact form posts a single `crm.lead/ingest_web_lead` call
+    // which dedupes email→phone→name, creates/updates a res.partner, and
+    // creates a crm.lead in the Sales pipeline. The Twenty multi-call sequence
+    // (createPerson / createNoteOnPerson / createTaskForPerson) is retired.
     //
-    // We wrap the CRM chain in waitUntil so it runs in the background — the
-    // form action returns its success response immediately, and the user
-    // doesn't pay the CRM round-trip latency.
+    // We wrap the call in waitUntil so it runs in the background — the form
+    // action returns its success response immediately, and the user doesn't
+    // pay the Odoo round-trip latency.
     //
     // On failure the deadletter logs to stderr + alerts Telegram so manual
     // recovery is possible (the alert includes the full payload).
@@ -303,20 +304,16 @@ export async function submitContactForm(
       lastName: lastName || undefined,
       email: sanitizedEmail ?? undefined,
       phone: sanitizedPhone || undefined,
-      leadSource: 'OTHER' as const,
+      leadSource: 'OTHER',
       preferredAreaId: preferredAreaId ?? undefined,
+      preferredService: undefined as string | undefined,
       propertyType: mapPropertyTypeSlugToCrm(propertyTypeSlug),
       notesFromForm: sanitizedMessage,
     };
     waitUntil(
       (async () => {
         try {
-          const person = await crmClient.createPerson(crmPayload);
-          await crmClient.createNoteOnPerson(person.id, sanitizedMessage);
-          await crmClient.createTaskForPerson(
-            person.id,
-            `Follow up on new lead from ${sanitizedName}`
-          );
+          await createLeadInOdoo(crmPayload);
         } catch (err) {
           await recordCrmDeadLetter(crmPayload, err);
         }
