@@ -79,6 +79,12 @@ export const dynamic = 'force-dynamic';
  */
 const enServiceH1Overrides: Partial<Record<string, string>> = {
   basement: 'Basement Renovation in Vancouver — Legal Suites, Waterproofing & Permits',
+  // 2026-06-23: add Vancouver geo-modifier to align H1 with title tags.
+  // Without override the H1 is the DB title_en ("Kitchen Renovation") — no
+  // geo signal. Meta titles correctly read "Kitchen/Bathroom Renovation
+  // Vancouver". H1/title consistency improves relevance signals.
+  kitchen: 'Kitchen Renovation Vancouver — Custom Cabinetry, Countertops & Full Remodels',
+  bathroom: 'Bathroom Renovation Vancouver — Custom Tile, Waterproofing & Full Bath Remodels',
 };
 
 function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
