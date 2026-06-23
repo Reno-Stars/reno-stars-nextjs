@@ -275,6 +275,12 @@ const enAreaH1Overrides: Record<string, string> = {
   'west-vancouver': 'West Vancouver Home & Bathroom Renovations — Caulfeild, Dundarave & Ambleside',
   surrey: 'Surrey Renovation Contractor — Kitchens, Bathrooms & Basement Suites',
   'north-vancouver': 'North Vancouver Basement & Home Renovation Contractor — Lynn Valley to Deep Cove',
+  // 2026-06-23: fix heading-hierarchy finding — without override, NW falls
+  // back to t('areas.servingIn') which scanner reported as doubling the city.
+  // Explicit override aligns H1 with the meta title and adds geo-specificity.
+  'new-westminster': 'New Westminster Renovation Contractor — Quay, Sapperton & Queens Park',
+  // 2026-06-23: Langley H1 override for consistency with meta title.
+  langley: 'Langley Renovation Contractor — Walnut Grove, Willoughby & Fort Langley',
 };
 
 export function getAreaH1Override(slug: string, locale: Locale): string | undefined {

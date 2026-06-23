@@ -7,7 +7,23 @@ import { Link } from '@/navigation';
 import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
-import { marked } from 'marked';
+import { Marked, type Token } from 'marked';
+
+// Module-level marked instance for blog article body rendering.
+// The template already renders the article title as an explicit <h1> below.
+// Blog posts authored with leading "# Heading" markdown produce a second
+// <h1> inside the prose content, breaking heading hierarchy for SEO and
+// accessibility. walkTokens downgrade H1→H2 before parsing so authors
+// can write natural markdown without creating duplicate H1s.
+// Covers 10 heading-hierarchy findings (on-page scanner, Tick 441).
+const blogContentRenderer = new Marked();
+blogContentRenderer.use({
+  walkTokens(token: Token) {
+    if (token.type === 'heading' && token.depth === 1) {
+      token.depth = 2;
+    }
+  },
+});
 import { expandMarkdownLinksInHeadings } from '@/lib/utils';
 import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
 
@@ -123,7 +139,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   // can't fix on its own: an HTML heading block authored with a markdown
                   // link inside it. Sibling to PR #57's truncateMetaDescription strip.
                   expandMarkdownLinksInHeadings(
-                    marked.parse(localizedPost.content, { async: false }) as string,
+                    blogContentRenderer.parse(localizedPost.content, { async: false }) as string,
                   ),
                   BLOG_SANITIZE_OPTIONS
                 ) }} />
