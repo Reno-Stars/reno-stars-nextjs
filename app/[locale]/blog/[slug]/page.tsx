@@ -36,19 +36,36 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
   const faqHeading = content.match(/##\s*(?:Frequently Asked Questions|FAQs?|常见问题)\s*\n([\s\S]*?)(?=\n##\s|$)/i);
   if (!faqHeading) return [];
   const block = faqHeading[1];
-  const re = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
   const out: { question: string; answer: string }[] = [];
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(block)) !== null) {
-    const question = m[1].trim();
-    const answer = m[2]
+
+  function cleanAnswer(raw: string): string {
+    return raw
       .replace(/\[(.+?)\]\((.+?)\)/g, '$1')
       .replace(/[*_`#>]/g, '')
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 1000);
+  }
+
+  // Format 1: ### Heading style
+  const reH3 = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
+  let m: RegExpExecArray | null;
+  while ((m = reH3.exec(block)) !== null) {
+    const question = m[1].trim();
+    const answer = cleanAnswer(m[2]);
     if (question && answer) out.push({ question, answer });
   }
+
+  // Format 2: **Bold question** style (used when ### found nothing)
+  if (out.length === 0) {
+    const reBold = /^\*\*(.+?)\*\*\n([\s\S]*?)(?=\n\*\*|$)/gm;
+    while ((m = reBold.exec(block)) !== null) {
+      const question = m[1].trim();
+      const answer = cleanAnswer(m[2]);
+      if (question && answer) out.push({ question, answer });
+    }
+  }
+
   return out;
 }
 

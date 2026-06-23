@@ -33,7 +33,7 @@
       "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
     },
     "projectCategory": {
-      "title": "{category} Renovation Projects | Reno Stars Vancouver",
+      "title": "{category} Projects | Reno Stars Vancouver",
       "description": "Explore our {category} renovation projects across Vancouver and the Lower Mainland. View before-and-after photos and design inspiration."
     },
     "projectDetail": {
@@ -73,7 +73,7 @@
       },
       "bathroomCost": {
         "title": "Bathroom Renovation Cost Vancouver 2026 | Reno Stars",
-        "description": "Bathroom renovation cost Vancouver 2026: $10K–$20K refresh, $25K–$40K mid, $45K+ full remodel. Bathtub, shower, vanity & tile — 22 real projects."
+        "description": "Average bathroom renovation cost Vancouver 2026: $25K–$40K for most homes. Refresh $10K, full remodel $45K+. 22 real projects with photos & actual costs."
       },
       "wholeHouseCost": {
         "title": "Whole House Renovation Cost Vancouver 2026: $50K–$200K+",
