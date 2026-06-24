@@ -5,6 +5,13 @@
     "q2": "Do you offer 3D renderings of renovation designs?",
     "a2": "Yes, we provide 3D visualizations for many projects so you can see exactly how your renovated space will look before any work begins.",
     "q3": "How much does a design consultation cost?",
-    "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment."
+    "a3": "Our initial design consultations are free. We believe in helping you explore your options before making any commitment.",
+    "q4": "How long does the design process take before construction begins?",
+    "a4": "The design phase typically takes 1–3 weeks depending on project complexity. Simple single-room designs move faster; multi-room or whole-house designs include additional revision rounds. Once you approve the design, we move directly into scheduling and procurement.",
+    "q5": "What happens after I approve the design?",
+    "a5": "After design approval, we finalize material selections, apply for any required permits, and create a detailed construction schedule. Your designer stays involved through construction to ensure the build matches the approved vision.",
+    "q6": "Can I see design renderings for multiple rooms at once?",
+    "a6": "Yes. For whole-house and multi-room renovations, we create coordinated renderings for all spaces so you can review material palettes, finishes, and furniture layouts as a cohesive design before committing to any single room.",
+    "faqTitle": "Design & Rendering FAQs"
   }
 }

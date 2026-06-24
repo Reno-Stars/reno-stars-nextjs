@@ -8,17 +8,26 @@ import type { Company, DesignItem } from '@/lib/types';
 import { pickLocale } from '@/lib/utils';
 import { tetrisLayouts } from '@/components/TetrisGallery';
 import CTASection from '@/components/CTASection';
+import FaqSection from '@/components/home/FaqSection';
 import {
   NAVY, GOLD, SURFACE, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
+
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
 
 interface DesignPageProps {
   locale: Locale;
   company: Company;
   designs: DesignItem[];
+  faqs: FaqItem[];
+  faqTitle: string;
 }
 
-export default function DesignPage({ locale, company, designs }: DesignPageProps) {
+export default function DesignPage({ locale, company, designs, faqs, faqTitle }: DesignPageProps) {
   const t = useTranslations();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [failedImages, setFailedImages] = useState<Set<string>>(() => new Set());
@@ -101,6 +110,7 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
           <div className="prose prose-lg max-w-none" style={{ color: TEXT_MID }}>
             <p className="mb-4 leading-relaxed">{t('design.seoParagraph1')}</p>
             <p className="mb-4 leading-relaxed">{t('design.seoParagraph2')}</p>
+            <p className="mb-4 leading-relaxed">{t('design.seoParagraph3')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
             {(['designFeature1', 'designFeature2', 'designFeature3'] as const).map((key) => (
@@ -164,6 +174,16 @@ export default function DesignPage({ locale, company, designs }: DesignPageProps
           )}
         </div>
       </section>
+
+      {/* FAQ Section — op-f7a6e4e8ed: design page had 380w and 0 visible FAQ content
+          despite FAQSchema emitting 3 questions. Renders 6 accordion FAQs covering
+          design consultation scope, 3D process, timeline, and design-to-build flow. */}
+      {faqs.length > 0 && (
+        <FaqSection
+          faqs={faqs}
+          translations={{ title: faqTitle }}
+        />
+      )}
 
       <CTASection
         heading={t('projects.readyToTransform')}

@@ -57,16 +57,25 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const faqs = [
-    { question: faqT('q1'), answer: faqT('a1') },
-    { question: faqT('q2'), answer: faqT('a2') },
-    { question: faqT('q3'), answer: faqT('a3') },
+    { id: 'design-faq1', question: faqT('q1'), answer: faqT('a1') },
+    { id: 'design-faq2', question: faqT('q2'), answer: faqT('a2') },
+    { id: 'design-faq3', question: faqT('q3'), answer: faqT('a3') },
+    { id: 'design-faq4', question: faqT('q4'), answer: faqT('a4') },
+    { id: 'design-faq5', question: faqT('q5'), answer: faqT('a5') },
+    { id: 'design-faq6', question: faqT('q6'), answer: faqT('a6') },
   ];
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
-      <DesignPage locale={locale as Locale} company={company} designs={designs} />
+      <DesignPage
+        locale={locale as Locale}
+        company={company}
+        designs={designs}
+        faqs={faqs}
+        faqTitle={faqT('faqTitle')}
+      />
     </>
   );
 }
