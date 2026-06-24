@@ -10,6 +10,7 @@ import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
+import { buildOptimizedUrl, buildSrcSet, isR2Url, buildProcessedUrl, buildProcessedSrcSet } from '@/lib/image';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
@@ -227,8 +228,39 @@ export default async function Page({ params }: PageProps) {
     { question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
   ].filter((f) => f.question && f.answer);
 
+  const serviceHeroImage = service.image || siteImages.hero;
+
   return (
     <>
+      {/* Hero preload — React 19's auto-preload for srcset <img> tags omits
+          fetchPriority="high", so the full-res hero ends up downloading at
+          normal priority AFTER the 20px LQIP thumb. On mobile/slow links
+          this delays LCP. Explicit <link rel="preload"> with fetchPriority
+          mirrors the global-hero preload in layout.tsx and starts the
+          download during HTML head parsing. */}
+      {serviceHeroImage && (
+        isR2Url(serviceHeroImage) ? (
+          <link
+            rel="preload"
+            as="image"
+            href={buildProcessedUrl(serviceHeroImage, 828)}
+            imageSrcSet={buildProcessedSrcSet(serviceHeroImage)}
+            imageSizes="100vw"
+            type="image/webp"
+            fetchPriority="high"
+          />
+        ) : (
+          <link
+            rel="preload"
+            as="image"
+            href={buildOptimizedUrl(serviceHeroImage, 828)}
+            imageSrcSet={buildSrcSet(serviceHeroImage)}
+            imageSizes="100vw"
+            type="image/webp"
+            fetchPriority="high"
+          />
+        )
+      )}
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* Use long_description in schema only when the current locale has a
           genuine translation (not a pickLocale en-fallback). Otherwise use
