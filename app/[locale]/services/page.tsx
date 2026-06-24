@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ServicesPage from '@/components/pages/ServicesPage';
 import AnswerBlockSection from '@/components/home/AnswerBlockSection';
-import { BreadcrumbSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getLocalizedService } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -52,10 +52,30 @@ export default async function Page({ params }: PageProps) {
     getServiceAreasFromDb(),
   ]);
 
-  const [t, sectionT] = await Promise.all([
+  const [t, sectionT, aboutT] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'section' }),
+    getTranslations({ locale, namespace: 'aboutPage' }),
   ]);
+
+  // Hub-level FAQs reuse the aboutPage.faq translations (q1–q5) which
+  // cover: how long in business, licensing/insurance, service areas, getting
+  // started, and what makes Reno Stars different. These are general questions
+  // equally relevant on the services hub as on the about page — no separate
+  // translation keys needed. Mirrors about/page.tsx exactly.
+  //
+  // next-intl returns the namespaced key string (e.g. "aboutPage.faq.q1")
+  // for missing translations rather than throwing. Filter those out so
+  // locales with partial aboutPage translations degrade gracefully.
+  const hubFaqs = [1, 2, 3, 4, 5]
+    .map((i) => ({
+      question: aboutT(`faq.q${i}`),
+      answer: aboutT(`faq.a${i}`),
+    }))
+    .filter(
+      ({ question, answer }) =>
+        !question.startsWith('aboutPage.') && question.length > 0 && answer.length > 0
+    );
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('services'), url: `/${locale}/services/` },
@@ -110,6 +130,13 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
+      {/* Hub-level FAQPage schema — covers cross-service questions: licensing,
+          insurance, service areas, getting started, and differentiators.
+          Individual service detail pages have their own service-specific
+          FAQPage schemas. This schema surfaces in Google's rich snippets for
+          "{service} contractor Vancouver" queries that land on the hub.
+          Source: on-page scanner finding on-page-9e16c591391d (2026-06-18). */}
+      <FAQSchema faqs={hubFaqs} locale={locale} />
       {answerBlockT && (
         <AnswerBlockSection
           foundingYear={company.foundingYear}
