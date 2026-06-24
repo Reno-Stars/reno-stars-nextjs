@@ -461,6 +461,15 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
                 desc: locale === 'zh' ? '$25K–$120K+ 按设计风格' : '$25K–$120K+ by design style',
               },
+              {
+                // 2026-06-24: Internal link to bathroom service page — strengthens
+                // topic cluster hub→service authority for "bathroom renovation
+                // vancouver" query (currently at pos 13.69 on cost guide, gsc-9ade0eb00cfd).
+                // Passes link equity from high-impression cost guide to service page.
+                href: `/${locale}/services/bathroom/`,
+                title: locale === 'zh' ? '浴室翻新服务 Vancouver' : 'Bathroom Renovation Vancouver',
+                desc: locale === 'zh' ? '查看案例、保修政策，获取免费报价' : 'Portfolio, warranty & free quote',
+              },
             ].map((p) => (
               <Link
                 key={p.href}

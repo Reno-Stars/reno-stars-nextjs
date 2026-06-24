@@ -414,6 +414,23 @@ export default function KitchenCostGuidePage({ locale, projects, phone }: Kitche
               Read our Vancouver backsplash cost guide →
             </Link>
           </p>
+          {/* 2026-06-24: service page inbound — kitchen cost guide is a
+              high-impression hub (1400+ impressions/28d for cost queries)
+              with no outbound link to the kitchen service page. Adding a
+              "hire us" link with the exact anchor "kitchen renovation
+              Vancouver" strengthens the topic-cluster hub→service signal
+              and passes link equity to the service page for the broad
+              "kitchen renovation Vancouver" query. */}
+          <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+            Ready to hire?{' '}
+            <Link
+              href={`/${locale}/services/kitchen/`}
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our kitchen renovation Vancouver services →
+            </Link>
+          </p>
         </div>
       </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
