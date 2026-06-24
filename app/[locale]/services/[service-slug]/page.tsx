@@ -99,6 +99,11 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
   // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
   'heat-pump-hvac': 'Heat Pump Installation Vancouver — Ductless Mini-Splits, HVAC & Energy Rebates',
+  // 2026-06-24: "poly b replacement vancouver" (146 imp, pos 18.8) — H1 is bare
+  // "Poly-B Pipe Replacement" with no Vancouver geo signal. Meta title correctly
+  // reads "Poly-B Pipe Replacement Vancouver" but H1/title mismatch weakens
+  // local relevance. Adding Vancouver geo + descriptors to close the gap.
+  'poly-b-replacement': 'Poly-B Pipe Replacement Vancouver — PEX Re-pipe, Permit & Inspection',
 };
 
 function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
