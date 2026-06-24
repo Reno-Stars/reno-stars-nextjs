@@ -1,7 +1,7 @@
 {
   "showroomPage": {
-    "heroTitle": "Visit Our Showroom",
-    "heroSubtitle": "Experience renovation materials, designs, and finishes firsthand",
+    "heroTitle": "Visit Our Renovation Showroom",
+    "heroSubtitle": "See kitchen and bathroom materials in person — cabinets, countertops, tile, and flooring samples. Free consultations at our Richmond BC showroom.",
     "addressTitle": "Location & Hours",
     "phoneTitle": "Phone",
     "emailTitle": "Email",
@@ -12,6 +12,7 @@
     "ctaDescription": "Book a free consultation at our showroom. Our design team will help you explore options and plan your renovation.",
     "bookConsultation": "Book a Free Consultation",
     "callUs": "Or call us at",
+    "faqTitle": "Showroom FAQs",
     "faq1q": "Do I need an appointment to visit the showroom?",
     "faq1a": "Walk-ins are welcome, but we recommend booking an appointment so our design team can dedicate time to discuss your project in detail.",
     "faq2q": "What can I see at the Reno Stars showroom?",
@@ -20,6 +21,14 @@
     "faq3a": "Yes, free parking is available directly in front of our showroom location in Richmond.",
     "faq4q": "Can I bring my renovation plans to the showroom?",
     "faq4a": "Absolutely! Bring your floor plans, photos, or inspiration images. Our team can review them and provide professional recommendations during your visit.",
+    "faq5q": "What renovation materials are on display at the showroom?",
+    "faq5a": "The showroom displays kitchen cabinet samples in shaker, slab, and raised-panel styles; countertop slabs in quartz and laminate; and floor and wall tile in a range of formats and finishes. Comparing finishes side by side in person is far more useful than selecting from a catalogue or screen.",
+    "faq6q": "How far in advance should I book a showroom appointment?",
+    "faq6a": "For most consultations, 3–7 days' notice is ideal. If your project start date is within the next 2–4 weeks, call us directly at 778-960-7999 and we will do our best to accommodate a same-week visit.",
+    "faq7q": "Is the showroom consultation free?",
+    "faq7a": "Yes. Showroom consultations are completely free with no obligation. Our team will review your project, discuss material options, and provide a rough budget overview at no cost. Detailed written quotes are also free.",
+    "faq8q": "Can I discuss multiple rooms in one showroom visit?",
+    "faq8a": "Absolutely. If you bring floor plans or measurements for multiple rooms, our team can discuss scope and ballpark pricing for your kitchen, bathrooms, and other areas in a single consultation. Multi-room projects often benefit from combined planning.",
     "appointmentPrefix": "Welcome to schedule a visit to our Renovation showroom",
     "appointmentBold": "by appointment!"
   }
