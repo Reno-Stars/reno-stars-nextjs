@@ -121,7 +121,11 @@ function getServiceH1Override(serviceSlug: string, locale: Locale): string | und
 const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, 3-yr workmanship warranty. Free quote.',
   bathroom:   'Vancouver bathroom renovations — waterproofing, custom tile, showers, soaker tubs & vanities. $5M insured, 3-yr warranty. Free quote.',
-  basement:   'Metro Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Permits handled. $5M insured, 3-yr warranty.',
+  // 2026-06-24: "basement renovation vancouver" (121 imp, pos 18.8) + "vancouver
+  // basement renovations" (58 imp, pos 15.4) — description started with "Metro
+  // Vancouver basement renovations" but query form is "Vancouver basement
+  // renovations" / "basement renovation Vancouver". Moved Vancouver to front.
+  basement:   'Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Metro-wide service. Permits handled. $5M insured, 3-yr warranty.',
   'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, 3-yr warranty. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
   // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
