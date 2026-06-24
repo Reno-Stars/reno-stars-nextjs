@@ -20,6 +20,7 @@ import {
 interface KitchenCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function parseBudgetRange(range: string | null): [number, number] | null {
@@ -33,7 +34,7 @@ function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGuidePageProps) {
+export default function KitchenCostGuidePage({ locale, projects, phone }: KitchenCostGuidePageProps) {
   const t = useTranslations('guides.kitchenCost');
   const tGuides = useTranslations('guides.relatedGuides');
   const tCity = useTranslations('guides.cityCostTable');
@@ -213,6 +214,60 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
         </div>
       </section>
 
+      {/* Kitchen Renovation Timeline — new section 2026-06-24.
+          Addresses on-page-3240a87e5730 (1,400w→2,200w expansion) and
+          positions the guide for "kitchen renovation timeline vancouver"
+          striking-distance queries. Phases reference durations already
+          present in tier descriptions; no new numeric claims added. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('timeline.title')}</h2>
+          <p className="text-center mb-6" style={{ color: TEXT_MID }}>{t('timeline.subtitle')}</p>
+          <p className="mb-8 text-base leading-relaxed" style={{ color: TEXT_MID }}>{t('timeline.intro')}</p>
+          <div className="space-y-4">
+            {(['phase1', 'phase2', 'phase3', 'phase4', 'phase5'] as const).map((key, i) => (
+              <div key={key} className="rounded-xl p-5 flex gap-4" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <div
+                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+                  style={{ backgroundColor: GOLD_PALE, color: GOLD }}
+                >
+                  {i + 1}
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: GOLD }}>
+                    {t(`timeline.${key}.label`)}
+                  </div>
+                  <h3 className="font-bold mb-1" style={{ color: TEXT }}>{t(`timeline.${key}.title`)}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`timeline.${key}.description`)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How a Kitchen Renovation Works — process walkthrough section.
+          Supports FAQ q3 (permits) and q2 (timeline) featured-snippet
+          eligibility by surfacing both topics as structured prose before
+          the FAQ accordion. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('process.title')}</h2>
+          <p className="text-center mb-8" style={{ color: TEXT_MID }}>{t('process.subtitle')}</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {(['step1', 'step2', 'step3', 'step4', 'step5', 'step6'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: GOLD }}>
+                  {t(`process.${key}.label`)}
+                </div>
+                <h3 className="font-bold mb-2" style={{ color: TEXT }}>{t(`process.${key}.title`)}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`process.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CostByCityTable
         projects={projects}
         title={tCity('kitchenTitle')}
@@ -359,9 +414,26 @@ export default function KitchenCostGuidePage({ locale, projects }: KitchenCostGu
               Read our Vancouver backsplash cost guide →
             </Link>
           </p>
+          {/* 2026-06-24: service page inbound — kitchen cost guide is a
+              high-impression hub (1400+ impressions/28d for cost queries)
+              with no outbound link to the kitchen service page. Adding a
+              "hire us" link with the exact anchor "kitchen renovation
+              Vancouver" strengthens the topic-cluster hub→service signal
+              and passes link equity to the service page for the broad
+              "kitchen renovation Vancouver" query. */}
+          <p className="text-sm mt-2" style={{ color: TEXT_MID }}>
+            Ready to hire?{' '}
+            <Link
+              href={`/${locale}/services/kitchen/`}
+              className="font-semibold underline hover:no-underline"
+              style={{ color: GOLD }}
+            >
+              See our kitchen renovation Vancouver services →
+            </Link>
+          </p>
         </div>
       </section>
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }

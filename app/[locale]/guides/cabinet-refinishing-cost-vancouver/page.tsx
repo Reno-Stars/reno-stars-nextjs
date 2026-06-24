@@ -86,7 +86,7 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-08"
         locale={locale}
       />
-      <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} />
+      <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} phone={company.phone} />
     </>
   );
 }

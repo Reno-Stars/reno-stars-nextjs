@@ -130,7 +130,7 @@ export default async function Page({ params }: PageProps) {
         steps={howToSteps}
         locale={locale}
       />
-      <KitchenCostGuidePage locale={locale as Locale} projects={projects} />
+      <KitchenCostGuidePage locale={locale as Locale} projects={projects} phone={company.phone} />
     </>
   );
 }

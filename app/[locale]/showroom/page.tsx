@@ -56,10 +56,14 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const faqs = [
-    { question: t('faq1q'), answer: t('faq1a') },
-    { question: t('faq2q'), answer: t('faq2a') },
-    { question: t('faq3q'), answer: t('faq3a') },
-    { question: t('faq4q'), answer: t('faq4a') },
+    { id: 'showroom-faq1', question: t('faq1q'), answer: t('faq1a') },
+    { id: 'showroom-faq2', question: t('faq2q'), answer: t('faq2a') },
+    { id: 'showroom-faq3', question: t('faq3q'), answer: t('faq3a') },
+    { id: 'showroom-faq4', question: t('faq4q'), answer: t('faq4a') },
+    { id: 'showroom-faq5', question: t('faq5q'), answer: t('faq5a') },
+    { id: 'showroom-faq6', question: t('faq6q'), answer: t('faq6a') },
+    { id: 'showroom-faq7', question: t('faq7q'), answer: t('faq7a') },
+    { id: 'showroom-faq8', question: t('faq8q'), answer: t('faq8a') },
   ];
 
   const localizedShowroom = {
@@ -79,6 +83,7 @@ export default async function Page({ params }: PageProps) {
     hoursTitle: t('hoursTitle'),
     hoursValue: t('hoursValue'),
     mapTitle: t('mapTitle'),
+    faqTitle: t('faqTitle'),
     ctaTitle: t('ctaTitle'),
     ctaDescription: t('ctaDescription'),
     bookConsultation: t('bookConsultation'),
@@ -92,6 +97,7 @@ export default async function Page({ params }: PageProps) {
       <ShowroomPage
         company={company}
         showroom={localizedShowroom}
+        faqs={faqs}
         translations={translations}
       />
     </>

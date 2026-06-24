@@ -85,6 +85,19 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   // Vancouver". H1/title consistency improves relevance signals.
   kitchen: 'Kitchen Renovation Vancouver — Custom Cabinetry, Countertops & Full Remodels',
   bathroom: 'Bathroom Renovation Vancouver — Custom Tile, Waterproofing & Full Bath Remodels',
+  // 2026-06-24: Whole-house + commercial H1s flagged by on-page scanner
+  // (on-page-7646195cb828, on-page-739a04eac24c) — same weak-H1 geo-gap pattern
+  // as kitchen/bathroom above. Meta titles read "Whole House Renovation Vancouver
+  // — 3-Yr Warranty" and "Commercial Renovation Vancouver — 3-Yr Warranty", so
+  // H1s must carry "Vancouver" to align local relevance signals.
+  'whole-house': 'Whole-House Renovation Vancouver — Kitchens, Bathrooms & Full Home Remodels',
+  commercial: 'Commercial Renovation Vancouver — Offices, Retail & Restaurant Build-Outs',
+  // Cabinet refacing H1 "Cabinet Refacing" is bare — add geo + differentiator.
+  cabinet: 'Cabinet Refacing Vancouver — Refinishing, Resurfacing & Hardware Upgrades',
+  // 2026-06-24: H1 "Heat Pump Installation" is bare — scanner flagged missing
+  // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
+  // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
+  'heat-pump-hvac': 'Heat Pump Installation Vancouver — Ductless Mini-Splits, HVAC & Energy Rebates',
 };
 
 function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
@@ -105,6 +118,26 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   basement:   'Metro Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Permits handled. $5M insured, 3-yr warranty.',
   'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, 3-yr warranty. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
+  // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
+  // vancouver" striking-distance. Description now surfaces "poly-b replacement"
+  // + "vancouver" + insurance motivation up front, matching query intent.
+  'poly-b-replacement': 'Poly-B replacement in Metro Vancouver — full PEX re-pipe, BC permit + inspection included. Required by most BC insurers for homes built 1985–1997. Free quote.',
+};
+
+/**
+ * ZH meta description overrides — resolves cross-locale-f21f1b4470f3 &
+ * cross-locale-6e4bf56fdd76 (scanner found /zh/services/kitchen/ and
+ * /zh/services/whole-house/ with no optimised meta description).
+ * DB long_description_zh starts with markdown links that strip to
+ * "Vancouver 厨房装修 — 根据一份合同…" — valid but not keyword-optimised.
+ * These overrides use the same complete-sentence / CTA pattern as EN.
+ * Tick 485 — 2026-06-24.
+ */
+const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
+  'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -119,6 +152,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedService = getLocalizedService(service, locale as Locale);
   const baseUrl = getBaseUrl();
   const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
+    || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;

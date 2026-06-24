@@ -20,6 +20,7 @@ import {
 interface BathroomCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function parseBudgetRange(range: string | null): [number, number] | null {
@@ -33,7 +34,7 @@ function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function BathroomCostGuidePage({ locale, projects }: BathroomCostGuidePageProps) {
+export default function BathroomCostGuidePage({ locale, projects, phone }: BathroomCostGuidePageProps) {
   const t = useTranslations('guides.bathroomCost');
   const tGuides = useTranslations('guides.relatedGuides');
 
@@ -216,6 +217,27 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
+      {/* Mid-guide inline CTA — ga4-ee9bf2dfb8c0: bathroom cost guide has
+          83% engagement rate but 0 conversions (12 sessions/90d). Placed
+          directly after the cost-tier cards while budget intent is highest;
+          users who've read all three tiers have priced themselves in and need
+          a low-friction next step before scrolling past 8 more sections. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div>
+            <p className="font-bold text-lg text-white">{t('inlineCta.heading')}</p>
+            <p className="text-sm mt-1" style={{ color: GOLD }}>{t('inlineCta.sub')}</p>
+          </div>
+          <Link
+            href="/contact"
+            className="flex-shrink-0 px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-transform hover:scale-[1.02]"
+            style={{ backgroundColor: GOLD, color: '#fff' }}
+          >
+            {t('inlineCta.button')}
+          </Link>
+        </div>
+      </section>
+
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('factors.title')}</h2>
@@ -234,6 +256,59 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Shower Renovation Cost — dedicated H2 targeting "shower renovation cost"
+          query cluster (gsc-262533805fb3, pos ~18, 2026-06-23 scan). Placed after
+          the factors-overview section so users who want the per-scope deep-dive
+          find it immediately after the overview cards. Prices source from
+          factors.shower + FAQ q3/q4 already in this file — not new data. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('showerCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('showerCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('showerCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['conversion', 'curbless', 'enclosureOnly'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`showerCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`showerCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`showerCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>{t('showerCost.note')}</p>
+        </div>
+      </section>
+
+      {/* Vanity Renovation Cost — dedicated H2 targeting "vanity renovation cost"
+          query cluster (gsc-7bee67263c70, 2026-06-23 scan). Prices from
+          factors.vanity already in this file — stock/semi/custom tiers. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('vanityCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('vanityCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('vanityCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['stock', 'semiCustom', 'custom'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`vanityCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`vanityCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`vanityCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('vanityCost.note')}
+            <Link href={`/${locale}/blog/vanity-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Vanity Renovation Cost Vancouver →
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -386,6 +461,15 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
                 desc: locale === 'zh' ? '$25K–$120K+ 按设计风格' : '$25K–$120K+ by design style',
               },
+              {
+                // 2026-06-24: Internal link to bathroom service page — strengthens
+                // topic cluster hub→service authority for "bathroom renovation
+                // vancouver" query (currently at pos 13.69 on cost guide, gsc-9ade0eb00cfd).
+                // Passes link equity from high-impression cost guide to service page.
+                href: `/${locale}/services/bathroom/`,
+                title: locale === 'zh' ? '浴室翻新服务 Vancouver' : 'Bathroom Renovation Vancouver',
+                desc: locale === 'zh' ? '查看案例、保修政策，获取免费报价' : 'Portfolio, warranty & free quote',
+              },
             ].map((p) => (
               <Link
                 key={p.href}
@@ -448,7 +532,7 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
           </p>
         </div>
       </section>
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }

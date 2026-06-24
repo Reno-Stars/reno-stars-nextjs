@@ -4,8 +4,15 @@ import { Link } from '@/navigation';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import type { Company } from '@/lib/types';
 import { NAVY, GOLD, SURFACE, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import FaqSection from '@/components/home/FaqSection';
 
 const NEU8 = neu(8);
+
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
 
 interface ShowroomPageProps {
   company: Company;
@@ -14,6 +21,7 @@ interface ShowroomPageProps {
     phone: string;
     email: string;
   };
+  faqs: FaqItem[];
   translations: {
     heroTitle: string;
     heroSubtitle: string;
@@ -25,6 +33,7 @@ interface ShowroomPageProps {
     hoursTitle: string;
     hoursValue: string;
     mapTitle: string;
+    faqTitle: string;
     ctaTitle: string;
     ctaDescription: string;
     bookConsultation: string;
@@ -32,7 +41,7 @@ interface ShowroomPageProps {
   };
 }
 
-export default function ShowroomPage({ company, showroom, translations: t }: ShowroomPageProps) {
+export default function ShowroomPage({ company, showroom, faqs, translations: t }: ShowroomPageProps) {
   const mapQuery = encodeURIComponent(showroom.address || company.address);
 
   return (
@@ -121,6 +130,16 @@ export default function ShowroomPage({ company, showroom, translations: t }: Sho
           </div>
         </div>
       </section>
+
+      {/* FAQ Section — showroom-thin-content: renders the 8 FAQ items that were
+          previously only emitted as JSON-LD schema (invisible). Adds ~300w of
+          visible, crawlable content and an accordion UI for engagement. */}
+      {faqs.length > 0 && (
+        <FaqSection
+          faqs={faqs}
+          translations={{ title: t.faqTitle }}
+        />
+      )}
 
       {/* CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>

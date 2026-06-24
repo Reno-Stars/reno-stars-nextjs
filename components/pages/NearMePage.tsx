@@ -28,9 +28,15 @@ import {
 interface Props {
   locale: Locale;
   areas: ServiceArea[];
+  /** Service-specific H1 override. If provided, replaces the generic
+   *  t("hero.h1") text so each near-me sub-page targets a distinct
+   *  service query rather than duplicating "Looking for a renovation
+   *  company near you?" across all 5 URLs (op-d087a446b70a).
+   */
+  h1Override?: string;
 }
 
-export default function NearMePage({ locale, areas }: Props) {
+export default function NearMePage({ locale, areas, h1Override }: Props) {
   const t = useTranslations("nearMe");
 
   const services = ["kitchen", "bathroom", "wholeHouse", "basement", "cabinet", "commercial"] as const;
@@ -67,7 +73,7 @@ export default function NearMePage({ locale, areas }: Props) {
             className="text-4xl md:text-5xl font-bold mb-6"
             style={{ color: NAVY }}
           >
-            {t("hero.h1")}
+            {h1Override ?? t("hero.h1")}
           </h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10" style={{ color: TEXT_MID }}>
             {t("hero.subtitle")}

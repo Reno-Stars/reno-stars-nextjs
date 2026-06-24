@@ -3,7 +3,7 @@
     "breadcrumb": "Kitchen Renovation Cost",
     "hero": {
       "title": "Average Kitchen Remodel Cost in Vancouver BC (2026)",
-      "subtitle": "Real pricing from completed kitchen remodels and renovations across Greater Vancouver. Kitchen renovation costs in Vancouver typically range from $15,000 for a cosmetic refresh to $72,000+ for a full custom build. Every number below comes from actual Reno Stars projects — not industry estimates. Here's a complete breakdown by tier, cost factor, and timeline to help you plan your budget."
+      "subtitle": "The average kitchen remodel cost in Vancouver ranges from $15,000 to $72,000+, with most mid-range kitchen renovations landing around $28,000–$38,000. These are real prices from actual Reno Stars kitchen remodels and renovations across Greater Vancouver — not industry estimates or national averages. Below you will find a complete breakdown by tier, cost factor, permit requirements, and a full renovation timeline to help you plan your budget."
     },
     "stats": {
       "avgCost": "Average Cost",
@@ -54,6 +54,70 @@
       "permits": {
         "title": "Permits & Inspections",
         "description": "Building permits for kitchen renovations typically cost $200–$1,000 in Metro Vancouver (varies by municipality and scope). Permits are required when changing plumbing, electrical, gas lines, or structural elements. Cosmetic updates like new cabinets, countertops, and backsplash do not need permits. The permit process for a standard kitchen renovation takes 2–4 weeks in most Metro Vancouver municipalities."
+      }
+    },
+    "timeline": {
+      "title": "Kitchen Renovation Timeline",
+      "subtitle": "What to expect from permit application to handover — based on Greater Vancouver kitchen projects",
+      "intro": "On-site kitchen renovation work typically runs 3 to 6 weeks once trades are on-site. The full project from first consultation to move-back spans longer, however, once you account for permit processing and material lead times. Budget renovations with stock cabinets and no plumbing changes move fastest. High-end projects with custom cabinetry, structural work, and multiple permit inspections take the most time. Understanding the sequence helps you plan appliance deliveries, temporary kitchen setup, and your own schedule during construction.",
+      "phase1": {
+        "label": "Pre-Construction",
+        "title": "Design, Materials & Permit Application",
+        "description": "Measurements, design sign-off, and all material selections — cabinets, countertops, tile, appliances, and hardware — are completed before any demolition begins. Permit drawings are submitted at this stage if your scope includes plumbing, electrical, gas, or structural work. Metro Vancouver municipalities typically take 2 to 4 weeks to issue a building permit. Custom cabinetry orders are placed immediately after design sign-off so fabrication runs concurrently with permit processing, avoiding weeks of unnecessary delay."
+      },
+      "phase2": {
+        "label": "Construction — Phase 1",
+        "title": "Demolition & Rough-In Trades",
+        "description": "Once the permit is issued, demolition removes existing cabinets, countertops, appliances, and flooring, stripping the space back to framing and subfloor. Plumbers, electricians, and gas fitters complete all relocations or upgrades during rough-in — this is the most disruptive phase and the kitchen will be fully non-functional. A building inspector visits to approve rough-in work before walls and ceilings are closed. This mandatory inspection step needs to be scheduled in advance with the municipality."
+      },
+      "phase3": {
+        "label": "Construction — Phase 2",
+        "title": "Cabinet Installation & Countertop Templating",
+        "description": "Cabinets are installed once the rough-in inspection passes. This milestone unlocks countertop fabrication: a countertop templater measures the installed cabinets precisely so the slab can be cut to fit. Templating cannot happen before cabinets are fully set and levelled — a common misconception that delays projects when clients expect counter installation immediately after cabinet delivery. Quartz or stone slabs go to the fabrication shop after templating and are delivered once cut and polished."
+      },
+      "phase4": {
+        "label": "Construction — Phase 3",
+        "title": "Countertops, Tile, Appliances & Finishes",
+        "description": "Countertops are installed after fabrication and delivery. Backsplash tile, flooring, pot-lights, and under-cabinet lighting are installed next. Appliances are connected once countertops and plumbing rough-in are both finalized — dishwasher supply and drain, range gas or 240V circuit, refrigerator water line. Painters and finish carpenters then complete the space with paint, hardware installation, and any trim or crown moulding work. At this point the kitchen becomes functional again."
+      },
+      "phase5": {
+        "label": "Final Phase",
+        "title": "Inspections, Punch-List & Handover",
+        "description": "Final plumbing and electrical inspections are scheduled after all connections are made. Your contractor walks the kitchen with you on a punch-list inspection — outstanding touch-ups such as grout haze, paint edges, hardware alignment, or appliance commissioning are documented and addressed before final payment is released. Once all items are signed off, the contractor closes the permit file with the municipality and provides lien-holdback documentation per BC's Builder Lien Act."
+      }
+    },
+    "process": {
+      "title": "How a Kitchen Renovation Works in Vancouver",
+      "subtitle": "Six steps from first site visit to final handover",
+      "step1": {
+        "label": "Step 1",
+        "title": "Site Visit & Scope Definition",
+        "description": "A renovation specialist visits your home to measure the kitchen and review your goals, wish list, and budget. Structural constraints — load-bearing walls, plumbing stack location, electrical panel capacity — are assessed on-site. Scope and budget range are documented in a written proposal before any work begins."
+      },
+      "step2": {
+        "label": "Step 2",
+        "title": "Design & Material Selection",
+        "description": "Cabinet style, door profiles, countertop material, tile, flooring, hardware, and appliance package are finalized. For projects involving wall removal or layout changes, a structural engineer may be engaged to specify beam sizing and connection details. Most clients spend 1 to 2 sessions narrowing selections before signing off on the design package."
+      },
+      "step3": {
+        "label": "Step 3",
+        "title": "Permit Application & Material Ordering",
+        "description": "Permit drawings are submitted to your municipality for any plumbing, electrical, gas, or structural work. In Metro Vancouver, permit review typically takes 2 to 4 weeks. Cabinet and countertop orders are placed concurrently so materials arrive close to the permit issuance date, minimizing the gap between permit approval and construction start."
+      },
+      "step4": {
+        "label": "Step 4",
+        "title": "Demolition & Rough-In",
+        "description": "Old cabinets, appliances, flooring, and finishes are removed. Rough-in trades — plumber, electrician, gas fitter, and framer — complete all relocations and upgrades before walls are closed. A building inspector signs off on rough-in work as a mandatory checkpoint before construction continues to the next phase."
+      },
+      "step5": {
+        "label": "Step 5",
+        "title": "Cabinet, Countertop & Finish Installation",
+        "description": "Cabinets are installed and levelled, followed by countertop templating and fabrication. Once countertops are in, backsplash tile, flooring, appliances, pot-lights, paint, and hardware are installed to bring the kitchen to its finished state. This phase transforms the space from a bare shell into a functioning kitchen."
+      },
+      "step6": {
+        "label": "Step 6",
+        "title": "Final Inspection & Handover",
+        "description": "Trade inspections are scheduled and the permit file is closed with the municipality. A final walkthrough captures any outstanding punch-list items. Upon completion you receive warranty documentation, lien-holdback paperwork per BC's Builder Lien Act, and care instructions for your new countertops, cabinets, and tile grout."
       }
     },
     "realProjects": {

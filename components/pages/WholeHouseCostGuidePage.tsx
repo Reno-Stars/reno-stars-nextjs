@@ -20,6 +20,7 @@ import {
 interface WholeHouseCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function parseBudgetRange(range: string | null): [number, number] | null {
@@ -33,7 +34,7 @@ function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouseCostGuidePageProps) {
+export default function WholeHouseCostGuidePage({ locale, projects, phone }: WholeHouseCostGuidePageProps) {
   const t = useTranslations('guides.wholeHouseCost');
   const tGuides = useTranslations('guides.relatedGuides');
   const tCity = useTranslations('guides.cityCostTable');
@@ -268,7 +269,7 @@ export default function WholeHouseCostGuidePage({ locale, projects }: WholeHouse
           </p>
         </div>
       </section>
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }

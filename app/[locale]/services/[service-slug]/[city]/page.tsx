@@ -242,8 +242,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Whole-House Renovation Richmond BC | $50K–$200K+ | Reno Stars',
       description: 'Richmond whole-house renovation — Steveston heritage, Brighouse condos, Terra Nova SFH. $50K–$200K+ from real projects. 18+ yrs, $5M insured, 3-yr warranty.',
     },
+    // 2026-06-23: Remove price range from title — CTR A/B test per owner directive.
+    // Price ranges in SERP titles depress CTR for high-cost whole-house queries
+    // because users see "$50K–$200K+" before clicking and self-select out.
     'whole-house/surrey': {
-      title: 'Whole-House Renovation Surrey | $50K–$200K+ | Reno Stars',
+      title: 'Whole-House Renovation Surrey | Real Projects | Reno Stars',
       description: 'Surrey whole-house renovation — Fleetwood, Newton, Cloverdale, South Surrey. SFH + secondary suite work. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
     },
     // 2026-06-21 GSC scan: white-rock whole-house at pos 6.35 / 83 impressions / 0 clicks.

@@ -28,6 +28,11 @@
         "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, and structural modifications. Often includes renovating 2-3+ bathrooms simultaneously."
       }
     },
+    "inlineCta": {
+      "heading": "Ready to plan your bathroom renovation?",
+      "sub": "Free, detailed estimate within 48 hours — no obligation.",
+      "button": "Get Free Quote →"
+    },
     "factors": {
       "title": "What Affects Your Bathroom Renovation Cost?",
       "subtitle": "Six key factors that determine your final price",
@@ -78,6 +83,48 @@
         "title": "Invest in Waterproofing",
         "description": "Skimping on waterproofing leads to costly repairs later. Proper membrane systems add $1,500–3,500 upfront but prevent $10,000+ in water damage down the road."
       }
+    },
+    "showerCost": {
+      "title": "Shower Renovation Cost in Vancouver",
+      "subtitle": "Shower-specific pricing from completed Metro Vancouver projects",
+      "intro": "Shower work is one of the most common scope items in a bathroom renovation. Whether you are converting a tub to a walk-in shower, adding a curbless entry, or simply replacing an old shower pan and glass, costs vary significantly by scope.",
+      "conversion": {
+        "title": "Tub-to-Shower Conversion",
+        "range": "$3,000 – $8,000",
+        "description": "Removing an existing tub and installing a shower in the same footprint. Includes new liner or tile base, shower head, rough-in adjustment, and a standard framed or semi-frameless glass enclosure."
+      },
+      "curbless": {
+        "title": "Curbless (Zero-Threshold) Shower",
+        "range": "$5,000 – $13,000",
+        "description": "No step or lip at the shower entry. Requires custom waterproofing membrane, sloped subfloor, and a linear drain — adds $2,000–$5,000 over a standard base. Popular for accessibility and modern aesthetics."
+      },
+      "enclosureOnly": {
+        "title": "Glass Enclosure Replacement Only",
+        "range": "$1,200 – $3,500",
+        "description": "Swapping out an old framed enclosure for a semi-frameless or frameless glass door and panel — no tile work, no plumbing changes. Fast scope, usually completable in one day."
+      },
+      "note": "Shower costs are typically included in a full bathroom renovation quote. If you only need shower work, contact us for a standalone scope — it is often more efficient to combine with vanity or flooring upgrades."
+    },
+    "vanityCost": {
+      "title": "Vanity Renovation Cost in Vancouver",
+      "subtitle": "From stock cabinet replacement to fully custom floating cabinetry",
+      "intro": "A vanity upgrade is the single highest-ROI cosmetic change in a bathroom — buyers and renters notice it immediately. Costs range from a straightforward stock swap to a fully custom millwork piece built to your exact dimensions.",
+      "stock": {
+        "title": "Stock Vanity Replacement",
+        "range": "$500 – $1,500",
+        "description": "Box-store vanity unit with a standard top (laminate or basic cultured marble). Includes supply and basic installation. Lead time: in stock. Best for budget refreshes where function over form is acceptable."
+      },
+      "semiCustom": {
+        "title": "Semi-Custom with Quartz Top",
+        "range": "$2,000 – $4,000",
+        "description": "A mid-range vanity cabinet (shaker or slab door) with a cut-to-size quartz countertop and undermount sink. Most popular choice for Vancouver condo and townhouse bathrooms."
+      },
+      "custom": {
+        "title": "Custom Floating Vanity",
+        "range": "$4,000 – $8,000+",
+        "description": "Millwork-grade cabinetry built to exact dimensions, wall-mounted with integrated plumbing chase, custom stone or quartz top, and integrated vessel or undermount sink. Standard in high-end master ensuite renovations."
+      },
+      "note": "Vanity installation includes supply and rough-in connection. Mirror, lighting, and hardware are quoted separately. See our dedicated guide for a full breakdown: "
     },
     "cityComparison": {
       "title": "Bathroom Renovation Costs by City",
