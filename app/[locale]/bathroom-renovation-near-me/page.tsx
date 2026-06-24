@@ -63,7 +63,11 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />
-      <NearMePage locale={locale as Locale} areas={areas} />
+      <NearMePage
+        locale={locale as Locale}
+        areas={areas}
+        h1Override={isZh ? '附近浴室翻新 — Metro Vancouver' : 'Bathroom Renovation Near Me in Metro Vancouver'}
+      />
     </>
   );
 }
