@@ -85,6 +85,10 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   // Vancouver". H1/title consistency improves relevance signals.
   kitchen: 'Kitchen Renovation Vancouver — Custom Cabinetry, Countertops & Full Remodels',
   bathroom: 'Bathroom Renovation Vancouver — Custom Tile, Waterproofing & Full Bath Remodels',
+  // 2026-06-24: H1 "Heat Pump Installation" is bare — scanner flagged missing
+  // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
+  // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
+  'heat-pump-hvac': 'Heat Pump Installation Vancouver — Ductless Mini-Splits, HVAC & Energy Rebates',
 };
 
 function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
