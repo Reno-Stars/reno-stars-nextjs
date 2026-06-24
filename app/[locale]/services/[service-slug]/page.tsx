@@ -85,6 +85,15 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   // Vancouver". H1/title consistency improves relevance signals.
   kitchen: 'Kitchen Renovation Vancouver — Custom Cabinetry, Countertops & Full Remodels',
   bathroom: 'Bathroom Renovation Vancouver — Custom Tile, Waterproofing & Full Bath Remodels',
+  // 2026-06-24: Whole-house + commercial H1s flagged by on-page scanner
+  // (on-page-7646195cb828, on-page-739a04eac24c) — same weak-H1 geo-gap pattern
+  // as kitchen/bathroom above. Meta titles read "Whole House Renovation Vancouver
+  // — 3-Yr Warranty" and "Commercial Renovation Vancouver — 3-Yr Warranty", so
+  // H1s must carry "Vancouver" to align local relevance signals.
+  'whole-house': 'Whole-House Renovation Vancouver — Kitchens, Bathrooms & Full Home Remodels',
+  commercial: 'Commercial Renovation Vancouver — Offices, Retail & Restaurant Build-Outs',
+  // Cabinet refacing H1 "Cabinet Refacing" is bare — add geo + differentiator.
+  cabinet: 'Cabinet Refacing Vancouver — Refinishing, Resurfacing & Hardware Upgrades',
   // 2026-06-24: H1 "Heat Pump Installation" is bare — scanner flagged missing
   // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
   // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
