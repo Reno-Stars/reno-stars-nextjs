@@ -237,6 +237,59 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
+      {/* Shower Renovation Cost — dedicated H2 targeting "shower renovation cost"
+          query cluster (gsc-262533805fb3, pos ~18, 2026-06-23 scan). Placed after
+          the factors-overview section so users who want the per-scope deep-dive
+          find it immediately after the overview cards. Prices source from
+          factors.shower + FAQ q3/q4 already in this file — not new data. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('showerCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('showerCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('showerCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['conversion', 'curbless', 'enclosureOnly'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`showerCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`showerCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`showerCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>{t('showerCost.note')}</p>
+        </div>
+      </section>
+
+      {/* Vanity Renovation Cost — dedicated H2 targeting "vanity renovation cost"
+          query cluster (gsc-7bee67263c70, 2026-06-23 scan). Prices from
+          factors.vanity already in this file — stock/semi/custom tiers. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('vanityCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('vanityCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('vanityCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['stock', 'semiCustom', 'custom'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`vanityCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`vanityCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`vanityCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('vanityCost.note')}
+            <Link href={`/${locale}/blog/vanity-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Vanity Renovation Cost Vancouver →
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {projects.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-5xl mx-auto">
