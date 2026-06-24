@@ -105,6 +105,10 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   basement:   'Metro Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Permits handled. $5M insured, 3-yr warranty.',
   'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, 3-yr warranty. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
+  // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
+  // vancouver" striking-distance. Description now surfaces "poly-b replacement"
+  // + "vancouver" + insurance motivation up front, matching query intent.
+  'poly-b-replacement': 'Poly-B replacement in Metro Vancouver — full PEX re-pipe, BC permit + inspection included. Required by most BC insurers for homes built 1985–1997. Free quote.',
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
