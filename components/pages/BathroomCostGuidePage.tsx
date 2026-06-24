@@ -216,6 +216,27 @@ export default function BathroomCostGuidePage({ locale, projects }: BathroomCost
         </div>
       </section>
 
+      {/* Mid-guide inline CTA — ga4-ee9bf2dfb8c0: bathroom cost guide has
+          83% engagement rate but 0 conversions (12 sessions/90d). Placed
+          directly after the cost-tier cards while budget intent is highest;
+          users who've read all three tiers have priced themselves in and need
+          a low-friction next step before scrolling past 8 more sections. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div>
+            <p className="font-bold text-lg text-white">{t('inlineCta.heading')}</p>
+            <p className="text-sm mt-1" style={{ color: GOLD }}>{t('inlineCta.sub')}</p>
+          </div>
+          <Link
+            href="/contact"
+            className="flex-shrink-0 px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-transform hover:scale-[1.02]"
+            style={{ backgroundColor: GOLD, color: '#fff' }}
+          >
+            {t('inlineCta.button')}
+          </Link>
+        </div>
+      </section>
+
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>{t('factors.title')}</h2>
