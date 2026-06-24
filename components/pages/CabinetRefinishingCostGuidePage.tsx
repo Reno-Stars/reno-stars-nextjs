@@ -19,6 +19,7 @@ import {
 interface CabinetRefinishingCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function parseBudgetRange(range: string | null): [number, number] | null {
@@ -32,7 +33,7 @@ function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function CabinetRefinishingCostGuidePage({ locale, projects }: CabinetRefinishingCostGuidePageProps) {
+export default function CabinetRefinishingCostGuidePage({ locale, projects, phone }: CabinetRefinishingCostGuidePageProps) {
   const t = useTranslations('guides.cabinetCost');
 
   const stats = useMemo(() => {
@@ -240,7 +241,7 @@ export default function CabinetRefinishingCostGuidePage({ locale, projects }: Ca
         </div>
       </section>
 
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }

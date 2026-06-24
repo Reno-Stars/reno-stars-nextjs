@@ -20,13 +20,14 @@ import {
 interface BasementSuiteCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function BasementSuiteCostGuidePage({ locale, projects }: BasementSuiteCostGuidePageProps) {
+export default function BasementSuiteCostGuidePage({ locale, projects, phone }: BasementSuiteCostGuidePageProps) {
   const t = useTranslations('guides.basementSuiteCost');
 
   const stats = useMemo(() => {
@@ -240,7 +241,7 @@ export default function BasementSuiteCostGuidePage({ locale, projects }: Basemen
         </div>
       </section>
 
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }

@@ -115,6 +115,22 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   'poly-b-replacement': 'Poly-B replacement in Metro Vancouver — full PEX re-pipe, BC permit + inspection included. Required by most BC insurers for homes built 1985–1997. Free quote.',
 };
 
+/**
+ * ZH meta description overrides — resolves cross-locale-f21f1b4470f3 &
+ * cross-locale-6e4bf56fdd76 (scanner found /zh/services/kitchen/ and
+ * /zh/services/whole-house/ with no optimised meta description).
+ * DB long_description_zh starts with markdown links that strip to
+ * "Vancouver 厨房装修 — 根据一份合同…" — valid but not keyword-optimised.
+ * These overrides use the same complete-sentence / CTA pattern as EN.
+ * Tick 485 — 2026-06-24.
+ */
+const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:       '温哥华厨房翻新 — 定制橱柜、石英台面、瓷砖、管道及电气一站式服务。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
+  basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
+  'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -127,6 +143,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedService = getLocalizedService(service, locale as Locale);
   const baseUrl = getBaseUrl();
   const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
+    || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;

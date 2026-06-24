@@ -19,13 +19,14 @@ import {
 interface CommercialCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
+  phone?: string;
 }
 
 function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function CommercialCostGuidePage({ locale, projects }: CommercialCostGuidePageProps) {
+export default function CommercialCostGuidePage({ locale, projects, phone }: CommercialCostGuidePageProps) {
   const t = useTranslations('guides.commercialCost');
 
   const stats = useMemo(() => {
@@ -202,7 +203,7 @@ export default function CommercialCostGuidePage({ locale, projects }: Commercial
         </div>
       </section>
 
-      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} />
+      <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
 }
