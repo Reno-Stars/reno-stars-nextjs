@@ -126,6 +126,27 @@
       },
       "note": "Tub-to-shower conversions are covered in the shower section above. For full bathtub pricing — alcove, drop-in, soaking, and freestanding tubs — see our dedicated guide: "
     },
+    "toiletCost": {
+      "title": "Toilet Renovation Cost in Vancouver",
+      "subtitle": "Toilet replacement costs from completed Metro Vancouver projects",
+      "intro": "A basic toilet swap is the cheapest plumbing scope in any bathroom renovation. Costs jump once you add comfort-height one-piece toilets, skirted designs, or wall-hung carriers — which require opening the wall to frame the in-wall tank.",
+      "standard": {
+        "title": "Standard Two-Piece or One-Piece",
+        "range": "$400 – $1,500",
+        "description": "Two-piece tank-on-bowl or one-piece elongated comfort-height (17\"–19\"). Includes wax ring, new supply line, shutoff valve, and disposal of old unit. The default choice for most bathroom renovations."
+      },
+      "skirted": {
+        "title": "Skirted / Comfort-Height",
+        "range": "$900 – $2,000",
+        "description": "Smooth-sided skirted one-piece (Toto Aquia, Kohler Veil) with soft-close seat. Hides the trapway for a modern look and easier cleaning. Preferred option for master ensuites and powder rooms."
+      },
+      "wallHung": {
+        "title": "Wall-Hung + In-Wall Tank",
+        "range": "$3,000 – $8,500+",
+        "description": "Bowl floats off the floor; tank is hidden in a furred-out wall cavity with a carrier frame. Opens the wall, typically adds 1–2 days to scope. Maximizes visual space in compact powder rooms and luxury ensuites."
+      },
+      "note": "Smart / bidet toilet pricing varies widely by fixture ($1,300–$4,500 installed). For a full breakdown of toilet types, installation notes, and permit requirements, see our dedicated guide: "
+    },
     "vanityCost": {
       "title": "Vanity Renovation Cost in Vancouver",
       "subtitle": "From stock cabinet replacement to fully custom floating cabinetry",

@@ -318,10 +318,39 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
         </div>
       </section>
 
+      {/* Toilet Renovation Cost — dedicated H2 targeting "toilet renovation cost"
+          query cluster (bathroom-renovation-cost-vancouver ranks pos 7.87 for
+          "toilet renovation cost" / 1,007 imps — channels to dedicated toilet
+          post). Prices sourced from toilet-renovation-cost-vancouver post data. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('toiletCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('toiletCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('toiletCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['standard', 'skirted', 'wallHung'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`toiletCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`toiletCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`toiletCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('toiletCost.note')}
+            <Link href={`/${locale}/blog/toilet-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Toilet Renovation Cost Vancouver 2026 →
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* Vanity Renovation Cost — dedicated H2 targeting "vanity renovation cost"
           query cluster (gsc-7bee67263c70, 2026-06-23 scan). Prices from
           factors.vanity already in this file — stock/semi/custom tiers. */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
             {t('vanityCost.title')}
