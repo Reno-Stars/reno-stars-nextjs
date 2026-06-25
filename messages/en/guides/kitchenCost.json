@@ -41,19 +41,19 @@
       },
       "layout": {
         "title": "Layout Changes",
-        "description": "Moving plumbing, gas lines, or removing load-bearing walls significantly increases costs. Relocating a sink or dishwasher adds $2,000–5,000. Removing a wall for an open-concept kitchen runs $3,000–15,000 depending on whether it's load-bearing (requires a structural engineer and beam). Keeping the same layout is the single most effective way to stay on budget."
+        "description": "Layout changes are the highest-cost variable in a kitchen renovation. Relocating a sink or dishwasher requires extending drain rough-in and adding a new vent — typically $2,000–$5,000. Moving the stove requires extending gas lines (licensed gas fitter required) or 240V electrical circuits, adding another $2,000–$5,000. Removing a load-bearing wall for an open-concept kitchen runs $8,000–$25,000: a structural engineer's report ($800–$2,000), temporary shoring, an LVL or steel beam, and new column footings are all involved. Keeping the sink, stove, and refrigerator in their existing locations is the single most effective way to control kitchen renovation budget."
       },
       "appliances": {
         "title": "Appliances",
-        "description": "Entry-level appliance packages (fridge, stove, dishwasher) start at $3,000–$5,000. Mid-range brands like Bosch, KitchenAid, and Café run $8,000–$15,000 for a matching set. Premium panel-ready or pro-style brands like Sub-Zero, Wolf, or Miele can exceed $30,000. For condos and rental suites, staying in the $4,000–$8,000 appliance range typically delivers the best ROI."
+        "description": "Appliances are a significant line item that many homeowners underestimate. Entry-level appliance packages — fridge, range, and dishwasher from brands like Samsung or LG — start at $3,000–$5,000. Mid-range sets from Bosch, KitchenAid, and Café run $8,000–$15,000 and offer quieter dishwashers, better cooktop control, and panel-ready options. Premium pro-style or panel-ready brands (Sub-Zero, Wolf, Miele, Thermador) exceed $25,000–$40,000. For condos and rental suites, staying in the $4,000–$8,000 range typically delivers the best ROI — over-capitalizing appliances for the building's market tier is one of the most common kitchen renovation budget mistakes."
       },
       "plumbing": {
         "title": "Plumbing & Electrical",
-        "description": "Relocating plumbing adds $2,000–$5,000 for simple moves and $5,000–$8,000 if concrete cutting is required. Adding dedicated 240V circuits for appliances or under-cabinet lighting adds $1,000–$3,000. Many Vancouver homes built before 1990 have 100-amp panels that need upgrading to 200 amps ($2,000–$4,000) before installing modern induction cooktops or double ovens."
+        "description": "Rough-in plumbing and electrical costs in kitchen renovations depend almost entirely on whether fixture locations change. Keeping plumbing in place: $1,500–$3,000 for connection of new sink, dishwasher, and fridge ice-maker line. Moving plumbing adds $2,000–$5,000 for typical relocations; $5,000–$8,000 if concrete cutting is required (slab-on-grade homes). Electrical: dedicated 240V circuits for induction cooktops add $800–$1,500 each; under-cabinet LED power adds $500–$1,200. Many Metro Vancouver homes built before 1990 have 100-amp panels that need upgrading to 200-amp service ($2,000–$4,000) before adding a high-draw induction range or double oven."
       },
       "permits": {
         "title": "Permits & Inspections",
-        "description": "Building permits for kitchen renovations typically cost $200–$1,000 in Metro Vancouver (varies by municipality and scope). Permits are required when changing plumbing, electrical, gas lines, or structural elements. Cosmetic updates like new cabinets, countertops, and backsplash do not need permits. The permit process for a standard kitchen renovation takes 2–4 weeks in most Metro Vancouver municipalities."
+        "description": "Building permits for kitchen renovations in Metro Vancouver typically cost $200–$1,000 depending on municipality and declared scope. Permits are required when changing plumbing rough-in locations, adding new electrical circuits, modifying gas lines, or removing walls. Cosmetic updates — new cabinets in the same location, countertop replacement, backsplash tile, and flooring — do not require permits. The permit process for a standard kitchen renovation takes 2–4 weeks at most Metro Vancouver municipalities. Permitted work comes with mandatory inspections that verify rough-in quality before walls close — a quality control step that protects the homeowner."
       }
     },
     "timeline": {
