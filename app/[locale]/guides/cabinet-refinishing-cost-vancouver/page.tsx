@@ -86,7 +86,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/guides/cabinet-refinishing-cost-vancouver/`}
         authorName={`${company.name} Team`}
         datePublished="2026-02-03"
-        dateModified="2026-06-08"
+        dateModified="2026-06-25"
         locale={locale}
       />
       <CabinetRefinishingCostGuidePage locale={locale as Locale} projects={projects} phone={company.phone} />
