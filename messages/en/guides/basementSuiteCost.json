@@ -63,17 +63,17 @@
       "rentalIncome": {
         "value": "$1,800–$2,800/mo",
         "title": "Monthly Rental Income",
-        "description": "One-bedroom suites rent for $1,800–$2,200/month. Two-bedroom suites command $2,200–$2,800/month."
+        "description": "One-bedroom suites in Metro Vancouver typically rent for $1,800–$2,200/month. Two-bedroom suites command $2,200–$2,800/month. Higher-end suites in Vancouver, Burnaby, and Richmond with quality finishes and in-suite laundry reach the top of that range."
       },
       "propertyValue": {
         "value": "15–25%",
         "title": "Property Value Increase",
-        "description": "Homes with legal secondary suites sell for 15–25% more than comparable properties without."
+        "description": "Homes with legal secondary suites sell for 15–25% more than comparable properties without suites in Metro Vancouver — buyers value the rental income stream, and mortgage lenders factor suite income into qualification calculations."
       },
       "paybackPeriod": {
         "value": "3–5 years",
         "title": "Payback Period",
-        "description": "At average rental rates, a $95,000 suite conversion pays for itself in 3–5 years through rental income alone."
+        "description": "At average Metro Vancouver rental rates, a $95,000 suite conversion pays for itself in 3–5 years through rental income alone. At $2,000/month, the payback period is under 4 years — every additional year is pure return on the investment."
       }
     },
     "realProjects": {
@@ -85,19 +85,19 @@
       "subtitle": "Each Metro Vancouver city has different rules for secondary suites",
       "vancouver": {
         "title": "City of Vancouver",
-        "description": "Allows secondary suites in most single-family zones (RS). Affordable Housing program may provide incentives. Permits $1,500–$3,000."
+        "description": "Allows secondary suites in most single-family zones (RS-1, RS-2, RS-3). Vancouver's Affordable Housing programs may provide incentives for suite legalization. Building permit fees typically $1,500–$3,000 for a full suite conversion. Minimum 1.95 m ceiling height required throughout habitable rooms."
       },
       "burnaby": {
         "title": "City of Burnaby",
-        "description": "Secondary Suite Program offers grants up to $10,000 for legalization. Requires minimum 1,850 sq ft lot. Suite max 40% of floor area."
+        "description": "Burnaby's Secondary Suite Program offers grants up to $10,000 toward legalization for eligible properties. Requires a minimum 1,850 sq ft lot area. Suite maximum floor area is 40% of the main dwelling. Separate utility meters required. Pre-application consultation recommended."
       },
       "surrey": {
         "title": "City of Surrey",
-        "description": "Allows suites in most single-family zones. Streamlined permit process. One additional off-street parking space required."
+        "description": "Surrey allows secondary suites in most single-family residential zones with a streamlined permit process. One additional off-street parking space must be provided for the suite tenant. Surrey's Secondary Suite Incentive Program provides pre-application consultation and support for new suite creation."
       },
       "coquitlam": {
         "title": "City of Coquitlam",
-        "description": "Permits suites in RS-1 and RS-2 zones. Requires minimum lot size and separate utility meters. Pre-application consultations available."
+        "description": "Coquitlam permits secondary suites in RS-1 and RS-2 single-family zones. Requires minimum lot size for the specific zone. Separate utility meters are required for legal suites. Pre-application consultations with the City are available and recommended before starting permit preparation."
       }
     },
     "tips": {
