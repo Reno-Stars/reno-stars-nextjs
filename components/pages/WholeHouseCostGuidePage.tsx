@@ -289,6 +289,31 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone }: Who
           </div>
         </div>
       </section>
+      {/* 2026-06-25: City-specific home renovation guides. Cross-linking from
+          the whole-house cost guide (high-equity hub) to city posts passes
+          PageRank and helps city posts rank for "[city] home renovation" queries. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>City-specific home renovation guides:</strong>{' '}
+            <Link href="/blog/burnaby-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/richmond-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/surrey-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/coquitlam-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/north-vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/langley-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/west-vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );

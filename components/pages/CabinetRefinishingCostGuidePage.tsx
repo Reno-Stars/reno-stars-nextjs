@@ -261,6 +261,30 @@ export default function CabinetRefinishingCostGuidePage({ locale, projects, phon
           </div>
         </div>
       </section>
+      {/* 2026-06-25: City-specific cabinet refinishing guides. Cross-linking from
+          the cabinet refinishing cost guide to city posts passes PageRank. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>City-specific cabinet refinishing guides:</strong>{' '}
+            <Link href="/blog/cabinet-refinishing-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-burnaby-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-richmond-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-surrey-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-coquitlam-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-north-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-new-westminster-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-delta-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );
