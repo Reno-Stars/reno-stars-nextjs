@@ -101,7 +101,7 @@
       "enclosureOnly": {
         "title": "Glass Enclosure Replacement Only",
         "range": "$1,200 – $3,500",
-        "description": "Swapping out an old framed enclosure for a semi-frameless or frameless glass door and panel — no tile work, no plumbing changes. Fast scope, usually completable in one day."
+        "description": "Swapping out an old framed shower enclosure for a semi-frameless or frameless glass door and panel. No tile work and no plumbing changes required. Fast scope, usually completable in one day. Best option when the existing tile and base are in good condition."
       },
       "note": "Shower costs are typically included in a full bathroom renovation quote. For a detailed breakdown by shower type — tub-to-shower, curbless walk-in, glass enclosure — see our dedicated guide: "
     },
@@ -112,17 +112,17 @@
       "alcove": {
         "title": "Alcove Swap (Like-for-Like)",
         "range": "$800 – $2,200",
-        "description": "Standard acrylic alcove tub replaced in the same footprint. Includes supply, drain/overflow assembly, basic tile surround reset, and disposal of the existing tub. Fastest bathtub scope."
+        "description": "Standard acrylic alcove tub replaced in the same footprint with a new unit. Includes supply, drain/overflow assembly, basic tile surround reset if needed, and disposal of the existing tub. The fastest and most affordable bathtub scope — no structural or plumbing changes required."
       },
       "dropIn": {
         "title": "Drop-In or Soaking Tub",
         "range": "$2,500 – $5,500",
-        "description": "Tub built into a custom tile or quartz deck surround. The surround fabrication often costs more than the tub itself. Popular upgrade for primary ensuites and master bath renovations."
+        "description": "Tub built into a custom tile deck or quartz surround. The surround fabrication often costs as much as the tub fixture itself. A popular upgrade for primary ensuites and master bath renovations where a soaking tub adds a premium feel."
       },
       "freestanding": {
         "title": "Freestanding Tub",
         "range": "$3,500 – $8,500+",
-        "description": "Standalone tub with floor-mount supply and a freestanding tub filler. Includes drain rough-in extension and any floor structural reinforcement. Statement option for luxury ensuites."
+        "description": "Standalone tub positioned away from walls with floor-mount supply and a freestanding tub filler. Includes drain rough-in repositioning and any floor structural reinforcement for heavier cast iron fixtures. A statement option for luxury primary ensuites."
       },
       "note": "Tub-to-shower conversions are covered in the shower section above. For full bathtub pricing — alcove, drop-in, soaking, and freestanding tubs — see our dedicated guide: "
     },
@@ -133,12 +133,12 @@
       "standard": {
         "title": "Standard Two-Piece or One-Piece",
         "range": "$400 – $1,500",
-        "description": "Two-piece tank-on-bowl or one-piece elongated comfort-height (17\"–19\"). Includes wax ring, new supply line, shutoff valve, and disposal of old unit. The default choice for most bathroom renovations."
+        "description": "Two-piece tank-on-bowl or one-piece elongated comfort-height toilet (17\"–19\" bowl height). Includes wax ring or waxless seal, new braided supply line, shutoff valve, and disposal of old unit. The default, code-compliant choice for most Metro Vancouver bathroom renovations."
       },
       "skirted": {
         "title": "Skirted / Comfort-Height",
         "range": "$900 – $2,000",
-        "description": "Smooth-sided skirted one-piece (Toto Aquia, Kohler Veil) with soft-close seat. Hides the trapway for a modern look and easier cleaning. Preferred option for master ensuites and powder rooms."
+        "description": "Smooth-sided skirted one-piece toilet (Toto Aquia IV, Kohler Veil, or equivalent) with soft-close seat. The smooth trapway exterior hides the typical exposed plumbing curve for a modern look and easier cleaning. Preferred for master ensuites and updated powder rooms."
       },
       "wallHung": {
         "title": "Wall-Hung + In-Wall Tank",
@@ -159,12 +159,12 @@
       "semiCustom": {
         "title": "Semi-Custom with Quartz Top",
         "range": "$2,000 – $4,000",
-        "description": "A mid-range vanity cabinet (shaker or slab door) with a cut-to-size quartz countertop and undermount sink. Most popular choice for Vancouver condo and townhouse bathrooms."
+        "description": "A mid-range floating or floor-mounted vanity cabinet (shaker or slab door profile) with a cut-to-size quartz countertop and undermount ceramic or integrated sink. The most popular vanity choice for Metro Vancouver condo and townhouse bathroom renovations."
       },
       "custom": {
         "title": "Custom Floating Vanity",
         "range": "$4,000 – $8,000+",
-        "description": "Millwork-grade cabinetry built to exact dimensions, wall-mounted with integrated plumbing chase, custom stone or quartz top, and integrated vessel or undermount sink. Standard in high-end master ensuite renovations."
+        "description": "Millwork-grade cabinetry built to exact dimensions, wall-mounted with integrated plumbing chase concealed behind the cabinet body, custom stone or quartz countertop, integrated or undermount vessel sink, and drawer organizers. Standard scope for high-end master ensuite renovations in Metro Vancouver."
       },
       "note": "Vanity installation includes supply and rough-in connection. Mirror, lighting, and hardware are quoted separately. See our dedicated guide for a full breakdown: "
     },
