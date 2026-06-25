@@ -42,19 +42,19 @@
       },
       "fireSafety": {
         "title": "Fire Safety & Sprinklers",
-        "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify. Fire alarm upgrades run $5,000–20,000. Change-of-use triggers full fire code compliance review. Restaurants and assembly spaces have the most stringent requirements."
+        "description": "Fire sprinkler systems cost $3–8 per square foot to install or modify in Metro Vancouver — a 2,000 sq ft space runs $6,000–$16,000 for sprinkler work alone. Fire alarm upgrades, including new pull stations, heat and smoke detectors, and panel replacement, add $5,000–$20,000. Any change-of-use application triggers a full fire code compliance review under the BC Fire Code and the National Building Code, which may require adding sprinklers to previously exempt spaces, upgrading exit signage, and widening corridors. Restaurants and Group A assembly spaces face the most stringent requirements and the highest fire safety costs."
       },
       "accessibility": {
         "title": "Accessibility Compliance",
-        "description": "BC Building Code requires barrier-free access for commercial spaces. Accessible washrooms, ramps, door widths, and signage add $5,000–25,000. Heritage buildings in Vancouver often need creative solutions to meet accessibility standards."
+        "description": "BC Building Code Division B Part 3 requires barrier-free access for most commercial occupancies in Metro Vancouver. Accessible washrooms (turning radius, grab bars, lowered sinks), entry ramps, 860mm minimum door clear-opening widths, and tactile floor indicators add $5,000–$25,000 depending on the starting condition of the space. Heritage buildings in Vancouver — particularly in Gastown, Chinatown, and Hastings-Sunrise — present additional complexity: exterior grade changes and existing structure may require creative engineering solutions. Budget for an early accessibility audit with a certified consultant ($500–$1,500) before finalizing your layout."
       },
       "electrical": {
         "title": "Electrical & IT Infrastructure",
-        "description": "Commercial electrical upgrades cost $10,000–50,000+ depending on service capacity. Restaurants need 200–400 amp services. Modern offices require structured cabling ($3,000–15,000), server room cooling, and dedicated circuits for equipment."
+        "description": "Commercial electrical upgrades in Metro Vancouver typically cost $10,000–$50,000+ depending on the incoming service capacity and the business type. Restaurants require 200–400 amp three-phase service for commercial kitchen equipment. Modern offices and medical clinics require structured cabling (CAT6A minimum) at $3,000–$15,000 for a standard fit-out, plus server room cooling and UPS circuits. Any electrical service upgrade requires coordination with BC Hydro, which can add 4–8 weeks to the project timeline. Dedicated circuits for commercial kitchen equipment, dental operatories, or medical imaging must be designed by a registered electrical engineer in BC."
       },
       "disruption": {
         "title": "Project Timing & Business Disruption",
-        "description": "Working around business hours increases costs 15–25%. Many Vancouver commercial tenants renovate during lease transitions. After-hours work adds premium labor costs. A phased renovation plan can keep portions of the business operational during construction."
+        "description": "Renovating while open increases costs 15–25% due to after-hours and weekend labour premiums, dust control requirements, and extended sequencing. Many Metro Vancouver commercial tenants renovate during lease transitions, combining the outgoing tenant's condition restoration period with their own fit-out to negotiate rent abatement. A detailed phasing plan — shared with staff, customers, and the property manager — is essential for staying operational. Identify the critical revenue-generating zones in your space first; those areas get the most protective phasing to minimize revenue loss during construction."
       }
     },
     "realProjects": {
@@ -65,7 +65,7 @@
       "title": "Money-Saving Tips for Commercial Renovations",
       "tip1": {
         "title": "Negotiate a Tenant Improvement Allowance",
-        "description": "A Tenant Improvement Allowance (TIA) is money the landlord contributes toward your renovation in exchange for a longer lease. Many Metro Vancouver commercial leases include $20–80 per square foot in TIA for spaces over 1,500 sq ft. Always negotiate TIA before signing the lease — it's much harder to add after. Bring your contractor's preliminary estimate to negotiations to anchor the ask."
+        "description": "A Tenant Improvement Allowance (TIA) is money the landlord contributes toward your renovation in exchange for a longer lease. Many Metro Vancouver commercial leases include $20–80 per square foot in TIA for spaces over 1,500 sq ft — on a 2,000 sq ft space, that's $40,000–$160,000 that could offset your fit-out budget significantly. Always negotiate TIA before signing the lease — it's much harder to add after the lease is executed. Bring your contractor's preliminary estimate to negotiations to anchor the ask, and clarify whether TIA is paid upfront, reimbursed against invoices, or structured as a rent abatement period."
       },
       "tip2": {
         "title": "Phase Your Renovation",
