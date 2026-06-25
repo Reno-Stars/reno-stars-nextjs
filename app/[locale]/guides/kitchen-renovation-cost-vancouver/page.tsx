@@ -71,6 +71,11 @@ export default async function Page({ params }: PageProps) {
     // for the higher-impression variant. Same project-data backing as
     // the quickAnswer passage above. All 14 locales populated.
     { question: t('faq.q6'), answer: t('faq.a6') },
+    // q7-q8 added 2026-06-25 for parity with other 6 cost guides (all now at 8 FAQs).
+    // q7 targets "kitchen appliance cost vancouver" long-tail intent.
+    // q8 targets "cheap kitchen renovation vancouver" / cost-saving queries.
+    { question: t('faq.q7'), answer: t('faq.a7') },
+    { question: t('faq.q8'), answer: t('faq.a8') },
   ];
 
   const howToSteps = [
