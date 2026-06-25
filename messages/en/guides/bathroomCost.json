@@ -105,6 +105,27 @@
       },
       "note": "Shower costs are typically included in a full bathroom renovation quote. For a detailed breakdown by shower type — tub-to-shower, curbless walk-in, glass enclosure — see our dedicated guide: "
     },
+    "bathtubCost": {
+      "title": "Bathtub Renovation Cost in Vancouver",
+      "subtitle": "Bathtub replacement costs from completed Metro Vancouver projects",
+      "intro": "Bathtub format and material drive most of the cost. A like-for-like alcove swap stays under $2,500 in most cases; freestanding tubs and drop-ins cost more because the surround and floor-mount plumbing add significant labour.",
+      "alcove": {
+        "title": "Alcove Swap (Like-for-Like)",
+        "range": "$800 – $2,200",
+        "description": "Standard acrylic alcove tub replaced in the same footprint. Includes supply, drain/overflow assembly, basic tile surround reset, and disposal of the existing tub. Fastest bathtub scope."
+      },
+      "dropIn": {
+        "title": "Drop-In or Soaking Tub",
+        "range": "$2,500 – $5,500",
+        "description": "Tub built into a custom tile or quartz deck surround. The surround fabrication often costs more than the tub itself. Popular upgrade for primary ensuites and master bath renovations."
+      },
+      "freestanding": {
+        "title": "Freestanding Tub",
+        "range": "$3,500 – $8,500+",
+        "description": "Standalone tub with floor-mount supply and a freestanding tub filler. Includes drain rough-in extension and any floor structural reinforcement. Statement option for luxury ensuites."
+      },
+      "note": "Tub-to-shower conversions are covered in the shower section above. For full bathtub pricing — alcove, drop-in, soaking, and freestanding tubs — see our dedicated guide: "
+    },
     "vanityCost": {
       "title": "Vanity Renovation Cost in Vancouver",
       "subtitle": "From stock cabinet replacement to fully custom floating cabinetry",
