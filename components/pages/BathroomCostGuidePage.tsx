@@ -280,7 +280,12 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
               </div>
             ))}
           </div>
-          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>{t('showerCost.note')}</p>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('showerCost.note')}
+            <Link href={`/${locale}/blog/shower-renovation-cost-vancouver-2026/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Shower Renovation Cost Vancouver 2026 →
+            </Link>
+          </p>
         </div>
       </section>
 
