@@ -52,27 +52,27 @@
       "subtitle": "Six key factors that determine your final price",
       "cabinetCount": {
         "title": "Number of Cabinets",
-        "description": "A typical Vancouver kitchen has 20–30 cabinet doors and drawer fronts. More doors means more labour and materials. Expect to pay $150–$300 per door for professional refinishing."
+        "description": "A typical Vancouver kitchen has 20–30 cabinet doors and drawer fronts. More doors means more labour and materials. Expect to pay $150–$300 per door for professional refinishing, including both sides of each door. Kitchens with a pantry wall, tall upper cabinets, or an island add significantly more doors to the count — always get a door-by-door quote before approving work."
       },
       "material": {
-        "title": "Cabinet Material",
-        "description": "Solid wood cabinets refinish beautifully. MDF and thermofoil cabinets require different techniques and may cost more. Laminate cabinets need special adhesion primers for lasting results."
+        "title": "Cabinet Material & Door Style",
+        "description": "Solid wood and MDF cabinets refinish beautifully. Door style also affects cost: flat-panel (slab) doors are the fastest to prep and spray; shaker-style doors with recessed panels add 15–25% to labour due to edge detail work; raised-panel and cathedral doors are the most labour-intensive. Thermofoil cabinets can be painted but the thermofoil may bubble or peel — refacing with new doors is usually the better long-term option for thermofoil kitchens."
       },
       "finishType": {
-        "title": "Finish Type",
-        "description": "Basic paint refinishing costs less than specialty finishes. Staining, glazing, or distressed looks add $500–$1,500 to the project. Two-tone cabinet designs are popular but require extra labour."
+        "title": "Finish Type & Sheen",
+        "description": "Paint sheen affects both cost and durability. Semi-gloss and satin sheens are standard for Vancouver kitchens — easier to clean than flat finishes. Staining or glazing adds $500–$1,500 over basic paint. Two-tone designs (different colour upper vs. lower cabinets) are popular in Metro Vancouver but require masking, separate mix batches, and two cure cycles. Conversion varnish and water-based alkyd finishes cost more than standard latex but are significantly more durable in kitchen environments."
       },
       "hardware": {
         "title": "Hardware Upgrades",
-        "description": "New handles, knobs, and hinges can add $300–$2,000 depending on quality. Upgrading to soft-close hinges is highly recommended and typically costs $5–$15 per hinge installed."
+        "description": "New handles, knobs, and hinges can add $300–$2,000 depending on quality and quantity. Upgrading to soft-close hinges (Blum, Grass, or equivalent) costs $5–$15 per hinge installed — strongly recommended when refinishing since it substantially improves the feel of the finished kitchen. Concealed hinges on inset-style doors (common in older Metro Vancouver homes) take longer to adjust and align, adding to labour."
       },
       "kitchenSize": {
         "title": "Kitchen Size & Accessibility",
-        "description": "Larger kitchens with upper and lower cabinets, pantry units, and island cabinets cost more. Hard-to-reach cabinets or intricate moulding details increase labour time."
+        "description": "Larger kitchens with upper and lower cabinets, pantry units, and island cabinets cost more. Hard-to-reach upper cabinets above refrigerators or in corner blind spots increase labour time. Intricate moulding profiles, corbels, or decorative glass inserts also add to prep and spray time. Kitchens with open shelving converted from cabinets may need custom trim work to blend refinished surfaces with the existing cabinetry."
       },
       "condition": {
         "title": "Current Cabinet Condition",
-        "description": "Cabinets with water damage, delamination, or structural issues may need repairs before refinishing. Significant damage may make refinishing impractical, refacing or replacement becomes the better option."
+        "description": "Cabinets with water damage, delamination, veneer separation, or hinge-hole blowout may need repairs before refinishing adds value. Minor repairs — filling small holes, tightening loose joints, replacing a damaged door — are typically included or priced separately at $50–$200 per repair. Significant structural issues in cabinet boxes make refinishing impractical. Our team assesses condition on every estimate and will recommend the most cost-effective approach for your specific cabinets."
       }
     },
     "realProjects": {
