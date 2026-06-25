@@ -38,27 +38,27 @@
       "subtitle": "Six key factors that determine your final price",
       "tiles": {
         "title": "Tile & Flooring (25–35% of budget)",
-        "description": "Standard ceramic tile starts at $5/sq ft, porcelain runs $8–15/sq ft, and natural stone can exceed $25/sq ft. Large-format tiles reduce grout lines but cost more to install."
+        "description": "Tile selection is the largest variable in bathroom renovation cost and the most visible design decision. Standard ceramic floor tile starts at $5/sq ft installed; porcelain — the preferred choice in Metro Vancouver for durability and water resistance — runs $8–$15/sq ft. Large-format tiles (24\"×48\" or larger) cost more per sq ft to install because they require precision levelling substrate and more experienced setters, but they dramatically reduce grout lines, which makes cleaning easier. Natural stone (marble, slate) exceeds $25/sq ft and requires sealing. Rectified porcelain with 2mm grout joints is the most popular mid-range choice in Metro Vancouver bathroom renovations."
       },
       "shower": {
         "title": "Shower / Tub Configuration",
-        "description": "A tub-to-shower conversion costs $3,000–8,000. Curbless (zero-threshold) showers require custom waterproofing and sloped subfloor, adding $2,000–5,000 vs a standard shower base."
+        "description": "Shower or tub choice is one of the most impactful cost decisions in a bathroom renovation. A tub-to-shower conversion using a standard shower base with framed glass doors costs $3,000–$6,000. Upgrading to a curbless (zero-threshold) shower adds $2,000–$5,000 because it requires a custom-sloped plywood or concrete subfloor, a full waterproofing membrane system (Schluter Kerdi, Wedi, or Laticrete Hydro Ban), and a recessed linear or point drain. Frameless glass shower enclosures add $2,000–$4,000 over framed alternatives. A freestanding soaker tub with deck-mounted faucet runs $2,500–$5,000 for supply and drain rough-in plus the fixture."
       },
       "vanity": {
         "title": "Vanity & Countertop",
-        "description": "Stock vanities start at $500–1,500. Semi-custom with quartz top runs $2,000–4,000. Fully custom floating vanities with integrated sinks can exceed $6,000."
+        "description": "Vanity quality spans a wide range in Metro Vancouver bathroom renovations. Stock vanities from large-format retailers start at $500–$1,500 including the basin. Semi-custom floating vanities with integrated quartz countertop and undermount sink run $2,000–$4,000 — the most popular choice for mid-range projects. Fully custom millwork floating vanities with integrated sinks, drawer organizers, and open shelving can exceed $6,000–$10,000. A separate freestanding mirror with integrated LED backlight adds $400–$1,200. Double vanities for primary ensuites roughly double vanity cost but are strongly preferred by buyers in Metro Vancouver's resale market."
       },
       "plumbing": {
         "title": "Plumbing Relocation",
-        "description": "Moving drain lines or supply pipes adds $2,000–6,000. Older homes may need new shut-off valves or supply line upgrades. Keeping existing plumbing layout saves significantly."
+        "description": "Relocating plumbing within a bathroom is one of the most significant cost variables. Moving a toilet (rerouting the main waste drain) adds $2,000–$5,000. Relocating the shower drain or vanity supply lines within the existing wall cavity adds $1,000–$3,000. In older Metro Vancouver homes built before 1970, galvanized supply lines often require full replacement ($2,000–$4,000), and main shut-off valve replacement is standard practice during any replumb. Keeping fixtures in their original location is the single most effective way to control bathroom renovation costs — the plumber's rough-in cost drops from $4,000–$8,000 to $1,500–$3,000 for a same-footprint renovation."
       },
       "waterproofing": {
         "title": "Waterproofing",
-        "description": "Proper waterproofing with membrane systems (Schluter, Laticrete) costs $1,500–3,500 for a standard shower. Essential in Vancouver's climate to prevent moisture damage behind walls."
+        "description": "Waterproofing is the most important step in a bathroom renovation and the most commonly skipped in DIY and low-bid projects. In Metro Vancouver's wet climate, inadequate waterproofing behind shower tile causes mould behind walls, rot in framing, and subfloor decay — remediation costs $10,000–$30,000. Proper waterproofing with bonded membrane systems (Schluter Kerdi, Wedi board, or Laticrete Hydro Ban) costs $1,500–$3,500 for a standard shower. These systems are fabric or foam panels bonded to the framing before tile is set, creating a fully waterproof substrate. Require your contractor to confirm which waterproofing system they use before signing any scope of work."
       },
       "permits": {
         "title": "Permits & Inspections",
-        "description": "Building permits for bathroom renovations cost $200–800 in Metro Vancouver. Required when moving plumbing, adding new fixtures, or making structural changes."
+        "description": "Building permits for bathroom renovations in Metro Vancouver cost $200–$800 depending on municipality and declared scope. Permits are required when moving plumbing rough-in (toilet, shower drain, vanity supply), adding new electrical circuits (heated floor thermostat, exhaust fan upgrade, GFCI outlets), or making structural changes such as moving walls. Like-for-like replacements — same-location vanity, toilet, and fixture swaps — typically don't require permits. The permit process for a standard bathroom renovation takes 2–4 weeks in most Metro Vancouver municipalities. Unpermitted plumbing or electrical work creates liability at property transfer."
       }
     },
     "realProjects": {
