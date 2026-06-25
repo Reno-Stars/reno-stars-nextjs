@@ -278,6 +278,18 @@ export default function BasementCostGuidePage({ locale, projects, phone }: Basem
             {' · '}
             <Link href="/blog/basement-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
             {' · '}
+            <Link href="/blog/basement-renovations-port-coquitlam-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-port-moody" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-maple-ridge" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-delta-bc" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-white-rock-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+            {' · '}
             <Link href="/blog/basement-renovation-vancouver-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
           </p>
         </div>

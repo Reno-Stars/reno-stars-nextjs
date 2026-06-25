@@ -453,6 +453,16 @@ export default function KitchenCostGuidePage({ locale, projects, phone }: Kitche
             <Link href="/blog/kitchen-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
             {' · '}
             <Link href="/blog/kitchen-renovation-delta-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-port-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-port-moody-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-maple-ridge-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-white-rock-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-new-westminster-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
           </p>
         </div>
       </section>
