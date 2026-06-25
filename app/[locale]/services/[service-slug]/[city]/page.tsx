@@ -279,6 +279,123 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Basement Renovation Port Moody | $30K–$120K+ | Reno Stars',
       description: 'Port Moody basement renovation — finishing, suite conversions, family rooms. Inlet to Heritage Mountain. Permit-aware, $5M insured. $30K–$120K+. Free quote.',
     },
+    // 2026-06-25: Kitchen city-specific overrides for remaining 7 cities without custom meta.
+    // Price ranges from real completed projects per city (§8-compliant DB data).
+    'kitchen/delta': {
+      title: 'Kitchen Renovation Delta BC | $20K–$50K | Reno Stars',
+      description: 'Delta kitchen renovation — Tsawwassen, Ladner & North Delta. Custom cabinets, quartz countertops, full layout redesign. $20K–$50K from real projects. 3–5 weeks. Free quote.',
+    },
+    'kitchen/langley': {
+      title: 'Kitchen Renovation Langley BC | $20K–$35K | Reno Stars',
+      description: 'Langley kitchen renovation — Willoughby, Walnut Grove, Fort Langley. Custom & prefab cabinets, quartz, layout redesign. $20K–$35K from real projects. Free quote.',
+    },
+    'kitchen/maple-ridge': {
+      title: 'Kitchen Renovation Maple Ridge | $22K–$50K | Reno Stars',
+      description: 'Maple Ridge kitchen renovation — Silver Valley, Albion, Cottonwood. Custom cabinets, quartz countertops, full layout. $22K–$50K from real projects. Free quote.',
+    },
+    'kitchen/new-westminster': {
+      title: 'Kitchen Renovation New Westminster | $20K–$40K | Reno Stars',
+      description: "New Westminster kitchen renovation — Queen's Park heritage, Sapperton & Queensborough. Custom cabinets, quartz countertops, layout redesign. $20K–$40K. Free quote.",
+    },
+    'kitchen/port-coquitlam': {
+      title: 'Kitchen Renovation Port Coquitlam | $22K–$45K | Reno Stars',
+      description: 'Port Coquitlam kitchen renovation — Citadel Heights, Riverwood & West PoCo. Custom & prefab cabinets, quartz, layout redesign. $22K–$45K from real projects. Free quote.',
+    },
+    'kitchen/port-moody': {
+      title: 'Kitchen Renovation Port Moody | $25K–$55K | Reno Stars',
+      description: 'Port Moody kitchen renovation — Heritage Woods, Moody Centre & Inlet Centre. Custom cabinets, quartz countertops, full layout redesign. $25K–$55K. Free quote.',
+    },
+    'kitchen/white-rock': {
+      title: 'Kitchen Renovation White Rock | $16K–$46K | Reno Stars',
+      description: 'White Rock kitchen renovation — East Beach, West Beach & South Surrey. Custom cabinets, quartz countertops, layout redesign. $16K–$46K from real projects. Free quote.',
+    },
+    // 2026-06-25: Bathroom overrides for 7 cities.
+    'bathroom/coquitlam': {
+      title: 'Bathroom Renovation Coquitlam | $14K–$35K | Reno Stars',
+      description: 'Coquitlam bathroom renovation — Burke Mountain condos, Westwood Plateau SFH. Walk-in showers, tub conversions, custom vanities. $14K–$35K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/delta': {
+      title: 'Bathroom Renovation Delta BC | $15K–$35K | Reno Stars',
+      description: 'Delta bathroom renovation — Tsawwassen coastal, Ladner heritage, North Delta. Walk-in showers, soaker tubs, custom vanities. $15K–$35K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/langley': {
+      title: 'Bathroom Renovation Langley BC | $12K–$35K | Reno Stars',
+      description: 'Langley bathroom renovation — Willoughby, Walnut Grove & Fort Langley. Walk-in showers, tub conversions, custom tile & vanities. $12K–$35K. 3–6 weeks. Free quote.',
+    },
+    'bathroom/new-westminster': {
+      title: 'Bathroom Renovation New Westminster | $14K–$35K | Reno Stars',
+      description: "New Westminster bathroom renovation — Queen's Park, Sapperton & Queensborough. Walk-in showers, soaker tubs, custom vanities. $14K–$35K, 3–6 weeks. Free quote.",
+    },
+    'bathroom/port-coquitlam': {
+      title: 'Bathroom Renovation Port Coquitlam | $14K–$35K | Reno Stars',
+      description: 'Port Coquitlam bathroom renovation — Citadel Heights, Riverwood, Oxford Heights. Walk-in showers, tub conversions, custom vanities. $14K–$35K. Free quote.',
+    },
+    'bathroom/port-moody': {
+      title: 'Bathroom Renovation Port Moody | $16K–$40K | Reno Stars',
+      description: 'Port Moody bathroom renovation — Heritage Woods, Moody Centre & Inlet Centre. Walk-in showers, soaker tubs, custom vanities. $16K–$40K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/surrey': {
+      title: 'Bathroom Renovation Surrey BC | $14K–$40K | Reno Stars',
+      description: 'Surrey bathroom renovation — Fleetwood, Newton, Cloverdale & South Surrey. Walk-in showers, tub conversions, custom tile & vanities. $14K–$40K. Free quote.',
+    },
+    // 2026-06-25: Basement overrides for 8 cities.
+    'basement/coquitlam': {
+      title: 'Basement Renovation Coquitlam | $35K–$120K+ | Reno Stars',
+      description: 'Coquitlam basement renovation — Burke Mountain, Westwood Plateau, Maillardville. Finishing, suite conversions, family rooms. Permit-aware. $35K–$120K+. Free quote.',
+    },
+    'basement/delta': {
+      title: 'Basement Renovation Delta BC | $30K–$110K+ | Reno Stars',
+      description: 'Delta basement renovation — Tsawwassen, Ladner & North Delta. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $30K–$110K+. Free quote.',
+    },
+    'basement/langley': {
+      title: 'Basement Renovation Langley BC | $30K–$110K+ | Reno Stars',
+      description: 'Langley basement renovation — Willoughby, Walnut Grove, Fort Langley. Finishing, secondary suites, family rooms. Permit-aware. $30K–$110K+. Free quote.',
+    },
+    'basement/maple-ridge': {
+      title: 'Basement Renovation Maple Ridge | $30K–$110K+ | Reno Stars',
+      description: 'Maple Ridge basement renovation — Silver Valley, Albion, Cottonwood. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+    },
+    'basement/new-westminster': {
+      title: 'Basement Renovation New Westminster | $30K–$110K+ | Reno Stars',
+      description: "New Westminster basement renovation — Queen's Park heritage, Queensborough. Finishing, suite conversions, family rooms. Permit-aware. $30K–$110K+. Free quote.",
+    },
+    'basement/richmond': {
+      title: 'Basement Renovation Richmond BC | $35K–$120K+ | Reno Stars',
+      description: 'Richmond basement renovation — Steveston, Brighouse, Terra Nova. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $35K–$120K+. Free quote.',
+    },
+    'basement/west-vancouver': {
+      title: 'Basement Renovation West Vancouver | $40K–$130K+ | Reno Stars',
+      description: 'West Vancouver basement renovation — British Properties, Caulfeild, Dundarave. Wine cellars, home theatres, suite conversions. Luxury finishes. $40K–$130K+. Free quote.',
+    },
+    'basement/white-rock': {
+      title: 'Basement Renovation White Rock | $30K–$110K+ | Reno Stars',
+      description: 'White Rock basement renovation — East Beach, West Beach & South Surrey. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+    },
+    // 2026-06-25: Whole-house overrides for 6 cities.
+    'whole-house/delta': {
+      title: 'Home Renovation Delta BC | $50K–$200K+ | Reno Stars',
+      description: 'Delta home renovation — Tsawwassen, Ladner & North Delta. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/langley': {
+      title: 'Home Renovation Langley BC | $50K–$200K+ | Reno Stars',
+      description: 'Langley home renovation — Willoughby, Walnut Grove & Fort Langley. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/maple-ridge': {
+      title: 'Home Renovation Maple Ridge | $50K–$200K+ | Reno Stars',
+      description: 'Maple Ridge home renovation — Silver Valley, Albion & Cottonwood. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/new-westminster': {
+      title: 'Home Renovation New Westminster | $50K–$200K+ | Reno Stars',
+      description: "New Westminster home renovation — Queen's Park heritage, Sapperton & Uptown. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.",
+    },
+    'whole-house/north-vancouver': {
+      title: 'Home Renovation North Vancouver | $50K–$200K+ | Reno Stars',
+      description: 'North Vancouver home renovation — Lynn Valley, Lonsdale & Deep Cove. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/port-moody': {
+      title: 'Home Renovation Port Moody | $50K–$200K+ | Reno Stars',
+      description: 'Port Moody home renovation — Heritage Woods, Moody Centre & Inlet Centre. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
