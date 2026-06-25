@@ -615,6 +615,32 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
           </div>
         </div>
       </section>
+      {/* 2026-06-25: City-specific bathroom guides. Cross-linking from the
+          bathroom cost guide (high-equity hub) to the city posts passes
+          PageRank and helps city posts rank for "[city] bathroom renovation
+          cost" queries. Top 8 cities by organic search volume. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: '#8c8c8c' }}>
+            <strong>City-specific bathroom renovation guides:</strong>{' '}
+            <Link href="/blog/burnaby-bathroom-renovation-guide-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-cost-richmond-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-surrey-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovations-north-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-langley-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovations-west-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/average-bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );

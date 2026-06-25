@@ -431,6 +431,29 @@ export default function KitchenCostGuidePage({ locale, projects, phone }: Kitche
               See our kitchen renovation Vancouver services →
             </Link>
           </p>
+          {/* 2026-06-25: City-specific kitchen guides. Each city guide has
+              detailed neighbourhood-by-neighbourhood pricing. Cross-linking
+              from the cost guide (high-equity hub) passes PageRank to the
+              city posts and helps them rank for "[city] kitchen renovation
+              cost" queries. Top 8 cities by organic search volume listed. */}
+          <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
+            <strong>City-specific kitchen renovation guides:</strong>{' '}
+            <Link href="/blog/kitchen-renovation-burnaby-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-richmond-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-surrey-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-north-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-langley-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/kitchen-renovation-delta-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+          </p>
         </div>
       </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />

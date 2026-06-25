@@ -258,6 +258,28 @@ export default function BasementCostGuidePage({ locale, projects, phone }: Basem
               See our service area + booking page →
             </Link>
           </p>
+          {/* 2026-06-25: City-specific basement guides. Cross-linking from
+              the basement cost guide (high-equity hub) to city posts passes
+              PageRank and helps city posts rank for "[city] basement
+              renovation" queries. Top 8 cities listed. */}
+          <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
+            <strong>City-specific basement renovation guides:</strong>{' '}
+            <Link href="/blog/basement-renovations-burnaby-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-richmond-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-surrey" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-coquitlam-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-north-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/basement-renovations-langley" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-west-vancouver-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/basement-renovation-vancouver-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+          </p>
         </div>
       </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
