@@ -22,6 +22,8 @@ import ShowroomSection from '@/components/home/ShowroomSection';
 // Below-fold client components — lazy-load JS
 const FaqSection = dynamic(() => import('@/components/home/FaqSection'));
 const ContactSection = dynamic(() => import('@/components/home/ContactSection'));
+// Mobile sticky CTA — GA4: 0 conversions from 114 organic sessions (high engagement, no convert)
+const StickyHomeCta = dynamic(() => import('@/components/StickyHomeCta'));
 
 // Pre-localized types (computed server-side)
 interface LocalizedBlogPost { slug: string; title: string }
@@ -137,6 +139,7 @@ export default function HomePage({
       <BlogSection posts={blogPosts} translations={t.blog} />
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />
       <ContactSection company={company} areasText={areasText} translations={t.contact} />
+      <StickyHomeCta phone={company.phone} />
     </div>
   );
 }
