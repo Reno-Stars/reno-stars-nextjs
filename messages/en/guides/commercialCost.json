@@ -38,7 +38,7 @@
       },
       "hvac": {
         "title": "HVAC & Mechanical Systems",
-        "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant hood and make-up air systems alone cost $20,000–50,000. Office spaces need proper zoning for tenant comfort. Vancouver's energy code requires high-efficiency systems."
+        "description": "Commercial HVAC is a major cost driver at $15,000–80,000+. Restaurant Type I hood and make-up air systems alone typically cost $20,000–50,000 and require a dedicated mechanical subcontractor with Metro Vancouver experience. Office spaces need proper zoning and separate VAV or fan-coil units for tenant thermal comfort. BC Energy Step Code requirements (Step 2 minimum for most commercial occupancies as of 2023) mandate high-efficiency equipment, heat recovery ventilation for mechanical rooms, and demand-controlled ventilation in assembly spaces — all of which add to upfront cost but reduce long-term operating expense. Always specify HVAC requirements clearly in your scope before pricing — equipment lead times can run 6–12 weeks for commercial units and must be ordered before construction begins."
       },
       "fireSafety": {
         "title": "Fire Safety & Sprinklers",
@@ -69,15 +69,15 @@
       },
       "tip2": {
         "title": "Phase Your Renovation",
-        "description": "Divide the project into phases to spread costs and minimize business disruption. Prioritize customer-facing areas first, then tackle back-of-house improvements in a second phase."
+        "description": "Divide the project into phases to spread costs and minimize business disruption. A well-planned phased approach sequences work to keep revenue-generating areas open: tackle storage, back-of-house, and mechanical first; move to customer-facing areas after the noisiest and dustiest trades are complete. For restaurants, phased closure (lunch service off, dinner on) can limit revenue loss during construction. Document each phase clearly with a written scope-of-work handoff between phases to avoid contractors pricing re-mobilization costs as extras."
       },
       "tip3": {
         "title": "Reuse Existing Infrastructure",
-        "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in costs alone."
+        "description": "Keep plumbing and electrical in existing locations where possible. Moving a commercial kitchen or washroom can add $20,000–50,000 in rough-in cost alone — concrete coring, plumbing relocation, new drain lines to the stack, and wall framing are all labour-intensive. Before relocating any wet wall, ask your contractor for a detailed cost comparison: keeping versus moving. Even a $5,000 design fee for a space plan that minimizes relocations typically saves many times its cost in construction budget."
       },
       "tip4": {
         "title": "Choose Durable Commercial-Grade Materials",
-        "description": "Invest in commercial-grade flooring, fixtures, and finishes. Higher upfront cost saves money long-term. Commercial LVT lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces."
+        "description": "Invest in commercial-grade flooring, fixtures, and finishes from the start. Commercial LVT (luxury vinyl tile) rated for 500,000 cycles Tarkett or Forbo equivalent lasts 15–20 years vs. 5–8 years for residential-grade products in high-traffic spaces. Commercial-rated paint formulations (epoxy, modified acrylic) handle daily cleaning and disinfectants that dissolve residential paint over months. The price premium for commercial-grade products is typically 20–40% over residential equivalents — but a complete redo in 5 years at full commercial renovation cost is far more expensive than spec'ing correctly the first time."
       }
     },
     "cta": {
