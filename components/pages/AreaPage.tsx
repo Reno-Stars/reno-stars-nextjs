@@ -1,7 +1,23 @@
 'use client';
 
 import { useMemo } from 'react';
+import sanitizeHtml from 'sanitize-html';
+import { Marked } from 'marked';
 import OptimizedImage from '@/components/OptimizedImage';
+
+// Shared markdown renderer for service-area body content.
+// Area page content uses ## headings, **bold**, and [links]() throughout.
+// Previously these rendered as literal characters in <p> tags — now properly
+// parsed to semantic HTML. Added 2026-06-25 SEO tick-598.
+const areaContentRenderer = new Marked();
+
+const AREA_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h2', 'h3', 'h4']),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    a: ['href', 'title', 'target', 'rel'],
+  },
+};
 import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronRight, MapPin, Star } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -460,13 +476,20 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
       {/* Unique Content */}
       {localizedArea.content && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="max-w-3xl mx-auto">
             <h2 className="sr-only">{t('areas.aboutArea', { area: localizedArea.name })}</h2>
-            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
-              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
-                {paragraph}
-              </p>
-            ))}
+            {/* Markdown-rendered content: ## headings → <h2>, **bold** → <strong>,
+                [links]() → <a>, - list items → <ul><li>. Sanitized for XSS safety. */}
+            <div
+              className="prose prose-base max-w-none prose-headings:text-xl prose-headings:font-semibold prose-headings:mt-6 prose-headings:mb-2 prose-a:text-blue-700 prose-strong:font-semibold"
+              style={{ color: TEXT_MID }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  areaContentRenderer.parse(localizedArea.content) as string,
+                  AREA_SANITIZE_OPTIONS,
+                ),
+              }}
+            />
           </div>
         </section>
       )}
