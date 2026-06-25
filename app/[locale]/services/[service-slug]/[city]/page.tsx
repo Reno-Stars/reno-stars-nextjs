@@ -100,6 +100,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Cabinet Resurfacing & Refinishing Port Moody | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing, refinishing & refacing in Port Moody — Heritage Mountain, Newport Village, Inlet Centre. Painting from $1.5K, refacing $4–$15K. Free quote.',
     },
+    // 2026-06-25: Remaining 10 cabinet city overrides (same pattern as the 4 above).
+    'cabinet/burnaby': {
+      title: 'Cabinet Resurfacing & Refinishing Burnaby | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Burnaby — Metrotown, Heights, Capitol Hill. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/coquitlam': {
+      title: 'Cabinet Resurfacing & Refinishing Coquitlam | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Coquitlam — Burke Mountain, Westwood Plateau, Maillardville. Painting from $1.5K, full refacing $4–$15K. Free quote.',
+    },
+    'cabinet/langley': {
+      title: 'Cabinet Resurfacing & Refinishing Langley | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Langley — Willoughby, Walnut Grove, Fort Langley. Painting from $1.5K, full refacing $4–$15K. 1–2 week timeline. Free quote.',
+    },
+    'cabinet/new-westminster': {
+      title: 'Cabinet Resurfacing & Refinishing New Westminster | $1.5K–$15K | Reno Stars',
+      description: "Cabinet resurfacing & refinishing in New Westminster — Queen's Park, Sapperton & Uptown. Painting from $1.5K, full refacing $8–$15K. 1–2 week timeline. Free quote.",
+    },
+    'cabinet/north-vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing North Vancouver | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in North Vancouver — Lynn Valley, Lonsdale, Deep Cove. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/richmond': {
+      title: 'Cabinet Resurfacing & Refinishing Richmond BC | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Richmond — Steveston, Brighouse, Terra Nova. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/surrey': {
+      title: 'Cabinet Resurfacing & Refinishing Surrey BC | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Surrey — Fleetwood, Newton, Cloverdale. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing Vancouver | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Vancouver — East Van, Kitsilano, Mount Pleasant. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/west-vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing West Vancouver | $1.5K–$25K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in West Vancouver — Caulfeild, Dundarave, British Properties. Painting from $1.5K, full refacing $4–$15K, luxury finishes to $25K. Free quote.',
+    },
+    'cabinet/white-rock': {
+      title: 'Cabinet Resurfacing & Refinishing White Rock | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in White Rock & South Surrey — painting from $1.5K, door replacement $4K+, full refacing $9–$16K. Free in-home quote.',
+    },
     'cabinet/delta': {
       title: 'Cabinet Resurfacing & Refinishing Delta BC | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing & refinishing in Delta — Ladner, Tsawwassen, North Delta. Painting from $1.5K, full refacing from $4K. Free in-home quote.',
