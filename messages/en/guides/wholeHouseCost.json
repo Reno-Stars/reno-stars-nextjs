@@ -33,27 +33,27 @@
       "subtitle": "Six key factors that determine your final price",
       "scope": {
         "title": "Scope & Square Footage",
-        "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+        "description": "Scope is the single biggest cost driver. A 600 sq ft condo cosmetic refresh (paint, flooring, fixtures) costs far less than a 2,500 sq ft house gut renovation with structural changes. Define your must-haves vs nice-to-haves early — every scope addition is easier to decline at the planning stage than after your contractor has mobilized. Walking through a priority list room-by-room with your contractor before signing anything prevents the most common cause of renovation budget overruns."
       },
       "kitchen": {
         "title": "Kitchen (30–40% of total budget)",
-        "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+        "description": "Kitchens are typically the most expensive room in a whole-house renovation. Custom cabinets, quartz countertops, integrated appliances, and a kitchen island can run $15,000–$72,000 on their own. The kitchen's share of a whole-house budget is 30–40% in most Metro Vancouver projects. Open-concept kitchen conversions that remove walls between kitchen and living areas are the most popular structural change — but they add $10,000–$25,000 to budget. See our kitchen renovation cost guide for detailed tier breakdowns by scope."
       },
       "bathrooms": {
         "title": "Bathrooms (15–25% of total budget)",
-        "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+        "description": "Each bathroom adds $10,000–$40,000 depending on size and finish level. Waterproofing systems, tile work (labour and materials), fixture quality, and plumbing rough-in complexity are the main cost variables. Homes with two or more bathrooms benefit from bundling them in the same renovation — the contractor can schedule the tile setter and plumber across both bathrooms efficiently, reducing the per-bathroom cost vs. renovating each separately in different years. Primary ensuites with heated floors, frameless glass showers, and freestanding tubs are at the high end of the range."
       },
       "flooring": {
         "title": "Flooring (10–15% of total budget)",
-        "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+        "description": "Flooring accounts for 10–15% of a whole-house renovation budget in Metro Vancouver. Engineered hardwood is the most popular choice for main living areas at $8–$15 per sq ft installed. Luxury vinyl plank (LVP) is a waterproof, budget-friendly alternative at $5–$10 per sq ft installed — increasingly common in basement and ground-floor applications. Tile in bathrooms and entryways adds $12–$25 per sq ft depending on tile size and pattern complexity. Large-format tiles (24\"×48\") cost more per sq ft to install than standard sizes due to levelling requirements."
       },
       "structural": {
         "title": "Structural Changes",
-        "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+        "description": "Structural work — removing walls, adding windows, reconfiguring stairs, or changing floor layouts — adds $5,000–$25,000+ per change. Load-bearing wall removal is the most common structural request: it requires a structural engineer's report ($800–$2,000), a temporary shoring plan, a new LVL or steel beam, and column footings in some cases. This scope requires a building permit in all Metro Vancouver municipalities. Open-concept kitchen conversions are the most popular reason for load-bearing wall removal in Metro Vancouver SFH homes built before 1990."
       },
       "permits": {
         "title": "Permits & Professional Fees",
-        "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+        "description": "Building permits in Metro Vancouver cost $500–$2,500 for typical whole-house renovation scopes. Any plumbing, electrical, gas, or structural work requires permits; cosmetic-only work (paint, flooring, cabinet replacement without structural changes) typically does not. Budget an additional $2,000–$5,000 for architectural drawings and engineering reports if structural work is involved. A registered structural engineer's report is required for load-bearing wall removal in all Metro Vancouver jurisdictions. Processing times vary: City of Vancouver online permits may be approved in 5–10 business days; Burnaby and Surrey are generally similar."
       }
     },
     "realProjects": {
