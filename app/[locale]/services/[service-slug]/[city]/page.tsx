@@ -190,6 +190,100 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Poly-B Replacement Surrey | $10K–$25K | Insurance-Ready | Reno Stars',
       description: 'Surrey Poly-B pipe replacement — Fleetwood, Newton, Cloverdale SFH. PEX re-pipe with 50-year warranty + insurance-renewal documentation. $10K–$25K.',
     },
+    // 2026-06-25: Remaining accessible-bathroom + poly-b cities
+    'accessible-bathroom/north-vancouver': {
+      title: 'Accessible Bathroom North Vancouver | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'North Vancouver accessible bathroom renovations — Lynn Valley, Lonsdale, Deep Cove. Curbless showers, grab bars, comfort-height fixtures. CSA B651 compliant. $3K–$60K.',
+    },
+    'accessible-bathroom/coquitlam': {
+      title: 'Accessible Bathroom Coquitlam | Wheelchair Walk-in | $3K–$60K | Reno Stars',
+      description: 'Coquitlam accessible bathroom renovations — Westwood Plateau, Burke Mountain, Town Centre. Curbless showers, grab bars, roll-in seating, widened doorways. $3K–$60K.',
+    },
+    'accessible-bathroom/langley': {
+      title: 'Accessible Bathroom Langley BC | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Langley accessible bathroom renovations — Langley City, Walnut Grove, Willoughby. Walk-in showers, grab bars, comfort-height toilets, wheelchair vanities. $3K–$60K.',
+    },
+    'accessible-bathroom/delta': {
+      title: 'Accessible Bathroom Delta BC | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Delta accessible bathroom renovations — Ladner, Tsawwassen, North Delta. Curbless showers, grab bars, OT-coordinated layouts, wheelchair-accessible vanities. $3K–$60K.',
+    },
+    'poly-b-replacement/vancouver': {
+      title: 'Poly-B Replacement Vancouver | $8K–$25K | Insurance-Ready | Reno Stars',
+      description: 'Vancouver Poly-B pipe replacement — East Van, Kitsilano, Dunbar SFH + strata. Full PEX re-pipe, 50-year warranty, insurer-ready documentation. $8K–$25K. Free quote.',
+    },
+    'poly-b-replacement/north-vancouver': {
+      title: 'Poly-B Replacement North Vancouver | $8K–$22K | Insurance-Ready | Reno Stars',
+      description: 'North Vancouver Poly-B replacement — Lynn Valley, Capilano Highlands, Edgemont SFH. 1985-97 building stock. PEX re-pipe + 50-year warranty + insurance docs. $8K–$22K.',
+    },
+    'poly-b-replacement/langley': {
+      title: 'Poly-B Replacement Langley BC | $10K–$22K | Insurance-Ready | Reno Stars',
+      description: 'Langley Poly-B pipe replacement — Langley City, Walnut Grove, Willoughby SFH. PEX re-pipe, 50-year warranty, insurer-ready documentation. $10K–$22K.',
+    },
+    'poly-b-replacement/west-vancouver': {
+      title: 'Poly-B Replacement West Vancouver | $10K–$28K | Insurance-Ready | Reno Stars',
+      description: 'West Vancouver Poly-B replacement — Caulfeild, Dundarave, British Properties SFH. Full PEX re-pipe, 50-year warranty, insurance-renewal documentation. $10K–$28K.',
+    },
+    // 2026-06-25: Critical load panel + heat pump HVAC — specialty services
+    'critical-load-panel/vancouver': {
+      title: 'Electrical Panel Upgrade Vancouver | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Vancouver critical load panel upgrades — 100A→200A service, EV charger circuits, arc-fault breakers. East Van, Kitsilano, Dunbar. BC permit + ESA inspection. $3K–$8K.',
+    },
+    'critical-load-panel/burnaby': {
+      title: 'Electrical Panel Upgrade Burnaby | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Burnaby electrical panel upgrades — Metrotown, Heights, Edmonds. 100A→200A service, EV charger prep, dedicated kitchen circuits. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/richmond': {
+      title: 'Electrical Panel Upgrade Richmond BC | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Richmond electrical panel upgrades — Steveston, Brighouse, Terra Nova. 100A→200A service upgrade, EV-ready circuits, arc-fault protection. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/surrey': {
+      title: 'Electrical Panel Upgrade Surrey | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Surrey electrical panel upgrades — Fleetwood, Newton, Cloverdale. 100A→200A service, EV charger circuits, dedicated appliance breakers. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/north-vancouver': {
+      title: 'Electrical Panel Upgrade North Vancouver | 200A Service | Reno Stars',
+      description: 'North Vancouver electrical panel upgrades — Lynn Valley, Lonsdale. 100A→200A service, EV charger prep, arc-fault breakers. BC permit + ESA inspection. Free quote.',
+    },
+    'critical-load-panel/coquitlam': {
+      title: 'Electrical Panel Upgrade Coquitlam | 200A Service | Reno Stars',
+      description: 'Coquitlam electrical panel upgrades — Burke Mountain, Westwood Plateau. 100A→200A service, EV-ready circuits, dedicated kitchen breakers. BC permit + ESA. Free quote.',
+    },
+    'critical-load-panel/langley': {
+      title: 'Electrical Panel Upgrade Langley BC | 200A Service | Reno Stars',
+      description: 'Langley electrical panel upgrades — Langley City, Walnut Grove, Willoughby. 100A→200A service, EV charger circuits, arc-fault protection. BC permit + ESA. Free quote.',
+    },
+    'critical-load-panel/west-vancouver': {
+      title: 'Electrical Panel Upgrade West Vancouver | 200A Service | Reno Stars',
+      description: 'West Vancouver electrical panel upgrades — Caulfeild, Dundarave, British Properties. 100A→200A service, EV charger circuits, premium ESA inspection. Free quote.',
+    },
+    'critical-load-panel/delta': {
+      title: 'Electrical Panel Upgrade Delta BC | 200A Service | Reno Stars',
+      description: 'Delta electrical panel upgrades — Ladner, Tsawwassen, North Delta. 100A→200A service, EV charger prep, dedicated appliance circuits. BC permit + ESA. Free quote.',
+    },
+    'heat-pump-hvac/vancouver': {
+      title: 'Heat Pump Installation Vancouver | $8K–$18K | Reno Stars',
+      description: 'Vancouver heat pump & HVAC installation — ductless mini-splits, ducted heat pumps. BC Energy Step Code ready. CleanBC rebates available. East Van, Kitsilano. $8K–$18K.',
+    },
+    'heat-pump-hvac/burnaby': {
+      title: 'Heat Pump Installation Burnaby | $8K–$18K | Reno Stars',
+      description: 'Burnaby heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates, BC Energy Step Code. Metrotown, Heights, Burnaby Mountain. $8K–$18K.',
+    },
+    'heat-pump-hvac/richmond': {
+      title: 'Heat Pump Installation Richmond BC | $8K–$18K | Reno Stars',
+      description: 'Richmond heat pump & HVAC installation — ductless mini-splits, ducted heat pumps. CleanBC rebates, BC Energy Step Code. Steveston, Brighouse. $8K–$18K.',
+    },
+    'heat-pump-hvac/surrey': {
+      title: 'Heat Pump Installation Surrey | $8K–$18K | Reno Stars',
+      description: 'Surrey heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates available. Fleetwood, Newton, South Surrey. $8K–$18K.',
+    },
+    'heat-pump-hvac/north-vancouver': {
+      title: 'Heat Pump Installation North Vancouver | $8K–$18K | Reno Stars',
+      description: 'North Vancouver heat pump & HVAC installation — ductless mini-splits, ducted systems. CleanBC rebates, BC Energy Step Code. Lynn Valley, Lonsdale. $8K–$18K.',
+    },
+    'heat-pump-hvac/coquitlam': {
+      title: 'Heat Pump Installation Coquitlam | $8K–$18K | Reno Stars',
+      description: 'Coquitlam heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates available. Burke Mountain, Westwood Plateau. $8K–$18K.',
+    },
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
       title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',
@@ -749,6 +843,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'realtor/vancouver': { title: '温哥华出售前装修 | 经纪人服务 | Reno Stars', description: '温哥华出售前装修——基斯兰奴、东区及芒特普莱森特的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
     'realtor/west-vancouver': { title: '西温哥华出售前装修 | 经纪人服务 | Reno Stars', description: '西温哥华出售前装修——科尔菲尔德、敦达雷夫及英属山庄的厨房、浴室及豪华外观改善。最高回报率方案。免费报价。' },
     'realtor/white-rock': { title: '白石出售前装修 | 经纪人服务 | Reno Stars', description: '白石及南素里出售前装修——厨房、浴室及外观改善。最高回报率翻新方案，靠近东滩及西滩。免费报价。' },
+    // 2026-06-25: ZH for accessible-bathroom/poly-b remaining cities + critical-load-panel + heat-pump-hvac
+    'accessible-bathroom/north-vancouver': { title: '北温哥华无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: '北温哥华无障碍浴室改造——林恩谷、朗斯代尔及深湾。无门槛淋浴、扶手、舒适高度洁具。CSA B651合规。$3K–$60K。免费报价。' },
+    'accessible-bathroom/coquitlam': { title: '高贵林无障碍浴室改造 | 轮椅步入式 | $3K–$60K | Reno Stars', description: '高贵林无障碍浴室改造——西木高原、博客山、市中心。无门槛淋浴、扶手、可滚入式座椅、加宽门框。$3K–$60K。' },
+    'accessible-bathroom/langley': { title: '兰里无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: '兰里无障碍浴室改造——兰里市区、胡桃树林、威洛比。步入式淋浴、扶手、舒适高度马桶、轮椅可入梳妆台。$3K–$60K。' },
+    'accessible-bathroom/delta': { title: 'Delta无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: 'Delta无障碍浴室改造——拉德纳、察瓦森、北Delta。无门槛淋浴、扶手、职业治疗师协调布局、轮椅可入梳妆台。$3K–$60K。' },
+    'poly-b-replacement/vancouver': { title: '温哥华 Poly-B 水管更换 | $8K–$25K | 保险续保 | Reno Stars', description: '温哥华 Poly-B 水管更换——东区、基斯兰奴、邓巴独立屋及公寓。全屋 PEX 重新走管、50年保修、保险公司认可文件。$8K–$25K。免费报价。' },
+    'poly-b-replacement/north-vancouver': { title: '北温哥华 Poly-B 水管更换 | $8K–$22K | 保险续保 | Reno Stars', description: '北温哥华 Poly-B 水管更换——林恩谷、卡皮拉诺高地、爱德蒙特独立屋。PEX 重新走管、50年保修、保险续保文件。$8K–$22K。' },
+    'poly-b-replacement/langley': { title: '兰里 Poly-B 水管更换 | $10K–$22K | 保险续保 | Reno Stars', description: '兰里 Poly-B 水管更换——兰里市区、胡桃树林、威洛比独立屋。PEX 重新走管、50年保修、保险公司认可文件。$10K–$22K。' },
+    'poly-b-replacement/west-vancouver': { title: '西温 Poly-B 水管更换 | $10K–$28K | 保险续保 | Reno Stars', description: '西温 Poly-B 水管更换——科尔菲尔德、敦达雷夫、英属山庄独立屋。全屋 PEX 重新走管、50年保修、保险续保文件。$10K–$28K。' },
+    'critical-load-panel/vancouver': { title: '温哥华电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '温哥华配电箱升级——东区、基斯兰奴、邓巴。100A→200A服务升级、电动车充电线路、弧故障断路器。BC许可证+ESA检验。$3K–$8K。' },
+    'critical-load-panel/burnaby': { title: '本拿比电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '本拿比配电箱升级——Metrotown、Heights、Edmonds。100A→200A服务、电动车充电准备、专用厨房线路。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/richmond': { title: '列治文电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '列治文配电箱升级——史蒂文斯顿、布里格豪斯、特拉诺瓦。100A→200A服务升级、电动车就绪线路、弧故障保护。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/surrey': { title: '素里电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '素里配电箱升级——弗利特伍德、纽顿、克洛弗代尔。100A→200A服务、电动车充电线路、专用电器断路器。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/north-vancouver': { title: '北温哥华电箱升级 | 200A电力服务 | Reno Stars', description: '北温哥华配电箱升级——林恩谷、朗斯代尔。100A→200A服务、电动车充电准备、弧故障断路器。BC许可证+ESA检验。免费报价。' },
+    'critical-load-panel/coquitlam': { title: '高贵林电箱升级 | 200A电力服务 | Reno Stars', description: '高贵林配电箱升级——博客山、西木高原。100A→200A服务、电动车就绪线路、专用厨房断路器。BC许可证+ESA。免费报价。' },
+    'critical-load-panel/langley': { title: '兰里电箱升级 | 200A电力服务 | Reno Stars', description: '兰里配电箱升级——兰里市区、胡桃树林、威洛比。100A→200A服务、电动车充电线路、弧故障保护。BC许可证+ESA。免费报价。' },
+    'critical-load-panel/west-vancouver': { title: '西温哥华电箱升级 | 200A电力服务 | Reno Stars', description: '西温哥华配电箱升级——科尔菲尔德、敦达雷夫、英属山庄。100A→200A服务、电动车充电线路、优质ESA检验。免费报价。' },
+    'critical-load-panel/delta': { title: 'Delta电箱升级 | 200A电力服务 | Reno Stars', description: 'Delta配电箱升级——拉德纳、察瓦森、北Delta。100A→200A服务、电动车充电准备、专用电器线路。BC许可证+ESA。免费报价。' },
+    'heat-pump-hvac/vancouver': { title: '温哥华热泵安装 | $8K–$18K | Reno Stars', description: '温哥华热泵及暖通安装——无管道迷你分体机、导管式热泵。符合BC能源阶梯法规。CleanBC退税可申请。东区、基斯兰奴。$8K–$18K。' },
+    'heat-pump-hvac/burnaby': { title: '本拿比热泵安装 | $8K–$18K | Reno Stars', description: '本拿比热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税，BC能源阶梯法规。Metrotown、Heights、本拿比山。$8K–$18K。' },
+    'heat-pump-hvac/richmond': { title: '列治文热泵安装 | $8K–$18K | Reno Stars', description: '列治文热泵及暖通安装——无管道迷你分体机、导管式热泵。CleanBC退税，BC能源阶梯法规。史蒂文斯顿、布里格豪斯。$8K–$18K。' },
+    'heat-pump-hvac/surrey': { title: '素里热泵安装 | $8K–$18K | Reno Stars', description: '素里热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税可申请。弗利特伍德、纽顿、南素里。$8K–$18K。' },
+    'heat-pump-hvac/north-vancouver': { title: '北温哥华热泵安装 | $8K–$18K | Reno Stars', description: '北温哥华热泵及暖通安装——无管道迷你分体机、导管系统。CleanBC退税，BC能源阶梯法规。林恩谷、朗斯代尔。$8K–$18K。' },
+    'heat-pump-hvac/coquitlam': { title: '高贵林热泵安装 | $8K–$18K | Reno Stars', description: '高贵林热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税可申请。博客山、西木高原。$8K–$18K。' },
   };
   if (locale === 'zh' && zhOverrides[overrideKey]) {
     title = zhOverrides[overrideKey].title;
