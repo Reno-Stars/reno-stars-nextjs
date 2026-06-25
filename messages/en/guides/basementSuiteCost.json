@@ -34,27 +34,27 @@
       "subtitle": "Six key factors specific to legal suite builds",
       "separateEntrance": {
         "title": "Separate Entrance",
-        "description": "Most municipalities require a separate exterior entrance. Excavation, concrete stairs, drainage, landing, and fire-rated door typically cost $8,000–$18,000."
+        "description": "Most Metro Vancouver municipalities require a dedicated exterior entrance for legal secondary suites. The type of entrance determines cost: a side-entry door at grade level with a short concrete landing is the least expensive option ($4,000–$8,000). A stairwell excavated below grade — common when the only available exterior wall is below the main floor — requires retaining walls, drainage, and often concrete cutting, bringing the total to $10,000–$18,000. Always include weatherproofing, exterior lighting, and a fire-rated self-closing door in the entrance scope."
       },
       "fireSeparation": {
         "title": "Fire Separation & Safety",
-        "description": "BC Building Code requires 1-hour fire-rated separation between suite and main dwelling. Fire-rated drywall, smoke alarms, and fire-rated doors cost $4,000–$8,000."
+        "description": "BC Building Code Section 9.8 requires 1-hour fire-rated assemblies between the secondary suite and the main dwelling. This means Type X fire-rated drywall (5/8\") on both sides of all shared walls and ceilings, fire-rated doors with self-closing hardware at every shared boundary, interconnected smoke alarms in every room of both units, and CO detectors where gas appliances serve either unit. In older homes where shared walls are already drywall-finished, the cost to open and rebuild to code adds to the $4,000–$8,000 typical range for fire separation work."
       },
       "plumbing": {
         "title": "Kitchen & Bathroom Plumbing",
-        "description": "Full suite kitchen costs $12,000–$25,000 including cabinets, countertops, sink, and appliance hookups. Bathroom addition runs $8,000–$15,000."
+        "description": "Suite plumbing is the second-largest cost driver after the entrance. A full suite kitchen (cabinets, countertops, sink, faucet, dishwasher hookup, appliance rough-ins) costs $12,000–$25,000. Adding a suite bathroom (toilet, shower, vanity) typically adds $8,000–$15,000. Locating the suite kitchen near existing main-floor drain stacks avoids concrete cutting — a crucial cost-saving decision. Where concrete cutting is unavoidable, budget an additional $3,000–$8,000 for rough-in labour and concrete patching. Always discuss plumbing layout before finalizing the suite floor plan."
       },
       "electrical": {
         "title": "Electrical Panel & Wiring",
-        "description": "Suites need a dedicated sub-panel ($2,500–$5,000). Full wiring with code-required outlets and lighting costs $5,000–$10,000. Panel upgrades add $3,000–$5,000."
+        "description": "Legal suites require a dedicated sub-panel with minimum 60-amp service ($2,500–$5,000 installed). Full suite wiring — kitchen circuits, bathroom GFCI outlets, bedroom outlets, smoke and CO alarm interconnects, exterior lighting — typically adds $5,000–$10,000 in labour and materials. If the main panel is already at 100 amps, upgrading to 200-amp service before adding a sub-panel costs $3,000–$5,000. Some municipalities (Burnaby, New Westminster) require a separate utility meter for the suite — confirm this requirement early as it affects wiring scope and tenant billing."
       },
       "egress": {
         "title": "Egress Windows & Natural Light",
-        "description": "Every bedroom needs an egress window (5.7 sq ft opening min). Installing in concrete foundation walls costs $2,500–$6,000 each. Window wells add $1,000–$2,000."
+        "description": "BC Building Code requires every habitable bedroom to have an egress window with a minimum clear opening of 0.35 sq m (approximately 3.76 sq ft) in any dimension not less than 380mm. In concrete or masonry foundation walls, cutting a new egress opening requires a diamond blade saw, a structural header, and concrete patching — typically $2,500–$6,000 per opening. Window wells for below-grade windows add $1,000–$2,000 each. Proper egress windows also dramatically improve suite liveability and natural light, both of which support higher rental income."
       },
       "permits": {
         "title": "Permits, Inspections & Legalization",
-        "description": "Permit fees range $1,000–$3,500. Expect 4–6 inspections. Vancouver and Burnaby offer suite incentive programs offsetting $5,000–$10,000 in costs."
+        "description": "Permit fees for a basement suite conversion range from $1,000–$3,500 depending on municipality and declared construction value. Expect 4–6 inspections: framing, plumbing rough-in, electrical rough-in, insulation, drywall, and final occupancy. City of Vancouver and City of Burnaby run suite incentive programs that offset $5,000–$10,000 of cost. City of Surrey's Secondary Suite Incentive Program offers pre-application support. Permit processing times vary: straightforward residential suite permits may be processed in 2–4 weeks in some municipalities; others take 6–8 weeks. Factor permit timelines into your construction schedule from the start."
       }
     },
     "roi": {
@@ -104,19 +104,19 @@
       "title": "Money-Saving Tips for Your Basement Suite",
       "tip1": {
         "title": "Apply for Municipal Incentives First",
-        "description": "Vancouver, Burnaby, and other cities offer grants for legal suite creation. Apply before construction. Some require pre-approval. Savings: $5,000–$10,000."
+        "description": "Vancouver, Burnaby, and other Metro Vancouver cities offer grants and incentive programs for legal secondary suite creation. Apply before construction begins — some programs require pre-approval and a site inspection before work starts. Burnaby's Secondary Suite Program offers grants up to $10,000; Vancouver's suite incentives are available through the Affordable Housing programs. Savings of $5,000–$10,000 are typical for eligible projects. Don't leave this money on the table — ask your contractor to help identify applicable programs during the planning phase."
       },
       "tip2": {
         "title": "Plan Kitchen Near Existing Plumbing",
-        "description": "Locating the suite kitchen near existing drain stacks saves thousands. Avoiding concrete cutting saves $3,000–$8,000."
+        "description": "The single most impactful budget decision in a suite conversion is where to locate the suite kitchen relative to the existing main-floor drain stack. Locating the suite sink, dishwasher, and washer/dryer hookup directly below (or within 4–6 feet of) the existing drain stack avoids concrete cutting entirely, saving $3,000–$8,000 in rough-in costs. Review the main floor plumbing layout with your contractor before committing to a suite floor plan — even a modest kitchen relocation of 3–4 feet can eliminate thousands in concrete work."
       },
       "tip3": {
         "title": "Choose a Side-Entry Entrance",
-        "description": "Side-entry entrances cost significantly less than rear entries requiring major excavation. Savings: $5,000–$10,000."
+        "description": "Exterior entrance type is one of the biggest variable costs in a suite conversion. Side-entry entrances at grade — where the door is at the same level as the exterior grade with no steps or minimal concrete work — are the most cost-effective option. Rear-entry or below-grade entrances that require excavating a stairwell, installing drainage, retaining walls, and concrete formwork can cost $5,000–$10,000 more than a simple side door at grade. If your home's layout allows for a side or even front-facing entrance near grade level, prioritize it to save budget for kitchen and bathroom finishes."
       },
       "tip4": {
         "title": "Invest in Soundproofing Upfront",
-        "description": "Resilient channel and insulation between floors costs $2,000–$4,000 during construction. After drywall: 3–5x more and less effective."
+        "description": "Impact sound and airborne noise between floors is the top complaint from basement suite landlords and tenants. Installing resilient channel and acoustic insulation (Rockwool Safe'n'Sound or equivalent) between basement ceiling joists and the main floor above during framing costs $2,000–$4,000 and is dramatically more effective when installed before drywall. Adding soundproofing after drywall is installed requires opening the ceiling entirely — 3–5 times more expensive and less acoustically effective. Budget for proper soundproofing from the start: it directly affects tenant satisfaction, rental income stability, and the liveability of your main floor."
       }
     },
     "related": {
