@@ -232,6 +232,100 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Commercial Renovation Langley BC | Reno Stars',
       description: 'Langley commercial renovation — office, retail & restaurant fit-outs in Langley City, Willoughby & Walnut Grove. Permits handled, minimal disruption. Free quote.',
     },
+    // 2026-06-25: Remaining 9 commercial city overrides.
+    'commercial/burnaby': {
+      title: 'Commercial Renovation Burnaby | Reno Stars',
+      description: 'Burnaby commercial renovation — office, retail, restaurant & strata lobby fit-outs in Metrotown, Brentwood & Edmonds. Off-hours scheduling, permits handled. Free consultation.',
+    },
+    'commercial/new-westminster': {
+      title: 'Commercial Renovation New Westminster | Reno Stars',
+      description: "New Westminster commercial renovation — office, retail & restaurant fit-outs in Downtown, Sapperton & Queensborough. Permits handled, minimal disruption. Free consultation.",
+    },
+    'commercial/north-vancouver': {
+      title: 'Commercial Renovation North Vancouver | Reno Stars',
+      description: 'North Vancouver commercial renovation — office, retail & restaurant fit-outs on Lonsdale & in Lynn Valley. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/port-coquitlam': {
+      title: 'Commercial Renovation Port Coquitlam | Reno Stars',
+      description: 'Port Coquitlam commercial renovation — office, retail & restaurant fit-outs in Town Centre & Oxford Heights. Permits handled, minimal disruption. Free consultation.',
+    },
+    'commercial/port-moody': {
+      title: 'Commercial Renovation Port Moody | Reno Stars',
+      description: 'Port Moody commercial renovation — office, retail & restaurant fit-outs in Inlet Centre & Moody Centre. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/richmond': {
+      title: 'Commercial Renovation Richmond BC | Reno Stars',
+      description: 'Richmond commercial renovation — office, retail, restaurant & medical fit-outs in Brighouse, Steveston & Alexandra. Permits handled, minimal disruption. Free consultation.',
+    },
+    'commercial/surrey': {
+      title: 'Commercial Renovation Surrey BC | Reno Stars',
+      description: 'Surrey commercial renovation — office, retail, restaurant & clinic fit-outs in Guildford, Newton & City Centre. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/vancouver': {
+      title: 'Commercial Renovation Vancouver BC | Reno Stars',
+      description: 'Vancouver commercial renovation — office, retail, restaurant & medical fit-outs Downtown, Gastown, Mount Pleasant & East Van. Permits handled. $150–$500/sqft. Free consultation.',
+    },
+    'commercial/white-rock': {
+      title: 'Commercial Renovation White Rock | Reno Stars',
+      description: 'White Rock & South Surrey commercial renovation — retail, restaurant & clinic fit-outs. Permits handled, minimal disruption to neighbouring businesses. Free consultation.',
+    },
+    // 2026-06-25: Realtor (pre-sale) service city overrides for all 14 cities.
+    'realtor/burnaby': {
+      title: 'Pre-Sale Renovation Burnaby | For Realtors | Reno Stars',
+      description: 'Burnaby pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Metrotown, Heights & Capitol Hill. 2–4 week timeline. Free quote.',
+    },
+    'realtor/coquitlam': {
+      title: 'Pre-Sale Renovation Coquitlam | For Realtors | Reno Stars',
+      description: 'Coquitlam pre-sale renovation — kitchen, bathroom & cosmetic updates in Burke Mountain, Westwood Plateau & Maillardville. 2–4 week timeline. Free quote.',
+    },
+    'realtor/delta': {
+      title: 'Pre-Sale Renovation Delta BC | For Realtors | Reno Stars',
+      description: 'Delta pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Tsawwassen, Ladner & North Delta. 2–4 week timeline. Free quote.',
+    },
+    'realtor/langley': {
+      title: 'Pre-Sale Renovation Langley | For Realtors | Reno Stars',
+      description: 'Langley pre-sale renovation — kitchen, bathroom & cosmetic updates in Willoughby, Walnut Grove & Fort Langley. Best ROI updates for sellers. Free quote.',
+    },
+    'realtor/maple-ridge': {
+      title: 'Pre-Sale Renovation Maple Ridge | For Realtors | Reno Stars',
+      description: 'Maple Ridge pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Silver Valley & Albion. 2–4 week timeline. Free quote.',
+    },
+    'realtor/new-westminster': {
+      title: 'Pre-Sale Renovation New Westminster | For Realtors | Reno Stars',
+      description: "New Westminster pre-sale renovation — kitchen, bathroom & cosmetic updates in Queen's Park, Sapperton & Uptown. Best ROI updates for sellers. Free quote.",
+    },
+    'realtor/north-vancouver': {
+      title: 'Pre-Sale Renovation North Vancouver | For Realtors | Reno Stars',
+      description: 'North Vancouver pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Lynn Valley, Lonsdale & Deep Cove. Free quote.',
+    },
+    'realtor/port-coquitlam': {
+      title: 'Pre-Sale Renovation Port Coquitlam | For Realtors | Reno Stars',
+      description: 'Port Coquitlam pre-sale renovation — kitchen, bathroom & cosmetic updates in Citadel Heights, Riverwood & West PoCo. Best ROI updates for sellers. Free quote.',
+    },
+    'realtor/port-moody': {
+      title: 'Pre-Sale Renovation Port Moody | For Realtors | Reno Stars',
+      description: 'Port Moody pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Heritage Woods & Moody Centre. Free quote.',
+    },
+    'realtor/richmond': {
+      title: 'Pre-Sale Renovation Richmond BC | For Realtors | Reno Stars',
+      description: 'Richmond pre-sale renovation — kitchen, bathroom & cosmetic updates in Steveston, Brighouse & Terra Nova. Best ROI for sellers & realtors. Free quote.',
+    },
+    'realtor/surrey': {
+      title: 'Pre-Sale Renovation Surrey | For Realtors | Reno Stars',
+      description: 'Surrey pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Fleetwood, Newton & South Surrey. 2–4 week timeline. Free quote.',
+    },
+    'realtor/vancouver': {
+      title: 'Pre-Sale Renovation Vancouver | For Realtors | Reno Stars',
+      description: 'Vancouver pre-sale renovation — kitchen, bathroom & cosmetic updates in Kitsilano, East Van & Mount Pleasant. Best ROI updates for sellers & realtors. Free quote.',
+    },
+    'realtor/west-vancouver': {
+      title: 'Pre-Sale Renovation West Vancouver | For Realtors | Reno Stars',
+      description: 'West Vancouver pre-sale renovation for realtors & sellers — kitchen, bathroom & luxury cosmetic updates in Caulfeild, Dundarave & British Properties. Free quote.',
+    },
+    'realtor/white-rock': {
+      title: 'Pre-Sale Renovation White Rock | For Realtors | Reno Stars',
+      description: 'White Rock & South Surrey pre-sale renovation — kitchen, bathroom & cosmetic updates. Best ROI updates for sellers & realtors near East Beach & West Beach. Free quote.',
+    },
     // Bathroom — high impressions
     'bathroom/burnaby': {
       title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
