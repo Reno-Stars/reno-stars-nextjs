@@ -10,6 +10,7 @@ import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
+import { buildOptimizedUrl, buildSrcSet, isR2Url, buildProcessedUrl, buildProcessedSrcSet } from '@/lib/image';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string }>;
@@ -98,6 +99,11 @@ const enServiceH1Overrides: Partial<Record<string, string>> = {
   // descriptive context and geo signal (op-34b0f8ce1f). Override adds service
   // detail + Vancouver geo to match meta title "Heat Pump Installation Vancouver".
   'heat-pump-hvac': 'Heat Pump Installation Vancouver — Ductless Mini-Splits, HVAC & Energy Rebates',
+  // 2026-06-24: "poly b replacement vancouver" (146 imp, pos 18.8) — H1 is bare
+  // "Poly-B Pipe Replacement" with no Vancouver geo signal. Meta title correctly
+  // reads "Poly-B Pipe Replacement Vancouver" but H1/title mismatch weakens
+  // local relevance. Adding Vancouver geo + descriptors to close the gap.
+  'poly-b-replacement': 'Poly-B Pipe Replacement Vancouver — PEX Re-pipe, Permit & Inspection',
 };
 
 function getServiceH1Override(serviceSlug: string, locale: Locale): string | undefined {
@@ -115,7 +121,11 @@ function getServiceH1Override(serviceSlug: string, locale: Locale): string | und
 const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   kitchen:    'Vancouver kitchen renovations — cabinetry, countertops, tile, plumbing & electrical. $5M insured, 3-yr workmanship warranty. Free quote.',
   bathroom:   'Vancouver bathroom renovations — waterproofing, custom tile, showers, soaker tubs & vanities. $5M insured, 3-yr warranty. Free quote.',
-  basement:   'Metro Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Permits handled. $5M insured, 3-yr warranty.',
+  // 2026-06-24: "basement renovation vancouver" (121 imp, pos 18.8) + "vancouver
+  // basement renovations" (58 imp, pos 15.4) — description started with "Metro
+  // Vancouver basement renovations" but query form is "Vancouver basement
+  // renovations" / "basement renovation Vancouver". Moved Vancouver to front.
+  basement:   'Vancouver basement renovations — rec rooms, legal suites, home gyms & home theatres. Metro-wide service. Permits handled. $5M insured, 3-yr warranty.',
   'whole-house': 'Vancouver whole-house renovations — kitchens, bathrooms, flooring & all trades under one contract. $5M CGL, 3-yr warranty. Free quote.',
   commercial: 'Commercial renovation Metro Vancouver — offices, retail, restaurants & clinics. BC Building Code compliant. $5M insured. Free estimate.',
   // 2026-06-24: GSC striking-distance gsc-3c0d3aad7adf — "poly b replacement
@@ -227,8 +237,39 @@ export default async function Page({ params }: PageProps) {
     { question: safeFaq(`${serviceSlug}.q3`), answer: safeFaq(`${serviceSlug}.a3`) },
   ].filter((f) => f.question && f.answer);
 
+  const serviceHeroImage = service.image || siteImages.hero;
+
   return (
     <>
+      {/* Hero preload — React 19's auto-preload for srcset <img> tags omits
+          fetchPriority="high", so the full-res hero ends up downloading at
+          normal priority AFTER the 20px LQIP thumb. On mobile/slow links
+          this delays LCP. Explicit <link rel="preload"> with fetchPriority
+          mirrors the global-hero preload in layout.tsx and starts the
+          download during HTML head parsing. */}
+      {serviceHeroImage && (
+        isR2Url(serviceHeroImage) ? (
+          <link
+            rel="preload"
+            as="image"
+            href={buildProcessedUrl(serviceHeroImage, 828)}
+            imageSrcSet={buildProcessedSrcSet(serviceHeroImage)}
+            imageSizes="100vw"
+            type="image/webp"
+            fetchPriority="high"
+          />
+        ) : (
+          <link
+            rel="preload"
+            as="image"
+            href={buildOptimizedUrl(serviceHeroImage, 828)}
+            imageSrcSet={buildSrcSet(serviceHeroImage)}
+            imageSizes="100vw"
+            type="image/webp"
+            fetchPriority="high"
+          />
+        )
+      )}
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* Use long_description in schema only when the current locale has a
           genuine translation (not a pickLocale en-fallback). Otherwise use
