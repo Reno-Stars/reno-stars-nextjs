@@ -463,6 +463,119 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Surrey Poly-B 水管更换 | $10K–$25K | 保险续保 | Reno Stars',
       description: 'Surrey Poly-B 水管更换——Fleetwood、Newton、Cloverdale 独立屋。PEX 重新走管，50 年保修 + 保险续保文件。$10K–$25K。',
     },
+    // 2026-06-25: ZH overrides for the 28 new EN combos (kitchen/bathroom/basement/whole-house).
+    'kitchen/delta': {
+      title: '德尔塔厨房装修费用2026 | Reno Stars',
+      description: '德尔塔厨房装修——察瓦森、拉德纳及北德尔塔。定制橱柜、石英台面、布局重设计。费用$20K–$50K，3–5周完工。免费报价。',
+    },
+    'kitchen/langley': {
+      title: '兰里厨房装修费用2026 | Reno Stars',
+      description: '兰里厨房装修——威洛比、胡桃树林及弗雷德里克。定制及预制橱柜、石英台面。费用$20K–$35K，3–5周。免费报价。',
+    },
+    'kitchen/maple-ridge': {
+      title: '枫树岭厨房装修费用2026 | Reno Stars',
+      description: '枫树岭厨房装修——银谷、阿尔比恩及科顿伍德。定制橱柜、石英台面、全面布局改造。费用$22K–$50K。免费报价。',
+    },
+    'kitchen/new-westminster': {
+      title: '新西敏厨房装修费用2026 | Reno Stars',
+      description: '新西敏厨房装修——皇后公园历史建筑、萨帕顿及昆斯伯勒。定制橱柜、石英台面、布局重设计。费用$20K–$40K。免费报价。',
+    },
+    'kitchen/port-coquitlam': {
+      title: '高贵林港厨房装修费用2026 | Reno Stars',
+      description: '高贵林港厨房装修——山城高地、河木及西区。定制及预制橱柜、石英台面。费用$22K–$45K，3–5周完工。免费报价。',
+    },
+    'kitchen/port-moody': {
+      title: '满地宝厨房装修费用2026 | Reno Stars',
+      description: '满地宝厨房装修——遗产林、穆迪中心及英湾口岸。定制橱柜、石英台面、全面布局改造。费用$25K–$55K。免费报价。',
+    },
+    'kitchen/white-rock': {
+      title: '白石厨房装修费用2026 | Reno Stars',
+      description: '白石厨房装修——东滩、西滩及南素里。定制橱柜、石英台面、布局重设计。费用$16K–$46K，来自真实项目数据。免费报价。',
+    },
+    'bathroom/coquitlam': {
+      title: '高贵林浴室装修费用2026 | Reno Stars',
+      description: '高贵林浴室装修——博客山公寓、西木高原独立屋。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/delta': {
+      title: '德尔塔浴室装修费用2026 | Reno Stars',
+      description: '德尔塔浴室装修——察瓦森海岸、拉德纳历史建筑。步入式淋浴、泡澡浴缸、定制梳妆台。费用$15K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/langley': {
+      title: '兰里浴室装修费用2026 | Reno Stars',
+      description: '兰里浴室装修——威洛比、胡桃树林及弗雷德里克。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$12K–$35K。免费报价。',
+    },
+    'bathroom/new-westminster': {
+      title: '新西敏浴室装修费用2026 | Reno Stars',
+      description: '新西敏浴室装修——皇后公园、萨帕顿及昆斯伯勒。步入式淋浴、泡澡浴缸、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/port-coquitlam': {
+      title: '高贵林港浴室装修费用2026 | Reno Stars',
+      description: '高贵林港浴室装修——山城高地、河木及牛津高地。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K。免费报价。',
+    },
+    'bathroom/port-moody': {
+      title: '满地宝浴室装修费用2026 | Reno Stars',
+      description: '满地宝浴室装修——遗产林、穆迪中心及英湾口岸。步入式淋浴、泡澡浴缸、定制梳妆台。费用$16K–$40K，3–6周。免费报价。',
+    },
+    'bathroom/surrey': {
+      title: '素里浴室装修费用2026 | Reno Stars',
+      description: '素里浴室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$14K–$40K。免费报价。',
+    },
+    'basement/coquitlam': {
+      title: '高贵林地下室装修费用2026 | Reno Stars',
+      description: '高贵林地下室装修——博客山、西木高原、马拉德维尔。收尾装修、套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+    },
+    'basement/delta': {
+      title: '德尔塔地下室装修费用2026 | Reno Stars',
+      description: '德尔塔地下室装修——察瓦森、拉德纳及北德尔塔。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/langley': {
+      title: '兰里地下室装修费用2026 | Reno Stars',
+      description: '兰里地下室装修——威洛比、胡桃树林及弗雷德里克。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/maple-ridge': {
+      title: '枫树岭地下室装修费用2026 | Reno Stars',
+      description: '枫树岭地下室装修——银谷、阿尔比恩及科顿伍德。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+    },
+    'basement/new-westminster': {
+      title: '新西敏地下室装修费用2026 | Reno Stars',
+      description: '新西敏地下室装修——皇后公园历史建筑、昆斯伯勒。收尾装修、套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/richmond': {
+      title: '列治文地下室装修费用2026 | Reno Stars',
+      description: '列治文地下室装修——史蒂文斯顿、布里格豪斯、特拉诺瓦。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+    },
+    'basement/west-vancouver': {
+      title: '西温哥华地下室装修费用2026 | Reno Stars',
+      description: '西温哥华地下室装修——英属山庄、科尔菲尔德及敦达雷夫。酒窖、家庭影院、套间改造。豪华饰面，费用$40K–$130K+。免费报价。',
+    },
+    'basement/white-rock': {
+      title: '白石地下室装修费用2026 | Reno Stars',
+      description: '白石地下室装修——东滩、西滩及南素里。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+    },
+    'whole-house/delta': {
+      title: '德尔塔家居装修2026 | Reno Stars',
+      description: '德尔塔家居装修——察瓦森、拉德纳及北德尔塔。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/langley': {
+      title: '兰里家居装修2026 | Reno Stars',
+      description: '兰里家居装修——威洛比、胡桃树林及弗雷德里克。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/maple-ridge': {
+      title: '枫树岭家居装修2026 | Reno Stars',
+      description: '枫树岭家居装修——银谷、阿尔比恩及科顿伍德。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/new-westminster': {
+      title: '新西敏家居装修2026 | Reno Stars',
+      description: '新西敏家居装修——皇后公园历史建筑、萨帕顿及上城区。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+    },
+    'whole-house/north-vancouver': {
+      title: '北温哥华家居装修2026 | Reno Stars',
+      description: '北温哥华家居装修——林恩谷、朗斯代尔及深湾。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/port-moody': {
+      title: '满地宝家居装修2026 | Reno Stars',
+      description: '满地宝家居装修——遗产林、穆迪中心及英湾口岸。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+    },
   };
   if (locale === 'zh' && zhOverrides[overrideKey]) {
     title = zhOverrides[overrideKey].title;
