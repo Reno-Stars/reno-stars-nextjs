@@ -44,6 +44,59 @@ interface FAQ {
  * /guides/.../page.tsx URL. Keep the values as literal string literals so the next-intl
  * Link's typed-route assertion in ServiceDetailPage continues to type-check.
  */
+// 2026-06-25: Top city blog post slugs per service. Shown in the "Areas We
+// Serve" section to pass PageRank from the generic service page to city cluster
+// blog posts and provide a crawlable hub for "[service] renovation [city]".
+// Ordered by estimated search volume (Vancouver > Burnaby > Richmond > Surrey…).
+const SERVICE_CITY_BLOG_LINKS: Partial<Record<ServiceType, Array<{ city: string; slug: string }>>> = {
+  kitchen: [
+    { city: 'Vancouver', slug: 'kitchen-renovation-vancouver-bc-2026' },
+    { city: 'Burnaby', slug: 'kitchen-renovation-burnaby-2026' },
+    { city: 'Richmond', slug: 'kitchen-renovation-richmond-bc-2026' },
+    { city: 'Surrey', slug: 'kitchen-renovation-surrey-bc-2026' },
+    { city: 'Coquitlam', slug: 'kitchen-renovation-coquitlam-bc-2026' },
+    { city: 'North Vancouver', slug: 'kitchen-renovation-north-vancouver-2026' },
+    { city: 'West Vancouver', slug: 'kitchen-renovation-west-vancouver-2026' },
+    { city: 'Langley', slug: 'kitchen-renovation-langley-bc-2026' },
+  ],
+  bathroom: [
+    { city: 'Vancouver', slug: 'average-bathroom-renovation-cost-vancouver' },
+    { city: 'Burnaby', slug: 'burnaby-bathroom-renovation-guide-2026' },
+    { city: 'Richmond', slug: 'bathroom-renovation-cost-richmond-bc-2026' },
+    { city: 'Surrey', slug: 'bathroom-renovation-surrey-bc-2026' },
+    { city: 'Coquitlam', slug: 'bathroom-renovation-coquitlam-bc-2026' },
+    { city: 'North Vancouver', slug: 'bathroom-renovations-north-vancouver-2026' },
+    { city: 'West Vancouver', slug: 'bathroom-renovations-west-vancouver-2026' },
+    { city: 'Langley', slug: 'bathroom-renovation-langley-2026' },
+  ],
+  'accessible-bathroom': [
+    { city: 'Vancouver', slug: 'average-bathroom-renovation-cost-vancouver' },
+    { city: 'Burnaby', slug: 'burnaby-bathroom-renovation-guide-2026' },
+    { city: 'Richmond', slug: 'bathroom-renovation-cost-richmond-bc-2026' },
+    { city: 'Surrey', slug: 'bathroom-renovation-surrey-bc-2026' },
+    { city: 'North Vancouver', slug: 'bathroom-renovations-north-vancouver-2026' },
+    { city: 'West Vancouver', slug: 'bathroom-renovations-west-vancouver-2026' },
+  ],
+  basement: [
+    { city: 'Vancouver', slug: 'basement-renovation-vancouver-complete-guide' },
+    { city: 'Burnaby', slug: 'basement-renovations-burnaby-2026' },
+    { city: 'Richmond', slug: 'basement-renovation-richmond-bc-2026' },
+    { city: 'Surrey', slug: 'basement-renovations-surrey' },
+    { city: 'Coquitlam', slug: 'basement-renovations-coquitlam-2026' },
+    { city: 'North Vancouver', slug: 'basement-renovations-north-vancouver' },
+    { city: 'West Vancouver', slug: 'basement-renovation-west-vancouver-2026' },
+    { city: 'Langley', slug: 'basement-renovations-langley' },
+  ],
+  'whole-house': [
+    { city: 'Vancouver', slug: 'vancouver-home-renovation-guide-2026' },
+    { city: 'Burnaby', slug: 'burnaby-home-renovation-guide-2026' },
+    { city: 'Richmond', slug: 'richmond-home-renovation-guide-2026' },
+    { city: 'Surrey', slug: 'surrey-home-renovation-guide-2026' },
+    { city: 'Coquitlam', slug: 'coquitlam-home-renovation-guide-2026' },
+    { city: 'North Vancouver', slug: 'north-vancouver-home-renovation-guide-2026' },
+  ],
+};
+
 const COST_GUIDE_BY_SERVICE_SLUG: Partial<Record<ServiceType, string>> = {
   kitchen: '/guides/kitchen-renovation-cost-vancouver',
   bathroom: '/guides/bathroom-renovation-cost-vancouver',
@@ -633,6 +686,24 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                   basement renovation in Burnaby
                 </Link>{' '}
                 neighborhood pages — each with real Reno Stars project costs and area-specific notes including waterproofing, legalization, and hillside considerations.
+              </p>
+            )}
+            {/* 2026-06-25: City-specific blog guide links. The service page is
+                a high-equity hub; adding body-level links to city cluster posts
+                passes PageRank to those posts and gives Googlebot a crawlable
+                hub for the "[service] renovation [city]" keyword family.
+                Only rendered for EN + services with a city blog cluster. */}
+            {locale === 'en' && SERVICE_CITY_BLOG_LINKS[serviceSlug] && (
+              <p className="text-center mt-4 text-sm" style={{ color: TEXT_MID }}>
+                <strong>City guides:</strong>{' '}
+                {SERVICE_CITY_BLOG_LINKS[serviceSlug]!.map((link, i) => (
+                  <span key={link.slug}>
+                    {i > 0 && ' · '}
+                    <Link href={`/blog/${link.slug}`} className="underline hover:no-underline" style={{ color: GOLD }}>
+                      {link.city}
+                    </Link>
+                  </span>
+                ))}
               </p>
             )}
           </div>
