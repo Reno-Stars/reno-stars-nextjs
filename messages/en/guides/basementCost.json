@@ -3,7 +3,7 @@
     "breadcrumb": "Basement Renovation Cost",
     "hero": {
       "title": "Basement Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Typical basement renovation costs range from $30,000 for basic finishing to $120,000+ for a full legal suite conversion. Here are the price ranges, cost factors, and money-saving strategies based on completed projects across Metro Vancouver."
+      "subtitle": "What does it really cost to finish or renovate a basement in Greater Vancouver? Typical basement renovation costs range from $30,000 for basic finishing (framing, insulation, drywall, LVP flooring, and pot lights) to $120,000+ for a full legal suite conversion with separate entrance, kitchen, bathroom, fire separation, and egress windows. Here are the price ranges by tier, the six cost factors, and money-saving strategies based on completed projects across Metro Vancouver."
     },
     "stats": {
       "avgCost": "Average Cost",
@@ -38,19 +38,19 @@
       },
       "framing": {
         "title": "Framing & Insulation",
-        "description": "Steel or wood framing with insulation typically costs $8–15 per square foot. Steel stud framing is preferred in below-grade spaces because it won't rot or warp from moisture. Older Vancouver homes often need additional vapor barriers and insulation upgrades to meet the current BC Energy Step Code requirements. Many pre-1990 basements also have low ceilings (under 7 feet) that require consultation about scope before finishing."
+        "description": "Steel or wood framing with insulation typically costs $8–$15 per square foot. Steel stud framing is preferred in below-grade spaces because it won't rot or warp from moisture — a critical consideration in Metro Vancouver's wet climate. Older Vancouver homes often need additional vapour barriers and insulation upgrades to meet current BC Energy Step Code requirements. Many pre-1990 basements also have ceiling heights under 7 feet, which requires a feasibility assessment before committing to a finishing scope. Always measure ceiling height at the lowest point (main floor joists plus any ductwork) before requesting quotes."
       },
       "plumbing": {
         "title": "Plumbing (Bathroom/Kitchen)",
-        "description": "Adding a basement bathroom costs $8,000–15,000 depending on whether the drain lines can tie into existing stacks or require breaking concrete (saw-cutting and re-pouring adds $2,000–5,000). A rough-in bathroom that connects easily to existing lines runs $8,000–10,000. A full kitchen installation for a legal suite adds $12,000–25,000 including rough-in plumbing, fixtures, and cabinets. Locating plumbing near existing lines is the single biggest cost-saving move in basement renovation."
+        "description": "Adding a basement bathroom costs $8,000–$15,000 depending on whether drain lines can tie into existing stacks or require breaking concrete (saw-cutting and re-pouring adds $2,000–$5,000). A rough-in bathroom that connects easily to existing lines runs $8,000–$10,000. A full kitchen installation for a legal suite adds $12,000–$25,000 including rough-in plumbing, fixtures, and cabinets. Locating plumbing near existing drain stacks is the single biggest cost-saving decision in basement renovation — even a 3-foot shift in bathroom placement can eliminate an entire day of concrete cutting."
       },
       "electrical": {
         "title": "Electrical & HVAC",
-        "description": "Basement electrical typically runs $3,000–8,000 for a standard finishing layout with pot lights, outlets, and switches. Many Metro Vancouver homes built before 1980 have 100-amp panels that need upgrading to 200-amp ($2,000–4,000) before adding a secondary suite. Legal suite conversions require a separate sub-panel. Extending existing HVAC ductwork to the basement adds $2,000–5,000; some suites require a separate heat source such as mini-split systems."
+        "description": "Basement electrical typically runs $3,000–$8,000 for a standard finishing layout with pot lights, outlets, and switches. Many Metro Vancouver homes built before 1980 have 100-amp panels that need upgrading to 200-amp ($2,000–$4,000) before adding a secondary suite — confirm panel capacity early. Legal suite conversions require a separate sub-panel. Extending existing HVAC ductwork to the basement adds $2,000–$5,000; some suites require a separate heat source (mini-split or baseboard heat) to meet tenant comfort and building code requirements. Address panel capacity in the budget phase, not mid-construction."
       },
       "egress": {
         "title": "Egress Windows & Separate Entrance",
-        "description": "BC Building Code requires egress windows in any bedroom below grade — each window costs $2,000–5,000 to install including excavation, window well, and waterproofing. A separate exterior entrance for a legal suite costs $8,000–15,000 including concrete stairs, excavation, and waterproofing around the door frame. These code requirements are non-negotiable for rental legalization and are factored into all Reno Stars suite conversion quotes upfront."
+        "description": "BC Building Code requires egress windows in any bedroom below grade — each window costs $2,000–$5,000 to install including excavation, window well, and waterproofing. A separate exterior entrance for a legal suite costs $8,000–$15,000 including concrete stairs, excavation, and waterproofing around the door frame. These code requirements are non-negotiable for rental legalization and are factored into all Reno Stars suite conversion quotes upfront — surprises in this area are the most common cause of legal suite budget overruns for homeowners working with contractors who skipped the code review."
       },
       "permits": {
         "title": "Permits & Code Compliance",
