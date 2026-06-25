@@ -18,15 +18,15 @@
       "subtitle": "Typical pricing for legal suite conversions across Greater Vancouver",
       "budget": {
         "title": "Basic In-Law Suite",
-        "description": "Converting an already-finished basement into a basic suite with kitchenette, bathroom, bedroom with egress window, and interior shared entrance. Minimal structural changes. Ideal for family use."
+        "description": "Converting an already-finished basement with an existing bathroom and interior shared entrance into a basic secondary suite. Adds a kitchenette, egress windows in bedrooms, smoke and CO interconnects, and minimal fire-separation upgrades. Ideal for multi-generational family use rather than rental income. Requires building permit."
       },
       "midRange": {
         "title": "Standard Rental Suite",
-        "description": "Full legal secondary suite with separate entrance, complete kitchen, full bathroom, one bedroom with egress, fire separation, and all code-required features. Most common scope for rental income."
+        "description": "Full legal secondary suite built to BC Building Code for rental legalization: dedicated exterior entrance, complete kitchen with cabinets and appliances, full bathroom with shower, one bedroom with code-compliant egress window, Type X fire separation, interconnected smoke alarms, and sub-panel. The most common scope for Metro Vancouver homeowners targeting rental income of $1,800–$2,400/month."
       },
       "highEnd": {
         "title": "Premium Two-Bedroom Suite",
-        "description": "High-end legal suite with two bedrooms, full kitchen with quality appliances, in-suite laundry, upgraded finishes, separate HVAC zone, soundproofing, and premium fixtures."
+        "description": "High-end two-bedroom legal suite with full kitchen featuring quality appliances and stone countertops, two bedrooms each with egress windows, in-suite laundry, upgraded tile and flooring, separate mini-split HVAC zone for independent temperature control, resilient channel soundproofing between floors, and premium plumbing fixtures throughout."
       }
     },
     "factors": {

@@ -17,15 +17,15 @@
       "subtitle": "Based on our completed projects across Greater Vancouver",
       "budget": {
         "title": "Cosmetic Refresh",
-        "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+        "description": "Paint throughout all rooms, new LVP or engineered hardwood flooring, updated light fixtures, bathroom refresh (vanity, mirror, faucet, and hardware without moving plumbing), and minor kitchen updates such as new hardware and countertop replacement. Ideal for condos, townhouses, and rental properties needing a modern update without structural work. No building permit required for cosmetic-only scope."
       },
       "midRange": {
         "title": "Comprehensive Renovation",
-        "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+        "description": "Full kitchen renovation with semi-custom cabinets, quartz countertops, and new appliances; bathroom remodels with tile, new vanity, and frameless glass shower; new flooring throughout; fresh paint; updated electrical and plumbing fixtures; and new lighting. The most popular choice for Metro Vancouver homeowners planning to stay 5+ years. Includes building permit for plumbing and electrical changes."
       },
       "highEnd": {
         "title": "Premium Transformation",
-        "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+        "description": "Complete gut renovation including structural wall removal for open-concept layouts, custom kitchen with premium cabinetry and integrated appliances, full high-end bathroom remodels with natural stone, custom millwork throughout, premium wide-plank hardwood flooring, smart home integration (lighting, HVAC, security), and designer fixtures. For homeowners who want a fully custom home and may be planning a high-end resale."
       }
     },
     "factors": {
