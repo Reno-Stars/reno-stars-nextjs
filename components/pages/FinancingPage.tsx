@@ -507,6 +507,37 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
         </div>
       </section>
 
+      {/* 2026-06-25: Blog cross-links from FinancingPage. Closes the loop
+          from 200 blog posts → FinancingPage ← FinancingPage → related blog posts.
+          Passes PageRank back to renovation-financing-vancouver-heloc,
+          tax-credits, ROI, and contractor selection posts. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold mb-4 text-center" style={{ color: TEXT }}>
+            Related Guides
+          </h2>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {[
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'HELOC & Home Equity Loans' },
+              { href: '/blog/basement-renovation-financing-bc-guide', label: 'BC Renovation Financing' },
+              { href: '/blog/vancouver-renovation-tax-credits-rebates-2026', label: 'Tax Credits & Rebates' },
+              { href: '/blog/rental-property-renovation-vancouver-roi', label: 'Rental Property ROI' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: '2026 Cost Guide' },
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'Choosing a Contractor' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href as '/blog/renovation-financing-vancouver-heloc'}
+                className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:shadow-md"
+                style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection
         heading={t("cta.heading")}
