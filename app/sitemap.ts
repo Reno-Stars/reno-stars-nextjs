@@ -429,6 +429,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'vancouver-renovation-before-after-10-projects',
     'langley-kitchen-renovation-waterfall-island',
     'two-bathroom-renovation-with-brushed-gold-fixtures',
+    // Elevated 2026-06-26 tick 637 (batch 2) — showcase posts that reached 8+ inbound
+    'budget-friendly-kitchen-renovation-in-coquitlam',
+    'burnaby-bathroom-renovation-success',
+    'commercial-warehouse-door-renovation-burnaby',
+    'comprehensive-kitchen-renovation-surrey',
+    'custom-whole-house-renovation-in-vancouver',
+    'daughters-bathroom-renovation-with-gray-tiles-and-black-fixtures',
+    'dual-bathroom-renovation-with-unique-powder-room',
+    'exotic-style-kitchen-renovation-with-waterfall-island',
+    'modern-kitchen-renovation-with-custom-cabinets-surrey',
+    'stylish-kitchen-renovation-with-white-cabinets-and-gold-handles',
+    'transforming-one-bathroom-into-two-stylish-spaces',
+    'two-bathroom-renovation-with-arched-doors-richmond',
   ]);
 
   for (const slug of blogPostSlugs) {
