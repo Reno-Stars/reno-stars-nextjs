@@ -397,6 +397,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'surrey-renovation-permits-guide-2026',
     'vancouver-renovation-tax-credits-rebates-2026',
     'whole-house-renovation-white-rock-2026',
+    // Additional posts elevated 2026-06-26 — all have 8+ inbound links from
+    // cross-linking work this session and warrant guide-tier sitemap priority.
+    'best-time-to-renovate-in-vancouver',
+    'kitchen-design-trends-vancouver-2026',
+    'pre-1980-home-renovation-vancouver-what-to-expect',
+    'kitchen-cabinet-colour-timeless-vancouver',
+    'glass-shower-doors-vancouver-frameless-semi-frameless-sliding',
+    'renovate-vs-move-vancouver-2026',
+    'best-kitchen-cabinets-vancouver-stock-vs-custom-2026',
+    'rental-property-renovation-vancouver-roi',
+    'office-renovation-vancouver-tenant-improvements-2026',
+    'kitchen-lighting-design-vancouver-2026',
+    'ikea-sektion-vs-custom-kitchen-cabinets-vancouver-2026',
+    'how-to-read-renovation-quote-line-items',
+    'hardwood-vs-laminate-vs-lvp-flooring-vancouver-comparison',
+    'apartment-building-renovation-vancouver-2026',
+    'update-kitchen-without-full-renovation-under-15k-vancouver',
+    'tub-vs-shower-vancouver-which-adds-more-value',
+    'spring-renovation-checklist-vancouver-2026',
+    'quartz-vs-granite-countertops-vancouver-2026',
+    'mid-century-rancher-renovation-vancouver-2026',
+    'kitchen-refresh-without-full-renovation-vancouver-2026',
+    'best-flooring-options-vancouver-2026',
+    'best-bathroom-tiles-vancouver-2026',
+    'bathroom-refresh-without-full-renovation-vancouver-2026',
   ]);
 
   for (const slug of blogPostSlugs) {
