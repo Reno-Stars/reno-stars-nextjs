@@ -287,6 +287,41 @@ export default function BlogPage({
         </div>
       </section>
 
+      {/* 2026-06-26: City Renovation Guides — city home renovation guide pills.
+          Blog hub sits at 0.9 priority; linking to city guides channels PageRank
+          from the hub to posts that target "home renovation [city]" queries. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-2 mb-3 justify-center">
+            <BookOpen size={16} style={{ color: GOLD }} />
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: TEXT_MUTED }}>Renovation Guides by City</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            {([
+              { href: '/blog/vancouver-home-renovation-guide-2026', label: 'Vancouver' },
+              { href: '/blog/burnaby-home-renovation-guide-2026', label: 'Burnaby' },
+              { href: '/blog/richmond-home-renovation-guide-2026', label: 'Richmond' },
+              { href: '/blog/surrey-home-renovation-guide-2026', label: 'Surrey' },
+              { href: '/blog/north-vancouver-home-renovation-guide-2026', label: 'North Vancouver' },
+              { href: '/blog/coquitlam-home-renovation-guide-2026', label: 'Coquitlam' },
+              { href: '/blog/langley-home-renovation-guide-2026', label: 'Langley' },
+              { href: '/blog/delta-home-renovation-guide-2026', label: 'Delta' },
+              { href: '/blog/maple-ridge-home-renovation-guide-2026', label: 'Maple Ridge' },
+              { href: '/blog/west-vancouver-home-renovation-guide-2026', label: 'West Vancouver' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity hover:opacity-75"
+                style={{ backgroundColor: CARD, color: NAVY, boxShadow: `0 1px 3px rgba(0,0,0,0.08)` }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Internal Cross-Links */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
