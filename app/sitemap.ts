@@ -302,6 +302,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'white-rock-home-renovation-guide-2026',
     // Fixture cost guides — specialized cost research posts.
     'shower-renovation-cost-vancouver-2026',
+    // Kitchen renovation city guides — high commercial intent per-city content.
+    // Added 2026-06-26: match the home-renovation-guide tier elevation.
+    'kitchen-renovation-burnaby-2026',
+    'kitchen-renovation-coquitlam-bc-2026',
+    'kitchen-renovation-delta-bc-2026',
+    'kitchen-renovation-langley-bc-2026',
+    'kitchen-renovation-maple-ridge-bc-2026',
+    'kitchen-renovation-new-westminster-bc-2026',
+    'kitchen-renovation-north-vancouver-2026',
+    'kitchen-renovation-port-coquitlam-bc-2026',
+    'kitchen-renovation-port-moody-bc-2026',
+    'kitchen-renovation-richmond-bc-2026',
+    'kitchen-renovation-surrey-bc-2026',
+    'kitchen-renovation-vancouver-bc-2026',
+    'kitchen-renovation-west-vancouver-2026',
+    'kitchen-renovation-white-rock-2026',
+    // Bathroom renovation city guides.
+    'bathroom-renovation-coquitlam-bc-2026',
+    'bathroom-renovation-cost-richmond-bc-2026',
+    'bathroom-renovation-delta-bc-2026',
+    'bathroom-renovation-langley-2026',
+    'bathroom-renovation-maple-ridge-bc-2026',
+    'bathroom-renovation-new-westminster-2026',
+    'bathroom-renovation-port-coquitlam-2026',
+    'bathroom-renovation-port-moody-2026',
+    'bathroom-renovation-surrey-bc-2026',
+    'burnaby-bathroom-renovation-guide-2026',
+    // Kitchen + bathroom combo city guides.
+    'kitchen-bathroom-renovation-maple-ridge-2026',
+    'kitchen-bathroom-renovation-new-westminster-2026',
+    'kitchen-bathroom-renovation-port-coquitlam-2026',
+    'kitchen-bathroom-renovation-port-moody-2026',
   ]);
 
   for (const slug of blogPostSlugs) {
