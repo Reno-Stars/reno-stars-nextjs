@@ -177,6 +177,25 @@ const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
 };
 
+/**
+ * KO meta description overrides — Korean audience (ko CTR 8.57%).
+ * Cross-locale scanner (2026-06-26 tick 671) found ko service pages serving
+ * English "Vancouver — 3-Yr Warranty" in titles and machine-translated
+ * truncated long_description_ko as descriptions. No koServiceMetaDescriptions
+ * constant existed. Fix follows same pattern as zh/zh-Hant overrides.
+ * Korean titles from DB (localizations->>'titleKo') are already in Korean;
+ * only the geo+warranty suffix and description were non-Korean.
+ */
+const koServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:             '밴쿠버 주방 리노베이션 — 맞춤형 캐비닛, 쿼츠 상판, 타일, 배관·전기 일괄 시공. 500만 보험, 3년 공법 보증. Metro Vancouver 전 지역. 무료 견적.',
+  bathroom:            '밴쿠버 욕실 리노베이션 — 방수 공사, 맞춤형 타일, 샤워부스·욕조 설치. 500만 보험, 3년 공법 보증. Metro Vancouver 전 지역. 무료 견적.',
+  basement:            'Metro Vancouver 지하실 리노베이션 — 엔터테인먼트 룸, 합법 스위트, 홈시어터 일괄 시공. 허가 대행. 500만 보험, 3년 보증. 무료 견적.',
+  'whole-house':       '밴쿠버 전체 주택 리노베이션 — 주방·욕실·바닥재 공사를 단일 계약으로 진행, 전담 PM 배치. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
+  cabinet:             '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.',
+  'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
+  'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -191,17 +210,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh-Hant' && zhHantServiceMetaDescriptions[serviceSlug])
+    || (locale === 'ko' && koServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;
 
   // Title length: keep under Google's ~60-char SERP truncation cap.
   // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
-  // All other locales get the EN template (title comes from localizedService).
+  // ko gets Korean geo + warranty suffix; all other locales get EN template.
   const title = locale === 'zh'
     ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
     : locale === 'zh-Hant'
     ? `${localizedService.title} 溫哥華 — 3年保固 | Reno Stars`
+    : locale === 'ko'
+    ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
     : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
 
   return {
