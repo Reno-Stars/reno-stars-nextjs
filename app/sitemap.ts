@@ -377,6 +377,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'basement-renovations-north-vancouver',
     'basement-renovations-port-moody',
     'basement-renovations-surrey',
+    // Bathroom renovation city guides not previously captured.
+    'bathroom-renovations-north-vancouver-2026',
+    'bathroom-renovations-west-vancouver-2026',
+    'bathroom-renovations-white-rock-bc-2026',
+    // Comparison/decision guides — same topical-authority role as /guides/ pages.
+    'kitchen-vs-bathroom-which-renovation-first-vancouver',
   ]);
 
   for (const slug of blogPostSlugs) {
