@@ -94,6 +94,14 @@ const SERVICE_CITY_BLOG_LINKS: Partial<Record<ServiceType, Array<{ city: string;
     { city: 'Surrey', slug: 'surrey-home-renovation-guide-2026' },
     { city: 'Coquitlam', slug: 'coquitlam-home-renovation-guide-2026' },
     { city: 'North Vancouver', slug: 'north-vancouver-home-renovation-guide-2026' },
+    { city: 'West Vancouver', slug: 'west-vancouver-home-renovation-guide-2026' },
+    { city: 'Langley', slug: 'langley-home-renovation-guide-2026' },
+    { city: 'Delta', slug: 'delta-home-renovation-guide-2026' },
+    { city: 'Maple Ridge', slug: 'maple-ridge-home-renovation-guide-2026' },
+    { city: 'New Westminster', slug: 'new-westminster-home-renovation-guide-2026' },
+    { city: 'Port Coquitlam', slug: 'port-coquitlam-home-renovation-guide-2026' },
+    { city: 'Port Moody', slug: 'port-moody-home-renovation-guide-2026' },
+    { city: 'White Rock', slug: 'white-rock-home-renovation-guide-2026' },
   ],
 };
 
