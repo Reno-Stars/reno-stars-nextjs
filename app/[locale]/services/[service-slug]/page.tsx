@@ -196,6 +196,24 @@ const koServiceMetaDescriptions: Partial<Record<string, string>> = {
   'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
 };
 
+/**
+ * JA meta description overrides — Japanese audience (ja CTR 16.67% — highest locale).
+ * Cross-locale scanner (2026-06-26 tick 672) found ja service pages serving
+ * English "Vancouver — 3-Yr Warranty" in titles and machine-translated
+ * truncated long_description_ja as descriptions. Fix follows zh/zh-Hant/ko pattern.
+ * Japanese titles from DB (localizations->>'titleJa') are already in Japanese;
+ * only the geo+warranty suffix and description were non-Japanese.
+ */
+const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:             'バンクーバーのキッチンリノベーション — カスタムキャビネット、石英カウンタートップ、タイル、配管・電気を一括施工。500万保険、3年工事保証。Metro Vancouver全域。無料見積もり。',
+  bathroom:            'バンクーバーのバスルームリノベーション — 防水工事、カスタムタイル、シャワー・バスタブ設置。500万保険、3年工事保証。Metro Vancouver全域。無料見積もり。',
+  basement:            'Metro Vancouverの地下室リノベーション — エンターテイメントルーム、合法スイート、ホームシアターを一括施工。許可証代行。500万保険、3年保証。無料見積もり。',
+  'whole-house':       'バンクーバーの全体リノベーション — キッチン・バスルーム・フローリングをワンコントラクトで、専任PMが統括。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
+  cabinet:             'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。',
+  'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
+  'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -211,19 +229,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh-Hant' && zhHantServiceMetaDescriptions[serviceSlug])
     || (locale === 'ko' && koServiceMetaDescriptions[serviceSlug])
+    || (locale === 'ja' && jaServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;
 
   // Title length: keep under Google's ~60-char SERP truncation cap.
   // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
-  // ko gets Korean geo + warranty suffix; all other locales get EN template.
+  // ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
   const title = locale === 'zh'
     ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
     : locale === 'zh-Hant'
     ? `${localizedService.title} 溫哥華 — 3年保固 | Reno Stars`
     : locale === 'ko'
     ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
+    : locale === 'ja'
+    ? `${localizedService.title} バンクーバー — 3年保証 | Reno Stars`
     : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
 
   return {
