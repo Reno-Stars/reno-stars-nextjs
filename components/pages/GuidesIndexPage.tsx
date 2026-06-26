@@ -263,6 +263,44 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
         </div>
       </section>
 
+      {/* 2026-06-26: Decision guides — high-intent comparison and decision posts.
+          These posts target "should I" and "which is better" queries from buyers
+          who are close to hiring. Linking from the guides hub passes PageRank and
+          surfaces them for users at the decision stage of their renovation journey. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Renovation Decision Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Comparison guides to help you make the right renovation decisions.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/renovate-vs-move-vancouver-2026', label: 'Renovate vs Move in Vancouver 2026', desc: 'Cost comparison: is it better to renovate your current home or sell and buy?' },
+              { href: '/blog/kitchen-vs-bathroom-which-renovation-first-vancouver', label: 'Kitchen vs Bathroom: Which First?', desc: 'Expert guidance on renovation sequencing for the best ROI in Metro Vancouver.' },
+              { href: '/blog/tub-vs-shower-vancouver-which-adds-more-value', label: 'Tub vs Shower: Which Adds More Value?', desc: 'Should you keep the bathtub or convert to a walk-in shower before selling?' },
+              { href: '/blog/quartz-vs-granite-countertops-vancouver-2026', label: 'Quartz vs Granite Countertops 2026', desc: 'Durability, cost, and resale value comparison for Vancouver kitchens.' },
+              { href: '/blog/best-kitchen-cabinets-vancouver-stock-vs-custom-2026', label: 'Stock vs Custom Kitchen Cabinets', desc: 'Comparing stock, semi-custom, and custom cabinets for Vancouver kitchens.' },
+              { href: '/blog/diy-vs-contractor-renovation-vancouver-2026', label: 'DIY vs Hiring a Contractor', desc: 'When to DIY and when to hire a professional — with Vancouver cost comparisons.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/renovate-vs-move-vancouver-2026'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 2026-06-26: City renovation guides grid — links /guides/ hub to 14 city home
           renovation guide posts. The /guides/ hub carries priority 0.9; adding city
           links here passes additional PageRank to city home guides, which are the
