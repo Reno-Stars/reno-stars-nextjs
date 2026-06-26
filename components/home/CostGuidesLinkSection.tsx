@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/navigation';
-import { CARD, GOLD, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { CARD, GOLD, GOLD_PALE, NAVY, SURFACE_ALT, TEXT, TEXT_MID, neu } from '@/lib/theme';
 import type { Locale } from '@/i18n/config';
 
 /**
@@ -72,6 +72,35 @@ export default async function CostGuidesLinkSection({ locale }: { locale: Locale
             {t('financingCta')}
           </Link>
         </p>
+        {/* 2026-06-26: Planning guide pills on the home page. The home page is
+            the highest-equity page on the site — linking to the 6 key planning
+            guide blog posts from here passes maximum PageRank to those posts.
+            English-only inline strings (consistent with other EN-only inline
+            patterns in this component pre-i18n-backfill). */}
+        <div className="mt-8 pt-6 border-t" style={{ borderColor: `${NAVY}10` }}>
+          <p className="text-xs font-bold uppercase tracking-wider text-center mb-4" style={{ color: TEXT_MID }}>
+            Free Renovation Planning Guides
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
