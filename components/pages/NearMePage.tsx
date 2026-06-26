@@ -237,6 +237,37 @@ export default function NearMePage({ locale, areas, h1Override }: Props) {
       </section>
 
       {/* Final CTA */}
+      {/* 2026-06-26: Planning guide pill-links before final CTA. Near-me pages
+          attract high-intent users who are ready to hire. Planning guides
+          (contractor vetting, timelines, permits) close the last research
+          questions before they submit a quote request. */}
+      <section className="py-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            Renovation Planning Guides
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Financing Your Reno' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-16" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4" style={{ color: NAVY }}>
