@@ -91,12 +91,12 @@
       "conversion": {
         "title": "Tub-to-Shower Conversion",
         "range": "$3,000 – $8,000",
-        "description": "Removing an existing tub and installing a shower in the same footprint. Includes new liner or tile base, shower head, rough-in adjustment, and a standard framed or semi-frameless glass enclosure."
+        "description": "Removing an existing tub and installing a shower in the same footprint. Includes new liner or tile base, shower head, rough-in adjustment, and a standard framed or semi-frameless glass enclosure. The most popular bathroom scope in Metro Vancouver — especially in 2-bathroom homes where one tub is kept and one is converted to a walk-in shower."
       },
       "curbless": {
         "title": "Curbless (Zero-Threshold) Shower",
         "range": "$5,000 – $13,000",
-        "description": "No step or lip at the shower entry. Requires custom waterproofing membrane, sloped subfloor, and a linear drain — adds $2,000–$5,000 over a standard base. Popular for accessibility and modern aesthetics."
+        "description": "No step or lip at the shower entry. Requires custom waterproofing with linear or centre drain, a sloped floor, and Schluter Kerdi or equivalent membrane throughout the wet zone. Popular in primary ensuites and for aging-in-place bathrooms. Curbless showers add $1,500–$3,000 to the cost of a standard shower installation due to additional waterproofing and custom drain work."
       },
       "enclosureOnly": {
         "title": "Glass Enclosure Replacement Only",
@@ -154,7 +154,7 @@
       "stock": {
         "title": "Stock Vanity Replacement",
         "range": "$500 – $1,500",
-        "description": "Box-store vanity unit with a standard top (laminate or basic cultured marble). Includes supply and basic installation. Lead time: in stock. Best for budget refreshes where function over form is acceptable."
+        "description": "Box-store vanity unit with a standard top (laminate or basic cultured marble). Replaces in-kind with minimal rough-in changes. Cost-effective option for secondary bathrooms, rental properties, or budget refreshes where the plumbing is staying in place. Stock vanities are available next-day from Home Depot, IKEA, Rona, or Costco and don't require lead time."
       },
       "semiCustom": {
         "title": "Semi-Custom with Quartz Top",
