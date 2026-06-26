@@ -1,7 +1,7 @@
 'use client';
 
 import OptimizedImage from '@/components/OptimizedImage';
-import { Phone, Mail, MapPin, Facebook, Instagram, Star, Shield } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Star, Shield } from 'lucide-react';
 import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
@@ -46,9 +46,20 @@ function LinktreeIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+function XIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
 const socialIcons: Partial<Record<string, IconComponent>> = {
   facebook: Facebook,
   instagram: Instagram,
+  youtube: Youtube,
+  // The platform enum stores X as `twitter`; render the current X wordmark.
+  twitter: XIcon,
   xiaohongshu: XiaohongshuIcon,
   wechat: WechatIcon,
   whatsapp: WhatsAppIcon,
