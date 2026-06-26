@@ -675,7 +675,7 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
           <div className="flex flex-wrap justify-center gap-2">
             {([
               { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'Choose a Contractor' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Cost Guide 2026' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: 'Cost Guide 2026' },
               { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Timeline Guide' },
               { href: '/blog/renovation-permits-bc-guide', label: 'Permits Guide' },
               { href: '/blog/renovation-financing-vancouver-heloc', label: 'Financing Guide' },

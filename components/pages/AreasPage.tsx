@@ -94,7 +94,7 @@ export default function AreasPage({ locale, areas, company }: AreasPageProps) {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: '2026 Renovation Cost Guide' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: '2026 Renovation Cost Guide' },
               { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline Guide' },
               { href: '/blog/renovation-permits-bc-guide', label: 'BC Renovation Permits Guide' },
               { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing (HELOC)' },

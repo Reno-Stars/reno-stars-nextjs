@@ -754,7 +754,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
           <div className="flex flex-wrap justify-center gap-3">
             {([
               { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: locale === 'zh' ? '如何选择承包商' : 'How to Choose a Contractor' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: locale === 'zh' ? '2026装修费用指南' : 'Renovation Costs 2026' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: locale === 'zh' ? '2026装修费用指南' : 'Renovation Costs 2026' },
               { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: locale === 'zh' ? '装修时间线' : 'Renovation Timeline' },
               { href: '/blog/renovation-permits-bc-guide', label: locale === 'zh' ? 'BC省许可证指南' : 'BC Permits Guide' },
               { href: '/blog/renovation-financing-vancouver-heloc', label: locale === 'zh' ? '装修融资' : 'Financing Your Reno' },

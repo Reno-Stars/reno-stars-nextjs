@@ -459,6 +459,12 @@ describe('Metadata Utilities', () => {
       expect(result.canonical).toBe('https://www.reno-stars.com/en/projects/');
       expect(result.languages.en).toBe('https://www.reno-stars.com/en/projects/');
       expect(result.languages.zh).toBe('https://www.reno-stars.com/zh/projects/');
+      // Traditional Chinese hreflang must use the `zh-Hant` script subtag to
+      // stay consistent with the URL path, <html lang>, and the sitemap's
+      // alternates. A prior version remapped it to `zh-TW` in the page <head>
+      // only, which Semrush flagged as an hreflang language mismatch.
+      expect(result.languages['zh-Hant']).toBe('https://www.reno-stars.com/zh-Hant/projects/');
+      expect(result.languages['zh-TW']).toBeUndefined();
       expect(result.languages['x-default']).toBe('https://www.reno-stars.com/en/projects/');
     });
 
