@@ -282,6 +282,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'renovation-permits-bc-guide',
     'renovation-financing-vancouver-heloc',
     'strata-renovation-rules-vancouver',
+    // Home renovation city guides — high commercial intent, broad area coverage.
+    // Added 2026-06-26: each guide covers costs, permits, and neighbourhoods for
+    // a specific Metro Vancouver city — same topical authority tier as pre-sale guides.
+    'burnaby-home-renovation-guide-2026',
+    'burnaby-renovation-cost-guide-2026',
+    'coquitlam-home-renovation-guide-2026',
+    'delta-home-renovation-guide-2026',
+    'langley-home-renovation-guide-2026',
+    'maple-ridge-home-renovation-guide-2026',
+    'new-westminster-home-renovation-guide-2026',
+    'north-vancouver-home-renovation-guide-2026',
+    'port-coquitlam-home-renovation-guide-2026',
+    'port-moody-home-renovation-guide-2026',
+    'richmond-home-renovation-guide-2026',
+    'surrey-home-renovation-guide-2026',
+    'vancouver-home-renovation-guide-2026',
+    'west-vancouver-home-renovation-guide-2026',
+    'white-rock-home-renovation-guide-2026',
+    // Fixture cost guides — specialized cost research posts.
+    'shower-renovation-cost-vancouver-2026',
   ]);
 
   for (const slug of blogPostSlugs) {
