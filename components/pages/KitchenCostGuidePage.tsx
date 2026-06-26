@@ -438,6 +438,8 @@ export default function KitchenCostGuidePage({ locale, projects, phone }: Kitche
               cost" queries. Top 8 cities by organic search volume listed. */}
           <p className="text-sm mt-4" style={{ color: TEXT_MID }}>
             <strong>City-specific kitchen renovation guides:</strong>{' '}
+            <Link href="/blog/kitchen-renovation-vancouver-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            {' · '}
             <Link href="/blog/kitchen-renovation-burnaby-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
             {' · '}
             <Link href="/blog/kitchen-renovation-richmond-bc-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
