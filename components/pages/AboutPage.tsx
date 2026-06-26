@@ -337,6 +337,35 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         </div>
       </section>
 
+      {/* 2026-06-26: Planning guide pill-links. About page is in top nav;
+          visitors researching the company also benefit from planning guides. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            Free Renovation Planning Guides
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: CARD }}>
         <div className="max-w-4xl mx-auto text-center">
