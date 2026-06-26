@@ -60,7 +60,6 @@ export default async function Page({ params }: PageProps) {
         areaServed={areas.map((a) => a.name.en)}
         priceRange={{ min: 25000, max: 90000 }}
         serviceRadiusKm={50}
-        locale={locale}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />

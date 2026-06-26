@@ -290,7 +290,6 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
         serviceRadiusKm={50}
-        locale={locale}
       />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceDetailPage

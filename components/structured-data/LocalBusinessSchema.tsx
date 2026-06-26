@@ -52,16 +52,12 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     // without duplicating the entity into separate nodes.
     '@type': ['Organization', 'LocalBusiness', 'HomeAndConstructionBusiness'],
     '@id': `${BASE_URL}/#organization`,
-    // inLanguage declares THIS document's natural language. Critical for
-    // a multilingual site — the same Organization @id renders on every
-    // /[locale]/* page via app/[locale]/layout.tsx; without inLanguage,
-    // Google sees one Organization node and can't tell whether the
-    // current emission is the /en/ or /zh/ variant. Completes the
-    // i18n-aware schema cluster after FAQ, Article, HowTo, Breadcrumb,
-    // ContactPage (this same daily branch). Note: this is DOCUMENT
-    // language; `availableLanguage` inside contactPoint below
-    // (line 176) is SERVICE-language and stays as the 7-language list.
-    ...(locale && { inLanguage: locale }),
+    // NOTE: inLanguage is intentionally NOT set here. It is a CreativeWork
+    // property and is invalid on Organization/LocalBusiness nodes (Semrush
+    // and Google Rich Results flag it as an unknown property). Document
+    // language for these entity nodes is conveyed via <html lang> + hreflang,
+    // not a schema field. `availableLanguage` inside contactPoint below is
+    // SERVICE-language and is a different, valid signal.
     name: company.name,
     // alternateName: brand-variant capture so Google reconciles user queries
     // for the singular "Reno Star", concatenated "RenoStars", and lowercase
