@@ -243,10 +243,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'toilet-renovation-cost-vancouver',
     'average-bathroom-renovation-cost-vancouver',
     'basement-renovation-vancouver-complete-guide',
-    'cabinet-resurfacing-port-moody-cost-guide',
+    // Cabinet refinishing city cost guides — same topic-cluster role as /guides/ pages.
+    // Added 2026-06-26: elevated sitemap priority so Googlebot crawls on the same
+    // monthly cadence as /guides/ pages instead of the default blog 0.65 tier.
+    'cabinet-refinishing-burnaby-cost-guide',
     'cabinet-refinishing-coquitlam-cost-guide',
+    'cabinet-refinishing-delta-cost-guide',
     'cabinet-refinishing-maple-ridge-cost-guide',
+    'cabinet-refinishing-new-westminster-cost-guide',
+    'cabinet-refinishing-north-vancouver-cost-guide',
+    'cabinet-refinishing-port-coquitlam-cost-guide',
+    'cabinet-refinishing-richmond-cost-guide',
+    'cabinet-refinishing-surrey-cost-guide',
+    'cabinet-refinishing-vancouver-cost-guide',
+    'cabinet-refinishing-west-vancouver-cost-guide',
+    'cabinet-refinishing-white-rock-cost-guide',
     'cabinet-resurfacing-langley-cost-guide',
+    'cabinet-resurfacing-port-moody-cost-guide',
+    // Pre-sale renovation city guides — high commercial intent.
+    'pre-sale-renovation-burnaby-bc-2026',
+    'pre-sale-renovation-coquitlam-bc-2026',
+    'pre-sale-renovation-delta-bc-2026',
+    'pre-sale-renovation-langley-bc-2026',
+    'pre-sale-renovation-maple-ridge-bc-2026',
+    'pre-sale-renovation-new-westminster-bc-2026',
+    'pre-sale-renovation-north-vancouver-bc-2026',
+    'pre-sale-renovation-port-coquitlam-bc-2026',
+    'pre-sale-renovation-port-moody-bc-2026',
+    'pre-sale-renovation-richmond-bc-2026',
+    'pre-sale-renovation-surrey-bc-2026',
+    'pre-sale-renovation-vancouver-what-to-fix-before-listing',
+    'pre-sale-renovation-west-vancouver-bc-2026',
+    'pre-sale-renovation-white-rock-bc-2026',
+    // Main guide hub blog posts — high-equity reference content.
+    'how-to-choose-renovation-contractor-vancouver',
+    'renovation-cost-vancouver-2026-complete-guide',
+    'renovation-timeline-how-long-does-each-project-take',
+    'renovation-permits-bc-guide',
+    'renovation-financing-vancouver-heloc',
+    'strata-renovation-rules-vancouver',
   ]);
 
   for (const slug of blogPostSlugs) {
