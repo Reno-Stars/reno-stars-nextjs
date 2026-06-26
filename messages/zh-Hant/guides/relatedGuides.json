@@ -7,7 +7,8 @@
     "basement": "地下室裝修費用",
     "bathroom": "浴室裝修平均費用",
     "bathroomGuide": "衛生間裝修費用",
-    "flooring": "地板安裝費用"
+    "flooring": "地板安裝費用",
+    "cabinetRefinishing": "廚櫃翻新費用"
   },
   "cityCostTable": {
     "kitchenTitle": "大溫哥華地區的廚房成本",

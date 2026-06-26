@@ -7,7 +7,8 @@
     "basement": "地下室装修费用",
     "bathroom": "浴室装修平均费用",
     "bathroomGuide": "卫生间装修费用",
-    "flooring": "地板安装费用"
+    "flooring": "地板安装费用",
+    "cabinetRefinishing": "橱柜翻新费用"
   },
   "cityCostTable": {
     "kitchenTitle": "大温哥华地区的厨房成本",

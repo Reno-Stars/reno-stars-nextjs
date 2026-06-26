@@ -35,6 +35,7 @@ function formatCurrency(n: number): string {
 
 export default function CabinetRefinishingCostGuidePage({ locale, projects, phone }: CabinetRefinishingCostGuidePageProps) {
   const t = useTranslations('guides.cabinetCost');
+  const tGuides = useTranslations('guides.relatedGuides');
 
   const stats = useMemo(() => {
     const budgets = projects
@@ -257,6 +258,30 @@ export default function CabinetRefinishingCostGuidePage({ locale, projects, phon
                 </summary>
                 <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${key.slice(1)}`)}</p>
               </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 2026-06-26: Related Guides cross-links to the other 4 cost guides */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
+            {tGuides('title')}
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {[
+              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
+            ].map((guide) => (
+              <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
+                <span className="text-sm" style={{ color: GOLD }}>{guide.range}</span>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold mt-auto" style={{ color: NAVY }}>
+                  {tGuides('viewGuide')} <ArrowRight size={14} />
+                </span>
+              </Link>
             ))}
           </div>
         </div>

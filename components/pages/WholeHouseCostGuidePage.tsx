@@ -237,7 +237,7 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone }: Who
               { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
               { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
-              { href: '/blog/hardwood-flooring-vancouver-installation-cost-2026', label: tGuides('flooring'), range: '$8K–$35K' },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, ...neu }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
