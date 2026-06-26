@@ -662,6 +662,38 @@ export default function ProjectDetailPage({ locale, project, allProjects, compan
         </section>
       )}
 
+      {/* 2026-06-26: Planning guide cross-links. Project pages are high-intent
+          — visitors have already self-selected into a specific renovation type.
+          Surfacing the planning guides here converts project browsers into
+          content readers and passes PageRank from project leaf pages to the
+          6 blog guide hub posts. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: TEXT_MUTED }}>
+            Planning Your Renovation?
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Cost Guide 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Timeline Guide' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Financing Guide' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity hover:opacity-75"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Fullscreen Image Overlay */}
       {isFullscreen && (displayImage || displayVideo) && (
         <div
