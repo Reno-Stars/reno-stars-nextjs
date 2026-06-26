@@ -383,6 +383,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'bathroom-renovations-white-rock-bc-2026',
     // Comparison/decision guides — same topical-authority role as /guides/ pages.
     'kitchen-vs-bathroom-which-renovation-first-vancouver',
+    // Property-type and specialty renovation guides — evergreen reference content.
+    'adu-renovation-vancouver-2026',
+    'condo-kitchen-renovation-vancouver-space-saving-ideas',
+    'diy-vs-contractor-renovation-vancouver-2026',
+    'duplex-renovation-vancouver-costs-permits-2026',
+    'heritage-home-renovation-vancouver-2026',
+    'kitchen-layout-planning-vancouver-2026',
+    'multi-generational-home-renovation-vancouver-2026',
+    'open-concept-kitchen-vancouver-load-bearing-wall-cost',
+    'renovation-insurance-guide-bc',
+    'split-level-home-renovation-burnaby-coquitlam-2026',
+    'surrey-renovation-permits-guide-2026',
+    'vancouver-renovation-tax-credits-rebates-2026',
+    'whole-house-renovation-white-rock-2026',
   ]);
 
   for (const slug of blogPostSlugs) {
