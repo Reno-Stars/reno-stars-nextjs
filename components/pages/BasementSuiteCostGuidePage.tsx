@@ -277,7 +277,7 @@ export default function BasementSuiteCostGuidePage({ locale, projects, phone }: 
             {' · '}
             <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
             {' · '}
-            <Link href="/blog/renovation-cost-vancouver-2026-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
+            <Link href="/guides/whole-house-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
         </div>
       </section>

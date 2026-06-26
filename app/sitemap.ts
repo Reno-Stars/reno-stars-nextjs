@@ -277,7 +277,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'pre-sale-renovation-white-rock-bc-2026',
     // Main guide hub blog posts — high-equity reference content.
     'how-to-choose-renovation-contractor-vancouver',
-    'renovation-cost-vancouver-2026-complete-guide',
+    // NOTE: 'renovation-cost-vancouver-2026-complete-guide' removed 2026-06-26 —
+    // next.config.ts 308-redirects it to /guides/whole-house-renovation-cost-vancouver/,
+    // so listing it here put a redirecting URL in the sitemap ("Incorrect pages
+    // found in sitemap.xml"). The destination guide is indexed on its own.
     'renovation-timeline-how-long-does-each-project-take',
     'renovation-permits-bc-guide',
     'renovation-financing-vancouver-heloc',

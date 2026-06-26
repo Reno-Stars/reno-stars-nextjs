@@ -23,13 +23,10 @@ export default function ProjectCategorySchema({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: categoryName,
-    // inLanguage: declares the natural language of the ItemList items
-    // (project titles render in `locale`). Caller already passes locale
-    // for the URL construction below — just wire it into the schema
-    // top-level. Completes the i18n-aware schema cluster discipline
-    // (FAQ + Article + HowTo + Breadcrumb + ContactPage + LocalBusiness
-    // + ProjectCategory).
-    inLanguage: locale,
+    // NOTE: inLanguage intentionally NOT set. It is a CreativeWork property,
+    // but ItemList is an Intangible — emitting it produces an unrecognized-
+    // property markup error in strict validators (Semrush/schema.org).
+    // Removed 2026-06-26 audit; see BreadcrumbSchema/ItemListSchema.
     numberOfItems: projects.length,
     itemListElement: projects.map((project, index) => ({
       '@type': 'ListItem',

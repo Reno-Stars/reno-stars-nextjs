@@ -522,7 +522,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               { href: '/blog/basement-renovation-financing-bc-guide', label: 'BC Renovation Financing' },
               { href: '/blog/vancouver-renovation-tax-credits-rebates-2026', label: 'Tax Credits & Rebates' },
               { href: '/blog/rental-property-renovation-vancouver-roi', label: 'Rental Property ROI' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: '2026 Cost Guide' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: '2026 Cost Guide' },
               { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'Choosing a Contractor' },
             ].map((link) => (
               <Link
