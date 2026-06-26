@@ -734,6 +734,37 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
         </section>
       )}
 
+      {/* 2026-06-26: Planning guide pill-links. Service pages are high-intent —
+          users are researching a specific service before getting a quote.
+          Planning guides (contractor/cost/timeline/permits/financing/strata)
+          answer common questions during this research phase. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            {locale === 'zh' ? '装修规划指南' : 'Renovation Planning Guides'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: locale === 'zh' ? '如何选择承包商' : 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: locale === 'zh' ? '2026装修费用指南' : 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: locale === 'zh' ? '装修时间线' : 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: locale === 'zh' ? 'BC省许可证指南' : 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: locale === 'zh' ? '装修融资' : 'Financing Your Reno' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: locale === 'zh' ? 'BC省分层产权规则' : 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <CTASection
         heading={t('services.getQuoteForService', { service: localizedService.title })}
         subtitle={t('projects.ctaSubtitle7', { years: company.yearsExperience })}
