@@ -186,6 +186,45 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
         </div>
       </section>
 
+      {/* 2026-06-26: Planning guide hub links — cross-link /guides/ hub to the 6 major
+          blog guide posts. These posts are the SEO-weighted entry points for planning
+          queries (contractor selection, financing, timeline, permits, strata rules).
+          Adding them here passes PageRank from the high-priority /guides/ hub to each
+          blog post and surfaces them for users at the planning stage. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            More Renovation Planning Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Beyond cost guides — everything you need to plan a successful Metro Vancouver renovation.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Renovation Contractor', desc: 'Vetting tips, red flags, and what to look for in a Vancouver contractor.' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'How to Finance Your Renovation (HELOC)', desc: 'HELOC, home equity loans, and financing options for Metro Vancouver homeowners.' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline Guide', desc: 'How long each type of renovation takes — from planning to completion.' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Renovation Permits Guide', desc: 'When you need a permit, how to apply, and what happens if you skip it.' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'BC Strata Renovation Rules', desc: 'How to get strata council approval and what rules apply to condo renovations.' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Complete Vancouver Renovation Cost Guide 2026', desc: 'Full breakdown of renovation costs across all project types in Metro Vancouver.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/how-to-choose-renovation-contractor-vancouver'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.01]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection
         heading={t('guides.index.cta.heading')}
