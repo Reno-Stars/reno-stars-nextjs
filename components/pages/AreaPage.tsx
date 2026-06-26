@@ -77,6 +77,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-burnaby-2026' },
     { label: 'Home Guide', slug: 'burnaby-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-burnaby-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-burnaby-cost-guide' },
   ],
   richmond: [
     { label: 'Kitchen', slug: 'kitchen-renovation-richmond-bc-2026' },
@@ -84,6 +85,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-richmond-bc-2026' },
     { label: 'Home Guide', slug: 'richmond-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-richmond-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-richmond-cost-guide' },
   ],
   surrey: [
     { label: 'Kitchen', slug: 'kitchen-renovation-surrey-bc-2026' },
@@ -91,6 +93,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-surrey' },
     { label: 'Home Guide', slug: 'surrey-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-surrey-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-surrey-cost-guide' },
   ],
   coquitlam: [
     { label: 'Kitchen', slug: 'kitchen-renovation-coquitlam-bc-2026' },
@@ -98,6 +101,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-coquitlam-2026' },
     { label: 'Home Guide', slug: 'coquitlam-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-coquitlam-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-coquitlam-cost-guide' },
   ],
   'north-vancouver': [
     { label: 'Kitchen', slug: 'kitchen-renovation-north-vancouver-2026' },
@@ -105,6 +109,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-north-vancouver' },
     { label: 'Home Guide', slug: 'north-vancouver-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-north-vancouver-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-north-vancouver-cost-guide' },
   ],
   'west-vancouver': [
     { label: 'Kitchen', slug: 'kitchen-renovation-west-vancouver-2026' },
@@ -112,6 +117,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-west-vancouver-2026' },
     { label: 'Home Guide', slug: 'west-vancouver-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-west-vancouver-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-west-vancouver-cost-guide' },
   ],
   langley: [
     { label: 'Kitchen', slug: 'kitchen-renovation-langley-bc-2026' },
@@ -119,6 +125,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-langley' },
     { label: 'Home Guide', slug: 'langley-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-langley-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-resurfacing-langley-cost-guide' },
   ],
   delta: [
     { label: 'Kitchen', slug: 'kitchen-renovation-delta-bc-2026' },
@@ -126,6 +133,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-delta-bc' },
     { label: 'Home Guide', slug: 'delta-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-delta-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-delta-cost-guide' },
   ],
   'new-westminster': [
     { label: 'Kitchen', slug: 'kitchen-renovation-new-westminster-bc-2026' },
@@ -133,6 +141,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-new-westminster-2026' },
     { label: 'Home Guide', slug: 'new-westminster-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-new-westminster-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-new-westminster-cost-guide' },
   ],
   vancouver: [
     { label: 'Kitchen', slug: 'kitchen-renovation-vancouver-bc-2026' },
@@ -140,6 +149,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-vancouver-complete-guide' },
     { label: 'Home Guide', slug: 'vancouver-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-vancouver-what-to-fix-before-listing' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-vancouver-cost-guide' },
   ],
   'port-coquitlam': [
     { label: 'Kitchen', slug: 'kitchen-renovation-port-coquitlam-bc-2026' },
@@ -147,6 +157,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-port-coquitlam-2026' },
     { label: 'Home Guide', slug: 'port-coquitlam-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-port-coquitlam-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-port-coquitlam-cost-guide' },
   ],
   'port-moody': [
     { label: 'Kitchen', slug: 'kitchen-renovation-port-moody-bc-2026' },
@@ -154,6 +165,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-port-moody' },
     { label: 'Home Guide', slug: 'port-moody-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-port-moody-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-resurfacing-port-moody-cost-guide' },
   ],
   'maple-ridge': [
     { label: 'Kitchen', slug: 'kitchen-renovation-maple-ridge-bc-2026' },
@@ -161,6 +173,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovations-maple-ridge' },
     { label: 'Home Guide', slug: 'maple-ridge-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-maple-ridge-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-maple-ridge-cost-guide' },
   ],
   'white-rock': [
     { label: 'Kitchen', slug: 'kitchen-renovation-white-rock-2026' },
@@ -168,6 +181,7 @@ const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
     { label: 'Basement', slug: 'basement-renovation-white-rock-2026' },
     { label: 'Home Guide', slug: 'white-rock-home-renovation-guide-2026' },
     { label: 'Pre-Sale', slug: 'pre-sale-renovation-white-rock-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-white-rock-cost-guide' },
   ],
 };
 
