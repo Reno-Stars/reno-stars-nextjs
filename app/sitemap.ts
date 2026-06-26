@@ -348,6 +348,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'condo-renovation-new-westminster-2026',
     'condo-renovation-north-vancouver-2026',
     'condo-renovation-surrey-bc-2026',
+    // Additional cost/renovation guides — elevated to guide tier 2026-06-26.
+    // Fixture + room-specific cost posts, aging-in-place guides, and comparison
+    // posts share the same topical-authority role as the /guides/ pages.
+    '3-piece-vs-4-piece-bathroom-renovation-cost-vancouver-2026',
+    'aging-in-place-bathroom-renovation-vancouver-2026',
+    'aging-in-place-renovation-guide-bc',
+    'basement-renovation-cost-vancouver-2026',
+    'basement-suite-renovation-cost-vancouver',
+    'bathroom-renovation-cost-vancouver-by-size',
+    'bathroom-renovation-cost-vancouver-by-style',
+    'condo-vs-house-renovation-cost-vancouver',
+    'hardwood-flooring-vancouver-installation-cost-2026',
+    'kitchen-backsplash-cost-vancouver-2026',
+    'laundry-room-renovation-cost-vancouver-2026',
+    'powder-room-renovation-vancouver-cost-design-2026',
+    'restaurant-renovation-cost-vancouver',
+    'townhouse-renovation-cost-vancouver-2026',
+    'vancouver-infill-development-cost-2026',
+    'vancouver-multiplex-laneway-renovation-guide-2026',
+    // Planning and ideas guides for bathroom and basement.
+    'basement-renovation-financing-bc-guide',
+    'bathroom-renovation-planning-guide-vancouver',
+    'small-bathroom-renovation-ideas-vancouver-condos-2026',
+    // Remaining basement renovation city guides.
+    'basement-renovations-langley',
+    'basement-renovations-maple-ridge',
+    'basement-renovations-north-vancouver',
+    'basement-renovations-port-moody',
+    'basement-renovations-surrey',
   ]);
 
   for (const slug of blogPostSlugs) {
