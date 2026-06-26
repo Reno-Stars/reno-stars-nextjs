@@ -15,7 +15,7 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, SURFACE, SURFACE_ALT, CARD,
+  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD,
   TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -809,6 +809,37 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               >
                 <span className="font-semibold" style={{ color: TEXT }}>{p.label}</span>
                 <span className="text-sm font-bold" style={{ color: GOLD }}>{p.range}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide cross-links. /projects/ is a high-traffic
+          mid-funnel page (253 impressions/mo). Project browsers are actively
+          planning and benefit from how-to guides before requesting a quote. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            {locale === 'zh' ? '装修规划指南' : 'Renovation Planning Guides'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: locale === 'zh' ? '如何选择承包商' : 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: locale === 'zh' ? '2026装修费用指南' : 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: locale === 'zh' ? '装修时间线' : 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: locale === 'zh' ? 'BC省许可证指南' : 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: locale === 'zh' ? '装修融资' : 'Financing Your Reno' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: locale === 'zh' ? 'BC省分层产权规则' : 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                <ChevronRight size={12} style={{ color: GOLD }} />
+                {label}
               </Link>
             ))}
           </div>
