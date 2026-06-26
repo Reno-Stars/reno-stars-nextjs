@@ -8,7 +8,7 @@ import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
-import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 
@@ -992,6 +992,20 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
+      {/* 2026-06-26: LocalBusiness schema — on-page scan P7 finding: all service+city
+          sub-pages were missing LocalBusiness schema (only Service + BreadcrumbList
+          were present). Adding LocalBusinessAreaSchema gives Google the geo/contact
+          signals needed for local pack eligibility on "kitchen renovation richmond"
+          style queries that land on service+city sub-pages. */}
+      <LocalBusinessAreaSchema
+        company={company}
+        areaName={localizedArea.name}
+        areaSlug={city}
+        locale={locale}
+        services={[localizedService.title]}
+        googleRating={googleReviews.rating}
+        googleReviewCount={googleReviews.userRatingCount}
+      />
       <ServiceSchema
         company={company}
         serviceName={serviceTitle}
