@@ -42,7 +42,7 @@
     "serviceLocation": {
       "title": "{service}的{area} |Reno Stars",
       "titleWithTagline": "{service}的{area} – {tagline} |Reno Stars",
-      "description": "Reno Stars在{service}提供專家{area}。 {years}+ 年經驗、500 萬加元 CGL 保險、有效的 WCB 保險、長達 3 年的保固。今天免費報價。"
+      "description": "Reno Stars為{area}提供專業{service}服務——{years}+年經驗、500萬加元CGL保險、有效WCB保險、最長3年保固。今天免費報價。"
     },
     "areas": {
       "title": "您附近的裝潢 | 17 個大溫哥華地區 |Reno Stars",
