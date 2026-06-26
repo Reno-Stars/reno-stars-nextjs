@@ -237,7 +237,7 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone }: Who
               { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
               { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
-              { href: '/blog/hardwood-flooring-vancouver-installation-cost-2026', label: tGuides('flooring'), range: '$8K–$35K' },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, ...neu }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
@@ -266,6 +266,83 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone }: Who
             >
               See our service area + booking page →
             </Link>
+          </p>
+        </div>
+      </section>
+      {/* FAQ — visible accordion matches FAQSchema structured data; targets 'whole house renovation
+          cost vancouver' long-tail questions including renovation vs addition and design-build */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
+            Frequently Asked Questions — Whole-House Renovation Cost Vancouver
+          </h2>
+          <div className="space-y-4">
+            {(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const).map((key) => (
+              <details key={key} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, ...neu }}>
+                <summary className="font-bold cursor-pointer list-none flex justify-between items-center" style={{ color: TEXT }}>
+                  {t(`faq.${key}`)}
+                  <span className="ml-4 shrink-0 text-lg" style={{ color: GOLD }}>+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${key.slice(1)}`)}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 2026-06-25: City-specific home renovation guides. Cross-linking from
+          the whole-house cost guide (high-equity hub) to city posts passes
+          PageRank and helps city posts rank for "[city] home renovation" queries. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>City-specific home renovation guides:</strong>{' '}
+            <Link href="/blog/burnaby-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/richmond-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/surrey-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/coquitlam-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/north-vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/langley-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/west-vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            {' · '}
+            <Link href="/blog/delta-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/maple-ridge-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/new-westminster-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/port-coquitlam-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/port-moody-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/white-rock-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide hub links. Cross-linking to major blog guides
+          (contractor, timeline, permits, financing) strengthens topical authority
+          and passes PageRank to high-equity hub pages. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>Planning your renovation?</strong>{' '}
+            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            {' · '}
+            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            {' · '}
+            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            {' · '}
+            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            {' · '}
+            <Link href="/blog/renovation-cost-vancouver-2026-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
         </div>
       </section>

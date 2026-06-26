@@ -3,7 +3,7 @@
     "breadcrumb": "Whole House Renovation Cost",
     "hero": {
       "title": "Whole House Renovation Cost in Vancouver BC (2026)",
-      "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver. From condo refreshes to full house transformations. Every number comes from actual projects."
+      "subtitle": "Real pricing from completed whole-home renovations across Greater Vancouver — from cosmetic condo refreshes ($50,000–$80,000) to full house transformations with structural changes ($120,000–$200,000+). This guide covers pricing by tier, the six factors that drive cost most (scope, kitchen, bathrooms, flooring, structural changes, permits), what is typically included in each scope level, and money-saving strategies based on real Metro Vancouver projects."
     },
     "stats": {
       "avgCost": "Average Cost",
@@ -17,15 +17,15 @@
       "subtitle": "Based on our completed projects across Greater Vancouver",
       "budget": {
         "title": "Cosmetic Refresh",
-        "description": "Paint throughout, new flooring, updated light fixtures, bathroom refresh (vanity, mirror, hardware), and minor kitchen updates. Ideal for condos and rental properties needing a modern update without structural work."
+        "description": "Paint throughout all rooms, new LVP or engineered hardwood flooring, updated light fixtures, bathroom refresh (vanity, mirror, faucet, and hardware without moving plumbing), and minor kitchen updates such as new hardware and countertop replacement. Ideal for condos, townhouses, and rental properties needing a modern update without structural work. No building permit required for cosmetic-only scope."
       },
       "midRange": {
         "title": "Comprehensive Renovation",
-        "description": "Full kitchen renovation with new cabinets and countertops, bathroom remodels, new flooring throughout, fresh paint, updated electrical and plumbing fixtures, and new lighting. The most popular choice for homeowners planning to stay long-term."
+        "description": "Full kitchen renovation with semi-custom cabinets, quartz countertops, and new appliances; bathroom remodels with tile, new vanity, and frameless glass shower; new flooring throughout; fresh paint; updated electrical and plumbing fixtures; and new lighting. The most popular choice for Metro Vancouver homeowners planning to stay 5+ years. Includes building permit for plumbing and electrical changes."
       },
       "highEnd": {
         "title": "Premium Transformation",
-        "description": "Complete gut renovation including structural changes, open-concept layouts, high-end kitchen and bathrooms, custom millwork, premium flooring, smart home integration, and designer finishes throughout. For homeowners who want a truly custom home."
+        "description": "Complete gut renovation including structural wall removal for open-concept layouts, custom kitchen with premium cabinetry and integrated appliances, full high-end bathroom remodels with natural stone, custom millwork throughout, premium wide-plank hardwood flooring, smart home integration (lighting, HVAC, security), and designer fixtures. For homeowners who want a fully custom home and may be planning a high-end resale."
       }
     },
     "factors": {
@@ -33,27 +33,27 @@
       "subtitle": "Six key factors that determine your final price",
       "scope": {
         "title": "Scope & Square Footage",
-        "description": "The single biggest factor. A 600 sq ft condo refresh costs far less than a 2,500 sq ft house gut renovation. Define your must-haves vs nice-to-haves early to control budget."
+        "description": "Scope is the single biggest cost driver. A 600 sq ft condo cosmetic refresh (paint, flooring, fixtures) costs far less than a 2,500 sq ft house gut renovation with structural changes. Define your must-haves vs nice-to-haves early — every scope addition is easier to decline at the planning stage than after your contractor has mobilized. Walking through a priority list room-by-room with your contractor before signing anything prevents the most common cause of renovation budget overruns."
       },
       "kitchen": {
         "title": "Kitchen (30–40% of total budget)",
-        "description": "Kitchens are typically the most expensive room. Custom cabinets, quartz countertops, and appliance upgrades can run $15,000–$72,000 on their own. See our kitchen cost guide for detailed breakdowns."
+        "description": "Kitchens are typically the most expensive room in a whole-house renovation. Custom cabinets, quartz countertops, integrated appliances, and a kitchen island can run $15,000–$72,000 on their own. The kitchen's share of a whole-house budget is 30–40% in most Metro Vancouver projects. Open-concept kitchen conversions that remove walls between kitchen and living areas are the most popular structural change — but they add $10,000–$25,000 to budget. See our kitchen renovation cost guide for detailed tier breakdowns by scope."
       },
       "bathrooms": {
         "title": "Bathrooms (15–25% of total budget)",
-        "description": "Each bathroom renovation adds $10,000–$40,000 depending on size and finishes. Waterproofing, tile work, and fixture quality drive costs. Multi-bathroom homes see significant savings per unit."
+        "description": "Each bathroom adds $10,000–$40,000 depending on size and finish level. Waterproofing systems, tile work (labour and materials), fixture quality, and plumbing rough-in complexity are the main cost variables. Homes with two or more bathrooms benefit from bundling them in the same renovation — the contractor can schedule the tile setter and plumber across both bathrooms efficiently, reducing the per-bathroom cost vs. renovating each separately in different years. Primary ensuites with heated floors, frameless glass showers, and freestanding tubs are at the high end of the range."
       },
       "flooring": {
         "title": "Flooring (10–15% of total budget)",
-        "description": "Engineered hardwood runs $8–$15/sq ft installed. Luxury vinyl plank (LVP) offers a budget-friendly alternative at $5–$10/sq ft. Tile for wet areas adds $12–$25/sq ft."
+        "description": "Flooring accounts for 10–15% of a whole-house renovation budget in Metro Vancouver. Engineered hardwood is the most popular choice for main living areas at $8–$15 per sq ft installed. Luxury vinyl plank (LVP) is a waterproof, budget-friendly alternative at $5–$10 per sq ft installed — increasingly common in basement and ground-floor applications. Tile in bathrooms and entryways adds $12–$25 per sq ft depending on tile size and pattern complexity. Large-format tiles (24\"×48\") cost more per sq ft to install than standard sizes due to levelling requirements."
       },
       "structural": {
         "title": "Structural Changes",
-        "description": "Removing walls, adding windows, or reconfiguring layouts adds $5,000–$25,000+. Load-bearing wall removal requires engineering reports and permits. Open-concept conversions are popular but costly."
+        "description": "Structural work — removing walls, adding windows, reconfiguring stairs, or changing floor layouts — adds $5,000–$25,000+ per change. Load-bearing wall removal is the most common structural request: it requires a structural engineer's report ($800–$2,000), a temporary shoring plan, a new LVL or steel beam, and column footings in some cases. This scope requires a building permit in all Metro Vancouver municipalities. Open-concept kitchen conversions are the most popular reason for load-bearing wall removal in Metro Vancouver SFH homes built before 1990."
       },
       "permits": {
         "title": "Permits & Professional Fees",
-        "description": "Building permits in Metro Vancouver typically cost $500–$2,500 for whole house renovations. Budget an additional $2,000–$5,000 for architectural drawings, engineering reports, and inspections."
+        "description": "Building permits in Metro Vancouver cost $500–$2,500 for typical whole-house renovation scopes. Any plumbing, electrical, gas, or structural work requires permits; cosmetic-only work (paint, flooring, cabinet replacement without structural changes) typically does not. Budget an additional $2,000–$5,000 for architectural drawings and engineering reports if structural work is involved. A registered structural engineer's report is required for load-bearing wall removal in all Metro Vancouver jurisdictions. Processing times vary: City of Vancouver online permits may be approved in 5–10 business days; Burnaby and Surrey are generally similar."
       }
     },
     "realProjects": {
@@ -65,59 +65,65 @@
       "subtitle": "A comprehensive renovation touches every room and system",
       "item1": {
         "title": "Kitchen Renovation",
-        "description": "New cabinets, countertops, backsplash, sink, faucet, and updated appliance connections. Layout changes available for mid-range and premium tiers."
+        "description": "Semi-custom or custom cabinets, quartz countertops, tile backsplash, new sink and faucet, updated appliance connections, and pot-light upgrades. Open-concept wall removal and layout changes available in mid-range and premium tiers. Kitchen is typically 30–40% of the total whole-house budget."
       },
       "item2": {
         "title": "Bathroom Remodels",
-        "description": "New vanity, toilet, shower or tub, tile work, waterproofing, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt."
+        "description": "New vanity with quartz countertop, toilet, shower or tub-to-shower conversion, large-format tile work, full waterproofing membrane, and updated plumbing fixtures. Each bathroom fully refreshed or rebuilt. Heated floor option available. Multi-bathroom bundling saves 10–20% vs. separate projects."
       },
       "item3": {
         "title": "Flooring Throughout",
-        "description": "New flooring in all living spaces: hardwood, engineered wood, or LVP in main areas; tile in bathrooms and entryways."
+        "description": "New flooring across all living spaces: engineered hardwood ($8–$15/sq ft) or luxury vinyl plank ($5–$10/sq ft) in main living areas, bedrooms, and hallways; large-format porcelain tile in bathrooms, laundry, and entryways. Single-mobilization installation across all rooms reduces cost."
       },
       "item4": {
         "title": "Paint & Trim",
-        "description": "Fresh paint on all walls and ceilings, new or refinished baseboards, door casings, and crown moulding where applicable."
+        "description": "Fresh interior paint on all walls and ceilings using mid-grade or premium washable finish (Benjamin Moore, Sherwin-Williams). New or refinished baseboards, door casings, and window trim. Crown moulding in main living areas. Exterior touch-up painting as needed for trim and soffits."
       },
       "item5": {
         "title": "Electrical & Lighting",
-        "description": "Updated light fixtures, additional outlets where needed, dimmer switches, and panel upgrades for older homes."
+        "description": "Updated light fixtures throughout, additional outlets per room as needed, dimmer switches in living and dining areas, and LED pot-light installation or replacement. Panel upgrades from 100-amp to 200-amp ($2,000–$4,000) for older Metro Vancouver homes when required by the new scope's electrical load."
       },
       "item6": {
         "title": "Doors & Hardware",
-        "description": "New interior doors, updated door handles and hinges, closet organizers, and any exterior door replacements as needed."
+        "description": "New interior solid-core or hollow-core doors with updated lever-style handles and hinges. Closet organizer installation. Any exterior door replacements for energy efficiency or aesthetic upgrade. Door hardware throughout updated to a consistent finish (brushed nickel, matte black, or satin brass)."
       }
     },
     "tips": {
       "title": "Money-Saving Tips for Whole House Renovations",
       "tip1": {
         "title": "Prioritize and Phase Your Work",
-        "description": "You don't have to do everything at once. Tackle the kitchen and bathrooms first (highest ROI), then address cosmetic updates in later phases. This spreads costs and lets you live in the home during renovations."
+        "description": "You don't have to renovate every room in one project. A phased approach lets you tackle the highest-ROI scopes first — kitchens and bathrooms typically deliver the strongest return in Metro Vancouver's resale market — and defer lower-priority cosmetic work to a later phase. This approach also lets you live in your home throughout: most clients manage a kitchen-and-two-bathrooms renovation while staying on-site, using a temporary kitchen setup. The key discipline: lock your scope and phase list before signing a contract, because mid-project scope additions are the most expensive changes you can make."
       },
       "tip2": {
         "title": "Keep Plumbing Where It Is",
-        "description": "Relocating plumbing is one of the most expensive changes. Keeping kitchens and bathrooms in their current locations saves $5,000–$15,000 in plumbing and structural work."
+        "description": "Plumbing relocation is one of the most expensive line items in a whole-house renovation. Moving a kitchen sink to a new island location requires extending the drain rough-in, adding an island vent, and often cutting the subfloor — a $3,000–$6,000 scope addition that delivers zero visual improvement. Relocating a bathroom from one side of a wall to the other can add $5,000–$10,000 in rough-in costs. For each plumbing change in your wish list, ask your contractor to price the 'keep it' vs 'move it' option — the cost difference usually makes the decision easy."
       },
       "tip3": {
         "title": "Choose Materials Strategically",
-        "description": "Splurge on high-impact, high-touch surfaces like kitchen countertops and bathroom tile. Save on areas like bedroom flooring (LVP looks great at half the cost of hardwood) and interior paint (mid-range paints perform nearly as well as premium)."
+        "description": "Spend on the surfaces you touch and see most: kitchen countertops (quartz delivers better durability than laminate at $80–$150/sq ft installed), bathroom tile (large-format porcelain reads premium and has lower long-term grout maintenance), and cabinet hardware (quality soft-close hinges add $5–$15 per door). Save on bedroom and hallway flooring — LVP at $5–$10 per sq ft installed looks comparable to engineered hardwood at $8–$15. Save on interior paint — mid-grade products like Benjamin Moore Regal or Sherwin-Williams Emerald perform nearly identically to premium lines in lived-in residential conditions."
       },
       "tip4": {
         "title": "Bundle for Better Pricing",
-        "description": "Whole house renovations often cost less per room than doing rooms individually. Contractors offer better rates when they can schedule crews efficiently across a larger project."
+        "description": "Renovating multiple rooms in the same project is consistently cheaper per room than scheduling separate projects a year apart. When a tile setter is on-site for your bathroom, extending the booking by two days to tile your entryway costs far less than remobilizing months later. The same logic applies to painting (one painter, one mobilization, whole house), flooring installation (one installer, one subfloor prep, every room), and electrical (one panel pull, run circuits everywhere while walls are open). Bundled projects also give you stronger negotiating leverage on material pricing from suppliers."
       }
     },
     "faq": {
       "q1": "How much does a whole house renovation cost in Vancouver?",
-      "a1": "Whole house renovation costs in Vancouver typically range from $50,000 to $200,000+ based on our completed projects. Cosmetic refreshes (paint, flooring, fixtures) start around $50,000–$80,000, comprehensive renovations with new kitchen and bathrooms run $80,000–$120,000, and premium transformations with structural changes can exceed $120,000.",
+      "a1": "Whole house renovation costs in Vancouver range from $50,000 to $200,000+ depending on scope, size, and finish level. A cosmetic refresh — paint throughout, new flooring, updated fixtures, bathroom vanity replacement — typically runs $50,000–$80,000 for a standard 1,500–2,000 sq ft home. A comprehensive renovation with new kitchen and bathrooms, structural changes, and quality finishes runs $80,000–$120,000. A premium transformation with custom kitchen, full bathroom remodels, structural changes, smart home integration, and designer finishes typically exceeds $120,000–$200,000. Kitchen and bathrooms alone often account for 45–65% of the total budget.",
       "q2": "How long does a whole house renovation take?",
-      "a2": "Most whole house renovations take 3 to 8 weeks depending on scope. A cosmetic refresh (paint, flooring, fixtures) can be done in 3–4 weeks. A comprehensive renovation including kitchen and bathrooms typically takes 5–8 weeks. Projects with structural changes or permits may take 10–14 weeks.",
+      "a2": "Most whole house renovations in Metro Vancouver take 5 to 14 weeks from demolition to completion. A cosmetic refresh focusing on paint, flooring, and fixture updates can be completed in 3–5 weeks. A comprehensive renovation with kitchen demolition, bathroom builds, and permit-required electrical or plumbing typically runs 6–10 weeks of construction time, plus 2–4 weeks for permit processing before work begins. Projects with structural changes (wall removal, beam installation, new windows) or custom cabinetry (10–14 week lead time) may take 12–16 weeks from contract to handover.",
       "q3": "Can I live in my home during a whole house renovation?",
-      "a3": "It depends on the scope. For cosmetic refreshes, you can usually stay in the home as work is done room-by-room. For comprehensive renovations involving kitchen and bathroom demolition, we recommend arranging temporary accommodation for at least 2–4 weeks during the most disruptive phases.",
+      "a3": "It depends on which phases are active. For cosmetic refreshes done room-by-room, most homeowners stay in place — painters move through rooms sequentially and flooring installers work one section at a time. For comprehensive renovations with kitchen demolition, both bathrooms under renovation, and multiple active trades, most homeowners find it significantly easier to arrange temporary accommodation for at least 2–4 weeks during the most disruptive phase. The kitchen-out period (when both demolition and rough-in trades are active) is typically the least livable period — a temporary microwave station and camp-style cooking can work for 2–3 weeks.",
       "q4": "What gives the best return on investment for a whole house renovation?",
-      "a4": "Kitchen and bathroom renovations consistently deliver the highest ROI in the Vancouver market. Updated flooring and fresh paint provide excellent value for relatively low cost. Open-concept layouts are popular with buyers but require structural work that increases costs significantly.",
+      "a4": "Kitchen renovations consistently deliver the highest ROI in Metro Vancouver's resale market — updated kitchens (quartz countertops, quality cabinetry, new appliances) are the first thing buyers notice and the most frequently cited reason for premium offers. Bathroom renovations rank second. Both rooms should be tackled first in a whole-house scope. Flooring throughout (LVP or engineered hardwood) provides strong visual impact at lower cost-per-sqft than kitchen or bathroom work. Fresh paint is the highest-ROI cosmetic item. Open-concept wall removal is popular with buyers but adds $15,000–$30,000 in structural cost — evaluate the cost vs. buyer value carefully for your specific floor plan.",
       "q5": "Do I need permits for a whole house renovation in Vancouver?",
-      "a5": "Yes, most whole house renovations require permits. Any work involving plumbing, electrical, gas, or structural changes needs a City of Vancouver building permit. Cosmetic-only work (paint, flooring, cabinets) typically does not require permits. Budget $500–$2,500 for permit fees."
+      "a5": "Building permits are required in Metro Vancouver for any renovation that touches regulated systems: plumbing (moving fixtures, adding a bathroom), electrical (new circuits, panel upgrades), gas (relocating lines or appliances), or structural work (wall removal, new beams, foundation). Cosmetic-only work — painting, flooring replacement, cabinet replacement without structural changes, new light fixtures on existing circuits — typically does not require permits. For a comprehensive whole-house renovation, budget $500–$2,500 in permit fees plus $2,000–$5,000 for architectural or structural drawings if walls are being removed. City of Vancouver online permits for standard residential scopes are often approved in 5–10 business days.",
+      "q6": "What is the difference between a whole-house renovation and a home addition?",
+      "a6": "A renovation works within your existing footprint — moving walls, updating rooms, changing finishes, and upgrading systems. A home addition expands your footprint by adding new square footage and requires new foundation work, framing, roofing, and exterior envelope. Both need building permits in Metro Vancouver. Ceiling heights, lot setbacks, floor area ratio (FAR) limits, and strata restrictions often determine which is feasible. Home additions typically cost $400–$700 per sq ft in Metro Vancouver because every square foot requires new structure — making whole-house renovation within the existing footprint the more cost-effective path for most homeowners. Consult a structural engineer and your municipality before committing to either path.",
+      "q7": "Should I use a design-build contractor or hire a designer and contractor separately for a whole-house renovation?",
+      "a7": "Design-build — where one company handles both design and construction — typically saves 10–15% on total project cost compared to hiring a designer and contractor separately. The savings come from integrated estimating, faster material sourcing, and fewer change orders from miscommunication. The trade-off is less independent oversight of the contractor. Design-build works best when you trust the contractor's completed portfolio. Separate hiring makes sense when you have a strong design vision and want an independent advocate overseeing construction quality.",
+      "q8": "What should my whole-house renovation contract include to avoid disputes?",
+      "a8": "A detailed scope-of-work document that lists every room, every trade (plumbing, electrical, framing, tile, finishes), and every allowance explicitly. Vague contracts — 'renovate kitchen as discussed' — cause most budget disputes. Also include: permit responsibility (who pulls and pays), insurance requirements ($5M CGL minimum for Metro Vancouver projects), a payment schedule tied to construction milestones not calendar dates, and a written change-order clause that requires your signature and cost confirmation before any additional scope proceeds."
     },
     "cta": {
       "heading": "Ready to Transform Your Entire Home?",

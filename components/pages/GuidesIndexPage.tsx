@@ -186,6 +186,166 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
         </div>
       </section>
 
+      {/* 2026-06-26: Planning guide hub links — cross-link /guides/ hub to the 6 major
+          blog guide posts. These posts are the SEO-weighted entry points for planning
+          queries (contractor selection, financing, timeline, permits, strata rules).
+          Adding them here passes PageRank from the high-priority /guides/ hub to each
+          blog post and surfaces them for users at the planning stage. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            More Renovation Planning Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Beyond cost guides — everything you need to plan a successful Metro Vancouver renovation.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Renovation Contractor', desc: 'Vetting tips, red flags, and what to look for in a Vancouver contractor.' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'How to Finance Your Renovation (HELOC)', desc: 'HELOC, home equity loans, and financing options for Metro Vancouver homeowners.' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline Guide', desc: 'How long each type of renovation takes — from planning to completion.' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Renovation Permits Guide', desc: 'When you need a permit, how to apply, and what happens if you skip it.' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'BC Strata Renovation Rules', desc: 'How to get strata council approval and what rules apply to condo renovations.' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Complete Vancouver Renovation Cost Guide 2026', desc: 'Full breakdown of renovation costs across all project types in Metro Vancouver.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/how-to-choose-renovation-contractor-vancouver'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.01]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Specialty & property-type renovation guides. Passes PageRank from
+          the high-priority /guides/ hub to newly elevated specialty posts (ADU, heritage,
+          aging-in-place, insurance, tax credits, DIY). These posts were elevated to guide
+          tier in the sitemap but needed hub-level inbound links to fully benefit. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Specialty Renovation Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Property-type specific guides, financial resources, and renovation decision guides.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/adu-renovation-vancouver-2026', label: 'ADU & Laneway House Renovation', desc: 'Costs, permits, and design for secondary suites and laneway homes in Vancouver.' },
+              { href: '/blog/heritage-home-renovation-vancouver-2026', label: 'Heritage Home Renovation Vancouver', desc: 'Navigating heritage alteration permits while modernizing character homes.' },
+              { href: '/blog/aging-in-place-renovation-guide-bc', label: 'Aging-in-Place Renovation Guide BC', desc: 'Accessible modifications, grab bars, walk-in showers, and barrier-free design.' },
+              { href: '/blog/vancouver-renovation-tax-credits-rebates-2026', label: 'Renovation Tax Credits & Rebates 2026', desc: 'BC government grants, energy rebates, and tax incentives for home renovation.' },
+              { href: '/blog/renovation-insurance-guide-bc', label: 'Renovation Insurance Guide BC', desc: 'Liability, builder\'s risk, and coverage requirements for Metro Vancouver renovations.' },
+              { href: '/blog/diy-vs-contractor-renovation-vancouver-2026', label: 'DIY vs Hiring a Contractor', desc: 'When to DIY and when to hire a professional — with Vancouver cost comparisons.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/adu-renovation-vancouver-2026'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.01]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Decision guides — high-intent comparison and decision posts.
+          These posts target "should I" and "which is better" queries from buyers
+          who are close to hiring. Linking from the guides hub passes PageRank and
+          surfaces them for users at the decision stage of their renovation journey. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Renovation Decision Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Comparison guides to help you make the right renovation decisions.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/renovate-vs-move-vancouver-2026', label: 'Renovate vs Move in Vancouver 2026', desc: 'Cost comparison: is it better to renovate your current home or sell and buy?' },
+              { href: '/blog/kitchen-vs-bathroom-which-renovation-first-vancouver', label: 'Kitchen vs Bathroom: Which First?', desc: 'Expert guidance on renovation sequencing for the best ROI in Metro Vancouver.' },
+              { href: '/blog/tub-vs-shower-vancouver-which-adds-more-value', label: 'Tub vs Shower: Which Adds More Value?', desc: 'Should you keep the bathtub or convert to a walk-in shower before selling?' },
+              { href: '/blog/quartz-vs-granite-countertops-vancouver-2026', label: 'Quartz vs Granite Countertops 2026', desc: 'Durability, cost, and resale value comparison for Vancouver kitchens.' },
+              { href: '/blog/best-kitchen-cabinets-vancouver-stock-vs-custom-2026', label: 'Stock vs Custom Kitchen Cabinets', desc: 'Comparing stock, semi-custom, and custom cabinets for Vancouver kitchens.' },
+              { href: '/blog/diy-vs-contractor-renovation-vancouver-2026', label: 'DIY vs Hiring a Contractor', desc: 'When to DIY and when to hire a professional — with Vancouver cost comparisons.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/renovate-vs-move-vancouver-2026'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.02]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: City renovation guides grid — links /guides/ hub to 14 city home
+          renovation guide posts. The /guides/ hub carries priority 0.9; adding city
+          links here passes additional PageRank to city home guides, which are the
+          anchor posts for each city's renovation cluster. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Renovation Cost Guides by City
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            City-specific renovation planning guides for Metro Vancouver homeowners.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {([
+              { href: '/blog/vancouver-home-renovation-guide-2026',       label: 'Vancouver Renovation Guide' },
+              { href: '/blog/burnaby-home-renovation-guide-2026',         label: 'Burnaby Renovation Guide' },
+              { href: '/blog/richmond-home-renovation-guide-2026',        label: 'Richmond Renovation Guide' },
+              { href: '/blog/surrey-home-renovation-guide-2026',          label: 'Surrey Renovation Guide' },
+              { href: '/blog/north-vancouver-home-renovation-guide-2026', label: 'North Vancouver Guide' },
+              { href: '/blog/coquitlam-home-renovation-guide-2026',       label: 'Coquitlam Renovation Guide' },
+              { href: '/blog/langley-home-renovation-guide-2026',         label: 'Langley Renovation Guide' },
+              { href: '/blog/delta-home-renovation-guide-2026',           label: 'Delta Renovation Guide' },
+              { href: '/blog/maple-ridge-home-renovation-guide-2026',     label: 'Maple Ridge Guide' },
+              { href: '/blog/west-vancouver-home-renovation-guide-2026',  label: 'West Vancouver Guide' },
+              { href: '/blog/new-westminster-home-renovation-guide-2026', label: 'New Westminster Guide' },
+              { href: '/blog/port-coquitlam-home-renovation-guide-2026',  label: 'Port Coquitlam Guide' },
+              { href: '/blog/port-moody-home-renovation-guide-2026',      label: 'Port Moody Guide' },
+              { href: '/blog/white-rock-home-renovation-guide-2026',      label: 'White Rock Guide' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="block rounded-xl px-4 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] text-center"
+                style={{ backgroundColor: CARD, color: NAVY, boxShadow: neu(3) }}
+              >
+                {label}
+                <span className="flex items-center justify-center gap-1 text-xs font-normal mt-0.5" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={10} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection
         heading={t('guides.index.cta.heading')}

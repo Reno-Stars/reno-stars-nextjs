@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { MapPin, ChevronRight } from 'lucide-react';
+import { MapPin, ChevronRight, BookOpen } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data';
@@ -10,8 +10,8 @@ import type { Company, ServiceArea } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
-  NAVY, GOLD, SURFACE,
-  CARD, TEXT, TEXT_MID, neu,
+  NAVY, GOLD, SURFACE, SURFACE_ALT,
+  CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
 interface AreasPageProps {
@@ -75,6 +75,45 @@ export default function AreasPage({ locale, areas, company }: AreasPageProps) {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide cross-links. The /areas/ hub is a high-priority
+          (0.8) page that Googlebot visits frequently. Linking to the 6 planning guide
+          blog posts from here channels PageRank to those posts and gives users at the
+          area-research stage a clear path to planning resources. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-2 mb-2 justify-center">
+            <BookOpen size={18} style={{ color: GOLD }} />
+            <h2 className="text-xl font-bold" style={{ color: TEXT }}>Renovation Planning Guides</h2>
+          </div>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Before you hire — read our free Metro Vancouver renovation guides.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: '2026 Renovation Cost Guide' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline Guide' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Renovation Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing (HELOC)' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Renovation Rules BC' },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href as '/blog/how-to-choose-renovation-contractor-vancouver'}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 transition-transform hover:scale-[1.01]"
+                style={{ backgroundColor: CARD, boxShadow: neu(2) }}
+              >
+                <ChevronRight size={14} style={{ color: GOLD, flexShrink: 0 }} />
+                <span className="text-sm font-semibold" style={{ color: TEXT }}>{label}</span>
+              </Link>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-4" style={{ color: TEXT_MUTED }}>
+            All guides are free — no sign-up required.
+          </p>
         </div>
       </section>
 

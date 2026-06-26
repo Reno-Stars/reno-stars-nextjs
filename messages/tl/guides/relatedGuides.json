@@ -7,7 +7,8 @@
     "basement": "Basement Renovation Cost",
     "bathroom": "Average Bathroom Reno Cost",
     "bathroomGuide": "Bathroom Renovation Cost",
-    "flooring": "Gastos sa Pag-install ng Flooring"
+    "flooring": "Gastos sa Pag-install ng Flooring",
+    "cabinetRefinishing": "Gastos sa Cabinet Refinishing"
   },
   "cityCostTable": {
     "kitchenTitle": "Gastos sa Kusina ayon sa Metro Vancouver Neighborhood",

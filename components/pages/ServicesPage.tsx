@@ -223,6 +223,37 @@ export default function ServicesPage({ locale: _locale, company, services, areas
         </div>
       </section>
 
+      {/* 2026-06-26: Planning guide cross-links from the services hub.
+          /services/ is priority 0.9 (hub tier) and sits one click from the home page.
+          Linking to the 5 main blog planning guides passes PageRank to those posts. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-widest text-center mb-4" style={{ color: TEXT_MID }}>
+            Free Renovation Planning Guides
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Cost Guide 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href as '/blog/how-to-choose-renovation-contractor-vancouver'}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                <ChevronRight size={12} style={{ filter: GOLD_ICON_FILTER }} />
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

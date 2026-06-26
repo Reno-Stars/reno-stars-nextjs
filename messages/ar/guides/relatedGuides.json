@@ -7,7 +7,8 @@
     "basement": "تكلفة تجديد الطابق السفلي",
     "bathroom": "متوسط ​​تكلفة رينو الحمام",
     "bathroomGuide": "تكلفة تجديد الحمام",
-    "flooring": "تكلفة تركيب الأرضيات"
+    "flooring": "تكلفة تركيب الأرضيات",
+    "cabinetRefinishing": "تكلفة تجديد الخزائن"
   },
   "cityCostTable": {
     "kitchenTitle": "تكلفة المطبخ من مترو فانكوفر",

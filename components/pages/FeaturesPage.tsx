@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Award, Users, Wrench, Clock, ShieldCheck, Star, AlertCircle, CheckCircle2 } from 'lucide-react';
 import type { Company } from '@/lib/types';
+import { Link } from '@/navigation';
 import CTASection from '@/components/CTASection';
 import {
   NAVY, NAVY_MID, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
@@ -162,6 +163,35 @@ export default function FeaturesPage({ company }: FeaturesPageProps) {
                   </p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide pill-links. Features page is in top nav;
+          linking to the 6 planning guides passes PageRank to those hub posts. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            Free Renovation Planning Guides
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                {label}
+              </Link>
             ))}
           </div>
         </div>

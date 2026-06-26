@@ -7,7 +7,8 @@
     "basement": "Basement Renovation Cost",
     "bathroom": "Average Bathroom Reno Cost",
     "bathroomGuide": "Bathroom Renovation Cost",
-    "flooring": "Flooring Installation Cost"
+    "flooring": "Flooring Installation Cost",
+    "cabinetRefinishing": "Cabinet Refinishing Cost"
   },
   "cityCostTable": {
     "kitchenTitle": "Kitchen Cost by Metro Vancouver Neighbourhood",

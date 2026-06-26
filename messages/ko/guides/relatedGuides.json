@@ -7,7 +7,8 @@
     "basement": "지하실 리노베이션 비용",
     "bathroom": "평균 욕실 리노베이션 비용",
     "bathroomGuide": "욕실 리노베이션 비용",
-    "flooring": "바닥재 설치 비용"
+    "flooring": "바닥재 설치 비용",
+    "cabinetRefinishing": "커비닛 재도장 비용"
   },
   "cityCostTable": {
     "kitchenTitle": "메트로 밴쿠버 지역별 주방 비용",

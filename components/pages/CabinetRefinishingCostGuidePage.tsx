@@ -35,6 +35,7 @@ function formatCurrency(n: number): string {
 
 export default function CabinetRefinishingCostGuidePage({ locale, projects, phone }: CabinetRefinishingCostGuidePageProps) {
   const t = useTranslations('guides.cabinetCost');
+  const tGuides = useTranslations('guides.relatedGuides');
 
   const stats = useMemo(() => {
     const budgets = projects
@@ -241,6 +242,106 @@ export default function CabinetRefinishingCostGuidePage({ locale, projects, phon
         </div>
       </section>
 
+      {/* FAQ — visible accordion matches FAQSchema; targets 'cabinet refinishing vancouver'
+          long-tail questions including durability, staying-in-home, and resale colour choice */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
+            Frequently Asked Questions — Cabinet Refinishing Cost Vancouver
+          </h2>
+          <div className="space-y-4">
+            {(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const).map((key) => (
+              <details key={key} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <summary className="font-bold cursor-pointer list-none flex justify-between items-center" style={{ color: TEXT }}>
+                  {t(`faq.${key}`)}
+                  <span className="ml-4 shrink-0 text-lg" style={{ color: GOLD }}>+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${key.slice(1)}`)}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 2026-06-26: Related Guides cross-links to the other 4 cost guides */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
+            {tGuides('title')}
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {[
+              { href: '/guides/kitchen-renovation-cost-vancouver', label: tGuides('kitchen'), range: '$15K–$80K' },
+              { href: '/guides/bathroom-renovation-cost-vancouver', label: tGuides('bathroomGuide'), range: '$10K–$60K+' },
+              { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
+            ].map((guide) => (
+              <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
+                <span className="text-sm" style={{ color: GOLD }}>{guide.range}</span>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold mt-auto" style={{ color: NAVY }}>
+                  {tGuides('viewGuide')} <ArrowRight size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 2026-06-25: City-specific cabinet refinishing guides. Cross-linking from
+          the cabinet refinishing cost guide to city posts passes PageRank. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>City-specific cabinet refinishing guides:</strong>{' '}
+            <Link href="/blog/cabinet-refinishing-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-burnaby-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-richmond-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-surrey-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-coquitlam-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-north-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-new-westminster-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-delta-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-maple-ridge-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-port-coquitlam-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/cabinet-resurfacing-port-moody-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/cabinet-resurfacing-langley-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-west-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-white-rock-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide hub links. Cross-linking to major blog guides
+          (contractor, timeline, permits, financing) strengthens topical authority
+          and passes PageRank to high-equity hub pages. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>Planning your renovation?</strong>{' '}
+            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            {' · '}
+            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            {' · '}
+            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            {' · '}
+            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            {' · '}
+            <Link href="/blog/renovation-cost-vancouver-2026-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );

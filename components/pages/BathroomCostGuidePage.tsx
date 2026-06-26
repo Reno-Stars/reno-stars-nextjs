@@ -280,7 +280,70 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
               </div>
             ))}
           </div>
-          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>{t('showerCost.note')}</p>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('showerCost.note')}
+            <Link href={`/${locale}/blog/shower-renovation-cost-vancouver-2026/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Shower Renovation Cost Vancouver 2026 →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Bathtub Renovation Cost — dedicated H2 targeting "bathtub renovation cost"
+          query cluster (bathroom-renovation-cost-vancouver ranks pos 7.5 for
+          "bathtub renovation cost" / 2,964 imps — channels to dedicated bathtub
+          post). Prices sourced from bathtub-renovation-cost-vancouver post data. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('bathtubCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('bathtubCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('bathtubCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['alcove', 'dropIn', 'freestanding'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`bathtubCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`bathtubCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`bathtubCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('bathtubCost.note')}
+            <Link href={`/${locale}/blog/bathtub-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Bathtub Renovation Cost Vancouver 2026 →
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Toilet Renovation Cost — dedicated H2 targeting "toilet renovation cost"
+          query cluster (bathroom-renovation-cost-vancouver ranks pos 7.87 for
+          "toilet renovation cost" / 1,007 imps — channels to dedicated toilet
+          post). Prices sourced from toilet-renovation-cost-vancouver post data. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            {t('toiletCost.title')}
+          </h2>
+          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('toiletCost.subtitle')}</p>
+          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('toiletCost.intro')}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {(['standard', 'skirted', 'wallHung'] as const).map((key) => (
+              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`toiletCost.${key}.title`)}</h3>
+                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`toiletCost.${key}.range`)}</span>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`toiletCost.${key}.description`)}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
+            {t('toiletCost.note')}
+            <Link href={`/${locale}/blog/toilet-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+              Toilet Renovation Cost Vancouver 2026 →
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -500,7 +563,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
               { href: '/guides/whole-house-renovation-cost-vancouver', label: tGuides('wholeHouse'), range: '$50K–$300K+' },
               { href: '/guides/basement-renovation-cost-vancouver', label: tGuides('basement'), range: '$20K–$80K' },
               { href: '/blog/average-bathroom-renovation-cost-vancouver', label: tGuides('bathroom'), range: '$18K–$45K+' },
-              { href: '/blog/hardwood-flooring-vancouver-installation-cost-2026', label: tGuides('flooring'), range: '$8K–$35K' },
+              { href: '/guides/cabinet-refinishing-cost-vancouver', label: tGuides('cabinetRefinishing'), range: '$4K–$30K+' },
             ].map((guide) => (
               <Link key={guide.href} href={guide.href} className="rounded-xl p-5 flex flex-col gap-2 transition-transform hover:scale-[1.02]" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <span className="font-bold" style={{ color: TEXT }}>{guide.label}</span>
@@ -529,6 +592,84 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
             >
               See our service area + booking page →
             </Link>
+          </p>
+        </div>
+      </section>
+      {/* FAQ — visible accordion matches FAQSchema structured data; targets 'bathroom renovation cost
+          vancouver' long-tail questions including plumbing relocation costs and high-end ensuite scope */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>
+            Frequently Asked Questions — Bathroom Renovation Cost Vancouver
+          </h2>
+          <div className="space-y-4">
+            {(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const).map((key) => (
+              <details key={key} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, boxShadow: neu() }}>
+                <summary className="font-bold cursor-pointer list-none flex justify-between items-center" style={{ color: TEXT }}>
+                  {t(`faq.${key}`)}
+                  <span className="ml-4 shrink-0 text-lg" style={{ color: GOLD }}>+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: TEXT_MID }}>{t(`faq.a${key.slice(1)}`)}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 2026-06-25: City-specific bathroom guides. Cross-linking from the
+          bathroom cost guide (high-equity hub) to the city posts passes
+          PageRank and helps city posts rank for "[city] bathroom renovation
+          cost" queries. Top 8 cities by organic search volume. */}
+      <section className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: '#8c8c8c' }}>
+            <strong>City-specific bathroom renovation guides:</strong>{' '}
+            <Link href="/blog/burnaby-bathroom-renovation-guide-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Burnaby</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-cost-richmond-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Richmond</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-surrey-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Surrey</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-coquitlam-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovations-north-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>North Vancouver</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-langley-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovations-west-vancouver-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-maple-ridge-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-delta-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-port-coquitlam-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-port-moody-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovations-white-rock-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>White Rock</Link>
+            {' · '}
+            <Link href="/blog/bathroom-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/average-bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
+          </p>
+        </div>
+      </section>
+
+      {/* 2026-06-26: Planning guide hub links. Cross-linking to major blog guides
+          (contractor, timeline, permits, financing) strengthens topical authority
+          and passes PageRank to high-equity hub pages. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>Planning your renovation?</strong>{' '}
+            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            {' · '}
+            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            {' · '}
+            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            {' · '}
+            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            {' · '}
+            <Link href="/blog/renovation-cost-vancouver-2026-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
           </p>
         </div>
       </section>

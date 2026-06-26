@@ -167,12 +167,15 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
     { href: '/about', label: t('nav.about') },
     { href: '/workflow', label: t('nav.process') },
     { href: '/services', label: t('nav.services') },
+    { href: '/guides', label: t('nav.guides') },
     { href: '/design', label: t('nav.design') },
     { href: '/features', label: t('nav.features') },
     { href: '/contact', label: t('nav.contact') },
     // Blog & News intentionally moved out of the top nav to the footer only
     // (footer.quickLinks renders /blog). Keeps top nav focused on conversion-
-    // path pages — services, design, contact — and reduces clutter on mobile.
+    // path pages — services, guides, design, contact — and reduces clutter on mobile.
+    // 2026-06-26: /guides added to top nav (was footer-only). Every page now passes
+    // PageRank to the guides hub; guides convert well → contact.
   ], [t]);
 
   return (

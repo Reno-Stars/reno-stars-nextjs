@@ -73,6 +73,11 @@ export default async function Page({ params }: PageProps) {
     // remodel" (6 imp). ~71 imp/28d combined exact-match opportunity that
     // existing q1 (renovation-terminology) misses. All 14 locales populated.
     { question: t('faq.q6'), answer: t('faq.a6') },
+    // q7-q8 added 2026-06-25 for parity with other 6 cost guides (all now at 8 FAQs).
+    // q7 targets "bathroom plumbing relocation cost vancouver" long-tail.
+    // q8 targets "luxury bathroom renovation vancouver" / high-end ensuite queries.
+    { question: t('faq.q7'), answer: t('faq.a7') },
+    { question: t('faq.q8'), answer: t('faq.a8') },
   ];
 
   const howToSteps = [
@@ -119,7 +124,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/guides/bathroom-renovation-cost-vancouver/`}
         authorName={`${company.name} Team`}
         datePublished="2026-02-03"
-        dateModified="2026-06-08"
+        dateModified="2026-06-25"
         locale={locale}
       />
       <HowToSchema

@@ -8,7 +8,7 @@ import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
-import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 
@@ -100,6 +100,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Cabinet Resurfacing & Refinishing Port Moody | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing, refinishing & refacing in Port Moody — Heritage Mountain, Newport Village, Inlet Centre. Painting from $1.5K, refacing $4–$15K. Free quote.',
     },
+    // 2026-06-25: Remaining 10 cabinet city overrides (same pattern as the 4 above).
+    'cabinet/burnaby': {
+      title: 'Cabinet Resurfacing & Refinishing Burnaby | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Burnaby — Metrotown, Heights, Capitol Hill. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/coquitlam': {
+      title: 'Cabinet Resurfacing & Refinishing Coquitlam | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Coquitlam — Burke Mountain, Westwood Plateau, Maillardville. Painting from $1.5K, full refacing $4–$15K. Free quote.',
+    },
+    'cabinet/langley': {
+      title: 'Cabinet Resurfacing & Refinishing Langley | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Langley — Willoughby, Walnut Grove, Fort Langley. Painting from $1.5K, full refacing $4–$15K. 1–2 week timeline. Free quote.',
+    },
+    'cabinet/new-westminster': {
+      title: 'Cabinet Resurfacing & Refinishing New Westminster | $1.5K–$15K | Reno Stars',
+      description: "Cabinet resurfacing & refinishing in New Westminster — Queen's Park, Sapperton & Uptown. Painting from $1.5K, full refacing $8–$15K. 1–2 week timeline. Free quote.",
+    },
+    'cabinet/north-vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing North Vancouver | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in North Vancouver — Lynn Valley, Lonsdale, Deep Cove. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/richmond': {
+      title: 'Cabinet Resurfacing & Refinishing Richmond BC | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Richmond — Steveston, Brighouse, Terra Nova. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/surrey': {
+      title: 'Cabinet Resurfacing & Refinishing Surrey BC | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Surrey — Fleetwood, Newton, Cloverdale. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing Vancouver | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in Vancouver — East Van, Kitsilano, Mount Pleasant. Painting from $1.5K, door replacement $4K+, full refacing $8–$15K. Free quote.',
+    },
+    'cabinet/west-vancouver': {
+      title: 'Cabinet Resurfacing & Refinishing West Vancouver | $1.5K–$25K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in West Vancouver — Caulfeild, Dundarave, British Properties. Painting from $1.5K, full refacing $4–$15K, luxury finishes to $25K. Free quote.',
+    },
+    'cabinet/white-rock': {
+      title: 'Cabinet Resurfacing & Refinishing White Rock | $1.5K–$15K | Reno Stars',
+      description: 'Cabinet resurfacing & refinishing in White Rock & South Surrey — painting from $1.5K, door replacement $4K+, full refacing $9–$16K. Free in-home quote.',
+    },
     'cabinet/delta': {
       title: 'Cabinet Resurfacing & Refinishing Delta BC | $1.5K–$15K | Reno Stars',
       description: 'Cabinet resurfacing & refinishing in Delta — Ladner, Tsawwassen, North Delta. Painting from $1.5K, full refacing from $4K. Free in-home quote.',
@@ -149,6 +190,100 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Poly-B Replacement Surrey | $10K–$25K | Insurance-Ready | Reno Stars',
       description: 'Surrey Poly-B pipe replacement — Fleetwood, Newton, Cloverdale SFH. PEX re-pipe with 50-year warranty + insurance-renewal documentation. $10K–$25K.',
     },
+    // 2026-06-25: Remaining accessible-bathroom + poly-b cities
+    'accessible-bathroom/north-vancouver': {
+      title: 'Accessible Bathroom North Vancouver | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'North Vancouver accessible bathroom renovations — Lynn Valley, Lonsdale, Deep Cove. Curbless showers, grab bars, comfort-height fixtures. CSA B651 compliant. $3K–$60K.',
+    },
+    'accessible-bathroom/coquitlam': {
+      title: 'Accessible Bathroom Coquitlam | Wheelchair Walk-in | $3K–$60K | Reno Stars',
+      description: 'Coquitlam accessible bathroom renovations — Westwood Plateau, Burke Mountain, Town Centre. Curbless showers, grab bars, roll-in seating, widened doorways. $3K–$60K.',
+    },
+    'accessible-bathroom/langley': {
+      title: 'Accessible Bathroom Langley BC | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Langley accessible bathroom renovations — Langley City, Walnut Grove, Willoughby. Walk-in showers, grab bars, comfort-height toilets, wheelchair vanities. $3K–$60K.',
+    },
+    'accessible-bathroom/delta': {
+      title: 'Accessible Bathroom Delta BC | Aging in Place | $3K–$60K | Reno Stars',
+      description: 'Delta accessible bathroom renovations — Ladner, Tsawwassen, North Delta. Curbless showers, grab bars, OT-coordinated layouts, wheelchair-accessible vanities. $3K–$60K.',
+    },
+    'poly-b-replacement/vancouver': {
+      title: 'Poly-B Replacement Vancouver | $8K–$25K | Insurance-Ready | Reno Stars',
+      description: 'Vancouver Poly-B pipe replacement — East Van, Kitsilano, Dunbar SFH + strata. Full PEX re-pipe, 50-year warranty, insurer-ready documentation. $8K–$25K. Free quote.',
+    },
+    'poly-b-replacement/north-vancouver': {
+      title: 'Poly-B Replacement North Vancouver | $8K–$22K | Insurance-Ready | Reno Stars',
+      description: 'North Vancouver Poly-B replacement — Lynn Valley, Capilano Highlands, Edgemont SFH. 1985-97 building stock. PEX re-pipe + 50-year warranty + insurance docs. $8K–$22K.',
+    },
+    'poly-b-replacement/langley': {
+      title: 'Poly-B Replacement Langley BC | $10K–$22K | Insurance-Ready | Reno Stars',
+      description: 'Langley Poly-B pipe replacement — Langley City, Walnut Grove, Willoughby SFH. PEX re-pipe, 50-year warranty, insurer-ready documentation. $10K–$22K.',
+    },
+    'poly-b-replacement/west-vancouver': {
+      title: 'Poly-B Replacement West Vancouver | $10K–$28K | Insurance-Ready | Reno Stars',
+      description: 'West Vancouver Poly-B replacement — Caulfeild, Dundarave, British Properties SFH. Full PEX re-pipe, 50-year warranty, insurance-renewal documentation. $10K–$28K.',
+    },
+    // 2026-06-25: Critical load panel + heat pump HVAC — specialty services
+    'critical-load-panel/vancouver': {
+      title: 'Electrical Panel Upgrade Vancouver | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Vancouver critical load panel upgrades — 100A→200A service, EV charger circuits, arc-fault breakers. East Van, Kitsilano, Dunbar. BC permit + ESA inspection. $3K–$8K.',
+    },
+    'critical-load-panel/burnaby': {
+      title: 'Electrical Panel Upgrade Burnaby | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Burnaby electrical panel upgrades — Metrotown, Heights, Edmonds. 100A→200A service, EV charger prep, dedicated kitchen circuits. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/richmond': {
+      title: 'Electrical Panel Upgrade Richmond BC | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Richmond electrical panel upgrades — Steveston, Brighouse, Terra Nova. 100A→200A service upgrade, EV-ready circuits, arc-fault protection. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/surrey': {
+      title: 'Electrical Panel Upgrade Surrey | 200A Service | $3K–$8K | Reno Stars',
+      description: 'Surrey electrical panel upgrades — Fleetwood, Newton, Cloverdale. 100A→200A service, EV charger circuits, dedicated appliance breakers. BC permit + ESA. $3K–$8K.',
+    },
+    'critical-load-panel/north-vancouver': {
+      title: 'Electrical Panel Upgrade North Vancouver | 200A Service | Reno Stars',
+      description: 'North Vancouver electrical panel upgrades — Lynn Valley, Lonsdale. 100A→200A service, EV charger prep, arc-fault breakers. BC permit + ESA inspection. Free quote.',
+    },
+    'critical-load-panel/coquitlam': {
+      title: 'Electrical Panel Upgrade Coquitlam | 200A Service | Reno Stars',
+      description: 'Coquitlam electrical panel upgrades — Burke Mountain, Westwood Plateau. 100A→200A service, EV-ready circuits, dedicated kitchen breakers. BC permit + ESA. Free quote.',
+    },
+    'critical-load-panel/langley': {
+      title: 'Electrical Panel Upgrade Langley BC | 200A Service | Reno Stars',
+      description: 'Langley electrical panel upgrades — Langley City, Walnut Grove, Willoughby. 100A→200A service, EV charger circuits, arc-fault protection. BC permit + ESA. Free quote.',
+    },
+    'critical-load-panel/west-vancouver': {
+      title: 'Electrical Panel Upgrade West Vancouver | 200A Service | Reno Stars',
+      description: 'West Vancouver electrical panel upgrades — Caulfeild, Dundarave, British Properties. 100A→200A service, EV charger circuits, premium ESA inspection. Free quote.',
+    },
+    'critical-load-panel/delta': {
+      title: 'Electrical Panel Upgrade Delta BC | 200A Service | Reno Stars',
+      description: 'Delta electrical panel upgrades — Ladner, Tsawwassen, North Delta. 100A→200A service, EV charger prep, dedicated appliance circuits. BC permit + ESA. Free quote.',
+    },
+    'heat-pump-hvac/vancouver': {
+      title: 'Heat Pump Installation Vancouver | $8K–$18K | Reno Stars',
+      description: 'Vancouver heat pump & HVAC installation — ductless mini-splits, ducted heat pumps. BC Energy Step Code ready. CleanBC rebates available. East Van, Kitsilano. $8K–$18K.',
+    },
+    'heat-pump-hvac/burnaby': {
+      title: 'Heat Pump Installation Burnaby | $8K–$18K | Reno Stars',
+      description: 'Burnaby heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates, BC Energy Step Code. Metrotown, Heights, Burnaby Mountain. $8K–$18K.',
+    },
+    'heat-pump-hvac/richmond': {
+      title: 'Heat Pump Installation Richmond BC | $8K–$18K | Reno Stars',
+      description: 'Richmond heat pump & HVAC installation — ductless mini-splits, ducted heat pumps. CleanBC rebates, BC Energy Step Code. Steveston, Brighouse. $8K–$18K.',
+    },
+    'heat-pump-hvac/surrey': {
+      title: 'Heat Pump Installation Surrey | $8K–$18K | Reno Stars',
+      description: 'Surrey heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates available. Fleetwood, Newton, South Surrey. $8K–$18K.',
+    },
+    'heat-pump-hvac/north-vancouver': {
+      title: 'Heat Pump Installation North Vancouver | $8K–$18K | Reno Stars',
+      description: 'North Vancouver heat pump & HVAC installation — ductless mini-splits, ducted systems. CleanBC rebates, BC Energy Step Code. Lynn Valley, Lonsdale. $8K–$18K.',
+    },
+    'heat-pump-hvac/coquitlam': {
+      title: 'Heat Pump Installation Coquitlam | $8K–$18K | Reno Stars',
+      description: 'Coquitlam heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates available. Burke Mountain, Westwood Plateau. $8K–$18K.',
+    },
     // Kitchen — high-volume cities
     'kitchen/west-vancouver': {
       title: 'Kitchen Renovation West Vancouver | Luxury Kitchens | Reno Stars',
@@ -190,6 +325,100 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'commercial/langley': {
       title: 'Commercial Renovation Langley BC | Reno Stars',
       description: 'Langley commercial renovation — office, retail & restaurant fit-outs in Langley City, Willoughby & Walnut Grove. Permits handled, minimal disruption. Free quote.',
+    },
+    // 2026-06-25: Remaining 9 commercial city overrides.
+    'commercial/burnaby': {
+      title: 'Commercial Renovation Burnaby | Reno Stars',
+      description: 'Burnaby commercial renovation — office, retail, restaurant & strata lobby fit-outs in Metrotown, Brentwood & Edmonds. Off-hours scheduling, permits handled. Free consultation.',
+    },
+    'commercial/new-westminster': {
+      title: 'Commercial Renovation New Westminster | Reno Stars',
+      description: "New Westminster commercial renovation — office, retail & restaurant fit-outs in Downtown, Sapperton & Queensborough. Permits handled, minimal disruption. Free consultation.",
+    },
+    'commercial/north-vancouver': {
+      title: 'Commercial Renovation North Vancouver | Reno Stars',
+      description: 'North Vancouver commercial renovation — office, retail & restaurant fit-outs on Lonsdale & in Lynn Valley. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/port-coquitlam': {
+      title: 'Commercial Renovation Port Coquitlam | Reno Stars',
+      description: 'Port Coquitlam commercial renovation — office, retail & restaurant fit-outs in Town Centre & Oxford Heights. Permits handled, minimal disruption. Free consultation.',
+    },
+    'commercial/port-moody': {
+      title: 'Commercial Renovation Port Moody | Reno Stars',
+      description: 'Port Moody commercial renovation — office, retail & restaurant fit-outs in Inlet Centre & Moody Centre. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/richmond': {
+      title: 'Commercial Renovation Richmond BC | Reno Stars',
+      description: 'Richmond commercial renovation — office, retail, restaurant & medical fit-outs in Brighouse, Steveston & Alexandra. Permits handled, minimal disruption. Free consultation.',
+    },
+    'commercial/surrey': {
+      title: 'Commercial Renovation Surrey BC | Reno Stars',
+      description: 'Surrey commercial renovation — office, retail, restaurant & clinic fit-outs in Guildford, Newton & City Centre. Permits handled, off-hours scheduling. Free consultation.',
+    },
+    'commercial/vancouver': {
+      title: 'Commercial Renovation Vancouver BC | Reno Stars',
+      description: 'Vancouver commercial renovation — office, retail, restaurant & medical fit-outs Downtown, Gastown, Mount Pleasant & East Van. Permits handled. $150–$500/sqft. Free consultation.',
+    },
+    'commercial/white-rock': {
+      title: 'Commercial Renovation White Rock | Reno Stars',
+      description: 'White Rock & South Surrey commercial renovation — retail, restaurant & clinic fit-outs. Permits handled, minimal disruption to neighbouring businesses. Free consultation.',
+    },
+    // 2026-06-25: Realtor (pre-sale) service city overrides for all 14 cities.
+    'realtor/burnaby': {
+      title: 'Pre-Sale Renovation Burnaby | For Realtors | Reno Stars',
+      description: 'Burnaby pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Metrotown, Heights & Capitol Hill. 2–4 week timeline. Free quote.',
+    },
+    'realtor/coquitlam': {
+      title: 'Pre-Sale Renovation Coquitlam | For Realtors | Reno Stars',
+      description: 'Coquitlam pre-sale renovation — kitchen, bathroom & cosmetic updates in Burke Mountain, Westwood Plateau & Maillardville. 2–4 week timeline. Free quote.',
+    },
+    'realtor/delta': {
+      title: 'Pre-Sale Renovation Delta BC | For Realtors | Reno Stars',
+      description: 'Delta pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Tsawwassen, Ladner & North Delta. 2–4 week timeline. Free quote.',
+    },
+    'realtor/langley': {
+      title: 'Pre-Sale Renovation Langley | For Realtors | Reno Stars',
+      description: 'Langley pre-sale renovation — kitchen, bathroom & cosmetic updates in Willoughby, Walnut Grove & Fort Langley. Best ROI updates for sellers. Free quote.',
+    },
+    'realtor/maple-ridge': {
+      title: 'Pre-Sale Renovation Maple Ridge | For Realtors | Reno Stars',
+      description: 'Maple Ridge pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Silver Valley & Albion. 2–4 week timeline. Free quote.',
+    },
+    'realtor/new-westminster': {
+      title: 'Pre-Sale Renovation New Westminster | For Realtors | Reno Stars',
+      description: "New Westminster pre-sale renovation — kitchen, bathroom & cosmetic updates in Queen's Park, Sapperton & Uptown. Best ROI updates for sellers. Free quote.",
+    },
+    'realtor/north-vancouver': {
+      title: 'Pre-Sale Renovation North Vancouver | For Realtors | Reno Stars',
+      description: 'North Vancouver pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Lynn Valley, Lonsdale & Deep Cove. Free quote.',
+    },
+    'realtor/port-coquitlam': {
+      title: 'Pre-Sale Renovation Port Coquitlam | For Realtors | Reno Stars',
+      description: 'Port Coquitlam pre-sale renovation — kitchen, bathroom & cosmetic updates in Citadel Heights, Riverwood & West PoCo. Best ROI updates for sellers. Free quote.',
+    },
+    'realtor/port-moody': {
+      title: 'Pre-Sale Renovation Port Moody | For Realtors | Reno Stars',
+      description: 'Port Moody pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Heritage Woods & Moody Centre. Free quote.',
+    },
+    'realtor/richmond': {
+      title: 'Pre-Sale Renovation Richmond BC | For Realtors | Reno Stars',
+      description: 'Richmond pre-sale renovation — kitchen, bathroom & cosmetic updates in Steveston, Brighouse & Terra Nova. Best ROI for sellers & realtors. Free quote.',
+    },
+    'realtor/surrey': {
+      title: 'Pre-Sale Renovation Surrey | For Realtors | Reno Stars',
+      description: 'Surrey pre-sale renovation for realtors & sellers — kitchen, bathroom & cosmetic updates in Fleetwood, Newton & South Surrey. 2–4 week timeline. Free quote.',
+    },
+    'realtor/vancouver': {
+      title: 'Pre-Sale Renovation Vancouver | For Realtors | Reno Stars',
+      description: 'Vancouver pre-sale renovation — kitchen, bathroom & cosmetic updates in Kitsilano, East Van & Mount Pleasant. Best ROI updates for sellers & realtors. Free quote.',
+    },
+    'realtor/west-vancouver': {
+      title: 'Pre-Sale Renovation West Vancouver | For Realtors | Reno Stars',
+      description: 'West Vancouver pre-sale renovation for realtors & sellers — kitchen, bathroom & luxury cosmetic updates in Caulfeild, Dundarave & British Properties. Free quote.',
+    },
+    'realtor/white-rock': {
+      title: 'Pre-Sale Renovation White Rock | For Realtors | Reno Stars',
+      description: 'White Rock & South Surrey pre-sale renovation — kitchen, bathroom & cosmetic updates. Best ROI updates for sellers & realtors near East Beach & West Beach. Free quote.',
     },
     // Bathroom — high impressions
     'bathroom/burnaby': {
@@ -279,6 +508,123 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Basement Renovation Port Moody | $30K–$120K+ | Reno Stars',
       description: 'Port Moody basement renovation — finishing, suite conversions, family rooms. Inlet to Heritage Mountain. Permit-aware, $5M insured. $30K–$120K+. Free quote.',
     },
+    // 2026-06-25: Kitchen city-specific overrides for remaining 7 cities without custom meta.
+    // Price ranges from real completed projects per city (§8-compliant DB data).
+    'kitchen/delta': {
+      title: 'Kitchen Renovation Delta BC | $20K–$50K | Reno Stars',
+      description: 'Delta kitchen renovation — Tsawwassen, Ladner & North Delta. Custom cabinets, quartz countertops, full layout redesign. $20K–$50K from real projects. 3–5 weeks. Free quote.',
+    },
+    'kitchen/langley': {
+      title: 'Kitchen Renovation Langley BC | $20K–$35K | Reno Stars',
+      description: 'Langley kitchen renovation — Willoughby, Walnut Grove, Fort Langley. Custom & prefab cabinets, quartz, layout redesign. $20K–$35K from real projects. Free quote.',
+    },
+    'kitchen/maple-ridge': {
+      title: 'Kitchen Renovation Maple Ridge | $22K–$50K | Reno Stars',
+      description: 'Maple Ridge kitchen renovation — Silver Valley, Albion, Cottonwood. Custom cabinets, quartz countertops, full layout. $22K–$50K from real projects. Free quote.',
+    },
+    'kitchen/new-westminster': {
+      title: 'Kitchen Renovation New Westminster | $20K–$40K | Reno Stars',
+      description: "New Westminster kitchen renovation — Queen's Park heritage, Sapperton & Queensborough. Custom cabinets, quartz countertops, layout redesign. $20K–$40K. Free quote.",
+    },
+    'kitchen/port-coquitlam': {
+      title: 'Kitchen Renovation Port Coquitlam | $22K–$45K | Reno Stars',
+      description: 'Port Coquitlam kitchen renovation — Citadel Heights, Riverwood & West PoCo. Custom & prefab cabinets, quartz, layout redesign. $22K–$45K from real projects. Free quote.',
+    },
+    'kitchen/port-moody': {
+      title: 'Kitchen Renovation Port Moody | $25K–$55K | Reno Stars',
+      description: 'Port Moody kitchen renovation — Heritage Woods, Moody Centre & Inlet Centre. Custom cabinets, quartz countertops, full layout redesign. $25K–$55K. Free quote.',
+    },
+    'kitchen/white-rock': {
+      title: 'Kitchen Renovation White Rock | $16K–$46K | Reno Stars',
+      description: 'White Rock kitchen renovation — East Beach, West Beach & South Surrey. Custom cabinets, quartz countertops, layout redesign. $16K–$46K from real projects. Free quote.',
+    },
+    // 2026-06-25: Bathroom overrides for 7 cities.
+    'bathroom/coquitlam': {
+      title: 'Bathroom Renovation Coquitlam | $14K–$35K | Reno Stars',
+      description: 'Coquitlam bathroom renovation — Burke Mountain condos, Westwood Plateau SFH. Walk-in showers, tub conversions, custom vanities. $14K–$35K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/delta': {
+      title: 'Bathroom Renovation Delta BC | $15K–$35K | Reno Stars',
+      description: 'Delta bathroom renovation — Tsawwassen coastal, Ladner heritage, North Delta. Walk-in showers, soaker tubs, custom vanities. $15K–$35K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/langley': {
+      title: 'Bathroom Renovation Langley BC | $12K–$35K | Reno Stars',
+      description: 'Langley bathroom renovation — Willoughby, Walnut Grove & Fort Langley. Walk-in showers, tub conversions, custom tile & vanities. $12K–$35K. 3–6 weeks. Free quote.',
+    },
+    'bathroom/new-westminster': {
+      title: 'Bathroom Renovation New Westminster | $14K–$35K | Reno Stars',
+      description: "New Westminster bathroom renovation — Queen's Park, Sapperton & Queensborough. Walk-in showers, soaker tubs, custom vanities. $14K–$35K, 3–6 weeks. Free quote.",
+    },
+    'bathroom/port-coquitlam': {
+      title: 'Bathroom Renovation Port Coquitlam | $14K–$35K | Reno Stars',
+      description: 'Port Coquitlam bathroom renovation — Citadel Heights, Riverwood, Oxford Heights. Walk-in showers, tub conversions, custom vanities. $14K–$35K. Free quote.',
+    },
+    'bathroom/port-moody': {
+      title: 'Bathroom Renovation Port Moody | $16K–$40K | Reno Stars',
+      description: 'Port Moody bathroom renovation — Heritage Woods, Moody Centre & Inlet Centre. Walk-in showers, soaker tubs, custom vanities. $16K–$40K, 3–6 weeks. Free quote.',
+    },
+    'bathroom/surrey': {
+      title: 'Bathroom Renovation Surrey BC | $14K–$40K | Reno Stars',
+      description: 'Surrey bathroom renovation — Fleetwood, Newton, Cloverdale & South Surrey. Walk-in showers, tub conversions, custom tile & vanities. $14K–$40K. Free quote.',
+    },
+    // 2026-06-25: Basement overrides for 8 cities.
+    'basement/coquitlam': {
+      title: 'Basement Renovation Coquitlam | $35K–$120K+ | Reno Stars',
+      description: 'Coquitlam basement renovation — Burke Mountain, Westwood Plateau, Maillardville. Finishing, suite conversions, family rooms. Permit-aware. $35K–$120K+. Free quote.',
+    },
+    'basement/delta': {
+      title: 'Basement Renovation Delta BC | $30K–$110K+ | Reno Stars',
+      description: 'Delta basement renovation — Tsawwassen, Ladner & North Delta. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $30K–$110K+. Free quote.',
+    },
+    'basement/langley': {
+      title: 'Basement Renovation Langley BC | $30K–$110K+ | Reno Stars',
+      description: 'Langley basement renovation — Willoughby, Walnut Grove, Fort Langley. Finishing, secondary suites, family rooms. Permit-aware. $30K–$110K+. Free quote.',
+    },
+    'basement/maple-ridge': {
+      title: 'Basement Renovation Maple Ridge | $30K–$110K+ | Reno Stars',
+      description: 'Maple Ridge basement renovation — Silver Valley, Albion, Cottonwood. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+    },
+    'basement/new-westminster': {
+      title: 'Basement Renovation New Westminster | $30K–$110K+ | Reno Stars',
+      description: "New Westminster basement renovation — Queen's Park heritage, Queensborough. Finishing, suite conversions, family rooms. Permit-aware. $30K–$110K+. Free quote.",
+    },
+    'basement/richmond': {
+      title: 'Basement Renovation Richmond BC | $35K–$120K+ | Reno Stars',
+      description: 'Richmond basement renovation — Steveston, Brighouse, Terra Nova. Finishing, secondary suites, family rooms. Permit-aware, egress-compliant. $35K–$120K+. Free quote.',
+    },
+    'basement/west-vancouver': {
+      title: 'Basement Renovation West Vancouver | $40K–$130K+ | Reno Stars',
+      description: 'West Vancouver basement renovation — British Properties, Caulfeild, Dundarave. Wine cellars, home theatres, suite conversions. Luxury finishes. $40K–$130K+. Free quote.',
+    },
+    'basement/white-rock': {
+      title: 'Basement Renovation White Rock | $30K–$110K+ | Reno Stars',
+      description: 'White Rock basement renovation — East Beach, West Beach & South Surrey. Finishing, secondary suites, family rooms. Permit-aware, $5M insured. $30K–$110K+. Free quote.',
+    },
+    // 2026-06-25: Whole-house overrides for 6 cities.
+    'whole-house/delta': {
+      title: 'Home Renovation Delta BC | $50K–$200K+ | Reno Stars',
+      description: 'Delta home renovation — Tsawwassen, Ladner & North Delta. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/langley': {
+      title: 'Home Renovation Langley BC | $50K–$200K+ | Reno Stars',
+      description: 'Langley home renovation — Willoughby, Walnut Grove & Fort Langley. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/maple-ridge': {
+      title: 'Home Renovation Maple Ridge | $50K–$200K+ | Reno Stars',
+      description: 'Maple Ridge home renovation — Silver Valley, Albion & Cottonwood. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/new-westminster': {
+      title: 'Home Renovation New Westminster | $50K–$200K+ | Reno Stars',
+      description: "New Westminster home renovation — Queen's Park heritage, Sapperton & Uptown. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.",
+    },
+    'whole-house/north-vancouver': {
+      title: 'Home Renovation North Vancouver | $50K–$200K+ | Reno Stars',
+      description: 'North Vancouver home renovation — Lynn Valley, Lonsdale & Deep Cove. Kitchen, bathroom & whole-house remodels. $50K–$200K+, 18+ yrs, $5M insured. Free quote.',
+    },
+    'whole-house/port-moody': {
+      title: 'Home Renovation Port Moody | $50K–$200K+ | Reno Stars',
+      description: 'Port Moody home renovation — Heritage Woods, Moody Centre & Inlet Centre. Kitchen, bathroom & whole-house remodels. $50K–$200K+, $5M insured. Free quote.',
+    },
   };
   if (locale === 'en' && enOverrides[overrideKey]) {
     title = enOverrides[overrideKey].title;
@@ -346,6 +692,211 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Surrey Poly-B 水管更换 | $10K–$25K | 保险续保 | Reno Stars',
       description: 'Surrey Poly-B 水管更换——Fleetwood、Newton、Cloverdale 独立屋。PEX 重新走管，50 年保修 + 保险续保文件。$10K–$25K。',
     },
+    // 2026-06-25: ZH overrides for the 28 new EN combos (kitchen/bathroom/basement/whole-house).
+    'kitchen/delta': {
+      title: '德尔塔厨房装修费用2026 | Reno Stars',
+      description: '德尔塔厨房装修——察瓦森、拉德纳及北德尔塔。定制橱柜、石英台面、布局重设计。费用$20K–$50K，3–5周完工。免费报价。',
+    },
+    'kitchen/langley': {
+      title: '兰里厨房装修费用2026 | Reno Stars',
+      description: '兰里厨房装修——威洛比、胡桃树林及弗雷德里克。定制及预制橱柜、石英台面。费用$20K–$35K，3–5周。免费报价。',
+    },
+    'kitchen/maple-ridge': {
+      title: '枫树岭厨房装修费用2026 | Reno Stars',
+      description: '枫树岭厨房装修——银谷、阿尔比恩及科顿伍德。定制橱柜、石英台面、全面布局改造。费用$22K–$50K。免费报价。',
+    },
+    'kitchen/new-westminster': {
+      title: '新西敏厨房装修费用2026 | Reno Stars',
+      description: '新西敏厨房装修——皇后公园历史建筑、萨帕顿及昆斯伯勒。定制橱柜、石英台面、布局重设计。费用$20K–$40K。免费报价。',
+    },
+    'kitchen/port-coquitlam': {
+      title: '高贵林港厨房装修费用2026 | Reno Stars',
+      description: '高贵林港厨房装修——山城高地、河木及西区。定制及预制橱柜、石英台面。费用$22K–$45K，3–5周完工。免费报价。',
+    },
+    'kitchen/port-moody': {
+      title: '满地宝厨房装修费用2026 | Reno Stars',
+      description: '满地宝厨房装修——遗产林、穆迪中心及英湾口岸。定制橱柜、石英台面、全面布局改造。费用$25K–$55K。免费报价。',
+    },
+    'kitchen/white-rock': {
+      title: '白石厨房装修费用2026 | Reno Stars',
+      description: '白石厨房装修——东滩、西滩及南素里。定制橱柜、石英台面、布局重设计。费用$16K–$46K，来自真实项目数据。免费报价。',
+    },
+    'bathroom/coquitlam': {
+      title: '高贵林浴室装修费用2026 | Reno Stars',
+      description: '高贵林浴室装修——博客山公寓、西木高原独立屋。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/delta': {
+      title: '德尔塔浴室装修费用2026 | Reno Stars',
+      description: '德尔塔浴室装修——察瓦森海岸、拉德纳历史建筑。步入式淋浴、泡澡浴缸、定制梳妆台。费用$15K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/langley': {
+      title: '兰里浴室装修费用2026 | Reno Stars',
+      description: '兰里浴室装修——威洛比、胡桃树林及弗雷德里克。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$12K–$35K。免费报价。',
+    },
+    'bathroom/new-westminster': {
+      title: '新西敏浴室装修费用2026 | Reno Stars',
+      description: '新西敏浴室装修——皇后公园、萨帕顿及昆斯伯勒。步入式淋浴、泡澡浴缸、定制梳妆台。费用$14K–$35K，3–6周。免费报价。',
+    },
+    'bathroom/port-coquitlam': {
+      title: '高贵林港浴室装修费用2026 | Reno Stars',
+      description: '高贵林港浴室装修——山城高地、河木及牛津高地。步入式淋浴、浴缸改造、定制梳妆台。费用$14K–$35K。免费报价。',
+    },
+    'bathroom/port-moody': {
+      title: '满地宝浴室装修费用2026 | Reno Stars',
+      description: '满地宝浴室装修——遗产林、穆迪中心及英湾口岸。步入式淋浴、泡澡浴缸、定制梳妆台。费用$16K–$40K，3–6周。免费报价。',
+    },
+    'bathroom/surrey': {
+      title: '素里浴室装修费用2026 | Reno Stars',
+      description: '素里浴室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$14K–$40K。免费报价。',
+    },
+    'basement/coquitlam': {
+      title: '高贵林地下室装修费用2026 | Reno Stars',
+      description: '高贵林地下室装修——博客山、西木高原、马拉德维尔。收尾装修、套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+    },
+    'basement/delta': {
+      title: '德尔塔地下室装修费用2026 | Reno Stars',
+      description: '德尔塔地下室装修——察瓦森、拉德纳及北德尔塔。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/langley': {
+      title: '兰里地下室装修费用2026 | Reno Stars',
+      description: '兰里地下室装修——威洛比、胡桃树林及弗雷德里克。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/maple-ridge': {
+      title: '枫树岭地下室装修费用2026 | Reno Stars',
+      description: '枫树岭地下室装修——银谷、阿尔比恩及科顿伍德。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+    },
+    'basement/new-westminster': {
+      title: '新西敏地下室装修费用2026 | Reno Stars',
+      description: '新西敏地下室装修——皇后公园历史建筑、昆斯伯勒。收尾装修、套间改造、家庭活动室。已获许可，费用$30K–$110K+。免费报价。',
+    },
+    'basement/richmond': {
+      title: '列治文地下室装修费用2026 | Reno Stars',
+      description: '列治文地下室装修——史蒂文斯顿、布里格豪斯、特拉诺瓦。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。',
+    },
+    'basement/west-vancouver': {
+      title: '西温哥华地下室装修费用2026 | Reno Stars',
+      description: '西温哥华地下室装修——英属山庄、科尔菲尔德及敦达雷夫。酒窖、家庭影院、套间改造。豪华饰面，费用$40K–$130K+。免费报价。',
+    },
+    'basement/white-rock': {
+      title: '白石地下室装修费用2026 | Reno Stars',
+      description: '白石地下室装修——东滩、西滩及南素里。收尾装修、辅助套间改造、家庭活动室。$5M保险，费用$30K–$110K+。免费报价。',
+    },
+    'whole-house/delta': {
+      title: '德尔塔家居装修2026 | Reno Stars',
+      description: '德尔塔家居装修——察瓦森、拉德纳及北德尔塔。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/langley': {
+      title: '兰里家居装修2026 | Reno Stars',
+      description: '兰里家居装修——威洛比、胡桃树林及弗雷德里克。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/maple-ridge': {
+      title: '枫树岭家居装修2026 | Reno Stars',
+      description: '枫树岭家居装修——银谷、阿尔比恩及科顿伍德。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/new-westminster': {
+      title: '新西敏家居装修2026 | Reno Stars',
+      description: '新西敏家居装修——皇后公园历史建筑、萨帕顿及上城区。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+    },
+    'whole-house/north-vancouver': {
+      title: '北温哥华家居装修2026 | Reno Stars',
+      description: '北温哥华家居装修——林恩谷、朗斯代尔及深湾。厨房、浴室及全房翻新。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。',
+    },
+    'whole-house/port-moody': {
+      title: '满地宝家居装修2026 | Reno Stars',
+      description: '满地宝家居装修——遗产林、穆迪中心及英湾口岸。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。',
+    },
+    // 2026-06-26: ZH overrides for remaining kitchen/bathroom/basement/whole-house city combos.
+    // These 28 entries complete the full 14-city × 4-service ZH coverage.
+    'kitchen/burnaby': { title: '本拿比厨房装修费用2026 | Reno Stars', description: '本拿比厨房装修——Metrotown公寓、Heights独立屋、Capitol Hill联排。定制及预制橱柜、石英台面。费用$20K–$60K，3–5周。免费报价。' },
+    'kitchen/coquitlam': { title: '高贵林厨房装修费用2026 | Reno Stars', description: '高贵林厨房装修——博客山公寓、西木高原独立屋。定制橱柜、石英台面、全面布局改造。费用$22K–$55K，3–5周完工。免费报价。' },
+    'kitchen/north-vancouver': { title: '北温哥华厨房装修费用2026 | Reno Stars', description: '北温哥华厨房装修——林恩谷、朗斯代尔及深湾。定制橱柜、石英台面、开放式布局改造。费用$22K–$60K，3–5周完工。免费报价。' },
+    'kitchen/richmond': { title: '列治文厨房装修费用2026 | Reno Stars', description: '列治文厨房装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。定制及预制橱柜、石英台面、布局重设计。费用$20K–$60K，3–5周。免费报价。' },
+    'kitchen/surrey': { title: '素里厨房装修费用2026 | Reno Stars', description: '素里厨房装修——弗利特伍德、纽顿、克洛弗代尔及南素里。定制橱柜、石英台面、全面布局改造。费用$20K–$55K，3–5周。免费报价。' },
+    'kitchen/vancouver': { title: '温哥华厨房装修费用2026 | Reno Stars', description: '温哥华厨房装修——基斯兰奴、芒特普莱森特、邓巴及市中心公寓。定制橱柜、石英台面、布局重设计。费用$25K–$72K。免费报价。' },
+    'kitchen/west-vancouver': { title: '西温哥华厨房装修费用2026 | Reno Stars', description: '西温哥华厨房装修——敦达雷夫、安布尔赛德及英属山庄。高端定制橱柜、石英及大理石台面。费用$30K–$80K。免费报价。' },
+    'bathroom/burnaby': { title: '本拿比浴室装修费用2026 | Reno Stars', description: '本拿比浴室装修——Metrotown、Heights、Capitol Hill。步入式淋浴、浴缸改造、定制梳妆台。费用$15K–$45K，3–6周完工。免费报价。' },
+    'bathroom/maple-ridge': { title: '枫树岭浴室装修费用2026 | Reno Stars', description: '枫树岭浴室装修——银谷、阿尔比恩及科顿伍德。步入式淋浴、自定义玻璃淋浴屏、定制梳妆台。费用$15K–$35K。免费报价。' },
+    'bathroom/north-vancouver': { title: '北温哥华浴室装修费用2026 | Reno Stars', description: '北温哥华浴室装修——林恩谷、朗斯代尔及深湾。步入式淋浴、泡澡浴缸、定制梳妆台。费用$15K–$45K，3–6周。免费报价。' },
+    'bathroom/richmond': { title: '列治文浴室装修费用2026 | Reno Stars', description: '列治文浴室装修——史蒂文斯顿、布里格豪斯及特拉诺瓦。步入式淋浴、浴缸改造、定制瓷砖及梳妆台。费用$15K–$45K。免费报价。' },
+    'bathroom/vancouver': { title: '温哥华浴室翻新费用2026 | Reno Stars', description: '温哥华浴室翻新——从$15K–$45K。步入式淋浴、浴缸改造、定制梳妆台。3–6周，20年以上经验，$5M保险，3年质保。免费报价。' },
+    'bathroom/west-vancouver': { title: '西温哥华浴室装修费用2026 | Reno Stars', description: '西温哥华浴室装修——安布尔赛德、英属山庄及科尔菲尔德。无门槛淋浴、高端瓷砖、定制梳妆台。费用$20K–$60K，3–6周。免费报价。' },
+    'bathroom/white-rock': { title: '白石浴室装修费用2026 | Reno Stars', description: '白石及南素里浴室装修——步入式淋浴、泡澡浴缸、定制梳妆台。费用$14K–$40K，3–6周。$5M保险。免费报价。' },
+    'basement/burnaby': { title: '本拿比地下室装修费用2026 | Reno Stars', description: '本拿比地下室装修——Metrotown、Heights、Capitol Hill。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$35K–$120K+。免费报价。' },
+    'basement/north-vancouver': { title: '北温哥华地下室装修费用2026 | Reno Stars', description: '北温哥华地下室装修——林恩谷、朗斯代尔及深湾。收尾装修、辅助套间改造、坡地特有防水。$5M保险，费用$35K–$130K+。免费报价。' },
+    'basement/port-coquitlam': { title: '高贵林港地下室装修费用2026 | Reno Stars', description: '高贵林港地下室装修——山城高地、河木及牛津高地。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$120K+。免费报价。' },
+    'basement/port-moody': { title: '满地宝地下室装修费用2026 | Reno Stars', description: '满地宝地下室装修——遗产林、穆迪中心及英湾口岸。收尾装修、辅助套间改造、家庭影院。$5M保险，费用$30K–$120K+。免费报价。' },
+    'basement/surrey': { title: '素里地下室装修费用2026 | Reno Stars', description: '素里地下室装修——弗利特伍德、纽顿、克洛弗代尔及南素里。收尾装修、辅助套间改造、家庭活动室。已获许可，费用$30K–$115K+。免费报价。' },
+    'basement/vancouver': { title: '温哥华地下室装修费用2026 | Reno Stars', description: '温哥华地下室装修——收尾装修、套间改造、家庭活动室。基斯兰奴至基拉尼。符合出行规范，费用$30K–$120K+，来自真实项目数据。免费报价。' },
+    'whole-house/burnaby': { title: '本拿比全屋装修2026 | Reno Stars', description: '本拿比全屋装修——Heights独立屋、Metrotown联排、Capitol Hill住宅。符合分层规定。费用$50K–$200K+，18年以上经验，$5M保险。免费报价。' },
+    'whole-house/coquitlam': { title: '高贵林全屋装修2026 | Reno Stars', description: '高贵林全屋装修——博客山公寓、西木高原独立屋。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
+    'whole-house/port-coquitlam': { title: '高贵林港全屋装修2026 | Reno Stars', description: '高贵林港全屋装修——山城高地、河木及牛津高地。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
+    'whole-house/richmond': { title: '列治文全屋装修2026 | Reno Stars', description: '列治文全屋装修——史蒂文斯顿历史建筑、布里格豪斯公寓、特拉诺瓦独立屋。费用$50K–$200K+，18年以上经验，$5M保险，3年质保。免费报价。' },
+    'whole-house/surrey': { title: '素里全屋装修2026 | Reno Stars', description: '素里全屋装修——弗利特伍德、纽顿、克洛弗代尔及南素里。独立屋及辅助套间。费用$50K–$200K+，$5M保险。免费报价。' },
+    'whole-house/vancouver': { title: '温哥华全屋装修2026 | Reno Stars', description: '温哥华全屋装修——基斯兰奴、芒特普莱森特、邓巴独立屋及市中心公寓。厨房、浴室及全房翻新。费用$60K–$300K+。免费报价。' },
+    'whole-house/west-vancouver': { title: '西温哥华全屋装修2026 | Reno Stars', description: '西温哥华全屋装修——英属山庄、科尔菲尔德及敦达雷夫。高端定制翻新，豪华饰面。费用$80K–$350K+，$5M保险。免费报价。' },
+    'whole-house/white-rock': { title: '白石全屋装修2026 | Reno Stars', description: '白石及南素里全屋装修——东滩、西滩独立屋。厨房、浴室及全房翻新。费用$50K–$200K+，$5M保险。免费报价。' },
+    // 2026-06-25: ZH for cabinet remaining 10 cities.
+    'cabinet/burnaby': { title: '本拿比厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '本拿比厨柜翻新——Metrotown、Heights、Capitol Hill。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/coquitlam': { title: '高贵林厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '高贵林厨柜翻新——博客山、西木高原、马拉德维尔。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/langley': { title: '兰里厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '兰里厨柜翻新——威洛比、胡桃树林及弗雷德里克。喷漆$1.5K起，整体翻新$4–$15K。1–2周完工。免费报价。' },
+    'cabinet/new-westminster': { title: '新西敏厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '新西敏厨柜翻新——皇后公园、萨帕顿及上城区。喷漆$1.5K起，整体翻新$8–$15K。1–2周完工。免费报价。' },
+    'cabinet/north-vancouver': { title: '北温哥华厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '北温哥华厨柜翻新——林恩谷、朗斯代尔及深湾。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/richmond': { title: '列治文厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '列治文厨柜翻新——史蒂文斯顿、布里格豪斯及特拉诺瓦。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/surrey': { title: '素里厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '素里厨柜翻新——弗利特伍德、纽顿及克洛弗代尔。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/vancouver': { title: '温哥华厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '温哥华厨柜翻新——东区、基斯兰奴及芒特普莱森特。喷漆$1.5K起，门板更换$4K+，整体翻新$8–$15K。免费报价。' },
+    'cabinet/west-vancouver': { title: '西温哥华厨柜翻新喷漆 | $1.5K–$25K | Reno Stars', description: '西温哥华厨柜翻新——科尔菲尔德、敦达雷夫及英属山庄。喷漆$1.5K起，整体翻新$4–$15K，豪华饰面至$25K。免费报价。' },
+    'cabinet/white-rock': { title: '白石厨柜翻新喷漆 | $1.5K–$15K | Reno Stars', description: '白石及南素里厨柜翻新——喷漆$1.5K起，门板更换$4K+，整体翻新$9–$16K。免费上门报价。' },
+    // 2026-06-25: ZH for commercial 9 cities.
+    'commercial/burnaby': { title: '本拿比商业装修 | Reno Stars', description: '本拿比商业装修——Metrotown、Brentwood及Edmonds的办公室、零售及餐厅翻新。错峰施工，许可证代办。免费咨询。' },
+    'commercial/coquitlam': { title: '高贵林商业装修 | Reno Stars', description: '高贵林商业装修——市中心、奥斯汀高地及博客山的办公室、零售及餐厅翻新。许可证代办，最大限度减少干扰。免费咨询。' },
+    'commercial/langley': { title: '兰里商业装修 | Reno Stars', description: '兰里商业装修——兰里市区、威洛比及胡桃树林的办公室、零售及餐厅翻新。许可证代办，最大限度减少干扰。免费咨询。' },
+    'commercial/new-westminster': { title: '新西敏商业装修 | Reno Stars', description: '新西敏商业装修——市中心、萨帕顿及昆斯伯勒的办公室、零售及餐厅翻新。许可证代办，错峰施工。免费咨询。' },
+    'commercial/north-vancouver': { title: '北温哥华商业装修 | Reno Stars', description: '北温哥华商业装修——朗斯代尔及林恩谷的办公室、零售及餐厅翻新。许可证代办，错峰施工。免费咨询。' },
+    'commercial/port-coquitlam': { title: '高贵林港商业装修 | Reno Stars', description: '高贵林港商业装修——市中心及牛津高地的办公室、零售及餐厅翻新。许可证代办，最大限度减少干扰。免费咨询。' },
+    'commercial/port-moody': { title: '满地宝商业装修 | Reno Stars', description: '满地宝商业装修——英湾口岸及穆迪中心的办公室、零售及餐厅翻新。许可证代办，错峰施工。免费咨询。' },
+    'commercial/richmond': { title: '列治文商业装修 | Reno Stars', description: '列治文商业装修——布里格豪斯、史蒂文斯顿及亚历山德拉的办公室、零售、餐厅及医疗诊所翻新。许可证代办。免费咨询。' },
+    'commercial/surrey': { title: '素里商业装修 | Reno Stars', description: '素里商业装修——盖尔福德、纽顿及市中心的办公室、零售、餐厅及诊所翻新。许可证代办，错峰施工。免费咨询。' },
+    'commercial/vancouver': { title: '温哥华商业装修 | Reno Stars', description: '温哥华商业装修——市中心、煤气镇、芒特普莱森特及东区的办公室、零售及餐厅翻新。许可证代办。$150–$500/平方英尺。免费咨询。' },
+    'commercial/white-rock': { title: '白石商业装修 | Reno Stars', description: '白石及南素里商业装修——零售、餐厅及诊所翻新。许可证代办，最大限度减少对周边商家的干扰。免费咨询。' },
+    // 2026-06-25: ZH for realtor pre-sale 14 cities.
+    'realtor/burnaby': { title: '本拿比出售前装修 | 经纪人服务 | Reno Stars', description: '本拿比出售前装修——Metrotown、Heights及Capitol Hill的厨房、浴室及外观改善。2–4周完工。免费报价。' },
+    'realtor/coquitlam': { title: '高贵林出售前装修 | 经纪人服务 | Reno Stars', description: '高贵林出售前装修——博客山、西木高原及马拉德维尔的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/delta': { title: '德尔塔出售前装修 | 经纪人服务 | Reno Stars', description: '德尔塔出售前装修——察瓦森、拉德纳及北德尔塔的厨房、浴室及外观改善。2–4周完工。免费报价。' },
+    'realtor/langley': { title: '兰里出售前装修 | 经纪人服务 | Reno Stars', description: '兰里出售前装修——威洛比、胡桃树林及弗雷德里克的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/maple-ridge': { title: '枫树岭出售前装修 | 经纪人服务 | Reno Stars', description: '枫树岭出售前装修——银谷及阿尔比恩的厨房、浴室及外观改善。2–4周完工。最高回报率翻新方案。免费报价。' },
+    'realtor/new-westminster': { title: '新西敏出售前装修 | 经纪人服务 | Reno Stars', description: '新西敏出售前装修——皇后公园、萨帕顿及上城区的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/north-vancouver': { title: '北温哥华出售前装修 | 经纪人服务 | Reno Stars', description: '北温哥华出售前装修——林恩谷、朗斯代尔及深湾的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/port-coquitlam': { title: '高贵林港出售前装修 | 经纪人服务 | Reno Stars', description: '高贵林港出售前装修——山城高地、河木及西区的厨房、浴室及外观改善。2–4周完工。免费报价。' },
+    'realtor/port-moody': { title: '满地宝出售前装修 | 经纪人服务 | Reno Stars', description: '满地宝出售前装修——遗产林及穆迪中心的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/richmond': { title: '列治文出售前装修 | 经纪人服务 | Reno Stars', description: '列治文出售前装修——史蒂文斯顿、布里格豪斯及特拉诺瓦的厨房、浴室及外观改善。最高回报率方案。免费报价。' },
+    'realtor/surrey': { title: '素里出售前装修 | 经纪人服务 | Reno Stars', description: '素里出售前装修——弗利特伍德、纽顿及南素里的厨房、浴室及外观改善。2–4周完工。免费报价。' },
+    'realtor/vancouver': { title: '温哥华出售前装修 | 经纪人服务 | Reno Stars', description: '温哥华出售前装修——基斯兰奴、东区及芒特普莱森特的厨房、浴室及外观改善。最高回报率翻新方案。免费报价。' },
+    'realtor/west-vancouver': { title: '西温哥华出售前装修 | 经纪人服务 | Reno Stars', description: '西温哥华出售前装修——科尔菲尔德、敦达雷夫及英属山庄的厨房、浴室及豪华外观改善。最高回报率方案。免费报价。' },
+    'realtor/white-rock': { title: '白石出售前装修 | 经纪人服务 | Reno Stars', description: '白石及南素里出售前装修——厨房、浴室及外观改善。最高回报率翻新方案，靠近东滩及西滩。免费报价。' },
+    // 2026-06-25: ZH for accessible-bathroom/poly-b remaining cities + critical-load-panel + heat-pump-hvac
+    'accessible-bathroom/north-vancouver': { title: '北温哥华无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: '北温哥华无障碍浴室改造——林恩谷、朗斯代尔及深湾。无门槛淋浴、扶手、舒适高度洁具。CSA B651合规。$3K–$60K。免费报价。' },
+    'accessible-bathroom/coquitlam': { title: '高贵林无障碍浴室改造 | 轮椅步入式 | $3K–$60K | Reno Stars', description: '高贵林无障碍浴室改造——西木高原、博客山、市中心。无门槛淋浴、扶手、可滚入式座椅、加宽门框。$3K–$60K。' },
+    'accessible-bathroom/langley': { title: '兰里无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: '兰里无障碍浴室改造——兰里市区、胡桃树林、威洛比。步入式淋浴、扶手、舒适高度马桶、轮椅可入梳妆台。$3K–$60K。' },
+    'accessible-bathroom/delta': { title: 'Delta无障碍浴室改造 | 老人浴室 | $3K–$60K | Reno Stars', description: 'Delta无障碍浴室改造——拉德纳、察瓦森、北Delta。无门槛淋浴、扶手、职业治疗师协调布局、轮椅可入梳妆台。$3K–$60K。' },
+    'poly-b-replacement/vancouver': { title: '温哥华 Poly-B 水管更换 | $8K–$25K | 保险续保 | Reno Stars', description: '温哥华 Poly-B 水管更换——东区、基斯兰奴、邓巴独立屋及公寓。全屋 PEX 重新走管、50年保修、保险公司认可文件。$8K–$25K。免费报价。' },
+    'poly-b-replacement/north-vancouver': { title: '北温哥华 Poly-B 水管更换 | $8K–$22K | 保险续保 | Reno Stars', description: '北温哥华 Poly-B 水管更换——林恩谷、卡皮拉诺高地、爱德蒙特独立屋。PEX 重新走管、50年保修、保险续保文件。$8K–$22K。' },
+    'poly-b-replacement/langley': { title: '兰里 Poly-B 水管更换 | $10K–$22K | 保险续保 | Reno Stars', description: '兰里 Poly-B 水管更换——兰里市区、胡桃树林、威洛比独立屋。PEX 重新走管、50年保修、保险公司认可文件。$10K–$22K。' },
+    'poly-b-replacement/west-vancouver': { title: '西温 Poly-B 水管更换 | $10K–$28K | 保险续保 | Reno Stars', description: '西温 Poly-B 水管更换——科尔菲尔德、敦达雷夫、英属山庄独立屋。全屋 PEX 重新走管、50年保修、保险续保文件。$10K–$28K。' },
+    'critical-load-panel/vancouver': { title: '温哥华电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '温哥华配电箱升级——东区、基斯兰奴、邓巴。100A→200A服务升级、电动车充电线路、弧故障断路器。BC许可证+ESA检验。$3K–$8K。' },
+    'critical-load-panel/burnaby': { title: '本拿比电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '本拿比配电箱升级——Metrotown、Heights、Edmonds。100A→200A服务、电动车充电准备、专用厨房线路。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/richmond': { title: '列治文电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '列治文配电箱升级——史蒂文斯顿、布里格豪斯、特拉诺瓦。100A→200A服务升级、电动车就绪线路、弧故障保护。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/surrey': { title: '素里电箱升级 | 200A电力服务 | $3K–$8K | Reno Stars', description: '素里配电箱升级——弗利特伍德、纽顿、克洛弗代尔。100A→200A服务、电动车充电线路、专用电器断路器。BC许可证+ESA。$3K–$8K。' },
+    'critical-load-panel/north-vancouver': { title: '北温哥华电箱升级 | 200A电力服务 | Reno Stars', description: '北温哥华配电箱升级——林恩谷、朗斯代尔。100A→200A服务、电动车充电准备、弧故障断路器。BC许可证+ESA检验。免费报价。' },
+    'critical-load-panel/coquitlam': { title: '高贵林电箱升级 | 200A电力服务 | Reno Stars', description: '高贵林配电箱升级——博客山、西木高原。100A→200A服务、电动车就绪线路、专用厨房断路器。BC许可证+ESA。免费报价。' },
+    'critical-load-panel/langley': { title: '兰里电箱升级 | 200A电力服务 | Reno Stars', description: '兰里配电箱升级——兰里市区、胡桃树林、威洛比。100A→200A服务、电动车充电线路、弧故障保护。BC许可证+ESA。免费报价。' },
+    'critical-load-panel/west-vancouver': { title: '西温哥华电箱升级 | 200A电力服务 | Reno Stars', description: '西温哥华配电箱升级——科尔菲尔德、敦达雷夫、英属山庄。100A→200A服务、电动车充电线路、优质ESA检验。免费报价。' },
+    'critical-load-panel/delta': { title: 'Delta电箱升级 | 200A电力服务 | Reno Stars', description: 'Delta配电箱升级——拉德纳、察瓦森、北Delta。100A→200A服务、电动车充电准备、专用电器线路。BC许可证+ESA。免费报价。' },
+    'heat-pump-hvac/vancouver': { title: '温哥华热泵安装 | $8K–$18K | Reno Stars', description: '温哥华热泵及暖通安装——无管道迷你分体机、导管式热泵。符合BC能源阶梯法规。CleanBC退税可申请。东区、基斯兰奴。$8K–$18K。' },
+    'heat-pump-hvac/burnaby': { title: '本拿比热泵安装 | $8K–$18K | Reno Stars', description: '本拿比热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税，BC能源阶梯法规。Metrotown、Heights、本拿比山。$8K–$18K。' },
+    'heat-pump-hvac/richmond': { title: '列治文热泵安装 | $8K–$18K | Reno Stars', description: '列治文热泵及暖通安装——无管道迷你分体机、导管式热泵。CleanBC退税，BC能源阶梯法规。史蒂文斯顿、布里格豪斯。$8K–$18K。' },
+    'heat-pump-hvac/surrey': { title: '素里热泵安装 | $8K–$18K | Reno Stars', description: '素里热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税可申请。弗利特伍德、纽顿、南素里。$8K–$18K。' },
+    'heat-pump-hvac/north-vancouver': { title: '北温哥华热泵安装 | $8K–$18K | Reno Stars', description: '北温哥华热泵及暖通安装——无管道迷你分体机、导管系统。CleanBC退税，BC能源阶梯法规。林恩谷、朗斯代尔。$8K–$18K。' },
+    'heat-pump-hvac/coquitlam': { title: '高贵林热泵安装 | $8K–$18K | Reno Stars', description: '高贵林热泵及暖通安装——无管道迷你分体机、多区域系统。CleanBC退税可申请。博客山、西木高原。$8K–$18K。' },
   };
   if (locale === 'zh' && zhOverrides[overrideKey]) {
     title = zhOverrides[overrideKey].title;
@@ -441,6 +992,20 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
+      {/* 2026-06-26: LocalBusiness schema — on-page scan P7 finding: all service+city
+          sub-pages were missing LocalBusiness schema (only Service + BreadcrumbList
+          were present). Adding LocalBusinessAreaSchema gives Google the geo/contact
+          signals needed for local pack eligibility on "kitchen renovation richmond"
+          style queries that land on service+city sub-pages. */}
+      <LocalBusinessAreaSchema
+        company={company}
+        areaName={localizedArea.name}
+        areaSlug={city}
+        locale={locale}
+        services={[localizedService.title]}
+        googleRating={googleReviews.rating}
+        googleReviewCount={googleReviews.userRatingCount}
+      />
       <ServiceSchema
         company={company}
         serviceName={serviceTitle}

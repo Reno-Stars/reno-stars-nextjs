@@ -190,7 +190,7 @@ export default function CommercialCostGuidePage({ locale, projects, phone }: Com
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center" style={{ color: TEXT }}>Frequently Asked Questions — Commercial Renovation Cost Vancouver</h2>
           <div className="space-y-4">
-            {(['q1', 'q2', 'q3', 'q4', 'q5'] as const).map((key) => (
+            {(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const).map((key) => (
               <details key={key} className="rounded-xl p-5 group" style={{ backgroundColor: CARD, boxShadow: neu() }}>
                 <summary className="font-bold cursor-pointer list-none flex justify-between items-center" style={{ color: TEXT }}>
                   {t(`faq.${key}`)}
@@ -203,6 +203,26 @@ export default function CommercialCostGuidePage({ locale, projects, phone }: Com
         </div>
       </section>
 
+
+      {/* 2026-06-26: Planning guide hub links. Cross-linking to major blog guides
+          (contractor, timeline, permits, financing) strengthens topical authority
+          and passes PageRank to high-equity hub pages. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm" style={{ color: TEXT_MID }}>
+            <strong>Planning your renovation?</strong>{' '}
+            <Link href="/blog/how-to-choose-renovation-contractor-vancouver" className="underline hover:no-underline" style={{ color: GOLD }}>How to Choose a Contractor</Link>
+            {' · '}
+            <Link href="/blog/renovation-timeline-how-long-does-each-project-take" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Timeline</Link>
+            {' · '}
+            <Link href="/blog/renovation-permits-bc-guide" className="underline hover:no-underline" style={{ color: GOLD }}>BC Renovation Permits</Link>
+            {' · '}
+            <Link href="/blog/renovation-financing-vancouver-heloc" className="underline hover:no-underline" style={{ color: GOLD }}>Renovation Financing</Link>
+            {' · '}
+            <Link href="/blog/renovation-cost-vancouver-2026-complete-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Full Cost Guide 2026</Link>
+          </p>
+        </div>
+      </section>
       <CTASection heading={t('cta.heading')} subtitle={t('cta.subtitle')} phone={phone} />
     </main>
   );

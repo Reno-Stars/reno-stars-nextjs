@@ -1,7 +1,23 @@
 'use client';
 
 import { useMemo } from 'react';
+import sanitizeHtml from 'sanitize-html';
+import { Marked } from 'marked';
 import OptimizedImage from '@/components/OptimizedImage';
+
+// Shared markdown renderer for service-area body content.
+// Area page content uses ## headings, **bold**, and [links]() throughout.
+// Previously these rendered as literal characters in <p> tags — now properly
+// parsed to semantic HTML. Added 2026-06-25 SEO tick-598.
+const areaContentRenderer = new Marked();
+
+const AREA_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['h2', 'h3', 'h4']),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    a: ['href', 'title', 'target', 'rel'],
+  },
+};
 import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronRight, MapPin, Star } from 'lucide-react';
 import { Link } from '@/navigation';
@@ -15,7 +31,7 @@ import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import FaqSection from '@/components/home/FaqSection';
 import {
-  NAVY, GOLD, SURFACE, SURFACE_ALT,
+  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 
@@ -49,6 +65,126 @@ function cityReviewOffset(slug: string, total: number): number {
 // (e.g. "kitsilano renovation" → /areas/vancouver/) without needing a
 // programmatic neighbourhood route. Source: GBP service-area definitions
 // + intro override copy. Keep 4–8 per city, ordered by population/search.
+// 2026-06-25: City-specific blog post clusters. Each key is the area slug;
+// each value is an array of { label, slug } pairs for the city's cluster posts.
+// Renders in AreaPage between Cost Guides and Nearby Areas so area pages pass
+// PageRank equity directly to the city cluster posts.
+type CityBlogLink = { label: string; slug: string };
+const CITY_BLOG_CLUSTERS: Record<string, CityBlogLink[]> = {
+  burnaby: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-burnaby-2026' },
+    { label: 'Bathroom', slug: 'burnaby-bathroom-renovation-guide-2026' },
+    { label: 'Basement', slug: 'basement-renovations-burnaby-2026' },
+    { label: 'Home Guide', slug: 'burnaby-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-burnaby-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-burnaby-cost-guide' },
+  ],
+  richmond: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-richmond-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-cost-richmond-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovation-richmond-bc-2026' },
+    { label: 'Home Guide', slug: 'richmond-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-richmond-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-richmond-cost-guide' },
+  ],
+  surrey: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-surrey-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-surrey-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovations-surrey' },
+    { label: 'Home Guide', slug: 'surrey-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-surrey-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-surrey-cost-guide' },
+  ],
+  coquitlam: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-coquitlam-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-coquitlam-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovations-coquitlam-2026' },
+    { label: 'Home Guide', slug: 'coquitlam-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-coquitlam-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-coquitlam-cost-guide' },
+  ],
+  'north-vancouver': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-north-vancouver-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovations-north-vancouver-2026' },
+    { label: 'Basement', slug: 'basement-renovations-north-vancouver' },
+    { label: 'Home Guide', slug: 'north-vancouver-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-north-vancouver-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-north-vancouver-cost-guide' },
+  ],
+  'west-vancouver': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-west-vancouver-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovations-west-vancouver-2026' },
+    { label: 'Basement', slug: 'basement-renovation-west-vancouver-2026' },
+    { label: 'Home Guide', slug: 'west-vancouver-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-west-vancouver-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-west-vancouver-cost-guide' },
+  ],
+  langley: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-langley-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-langley-2026' },
+    { label: 'Basement', slug: 'basement-renovations-langley' },
+    { label: 'Home Guide', slug: 'langley-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-langley-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-resurfacing-langley-cost-guide' },
+  ],
+  delta: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-delta-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-delta-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovation-delta-bc' },
+    { label: 'Home Guide', slug: 'delta-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-delta-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-delta-cost-guide' },
+  ],
+  'new-westminster': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-new-westminster-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-new-westminster-2026' },
+    { label: 'Basement', slug: 'basement-renovation-new-westminster-2026' },
+    { label: 'Home Guide', slug: 'new-westminster-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-new-westminster-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-new-westminster-cost-guide' },
+  ],
+  vancouver: [
+    { label: 'Kitchen', slug: 'kitchen-renovation-vancouver-bc-2026' },
+    { label: 'Bathroom', slug: 'average-bathroom-renovation-cost-vancouver' },
+    { label: 'Basement', slug: 'basement-renovation-vancouver-complete-guide' },
+    { label: 'Home Guide', slug: 'vancouver-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-vancouver-what-to-fix-before-listing' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-vancouver-cost-guide' },
+  ],
+  'port-coquitlam': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-port-coquitlam-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-port-coquitlam-2026' },
+    { label: 'Basement', slug: 'basement-renovations-port-coquitlam-2026' },
+    { label: 'Home Guide', slug: 'port-coquitlam-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-port-coquitlam-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-port-coquitlam-cost-guide' },
+  ],
+  'port-moody': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-port-moody-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-port-moody-2026' },
+    { label: 'Basement', slug: 'basement-renovations-port-moody' },
+    { label: 'Home Guide', slug: 'port-moody-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-port-moody-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-resurfacing-port-moody-cost-guide' },
+  ],
+  'maple-ridge': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-maple-ridge-bc-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovation-maple-ridge-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovations-maple-ridge' },
+    { label: 'Home Guide', slug: 'maple-ridge-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-maple-ridge-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-maple-ridge-cost-guide' },
+  ],
+  'white-rock': [
+    { label: 'Kitchen', slug: 'kitchen-renovation-white-rock-2026' },
+    { label: 'Bathroom', slug: 'bathroom-renovations-white-rock-bc-2026' },
+    { label: 'Basement', slug: 'basement-renovation-white-rock-2026' },
+    { label: 'Home Guide', slug: 'white-rock-home-renovation-guide-2026' },
+    { label: 'Pre-Sale', slug: 'pre-sale-renovation-white-rock-bc-2026' },
+    { label: 'Cabinets', slug: 'cabinet-refinishing-white-rock-cost-guide' },
+  ],
+};
+
 const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
   vancouver: ['Kitsilano', 'Mount Pleasant', 'Kerrisdale', 'Dunbar', 'West End', 'Yaletown', 'Marpole', 'Oakridge'],
   burnaby: ['Metrotown', 'The Heights', 'Capitol Hill', 'Brentwood', 'Burnaby Mountain', 'South Burnaby', 'Lougheed'],
@@ -354,13 +490,20 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
       {/* Unique Content */}
       {localizedArea.content && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="max-w-3xl mx-auto">
             <h2 className="sr-only">{t('areas.aboutArea', { area: localizedArea.name })}</h2>
-            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
-              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
-                {paragraph}
-              </p>
-            ))}
+            {/* Markdown-rendered content: ## headings → <h2>, **bold** → <strong>,
+                [links]() → <a>, - list items → <ul><li>. Sanitized for XSS safety. */}
+            <div
+              className="prose prose-base max-w-none prose-headings:text-xl prose-headings:font-semibold prose-headings:mt-6 prose-headings:mb-2 prose-a:text-blue-700 prose-strong:font-semibold"
+              style={{ color: TEXT_MID }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  areaContentRenderer.parse(localizedArea.content) as string,
+                  AREA_SANITIZE_OPTIONS,
+                ),
+              }}
+            />
           </div>
         </section>
       )}
@@ -629,6 +772,34 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
         </div>
       </section>
 
+      {/* 2026-06-25: City-specific renovation blog cluster links.
+          Area pages (/en/areas/{city}/) are high-authority topical hubs.
+          Adding direct body links to the city's kitchen/bathroom/basement/
+          home-guide/presale cluster posts passes PageRank equity and
+          strengthens the topical-authority signal for "[city] renovation"
+          queries. Only rendered for cities that have a full cluster. */}
+      {CITY_BLOG_CLUSTERS[citySlug] && (
+        <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-xl font-bold mb-4" style={{ color: TEXT }}>
+              {localizedArea.name} Renovation Guides
+            </h2>
+            <div className="flex flex-wrap gap-3">
+              {CITY_BLOG_CLUSTERS[citySlug].map((link) => (
+                <Link
+                  key={link.slug}
+                  href={`/blog/${link.slug}`}
+                  className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:shadow-md"
+                  style={{ backgroundColor: CARD, boxShadow: neu(2), color: NAVY }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Nearby Service Areas */}
       {otherAreas.length > 0 && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
@@ -651,6 +822,38 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </section>
       )}
+
+      {/* 2026-06-26: Planning guide pill-links. Area pages are high-authority
+          topical hubs — every area page now passes PageRank to the 6 key
+          planning guide blog posts. Users researching renovation in a
+          specific city need these planning resources before getting a quote. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: TEXT_MID }}>
+            {locale === 'zh' ? '装修规划指南' : 'Renovation Planning Guides'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: locale === 'zh' ? '如何选择承包商' : 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: locale === 'zh' ? '2026装修费用指南' : 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: locale === 'zh' ? '装修时间线' : 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: locale === 'zh' ? 'BC省许可证指南' : 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: locale === 'zh' ? '装修融资' : 'Financing Your Reno' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: locale === 'zh' ? 'BC省分层产权规则' : 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ backgroundColor: GOLD_PALE, color: NAVY }}
+              >
+                <ChevronRight size={12} style={{ color: GOLD }} />
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <CTASection
         heading={t('areas.readyToStartRenovation', { area: localizedArea.name })}

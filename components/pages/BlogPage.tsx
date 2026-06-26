@@ -255,9 +255,83 @@ export default function BlogPage({
         </div>
       </section>
 
+      {/* 2026-06-26: Planning guide pills — surfaces the 6 key blog hub posts
+          directly from the blog index. Blog index has priority 0.9 (hub tier)
+          in the sitemap; linking to specific planning guides channels PageRank
+          from the hub to the individual guide posts. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-2 mb-3 justify-center">
+            <BookOpen size={16} style={{ color: GOLD }} />
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: TEXT_MUTED }}>Popular Planning Guides</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            {([
+              { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
+              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
+              { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
+              { href: '/blog/renovation-financing-vancouver-heloc', label: 'Financing Your Reno' },
+              { href: '/blog/strata-renovation-rules-vancouver', label: 'Strata Rules BC' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity hover:opacity-75"
+                style={{ backgroundColor: CARD, color: NAVY, boxShadow: `0 1px 3px rgba(0,0,0,0.08)` }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026-06-26: City Renovation Guides — city home renovation guide pills.
+          Blog hub sits at 0.9 priority; linking to city guides channels PageRank
+          from the hub to posts that target "home renovation [city]" queries. */}
+      <section className="py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-2 mb-3 justify-center">
+            <BookOpen size={16} style={{ color: GOLD }} />
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: TEXT_MUTED }}>Renovation Guides by City</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2">
+            {([
+              { href: '/blog/vancouver-home-renovation-guide-2026', label: 'Vancouver' },
+              { href: '/blog/burnaby-home-renovation-guide-2026', label: 'Burnaby' },
+              { href: '/blog/richmond-home-renovation-guide-2026', label: 'Richmond' },
+              { href: '/blog/surrey-home-renovation-guide-2026', label: 'Surrey' },
+              { href: '/blog/north-vancouver-home-renovation-guide-2026', label: 'North Vancouver' },
+              { href: '/blog/coquitlam-home-renovation-guide-2026', label: 'Coquitlam' },
+              { href: '/blog/langley-home-renovation-guide-2026', label: 'Langley' },
+              { href: '/blog/delta-home-renovation-guide-2026', label: 'Delta' },
+              { href: '/blog/maple-ridge-home-renovation-guide-2026', label: 'Maple Ridge' },
+              { href: '/blog/west-vancouver-home-renovation-guide-2026', label: 'West Vancouver' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold transition-opacity hover:opacity-75"
+                style={{ backgroundColor: CARD, color: NAVY, boxShadow: `0 1px 3px rgba(0,0,0,0.08)` }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Internal Cross-Links */}
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+          <Link
+            href="/guides"
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+            style={{ color: GOLD }}
+          >
+            Cost Guides <ArrowRight className="w-4 h-4" />
+          </Link>
           <Link
             href="/services"
             className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"

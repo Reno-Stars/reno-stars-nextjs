@@ -43,6 +43,109 @@ interface ServiceLocationPageProps {
   areaProjects?: Project[];
 }
 
+// 2026-06-25: City-specific blog post lookup for service+city pages.
+// service slug → city slug → blog post slug. Renders a direct guide link in
+// the Contextual Links section, passing PageRank from high-authority service+
+// city pages (/en/services/kitchen/burnaby/) to city cluster blog posts.
+const SERVICE_CITY_BLOG: Partial<Record<string, Record<string, string>>> = {
+  kitchen: {
+    burnaby: 'kitchen-renovation-burnaby-2026',
+    richmond: 'kitchen-renovation-richmond-bc-2026',
+    surrey: 'kitchen-renovation-surrey-bc-2026',
+    coquitlam: 'kitchen-renovation-coquitlam-bc-2026',
+    'north-vancouver': 'kitchen-renovation-north-vancouver-2026',
+    'west-vancouver': 'kitchen-renovation-west-vancouver-2026',
+    langley: 'kitchen-renovation-langley-bc-2026',
+    delta: 'kitchen-renovation-delta-bc-2026',
+    'new-westminster': 'kitchen-renovation-new-westminster-bc-2026',
+    vancouver: 'kitchen-renovation-vancouver-bc-2026',
+    'port-coquitlam': 'kitchen-renovation-port-coquitlam-bc-2026',
+    'port-moody': 'kitchen-renovation-port-moody-bc-2026',
+    'maple-ridge': 'kitchen-renovation-maple-ridge-bc-2026',
+    'white-rock': 'kitchen-renovation-white-rock-2026',
+  },
+  bathroom: {
+    burnaby: 'burnaby-bathroom-renovation-guide-2026',
+    richmond: 'bathroom-renovation-cost-richmond-bc-2026',
+    surrey: 'bathroom-renovation-surrey-bc-2026',
+    coquitlam: 'bathroom-renovation-coquitlam-bc-2026',
+    'north-vancouver': 'bathroom-renovations-north-vancouver-2026',
+    'west-vancouver': 'bathroom-renovations-west-vancouver-2026',
+    langley: 'bathroom-renovation-langley-2026',
+    delta: 'bathroom-renovation-delta-bc-2026',
+    'new-westminster': 'bathroom-renovation-new-westminster-2026',
+    vancouver: 'average-bathroom-renovation-cost-vancouver',
+    'port-coquitlam': 'bathroom-renovation-port-coquitlam-2026',
+    'port-moody': 'bathroom-renovation-port-moody-2026',
+    'maple-ridge': 'bathroom-renovation-maple-ridge-bc-2026',
+    'white-rock': 'bathroom-renovations-white-rock-bc-2026',
+  },
+  'accessible-bathroom': {
+    burnaby: 'burnaby-bathroom-renovation-guide-2026',
+    richmond: 'bathroom-renovation-cost-richmond-bc-2026',
+    surrey: 'bathroom-renovation-surrey-bc-2026',
+    coquitlam: 'bathroom-renovation-coquitlam-bc-2026',
+    'north-vancouver': 'bathroom-renovations-north-vancouver-2026',
+    'west-vancouver': 'bathroom-renovations-west-vancouver-2026',
+    langley: 'bathroom-renovation-langley-2026',
+    delta: 'bathroom-renovation-delta-bc-2026',
+    'new-westminster': 'bathroom-renovation-new-westminster-2026',
+    vancouver: 'average-bathroom-renovation-cost-vancouver',
+    'port-coquitlam': 'bathroom-renovation-port-coquitlam-2026',
+    'port-moody': 'bathroom-renovation-port-moody-2026',
+    'maple-ridge': 'bathroom-renovation-maple-ridge-bc-2026',
+    'white-rock': 'bathroom-renovations-white-rock-bc-2026',
+  },
+  basement: {
+    burnaby: 'basement-renovations-burnaby-2026',
+    richmond: 'basement-renovation-richmond-bc-2026',
+    surrey: 'basement-renovations-surrey',
+    coquitlam: 'basement-renovations-coquitlam-2026',
+    'north-vancouver': 'basement-renovations-north-vancouver',
+    'west-vancouver': 'basement-renovation-west-vancouver-2026',
+    langley: 'basement-renovations-langley',
+    delta: 'basement-renovation-delta-bc',
+    'new-westminster': 'basement-renovation-new-westminster-2026',
+    vancouver: 'basement-renovation-vancouver-complete-guide',
+    'port-coquitlam': 'basement-renovations-port-coquitlam-2026',
+    'port-moody': 'basement-renovations-port-moody',
+    'maple-ridge': 'basement-renovations-maple-ridge',
+    'white-rock': 'basement-renovation-white-rock-2026',
+  },
+  'whole-house': {
+    burnaby: 'burnaby-home-renovation-guide-2026',
+    richmond: 'richmond-home-renovation-guide-2026',
+    surrey: 'surrey-home-renovation-guide-2026',
+    coquitlam: 'coquitlam-home-renovation-guide-2026',
+    'north-vancouver': 'north-vancouver-home-renovation-guide-2026',
+    'west-vancouver': 'west-vancouver-home-renovation-guide-2026',
+    langley: 'langley-home-renovation-guide-2026',
+    delta: 'delta-home-renovation-guide-2026',
+    'new-westminster': 'new-westminster-home-renovation-guide-2026',
+    vancouver: 'vancouver-home-renovation-guide-2026',
+    'port-coquitlam': 'port-coquitlam-home-renovation-guide-2026',
+    'port-moody': 'port-moody-home-renovation-guide-2026',
+    'maple-ridge': 'maple-ridge-home-renovation-guide-2026',
+    'white-rock': 'white-rock-home-renovation-guide-2026',
+  },
+  realtor: {
+    burnaby: 'pre-sale-renovation-burnaby-bc-2026',
+    richmond: 'pre-sale-renovation-richmond-bc-2026',
+    surrey: 'pre-sale-renovation-surrey-bc-2026',
+    coquitlam: 'pre-sale-renovation-coquitlam-bc-2026',
+    'north-vancouver': 'pre-sale-renovation-north-vancouver-bc-2026',
+    'west-vancouver': 'pre-sale-renovation-west-vancouver-bc-2026',
+    langley: 'pre-sale-renovation-langley-bc-2026',
+    delta: 'pre-sale-renovation-delta-bc-2026',
+    'new-westminster': 'pre-sale-renovation-new-westminster-bc-2026',
+    vancouver: 'pre-sale-renovation-vancouver-what-to-fix-before-listing',
+    'port-coquitlam': 'pre-sale-renovation-port-coquitlam-bc-2026',
+    'port-moody': 'pre-sale-renovation-port-moody-bc-2026',
+    'maple-ridge': 'pre-sale-renovation-maple-ridge-bc-2026',
+    'white-rock': 'pre-sale-renovation-white-rock-bc-2026',
+  },
+};
+
 export default function ServiceLocationPage({
   locale, serviceSlug, citySlug, company, service, area,
   services = [], areas = [], faqs = [], areaProjects = [],
@@ -76,6 +179,9 @@ export default function ServiceLocationPage({
       .map((a) => ({ slug: a.slug, name: getLocalizedArea(a, locale).name })),
     [areas, area.slug, locale],
   );
+
+  // City-specific blog guide link (kitchen/bathroom/basement/whole-house/presale)
+  const cityBlogSlug: string | undefined = SERVICE_CITY_BLOG[serviceSlug]?.[citySlug];
 
   // Other services available in this area (exclude current)
   const otherServices: LocalizedServiceType[] = useMemo(
@@ -336,6 +442,18 @@ export default function ServiceLocationPage({
           >
             {t('areas.areaLinkText', { area: localizedArea.name })} <ArrowRight className="w-4 h-4" />
           </Link>
+          {/* 2026-06-25: city-specific blog guide link. Service+city pages are
+              high-authority hubs; direct body link to matching city blog post
+              passes PageRank to the city cluster and deepens topical coverage. */}
+          {cityBlogSlug && (
+            <Link
+              href={`/blog/${cityBlogSlug}`}
+              className="inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+              style={{ color: GOLD }}
+            >
+              {localizedArea.name} Renovation Guide <ArrowRight className="w-4 h-4" />
+            </Link>
+          )}
         </div>
       </section>
 

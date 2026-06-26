@@ -64,6 +64,9 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q3'), answer: t('faq.a3') },
     { question: t('faq.q4'), answer: t('faq.a4') },
     { question: t('faq.q5'), answer: t('faq.a5') },
+    { question: t('faq.q6'), answer: t('faq.a6') },
+    { question: t('faq.q7'), answer: t('faq.a7') },
+    { question: t('faq.q8'), answer: t('faq.a8') },
   ];
 
   const howToSteps = [
@@ -110,7 +113,7 @@ export default async function Page({ params }: PageProps) {
         url={`/${locale}/guides/whole-house-renovation-cost-vancouver/`}
         authorName={`${company.name} Team`}
         datePublished="2026-02-03"
-        dateModified="2026-06-08"
+        dateModified="2026-06-25"
         locale={locale}
       />
       <HowToSchema
