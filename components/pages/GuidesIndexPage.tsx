@@ -263,6 +263,51 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
         </div>
       </section>
 
+      {/* 2026-06-26: City renovation guides grid — links /guides/ hub to 14 city home
+          renovation guide posts. The /guides/ hub carries priority 0.9; adding city
+          links here passes additional PageRank to city home guides, which are the
+          anchor posts for each city's renovation cluster. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Renovation Cost Guides by City
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            City-specific renovation planning guides for Metro Vancouver homeowners.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {([
+              { href: '/blog/vancouver-home-renovation-guide-2026',       label: 'Vancouver Renovation Guide' },
+              { href: '/blog/burnaby-home-renovation-guide-2026',         label: 'Burnaby Renovation Guide' },
+              { href: '/blog/richmond-home-renovation-guide-2026',        label: 'Richmond Renovation Guide' },
+              { href: '/blog/surrey-home-renovation-guide-2026',          label: 'Surrey Renovation Guide' },
+              { href: '/blog/north-vancouver-home-renovation-guide-2026', label: 'North Vancouver Guide' },
+              { href: '/blog/coquitlam-home-renovation-guide-2026',       label: 'Coquitlam Renovation Guide' },
+              { href: '/blog/langley-home-renovation-guide-2026',         label: 'Langley Renovation Guide' },
+              { href: '/blog/delta-home-renovation-guide-2026',           label: 'Delta Renovation Guide' },
+              { href: '/blog/maple-ridge-home-renovation-guide-2026',     label: 'Maple Ridge Guide' },
+              { href: '/blog/west-vancouver-home-renovation-guide-2026',  label: 'West Vancouver Guide' },
+              { href: '/blog/new-westminster-home-renovation-guide-2026', label: 'New Westminster Guide' },
+              { href: '/blog/port-coquitlam-home-renovation-guide-2026',  label: 'Port Coquitlam Guide' },
+              { href: '/blog/port-moody-home-renovation-guide-2026',      label: 'Port Moody Guide' },
+              { href: '/blog/white-rock-home-renovation-guide-2026',      label: 'White Rock Guide' },
+            ] as const).map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="block rounded-xl px-4 py-3 text-sm font-semibold transition-transform hover:scale-[1.02] text-center"
+                style={{ backgroundColor: CARD, color: NAVY, boxShadow: neu(3) }}
+              >
+                {label}
+                <span className="flex items-center justify-center gap-1 text-xs font-normal mt-0.5" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={10} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection
         heading={t('guides.index.cta.heading')}
