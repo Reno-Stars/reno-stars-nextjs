@@ -334,6 +334,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'kitchen-bathroom-renovation-new-westminster-2026',
     'kitchen-bathroom-renovation-port-coquitlam-2026',
     'kitchen-bathroom-renovation-port-moody-2026',
+    // Basement renovation city guides.
+    'basement-renovation-delta-bc',
+    'basement-renovation-new-westminster-2026',
+    'basement-renovation-richmond-bc-2026',
+    'basement-renovation-west-vancouver-2026',
+    'basement-renovation-white-rock-2026',
+    'basement-renovations-burnaby-2026',
+    'basement-renovations-coquitlam-2026',
+    'basement-renovations-port-coquitlam-2026',
+    // Condo renovation city guides.
+    'condo-renovation-delta-bc-2026',
+    'condo-renovation-new-westminster-2026',
+    'condo-renovation-north-vancouver-2026',
+    'condo-renovation-surrey-bc-2026',
   ]);
 
   for (const slug of blogPostSlugs) {
