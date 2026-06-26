@@ -225,6 +225,44 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
         </div>
       </section>
 
+      {/* 2026-06-26: Specialty & property-type renovation guides. Passes PageRank from
+          the high-priority /guides/ hub to newly elevated specialty posts (ADU, heritage,
+          aging-in-place, insurance, tax credits, DIY). These posts were elevated to guide
+          tier in the sitemap but needed hub-level inbound links to fully benefit. */}
+      <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+            Specialty Renovation Guides
+          </h2>
+          <p className="text-center text-sm mb-6" style={{ color: TEXT_MID }}>
+            Property-type specific guides, financial resources, and renovation decision guides.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { href: '/blog/adu-renovation-vancouver-2026', label: 'ADU & Laneway House Renovation', desc: 'Costs, permits, and design for secondary suites and laneway homes in Vancouver.' },
+              { href: '/blog/heritage-home-renovation-vancouver-2026', label: 'Heritage Home Renovation Vancouver', desc: 'Navigating heritage alteration permits while modernizing character homes.' },
+              { href: '/blog/aging-in-place-renovation-guide-bc', label: 'Aging-in-Place Renovation Guide BC', desc: 'Accessible modifications, grab bars, walk-in showers, and barrier-free design.' },
+              { href: '/blog/vancouver-renovation-tax-credits-rebates-2026', label: 'Renovation Tax Credits & Rebates 2026', desc: 'BC government grants, energy rebates, and tax incentives for home renovation.' },
+              { href: '/blog/renovation-insurance-guide-bc', label: 'Renovation Insurance Guide BC', desc: 'Liability, builder\'s risk, and coverage requirements for Metro Vancouver renovations.' },
+              { href: '/blog/diy-vs-contractor-renovation-vancouver-2026', label: 'DIY vs Hiring a Contractor', desc: 'When to DIY and when to hire a professional — with Vancouver cost comparisons.' },
+            ].map(({ href, label, desc }) => (
+              <Link
+                key={href}
+                href={href as '/blog/adu-renovation-vancouver-2026'}
+                className="block rounded-xl p-5 transition-transform hover:scale-[1.01]"
+                style={{ backgroundColor: CARD, boxShadow: neu() }}
+              >
+                <span className="block font-bold text-sm mb-1" style={{ color: NAVY }}>{label}</span>
+                <span className="block text-xs leading-relaxed" style={{ color: TEXT_MID }}>{desc}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold mt-2" style={{ color: GOLD }}>
+                  Read guide <ArrowRight size={12} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <CTASection
         heading={t('guides.index.cta.heading')}
