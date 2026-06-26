@@ -647,6 +647,8 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
             {' · '}
             <Link href="/blog/bathroom-renovations-white-rock-bc-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>White Rock</Link>
             {' · '}
+            <Link href="/blog/bathroom-renovation-new-westminster-2026" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>New Westminster</Link>
+            {' · '}
             <Link href="/blog/average-bathroom-renovation-cost-vancouver" className="underline hover:no-underline" style={{ color: '#c9a84c' }}>Vancouver</Link>
           </p>
         </div>
