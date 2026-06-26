@@ -282,6 +282,18 @@ export default function CabinetRefinishingCostGuidePage({ locale, projects, phon
             <Link href="/blog/cabinet-refinishing-new-westminster-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
             {' · '}
             <Link href="/blog/cabinet-refinishing-delta-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-maple-ridge-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-port-coquitlam-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/cabinet-resurfacing-port-moody-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/cabinet-resurfacing-langley-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>Langley</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-west-vancouver-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
+            {' · '}
+            <Link href="/blog/cabinet-refinishing-white-rock-cost-guide" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
           </p>
         </div>
       </section>

@@ -311,6 +311,18 @@ export default function WholeHouseCostGuidePage({ locale, projects, phone }: Who
             <Link href="/blog/west-vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>West Vancouver</Link>
             {' · '}
             <Link href="/blog/vancouver-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Vancouver</Link>
+            {' · '}
+            <Link href="/blog/delta-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Delta</Link>
+            {' · '}
+            <Link href="/blog/maple-ridge-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Maple Ridge</Link>
+            {' · '}
+            <Link href="/blog/new-westminster-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>New Westminster</Link>
+            {' · '}
+            <Link href="/blog/port-coquitlam-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Coquitlam</Link>
+            {' · '}
+            <Link href="/blog/port-moody-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>Port Moody</Link>
+            {' · '}
+            <Link href="/blog/white-rock-home-renovation-guide-2026" className="underline hover:no-underline" style={{ color: GOLD }}>White Rock</Link>
           </p>
         </div>
       </section>
