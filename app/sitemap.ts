@@ -422,6 +422,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'best-flooring-options-vancouver-2026',
     'best-bathroom-tiles-vancouver-2026',
     'bathroom-refresh-without-full-renovation-vancouver-2026',
+    // Elevated 2026-06-26 tick 637 — all reached 8+ inbound links
+    '3-piece-vs-4-piece-bathroom-renovation-cost-vancouver-2026',
+    'range-hood-install-vancouver-2026',
+    'summer-renovation-vancouver-2026-best-projects',
+    'vancouver-renovation-before-after-10-projects',
+    'langley-kitchen-renovation-waterfall-island',
+    'two-bathroom-renovation-with-brushed-gold-fixtures',
   ]);
 
   for (const slug of blogPostSlugs) {
