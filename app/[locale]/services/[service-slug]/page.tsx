@@ -157,6 +157,26 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
 };
 
+/**
+ * ZH-HANT meta description overrides — Traditional Chinese (Taiwan/HK audience).
+ * Cross-locale scanner (2026-06-26 tick 670) detected zh-Hant service pages
+ * serving simplified-Chinese descriptions because zh-Hant fell through to
+ * truncateMetaDescription(long_description_zh_hant) which is simplified.
+ * CTR for zh-Hant is 8.93% — highest-converting locale. Fixing the language
+ * mismatch with clean Traditional Chinese overrides matching the en/zh pattern.
+ * Prices and facts mirror the zh overrides (same source); only character set
+ * and vocabulary converted to Traditional Chinese.
+ */
+const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
+  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
+  basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
+  'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
+  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
+  'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
+  'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -170,16 +190,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
+    || (locale === 'zh-Hant' && zhHantServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;
 
-  // Title length: keep under Google's ~60-char SERP truncation cap. Dropping
-  // "Free Quote, " (and the ZH equivalent "免费报价, ") brings each service title
-  // to 57–61 chars vs the prior 69–73. "3-Yr Warranty" stays as the strongest
-  // trust differentiator — same pattern used in the area-page overrides.
+  // Title length: keep under Google's ~60-char SERP truncation cap.
+  // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
+  // All other locales get the EN template (title comes from localizedService).
   const title = locale === 'zh'
     ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
+    : locale === 'zh-Hant'
+    ? `${localizedService.title} 溫哥華 — 3年保固 | Reno Stars`
     : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
 
   return {
