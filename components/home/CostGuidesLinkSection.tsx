@@ -84,7 +84,7 @@ export default async function CostGuidesLinkSection({ locale }: { locale: Locale
           <div className="flex flex-wrap justify-center gap-2">
             {([
               { href: '/blog/how-to-choose-renovation-contractor-vancouver', label: 'How to Choose a Contractor' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Renovation Costs 2026' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: 'Renovation Costs 2026' },
               { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline' },
               { href: '/blog/renovation-permits-bc-guide', label: 'BC Permits Guide' },
               { href: '/blog/renovation-financing-vancouver-heloc', label: 'Renovation Financing' },

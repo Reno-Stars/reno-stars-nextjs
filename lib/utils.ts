@@ -526,16 +526,16 @@ export function buildAlternates(path: string, locale: string): {
   // canonical `locales` array so adding a new locale doesn't require editing
   // every page's metadata helper.
   const languages: Record<string, string> = {};
-  // Hreflang key mapping: zh-Hant uses script subtag in URL paths but Google
-  // and Semrush expect region-qualified BCP-47 codes (zh-TW for Traditional
-  // Chinese). The URL stays /zh-Hant/ while the hreflang emits zh-TW.
-  // See: https://developers.google.com/search/docs/specialty/international/localization-and-internationalization
-  const hreflangKeyMap: Partial<Record<string, string>> = {
-    'zh-Hant': 'zh-TW',
-  };
+  // Emit the hreflang key exactly as the locale slug. `zh-Hant` is a valid
+  // BCP-47 script subtag that Google fully supports, and keeping it identical
+  // to the URL path (/zh-Hant/), the page's <html lang="zh-Hant">, and the
+  // sitemap's xhtml:link alternates is what avoids Semrush "hreflang language
+  // mismatch" errors. A previous version remapped zh-Hant → zh-TW here only in
+  // the page <head> (the sitemap always emitted zh-Hant), so head and sitemap
+  // disagreed on the same /zh-Hant/ URL — the exact mismatch this restores.
+  // Removed 2026-06-26 site-audit pass.
   for (const loc of locales) {
-    const hreflangKey = hreflangKeyMap[loc] ?? loc;
-    languages[hreflangKey] = `${baseUrl}/${loc}${path}`;
+    languages[loc] = `${baseUrl}/${loc}${path}`;
   }
   languages['x-default'] = `${baseUrl}/en${path}`;
   return {

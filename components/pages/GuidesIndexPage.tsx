@@ -206,7 +206,7 @@ export default function GuidesIndexPage({ locale: _locale }: GuidesIndexPageProp
               { href: '/blog/renovation-timeline-how-long-does-each-project-take', label: 'Renovation Timeline Guide', desc: 'How long each type of renovation takes — from planning to completion.' },
               { href: '/blog/renovation-permits-bc-guide', label: 'BC Renovation Permits Guide', desc: 'When you need a permit, how to apply, and what happens if you skip it.' },
               { href: '/blog/strata-renovation-rules-vancouver', label: 'BC Strata Renovation Rules', desc: 'How to get strata council approval and what rules apply to condo renovations.' },
-              { href: '/blog/renovation-cost-vancouver-2026-complete-guide', label: 'Complete Vancouver Renovation Cost Guide 2026', desc: 'Full breakdown of renovation costs across all project types in Metro Vancouver.' },
+              { href: '/guides/whole-house-renovation-cost-vancouver', label: 'Complete Vancouver Renovation Cost Guide 2026', desc: 'Full breakdown of renovation costs across all project types in Metro Vancouver.' },
             ].map(({ href, label, desc }) => (
               <Link
                 key={href}

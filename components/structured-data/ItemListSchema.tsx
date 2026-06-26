@@ -10,7 +10,13 @@ interface ItemListSchemaProps {
   items: ItemListItem[];
   name?: string;
   description?: string;
-  /** BCP-47 locale. When provided, emits `inLanguage` for locale targeting. */
+  /**
+   * BCP-47 locale. Accepted for call-site compatibility but intentionally NOT
+   * emitted: `inLanguage` is a `CreativeWork` property, and `ItemList` is an
+   * `Intangible`, so emitting it here produces an unrecognized-property markup
+   * error in strict validators (Semrush/schema.org). Removed 2026-06-26 audit;
+   * see BreadcrumbSchema for the same fix.
+   */
   locale?: string;
 }
 
@@ -18,7 +24,6 @@ export default function ItemListSchema({
   items,
   name,
   description,
-  locale,
 }: ItemListSchemaProps): React.ReactElement | null {
   if (items.length === 0) return null;
   const baseUrl = getBaseUrl();
@@ -28,7 +33,6 @@ export default function ItemListSchema({
     '@type': 'ItemList',
     ...(name && { name }),
     ...(description && { description }),
-    ...(locale && { inLanguage: locale }),
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
