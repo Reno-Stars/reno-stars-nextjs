@@ -333,18 +333,22 @@ export default function ServiceLocationPage({
         </section>
       )}
 
-      {/* Area Content */}
+      {/* Area Content — 2026-06-26: render via renderProseHtml (was plain-text split).
+          Area content_en uses markdown (## headings, **bold**, [links](url)) but was
+          previously split on \n\n and rendered as raw <p> tags, showing ## symbols
+          literally and suppressing heading structure. Using renderProseHtml matches
+          the treatment of localizedService.long_description (line ~330 above). */}
       {localizedArea.content && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
               {t('areas.areaServiceContent', { service: localizedService.title, area: localizedArea.name })}
             </h2>
-            {localizedArea.content.split('\n\n').filter(Boolean).map((paragraph, i) => (
-              <p key={i} className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
-                {paragraph}
-              </p>
-            ))}
+            <div
+              className="prose prose-sm max-w-none"
+              style={{ color: TEXT_MID }}
+              dangerouslySetInnerHTML={{ __html: renderProseHtml(localizedArea.content) }}
+            />
           </div>
         </section>
       )}
