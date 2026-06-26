@@ -740,6 +740,9 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
               { slug: 'basement-renovation-cost-vancouver', labelKey: 'basement' },
               { slug: 'commercial-renovation-cost-vancouver', labelKey: 'commercial' },
               { slug: 'cabinet-refinishing-cost-vancouver', labelKey: 'cabinet' },
+              // 2026-06-26: basement-suite was the only guide missing from all
+              // area pages' cost-guide grid; adding closes the inbound gap.
+              { slug: 'basement-suite-cost-vancouver', labelKey: 'basementSuite' },
             ].map((g) => (
               <Link
                 key={g.slug}

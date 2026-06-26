@@ -8,7 +8,8 @@
       "basement": "地下室改修費用",
       "wholeHouse": "家全体のリノベーション費用",
       "commercial": "商業施設の改修費用",
-      "cabinet": "キャビネットの再仕上げ費用"
+      "cabinet": "キャビネットの再仕上げ費用",
+      "basementSuite": "地下室スイートの費用"
     },
     "financingPrompt": "リノベーション費用の支払い方法を知りたいですか?",
     "financingCta": "資金調達オプションを参照→",

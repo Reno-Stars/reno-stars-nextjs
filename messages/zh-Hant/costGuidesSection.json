@@ -8,7 +8,8 @@
       "basement": "地下室裝修費用",
       "wholeHouse": "全屋裝修費用",
       "commercial": "商業裝修費用",
-      "cabinet": "櫥櫃整修費用"
+      "cabinet": "櫥櫃整修費用",
+      "basementSuite": "地下室套房費用"
     },
     "financingPrompt": "想知道如何支付裝修費用嗎？",
     "financingCta": "查看融資選項 →",

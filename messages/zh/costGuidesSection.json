@@ -8,7 +8,8 @@
       "basement": "地下室装修费用",
       "wholeHouse": "全屋装修费用",
       "commercial": "商业装修费用",
-      "cabinet": "橱柜整修费用"
+      "cabinet": "橱柜整修费用",
+      "basementSuite": "地下室套房费用"
     },
     "financingPrompt": "想知道如何支付装修费用吗？",
     "financingCta": "查看融资选项 →",
