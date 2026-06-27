@@ -164,6 +164,12 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
   cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
+  // 2026-06-27 tick-707: 4 services still missing zh overrides after tick-706 EN sweep.
+  // Source: services.localizations->>'descriptionZhHant' + description_en (DB). No fabrication.
+  commercial:              'Metro Vancouver商业装修 — 办公室、零售、餐厅及诊所翻新。许可证代办，符合BC建筑规范，支持非工时施工。500万保险。免费报价。',
+  'accessible-bathroom':   '温哥华无障碍浴室改造 — 无门槛淋浴、扶手、舒适高度洁具及防滑地板。符合CSA B651，协助HAFI补贴申请。500万保险，3年保修。免费报价。',
+  'critical-load-panel':   'Metro Vancouver关键负载电箱 — 为发电机、储能电池及电动车充电桩预留专用回路。热泵配套，含BC许可证。500万保险。免费报价。',
+  realtor:                 '温哥华房产装修咨询 — 专为买卖双方提供翻新评估与挂牌升级方案，买·翻·卖一体化策略，最大化Metro Vancouver物业转售价值。免费咨询。',
 };
 
 /**
@@ -184,6 +190,11 @@ const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
   cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
+  // 2026-06-27 tick-707: mirror zh additions in Traditional Chinese.
+  commercial:              'Metro Vancouver商業裝修 — 辦公室、零售、餐廳及診所翻新。許可證代辦，符合BC建築規範，支持非工時施工。500萬保險。免費報價。',
+  'accessible-bathroom':   '溫哥華無障礙浴室翻新 — 無門檻淋浴、扶手、舒適高度潔具及防滑地板。符合CSA B651，協助HAFI補助申請。500萬保險，3年保固。免費報價。',
+  'critical-load-panel':   'Metro Vancouver關鍵負載電箱 — 為發電機、儲能電池及電動車充電樁預留專用迴路。熱泵配套，含BC許可證。500萬保險。免費報價。',
+  realtor:                 '溫哥華房產裝修諮詢 — 專為買賣雙方提供翻新評估與掛牌升級方案，買·翻·賣一體化策略，最大化Metro Vancouver物業轉售價值。免費諮詢。',
 };
 
 /**
@@ -203,6 +214,11 @@ const koServiceMetaDescriptions: Partial<Record<string, string>> = {
   cabinet:             '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.',
   'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
   'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
+  // 2026-06-27 tick-707: KO overrides for 4 missing services. Source: DB localizations->>'descriptionKo' + description_en.
+  commercial:              'Metro Vancouver 상업 리노베이션 — 사무실·소매점·레스토랑·진료소 개조. 허가 대행, BC 건축 규정 준수, 비업무 시간 시공. 500만 보험. 무료 견적.',
+  'accessible-bathroom':   '밴쿠버 배리어 프리 욕실 리노베이션 — 무턱 샤워, 손잡이 바, 편안한 높이 설비, 미끄럼 방지 바닥. CSA B651 준수, HAFI 보조금 대행. 500만 보험, 3년 보증. 무료 견적.',
+  'critical-load-panel':   'Metro Vancouver 크리티컬 로드 패널 — 발전기·배터리·EV 충전기 전용 서브 패널. 열펌프 대응, BC 허가 포함. 500만 보험. 무료 견적.',
+  realtor:                 '밴쿠버 부동산 리노베이션 상담 — 매수·매도 고객을 위한 구매-리노베이션-매각 전략. 상장 전 업그레이드로 물건 가치 극대화. 무료 상담.',
 };
 
 /**
@@ -221,6 +237,11 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
   cabinet:             'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。',
   'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
   'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
+  // 2026-06-27 tick-707: JA overrides for 4 missing services. Source: DB localizations->>'descriptionJa' + description_en.
+  commercial:              'Metro Vancouverの商業リノベーション — オフィス・小売・レストラン・診療所の改修。許可取得代行、BC建築基準準拠、時間外施工でダウンタイム最小化。500万保険。無料見積もり。',
+  'accessible-bathroom':   'バンクーバーのバリアフリー浴室リノベーション — フラットシャワー、手すり、適切な高さの設備、滑り止め床材。CSA B651準拠、HAFI補助金申請サポート。500万保険、3年保証。無料見積もり。',
+  'critical-load-panel':   'Metro Vancouverのクリティカルロードパネル — 発電機・蓄電池・EV充電器用バックアップ分電盤。ヒートポンプ対応、BC許可証込み。500万保険。無料見積もり。',
+  realtor:                 'バンクーバーの不動産リノベーション相談 — 購入前の潜在価値査定から売却前アップグレードまで、購入・改修・売却の一体型戦略。物件価値を最大化。無料相談。',
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
