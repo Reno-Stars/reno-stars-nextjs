@@ -18,11 +18,11 @@
     },
     "contact": {
       "title": "Devis de rénovation gratuit Vancouver | Contacter Reno Stars",
-      "description": "Obtenez un devis de rénovation gratuit auprès de Reno Stars, l'entreprise de rénovation de confiance de Vancouver. Rénovations de cuisine, de salle de bain, de sous-sol et de maison entière dans la région métropolitaine de Vancouver. Appelez le 778-960-7999."
+      "description": "Réservez un devis gratuit avec Reno Stars — cuisine, salle de bain, sous-sol et maison entière dans le Grand Vancouver. Appelez le 778-960-7999."
     },
     "blog": {
-      "title": "Conseils de rénovation et guides de coûts | Vancouver | Reno Stars Blog",
-      "description": "Conseils d'experts en rénovation, tendances en matière de design et idées pratiques pour votre projet de rénovation domiciliaire à Vancouver. Lisez des études de cas et des transformations avant et après."
+      "title": "Conseils de rénovation et guides de coûts | Vancouver | Reno Stars",
+      "description": "Conseils de rénovation d'experts, tendances de design et idées pratiques pour votre maison à Vancouver. Études de cas et transformations avant et après."
     },
     "benefits": {
       "title": "Pourquoi choisir Reno Stars | 5 M$ assuré, WCB et garantie 3 ans",
@@ -42,14 +42,14 @@
     "serviceLocation": {
       "title": "{service} à {area} | Reno Stars",
       "titleWithTagline": "{service} à {area} — {tagline} | Reno Stars",
-      "description": "Expert {service} dans {area} par Reno Stars. {years} + années d'expérience, assurance CGL de 5 millions de dollars, couverture WCB active, jusqu'à 3 ans de garantie. Consultez les projets locaux et obtenez un devis gratuit dès aujourd'hui."
+      "description": "Expert {service} à {area} par Reno Stars — {years}+ ans, assurance $5M CGL, WCB, garantie 3 ans. Devis gratuit aujourd'hui."
     },
     "areas": {
       "title": "Rénovation près de chez vous | 17 régions Metro Vancouver | Reno Stars",
-      "description": "Reno Stars dessert 17 communautés de la région métropolitaine de Vancouver et de la vallée du Fraser. Trouvez des services de rénovation dans votre ville et obtenez un devis gratuit."
+      "description": "Reno Stars dessert 17 communautés du Grand Vancouver et de la vallée du Fraser. Trouvez des services de rénovation dans votre ville et obtenez un devis gratuit."
     },
     "area": {
-      "title": "Entrepreneur en rénovation à {area} | Cuisine et salle de bain | Reno Stars",
+      "title": "Entrepreneur en rénovation à {area} | Reno Stars",
       "description": "Services de rénovation professionnels à {area}. Rénovation de cuisine, salle de bain et maison entière. Contactez-nous pour un devis gratuit."
     },
     "thankYou": {
@@ -58,11 +58,11 @@
     },
     "process": {
       "title": "Processus de rénovation : 5 étapes | Vancouver | Reno Stars",
-      "description": "Découvrez notre flux de travail de rénovation rationalisé en 5 étapes. De la consultation initiale à la remise du projet, nous rendons votre parcours de rénovation simple et sans souci."
+      "description": "Découvrez notre processus de rénovation simplifié en 5 étapes. De la consultation à la remise du projet, nous rendons votre rénovation simple et sans souci."
     },
     "showroom": {
-      "title": "Salle d'exposition de rénovation Richmond BC | Consultation gratuite | Reno Stars",
-      "description": "Visitez notre salle d'exposition de Richmond BC : touchez de vrais matériaux, voyez les présentoirs de cuisine et de salle de bain, obtenez un devis gratuit sur place. Ouvert du lundi au samedi de 9h30. Aucun rendez-vous n'est nécessaire."
+      "title": "Showroom Rénovation Richmond BC | Devis Gratuit | Reno Stars",
+      "description": "Visitez notre showroom à Richmond BC — matériaux réels, présentoirs cuisine et salle de bain, devis gratuit sur place. Lun-sam 9h30. Sans rendez-vous."
     },
     "guides": {
       "title": "Coûts de rénovation Vancouver 2026 | Reno Stars",

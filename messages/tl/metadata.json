@@ -6,7 +6,7 @@
     },
     "services": {
       "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
-      "description": "Kitchen, bathroom, whole house, basement at commercial renovation services sa buong Metro Vancouver. 20+ taong karanasan, $5M CGL insurance, 3-taong warranty. Libreng quotes."
+      "description": "Kitchen, bathroom, whole house, basement at commercial renovation sa buong Metro Vancouver. 20+ taon, $5M CGL insurance, 3-taong warranty. Libreng quotes."
     },
     "projects": {
       "title": "Vancouver Renovation Portfolio | Before & After | Reno Stars",
@@ -14,15 +14,15 @@
     },
     "projectsBudget": {
       "title": "{tier} Mga Proyekto sa Pagkukumpuni Vancouver | Mga Bituin sa Reno",
-      "description": "Mga totoong proyekto sa pagsasaayos ng {tier} sa Metro Vancouver — mga aktwal na gastos, bago/pagkatapos ng mga larawan, at mga timeline. Salain ayon sa kusina, banyo, basement o buong bahay."
+      "description": "Totoong {tier} renovation sa Metro Vancouver — aktwal na gastos, bago/pagkatapos na larawan, timeline. Salain ayon sa kusina, banyo, basement o buong bahay."
     },
     "contact": {
       "title": "Libreng Renovation Quote Vancouver | Contact Reno Stars",
-      "description": "Kumuha ng libreng renovation quote mula sa Reno Stars — ang pinagkakatiwalaang reno company sa Vancouver. Kitchen, bathroom, basement at whole house renovations sa Metro Vancouver. Tumawag sa 778-960-7999."
+      "description": "Kumuha ng libreng renovation quote mula sa Reno Stars — kitchen, bathroom, basement at whole house sa Metro Vancouver. Tumawag sa 778-960-7999."
     },
     "blog": {
       "title": "Renovation Tips at Cost Guides | Vancouver | Reno Stars Blog",
-      "description": "Eksperto sa renovation tips, design trends, at praktikal na ideya para sa iyong Vancouver home improvement project. Magbasa ng case studies at before-and-after transformations."
+      "description": "Mga tip sa renovation, design trends, at ideya para sa iyong Vancouver home improvement project. Basahin ang case studies at before-and-after transformations."
     },
     "benefits": {
       "title": "Bakit Piliin ang Reno Stars | $5M Insured, WCB & 3-Year Warranty",
@@ -42,7 +42,7 @@
     "serviceLocation": {
       "title": "{service} sa {area} | Reno Stars",
       "titleWithTagline": "{service} sa {area} – {tagline} | Reno Stars",
-      "description": "Eksperto sa {service} sa {area} ng Reno Stars. {years}+ taong karanasan, $5M CGL insurance, active na WCB coverage, hanggang 3 taong warranty. Tingnan ang local projects at kumuha ng libreng quote ngayon."
+      "description": "Eksperto na {service} sa {area} — {years}+ taon, $5M CGL insurance, WCB, 3-taong warranty. Libreng quote ngayon."
     },
     "areas": {
       "title": "Renovation Near You | 17 Metro Vancouver Areas | Reno Stars",
@@ -58,15 +58,15 @@
     },
     "process": {
       "title": "Renovation Workflow: 5 Hakbang | Reno Stars Vancouver",
-      "description": "Alamin ang aming streamlined 5-step renovation workflow. Mula initial consultation hanggang project handover, ginagawa naming simple at worry-free ang iyong renovation journey."
+      "description": "Alamin ang aming 5-step renovation workflow. Mula sa initial consultation hanggang project handover, ginagawa naming simple at worry-free ang renovation."
     },
     "showroom": {
       "title": "Renovation Showroom Richmond BC | Libreng Konsultasyon | Reno Stars",
-      "description": "Bumisita sa aming Richmond BC showroom: hawakan ang totoong materyales, tingnan ang kitchen at bathroom displays, kumuha ng libreng quote sa isang iglap. Bukas Lun-Sab 9:30AM. Walang appointment kailangan."
+      "description": "Bisitahin ang aming Richmond BC showroom: hawakan ang materyales, tingnan ang kitchen at bathroom displays, libreng quote. Lun-Sab 9:30AM. Walang appointment."
     },
     "guides": {
       "title": "Renovation Cost Guides | Vancouver BC | Reno Stars",
-      "description": "Libreng renovation cost guides base sa totoong project data mula sa Greater Vancouver. Kitchen, bathroom, at whole-house renovation pricing na may aktwal na budget at timeline.",
+      "description": "Libreng renovation cost guides base sa totoong project data ng Greater Vancouver. Kitchen, bathroom, at whole-house renovation pricing na may aktwal na budget.",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
         "description": "Magkano ang kitchen renovation sa Vancouver? Totoong pricing mula $15,000 hanggang $72,000 base sa 16 na natapos na project. Kumuha ng tumpak na cost breakdown ayon sa tier."
@@ -106,11 +106,11 @@
     },
     "financing": {
       "title": "Renovation Financing at Budget Guide | Vancouver | Reno Stars",
-      "description": "I-explore ang renovation financing options sa Metro Vancouver. HELOC, personal loans, mortgage refinancing, at budget planning tips para sa iyong home renovation project."
+      "description": "I-explore ang renovation financing options sa Metro Vancouver. HELOC, personal loans, mortgage refinancing, at tips sa budget para sa iyong home renovation."
     },
     "beforeAfter": {
       "title": "Before at After: Real Vancouver Renovations | Reno Stars",
-      "description": "Kapansin-pansing before at after renovation transformations mula sa Metro Vancouver. Totoong projects, totoong cost, totoong resulta. Kitchen, bathroom at whole-house."
+      "description": "Before at after renovation transformations mula sa Metro Vancouver. Totoong projects, totoong cost, totoong resulta. Kitchen, bathroom at whole-house."
     },
     "features": {
       "title": "Bakit Reno Stars | $5M Insured, 3-Year Warranty, WCB Active",

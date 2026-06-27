@@ -6,7 +6,7 @@
     },
     "services": {
       "title": "Dịch Vụ Cải Tạo Vancouver — Bảo Hiểm $5M | Reno Stars",
-      "description": "Dịch vụ cải tạo phòng bếp, phòng tắm, toàn bộ nhà, tầng hầm và thương mại khắp Metro Vancouver. 20+ năm kinh nghiệm, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí."
+      "description": "Dịch vụ cải tạo nhà bếp, phòng tắm, toàn bộ nhà, tầng hầm và thương mại tại Metro Vancouver. 20+ năm, bảo hiểm $5M CGL, bảo hành 3 năm. Báo giá miễn phí."
     },
     "projects": {
       "title": "Hồ Sơ Dự Án Cải Tạo Vancouver | Trước & Sau | Reno Stars",
@@ -14,15 +14,15 @@
     },
     "projectsBudget": {
       "title": "Dự án cải tạo {tier} Vancouver | Ngôi sao Reno",
-      "description": "Các dự án cải tạo {tier} thực tế trên khắp Metro Vancouver - chi phí thực tế, ảnh trước/sau và tiến trình. Lọc theo nhà bếp, phòng tắm, tầng hầm hoặc toàn bộ ngôi nhà."
+      "description": "Dự án cải tạo {tier} thực tế tại Metro Vancouver — chi phí thực tế, ảnh trước/sau và tiến trình. Lọc theo nhà bếp, phòng tắm, tầng hầm hoặc toàn bộ nhà."
     },
     "contact": {
       "title": "Báo Giá Cải Tạo Miễn Phí Vancouver | Liên Hệ Reno Stars",
-      "description": "Nhận báo giá cải tạo miễn phí từ Reno Stars — công ty cải tạo đáng tin cậy của Vancouver. Cải tạo phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà tại Metro Vancouver. Gọi 778-960-7999."
+      "description": "Nhận báo giá cải tạo miễn phí từ Reno Stars — phòng bếp, phòng tắm, tầng hầm và toàn bộ nhà tại Metro Vancouver. Gọi 778-960-7999."
     },
     "blog": {
       "title": "Mẹo Cải Tạo & Hướng Dẫn Chi Phí | Vancouver | Blog Reno Stars",
-      "description": "Mẹo cải tạo chuyên gia, xu hướng thiết kế và ý tưởng thực tế cho dự án cải tạo nhà của bạn tại Vancouver. Đọc các nghiên cứu trường hợp và biến đổi trước-và-sau."
+      "description": "Mẹo cải tạo chuyên gia, xu hướng thiết kế và ý tưởng thực tế cho dự án cải tạo nhà tại Vancouver. Đọc các nghiên cứu trường hợp và biến đổi trước-và-sau."
     },
     "benefits": {
       "title": "Vì Sao Chọn Reno Stars | Bảo Hiểm $5M, WCB & Bảo Hành 3 Năm",
@@ -42,7 +42,7 @@
     "serviceLocation": {
       "title": "{service} tại {area} | Reno Stars",
       "titleWithTagline": "{service} tại {area} – {tagline} | Reno Stars",
-      "description": "{service} chuyên nghiệp tại {area} bởi Reno Stars. Hơn {years} năm kinh nghiệm, bảo hiểm $5M CGL, bảo hiểm WCB đang hiệu lực, bảo hành lên đến 3 năm. Xem các dự án địa phương và nhận báo giá miễn phí ngay hôm nay."
+      "description": "{service} chuyên nghiệp tại {area} bởi Reno Stars — {years}+ năm, bảo hiểm $5M CGL, WCB, bảo hành 3 năm. Báo giá miễn phí ngay hôm nay."
     },
     "areas": {
       "title": "Cải Tạo Gần Bạn | 17 Khu Vực Metro Vancouver | Reno Stars",
@@ -58,15 +58,15 @@
     },
     "process": {
       "title": "Quy Trình Cải Tạo: 5 Bước | Reno Stars Vancouver",
-      "description": "Tìm hiểu về quy trình cải tạo 5 bước được tinh giản của chúng tôi. Từ tư vấn ban đầu đến bàn giao dự án, chúng tôi làm cho hành trình cải tạo của bạn đơn giản và an tâm."
+      "description": "Tìm hiểu về quy trình cải tạo 5 bước của chúng tôi. Từ tư vấn ban đầu đến bàn giao dự án, chúng tôi làm cho hành trình cải tạo của bạn đơn giản và an tâm."
     },
     "showroom": {
       "title": "Showroom Cải Tạo Richmond BC | Tư Vấn Miễn Phí | Reno Stars",
-      "description": "Ghé thăm showroom của chúng tôi tại Richmond BC: chạm vào vật liệu thực, xem trưng bày phòng bếp & phòng tắm, nhận báo giá miễn phí tại chỗ. Mở cửa T2-T7 từ 9:30. Không cần hẹn trước."
+      "description": "Showroom Richmond BC: chạm vào vật liệu thực, xem trưng bày phòng bếp & phòng tắm, nhận báo giá miễn phí. Mở cửa T2-T7 từ 9:30. Không cần hẹn trước."
     },
     "guides": {
       "title": "Hướng Dẫn Chi Phí Cải Tạo | Vancouver BC | Reno Stars",
-      "description": "Hướng dẫn chi phí cải tạo miễn phí dựa trên dữ liệu dự án thực từ Greater Vancouver. Báo giá cải tạo phòng bếp, phòng tắm và toàn bộ nhà với ngân sách và tiến độ thực.",
+      "description": "Hướng dẫn chi phí cải tạo miễn phí từ dữ liệu dự án thực tại Greater Vancouver. Báo giá cải tạo phòng bếp, phòng tắm và toàn bộ nhà với ngân sách thực.",
       "kitchenCost": {
         "title": "Chi Phí Cải Tạo Phòng Bếp Vancouver BC (2026) | Reno Stars",
         "description": "Cải tạo phòng bếp tại Vancouver tốn bao nhiêu? Báo giá thực từ $15,000 đến $72,000 dựa trên 16 dự án đã hoàn thành. Nhận phân tích chi phí chính xác theo hạng mức."
@@ -106,7 +106,7 @@
     },
     "financing": {
       "title": "Hướng Dẫn Tài Chính & Ngân Sách Cải Tạo | Vancouver | Reno Stars",
-      "description": "Khám phá các lựa chọn tài chính cải tạo tại Metro Vancouver. HELOC, vay cá nhân, tái tài trợ thế chấp và mẹo lập kế hoạch ngân sách cho dự án cải tạo nhà của bạn."
+      "description": "Khám phá các lựa chọn tài chính cải tạo tại Metro Vancouver. HELOC, vay cá nhân, tái tài trợ thế chấp và mẹo ngân sách cho dự án cải tạo nhà của bạn."
     },
     "beforeAfter": {
       "title": "Trước & Sau: Cải Tạo Vancouver Thực | Reno Stars",
