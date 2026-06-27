@@ -9,8 +9,8 @@
       "description": "整个大温哥华地区的厨房、浴室、整栋房子、地下室和商业装修。 20 多年，500 万加元 CGL 保险，3 年保修。"
     },
     "projects": {
-      "title": "100+ 温哥华装修项目 | 改造前后 | Reno Stars",
-      "description": "温哥华大都会地区 100 多个真实的改造项目 - 前后照片、实际成本、时间表。厨房、卫生间、地下室、全屋。"
+      "title": "温哥华装修作品集 | 改造前后 | Reno Stars",
+      "description": "大温哥华地区真实装修项目 — 前后照片与实际成本。厨房、浴室、地下室及全屋改造案例。"
     },
     "projectsBudget": {
       "title": "温哥华 | {tier} 装修项目Reno Stars",
@@ -25,12 +25,12 @@
       "description": "温哥华家居装修项目的专家装修技巧、设计趋势和实用想法。阅读案例研究和转型前后。"
     },
     "benefits": {
-      "title": "为什么选择Reno Stars | 70+ 5星 评论，500 万加元保险",
-      "description": "70 多条 Google 五星级评论、500 万加元的 CGL 保险、有效的 WCB 保险。透明的报价和反应灵敏的团队。了解为什么温哥华房主信任 Reno Stars。"
+      "title": "为什么选择Reno Stars | $500万保险、WCB及3年质保",
+      "description": "已认证的 $500 万 CGL 保险、有效的 WCB 保险、3 年工艺保修。透明报价和专业团队。了解为什么温哥华房主信任 Reno Stars。"
     },
     "design": {
       "title": "装修设计图库 | 真实温哥华项目 | Reno Stars",
-      "description": "浏览 100 多个真实的大温哥华地区项目的装修设计理念。厨房、浴室、地下室和全屋灵感与实际成本。"
+      "description": "浏览大温哥华地区真实装修项目的设计理念。厨房、浴室、地下室和全屋灵感与实际成本。"
     },
     "projectCategory": {
       "title": "{category} 装修项目 |温哥华Reno Stars",
@@ -66,7 +66,7 @@
     },
     "guides": {
       "title": "2026 年温哥华装修成本：4000 加元至 200000 加元以上（按项目类型划分）",
-      "description": "真正的温哥华装修费用来自 100 多个项目。厨房$15K–$72K，浴室$10K–$60K，全屋$50K–$200K+，地下室$30K–$120K。免费报价。",
+      "description": "温哥华装修费用指南 2026 — 厨房 $15K–$72K，浴室 $10K–$60K，地下室 $30K–$120K+，全屋 $50K–$200K+。真实项目，免费报价。",
       "kitchenCost": {
         "title": "2026 年温哥华厨房装修成本：$15K–$72K |Reno Stars",
         "description": "温哥华厨房装修平均成本：预算为$15K–$27K，中档为$28K–$38K，高端为$40K+。来自 16 个真实的 2026 年项目。"
@@ -97,12 +97,12 @@
       }
     },
     "about": {
-      "title": "关于 Reno Stars | 20+ 年，70+ 5星 温哥华装修",
-      "description": "认识 100 多项大温哥华地区翻新工程背后的团队。 20 多年经验，500 万加元保险，WCB 承保，70 多条 Google 五星级评论。免费咨询。"
+      "title": "关于 Reno Stars | 持牌温哥华装修承包商",
+      "description": "认识 Reno Stars 团队 — 大温哥华地区持牌装修承包商。20 年以上经验，$500 万 CGL 保险，WCB 承保。免费咨询。"
     },
     "reviews": {
-      "title": "Reno Stars 评论 — 70+ 已验证 5星 温哥华客户",
-      "description": "70 多个来自温哥华真实房主的经过验证的 Google 五星级评级 - 厨房、浴室和全屋翻新。了解为什么大温哥华家庭信任 Reno Stars。"
+      "title": "Reno Stars 评论 — 温哥华真实客户评价",
+      "description": "来自温哥华真实房主的 Google 认证评价 — 厨房、浴室和全屋翻新。了解为什么大温哥华家庭信任 Reno Stars。"
     },
     "financing": {
       "title": "装修融资与预算指南 | 温哥华 | Reno Stars",
@@ -113,12 +113,12 @@
       "description": "大温哥华地区改造前后的惊人对比。真实的项目、真实的成本、真实的结果。厨房、浴室和整个房子。"
     },
     "features": {
-      "title": "为什么选择Reno Stars | 500 万加元保险，3 年保修，70 多条评论",
-      "description": "Reno Stars 的与众不同之处在于：500 万加元的 CGL 保险、WCB 保险、3 年工艺保修、双语团队、70 多条五星级 Google 评论。温哥华。"
+      "title": "为什么选择Reno Stars | $500万保险、3年质保、WCB认证",
+      "description": "Reno Stars 的与众不同之处：$500 万 CGL 保险、WCB 保险、3 年工艺保修、双语团队及已认证 Google 评价。温哥华。"
     },
     "nearMe": {
       "title": "我附近的家居装修 |温哥华地铁 |Reno Stars",
-      "description": "您附近的顶级装修公司，位于温哥华、列治文、本拿比、萨里 + 14 个大温哥华地区城市。 70+ Google 5星，20+ 年，保额 500 万加元。"
+      "description": "您附近的顶级装修公司，位于温哥华、列治文、本拿比、萨里 + 14 个大温哥华地区城市。20 年以上经验，$500 万 CGL 保险，WCB 承保。"
     },
     "localBusinessDescription": "大温哥华地区的专业家居装修服务。厨房、卫生间、全屋装修。已获得许可，拥有高达 500 万加元的 CGL 保险、有效的 WCB 保险以及长达 3 年的保修。"
   },

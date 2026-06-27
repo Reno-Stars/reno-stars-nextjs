@@ -9,8 +9,8 @@
       "description": "整個大溫哥華地區的廚房、浴室、整棟房子、地下室和商業裝修。 20 多年，500 萬加元 CGL 保險，3 年保固。"
     },
     "projects": {
-      "title": "100+ 溫哥華裝修工程 | 改造前後 | Reno Stars",
-      "description": "溫哥華大都會地區 100 多個真實的改造項目 - 前後照片、實際成本、時間表。廚房、衛浴、地下室、全屋。"
+      "title": "溫哥華裝修作品集 | 改造前後 | Reno Stars",
+      "description": "大溫哥華地區真實裝修項目 — 前後照片與實際成本。廚房、浴室、地下室及全屋改造案例。"
     },
     "projectsBudget": {
       "title": "溫哥華 | {tier} 裝修工程 | Reno Stars",
@@ -25,12 +25,12 @@
       "description": "溫哥華家居裝修專案的專家裝修技巧、設計趨勢和實用想法。閱讀案例研究和轉型前後。"
     },
     "benefits": {
-      "title": "為何選擇 Reno Stars | 70+ 5星評論，500萬保險 | 溫哥華",
-      "description": "70 多則 Google 五星評論、500 萬加元的 CGL 保險、有效的 WCB 保險。透明的報價和反應靈敏的團隊。了解為什麼溫哥華房主信任 Reno Stars。"
+      "title": "為何選擇 Reno Stars | $500萬保險、WCB及3年保固",
+      "description": "已認證的 $500 萬 CGL 保險、有效的 WCB 保險、3 年工藝保固。透明報價和專業團隊。了解為什麼溫哥華房主信任 Reno Stars。"
     },
     "design": {
       "title": "裝修設計圖庫 | 真實溫哥華工程 | Reno Stars",
-      "description": "瀏覽 100 多個真實的大溫哥華地區專案的裝修設計理念。廚房、浴室、地下室和全屋靈感與實際成本。"
+      "description": "瀏覽大溫哥華地區真實裝修項目的設計理念。廚房、浴室、地下室和全屋靈感與實際成本。"
     },
     "projectCategory": {
       "title": "{category} 裝修工程 | Reno Stars 溫哥華",
@@ -66,7 +66,7 @@
     },
     "guides": {
       "title": "2026 年溫哥華裝修成本：4000 加元至 200000 加元以上（按項目類型劃分）",
-      "description": "真正的溫哥華裝修費用來自 100 多個項目。廚房$15K–$72K，浴室$10K–$60K，全屋$50K–$200K+，地下室$30K–$120K。免費報價。",
+      "description": "溫哥華裝修費用指南 2026 — 廚房 $15K–$72K，浴室 $10K–$60K，地下室 $30K–$120K+，全屋 $50K–$200K+。真實項目，免費報價。",
       "kitchenCost": {
         "title": "2026 年溫哥華廚房裝修成本：$15K–$72K | Reno Stars",
         "description": "溫哥華廚房裝修平均成本：預算為$15K–$27K，中檔為$28K–$38K，高端為$40K+。來自 16 個真實的 2026 年專案。"
@@ -97,12 +97,12 @@
       }
     },
     "about": {
-      "title": "關於 Reno Stars | 20+ 年，70+ 5星 溫哥華裝修",
-      "description": "認識 100 多項大溫哥華地區翻新工程背後的團隊。 20 多年經驗，500 萬加元保險，WCB 承保，70 多則 Google 五星級評論。免費諮詢。"
+      "title": "關於 Reno Stars | 持牌溫哥華裝修承包商",
+      "description": "認識 Reno Stars 團隊 — 大溫哥華地區持牌裝修承包商。20 年以上經驗，$500 萬 CGL 保險，WCB 承保。免費諮詢。"
     },
     "reviews": {
-      "title": "Reno Stars 評論 — 70+ 已驗證 5星 溫哥華客戶",
-      "description": "70 多個來自溫哥華真實房主的經過驗證的 Google 五星級評級 - 廚房、浴室和全屋翻新。了解為什麼大溫哥華家庭信任 Reno Stars。"
+      "title": "Reno Stars 評論 — 溫哥華真實客戶評價",
+      "description": "來自溫哥華真實房主的 Google 認證評價 — 廚房、浴室和全屋翻新。了解為什麼大溫哥華家庭信任 Reno Stars。"
     },
     "financing": {
       "title": "裝修融資與預算指南 | 溫哥華 | Reno Stars",
@@ -113,12 +113,12 @@
       "description": "大溫哥華地區改造前後的驚人對比。真實的項目、真實的成本、真實的結果。廚房、浴室和整個房子。"
     },
     "features": {
-      "title": "為什麼選擇 Reno Stars | 500 萬保險，3 年保固，70+ 評論",
-      "description": "Reno Stars 的與眾不同之處在於：500 萬加元的 CGL 保險、WCB 保險、3 年工藝保固、雙語團隊、70 多則五星級 Google 評論。溫哥華。"
+      "title": "為何選擇 Reno Stars | $500萬保險、3年保固、WCB認證",
+      "description": "Reno Stars 的與眾不同之處：$500 萬 CGL 保險、WCB 保險、3 年工藝保固、雙語團隊及已認證 Google 評價。溫哥華。"
     },
     "nearMe": {
       "title": "我附近的裝修 | 大溫哥華 | Reno Stars",
-      "description": "您附近的頂級裝修公司，位於溫哥華、列治文、本拿比、薩裡 + 14 個大溫哥華地區城市。 70+ Google 5星，20+ 年，保額 500 萬加元。"
+      "description": "您附近的頂級裝修公司，位於溫哥華、列治文、本拿比、薩裡 + 14 個大溫哥華地區城市。20 年以上經驗，$500 萬 CGL 保險，WCB 承保。"
     },
     "localBusinessDescription": "大溫哥華地區的專業家居裝修服務。廚房、衛浴、全屋裝修。已獲得許可，擁有高達 500 萬加元的 CGL 保險、有效的 WCB 保險以及長達 3 年的保固。"
   },
