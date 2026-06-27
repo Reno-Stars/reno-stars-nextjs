@@ -442,10 +442,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Bathroom Renovation Burnaby | $15K–$45K | Reno Stars',
       description: 'Burnaby bathroom renovation — tiled showers, tub conversions, custom vanities. Metrotown to Heights. $15K–$45K, 3–6 weeks. Free quote.',
     },
-    'bathroom/maple-ridge': {
-      title: 'Bathroom Renovation Maple Ridge | $15K–$35K | Reno Stars',
-      description: 'Maple Ridge bathroom renovation with custom Glass Door, tiled walls & quartz vanity. Real project: $18K–$21K. Free in-home quote.',
-    },
     // Q7 (64 imp pos 5.2) "bathroom reno vancouver" + Q10 (57 imp pos 1.5) "bathroom remodel vancouver".
     // Page is already ranking — entire fix is snippet attractiveness, not rank.
     'bathroom/vancouver': {
@@ -471,10 +467,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'kitchen/surrey': {
       title: 'Kitchen Renovation Surrey | $20K–$55K | Reno Stars',
       description: 'Surrey kitchen renovation — Fleetwood, Newton, Cloverdale, South Surrey. Custom & prefab cabinets, quartz, layout redesign. $20K–$55K, 3–5 weeks. Free quote.',
-    },
-    'bathroom/richmond': {
-      title: 'Bathroom Renovation Richmond BC | $15K–$45K | Reno Stars',
-      description: 'Richmond bathroom renovation — Steveston, Brighouse, Terra Nova, Hamilton. Walk-in showers, tub conversions, custom vanities. $15K–$45K, 3–6 weeks. Free quote.',
     },
     'bathroom/north-vancouver': {
       title: 'Bathroom Renovation North Vancouver | $15K–$45K | Reno Stars',
