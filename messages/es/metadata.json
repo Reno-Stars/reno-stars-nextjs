@@ -2,11 +2,11 @@
   "metadata": {
     "home": {
       "title": "Renovaciones Residenciales y Comerciales en Vancouver | Reno Stars",
-      "description": "Remodelaciones de cocina, baño y casa completa en Metro Vancouver. {years}+ años de experiencia, seguro CGL de $5M, equipos cubiertos por WCB y 3 años de garantía. Vea más de 100 proyectos completados u obtenga su cotización gratis."
+      "description": "Empresa de remodelación residencial y comercial en Metro Vancouver — cocinas, baños, casas completas. {years}+ años, seguro $5M CGL, WCB. Cotización gratis."
     },
     "services": {
       "title": "Servicios de remodelación en Vancouver — $5M asegurado | Reno Stars",
-      "description": "Servicios de remodelación de cocina, baño, casa completa, sótano y comercial en todo Metro Vancouver. Más de 20 años de experiencia, seguro CGL de $5M, 3 años de garantía. Cotizaciones gratis."
+      "description": "Remodelaciones de cocina, baño, casa completa, sótano y comercial en Metro Vancouver. {years}+ años, seguro CGL $5M, garantía 3 años. Cotizaciones gratis."
     },
     "projects": {
       "title": "Portafolio de Renovación Vancouver | Antes y Después | Reno Stars",
@@ -14,7 +14,7 @@
     },
     "projectsBudget": {
       "title": "{tier} Proyectos de renovación Vancouver | Reno Stars",
-      "description": "Proyectos reales de renovación {tier} en Metro Vancouver: costos reales, fotografías de antes y después y cronogramas. Filtrar por cocina, baño, sótano o toda la casa."
+      "description": "Proyectos reales de renovación {tier} en Metro Vancouver — costos reales y fotos antes/después. Filtra por cocina, baño, sótano o casa completa."
     },
     "contact": {
       "title": "Cotización gratis de remodelación en Vancouver | Contacto Reno Stars",
@@ -29,8 +29,8 @@
       "description": "Seguro CGL de $5M, WCB, garantía 3 años. Presupuestos transparentes y equipos receptivos. Vea por qué los propietarios de Vancouver confían en Reno Stars."
     },
     "design": {
-      "title": "Galería de diseño de remodelación | Proyectos reales en Vancouver | Reno Stars",
-      "description": "Explore ideas de diseño de remodelación a partir de más de 100 proyectos reales en Metro Vancouver. Inspiración para cocina, baño, sótano y casa completa."
+      "title": "Galería de Diseño de Remodelación Vancouver | Reno Stars",
+      "description": "Explore ideas de diseño de remodelación de proyectos reales en Metro Vancouver. Inspiración para cocina, baño, sótano y casa completa."
     },
     "projectCategory": {
       "title": "Proyectos de remodelación de {category} | Reno Stars Vancouver",
@@ -65,7 +65,7 @@
       "description": "Visite nuestro showroom en Richmond BC: toque materiales reales, vea exhibiciones de cocinas y baños, obtenga una cotización gratis. Lun-Sáb 9:30 AM. Sin cita previa."
     },
     "guides": {
-      "title": "Costo de renovación Vancouver 2026: $4K–$200K+ por tipo de proyecto | Reno Stars",
+      "title": "Costos de Renovación Vancouver 2026 | Reno Stars",
       "description": "Guías gratis de costos de remodelación basadas en datos reales del Greater Vancouver. Precios de cocina, baño y casa completa con presupuestos y plazos reales.",
       "kitchenCost": {
         "title": "Costo de remodelación de cocina Vancouver BC (2026) | Reno Stars",
@@ -105,12 +105,12 @@
       "description": "Reseñas Google verificadas de propietarios en Vancouver — cocinas, baños y casas. Vea por qué las familias de Metro Vancouver confían en Reno Stars."
     },
     "financing": {
-      "title": "Guía de financiamiento y presupuesto de renovación | Vancouver | Reno Stars",
+      "title": "Financiamiento de Renovación Vancouver | Reno Stars",
       "description": "Explore opciones de financiamiento para remodelaciones en Metro Vancouver. HELOC, préstamos personales, refinanciamiento hipotecario y consejos de presupuesto."
     },
     "beforeAfter": {
       "title": "Antes y después: remodelaciones reales en Vancouver | Reno Stars",
-      "description": "Impresionantes transformaciones antes/después de remodelaciones en Metro Vancouver. Proyectos reales, costos reales, resultados reales. Cocina, baño y casa completa."
+      "description": "Transformaciones antes/después de remodelaciones en Metro Vancouver. Proyectos reales, costos reales, resultados reales. Cocina, baño y casa completa."
     },
     "features": {
       "title": "Por qué Reno Stars | $5M Asegurado, Garantía 3 Años, WCB Activo",
