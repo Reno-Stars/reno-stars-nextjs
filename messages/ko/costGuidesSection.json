@@ -8,7 +8,8 @@
       "basement": "지하 개조 비용",
       "wholeHouse": "집 전체 개조 비용",
       "commercial": "상업시설 개조 비용",
-      "cabinet": "캐비닛 재마무리 비용"
+      "cabinet": "캐비닛 재마무리 비용",
+      "basementSuite": "지하실 스위트 비용"
     },
     "financingPrompt": "리모델링 비용을 지불하는 방법이 궁금하십니까?",
     "financingCta": "파이낸싱 옵션 보기 →",

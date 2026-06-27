@@ -8,7 +8,8 @@
       "basement": "Costo de renovación del sótano",
       "wholeHouse": "Costo de renovación de toda la casa",
       "commercial": "Costo de renovación comercial",
-      "cabinet": "Costo de reacabado del gabinete"
+      "cabinet": "Costo de reacabado del gabinete",
+      "basementSuite": "Costo de Suite en Sótano"
     },
     "financingPrompt": "¿Se pregunta cómo pagar su renovación?",
     "financingCta": "Ver opciones de financiación →",

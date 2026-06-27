@@ -8,7 +8,8 @@
       "basement": "Gastos sa Pagkukumpuni ng Basement",
       "wholeHouse": "Gastos sa Pagkukumpuni ng Buong Bahay",
       "commercial": "Gastos sa Komersyal na Pagkukumpuni",
-      "cabinet": "Gastos sa Pag-aayos ng Gabinete"
+      "cabinet": "Gastos sa Pag-aayos ng Gabinete",
+      "basementSuite": "Gastos sa Basement Suite"
     },
     "financingPrompt": "Nag-iisip kung paano babayaran ang iyong renovation?",
     "financingCta": "Tingnan ang mga opsyon sa financing →",

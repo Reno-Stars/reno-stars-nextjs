@@ -37,6 +37,9 @@ const COST_GUIDE_SLUGS = [
   { slug: 'whole-house-renovation-cost-vancouver', labelKey: 'wholeHouse' },
   { slug: 'commercial-renovation-cost-vancouver', labelKey: 'commercial' },
   { slug: 'cabinet-refinishing-cost-vancouver', labelKey: 'cabinet' },
+  // 2026-06-26: Added basement-suite guide — was the only guide missing from
+  // this section. Now all 7 cost guides are linked from the homepage hub.
+  { slug: 'basement-suite-cost-vancouver', labelKey: 'basementSuite' },
 ] as const;
 
 export default async function CostGuidesLinkSection({ locale }: { locale: Locale }) {

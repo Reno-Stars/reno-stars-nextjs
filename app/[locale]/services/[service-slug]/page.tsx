@@ -148,6 +148,70 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
   basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
   'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
+  // 2026-06-26 Tick 663: GSC zh service page CTR audit — three services missing zh overrides,
+  // falling back to truncated long_description_zh (starts with English "Vancouver" or mid-sentence cut).
+  // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
+  // poly-b-replacement: 49 imp / 4.1% CTR, short zh description. Prices from services.description_zh DB column.
+  'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
+  cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
+  'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
+};
+
+/**
+ * ZH-HANT meta description overrides — Traditional Chinese (Taiwan/HK audience).
+ * Cross-locale scanner (2026-06-26 tick 670) detected zh-Hant service pages
+ * serving simplified-Chinese descriptions because zh-Hant fell through to
+ * truncateMetaDescription(long_description_zh_hant) which is simplified.
+ * CTR for zh-Hant is 8.93% — highest-converting locale. Fixing the language
+ * mismatch with clean Traditional Chinese overrides matching the en/zh pattern.
+ * Prices and facts mirror the zh overrides (same source); only character set
+ * and vocabulary converted to Traditional Chinese.
+ */
+const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:       '溫哥華廚房翻新 — 訂製櫥櫃、石英檯面、磁磚、管道及電氣一站式服務。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
+  bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
+  basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
+  'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
+  cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
+  'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
+  'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
+};
+
+/**
+ * KO meta description overrides — Korean audience (ko CTR 8.57%).
+ * Cross-locale scanner (2026-06-26 tick 671) found ko service pages serving
+ * English "Vancouver — 3-Yr Warranty" in titles and machine-translated
+ * truncated long_description_ko as descriptions. No koServiceMetaDescriptions
+ * constant existed. Fix follows same pattern as zh/zh-Hant overrides.
+ * Korean titles from DB (localizations->>'titleKo') are already in Korean;
+ * only the geo+warranty suffix and description were non-Korean.
+ */
+const koServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:             '밴쿠버 주방 리노베이션 — 맞춤형 캐비닛, 쿼츠 상판, 타일, 배관·전기 일괄 시공. 500만 보험, 3년 공법 보증. Metro Vancouver 전 지역. 무료 견적.',
+  bathroom:            '밴쿠버 욕실 리노베이션 — 방수 공사, 맞춤형 타일, 샤워부스·욕조 설치. 500만 보험, 3년 공법 보증. Metro Vancouver 전 지역. 무료 견적.',
+  basement:            'Metro Vancouver 지하실 리노베이션 — 엔터테인먼트 룸, 합법 스위트, 홈시어터 일괄 시공. 허가 대행. 500만 보험, 3년 보증. 무료 견적.',
+  'whole-house':       '밴쿠버 전체 주택 리노베이션 — 주방·욕실·바닥재 공사를 단일 계약으로 진행, 전담 PM 배치. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
+  cabinet:             '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.',
+  'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
+  'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
+};
+
+/**
+ * JA meta description overrides — Japanese audience (ja CTR 16.67% — highest locale).
+ * Cross-locale scanner (2026-06-26 tick 672) found ja service pages serving
+ * English "Vancouver — 3-Yr Warranty" in titles and machine-translated
+ * truncated long_description_ja as descriptions. Fix follows zh/zh-Hant/ko pattern.
+ * Japanese titles from DB (localizations->>'titleJa') are already in Japanese;
+ * only the geo+warranty suffix and description were non-Japanese.
+ */
+const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
+  kitchen:             'バンクーバーのキッチンリノベーション — カスタムキャビネット、石英カウンタートップ、タイル、配管・電気を一括施工。500万保険、3年工事保証。Metro Vancouver全域。無料見積もり。',
+  bathroom:            'バンクーバーのバスルームリノベーション — 防水工事、カスタムタイル、シャワー・バスタブ設置。500万保険、3年工事保証。Metro Vancouver全域。無料見積もり。',
+  basement:            'Metro Vancouverの地下室リノベーション — エンターテイメントルーム、合法スイート、ホームシアターを一括施工。許可証代行。500万保険、3年保証。無料見積もり。',
+  'whole-house':       'バンクーバーの全体リノベーション — キッチン・バスルーム・フローリングをワンコントラクトで、専任PMが統括。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
+  cabinet:             'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。',
+  'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
+  'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -163,16 +227,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   const description = (locale === 'en' && enServiceMetaDescriptions[serviceSlug])
     || (locale === 'zh' && zhServiceMetaDescriptions[serviceSlug])
+    || (locale === 'zh-Hant' && zhHantServiceMetaDescriptions[serviceSlug])
+    || (locale === 'ko' && koServiceMetaDescriptions[serviceSlug])
+    || (locale === 'ja' && jaServiceMetaDescriptions[serviceSlug])
     || truncateMetaDescription(localizedService.long_description || localizedService.description);
 
   const ogImage = service.image || siteImages.hero;
 
-  // Title length: keep under Google's ~60-char SERP truncation cap. Dropping
-  // "Free Quote, " (and the ZH equivalent "免费报价, ") brings each service title
-  // to 57–61 chars vs the prior 69–73. "3-Yr Warranty" stays as the strongest
-  // trust differentiator — same pattern used in the area-page overrides.
+  // Title length: keep under Google's ~60-char SERP truncation cap.
+  // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
+  // ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
   const title = locale === 'zh'
     ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
+    : locale === 'zh-Hant'
+    ? `${localizedService.title} 溫哥華 — 3年保固 | Reno Stars`
+    : locale === 'ko'
+    ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
+    : locale === 'ja'
+    ? `${localizedService.title} バンクーバー — 3年保証 | Reno Stars`
     : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
 
   return {

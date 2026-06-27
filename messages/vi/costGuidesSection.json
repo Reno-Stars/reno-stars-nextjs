@@ -8,7 +8,8 @@
       "basement": "Chi phí cải tạo tầng hầm",
       "wholeHouse": "Chi phí cải tạo toàn bộ ngôi nhà",
       "commercial": "Chi phí cải tạo thương mại",
-      "cabinet": "Chi phí hoàn thiện tủ"
+      "cabinet": "Chi phí hoàn thiện tủ",
+      "basementSuite": "Chi phí Suite Tầng Hầm"
     },
     "financingPrompt": "Bạn đang thắc mắc làm thế nào để trả tiền cho việc cải tạo của mình?",
     "financingCta": "Xem các lựa chọn tài chính →",

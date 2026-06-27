@@ -8,7 +8,8 @@
       "basement": "Coût de rénovation du sous-sol",
       "wholeHouse": "Coût de rénovation de toute la maison",
       "commercial": "Coût de rénovation commerciale",
-      "cabinet": "Coût de finition des armoires"
+      "cabinet": "Coût de finition des armoires",
+      "basementSuite": "Coût de Suite au Sous-sol"
     },
     "financingPrompt": "Vous vous demandez comment financer votre rénovation ?",
     "financingCta": "Voir les options de financement →",

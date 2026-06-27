@@ -406,6 +406,10 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               { slug: 'basement-renovation-cost-vancouver', labelKey: 'basement' },
               { slug: 'commercial-renovation-cost-vancouver', labelKey: 'commercial' },
               { slug: 'cabinet-refinishing-cost-vancouver', labelKey: 'cabinet' },
+              // 2026-06-26: basement-suite was the only guide missing from this
+              // component-level grid; adding closes the inbound-link gap for
+              // /guides/basement-suite-cost-vancouver/ across all blog posts.
+              { slug: 'basement-suite-cost-vancouver', labelKey: 'basementSuite' },
             ].map((g) => (
               <Link
                 key={g.slug}
