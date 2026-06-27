@@ -235,6 +235,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = service.image || siteImages.hero;
 
   // Title length: keep under Google's ~60-char SERP truncation cap.
+  // EN title overrides for services where the default template produces > 60 chars.
+  // "Accessible Bathroom Renovation Vancouver — 3-Yr Warranty | Reno Stars" = 70 chars (9 over).
+  // Drop "Renovation" from the title to fit: 57 chars. Source: 2026-06-27 on-page scan.
+  const enServiceMetaTitleOverrides: Partial<Record<string, string>> = {
+    'accessible-bathroom': 'Accessible Bathroom Vancouver — 3-Yr Warranty | Reno Stars',
+  };
+
   // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
   // ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
   const title = locale === 'zh'
@@ -245,7 +252,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
     : locale === 'ja'
     ? `${localizedService.title} バンクーバー — 3年保証 | Reno Stars`
-    : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
+    : (enServiceMetaTitleOverrides[serviceSlug] ?? `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`);
 
   return {
     title,
