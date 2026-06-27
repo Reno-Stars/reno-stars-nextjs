@@ -138,7 +138,9 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   // heat-pump-hvac: 82 imp / 0% CTR pos 77.7. Prices from DB description_en / zh override.
   cabinet:              'Vancouver cabinet refacing & refinishing: painted/refinished from $4K, refacing $8K–$18K, full replacement $20K–$50K. $5M insured, 3-yr warranty. Free quote.',
   'heat-pump-hvac':     'Heat pump installation Metro Vancouver — replace gas furnace, qualify for BC Hydro rebates, paperwork handled. $5M insured, 3-yr warranty. Free quote.',
-  'accessible-bathroom':'Vancouver accessible bathroom renovation — curbless showers, grab bars & comfort-height fixtures. Aging-in-place design. $5M insured, 3-yr warranty. Free quote.',
+  // 2026-06-27 tick-712: swap "comfort-height fixtures" → "HAFI grant support" (160c→155c).
+  // HAFI is a concrete BC grant differentiator; grab bars already implies comfort-height fixtures.
+  'accessible-bathroom':'Vancouver accessible bathroom renovation — curbless showers, grab bars & HAFI grant support. Aging-in-place design. $5M insured, 3-yr warranty. Free quote.',
   'critical-load-panel':'Critical load panel Metro Vancouver — backup sub-panel for generator, battery & EV charger. Heat pump-ready. BC permit included. $5M insured. Free quote.',
   realtor:              'Vancouver renovation consultation for buyers & sellers — Buy–Renovate–Sell strategy, pre-listing upgrades to maximize property value. Free consultation.',
 };
@@ -161,7 +163,9 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   // falling back to truncated long_description_zh (starts with English "Vancouver" or mid-sentence cut).
   // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
   // poly-b-replacement: 49 imp / 4.1% CTR, short zh description. Prices from services.description_zh DB column.
-  'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
+  // 2026-06-27 tick-712: was 87c (over 80c optimal upper bound); trimmed to 76c.
+  // Removed "冬暖夏凉，" (implicit in heat pump) + "全程跟进" + "上门". Key differentiators kept.
+  'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，符合BC Hydro退税资格，代办申请。500万保险，3年保修，Metro Vancouver全区。免费报价。',
   cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
   // 2026-06-27 tick-707: 4 services still missing zh overrides after tick-706 EN sweep.

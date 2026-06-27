@@ -16,8 +16,10 @@ import { getBaseUrl } from '@/lib/utils';
  */
 export const metadata: Metadata = {
   title: 'Vancouver Home Renovations — 20+ Yrs, $5M Insured | Reno Stars',
+  // 2026-06-27 tick-712: was 204c (heavily truncated in SERPs at ~155). Condensed
+  // to 153c — same trust signals, tighter phrasing. 643 imp at pos 4.07.
   description:
-    'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.',
+    'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years, $5M CGL insured, WCB crews, 3-yr warranty. 100+ real projects. Free quote.',
   alternates: {
     canonical: `${getBaseUrl()}/en/`,
     languages: {
