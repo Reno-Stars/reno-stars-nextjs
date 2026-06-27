@@ -277,13 +277,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: 'Electrical Panel Upgrade Delta BC | 200A Service | Reno Stars',
       description: 'Delta electrical panel upgrades — Ladner, Tsawwassen, North Delta. 100A→200A service, EV charger prep, dedicated appliance circuits. BC permit + ESA. Free quote.',
     },
+    // 2026-06-27 tick-713: vancouver 167c→147c (ducted heat pumps→ducted systems,
+    // BC Energy Step Code→BC Step Code, CleanBC rebates available→CleanBC rebates).
+    // burnaby 167c→160c (BC Energy Step Code→BC Step Code). Both were over 160c limit.
     'heat-pump-hvac/vancouver': {
       title: 'Heat Pump Installation Vancouver | $8K–$18K | Reno Stars',
-      description: 'Vancouver heat pump & HVAC installation — ductless mini-splits, ducted heat pumps. BC Energy Step Code ready. CleanBC rebates available. East Van, Kitsilano. $8K–$18K.',
+      description: 'Vancouver heat pump & HVAC installation — ductless mini-splits, ducted systems. CleanBC rebates, BC Step Code ready. East Van, Kitsilano. $8K–$18K.',
     },
     'heat-pump-hvac/burnaby': {
       title: 'Heat Pump Installation Burnaby | $8K–$18K | Reno Stars',
-      description: 'Burnaby heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates, BC Energy Step Code. Metrotown, Heights, Burnaby Mountain. $8K–$18K.',
+      description: 'Burnaby heat pump & HVAC installation — ductless mini-splits, multi-zone systems. CleanBC rebates, BC Step Code. Metrotown, Heights, Burnaby Mountain. $8K–$18K.',
     },
     'heat-pump-hvac/richmond': {
       title: 'Heat Pump Installation Richmond BC | $8K–$18K | Reno Stars',
@@ -700,6 +703,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     'poly-b-replacement/surrey': {
       title: 'Surrey Poly-B 水管更换 | $10K–$25K | 保险续保 | Reno Stars',
       description: 'Surrey Poly-B 水管更换——Fleetwood、Newton、Cloverdale 独立屋。PEX 重新走管，50 年保修 + 保险续保文件。$10K–$25K。',
+    },
+    // 2026-06-27 tick-713: ZH heat pump city overrides — /zh/services/heat-pump-hvac/vancouver/
+    // was serving the EN description (no zh override existed). 55 imp pos 11.87.
+    'heat-pump-hvac/vancouver': {
+      title: '温哥华热泵及空调安装 | $8K–$18K | Reno Stars',
+      description: '温哥华热泵安装 — 无管道迷你分体机、管道式热泵系统。CleanBC退税，符合BC节能规范。东温哥华、基斯兰奴覆盖。$8K–$18K。免费报价。',
     },
     // 2026-06-25: ZH overrides for the 28 new EN combos (kitchen/bathroom/basement/whole-house).
     'kitchen/delta': {
