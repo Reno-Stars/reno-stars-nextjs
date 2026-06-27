@@ -69,31 +69,31 @@
       "description": "Libreng renovation cost guides base sa totoong project data ng Greater Vancouver. Kitchen, bathroom, at whole-house renovation pricing na may aktwal na budget.",
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Magkano ang kitchen renovation sa Vancouver? Totoong pricing mula $15,000 hanggang $72,000 base sa 16 na natapos na project. Kumuha ng tumpak na cost breakdown ayon sa tier."
+        "description": "Magkano ang kitchen renovation sa Vancouver? Totoong pricing mula $15,000 hanggang $72,000 base sa 16 na natapos na project."
       },
       "bathroomCost": {
         "title": "Average Bathroom Renovation Cost Vancouver (2026) | Reno Stars",
-        "description": "Ano ang average na bathroom renovation cost sa Vancouver? Totoong presyo mula $10K–$60K+ base sa 19 na natapos na project. Buong cost breakdown ayon sa 3-piece, 4-piece at 5-piece bathrooms."
+        "description": "Ano ang average na bathroom renovation cost sa Vancouver? Totoong presyo mula $10K–$60K+ base sa 19 na natapos na project."
       },
       "wholeHouseCost": {
         "title": "Whole House Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Whole house renovation cost sa Vancouver: $50K–$200K+ mula sa totoong projects. Buong breakdown ayon sa scope — kitchens, bathrooms, flooring at iba pa. Kumuha ng libreng estimate mula sa Reno Stars."
+        "description": "Whole house renovation cost sa Vancouver: $50K–$200K+ mula sa totoong projects. Buong breakdown ayon sa scope — kitchens, bathrooms, flooring at iba pa."
       },
       "basementCost": {
         "title": "Basement Renovation Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Magkano ang basement renovation sa Vancouver? Karaniwang pricing mula $30,000 hanggang $120,000+ para sa Greater Vancouver. Kumuha ng tumpak na cost breakdown ayon sa tier, plus money-saving tips."
+        "description": "Magkano ang basement renovation sa Vancouver? Karaniwang pricing mula $30,000 hanggang $120,000+ para sa Greater Vancouver."
       },
       "commercialCost": {
         "title": "Commercial Renovation Cost sa Vancouver BC (2026) | Reno Stars",
-        "description": "Magkano ang commercial renovation sa Vancouver? Karaniwang cost ay nasa $50,000 hanggang $1,000,000+. Detalyadong breakdown ayon sa uri ng project na may totoong data."
+        "description": "Magkano ang commercial renovation sa Vancouver? Karaniwang cost ay nasa $50,000 hanggang $1,000,000+. Detalyadong breakdown ayon sa uri ng project na may t."
       },
       "cabinetCost": {
         "title": "Cabinet Refinishing Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Magkano ang cabinet refinishing sa Vancouver? Karaniwang pricing mula $4,000 hanggang $15,000 para sa Greater Vancouver. Ihambing ang refinishing, refacing, at full replacement options."
+        "description": "Magkano ang cabinet refinishing sa Vancouver? Karaniwang pricing mula $4,000 hanggang $15,000 para sa Greater Vancouver. Ihambing ang refinishing, refacing."
       },
       "basementSuiteCost": {
         "title": "Basement Suite Conversion Cost Vancouver BC (2026) | Reno Stars",
-        "description": "Magkano ang legal basement suite sa Vancouver? Karaniwang pricing mula $60,000 hanggang $150,000. Detalyadong cost breakdown, ROI analysis, at municipal regulations."
+        "description": "Magkano ang legal basement suite sa Vancouver? Karaniwang pricing mula $60,000 hanggang $150,000. Detalyadong cost breakdown, ROI analysis."
       }
     },
     "about": {

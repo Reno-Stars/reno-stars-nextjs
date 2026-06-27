@@ -69,7 +69,7 @@
       "description": "Guides coûts rénovation Vancouver 2026 — cuisine $15K–$72K, salle de bain $10K–$60K, sous-sol $30K–$120K+, maison $50K–$200K+. Projets réels, devis gratuit.",
       "kitchenCost": {
         "title": "Coût de rénovation de cuisine Vancouver 2026 : 15 000 $ à 72 000 $ Données réelles",
-        "description": "Coût de rénovation de la cuisine de Vancouver : 15 000 $ à 72 000 $ provenant de 16 projets réels. Niveaux de prix détaillés, délais et ce que votre budget achète réellement. Estimation gratuite en 24h."
+        "description": "Coût de rénovation de la cuisine de Vancouver : 15 000 $ à 72 000 $ provenant de 16 projets réels. Niveaux de prix détaillés."
       },
       "bathroomCost": {
         "title": "Coût Rénovation Salle de Bain Vancouver 2026 | Reno Stars",
@@ -77,23 +77,23 @@
       },
       "wholeHouseCost": {
         "title": "Coût de rénovation de toute la maison Vancouver 2026 : 50 000 $ à 200 000 $ +",
-        "description": "Coût de rénovation de toute la maison à Vancouver : 50 000 $ à plus de 200 000 $ provenant de projets réels. Répartition niveau par niveau : cuisines, salles de bains, revêtements de sol. Tarifs 2026, estimation gratuite."
+        "description": "Coût de rénovation de toute la maison à Vancouver : 50 000 $ à plus de 200 000 $ provenant de projets réels. Répartition niveau par niveau : cuisines."
       },
       "basementCost": {
         "title": "Coût de rénovation du sous-sol Vancouver 2026 : 30 000 $ à 120 000 $ + données réelles",
-        "description": "Coût de rénovation du sous-sol de Vancouver : 30 000 $ à plus de 120 000 $ provenant de projets réels. Répartition des niveaux, guide des permis, conseils pour économiser de l'argent. Données 2026, estimation gratuite en 24h."
+        "description": "Coût de rénovation du sous-sol de Vancouver : 30 000 $ à plus de 120 000 $ provenant de projets réels. Répartition des niveaux, guide des permis."
       },
       "commercialCost": {
         "title": "Coût de la rénovation commerciale Vancouver 2026 : 50 000 $ à 1 M$+",
-        "description": "Coût de la rénovation commerciale à Vancouver : 50 000 $ à 1 M$+ par type de projet. Restaurants, cliniques, bureaux, commerces de détail. Données réelles, planification tenant compte des permis. Estimation gratuite en 24h."
+        "description": "Coût de la rénovation commerciale à Vancouver : 50 000 $ à 1 M$+ par type de projet. Restaurants, cliniques, bureaux, commerces de détail."
       },
       "cabinetCost": {
         "title": "Coût de finition des armoires Vancouver 2026 : 4 000 $ à 15 000 $ Données réelles",
-        "description": "Coût de finition des armoires de Vancouver : 4 000 $ à 15 000 $. Comparaison entre finition, refaçage et remplacement complet. Tarifs 2026, données réelles du projet, estimation gratuite en 24h."
+        "description": "Coût de finition des armoires de Vancouver : 4 000 $ à 15 000 $. Comparaison entre finition, refaçage et remplacement complet."
       },
       "basementSuiteCost": {
         "title": "Coût du sous-sol légal Vancouver 2026 : 60 000 $ à 150 000 $",
-        "description": "Coût de conversion du sous-sol légal de Vancouver : 60 000 $ à 150 000 $. Répartition des coûts, analyse du ROI, règles municipales. Données 2026, estimation gratuite en 24h."
+        "description": "Coût de conversion du sous-sol légal de Vancouver : 60 000 $ à 150 000 $. Répartition des coûts, analyse du ROI, règles municipales."
       }
     },
     "about": {
