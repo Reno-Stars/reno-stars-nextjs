@@ -132,6 +132,15 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   // vancouver" striking-distance. Description now surfaces "poly-b replacement"
   // + "vancouver" + insurance motivation up front, matching query intent.
   'poly-b-replacement': 'Poly-B replacement in Metro Vancouver — full PEX re-pipe, BC permit + inspection included. Required by most BC insurers for homes built 1985–1997. Free quote.',
+  // 2026-06-27: tick-706 — 5 services missing EN overrides, falling back to truncated
+  // long_description mid-sentence. accessible-bathroom: 392 imp / 0.8% CTR pos 16.5
+  // (highest-impact). critical-load-panel: 102 imp / 0% CTR pos 21.3.
+  // heat-pump-hvac: 82 imp / 0% CTR pos 77.7. Prices from DB description_en / zh override.
+  cabinet:              'Vancouver cabinet refacing & refinishing: painted/refinished from $4K, refacing $8K–$18K, full replacement $20K–$50K. $5M insured, 3-yr warranty. Free quote.',
+  'heat-pump-hvac':     'Heat pump installation Metro Vancouver — replace gas furnace, qualify for BC Hydro rebates, paperwork handled. $5M insured, 3-yr warranty. Free quote.',
+  'accessible-bathroom':'Vancouver accessible bathroom renovation — curbless showers, grab bars & comfort-height fixtures. Aging-in-place design. $5M insured, 3-yr warranty. Free quote.',
+  'critical-load-panel':'Critical load panel Metro Vancouver — backup sub-panel for generator, battery & EV charger. Heat pump-ready. BC permit included. $5M insured. Free quote.',
+  realtor:              'Vancouver renovation consultation for buyers & sellers — Buy–Renovate–Sell strategy, pre-listing upgrades to maximize property value. Free consultation.',
 };
 
 /**
