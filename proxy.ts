@@ -70,6 +70,20 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
 export default function proxy(request: NextRequest): NextResponse {
   const { pathname } = request.nextUrl;
 
+  // Canonical host: 301 apex → www. Vercel's domain config used to do this;
+  // now that the site is served behind Cloudflare Tunnel (self-hosted), enforce
+  // it here so the apex doesn't become duplicate content. www is canonical
+  // (NEXT_PUBLIC_BASE_URL = https://www.reno-stars.com).
+  const host = (request.headers.get('host') ?? '').toLowerCase();
+  if (host === 'reno-stars.com' || host.startsWith('reno-stars.com:')) {
+    return addSecurityHeaders(
+      NextResponse.redirect(
+        `https://www.reno-stars.com${pathname}${request.nextUrl.search}`,
+        301,
+      ),
+    );
+  }
+
   // Admin routes — handle auth check (skip login page)
   if (pathname.startsWith('/admin')) {
     if (pathname === '/admin/login' || pathname === '/admin/login/') {

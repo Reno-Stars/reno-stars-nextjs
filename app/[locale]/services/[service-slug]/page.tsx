@@ -245,7 +245,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
     : locale === 'ja'
     ? `${localizedService.title} バンクーバー — 3年保証 | Reno Stars`
-    : `${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`;
+    : ((withWarranty) =>
+        // Keep the trust suffix for short service names (e.g. Kitchen/Bathroom);
+        // drop it for long names so the title stays under Google's ~60-char cap.
+        withWarranty.length <= 60
+          ? withWarranty
+          : `${localizedService.title} Vancouver | Reno Stars`
+      )(`${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`);
 
   return {
     title,
