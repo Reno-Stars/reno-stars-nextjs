@@ -13,19 +13,19 @@
  *
  * Exits 1 if any URL is missing locales or has self-canonical mismatch.
  *
- * Note: buildAlternates() maps zh-Hant (URL prefix) → zh-TW (hreflang key)
- * per Google's BCP-47 recommendation. EXPECTED_LOCALES uses hreflang keys,
- * and HREFLANG_TO_URL_PREFIX maps back to URL path prefixes for href checks.
+ * Note: buildAlternates() emits hreflang="zh-Hant" (matching the URL path
+ * prefix /zh-Hant/ and the sitemap's xhtml:link). An earlier version remapped
+ * to zh-TW here in the page <head> only, which caused a head/sitemap mismatch
+ * flagged by Semrush. EXPECTED_LOCALES now uses the locale slug directly.
  */
 
 const BASE = process.env.BASE || 'https://www.reno-stars.com';
-// Hreflang keys as they appear in the emitted HTML (not URL path prefixes).
-// zh-Hant locale emits hreflang="zh-TW" (see buildAlternates in lib/utils.ts).
+// Hreflang keys as emitted in the page <head> — identical to URL path prefixes.
 // ru/ar/hi/fr added 2026-05-01 for Metro Vancouver demographic expansion.
-const EXPECTED_LOCALES = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr'];
+const EXPECTED_LOCALES = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr'];
 
-// Maps hreflang key → URL path prefix when they differ.
-const HREFLANG_TO_URL_PREFIX = { 'zh-TW': 'zh-Hant' };
+// Maps hreflang key → URL path prefix when they differ (currently empty).
+const HREFLANG_TO_URL_PREFIX = {};
 
 // Pages worth auditing — one of each route shape. If these are correct, the
 // generators are correct.
