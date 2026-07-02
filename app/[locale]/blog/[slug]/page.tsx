@@ -26,43 +26,70 @@ function toIsoString(value: Date | string | null | undefined): string | undefine
 
 
 /**
- * Pull FAQs out of a markdown blog body. Looks for an FAQ section heading
- * (## Frequently Asked Questions / ## FAQs / ## 常见问题) and extracts each
- * `### Question` / answer-paragraph pair. Returns [] if no recognizable
- * FAQ block exists.
+ * Pull FAQs out of a blog body — markdown OR HTML. The blog editor stores
+ * bodies as HTML (`<h2>…</h2>` + `<h3>Q</h3><p>A</p>`); older WordPress-seeded
+ * posts may be markdown (`## FAQ` + `### Q`). Looks for an FAQ section heading
+ * (Frequently Asked Questions / FAQs / 常见问题 / 常見問題) and extracts each
+ * question/answer pair. Returns [] if no recognizable FAQ block exists.
+ *
+ * Without the HTML path, HTML-authored posts silently emitted no FAQPage
+ * structured data even when they had a clear FAQ section — a missed
+ * rich-result / AI-citation opportunity (fixed 2026-07 GEO pass).
  */
 function extractFaqsFromContent(content: string | null | undefined): { question: string; answer: string }[] {
   if (!content) return [];
-  const faqHeading = content.match(/##\s*(?:Frequently Asked Questions|FAQs?|常见问题)\s*\n([\s\S]*?)(?=\n##\s|$)/i);
-  if (!faqHeading) return [];
-  const block = faqHeading[1];
   const out: { question: string; answer: string }[] = [];
 
   function cleanAnswer(raw: string): string {
     return raw
-      .replace(/\[(.+?)\]\((.+?)\)/g, '$1')
-      .replace(/[*_`#>]/g, '')
+      .replace(/<[^>]+>/g, ' ')                    // strip HTML tags (HTML bodies)
+      .replace(/\[(.+?)\]\((.+?)\)/g, '$1')        // md links -> text
+      .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
+      .replace(/&#39;|&rsquo;|&lsquo;/g, "'").replace(/&quot;|&ldquo;|&rdquo;/g, '"')
+      .replace(/^\s*#{1,6}\s+/gm, '')              // md heading marks (line-start only — keeps inline "#1")
+      .replace(/^\s*>\s?/gm, '')                   // md blockquote marks
+      .replace(/[*_`]/g, '')                       // md emphasis / inline code
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 1000);
   }
 
-  // Format 1: ### Heading style
-  const reH3 = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
-  let m: RegExpExecArray | null;
-  while ((m = reH3.exec(block)) !== null) {
-    const question = m[1].trim();
-    const answer = cleanAnswer(m[2]);
-    if (question && answer) out.push({ question, answer });
-  }
+  const FAQ_LABEL = '(?:Frequently Asked Questions|FAQs?|常见问题|常見問題)';
 
-  // Format 2: **Bold question** style (used when ### found nothing)
-  if (out.length === 0) {
-    const reBold = /^\*\*(.+?)\*\*\n([\s\S]*?)(?=\n\*\*|$)/gm;
-    while ((m = reBold.exec(block)) !== null) {
+  // Markdown: the '## FAQ' section, then '### Q' or '**Q**' pairs.
+  const mdHeading = content.match(new RegExp(`##\\s*${FAQ_LABEL}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i'));
+  if (mdHeading) {
+    const block = mdHeading[1];
+    let m: RegExpExecArray | null;
+    const reH3 = /###\s+(.+?)\n+([\s\S]*?)(?=\n###\s|\n##\s|$)/g;
+    while ((m = reH3.exec(block)) !== null) {
       const question = m[1].trim();
       const answer = cleanAnswer(m[2]);
       if (question && answer) out.push({ question, answer });
+    }
+    if (out.length === 0) {
+      const reBold = /^\*\*(.+?)\*\*\n([\s\S]*?)(?=\n\*\*|$)/gm;
+      while ((m = reBold.exec(block)) !== null) {
+        const question = m[1].trim();
+        const answer = cleanAnswer(m[2]);
+        if (question && answer) out.push({ question, answer });
+      }
+    }
+  }
+
+  // HTML: the <h2>…FAQ…</h2> section, then each <h3>Q</h3> + following answer
+  // block (everything up to the next <h3>/<h2> — handles multi-<p> answers).
+  if (out.length === 0) {
+    const htmlHeading = content.match(new RegExp(`<h2[^>]*>\\s*${FAQ_LABEL}[^<]*</h2>([\\s\\S]*?)(?=<h2[\\s>]|$)`, 'i'));
+    if (htmlHeading) {
+      const block = htmlHeading[1];
+      const reHtml = /<h3[^>]*>([\s\S]*?)<\/h3>\s*([\s\S]*?)(?=<h3[\s>]|<h2[\s>]|$)/gi;
+      let m: RegExpExecArray | null;
+      while ((m = reHtml.exec(block)) !== null) {
+        const question = cleanAnswer(m[1]);
+        const answer = cleanAnswer(m[2]);
+        if (question && answer) out.push({ question, answer });
+      }
     }
   }
 
