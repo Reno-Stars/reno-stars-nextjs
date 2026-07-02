@@ -78,8 +78,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     for (const loc of locales) {
       revalidatedPaths.push(`/${loc}/${cfg.base}/${slug}`);
       revalidatedPaths.push(`/${loc}/${cfg.base}`); // the listing index
+      revalidatedPaths.push(`/${loc}/feed.xml`); // per-locale RSS feed
     }
     revalidatedTags.push(...cfg.tags(slug));
+    // A new/edited blog/project/area changes the XML sitemap (a new URL +
+    // its hreflang alternates) and the RSS feeds. Both otherwise carry a
+    // weekly ISR TTL, so freshly published content would sit WITHOUT sitemap
+    // inclusion — and therefore without hreflang — for up to a week. Refresh
+    // them here so every publish is crawlable and hreflang-complete at once.
+    revalidatedPaths.push('/sitemap.xml');
   }
 
   // 2. Explicit paths.
