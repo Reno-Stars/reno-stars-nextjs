@@ -53,16 +53,23 @@ async function fetchReviews(
   return res.json();
 }
 
-/** Read the cached fallback row from the database. Returns null on miss/error. */
-async function readCacheRow(): Promise<GooglePlaceRating | null> {
+interface CacheRow {
+  payload: GooglePlaceRating;
+  /** When the row was last refreshed — drives the lazy self-refresh cadence. */
+  updatedAt: Date;
+}
+
+/** Read the cached fallback row (payload + freshness) from the DB. Returns null on miss/error. */
+async function readCacheRow(): Promise<CacheRow | null> {
   try {
     const rows = await db
-      .select({ payload: googleReviewsCache.payload })
+      .select({ payload: googleReviewsCache.payload, updatedAt: googleReviewsCache.updatedAt })
       .from(googleReviewsCache)
       .where(eq(googleReviewsCache.cacheKey, CACHE_KEY))
       .limit(1);
-    const payload = rows[0]?.payload as GooglePlaceRating | undefined;
-    return payload ?? null;
+    const row = rows[0];
+    if (!row?.payload) return null;
+    return { payload: row.payload as GooglePlaceRating, updatedAt: row.updatedAt };
   } catch (error) {
     console.warn('[getGoogleReviews] Failed to read cache row:', error);
     return null;
@@ -85,20 +92,226 @@ async function updateCache(data: GooglePlaceRating): Promise<void> {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Translation + background self-refresh
+//
+// The cache row is the source of AI-generated per-locale translations. The
+// hot read path (`getGoogleReviews`) only *merges* existing translations onto
+// fresh API results — it never translates. Translation happens here, in
+// `refreshReviewsCache`, which runs at most once per STALE_MS, triggered
+// lazily by site traffic (no external cron). This replaced the local
+// `com.renostars.reviews-cache` launchd job (removed 2026-07).
+// ---------------------------------------------------------------------------
+
+/** How stale the cache row may get before a visit triggers a background refresh. */
+const STALE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+/**
+ * Per-locale display labels + Google Translate target-language (`tl`) codes.
+ * Keys match the site's locale set in i18n/config.ts (minus `en`, the source).
+ * For Chinese variants the `tlCode` differs from the BCP-47 code
+ * (zh → zh-CN, zh-Hant → zh-TW). If the locale set changes, update this map
+ * AND the Locale union in i18n/config.ts in the same change.
+ */
+const TRANSLATION_TARGETS: Array<{
+  locale: import('../i18n/config').Locale;
+  languageLabel: string;
+  tlCode: string;
+}> = [
+  { locale: 'zh',      languageLabel: 'Simplified Chinese',              tlCode: 'zh-CN' },
+  { locale: 'zh-Hant', languageLabel: 'Traditional Chinese (Taiwan)',    tlCode: 'zh-TW' },
+  { locale: 'ja',      languageLabel: 'Japanese',                        tlCode: 'ja' },
+  { locale: 'ko',      languageLabel: 'Korean',                          tlCode: 'ko' },
+  { locale: 'es',      languageLabel: 'Spanish (Latin American)',        tlCode: 'es' },
+  { locale: 'fr',      languageLabel: 'French (Canadian)',               tlCode: 'fr' },
+  { locale: 'ru',      languageLabel: 'Russian',                         tlCode: 'ru' },
+  { locale: 'tl',      languageLabel: 'Tagalog',                         tlCode: 'tl' },
+  { locale: 'vi',      languageLabel: 'Vietnamese',                      tlCode: 'vi' },
+  { locale: 'pa',      languageLabel: 'Punjabi (Gurmukhi script)',       tlCode: 'pa' },
+  { locale: 'fa',      languageLabel: 'Persian/Farsi',                   tlCode: 'fa' },
+  { locale: 'ar',      languageLabel: 'Arabic (Modern Standard)',        tlCode: 'ar' },
+  { locale: 'hi',      languageLabel: 'Hindi (Devanagari script)',       tlCode: 'hi' },
+];
+
+/**
+ * Translate one source text into one target language using the FREE
+ * `translate.googleapis.com/translate_a/single` endpoint (no API key).
+ * Returns `null` on HTTP/parse failure so the caller can skip this
+ * (review × locale) pair without aborting the whole pass.
+ */
+async function translateOne(text: string, tlCode: string): Promise<string | null> {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${encodeURIComponent(tlCode)}&dt=t&q=${encodeURIComponent(text)}`;
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ReviewsCacheBot/1.0)' },
+    });
+    if (!res.ok) {
+      console.warn(`[translate:${tlCode}] HTTP ${res.status} ${res.statusText}`);
+      return null;
+    }
+    const data = (await res.json()) as Array<Array<[string, string, ...unknown[]]>>;
+    const segments = data?.[0];
+    if (!Array.isArray(segments) || segments.length === 0) return null;
+    return segments.map((seg) => (Array.isArray(seg) ? seg[0] : '')).join('').trim() || null;
+  } catch (err) {
+    console.warn(`[translate:${tlCode}] fetch failed:`, err);
+    return null;
+  }
+}
+
+/**
+ * Translate review texts into all configured locales via the FREE Google
+ * Translate endpoint. Per-review × per-locale write-once: reuses any
+ * translation already cached in the DB row for an unchanged (text|locale)
+ * pair, so a refresh only issues requests for genuinely new pairs. A single
+ * locale failure does NOT abort the pass (partial success is valuable), and
+ * requests are lightly throttled (50ms) to avoid the endpoint's burst limit.
+ * Keeps the deprecated `textZh` in sync from `translations.zh`.
+ */
+async function translateReviews(reviews: GoogleReview[]): Promise<void> {
+  // Reuse translations from the existing DB cache row for unchanged reviews.
+  const existing = await readCacheRow();
+  const existingTranslations = new Map<string, string>();
+  for (const r of existing?.payload.reviews ?? []) {
+    if (r.translations) {
+      for (const [locale, translated] of Object.entries(r.translations)) {
+        if (translated) existingTranslations.set(`${r.text}|${locale}`, translated);
+      }
+    }
+    // Migration path: previous rows used only textZh — treat it as translations.zh.
+    if (r.textZh && !existingTranslations.has(`${r.text}|zh`)) {
+      existingTranslations.set(`${r.text}|zh`, r.textZh);
+    }
+  }
+
+  // Apply existing cached translations to the in-memory reviews list.
+  for (const r of reviews) {
+    r.translations = r.translations ?? {};
+    for (const { locale } of TRANSLATION_TARGETS) {
+      const cached = existingTranslations.get(`${r.text}|${locale}`);
+      if (cached) r.translations[locale] = cached;
+    }
+    if (r.translations.zh) r.textZh = r.translations.zh;
+  }
+
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  for (const target of TRANSLATION_TARGETS) {
+    const needs = reviews.filter((r) => !r.translations?.[target.locale]);
+    if (needs.length === 0) continue;
+
+    let successCount = 0;
+    for (const r of needs) {
+      const translated = await translateOne(r.text, target.tlCode);
+      if (translated) {
+        r.translations = r.translations ?? {};
+        r.translations[target.locale] = translated;
+        if (target.locale === 'zh') r.textZh = translated;
+        successCount++;
+      }
+      await sleep(50);
+    }
+    console.log(`[reviews:refresh] ${target.locale}: ${successCount}/${needs.length} translated.`);
+  }
+}
+
+/**
+ * Refresh the cache row: fetch live reviews, translate to all locales, upsert.
+ * The single source of the translated payload. Called by the manual
+ * `pnpm reviews:cache` script and lazily in the background by
+ * `getGoogleReviews` when the row is stale. Throws on missing credentials.
+ */
+export async function refreshReviewsCache(): Promise<{
+  reviewCount: number;
+  rating: number;
+  userRatingCount: number;
+}> {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  const placeId = process.env.GOOGLE_PLACE_ID;
+  if (!apiKey || !placeId) {
+    throw new Error('Missing GOOGLE_PLACES_API_KEY or GOOGLE_PLACE_ID env vars.');
+  }
+
+  const [relevant, newest] = await Promise.all([
+    fetchReviews(placeId, apiKey, 'MOST_RELEVANT'),
+    fetchReviews(placeId, apiKey, 'NEWEST'),
+  ]);
+
+  const seen = new Set<string>();
+  const allReviews: GoogleReview[] = [];
+  for (const r of [...(relevant.reviews ?? []), ...(newest.reviews ?? [])]) {
+    const mapped = mapReview(r);
+    const dedupeKey = mapped.authorUri || mapped.authorName;
+    if (dedupeKey && !seen.has(dedupeKey)) {
+      seen.add(dedupeKey);
+      allReviews.push(mapped);
+    }
+  }
+
+  const fiveStarReviews = allReviews.filter((r) => r.rating === 5);
+  await translateReviews(fiveStarReviews);
+
+  const result: GooglePlaceRating = {
+    rating: relevant.rating ?? 0,
+    userRatingCount: relevant.userRatingCount ?? 0,
+    reviews: fiveStarReviews,
+  };
+  await updateCache(result);
+
+  return {
+    reviewCount: fiveStarReviews.length,
+    rating: result.rating,
+    userRatingCount: result.userRatingCount,
+  };
+}
+
+// Single-instance in-process guard so concurrent visits don't stampede the
+// refresh. On a multi-instance deploy this would need a DB-level claim
+// (conditional UPDATE on updatedAt) instead — flagged, not assumed.
+let refreshInFlight = false;
+
+/**
+ * Fire-and-forget: if the row is missing or older than STALE_MS, refresh it in
+ * the background. The current request serves existing data immediately; the
+ * fresh payload lands on a later request. Relies on the self-hosted
+ * long-running Node process to finish the floating promise (a serverless
+ * function would freeze after responding — which is why this is only viable
+ * self-hosted).
+ */
+function maybeTriggerBackgroundRefresh(updatedAt: Date | null): void {
+  if (refreshInFlight) return;
+  const isStale = !updatedAt || Date.now() - updatedAt.getTime() > STALE_MS;
+  if (!isStale) return;
+  if (!process.env.GOOGLE_PLACES_API_KEY || !process.env.GOOGLE_PLACE_ID) return;
+
+  refreshInFlight = true;
+  void refreshReviewsCache()
+    .then((s) => console.log(`[getGoogleReviews] Background refresh: cached ${s.reviewCount} reviews.`))
+    .catch((err) => console.warn('[getGoogleReviews] Background refresh failed:', err))
+    .finally(() => {
+      refreshInFlight = false;
+    });
+}
+
 /**
  * Fetch Google Reviews via the Places API (New, v1).
  * Makes two requests (relevance + newest) to get up to 10 reviews,
  * deduplicates, and filters to 5-star only.
  * Uses Next.js fetch caching with 24h revalidation.
  * Falls back to a Postgres-stored cache row when the API is unavailable;
- * the row is also the source of AI-generated Chinese translations.
+ * the row is also the source of AI-generated per-locale translations, which
+ * are refreshed lazily in the background on a ~7-day cadence (no cron).
  */
 export async function getGoogleReviews(): Promise<GooglePlaceRating> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const placeId = process.env.GOOGLE_PLACE_ID;
 
-  // Cached row is the source of Chinese translations even when the API succeeds.
-  const cached = await readCacheRow();
+  // Cached row is the source of translations even when the API succeeds.
+  const cacheRow = await readCacheRow();
+  const cached = cacheRow?.payload ?? null;
+
+  // Lazily keep translations fresh — background, never blocks this render.
+  maybeTriggerBackgroundRefresh(cacheRow?.updatedAt ?? null);
 
   if (!apiKey || !placeId) {
     if (cached && cached.reviews?.length > 0) {
