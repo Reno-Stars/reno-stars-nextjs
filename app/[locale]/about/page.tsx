@@ -59,9 +59,13 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const ABOUT_FAQ_KEYS = [1, 2, 3, 4, 5] as const;
+  // faq.a* answers carry a {years} ICU placeholder ("over {years} years of
+  // combined experience"). Provide it or next-intl raises a FORMATTING_ERROR
+  // (fatal in dev per i18n/request.ts; prod would leave the literal token).
+  const faqVars = { years: getYearsExperience() };
   const faqs = ABOUT_FAQ_KEYS.map((i) => ({
-    question: t(`faq.q${i}`),
-    answer: t(`faq.a${i}`),
+    question: t(`faq.q${i}`, faqVars),
+    answer: t(`faq.a${i}`, faqVars),
   }));
 
   const baseUrl = getBaseUrl();
