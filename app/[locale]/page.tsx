@@ -212,10 +212,16 @@ export default async function Page({ params }: PageProps) {
         if (value === `section.${key}`) return null;
         return value;
       };
+      // renoStarsAnswerTemplate / viewServiceLink carry {year}/{service} ICU
+      // placeholders that AnswerBlockSection substitutes via .replace(). Feed
+      // each placeholder back as its own value so next-intl formats without a
+      // FORMATTING_ERROR (fatal in dev per i18n/request.ts) while leaving the
+      // literal token intact for the component to replace.
+      const templated = (raw: string, key: string) => (raw === `section.${key}` ? null : raw);
       const question = lookup('whatDoesRenoStarsDo');
-      const answer = lookup('renoStarsAnswerTemplate');
+      const answer = templated(t('section.renoStarsAnswerTemplate', { year: '{year}' }), 'renoStarsAnswerTemplate');
       const servicesTitle = lookup('servicesWeCover');
-      const viewServiceLabel = lookup('viewServiceLink');
+      const viewServiceLabel = templated(t('section.viewServiceLink', { service: '{service}' }), 'viewServiceLink');
       if (!question || !answer || !servicesTitle || !viewServiceLabel) return null;
       return { question, answer, servicesTitle, viewServiceLabel };
     })(),
