@@ -16,7 +16,9 @@ import { GOLD, SURFACE, TEXT, NAVY, CARD, neu } from '@/lib/theme';
  * Added 2026-05-26 per Hongming greenlight #3 (homepage AI-citability refactor).
  */
 interface AnswerBlockSectionProps {
-  /** Year the company was founded (from `companies.foundingYear`) */
+  /** Legal incorporation year for the "…founded in {year}" copy (2021, from
+   *  COMPANY_STATS.companyFoundingYear). Distinct from the "20+ years
+   *  experience" stat, which reflects the team's renovation start. */
   foundingYear: number;
   /** Pre-localized services for the citable list (slug + label only). */
   services: { slug: string; title: string }[];

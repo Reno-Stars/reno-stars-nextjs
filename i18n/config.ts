@@ -77,4 +77,13 @@ export const routing = defineRouting({
   // SSR HTML (see proxy.ts `Vercel-CDN-Cache-Control`): fast TTFB + low origin
   // transfer, still zero ISR writes.
   localeCookie: false,
+  // No next-intl `Link:` hreflang response header. next-intl emits x-default as
+  // the locale-LESS root URL (e.g. `/blog/x`), which 308-redirects to `/en/blog/x`
+  // — so the header's x-default DISAGREED with the two channels Google actually
+  // reads: the HTML `<link rel="alternate">` (buildAlternates in lib/utils.ts)
+  // and the sitemap (app/sitemap.ts), both of which correctly point x-default at
+  // `/en/...`. Three hreflang sources, one contradicting the other two, is a
+  // conflicting signal. The HTML + sitemap alternates are complete and correct on
+  // their own, so we drop the redundant, wrong-x-default header entirely.
+  alternateLinks: false,
 });

@@ -1,5 +1,6 @@
 # Reno Stars Construction Inc.
 > Reno Stars Construction Inc. was founded in 2021. Our team brings 20+ years of prior renovation industry experience, serving Metro Vancouver, BC.
+> Full reference (all services, service areas, cost guides, and every blog article with summaries): https://www.reno-stars.com/llms-full.txt
 
 ## Company Info
 - Name: Reno Stars Construction Inc.
