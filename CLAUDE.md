@@ -5,7 +5,27 @@ This file provides essential context for AI assistants. For detailed docs, see `
 ## Project Overview
 
 Bilingual (EN/ZH) renovation company website built with Next.js 16 App Router.
-Deployed on Vercel with Neon PostgreSQL. Local dev uses Docker (Postgres + MinIO).
+
+**Self-hosted (since mid-2026, migrated off Vercel).** Production runs as
+`next start` on this Mac (launchd `com.renostars.reno-stars-web`, port 3000)
+behind a Cloudflare Tunnel, backed by a **local PostgreSQL** instance
+(`127.0.0.1:5435` — Neon retired). Local dev uses Docker (Postgres + MinIO).
+
+**Deploy = rebuild + restart** (no Vercel git-push auto-deploy anymore):
+`git pull` on `main` → `pnpm build` → `launchctl kickstart -k
+gui/$(id -u)/com.renostars.reno-stars-web`, then verify HTTP 200 on
+`http://127.0.0.1:3000/en/` and `https://www.reno-stars.com/en/`.
+
+> **Self-hosting enables server-side background work.** Because production is a
+> long-running Node process (not serverless), fire-and-forget promises actually
+> complete after the response is sent. The Google-reviews cache uses this: a
+> visit that finds the cache row >7 days stale triggers `refreshReviewsCache()`
+> in the background (see `lib/google-reviews.ts`) — no external cron. Prefer this
+> pattern over adding machine-local crons for site data.
+
+Historical note: several architecture decisions below still reference Vercel
+(ISR-Writes billing, image-quota bypass). Those explain *why* the current design
+exists; the Vercel-specific costs no longer apply, but the designs remain sound.
 
 ## Tech Stack
 
