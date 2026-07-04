@@ -77,10 +77,15 @@ function extractFaqsFromContent(content: string | null | undefined): { question:
     }
   }
 
-  // HTML: the <h2>…FAQ…</h2> section, then each <h3>Q</h3> + following answer
-  // block (everything up to the next <h3>/<h2> — handles multi-<p> answers).
+  // HTML: the FAQ <h2> section, then each <h3>Q</h3> + following answer block
+  // (everything up to the next <h3>/<h2> — handles multi-<p> answers). Match the
+  // heading by TEXT label (en/zh) OR by a translation-invariant id="faq" anchor:
+  // machine translation rewrites the heading text away on ja/ko/es/… but keeps
+  // the id attribute, so id="faq" keeps FAQPage schema working on every locale.
   if (out.length === 0) {
-    const htmlHeading = content.match(new RegExp(`<h2[^>]*>\\s*${FAQ_LABEL}[^<]*</h2>([\\s\\S]*?)(?=<h2[\\s>]|$)`, 'i'));
+    const htmlHeading =
+      content.match(new RegExp(`<h2[^>]*>\\s*${FAQ_LABEL}[^<]*</h2>([\\s\\S]*?)(?=<h2[\\s>]|$)`, 'i'))
+      || content.match(/<h2[^>]*\bid=["']faq["'][^>]*>[\s\S]*?<\/h2>([\s\S]*?)(?=<h2[\s>]|$)/i);
     if (htmlHeading) {
       const block = htmlHeading[1];
       const reHtml = /<h3[^>]*>([\s\S]*?)<\/h3>\s*([\s\S]*?)(?=<h3[\s>]|<h2[\s>]|$)/gi;

@@ -92,3 +92,33 @@ export function buildSrcSet(src: string, quality = DEFAULT_QUALITY): string {
 export function buildPreloadUrl(src: string, width = 828, quality = DEFAULT_QUALITY): string {
   return buildOptimizedUrl(src, width, quality);
 }
+
+// Hosts whose in-content <img> originals we may route through the WebP optimizer.
+// Mirrors ALLOWED_HOSTS in app/api/image/route.ts (only images we control).
+const OPTIMIZABLE_IMG_HOSTS = [
+  'pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev',
+  'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
+  'www.reno-stars.com',
+  'reno-stars.com',
+];
+
+/**
+ * Rewrite in-content `<img>` srcs (raw-HTML blog/service/area bodies) to the WebP
+ * optimizer. Content HTML is injected via dangerouslySetInnerHTML, so its images
+ * otherwise bypass OptimizedImage and ship as raw multi-hundred-KB PNG/JPEG — bad
+ * for Core Web Vitals and image SEO. Only our own hosts are rewritten; external,
+ * data-URI, already-proxied, and pre-processed srcs are left untouched. Preserves
+ * every other attribute (alt / width / height / loading).
+ */
+export function optimizeContentImages(html: string, width = 1200): string {
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    const m = tag.match(/\ssrc="([^"]+)"/i);
+    if (!m) return tag;
+    const src = m[1];
+    if (src.startsWith('/api/image') || src.startsWith('data:') || src.includes('/uploads/processed/')) return tag;
+    let hostname: string;
+    try { hostname = new URL(src, 'https://www.reno-stars.com').hostname; } catch { return tag; }
+    if (!OPTIMIZABLE_IMG_HOSTS.includes(hostname)) return tag;
+    return tag.replace(/\ssrc="[^"]+"/i, ` src="${buildOptimizedUrl(src, width)}"`);
+  });
+}

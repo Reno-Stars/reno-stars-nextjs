@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react';
 import { Link } from '@/navigation';
 import OptimizedImage from '@/components/OptimizedImage';
+import { optimizeContentImages } from '@/lib/image';
 import type { Locale } from '@/i18n/config';
 import sanitizeHtml, { type IOptions } from 'sanitize-html';
 import { Marked, type Token } from 'marked';
@@ -130,7 +131,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
 
             <div className="prose prose-lg max-w-none prose-img:rounded-xl prose-img:my-6 blog-content">
               {localizedPost.content ? (
-                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(
+                <div dangerouslySetInnerHTML={{ __html: optimizeContentImages(sanitizeHtml(
                   // Accept both markdown AND HTML — marked passes HTML through unchanged,
                   // so pure-HTML content still renders correctly. Markdown (##, **bold**,
                   // |tables|) gets converted to proper HTML tags before sanitize.
@@ -142,7 +143,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     blogContentRenderer.parse(localizedPost.content, { async: false }) as string,
                   ),
                   BLOG_SANITIZE_OPTIONS
-                ) }} />
+                )) }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}
