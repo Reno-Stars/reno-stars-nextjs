@@ -821,6 +821,13 @@ export async function getAllProjectsAdmin() {
 }
 
 /** Fetch all published project slugs with dates (for sitemap). */
+// UNCACHED (read fresh every call). The sitemap route (app/sitemap.ts) is
+// force-dynamic and reads these, so uncached reads guarantee the sitemap always
+// mirrors the DB — a freshly published slug appears immediately and a published
+// slug can never silently drop out behind a stale cache. Do NOT wrap these in
+// cachedQuery: a 300s-cached slug list was tried (2026-07-03) and a stale entry
+// dropped a live blog from the sitemap after a restart. Sitemap traffic is
+// crawler-only + low volume, so the per-request DB read is negligible.
 export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null; heroImageUrl: string | null }[]> {
   return safeQuery('getProjectSlugsFromDb', async () => {
     const rows = await db
@@ -831,7 +838,7 @@ export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt
   }, []);
 }
 
-/** Fetch all published site slugs with dates (for sitemap). */
+/** Fetch all published site slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
 export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; heroImageUrl: string | null }[]> {
   return safeQuery('getSiteSlugsFromDb', async () => {
     const rows = await db
@@ -1368,7 +1375,7 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
   { revalidate: 86400, tagPrefix: 'blog' }
 );
 
-/** Fetch all published blog post slugs with dates (for sitemap). */
+/** Fetch all published blog post slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
 export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null }[]> {
   return safeQuery('getBlogPostSlugsFromDb', async () => {
     const rows = await db

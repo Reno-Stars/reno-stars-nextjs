@@ -3,7 +3,18 @@ import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
 
-export const revalidate = 604800; // 168h — bumped to reduce ISR writes (Vercel free-tier optimization)
+// Render per-request so a freshly published blog/project/area appears in the
+// sitemap IMMEDIATELY. The old `revalidate = 604800` (168h ISR) only ever
+// existed to dodge Vercel ISR-WRITE billing — which no longer applies now that
+// the site is self-hosted. Worse, that metadata-route ISR entry could NOT be
+// busted on demand (verified 2026-07-03: neither revalidatePath('/sitemap.xml')
+// nor cache-tag propagation invalidates it), so new content sat out of the
+// sitemap for up to a week. `force-dynamic` + the UNCACHED slug queries this
+// reads (getBlogPostSlugsFromDb etc.) mean the sitemap always mirrors the DB:
+// published content can never silently drop out behind a stale cache, and new
+// content needs no revalidation to appear. Sitemap traffic is crawler-only and
+// low-volume, so the per-request DB reads are negligible.
+export const dynamic = 'force-dynamic';
 
 const BASE_URL = getBaseUrl();
 
