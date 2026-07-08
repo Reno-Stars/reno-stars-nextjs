@@ -354,6 +354,40 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   }, [initialService]);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
+  // --- Filter <-> URL sync -------------------------------------------------
+  // Filtering is purely client-side, but the chosen filters should live in the
+  // URL so a filtered view is shareable/bookmarkable and survives refresh.
+  // history.replaceState avoids a server round-trip per click (?service= is the
+  // only param the server also reads, via page.tsx initialService).
+  const urlSyncReady = useRef(false);
+  // 1) On first mount, initialize the client-only filters from the URL.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const loc = params.get('location'); if (loc) setLocationFilter(loc);
+    const sp = params.get('space'); if (sp) setSpaceTypeFilter(sp);
+    const bu = params.get('budget'); if (bu) setBudgetFilter(bu);
+    const q = params.get('q'); if (q) setSearchQuery(q);
+    urlSyncReady.current = true;
+  }, []);
+  // 2) Reflect every filter change back into the URL.
+  useEffect(() => {
+    if (!urlSyncReady.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const setOrDel = (k: string, v: string, empty: string) => {
+      if (v && v !== empty) params.set(k, v); else params.delete(k);
+    };
+    setOrDel('service', activeCategory, 'All');
+    setOrDel('location', locationFilter, 'All');
+    setOrDel('space', spaceTypeFilter, 'All');
+    setOrDel('budget', budgetFilter, 'All');
+    setOrDel('q', searchQuery, '');
+    const qs = params.toString();
+    const next = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
+    if (next !== `${window.location.pathname}${window.location.search}`) {
+      window.history.replaceState(window.history.state, '', next);
+    }
+  }, [activeCategory, locationFilter, spaceTypeFilter, budgetFilter, searchQuery]);
+
   const handleCategoryClick = useCallback((serviceType: string) => {
     setActiveCategory(serviceType);
     setCurrentPage(1);

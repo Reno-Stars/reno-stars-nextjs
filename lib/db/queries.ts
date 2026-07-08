@@ -770,7 +770,7 @@ export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> =>
 
     return rows.map((row: typeof rows[number]) => mapDbProjectToProject(row as DbProjectRow, [], [], []));
   }, []);
-}, ['getProjectsListFromDb-v2'], { tags: ['projects:listing'] });
+}, ['getProjectsListFromDb-v2'], { revalidate: 300, tags: ['projects:listing'] });
 
 /** Fetch a single published project by slug from DB. */
 export const getProjectBySlugFromDb = cachedQueryPerSlug(
@@ -1125,7 +1125,7 @@ export const getSitesAsProjectsFromDb = cachedQuery(async (): Promise<SiteWithPr
 
   return results;
   }, []);
-}, ['getSitesAsProjectsFromDb-v3'], { tags: ['sites:listing', 'projects:listing'] });
+}, ['getSitesAsProjectsFromDb-v3'], { revalidate: 300, tags: ['sites:listing', 'projects:listing'] });
 
 // ============================================================================
 // SERVICE AREA QUERIES
