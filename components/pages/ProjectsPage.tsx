@@ -11,6 +11,7 @@ import { getLocalizedProject } from '@/lib/data/projects';
 import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 // categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
+import BudgetRangeSlider from '@/components/BudgetRangeSlider';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -60,6 +61,15 @@ function collectImagesFromPairs(
 const PROJECTS_PER_PAGE = 12;
 
 /** Check if a project matches a given service type category */
+function parseBudgetRange(range: string | null | undefined): [number, number] | null {
+  if (!range) return null;
+  const nums = range.match(/[\d,]+/g);
+  if (!nums || nums.length === 0) return null;
+  const lo = parseInt(nums[0].replace(/,/g, ''), 10);
+  const hi = nums.length > 1 ? parseInt(nums[1].replace(/,/g, ''), 10) : lo;
+  return [lo, hi];
+}
+
 function matchesCategory(project: DisplayProject, serviceType: string): boolean {
   return serviceType === 'whole-house'
     ? project.isSiteProject === true || project.service_type === 'whole-house'
@@ -243,14 +253,17 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     ]);
     return Array.from(types).sort();
   }, [rawProjects, sitesAsProjects]);
-  const budgetRanges = useMemo(() => {
-    const ranges = new Set(rawProjects.map((p) => p.budget_range).filter((r): r is string => !!r));
-    return Array.from(ranges).sort((a, b) => {
-      const numA = parseInt(a.replace(/[^0-9]/g, ''), 10);
-      const numB = parseInt(b.replace(/[^0-9]/g, ''), 10);
-      return numA - numB;
-    });
-  }, [rawProjects]);
+  // Full budget extent across all projects/sites, snapped to $1k, for the slider.
+  const budgetBounds = useMemo<[number, number]>(() => {
+    const parsed = [
+      ...rawProjects.map((p) => parseBudgetRange(p.budget_range)),
+      ...sitesAsProjects.map((st) => parseBudgetRange(st.budget_range)),
+    ].filter((r): r is [number, number] => !!r);
+    if (parsed.length === 0) return [0, 200000];
+    const lo = Math.floor(Math.min(...parsed.map((r) => r[0])) / 1000) * 1000;
+    const hi = Math.ceil(Math.max(...parsed.map((r) => r[1])) / 1000) * 1000;
+    return [lo, Math.max(hi, lo + 1000)];
+  }, [rawProjects, sitesAsProjects]);
 
   const projectsRef = useRef<HTMLElement>(null);
   const categoryScrollRef = useRef<HTMLDivElement>(null);
@@ -340,7 +353,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const [activeCategory, setActiveCategory] = useState<string>(initialService ?? 'All');
   const [locationFilter, setLocationFilter] = useState<string>('All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
-  const [budgetFilter, setBudgetFilter] = useState<string>('All');
+  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
@@ -365,7 +378,11 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const params = new URLSearchParams(window.location.search);
     const loc = params.get('location'); if (loc) setLocationFilter(loc);
     const sp = params.get('space'); if (sp) setSpaceTypeFilter(sp);
-    const bu = params.get('budget'); if (bu) setBudgetFilter(bu);
+    const bu = params.get('budget');
+    if (bu) {
+      const m = bu.match(/^(\d+)-(\d+)$/);
+      if (m) setBudgetSel([parseInt(m[1], 10), parseInt(m[2], 10)]);
+    }
     const q = params.get('q'); if (q) setSearchQuery(q);
     urlSyncReady.current = true;
   }, []);
@@ -379,14 +396,14 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setOrDel('service', activeCategory, 'All');
     setOrDel('location', locationFilter, 'All');
     setOrDel('space', spaceTypeFilter, 'All');
-    setOrDel('budget', budgetFilter, 'All');
+    setOrDel('budget', budgetSel ? `${budgetSel[0]}-${budgetSel[1]}` : '', '');
     setOrDel('q', searchQuery, '');
     const qs = params.toString();
     const next = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
     if (next !== `${window.location.pathname}${window.location.search}`) {
       window.history.replaceState(window.history.state, '', next);
     }
-  }, [activeCategory, locationFilter, spaceTypeFilter, budgetFilter, searchQuery]);
+  }, [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery]);
 
   const handleCategoryClick = useCallback((serviceType: string) => {
     setActiveCategory(serviceType);
@@ -423,11 +440,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     }),
   ], [spaceTypes, rawProjects, sitesAsProjects, locale, t]);
 
-  const budgetOptions = useMemo(() => [
-    { value: 'All', label: t('filter.allBudgets') },
-    ...budgetRanges.map((br) => ({ value: br, label: br })),
-  ], [budgetRanges, t]);
-
   const localizedSpaceType = useMemo(() => {
     if (spaceTypeFilter === 'All') return null;
     const matchProject = rawProjects.find((p) => p.space_type?.en === spaceTypeFilter);
@@ -439,29 +451,32 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const categoryMatch = activeCategory === 'All' || matchesCategory(project, activeCategory);
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
-    const budgetMatch = budgetFilter === 'All' || project.budget_range === budgetFilter;
+    const budgetMatch = !budgetSel || (() => {
+      const pr = parseBudgetRange(project.budget_range);
+      return !!pr && pr[1] >= budgetSel[0] && pr[0] <= budgetSel[1];
+    })();
     const q = searchQuery.toLowerCase();
     const searchMatch = !searchQuery || [project.title, project.po_number].some((v) => v?.toLowerCase().includes(q));
     return categoryMatch && locationMatch && spaceTypeMatch && budgetMatch && searchMatch;
-  }), [allProjects, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetFilter, searchQuery]);
+  }), [allProjects, activeCategory, locationFilter, spaceTypeFilter, localizedSpaceType, budgetSel, searchQuery]);
 
   const handleCategoryChange = useCallback((v: string) => { setActiveCategory(v); setCurrentPage(1); }, []);
   const handleLocationChange = useCallback((v: string) => { setLocationFilter(v); setCurrentPage(1); }, []);
   const handleSpaceTypeChange = useCallback((v: string) => { setSpaceTypeFilter(v); setCurrentPage(1); }, []);
-  const handleBudgetChange = useCallback((v: string) => { setBudgetFilter(v); setCurrentPage(1); }, []);
+  const handleBudgetChange = useCallback((v: [number, number] | null) => { setBudgetSel(v); setCurrentPage(1); }, []);
 
   const clearFilters = useCallback(() => {
     setActiveCategory('All');
     setLocationFilter('All');
     setSpaceTypeFilter('All');
-    setBudgetFilter('All');
+    setBudgetSel(null);
     setSearchQuery('');
     setCurrentPage(1);
   }, []);
 
   const hasActiveFilters = useMemo(() =>
-    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetFilter !== 'All' || searchQuery !== '',
-  [activeCategory, locationFilter, spaceTypeFilter, budgetFilter, searchQuery]);
+    activeCategory !== 'All' || locationFilter !== 'All' || spaceTypeFilter !== 'All' || budgetSel !== null || searchQuery !== '',
+  [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery]);
 
   // Pagination
   const totalPages = useMemo(() => Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE), [filteredProjects.length]);
@@ -616,11 +631,13 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             options={spaceTypeOptions}
             ariaLabel={t('filter.spaceType')}
           />
-          <SelectDropdown
-            value={budgetFilter}
+          <BudgetRangeSlider
+            bounds={budgetBounds}
+            value={budgetSel}
             onChange={handleBudgetChange}
-            options={budgetOptions}
-            ariaLabel={t('filter.budget')}
+            ariaLabelMin={`${t('filter.budget')} min`}
+            ariaLabelMax={`${t('filter.budget')} max`}
+            allLabel={t('filter.allBudgets')}
           />
 
           {hasActiveFilters && (
