@@ -1,3 +1,6 @@
+import { createHash } from 'crypto';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { getS3Client, S3_BUCKET } from './admin/s3';
 import { eq } from 'drizzle-orm';
 import { db } from './db';
 import { googleReviewsCache } from './db/schema';
@@ -221,6 +224,38 @@ async function translateReviews(reviews: GoogleReview[]): Promise<void> {
  * `pnpm reviews:cache` script and lazily in the background by
  * `getGoogleReviews` when the row is stale. Throws on missing credentials.
  */
+/**
+ * Mirror Google review avatars to R2 and rewrite authorPhotoUri to the
+ * first-party URL. lh3.googleusercontent.com avatar URLs rotate/expire —
+ * that churn shows up as "broken external images" in SEO audits and would
+ * eventually break for real visitors too. Keyed by a stable author hash so
+ * repeat refreshes overwrite in place. Best-effort: failures keep the
+ * original Google URL. Objects are written under BOTH key forms because the
+ * public r2.dev domain serves literal object keys and existing site URLs use
+ * the `reno-stars/`-prefixed form.
+ */
+async function mirrorAvatars(reviews: GoogleReview[]): Promise<void> {
+  const client = getS3Client();
+  const publicBase = process.env.S3_PUBLIC_URL;
+  if (!client || !publicBase) return;
+  await Promise.all(reviews.map(async (r) => {
+    if (!r.authorPhotoUri || !r.authorPhotoUri.includes('googleusercontent.com')) return;
+    try {
+      const res = await fetch(r.authorPhotoUri, { signal: AbortSignal.timeout(10_000) });
+      if (!res.ok) return;
+      const buf = Buffer.from(await res.arrayBuffer());
+      const hash = createHash('sha1').update(r.authorUri || r.authorName).digest('hex').slice(0, 12);
+      const suffix = `uploads/reviews/avatar-${hash}.jpg`;
+      const contentType = res.headers.get('content-type') ?? 'image/jpeg';
+      await Promise.all([
+        client.send(new PutObjectCommand({ Bucket: S3_BUCKET, Key: suffix, Body: buf, ContentType: contentType })),
+        client.send(new PutObjectCommand({ Bucket: S3_BUCKET, Key: `reno-stars/${suffix}`, Body: buf, ContentType: contentType })),
+      ]);
+      r.authorPhotoUri = `${publicBase}/${suffix}`;
+    } catch { /* keep the original URL on failure */ }
+  }));
+}
+
 export async function refreshReviewsCache(): Promise<{
   reviewCount: number;
   rating: number;
@@ -250,6 +285,7 @@ export async function refreshReviewsCache(): Promise<{
 
   const fiveStarReviews = allReviews.filter((r) => r.rating === 5);
   await translateReviews(fiveStarReviews);
+  await mirrorAvatars(fiveStarReviews);
 
   const result: GooglePlaceRating = {
     rating: relevant.rating ?? 0,
@@ -359,7 +395,7 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
     // DB row with translations=undefined — a Stage 1 (PR #83) data-plumbing
     // regression. Carries the full translations map (every locale) plus
     // keeps textZh in sync for the transitional deprecated read path.
-    type CachedTrans = { translations?: GoogleReview['translations']; textZh?: string };
+    type CachedTrans = { translations?: GoogleReview['translations']; textZh?: string; mirroredPhoto?: string };
     const cachedTranslationsByKey = new Map<string, CachedTrans>();
     for (const r of cached?.reviews ?? []) {
       const key = r.authorUri || r.authorName;
@@ -367,7 +403,11 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       const entry: CachedTrans = {};
       if (r.translations && Object.keys(r.translations).length > 0) entry.translations = r.translations;
       if (r.textZh) entry.textZh = r.textZh;
-      if (entry.translations || entry.textZh) cachedTranslationsByKey.set(key, entry);
+      // Mirrored avatar: the cache row holds first-party R2 avatar URLs
+      // (mirrorAvatars) — prefer them over the live API's rotating
+      // lh3.googleusercontent.com URLs so pages never hotlink Google's CDN.
+      if (r.authorPhotoUri && !r.authorPhotoUri.includes('googleusercontent.com')) entry.mirroredPhoto = r.authorPhotoUri;
+      if (entry.translations || entry.textZh || entry.mirroredPhoto) cachedTranslationsByKey.set(key, entry);
     }
     for (const r of fiveStarReviews) {
       const key = r.authorUri || r.authorName;
@@ -377,6 +417,7 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       // textZh backward-compat: prefer translations.zh, fall back to legacy textZh.
       if (cachedEntry.translations?.zh) r.textZh = cachedEntry.translations.zh;
       else if (cachedEntry.textZh) r.textZh = cachedEntry.textZh;
+      if (cachedEntry.mirroredPhoto) r.authorPhotoUri = cachedEntry.mirroredPhoto;
     }
 
     const result: GooglePlaceRating = {
