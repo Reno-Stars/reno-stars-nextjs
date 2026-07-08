@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
-import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 
 // Render per-request so a freshly published blog/project/area appears in the
 // sitemap IMMEDIATELY. The old `revalidate = 604800` (168h ISR) only ever
@@ -26,13 +26,14 @@ const BASE_URL = getBaseUrl();
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices, videoEntries] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
     getCategorySlugs(),
     getServicesFromDb(),
+    getVideoWatchEntriesFromDb(),
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
@@ -496,6 +497,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: buildAlternates(`/areas/${area.slug}`),
         priority: PRIORITY.area,
         changeFrequency: CHANGEFREQ.monthly,
+      });
+    }
+  }
+
+  // Video WATCH pages (/videos/[slug]/) — EN+ZH like project leaves. The
+  // `videos` field renders <video:video> sitemap tags (title, thumbnail,
+  // description), which Google requires alongside the VideoObject JSON-LD
+  // on the page for video indexing. DB-driven: a new project hero video
+  // (+ thumbnail) adds its watch page here automatically.
+  for (const v of videoEntries) {
+    if (!v.thumbnailUrl) continue;
+    for (const locale of PROJECT_LEAF_LOCALES) {
+      const isZh = locale === 'zh';
+      entries.push({
+        url: `${BASE_URL}/${locale}/videos/${v.slug}/`,
+        lastModified: (v.updatedAt ?? new Date()).toISOString(),
+        alternates: buildAlternates(`/videos/${v.slug}`, [...PROJECT_LEAF_LOCALES]),
+        priority: PRIORITY.projectLeaf,
+        changeFrequency: CHANGEFREQ.yearly,
+        videos: [{
+          title: isZh ? `${v.titleZh}——装修实拍视频` : `${v.titleEn} — Renovation Video Tour`,
+          thumbnail_loc: v.thumbnailUrl,
+          description: (isZh ? v.descriptionZh : v.descriptionEn) || (isZh ? v.titleZh : v.titleEn),
+        }],
       });
     }
   }
