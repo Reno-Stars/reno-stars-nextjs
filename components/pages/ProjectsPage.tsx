@@ -12,7 +12,7 @@ import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 // categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
 import BudgetRangeSlider from '@/components/BudgetRangeSlider';
-import { BUDGET_PRESETS, presetForSelection, presetRange } from '@/lib/budget-presets';
+import { BUDGET_PRESETS, presetForSelection } from '@/lib/budget-presets';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -672,31 +672,6 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           </span>
         </div>
 
-        {/* Budget preset chips — real links (crawlable facet landing pages);
-            clicking also filters instantly client-side via the state setter. */}
-        <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
-          {BUDGET_PRESETS.map((p) => {
-            const active = presetForSelection(budgetSel, budgetBounds)?.slug === p.slug;
-            const href = `/projects/?budget=${p.slug}${activeCategory !== 'All' ? `&service=${activeCategory}` : ''}${locationFilter !== 'All' ? `&location=${encodeURIComponent(locationFilter)}` : ''}`;
-            return (
-              <Link
-                key={p.slug}
-                href={href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const [lo, hi] = presetRange(p);
-                  handleBudgetChange(active ? null : (clampBudget([lo, hi]) ?? [Math.max(lo, budgetBounds[0]), Math.min(hi, budgetBounds[1])]));
-                }}
-                className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors shrink-0 whitespace-nowrap"
-                style={active
-                  ? { backgroundColor: GOLD, color: '#fff', boxShadow: neu(2) }
-                  : { backgroundColor: CARD, color: TEXT_MID, boxShadow: neu(2) }}
-              >
-                {p.label}
-              </Link>
-            );
-          })}
-        </div>
       </section>
 
       {/* Projects Grid */}
@@ -813,6 +788,17 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             </>
           )}
         </div>
+      
+        {/* Crawlable budget facet links (SEO): the budget dropdown itself isn't
+            crawlable, so keep discoverable links to the preset landing pages. */}
+        <nav aria-label="Browse projects by budget" className="max-w-7xl mx-auto mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" style={{ color: TEXT_MUTED }}>
+          <span>{t('filter.budget')}:</span>
+          {BUDGET_PRESETS.map((p) => (
+            <Link key={p.slug} href={`/projects/?budget=${p.slug}`} className="underline-offset-2 hover:underline" style={{ color: TEXT_MID }}>
+              {p.label}
+            </Link>
+          ))}
+        </nav>
       </section>
 
       {/* Internal Cross-Links — /before-after/ chip added on

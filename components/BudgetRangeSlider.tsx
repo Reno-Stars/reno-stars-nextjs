@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useState } from 'react';
 import { GOLD, TEXT, TEXT_MID, TEXT_MUTED, CARD, SURFACE_ALT, neu } from '@/lib/theme';
+import { BUDGET_PRESETS, presetForSelection } from '@/lib/budget-presets';
+import { ChevronDown } from 'lucide-react';
 
 interface BudgetRangeSliderProps {
   /** Full selectable extent in dollars, e.g. [3000, 170000]. */
@@ -54,6 +56,19 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
 
   const pct = (v: number) => ((v - minB) / Math.max(1, maxB - minB)) * 100;
 
+  // Preset dropdown state: matching preset slug, 'all' when untouched, or
+  // 'custom' when the thumbs/inputs sit on a non-preset range.
+  const activePreset = presetForSelection(value, bounds);
+  const presetValue = value ? (activePreset?.slug ?? 'custom') : 'all';
+  const onPresetChange = (slug: string) => {
+    if (slug === 'all') { onChange(null); return; }
+    const p = BUDGET_PRESETS.find((x) => x.slug === slug);
+    if (!p) return;
+    const lo2 = Math.max(p.min, minB);
+    const hi2 = Math.min(p.max ?? Number.MAX_SAFE_INTEGER, maxB);
+    emit(lo2, hi2);
+  };
+
   const numStyle: React.CSSProperties = {
     backgroundColor: SURFACE_ALT,
     color: value ? TEXT : TEXT_MID,
@@ -66,6 +81,22 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
       style={{ boxShadow: neu(3), backgroundColor: CARD }}
       title={value ? undefined : allLabel}
     >
+      <div className="relative shrink-0">
+        <select
+          value={presetValue}
+          onChange={(e) => onPresetChange(e.target.value)}
+          aria-label={allLabel}
+          className="appearance-none pl-2.5 pr-7 py-1.5 text-xs font-medium rounded-md cursor-pointer outline-none"
+          style={{ backgroundColor: SURFACE_ALT, color: value ? TEXT : TEXT_MID, border: 'none', boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.10)' }}
+        >
+          <option value="all">{allLabel}</option>
+          {BUDGET_PRESETS.map((p) => (
+            <option key={p.slug} value={p.slug}>{p.label}</option>
+          ))}
+          {presetValue === 'custom' && <option value="custom" disabled>{`$${lo.toLocaleString()} – $${hi.toLocaleString()}`}</option>}
+        </select>
+        <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none" style={{ color: TEXT_MUTED }} aria-hidden="true" />
+      </div>
       <div className="relative shrink-0">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs pointer-events-none" style={{ color: TEXT_MUTED }}>$</span>
         <input
