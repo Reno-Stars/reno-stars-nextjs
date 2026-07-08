@@ -12,6 +12,7 @@ import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 // categories passed as prop from server component
 import SelectDropdown from '@/components/SelectDropdown';
 import BudgetRangeSlider from '@/components/BudgetRangeSlider';
+import { BUDGET_PRESETS, presetForSelection, presetRange } from '@/lib/budget-presets';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
@@ -357,7 +358,14 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   const [activeCategory, setActiveCategory] = useState<string>(initialService ?? 'All');
   const [locationFilter, setLocationFilter] = useState<string>(initialLocation ?? 'All');
   const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>(initialSpaceType ?? 'All');
-  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(initialBudget);
+  const clampBudget = useCallback((b: [number, number] | null): [number, number] | null => {
+    if (!b) return null;
+    const lo = Math.max(b[0], budgetBounds[0]);
+    const hi = Math.min(b[1], budgetBounds[1]);
+    return lo <= budgetBounds[0] && hi >= budgetBounds[1] ? null : [lo, hi];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [budgetBounds[0], budgetBounds[1]]);
+  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(() => clampBudget(initialBudget));
   const [searchQuery, setSearchQuery] = useState(initialQuery ?? '');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
@@ -369,6 +377,12 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setActiveCategory(initialService ?? 'All');
     setCurrentPage(1);
   }, [initialService]);
+  useEffect(() => {
+    if (isFirstRender.current) return;
+    setBudgetSel(clampBudget(initialBudget));
+    setCurrentPage(1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialBudget?.[0], initialBudget?.[1]]);
   const [selectedProject, setSelectedProject] = useState<DisplayProject | null>(null);
 
   // --- Filter <-> URL sync -------------------------------------------------
@@ -389,14 +403,15 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     setOrDel('service', activeCategory, 'All');
     setOrDel('location', locationFilter, 'All');
     setOrDel('space', spaceTypeFilter, 'All');
-    setOrDel('budget', budgetSel ? `${budgetSel[0]}-${budgetSel[1]}` : '', '');
+    const activePreset = presetForSelection(budgetSel, budgetBounds);
+    setOrDel('budget', budgetSel ? (activePreset ? activePreset.slug : `${budgetSel[0]}-${budgetSel[1]}`) : '', '');
     setOrDel('q', searchQuery, '');
     const qs = params.toString();
     const next = `${window.location.pathname}${qs ? `?${qs}` : ''}`;
     if (next !== `${window.location.pathname}${window.location.search}`) {
       window.history.replaceState(window.history.state, '', next);
     }
-  }, [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery]);
+  }, [activeCategory, locationFilter, spaceTypeFilter, budgetSel, searchQuery, budgetBounds]);
 
   const handleCategoryClick = useCallback((serviceType: string) => {
     setActiveCategory(serviceType);
@@ -647,6 +662,32 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           <span className="ml-auto text-sm" style={{ color: TEXT_MID }}>
             {t('filter.showing')} {filteredProjects.length} {t('filter.projects', { count: filteredProjects.length })}
           </span>
+        </div>
+
+        {/* Budget preset chips — real links (crawlable facet landing pages);
+            clicking also filters instantly client-side via the state setter. */}
+        <div className="flex flex-wrap items-center gap-2 mt-3">
+          {BUDGET_PRESETS.map((p) => {
+            const active = presetForSelection(budgetSel, budgetBounds)?.slug === p.slug;
+            const href = `/projects/?budget=${p.slug}${activeCategory !== 'All' ? `&service=${activeCategory}` : ''}${locationFilter !== 'All' ? `&location=${encodeURIComponent(locationFilter)}` : ''}`;
+            return (
+              <Link
+                key={p.slug}
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const [lo, hi] = presetRange(p);
+                  handleBudgetChange(active ? null : (clampBudget([lo, hi]) ?? [Math.max(lo, budgetBounds[0]), Math.min(hi, budgetBounds[1])]));
+                }}
+                className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
+                style={active
+                  ? { backgroundColor: GOLD, color: '#fff', boxShadow: neu(2) }
+                  : { backgroundColor: CARD, color: TEXT_MID, boxShadow: neu(2) }}
+              >
+                {p.label}
+              </Link>
+            );
+          })}
         </div>
       </section>
 

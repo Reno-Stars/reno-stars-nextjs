@@ -5,6 +5,7 @@ import ProjectsPage from '@/components/pages/ProjectsPage';
 import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
+import { presetBySlug, presetRange } from '@/lib/budget-presets';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -21,18 +22,22 @@ async function resolveFilters(searchParams: PageProps['searchParams'], locale: s
     : undefined;
   const location = sp.location && /^[\p{L} .'-]{2,40}$/u.test(sp.location) ? sp.location : undefined;
   const space = sp.space && /^[\p{L} .'-]{2,40}$/u.test(sp.space) ? sp.space : undefined;
+  // Budget: preset slug (indexable facet) or raw lo-hi (slider refinement).
+  const budgetPreset = presetBySlug(sp.budget);
   const budgetMatch = sp.budget?.match(/^(\d{3,7})-(\d{3,7})$/);
-  const budget: [number, number] | null = budgetMatch
-    ? [parseInt(budgetMatch[1], 10), parseInt(budgetMatch[2], 10)]
-    : null;
+  const budget: [number, number] | null = budgetPreset
+    ? presetRange(budgetPreset)
+    : budgetMatch
+      ? [parseInt(budgetMatch[1], 10), parseInt(budgetMatch[2], 10)]
+      : null;
   const q = sp.q ? sp.q.slice(0, 80) : undefined;
-  return { service, serviceLabel, location, space, budget, q };
+  return { service, serviceLabel, location, space, budget, budgetPreset, q };
 }
 
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'metadata.projects' });
-  const { service, serviceLabel, location, budget } = await resolveFilters(searchParams, locale);
+  const { service, serviceLabel, location, budget, budgetPreset } = await resolveFilters(searchParams, locale);
 
   const baseUrl = getBaseUrl();
 
@@ -42,15 +47,16 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   // pages. Budget/space/search are refinements, not landing pages: they are
   // STRIPPED from the canonical so engines consolidate them onto the parent
   // service+location facet instead of index-bloating on slider positions.
-  const facetBits = [serviceLabel, location].filter(Boolean) as string[];
+  const facetBits = [serviceLabel, location, budgetPreset?.label].filter(Boolean) as string[];
   const title = facetBits.length ? `${facetBits.join(' · ')} | ${t('title')}` : t('title');
-  const budgetNote = budget ? ` ($${budget[0].toLocaleString()} – $${budget[1].toLocaleString()})` : '';
+  const budgetNote = budget && !budgetPreset ? ` ($${budget[0].toLocaleString()} – $${budget[1].toLocaleString()})` : '';
   const description = facetBits.length
     ? `${facetBits.join(' · ')}${budgetNote} — ${t('description')}`
     : t('description');
   const canonicalParams = new URLSearchParams();
   if (service) canonicalParams.set('service', service);
   if (location) canonicalParams.set('location', location);
+  if (budgetPreset) canonicalParams.set('budget', budgetPreset.slug);
   const canonicalQs = canonicalParams.toString();
   const canonicalPath = `/projects/${canonicalQs ? `?${canonicalQs}` : ''}`;
   const ogImage = buildOgImageUrl(title);
