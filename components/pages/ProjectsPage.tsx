@@ -83,9 +83,13 @@ interface ProjectsPageProps {
   sitesAsProjects?: SiteWithProjects[];
   categories: ({ serviceType: string } & import('@/lib/types').Localized<string>)[];
   initialService?: string;
+  initialLocation?: string;
+  initialSpaceType?: string;
+  initialBudget?: [number, number] | null;
+  initialQuery?: string;
 }
 
-export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories, initialService }: ProjectsPageProps) {
+export default function ProjectsPage({ locale, company, projects: rawProjects, sitesAsProjects = [], categories, initialService, initialLocation, initialSpaceType, initialBudget = null, initialQuery }: ProjectsPageProps) {
   const t = useTranslations();
 
   // Convert sites to display format (as "Whole House" projects)
@@ -351,10 +355,10 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   }, []);
 
   const [activeCategory, setActiveCategory] = useState<string>(initialService ?? 'All');
-  const [locationFilter, setLocationFilter] = useState<string>('All');
-  const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>('All');
-  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [locationFilter, setLocationFilter] = useState<string>(initialLocation ?? 'All');
+  const [spaceTypeFilter, setSpaceTypeFilter] = useState<string>(initialSpaceType ?? 'All');
+  const [budgetSel, setBudgetSel] = useState<[number, number] | null>(initialBudget);
+  const [searchQuery, setSearchQuery] = useState(initialQuery ?? '');
   const [currentPage, setCurrentPage] = useState(1);
   const neuShadow4 = useMemo(() => neu(4), []);
 
@@ -373,20 +377,9 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
   // history.replaceState avoids a server round-trip per click (?service= is the
   // only param the server also reads, via page.tsx initialService).
   const urlSyncReady = useRef(false);
-  // 1) On first mount, initialize the client-only filters from the URL.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const loc = params.get('location'); if (loc) setLocationFilter(loc);
-    const sp = params.get('space'); if (sp) setSpaceTypeFilter(sp);
-    const bu = params.get('budget');
-    if (bu) {
-      const m = bu.match(/^(\d+)-(\d+)$/);
-      if (m) setBudgetSel([parseInt(m[1], 10), parseInt(m[2], 10)]);
-    }
-    const q = params.get('q'); if (q) setSearchQuery(q);
-    urlSyncReady.current = true;
-  }, []);
-  // 2) Reflect every filter change back into the URL.
+  useEffect(() => { urlSyncReady.current = true; }, []);
+  // Reflect every filter change back into the URL (all filters initialize
+  // server-side from searchParams, so SSR output matches the filtered view).
   useEffect(() => {
     if (!urlSyncReady.current) return;
     const params = new URLSearchParams(window.location.search);
@@ -452,7 +445,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
     const locationMatch = locationFilter === 'All' || project.location_city === locationFilter;
     const spaceTypeMatch = spaceTypeFilter === 'All' || project.space_type === localizedSpaceType;
     const budgetMatch = !budgetSel || (() => {
-      const pr = parseBudgetRange(project.budget_range);
+      const pr = parseBudgetRange(project.budget_range ?? project.totalBudget);
       return !!pr && pr[1] >= budgetSel[0] && pr[0] <= budgetSel[1];
     })();
     const q = searchQuery.toLowerCase();
