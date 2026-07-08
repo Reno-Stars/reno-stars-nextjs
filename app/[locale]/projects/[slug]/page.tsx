@@ -71,6 +71,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  // Project/site LEAF pages: only EN and ZH have native copy — the sitemap
+  // restricts this route to en+zh (PROJECT_LEAF_LOCALES in app/sitemap.ts).
+  // Noindex the other 12 locales and restrict hreflang to en/zh so Google
+  // stops re-crawling ~750 duplicate leaf URLs ("Crawled - currently not
+  // indexed", GSC 2026-07-07). Category pages above keep all locales.
+  const isIndexableLocale = locale === 'en' || locale === 'zh';
+  const leafRobots = isIndexableLocale ? {} : { robots: { index: false, follow: true } as const };
+
   // Check if it's a project
   const allProjects = await getProjectsFromDb();
   const project = allProjects.find((p) => p.slug === slug);
@@ -91,7 +99,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: metaTitle,
       description: metaDescription,
       keywords: project.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
-      alternates: buildAlternates(`/projects/${slug}/`, locale),
+      ...leafRobots,
+      alternates: buildAlternates(`/projects/${slug}/`, locale, ['en', 'zh']),
       openGraph: {
         title: metaTitle,
         description: metaDescription,
@@ -128,7 +137,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: metaTitle,
       description: metaDescription,
       keywords: pickLocaleOptional(siteData.seo_keywords, locale as Locale)?.split(',').map(k => k.trim()).filter(Boolean),
-      alternates: buildAlternates(`/projects/${slug}/`, locale),
+      ...leafRobots,
+      alternates: buildAlternates(`/projects/${slug}/`, locale, ['en', 'zh']),
       openGraph: {
         title: metaTitle,
         description: metaDescription,

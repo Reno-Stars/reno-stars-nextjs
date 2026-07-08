@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
@@ -133,16 +133,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // content risk and contradicts the locale signal. Until per-locale bodies
   // exist (post.content_ja/ko/es present in localizations jsonb), noindex
   // these locale variants. EN and ZH have native bodies and stay indexed.
+  const contentMap = post.content as Record<string, string | undefined>;
   const hasNativeBody = locale === 'en' || locale === 'zh'
-    || Boolean((post.content as Record<string, string | undefined>)?.[locale]
-        && (post.content as Record<string, string | undefined>)[locale] !== (post.content as Record<string, string | undefined>).en);
+    || Boolean(contentMap?.[locale] && contentMap[locale] !== contentMap.en);
+
+  // hreflang must only list indexable variants: en/zh always, minor locales
+  // only once a native body exists. Must stay in sync with the sitemap's
+  // nativeLocales filter (app/sitemap.ts) and the noindex condition above.
+  const nativeLocales = locales.filter(
+    loc => loc === 'en' || loc === 'zh' || Boolean(contentMap?.[loc] && contentMap[loc] !== contentMap.en),
+  );
 
   return {
     title: metaTitle,
     description: metaDescription,
     keywords: post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
     ...(hasNativeBody ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates(`/blog/${slug}/`, locale),
+    alternates: buildAlternates(`/blog/${slug}/`, locale, nativeLocales),
     openGraph: {
       title: metaTitle,
       description: metaDescription,

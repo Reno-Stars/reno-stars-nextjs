@@ -1376,10 +1376,22 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
-export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null }[]> {
+export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null; nativeContentKeys: string[] }[]> {
   return safeQuery('getBlogPostSlugsFromDb', async () => {
     const rows = await db
-      .select({ slug: blogPostsTable.slug, updatedAt: blogPostsTable.updatedAt, featuredImageUrl: blogPostsTable.featuredImageUrl })
+      .select({
+        slug: blogPostsTable.slug,
+        updatedAt: blogPostsTable.updatedAt,
+        featuredImageUrl: blogPostsTable.featuredImageUrl,
+        // `content<Suffix>` keys (e.g. contentJa) whose value is a real native
+        // translation — non-empty and different from the EN body. Mirrors the
+        // hasNativeBody noindex condition in app/[locale]/blog/[slug]/page.tsx
+        // so the sitemap only submits locale URLs that are actually indexable.
+        nativeContentKeys: sql<string[]>`array(
+          select e.key from jsonb_each_text(${blogPostsTable.localizations}) as e(key, value)
+          where e.key like 'content%' and e.value <> '' and e.value is distinct from ${blogPostsTable.contentEn}
+        )`,
+      })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true));
     return rows;

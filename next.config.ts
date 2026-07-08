@@ -100,14 +100,23 @@ const nextConfig: NextConfig = {
       //    /en/en/projects/ → /en/projects/
       //    /zh/zh/projects/ → /zh/projects/
       // ================================================================
+      // With trailingSlash: true, wildcard sources AND destinations must both
+      // end in "/" (docs: next-config-js/redirects + trailingSlash). A
+      // destination written without the slash ("/en/:path*") expands to a
+      // slash-less URL, forcing a second 308 hop on EVERY hit — GSC counted
+      // 1,309 "Page with redirect" URLs largely from these chains (2026-07-07).
+      // The bare "/en/en/" root form is covered by a separate exact rule since
+      // ":path*/" requires at least the trailing slash after a segment.
+      { source: '/en/en/', destination: '/en/', permanent: true },
       {
-        source: '/en/en/:path*',
-        destination: '/en/:path*',
+        source: '/en/en/:path*/',
+        destination: '/en/:path*/',
         permanent: true,
       },
+      { source: '/zh/zh/', destination: '/zh/', permanent: true },
       {
-        source: '/zh/zh/:path*',
-        destination: '/zh/:path*',
+        source: '/zh/zh/:path*/',
+        destination: '/zh/:path*/',
         permanent: true,
       },
 
@@ -117,14 +126,16 @@ const nextConfig: NextConfig = {
       //    /en/zh/projects/ → /en/projects/  (user was on EN site)
       //    Per SEO guide §1.1 and §1.3
       // ================================================================
+      { source: '/zh/en/', destination: '/zh/', permanent: true },
       {
-        source: '/zh/en/:path*',
-        destination: '/zh/:path*',
+        source: '/zh/en/:path*/',
+        destination: '/zh/:path*/',
         permanent: true,
       },
+      { source: '/en/zh/', destination: '/en/', permanent: true },
       {
-        source: '/en/zh/:path*',
-        destination: '/en/:path*',
+        source: '/en/zh/:path*/',
+        destination: '/en/:path*/',
         permanent: true,
       },
 
@@ -628,14 +639,17 @@ const nextConfig: NextConfig = {
       // ================================================================
       // 10. Non-localized paths → default locale (EN)
       // ================================================================
+      // Slash-terminated pairs — see the comment on the double-locale rules.
+      { source: '/projects/', destination: '/en/projects/', permanent: true },
       {
-        source: '/projects/:path*',
-        destination: '/en/projects/:path*',
+        source: '/projects/:path*/',
+        destination: '/en/projects/:path*/',
         permanent: true,
       },
+      { source: '/services/', destination: '/en/services/', permanent: true },
       {
-        source: '/services/:path*',
-        destination: '/en/services/:path*',
+        source: '/services/:path*/',
+        destination: '/en/services/:path*/',
         permanent: true,
       },
       {
@@ -643,9 +657,10 @@ const nextConfig: NextConfig = {
         destination: '/en/contact/',
         permanent: true,
       },
+      { source: '/blog/', destination: '/en/blog/', permanent: true },
       {
-        source: '/blog/:path*',
-        destination: '/en/blog/:path*',
+        source: '/blog/:path*/',
+        destination: '/en/blog/:path*/',
         permanent: true,
       },
       {
@@ -663,9 +678,10 @@ const nextConfig: NextConfig = {
         destination: '/en/workflow/',
         permanent: true,
       },
+      { source: '/areas/', destination: '/en/areas/', permanent: true },
       {
-        source: '/areas/:path*',
-        destination: '/en/areas/:path*',
+        source: '/areas/:path*/',
+        destination: '/en/areas/:path*/',
         permanent: true,
       },
       {

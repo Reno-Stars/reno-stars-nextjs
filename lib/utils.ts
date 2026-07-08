@@ -517,14 +517,18 @@ export function getRelativeTime(
  * @param locale - Current locale string
  * @returns Alternates object for Metadata
  */
-export function buildAlternates(path: string, locale: string): {
+export function buildAlternates(path: string, locale: string, restrictLocales?: readonly string[]): {
   canonical: string;
   languages: Record<string, string>;
 } {
   const baseUrl = getBaseUrl();
   // Generate hreflang alternates for every supported locale. Driven by the
   // canonical `locales` array so adding a new locale doesn't require editing
-  // every page's metadata helper.
+  // every page's metadata helper. `restrictLocales` narrows the hreflang set
+  // for pages whose minor-locale variants are noindexed (untranslated blog
+  // posts) — hreflang must not point at non-indexable URLs, and the set here
+  // must match what the sitemap emits for the same page.
+  const includeLocales = restrictLocales ?? locales;
   const languages: Record<string, string> = {};
   // Emit the hreflang key exactly as the locale slug. `zh-Hant` is a valid
   // BCP-47 script subtag that Google fully supports, and keeping it identical
@@ -534,7 +538,7 @@ export function buildAlternates(path: string, locale: string): {
   // the page <head> (the sitemap always emitted zh-Hant), so head and sitemap
   // disagreed on the same /zh-Hant/ URL — the exact mismatch this restores.
   // Removed 2026-06-26 site-audit pass.
-  for (const loc of locales) {
+  for (const loc of includeLocales) {
     languages[loc] = `${baseUrl}/${loc}${path}`;
   }
   languages['x-default'] = `${baseUrl}/en${path}`;
