@@ -27,7 +27,7 @@ blogContentRenderer.use({
 });
 import { expandMarkdownLinksInHeadings } from '@/lib/utils';
 import { normalizeInternalLinks } from '@/lib/markdown-html';
-import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
+import type { Company, BlogPost } from '@/lib/types';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -36,27 +36,31 @@ const BLOG_SANITIZE_OPTIONS: IOptions = {
     img: ['src', 'alt', 'width', 'height', 'loading'],
   },
 };
-import { getLocalizedBlogPost, getLocalizedService, getLocalizedArea } from '@/lib/data';
+import { getLocalizedBlogPost } from '@/lib/data';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
+interface RelatedLink { slug: string; title: string }
+interface RelatedAreaLink { slug: string; name: string }
+
 interface BlogPostPageProps {
   locale: Locale;
   post: BlogPost;
   company: Company;
-  services?: Service[];
-  areas?: ServiceArea[];
+  /** Slim slug+title projections — see app/[locale]/blog/[slug]/page.tsx. */
+  services?: RelatedLink[];
+  areas?: RelatedAreaLink[];
 }
 
 export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
-  const localizedServices = useMemo(() => services.map((s) => getLocalizedService(s, locale)), [services, locale]);
-  const localizedAreas = useMemo(() => areas.map((a) => getLocalizedArea(a, locale)), [areas, locale]);
+  const localizedServices = services;
+  const localizedAreas = areas;
   // unstable_cache JSON-serializes results so Date columns arrive as strings
   // on cache hits; rehydrate before formatting to avoid TypeError at runtime.
   const publishedAt = useMemo(

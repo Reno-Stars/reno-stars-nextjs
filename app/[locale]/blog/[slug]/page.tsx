@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { locales, ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedBlogPost } from '@/lib/data';
 import BlogPostPage from '@/components/pages/BlogPostPage';
+import { getLocalizedService, getLocalizedArea } from '@/lib/data';
 import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
@@ -214,7 +215,17 @@ export default async function Page({ params }: PageProps) {
         locale={locale}
         keywords={post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean)}
       />
-      <BlogPostPage locale={locale as Locale} post={post} company={company} services={services} areas={areas} />
+      <BlogPostPage
+        locale={locale as Locale}
+        post={post}
+        company={company}
+        // Slim projections: the client component renders only slug+title link
+        // chips. Passing the full Service/ServiceArea rows (every locale of
+        // every long_description) serialized ~1.9MB of RSC flight data into
+        // EVERY blog page (Semrush "Large HTML", 2026-07-08 audit).
+        services={services.map((s) => { const l = getLocalizedService(s, locale as Locale); return { slug: l.slug, title: l.title }; })}
+        areas={areas.map((a) => { const l = getLocalizedArea(a, locale as Locale); return { slug: l.slug, name: l.name }; })}
+      />
     </>
   );
 }
