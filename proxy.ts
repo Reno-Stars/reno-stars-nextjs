@@ -41,15 +41,18 @@ const securityHeaders: Record<string, string> = {
     // - Inline styles from component libraries
     // Migration path: Use next.config.ts experimental.cspNonce when stable,
     // which adds nonces to inline scripts. See: https://nextjs.org/docs/app/api-reference/next-config-js/cspNonce
+    // Analytics/ads script hosts: GTM bootstraps Clarity + Google Ads
+    // conversion tags, and the Cloudflare tunnel auto-injects its RUM beacon —
+    // all were being CSP-blocked (observed 2026-07-08 console).
     isDev
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com"
-      : "script-src 'self' 'unsafe-inline' blob: https://www.googletagmanager.com",
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://www.googleadservices.com"
+      : "script-src 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://static.cloudflareinsights.com https://googleads.g.doubleclick.net https://www.googleadservices.com",
     "style-src 'self' 'unsafe-inline'",
     `img-src 'self' data: blob: https: ${ASSET_ORIGIN}`,
     "font-src 'self' data:",
     isDev
-      ? `connect-src 'self' blob: ws: wss: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://www.google-analytics.com https://www.googletagmanager.com`
-      : `connect-src 'self' blob: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://www.google-analytics.com https://www.googletagmanager.com`,
+      ? `connect-src 'self' blob: ws: wss: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://*.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://www.google.com https://*.doubleclick.net https://cloudflareinsights.com`
+      : `connect-src 'self' blob: ${ASSET_ORIGIN}${S3_ORIGIN ? ` ${S3_ORIGIN}` : ''} https://cdn.jsdelivr.net https://*.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://www.google.com https://*.doubleclick.net https://cloudflareinsights.com`,
     `media-src 'self' ${ASSET_ORIGIN}${ASSET_ORIGIN !== PROD_ORIGIN ? ` ${PROD_ORIGIN}` : ''}`,
     "worker-src 'self' blob:",
     "object-src 'none'",

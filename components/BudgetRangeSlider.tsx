@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useState } from 'react';
-import { GOLD, TEXT, TEXT_MID, CARD, SURFACE_ALT, neu } from '@/lib/theme';
+import { GOLD, TEXT, TEXT_MID, TEXT_MUTED, CARD, SURFACE_ALT, neu } from '@/lib/theme';
 
 interface BudgetRangeSliderProps {
   /** Full selectable extent in dollars, e.g. [3000, 170000]. */
@@ -57,27 +57,28 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
   const numStyle: React.CSSProperties = {
     backgroundColor: SURFACE_ALT,
     color: value ? TEXT : TEXT_MID,
-    width: 76,
-    boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.12)',
+    boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.10)',
   };
 
   return (
     <div
-      className="flex items-center gap-2 px-3 py-1.5 rounded-lg select-none"
-      style={{ boxShadow: neu(3), backgroundColor: CARD, minWidth: 300 }}
+      className="flex items-center gap-2.5 px-3 py-2 rounded-lg select-none w-full"
+      style={{ boxShadow: neu(3), backgroundColor: CARD }}
       title={value ? undefined : allLabel}
     >
-      <span className="text-xs" style={{ color: TEXT_MID }}>$</span>
-      <input
-        type="text" inputMode="numeric" value={loText}
-        aria-label={ariaLabelMin}
-        onChange={(e) => setLoText(e.target.value)}
-        onBlur={commitLo}
-        onKeyDown={onEnter(commitLo)}
-        className="text-sm rounded-md px-2 py-1 text-right outline-none"
-        style={numStyle}
-      />
-      <div className={`relative flex-1 h-6 budget-slider-${uid}`} style={{ minWidth: 110 }}>
+      <div className="relative shrink-0">
+        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs pointer-events-none" style={{ color: TEXT_MUTED }}>$</span>
+        <input
+          type="text" inputMode="numeric" value={loText}
+          aria-label={ariaLabelMin}
+          onChange={(e) => setLoText(e.target.value)}
+          onBlur={commitLo}
+          onKeyDown={onEnter(commitLo)}
+          className="text-xs rounded-md pl-5 pr-2 py-1.5 text-right outline-none w-[74px]"
+          style={numStyle}
+        />
+      </div>
+      <div className={`relative flex-1 h-6 budget-slider-${uid}`} style={{ minWidth: 90 }}>
         {/* track */}
         <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 rounded-full" style={{ backgroundColor: `${TEXT_MID}30` }} />
         {/* gold fill between thumbs */}
@@ -116,16 +117,18 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
           .budget-slider-${uid} .dual-range::-moz-range-track { background: transparent; }
         `}</style>
       </div>
-      <span className="text-xs" style={{ color: TEXT_MID }}>$</span>
-      <input
-        type="text" inputMode="numeric" value={hiText}
-        aria-label={ariaLabelMax}
-        onChange={(e) => setHiText(e.target.value)}
-        onBlur={commitHi}
-        onKeyDown={onEnter(commitHi)}
-        className="text-sm rounded-md px-2 py-1 text-right outline-none"
-        style={numStyle}
-      />
+      <div className="relative shrink-0">
+        <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs pointer-events-none" style={{ color: TEXT_MUTED }}>$</span>
+        <input
+          type="text" inputMode="numeric" value={hiText}
+          aria-label={ariaLabelMax}
+          onChange={(e) => setHiText(e.target.value)}
+          onBlur={commitHi}
+          onKeyDown={onEnter(commitHi)}
+          className="text-xs rounded-md pl-5 pr-2 py-1.5 text-right outline-none w-[74px]"
+          style={numStyle}
+        />
+      </div>
     </div>
   );
 }

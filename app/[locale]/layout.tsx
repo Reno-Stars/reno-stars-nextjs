@@ -3,7 +3,6 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { notFound } from 'next/navigation';
 import { locales, type Locale, isRtl } from '@/i18n/config';
 import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data';
-import { Analytics } from '@vercel/analytics/next';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import MicrosoftClarity from '@/components/MicrosoftClarity';
 import MetaPixel from '@/components/MetaPixel';
@@ -156,7 +155,6 @@ export default async function LocaleLayout({
           </main>
           <Footer company={company} socialLinks={socialLinks} services={footerServices} areas={footerAreas} googleRating={googleReviews.rating} />
         </NextIntlClientProvider>
-        <Analytics />
       </body>
     </html>
   );

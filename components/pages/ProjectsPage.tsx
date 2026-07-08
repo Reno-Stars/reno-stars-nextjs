@@ -618,35 +618,43 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
             onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             placeholder={t('filter.search')}
             aria-label={t('filter.search')}
-            className="rounded-lg text-sm px-3 py-2 border-0 outline-none"
-            style={{ backgroundColor: CARD, color: TEXT, boxShadow: neu(3), width: '180px' }}
+            className="rounded-lg text-sm px-3 py-2 border-0 outline-none w-full sm:w-44"
+            style={{ backgroundColor: CARD, color: TEXT, boxShadow: neu(3) }}
           />
-          <SelectDropdown
-            value={activeCategory}
-            onChange={handleCategoryChange}
-            options={categoryOptions}
-            ariaLabel={t('modal.category')}
-          />
-          <SelectDropdown
-            value={locationFilter}
-            onChange={handleLocationChange}
-            options={locationOptions}
-            ariaLabel={t('filter.location')}
-          />
-          <SelectDropdown
-            value={spaceTypeFilter}
-            onChange={handleSpaceTypeChange}
-            options={spaceTypeOptions}
-            ariaLabel={t('filter.spaceType')}
-          />
-          <BudgetRangeSlider
-            bounds={budgetBounds}
-            value={budgetSel}
-            onChange={handleBudgetChange}
-            ariaLabelMin={`${t('filter.budget')} min`}
-            ariaLabelMax={`${t('filter.budget')} max`}
-            allLabel={t('filter.allBudgets')}
-          />
+          <div className="w-[calc(50%-0.5rem)] sm:w-auto">
+            <SelectDropdown
+              value={activeCategory}
+              onChange={handleCategoryChange}
+              options={categoryOptions}
+              ariaLabel={t('modal.category')}
+            />
+          </div>
+          <div className="w-[calc(50%-0.5rem)] sm:w-auto">
+            <SelectDropdown
+              value={locationFilter}
+              onChange={handleLocationChange}
+              options={locationOptions}
+              ariaLabel={t('filter.location')}
+            />
+          </div>
+          <div className="w-[calc(50%-0.5rem)] sm:w-auto">
+            <SelectDropdown
+              value={spaceTypeFilter}
+              onChange={handleSpaceTypeChange}
+              options={spaceTypeOptions}
+              ariaLabel={t('filter.spaceType')}
+            />
+          </div>
+          <div className="w-full xl:w-auto xl:flex-1 xl:max-w-md">
+            <BudgetRangeSlider
+              bounds={budgetBounds}
+              value={budgetSel}
+              onChange={handleBudgetChange}
+              ariaLabelMin={`${t('filter.budget')} min`}
+              ariaLabelMax={`${t('filter.budget')} max`}
+              allLabel={t('filter.allBudgets')}
+            />
+          </div>
 
           {hasActiveFilters && (
             <button
@@ -666,7 +674,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
 
         {/* Budget preset chips — real links (crawlable facet landing pages);
             clicking also filters instantly client-side via the state setter. */}
-        <div className="flex flex-wrap items-center gap-2 mt-3">
+        <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
           {BUDGET_PRESETS.map((p) => {
             const active = presetForSelection(budgetSel, budgetBounds)?.slug === p.slug;
             const href = `/projects/?budget=${p.slug}${activeCategory !== 'All' ? `&service=${activeCategory}` : ''}${locationFilter !== 'All' ? `&location=${encodeURIComponent(locationFilter)}` : ''}`;
@@ -679,7 +687,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                   const [lo, hi] = presetRange(p);
                   handleBudgetChange(active ? null : (clampBudget([lo, hi]) ?? [Math.max(lo, budgetBounds[0]), Math.min(hi, budgetBounds[1])]));
                 }}
-                className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
+                className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors shrink-0 whitespace-nowrap"
                 style={active
                   ? { backgroundColor: GOLD, color: '#fff', boxShadow: neu(2) }
                   : { backgroundColor: CARD, color: TEXT_MID, boxShadow: neu(2) }}
