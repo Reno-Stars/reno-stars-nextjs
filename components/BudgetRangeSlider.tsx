@@ -1,7 +1,7 @@
 'use client';
 
-import { useId } from 'react';
-import { GOLD, TEXT, TEXT_MID, CARD, neu } from '@/lib/theme';
+import { useEffect, useId, useState } from 'react';
+import { GOLD, TEXT, TEXT_MID, CARD, SURFACE_ALT, neu } from '@/lib/theme';
 
 interface BudgetRangeSliderProps {
   /** Full selectable extent in dollars, e.g. [3000, 170000]. */
@@ -16,13 +16,10 @@ interface BudgetRangeSliderProps {
   allLabel: string;
 }
 
-function fmt(n: number): string {
-  return n >= 1000 ? `$${Math.round(n / 1000)}k` : `$${n}`;
-}
-
 /**
- * Dual-thumb budget range slider (two overlaid native <input type="range">
- * elements — track clicks land on the nearer thumb, keyboard works per-thumb).
+ * Dual-thumb budget range slider with exact-value number inputs.
+ * Two overlaid native <input type="range"> elements give per-thumb keyboard
+ * and pointer control; the number inputs commit on blur/Enter for exact values.
  * Emits null when the selection covers the full extent, meaning "no filter".
  */
 export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000, ariaLabelMin, ariaLabelMax, allLabel }: BudgetRangeSliderProps) {
@@ -30,22 +27,57 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
   const [minB, maxB] = bounds;
   const [lo, hi] = value ?? bounds;
 
+  // Local text state so typing isn't clamped mid-keystroke; commit on blur/Enter.
+  const [loText, setLoText] = useState(String(lo));
+  const [hiText, setHiText] = useState(String(hi));
+  useEffect(() => { setLoText(String(lo)); }, [lo]);
+  useEffect(() => { setHiText(String(hi)); }, [hi]);
+
   const emit = (nextLo: number, nextHi: number) => {
     if (nextLo <= minB && nextHi >= maxB) onChange(null);
     else onChange([nextLo, nextHi]);
   };
 
+  const commitLo = () => {
+    const n = parseInt(loText.replace(/[^0-9]/g, ''), 10);
+    if (Number.isNaN(n)) { setLoText(String(lo)); return; }
+    emit(Math.min(Math.max(n, minB), hi - step), hi);
+  };
+  const commitHi = () => {
+    const n = parseInt(hiText.replace(/[^0-9]/g, ''), 10);
+    if (Number.isNaN(n)) { setHiText(String(hi)); return; }
+    emit(lo, Math.max(Math.min(n, maxB), lo + step));
+  };
+  const onEnter = (commit: () => void) => (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') { commit(); (e.target as HTMLInputElement).blur(); }
+  };
+
   const pct = (v: number) => ((v - minB) / Math.max(1, maxB - minB)) * 100;
+
+  const numStyle: React.CSSProperties = {
+    backgroundColor: SURFACE_ALT,
+    color: value ? TEXT : TEXT_MID,
+    width: 76,
+    boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.12)',
+  };
 
   return (
     <div
-      className="flex items-center gap-3 px-4 py-2 rounded-lg select-none"
-      style={{ boxShadow: neu(3), backgroundColor: CARD, minWidth: 240 }}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-lg select-none"
+      style={{ boxShadow: neu(3), backgroundColor: CARD, minWidth: 300 }}
+      title={value ? undefined : allLabel}
     >
-      <span className="text-sm whitespace-nowrap" style={{ color: value ? TEXT : TEXT_MID }}>
-        {value ? `${fmt(lo)} – ${fmt(hi)}` : allLabel}
-      </span>
-      <div className={`relative flex-1 h-6 budget-slider-${uid}`} style={{ minWidth: 120 }}>
+      <span className="text-xs" style={{ color: TEXT_MID }}>$</span>
+      <input
+        type="text" inputMode="numeric" value={loText}
+        aria-label={ariaLabelMin}
+        onChange={(e) => setLoText(e.target.value)}
+        onBlur={commitLo}
+        onKeyDown={onEnter(commitLo)}
+        className="text-sm rounded-md px-2 py-1 text-right outline-none"
+        style={numStyle}
+      />
+      <div className={`relative flex-1 h-6 budget-slider-${uid}`} style={{ minWidth: 110 }}>
         {/* track */}
         <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 rounded-full" style={{ backgroundColor: `${TEXT_MID}30` }} />
         {/* gold fill between thumbs */}
@@ -55,13 +87,13 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
         />
         <input
           type="range" min={minB} max={maxB} step={step} value={lo}
-          aria-label={ariaLabelMin}
+          aria-label={`${ariaLabelMin} slider`}
           onChange={(e) => emit(Math.min(Number(e.target.value), hi - step), hi)}
           className="dual-range absolute inset-0 w-full appearance-none bg-transparent"
         />
         <input
           type="range" min={minB} max={maxB} step={step} value={hi}
-          aria-label={ariaLabelMax}
+          aria-label={`${ariaLabelMax} slider`}
           onChange={(e) => emit(lo, Math.max(Number(e.target.value), lo + step))}
           className="dual-range absolute inset-0 w-full appearance-none bg-transparent"
         />
@@ -84,6 +116,16 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
           .budget-slider-${uid} .dual-range::-moz-range-track { background: transparent; }
         `}</style>
       </div>
+      <span className="text-xs" style={{ color: TEXT_MID }}>$</span>
+      <input
+        type="text" inputMode="numeric" value={hiText}
+        aria-label={ariaLabelMax}
+        onChange={(e) => setHiText(e.target.value)}
+        onBlur={commitHi}
+        onKeyDown={onEnter(commitHi)}
+        className="text-sm rounded-md px-2 py-1 text-right outline-none"
+        style={numStyle}
+      />
     </div>
   );
 }
