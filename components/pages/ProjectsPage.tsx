@@ -645,7 +645,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
               ariaLabel={t('filter.spaceType')}
             />
           </div>
-          <div className="w-full xl:w-auto xl:flex-1 xl:max-w-md">
+          <div className="w-full xl:w-auto xl:flex-1 xl:min-w-[400px] xl:max-w-md">
             <BudgetRangeSlider
               bounds={budgetBounds}
               value={budgetSel}

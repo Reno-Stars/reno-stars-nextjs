@@ -77,16 +77,16 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
 
   return (
     <div
-      className="flex items-center gap-2.5 px-3 py-2 rounded-lg select-none w-full"
+      className="flex flex-wrap sm:flex-nowrap items-center gap-x-2.5 gap-y-2.5 px-3 py-2 rounded-lg select-none w-full"
       style={{ boxShadow: neu(3), backgroundColor: CARD }}
       title={value ? undefined : allLabel}
     >
-      <div className="relative shrink-0">
+      <div className="relative flex-1 sm:flex-none order-1">
         <select
           value={presetValue}
           onChange={(e) => onPresetChange(e.target.value)}
           aria-label={allLabel}
-          className="appearance-none pl-2.5 pr-7 py-1.5 text-xs font-medium rounded-md cursor-pointer outline-none"
+          className="appearance-none w-full sm:w-auto pl-2.5 pr-7 py-1.5 text-xs font-medium rounded-md cursor-pointer outline-none"
           style={{ backgroundColor: SURFACE_ALT, color: value ? TEXT : TEXT_MID, border: 'none', boxShadow: 'inset 1px 1px 3px rgba(0,0,0,0.10)' }}
         >
           <option value="all">{allLabel}</option>
@@ -97,7 +97,7 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
         </select>
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none" style={{ color: TEXT_MUTED }} aria-hidden="true" />
       </div>
-      <div className="relative shrink-0">
+      <div className="relative shrink-0 order-2">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs pointer-events-none" style={{ color: TEXT_MUTED }}>$</span>
         <input
           type="text" inputMode="numeric" value={loText}
@@ -109,7 +109,7 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
           style={numStyle}
         />
       </div>
-      <div className={`relative flex-1 h-6 budget-slider-${uid}`} style={{ minWidth: 90 }}>
+      <div className={`relative h-7 w-full order-last sm:order-3 sm:w-auto sm:flex-1 budget-slider-${uid}`} style={{ minWidth: 0 }}>
         {/* track */}
         <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-1 rounded-full" style={{ backgroundColor: `${TEXT_MID}30` }} />
         {/* gold fill between thumbs */}
@@ -146,9 +146,13 @@ export default function BudgetRangeSlider({ bounds, value, onChange, step = 1000
           }
           .budget-slider-${uid} .dual-range::-webkit-slider-runnable-track { background: transparent; }
           .budget-slider-${uid} .dual-range::-moz-range-track { background: transparent; }
+          @media (pointer: coarse) {
+            .budget-slider-${uid} .dual-range::-webkit-slider-thumb { width: 22px; height: 22px; }
+            .budget-slider-${uid} .dual-range::-moz-range-thumb { width: 22px; height: 22px; }
+          }
         `}</style>
       </div>
-      <div className="relative shrink-0">
+      <div className="relative shrink-0 order-3 sm:order-4">
         <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs pointer-events-none" style={{ color: TEXT_MUTED }}>$</span>
         <input
           type="text" inputMode="numeric" value={hiText}
