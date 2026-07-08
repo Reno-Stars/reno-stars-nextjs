@@ -913,10 +913,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
   const ogImage = service.image || siteImages.hero;
 
+  // Minor locales render the SAME templated body as EN (only EN/ZH have
+  // native copy — the sitemap already restricts this route to en+zh, see
+  // SERVICE_CITY_LOCALES in app/sitemap.ts). Noindex the other 12 locales
+  // and restrict hreflang to en/zh so Google stops re-crawling ~1,800
+  // duplicate service×city URLs ("Crawled - currently not indexed",
+  // GSC 2026-07-07). Lift per-locale once native translations exist.
+  const isIndexableLocale = locale === 'en' || locale === 'zh';
+
   return {
     title,
     description,
-    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale),
+    ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
+    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale, ['en', 'zh']),
     openGraph: {
       title,
       description,

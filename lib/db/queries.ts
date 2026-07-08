@@ -849,6 +849,89 @@ export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: D
   }, []);
 }
 
+export interface VideoWatchEntry {
+  slug: string;
+  titleEn: string;
+  titleZh: string;
+  descriptionEn: string | null;
+  descriptionZh: string | null;
+  videoUrl: string;
+  thumbnailUrl: string | null;
+  uploadDate: Date | null;
+  updatedAt: Date | null;
+}
+
+/**
+ * Published projects/sites that have a hero (walkthrough) video AND a
+ * thumbnail — the inventory behind the `/[locale]/videos/[slug]/` watch
+ * pages and their sitemap entries. Thumbnail is required because Google
+ * won't index a video without one. Uncached — sitemap-consumed, same
+ * rationale as getProjectSlugsFromDb.
+ */
+export async function getVideoWatchEntriesFromDb(): Promise<VideoWatchEntry[]> {
+  return safeQuery('getVideoWatchEntriesFromDb', async () => {
+    const [siteRows, projectRows] = await Promise.all([
+      db
+        .select({
+          slug: sitesTable.slug,
+          titleEn: sitesTable.titleEn,
+          titleZh: sitesTable.titleZh,
+          descriptionEn: sitesTable.descriptionEn,
+          descriptionZh: sitesTable.descriptionZh,
+          videoUrl: sitesTable.heroVideoUrl,
+          thumbnailUrl: sitesTable.heroImageUrl,
+          uploadDate: sitesTable.publishedAt,
+          createdAt: sitesTable.createdAt,
+          updatedAt: sitesTable.updatedAt,
+        })
+        .from(sitesTable)
+        .where(and(
+          eq(sitesTable.isPublished, true),
+          sql`${sitesTable.heroVideoUrl} IS NOT NULL AND ${sitesTable.heroVideoUrl} <> ''`,
+          sql`${sitesTable.heroImageUrl} IS NOT NULL AND ${sitesTable.heroImageUrl} <> ''`,
+        )),
+      db
+        .select({
+          slug: projectsTable.slug,
+          titleEn: projectsTable.titleEn,
+          titleZh: projectsTable.titleZh,
+          descriptionEn: projectsTable.descriptionEn,
+          descriptionZh: projectsTable.descriptionZh,
+          videoUrl: projectsTable.heroVideoUrl,
+          thumbnailUrl: projectsTable.heroImageUrl,
+          uploadDate: projectsTable.publishedAt,
+          createdAt: projectsTable.createdAt,
+          updatedAt: projectsTable.updatedAt,
+        })
+        .from(projectsTable)
+        .where(and(
+          eq(projectsTable.isPublished, true),
+          sql`${projectsTable.heroVideoUrl} IS NOT NULL AND ${projectsTable.heroVideoUrl} <> ''`,
+          sql`${projectsTable.heroImageUrl} IS NOT NULL AND ${projectsTable.heroImageUrl} <> ''`,
+        )),
+    ]);
+    // Sites win on slug collision (same precedence as /projects/[slug]).
+    const seen = new Set<string>();
+    const merged: VideoWatchEntry[] = [];
+    for (const r of [...siteRows, ...projectRows]) {
+      if (seen.has(r.slug)) continue;
+      seen.add(r.slug);
+      merged.push({
+        slug: r.slug,
+        titleEn: r.titleEn,
+        titleZh: r.titleZh,
+        descriptionEn: r.descriptionEn,
+        descriptionZh: r.descriptionZh,
+        videoUrl: r.videoUrl!,
+        thumbnailUrl: r.thumbnailUrl,
+        uploadDate: r.uploadDate ?? r.createdAt,
+        updatedAt: r.updatedAt,
+      });
+    }
+    return merged;
+  }, []);
+}
+
 // ============================================================================
 // SITE QUERIES
 // ============================================================================
@@ -1376,10 +1459,22 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
-export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null }[]> {
+export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null; nativeContentKeys: string[] }[]> {
   return safeQuery('getBlogPostSlugsFromDb', async () => {
     const rows = await db
-      .select({ slug: blogPostsTable.slug, updatedAt: blogPostsTable.updatedAt, featuredImageUrl: blogPostsTable.featuredImageUrl })
+      .select({
+        slug: blogPostsTable.slug,
+        updatedAt: blogPostsTable.updatedAt,
+        featuredImageUrl: blogPostsTable.featuredImageUrl,
+        // `content<Suffix>` keys (e.g. contentJa) whose value is a real native
+        // translation — non-empty and different from the EN body. Mirrors the
+        // hasNativeBody noindex condition in app/[locale]/blog/[slug]/page.tsx
+        // so the sitemap only submits locale URLs that are actually indexable.
+        nativeContentKeys: sql<string[]>`array(
+          select e.key from jsonb_each_text(${blogPostsTable.localizations}) as e(key, value)
+          where e.key like 'content%' and e.value <> '' and e.value is distinct from ${blogPostsTable.contentEn}
+        )`,
+      })
       .from(blogPostsTable)
       .where(eq(blogPostsTable.isPublished, true));
     return rows;

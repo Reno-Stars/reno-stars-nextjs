@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
-import { getBaseUrl } from '@/lib/utils';
-import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb } from '@/lib/db/queries';
+import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
+import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 
 // Render per-request so a freshly published blog/project/area appears in the
 // sitemap IMMEDIATELY. The old `revalidate = 604800` (168h ISR) only ever
@@ -26,13 +26,14 @@ const BASE_URL = getBaseUrl();
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
-  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices] = await Promise.all([
+  const [projectRows, siteRows, blogPostRows, serviceAreas, categorySlugs, allServices, videoEntries] = await Promise.all([
     getProjectSlugsFromDb(),
     getSiteSlugsFromDb(),
     getBlogPostSlugsFromDb(),
     getServiceAreasFromDb(),
     getCategorySlugs(),
     getServicesFromDb(),
+    getVideoWatchEntriesFromDb(),
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
@@ -132,9 +133,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generate hreflang alternates for every supported locale. Driven by
   // i18n/config.ts locales array so adding a new locale automatically
   // expands the sitemap without further edits here.
-  const buildAlternates = (path: string) => {
+  const buildAlternates = (path: string, includeLocales: readonly string[] = locales) => {
     const languages: Record<string, string> = {};
-    for (const loc of locales) {
+    for (const loc of includeLocales) {
       languages[loc] = `${BASE_URL}/${loc}${path}/`;
     }
     languages['x-default'] = `${BASE_URL}/en${path}/`;
@@ -458,14 +459,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'two-bathroom-renovation-with-arched-doors-richmond',
   ]);
 
+  // Blog × locale: only submit locales that have a NATIVE body. Untranslated
+  // minor-locale variants render with an EN fallback body and carry
+  // `robots: noindex` (app/[locale]/blog/[slug]/page.tsx) — submitting them in
+  // the sitemap is a contradictory signal Google flags as "Excluded by
+  // 'noindex' tag" (793 URLs, GSC 2026-07-07) and wastes crawl budget. Each
+  // locale URL (and its hreflang alternates) appears here automatically once
+  // its translation lands in the localizations jsonb.
+  const nativeKeysBySlug = new Map(blogPostRows.map(r => [r.slug, new Set(r.nativeContentKeys ?? [])]));
   for (const slug of blogPostSlugs) {
     const isCostGuide = COST_GUIDE_BLOG_SLUGS.has(slug);
     const blogImage = blogImageMap.get(slug);
-    for (const locale of locales) {
+    const nativeKeys = nativeKeysBySlug.get(slug) ?? new Set<string>();
+    const nativeLocales = locales.filter(loc => {
+      if (loc === 'en' || loc === 'zh') return true;
+      const suffix = LOCALE_TO_DB_SUFFIX[loc];
+      return suffix ? nativeKeys.has(`content${suffix}`) : false;
+    });
+    const alternates = buildAlternates(`/blog/${slug}`, nativeLocales);
+    for (const locale of nativeLocales) {
       entries.push({
         url: `${BASE_URL}/${locale}/blog/${slug}/`,
         lastModified: blogDateMap.get(slug) ?? now,
-        alternates: buildAlternates(`/blog/${slug}`),
+        alternates,
         priority: isCostGuide ? PRIORITY.guide : PRIORITY.blog,
         changeFrequency: CHANGEFREQ.monthly,
         ...(blogImage && { images: [blogImage] }),
@@ -481,6 +497,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: buildAlternates(`/areas/${area.slug}`),
         priority: PRIORITY.area,
         changeFrequency: CHANGEFREQ.monthly,
+      });
+    }
+  }
+
+  // Video WATCH pages (/videos/[slug]/) — EN+ZH like project leaves. The
+  // `videos` field renders <video:video> sitemap tags (title, thumbnail,
+  // description), which Google requires alongside the VideoObject JSON-LD
+  // on the page for video indexing. DB-driven: a new project hero video
+  // (+ thumbnail) adds its watch page here automatically.
+  for (const v of videoEntries) {
+    if (!v.thumbnailUrl) continue;
+    for (const locale of PROJECT_LEAF_LOCALES) {
+      const isZh = locale === 'zh';
+      entries.push({
+        url: `${BASE_URL}/${locale}/videos/${v.slug}/`,
+        lastModified: (v.updatedAt ?? new Date()).toISOString(),
+        alternates: buildAlternates(`/videos/${v.slug}`, [...PROJECT_LEAF_LOCALES]),
+        priority: PRIORITY.projectLeaf,
+        changeFrequency: CHANGEFREQ.yearly,
+        videos: [{
+          title: isZh ? `${v.titleZh}——装修实拍视频` : `${v.titleEn} — Renovation Video Tour`,
+          thumbnail_loc: v.thumbnailUrl,
+          description: (isZh ? v.descriptionZh : v.descriptionEn) || (isZh ? v.titleZh : v.titleEn),
+        }],
       });
     }
   }

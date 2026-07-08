@@ -26,6 +26,7 @@ blogContentRenderer.use({
   },
 });
 import { expandMarkdownLinksInHeadings } from '@/lib/utils';
+import { normalizeInternalLinks } from '@/lib/markdown-html';
 import type { Company, BlogPost, Service, ServiceArea } from '@/lib/types';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
@@ -131,7 +132,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
 
             <div className="prose prose-lg max-w-none prose-img:rounded-xl prose-img:my-6 blog-content">
               {localizedPost.content ? (
-                <div dangerouslySetInnerHTML={{ __html: optimizeContentImages(sanitizeHtml(
+                <div dangerouslySetInnerHTML={{ __html: normalizeInternalLinks(optimizeContentImages(sanitizeHtml(
                   // Accept both markdown AND HTML — marked passes HTML through unchanged,
                   // so pure-HTML content still renders correctly. Markdown (##, **bold**,
                   // |tables|) gets converted to proper HTML tags before sanitize.
@@ -143,7 +144,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                     blogContentRenderer.parse(localizedPost.content, { async: false }) as string,
                   ),
                   BLOG_SANITIZE_OPTIONS
-                )) }} />
+                )), locale) }} />
               ) : (
                 <p>{t('blog.comingSoon')}</p>
               )}

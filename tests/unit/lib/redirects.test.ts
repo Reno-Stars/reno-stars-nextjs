@@ -68,30 +68,30 @@ describe('next.config.ts redirects', () => {
   });
 
   describe('2. Double locale prefix', () => {
-    it('should redirect /en/en/:path* to /en/:path*', () => {
-      const r = findRedirect(redirects, '/en/en/:path*');
+    it('should redirect /en/en/:path*/ to /en/:path*/', () => {
+      const r = findRedirect(redirects, '/en/en/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/:path*');
+      expect(r!.destination).toBe('/en/:path*/');
     });
 
-    it('should redirect /zh/zh/:path* to /zh/:path*', () => {
-      const r = findRedirect(redirects, '/zh/zh/:path*');
+    it('should redirect /zh/zh/:path*/ to /zh/:path*/', () => {
+      const r = findRedirect(redirects, '/zh/zh/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/zh/:path*');
+      expect(r!.destination).toBe('/zh/:path*/');
     });
   });
 
   describe('3. Mixed locale prefix', () => {
-    it('should redirect /zh/en/:path* to /zh/:path*', () => {
-      const r = findRedirect(redirects, '/zh/en/:path*');
+    it('should redirect /zh/en/:path*/ to /zh/:path*/', () => {
+      const r = findRedirect(redirects, '/zh/en/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/zh/:path*');
+      expect(r!.destination).toBe('/zh/:path*/');
     });
 
-    it('should redirect /en/zh/:path* to /en/:path*', () => {
-      const r = findRedirect(redirects, '/en/zh/:path*');
+    it('should redirect /en/zh/:path*/ to /en/:path*/', () => {
+      const r = findRedirect(redirects, '/en/zh/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/:path*');
+      expect(r!.destination).toBe('/en/:path*/');
     });
   });
 
@@ -248,16 +248,16 @@ describe('next.config.ts redirects', () => {
   });
 
   describe('10. Non-localized paths → default locale (EN)', () => {
-    it('should redirect /projects/:path* to /en/projects/:path*', () => {
-      const r = findRedirect(redirects, '/projects/:path*');
+    it('should redirect /projects/:path*/ to /en/projects/:path*/', () => {
+      const r = findRedirect(redirects, '/projects/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/projects/:path*');
+      expect(r!.destination).toBe('/en/projects/:path*/');
     });
 
-    it('should redirect /services/:path* to /en/services/:path*', () => {
-      const r = findRedirect(redirects, '/services/:path*');
+    it('should redirect /services/:path*/ to /en/services/:path*/', () => {
+      const r = findRedirect(redirects, '/services/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/services/:path*');
+      expect(r!.destination).toBe('/en/services/:path*/');
     });
 
     it('should redirect /contact to /en/contact/', () => {
@@ -266,10 +266,10 @@ describe('next.config.ts redirects', () => {
       expect(r!.destination).toBe('/en/contact/');
     });
 
-    it('should redirect /blog/:path* to /en/blog/:path*', () => {
-      const r = findRedirect(redirects, '/blog/:path*');
+    it('should redirect /blog/:path*/ to /en/blog/:path*/', () => {
+      const r = findRedirect(redirects, '/blog/:path*/');
       expect(r).toBeDefined();
-      expect(r!.destination).toBe('/en/blog/:path*');
+      expect(r!.destination).toBe('/en/blog/:path*/');
     });
 
     it('should redirect non-localized service page slugs directly', () => {
