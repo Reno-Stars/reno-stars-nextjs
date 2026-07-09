@@ -57,7 +57,8 @@
     "whatDoesRenoStarsDo": "Reno Stars是做什么的？",
     "renoStarsAnswerTemplate": "Reno Stars 是一家成立于 {year} 年的大温哥华装修承包商。我们承接住宅与商业装修——厨房、浴室、地下室、全屋及商业空间改造，从设计到完工一站式服务。$5M CGL 保险、有效的 WCB 保险，每个项目最多 3 年工艺保修。",
     "servicesWeCover": "我们涵盖的服务",
-    "viewServiceLink": "查看{service}"
+    "viewServiceLink": "查看{service}",
+    "relatedServices": "相关服务"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

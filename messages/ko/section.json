@@ -57,7 +57,8 @@
     "whatDoesRenoStarsDo": "Reno Stars는 무슨 일을 하나요?",
     "renoStarsAnswerTemplate": "Reno Stars는 {year}에 설립된 메트로 밴쿠버 개조 계약업체입니다. 우리는 설계부터 완성까지 주방, 욕실, 지하실, 집 전체 및 상업용 설비 등 주택 및 상업용 개조 작업을 처음부터 끝까지 처리합니다. $5M CGL 보험, 활성 WCB 보장 및 모든 프로젝트에 대해 최대 3년의 기술 보증이 제공됩니다.",
     "servicesWeCover": "우리가 다루는 서비스",
-    "viewServiceLink": "{service} 보기"
+    "viewServiceLink": "{service} 보기",
+    "relatedServices": "관련 서비스"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

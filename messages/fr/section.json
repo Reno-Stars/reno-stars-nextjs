@@ -57,6 +57,7 @@
     "whatDoesRenoStarsDo": "Que fait Reno Stars ?",
     "renoStarsAnswerTemplate": "Reno Stars est un entrepreneur en rénovation de la région métropolitaine de Vancouver fondé à {year}. Nous gérons les rénovations résidentielles et commerciales de bout en bout : cuisines, salles de bains, sous-sols, aménagements complets de la maison et commerciaux, de la conception à l'achèvement. Assurance CGL de 5 millions de dollars, couverture WCB active et jusqu'à 3 ans de garantie de fabrication sur chaque projet.",
     "servicesWeCover": "Nos prestations",
-    "viewServiceLink": "Voir {service}"
+    "viewServiceLink": "Voir {service}",
+    "relatedServices": "Services connexes"
   }
 }

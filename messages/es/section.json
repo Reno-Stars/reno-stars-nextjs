@@ -57,6 +57,7 @@
     "whatDoesRenoStarsDo": "¿Qué hace Reno Stars?",
     "renoStarsAnswerTemplate": "Reno Stars es un contratista de renovaciones de Metro Vancouver fundado en {year}. Nos encargamos de renovaciones de hogares y comerciales de principio a fin: cocinas, baños, sótanos, acondicionamiento de todo el hogar y comerciales, desde el diseño hasta la finalización. Seguro CGL de $5 millones, cobertura WCB activa y hasta 3 años de garantía de mano de obra en cada proyecto.",
     "servicesWeCover": "Servicios que ofrecemos",
-    "viewServiceLink": "Ver {service}"
+    "viewServiceLink": "Ver {service}",
+    "relatedServices": "Servicios relacionados"
   }
 }

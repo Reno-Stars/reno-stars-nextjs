@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: buildAlternateLocales(locale as Locale),
-      type: 'article',
+      type: 'website',
       images: [{ url: ogImage, width: 1200, height: 630, alt: t('title') }],
     },
     twitter: {

@@ -57,6 +57,7 @@
     "whatDoesRenoStarsDo": "Reno Stars چه می کند؟",
     "renoStarsAnswerTemplate": "Reno Stars یک پیمانکار نوسازی مترو ونکوور است که در {year} تأسیس شده است. ما بازسازی های خانه و تجاری را به صورت تمام و کمال انجام می دهیم - آشپزخانه، حمام، زیرزمین، لوازم خانگی و تجاری، از طراحی تا تکمیل. بیمه 5 میلیون دلاری CGL، پوشش فعال WCB، و ضمانت کار تا 3 سال در هر پروژه.",
     "servicesWeCover": "خدماتی که ما پوشش می دهیم",
-    "viewServiceLink": "مشاهده {service}"
+    "viewServiceLink": "مشاهده {service}",
+    "relatedServices": "خدمات مرتبط"
   }
 }
