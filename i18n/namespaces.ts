@@ -1,6 +1,7 @@
 export const namespaces = [
   'about',
   'aboutPage',
+  'careersPage',
   'areaBenefits',
   'areas',
   'beforeAfterPage',

@@ -34,7 +34,8 @@
     "budgetHigh": "$60,000 이상 프로젝트",
     "kitchenVsBathroom": "주방 vs 욕실: 어느 것이 먼저일까요?",
     "condoVsHouse": "콘도 대 주택 개조 비용",
-    "supplies": "우리의 공급품"
+    "supplies": "우리의 공급품",
+    "careers": "채용"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

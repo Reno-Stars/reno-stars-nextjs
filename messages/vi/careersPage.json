@@ -1,0 +1,74 @@
+{
+  "careers": {
+    "breadcrumb": "Nghề nghiệp",
+    "hero": {
+      "title": "Tham gia nhóm Reno Stars",
+      "subtitle": "Chúng tôi đang thuê công nhân cải tạo cho các địa điểm làm việc trên khắp Metro Vancouver. Ưu tiên biết tiếng phổ thông hoặc tiếng Quảng Đông.",
+      "badge": "Đang tuyển dụng"
+    },
+    "role": {
+      "title": "Công nhân cải tạo",
+      "typeLabel": "Loại việc làm",
+      "type": "Toàn thời gian / Bán thời gian",
+      "locationLabel": "Vị trí",
+      "location": "Có trụ sở tại Richmond, BC — các địa điểm việc làm trên khắp Metro Vancouver",
+      "payLabel": "Chi trả",
+      "pay": "Cạnh tranh dựa trên kinh nghiệm và kỹ năng"
+    },
+    "duties": {
+      "title": "Bạn sẽ làm gì",
+      "items": {
+        "d1": "Phá dỡ và chuẩn bị mặt bằng",
+        "d2": "Cách lát gạch cho phòng tắm, nhà bếp và sàn nhà",
+        "d3": "Lắp đặt, dán và hoàn thiện vách thạch cao",
+        "d4": "Sơn nội thất và chuẩn bị bề mặt",
+        "d5": "Lắp đặt sàn (laminate, vinyl, gỗ cứng)",
+        "d6": "Hoàn thiện nghề mộc - trang trí, cửa, tủ",
+        "d7": "Hỗ trợ chung tại công trường: xử lý vật liệu, dọn dẹp, giữ an toàn cho công trường"
+      }
+    },
+    "requirements": {
+      "title": "Chúng tôi đang tìm kiếm ai",
+      "items": {
+        "r1": "Ưu tiên có kinh nghiệm xây dựng hoặc cải tạo thực tế - nhưng chúng tôi cũng hoan nghênh những người mới bắt đầu chăm chỉ sẵn sàng học hỏi",
+        "r2": "Nói tiếng Quan Thoại hoặc tiếng Quảng Đông là một lợi thế lớn — phần lớn thành viên trong nhóm của chúng tôi và nhiều khách hàng của chúng tôi là người nói tiếng Trung Quốc",
+        "r3": "Tiếng Anh cơ bản để giao tiếp trên trang web rất hữu ích",
+        "r4": "Đủ điều kiện hợp pháp để làm việc tại Canada",
+        "r5": "Đáng tin cậy, đúng giờ và an toàn",
+        "r6": "Bằng lái xe và phương tiện di chuyển riêng là một tài sản"
+      },
+      "languageHighlight": "Ưu tiên người biết tiếng phổ thông hoặc tiếng Quảng Đông — 会说普通话或粤语优先"
+    },
+    "whyUs": {
+      "title": "Tại sao làm việc với chúng tôi",
+      "items": {
+        "w1": {
+          "title": "Công việc ổn định",
+          "body": "Một chuỗi các dự án cải tạo nhà bếp, phòng tắm và cải tạo toàn bộ ngôi nhà bận rộn quanh năm trên khắp Metro Vancouver."
+        },
+        "w2": {
+          "title": "Bảo hiểm WCB",
+          "body": "WorkSafeBC đưa tin về mọi công việc — an toàn không bao giờ là tùy chọn tại các cơ sở của chúng tôi."
+        },
+        "w3": {
+          "title": "Đội song ngữ",
+          "body": "Làm việc trong một nhóm hỗ trợ sử dụng tiếng Quan Thoại, tiếng Quảng Đông và tiếng Anh hàng ngày."
+        },
+        "w4": {
+          "title": "Phòng để phát triển",
+          "body": "Tìm hiểu các ngành nghề mới trong công việc và phát triển lên vai trò lãnh đạo và chuyên gia khi bạn xây dựng kỹ năng."
+        }
+      }
+    },
+    "apply": {
+      "title": "Làm thế nào để nộp đơn",
+      "body": "Hãy cho chúng tôi biết ngắn gọn về trải nghiệm của bạn, các giao dịch mà bạn cảm thấy thoải mái và khi nào bạn có thể bắt đầu. Không cần sơ yếu lý lịch chính thức - một cuộc gọi điện thoại hoặc tin nhắn là đủ để cuộc trò chuyện diễn ra.",
+      "call": "Gọi điện hoặc nhắn tin",
+      "email": "E-mail",
+      "emailSubject": "Đơn xin việc - Công nhân cải tạo",
+      "wechat": "WeChat",
+      "wechatNote": "Thêm chúng tôi trên WeChat và đề cập đến việc bạn đang xin việc",
+      "cta": "Call 778-960-7999"
+    }
+  }
+}

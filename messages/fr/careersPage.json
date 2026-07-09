@@ -1,0 +1,74 @@
+{
+  "careers": {
+    "breadcrumb": "Carrières",
+    "hero": {
+      "title": "Rejoignez l'équipe Reno Stars",
+      "subtitle": "Nous embauchons des travailleurs en rénovation pour des chantiers dans la région métropolitaine de Vancouver. Les locuteurs du mandarin ou du cantonais sont préférés.",
+      "badge": "Nous embauchons actuellement"
+    },
+    "role": {
+      "title": "Ouvrier en rénovation",
+      "typeLabel": "Type d'emploi",
+      "type": "Temps plein / Temps partiel",
+      "locationLabel": "Emplacement",
+      "location": "Basé à Richmond, en Colombie-Britannique – sites d'emploi dans la région métropolitaine de Vancouver",
+      "payLabel": "Payer",
+      "pay": "Compétitif, basé sur l'expérience et les compétences"
+    },
+    "duties": {
+      "title": "Ce que vous ferez",
+      "items": {
+        "d1": "Démolition et préparation de chantier",
+        "d2": "Pose de carrelage pour salles de bains, cuisines et sols",
+        "d3": "Installation, collage et finition de cloisons sèches",
+        "d4": "Peinture intérieure et préparation de surface",
+        "d5": "Installation de revêtement de sol (stratifié, vinyle, bois franc)",
+        "d6": "Menuiserie de finition – boiseries, portes, armoires",
+        "d7": "Support général sur chantier : manutention du matériel, nettoyage, maintien de la sécurité du chantier"
+      }
+    },
+    "requirements": {
+      "title": "Qui nous recherchons",
+      "items": {
+        "r1": "Une expérience pratique en rénovation ou en construction est préférable — mais nous accueillons également les débutants assidus désireux d'apprendre.",
+        "r2": "Parler le mandarin ou le cantonais est un atout majeur – une grande partie de notre équipe et plusieurs de nos clients sont chinois",
+        "r3": "Un anglais de base pour la communication sur le site est utile",
+        "r4": "Légalement admissible à travailler au Canada",
+        "r5": "Fiable, ponctuel et soucieux de la sécurité",
+        "r6": "Permis de conduire et propre moyen de transport sont un atout"
+      },
+      "languageHighlight": "Les locuteurs du mandarin ou du cantonais sont préférés — 会说普通话或粤语优先"
+    },
+    "whyUs": {
+      "title": "Pourquoi travailler avec nous",
+      "items": {
+        "w1": {
+          "title": "Travail stable",
+          "body": "Un pipeline chargé tout au long de l'année de projets de rénovation de cuisines, de salles de bains et de maisons entières dans la région métropolitaine de Vancouver."
+        },
+        "w2": {
+          "title": "Couverture de la WCB",
+          "body": "Couverture WorkSafeBC sur chaque travail – la sécurité n’est jamais facultative sur nos sites."
+        },
+        "w3": {
+          "title": "Équipe bilingue",
+          "body": "Travaillez dans une équipe solidaire où le mandarin, le cantonais et l'anglais sont tous parlés quotidiennement."
+        },
+        "w4": {
+          "title": "De la place pour grandir",
+          "body": "Apprenez de nouveaux métiers sur le tas et évoluez vers des rôles de direction et de spécialiste tout en développant vos compétences."
+        }
+      }
+    },
+    "apply": {
+      "title": "Comment postuler",
+      "body": "Parlez-nous brièvement de votre expérience, des métiers avec lesquels vous êtes à l'aise et quand vous pouvez commencer. Aucun CV formel n'est requis : un appel téléphonique ou un message suffit pour lancer la conversation.",
+      "call": "Appeler ou envoyer un SMS",
+      "email": "E-mail",
+      "emailSubject": "Demande d'emploi — Ouvrier en rénovation",
+      "wechat": "WeChat",
+      "wechatNote": "Ajoutez-nous sur WeChat et mentionnez que vous postulez pour un emploi",
+      "cta": "Call 778-960-7999"
+    }
+  }
+}

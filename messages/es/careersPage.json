@@ -1,0 +1,74 @@
+{
+  "careers": {
+    "breadcrumb": "Carreras",
+    "hero": {
+      "title": "Únase al equipo de Reno Stars",
+      "subtitle": "Estamos contratando trabajadores de renovación para sitios de trabajo en todo Metro Vancouver. Preferiblemente hablantes de mandarín o cantonés.",
+      "badge": "Ahora contratando"
+    },
+    "role": {
+      "title": "Trabajador de renovación",
+      "typeLabel": "Tipo de empleo",
+      "type": "Tiempo completo/tiempo parcial",
+      "locationLabel": "Ubicación",
+      "location": "Con sede en Richmond, BC: sitios de trabajo en todo Metro Vancouver",
+      "payLabel": "Pagar",
+      "pay": "Competitivo, basado en experiencia y habilidades."
+    },
+    "duties": {
+      "title": "lo que harás",
+      "items": {
+        "d1": "Demolición y preparación del lugar de trabajo.",
+        "d2": "Colocación de azulejos para baños, cocinas y suelos.",
+        "d3": "Instalación, encintado y acabado de paneles de yeso.",
+        "d4": "Pintura de interiores y preparación de superficies.",
+        "d5": "Instalación de pisos (laminado, vinilo, madera dura)",
+        "d6": "Acabado de carpintería: molduras, puertas, gabinetes.",
+        "d7": "Soporte general del sitio: manejo de materiales, limpieza, mantenimiento del sitio seguro"
+      }
+    },
+    "requirements": {
+      "title": "A quién estamos buscando",
+      "items": {
+        "r1": "Se prefiere experiencia práctica en renovación o construcción, pero también damos la bienvenida a principiantes trabajadores y dispuestos a aprender.",
+        "r2": "Hablar mandarín o cantonés es una gran ventaja: gran parte de nuestro equipo y muchos de nuestros clientes hablan chino.",
+        "r3": "El inglés básico para la comunicación del sitio es útil.",
+        "r4": "Legalmente elegible para trabajar en Canadá",
+        "r5": "Confiable, puntual y con mentalidad de seguridad.",
+        "r6": "Licencia de conducir y transporte propio son un activo."
+      },
+      "languageHighlight": "Se prefieren hablantes de mandarín o cantonés. — 会说普通话或粤语优先"
+    },
+    "whyUs": {
+      "title": "Por qué trabajar con nosotros",
+      "items": {
+        "w1": {
+          "title": "trabajo estable",
+          "body": "Una intensa cartera de proyectos de renovación de cocinas, baños y hogares completos durante todo el año en Metro Vancouver."
+        },
+        "w2": {
+          "title": "Cobertura WCB",
+          "body": "Cobertura WorkSafeBC en cada trabajo: la seguridad nunca es opcional en nuestros sitios."
+        },
+        "w3": {
+          "title": "Equipo bilingüe",
+          "body": "Trabaje en un equipo de apoyo donde se habla mandarín, cantonés e inglés a diario."
+        },
+        "w4": {
+          "title": "Espacio para crecer",
+          "body": "Aprenda nuevos oficios en el trabajo y avance hacia roles de liderazgo y especialistas a medida que desarrolla habilidades."
+        }
+      }
+    },
+    "apply": {
+      "title": "Cómo aplicar",
+      "body": "Cuéntenos brevemente sobre su experiencia, las operaciones con las que se siente cómodo y cuándo puede comenzar. No se requiere un currículum formal: una llamada telefónica o un mensaje es suficiente para iniciar la conversación.",
+      "call": "Llama o envía un mensaje de texto",
+      "email": "Correo electrónico",
+      "emailSubject": "Solicitud de empleo: trabajador de renovación",
+      "wechat": "WeChat",
+      "wechatNote": "Agréganos en WeChat y menciona que estás solicitando trabajo.",
+      "cta": "Call 778-960-7999"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "careers": {
+    "breadcrumb": "Careers",
+    "hero": {
+      "title": "Join the Reno Stars Team",
+      "subtitle": "We're hiring renovation workers for job sites across Metro Vancouver. Mandarin or Cantonese speakers preferred.",
+      "badge": "Now Hiring"
+    },
+    "role": {
+      "title": "Renovation Worker",
+      "typeLabel": "Employment type",
+      "type": "Full-time / Part-time",
+      "locationLabel": "Location",
+      "location": "Based in Richmond, BC — job sites across Metro Vancouver",
+      "payLabel": "Pay",
+      "pay": "Competitive, based on experience and skills"
+    },
+    "duties": {
+      "title": "What You'll Do",
+      "items": {
+        "d1": "Demolition and job-site preparation",
+        "d2": "Tile setting for bathrooms, kitchens and floors",
+        "d3": "Drywall installation, taping and finishing",
+        "d4": "Interior painting and surface prep",
+        "d5": "Flooring installation (laminate, vinyl, hardwood)",
+        "d6": "Finishing carpentry — trim, doors, cabinets",
+        "d7": "General site support: material handling, cleanup, keeping the site safe"
+      }
+    },
+    "requirements": {
+      "title": "Who We're Looking For",
+      "items": {
+        "r1": "Hands-on renovation or construction experience preferred — but we also welcome hardworking beginners willing to learn",
+        "r2": "Mandarin or Cantonese speaking is a strong asset — much of our team and many of our clients are Chinese-speaking",
+        "r3": "Basic English for site communication is helpful",
+        "r4": "Legally eligible to work in Canada",
+        "r5": "Reliable, punctual and safety-minded",
+        "r6": "Driver's license and own transportation are an asset"
+      },
+      "languageHighlight": "会说普通话或粤语者优先 — Mandarin or Cantonese speakers preferred"
+    },
+    "whyUs": {
+      "title": "Why Work With Us",
+      "items": {
+        "w1": {
+          "title": "Steady work",
+          "body": "A busy year-round pipeline of kitchen, bathroom and whole-home renovation projects across Metro Vancouver."
+        },
+        "w2": {
+          "title": "WCB coverage",
+          "body": "WorkSafeBC coverage on every job — safety is never optional on our sites."
+        },
+        "w3": {
+          "title": "Bilingual team",
+          "body": "Work in a supportive team where Mandarin, Cantonese and English are all spoken daily."
+        },
+        "w4": {
+          "title": "Room to grow",
+          "body": "Learn new trades on the job and grow toward lead-hand and specialist roles as you build skills."
+        }
+      }
+    },
+    "apply": {
+      "title": "How to Apply",
+      "body": "Tell us briefly about your experience, the trades you're comfortable with, and when you can start. No formal resume required — a phone call or message is enough to get the conversation going.",
+      "call": "Call or text",
+      "email": "Email",
+      "emailSubject": "Job Application — Renovation Worker",
+      "wechat": "WeChat",
+      "wechatNote": "Add us on WeChat and mention you're applying for work",
+      "cta": "Call 778-960-7999"
+    }
+  }
+}

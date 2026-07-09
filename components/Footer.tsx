@@ -263,6 +263,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
     // The /guides/ hub (above) is now the single entry point to those pages.
     { href: '/renovation-near-me', label: t('nav.renovationNearMe') },
     { href: '/financing', label: t('nav.financing') },
+    { href: '/careers', label: t('nav.careers') },
     { href: '/before-after', label: t('nav.beforeAfter') },
     // Network Partner backlink — Vancouver Construction Network directory listing.
     // Reciprocal dofollow footer link for their partner program (badge + higher

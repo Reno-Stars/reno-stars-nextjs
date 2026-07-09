@@ -1,0 +1,74 @@
+{
+  "careers": {
+    "breadcrumb": "Mga karera",
+    "hero": {
+      "title": "Sumali sa Reno Stars Team",
+      "subtitle": "Kami ay kumukuha ng mga manggagawa sa pagsasaayos para sa mga lugar ng trabaho sa buong Metro Vancouver. Mas gusto ang mga nagsasalita ng Mandarin o Cantonese.",
+      "badge": "Ngayon Hiring"
+    },
+    "role": {
+      "title": "Manggagawa sa Pagkukumpuni",
+      "typeLabel": "Uri ng trabaho",
+      "type": "Full-time / Part-time",
+      "locationLabel": "Lokasyon",
+      "location": "Batay sa Richmond, BC — mga job site sa Metro Vancouver",
+      "payLabel": "Magbayad",
+      "pay": "Competitive, batay sa karanasan at kasanayan"
+    },
+    "duties": {
+      "title": "Ano ang Gagawin Mo",
+      "items": {
+        "d1": "Demolisyon at paghahanda sa lugar ng trabaho",
+        "d2": "Tile setting para sa mga banyo, kusina at sahig",
+        "d3": "Pag-install, pag-tape at pagtatapos ng drywall",
+        "d4": "Pagpipinta sa loob at paghahanda sa ibabaw",
+        "d5": "Pag-install ng sahig (laminate, vinyl, hardwood)",
+        "d6": "Pagtatapos ng karpintero - trim, pinto, cabinet",
+        "d7": "Pangkalahatang suporta sa site: paghawak ng materyal, paglilinis, pagpapanatiling ligtas sa site"
+      }
+    },
+    "requirements": {
+      "title": "Sino ang Hinahanap Namin",
+      "items": {
+        "r1": "Mas gusto ang hands-on na renovation o construction experience — ngunit tinatanggap din namin ang mga masisipag na baguhan na gustong matuto",
+        "r2": "Ang Mandarin o Cantonese na pagsasalita ay isang malakas na asset — karamihan sa aming team at marami sa aming mga kliyente ay Chinese-speaking",
+        "r3": "Ang pangunahing Ingles para sa komunikasyon sa site ay kapaki-pakinabang",
+        "r4": "Legal na karapat-dapat na magtrabaho sa Canada",
+        "r5": "Maaasahan, maagap at may pag-iisip sa kaligtasan",
+        "r6": "Ang lisensya sa pagmamaneho at sariling transportasyon ay isang asset"
+      },
+      "languageHighlight": "Mas gusto ang mga nagsasalita ng Mandarin o Cantonese — 会说普通话或粤语优先"
+    },
+    "whyUs": {
+      "title": "Bakit Makipagtulungan sa Amin",
+      "items": {
+        "w1": {
+          "title": "Panay ang trabaho",
+          "body": "Isang abalang pipeline sa buong taon ng mga proyekto sa pagkukumpuni ng kusina, banyo at buong bahay sa Metro Vancouver."
+        },
+        "w2": {
+          "title": "Saklaw ng WCB",
+          "body": "Ang saklaw ng WorkSafeBC sa bawat trabaho — hindi kailanman opsyonal ang kaligtasan sa aming mga site."
+        },
+        "w3": {
+          "title": "Bilingual na pangkat",
+          "body": "Magtrabaho sa isang supportive team kung saan ang Mandarin, Cantonese at English ay binibigkas araw-araw."
+        },
+        "w4": {
+          "title": "Kwarto para lumaki",
+          "body": "Matuto ng mga bagong trade sa trabaho at umunlad patungo sa lead-hand at mga tungkuling espesyalista habang bumubuo ka ng mga kasanayan."
+        }
+      }
+    },
+    "apply": {
+      "title": "Paano Mag-apply",
+      "body": "Sabihin sa amin nang maikli ang tungkol sa iyong karanasan, ang mga trade na komportable ka, at kung kailan ka makakapagsimula. Walang kinakailangang pormal na resume — isang tawag sa telepono o mensahe ay sapat na upang magpatuloy ang pag-uusap.",
+      "call": "Tumawag o mag-text",
+      "email": "Email",
+      "emailSubject": "Aplikasyon ng Trabaho — Trabaho sa Pagkukumpuni",
+      "wechat": "WeChat",
+      "wechatNote": "Idagdag kami sa WeChat at banggitin na nag-a-apply ka para sa trabaho",
+      "cta": "Call 778-960-7999"
+    }
+  }
+}
