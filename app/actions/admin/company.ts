@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, updateTag } from 'next/cache';
+import { revalidateGlobals } from '@/lib/seo/revalidate-paths';
 import { db } from '@/lib/db';
 import { companyInfo } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -75,6 +76,7 @@ export async function updateCompanyInfo(
     });
 
     updateTag('company');
+    revalidateGlobals();
     return { success: true };
   } catch (error) {
     console.error('Failed to update company info:', error);

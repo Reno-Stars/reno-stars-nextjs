@@ -33,7 +33,16 @@ export function revalidateBlogPaths(
   const includeIndex = opts.includeIndex ?? true;
   const postLocales = opts.locales ?? locales;
   if (includeIndex) {
-    for (const loc of locales) revalidatePath(`/${loc}/blog`);
+    for (const loc of locales) {
+      revalidatePath(`/${loc}/blog`);
+      // The blog RSS feed is a route handler with 7-day ISR — updateTag on the
+      // post data doesn't bust its cached response; only revalidatePath does.
+      // Without this, RSS subscribers miss new posts for up to a week.
+      revalidatePath(`/${loc}/feed.xml`);
+    }
+    // llms-full.txt lists every blog article — refresh it so AI crawlers see
+    // the new post (its own route ISR is 7 days otherwise).
+    revalidatePath('/llms-full.txt');
   }
   if (slug) {
     for (const loc of postLocales) revalidatePath(`/${loc}/blog/${slug}`);

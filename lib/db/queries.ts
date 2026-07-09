@@ -2,6 +2,8 @@ import { cache } from 'react';
 import { unstable_cache } from 'next/cache';
 import { eq, asc, desc, and, or, like, inArray, count, isNull, sql } from 'drizzle-orm';
 import { db } from './index';
+import { withFallback, safeQuery, uncachedQuery } from './cache-fallback';
+
 
 /**
  * Wrap a layout-level / high-traffic query in BOTH layers of caching:
@@ -28,12 +30,12 @@ function cachedQuery<T>(
   // tsx scripts (seed jobs, migrations, CLI tools) run outside that context
   // and would crash with "Invariant: incrementalCache missing". Fall back
   // to react.cache() — single-process dedup is fine for one-shot scripts.
-  if (!process.env.NEXT_RUNTIME) return cache(fn);
+  if (!process.env.NEXT_RUNTIME) return withFallback(cache(fn));
   const wrapped = unstable_cache(fn, keyParts, {
     revalidate: options.revalidate ?? 86400,
     tags: options.tags,
   });
-  return cache(wrapped);
+  return withFallback(cache(wrapped));
 }
 
 /**
@@ -47,12 +49,12 @@ function cachedQueryWithArgs<A extends string, T>(
   keyParts: string[],
   options: { revalidate?: number; tags?: string[] } = {},
 ): (arg: A) => Promise<T> {
-  if (!process.env.NEXT_RUNTIME) return cache(fn);
+  if (!process.env.NEXT_RUNTIME) return withFallback(cache(fn));
   const wrapped = unstable_cache(fn, keyParts, {
     revalidate: options.revalidate ?? 86400,
     tags: options.tags,
   });
-  return cache(wrapped);
+  return withFallback(cache(wrapped));
 }
 
 /**
@@ -77,8 +79,8 @@ function cachedQueryPerSlug<T>(
   baseKey: string,
   options: { revalidate?: number; broadTags?: string[]; tagPrefix?: string } = {},
 ): (slug: string) => Promise<T> {
-  if (!process.env.NEXT_RUNTIME) return cache(fn);
-  return cache(async (slug: string) => {
+  if (!process.env.NEXT_RUNTIME) return withFallback(cache(fn));
+  return withFallback(cache(async (slug: string) => {
     const wrapped = unstable_cache(
       () => fn(slug),
       [baseKey, slug],
@@ -91,7 +93,7 @@ function cachedQueryPerSlug<T>(
       },
     );
     return wrapped();
-  });
+  }));
 }
 
 /**
@@ -112,8 +114,8 @@ function cachedQueryPerSlugLocale<T>(
   baseKey: string,
   options: { revalidate?: number; tagPrefix?: string } = {},
 ): (slug: string, locale: string) => Promise<T> {
-  if (!process.env.NEXT_RUNTIME) return cache((slug: string, _locale: string) => fn(slug));
-  return cache(async (slug: string, locale: string) => {
+  if (!process.env.NEXT_RUNTIME) return withFallback(cache((slug: string, _locale: string) => fn(slug)));
+  return withFallback(cache(async (slug: string, locale: string) => {
     const prefix = options.tagPrefix ?? baseKey;
     const wrapped = unstable_cache(
       () => fn(slug),
@@ -124,7 +126,7 @@ function cachedQueryPerSlugLocale<T>(
       },
     );
     return wrapped();
-  });
+  }));
 }
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
 import {
@@ -262,14 +264,6 @@ export function groupBy<T, K extends string | number>(arr: T[], keyFn: (item: T)
  * matters most for listing pages whose 500s would waste Googlebot crawl
  * budget across hundreds of locale variants.
  */
-async function safeQuery<T>(label: string, fn: () => Promise<T>, fallback: T): Promise<T> {
-  try {
-    return await fn();
-  } catch (err) {
-    console.error(`[db:${label}] query failed, returning fallback:`, err);
-    return fallback;
-  }
-}
 
 const COMPANY_FALLBACK: Company = (() => {
   const { companyFoundingYear, teamSize, projectsCompleted, liabilityCoverage } = COMPANY_STATS;
@@ -829,7 +823,7 @@ export async function getAllProjectsAdmin() {
 // dropped a live blog from the sitemap after a restart. Sitemap traffic is
 // crawler-only + low volume, so the per-request DB read is negligible.
 export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; locationCity: string | null; heroImageUrl: string | null }[]> {
-  return safeQuery('getProjectSlugsFromDb', async () => {
+  return uncachedQuery('getProjectSlugsFromDb', async () => {
     const rows = await db
       .select({ slug: projectsTable.slug, updatedAt: projectsTable.updatedAt, locationCity: projectsTable.locationCity, heroImageUrl: projectsTable.heroImageUrl })
       .from(projectsTable)
@@ -840,7 +834,7 @@ export async function getProjectSlugsFromDb(): Promise<{ slug: string; updatedAt
 
 /** Fetch all published site slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
 export async function getSiteSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; heroImageUrl: string | null }[]> {
-  return safeQuery('getSiteSlugsFromDb', async () => {
+  return uncachedQuery('getSiteSlugsFromDb', async () => {
     const rows = await db
       .select({ slug: sitesTable.slug, updatedAt: sitesTable.updatedAt, heroImageUrl: sitesTable.heroImageUrl })
       .from(sitesTable)
@@ -869,7 +863,7 @@ export interface VideoWatchEntry {
  * rationale as getProjectSlugsFromDb.
  */
 export async function getVideoWatchEntriesFromDb(): Promise<VideoWatchEntry[]> {
-  return safeQuery('getVideoWatchEntriesFromDb', async () => {
+  return uncachedQuery('getVideoWatchEntriesFromDb', async () => {
     const [siteRows, projectRows] = await Promise.all([
       db
         .select({
@@ -1470,7 +1464,7 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
 
 /** Fetch all published blog post slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
 export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; featuredImageUrl: string | null; nativeContentKeys: string[] }[]> {
-  return safeQuery('getBlogPostSlugsFromDb', async () => {
+  return uncachedQuery('getBlogPostSlugsFromDb', async () => {
     const rows = await db
       .select({
         slug: blogPostsTable.slug,

@@ -19,7 +19,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, parseImagePairs, validatePairUrls, validateExternalProductUrls, parseDynamicBlocks } from '@/lib/admin/form-utils';
 import { ensureUniqueSlug } from '@/lib/utils';
 import { SPACE_TYPE_TO_ZH } from '@/lib/admin/constants';
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePathAllLocales, revalidateProjectSurfaces } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, PROJECT_CARD_FIELDS } from '@/lib/admin/listing-cache';
 
 const MAX_SCOPES = 50;
@@ -249,8 +249,7 @@ export async function createProject(
     }
 
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     updateTag(`project:${data.slug}`);
     // The project detail page body + generateMetadata read UNTAGGED
     // getProjectsFromDb (handoff 5c#1), so the per-slug tag can't refresh them —
@@ -428,8 +427,7 @@ export async function updateProject(
     // (related-projects). Only bust them when a card-visible field changed —
     // not on meta/SEO, description, or dynamic-block edits.
     if (listingCardChanged(currentProject[0], data, PROJECT_CARD_FIELDS)) {
-      updateTag('projects:listing');
-      updateTag('sites:listing');
+      revalidateProjectSurfaces();
     }
     return { success: true, ...(renamedSlug ? { renamedSlug } : {}) };
   } catch (error) {
@@ -449,8 +447,7 @@ export async function deleteProject(id: string): Promise<{ error?: string }> {
     const slug = existing[0]?.slug;
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     if (slug) updateTag(`project:${slug}`);
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1) — revalidate
     // the deleted project's path so its page stops serving stale content.
@@ -471,8 +468,7 @@ export async function toggleProjectFeatured(id: string, current: boolean): Promi
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
     // feature toggle changes the detail render (and visibility), so revalidate
@@ -502,8 +498,7 @@ export async function toggleProjectPublished(id: string, current: boolean): Prom
       return { error: 'Project not found.' };
     }
     revalidatePath('/admin/projects');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     if (updated[0]?.slug) updateTag(`project:${updated[0].slug}`);
     // Detail page reads UNTAGGED getProjectsFromDb (handoff 5c#1); a publish/
     // feature toggle changes the detail render (and visibility), so revalidate
@@ -555,8 +550,7 @@ export async function moveProjectToSite(
       .where(eq(projects.id, projectId));
 
     revalidatePath('/admin/sites');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     return { success: true };
   } catch (error) {
     console.error('Failed to move project:', error);
@@ -588,8 +582,7 @@ export async function reorderProjectsInSite(
     );
 
     revalidatePath('/admin/sites');
-    updateTag('projects:listing');
-    updateTag('sites:listing');
+    revalidateProjectSurfaces();
     return {};
   } catch (error) {
     console.error('Failed to reorder projects:', error);

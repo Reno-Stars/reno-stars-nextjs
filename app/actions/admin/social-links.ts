@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, updateTag } from 'next/cache';
+import { revalidateGlobals } from '@/lib/seo/revalidate-paths';
 import { db } from '@/lib/db';
 import { socialLinks } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -38,6 +39,7 @@ export async function updateSocialLink(
 
     revalidatePath('/admin/social-links');
     updateTag('social-links');
+    revalidateGlobals();
     return { success: true };
   } catch (error) {
     console.error('Failed to update social link:', error);
@@ -58,6 +60,7 @@ export async function deleteSocialLink(id: string): Promise<{ error?: string }> 
 
     revalidatePath('/admin/social-links');
     updateTag('social-links');
+    revalidateGlobals();
     return {};
   } catch (error) {
     console.error('Failed to delete social link:', error);
@@ -82,6 +85,7 @@ export async function toggleSocialLinkActive(
 
     revalidatePath('/admin/social-links');
     updateTag('social-links');
+    revalidateGlobals();
     return {};
   } catch (error) {
     console.error('Failed to toggle social link active:', error);

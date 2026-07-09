@@ -9,7 +9,7 @@ import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, validateTextLengths, MAX_SHORT_TEXT_LENGTH, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
 import { ensureUniqueSlug } from '@/lib/utils';
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePathAllLocales, revalidateGlobals } from '@/lib/seo/revalidate-paths';
 import { listingCardChanged, SERVICE_AREA_LIST_FIELDS } from '@/lib/admin/listing-cache';
 import { areaTag } from '@/lib/admin/area-invalidation';
 
@@ -78,6 +78,7 @@ export async function createServiceArea(
 
     revalidatePath('/admin/service-areas');
     updateTag('service-areas');
+    revalidateGlobals();
     // Area detail is tag-covered (getServiceAreaBySlugFromDb), but path-
     // revalidate the new city page across locales too (handoff §5c/§6).
     revalidatePathAllLocales(`/areas/${uniqueSlug}`);
@@ -105,6 +106,7 @@ export async function deleteServiceArea(id: string): Promise<{ error?: string }>
     if (deleted.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
     updateTag('service-areas');
+    revalidateGlobals();
     return {};
   } catch (error) {
     console.error('Failed to delete service area:', error);
@@ -133,6 +135,7 @@ export async function reorderServiceAreas(orderedIds: string[]): Promise<{ error
 
     revalidatePath('/admin/service-areas');
     updateTag('service-areas');
+    revalidateGlobals();
     return {};
   } catch (error) {
     console.error('Failed to reorder service areas:', error);
@@ -211,6 +214,7 @@ export async function updateServiceArea(
     revalidatePathAllLocales(`/areas/${before[0].slug}`);
     if (listingCardChanged(before[0], data, SERVICE_AREA_LIST_FIELDS)) {
       updateTag('service-areas');
+    revalidateGlobals();
     }
     return { success: true };
   } catch (error) {
@@ -227,6 +231,7 @@ export async function toggleServiceAreaActive(id: string, current: boolean): Pro
     if (updated.length === 0) return { error: 'Service area not found.' };
     revalidatePath('/admin/service-areas');
     updateTag('service-areas');
+    revalidateGlobals();
     return {};
   } catch (error) {
     console.error('Failed to toggle service area active:', error);
