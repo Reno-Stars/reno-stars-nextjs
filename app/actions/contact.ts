@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 import { propertyTypes, serviceAreas } from '@/lib/db/schema';
 import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
-import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/crm';
+import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/odoo-lead';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 import { getClientIp as getTrustedClientIp } from '@/lib/get-client-ip';
 

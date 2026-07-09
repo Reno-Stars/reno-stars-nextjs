@@ -44,25 +44,15 @@ vi.mock('@/lib/email', () => ({
   sendContactNotification: mockSendContactNotification,
 }));
 
-// Mock the CRM client + deadletter — the action dual-writes to Twenty CRM in
-// the background. We just verify the form path itself; CRM integration is
-// covered by the smoke test in PR #75. Using empty resolved promises avoids
-// noisy stderr from the deadletter when the action runs in unit tests.
-const mockCreatePerson = vi
+// Mock the Odoo lead client + deadletter — the action writes the lead to Odoo
+// in the background. We just verify the form path itself; the Odoo integration
+// is covered separately. Using an empty resolved promise avoids noisy stderr
+// from the deadletter when the action runs in unit tests.
+const mockCreateLeadInOdoo = vi
   .fn()
-  .mockResolvedValue({ id: '00000000-0000-0000-0000-000000000001' });
-const mockCreateNoteOnPerson = vi
-  .fn()
-  .mockResolvedValue({ id: '00000000-0000-0000-0000-000000000002' });
-const mockCreateTaskForPerson = vi
-  .fn()
-  .mockResolvedValue({ id: '00000000-0000-0000-0000-000000000003' });
-vi.mock('@/lib/clients/crm', () => ({
-  crmClient: {
-    createPerson: mockCreatePerson,
-    createNoteOnPerson: mockCreateNoteOnPerson,
-    createTaskForPerson: mockCreateTaskForPerson,
-  },
+  .mockResolvedValue({ lead_id: 1, partner_id: 1, matched: false });
+vi.mock('@/lib/clients/odoo-lead', () => ({
+  createLeadInOdoo: mockCreateLeadInOdoo,
 }));
 
 const mockRecordCrmDeadLetter = vi.fn().mockResolvedValue(undefined);
