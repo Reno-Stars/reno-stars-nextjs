@@ -31,10 +31,10 @@ exists; the Vercel-specific costs no longer apply, but the designs remain sound.
 
 - **Framework:** Next.js 16, React 19, TypeScript 5.7
 - **Styling:** Tailwind CSS 4 with neumorphic design system
-- **Database:** Drizzle ORM → Neon (prod) / pg Pool (local)
+- **Database:** Drizzle ORM → pg Pool against local PostgreSQL (`127.0.0.1:5435`) in prod and local dev. (Neon HTTP driver is retired but still auto-selected if `DATABASE_URL` contains `neon.tech` — see "Dual DB driver" below.)
 - **i18n:** next-intl 4 — locales: `en`, `zh`, prefix: `always`
 - **Testing:** Vitest (unit), Playwright (e2e)
-- **Storage:** Production images on reno-stars.com, local dev on MinIO (S3-compatible)
+- **Storage:** Production images on Cloudflare R2, local dev on MinIO (S3-compatible)
 
 ## Commands
 
@@ -93,7 +93,7 @@ pnpm test:e2e             # Playwright headless
 - **Asset URL rewriting:** `getAssetUrl()` rewrites production URLs to MinIO when `NEXT_PUBLIC_STORAGE_PROVIDER=minio`.
 - **Neumorphic design:** Warm beige (#E8E2DA), navy (#1B365D), gold (#C8922A). `GOLD_ICON_FILTER` in `lib/theme.ts`.
 - **Unique slug generation:** `ensureUniqueSlug()` in `lib/utils.ts` auto-appends `-2`, `-3` on collision.
-- **Insert-before-delete pattern:** CRUD actions insert new related records before deleting old ones (Neon doesn't support interactive transactions).
+- **Insert-before-delete pattern:** CRUD actions insert new related records before deleting old ones (originally because the Neon HTTP driver couldn't do interactive transactions; retained after the move to local Postgres).
 - **Homepage section order:** Hero → AnswerBlock (What We Do + Services list, since #63 — GEO/AI-citability) → Gallery → Services → Testimonials → Stats → About → Trust Badges → Partners → Areas → FAQ → Blog → Showroom CTA → Contact
 - **Heading hierarchy:** H1 (page title) → H2 (sections) → H3 (items). Use `sr-only` H2 where needed.
 - **Performance:** `useMemo`/`useCallback` for derived data. `Promise.all` for parallel queries. `next/dynamic` for below-fold sections. No Suspense on SEO-critical pages.

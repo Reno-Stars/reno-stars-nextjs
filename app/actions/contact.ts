@@ -1,6 +1,6 @@
 'use server';
 
-import { waitUntil } from '@vercel/functions';
+
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { propertyTypes, serviceAreas } from '@/lib/db/schema';
@@ -9,6 +9,18 @@ import { sendContactNotification } from '@/lib/email';
 import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/crm';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
 import { getClientIp as getTrustedClientIp } from '@/lib/get-client-ip';
+
+/**
+ * Run a background task after the response is sent. On the self-hosted
+ * long-running `next start` process the floating promise completes on its own
+ * (unlike a serverless isolate, which froze after responding — the original
+ * reason this used @vercel/functions waitUntil). Errors are logged, never
+ * thrown into the request.
+ */
+function fireAndForget(promise: Promise<unknown>): void {
+  void promise.catch((err) => console.error('[contact] background task failed:', err));
+}
+
 
 /** Contact form input data */
 export interface ContactFormData {
@@ -293,7 +305,7 @@ export async function submitContactForm(
       propertyType: mapPropertyTypeSlugToCrm(propertyTypeSlug),
       notesFromForm: sanitizedMessage,
     };
-    waitUntil(
+    fireAndForget(
       (async () => {
         try {
           await createLeadInOdoo(crmPayload);
@@ -303,11 +315,11 @@ export async function submitContactForm(
       })()
     );
 
-    // Send email notification in the background. Wrapped in waitUntil() so
+    // Send email notification in the background. Wrapped in fireAndForget() so
     // Vercel keeps the serverless isolate alive until the HTTP call to Resend
     // completes — without it, the fire-and-forget promise was being dropped
     // mid-flight (~30% silent failure rate observed in production).
-    waitUntil(
+    fireAndForget(
       sendContactNotification({
         name: sanitizedName,
         email: sanitizedEmail,

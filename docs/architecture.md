@@ -9,10 +9,11 @@
 | Language | TypeScript (strict) | 5.7 |
 | Styling | Tailwind CSS | 4.0 |
 | Database ORM | Drizzle ORM | 0.36 |
-| Database | PostgreSQL 16 (Neon prod / pg local) | — |
+| Database | PostgreSQL 16 (local `127.0.0.1:5435` in prod and dev, via pg Pool) | — |
 | i18n | next-intl | 4.8 |
 | Testing | Vitest + Playwright | — |
-| Deployment | Vercel | — |
+| Deployment | Self-hosted `next start` on a Mac (launchd `com.renostars.reno-stars-web`, port 3000, Cloudflare Tunnel); manual `pnpm build` + `launchctl kickstart` (migrated off Vercel mid-2026) | — |
+| Storage | Cloudflare R2 (prod), MinIO (local dev) | — |
 
 ## Directory Layout
 
@@ -371,6 +372,8 @@ The `db` export in `lib/db/index.ts` uses a **Proxy** for lazy initialization:
    - Contains `neon.tech` → `@neondatabase/serverless` + `drizzle-orm/neon-http`
    - Otherwise → `pg` Pool + `drizzle-orm/node-postgres`
 
+   Since the mid-2026 migration to a local PostgreSQL instance (`127.0.0.1:5435`, Neon retired), **both production and local dev take the `pg` Pool path**. The Neon HTTP branch remains as a fallback but is no longer exercised.
+
 This pattern prevents build-time crashes at import time. Note that `DATABASE_URL` is still required at build time because `layout.tsx` and page components make DB queries during pre-rendering.
 
 ## AI Content Optimization
@@ -612,7 +615,7 @@ Tab bar at top for mode selection (Sites / Standalone Projects), disabled during
 
 ## Media Upload (Images & Video)
 
-All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This bypasses Vercel's proxy body size limit. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB). Videos upload directly without client-side preprocessing.
+All admin media uploads use presigned S3 URLs, uploading directly from the browser to S3-compatible storage (R2 in production, MinIO locally). This was originally designed to bypass Vercel's proxy body size limit (historical — prod is self-hosted since mid-2026); the direct-to-storage design remains sound and is still used. Supports images (JPEG, PNG, WebP, SVG, GIF — max 50 MB) and video (MP4, WebM, MOV — max 1 GB). Videos upload directly without client-side preprocessing.
 
 ### Architecture
 
@@ -695,7 +698,7 @@ The `humanizeSlug()` helper converts `richmond-kitchen` to `Richmond Kitchen`.
 
 ## Image Optimization
 
-Self-hosted image optimization bypasses Vercel's image quota (`unoptimized: true` remains in `next.config.ts`). Uses `sharp` for server-side resizing and WebP/AVIF conversion.
+Custom `sharp`-based image optimization (`unoptimized: true` remains in `next.config.ts`) — originally added to bypass Vercel's image-optimization quota (historical rationale; prod is self-hosted since mid-2026). Uses `sharp` for server-side resizing and WebP/AVIF conversion.
 
 ### API Route (`app/api/image/route.ts`)
 
@@ -761,7 +764,7 @@ Sends HTML email with contact details, service requested, and project descriptio
 
 ### Insert-Before-Delete Pattern
 
-Admin update actions that modify related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. The Neon HTTP driver does not support interactive transactions, so actions:
+Admin update actions that modify related records (image pairs, scopes, external products) use an insert-before-delete strategy instead of transactions. This originated because the Neon HTTP driver did not support interactive transactions; it has been retained after the move to local PostgreSQL. Actions:
 
 1. Fetch existing related record IDs before modification
 2. Insert new records first (old data remains as fallback if insert fails)

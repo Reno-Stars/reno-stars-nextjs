@@ -26,7 +26,7 @@
 
 ## Media Upload (Presigned S3 URL Flow)
 
-All admin uploads use presigned S3 URLs to bypass Vercel body size limit:
+All admin uploads use presigned S3 URLs, uploading directly from the browser to storage (originally to bypass Vercel's body size limit — historical rationale; prod is self-hosted since mid-2026, but the direct-to-storage design is retained):
 1. Client calls `uploadImageDirect()` or `uploadVideoDirect()` (`lib/admin/upload-client.ts`)
 2. Requests presigned PUT URL from `POST /admin/api/upload`
 3. Uploads directly from browser to S3

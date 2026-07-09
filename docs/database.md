@@ -2,14 +2,14 @@
 
 ## Overview
 
-PostgreSQL database managed with Drizzle ORM. Supports two drivers:
+PostgreSQL database managed with Drizzle ORM. Since the mid-2026 migration to a self-hosted stack, **production and local development both run against a local PostgreSQL instance** (`127.0.0.1:5435` in prod; Neon retired) via the `pg` Pool driver. The code still supports two drivers as a fallback:
 
 | Environment | Driver | Package |
 |------------|--------|---------|
-| Production (Neon) | HTTP serverless | `@neondatabase/serverless` + `drizzle-orm/neon-http` |
-| Local development | pg Pool | `pg` + `drizzle-orm/node-postgres` |
+| Current prod + local dev | pg Pool | `pg` + `drizzle-orm/node-postgres` |
+| Neon HTTP (legacy fallback, unused) | HTTP serverless | `@neondatabase/serverless` + `drizzle-orm/neon-http` |
 
-Driver selection is automatic based on whether `DATABASE_URL` contains `neon.tech`.
+Driver selection is automatic based on whether `DATABASE_URL` contains `neon.tech`. With a local Postgres URL, the `pg` Pool path is taken.
 
 ## Schema
 

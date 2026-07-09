@@ -31,8 +31,12 @@ jobs:
       - name: Type check
         run: pnpm typecheck
 
-      # Vercel GitHub Integration handles deployment automatically
-      # No CLI or tokens needed - just connect repo in Vercel dashboard
+      # This workflow only tests/validates on push to main — it does NOT deploy.
+      # Production is self-hosted (`next start` on a Mac via launchd
+      # `com.renostars.reno-stars-web`, port 3000, behind a Cloudflare Tunnel).
+      # Deploy is MANUAL on that machine: `git pull` on main → `pnpm build` →
+      # `launchctl kickstart -k gui/$(id -u)/com.renostars.reno-stars-web`.
+      # Merging a PR / pushing to main does NOT deploy. (Migrated off Vercel mid-2026.)
 
   # warm-image-cache is disabled — images are pre-processed to WebP at upload time
   # and served directly from R2. The /api/image route is only used as a fallback

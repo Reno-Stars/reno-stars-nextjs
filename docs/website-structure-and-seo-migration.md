@@ -2,7 +2,7 @@
 
 **Prepared for:** Client review
 **Date:** February 2026
-**Platform:** Next.js 16 on Vercel, Neon PostgreSQL
+**Platform:** Next.js 16, self-hosted (`next start` on a Mac behind a Cloudflare Tunnel), local PostgreSQL, Cloudflare R2 storage. _(This report was originally written in Feb 2026 when the site ran on Vercel + Neon; the stack migrated to self-hosted + local Postgres mid-2026.)_
 
 ---
 

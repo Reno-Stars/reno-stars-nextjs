@@ -22,7 +22,8 @@ function createDrizzleInstance(): DrizzleDB {
   const url = getDatabaseUrl();
 
   if (url.includes('neon.tech')) {
-    // Serverless Neon driver for production / preview
+    // Serverless Neon HTTP driver — legacy fallback, retired mid-2026 when
+    // prod moved to local PostgreSQL. Only taken if DATABASE_URL points at neon.tech.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { neon } = require('@neondatabase/serverless');
     // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -30,7 +31,8 @@ function createDrizzleInstance(): DrizzleDB {
     const sql = neon(url);
     return drizzle(sql, { schema });
   } else {
-    // Standard pg Pool for local development
+    // Standard pg Pool — used by both production (local PostgreSQL at
+    // 127.0.0.1:5435) and local development since the mid-2026 self-hosting migration.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const pg = require('pg');
     // eslint-disable-next-line @typescript-eslint/no-require-imports
