@@ -5,6 +5,7 @@
 
 import type { Locale, Localized } from '@/lib/types';
 import { locales, ogLocaleMap } from '@/i18n/config';
+import { LOCALE_TO_SUFFIX, isNativeLocale } from '@/lib/admin/locale-keys';
 
 // ============================================================================
 // ENVIRONMENT UTILITIES
@@ -96,20 +97,11 @@ export function hasNativeContent(
 // Map non-base locales to the camelCase suffix used in the DB localizations
 // jsonb. e.g. 'ja' → 'Ja', 'zh-Hant' → 'ZhHant'. The base locales (en, zh)
 // have dedicated columns and are not represented in this map.
-export const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = {
-  ja: 'Ja',
-  ko: 'Ko',
-  es: 'Es',
-  pa: 'Pa',
-  tl: 'Tl',
-  fa: 'Fa',
-  vi: 'Vi',
-  'zh-Hant': 'ZhHant',
-  ru: 'Ru',
-  ar: 'Ar',
-  hi: 'Hi',
-  fr: 'Fr',
-};
+// Derived from the exhaustive LOCALE_TO_SUFFIX in lib/admin/locale-keys.ts
+// (the SSOT) so the two maps can't drift.
+export const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = Object.fromEntries(
+  locales.filter((loc) => !isNativeLocale(loc)).map((loc) => [loc, LOCALE_TO_SUFFIX[loc]]),
+);
 
 /**
  * Build a `Localized<string>` shape from a DB row's en/zh columns plus the

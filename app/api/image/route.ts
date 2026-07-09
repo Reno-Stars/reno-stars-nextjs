@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
-import { SRCSET_WIDTHS } from '@/lib/image';
-
-// Allowed origins for image URLs
-const ALLOWED_HOSTS = [
-  'reno-stars.com',
-  'www.reno-stars.com',
-  'pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev',
-  'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
-  'lh3.googleusercontent.com',
-];
+// Allowed origins for image URLs — SSOT in lib/image.ts (base hosts shared
+// with the in-content optimizer rewrite + route-only extras like lh3).
+import { SRCSET_WIDTHS, ALLOWED_IMAGE_HOSTS } from '@/lib/image';
 
 // Also allow MinIO/localhost in dev
 const isDev = process.env.NODE_ENV === 'development';
@@ -32,7 +25,7 @@ function isAllowedUrl(url: string): boolean {
     if (isDev && (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1')) {
       return true;
     }
-    return ALLOWED_HOSTS.some(host => parsed.hostname === host || parsed.hostname.endsWith(`.${host}`));
+    return ALLOWED_IMAGE_HOSTS.some(host => parsed.hostname === host || parsed.hostname.endsWith(`.${host}`));
   } catch {
     return false;
   }

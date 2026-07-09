@@ -6,11 +6,15 @@ import {
   getBlogPostsFromDb,
 } from '@/lib/db/queries';
 import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { getGoogleReviews } from '@/lib/google-reviews';
+import { locales } from '@/i18n/config';
+import { COST_GUIDES } from '@/lib/seo/cost-guides';
 
 /**
- * /llms-full.txt — the comprehensive companion to the curated public/llms.txt.
+ * /llms-full.txt — the comprehensive companion to the curated /llms.txt.
  *
- * llms.txt is a short, hand-maintained index (~10 key links). This route is the
+ * llms.txt is a short, curated index (generated at app/llms.txt/route.ts from
+ * the same config/DB sources since 2026-07-09). This route is the
  * "full" variant of the llms.txt convention: a single, always-fresh Markdown
  * document that gives AI answer engines (ChatGPT, Perplexity, Google AI
  * Overviews, Claude) the WHOLE catalog in one fetch — every service with its
@@ -29,28 +33,21 @@ function clean(s: string | undefined | null): string {
   return (s ?? '').replace(STRIP_HTML, ' ').replace(/\s+/g, ' ').trim();
 }
 
-// Static cost-guide hub pages (mirror app/sitemap.ts staticPages /guides/*).
-const COST_GUIDES: { slug: string; label: string }[] = [
-  { slug: 'kitchen-renovation-cost-vancouver', label: 'Kitchen Renovation Cost' },
-  { slug: 'bathroom-renovation-cost-vancouver', label: 'Bathroom Renovation Cost' },
-  { slug: 'whole-house-renovation-cost-vancouver', label: 'Whole House Renovation Cost' },
-  { slug: 'basement-renovation-cost-vancouver', label: 'Basement Renovation Cost' },
-  { slug: 'basement-suite-cost-vancouver', label: 'Basement Suite Conversion Cost' },
-  { slug: 'commercial-renovation-cost-vancouver', label: 'Commercial Renovation Cost' },
-  { slug: 'cabinet-refinishing-cost-vancouver', label: 'Cabinet Refacing/Refinishing Cost' },
-];
-
 export async function GET(): Promise<Response> {
   const base = getBaseUrl();
-  const [company, services, areas, posts] = await Promise.all([
+  const [company, services, areas, posts, googleRating] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
     getBlogPostsFromDb(),
+    getGoogleReviews(),
   ]);
 
   const years = getYearsExperience();
   const en = base + '/en';
+  const ratingLine = googleRating.userRatingCount > 0
+    ? `${googleRating.rating.toFixed(1)} stars (${googleRating.userRatingCount} verified reviews)`
+    : '5.0 stars (verified Google reviews)';
 
   const header = [
     `# ${SITE_NAME} Construction Inc. — Full Reference`,
@@ -59,16 +56,16 @@ export async function GET(): Promise<Response> {
     '## Company',
     `- Name: ${SITE_NAME} Construction Inc.`,
     `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
-    `- Location: Unit 188-21300 Gordon Way, Richmond, BC V6W 1M2`,
+    `- Location: ${company.address || 'Unit 188-21300 Gordon Way, Richmond, BC V6W 1M2'}`,
     `- Phone: ${company.phone || '778-960-7999'}`,
     `- Website: ${base}`,
-    `- Languages Served: English, Mandarin, Cantonese, Japanese, Korean, Spanish, and more (14 locales)`,
+    `- Languages Served: English, Mandarin, Cantonese, Japanese, Korean, Spanish, and more (${locales.length} locales)`,
     `- Insurance: Up to ${COMPANY_STATS.liabilityCoverage} CGL (Commercial General Liability)`,
     `- Coverage: WCB (WorkSafeBC) on every job`,
-    `- Warranty: Up to 3 years workmanship warranty`,
+    `- Warranty: Up to ${COMPANY_STATS.warrantyYears} years workmanship warranty`,
     `- Experience: ${years}+ years in residential and commercial renovation`,
     `- Projects Completed: ${COMPANY_STATS.projectsCompleted}`,
-    `- Google Rating: 5.0 stars (70+ verified reviews)`,
+    `- Google Rating: ${ratingLine}`,
     `- Service Cities: ${areas.length} in Metro Vancouver`,
   ].join('\n');
 

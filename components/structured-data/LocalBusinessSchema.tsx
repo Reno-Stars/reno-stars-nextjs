@@ -133,7 +133,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       })),
     }),
     description: description
-      ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to 3 years warranty.`,
+      ?? `Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with ${company.liabilityCoverage} CGL insurance, active WCB coverage, and up to ${COMPANY_STATS.warrantyYears} years warranty.`,
     // schema.org foundingDate = legal incorporation year, NOT aggregate
     // team experience. The "20+ years" stat on the marketing site reflects
     // team-level renovation experience (foundingYear in company-config.ts);

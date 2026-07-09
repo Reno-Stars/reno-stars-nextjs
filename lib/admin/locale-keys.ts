@@ -7,8 +7,11 @@ import { locales, type Locale } from '@/i18n/config';
  * DB columns and the corresponding form fields are `titleEn` / `titleZh`.
  * The other 12 locales live in the `localizations` jsonb under
  * `${fieldName}${Suffix}` keys (e.g. `titleJa`, `descriptionZhHant`).
+ *
+ * SSOT: lib/utils.ts derives its LOCALE_TO_DB_SUFFIX (non-base locales only)
+ * from this exhaustive map — edit suffixes here only.
  */
-const LOCALE_TO_SUFFIX: Record<Locale, string> = {
+export const LOCALE_TO_SUFFIX: Record<Locale, string> = {
   en: 'En',
   zh: 'Zh',
   'zh-Hant': 'ZhHant',

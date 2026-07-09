@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getBaseUrl } from '@/lib/utils';
+import { getYearsExperience } from '@/lib/company-config';
 
 /**
  * Root (`/`) page — SEO-compliant landing that redirects to `/en/`.
@@ -15,9 +16,9 @@ import { getBaseUrl } from '@/lib/utils';
  * see rich metadata for the SERP; humans get auto-redirected.
  */
 export const metadata: Metadata = {
-  title: 'Vancouver Home Renovations — 20+ Yrs, $5M Insured | Reno Stars',
+  title: `Vancouver Home Renovations — ${getYearsExperience()}+ Yrs, $5M Insured | Reno Stars`,
   description:
-    'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years in business, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.',
+    `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${getYearsExperience()}+ years of experience, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.`,
   alternates: {
     canonical: `${getBaseUrl()}/en/`,
     languages: {
@@ -28,9 +29,9 @@ export const metadata: Metadata = {
   },
   // Don't pollute social cards for the redirect URL — use /en/'s instead
   openGraph: {
-    title: 'Vancouver Home Renovations — 20+ Yrs, $5M Insured | Reno Stars',
+    title: `Vancouver Home Renovations — ${getYearsExperience()}+ Yrs, $5M Insured | Reno Stars`,
     description:
-      'Kitchen, bathroom & whole-house renovations across Metro Vancouver. 20+ years, $5M CGL insurance, 3-year warranty.',
+      `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${getYearsExperience()}+ years of experience, $5M CGL insurance, 3-year warranty.`,
     url: `${getBaseUrl()}/en/`,
     type: 'website',
   },

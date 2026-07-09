@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SITE_NAME, getBaseUrl } from '@/lib/utils';
+import { getYearsExperience } from '@/lib/company-config';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -32,12 +33,12 @@ export const metadata: Metadata = {
   //
   // Pre-2026-05-30 the fallback was a generic 12-word filler. Now it
   // mirrors the structure of metadata.home (Trusted-Vancouver hook +
-  // quantified credibility signals + service breadth + CTA) using static
-  // numbers so it can render without runtime data access. Boosts the 404
-  // page's SERP description and any future route that forgets to define
-  // its own metadata.
+  // quantified credibility signals + service breadth + CTA) using
+  // config-derived numbers (lib/company-config.ts, no runtime data
+  // access). Boosts the 404 page's SERP description and any future
+  // route that forgets to define its own metadata.
   title: `${SITE_NAME} — Vancouver Renovation | Kitchen, Bath & Whole-House`,
-  description: "Trusted Vancouver renovation & remodeling contractor — 20+ yrs, 700+ projects, 5★ Google, $5M insured, 3-yr warranty. Kitchen, bathroom & whole-house renovations across Metro Vancouver. Free quote 24h.",
+  description: `Trusted Vancouver renovation & remodeling contractor — ${getYearsExperience()}+ yrs, 700+ projects, 5★ Google, $5M insured, 3-yr warranty. Kitchen, bathroom & whole-house renovations across Metro Vancouver. Free quote 24h.`,
   authors: [{ name: 'Reno Stars' }],
   // formatDetection: telephone:true makes iOS Safari auto-link any phone
   // number in body text into a tap-to-call link. The contractor business

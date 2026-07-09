@@ -94,12 +94,27 @@ export function buildPreloadUrl(src: string, width = 828, quality = DEFAULT_QUAL
 }
 
 // Hosts whose in-content <img> originals we may route through the WebP optimizer.
-// Mirrors ALLOWED_HOSTS in app/api/image/route.ts (only images we control).
-const OPTIMIZABLE_IMG_HOSTS = [
+// SSOT for image hostnames — the /api/image route allowlist derives from this
+// same base array (see ALLOWED_IMAGE_HOSTS below), so the two can't drift.
+// Only images we control: R2 buckets + www/apex.
+const OPTIMIZABLE_IMG_HOSTS: readonly string[] = [
   'pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev',
   'pub-c1ab6c279d0b4d818f91cee00ab3defe.r2.dev',
   'www.reno-stars.com',
   'reno-stars.com',
+];
+
+/**
+ * Full allowlist for the /api/image optimizer route: our own hosts plus
+ * route-only extras that the optimizer may FETCH but that the in-content
+ * rewrite (optimizeContentImages) must NOT proxy. Keeping the extras out of
+ * OPTIMIZABLE_IMG_HOSTS preserves the rewrite behavior exactly.
+ */
+export const ALLOWED_IMAGE_HOSTS: readonly string[] = [
+  ...OPTIMIZABLE_IMG_HOSTS,
+  // Route-only: Google review avatars (lh3) are resized by /api/image before
+  // being mirrored to R2 — they're never rewritten inside content HTML.
+  'lh3.googleusercontent.com',
 ];
 
 /**

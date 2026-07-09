@@ -1,11 +1,9 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+// Brand palette SSOT — same NAVY/GOLD/SURFACE the site UI uses.
+import { NAVY, GOLD, SURFACE } from '@/lib/theme';
 
 export const runtime = 'edge';
-
-const NAVY = '#1B365D';
-const GOLD = '#C8922A';
-const SURFACE = '#E8E2DA';
 
 const FONT_BOLD_URL =
   'https://cdn.jsdelivr.net/fontsource/fonts/inter@5.1.1/latin-700-normal.ttf';

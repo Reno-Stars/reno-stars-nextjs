@@ -10,6 +10,7 @@ import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { getYearsExperience } from '@/lib/company-config';
 
 interface PageProps {
   params: Promise<{ locale: string; city: string }>;
@@ -83,7 +84,7 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   'port-coquitlam': {
     title: 'Port Coquitlam Renovation Contractor (2026) | Reno Stars',
     description:
-      'Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. 20+ yrs, $5M insured.',
+      `Port Coquitlam home renovation contractor. Kitchens, bathrooms & basements — Citadel Heights, Lincoln Park. ${getYearsExperience()}+ yrs, $5M insured.`,
   },
   // 2026-04-30 CTR pass: 10 cities previously falling back to translation namespace.
   // Lead with city-name + service in title (Google bolds matching keywords),
@@ -94,7 +95,7 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
   vancouver: {
     title: 'Home Renovations Vancouver (2026) | Real Costs | Reno Stars',
     description:
-      'Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. 18+ yrs, $5M CGL, 3-yr warranty. Free quote.',
+      `Vancouver home renovations from $50K to $200K+. Kitchens, bathrooms & whole-house. ${getYearsExperience()}+ yrs, $5M CGL, 3-yr warranty. Free quote.`,
   },
   // 2026-05-10 GSC retune: page sat at pos 23.4 / 106 imp for 7d.
   // Top non-brand query is "bathroom renovation richmond" (23 imp pos 43.7).

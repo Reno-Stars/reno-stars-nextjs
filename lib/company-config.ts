@@ -16,6 +16,8 @@ export const COMPANY_STATS = {
   companyFoundingYear: 2020,
   teamSize: 17,
   projectsCompleted: "700+",
+  /** Up to N-year workmanship warranty ("up to 3 years workmanship warranty") */
+  warrantyYears: 3,
   /** Dollar amount with "Up to" qualifier — full label comes from translations */
   liabilityCoverage: "$5M",
 } as const;
