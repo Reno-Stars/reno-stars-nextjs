@@ -112,13 +112,18 @@ const OPTIMIZABLE_IMG_HOSTS = [
  */
 export function optimizeContentImages(html: string, width = 1200): string {
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
-    const m = tag.match(/\ssrc="([^"]+)"/i);
-    if (!m) return tag;
+    // In-content images are always below the fold — make them lazy + async
+    // when the stored HTML doesn't say otherwise (CWV: saves bandwidth/CLS).
+    let out = tag;
+    if (!/\sloading=/i.test(out)) out = out.replace(/^<img\b/i, '<img loading="lazy"');
+    if (!/\sdecoding=/i.test(out)) out = out.replace(/^<img\b/i, '<img decoding="async"');
+    const m = out.match(/\ssrc="([^"]+)"/i);
+    if (!m) return out;
     const src = m[1];
-    if (src.startsWith('/api/image') || src.startsWith('data:') || src.includes('/uploads/processed/')) return tag;
+    if (src.startsWith('/api/image') || src.startsWith('data:') || src.includes('/uploads/processed/')) return out;
     let hostname: string;
-    try { hostname = new URL(src, 'https://www.reno-stars.com').hostname; } catch { return tag; }
-    if (!OPTIMIZABLE_IMG_HOSTS.includes(hostname)) return tag;
-    return tag.replace(/\ssrc="[^"]+"/i, ` src="${buildOptimizedUrl(src, width)}"`);
+    try { hostname = new URL(src, 'https://www.reno-stars.com').hostname; } catch { return out; }
+    if (!OPTIMIZABLE_IMG_HOSTS.includes(hostname)) return out;
+    return out.replace(/\ssrc="[^"]+"/i, ` src="${buildOptimizedUrl(src, width)}"`);
   });
 }

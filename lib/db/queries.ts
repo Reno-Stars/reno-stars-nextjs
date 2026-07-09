@@ -1430,7 +1430,12 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
       excerpt: buildLocalizedOptional('excerpt', row.excerptEn, row.excerptZh, row.localizations),
       content: buildLocalizedOptional('content', row.contentEn, row.contentZh, row.localizations),
       featured_image: getOptionalAssetUrl(row.featuredImageUrl),
-      featured_image_alt: (row.localizations as Record<string, unknown> | null)?.['featuredImageAltEn'] as string | undefined ?? undefined,
+      featured_image_alt: (() => {
+        const locs = row.localizations as Record<string, unknown> | null;
+        const en = typeof locs?.['featuredImageAltEn'] === 'string' ? locs['featuredImageAltEn'] : '';
+        if (!en) return undefined;
+        return buildLocalized('featuredImageAlt', en, '', locs);
+      })(),
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,

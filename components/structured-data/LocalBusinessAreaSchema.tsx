@@ -1,6 +1,7 @@
 import type { Company } from '@/lib/types';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
+import { OPENING_HOURS } from '@/lib/company-config';
 
 interface LocalBusinessAreaSchemaProps {
   company: Company;
@@ -83,17 +84,8 @@ export default function LocalBusinessAreaSchema({
       },
     }),
     priceRange: '$$',
-    // Schema.org requires openingHoursSpecification to be an array even when
-    // there is only one time slot — Google's Rich Results validator flags
-    // the singular-object form as a structured-data error.
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        opens: '09:00',
-        closes: '18:00',
-      },
-    ],
+    // Hours SSOT lives in lib/company-config.ts and must mirror the GBP listing.
+    openingHoursSpecification: OPENING_HOURS,
   };
 
   return (

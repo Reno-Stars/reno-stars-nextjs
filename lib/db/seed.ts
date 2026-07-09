@@ -322,7 +322,7 @@ async function seed() {
       },
       {
         platform: 'facebook',
-        url: 'https://www.facebook.com/Reno-Stars-100374582261988',
+        url: 'https://www.facebook.com/profile.php?id=100068876523966',
         label: 'Facebook',
         displayOrder: 4,
       },
@@ -337,6 +337,30 @@ async function seed() {
         url: 'https://linktr.ee/qr/140df243-3ba8-49df-8770-53926aba2324',
         label: 'Linktree',
         displayOrder: 6,
+      },
+      {
+        platform: 'twitter',
+        url: 'https://x.com/Renostars_ca',
+        label: 'X',
+        displayOrder: 7,
+      },
+      {
+        platform: 'youtube',
+        url: 'https://www.youtube.com/@RenostarsAI',
+        label: 'YouTube',
+        displayOrder: 8,
+      },
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@renostars.renovation_yvr',
+        label: 'TikTok',
+        displayOrder: 9,
+      },
+      {
+        platform: 'linkedin',
+        url: 'https://www.linkedin.com/company/renostars/',
+        label: 'LinkedIn',
+        displayOrder: 10,
       },
     ])
     .onConflictDoNothing({ target: socialLinks.platform });

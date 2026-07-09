@@ -2,7 +2,7 @@ import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types
 import type { Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
-import { COMPANY_STATS } from '@/lib/company-config';
+import { COMPANY_STATS, OPENING_HOURS } from '@/lib/company-config';
 
 const BASE_URL = getBaseUrl();
 
@@ -86,17 +86,8 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
       name: area.name.en,
     })),
     priceRange: '$$',
-    // Schema.org requires openingHoursSpecification to be an array even when
-    // there is only one time slot — Google's Rich Results validator flags
-    // the singular-object form as a structured-data error.
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        opens: '09:00',
-        closes: '18:00',
-      },
-    ],
+    // Hours SSOT lives in lib/company-config.ts and must mirror the GBP listing.
+    openingHoursSpecification: OPENING_HOURS,
     // sameAs: social profiles + Google Business Profile (GBP). GBP URL via
     // place_id is the strongest entity-graph signal — it links the
     // Organization schema directly to the GBP listing for knowledge-graph

@@ -26,6 +26,7 @@ export interface LocalizedBlogPost {
   title: string;
   excerpt?: string;
   content?: string;
+  featured_image_alt?: string;
   published_at?: Date;
   url?: string;
   related_project?: LocalizedBlogRelatedProject;
@@ -89,6 +90,7 @@ export function getLocalizedBlogPost(post: BlogPost, locale: Locale): LocalizedB
     title: pickLocale(post.title, locale),
     excerpt: pickLocaleOptional(post.excerpt, locale),
     content: pickLocaleOptional(post.content, locale),
+    featured_image_alt: pickLocaleOptional(post.featured_image_alt, locale),
     published_at: post.published_at,
     url: post.url,
     related_project: localizedRelatedProject,

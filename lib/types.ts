@@ -361,7 +361,7 @@ export interface BlogPost {
   /** Featured image URL for OG/social sharing */
   featured_image?: string;
   /** Featured image alt text (SEO-agent managed, stored in localizations JSONB) */
-  featured_image_alt?: string;
+  featured_image_alt?: Localized<string>;
   /** Author name */
   author?: string;
   /** Publication date */
@@ -571,7 +571,7 @@ export interface LocalizedArea {
  */
 export interface SocialLink {
   /** Social platform name */
-  platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter' | 'xiaohongshu' | 'wechat' | 'whatsapp' | 'linktree';
+  platform: 'facebook' | 'instagram' | 'youtube' | 'linkedin' | 'twitter' | 'xiaohongshu' | 'wechat' | 'whatsapp' | 'linktree' | 'tiktok' | 'reddit';
   /** Profile URL */
   url: string;
   /** Display label */
