@@ -48,11 +48,6 @@ export default function JobPostingSchema({ company, locale, title, description, 
         addressCountry: 'CA',
       },
     },
-    // Metro Vancouver job sites — the role isn't tied to one address.
-    applicantLocationRequirements: {
-      '@type': 'City',
-      name: 'Metro Vancouver',
-    },
     skills: 'Demolition, tiling, drywall, painting, flooring, finishing carpentry',
     qualifications: 'Renovation or construction experience preferred; Mandarin or Cantonese speaking is a strong asset; legally eligible to work in Canada.',
     directApply: true,

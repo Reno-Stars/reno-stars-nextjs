@@ -15,7 +15,10 @@ import { getYearsExperience } from '@/lib/company-config';
  * a `<meta http-equiv="refresh">` so browsers still land on `/en/`. Bots
  * see rich metadata for the SERP; humans get auto-redirected.
  */
-export const metadata: Metadata = {
+// generateMetadata (not a module-level const) so getYearsExperience() is
+// evaluated at render/regeneration time, not frozen at process boot.
+export function generateMetadata(): Metadata {
+  return {
   title: `Vancouver Home Renovations — ${getYearsExperience()}+ Yrs, $5M Insured | Reno Stars`,
   description:
     `Kitchen, bathroom & whole-house renovations across Metro Vancouver. ${getYearsExperience()}+ years of experience, $5M CGL insurance, WCB-covered crews & 3-year warranty. See 100+ completed projects or get your free quote today.`,
@@ -35,7 +38,8 @@ export const metadata: Metadata = {
     url: `${getBaseUrl()}/en/`,
     type: 'website',
   },
-};
+  };
+}
 
 export default function RootRedirect() {
   const target = `${getBaseUrl()}/en/`;

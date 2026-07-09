@@ -4,9 +4,9 @@ import {
   getServiceAreasFromDb,
   getSocialLinksFromDb,
 } from '@/lib/db/queries';
-import { COMPANY_STATS, LOCALIZED_BRAND_NAMES, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { buildCompanyFactLines, legalName as buildLegalName } from '@/lib/seo/llms-shared';
 import { getGoogleReviews } from '@/lib/google-reviews';
-import { locales } from '@/i18n/config';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
 
 /**
@@ -35,17 +35,20 @@ export async function GET(): Promise<Response> {
     getGoogleReviews(),
   ]);
 
+  // A transient DB failure makes safeQuery return [] — refusing to render
+  // (503, uncached) beats baking "Service Cities: 0" into the ISR entry for
+  // a week and feeding it to AI crawlers.
+  if (areas.length === 0) {
+    return new Response('llms.txt temporarily unavailable', {
+      status: 503,
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  }
+
   const years = getYearsExperience();
   const en = base + '/en';
-  const legalName = `${SITE_NAME} Construction Inc.`;
+  const legalName = buildLegalName();
   const areaNames = areas.map((a) => a.name.en || a.slug);
-  const ratingLine = googleRating.userRatingCount > 0
-    ? `${googleRating.rating.toFixed(1)} stars (${googleRating.userRatingCount} verified reviews)`
-    : '5.0 stars (verified Google reviews)';
-  // Same fallback literals as llms-full.txt — used only when the company DB row is empty.
-  const address = company.address || 'Unit 188-21300 Gordon Way, Richmond, BC V6W 1M2';
-  const phone = company.phone || '778-960-7999';
-  const email = company.email || 'info@reno-stars.com';
 
   const header = [
     `# ${legalName}`,
@@ -56,21 +59,7 @@ export async function GET(): Promise<Response> {
   const companyBlock = [
     '',
     '## Company Info',
-    `- Name: ${legalName}`,
-    `- Local Brand Names: ${Object.entries(LOCALIZED_BRAND_NAMES).map(([lc, n]) => `${n} (${lc})`).join(', ')}`,
-    `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
-    `- Location: ${address}`,
-    `- Phone: ${phone}`,
-    `- Email: ${email}`,
-    `- Website: ${base}`,
-    `- Languages Served: English, Mandarin, Cantonese, Japanese, Korean, Spanish, and more — site available in ${locales.length} languages`,
-    `- Insurance: Up to ${COMPANY_STATS.liabilityCoverage} CGL (Commercial General Liability)`,
-    `- Coverage: WCB (WorkSafeBC) on every job`,
-    `- Warranty: Up to ${COMPANY_STATS.warrantyYears} years workmanship warranty`,
-    `- Experience: ${years}+ years in residential and commercial renovation`,
-    `- Projects Completed: ${COMPANY_STATS.projectsCompleted}`,
-    `- Google Rating: ${ratingLine}`,
-    `- Service Cities: ${areas.length} in Metro Vancouver`,
+    ...buildCompanyFactLines(company, areas.length, googleRating, base),
   ].join('\n');
 
   // Hand-written price ranges — no DB source for per-service pricing (kept verbatim).

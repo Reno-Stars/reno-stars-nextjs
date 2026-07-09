@@ -35,7 +35,11 @@ interface PageProps {
  * dormant fallback for any city not yet populated in the DB — do not edit it for
  * routine SEO tuning; edit the DB row instead.
  */
-const enAreaOverrides: Record<string, { title: string; description: string }> = {
+// Function (not module const) so ${getYearsExperience()} inside the entries
+// evaluates at request time — a module-level record freezes the years figure
+// at process boot. Cheap: ~15 string entries per metadata call.
+function getEnAreaOverrides(): Record<string, { title: string; description: string }> {
+  return {
   // 2026-05-01 GSC retitle: 1,393 imp pos 50 with 0% CTR. Hub framing
   // ("Renovation Contractor") to disambiguate from /services/{svc}/coquitlam
   // combo pages — same fix that worked for burnaby/delta/langley.
@@ -203,7 +207,8 @@ const enAreaOverrides: Record<string, { title: string; description: string }> = 
     description:
       'White Rock renovations — kitchens, bathrooms & whole-house. South Surrey, East Beach, Hillside. 5★ rated, $5M insured, 3-yr warranty.',
   },
-};
+  };
+}
 
 /**
  * EN intro paragraphs replacing the generic DB description for cities where
@@ -305,7 +310,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // DB-stored meta wins — tunable in /admin and surfaced via /api/revalidate with
   // NO deploy (ISR-cost work, 2026-06-04). The EN code map is a dormant fallback
   // for cities not yet populated in the DB.
-  const enOverride = locale === 'en' ? enAreaOverrides[city] : undefined;
+  const enOverride = locale === 'en' ? getEnAreaOverrides()[city] : undefined;
   const title = localizedArea.metaTitle
     || enOverride?.title
     || t('title', { area: localizedArea.name });

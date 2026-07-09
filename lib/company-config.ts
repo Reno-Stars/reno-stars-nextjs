@@ -43,6 +43,19 @@ export function brandName(locale: Locale): string {
 }
 
 /**
+ * Bilingual display form — owner rule (2026-07-09): locales with a tailored
+ * name must STILL surface "Reno Stars" so both names stay searchable.
+ * zh → "聚星装修 (Reno Stars)"; unmapped locales → "Reno Stars".
+ */
+export function brandDisplay(locale: Locale): string {
+  const local = LOCALIZED_BRAND_NAMES[locale];
+  return local ? `${local} (${BRAND})` : BRAND;
+}
+
+/** Official WeChat ID — shown in the footer modal and the careers page. */
+export const WECHAT_ID = 'RenoStars';
+
+/**
  * Brand-variant capture for schema.org alternateName — Google reconciles
  * user queries for the singular "Reno Star", concatenated "RenoStars",
  * lowercase "renostars", and the localized trade names with this entity.

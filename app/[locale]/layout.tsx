@@ -129,7 +129,10 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <GoogleAdsConversion />
-        <NextIntlClientProvider messages={messages}>
+        {/* Server-only namespaces are stripped from the client payload —
+            'careers' is rendered exclusively by the server CareersPage, and
+            shipping it here would add ~3KB to EVERY page's RSC stream. */}
+        <NextIntlClientProvider messages={(({ careers: _careers, ...clientMessages }) => clientMessages)(messages as Record<string, unknown>)}>
 
           <WebSiteSchema locale={locale} />
           <LocalBusinessSchema

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
-import CareersPage from '@/components/pages/CareersPage';
+import CareersPage, { DUTY_KEYS, REQ_KEYS } from '@/components/pages/CareersPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import JobPostingSchema from '@/components/structured-data/JobPostingSchema';
 import { getCompanyFromDb } from '@/lib/db/queries';
@@ -62,8 +62,8 @@ export default async function Page({ params }: PageProps) {
 
   const jobDescription = [
     t('hero.subtitle'),
-    t('duties.title') + ': ' + ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7'].map((k) => t(`duties.items.${k}`)).join('; '),
-    t('requirements.title') + ': ' + ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'].map((k) => t(`requirements.items.${k}`)).join('; '),
+    t('duties.title') + ': ' + DUTY_KEYS.map((k) => t(`duties.items.${k}`)).join('; '),
+    t('requirements.title') + ': ' + REQ_KEYS.map((k) => t(`requirements.items.${k}`)).join('; '),
   ].join(' ');
 
   return (

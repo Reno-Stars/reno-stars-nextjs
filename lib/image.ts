@@ -126,11 +126,14 @@ export const ALLOWED_IMAGE_HOSTS: readonly string[] = [
  * every other attribute (alt / width / height / loading).
  */
 export function optimizeContentImages(html: string, width = 1200): string {
+  let imgIndex = 0;
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
-    // In-content images are always below the fold — make them lazy + async
-    // when the stored HTML doesn't say otherwise (CWV: saves bandwidth/CLS).
+    // Lazy-load in-content images from the SECOND one on: when a post has no
+    // featured hero, the first content image can be the LCP element and must
+    // not be deferred. decoding=async is safe on all of them.
+    const isFirst = imgIndex++ === 0;
     let out = tag;
-    if (!/\sloading=/i.test(out)) out = out.replace(/^<img\b/i, '<img loading="lazy"');
+    if (!isFirst && !/\sloading=/i.test(out)) out = out.replace(/^<img\b/i, '<img loading="lazy"');
     if (!/\sdecoding=/i.test(out)) out = out.replace(/^<img\b/i, '<img decoding="async"');
     const m = out.match(/\ssrc="([^"]+)"/i);
     if (!m) return out;

@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import {
   Hammer,
@@ -27,7 +25,7 @@ import {
   TEXT_MUTED,
   neu,
 } from "@/lib/theme";
-import { wechatId } from "@/components/Footer";
+import { WECHAT_ID } from "@/lib/company-config";
 
 interface CareersPageProps {
   locale: Locale;
@@ -35,8 +33,8 @@ interface CareersPageProps {
   email: string;
 }
 
-const DUTY_KEYS = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"] as const;
-const REQ_KEYS = ["r1", "r2", "r3", "r4", "r5", "r6"] as const;
+export const DUTY_KEYS = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"] as const;
+export const REQ_KEYS = ["r1", "r2", "r3", "r4", "r5", "r6"] as const;
 const WHY_KEYS = ["w1", "w2", "w3", "w4"] as const;
 const WHY_ICONS = { w1: CalendarCheck, w2: ShieldCheck, w3: Languages, w4: TrendingUp } as const;
 
@@ -162,7 +160,7 @@ export default function CareersPage({ locale, phone, email }: CareersPageProps) 
           </div>
           <p className="mt-5 inline-flex items-center gap-2 text-sm text-white/70">
             <MessageCircle className="w-4 h-4" aria-hidden="true" />
-            {t("apply.wechat")}: <span className="font-semibold text-white">{wechatId}</span> — {t("apply.wechatNote")}
+            {t("apply.wechat")}: <span className="font-semibold text-white">{WECHAT_ID}</span> — {t("apply.wechatNote")}
           </p>
         </section>
       </div>

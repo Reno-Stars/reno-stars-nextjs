@@ -1434,7 +1434,12 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
         const locs = row.localizations as Record<string, unknown> | null;
         const en = typeof locs?.['featuredImageAltEn'] === 'string' ? locs['featuredImageAltEn'] : '';
         if (!en) return undefined;
-        return buildLocalized('featuredImageAlt', en, '', locs);
+        // zh alt also lives in the JSONB (no dedicated column). Fall back to EN —
+        // pickLocale treats '' as present, so an empty zh would block the en
+        // fallback chain for both zh and zh-Hant.
+        const zhRaw = locs?.['featuredImageAltZh'];
+        const zh = typeof zhRaw === 'string' && zhRaw ? zhRaw : en;
+        return buildLocalized('featuredImageAlt', en, zh, locs);
       })(),
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,

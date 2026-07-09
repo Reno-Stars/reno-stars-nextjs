@@ -23,7 +23,10 @@ export const viewport: Viewport = {
   colorScheme: 'light',
 };
 
-export const metadata: Metadata = {
+// generateMetadata (not a const) so getYearsExperience() re-evaluates at
+// render time instead of freezing at process boot.
+export function generateMetadata(): Metadata {
+  return {
   metadataBase: new URL(getBaseUrl()),
   // Root layout title + description are FALLBACKs — used on routes that
   // don't override metadata (404 page via app/not-found.tsx inherits the
@@ -83,7 +86,8 @@ export const metadata: Metadata = {
     site: '@renostars',
     creator: '@renostars',
   },
-};
+  };
+}
 
 /**
  * Root layout - minimal wrapper that delegates to locale layout.

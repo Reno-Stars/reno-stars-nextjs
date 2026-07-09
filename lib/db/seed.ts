@@ -363,7 +363,17 @@ async function seed() {
         displayOrder: 10,
       },
     ])
-    .onConflictDoNothing({ target: socialLinks.platform });
+    // Upsert (not do-nothing): URL corrections to existing platform rows must
+    // apply on re-seed — a doNothing here silently dropped the 2026-07 Facebook
+    // canonical-URL fix on any DB that already had the row.
+    .onConflictDoUpdate({
+      target: socialLinks.platform,
+      set: {
+        url: sql`excluded.url`,
+        label: sql`excluded.label`,
+        displayOrder: sql`excluded.display_order`,
+      },
+    });
   console.log('Social links seeded');
 
   // Blog posts are seeded separately via `pnpm db:seed:blog` (crawls WP REST API)

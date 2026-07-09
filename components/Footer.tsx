@@ -2,6 +2,7 @@
 
 import OptimizedImage from '@/components/OptimizedImage';
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin, Star, Shield } from 'lucide-react';
+import { WECHAT_ID } from '@/lib/company-config';
 import { useMemo, useState, useCallback, useEffect, useRef, type SVGProps } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
@@ -76,7 +77,8 @@ const socialIcons: Partial<Record<string, IconComponent>> = {
   linktree: LinktreeIcon,
 };
 
-export const wechatId = 'RenoStars';
+// SSOT moved to lib/company-config (WECHAT_ID); re-exported for existing importers.
+export const wechatId = WECHAT_ID;
 
 const STAGGER_DELAY_MS = 80;
 
