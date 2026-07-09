@@ -52,6 +52,39 @@ function evictStaleEntries() {
   }
 }
 
+
+/**
+ * Read a fetch Response body into an ArrayBuffer, aborting (returns null) the
+ * moment the accumulated size exceeds `maxBytes`. Prevents an allowed host
+ * serving an unbounded chunked stream from OOM-ing the shared origin process.
+ */
+async function readCappedBody(response: Response, maxBytes: number): Promise<ArrayBuffer | null> {
+  const reader = response.body?.getReader();
+  if (!reader) {
+    // No stream (shouldn't happen for a 200 image); fall back to a capped buffer.
+    const buf = await response.arrayBuffer();
+    return buf.byteLength > maxBytes ? null : buf;
+  }
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (value) {
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel().catch(() => {});
+        return null;
+      }
+      chunks.push(value);
+    }
+  }
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) { out.set(c, offset); offset += c.byteLength; }
+  return out.buffer;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const url = searchParams.get('url');
@@ -91,15 +124,19 @@ export async function GET(request: NextRequest) {
 
   try {
     // Fetch the original image
+    // redirect:'manual' — do NOT auto-follow. An allowed image host (R2, lh3,
+    // *.reno-stars.com) that answers a bare object GET with a 3xx is anomalous;
+    // following it is a blind-SSRF vector (redirect to 127.0.0.1:5435, the
+    // metadata IP, etc. — the internal request fires before any post-hoc URL
+    // check). We treat any redirect from an allowed host as a hard reject.
     const response = await fetch(url, {
       headers: { 'Accept': 'image/*' },
-      redirect: 'follow',
+      redirect: 'manual',
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
 
-    // Validate final URL after redirects to prevent SSRF via open redirects
-    if (response.redirected && !isAllowedUrl(response.url)) {
-      return NextResponse.json({ error: 'Redirected to disallowed host' }, { status: 403 });
+    if (response.status >= 300 && response.status < 400) {
+      return NextResponse.json({ error: 'Source refused: unexpected redirect' }, { status: 403 });
     }
 
     if (!response.ok) {
@@ -115,10 +152,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Source image too large' }, { status: 413 });
     }
 
-    const arrayBuffer = await response.arrayBuffer();
-
-    // Secondary size guard — Content-Length may be absent or spoofed
-    if (arrayBuffer.byteLength > MAX_SOURCE_SIZE) {
+    // Stream with a hard byte cap — Content-Length may be absent (chunked) or
+    // spoofed, and response.arrayBuffer() would buffer a multi-GB body into the
+    // single shared Node heap (OOM → whole self-hosted site down) before any
+    // size check. Abort as soon as we cross MAX_SOURCE_SIZE.
+    const arrayBuffer = await readCappedBody(response, MAX_SOURCE_SIZE);
+    if (arrayBuffer === null) {
       return NextResponse.json({ error: 'Source image too large' }, { status: 413 });
     }
 

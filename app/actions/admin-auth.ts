@@ -1,8 +1,8 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
 import { verifyPassword, createSession, destroySession } from '@/lib/admin/auth';
+import { getClientIp } from '@/lib/get-client-ip';
 
 export interface AuthResult {
   error?: string;
@@ -56,8 +56,7 @@ export async function loginAction(
     return { error: 'Password is required.' };
   }
 
-  const headersList = await headers();
-  const ip = headersList.get('x-real-ip') || headersList.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  const ip = await getClientIp();
   if (!checkRateLimit(ip)) {
     return { error: 'Too many login attempts. Please try again later.' };
   }

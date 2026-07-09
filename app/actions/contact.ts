@@ -1,6 +1,5 @@
 'use server';
 
-import { headers } from 'next/headers';
 import { waitUntil } from '@vercel/functions';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
@@ -9,6 +8,7 @@ import { isValidEmail } from '@/lib/utils';
 import { sendContactNotification } from '@/lib/email';
 import { createLeadInOdoo, type CrmPropertyType } from '@/lib/clients/crm';
 import { recordCrmDeadLetter } from '@/lib/crm-deadletter';
+import { getClientIp as getTrustedClientIp } from '@/lib/get-client-ip';
 
 /** Contact form input data */
 export interface ContactFormData {
@@ -181,26 +181,9 @@ function splitFullName(name: string): { firstName: string; lastName: string } {
 // SUBMIT ACTION
 // ============================================================================
 
-/**
- * Get client IP address from request headers.
- * Checks common proxy headers first, falls back to a default key.
- */
-async function getClientIp(): Promise<string> {
-  const headersList = await headers();
-  // Check common proxy headers (Vercel, Cloudflare, nginx)
-  const forwardedFor = headersList.get('x-forwarded-for');
-  if (forwardedFor) {
-    // x-forwarded-for can contain multiple IPs; take the first (client)
-    return forwardedFor.split(',')[0].trim();
-  }
-  const realIp = headersList.get('x-real-ip');
-  if (realIp) return realIp;
-  // Vercel-specific header
-  const vercelIp = headersList.get('x-vercel-forwarded-for');
-  if (vercelIp) return vercelIp.split(',')[0].trim();
-  // Fallback for local development or unknown proxy
-  return 'unknown-ip';
-}
+// Client IP for rate-limiting — trusted (Cloudflare cf-connecting-ip).
+// See lib/get-client-ip.ts for why x-forwarded-for alone is unsafe here.
+const getClientIp = getTrustedClientIp;
 
 /**
  * Submit contact form data.

@@ -10,14 +10,26 @@ const FONT_BOLD_URL =
 const FONT_REGULAR_URL =
   'https://cdn.jsdelivr.net/fontsource/fonts/inter@5.1.1/latin-400-normal.ttf';
 
-const interBold = fetch(FONT_BOLD_URL).then((res) => res.arrayBuffer());
-const interRegular = fetch(FONT_REGULAR_URL).then((res) => res.arrayBuffer());
+// Cache the SUCCESSFUL font bytes only. A module-level `fetch().then()` promise
+// caches its REJECTION forever — one CDN blip at process boot would degrade
+// every OG image for the process lifetime. This memo re-fetches after a failure.
+let fontCache: Promise<[ArrayBuffer, ArrayBuffer]> | null = null;
+function loadFonts(): Promise<[ArrayBuffer, ArrayBuffer]> {
+  if (fontCache) return fontCache;
+  const p = Promise.all([
+    fetch(FONT_BOLD_URL).then((res) => res.arrayBuffer()),
+    fetch(FONT_REGULAR_URL).then((res) => res.arrayBuffer()),
+  ]) as Promise<[ArrayBuffer, ArrayBuffer]>;
+  fontCache = p;
+  p.catch(() => { if (fontCache === p) fontCache = null; }); // drop failed memo → retry next request
+  return p;
+}
 
 export async function GET(request: NextRequest) {
   let boldFont: ArrayBuffer;
   let regularFont: ArrayBuffer;
   try {
-    [boldFont, regularFont] = await Promise.all([interBold, interRegular]);
+    [boldFont, regularFont] = await loadFonts();
   } catch {
     // Font CDN unavailable — return a minimal OG image without custom fonts
     return new ImageResponse(

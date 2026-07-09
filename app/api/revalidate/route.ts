@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { locales } from '@/i18n/config';
@@ -50,7 +51,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   }
   const auth = req.headers.get('authorization') ?? '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
-  if (token !== secret) {
+  // Timing-safe compare (matches lib/admin/auth.ts) — plain !== leaks the
+  // secret length/prefix via response latency on a stable-path origin.
+  const tokenBuf = Buffer.from(token);
+  const secretBuf = Buffer.from(secret);
+  if (tokenBuf.length !== secretBuf.length || !crypto.timingSafeEqual(tokenBuf, secretBuf)) {
     return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
   }
 
