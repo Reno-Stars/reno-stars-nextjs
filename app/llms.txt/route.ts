@@ -4,7 +4,7 @@ import {
   getServiceAreasFromDb,
   getSocialLinksFromDb,
 } from '@/lib/db/queries';
-import { COMPANY_STATS, CHINESE_BRAND, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS, LOCALIZED_BRAND_NAMES, getYearsExperience } from '@/lib/company-config';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { locales } from '@/i18n/config';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
@@ -57,7 +57,7 @@ export async function GET(): Promise<Response> {
     '',
     '## Company Info',
     `- Name: ${legalName}`,
-    `- Chinese Brand Name: ${CHINESE_BRAND.simplified} (Traditional: ${CHINESE_BRAND.traditional})`,
+    `- Local Brand Names: ${Object.entries(LOCALIZED_BRAND_NAMES).map(([lc, n]) => `${n} (${lc})`).join(', ')}`,
     `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
     `- Location: ${address}`,
     `- Phone: ${phone}`,

@@ -6,13 +6,16 @@
 import type { Locale, Localized } from '@/lib/types';
 import { locales, ogLocaleMap } from '@/i18n/config';
 import { LOCALE_TO_SUFFIX, isNativeLocale } from '@/lib/admin/locale-keys';
+import { BRAND } from '@/lib/company-config';
 
 // ============================================================================
 // ENVIRONMENT UTILITIES
 // ============================================================================
 
 /** Canonical site name used across metadata and structured data */
-export const SITE_NAME = 'Reno Stars';
+// Brand SSOT lives in lib/company-config; re-exported here because ~50 files
+// already import SITE_NAME from utils.
+export const SITE_NAME = BRAND;
 
 // ============================================================================
 // LOCALE UTILITIES
