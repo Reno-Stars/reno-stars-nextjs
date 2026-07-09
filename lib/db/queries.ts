@@ -279,10 +279,10 @@ const COMPANY_FALLBACK: Company = (() => {
     yearsExperience: getYearsExperience(),
     // `foundingYear` here feeds ONLY the AnswerBlock "…founded in {year}" copy,
     // so it must be the LEGAL incorporation year of Reno Stars Construction Inc.
-    // (2021), NOT the team's renovation-start year (COMPANY_STATS.foundingYear,
+    // (2020), NOT the team's renovation-start year (COMPANY_STATS.foundingYear,
     // 2007) which drives the separate "20+ years experience" stat via
-    // getYearsExperience(). Using 2021 keeps the homepage consistent with
-    // llms.txt + LocalBusinessSchema.foundingDate ("founded 2021; team brings
+    // getYearsExperience(). Using 2020 keeps the homepage consistent with
+    // llms.txt + LocalBusinessSchema.foundingDate ("founded 2020; team brings
     // 20+ years of prior industry experience"). Previously showed "founded in
     // 2007", contradicting both — fixed 2026-07 site-consistency pass.
     foundingYear: companyFoundingYear, teamSize, projectsCompleted, liabilityCoverage,

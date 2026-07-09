@@ -54,11 +54,11 @@ export async function GET(): Promise<Response> {
 
   const header = [
     `# ${SITE_NAME} Construction Inc. — Full Reference`,
-    `> Comprehensive machine-readable reference for ${SITE_NAME}, a Metro Vancouver renovation contractor. Founded 2021 (legal entity); team brings ${years}+ years of prior renovation industry experience. This is the full companion to /llms.txt.`,
+    `> Comprehensive machine-readable reference for ${SITE_NAME}, a Metro Vancouver renovation contractor. Founded ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior renovation industry experience. This is the full companion to /llms.txt.`,
     '',
     '## Company',
     `- Name: ${SITE_NAME} Construction Inc.`,
-    `- Founded: 2021 (legal entity); team brings ${years}+ years of prior industry experience`,
+    `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
     `- Location: Unit 188-21300 Gordon Way, Richmond, BC V6W 1M2`,
     `- Phone: ${company.phone || '778-960-7999'}`,
     `- Website: ${base}`,

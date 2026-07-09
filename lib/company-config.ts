@@ -13,7 +13,7 @@ export const COMPANY_STATS = {
    *  Used for schema.org Organization.foundingDate (which means corporate
    *  founding, not aggregate team experience). Keeps schema honest while
    *  the marketing "years experience" still reflects team-level expertise. */
-  companyFoundingYear: 2021,
+  companyFoundingYear: 2020,
   teamSize: 17,
   projectsCompleted: "700+",
   /** Dollar amount with "Up to" qualifier — full label comes from translations */
