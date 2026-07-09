@@ -976,7 +976,7 @@ function mapDbSiteToSite(row: DbSiteRow, siteImagePairRows?: DbSiteImagePairRow[
     external_products: siteExternalProductRows && siteExternalProductRows.length > 0
       ? sortByDisplayOrder(siteExternalProductRows).map((ep) => ({
           url: ep.url,
-          image_url: ep.imageUrl ?? undefined,
+          image_url: ep.imageUrl ? getAssetUrl(ep.imageUrl) : undefined,
           label: { en: ep.labelEn, zh: ep.labelZh },
         }))
       : undefined,
@@ -1500,7 +1500,9 @@ export const getDesignsFromDb = cachedQuery(async (): Promise<DesignItem[]> => {
 
     return rows.map((row: typeof designsTable.$inferSelect) => ({
       image: getAssetUrl(row.imageUrl),
-      title: { en: row.titleEn ?? '', zh: row.titleZh ?? '' },
+      // buildLocalized surfaces the localizations JSONB (12 non-en/zh locales)
+      // — the old `{ en, zh }` literal dropped every other locale's title.
+      title: buildLocalized('title', row.titleEn ?? '', row.titleZh ?? '', row.localizations),
     }));
   }, []);
 }, ['getDesignsFromDb'], { tags: ['designs'] });
@@ -1539,14 +1541,13 @@ async function mapFaqRows(rows: (typeof faqsTable.$inferSelect)[]): Promise<Faq[
   return rows.map((row) => {
     const question = buildLocalized('question', row.questionEn, row.questionZh, row.localizations);
     const answerRaw = buildLocalized('answer', row.answerEn, row.answerZh, row.localizations);
-    // Apply {yearsExperience} substitution across all locale variants
-    const answer: import('../types').Localized<string> = {
-      en: replaceYears(answerRaw.en),
-    };
-    if (answerRaw.zh !== undefined) answer.zh = replaceYears(answerRaw.zh);
-    if (answerRaw.ja !== undefined) answer.ja = replaceYears(answerRaw.ja);
-    if (answerRaw.ko !== undefined) answer.ko = replaceYears(answerRaw.ko);
-    if (answerRaw.es !== undefined) answer.es = replaceYears(answerRaw.es);
+    // Apply {yearsExperience} substitution across EVERY locale buildLocalized
+    // returned — the old hand-listed en/zh/ja/ko/es dropped the other 9 locales'
+    // answers (zh-Hant/pa/tl/fa/vi/ru/ar/hi/fr), rendering EN answers next to
+    // translated questions on those pages.
+    const answer = Object.fromEntries(
+      Object.entries(answerRaw).map(([loc, txt]) => [loc, replaceYears(txt as string)]),
+    ) as import('../types').Localized<string>;
     return {
       id: row.id,
       question,
@@ -1976,7 +1977,7 @@ export const getPartnersFromDb = cachedQuery(async (): Promise<Partner[]> => {
       .orderBy(asc(partnersTable.displayOrder));
 
     return rows.map((row: typeof partnersTable.$inferSelect) => ({
-      name: { en: row.nameEn, zh: row.nameZh },
+      name: buildLocalized('name', row.nameEn, row.nameZh, row.localizations),
       logo: getAssetUrl(row.logoUrl),
       url: row.websiteUrl ?? undefined,
       isHiddenVisually: row.isHiddenVisually,
