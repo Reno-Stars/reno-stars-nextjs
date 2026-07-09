@@ -36,7 +36,8 @@
     "storage:seed": "dotenv -e .env.local -- tsx scripts/seed-storage.ts",
     "dev:services": "docker compose up -d && pnpm db:push && pnpm db:seed && pnpm db:seed:projects && pnpm db:seed:blog && pnpm storage:seed",
     "images:process": "dotenv -e .env.local -- tsx scripts/process-all-images.ts",
-    "images:process:force": "dotenv -e .env.local -- tsx scripts/process-all-images.ts --force"
+    "images:process:force": "dotenv -e .env.local -- tsx scripts/process-all-images.ts --force",
+    "prepare": "husky"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1005.0",
@@ -89,6 +90,7 @@
     "eslint-config-next": "^16.1.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
     "jsdom": "^25.0.0",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.19.0",

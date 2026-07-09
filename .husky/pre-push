@@ -1,0 +1,5 @@
+# Enforce the CLAUDE.md rule: typecheck + lint + tests before every push.
+# A red main crash-loops the self-hosted prod on the next build+kickstart.
+# CI runs these too, but that's AFTER the push already landed on main.
+echo "pre-push: pnpm typecheck && pnpm lint && pnpm test:run"
+pnpm typecheck && pnpm lint && pnpm test:run
