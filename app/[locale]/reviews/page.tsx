@@ -6,7 +6,7 @@ import ReviewsPage from "@/components/pages/ReviewsPage";
 import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb } from "@/lib/db/queries";
-import { getGoogleReviews } from "@/lib/google-reviews";
+import { getGoogleReviews, projectReviewsToLocale } from "@/lib/google-reviews";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
-      <ReviewsPage locale={locale as Locale} company={company} googleReviews={googleReviews} />
+      <ReviewsPage locale={locale as Locale} company={company} googleReviews={projectReviewsToLocale(googleReviews, locale)} />
     </>
   );
 }

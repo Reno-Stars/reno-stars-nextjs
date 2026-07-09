@@ -338,6 +338,35 @@ function maybeTriggerBackgroundRefresh(updatedAt: Date | null): void {
  * the row is also the source of AI-generated per-locale translations, which
  * are refreshed lazily in the background on a ~7-day cadence (no cron).
  */
+
+/**
+ * Project a reviews payload to a SINGLE locale before passing it into a client
+ * component. The cached payload carries every review's text in all 13 non-EN
+ * locales (~47KB); a client component renders only the current locale, so the
+ * other 12 are dead weight serialized into the RSC stream on every page view.
+ * Keeps `translations` pruned to just `[locale]` so consumers' existing
+ * `review.translations?.[locale] ?? review.text` logic is unchanged.
+ */
+export function projectReviewsToLocale(rating: GooglePlaceRating, locale: string): GooglePlaceRating {
+  const stripLocales = (r: GoogleReview): GoogleReview => {
+    const copy: GoogleReview = { ...r };
+    delete copy.translations;
+    delete copy.textZh;
+    return copy;
+  };
+  if (locale === 'en') {
+    return { ...rating, reviews: rating.reviews.map(stripLocales) };
+  }
+  return {
+    ...rating,
+    reviews: rating.reviews.map((r) => {
+      const localized = r.translations?.[locale as keyof typeof r.translations];
+      const rest = stripLocales(r);
+      return localized ? { ...rest, translations: { [locale]: localized } as GoogleReview['translations'] } : rest;
+    }),
+  };
+}
+
 export async function getGoogleReviews(): Promise<GooglePlaceRating> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const placeId = process.env.GOOGLE_PLACE_ID;
@@ -426,7 +455,13 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
       reviews: fiveStarReviews,
     };
 
-    await updateCache(result);
+    // Write only when the payload actually changed. fetchReviews is Next-fetch
+    // cached (24h), so `result` is byte-stable between refreshes — the old
+    // unconditional updateCache() rewrote the same ~47KB row on EVERY page
+    // render (thousands of pointless UPSERTs/day, WAL churn on the shared PG).
+    if (!cached || JSON.stringify(cached) !== JSON.stringify(result)) {
+      await updateCache(result);
+    }
     return result;
   } catch (error) {
     console.error('[getGoogleReviews] Failed to fetch reviews:', error);

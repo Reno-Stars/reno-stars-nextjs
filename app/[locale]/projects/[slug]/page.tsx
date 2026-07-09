@@ -270,6 +270,14 @@ export default async function Page({ params }: PageProps) {
       `${getBaseUrl()}/${locale}/projects/${slug}/`,
     );
 
+    // Related projects computed SERVER-SIDE (same category, 3 max) so we pass
+    // 3 localized cards to the client — NOT all ~51 full projects with their
+    // 14-locale JSONB (~765KB serialized into the RSC payload for 3 thumbnails).
+    const relatedProjects = allProjects
+      .filter((p) => p.slug !== project.slug && p.service_type != null && p.service_type === project.service_type)
+      .slice(0, 3)
+      .map((p) => getLocalizedProject(p, locale as Locale));
+
     return (
       <>
         <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -299,7 +307,7 @@ export default async function Page({ params }: PageProps) {
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
         )}
         {await renderHeroVideoSchema(slug, locale)}
-        <ProjectDetailPage locale={locale as Locale} project={project} allProjects={allProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
+        <ProjectDetailPage locale={locale as Locale} project={project} relatedProjects={relatedProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
       </>
     );
   }

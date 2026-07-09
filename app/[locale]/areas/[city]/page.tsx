@@ -9,7 +9,7 @@ import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocal
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
-import { getGoogleReviews } from '@/lib/google-reviews';
+import { getGoogleReviews, projectReviewsToLocale } from '@/lib/google-reviews';
 import { getYearsExperience } from '@/lib/company-config';
 
 interface PageProps {
@@ -431,7 +431,7 @@ export default async function Page({ params }: PageProps) {
         areaProjects={areaProjects}
         introOverride={getAreaIntroOverride(city, locale as Locale)}
         h1Override={getAreaH1Override(city, locale as Locale)}
-        googleReviews={googleReviews}
+        googleReviews={projectReviewsToLocale(googleReviews, locale)}
       />
     </>
   );

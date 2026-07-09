@@ -39,6 +39,22 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
+
+// Namespaces referenced only by server components / generateMetadata. Keep in
+// sync with the 'use client' useTranslations scan (see B5, 2026-07-09).
+const SERVER_ONLY_NAMESPACES = [
+  'metadata', 'about', 'careers', 'designFaqs', 'gallery', 'hero',
+  'homeFaq', 'homePartners', 'lang', 'projectsFaqs', 'showroomPage',
+] as const;
+
+function stripServerOnly(messages: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const k of Object.keys(messages)) {
+    if (!(SERVER_ONLY_NAMESPACES as readonly string[]).includes(k)) out[k] = messages[k];
+  }
+  return out;
+}
+
 export default async function LocaleLayout({
   children,
   params,
@@ -129,10 +145,12 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <GoogleAdsConversion />
-        {/* Server-only namespaces are stripped from the client payload —
-            'careers' is rendered exclusively by the server CareersPage, and
-            shipping it here would add ~3KB to EVERY page's RSC stream. */}
-        <NextIntlClientProvider messages={(({ careers: _careers, ...clientMessages }) => clientMessages)(messages as Record<string, unknown>)}>
+        {/* Strip SERVER-ONLY namespaces from the client payload. These are
+            used only in generateMetadata / server components (never in a
+            'use client' file), so shipping them into every page's RSC stream
+            and hydrating them client-side is pure waste. Verified against a
+            scan of all 'use client' useTranslations() call sites. */}
+        <NextIntlClientProvider messages={stripServerOnly(messages as Record<string, unknown>)}>
 
           <WebSiteSchema locale={locale} />
           <LocalBusinessSchema
