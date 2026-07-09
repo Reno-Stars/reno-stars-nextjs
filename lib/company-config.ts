@@ -23,6 +23,33 @@ export const COMPANY_STATS = {
 } as const;
 
 /**
+ * Chinese trade name (owner-confirmed 2026-07-09). Use in zh/zh-Hant copy and
+ * as a schema alternateName so Chinese-language brand searches resolve to us.
+ * The brand is NEVER machine-translated in any language — it's either
+ * "Reno Stars" or these exact names.
+ */
+export const CHINESE_BRAND = {
+  simplified: '聚星装修',
+  traditional: '聚星裝修',
+} as const;
+
+/**
+ * Brand-variant capture for schema.org alternateName — Google reconciles
+ * user queries for the singular "Reno Star", concatenated "RenoStars",
+ * lowercase "renostars", and the Chinese trade name with this entity.
+ * (GSC 2026-05-04: "reno star" ranked pos 7 with 99 imp — should be pos 1.)
+ * Single source for LocalBusinessSchema + WebSiteSchema.
+ */
+export const BRAND_ALTERNATE_NAMES = [
+  'Reno Stars',
+  'Reno Star',
+  'RenoStars',
+  'Renostars',
+  CHINESE_BRAND.simplified,
+  CHINESE_BRAND.traditional,
+] as const;
+
+/**
  * Business opening hours — MUST match the Google Business Profile exactly
  * (Google cross-checks schema hours against GBP for local-pack trust).
  * GBP as of 2026-07: Mon–Sat 9:30–21:00, Sun 11:00–19:00.

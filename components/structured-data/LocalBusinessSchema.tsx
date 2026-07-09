@@ -2,7 +2,7 @@ import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types
 import type { Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
-import { COMPANY_STATS, OPENING_HOURS } from '@/lib/company-config';
+import { COMPANY_STATS, OPENING_HOURS, BRAND_ALTERNATE_NAMES } from '@/lib/company-config';
 
 const BASE_URL = getBaseUrl();
 
@@ -59,11 +59,8 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     // not a schema field. `availableLanguage` inside contactPoint below is
     // SERVICE-language and is a different, valid signal.
     name: company.name,
-    // alternateName: brand-variant capture so Google reconciles user queries
-    // for the singular "Reno Star", concatenated "RenoStars", and lowercase
-    // "renostars" with this entity. GSC 2026-05-04 showed "reno star" (sing.)
-    // ranking pos 7 with 99 imp / 12 clicks — should be pos 1 since brand.
-    alternateName: ['Reno Stars', 'Reno Star', 'RenoStars', 'Renostars'],
+    // Brand variants incl. the Chinese trade name — SSOT in lib/company-config.
+    alternateName: BRAND_ALTERNATE_NAMES,
     image: company.logo,
     url: BASE_URL,
     telephone: `+1${company.phone.replace(/\D/g, '')}`,

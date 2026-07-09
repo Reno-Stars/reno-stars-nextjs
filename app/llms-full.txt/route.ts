@@ -5,7 +5,7 @@ import {
   getServiceAreasFromDb,
   getBlogPostsFromDb,
 } from '@/lib/db/queries';
-import { COMPANY_STATS, getYearsExperience } from '@/lib/company-config';
+import { COMPANY_STATS, CHINESE_BRAND, getYearsExperience } from '@/lib/company-config';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { locales } from '@/i18n/config';
 import { COST_GUIDES } from '@/lib/seo/cost-guides';
@@ -55,6 +55,7 @@ export async function GET(): Promise<Response> {
     '',
     '## Company',
     `- Name: ${SITE_NAME} Construction Inc.`,
+    `- Chinese Brand Name: ${CHINESE_BRAND.simplified} (Traditional: ${CHINESE_BRAND.traditional})`,
     `- Founded: ${COMPANY_STATS.companyFoundingYear} (legal entity); team brings ${years}+ years of prior industry experience`,
     `- Location: ${company.address || 'Unit 188-21300 Gordon Way, Richmond, BC V6W 1M2'}`,
     `- Phone: ${company.phone || '778-960-7999'}`,

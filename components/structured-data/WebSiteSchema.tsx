@@ -1,4 +1,5 @@
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
+import { BRAND_ALTERNATE_NAMES } from '@/lib/company-config';
 
 interface WebSiteSchemaProps {
   locale?: string;
@@ -16,9 +17,8 @@ export default function WebSiteSchema({ locale = 'en' }: WebSiteSchemaProps): Re
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
     name: SITE_NAME,
-    // Match alternateName on the Organization node so Google reconciles brand
-    // variants ("reno star" sing., "RenoStars", "renostars") with this site.
-    alternateName: ['Reno Stars', 'Reno Star', 'RenoStars', 'Renostars'],
+    // Matches the Organization node's alternateName — SSOT in lib/company-config.
+    alternateName: BRAND_ALTERNATE_NAMES,
     inLanguage: locale,
     publisher: { '@id': `${baseUrl}/#organization` },
     // SearchAction target uses `?service=` because that's the actual
