@@ -204,7 +204,6 @@ export async function GET(request: NextRequest) {
         'X-Cache': 'MISS',
         'Vary': 'Accept',
         'CDN-Cache-Control': 'public, s-maxage=31536000, stale-while-revalidate=86400',
-        'Vercel-CDN-Cache-Control': 'public, s-maxage=31536000, stale-while-revalidate=86400',
       },
     });
   } catch (error) {
@@ -219,7 +218,6 @@ export async function GET(request: NextRequest) {
         headers: {
           'Cache-Control': 'public, max-age=300, s-maxage=300',
           'CDN-Cache-Control': 'public, max-age=300',
-          'Vercel-CDN-Cache-Control': 'public, max-age=300',
         },
       },
     );
