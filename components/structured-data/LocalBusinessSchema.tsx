@@ -1,4 +1,5 @@
 import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
+import JsonLd from './JsonLd';
 import type { Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
@@ -185,9 +186,6 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

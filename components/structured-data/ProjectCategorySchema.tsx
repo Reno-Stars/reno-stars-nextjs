@@ -1,4 +1,5 @@
 import { getBaseUrl } from '@/lib/utils';
+import JsonLd from './JsonLd';
 import type { Locale } from '@/i18n/config';
 
 interface CategoryProject {
@@ -37,9 +38,6 @@ export default function ProjectCategorySchema({
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

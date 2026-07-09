@@ -1,4 +1,5 @@
 import { getBaseUrl } from '@/lib/utils';
+import JsonLd from './JsonLd';
 
 interface VideoObjectSchemaProps {
   /** Video title shown in video search results. */
@@ -59,9 +60,6 @@ export default function VideoObjectSchema({
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

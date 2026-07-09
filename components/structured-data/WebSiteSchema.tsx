@@ -1,4 +1,5 @@
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
+import JsonLd from './JsonLd';
 import { BRAND_ALTERNATE_NAMES } from '@/lib/company-config';
 
 interface WebSiteSchemaProps {
@@ -35,9 +36,6 @@ export default function WebSiteSchema({ locale = 'en' }: WebSiteSchemaProps): Re
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

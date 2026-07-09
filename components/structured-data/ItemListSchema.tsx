@@ -1,4 +1,5 @@
 import { getBaseUrl } from '@/lib/utils';
+import JsonLd from './JsonLd';
 
 interface ItemListItem {
   name: string;
@@ -44,9 +45,6 @@ export default function ItemListSchema({
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

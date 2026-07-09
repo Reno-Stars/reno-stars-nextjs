@@ -44,9 +44,7 @@ export default function FAQSchema({ faqs, locale }: FAQSchemaProps): React.React
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }
+import JsonLd from './JsonLd';

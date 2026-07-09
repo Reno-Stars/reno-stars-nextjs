@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 
@@ -55,9 +56,6 @@ export default function JobPostingSchema({ company, locale, title, description, 
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <JsonLd data={schema} />
   );
 }

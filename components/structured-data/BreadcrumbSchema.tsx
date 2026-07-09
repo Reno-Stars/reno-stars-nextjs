@@ -1,4 +1,5 @@
 import { getBaseUrl } from '@/lib/utils';
+import JsonLd from './JsonLd';
 
 interface BreadcrumbItem {
   name: string;
@@ -45,9 +46,6 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps): Reac
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

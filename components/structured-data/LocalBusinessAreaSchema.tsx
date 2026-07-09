@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 import { OPENING_HOURS } from '@/lib/company-config';
@@ -89,9 +90,6 @@ export default function LocalBusinessAreaSchema({
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }

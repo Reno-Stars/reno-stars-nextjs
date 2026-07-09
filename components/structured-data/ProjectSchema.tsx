@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 
 interface ProjectSchemaProps {
@@ -113,9 +114,6 @@ export default function ProjectSchema({
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
-    />
+    <JsonLd data={schema} />
   );
 }
