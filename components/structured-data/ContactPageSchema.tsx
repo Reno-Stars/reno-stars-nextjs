@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
@@ -34,7 +35,7 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       name: company.name,
       image: company.logo,
       url: BASE_URL,
-      telephone: `+1${company.phone.replace(/\D/g, '')}`,
+      telephone: e164(company.phone),
       email: company.email,
       address: {
         '@type': 'PostalAddress',
@@ -46,7 +47,7 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: `+1${company.phone.replace(/\D/g, '')}`,
+        telephone: e164(company.phone),
         email: company.email,
         contactType: 'customer service',
         availableLanguage: ['English', 'Chinese'],

@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
@@ -52,7 +53,7 @@ export default function ServiceSchema({
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,
       url: baseUrl,
-      telephone: `+1${company.phone.replace(/\D/g, '')}`,
+      telephone: e164(company.phone),
       // Split address into proper PostalAddress sub-fields per Schema.org spec.
       // Previously the full company.address string was crammed into streetAddress,
       // which breaks structured-address parsing. Now each part lives in its own field.

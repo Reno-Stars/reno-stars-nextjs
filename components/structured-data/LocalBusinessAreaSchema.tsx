@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
@@ -36,7 +37,7 @@ export default function LocalBusinessAreaSchema({
     name: `${company.name} - ${areaName}`,
     description: `Professional home renovation services in ${areaName}. Kitchen, bathroom, whole house renovations by ${company.name}.`,
     url: `${baseUrl}/${locale}/areas/${areaSlug}/`,
-    telephone: `+1${company.phone.replace(/\D/g, '')}`,
+    telephone: e164(company.phone),
     email: company.email,
     image: company.logo,
     address: {

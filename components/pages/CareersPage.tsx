@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { telHref } from '@/lib/phone';
 import {
   Hammer,
   Languages,
@@ -40,7 +41,7 @@ const WHY_ICONS = { w1: CalendarCheck, w2: ShieldCheck, w3: Languages, w4: Trend
 
 export default function CareersPage({ locale, phone, email }: CareersPageProps) {
   const t = useTranslations("careers");
-  const telHref = `tel:+1${phone.replace(/\D/g, "")}`;
+  const tel = telHref(phone);
 
   return (
     <main className="min-h-screen pb-20" style={{ backgroundColor: SURFACE_ALT }} data-locale={locale}>
@@ -143,7 +144,7 @@ export default function CareersPage({ locale, phone, email }: CareersPageProps) 
           <p className="text-sm sm:text-base max-w-2xl mx-auto mb-7 text-white/80">{t("apply.body")}</p>
           <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-2xl mx-auto">
             <a
-              href={telHref}
+              href={tel}
               className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-transform hover:scale-[1.02]"
               style={{ backgroundColor: GOLD, color: NAVY }}
             >

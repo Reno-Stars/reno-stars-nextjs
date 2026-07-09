@@ -1,4 +1,5 @@
 import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
+import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import type { Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
@@ -64,7 +65,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     alternateName: BRAND_ALTERNATE_NAMES,
     image: company.logo,
     url: BASE_URL,
-    telephone: `+1${company.phone.replace(/\D/g, '')}`,
+    telephone: e164(company.phone),
     email: company.email,
     address: {
       '@type': 'PostalAddress',
@@ -176,7 +177,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: `+1${company.phone.replace(/\D/g, '')}`,
+        telephone: e164(company.phone),
         email: company.email,
         contactType: 'customer service',
         areaServed: 'CA',

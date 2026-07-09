@@ -1,4 +1,5 @@
 import type { Company } from '@/lib/types';
+import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 
@@ -49,7 +50,7 @@ export default function ProjectSchema({
     '@type': 'HomeAndConstructionBusiness' as const,
     name: company.name,
     url: baseUrl,
-    telephone: `+1${company.phone.replace(/\D/g, '')}`,
+    telephone: e164(company.phone),
     ...(googleRating && googleReviewCount && {
       aggregateRating: {
         '@type': 'AggregateRating',
