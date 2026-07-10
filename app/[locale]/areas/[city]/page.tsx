@@ -8,7 +8,7 @@ import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/componen
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
 import { getGoogleReviews, projectReviewsToLocale } from '@/lib/google-reviews';
 import { getYearsExperience } from '@/lib/company-config';
 
@@ -362,12 +362,14 @@ export default async function Page({ params }: PageProps) {
 
   // Note: getProjectsByAreaFromDb matches projects.locationCity against the area's English name.
   // This coupling works because project locationCity values use city names (e.g. "Burnaby").
-  const [company, services, googleReviews, areaFaqs, areaProjects] = await Promise.all([
+  const [company, services, googleReviews, areaFaqs, areaProjects, cityClientReviews] = await Promise.all([
     getCompanyFromDb(),
     getServicesFromDb(),
     getGoogleReviews(),
     getFaqsByAreaFromDb(area.id),
     getProjectsByAreaFromDb(area.name.en),
+    // Same English-name coupling as getProjectsByAreaFromDb above.
+    getReviewsByCityFromDb(area.name.en),
   ]);
 
   const localizedArea = getLocalizedArea(area, locale as Locale);
@@ -432,6 +434,7 @@ export default async function Page({ params }: PageProps) {
         introOverride={getAreaIntroOverride(city, locale as Locale)}
         h1Override={getAreaH1Override(city, locale as Locale)}
         googleReviews={projectReviewsToLocale(googleReviews, locale)}
+        cityClientReviews={cityClientReviews}
       />
     </>
   );

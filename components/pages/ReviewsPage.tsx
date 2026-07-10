@@ -7,9 +7,29 @@ import type { Locale, Company, GoogleReview, GooglePlaceRating } from "@/lib/typ
 import CTASection from "@/components/CTASection";
 import GoogleAvatar from "@/components/home/GoogleAvatar";
 import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
-import { GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
+import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
+import ReviewsCityGroups, { type HubCityGroupDisplay } from "@/components/pages/ReviewsCityGroups";
 
 const INTL_LOCALE_MAP: Record<string, string> = { en: "en-US", zh: "zh-CN" };
+
+// Self-contained 14-locale label (ZhTrustSignals pattern) for the hero's
+// "read all N reviews on Google" CTA. {count} = live cache userRatingCount.
+const READ_ALL_GOOGLE_LABELS: Record<string, string> = {
+  en: "Read all {count} reviews on Google",
+  zh: "在 Google 上阅读全部 {count} 条评价",
+  "zh-Hant": "在 Google 上閱讀全部 {count} 條評價",
+  es: "Lee las {count} reseñas en Google",
+  fr: "Lire les {count} avis sur Google",
+  ja: "Googleで{count}件のレビューをすべて読む",
+  ko: "Google에서 {count}개 리뷰 모두 보기",
+  ar: "اقرأ جميع المراجعات الـ {count} على Google",
+  fa: "خواندن همه {count} نظر در Google",
+  hi: "Google पर सभी {count} समीक्षाएँ पढ़ें",
+  pa: "Google 'ਤੇ ਸਾਰੀਆਂ {count} ਸਮੀਖਿਆਵਾਂ ਪੜ੍ਹੋ",
+  ru: "Читать все {count} отзывов в Google",
+  tl: "Basahin lahat ng {count} review sa Google",
+  vi: "Đọc tất cả {count} đánh giá trên Google",
+};
 
 function getRelativeTime(publishTime: string, locale: string): string {
   if (!publishTime) return "";
@@ -109,9 +129,11 @@ interface ReviewsPageProps {
   locale: Locale;
   company: Company;
   googleReviews: GooglePlaceRating;
+  /** Merged + deduped project/testimonial reviews grouped by city (hub). */
+  cityGroups?: HubCityGroupDisplay[];
 }
 
-export default function ReviewsPage({ locale, company, googleReviews }: ReviewsPageProps) {
+export default function ReviewsPage({ locale, company, googleReviews, cityGroups = [] }: ReviewsPageProps) {
   const t = useTranslations("reviewsPage");
   // CTA uses section-specific translations
 
@@ -142,6 +164,27 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
               </div>
             </div>
           )}
+          {googleReviews.userRatingCount > 0 && (
+            /* Prominent "read all our reviews on Google" CTA — the cached
+               payload holds only the 5 most recent reviews; the full set
+               lives on the Google profile. Count is the LIVE cache value,
+               never hardcoded. */
+            <div className="mt-6">
+              <a
+                href={GOOGLE_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors hover:opacity-90"
+                style={{ backgroundColor: GOLD, color: NAVY }}
+              >
+                <GoogleIcon className="w-5 h-5" />
+                {(READ_ALL_GOOGLE_LABELS[locale] ?? READ_ALL_GOOGLE_LABELS.en).replace(
+                  "{count}",
+                  String(googleReviews.userRatingCount),
+                )}
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
@@ -164,6 +207,10 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
           )}
         </div>
       </section>
+
+      {/* Client reviews by city — merged project_reviews + testimonials,
+          deduped against the Google grid above (lib/reviews-hub.ts). */}
+      <ReviewsCityGroups groups={cityGroups} locale={locale} />
 
       {/* Why Trust Us */}
       <section className="py-14" style={{ backgroundColor: SURFACE_ALT }} aria-labelledby="trust-title">

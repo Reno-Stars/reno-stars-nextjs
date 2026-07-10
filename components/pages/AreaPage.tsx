@@ -25,7 +25,9 @@ import type { Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import { getLocalizedProject } from '@/lib/data/projects';
 import type { Company, Faq, GooglePlaceRating, LocalizedService, Project, ServiceArea } from '@/lib/types';
+import type { AreaReviewDisplay } from '@/lib/project-reviews';
 import { pickLocale } from '@/lib/utils';
+import AreaClientReviews from '@/components/areas/AreaClientReviews';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
@@ -48,6 +50,8 @@ interface AreaPageProps {
   /** Optional code-driven H1 that wins over the generic "Home Renovations in {city}" string. EN-only, used to align H1 with the meta-title for low-rank cities (Burnaby pos 53, etc.). */
   h1Override?: string;
   googleReviews?: GooglePlaceRating;
+  /** Verified reviews linked to this city's case-study projects (≤3). */
+  cityClientReviews?: AreaReviewDisplay[];
 }
 
 // Stable hash-based offset so each city slug shows a different rotation of reviews.
@@ -202,7 +206,7 @@ const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
   'white-rock': ['East Beach', 'West Beach', 'White Rock Hill', 'South Surrey'],
 };
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews, cityClientReviews = [] }: AreaPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const citySlug = area.slug;
@@ -562,6 +566,13 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </section>
       )}
+
+      {/* What {city} clients say — verified reviews linked to this city's
+          case-study projects. Verbatim quotes (original language), each card
+          links to its project. Renders nothing for cities without
+          project-linked reviews. NO Review schema here — it lives on the
+          project pages (duplicating it on a second entity risks spam signals). */}
+      <AreaClientReviews reviews={cityClientReviews} cityName={localizedArea.name} locale={locale} />
 
       {/* Reviews — 2 reviews rotated by city slug for diversity across the 14 area pages */}
       {cityReviews.length > 0 && (
