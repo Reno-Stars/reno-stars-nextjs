@@ -87,6 +87,21 @@ describe('isDuplicateReview', () => {
   it('matches author names case/whitespace-insensitively', () => {
     expect(isDuplicateReview(base, makeHubReview({ authorName: '  lisa   JUNG ' }))).toBe(true);
   });
+
+  it('matches a zh verbatim body against its EN google copy via altBodies', () => {
+    const zhBody = '真心大推Reno Stars!!! 我们家刚装潢完成了三间浴室，成果真的太满意了！';
+    const projectCopy = makeHubReview({ authorName: 'Zoe Chen', body: zhBody, bodyLang: 'zh' });
+    const googleCopy = makeHubReview({
+      kind: 'google',
+      authorName: 'Zoe Chen',
+      body: 'Highly recommend Reno Stars!!! We just finished renovating three bathrooms and we are so happy with the result!',
+      bodyLang: 'en',
+      altBodies: [zhBody],
+    });
+    // Sanity: without the altBodies variant the EN translation cannot match.
+    expect(isDuplicateReview(projectCopy, { ...googleCopy, altBodies: undefined })).toBe(false);
+    expect(isDuplicateReview(projectCopy, googleCopy)).toBe(true);
+  });
 });
 
 describe('dedupeHubReviews', () => {
@@ -162,5 +177,32 @@ describe('buildReviewsHub', () => {
     const vancouver = hub.cityGroups.find((g) => g.city === 'Vancouver')!;
     expect(vancouver.reviews[0].kind).toBe('testimonial');
     expect(vancouver.reviews[0].translations?.zh).toBe('译文');
+  });
+
+  it('dedupes a zh project review against its EN-translated google cache copy', () => {
+    const zhBody = '真心大推Reno Stars!!! 我们家刚装潢完成了三间浴室，成果真的太满意了！';
+    const projectRows = [
+      { authorName: 'Zoe Chen', rating: 5, body: zhBody, bodyLang: 'zh', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'three-bathroom-delta', city: 'Delta' },
+    ];
+    const googleReviews = [
+      // The Places API (languageCode=en) returns the EN machine translation as
+      // `text` and keeps the verbatim zh original in `originalText`.
+      makeGoogleReview({
+        authorName: 'Zoe Chen',
+        text: 'Highly recommend Reno Stars!!! We just finished renovating three bathrooms and we are so happy with the result!',
+        originalText: zhBody,
+      }),
+      makeGoogleReview({ authorName: 'Marco Or' }),
+    ];
+
+    const hub = buildReviewsHub({ projectReviews: projectRows, googleReviews, testimonials: [] });
+
+    // Zoe's google copy is deduped away; the project copy (with its case-study
+    // link) wins. Only Marco Or survives from the google source.
+    expect(hub.uniqueCount).toBe(2);
+    expect(hub.googleIndices).toEqual([1]);
+    const delta = hub.cityGroups.find((g) => g.city === 'Delta')!;
+    expect(delta.reviews).toHaveLength(1);
+    expect(delta.reviews[0].kind).toBe('project');
   });
 });

@@ -71,9 +71,11 @@ export default function AreaClientReviews({ reviews, cityName, locale }: AreaCli
           </Link>
         </div>
         <div className={`grid gap-6 ${reviews.length > 1 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:max-w-xl'}`}>
-          {reviews.map((review) => (
+          {reviews.map((review, idx) => (
             <ReviewQuoteCard
-              key={`${review.authorName}-${review.projectSlug}`}
+              // idx guards against legitimate collisions (same author + same
+              // project, e.g. a follow-up review); the list is static per render.
+              key={`${review.authorName}-${review.projectSlug}-${idx}`}
               review={review}
               locale={locale}
               eyebrowTag="div"

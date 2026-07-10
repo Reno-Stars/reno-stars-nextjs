@@ -30,21 +30,24 @@ const SECTION_TITLE_LABELS: Record<string, string> = {
   vi: 'Đánh giá của khách hàng theo thành phố',
 };
 
+// Copy is deliberately conditional ("when the project is in our portfolio…"):
+// testimonial cards and unlinked reviews have no case-study link, so an
+// unconditional "each one links" claim would be factually wrong on the page.
 const SECTION_SUBTITLE_LABELS: Record<string, string> = {
-  en: 'Verbatim reviews from clients whose projects are in our portfolio — each one links to the real case study.',
-  zh: '来自案例库真实客户的原文评价——每条评价都链接到对应的项目案例。',
-  'zh-Hant': '來自案例庫真實客戶的原文評價——每條評價都連結到對應的項目案例。',
-  es: 'Reseñas textuales de clientes cuyos proyectos están en nuestro portafolio — cada una enlaza al caso real.',
-  fr: "Avis textuels de clients dont les projets figurent dans notre portfolio — chacun renvoie à l'étude de cas réelle.",
-  ja: 'ポートフォリオ掲載プロジェクトのお客様による原文レビュー。各レビューは実際の事例ページにリンクしています。',
-  ko: '포트폴리오에 있는 프로젝트 고객의 원문 리뷰 — 각 리뷰는 실제 사례 페이지로 연결됩니다.',
-  ar: 'مراجعات حرفية من عملاء مشاريعهم ضمن أعمالنا — كل مراجعة ترتبط بدراسة الحالة الحقيقية.',
-  fa: 'نظرات عینی مشتریانی که پروژه‌هایشان در نمونه‌کارهای ماست — هر نظر به مطالعه موردی واقعی پیوند دارد.',
-  hi: 'हमारे पोर्टफोलियो के प्रोजेक्ट वाले ग्राहकों की मूल समीक्षाएँ — हर समीक्षा असली केस स्टडी से जुड़ी है।',
-  pa: 'ਸਾਡੇ ਪੋਰਟਫੋਲੀਓ ਦੇ ਪ੍ਰੋਜੈਕਟਾਂ ਵਾਲੇ ਗਾਹਕਾਂ ਦੀਆਂ ਅਸਲ ਸਮੀਖਿਆਵਾਂ — ਹਰ ਇੱਕ ਅਸਲ ਕੇਸ ਸਟੱਡੀ ਨਾਲ ਜੁੜੀ ਹੈ।',
-  ru: 'Дословные отзывы клиентов, чьи проекты есть в нашем портфолио — каждый ведёт к реальному кейсу.',
-  tl: 'Verbatim na mga review mula sa mga kliyenteng nasa portfolio namin ang proyekto — bawat isa ay naka-link sa totoong case study.',
-  vi: 'Đánh giá nguyên văn từ khách hàng có dự án trong hồ sơ của chúng tôi — mỗi đánh giá liên kết đến dự án thực tế.',
+  en: 'Verbatim reviews from real clients — when the reviewed project is in our portfolio, the review links to the full case study.',
+  zh: '来自真实客户的原文评价——若项目已收录在案例库中，评价会链接到对应的项目案例。',
+  'zh-Hant': '來自真實客戶的原文評價——若項目已收錄在案例庫中，評價會連結到對應的項目案例。',
+  es: 'Reseñas textuales de clientes reales — cuando el proyecto está en nuestro portafolio, la reseña enlaza al caso de estudio real.',
+  fr: "Avis textuels de clients réels — lorsque le projet figure dans notre portfolio, l'avis renvoie à l'étude de cas réelle.",
+  ja: '実際のお客様による原文レビュー。プロジェクトがポートフォリオに掲載されている場合は、実際の事例ページにリンクしています。',
+  ko: '실제 고객의 원문 리뷰 — 해당 프로젝트가 포트폴리오에 있는 경우 실제 사례 페이지로 연결됩니다.',
+  ar: 'مراجعات حرفية من عملاء حقيقيين — عندما يكون المشروع ضمن أعمالنا، ترتبط المراجعة بدراسة الحالة الحقيقية.',
+  fa: 'نظرات عینی مشتریان واقعی — اگر پروژه در نمونه‌کارهای ما باشد، نظر به مطالعه موردی واقعی پیوند دارد.',
+  hi: 'वास्तविक ग्राहकों की मूल समीक्षाएँ — जब प्रोजेक्ट हमारे पोर्टफोलियो में हो, तो समीक्षा असली केस स्टडी से जुड़ती है।',
+  pa: 'ਅਸਲ ਗਾਹਕਾਂ ਦੀਆਂ ਮੂਲ ਸਮੀਖਿਆਵਾਂ — ਜਦੋਂ ਪ੍ਰੋਜੈਕਟ ਸਾਡੇ ਪੋਰਟਫੋਲੀਓ ਵਿੱਚ ਹੋਵੇ, ਤਾਂ ਸਮੀਖਿਆ ਅਸਲ ਕੇਸ ਸਟੱਡੀ ਨਾਲ ਜੁੜਦੀ ਹੈ।',
+  ru: 'Дословные отзывы реальных клиентов — если проект есть в нашем портфолио, отзыв ведёт к реальному кейсу.',
+  tl: 'Verbatim na mga review mula sa mga totoong kliyente — kapag nasa portfolio namin ang proyekto, naka-link ang review sa totoong case study.',
+  vi: 'Đánh giá nguyên văn từ khách hàng thực — khi dự án có trong hồ sơ của chúng tôi, đánh giá sẽ liên kết đến dự án thực tế.',
 };
 
 const OTHER_CITY_LABELS: Record<string, string> = {
@@ -120,9 +123,11 @@ export default function ReviewsCityGroups({ groups, locale }: ReviewsCityGroupsP
                 )}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {group.reviews.map((review) => (
+                {group.reviews.map((review, idx) => (
                   <ReviewQuoteCard
-                    key={`${review.authorName}-${review.reviewDate ?? review.body.slice(0, 24)}`}
+                    // idx guards against legitimate collisions (same author +
+                    // same month-precision date); the list is static per render.
+                    key={`${review.authorName}-${review.reviewDate ?? ''}-${idx}`}
                     review={review}
                     locale={locale}
                     kind={review.kind === 'testimonial' ? 'testimonial' : 'google'}

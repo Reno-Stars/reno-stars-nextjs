@@ -26,6 +26,7 @@ import { getLocalizedArea } from '@/lib/data/areas';
 import { getLocalizedProject } from '@/lib/data/projects';
 import type { Company, Faq, GooglePlaceRating, LocalizedService, Project, ServiceArea } from '@/lib/types';
 import type { AreaReviewDisplay } from '@/lib/project-reviews';
+import { isDuplicateReview } from '@/lib/reviews-hub';
 import { pickLocale } from '@/lib/utils';
 import AreaClientReviews from '@/components/areas/AreaClientReviews';
 import CTASection from '@/components/CTASection';
@@ -239,13 +240,26 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
 
   // 2 deterministic reviews per area page, rotated by city slug. Avoids
   // showing the same 2 reviews on every area page (near-duplicate content).
+  // Google reviews already rendered verbatim in the "What {city} clients say"
+  // section above are excluded first (project_reviews ARE Google reviews, so
+  // the same quote would otherwise appear twice on one page) — same
+  // author+text dedupe the /reviews hub applies.
   const cityReviews = useMemo(() => {
-    const all = googleReviews?.reviews ?? [];
+    const all = (googleReviews?.reviews ?? []).filter(
+      (gr) => !cityClientReviews.some((cr) => isDuplicateReview(
+        { authorName: cr.authorName, body: cr.body },
+        {
+          authorName: gr.authorName,
+          body: gr.text,
+          ...(gr.originalText ? { altBodies: [gr.originalText] } : {}),
+        },
+      )),
+    );
     if (all.length === 0) return [];
     const offset = cityReviewOffset(area.slug, all.length);
     const pick = 2;
     return Array.from({ length: Math.min(pick, all.length) }, (_, i) => all[(offset + i) % all.length]);
-  }, [googleReviews, area.slug]);
+  }, [googleReviews, area.slug, cityClientReviews]);
 
   // Most-recent completed project date in this city — surfaces a freshness
   // signal both to visitors ("active in {City} as of last month") and to

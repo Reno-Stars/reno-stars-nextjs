@@ -41,7 +41,11 @@ import { logEvent } from '@/lib/log';
 // service-areas.ts) so the SEO agent's direct-DB edits get the same coverage.
 const TYPE_CONFIG: Record<string, { base: string; tags: (slug: string) => string[] }> = {
   blog: { base: 'blog', tags: (slug) => [`blog:${slug}`, 'blog:listing'] },
-  project: { base: 'projects', tags: (slug) => [`project:${slug}`, 'projects:listing', 'sites:listing'] },
+  // `reviews:*` mirror revalidateProjectSurfaces(): the verified-review caches
+  // join projects (isPublished / locationCity / slug), so a direct-DB project
+  // or project_reviews edit must bust them or /reviews and the area-page
+  // "What {city} clients say" sections serve stale cards for up to 24h.
+  project: { base: 'projects', tags: (slug) => [`project:${slug}`, 'projects:listing', 'sites:listing', 'reviews:by-area', 'reviews:hub'] },
   area: { base: 'areas', tags: (slug) => [`area:${slug}`] },
 };
 

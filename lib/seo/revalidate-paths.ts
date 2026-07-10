@@ -33,6 +33,11 @@ export function revalidatePathAllLocales(relPath: string): void {
  * pages (`projects:by-area`) and the cost-guide pages (`projects:by-guide`)
  * both read cached project sets that go stale for 24h otherwise — a deleted
  * or re-scoped project keeps showing (dead card / wrong city) until the TTL.
+ * The verified-review caches (`reviews:by-area`, `reviews:hub`) JOIN projects
+ * for isPublished / locationCity / slug, so a delete, unpublish, re-city or
+ * slug rename also changes which review cards render where (and where their
+ * "See this project" links point) — bust them together, mirroring
+ * revalidateReviewSurfaces() on the review-mutation side.
  * Call this from every project mutation so all its surfaces refresh together.
  */
 export function revalidateProjectSurfaces(): void {
@@ -40,11 +45,13 @@ export function revalidateProjectSurfaces(): void {
   updateTag('sites:listing');
   updateTag('projects:by-area');
   updateTag('projects:by-guide');
-  // Projects surface on the /projects listing, /areas/* and /guides/* pages.
-  // Purge those index/hub URLs at the edge (the detail page is purged
-  // separately via revalidatePathAllLocales). No-op without a CF token.
+  updateTag('reviews:by-area');
+  updateTag('reviews:hub');
+  // Projects surface on the /projects listing, /areas/*, /guides/* and
+  // /reviews pages. Purge those index/hub URLs at the edge (the detail page
+  // is purged separately via revalidatePathAllLocales). No-op without a CF token.
   const base = getBaseUrl();
-  const hubs = ['/projects/', '/areas/', '/guides/'];
+  const hubs = ['/projects/', '/areas/', '/guides/', '/reviews/'];
   void purgeCloudflareUrls(locales.flatMap((loc) => hubs.map((h) => `${base}/${loc}${h}`)));
 }
 

@@ -42,6 +42,13 @@ export interface HubReview {
   projectSlug: string | null;
   /** English city name (matches service_areas.name_en), when known. */
   city: string | null;
+  /**
+   * Alternate texts of the SAME review, used only for dedupe comparison —
+   * e.g. the Google original-language text when `body` is the EN machine
+   * translation the Places API returned. Without it a zh review stored
+   * verbatim in project_reviews could never match its EN cache copy.
+   */
+  altBodies?: string[];
   /** Optional per-locale translations (google cache / testimonials only). */
   translations?: Partial<Record<string, string>>;
   /** Index into the source google reviews array (google kind only). */
@@ -82,22 +89,33 @@ export function textSimilarity(a: string, b: string): number {
 
 const SIMILARITY_THRESHOLD = 0.6;
 
-/**
- * Two reviews are duplicates when the author matches AND the texts are
- * similar (identical, one contains the other, or high word overlap).
- */
-export function isDuplicateReview(
-  a: Pick<HubReview, 'authorName' | 'body'>,
-  b: Pick<HubReview, 'authorName' | 'body'>,
-): boolean {
-  if (normalizeAuthor(a.authorName) !== normalizeAuthor(b.authorName)) return false;
-  const bodyA = a.body.trim().toLowerCase();
-  const bodyB = b.body.trim().toLowerCase();
+/** One text-pair comparison: identical, one contains the other, or high word overlap. */
+function bodiesMatch(a: string, b: string): boolean {
+  const bodyA = a.trim().toLowerCase();
+  const bodyB = b.trim().toLowerCase();
   if (bodyA === bodyB) return true;
   if (bodyA.length > 40 && bodyB.length > 40 && (bodyA.includes(bodyB) || bodyB.includes(bodyA))) {
     return true;
   }
-  return textSimilarity(a.body, b.body) >= SIMILARITY_THRESHOLD;
+  return textSimilarity(a, b) >= SIMILARITY_THRESHOLD;
+}
+
+/**
+ * Two reviews are duplicates when the author matches AND any text variant of
+ * one is similar to any text variant of the other. Variants (`altBodies`)
+ * cover cross-language copies of the same review: the Google cache stores the
+ * EN machine translation as `body` with the verbatim original in `altBodies`,
+ * while project_reviews stores the original — only the variant comparison can
+ * match those.
+ */
+export function isDuplicateReview(
+  a: Pick<HubReview, 'authorName' | 'body' | 'altBodies'>,
+  b: Pick<HubReview, 'authorName' | 'body' | 'altBodies'>,
+): boolean {
+  if (normalizeAuthor(a.authorName) !== normalizeAuthor(b.authorName)) return false;
+  const bodiesA = [a.body, ...(a.altBodies ?? [])];
+  const bodiesB = [b.body, ...(b.altBodies ?? [])];
+  return bodiesA.some((ba) => bodiesB.some((bb) => bodiesMatch(ba, bb)));
 }
 
 /**
@@ -212,6 +230,7 @@ export function buildReviewsHub(input: {
       sourceUrl: review.authorUri || null,
       projectSlug: null,
       city: null,
+      ...(review.originalText ? { altBodies: [review.originalText] } : {}),
       googleIndex: index,
     })),
     ...input.testimonials.map((row): HubReview => ({
