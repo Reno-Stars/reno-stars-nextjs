@@ -57,6 +57,18 @@ export function revalidateProjectSurfaces(): void {
  * NAP and the llms docs feed crawlers stale facts for up to their TTL.
  */
 /**
+ * SSOT for "a homepage/section content tag changed": bust the origin data-cache
+ * tag AND purge the edge pages it surfaces on, in ONE call. Bundling them means
+ * a mutating admin action can't refresh the origin while forgetting the edge
+ * (the drift that left FAQ/partners/design edits stale at the edge for ≤5min).
+ * `purgePages` are locale-relative paths ('/' = home), purged across all locales.
+ */
+export function revalidateContentTag(tag: string, purgePages: string[]): void {
+  updateTag(tag);
+  purgeCloudflarePagesAllLocales(purgePages);
+}
+
+/**
  * Purge specific relative paths from the Cloudflare edge across every locale
  * (no-op without a CF token). For admin actions that updateTag() homepage /
  * about / design content — those tag busts refresh the ORIGIN but leave the

@@ -14,25 +14,46 @@ interface JobPostingSchemaProps {
   datePosted: string;
   /** Monthly base pay in CAD, e.g. 4000. Omit to leave baseSalary out. */
   baseSalaryMonthCad?: number;
+  /** Localized comma/semicolon list of skills — mirrors the page's duties. */
+  skills: string;
+  /** Localized qualifications sentence — mirrors the page's requirements. */
+  qualifications: string;
 }
 
+/** Days a rendered posting stays valid — see validThrough note below. */
+const VALID_THROUGH_DAYS = 180;
+
 /**
- * schema.org JobPosting for the /careers page — makes the opening eligible
- * for the Google Jobs experience.
+ * schema.org JobPosting for the /careers page — makes the opening eligible for
+ * the Google Jobs experience.
  *
- * validThrough is a ROLLING date (~6 months from render). The careers page is
- * force-dynamic (re-rendered per request), so every crawl sees a future date —
- * the evergreen posting never expires, which is what Google's "Missing field
- * validThrough" recommendation wants without the risk of a static date silently
- * lapsing. (datePosted stays FIXED — it's the real posting day.)
+ * validThrough is a rolling DATE (not datetime): today + VALID_THROUGH_DAYS,
+ * truncated to YYYY-MM-DD. Date-only means every render on a given day emits the
+ * IDENTICAL value, so the edge-cached HTML and a fresh origin render never
+ * disagree (no structured-data churn), while it still rolls forward daily so the
+ * evergreen posting never lapses. The careers page declares its own
+ * `dynamic = 'force-dynamic'` (not relying on layout inheritance) so this
+ * re-renders and can't freeze at a build-time value. datePosted stays FIXED.
  *
- * baseSalary is the owner-provided monthly figure (CAD); it must match the pay
- * shown on the visible page (Google flags schema/page salary mismatches).
+ * title / description / baseSalary / skills / qualifications are ALL sourced
+ * from the careers translations (SSOT) so the schema matches the visible page
+ * in every locale — Google flags schema/page content + salary mismatches.
  */
-export default function JobPostingSchema({ company, locale, title, description, datePosted, baseSalaryMonthCad }: JobPostingSchemaProps) {
+export default function JobPostingSchema({
+  company,
+  locale,
+  title,
+  description,
+  datePosted,
+  baseSalaryMonthCad,
+  skills,
+  qualifications,
+}: JobPostingSchemaProps) {
   const baseUrl = getBaseUrl();
   const address = parseAddress(company.address);
-  const validThrough = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString();
+  const validThrough = new Date(Date.now() + VALID_THROUGH_DAYS * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -72,13 +93,11 @@ export default function JobPostingSchema({ company, locale, title, description, 
         addressCountry: 'CA',
       },
     },
-    skills: 'Demolition, tiling, drywall, painting, flooring, finishing carpentry',
-    qualifications: 'Renovation or construction experience preferred; Mandarin or Cantonese speaking is a strong asset; legally eligible to work in Canada.',
+    skills,
+    qualifications,
     directApply: true,
     url: `${baseUrl}/${locale}/careers/`,
   };
 
-  return (
-    <JsonLd data={schema} />
-  );
+  return <JsonLd data={schema} />;
 }

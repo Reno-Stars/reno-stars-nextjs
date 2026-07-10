@@ -11,6 +11,11 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+// Declared locally (not relying on layout inheritance) so JobPosting.validThrough
+// — a rolling date computed at render — can never freeze at a build-time value if
+// the layout's dynamic setting ever changes.
+export const dynamic = 'force-dynamic';
+
 // Stable posting date — the day the careers page shipped. Never derive from
 // "now": JobPosting.datePosted must not shift on every rebuild.
 const DATE_POSTED = '2026-07-09';
@@ -63,10 +68,15 @@ export default async function Page({ params }: PageProps) {
     { name: t('breadcrumb'), url: `/${locale}/careers/` },
   ];
 
+  // Schema skills/qualifications come from the SAME localized duty/requirement
+  // keys that render on the page — one source, so the JobPosting matches the
+  // visible content in every locale (no half-EN structured data).
+  const localizedDuties = DUTY_KEYS.map((k) => t(`duties.items.${k}`));
+  const localizedReqs = REQ_KEYS.map((k) => t(`requirements.items.${k}`));
   const jobDescription = [
     t('hero.subtitle'),
-    t('duties.title') + ': ' + DUTY_KEYS.map((k) => t(`duties.items.${k}`)).join('; '),
-    t('requirements.title') + ': ' + REQ_KEYS.map((k) => t(`requirements.items.${k}`)).join('; '),
+    t('duties.title') + ': ' + localizedDuties.join('; '),
+    t('requirements.title') + ': ' + localizedReqs.join('; '),
   ].join(' ');
 
   return (
@@ -79,6 +89,8 @@ export default async function Page({ params }: PageProps) {
         description={jobDescription}
         datePosted={DATE_POSTED}
         baseSalaryMonthCad={BASE_SALARY_MONTH_CAD}
+        skills={localizedDuties.join(', ')}
+        qualifications={localizedReqs.join('; ')}
       />
       <CareersPage
         locale={locale as Locale}

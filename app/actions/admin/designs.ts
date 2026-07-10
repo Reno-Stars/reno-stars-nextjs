@@ -2,8 +2,8 @@
 
 // NOTE: console.error is used for error logging until a structured logger is available.
 
-import { revalidatePath, updateTag } from 'next/cache';
-import { purgeCloudflarePagesAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePath } from 'next/cache';
+import { revalidateContentTag } from '@/lib/seo/revalidate-paths';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { designs } from '@/lib/db/schema';
@@ -50,8 +50,7 @@ export async function createDesignItem(
     await db.insert(designs).values(result.data);
 
     revalidatePath('/admin/designs');
-    updateTag('designs');
-    purgeCloudflarePagesAllLocales(['/design/']);
+    revalidateContentTag('designs', ['/design/']);
   } catch (error) {
     console.error('Failed to create design item:', error);
     return { error: 'Failed to create design item.' };
@@ -75,8 +74,7 @@ export async function updateDesignItem(
     if (updated.length === 0) return { error: 'Design item not found.' };
 
     revalidatePath('/admin/designs');
-    updateTag('designs');
-    purgeCloudflarePagesAllLocales(['/design/']);
+    revalidateContentTag('designs', ['/design/']);
     return { success: true };
   } catch (error) {
     console.error('Failed to update design item:', error);
@@ -91,8 +89,7 @@ export async function toggleDesignItemPublished(id: string, current: boolean): P
     const updated = await db.update(designs).set({ isPublished: !current }).where(eq(designs.id, id)).returning({ id: designs.id });
     if (updated.length === 0) return { error: 'Design item not found.' };
     revalidatePath('/admin/designs');
-    updateTag('designs');
-    purgeCloudflarePagesAllLocales(['/design/']);
+    revalidateContentTag('designs', ['/design/']);
     return {};
   } catch (error) {
     console.error('Failed to toggle design item published:', error);
@@ -107,8 +104,7 @@ export async function deleteDesignItem(id: string): Promise<{ error?: string }> 
     const deleted = await db.delete(designs).where(eq(designs.id, id)).returning({ id: designs.id });
     if (deleted.length === 0) return { error: 'Design item not found.' };
     revalidatePath('/admin/designs');
-    updateTag('designs');
-    purgeCloudflarePagesAllLocales(['/design/']);
+    revalidateContentTag('designs', ['/design/']);
     return {};
   } catch (error) {
     console.error('Failed to delete design item:', error);
@@ -137,8 +133,7 @@ export async function reorderDesignItems(
     );
 
     revalidatePath('/admin/designs');
-    updateTag('designs');
-    purgeCloudflarePagesAllLocales(['/design/']);
+    revalidateContentTag('designs', ['/design/']);
     return {};
   } catch (error) {
     console.error('Failed to reorder design items:', error);
