@@ -214,6 +214,33 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
   }, [wasJustDragging, handleSelectPair]);
 
 
+  // Challenge & Solution — rendered under the image gallery on desktop and
+  // in the details column on mobile (same content, responsive placement).
+  const challengeSolutionBlock = (localizedProject.challenge || localizedProject.solution) ? (
+    <>
+      {localizedProject.challenge && (
+        <div className="mb-4">
+          <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+            {t('modal.challenge')}
+          </h2>
+          <p className="text-base" style={{ color: TEXT_MID }}>
+            {localizedProject.challenge}
+          </p>
+        </div>
+      )}
+      {localizedProject.solution && (
+        <div className="mb-6">
+          <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
+            {t('modal.solution')}
+          </h2>
+          <p className="text-base" style={{ color: TEXT_MID }}>
+            {localizedProject.solution}
+          </p>
+        </div>
+      )}
+    </>
+  ) : null;
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <VisualBreadcrumb variant="light" items={[
@@ -441,6 +468,11 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
                   </button>
                 )}
               </div>
+
+              {/* Challenge & Solution — desktop: below the gallery */}
+              {challengeSolutionBlock && (
+                <div className="hidden lg:block mt-8">{challengeSolutionBlock}</div>
+              )}
             </div>
 
             {/* Details */}
@@ -558,26 +590,9 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
                 </div>
               )}
 
-              {/* Challenge & Solution */}
-              {localizedProject.challenge && (
-                <div className="mb-4">
-                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('modal.challenge')}
-                  </h2>
-                  <p className="text-base" style={{ color: TEXT_MID }}>
-                    {localizedProject.challenge}
-                  </p>
-                </div>
-              )}
-              {localizedProject.solution && (
-                <div className="mb-6">
-                  <h2 className="text-base font-bold uppercase tracking-wider mb-2" style={{ color: TEXT_MUTED }}>
-                    {t('modal.solution')}
-                  </h2>
-                  <p className="text-base" style={{ color: TEXT_MID }}>
-                    {localizedProject.solution}
-                  </p>
-                </div>
+              {/* Challenge & Solution — mobile: stays in the details flow */}
+              {challengeSolutionBlock && (
+                <div className="lg:hidden">{challengeSolutionBlock}</div>
               )}
 
               {/* Dynamic content blocks (FAQ, HowTo, callouts, images, etc.) */}
