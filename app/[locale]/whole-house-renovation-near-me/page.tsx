@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 2026-05-21 SEO trim: EN desc was 187 chars (truncates ~155).
   // Drops "lighting" + "one team, one timeline" framing to fit.
   const description = isZh
-    ? '大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修。$150K-$800K+，含许可与保险。免费估价。'
-    : 'Whole house renovation near you in Metro Vancouver — kitchen + bath + flooring + paint, one team. $150K-$800K+. Permits + $5M insured.';
+    ? '大温哥华附近全屋翻新：厨房+卫浴+地板+油漆+照明一站式装修。$50K-$200K+，含许可与保险。免费估价。'
+    : 'Whole house renovation near you in Metro Vancouver — kitchen + bath + flooring + paint, one team. $50K-$200K+. Permits + $5M insured.';
   const baseUrl = getBaseUrl();
   return {
     title, description,
@@ -44,8 +44,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '全屋翻新' : 'Whole House Renovation';
   const serviceDescription = isZh
-    ? '大温哥华附近全屋翻新：厨房、卫浴、地板、油漆、电气照明一站式协调。$150K-$800K+。'
-    : 'Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. $150K-$800K+ typical. Permits handled.';
+    ? '大温哥华附近全屋翻新：厨房、卫浴、地板、油漆、电气照明一站式协调。$50K-$200K+。'
+    : 'Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. $50K-$200K+ typical. Permits handled.';
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={serviceDescription}
         url={`/${locale}/whole-house-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={{ min: 150000, max: 800000 }}
+        priceRange={{ min: 50000, max: 200000 }}
         serviceRadiusKm={50}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}

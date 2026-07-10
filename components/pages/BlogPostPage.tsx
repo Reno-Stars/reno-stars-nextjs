@@ -492,7 +492,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              Read what our 70+ Vancouver clients say →
+              Read what our 75+ Vancouver clients say →
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link

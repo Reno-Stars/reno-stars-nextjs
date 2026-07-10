@@ -40,6 +40,7 @@
     "noImages": "Không có hình ảnh",
     "viewFullscreen": "Xem toàn màn hình",
     "aboutService": "Về dịch vụ {service} của chúng tôi",
-    "serviceInCity": "{service} tại {city}"
+    "serviceInCity": "{service} tại {city}",
+    "heroStats": "{completed} dự án đã hoàn thành · {documented} dự án được ghi lại chi tiết"
   }
 }

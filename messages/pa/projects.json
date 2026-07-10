@@ -40,6 +40,7 @@
     "noImages": "ਕੋਈ ਤਸਵੀਰ ਉਪਲਬਧ ਨਹੀਂ",
     "viewFullscreen": "ਫੁੱਲਸਕਰੀਨ ਵੇਖੋ",
     "aboutService": "ਸਾਡੀਆਂ {service} ਸੇਵਾਵਾਂ ਬਾਰੇ",
-    "serviceInCity": "{city} ਵਿੱਚ {service}"
+    "serviceInCity": "{city} ਵਿੱਚ {service}",
+    "heroStats": "{completed} ਮੁਕੰਮਲ ਪ੍ਰੋਜੈਕਟ · {documented} ਦਸਤਾਵੇਜ਼ੀ ਕੇਸ ਸਟੱਡੀ"
   }
 }

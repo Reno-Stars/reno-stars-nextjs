@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Keeps the keyword, geo, scope, price band, timeline + insurance — drops
   // the 3-city list (already on-page) and the redundant "Free quotes" tail.
   const description = isZh
-    ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。$25K-$90K，4-8周完工。70+五星好评，免费估价。'
-    : 'Kitchen renovation near you across Metro Vancouver — custom cabinets, quartz countertops, full design-build. $25K-$90K, 4-8 wks. $5M insured.';
+    ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、瓷砖墙面、电器升级。$15K-$72K，4-8周完工。75+五星好评，免费估价。'
+    : 'Kitchen renovation near you across Metro Vancouver — custom cabinets, quartz countertops, full design-build. $15K-$72K, 4-8 wks. $5M insured.';
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);
   return {
@@ -46,8 +46,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '厨房装修' : 'Kitchen Renovation';
   const serviceDescription = isZh
-    ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、设计建造一站式。$25K-$90K，4-8周完工。'
-    : 'Full design-build kitchen renovation across Metro Vancouver — custom cabinets, quartz countertops, appliance integration. $25K-$90K, 4-8 wks.';
+    ? '大温哥华附近专业厨房装修：定制橱柜、石英石台面、设计建造一站式。$15K-$72K，4-8周完工。'
+    : 'Full design-build kitchen renovation across Metro Vancouver — custom cabinets, quartz countertops, appliance integration. $15K-$72K, 4-8 wks.';
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={serviceDescription}
         url={`/${locale}/kitchen-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={{ min: 25000, max: 90000 }}
+        priceRange={{ min: 15000, max: 72000 }}
         serviceRadiusKm={50}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}

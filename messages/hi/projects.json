@@ -40,6 +40,7 @@
     "noImages": "कोई चित्र उपलब्ध नहीं",
     "viewFullscreen": "पूर्णस्क्रीन देखें",
     "aboutService": "हमारी {service} सेवाओं के बारे में",
-    "serviceInCity": "{service} में {city}"
+    "serviceInCity": "{service} में {city}",
+    "heroStats": "{completed} पूर्ण परियोजनाएँ · {documented} प्रलेखित केस स्टडी"
   }
 }

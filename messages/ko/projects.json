@@ -40,7 +40,8 @@
     "noImages": "사용 가능한 이미지가 없습니다.",
     "viewFullscreen": "전체 화면으로 보기",
     "aboutService": "{service} 서비스 정보",
-    "serviceInCity": "{city}의 {service}"
+    "serviceInCity": "{city}의 {service}",
+    "heroStats": "완료 프로젝트 {completed}건 · 상세 사례 {documented}건"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

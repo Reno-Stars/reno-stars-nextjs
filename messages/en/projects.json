@@ -40,6 +40,7 @@
     "noImages": "No images available",
     "viewFullscreen": "View fullscreen",
     "aboutService": "About our {service} services",
-    "serviceInCity": "{service} in {city}"
+    "serviceInCity": "{service} in {city}",
+    "heroStats": "{completed} projects completed · {documented} documented case studies"
   }
 }

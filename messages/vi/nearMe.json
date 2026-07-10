@@ -9,7 +9,7 @@
     },
     "trust": {
       "reviews": {
-        "stat": "70+",
+        "stat": "75+",
         "label": "Đánh giá Google 5★"
       },
       "insured": {
@@ -34,15 +34,15 @@
       "learnMore": "Tìm hiểu thêm",
       "kitchen": {
         "title": "Cải tạo phòng bếp gần tôi",
-        "desc": "Tủ bếp, mặt bàn quartz, ốp tường, sàn, điện. Làm mới tiết kiệm đến đặt đóng hoàn toàn. Thường 4-8 tuần, $25K-$90K."
+        "desc": "Tủ bếp, mặt bàn quartz, ốp tường, sàn, điện. Làm mới tiết kiệm đến đặt đóng hoàn toàn. Thường 4-8 tuần, $15K-$72K."
       },
       "bathroom": {
         "title": "Cải tạo phòng tắm gần tôi",
-        "desc": "Ốp gạch tường, chống thấm Schluter, vòi sen ốp gạch hoặc chuyển đổi từ bồn tắm sang vòi sen, tủ lavabo, phụ kiện. Thường 3-6 tuần, $15K-$45K."
+        "desc": "Ốp gạch tường, chống thấm Schluter, vòi sen ốp gạch hoặc chuyển đổi từ bồn tắm sang vòi sen, tủ lavabo, phụ kiện. Thường 3-6 tuần, $10K-$60K."
       },
       "wholeHouse": {
         "title": "Cải tạo toàn bộ nhà gần tôi",
-        "desc": "Sửa sang nội thất toàn bộ — phòng bếp, phòng tắm, sàn, sơn, chiếu sáng, đôi khi có kết cấu. 2-6 tháng, $80K-$400K+."
+        "desc": "Sửa sang nội thất toàn bộ — phòng bếp, phòng tắm, sàn, sơn, chiếu sáng, đôi khi có kết cấu. 2-6 tháng, $50K-$200K+."
       },
       "basement": {
         "title": "Cải tạo tầng hầm gần tôi",
@@ -83,9 +83,9 @@
     "faq": {
       "heading": "Cải tạo gần tôi — Câu Hỏi Thường Gặp",
       "q1": "Làm thế nào để tìm một công ty cải tạo đáng tin cậy gần tôi tại Vancouver?",
-      "a1": "Kiểm tra ba điều: giấy phép + bảo hiểm (yêu cầu chứng nhận, không phải lời hứa), đánh giá Google thực với số lượng đáng kể (100+ là có ý nghĩa, 10 thì chưa), và danh mục dự án từ khu vực của bạn. Reno Stars có hơn 70 đánh giá năm sao trên Google, bảo hiểm trách nhiệm $5M, bảo hiểm WCB và danh mục dự án ở mọi thành phố Metro Vancouver chúng tôi phục vụ.",
+      "a1": "Kiểm tra ba điều: giấy phép + bảo hiểm (yêu cầu chứng nhận, không phải lời hứa), đánh giá Google thực với số lượng đáng kể (100+ là có ý nghĩa, 10 thì chưa), và danh mục dự án từ khu vực của bạn. Reno Stars có hơn 75 đánh giá năm sao trên Google, bảo hiểm trách nhiệm $5M, bảo hiểm WCB và danh mục dự án ở mọi thành phố Metro Vancouver chúng tôi phục vụ.",
       "q2": "Chi phí cải tạo phòng tắm hoặc phòng bếp gần tôi là bao nhiêu?",
-      "a2": "Tại Metro Vancouver, cải tạo phòng tắm thường dao động $15K-$45K và phòng bếp dao động $25K-$90K. Giá chính xác phụ thuộc vào diện tích, mức độ hoàn thiện và liệu có di chuyển tường không. Mọi báo giá Reno Stars đều chi tiết — nhân công, vật tư, giấy phép — để bạn thấy mỗi đồng đi đâu.",
+      "a2": "Tại Metro Vancouver, cải tạo phòng tắm thường dao động $10K-$60K và phòng bếp dao động $15K-$72K. Giá chính xác phụ thuộc vào diện tích, mức độ hoàn thiện và liệu có di chuyển tường không. Mọi báo giá Reno Stars đều chi tiết — nhân công, vật tư, giấy phép — để bạn thấy mỗi đồng đi đâu.",
       "q3": "Cải tạo gần tôi mất bao lâu?",
       "a3": "Phòng tắm: 3-6 tuần từ tháo dỡ đến bàn giao. Phòng bếp: 4-8 tuần. Toàn nhà: 2-6 tháng tùy phạm vi. Thay mặt tủ: 1-2 tuần. Chúng tôi cung cấp lịch trình theo tuần khi ký hợp đồng và cập nhật qua tin nhắn khi đạt mốc.",
       "q4": "Bạn có xử lý giấy phép cho cải tạo gần tôi không?",

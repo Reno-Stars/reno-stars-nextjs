@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 2026-05-21 SEO trim: EN desc was 171 chars (truncates ~155).
   // Drops the "3-yr warranty" + "Free quote" tail to fit.
   const description = isZh
-    ? '大温哥华附近专业地下室装修：suite改造、家庭影院、活动室。$35K-$130K+，8-16周。许可证代办，防水保障。免费估价。'
-    : 'Basement renovation near you in Metro Vancouver. Legal suites, family rooms, home theatres. $35K-$130K+, 8-16 wks. Permits handled, $5M insured.';
+    ? '大温哥华附近专业地下室装修：suite改造、家庭影院、活动室。$30K-$120K+，8-16周。许可证代办，防水保障。免费估价。'
+    : 'Basement renovation near you in Metro Vancouver. Legal suites, family rooms, home theatres. $30K-$120K+, 8-16 wks. Permits handled, $5M insured.';
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);
   return {
@@ -45,8 +45,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '地下室装修' : 'Basement Renovation';
   const serviceDescription = isZh
-    ? '大温哥华附近专业地下室装修：legal suite改造、家庭影院、活动室、防水。$35K-$130K+，8-16周。'
-    : 'Basement renovation across Metro Vancouver — legal suites, family rooms, home theatres, waterproofing. $35K-$130K+, 8-16 wks. Permits handled.';
+    ? '大温哥华附近专业地下室装修：legal suite改造、家庭影院、活动室、防水。$30K-$120K+，8-16周。'
+    : 'Basement renovation across Metro Vancouver — legal suites, family rooms, home theatres, waterproofing. $30K-$120K+, 8-16 wks. Permits handled.';
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -57,7 +57,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={serviceDescription}
         url={`/${locale}/basement-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={{ min: 35000, max: 130000 }}
+        priceRange={{ min: 30000, max: 120000 }}
         serviceRadiusKm={50}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}

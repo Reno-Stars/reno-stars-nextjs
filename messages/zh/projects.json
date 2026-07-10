@@ -40,7 +40,8 @@
     "noImages": "没有可用的图像",
     "viewFullscreen": "全屏查看",
     "aboutService": "关于我们的{service}服务",
-    "serviceInCity": "{service}的{city}"
+    "serviceInCity": "{service}的{city}",
+    "heroStats": "已完成 {completed} 个项目 · 本页收录 {documented} 个案例"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

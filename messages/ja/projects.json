@@ -40,7 +40,8 @@
     "noImages": "利用可能な画像がありません",
     "viewFullscreen": "全画面表示",
     "aboutService": "{service} サービスについて",
-    "serviceInCity": "{city} の {service}"
+    "serviceInCity": "{city} の {service}",
+    "heroStats": "施工実績 {completed} 件 · 掲載事例 {documented} 件"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",
