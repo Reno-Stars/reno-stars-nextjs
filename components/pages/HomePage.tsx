@@ -13,6 +13,7 @@ import ServicesSection from '@/components/home/ServicesSection';
 import StatsSection from '@/components/home/StatsSection';
 import AboutSection from '@/components/home/AboutSection';
 import TrustBadgesSection from '@/components/home/TrustBadgesSection';
+import ZhTrustLine from '@/components/ZhTrustSignals';
 import PartnersSection from '@/components/home/PartnersSection';
 import AreasLinkSection from '@/components/home/AreasLinkSection';
 import CostGuidesLinkSection from '@/components/home/CostGuidesLinkSection';
@@ -116,6 +117,8 @@ export default function HomePage({
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
+      {/* zh/zh-Hant only — Chinese-market trust band (renders null elsewhere) */}
+      <ZhTrustLine locale={locale} rating={googleReviews.rating} />
       {t.answerBlock && (
         <AnswerBlockSection
           foundingYear={company.foundingYear}

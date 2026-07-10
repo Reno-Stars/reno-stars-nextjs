@@ -13,6 +13,7 @@ import {
   getLocalizedProject,
 } from '@/lib/data';
 import CTASection from '@/components/CTASection';
+import ZhTrustLine from '@/components/ZhTrustSignals';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
@@ -267,6 +268,9 @@ export default function ServiceLocationPage({
           </p>
         </div>
       </section>
+
+      {/* zh/zh-Hant only — Chinese-market trust band (renders null elsewhere) */}
+      <ZhTrustLine locale={locale} />
 
       {/* Real {service} costs in {city} — DB-backed cost stat block. Sits
           immediately under the hero so users + Google see real $-data above
