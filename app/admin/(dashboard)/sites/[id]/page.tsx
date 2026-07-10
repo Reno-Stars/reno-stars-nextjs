@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
-import { projectSites, siteImagePairs, siteExternalProducts, type DbSite, type DbSiteImagePair, type DbSiteExternalProduct } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { projectSites, siteImagePairs, siteExternalProducts, projectReviews, type DbSite, type DbSiteImagePair, type DbSiteExternalProduct } from '@/lib/db/schema';
+import { eq, inArray, desc } from 'drizzle-orm';
 import SiteDetailClient from './SiteDetailClient';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import { getAllServiceAreasAdmin, getProjectsWithDetailsBySite, getServicesFromDb } from '@/lib/db/queries';
@@ -26,6 +26,28 @@ export default async function EditSitePage({ params }: PageProps) {
 
   const site = rows[0];
   if (!site) notFound();
+
+  // Verified client reviews linked to this site's projects (managed in the
+  // "Verified Reviews" section under each project's edit form).
+  const projectIds = projectsWithDetails.map((p) => p.id);
+  const reviewRows = projectIds.length > 0
+    ? await db
+        .select({
+          id: projectReviews.id,
+          projectId: projectReviews.projectId,
+          source: projectReviews.source,
+          authorName: projectReviews.authorName,
+          rating: projectReviews.rating,
+          body: projectReviews.body,
+          bodyLang: projectReviews.bodyLang,
+          reviewDate: projectReviews.reviewDate,
+          ownerResponse: projectReviews.ownerResponse,
+          sourceUrl: projectReviews.sourceUrl,
+        })
+        .from(projectReviews)
+        .where(inArray(projectReviews.projectId, projectIds))
+        .orderBy(desc(projectReviews.reviewDate))
+    : [];
 
   const cities = serviceAreas.map((area) => ({
     nameEn: area.nameEn,
@@ -78,6 +100,7 @@ export default async function EditSitePage({ params }: PageProps) {
       <SiteDetailClient
         site={siteData}
         projects={projectsWithDetails}
+        projectReviews={reviewRows}
         cities={cities}
         allSites={allSiteRows}
         services={dbServices.map((s) => ({ slug: s.slug, titleEn: s.title.en, titleZh: s.title.zh ?? s.title.en }))}
