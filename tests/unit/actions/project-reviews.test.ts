@@ -11,9 +11,13 @@ const h = vi.hoisted(() => {
     updateSet,
     deleteWhere,
     // Rows returned by db.select().from(projects).where().limit()
-    projectRows: [{ id: projectId, slug: 'test-project' }] as unknown[],
-    // Rows returned by db.select().from(projectReviews).innerJoin(projects)...
-    reviewJoinRows: [{ slug: 'test-project' }] as unknown[],
+    projectRows: [{ id: projectId, slug: 'test-project', locationCity: 'Richmond' }] as unknown[],
+    // Rows returned by db.select().from(serviceAreas).where().limit()
+    areaRows: [{ slug: 'richmond' }] as unknown[],
+    // Rows returned by db.select().from(projectReviews).leftJoin(projects)...
+    reviewJoinRows: [
+      { reviewId: '550e8400-e29b-41d4-a716-446655440001', projectId, slug: 'test-project', locationCity: 'Richmond' },
+    ] as unknown[],
   };
 });
 
@@ -23,16 +27,18 @@ const REVIEW_ID = '550e8400-e29b-41d4-a716-446655440001';
 vi.mock('@/lib/db', () => ({
   db: {
     select: vi.fn().mockReturnValue({
-      from: vi.fn().mockReturnValue({
+      from: vi.fn().mockImplementation((table: { __table?: string }) => ({
         where: vi.fn().mockReturnValue({
-          limit: vi.fn().mockImplementation(async () => h.projectRows),
+          limit: vi.fn().mockImplementation(async () =>
+            table?.__table === 'service_areas' ? h.areaRows : h.projectRows,
+          ),
         }),
-        innerJoin: vi.fn().mockReturnValue({
+        leftJoin: vi.fn().mockReturnValue({
           where: vi.fn().mockReturnValue({
             limit: vi.fn().mockImplementation(async () => h.reviewJoinRows),
           }),
         }),
-      }),
+      })),
     }),
     insert: vi.fn().mockReturnValue({ values: h.insertValues }),
     update: vi.fn().mockReturnValue({ set: h.updateSet }),
@@ -41,8 +47,9 @@ vi.mock('@/lib/db', () => ({
 }));
 
 vi.mock('@/lib/db/schema', () => ({
-  projectReviews: {},
-  projects: {},
+  projectReviews: { __table: 'project_reviews' },
+  projects: { __table: 'projects' },
+  serviceAreas: { __table: 'service_areas' },
 }));
 
 vi.mock('@/lib/admin/auth', () => ({
@@ -69,6 +76,7 @@ const { createProjectReview, updateProjectReview, deleteProjectReview } =
 
 function validFormData(overrides: Record<string, string> = {}): FormData {
   const formData = new FormData();
+  formData.set('projectId', PROJECT_ID);
   formData.set('authorName', 'Lisa Jung');
   formData.set('rating', '5');
   formData.set('body', 'Amazing kitchen renovation, highly recommend Reno Stars!');
@@ -85,64 +93,67 @@ function validFormData(overrides: Record<string, string> = {}): FormData {
 describe('Project Review Actions', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    h.projectRows = [{ id: PROJECT_ID, slug: 'test-project' }];
-    h.reviewJoinRows = [{ slug: 'test-project' }];
+    h.projectRows = [{ id: PROJECT_ID, slug: 'test-project', locationCity: 'Richmond' }];
+    h.areaRows = [{ slug: 'richmond' }];
+    h.reviewJoinRows = [
+      { reviewId: REVIEW_ID, projectId: PROJECT_ID, slug: 'test-project', locationCity: 'Richmond' },
+    ];
   });
 
   describe('createProjectReview', () => {
     it('should reject invalid project ID', async () => {
-      const result = await createProjectReview('not-a-uuid', {}, validFormData());
+      const result = await createProjectReview({}, validFormData({ projectId: 'not-a-uuid' }));
       expect(result.error).toBe('Invalid project ID.');
     });
 
     it('should reject empty author name', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ authorName: '   ' }));
+      const result = await createProjectReview({}, validFormData({ authorName: '   ' }));
       expect(result.error).toBe('Author name is required.');
     });
 
     it('should reject out-of-range rating', async () => {
-      const zero = await createProjectReview(PROJECT_ID, {}, validFormData({ rating: '0' }));
+      const zero = await createProjectReview({}, validFormData({ rating: '0' }));
       expect(zero.error).toBe('Rating must be a whole number between 1 and 5.');
-      const six = await createProjectReview(PROJECT_ID, {}, validFormData({ rating: '6' }));
+      const six = await createProjectReview({}, validFormData({ rating: '6' }));
       expect(six.error).toBe('Rating must be a whole number between 1 and 5.');
     });
 
     it('should reject empty review body', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ body: '' }));
+      const result = await createProjectReview({}, validFormData({ body: '' }));
       expect(result.error).toBe('Review text is required.');
     });
 
     it('should reject unsupported review language', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ bodyLang: 'fr' }));
+      const result = await createProjectReview({}, validFormData({ bodyLang: 'fr' }));
       expect(result.error).toBe('Review language must be "en" or "zh".');
     });
 
     it('should reject malformed review date', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ reviewDate: 'May 2026' }));
+      const result = await createProjectReview({}, validFormData({ reviewDate: 'May 2026' }));
       expect(result.error).toBe('Review date must be in YYYY-MM format.');
     });
 
     it('should reject impossible month', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ reviewDate: '2026-13' }));
+      const result = await createProjectReview({}, validFormData({ reviewDate: '2026-13' }));
       expect(result.error).toBe('Review date month must be between 01 and 12.');
     });
 
     it('should reject invalid source URL', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ sourceUrl: 'not a url' }));
+      const result = await createProjectReview({}, validFormData({ sourceUrl: 'not a url' }));
       expect(result.error).toBe('Source URL is not a valid URL.');
     });
 
-    it('should return error when project does not exist', async () => {
+    it('should return error when the linked project does not exist', async () => {
       h.projectRows = [];
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData());
+      const result = await createProjectReview({}, validFormData());
       expect(result.error).toBe('Project not found.');
     });
 
-    it('should insert with month-normalized date and revalidate the project pages', async () => {
+    it('should insert with month-normalized date and revalidate project, area and hub pages', async () => {
       const { updateTag } = await import('next/cache');
       const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
 
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ reviewDate: '2026-05' }));
+      const result = await createProjectReview({}, validFormData({ reviewDate: '2026-05' }));
 
       expect(result.success).toBe(true);
       expect(h.insertValues).toHaveBeenCalledWith(
@@ -157,11 +168,32 @@ describe('Project Review Actions', () => {
         })
       );
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
+      expect(updateTag).toHaveBeenCalledWith('reviews:by-area');
+      expect(updateTag).toHaveBeenCalledWith('reviews:hub');
       expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/areas/richmond');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+    });
+
+    it('should create an UNLINKED review (no projectId) and revalidate only the hub surfaces', async () => {
+      const { updateTag } = await import('next/cache');
+      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+
+      const result = await createProjectReview({}, validFormData({ projectId: '' }));
+
+      expect(result.success).toBe(true);
+      expect(h.insertValues).toHaveBeenCalledWith(
+        expect.objectContaining({ projectId: null, authorName: 'Lisa Jung' })
+      );
+      expect(updateTag).toHaveBeenCalledWith('reviews:hub');
+      expect(updateTag).toHaveBeenCalledWith('reviews:by-area');
+      expect(updateTag).not.toHaveBeenCalledWith('project:test-project');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
     });
 
     it('should normalize a full date to the 1st of the month', async () => {
-      const result = await createProjectReview(PROJECT_ID, {}, validFormData({ reviewDate: '2026-05-19' }));
+      const result = await createProjectReview({}, validFormData({ reviewDate: '2026-05-19' }));
       expect(result.success).toBe(true);
       expect(h.insertValues).toHaveBeenCalledWith(
         expect.objectContaining({ reviewDate: '2026-05-01' })
@@ -170,7 +202,6 @@ describe('Project Review Actions', () => {
 
     it('should store empty optional fields as null', async () => {
       const result = await createProjectReview(
-        PROJECT_ID,
         {},
         validFormData({ sourceUrl: '', ownerResponse: '  ' })
       );
@@ -206,10 +237,36 @@ describe('Project Review Actions', () => {
           rating: 5,
           reviewDate: '2026-05-01',
           ownerResponse: 'Thank you!',
+          projectId: PROJECT_ID,
         })
       );
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
       expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
+    });
+
+    it('should unlink a review (empty projectId) while still revalidating the OLD project pages', async () => {
+      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+
+      const result = await updateProjectReview(REVIEW_ID, {}, validFormData({ projectId: '' }));
+
+      expect(result.success).toBe(true);
+      expect(h.updateSet).toHaveBeenCalledWith(
+        expect.objectContaining({ projectId: null })
+      );
+      // The review used to render on the old project's pages — refresh them.
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+    });
+
+    it('should update an UNLINKED review without touching project pages', async () => {
+      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      h.reviewJoinRows = [{ reviewId: REVIEW_ID, projectId: null, slug: null, locationCity: null }];
+
+      const result = await updateProjectReview(REVIEW_ID, {}, validFormData({ projectId: '' }));
+
+      expect(result.success).toBe(true);
+      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
     });
 
     it('should surface validation errors before touching the DB', async () => {
@@ -242,6 +299,21 @@ describe('Project Review Actions', () => {
       expect(h.deleteWhere).toHaveBeenCalled();
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
       expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+    });
+
+    it('should delete an UNLINKED review and revalidate the hub', async () => {
+      const { updateTag } = await import('next/cache');
+      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      h.reviewJoinRows = [{ reviewId: REVIEW_ID, projectId: null, slug: null, locationCity: null }];
+
+      const result = await deleteProjectReview(REVIEW_ID);
+
+      expect(result.error).toBeUndefined();
+      expect(h.deleteWhere).toHaveBeenCalled();
+      expect(updateTag).toHaveBeenCalledWith('reviews:hub');
+      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
     });
   });
 });

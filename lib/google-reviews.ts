@@ -21,12 +21,18 @@ export interface RawReview {
 }
 
 export function mapReview(r: RawReview): GoogleReview {
+  const text = r.text?.text ?? r.originalText?.text ?? '';
+  const original = r.originalText?.text;
   return {
     authorName: r.authorAttribution?.displayName ?? '',
     authorUri: r.authorAttribution?.uri ?? '',
     authorPhotoUri: r.authorAttribution?.photoUri ?? '',
     rating: r.rating ?? 0,
-    text: r.text?.text ?? r.originalText?.text ?? '',
+    text,
+    // Keep the verbatim original when `text` is an EN machine translation —
+    // the reviews-hub dedupe needs it to match the project_reviews copy of
+    // the same review (which stores the original-language text verbatim).
+    ...(original && original !== text ? { originalText: original } : {}),
     languageCode: r.text?.languageCode ?? r.originalText?.languageCode ?? 'en',
     publishTime: r.publishTime ?? '',
     relativePublishTime: r.relativePublishTimeDescription ?? '',

@@ -696,9 +696,14 @@ export const projectReviews = pgTable(
   'project_reviews',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    /**
+     * Nullable (reviews-hub upgrade): a verified review that can't be mapped
+     * to a published portfolio project is stored unlinked and surfaces only on
+     * /reviews. Deleting a project UNLINKS its reviews (set null) instead of
+     * deleting the client's testimony with it.
+     */
     projectId: uuid('project_id')
-      .references(() => projects.id, { onDelete: 'cascade' })
-      .notNull(),
+      .references(() => projects.id, { onDelete: 'set null' }),
     /** Review platform. Currently always 'google'. */
     source: varchar('source', { length: 30 }).default('google').notNull(),
     /** Author name exactly as written on the review (display abbreviates it). */

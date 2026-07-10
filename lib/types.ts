@@ -318,6 +318,14 @@ export interface GoogleReview {
    * deprecated `textZh` field; new code should read from here.
    */
   translations?: Partial<Record<Locale, string>>;
+  /**
+   * Verbatim original-language review text when it differs from `text` (the
+   * Places API is queried with languageCode=en, so `text` is Google's EN
+   * machine translation for non-EN reviews). Used by the reviews-hub dedupe:
+   * project_reviews store the verbatim original, which can only match the
+   * cache copy through this field. Absent on payloads cached before 2026-07.
+   */
+  originalText?: string;
   languageCode: string;
   publishTime: string;
   relativePublishTime: string;

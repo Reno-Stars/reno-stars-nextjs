@@ -16,7 +16,8 @@ import { useAdminTranslations } from '@/lib/admin/translations';
 /** Serializable project_reviews row passed from the admin server page. */
 export interface AdminProjectReview {
   id: string;
-  projectId: string;
+  /** Linked project — null for unlinked reviews (shown only on /reviews). */
+  projectId: string | null;
   source: string;
   authorName: string;
   rating: number;
@@ -28,8 +29,17 @@ export interface AdminProjectReview {
   sourceUrl: string | null;
 }
 
+/** Option for the review form's optional project link select. */
+export interface ReviewProjectOption {
+  id: string;
+  label: string;
+}
+
 interface ProjectReviewsSectionProps {
-  projectId: string;
+  /** Pre-selected project for NEW reviews (null on the unlinked-reviews page). */
+  defaultProjectId: string | null;
+  /** Projects offered by the "linked project" select. */
+  projectOptions: ReviewProjectOption[];
   reviews: AdminProjectReview[];
 }
 
@@ -46,11 +56,14 @@ interface ReviewFormProps {
     formData: FormData
   ) => Promise<{ success?: boolean; error?: string }>;
   initialData?: AdminProjectReview;
+  /** Project pre-selected in the linked-project select for NEW reviews. */
+  defaultProjectId: string | null;
+  projectOptions: ReviewProjectOption[];
   onSaved: () => void;
   onCancel: () => void;
 }
 
-function ReviewForm({ action, initialData, onSaved, onCancel }: ReviewFormProps) {
+function ReviewForm({ action, initialData, defaultProjectId, projectOptions, onSaved, onCancel }: ReviewFormProps) {
   const t = useAdminTranslations();
   const [state, formAction, isPending] = useActionState(action, {});
   useFormToast(state, t.projectReviews.saved);
@@ -63,6 +76,20 @@ function ReviewForm({ action, initialData, onSaved, onCancel }: ReviewFormProps)
     <form action={formAction} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '1rem', marginBottom: '0.5rem' }}>
       <FormField label={t.projectReviews.authorName} htmlFor="reviewAuthorName" tooltip={t.projectReviews.tooltips.authorName}>
         <input id="reviewAuthorName" name="authorName" defaultValue={initialData?.authorName ?? ''} required maxLength={120} style={inputStyle} placeholder="Lisa Jung" />
+      </FormField>
+
+      <FormField label={t.projectReviews.project} htmlFor="reviewProjectId" tooltip={t.projectReviews.tooltips.project}>
+        <select
+          id="reviewProjectId"
+          name="projectId"
+          defaultValue={initialData ? (initialData.projectId ?? '') : (defaultProjectId ?? '')}
+          style={selectStyle}
+        >
+          <option value="">{t.projectReviews.noProject}</option>
+          {projectOptions.map((option) => (
+            <option key={option.id} value={option.id}>{option.label}</option>
+          ))}
+        </select>
       </FormField>
 
       <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0 1rem' }}>
@@ -118,7 +145,7 @@ function ReviewForm({ action, initialData, onSaved, onCancel }: ReviewFormProps)
  * ProjectForm's form). Every mutation revalidates the project's public pages
  * via the server actions; the router.refresh() re-reads the list.
  */
-export default function ProjectReviewsSection({ projectId, reviews }: ProjectReviewsSectionProps) {
+export default function ProjectReviewsSection({ defaultProjectId, projectOptions, reviews }: ProjectReviewsSectionProps) {
   const t = useAdminTranslations();
   const router = useRouter();
   const { toast } = useToast();
@@ -130,7 +157,7 @@ export default function ProjectReviewsSection({ projectId, reviews }: ProjectRev
   useEffect(() => {
     setEditingId(null);
     setDeleteId(null);
-  }, [projectId]);
+  }, [defaultProjectId]);
 
   const handleSaved = () => {
     setEditingId(null);
@@ -184,6 +211,8 @@ export default function ProjectReviewsSection({ projectId, reviews }: ProjectRev
             key={review.id}
             action={updateProjectReview.bind(null, review.id)}
             initialData={review}
+            defaultProjectId={defaultProjectId}
+            projectOptions={projectOptions}
             onSaved={handleSaved}
             onCancel={() => setEditingId(null)}
           />
@@ -233,7 +262,9 @@ export default function ProjectReviewsSection({ projectId, reviews }: ProjectRev
 
       {editingId === 'new' ? (
         <ReviewForm
-          action={createProjectReview.bind(null, projectId)}
+          action={createProjectReview}
+          defaultProjectId={defaultProjectId}
+          projectOptions={projectOptions}
           onSaved={handleSaved}
           onCancel={() => setEditingId(null)}
         />

@@ -516,9 +516,11 @@ export default function SiteDetailClient({ site, projects, projectReviews, citie
               submitLabel={t.projects.updateProject}
             />
             {/* Verified Reviews — standalone card (owns its own <form>s, so it
-                cannot live inside ProjectForm's form element). */}
+                cannot live inside ProjectForm's form element). Unlinked
+                reviews (projectId null) are managed at /admin/reviews. */}
             <ProjectReviewsSection
-              projectId={selectedProject.id}
+              defaultProjectId={selectedProject.id}
+              projectOptions={projects.map((p) => ({ id: p.id, label: p.titleEn }))}
               reviews={projectReviews.filter((r) => r.projectId === selectedProject.id)}
             />
           </>

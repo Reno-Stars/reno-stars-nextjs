@@ -25,7 +25,10 @@ import type { Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import { getLocalizedProject } from '@/lib/data/projects';
 import type { Company, Faq, GooglePlaceRating, LocalizedService, Project, ServiceArea } from '@/lib/types';
+import type { AreaReviewDisplay } from '@/lib/project-reviews';
+import { isDuplicateReview } from '@/lib/reviews-hub';
 import { pickLocale } from '@/lib/utils';
+import AreaClientReviews from '@/components/areas/AreaClientReviews';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
@@ -48,6 +51,8 @@ interface AreaPageProps {
   /** Optional code-driven H1 that wins over the generic "Home Renovations in {city}" string. EN-only, used to align H1 with the meta-title for low-rank cities (Burnaby pos 53, etc.). */
   h1Override?: string;
   googleReviews?: GooglePlaceRating;
+  /** Verified reviews linked to this city's case-study projects (≤3). */
+  cityClientReviews?: AreaReviewDisplay[];
 }
 
 // Stable hash-based offset so each city slug shows a different rotation of reviews.
@@ -202,7 +207,7 @@ const CITY_NEIGHBOURHOODS: Record<string, string[]> = {
   'white-rock': ['East Beach', 'West Beach', 'White Rock Hill', 'South Surrey'],
 };
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews, cityClientReviews = [] }: AreaPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const citySlug = area.slug;
@@ -235,13 +240,26 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
 
   // 2 deterministic reviews per area page, rotated by city slug. Avoids
   // showing the same 2 reviews on every area page (near-duplicate content).
+  // Google reviews already rendered verbatim in the "What {city} clients say"
+  // section above are excluded first (project_reviews ARE Google reviews, so
+  // the same quote would otherwise appear twice on one page) — same
+  // author+text dedupe the /reviews hub applies.
   const cityReviews = useMemo(() => {
-    const all = googleReviews?.reviews ?? [];
+    const all = (googleReviews?.reviews ?? []).filter(
+      (gr) => !cityClientReviews.some((cr) => isDuplicateReview(
+        { authorName: cr.authorName, body: cr.body },
+        {
+          authorName: gr.authorName,
+          body: gr.text,
+          ...(gr.originalText ? { altBodies: [gr.originalText] } : {}),
+        },
+      )),
+    );
     if (all.length === 0) return [];
     const offset = cityReviewOffset(area.slug, all.length);
     const pick = 2;
     return Array.from({ length: Math.min(pick, all.length) }, (_, i) => all[(offset + i) % all.length]);
-  }, [googleReviews, area.slug]);
+  }, [googleReviews, area.slug, cityClientReviews]);
 
   // Most-recent completed project date in this city — surfaces a freshness
   // signal both to visitors ("active in {City} as of last month") and to
@@ -562,6 +580,13 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </section>
       )}
+
+      {/* What {city} clients say — verified reviews linked to this city's
+          case-study projects. Verbatim quotes (original language), each card
+          links to its project. Renders nothing for cities without
+          project-linked reviews. NO Review schema here — it lives on the
+          project pages (duplicating it on a second entity risks spam signals). */}
+      <AreaClientReviews reviews={cityClientReviews} cityName={localizedArea.name} locale={locale} />
 
       {/* Reviews — 2 reviews rotated by city slug for diversity across the 14 area pages */}
       {cityReviews.length > 0 && (

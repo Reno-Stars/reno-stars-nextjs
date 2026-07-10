@@ -23,6 +23,15 @@ export interface ProjectReviewDisplay {
 }
 
 /**
+ * A project-linked review as shown on the AREA pages ("What {city} clients
+ * say") — the card links through to the linked project's case study.
+ */
+export interface AreaReviewDisplay extends ProjectReviewDisplay {
+  /** Slug of the linked published project the review belongs to. */
+  projectSlug: string;
+}
+
+/**
  * Abbreviate a reviewer name for display: first name + last initial,
  * preserving the casing exactly as written on the review
  * (e.g. "Lisa Jung" → "Lisa J.", "shane groves" → "shane g.").

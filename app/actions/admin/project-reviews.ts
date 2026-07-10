@@ -2,18 +2,22 @@
 
 import { updateTag } from 'next/cache';
 import { db } from '@/lib/db';
-import { projectReviews, projects } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { projectReviews, projects, serviceAreas } from '@/lib/db/schema';
+import { eq, sql } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
 
 /**
- * Admin CRUD for project-linked verified client reviews (project_reviews).
+ * Admin CRUD for verified client reviews (project_reviews).
  *
  * Reviews are verbatim quotes from real, verified clients (see the schema
  * comment on `projectReviews`) — the admin UI exists so the owner can link a
  * new verified review without a DB seed, not to author marketing copy.
+ *
+ * `projectId` is optional (reviews-hub upgrade): an unlinked review surfaces
+ * only on /reviews; a linked review also renders on its project page and on
+ * the project's city area page.
  */
 
 const AUTHOR_NAME_MAX = 120;
@@ -88,51 +92,108 @@ function parseReviewData(formData: FormData): { data?: ReviewInput; error?: stri
 }
 
 /**
- * Refresh every surface a review change touches. Reviews render only on the
- * project detail page (VerifiedGoogleReviews card + Review JSON-LD in
- * ProjectSchema), which reads UNTAGGED getProjectReviews / getProjectsFromDb
- * (handoff 5c#1) — so the path revalidation is what actually refreshes it; the
- * per-slug tag is fired for parity with the other project mutations. Never
- * triggers a deploy.
+ * Parse the optional project link from the form. '' → unlinked (null).
  */
-function revalidateReviewedProject(slug: string): void {
-  updateTag(`project:${slug}`);
-  revalidatePathAllLocales(`/projects/${slug}`);
+function parseProjectId(formData: FormData): { projectId: string | null; error?: string } {
+  const raw = getString(formData, 'projectId').trim();
+  if (!raw) return { projectId: null };
+  if (!isValidUUID(raw)) return { projectId: null, error: 'Invalid project ID.' };
+  return { projectId: raw };
 }
 
-/** Look up the parent project's slug for a review id (for revalidation). */
-async function getReviewProjectSlug(reviewId: string): Promise<string | null> {
+interface LinkedProject {
+  id: string;
+  slug: string;
+  locationCity: string | null;
+}
+
+/** Fetch the linked project (for validation + revalidation targets). */
+async function getProjectForReview(projectId: string): Promise<LinkedProject | null> {
   const rows = await db
-    .select({ slug: projects.slug })
+    .select({ id: projects.id, slug: projects.slug, locationCity: projects.locationCity })
+    .from(projects)
+    .where(eq(projects.id, projectId))
+    .limit(1);
+  return rows[0] ?? null;
+}
+
+/**
+ * Refresh every surface a review change touches:
+ * - the linked project's detail page (VerifiedGoogleReviews + Review JSON-LD;
+ *   reads UNTAGGED getProjectReviews, so the PATH revalidation refreshes it),
+ * - the project's city AREA page ("What {city} clients say", tagged
+ *   `reviews:by-area` + path-purged via the service_areas slug lookup),
+ * - the /reviews hub (tagged `reviews:hub` + path-purged).
+ * Never triggers a deploy.
+ */
+async function revalidateReviewSurfaces(linked: Array<LinkedProject | null>): Promise<void> {
+  const seen = new Set<string>();
+  for (const project of linked) {
+    if (!project || seen.has(project.id)) continue;
+    seen.add(project.id);
+    updateTag(`project:${project.slug}`);
+    revalidatePathAllLocales(`/projects/${project.slug}`);
+    if (project.locationCity) {
+      const areaRows = await db
+        .select({ slug: serviceAreas.slug })
+        .from(serviceAreas)
+        .where(sql`LOWER(${serviceAreas.nameEn}) = LOWER(${project.locationCity})`)
+        .limit(1);
+      if (areaRows[0]) revalidatePathAllLocales(`/areas/${areaRows[0].slug}`);
+    }
+  }
+  updateTag('reviews:by-area');
+  updateTag('reviews:hub');
+  revalidatePathAllLocales('/reviews');
+}
+
+/**
+ * Look up a review's current linked project (null when unlinked) and whether
+ * the review row exists at all — a LEFT join, so unlinked reviews are found.
+ */
+async function getReviewLink(reviewId: string): Promise<{ exists: boolean; project: LinkedProject | null }> {
+  const rows = await db
+    .select({
+      reviewId: projectReviews.id,
+      projectId: projects.id,
+      slug: projects.slug,
+      locationCity: projects.locationCity,
+    })
     .from(projectReviews)
-    .innerJoin(projects, eq(projectReviews.projectId, projects.id))
+    .leftJoin(projects, eq(projectReviews.projectId, projects.id))
     .where(eq(projectReviews.id, reviewId))
     .limit(1);
-  return rows[0]?.slug ?? null;
+  const row = rows[0];
+  if (!row) return { exists: false, project: null };
+  return {
+    exists: true,
+    project: row.projectId && row.slug
+      ? { id: row.projectId, slug: row.slug, locationCity: row.locationCity }
+      : null,
+  };
 }
 
 export async function createProjectReview(
-  projectId: string,
   _prevState: { success?: boolean; error?: string },
   formData: FormData
 ): Promise<{ success?: boolean; error?: string }> {
   await requireAuth();
-  if (!isValidUUID(projectId)) return { error: 'Invalid project ID.' };
 
   try {
     const { data, error } = parseReviewData(formData);
     if (error || !data) return { error };
+    const { projectId, error: projectIdError } = parseProjectId(formData);
+    if (projectIdError) return { error: projectIdError };
 
-    const projectRows = await db
-      .select({ id: projects.id, slug: projects.slug })
-      .from(projects)
-      .where(eq(projects.id, projectId))
-      .limit(1);
-    if (!projectRows[0]) return { error: 'Project not found.' };
+    let project: LinkedProject | null = null;
+    if (projectId) {
+      project = await getProjectForReview(projectId);
+      if (!project) return { error: 'Project not found.' };
+    }
 
     await db.insert(projectReviews).values({ ...data, projectId });
 
-    revalidateReviewedProject(projectRows[0].slug);
+    await revalidateReviewSurfaces([project]);
     return { success: true };
   } catch (error) {
     console.error('Failed to create project review:', error);
@@ -151,14 +212,23 @@ export async function updateProjectReview(
   try {
     const { data, error } = parseReviewData(formData);
     if (error || !data) return { error };
+    const { projectId, error: projectIdError } = parseProjectId(formData);
+    if (projectIdError) return { error: projectIdError };
 
-    const slug = await getReviewProjectSlug(reviewId);
-    if (!slug) return { error: 'Review not found.' };
+    const { exists, project: oldProject } = await getReviewLink(reviewId);
+    if (!exists) return { error: 'Review not found.' };
+
+    let newProject: LinkedProject | null = null;
+    if (projectId) {
+      newProject = await getProjectForReview(projectId);
+      if (!newProject) return { error: 'Project not found.' };
+    }
 
     // `source` is intentionally not editable — it stays as created.
-    await db.update(projectReviews).set(data).where(eq(projectReviews.id, reviewId));
+    await db.update(projectReviews).set({ ...data, projectId }).where(eq(projectReviews.id, reviewId));
 
-    revalidateReviewedProject(slug);
+    // Refresh both the previous and the new link targets (re-link/unlink).
+    await revalidateReviewSurfaces([oldProject, newProject]);
     return { success: true };
   } catch (error) {
     console.error('Failed to update project review:', error);
@@ -171,13 +241,13 @@ export async function deleteProjectReview(reviewId: string): Promise<{ error?: s
   if (!isValidUUID(reviewId)) return { error: 'Invalid review ID.' };
 
   try {
-    // Capture the parent project's slug before deleting (needed to revalidate).
-    const slug = await getReviewProjectSlug(reviewId);
-    if (!slug) return { error: 'Review not found.' };
+    // Capture the linked project before deleting (needed to revalidate).
+    const { exists, project } = await getReviewLink(reviewId);
+    if (!exists) return { error: 'Review not found.' };
 
     await db.delete(projectReviews).where(eq(projectReviews.id, reviewId));
 
-    revalidateReviewedProject(slug);
+    await revalidateReviewSurfaces([project]);
     return {};
   } catch (error) {
     console.error('Failed to delete project review:', error);
