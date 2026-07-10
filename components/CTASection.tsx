@@ -1,6 +1,8 @@
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/navigation';
+import type { Locale } from '@/i18n/config';
 import { GOLD, SURFACE_ALT, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { WeChatContactCard } from '@/components/ZhTrustSignals';
 
 interface CTASectionProps {
   heading: string;
@@ -15,6 +17,7 @@ interface CTASectionProps {
 
 export default function CTASection({ heading, subtitle, bg = SURFACE_ALT, showCallButton = true, phone }: CTASectionProps) {
   const t = useTranslations();
+  const locale = useLocale() as Locale;
 
   return (
     <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: bg }}>
@@ -43,6 +46,8 @@ export default function CTASection({ heading, subtitle, bg = SURFACE_ALT, showCa
             </a>
           )}
         </div>
+        {/* zh/zh-Hant only — WeChat QR next to the primary CTA (renders null elsewhere) */}
+        <WeChatContactCard locale={locale} compact className="mt-6" />
       </div>
     </section>
   );

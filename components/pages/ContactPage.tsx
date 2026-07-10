@@ -1,12 +1,14 @@
 'use client';
 
 import { useMemo, useCallback } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle } from 'lucide-react';
 import { useRouter } from '@/navigation';
+import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
+import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, GOLD, neu,
@@ -32,6 +34,7 @@ interface ContactPageProps {
 
 export default function ContactPage({ company, areaNames, cityOptions, propertyTypeOptions, googleRating }: ContactPageProps) {
   const t = useTranslations();
+  const locale = useLocale() as Locale;
   const router = useRouter();
 
   const handleFormSuccess = useCallback(() => {
@@ -159,6 +162,9 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
                   {t('serviceBenefits.freeConsultation')}
                 </p>
               </div>
+
+              {/* zh/zh-Hant only — WeChat QR contact card (renders null elsewhere) */}
+              <WeChatContactCard locale={locale} className="mb-6" />
 
               {/* Contact Info Cards */}
               <h2 className="text-2xl font-bold mb-4" style={{ color: TEXT }}>

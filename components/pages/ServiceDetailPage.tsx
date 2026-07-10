@@ -7,6 +7,7 @@ import type { Locale } from '@/i18n/config';
 import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
 import CTASection from '@/components/CTASection';
+import ZhTrustLine from '@/components/ZhTrustSignals';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
@@ -312,6 +313,9 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
           </div>
         </div>
       </section>
+
+      {/* zh/zh-Hant only — Chinese-market trust band (renders null elsewhere) */}
+      <ZhTrustLine locale={locale} rating={googleRating} />
 
       {/* Long-form description rendered as prose. Accepts markdown OR HTML;
           heavy SEO content (pricing tables, project examples, included scope)

@@ -1,10 +1,13 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useLocale } from 'next-intl';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
+import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import { GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import { trackPhoneClick } from '@/lib/analytics';
 
@@ -22,6 +25,7 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ company, areasText, translations: t }: ContactSectionProps) {
+  const locale = useLocale() as Locale;
   const contactInfo = useMemo(() => [
     { icon: Phone, title: t.phone, value: company.phone, href: `tel:${company.phone}` },
     { icon: Mail, title: t.email, value: company.email, href: `mailto:${company.email}` },
@@ -59,6 +63,9 @@ export default function ContactSection({ company, areasText, translations: t }: 
                 </div>
               </div>
             ))}
+
+            {/* zh/zh-Hant only — WeChat QR contact card (renders null elsewhere) */}
+            <WeChatContactCard locale={locale} />
 
             {/* Map */}
             <div className="rounded-xl overflow-hidden" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
