@@ -40,6 +40,7 @@
     "noImages": "تصویری در دسترس نیست",
     "viewFullscreen": "مشاهده تمام‌صفحه",
     "aboutService": "درباره خدمات {service} ما",
-    "serviceInCity": "{service} در {city}"
+    "serviceInCity": "{service} در {city}",
+    "heroStats": "{completed} پروژه تکمیل‌شده · {documented} نمونه‌کار مستند"
   }
 }

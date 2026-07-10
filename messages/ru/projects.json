@@ -40,6 +40,7 @@
     "noImages": "Нет доступных изображений",
     "viewFullscreen": "Посмотреть в полноэкранном режиме",
     "aboutService": "О наших услугах {service}",
-    "serviceInCity": "{service} в {city}"
+    "serviceInCity": "{service} в {city}",
+    "heroStats": "{completed} завершённых проектов · {documented} задокументированных кейсов"
   }
 }

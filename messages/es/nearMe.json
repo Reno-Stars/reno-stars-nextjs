@@ -9,7 +9,7 @@
     },
     "trust": {
       "reviews": {
-        "stat": "más de 70",
+        "stat": "más de 75",
         "label": "Reseñas de Google 5★"
       },
       "insured": {
@@ -34,15 +34,15 @@
       "learnMore": "Más información",
       "kitchen": {
         "title": "Remodelación de cocina cerca de mí",
-        "desc": "Gabinetes, encimeras de cuarzo, salpicaderos, pisos, eléctrico. Renovación económica hasta personalización completa. Típico 4-8 semanas, $25K-$90K."
+        "desc": "Gabinetes, encimeras de cuarzo, salpicaderos, pisos, eléctrico. Renovación económica hasta personalización completa. Típico 4-8 semanas, $15K-$72K."
       },
       "bathroom": {
         "title": "Remodelación de baño cerca de mí",
-        "desc": "Paredes de azulejos, impermeabilización Schluter, duchas embaldosadas o conversiones de bañera a ducha, lavabos, accesorios. 3-6 semanas típico, $15K-$45K."
+        "desc": "Paredes de azulejos, impermeabilización Schluter, duchas embaldosadas o conversiones de bañera a ducha, lavabos, accesorios. 3-6 semanas típico, $10K-$60K."
       },
       "wholeHouse": {
         "title": "Remodelación de casa completa cerca de mí",
-        "desc": "Remodelaciones interiores completas — cocina, baños, pisos, pintura, iluminación, a veces estructural. 2-6 meses, $80K-$400K+."
+        "desc": "Remodelaciones interiores completas — cocina, baños, pisos, pintura, iluminación, a veces estructural. 2-6 meses, $50K-$200K+."
       },
       "basement": {
         "title": "Remodelación de sótano cerca de mí",
@@ -83,9 +83,9 @@
     "faq": {
       "heading": "Remodelación cerca de mí — FAQ",
       "q1": "¿Cómo encuentro una empresa de remodelación confiable cerca de mí en Vancouver?",
-      "a1": "Verifique tres cosas: licencia + seguro (pida certificados, no promesas), reseñas reales de Google en volumen (100+ es significativo, 10 no lo es), y un portafolio de su vecindario. Reno Stars tiene 70+ reseñas de cinco estrellas en Google, seguro de responsabilidad de $5M, cobertura WCB y un portafolio de proyectos en cada ciudad de Metro Vancouver que servimos.",
+      "a1": "Verifique tres cosas: licencia + seguro (pida certificados, no promesas), reseñas reales de Google en volumen (100+ es significativo, 10 no lo es), y un portafolio de su vecindario. Reno Stars tiene 75+ reseñas de cinco estrellas en Google, seguro de responsabilidad de $5M, cobertura WCB y un portafolio de proyectos en cada ciudad de Metro Vancouver que servimos.",
       "q2": "¿Cuál es el costo de una remodelación de baño o cocina cerca de mí?",
-      "a2": "En Metro Vancouver, las remodelaciones de baño típicamente van de $15K-$45K y las cocinas de $25K-$90K. El precio exacto depende del tamaño en pies cuadrados, el nivel de acabado y si se mueven paredes. Cada cotización de Reno Stars es detallada — mano de obra, materiales, permisos — para que vea adónde va cada dólar.",
+      "a2": "En Metro Vancouver, las remodelaciones de baño típicamente van de $10K-$60K y las cocinas de $15K-$72K. El precio exacto depende del tamaño en pies cuadrados, el nivel de acabado y si se mueven paredes. Cada cotización de Reno Stars es detallada — mano de obra, materiales, permisos — para que vea adónde va cada dólar.",
       "q3": "¿Cuánto tiempo toma una remodelación cerca de mí?",
       "a3": "Baños: 3-6 semanas desde la demolición hasta la entrega. Cocinas: 4-8 semanas. Casa completa: 2-6 meses dependiendo del alcance. Refacción de gabinetes: 1-2 semanas. Le damos un cronograma semana por semana al firmar el contrato y actualizaciones por mensaje cuando se alcanzan los hitos.",
       "q4": "¿Manejan permisos para remodelaciones cerca de mí?",

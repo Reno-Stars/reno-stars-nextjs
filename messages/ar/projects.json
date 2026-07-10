@@ -40,6 +40,7 @@
     "noImages": "لا توجد صور متاحة",
     "viewFullscreen": "عرض ملء الشاشة",
     "aboutService": "حول خدماتنا {service}",
-    "serviceInCity": "{service} في {city}"
+    "serviceInCity": "{service} في {city}",
+    "heroStats": "{completed} مشروع منجز · {documented} دراسة حالة موثقة"
   }
 }

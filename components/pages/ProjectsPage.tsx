@@ -521,6 +521,12 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
             {t('projects.subtitle')}
           </p>
+          {/* Reconcile the company-wide "700+" claim with the visible list:
+              the badge pairs it with the live count of documented case
+              studies below, so the two numbers can't read as a contradiction. */}
+          <p className="mt-3 text-sm text-white/60">
+            {t('projects.heroStats', { completed: company.projectsCompleted, documented: allProjects.length })}
+          </p>
         </div>
       </section>
 

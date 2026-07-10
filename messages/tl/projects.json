@@ -40,6 +40,7 @@
     "noImages": "Walang available na imahe",
     "viewFullscreen": "Tingnan sa fullscreen",
     "aboutService": "Tungkol sa aming {service} services",
-    "serviceInCity": "{service} sa {city}"
+    "serviceInCity": "{service} sa {city}",
+    "heroStats": "{completed} natapos na proyekto · {documented} dokumentadong case study"
   }
 }

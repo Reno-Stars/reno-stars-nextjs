@@ -40,6 +40,7 @@
     "noImages": "Sin imágenes disponibles",
     "viewFullscreen": "Ver pantalla completa",
     "aboutService": "Sobre nuestros servicios de {service}",
-    "serviceInCity": "{service} en {city}"
+    "serviceInCity": "{service} en {city}",
+    "heroStats": "{completed} proyectos completados · {documented} casos de estudio documentados"
   }
 }
