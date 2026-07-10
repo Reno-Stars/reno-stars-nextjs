@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, updateTag } from 'next/cache';
+import { purgeCloudflarePagesAllLocales } from '@/lib/seo/revalidate-paths';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { faqs } from '@/lib/db/schema';
@@ -50,6 +51,7 @@ export async function createFaq(
     // Also bust the homepage FAQ tag (handoff gap 5c#2): the homepage reads
     // getFaqsFromDb (tag `faqs`), so this guarantees a FAQ change surfaces there.
     updateTag('faqs');
+    purgeCloudflarePagesAllLocales(['/']);
   } catch (error) {
     console.error('Failed to create FAQ:', error);
     return { error: 'Failed to create FAQ.' };
@@ -87,6 +89,7 @@ export async function reorderFaqs(orderedIds: string[]): Promise<{ error?: strin
     revalidatePath('/admin/faqs');
     for (const tag of faqTagsForAreas(affected.map((r: { serviceAreaId: string | null }) => r.serviceAreaId))) updateTag(tag);
     updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to reorder FAQs:', error);
@@ -136,6 +139,7 @@ export async function updateFaq(
     revalidatePath('/admin/faqs');
     for (const tag of faqAffectedTags(before[0]?.serviceAreaId, serviceAreaId)) updateTag(tag);
     updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
+    purgeCloudflarePagesAllLocales(['/']);
     return { success: true };
   } catch (error) {
     console.error('Failed to update FAQ:', error);
@@ -152,6 +156,7 @@ export async function toggleFaqActive(id: string, current: boolean): Promise<{ e
     revalidatePath('/admin/faqs');
     updateTag(faqTag(updated[0].serviceAreaId));
     updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to toggle FAQ active:', error);
@@ -168,6 +173,7 @@ export async function deleteFaq(id: string): Promise<{ error?: string }> {
     revalidatePath('/admin/faqs');
     updateTag(faqTag(deleted[0].serviceAreaId));
     updateTag('faqs'); // homepage FAQ tag (handoff gap 5c#2)
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to delete FAQ:', error);

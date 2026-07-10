@@ -31,6 +31,9 @@ async function purgeCall(body: Record<string, unknown>): Promise<void> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
+      // Bound the fire-and-forget call — a hung CF API must not leak a socket
+      // on the long-running self-hosted process (same pattern as google-reviews).
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
       console.error(`[cf-purge] ${res.status} ${res.statusText}:`, (await res.text()).slice(0, 200));

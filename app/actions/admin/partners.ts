@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, updateTag } from 'next/cache';
+import { purgeCloudflarePagesAllLocales } from '@/lib/seo/revalidate-paths';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { partners } from '@/lib/db/schema';
@@ -57,6 +58,7 @@ export async function createPartner(
 
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
   } catch (error) {
     console.error('Failed to create partner:', error);
     return { error: 'Failed to create partner.' };
@@ -84,6 +86,7 @@ export async function updatePartner(
 
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
     return { success: true };
   } catch (error) {
     console.error('Failed to update partner:', error);
@@ -99,6 +102,7 @@ export async function deletePartner(id: string): Promise<{ error?: string }> {
     if (deleted.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to delete partner:', error);
@@ -117,6 +121,7 @@ export async function togglePartnerActive(id: string, current: boolean): Promise
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to toggle partner active:', error);
@@ -135,6 +140,7 @@ export async function togglePartnerHidden(id: string, current: boolean): Promise
     if (updated.length === 0) return { error: 'Partner not found.' };
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to toggle partner visibility:', error);
@@ -163,6 +169,7 @@ export async function reorderPartners(orderedIds: string[]): Promise<{ error?: s
 
     revalidatePath('/admin/partners');
     updateTag('partners');
+    purgeCloudflarePagesAllLocales(['/']);
     return {};
   } catch (error) {
     console.error('Failed to reorder partners:', error);

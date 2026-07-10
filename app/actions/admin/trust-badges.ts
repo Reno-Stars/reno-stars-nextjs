@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, updateTag } from 'next/cache';
+import { purgeCloudflarePagesAllLocales } from '@/lib/seo/revalidate-paths';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { trustBadges } from '@/lib/db/schema';
@@ -30,6 +31,7 @@ export async function createTrustBadge(
 
     revalidatePath('/admin/trust-badges');
     updateTag('trust-badges');
+    purgeCloudflarePagesAllLocales(['/', '/about/']);
   } catch (error) {
     console.error('Failed to create trust badge:', error);
     return { error: 'Failed to create trust badge.' };
@@ -58,6 +60,7 @@ export async function reorderTrustBadges(orderedIds: string[]): Promise<{ error?
 
     revalidatePath('/admin/trust-badges');
     updateTag('trust-badges');
+    purgeCloudflarePagesAllLocales(['/', '/about/']);
     return {};
   } catch (error) {
     console.error('Failed to reorder trust badges:', error);
@@ -73,6 +76,7 @@ export async function deleteTrustBadge(id: string): Promise<{ error?: string }> 
     if (deleted.length === 0) return { error: 'Trust badge not found.' };
     revalidatePath('/admin/trust-badges');
     updateTag('trust-badges');
+    purgeCloudflarePagesAllLocales(['/', '/about/']);
     return {};
   } catch (error) {
     console.error('Failed to delete trust badge:', error);
@@ -107,6 +111,7 @@ export async function updateTrustBadge(
 
     revalidatePath('/admin/trust-badges');
     updateTag('trust-badges');
+    purgeCloudflarePagesAllLocales(['/', '/about/']);
     return { success: true };
   } catch (error) {
     console.error('Failed to update trust badge:', error);
@@ -122,6 +127,7 @@ export async function toggleTrustBadgeActive(id: string, current: boolean): Prom
     if (updated.length === 0) return { error: 'Trust badge not found.' };
     revalidatePath('/admin/trust-badges');
     updateTag('trust-badges');
+    purgeCloudflarePagesAllLocales(['/', '/about/']);
     return {};
   } catch (error) {
     console.error('Failed to toggle trust badge active:', error);

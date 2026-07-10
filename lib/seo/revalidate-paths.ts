@@ -56,6 +56,21 @@ export function revalidateProjectSurfaces(): void {
  * services / service areas must call this, else the header/footer serve stale
  * NAP and the llms docs feed crawlers stale facts for up to their TTL.
  */
+/**
+ * Purge specific relative paths from the Cloudflare edge across every locale
+ * (no-op without a CF token). For admin actions that updateTag() homepage /
+ * about / design content — those tag busts refresh the ORIGIN but leave the
+ * edge-cached HTML stale for ≤5min otherwise. `relPath` '/' means the locale
+ * home (e.g. /en/). Fire-and-forget.
+ */
+export function purgeCloudflarePagesAllLocales(relPaths: string[]): void {
+  const base = getBaseUrl();
+  const urls = locales.flatMap((loc) =>
+    relPaths.map((rel) => `${base}/${loc}${rel === '/' ? '/' : rel}`),
+  );
+  void purgeCloudflareUrls(urls);
+}
+
 export function revalidateGlobals(): void {
   updateTag('nav:globals');
   revalidatePath('/llms.txt');

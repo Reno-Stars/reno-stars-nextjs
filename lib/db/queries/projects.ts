@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { and, asc, desc, eq, sql } from 'drizzle-orm';
 import { db } from '../index';
-import { safeQuery, uncachedQuery } from '../cache-fallback';
+import { safeQuery, uncachedQuery, withFallback } from '../cache-fallback';
 import { cachedQuery, cachedQueryPerSlug } from '../cache';
 import { projects as projectsTable } from '../schema';
 import { groupBy, sortByDisplayOrder } from '../map-helpers';
@@ -16,8 +16,14 @@ import {
 } from '../project-mappers';
 import type { Project } from '../../types';
 
-/** Fetch all published projects from DB, mapped to `Project[]`. */
-export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
+/**
+ * Fetch all published projects from DB, mapped to `Project[]`.
+ * Plain react-cache (NOT unstable_cache) — this heavy full query is deliberately
+ * not persisted. withFallback wraps it so a DB error's DbQueryError (thrown by
+ * safeQuery) is caught and the [] fallback served for this render, instead of
+ * throwing uncaught and 500-ing the project-detail / before-after pages.
+ */
+export const getProjectsFromDb = withFallback(cache(async (): Promise<Project[]> => {
   return safeQuery('getProjectsFromDb', async () => {
     const rows: DbProjectRow[] = await db
       .select()
@@ -42,7 +48,7 @@ export const getProjectsFromDb = cache(async (): Promise<Project[]> => {
       )
     );
   }, []);
-});
+}));
 
 export const getProjectsListFromDb = cachedQuery(async (): Promise<Project[]> => {
   return safeQuery('getProjectsListFromDb', async () => {
