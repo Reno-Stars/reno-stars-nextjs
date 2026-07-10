@@ -12,6 +12,8 @@ interface JobPostingSchemaProps {
   description: string;
   /** ISO date the posting went live (stable — don't regenerate per render). */
   datePosted: string;
+  /** Monthly base pay in CAD, e.g. 4000. Omit to leave baseSalary out. */
+  baseSalaryMonthCad?: number;
 }
 
 /**
@@ -24,11 +26,10 @@ interface JobPostingSchemaProps {
  * validThrough" recommendation wants without the risk of a static date silently
  * lapsing. (datePosted stays FIXED — it's the real posting day.)
  *
- * No baseSalary: the owner publishes "competitive, based on experience" rather
- * than a figure, and fabricating a range is not allowed. This stays a
- * non-critical GSC suggestion until the owner provides a real pay range.
+ * baseSalary is the owner-provided monthly figure (CAD); it must match the pay
+ * shown on the visible page (Google flags schema/page salary mismatches).
  */
-export default function JobPostingSchema({ company, locale, title, description, datePosted }: JobPostingSchemaProps) {
+export default function JobPostingSchema({ company, locale, title, description, datePosted, baseSalaryMonthCad }: JobPostingSchemaProps) {
   const baseUrl = getBaseUrl();
   const address = parseAddress(company.address);
   const validThrough = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString();
@@ -40,6 +41,19 @@ export default function JobPostingSchema({ company, locale, title, description, 
     description,
     datePosted,
     validThrough,
+    ...(baseSalaryMonthCad
+      ? {
+          baseSalary: {
+            '@type': 'MonetaryAmount',
+            currency: 'CAD',
+            value: {
+              '@type': 'QuantitativeValue',
+              value: baseSalaryMonthCad,
+              unitText: 'MONTH',
+            },
+          },
+        }
+      : {}),
     employmentType: ['FULL_TIME', 'PART_TIME'],
     hiringOrganization: {
       '@type': 'Organization',

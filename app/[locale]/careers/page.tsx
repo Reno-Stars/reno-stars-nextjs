@@ -14,6 +14,9 @@ interface PageProps {
 // Stable posting date — the day the careers page shipped. Never derive from
 // "now": JobPosting.datePosted must not shift on every rebuild.
 const DATE_POSTED = '2026-07-09';
+// Owner-provided base pay (2026-07-10): ~CAD 4,000/month. Must match role.pay
+// on the visible page (Google flags schema/page salary mismatches).
+const BASE_SALARY_MONTH_CAD = 4000;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -75,6 +78,7 @@ export default async function Page({ params }: PageProps) {
         title={t('role.title')}
         description={jobDescription}
         datePosted={DATE_POSTED}
+        baseSalaryMonthCad={BASE_SALARY_MONTH_CAD}
       />
       <CareersPage
         locale={locale as Locale}
