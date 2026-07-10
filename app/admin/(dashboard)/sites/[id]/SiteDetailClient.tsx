@@ -8,6 +8,7 @@ import ProjectForm from '@/components/admin/ProjectForm';
 import { updateSite } from '@/app/actions/admin/sites';
 import { createProject, updateProject, deleteProject, reorderProjectsInSite, moveProjectToSite } from '@/app/actions/admin/projects';
 import MoveProjectDialog from '@/components/admin/MoveProjectDialog';
+import ProjectReviewsSection, { type AdminProjectReview } from '@/components/admin/ProjectReviewsSection';
 import { generateBlogFromProject, generateBlogFromSite } from '@/app/actions/admin/generate-blog';
 import { CARD, NAVY, GOLD, SUCCESS, SUCCESS_BG, ERROR, ERROR_BG, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
@@ -160,12 +161,13 @@ interface ServiceOption {
 interface Props {
   site: SiteData;
   projects: ProjectWithDetails[];
+  projectReviews: AdminProjectReview[];
   cities: City[];
   allSites: SiteOption[];
   services: ServiceOption[];
 }
 
-export default function SiteDetailClient({ site, projects, cities, allSites, services }: Props) {
+export default function SiteDetailClient({ site, projects, projectReviews, cities, allSites, services }: Props) {
   const t = useAdminTranslations();
   const { locale } = useAdminLocale();
   const { toast } = useToast();
@@ -502,16 +504,24 @@ export default function SiteDetailClient({ site, projects, cities, allSites, ser
         )}
 
         {selectedProject && (
-          <ProjectForm
-            key={selectedProject.id}
-            action={updateProject.bind(null, selectedProject.id)}
-            initialData={getProjectFormData(selectedProject)}
-            cities={cities}
-            services={services}
-            hideSiteSelector
-            fixedSiteId={site.id}
-            submitLabel={t.projects.updateProject}
-          />
+          <>
+            <ProjectForm
+              key={selectedProject.id}
+              action={updateProject.bind(null, selectedProject.id)}
+              initialData={getProjectFormData(selectedProject)}
+              cities={cities}
+              services={services}
+              hideSiteSelector
+              fixedSiteId={site.id}
+              submitLabel={t.projects.updateProject}
+            />
+            {/* Verified Reviews — standalone card (owns its own <form>s, so it
+                cannot live inside ProjectForm's form element). */}
+            <ProjectReviewsSection
+              projectId={selectedProject.id}
+              reviews={projectReviews.filter((r) => r.projectId === selectedProject.id)}
+            />
+          </>
         )}
       </div>
 
