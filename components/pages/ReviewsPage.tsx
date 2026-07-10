@@ -7,6 +7,7 @@ import type { Locale, Company, GoogleReview, GooglePlaceRating } from "@/lib/typ
 import CTASection from "@/components/CTASection";
 import GoogleAvatar from "@/components/home/GoogleAvatar";
 import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
+import { GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
 
 const INTL_LOCALE_MAP: Record<string, string> = { en: "en-US", zh: "zh-CN" };
 
@@ -122,7 +123,6 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
   // word delta on /zh/reviews/ at 2026-05-29T03:30Z scan).
   const reviews = googleReviews.reviews;
 
-  const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJT0f2zbHhhVQRhHrIAuFh0y4";
 
   return (
     <main id="main-content" className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -212,7 +212,7 @@ export default function ReviewsPage({ locale, company, googleReviews }: ReviewsP
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold mb-2" style={{ color: TEXT }}>{t("leaveReviewTitle")}</h2>
           <p className="text-base mb-6" style={{ color: TEXT_MID }}>{t("leaveReviewSubtitle")}</p>
-          <a href={googleReviewUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-colors hover:opacity-90" style={{ backgroundColor: GOLD }}>
+          <a href={GOOGLE_WRITE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-colors hover:opacity-90" style={{ backgroundColor: GOLD }}>
             <GoogleIcon className="w-5 h-5" />
             {t("leaveReviewButton")}
           </a>

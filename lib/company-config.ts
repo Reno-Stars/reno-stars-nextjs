@@ -55,6 +55,15 @@ export function brandDisplay(locale: Locale): string {
 /** Official WeChat ID — shown in the footer modal and the careers page. */
 export const WECHAT_ID = 'RenoStars';
 
+/** Google Business Profile place ID (SSOT — was hardcoded in ReviewsPage). */
+export const GOOGLE_PLACE_ID = 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
+
+/** Public "read our Google reviews" listing for the GBP above. */
+export const GOOGLE_REVIEWS_URL = `https://search.google.com/local/reviews?placeid=${GOOGLE_PLACE_ID}`;
+
+/** "Write a review" deep link for the GBP above (ReviewsPage CTA). */
+export const GOOGLE_WRITE_REVIEW_URL = `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`;
+
 /**
  * Brand-variant capture for schema.org alternateName — Google reconciles
  * user queries for the singular "Reno Star", concatenated "RenoStars",

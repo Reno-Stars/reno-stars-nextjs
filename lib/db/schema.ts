@@ -6,6 +6,7 @@ import {
   boolean,
   integer,
   timestamp,
+  date,
   pgEnum,
   index,
   uniqueIndex,
@@ -674,6 +675,64 @@ export const testimonialsRelations = relations(testimonials, ({ one }) => ({
     references: [projects.id],
   }),
 }));
+
+// ============================================================================
+// PROJECT REVIEWS (verified client reviews linked to portfolio projects)
+// ============================================================================
+
+/**
+ * Real, verified client reviews (currently Google reviews) linked to the
+ * specific portfolio project(s) the reviewer's job produced.
+ *
+ * Rows are seeded manually and ONLY after the reviewer↔project mapping has
+ * been verified against invoice records (client address ↔ project PO number).
+ * `body` is a verbatim quote — never machine-translate or edit it; when
+ * `bodyLang` doesn't match the viewer's locale we still show the original.
+ * A review whose job spans multiple published projects is duplicated as one
+ * row per project. Rendered by components/projects/VerifiedGoogleReviews.tsx
+ * and emitted as Schema.org Review objects in ProjectSchema.
+ */
+export const projectReviews = pgTable(
+  'project_reviews',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    projectId: uuid('project_id')
+      .references(() => projects.id, { onDelete: 'cascade' })
+      .notNull(),
+    /** Review platform. Currently always 'google'. */
+    source: varchar('source', { length: 30 }).default('google').notNull(),
+    /** Author name exactly as written on the review (display abbreviates it). */
+    authorName: varchar('author_name', { length: 120 }).notNull(),
+    /** Star rating 1-5 (constrained at database level). */
+    rating: integer('rating').notNull(),
+    /** Verbatim review text (never translated/edited). */
+    body: text('body').notNull(),
+    /** Language of `body`: 'en' | 'zh'. */
+    bodyLang: varchar('body_lang', { length: 5 }).default('en').notNull(),
+    /** Publication date; month precision — day is normalized to the 1st. */
+    reviewDate: date('review_date', { mode: 'string' }).notNull(),
+    /** Verbatim owner reply on the review, when fully legible/available. */
+    ownerResponse: text('owner_response'),
+    /** Direct URL to the review on the source platform, when available. */
+    sourceUrl: varchar('source_url', { length: 500 }),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('project_reviews_project_id_idx').on(table.projectId),
+    // Rating must be between 1 and 5
+    check('project_reviews_rating_range', sql`${table.rating} >= 1 AND ${table.rating} <= 5`),
+  ]
+);
+
+export const projectReviewsRelations = relations(projectReviews, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectReviews.projectId],
+    references: [projects.id],
+  }),
+}));
+
+export type DbProjectReview = typeof projectReviews.$inferSelect;
+export type NewDbProjectReview = typeof projectReviews.$inferInsert;
 
 // ============================================================================
 // DESIGNS

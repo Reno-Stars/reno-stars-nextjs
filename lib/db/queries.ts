@@ -18,6 +18,7 @@ export * from './queries/company';
 export * from './queries/social';
 export * from './queries/services';
 export * from './queries/projects';
+export * from './queries/reviews';
 export * from './queries/sites';
 export * from './queries/service-areas';
 export * from './queries/blog';
