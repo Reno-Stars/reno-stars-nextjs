@@ -9,7 +9,9 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./tests/setup.ts'],
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', '.next', 'tests/e2e/**'],
+    // .claude/.agents hold nested agent worktrees (full repo copies) — without
+    // these excludes their test files get swept into this repo's run.
+    exclude: ['node_modules', '.next', 'tests/e2e/**', '.claude/**', '.agents/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
