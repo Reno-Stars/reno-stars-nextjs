@@ -15,10 +15,16 @@
  */
 import { revalidatePath, updateTag } from 'next/cache';
 import { locales } from '@/i18n/config';
+import { getBaseUrl } from '@/lib/utils';
+import { purgeCloudflareUrls, purgeCloudflareEverything } from '@/lib/cloudflare-purge';
 
 /** Revalidate the same relative path across every locale, e.g. `/projects/${slug}`. */
 export function revalidatePathAllLocales(relPath: string): void {
   for (const loc of locales) revalidatePath(`/${loc}${relPath}`);
+  // Purge the same URLs from the Cloudflare edge (no-op without a CF token) so
+  // the edit is visible immediately, not after the ≤5min s-maxage window.
+  const base = getBaseUrl();
+  void purgeCloudflareUrls(locales.map((loc) => `${base}/${loc}${relPath}/`));
 }
 
 /**
@@ -34,6 +40,12 @@ export function revalidateProjectSurfaces(): void {
   updateTag('sites:listing');
   updateTag('projects:by-area');
   updateTag('projects:by-guide');
+  // Projects surface on the /projects listing, /areas/* and /guides/* pages.
+  // Purge those index/hub URLs at the edge (the detail page is purged
+  // separately via revalidatePathAllLocales). No-op without a CF token.
+  const base = getBaseUrl();
+  const hubs = ['/projects/', '/areas/', '/guides/'];
+  void purgeCloudflareUrls(locales.flatMap((loc) => hubs.map((h) => `${base}/${loc}${h}`)));
 }
 
 /**
@@ -48,4 +60,8 @@ export function revalidateGlobals(): void {
   updateTag('nav:globals');
   revalidatePath('/llms.txt');
   revalidatePath('/llms-full.txt');
+  // The header/footer nav is on EVERY page, so a globals edit invalidates the
+  // whole edge cache. These edits are rare (company NAP / social / menus), so a
+  // full zone purge is the correct, simplest choice. No-op without a CF token.
+  void purgeCloudflareEverything();
 }

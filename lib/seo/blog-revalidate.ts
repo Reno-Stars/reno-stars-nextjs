@@ -10,6 +10,7 @@
  * (which the old `revalidatePath('/', 'layout')` pattern was doing).
  */
 import { revalidatePath } from 'next/cache';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-purge';
 import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 
@@ -47,6 +48,12 @@ export function revalidateBlogPaths(
   if (slug) {
     for (const loc of postLocales) revalidatePath(`/${loc}/blog/${slug}`);
   }
+  // Purge the same blog URLs from the Cloudflare edge (no-op without a CF
+  // token) so a published post appears at the edge immediately.
+  const urls: string[] = [];
+  if (includeIndex) for (const loc of locales) urls.push(`${BASE_URL}/${loc}/blog/`);
+  if (slug) for (const loc of postLocales) urls.push(`${BASE_URL}/${loc}/blog/${slug}/`);
+  void purgeCloudflareUrls(urls);
 }
 
 /**

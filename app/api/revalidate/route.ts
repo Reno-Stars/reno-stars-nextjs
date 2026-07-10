@@ -1,4 +1,6 @@
 import crypto from 'node:crypto';
+import { getBaseUrl } from '@/lib/utils';
+import { purgeCloudflareUrls, purgeCloudflareEverything } from '@/lib/cloudflare-purge';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { locales } from '@/i18n/config';
@@ -117,6 +119,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   // Server-Action-only and throws here). 'max' = invalidate immediately.
   for (const p of [...new Set(revalidatedPaths)]) revalidatePath(p);
   for (const t of [...new Set(revalidatedTags)]) revalidateTag(t, 'max');
+
+  // Mirror to the Cloudflare edge (no-op without a CF token): purge the exact
+  // revalidated paths as full URLs so external/SEO-agent edits surface at the
+  // edge immediately. A tag-only bust (no paths) can affect many pages — purge
+  // everything in that case. Fire-and-forget.
+  const base = getBaseUrl();
+  const purgeUrls = [...new Set(revalidatedPaths)].map((p) => `${base}${p.endsWith('/') ? p : p + '/'}`);
+  if (revalidatedTags.length > 0 && purgeUrls.length === 0) {
+    void purgeCloudflareEverything();
+  } else if (purgeUrls.length > 0) {
+    void purgeCloudflareUrls(purgeUrls);
+  }
 
   // Log every revalidation to Neon `app_log` — lets us measure how much ISR
   // write activity is edit-driven (this endpoint) vs crawl-after-deploy, and
