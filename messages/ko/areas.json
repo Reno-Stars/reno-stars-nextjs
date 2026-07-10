@@ -23,7 +23,7 @@
     "processLinkText": "우리가 일하는 방식 보기",
     "blogLinkText": "리노베이션 팁 및 가이드",
     "serviceLinkText": "{service}에 관한 모든 것",
-    "areaLinkText": "{area} 지역의 모든 개조 공사",
+    "areaLinkText": "{area}의 주택 개조",
     "trustStripPrefix": "밴쿠버의 최고 평점 {service}",
     "trustStripReviews": "Google 리뷰 {count}개 중 {count}★",
     "featuredProjectHeading": "최근 {area} {service} 프로젝트",

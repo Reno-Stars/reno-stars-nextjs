@@ -23,7 +23,7 @@
     "processLinkText": "See How We Work",
     "blogLinkText": "Renovation Tips & Guides",
     "serviceLinkText": "All About {service}",
-    "areaLinkText": "All Renovations in {area}",
+    "areaLinkText": "Home Renovations in {area}",
     "trustStripPrefix": "Top-rated {service} in Vancouver",
     "trustStripReviews": "{rating}★ from {count} Google reviews",
     "featuredProjectHeading": "Recent {area} {service} Project",

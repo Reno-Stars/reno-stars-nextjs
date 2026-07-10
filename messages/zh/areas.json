@@ -23,7 +23,7 @@
     "processLinkText": "了解我们的工作方式",
     "blogLinkText": "装修技巧和指南",
     "serviceLinkText": "关于{service}的一切",
-    "areaLinkText": "{area}的所有装修",
+    "areaLinkText": "{area}的房屋装修",
     "trustStripPrefix": "温哥华评价最高的{service}",
     "trustStripReviews": "{rating}★ 来自 {count} 条 Google 评论",
     "featuredProjectHeading": "最近的{area} {service}项目",
