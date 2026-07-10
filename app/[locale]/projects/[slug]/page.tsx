@@ -11,7 +11,7 @@ import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getVideoWatchEntriesFromDb, getProjectReviews } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -253,6 +253,11 @@ export default async function Page({ params }: PageProps) {
     const localizedProject = getLocalizedProject(project, locale as Locale);
     const serviceTypeName = (project.service_type && serviceTypeMap[project.service_type] && pickLocale(serviceTypeMap[project.service_type], locale as Locale)) || project.service_type || '';
 
+    // Verified client reviews linked to this project (project_reviews table).
+    // Rendered as a "Verified Google Review" card and emitted as Schema.org
+    // Review objects on the ProjectSchema Service entity.
+    const projectReviews = project.id ? await getProjectReviews(project.id) : [];
+
     const breadcrumbs = [
       { name: t('home'), url: `/${locale}/` },
       { name: t('projects'), url: `/${locale}/projects/` },
@@ -296,6 +301,7 @@ export default async function Page({ params }: PageProps) {
           budgetRange={project.budget_range}
           spaceType={localizedProject.space_type}
           locale={locale}
+          reviews={projectReviews}
         />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
@@ -307,7 +313,7 @@ export default async function Page({ params }: PageProps) {
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
         )}
         {await renderHeroVideoSchema(slug, locale)}
-        <ProjectDetailPage locale={locale as Locale} project={project} relatedProjects={relatedProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} />
+        <ProjectDetailPage locale={locale as Locale} project={project} relatedProjects={relatedProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} reviews={projectReviews} />
       </>
     );
   }

@@ -2,6 +2,11 @@ import type { Company } from '@/lib/types';
 import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
+import {
+  formatReviewerName,
+  reviewDateToSchemaDate,
+  type ProjectReviewDisplay,
+} from '@/lib/project-reviews';
 
 interface ProjectSchemaProps {
   company: Company;
@@ -24,6 +29,11 @@ interface ProjectSchemaProps {
    *  HowTo, Breadcrumb, ContactPage, LocalBusiness). Optional for
    *  backwards compatibility — 2 in-tree callers updated in same commit. */
   locale?: string;
+  /** Verified client reviews linked to THIS project (project_reviews table).
+   *  Emitted as Schema.org Review objects on the mainEntity Service. No
+   *  aggregateRating is derived from these — the provider keeps the
+   *  business-wide Google aggregate it already carried. */
+  reviews?: ProjectReviewDisplay[];
 }
 
 export default function ProjectSchema({
@@ -41,6 +51,7 @@ export default function ProjectSchema({
   budgetRange,
   spaceType,
   locale,
+  reviews,
 }: ProjectSchemaProps): React.ReactElement {
   const baseUrl = getBaseUrl();
   const allImages = [image, ...images].filter(Boolean);
@@ -101,6 +112,28 @@ export default function ProjectSchema({
             name: budgetRange,
           },
         },
+      }),
+      // Verified client reviews for THIS project. Author name is abbreviated
+      // to first name + last initial (matches the on-page card); reviewBody
+      // is the verbatim quote; datePublished is month-precision (YYYY-MM) —
+      // the exact day is not known. Deliberately NO aggregateRating here.
+      ...(reviews && reviews.length > 0 && {
+        review: reviews.map((r) => ({
+          '@type': 'Review',
+          author: {
+            '@type': 'Person',
+            name: formatReviewerName(r.authorName),
+          },
+          datePublished: reviewDateToSchemaDate(r.reviewDate),
+          reviewBody: r.body,
+          ...(r.bodyLang && { inLanguage: r.bodyLang }),
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: r.rating,
+            bestRating: 5,
+            worstRating: 1,
+          },
+        })),
       }),
     },
     ...(duration && {

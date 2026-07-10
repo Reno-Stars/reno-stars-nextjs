@@ -12,6 +12,8 @@ import { formatSlug } from '@/lib/utils';
 import ProjectCard from '@/components/ProjectCard';
 import { BeforeAfterBadge } from '@/components/ImageBadge';
 import BlockRenderer from '@/components/blocks/BlockRenderer';
+import VerifiedGoogleReviews from '@/components/projects/VerifiedGoogleReviews';
+import type { ProjectReviewDisplay } from '@/lib/project-reviews';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import { useDragScroll } from '@/hooks/useDragScroll';
 import { useFullscreenModal } from '@/hooks/useFullscreenModal';
@@ -27,12 +29,14 @@ interface ProjectDetailPageProps {
   company: Company;
   serviceType?: string | null;
   serviceTypeName?: string;
+  /** Verified client reviews linked to this project (verbatim quotes). */
+  reviews?: ProjectReviewDisplay[];
 }
 
 /** Minimum swipe distance in pixels to trigger navigation */
 const SWIPE_THRESHOLD = 50;
 
-export default function ProjectDetailPage({ locale, project, relatedProjects, company, serviceType, serviceTypeName }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({ locale, project, relatedProjects, company, serviceType, serviceTypeName, reviews = [] }: ProjectDetailPageProps) {
   const t = useTranslations();
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
 
@@ -582,6 +586,12 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
                   <BlockRenderer blocks={project.dynamic_blocks as Parameters<typeof BlockRenderer>[0]['blocks']} locale={locale} />
                 </div>
               )}
+
+              {/* Verified Google Review(s) from the client whose project this
+                  is — social proof placed right before the conversion CTA.
+                  Verbatim quotes; shown in their original language on every
+                  locale (never machine-translated). */}
+              <VerifiedGoogleReviews reviews={reviews} locale={locale} />
 
               {/* CTA */}
               <div className="flex flex-wrap gap-4">
