@@ -9,6 +9,7 @@ import GoogleAvatar from "@/components/home/GoogleAvatar";
 import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
 import ReviewsCityGroups, { type HubCityGroupDisplay } from "@/components/pages/ReviewsCityGroups";
+import ReviewsTypeGroups, { type HubTypeGroupDisplay } from "@/components/pages/ReviewsTypeGroups";
 
 const INTL_LOCALE_MAP: Record<string, string> = { en: "en-US", zh: "zh-CN" };
 
@@ -131,9 +132,11 @@ interface ReviewsPageProps {
   googleReviews: GooglePlaceRating;
   /** Merged + deduped project/testimonial reviews grouped by city (hub). */
   cityGroups?: HubCityGroupDisplay[];
+  /** The same deduped reviews grouped by their project's service type. */
+  typeGroups?: HubTypeGroupDisplay[];
 }
 
-export default function ReviewsPage({ locale, company, googleReviews, cityGroups = [] }: ReviewsPageProps) {
+export default function ReviewsPage({ locale, company, googleReviews, cityGroups = [], typeGroups = [] }: ReviewsPageProps) {
   const t = useTranslations("reviewsPage");
   // CTA uses section-specific translations
 
@@ -211,6 +214,11 @@ export default function ReviewsPage({ locale, company, googleReviews, cityGroups
       {/* Client reviews by city — merged project_reviews + testimonials,
           deduped against the Google grid above (lib/reviews-hub.ts). */}
       <ReviewsCityGroups groups={cityGroups} locale={locale} />
+
+      {/* Client reviews by project type — the SAME deduped reviews as the
+          city section, re-grouped by their project's service_type
+          (kitchen/bathroom/…). Only project-linked reviews appear here. */}
+      <ReviewsTypeGroups groups={typeGroups} locale={locale} />
 
       {/* Why Trust Us */}
       <section className="py-14" style={{ backgroundColor: SURFACE_ALT }} aria-labelledby="trust-title">

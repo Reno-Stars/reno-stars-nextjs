@@ -3,6 +3,7 @@ import {
   buildReviewsHub,
   dedupeHubReviews,
   groupReviewsByCity,
+  groupReviewsByServiceType,
   isDuplicateReview,
   stripProvince,
   textSimilarity,
@@ -21,6 +22,7 @@ function makeHubReview(overrides: Partial<HubReview> = {}): HubReview {
     sourceUrl: null,
     projectSlug: 'kitchen-renovation-richmond',
     city: 'Richmond',
+    serviceType: 'kitchen',
     ...overrides,
   };
 }
@@ -144,13 +146,41 @@ describe('groupReviewsByCity', () => {
   });
 });
 
+describe('groupReviewsByServiceType', () => {
+  it('groups by service type, biggest group first (ties: type name)', () => {
+    const reviews = [
+      makeHubReview({ serviceType: 'bathroom', authorName: 'Zoe Chen', body: 'unique bathroom review text' }),
+      makeHubReview({ serviceType: 'kitchen', authorName: 'A One', body: 'unique one', reviewDate: '2026-01-01' }),
+      makeHubReview({ serviceType: 'kitchen', authorName: 'B Two', body: 'unique two', reviewDate: '2026-06-01' }),
+      makeHubReview({ serviceType: 'commercial', authorName: 'C Three', body: 'unique three' }),
+    ];
+    const groups = groupReviewsByServiceType(reviews);
+    // kitchen (2) first, then bathroom/commercial (1 each) alphabetically.
+    expect(groups.map((g) => g.serviceType)).toEqual(['kitchen', 'bathroom', 'commercial']);
+    // Newest first inside a group.
+    expect(groups[0].reviews.map((r) => r.authorName)).toEqual(['B Two', 'A One']);
+  });
+
+  it('skips reviews without a serviceType — no "unknown type" bucket', () => {
+    const reviews = [
+      makeHubReview({ serviceType: 'kitchen' }),
+      makeHubReview({ serviceType: null, authorName: 'Unlinked U', body: 'unlinked review text' }),
+      makeHubReview({ kind: 'testimonial', serviceType: undefined, projectSlug: null, authorName: 'Testi T', body: 'legacy testimonial text' }),
+    ];
+    const groups = groupReviewsByServiceType(reviews);
+    expect(groups).toHaveLength(1);
+    expect(groups[0].serviceType).toBe('kitchen');
+    expect(groups[0].reviews).toHaveLength(1);
+  });
+});
+
 describe('buildReviewsHub', () => {
   it('merges the three sources, dedupes, and reports surviving google indices', () => {
     const projectRows = [
       // Multi-project duplicate → collapses to one.
-      { authorName: 'Henry Wang', rating: 5, body: 'We worked with Reno Stars Construction on a partial renovation of our home and are very happy with the result.', bodyLang: 'en', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'kitchen-a', city: 'Richmond' },
-      { authorName: 'Henry Wang', rating: 5, body: 'We worked with Reno Stars Construction on a partial renovation of our home and are very happy with the result.', bodyLang: 'en', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'bathroom-b', city: 'Richmond' },
-      { authorName: 'Zoe Chen', rating: 5, body: '真心大推Reno Stars!!! 我们家刚装潢完成了三间浴室，成果真的太满意了！', bodyLang: 'zh', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'three-bathroom-delta', city: 'Delta' },
+      { authorName: 'Henry Wang', rating: 5, body: 'We worked with Reno Stars Construction on a partial renovation of our home and are very happy with the result.', bodyLang: 'en', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'kitchen-a', city: 'Richmond', serviceType: 'kitchen' },
+      { authorName: 'Henry Wang', rating: 5, body: 'We worked with Reno Stars Construction on a partial renovation of our home and are very happy with the result.', bodyLang: 'en', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'bathroom-b', city: 'Richmond', serviceType: 'bathroom' },
+      { authorName: 'Zoe Chen', rating: 5, body: '真心大推Reno Stars!!! 我们家刚装潢完成了三间浴室，成果真的太满意了！', bodyLang: 'zh', reviewDate: '2026-01-01', sourceUrl: null, projectSlug: 'three-bathroom-delta', city: 'Delta', serviceType: 'bathroom' },
     ];
     const googleReviews = [
       // Duplicates Henry Wang's project review → project copy wins.
@@ -177,6 +207,17 @@ describe('buildReviewsHub', () => {
     const vancouver = hub.cityGroups.find((g) => g.city === 'Vancouver')!;
     expect(vancouver.reviews[0].kind).toBe('testimonial');
     expect(vancouver.reviews[0].translations?.zh).toBe('译文');
+
+    // Type groups: only project-linked survivors — the testimonial (Sarah)
+    // and the google survivor (Marco) have no serviceType, so they are
+    // excluded rather than grouped under an "unknown" type. Henry's dedupe
+    // survivor is his FIRST project row (kitchen); the collapsed bathroom
+    // duplicate does not create a second membership.
+    expect(hub.typeGroups.map((g) => g.serviceType)).toEqual(['bathroom', 'kitchen']);
+    const kitchen = hub.typeGroups.find((g) => g.serviceType === 'kitchen')!;
+    expect(kitchen.reviews.map((r) => r.authorName)).toEqual(['Henry Wang']);
+    const bathroom = hub.typeGroups.find((g) => g.serviceType === 'bathroom')!;
+    expect(bathroom.reviews.map((r) => r.authorName)).toEqual(['Zoe Chen']);
   });
 
   it('dedupes a zh project review against its EN-translated google cache copy', () => {

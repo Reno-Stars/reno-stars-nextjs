@@ -81,6 +81,53 @@ export const getReviewsByCityFromDb = cachedQueryWithArgs<string, AreaReviewDisp
 );
 
 /**
+ * Verified client reviews for a SERVICE page: reviews whose linked PUBLISHED
+ * project has the given service_type (exact match — service_type values are
+ * canonical services.slug values validated on write, unlike the free-text
+ * city names getReviewsByCityFromDb has to LOWER()). Same multi-project
+ * dedupe + at-most-3-newest contract as getReviewsByCityFromDb. Tagged
+ * `reviews:by-service` so review AND project mutations refresh every service
+ * page's data cache together.
+ */
+export const getReviewsByServiceType = cachedQueryWithArgs<string, AreaReviewDisplay[]>(
+  async (serviceType: string): Promise<AreaReviewDisplay[]> => {
+    return safeQuery('getReviewsByServiceType', async () => {
+      const rows = await db
+        .select({
+          authorName: projectReviews.authorName,
+          rating: projectReviews.rating,
+          body: projectReviews.body,
+          bodyLang: projectReviews.bodyLang,
+          reviewDate: projectReviews.reviewDate,
+          sourceUrl: projectReviews.sourceUrl,
+          projectSlug: projects.slug,
+        })
+        .from(projectReviews)
+        .innerJoin(projects, eq(projectReviews.projectId, projects.id))
+        .where(and(
+          eq(projects.isPublished, true),
+          eq(projects.serviceType, serviceType),
+        ))
+        .orderBy(desc(projectReviews.reviewDate), asc(projectReviews.createdAt));
+
+      // Collapse multi-project duplicates (same author + same verbatim body).
+      const seen = new Set<string>();
+      const unique: AreaReviewDisplay[] = [];
+      for (const row of rows) {
+        const key = `${row.authorName.trim().toLowerCase()}|${row.body.trim()}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        unique.push(row);
+        if (unique.length >= 3) break;
+      }
+      return unique;
+    }, []);
+  },
+  ['getReviewsByServiceType'],
+  { tags: ['reviews:by-service'] },
+);
+
+/**
  * ALL project_reviews rows for the /reviews hub, joined to their linked
  * project (left join — unlinked reviews are included with projectSlug null).
  * A linked-but-unpublished project contributes its city but no public slug.
@@ -100,6 +147,7 @@ export const getHubProjectReviews = cachedQuery(
           projectSlug: projects.slug,
           isPublished: projects.isPublished,
           city: projects.locationCity,
+          serviceType: projects.serviceType,
         })
         .from(projectReviews)
         .leftJoin(projects, eq(projectReviews.projectId, projects.id))
@@ -114,6 +162,9 @@ export const getHubProjectReviews = cachedQuery(
         sourceUrl: row.sourceUrl,
         projectSlug: row.isPublished ? row.projectSlug : null,
         city: row.city ?? null,
+        // Like `city`, a linked-but-unpublished project still contributes its
+        // service type (the group renders; the card just has no slug link).
+        serviceType: row.serviceType ?? null,
       }));
     }, []);
   },

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceDetailPage from '@/components/pages/ServiceDetailPage';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
@@ -280,7 +280,15 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas, googleReviews] = await Promise.all([getCompanyFromDb(), getServicesFromDb(), getServiceAreasFromDb(), getGoogleReviews()]);
+  const [company, services, areas, googleReviews, clientReviews] = await Promise.all([
+    getCompanyFromDb(),
+    getServicesFromDb(),
+    getServiceAreasFromDb(),
+    getGoogleReviews(),
+    // Verified client reviews whose linked project has this service_type
+    // (projects.service_type values ARE service slugs). ≤3, newest first.
+    getReviewsByServiceType(serviceSlug),
+  ]);
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service || service.showOnServicesPage === false) {
@@ -380,6 +388,7 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
         allServices={services}
+        clientReviews={clientReviews}
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
       />
     </>
