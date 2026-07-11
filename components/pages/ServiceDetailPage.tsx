@@ -5,12 +5,14 @@ import { useTranslations } from 'next-intl';
 import OptimizedImage from '@/components/OptimizedImage';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, ServiceArea, ServiceType } from '@/lib/types';
+import type { AreaReviewDisplay } from '@/lib/project-reviews';
 import { getLocalizedService, getAllProjectsLocalized } from '@/lib/data';
 import CTASection from '@/components/CTASection';
 import ZhTrustLine from '@/components/ZhTrustSignals';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
+import ServiceClientReviews from '@/components/services/ServiceClientReviews';
 import { Link } from '@/navigation';
 import { getLocalizedArea } from '@/lib/data/areas';
 import {
@@ -168,6 +170,12 @@ interface ServiceDetailPageProps {
    */
   allServices?: Service[];
   /**
+   * Verified client reviews whose linked case-study project has this
+   * service_type (≤3, from getReviewsByServiceType). Mirrors AreaPage's
+   * `cityClientReviews`. Empty/omitted → the section renders nothing.
+   */
+  clientReviews?: AreaReviewDisplay[];
+  /**
    * Optional code-driven H1 that wins over `service.title_en`. Used for
    * EN-only geo-anchoring on service pages where GSC shows striking-
    * distance ranking for "{service} renovation vancouver" queries but
@@ -225,7 +233,7 @@ const COST_GUIDE_LINK_COPY: Partial<Record<Locale, { heading: string; subtitle: 
   },
 };
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, h1Override }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override }: ServiceDetailPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
 
@@ -433,6 +441,16 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
           </p>
         </div>
       </section>
+
+      {/* What our {service} clients say — verified reviews linked to this
+          service type's case-study projects (the service-page twin of
+          AreaPage's AreaClientReviews, same before-CTA / after-main-content
+          slot: right after the related-projects gallery those reviews talk
+          about). Verbatim quotes (original language), each card links to its
+          project. Renders nothing for services without project-linked
+          reviews. NO Review schema here — it lives on the project pages
+          (duplicating it on a second entity risks spam signals). */}
+      <ServiceClientReviews reviews={clientReviews} serviceName={localizedService.title} locale={locale} />
 
       {/* Cost Guide cross-link — surfaces the matching /guides/<service>-renovation-cost-vancouver/ page
           to (a) help the user answer "what does this cost?" in-context, (b) pass internal-link equity to

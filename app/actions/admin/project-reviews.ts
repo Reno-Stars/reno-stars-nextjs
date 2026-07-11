@@ -105,12 +105,13 @@ interface LinkedProject {
   id: string;
   slug: string;
   locationCity: string | null;
+  serviceType: string | null;
 }
 
 /** Fetch the linked project (for validation + revalidation targets). */
 async function getProjectForReview(projectId: string): Promise<LinkedProject | null> {
   const rows = await db
-    .select({ id: projects.id, slug: projects.slug, locationCity: projects.locationCity })
+    .select({ id: projects.id, slug: projects.slug, locationCity: projects.locationCity, serviceType: projects.serviceType })
     .from(projects)
     .where(eq(projects.id, projectId))
     .limit(1);
@@ -123,7 +124,12 @@ async function getProjectForReview(projectId: string): Promise<LinkedProject | n
  *   reads UNTAGGED getProjectReviews, so the PATH revalidation refreshes it),
  * - the project's city AREA page ("What {city} clients say", tagged
  *   `reviews:by-area` + path-purged via the service_areas slug lookup),
- * - the /reviews hub (tagged `reviews:hub` + path-purged).
+ * - the project's SERVICE page ("What our {service} clients say", tagged
+ *   `reviews:by-service` + path-purged — the page is force-dynamic, so the
+ *   path call matters only for the Cloudflare edge copy; service_type IS the
+ *   service slug),
+ * - the /reviews hub, both city AND type groupings (one query feeds both,
+ *   tagged `reviews:hub` + path-purged).
  * Never triggers a deploy.
  */
 async function revalidateReviewSurfaces(linked: Array<LinkedProject | null>): Promise<void> {
@@ -141,8 +147,12 @@ async function revalidateReviewSurfaces(linked: Array<LinkedProject | null>): Pr
         .limit(1);
       if (areaRows[0]) revalidatePathAllLocales(`/areas/${areaRows[0].slug}`);
     }
+    if (project.serviceType) {
+      revalidatePathAllLocales(`/services/${project.serviceType}`);
+    }
   }
   updateTag('reviews:by-area');
+  updateTag('reviews:by-service');
   updateTag('reviews:hub');
   revalidatePathAllLocales('/reviews');
 }
@@ -158,6 +168,7 @@ async function getReviewLink(reviewId: string): Promise<{ exists: boolean; proje
       projectId: projects.id,
       slug: projects.slug,
       locationCity: projects.locationCity,
+      serviceType: projects.serviceType,
     })
     .from(projectReviews)
     .leftJoin(projects, eq(projectReviews.projectId, projects.id))
@@ -168,7 +179,7 @@ async function getReviewLink(reviewId: string): Promise<{ exists: boolean; proje
   return {
     exists: true,
     project: row.projectId && row.slug
-      ? { id: row.projectId, slug: row.slug, locationCity: row.locationCity }
+      ? { id: row.projectId, slug: row.slug, locationCity: row.locationCity, serviceType: row.serviceType }
       : null,
   };
 }

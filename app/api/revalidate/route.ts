@@ -42,10 +42,12 @@ import { logEvent } from '@/lib/log';
 const TYPE_CONFIG: Record<string, { base: string; tags: (slug: string) => string[] }> = {
   blog: { base: 'blog', tags: (slug) => [`blog:${slug}`, 'blog:listing'] },
   // `reviews:*` mirror revalidateProjectSurfaces(): the verified-review caches
-  // join projects (isPublished / locationCity / slug), so a direct-DB project
-  // or project_reviews edit must bust them or /reviews and the area-page
-  // "What {city} clients say" sections serve stale cards for up to 24h.
-  project: { base: 'projects', tags: (slug) => [`project:${slug}`, 'projects:listing', 'sites:listing', 'reviews:by-area', 'reviews:hub'] },
+  // join projects (isPublished / locationCity / serviceType / slug), so a
+  // direct-DB project or project_reviews edit must bust them or /reviews (city
+  // + type groups), the area-page "What {city} clients say" sections and the
+  // service-page "What our {service} clients say" sections serve stale cards
+  // for up to 24h.
+  project: { base: 'projects', tags: (slug) => [`project:${slug}`, 'projects:listing', 'sites:listing', 'reviews:by-area', 'reviews:by-service', 'reviews:hub'] },
   area: { base: 'areas', tags: (slug) => [`area:${slug}`] },
 };
 

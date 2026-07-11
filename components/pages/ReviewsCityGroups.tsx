@@ -33,7 +33,9 @@ const SECTION_TITLE_LABELS: Record<string, string> = {
 // Copy is deliberately conditional ("when the project is in our portfolio…"):
 // testimonial cards and unlinked reviews have no case-study link, so an
 // unconditional "each one links" claim would be factually wrong on the page.
-const SECTION_SUBTITLE_LABELS: Record<string, string> = {
+// Exported: ReviewsTypeGroups shares the same subtitle (same conditional
+// truth applies — a linked-but-unpublished project's card has no slug link).
+export const SECTION_SUBTITLE_LABELS: Record<string, string> = {
   en: 'Verbatim reviews from real clients — when the reviewed project is in our portfolio, the review links to the full case study.',
   zh: '来自真实客户的原文评价——若项目已收录在案例库中，评价会链接到对应的项目案例。',
   'zh-Hant': '來自真實客戶的原文評價——若項目已收錄在案例庫中，評價會連結到對應的項目案例。',

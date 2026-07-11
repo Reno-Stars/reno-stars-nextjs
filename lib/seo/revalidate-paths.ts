@@ -33,11 +33,14 @@ export function revalidatePathAllLocales(relPath: string): void {
  * pages (`projects:by-area`) and the cost-guide pages (`projects:by-guide`)
  * both read cached project sets that go stale for 24h otherwise — a deleted
  * or re-scoped project keeps showing (dead card / wrong city) until the TTL.
- * The verified-review caches (`reviews:by-area`, `reviews:hub`) JOIN projects
- * for isPublished / locationCity / slug, so a delete, unpublish, re-city or
- * slug rename also changes which review cards render where (and where their
- * "See this project" links point) — bust them together, mirroring
- * revalidateReviewSurfaces() on the review-mutation side.
+ * The verified-review caches (`reviews:by-area`, `reviews:by-service`,
+ * `reviews:hub`) JOIN projects for isPublished / locationCity / serviceType /
+ * slug, so a delete, unpublish, re-city, re-type or slug rename also changes
+ * which review cards render where (and where their "See this project" links
+ * point) — bust them together, mirroring revalidateReviewSurfaces() on the
+ * review-mutation side. (`reviews:by-service` also covers the force-dynamic
+ * /services/<type>/ pages' data reads; their edge-cached HTML self-heals
+ * within the s-maxage=300 window, same trade-off as the area detail pages.)
  * Call this from every project mutation so all its surfaces refresh together.
  */
 export function revalidateProjectSurfaces(): void {
@@ -46,6 +49,7 @@ export function revalidateProjectSurfaces(): void {
   updateTag('projects:by-area');
   updateTag('projects:by-guide');
   updateTag('reviews:by-area');
+  updateTag('reviews:by-service');
   updateTag('reviews:hub');
   // Projects surface on the /projects listing, /areas/*, /guides/* and
   // /reviews pages. Purge those index/hub URLs at the edge (the detail page

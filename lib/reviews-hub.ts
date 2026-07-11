@@ -43,6 +43,13 @@ export interface HubReview {
   /** English city name (matches service_areas.name_en), when known. */
   city: string | null;
   /**
+   * projects.service_type of the linked project (matches services.slug, e.g.
+   * 'kitchen'), when known. Only project-kind reviews carry one — google and
+   * testimonial reviews have no linked project, so they never join a type
+   * group (mirroring how unlinked reviews fall into the null city group).
+   */
+  serviceType?: string | null;
+  /**
    * Alternate texts of the SAME review, used only for dedupe comparison —
    * e.g. the Google original-language text when `body` is the EN machine
    * translation the Places API returned. Without it a zh review stored
@@ -169,6 +176,38 @@ export function groupReviewsByCity(reviews: HubReview[]): HubCityGroup[] {
   });
 }
 
+/** One rendered project-type section on the hub. */
+export interface HubTypeGroup {
+  /** Raw projects.service_type value (matches services.slug). */
+  serviceType: string;
+  reviews: HubReview[];
+}
+
+/**
+ * Group survivors by their linked project's service_type, biggest group first
+ * (ties: type name), reviews newest-first inside a group. Reviews WITHOUT a
+ * serviceType (unlinked reviews, google reviews, testimonials, projects with
+ * no type set) are skipped entirely — there is no "unknown type" bucket, so
+ * those reviews keep appearing only where they already do.
+ */
+export function groupReviewsByServiceType(reviews: HubReview[]): HubTypeGroup[] {
+  const byType = new Map<string, HubReview[]>();
+  for (const review of reviews) {
+    if (!review.serviceType) continue;
+    const bucket = byType.get(review.serviceType) ?? [];
+    bucket.push(review);
+    byType.set(review.serviceType, bucket);
+  }
+  const groups = Array.from(byType.entries()).map(([serviceType, groupReviews]) => ({
+    serviceType,
+    reviews: [...groupReviews].sort((a, b) => (b.reviewDate ?? '').localeCompare(a.reviewDate ?? '')),
+  }));
+  return groups.sort((a, b) => {
+    if (b.reviews.length !== a.reviews.length) return b.reviews.length - a.reviews.length;
+    return a.serviceType.localeCompare(b.serviceType);
+  });
+}
+
 /** project_reviews row (joined with its project) as fetched for the hub. */
 export interface HubProjectReviewRow {
   authorName: string;
@@ -181,6 +220,8 @@ export interface HubProjectReviewRow {
   projectSlug: string | null;
   /** projects.location_city of the linked project. */
   city: string | null;
+  /** projects.service_type of the linked project (matches services.slug). */
+  serviceType?: string | null;
 }
 
 /** testimonials row as fetched for the hub. */
@@ -198,6 +239,8 @@ export interface ReviewsHub {
   googleIndices: number[];
   /** Non-google survivors grouped by city (project + testimonial reviews). */
   cityGroups: HubCityGroup[];
+  /** Project-linked survivors grouped by their project's service_type. */
+  typeGroups: HubTypeGroup[];
   /** Total unique reviews on the hub (google survivors + city groups). */
   uniqueCount: number;
 }
@@ -219,6 +262,7 @@ export function buildReviewsHub(input: {
       sourceUrl: row.sourceUrl,
       projectSlug: row.projectSlug,
       city: row.city,
+      serviceType: row.serviceType ?? null,
     })),
     ...input.googleReviews.map((review, index): HubReview => ({
       kind: 'google',
@@ -252,7 +296,11 @@ export function buildReviewsHub(input: {
     .filter((r) => r.kind === 'google' && r.googleIndex !== undefined)
     .map((r) => r.googleIndex as number)
     .sort((a, b) => a - b);
-  const cityGroups = groupReviewsByCity(survivors.filter((r) => r.kind !== 'google'));
+  const nonGoogle = survivors.filter((r) => r.kind !== 'google');
+  const cityGroups = groupReviewsByCity(nonGoogle);
+  // Only project-kind survivors carry a serviceType, so google/testimonial
+  // reviews (and unlinked project reviews) never enter a type group.
+  const typeGroups = groupReviewsByServiceType(nonGoogle);
 
-  return { googleIndices, cityGroups, uniqueCount: survivors.length };
+  return { googleIndices, cityGroups, typeGroups, uniqueCount: survivors.length };
 }
