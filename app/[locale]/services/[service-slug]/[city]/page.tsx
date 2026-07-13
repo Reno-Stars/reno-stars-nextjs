@@ -5,7 +5,7 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
-import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
+import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getProjectsFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
@@ -119,8 +119,12 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const [areaProjects, areaFaqs, t, faqT] = await Promise.all([
+  const [areaProjects, projectPool, areaFaqs, t, faqT] = await Promise.all([
     getProjectsByAreaFromDb(area.name.en),
+    // Full published-project pool powers the honest related-project fallback
+    // (same-service other-city / same-city other-service) when this exact
+    // city×service has no completed project of its own. See lib/seo/combo-content.
+    getProjectsFromDb(),
     getFaqsByAreaFromDb(area.id),
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'faq' }),
@@ -202,6 +206,7 @@ export default async function Page({ params }: PageProps) {
         areas={areas}
         faqs={faqs}
         areaProjects={areaProjects}
+        projectPool={projectPool}
       />
     </>
   );

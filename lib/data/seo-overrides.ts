@@ -12,6 +12,36 @@ export interface SeoOverride {
   description: string;
 }
 
+/**
+ * Combo-page hero copy that keeps /services/{service}/{city} visibly distinct
+ * from the /areas/{city} hub. The hub leads with the generic
+ * "Home Renovations in {city}" H1 + a city description; the combo H1 leads with
+ * the specific "{service} in {city}" and this subtitle carries a cost/process
+ * angle (rather than re-printing the area's own description, which used to
+ * duplicate the hub verbatim).
+ *
+ * Honest in both branches: `hasLocalWork` (real completed projects in THIS city
+ * for THIS service) toggles a claim of completed local work vs. a service-area
+ * availability framing — we never imply past local projects we cannot source
+ * from the DB (rule §8). `service` is the already-localized service title.
+ */
+export function comboHeroSubtitle(
+  service: string,
+  city: string,
+  hasLocalWork: boolean,
+  locale: string,
+): string {
+  const zh = locale === 'zh' || locale === 'zh-Hant';
+  if (zh) {
+    return hasLocalWork
+      ? `${city}${service}的真实项目费用、工期与已完工案例，聚星装修为您透明呈现。`
+      : `${city}${service}——透明的报价与施工流程，并展示我们在大温地区的相关案例。`;
+  }
+  return hasLocalWork
+    ? `Real ${city} ${service.toLowerCase()} costs, timelines and completed local projects — transparently.`
+    : `Transparent ${service.toLowerCase()} pricing, our build process and related Metro Vancouver projects.`;
+}
+
 /** Returns the EN + ZH override maps with `years` interpolated. */
 export function serviceCityOverrides(years: number | string): {
   en: Record<string, SeoOverride>;
