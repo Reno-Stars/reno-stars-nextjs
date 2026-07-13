@@ -6,12 +6,12 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema, VideoObjectSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema } from '@/components/structured-data';
 import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
-import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getVideoWatchEntriesFromDb, getProjectReviews } from '@/lib/db/queries';
+import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps {
@@ -165,30 +165,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return { title: 'Not Found', robots: { index: false, follow: false } };
 }
 
-/**
- * VideoObject JSON-LD for a project/site hero (walkthrough) video, emitted on
- * the embedding case-study page with `url` pointed at the dedicated
- * /videos/[slug]/ watch page so Google consolidates video signals there
- * (this page itself is not a watch page — GSC "Video isn't on a watch page").
- * Returns null when the slug has no video watch entry.
- */
-async function renderHeroVideoSchema(slug: string, locale: string): Promise<React.ReactElement | null> {
-  const entry = (await getVideoWatchEntriesFromDb()).find((e) => e.slug === slug);
-  if (!entry || !entry.thumbnailUrl || !entry.uploadDate) return null;
-  const isZh = locale === 'zh';
-  return (
-    <VideoObjectSchema
-      name={isZh ? entry.titleZh : entry.titleEn}
-      description={truncateMetaDescription((isZh ? entry.descriptionZh : entry.descriptionEn) || (isZh ? entry.titleZh : entry.titleEn))}
-      thumbnailUrl={entry.thumbnailUrl}
-      contentUrl={entry.videoUrl}
-      uploadDate={entry.uploadDate.toISOString()}
-      url={`/${locale}/videos/${slug}/`}
-      locale={locale}
-    />
-  );
-}
-
 export default async function Page({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -312,7 +288,6 @@ export default async function Page({ params }: PageProps) {
         {blockSchema.imageList && (
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
         )}
-        {await renderHeroVideoSchema(slug, locale)}
         <ProjectDetailPage locale={locale as Locale} project={project} relatedProjects={relatedProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} reviews={projectReviews} />
       </>
     );
@@ -362,7 +337,6 @@ export default async function Page({ params }: PageProps) {
         {siteBlockSchema.imageList && (
           <ItemListSchema items={siteBlockSchema.imageList.items} name={siteBlockSchema.imageList.name} description={siteBlockSchema.imageList.description} locale={siteBlockSchema.imageList.locale} />
         )}
-        {await renderHeroVideoSchema(slug, locale)}
         <SiteDetailPage site={localizedSite} company={company} />
       </>
     );

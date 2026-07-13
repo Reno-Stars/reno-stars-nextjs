@@ -98,7 +98,7 @@ export default async function Page({ params }: PageProps) {
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <VideoObjectSchema
         name={watchTitle(title, locale)}
-        description={truncateMetaDescription(description || title)}
+        description={description || title}
         thumbnailUrl={entry.thumbnailUrl!}
         contentUrl={entry.videoUrl}
         uploadDate={uploadDate}
