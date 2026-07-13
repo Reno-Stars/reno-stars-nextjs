@@ -39,17 +39,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   // Blog <lastmod> runs the SAME honest-dates gate as the page's BlogPosting
-  // JSON-LD (lib/blog-dates.ts): genuine row-specific edit → updated_at;
-  // bulk-touch/unverifiable → published date. Raw updated_at here previously
-  // advertised bulk-script stamps (29 posts shared one 2026-07-10 stamp) as
-  // freshness while the pages themselves omitted dateModified — contradictory
-  // signals to Google on the same URLs (2026-07-13 review finding).
+  // JSON-LD (lib/blog-dates.ts): a genuine admin content edit (content_updated_at
+  // meaningfully after publication) → that edit date; otherwise → the published
+  // date. Raw updated_at here previously advertised bulk-script stamps (29 posts
+  // shared one 2026-07-10 stamp) as freshness while the pages themselves omitted
+  // dateModified — contradictory signals to Google on the same URLs (2026-07-13
+  // review finding). content_updated_at is a plain column read, so this no longer
+  // costs the O(n^2) cluster subquery it used to (finding #28).
   const blogDateMap = new Map(blogPostRows.map(r => {
     const { datePublished, dateModified } = resolveBlogDates({
       published_at: r.publishedAt,
       created_at: r.createdAt,
-      updated_at: r.updatedAt,
-      updated_at_cluster_count: r.updatedAtClusterCount,
+      content_updated_at: r.contentUpdatedAt,
     });
     return [r.slug, dateModified ?? datePublished ?? now];
   }));

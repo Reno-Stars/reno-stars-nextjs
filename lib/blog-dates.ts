@@ -4,91 +4,79 @@
  * article:published_time/modified_time, and the visible published/updated
  * labels on the post page).
  *
- * Why this exists (2026-07-10 bathtub-query forensics, fix shipped 2026-07-13):
+ * Why this exists (2026-07-10 bathtub-query forensics, first fix 2026-07-13):
  * the BlogPosting schema on an April-published post was observed emitting
  * `datePublished` from a *reset* published_at (an admin re-save had clobbered
  * it to "now") and `dateModified` straight from `updated_at` — a column that
- * bulk maintenance scripts (translation backfills, link rewrites) touch
- * wholesale. At the time of the audit, 89 of 250 blog rows shared one exact
- * updated_at microsecond timestamp, 30 shared another, and 238/250 rows had
- * updated_at > published_at. Fake-fresh dates are a trust signal Google
- * explicitly devalues, so:
+ * bulk maintenance scripts (translation backfills, link rewrites, the daily
+ * 6:17 AM SEO-builder cron) touch wholesale. At the time of the audit, 89 of
+ * 250 blog rows shared one exact updated_at microsecond timestamp, 30 shared
+ * another, and 238/250 rows had updated_at > published_at. Fake-fresh dates are
+ * a trust signal Google explicitly devalues.
+ *
+ * WHY THE HEURISTIC WAS RETIRED (2026-07-13 review findings #8/#30/#23/#28):
+ * the first fix inferred "genuine edit" from `updated_at` with a ±60-min
+ * bulk-touch *cluster* heuristic (dateModified only when no other blog row was
+ * written within an hour). That was a read-side forensic guess with two fatal
+ * flaws:
+ *   1. It suppressed GENUINE edits. An admin editing 2-3 posts in one session,
+ *      or editing within an hour of the 6:17 AM SEO-builder cron, produced a
+ *      cluster >= 2, so the dateModified, the visible "Updated" label, and the
+ *      sitemap <lastmod> were ALL dropped — permanently, failing closed on real
+ *      human edits.
+ *   2. It was expensive: a per-slug second round-trip on the page path and an
+ *      O(n^2) correlated count(*) on the force-dynamic /sitemap.xml.
+ *
+ * THE PROPER FIX — a write-side signal, `blog_posts.content_updated_at`:
+ * the admin content-save path (updateBlogPost, app/actions/admin/blog.ts)
+ * stamps `content_updated_at = now()` on every genuine content edit. Nothing
+ * else writes it — bulk/translation/cron scripts leave it untouched, so it can
+ * never be poisoned the way `updated_at` was. dateModified is then a plain,
+ * honest column read:
  *
  *   - datePublished = published_at, falling back to created_at.
- *   - dateModified  = updated_at ONLY when it looks like a genuine,
- *     row-specific content edit:
- *       (a) it is meaningfully later than the published date
- *           ({@link MIN_MODIFIED_GAP_MS}, same 24h window the visible
- *           "Updated" label always used), AND
- *       (b) it is NOT part of a bulk-touch cluster — i.e. no other blog row
- *           was written within {@link BULK_TOUCH_CLUSTER_WINDOW_MINUTES} of
- *           this row's updated_at. Bulk scripts either stamp every row with
- *           one `now()` inside a single statement (identical microsecond
- *           timestamps) or loop row-by-row with distinct stamps seconds-to-
- *           minutes apart — BOTH are bulk-write fingerprints. The 2026-07-13
- *           review of this fix proved exact-timestamp matching alone leaks:
- *           41 of 237 published rows had unique microsecond stamps yet ALL
- *           traced to sequential bulk runs (e.g. the 36-post cost-index
- *           backfill was written ~9 min apart, 2026-07-04 01:37→07:33). A
- *           time-window cluster catches both shapes; validated against prod:
- *           0 of 237 published rows leak at 60 min. A genuine human edit only
- *           loses its dateModified if another row was written within the same
- *           hour — which fails CLOSED (honest omission), the direction this
- *           module always prefers.
- *     When the cluster size is unknown (callers that didn't fetch it), the
- *     signal is unverifiable and dateModified is OMITTED — omitting is honest;
- *     request-time or bulk-touch timestamps are not.
+ *   - dateModified  = content_updated_at, emitted ONLY when it is meaningfully
+ *     later than the publication date ({@link MIN_MODIFIED_GAP_MS} — the same
+ *     24h window the visible "Updated" label always used, which also elides
+ *     trivial same-day churn like a typo fix minutes after publishing). NULL
+ *     content_updated_at (every row predating this column, and every post never
+ *     edited since publication) → dateModified OMITTED. Omitting is honest;
+ *     request-time or bulk-touch timestamps are not, and this module always
+ *     prefers to fail CLOSED.
  *
- * PRECISION WARNING for query authors: Postgres stores updated_at at
- * MICROSECOND precision; a JS Date only holds milliseconds. Never compute the
- * cluster by binding a JS Date back into a WHERE clause — the ms-truncated
- * parameter matches ZERO rows, not even the row itself (this exact bug
- * shipped in the first version of this fix: `eq(updatedAt, row.updatedAt)`
- * made the gate unpassable for every existing row). The cluster count MUST be
- * computed entirely in SQL, keyed by row id, so the microsecond value never
- * round-trips through a JS Date. See getBlogPostBySlugFromDb in
- * lib/db/queries/blog.ts.
+ * Backfill note: existing rows were left NULL (dateModified omitted). This is a
+ * zero-regression change — verified against prod 2026-07-13, the retired
+ * cluster heuristic already emitted dateModified for 0 of 237 published rows
+ * (all were in bulk-touch clusters), so no live page lost a real "Updated"
+ * date. Going forward, the FIRST genuine admin edit of a post lights up its
+ * dateModified.
  */
 
-/** Minimum gap between published and updated before `updated_at` counts as a
- * real post-publication edit (matches the visible "Updated" label rule). */
+/** Minimum gap between the publication date and `content_updated_at` before the
+ * edit counts as a meaningful, advertisable post-publication change (matches
+ * the visible "Updated" label rule; elides trivial same-day churn). */
 export const MIN_MODIFIED_GAP_MS = 24 * 60 * 60 * 1000;
-
-/**
- * Half-width of the bulk-touch detection window, in minutes: a blog row's
- * updated_at is only trusted as a genuine edit when NO other blog row was
- * written within ±this many minutes of it. 60 min suppresses every bulk run
- * observed in prod (single-stamp UPDATEs, the ~9-min-apart cost-index loop,
- * and stragglers written up to ~37 min from their cluster) with zero leaks
- * across all 237 published rows, while a lone human edit an hour clear of any
- * other write still passes. Consumed by the SQL cluster-count queries in
- * lib/db/queries/blog.ts.
- */
-export const BULK_TOUCH_CLUSTER_WINDOW_MINUTES = 60;
 
 export interface BlogDateSource {
   /** Publication date (may have been reset by past admin-save bugs). */
   published_at?: Date | string | null;
   /** Row creation date — the fallback publication signal. */
   created_at?: Date | string | null;
-  /** Last DB write — poisoned by bulk maintenance scripts; see module doc. */
-  updated_at?: Date | string | null;
   /**
-   * How many blog rows (published or not — bulk scripts touch both) have an
-   * `updated_at` within ±{@link BULK_TOUCH_CLUSTER_WINDOW_MINUTES} of this
-   * row's, including this row itself (so >= 1). 1 = isolated write = genuine
-   * row-specific edit; >= 2 = bulk-touch cluster; undefined = unknown.
-   * MUST be computed in SQL keyed by row id (see PRECISION WARNING above).
+   * Last GENUINE admin content edit — written only by the admin content-save
+   * path (updateBlogPost), never by bulk/translation/cron scripts. This is the
+   * trusted `dateModified` source. NULL/absent → dateModified omitted.
    */
-  updated_at_cluster_count?: number;
+  content_updated_at?: Date | string | null;
 }
 
 export interface ResolvedBlogDates {
   /** ISO 8601 publication timestamp, or undefined when no valid source. */
   datePublished?: string;
   /**
-   * ISO 8601 last-genuine-edit timestamp. Undefined whenever `updated_at`
-   * cannot be trusted — callers must OMIT the field, not substitute.
+   * ISO 8601 last-genuine-edit timestamp. Undefined whenever there is no
+   * trustworthy post-publication edit signal — callers must OMIT the field,
+   * not substitute.
    */
   dateModified?: string;
 }
@@ -100,21 +88,22 @@ function toValidDate(value: Date | string | null | undefined): Date | undefined 
 }
 
 /** Resolve the publicly-emitted dates for a blog post. Pure — safe on both
- * server (JSON-LD/metadata) and client (visible labels). */
+ * server (JSON-LD/metadata) and client (visible labels). Tolerant of the
+ * string dates unstable_cache hands back on a cache hit (Date columns
+ * JSON-serialize to ISO strings) and of unparseable values. */
 export function resolveBlogDates(source: BlogDateSource): ResolvedBlogDates {
   const published = toValidDate(source.published_at) ?? toValidDate(source.created_at);
-  const updated = toValidDate(source.updated_at);
+  const contentUpdated = toValidDate(source.content_updated_at);
 
   const datePublished = published?.toISOString();
 
   const isGenuineEdit =
-    updated !== undefined &&
+    contentUpdated !== undefined &&
     published !== undefined &&
-    updated.getTime() > published.getTime() + MIN_MODIFIED_GAP_MS &&
-    source.updated_at_cluster_count === 1;
+    contentUpdated.getTime() > published.getTime() + MIN_MODIFIED_GAP_MS;
 
   return {
     ...(datePublished && { datePublished }),
-    ...(isGenuineEdit && { dateModified: updated.toISOString() }),
+    ...(isGenuineEdit && { dateModified: contentUpdated.toISOString() }),
   };
 }

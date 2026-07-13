@@ -11,15 +11,7 @@ import {
 import { DbExternalProductRow } from '../project-mappers';
 import { getAssetUrl, getOptionalAssetUrl } from '../../storage';
 import { buildLocalized, buildLocalizedOptional } from '../../utils';
-import { BULK_TOUCH_CLUSTER_WINDOW_MINUTES } from '../../blog-dates';
 import type { BlogPost, BlogRelatedProject } from '../../types';
-
-/**
- * SQL interval fragment for the bulk-touch cluster window (see
- * lib/blog-dates.ts). `sql.raw` is safe here: the interpolated value is a
- * compile-time numeric constant, never user input.
- */
-const BULK_CLUSTER_WINDOW_SQL = sql.raw(`interval '${BULK_TOUCH_CLUSTER_WINDOW_MINUTES} minutes'`);
 
 /** Default number of blog posts per page */
 export const BLOG_POSTS_PER_PAGE = 10;
@@ -182,6 +174,7 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
           projectId: blogPostsTable.projectId,
           createdAt: blogPostsTable.createdAt,
           updatedAt: blogPostsTable.updatedAt,
+          contentUpdatedAt: blogPostsTable.contentUpdatedAt,
           localizations: blogPostsTable.localizations,
         })
         .from(blogPostsTable)
@@ -196,30 +189,6 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
 
     const row = rows[0];
     if (!row) return null;
-
-    // How many blog rows (published or not — bulk scripts touch both) were
-    // written within ±BULK_TOUCH_CLUSTER_WINDOW_MINUTES of this row's
-    // updated_at, including itself. Bulk maintenance scripts (translation
-    // backfills, link rewrites, content backfills) either stamp every row
-    // with one `now()` or loop row-by-row minutes apart — both cluster in
-    // time, so any neighbor inside the window is a bulk-write fingerprint and
-    // lib/blog-dates.ts suppresses dateModified instead of emitting a fake
-    // edit date. Cheap (~250 rows, runs only on per-slug cache miss).
-    //
-    // PRECISION: the comparison is entirely in SQL, keyed by row id — never
-    // `eq(updatedAt, row.updatedAt)`. Postgres stores microseconds; a JS Date
-    // param is ms-truncated and matches ZERO rows (not even the row itself),
-    // which silently disabled this gate in the first version of the fix.
-    let updatedAtClusterCount: number | undefined;
-    if (row.updatedAt) {
-      const cluster = await db
-        .select({ value: count() })
-        .from(blogPostsTable)
-        .where(sql`${blogPostsTable.updatedAt} BETWEEN
-          (SELECT b.updated_at FROM blog_posts b WHERE b.id = ${row.id}) - ${BULK_CLUSTER_WINDOW_SQL}
-          AND (SELECT b.updated_at FROM blog_posts b WHERE b.id = ${row.id}) + ${BULK_CLUSTER_WINDOW_SQL}`);
-      updatedAtClusterCount = cluster[0]?.value ?? undefined;
-    }
 
     // Fetch related project and external products in parallel if projectId is set
     let relatedProject: BlogRelatedProject | undefined;
@@ -270,7 +239,9 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
       published_at: row.publishedAt ?? undefined,
       created_at: row.createdAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
-      updated_at_cluster_count: updatedAtClusterCount,
+      // Honest dateModified source — written only by the admin content-save
+      // path, never by bulk/translation/cron scripts (lib/blog-dates.ts).
+      content_updated_at: row.contentUpdatedAt ?? undefined,
       meta_title: (row.metaTitleEn || row.metaTitleZh)
         ? buildLocalized('metaTitle', row.metaTitleEn ?? '', row.metaTitleZh ?? '', row.localizations)
         : undefined,
@@ -296,30 +267,22 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
 );
 
 /** Fetch all published blog post slugs with dates (for sitemap). Uncached — see getProjectSlugsFromDb. */
-export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; updatedAt: Date | null; publishedAt: Date | null; createdAt: Date | null; updatedAtClusterCount: number; featuredImageUrl: string | null; nativeContentKeys: string[] }[]> {
+export async function getBlogPostSlugsFromDb(): Promise<{ slug: string; contentUpdatedAt: Date | null; publishedAt: Date | null; createdAt: Date | null; featuredImageUrl: string | null; nativeContentKeys: string[] }[]> {
   return uncachedQuery('getBlogPostSlugsFromDb', async () => {
     const rows = await db
       .select({
         slug: blogPostsTable.slug,
-        updatedAt: blogPostsTable.updatedAt,
         publishedAt: blogPostsTable.publishedAt,
         createdAt: blogPostsTable.createdAt,
-        // Bulk-touch cluster size for this row (see getBlogPostBySlugFromDb).
-        // Lets the sitemap run the same resolveBlogDates gate as the page's
-        // JSON-LD, so <lastmod> and dateModified never contradict each other
-        // (pre-2026-07-13 the sitemap advertised raw bulk-stamp updated_at
-        // while the page honestly omitted dateModified). Column-to-column
-        // comparison — full microsecond precision, no JS round-trip.
-        // The outer column MUST be written as a raw qualified name: in a
-        // SELECT-list fragment drizzle renders ${blogPostsTable.updatedAt}
-        // UNqualified ("updated_at"), which the inner scope resolves to
-        // b.updated_at — turning the BETWEEN into a tautology that counts
-        // every row in the table (empirically: 250 for all rows).
-        updatedAtClusterCount: sql<number>`(
-          SELECT count(*)::int FROM blog_posts b
-          WHERE b.updated_at BETWEEN blog_posts.updated_at - ${BULK_CLUSTER_WINDOW_SQL}
-            AND blog_posts.updated_at + ${BULK_CLUSTER_WINDOW_SQL}
-        )`,
+        // Honest dateModified source — written only by the admin content-save
+        // path, never by bulk/translation/cron scripts. Lets the sitemap run
+        // the exact same resolveBlogDates gate as the page's BlogPosting
+        // JSON-LD, so <lastmod> and dateModified can never contradict each
+        // other. A plain column read: it replaced the pre-2026-07-13 O(n^2)
+        // correlated count(*) bulk-touch cluster subquery (which re-ran on
+        // every crawler fetch of the force-dynamic /sitemap.xml — review
+        // finding #28).
+        contentUpdatedAt: blogPostsTable.contentUpdatedAt,
         featuredImageUrl: blogPostsTable.featuredImageUrl,
         // `content<Suffix>` keys (e.g. contentJa) whose value is a real native
         // translation — non-empty and different from the EN body. Mirrors the

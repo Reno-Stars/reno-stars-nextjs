@@ -54,9 +54,17 @@ interface BlogPostPageProps {
   /** Slim slug+title projections — see app/[locale]/blog/[slug]/page.tsx. */
   services?: RelatedLink[];
   areas?: RelatedAreaLink[];
+  /**
+   * Live Google review count (google_reviews_cache.userRatingCount), threaded
+   * from the server page. Drives the "N+ Vancouver clients" social-proof line
+   * below — floored to the nearest 5 for a stable figure, never a hardcoded
+   * literal (was "75+"). Absent/0 → number-free phrasing, so the copy stays
+   * honest even before the count is wired in.
+   */
+  reviewCount?: number;
 }
 
-export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
@@ -64,12 +72,12 @@ export default function BlogPostPage({ locale, post, company, services = [], are
   const localizedAreas = areas;
   // Visible published/updated labels use the SAME resolved dates as the
   // BlogPosting JSON-LD and OpenGraph times (lib/blog-dates.ts): real
-  // published_at (fallback created_at), and an "Updated" date only when
-  // updated_at is a genuine row-specific edit — bulk-script touches
-  // (translation backfills stamping 30+ rows with one timestamp) must not
-  // surface as a fake on-page freshness claim. resolveBlogDates also handles
-  // unstable_cache's JSON serialization (Date columns arrive as strings on
-  // cache hits) and unparseable values.
+  // published_at (fallback created_at), and an "Updated" date only from
+  // content_updated_at — the write-side signal stamped solely by the admin
+  // content-save path, so bulk-script touches (translation backfills, the
+  // SEO-builder cron) can never surface as a fake on-page freshness claim.
+  // resolveBlogDates also handles unstable_cache's JSON serialization (Date
+  // columns arrive as strings on cache hits) and unparseable values.
   const { publishedAt, updatedAt } = useMemo(() => {
     const { datePublished, dateModified } = resolveBlogDates(post);
     return {
@@ -77,6 +85,14 @@ export default function BlogPostPage({ locale, post, company, services = [], are
       updatedAt: dateModified ? new Date(dateModified) : null,
     };
   }, [post]);
+
+  // Social-proof figure wired to the live google_reviews_cache count (via the
+  // reviewCount prop), floored to the nearest 5 for a stable "N+" — never a
+  // hardcoded number. Below 5 or absent → number-free phrasing so the sentence
+  // reads honestly ("Read what our Vancouver clients say").
+  const reviewCountPrefix = reviewCount && reviewCount >= 5
+    ? `${Math.floor(reviewCount / 5) * 5}+ `
+    : '';
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -124,8 +140,9 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   {post.author}
                 </span>
               )}
-              {/* resolveBlogDates already enforces updated > published + 24h
-                  and suppresses bulk-touch timestamps — non-null means show. */}
+              {/* resolveBlogDates already enforces content_updated_at >
+                  published + 24h and only trusts the admin-stamped edit
+                  signal — non-null means show. */}
               {updatedAt && (
                 <span className="flex items-center gap-1.5" style={{ color: TEXT_MID }}>
                   {t('blog.updated')}{' '}
@@ -500,7 +517,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              Read what our 75+ Vancouver clients say →
+              Read what our {reviewCountPrefix}Vancouver clients say →
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link

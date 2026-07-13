@@ -377,19 +377,20 @@ export interface BlogPost {
   /** Row creation date — fallback publication signal for schema dates when
    *  published_at was reset by past admin-save bugs (see lib/blog-dates.ts) */
   created_at?: Date;
-  /** Last updated date */
+  /** Last DB write — poisoned by bulk maintenance scripts (translation
+   *  backfills, link rewrites, the SEO-builder cron); NOT a reliable edit
+   *  signal. See content_updated_at + lib/blog-dates.ts. */
   updated_at?: Date;
   /**
-   * Number of blog rows (published or not) written within the bulk-touch
-   * cluster window (±BULK_TOUCH_CLUSTER_WINDOW_MINUTES, lib/blog-dates.ts)
-   * of this row's `updated_at`, including this row. 1 = isolated write =
-   * genuine row-specific edit; >= 2 = bulk-touch cluster (translation
-   * backfills etc. stamp many rows with one `now()` OR loop row-by-row
-   * minutes apart — both cluster in time). Consumed by lib/blog-dates.ts to
-   * decide whether dateModified is honest. Only populated by
-   * getBlogPostBySlugFromDb.
+   * Timestamp of the most recent GENUINE admin content edit — written only by
+   * the admin content-save path (updateBlogPost), never by bulk/translation/
+   * cron scripts. lib/blog-dates.ts uses it directly as the honest
+   * `dateModified` source (emitted only when meaningfully later than the
+   * publication date). NULL/undefined → dateModified omitted. Replaced the
+   * `updated_at_cluster_count` bulk-touch heuristic (review findings
+   * #8/#30/#23/#28, 2026-07-13).
    */
-  updated_at_cluster_count?: number;
+  content_updated_at?: Date;
   /** SEO meta title (max 70 chars) — content-team authored */
   meta_title?: Localized<string>;
   /** SEO meta description (max 155 chars) — content-team authored */
