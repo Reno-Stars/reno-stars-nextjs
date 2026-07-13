@@ -725,8 +725,14 @@ export const projectReviews = pgTable(
     rating: integer('rating').notNull(),
     /** Verbatim review text (never translated/edited). */
     body: text('body').notNull(),
-    /** Language of `body`: 'en' | 'zh'. */
-    bodyLang: varchar('body_lang', { length: 5 }).default('en').notNull(),
+    /**
+     * BCP-47 language tag of `body` — any of the 14 site locales
+     * (REVIEW_BODY_LANGS in lib/project-reviews.ts), drives the `lang`
+     * attribute on the verbatim quote and Schema.org `inLanguage`. varchar(10)
+     * (widened from 5 in migration 0008) so the 7-char `zh-Hant` (Traditional
+     * Chinese) fits — a 繁體 review is no longer mislabeled as `zh`.
+     */
+    bodyLang: varchar('body_lang', { length: 10 }).default('en').notNull(),
     /** Publication date; month precision — day is normalized to the 1st. */
     reviewDate: date('review_date', { mode: 'string' }).notNull(),
     /** Verbatim owner reply on the review, when fully legible/available. */

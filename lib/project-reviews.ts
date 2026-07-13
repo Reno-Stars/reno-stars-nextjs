@@ -21,14 +21,16 @@ export const REVIEW_SOURCES = ['google', 'yelp', 'houzz', 'facebook', 'homestars
 export type ReviewSource = (typeof REVIEW_SOURCES)[number];
 
 /**
- * Languages a verified review body may be recorded in — the site's supported
- * locales that fit the `project_reviews.body_lang` varchar(5) column. This is
- * every locale except `zh-Hant` (7 chars); a Traditional-Chinese review is
- * recorded as `zh` (the body is shown verbatim and lang-agnostically, and `zh`
- * is a valid superset language tag). Widened from the old ['en','zh'] so a
- * Korean/Japanese/French verified review can be recorded truthfully (#10).
+ * Languages a verified review body may be recorded in — ALL 14 supported site
+ * locales, including `zh-Hant` (Traditional Chinese). The old length<=5 filter
+ * excluded `zh-Hant` (7 chars) because `project_reviews.body_lang` was
+ * varchar(5), which forced a 繁體 review to be mislabeled as `zh` — the wrong
+ * `lang`/`inLanguage` on a verbatim quote. Migration 0008 widened the column to
+ * varchar(10), so every locale now fits and the filter is gone. This is the
+ * SAME list the admin form's language <select> and the server action's
+ * validation read, so they can't drift.
  */
-export const REVIEW_BODY_LANGS: readonly string[] = locales.filter((l) => l.length <= 5);
+export const REVIEW_BODY_LANGS: readonly string[] = locales;
 
 /** Serializable review shape passed from the server page into client components. */
 export interface ProjectReviewDisplay {
@@ -38,7 +40,7 @@ export interface ProjectReviewDisplay {
   rating: number;
   /** Verbatim review text — never translated or edited (it is a quote). */
   body: string;
-  /** Language of `body`: 'en' | 'zh'. */
+  /** BCP-47 language tag of `body` (one of REVIEW_BODY_LANGS, e.g. 'en', 'zh', 'zh-Hant'). */
   bodyLang: string;
   /** ISO date string 'YYYY-MM-DD'; month precision (day normalized to 01). */
   reviewDate: string;

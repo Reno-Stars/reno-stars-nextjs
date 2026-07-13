@@ -140,6 +140,22 @@ describe('Project Review Actions', () => {
       );
     });
 
+    it('should accept and store zh-Hant (7 chars — fits the widened varchar(10) column)', async () => {
+      // Regression guard for the mislabeling bug: zh-Hant (Traditional Chinese)
+      // was previously dropped by REVIEW_BODY_LANGS' length<=5 filter and the
+      // varchar(5) column, so a 繁體 review could only be stored as 'zh'. It must
+      // now round-trip verbatim so the card `lang` attr / Schema inLanguage are
+      // correct.
+      const result = await createProjectReview(
+        {},
+        validFormData({ bodyLang: 'zh-Hant', body: '真心大推Reno Stars！整個裝修過程非常專業。' }),
+      );
+      expect(result.success).toBe(true);
+      expect(h.insertValues).toHaveBeenCalledWith(
+        expect.objectContaining({ bodyLang: 'zh-Hant' }),
+      );
+    });
+
     it('should reject an unsupported review source', async () => {
       const result = await createProjectReview({}, validFormData({ source: 'craigslist' }));
       expect(result.error).toBe('Review source is not a supported platform.');
