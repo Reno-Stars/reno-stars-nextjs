@@ -33,7 +33,9 @@
     "linkSectionSubtitle": "Click your city for renovation projects, neighbourhood specifics, and a free local quote.",
     "neighbourhoodsTitle": "我們在{area}提供服務的社區",
     "neighbourhoodsSubtitle": "這些{area}社區的改造計畫。當您要求報價時，請提及您的鄰居 - 我們了解每個人的許可怪癖和供應商物流。",
-    "nearbyAreas": "我們也為附近地區提供服務"
+    "nearbyAreas": "我們也為附近地區提供服務",
+    "renovationServicesIn": "{city}的裝修服務",
+    "renovationServicesInSubtitle": "了解我們在{city}提供的各項裝修服務。"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

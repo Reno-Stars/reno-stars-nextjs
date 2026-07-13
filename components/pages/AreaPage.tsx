@@ -29,6 +29,7 @@ import type { AreaReviewDisplay } from '@/lib/project-reviews';
 import { isDuplicateReview } from '@/lib/reviews-hub';
 import { pickLocale } from '@/lib/utils';
 import AreaClientReviews from '@/components/areas/AreaClientReviews';
+import AreaServiceCityLinks from '@/components/areas/AreaServiceCityLinks';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
@@ -414,6 +415,21 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </div>
       </section>
+
+      {/* Renovation services in {City} — hub → spoke internal-link band.
+          ADDITIVE (sits alongside the "Our Services in {area}" card grid
+          above; nothing removed). One keyword-rich link per service to its
+          /services/{service}/{city} combo page ("Kitchen Renovation in
+          {City} →"). Builds body-content link equity + exact-match anchor
+          text toward the combo spokes so they hold rank for "{service}
+          {city}" queries, and gives visitors a direct path. Links only to
+          combos that exist (same services list as the card grid; all DB
+          service rows are show_on_services_page = true). */}
+      <AreaServiceCityLinks
+        services={services}
+        cityName={localizedArea.name}
+        citySlug={citySlug}
+      />
 
       {/* Neighbourhoods — long-tail keyword surface (e.g. "kitsilano renovation"
           → /areas/vancouver/) without programmatic neighbourhood routes. */}

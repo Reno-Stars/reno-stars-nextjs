@@ -33,7 +33,9 @@
     "linkSectionSubtitle": "개조 프로젝트, 인근 지역의 세부 사항 및 무료 지역 견적을 보려면 해당 도시를 클릭하세요.",
     "neighbourhoodsTitle": "{area}에서 우리가 봉사하는 지역",
     "neighbourhoodsSubtitle": "이 {area} 커뮤니티 전반의 혁신 프로젝트입니다. 견적을 요청할 때 귀하의 이웃을 언급하십시오. 우리는 각 지역의 허가증 특이사항과 공급업체 물류를 알고 있습니다.",
-    "nearbyAreas": "우리는 또한 인근 지역에도 서비스를 제공합니다"
+    "nearbyAreas": "우리는 또한 인근 지역에도 서비스를 제공합니다",
+    "renovationServicesIn": "{city}의 리모델링 서비스",
+    "renovationServicesInSubtitle": "{city}에서 제공하는 각 리모델링 서비스를 살펴보세요."
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

@@ -33,6 +33,8 @@
     "trustStripReviews": "{rating}★ de {count} avis Google",
     "featuredProjectHeading": "Projet récent {service} à {area}",
     "featuredProjectSubheading": "Budget réel, calendrier réel, étendue réelle de notre portefeuille.",
-    "featuredProjectCta": "Voir le projet complet"
+    "featuredProjectCta": "Voir le projet complet",
+    "renovationServicesIn": "Services de rénovation à {city}",
+    "renovationServicesInSubtitle": "Découvrez chacun de nos services de rénovation à {city}."
   }
 }
