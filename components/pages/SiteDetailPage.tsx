@@ -247,6 +247,23 @@ export default function SiteDetailPage({ site, company }: SiteDetailPageProps) {
                   />
                 </div>
               )}
+              {/* Link to the dedicated video watch page (only when one exists —
+                  requires both a hero video and a thumbnail). Consolidates
+                  video SEO signals onto /videos/[slug]/ and gives users the
+                  full-screen watch experience. */}
+              {site.hero_video && site.hero_image && (
+                <div className="mb-6">
+                  <Link
+                    href={`/videos/${site.slug}`}
+                    className="inline-flex items-center gap-2 font-semibold hover:underline"
+                    style={{ color: NAVY }}
+                  >
+                    <Video className="w-4 h-4" aria-hidden="true" />
+                    {locale === 'zh' ? '观看完整装修实拍视频' : 'Watch the full walkthrough'}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              )}
               {/* Main Image */}
               <div
                 id="area-gallery-panel"

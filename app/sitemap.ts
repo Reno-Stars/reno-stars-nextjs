@@ -545,6 +545,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           title: isZh ? `${v.titleZh}——装修实拍视频` : `${v.titleEn} — Renovation Video Tour`,
           thumbnail_loc: v.thumbnailUrl,
           description: (isZh ? v.descriptionZh : v.descriptionEn) || (isZh ? v.titleZh : v.titleEn),
+          content_loc: v.videoUrl,
+          publication_date: (v.uploadDate ?? new Date()).toISOString(),
         }],
       });
     }
