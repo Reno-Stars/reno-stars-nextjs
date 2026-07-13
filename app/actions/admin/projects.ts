@@ -348,6 +348,10 @@ export async function updateProject(
       heroImageUrl: projects.heroImageUrl,
       heroVideoUrl: projects.heroVideoUrl,
       locationCity: projects.locationCity,
+      // serviceType is in PROJECT_CARD_FIELDS (a re-type busts the reviews-by-
+      // service caches, #11); without it here oldRow.serviceType is always
+      // undefined and listingCardChanged over-busts on EVERY edit.
+      serviceType: projects.serviceType,
       badgeEn: projects.badgeEn,
       badgeZh: projects.badgeZh,
       budgetRange: projects.budgetRange,

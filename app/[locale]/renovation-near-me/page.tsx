@@ -92,7 +92,12 @@ export default async function Page({ params }: PageProps) {
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
       />
-      <NearMePage locale={locale as Locale} areas={areas} />
+      <NearMePage
+        locale={locale as Locale}
+        areas={areas}
+        googleRating={googleReviews.rating}
+        reviewCount={googleReviews.userRatingCount}
+      />
     </>
   );
 }

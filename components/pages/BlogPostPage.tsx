@@ -29,6 +29,7 @@ import { expandMarkdownLinksInHeadings } from '@/lib/utils';
 import { normalizeInternalLinks } from '@/lib/markdown-html';
 import type { Company, BlogPost } from '@/lib/types';
 import { resolveBlogDates } from '@/lib/blog-dates';
+import { flooredReviewCount } from '@/lib/project-reviews';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -54,14 +55,21 @@ interface BlogPostPageProps {
   /** Slim slug+title projections — see app/[locale]/blog/[slug]/page.tsx. */
   services?: RelatedLink[];
   areas?: RelatedAreaLink[];
+  /** Live Google review count (userRatingCount) from getGoogleReviews() — never
+   *  a hardcoded literal. Absent → the /reviews/ CTA renders count-free. */
+  reviewCount?: number;
 }
 
-export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
   const localizedServices = services;
   const localizedAreas = areas;
+  // Live review count floored to the nearest 5 for the "75+" social-proof style
+  // (77 → 75+); 0 when absent/too small so the CTA falls back to a number-free
+  // label rather than an awkward "0+".
+  const flooredCount = flooredReviewCount(reviewCount);
   // Visible published/updated labels use the SAME resolved dates as the
   // BlogPosting JSON-LD and OpenGraph times (lib/blog-dates.ts): real
   // published_at (fallback created_at), and an "Updated" date only from
@@ -501,7 +509,9 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              Read what our 75+ Vancouver clients say →
+              {flooredCount > 0
+                ? `Read what our ${flooredCount}+ Vancouver clients say →`
+                : 'Read what our Vancouver clients say →'}
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link

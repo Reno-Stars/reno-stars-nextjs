@@ -9,6 +9,7 @@ import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { getGoogleReviews } from '@/lib/google-reviews';
 import { resolveBlogDates } from '@/lib/blog-dates';
 
 interface PageProps {
@@ -181,11 +182,12 @@ export default async function Page({ params }: PageProps) {
   const localizedPost = getLocalizedBlogPost(post, locale as Locale);
   const ogImage = post.featured_image || siteImages.hero;
 
-  const [t, company, services, areas] = await Promise.all([
+  const [t, company, services, areas, googleReviews] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getCompanyFromDb(),
     getServicesFromDb(),
     getServiceAreasFromDb(),
+    getGoogleReviews(),
   ]);
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
@@ -229,6 +231,7 @@ export default async function Page({ params }: PageProps) {
         // EVERY blog page (Semrush "Large HTML", 2026-07-08 audit).
         services={services.map((s) => { const l = getLocalizedService(s, locale as Locale); return { slug: l.slug, title: l.title }; })}
         areas={areas.map((a) => { const l = getLocalizedArea(a, locale as Locale); return { slug: l.slug, name: l.name }; })}
+        reviewCount={googleReviews.userRatingCount}
       />
     </>
   );
