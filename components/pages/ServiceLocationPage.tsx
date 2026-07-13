@@ -279,7 +279,7 @@ export default function ServiceLocationPage({
   // project of this type (service-area business — not a false claim of past work).
   const availabilityCta = zhLoc
     ? `我们服务${cityT}地区，欢迎为您承接${svcT}工程——查看以上相关案例并获取免费报价。`
-    : `We serve ${cityT} and would love to take on your ${svcT.toLowerCase()} renovation — explore our related work above and get a free quote.`;
+    : `We serve ${cityT} and would love to take on your ${svcT.toLowerCase()} — explore our related work above and get a free quote.`;
 
   // Cost stat heading/subtitle — city-specific when we have ≥2 local projects,
   // else a clearly-labelled general Metro-Vancouver range.
