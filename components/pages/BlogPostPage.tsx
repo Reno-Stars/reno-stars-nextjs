@@ -54,17 +54,9 @@ interface BlogPostPageProps {
   /** Slim slug+title projections — see app/[locale]/blog/[slug]/page.tsx. */
   services?: RelatedLink[];
   areas?: RelatedAreaLink[];
-  /**
-   * Live Google review count (google_reviews_cache.userRatingCount), threaded
-   * from the server page. Drives the "N+ Vancouver clients" social-proof line
-   * below — floored to the nearest 5 for a stable figure, never a hardcoded
-   * literal (was "75+"). Absent/0 → number-free phrasing, so the copy stays
-   * honest even before the count is wired in.
-   */
-  reviewCount?: number;
 }
 
-export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company, services = [], areas = [] }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
@@ -85,14 +77,6 @@ export default function BlogPostPage({ locale, post, company, services = [], are
       updatedAt: dateModified ? new Date(dateModified) : null,
     };
   }, [post]);
-
-  // Social-proof figure wired to the live google_reviews_cache count (via the
-  // reviewCount prop), floored to the nearest 5 for a stable "N+" — never a
-  // hardcoded number. Below 5 or absent → number-free phrasing so the sentence
-  // reads honestly ("Read what our Vancouver clients say").
-  const reviewCountPrefix = reviewCount && reviewCount >= 5
-    ? `${Math.floor(reviewCount / 5) * 5}+ `
-    : '';
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -517,7 +501,7 @@ export default function BlogPostPage({ locale, post, company, services = [], are
               className="font-semibold underline hover:no-underline"
               style={{ color: NAVY }}
             >
-              Read what our {reviewCountPrefix}Vancouver clients say →
+              Read what our 75+ Vancouver clients say →
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link
