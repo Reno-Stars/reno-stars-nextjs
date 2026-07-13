@@ -136,8 +136,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   );
 
   // Real dates only — published_at (fallback created_at), and a modified time
-  // ONLY when updated_at reflects a genuine row-specific edit rather than a
-  // bulk-script touch. See lib/blog-dates.ts.
+  // ONLY from content_updated_at, the write-side edit signal stamped solely by
+  // the admin content-save path (bulk/translation/cron writes never touch it).
+  // See lib/blog-dates.ts.
   const { datePublished, dateModified } = resolveBlogDates(post);
 
   return {
@@ -195,10 +196,11 @@ export default async function Page({ params }: PageProps) {
   const faqs = extractFaqsFromContent(localizedPost.content);
 
   // Real DB dates only: datePublished = published_at (fallback created_at);
-  // dateModified emitted ONLY when updated_at is a genuine row-specific edit
-  // signal (bulk-touch clusters suppressed). See lib/blog-dates.ts — the
-  // 2026-07-10 forensics found an April post emitting a reset June
-  // datePublished and a translation-backfill timestamp as dateModified.
+  // dateModified emitted ONLY from content_updated_at — the write-side edit
+  // signal the admin content-save path stamps (bulk/translation/cron writes
+  // never touch it). See lib/blog-dates.ts — the 2026-07-10 forensics found an
+  // April post emitting a reset June datePublished and a translation-backfill
+  // timestamp as dateModified.
   const { datePublished, dateModified } = resolveBlogDates(post);
 
   return (

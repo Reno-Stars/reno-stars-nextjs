@@ -4,7 +4,10 @@ import { resolveBlogDates, MIN_MODIFIED_GAP_MS } from '@/lib/blog-dates';
 // Background (2026-07-10 bathtub forensics): BlogPosting JSON-LD emitted a
 // reset published_at and a bulk-script updated_at as dateModified. These tests
 // pin the honest-dates contract: real published_at (fallback created_at), and
-// dateModified ONLY for a genuine, row-specific, post-publication edit.
+// dateModified ONLY from content_updated_at — the write-side signal stamped
+// solely by the admin content-save path — when it is a meaningful post-
+// publication edit. (2026-07-13 review findings #8/#30/#23/#28 retired the
+// read-side ±60-min bulk-touch cluster heuristic that this replaced.)
 
 const PUBLISHED = new Date('2026-04-17T18:31:46.466Z');
 const CREATED = new Date('2026-04-01T08:00:00.000Z');
@@ -40,71 +43,71 @@ describe('resolveBlogDates — datePublished', () => {
   });
 });
 
-describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
-  it('emits dateModified for an isolated post-publication edit (cluster of 1)', () => {
+describe('resolveBlogDates — dateModified (write-side content-edit signal)', () => {
+  it('emits dateModified from a genuine post-publication content edit', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
-      updated_at: LATER_EDIT,
-      updated_at_cluster_count: 1,
+      content_updated_at: LATER_EDIT,
     });
     expect(dateModified).toBe(LATER_EDIT.toISOString());
   });
 
-  it('OMITS dateModified when other rows were written in the same window (single-stamp bulk touch)', () => {
-    // 29 rows shared the exact stamp 2026-07-10 23:14:35.880614 (translation
-    // backfill); 89 shared a 2026-06-27 stamp. Identical timestamps across
-    // rows are a bulk-write fingerprint, never independent edits.
+  it('OMITS dateModified when content_updated_at is NULL (legacy / never edited)', () => {
+    // Every row predating the column, and every post never edited since
+    // publication, has content_updated_at = NULL → honest omission. This is
+    // the state of all 250 backfilled prod rows.
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
+      content_updated_at: null,
+    });
+    expect(dateModified).toBeUndefined();
+  });
+
+  it('OMITS dateModified when content_updated_at is absent entirely', () => {
+    const { dateModified } = resolveBlogDates({ published_at: PUBLISHED });
+    expect(dateModified).toBeUndefined();
+  });
+
+  it('IGNORES a bulk-poisoned updated_at — only content_updated_at is trusted', () => {
+    // updated_at is stamped wholesale by translation backfills / the SEO cron;
+    // it is not part of BlogDateSource anymore and must never drive
+    // dateModified. Passing it as an unknown extra field changes nothing.
+    const { dateModified } = resolveBlogDates({
+      published_at: PUBLISHED,
+      // @ts-expect-error updated_at is no longer a recognized source field
       updated_at: new Date('2026-07-10T23:14:35.880Z'),
-      updated_at_cluster_count: 30,
     });
     expect(dateModified).toBeUndefined();
   });
 
-  it('OMITS dateModified for sequential bulk loops (distinct stamps, same window)', () => {
-    // 2026-07-13 review finding: bulk scripts that loop row-by-row give every
-    // row a DISTINCT updated_at (~9 min apart in the 36-post cost-index
-    // backfill), so exact-stamp matching alone leaked 41 posts. The window
-    // cluster count is >= 2 for such rows and must suppress dateModified.
-    const { dateModified } = resolveBlogDates({
-      published_at: new Date('2023-07-31T12:00:00.000Z'),
-      updated_at: new Date('2026-07-04T02:14:40.961Z'), // cost-index july-2023 row
-      updated_at_cluster_count: 7, // neighbors within ±60 min of the loop
-    });
-    expect(dateModified).toBeUndefined();
-  });
-
-  it('OMITS dateModified when the cluster size is unknown (unverifiable signal)', () => {
+  it('OMITS dateModified when the edit is within the publish window (< 24h gap)', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
-      updated_at: LATER_EDIT,
+      content_updated_at: new Date(PUBLISHED.getTime() + MIN_MODIFIED_GAP_MS - 1),
     });
     expect(dateModified).toBeUndefined();
   });
 
-  it('OMITS dateModified when updated_at is within the publish window (< 24h gap)', () => {
+  it('emits dateModified exactly at the 24h boundary + 1ms', () => {
+    const edit = new Date(PUBLISHED.getTime() + MIN_MODIFIED_GAP_MS + 1);
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
-      updated_at: new Date(PUBLISHED.getTime() + MIN_MODIFIED_GAP_MS - 1),
-      updated_at_cluster_count: 1,
+      content_updated_at: edit,
     });
-    expect(dateModified).toBeUndefined();
+    expect(dateModified).toBe(edit.toISOString());
   });
 
-  it('OMITS dateModified when updated_at precedes published_at', () => {
+  it('OMITS dateModified when content_updated_at precedes published_at', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
-      updated_at: new Date('2026-03-01T00:00:00Z'),
-      updated_at_cluster_count: 1,
+      content_updated_at: new Date('2026-03-01T00:00:00Z'),
     });
     expect(dateModified).toBeUndefined();
   });
 
   it('OMITS dateModified when there is no publication date at all', () => {
     const { dateModified } = resolveBlogDates({
-      updated_at: LATER_EDIT,
-      updated_at_cluster_count: 1,
+      content_updated_at: LATER_EDIT,
     });
     expect(dateModified).toBeUndefined();
   });
@@ -112,17 +115,23 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
   it('measures the edit gap against the created_at fallback when published_at is missing', () => {
     const { dateModified } = resolveBlogDates({
       created_at: CREATED,
-      updated_at: LATER_EDIT,
-      updated_at_cluster_count: 1,
+      content_updated_at: LATER_EDIT,
     });
     expect(dateModified).toBe(LATER_EDIT.toISOString());
   });
 
-  it('never fabricates dateModified from invalid updated_at', () => {
+  it('accepts string content_updated_at (unstable_cache JSON serialization)', () => {
+    const { dateModified } = resolveBlogDates({
+      published_at: PUBLISHED.toISOString(),
+      content_updated_at: LATER_EDIT.toISOString(),
+    });
+    expect(dateModified).toBe(LATER_EDIT.toISOString());
+  });
+
+  it('never fabricates dateModified from an invalid content_updated_at', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
-      updated_at: 'garbage',
-      updated_at_cluster_count: 1,
+      content_updated_at: 'garbage',
     });
     expect(dateModified).toBeUndefined();
   });

@@ -603,6 +603,19 @@ export const blogPosts = pgTable(
     }),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    // Timestamp of the most recent GENUINE content edit made through the admin
+    // content-save path (updateBlogPost in app/actions/admin/blog.ts). Distinct
+    // from `updated_at`, which bulk maintenance scripts (translation backfills,
+    // link rewrites, the daily 6:17 AM SEO-builder cron) stamp wholesale —
+    // making updated_at useless as a "was the article actually edited?" signal.
+    // `content_updated_at` is written ONLY by an admin content save and NEVER by
+    // bulk/translation/cron scripts, so lib/blog-dates.ts can trust it directly
+    // as the BlogPosting `dateModified` source. NULL = no post-publication
+    // content edit on record → dateModified omitted (honest). Added 2026-07-13
+    // (blog-dates review findings #8/#30/#23/#28): replaces the ±60-min
+    // bulk-touch cluster heuristic, which false-suppressed genuine edits and
+    // forced an O(n²) correlated count on the force-dynamic /sitemap.xml.
+    contentUpdatedAt: timestamp('content_updated_at'),
   localizations: jsonb('localizations').$type<Record<string, string>>().default({}).notNull(),
   // SEO-agent-managed meta overrides. Authored meta_title_* / meta_description_*
   // remain the content-team's source of truth; this column is the agent's

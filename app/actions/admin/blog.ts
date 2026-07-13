@@ -182,8 +182,17 @@ export async function updateBlogPost(
       data.publishedAt = currentPost[0]?.publishedAt ?? (data.isPublished ? new Date() : null);
     }
 
+    // Stamp content_updated_at on this genuine admin content edit. This is the
+    // ONLY writer of the column — lib/blog-dates.ts trusts it as the honest
+    // BlogPosting `dateModified` source precisely because bulk/translation/cron
+    // scripts (which poison the wholesale `updated_at`) never touch it. Reuse
+    // data.updatedAt so both columns share one instant. dateModified still only
+    // surfaces when this is meaningfully later than published_at (24h gate in
+    // resolveBlogDates), so a same-session publish+edit stays quiet while a real
+    // later edit lights up. createBlogPost deliberately leaves it NULL: a brand-
+    // new post has no post-publication edit to advertise yet.
     const localizations = parseLocalizations(formData);
-    const updated = await db.update(blogPosts).set({ ...data, localizations }).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
+    const updated = await db.update(blogPosts).set({ ...data, localizations, contentUpdatedAt: data.updatedAt }).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
     if (updated.length === 0) {
       return { error: 'Blog post not found.' };
     }
