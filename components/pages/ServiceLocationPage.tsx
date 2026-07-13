@@ -24,6 +24,13 @@ import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
 import { renderProseHtml } from '@/lib/markdown-html';
+import {
+  extractServiceCitySlice,
+  firstParagraph,
+  summarizeProjectCosts,
+  pickComboProjects,
+} from '@/lib/seo/combo-content';
+import { comboHeroSubtitle } from '@/lib/data/seo-overrides';
 
 interface FaqItem {
   id: string;
@@ -42,6 +49,8 @@ interface ServiceLocationPageProps {
   areas?: ServiceArea[];
   faqs?: FaqItem[];
   areaProjects?: Project[];
+  /** Every published project — powers the honest related-project fallback. */
+  projectPool?: Project[];
 }
 
 // 2026-06-25: City-specific blog post lookup for service+city pages.
@@ -149,29 +158,59 @@ const SERVICE_CITY_BLOG: Partial<Record<string, Record<string, string>>> = {
 
 export default function ServiceLocationPage({
   locale, serviceSlug, citySlug, company, service, area,
-  services = [], areas = [], faqs = [], areaProjects = [],
+  services = [], areas = [], faqs = [], areaProjects = [], projectPool = [],
 }: ServiceLocationPageProps) {
   const t = useTranslations();
+  const zhLoc = locale === 'zh' || locale === 'zh-Hant';
 
   const localizedService = useMemo(() => getLocalizedService(service, locale), [service, locale]);
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
 
-  // Localize and filter projects: prefer area-specific, then service-type matches
-  const relatedProjects = useMemo(() => {
-    const localized = areaProjects.map((p) => getLocalizedProject(p, locale));
-    // Prioritize projects matching the service type
-    const serviceMatch = localized.filter((p) => p.service_type === serviceSlug);
-    const others = localized.filter((p) => p.service_type !== serviceSlug);
-    return [...serviceMatch, ...others].slice(0, 3);
-  }, [areaProjects, locale, serviceSlug]);
+  // Localized project pools. `localizedAreaProjects` = projects in THIS city
+  // (drives the city+service cost stat). `pool` = every published project
+  // (drives the honest related-project fallback below).
+  const localizedAreaProjects = useMemo(
+    () => areaProjects.map((p) => getLocalizedProject(p, locale)),
+    [areaProjects, locale],
+  );
+  const pool = useMemo(
+    () => (projectPool.length ? projectPool : areaProjects).map((p) => getLocalizedProject(p, locale)),
+    [projectPool, areaProjects, locale],
+  );
 
-  // Single best matching project for the featured-case-study card. Prefers
-  // service-type AND city match; falls back to first relatedProjects entry.
-  const featuredProject = useMemo(() => {
-    if (relatedProjects.length === 0) return null;
-    const exactMatch = relatedProjects.find((p) => p.service_type === serviceSlug);
-    return exactMatch ?? relatedProjects[0];
-  }, [relatedProjects, serviceSlug]);
+  // Honest project selection: real city×service projects if any, otherwise
+  // RELATED real projects (same-service other-city, then same-city
+  // other-service), labelled as related — never presented as local to {city}.
+  const comboProjects = useMemo(
+    () => pickComboProjects(pool, area.name.en, serviceSlug),
+    [pool, area.name.en, serviceSlug],
+  );
+  const relatedProjects = comboProjects.projects;
+  const relation = comboProjects.relation;
+  const hasLocalWork = relation === 'exact';
+  const featuredProject = relatedProjects[0] ?? null;
+
+  // Service-relevant slice of THIS city's area content — kitchen combo pulls the
+  // city's kitchen section, bathroom pulls the bathroom section, etc. Differs by
+  // BOTH city and service and replaces the old full-area-content duplicate. Null
+  // (→ intro-only) when the city has no section for this service.
+  const citySlice = useMemo(
+    () => extractServiceCitySlice(localizedArea.content, serviceSlug),
+    [localizedArea.content, serviceSlug],
+  );
+
+  // Short, real service×city intro (first paragraph of the service
+  // long_description) — replaces the old full long_description dump.
+  const introParagraph = useMemo(
+    () => firstParagraph(localizedService.long_description),
+    [localizedService.long_description],
+  );
+  const introHtml = useMemo(() => {
+    const lead = zhLoc
+      ? `聚星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`
+      : `Reno Stars provides ${localizedService.title.toLowerCase()} for homeowners across ${localizedArea.name} and Metro Vancouver.`;
+    return renderProseHtml(introParagraph ? `${lead}\n\n${introParagraph}` : lead);
+  }, [introParagraph, zhLoc, localizedArea.name, localizedService.title]);
 
   // Other areas offering the same service (exclude current), pre-localized
   const otherAreas = useMemo(
@@ -192,38 +231,68 @@ export default function ServiceLocationPage({
     [services, serviceSlug, locale],
   );
 
-  // City+service-scoped cost summary from completed-project budget_range values.
-  // Targets "{service} renovation {city}" queries (combo pages collectively at
-  // pos 14-27 across the {svc}+{city} grid). Real DB data only — never
-  // fabricated. Section hides itself if <2 matching projects exist.
-  const cityServiceCostSummary = useMemo(() => {
-    const ranges = areaProjects
-      .filter((p) => p.service_type === serviceSlug)
-      .map((p) => {
-        const r = p.budget_range;
-        if (!r) return null;
-        const nums = r.match(/[\d,]+/g);
-        if (!nums || nums.length < 1) return null;
-        const lo = parseInt(nums[0].replace(/,/g, ''), 10);
-        const hi = nums.length > 1 ? parseInt(nums[1].replace(/,/g, ''), 10) : lo;
-        if (Number.isNaN(lo) || Number.isNaN(hi)) return null;
-        return { lo, hi, mid: Math.round((lo + hi) / 2) };
-      })
-      .filter((r): r is { lo: number; hi: number; mid: number } => r !== null);
-
-    if (ranges.length < 2) return null;
-    const allMin = Math.min(...ranges.map((r) => r.lo));
-    const allMax = Math.max(...ranges.map((r) => r.hi));
-    const avg = Math.round(ranges.reduce((s, r) => s + r.mid, 0) / ranges.length);
-    return { count: ranges.length, allMin, allMax, avg };
-  }, [areaProjects, serviceSlug]);
+  // City+service cost stat from completed LOCAL projects (real DB data, hides
+  // itself below 2 matches). When absent, fall back to a REAL Metro-Vancouver
+  // range for the service aggregated across all completed projects — clearly
+  // labelled as a general range below, never city-specific, never fabricated.
+  const cityServiceCostSummary = useMemo(
+    () => summarizeProjectCosts(localizedAreaProjects.filter((p) => p.service_type === serviceSlug), 2),
+    [localizedAreaProjects, serviceSlug],
+  );
+  const serviceGeneralCostSummary = useMemo(
+    () => summarizeProjectCosts(pool.filter((p) => p.service_type === serviceSlug), 2),
+    [pool, serviceSlug],
+  );
+  const costSummary = cityServiceCostSummary ?? serviceGeneralCostSummary;
+  const costIsCitySpecific = cityServiceCostSummary !== null;
 
   const formatPrice = (n: number): string => {
     if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
     return '$' + n.toLocaleString('en-CA');
   };
 
+  // H1 leads with the specific "{service} in {city}" — distinct from the
+  // /areas/{city} hub, which leads with the generic "Home Renovations in {city}".
   const title = t('areas.serviceInArea', { service: localizedService.title, area: localizedArea.name });
+  const svcT = localizedService.title;
+  const cityT = localizedArea.name;
+
+  // Relation-aware, honest headings for the project blocks. The heading always
+  // matches the real source of the projects shown (see pickComboProjects).
+  const featuredHeading = (() => {
+    switch (relation) {
+      case 'exact': return t('areas.featuredProjectHeading', { area: cityT, service: svcT });
+      case 'same-service': return zhLoc ? `近期${svcT}项目` : `Recent ${svcT} Project`;
+      case 'same-city': return zhLoc ? `我们在${cityT}的近期项目` : `Our Recent Work in ${cityT}`;
+      default: return zhLoc ? '近期装修项目' : 'Recent Renovation Project';
+    }
+  })();
+  const relatedHeading = (() => {
+    switch (relation) {
+      case 'exact': return t('areas.areaProjects', { area: cityT });
+      case 'same-service': return zhLoc ? `大温地区相关${svcT}项目` : `Related ${svcT} Projects Across Metro Vancouver`;
+      case 'same-city': return zhLoc ? `我们在${cityT}的近期装修项目` : `Our Recent Renovation Work in ${cityT}`;
+      default: return zhLoc ? '大温地区近期项目' : 'Recent Projects Across Metro Vancouver';
+    }
+  })();
+  // Honest service-area availability line for combos with no completed LOCAL
+  // project of this type (service-area business — not a false claim of past work).
+  const availabilityCta = zhLoc
+    ? `我们服务${cityT}地区，欢迎为您承接${svcT}工程——查看以上相关案例并获取免费报价。`
+    : `We serve ${cityT} and would love to take on your ${svcT.toLowerCase()} renovation — explore our related work above and get a free quote.`;
+
+  // Cost stat heading/subtitle — city-specific when we have ≥2 local projects,
+  // else a clearly-labelled general Metro-Vancouver range.
+  const costHeading = costIsCitySpecific
+    ? (zhLoc ? `${cityT}${svcT}真实费用` : `Real ${svcT} Costs in ${cityT}`)
+    : (zhLoc ? `${svcT}费用区间 · 大温地区` : `${svcT} Cost Range — Metro Vancouver`);
+  const costSubtitle = !costSummary ? '' : costIsCitySpecific
+    ? (zhLoc
+        ? `基于 ${costSummary.count} 个已完工 ${cityT} ${svcT}项目`
+        : `Based on ${costSummary.count} completed ${svcT.toLowerCase()} projects in ${cityT}`)
+    : (zhLoc
+        ? `来自大温地区 ${costSummary.count} 个已完工${svcT}项目的综合区间（非${cityT}专属数据）`
+        : `General range from ${costSummary.count} completed ${svcT.toLowerCase()} projects across Metro Vancouver — not ${cityT}-specific`);
 
   const benefits = [
     t('locationBenefits.localExpertise'),
@@ -264,7 +333,7 @@ export default function ServiceLocationPage({
             {title}
           </h1>
           <p className="text-lg text-white/70 max-w-2xl">
-            {localizedArea.description || localizedService.description}
+            {comboHeroSubtitle(localizedService.title, localizedArea.name, hasLocalWork, locale)}
           </p>
         </div>
       </section>
@@ -272,43 +341,42 @@ export default function ServiceLocationPage({
       {/* zh/zh-Hant only — Chinese-market trust band (renders null elsewhere) */}
       <ZhTrustLine locale={locale} />
 
-      {/* Real {service} costs in {city} — DB-backed cost stat block. Sits
-          immediately under the hero so users + Google see real $-data above
-          the fold. Targets the "{service} renovation {city}" query intent. */}
-      {cityServiceCostSummary && (
+      {/* Real {service} costs — DB-backed cost stat block. Sits immediately
+          under the hero so users + Google see real $-data above the fold.
+          Prefers a city+service figure from completed LOCAL projects; falls
+          back to a clearly-labelled general Metro-Vancouver range for the
+          service. Real DB data only — never fabricated (rule §8). */}
+      {costSummary && (
         <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-5xl mx-auto">
             <h2 className="text-xl md:text-2xl font-bold mb-2" style={{ color: TEXT }}>
-              {locale === 'zh' || locale === 'zh-Hant'
-                ? `${localizedArea.name}${localizedService.title}真实费用`
-                : `Real ${localizedService.title} Costs in ${localizedArea.name}`}
+              {costHeading}
             </h2>
             <p className="text-sm mb-6" style={{ color: TEXT_MID }}>
-              {locale === 'zh' || locale === 'zh-Hant'
-                ? `基于 ${cityServiceCostSummary.count} 个已完工 ${localizedArea.name} ${localizedService.title}项目`
-                : locale === 'ja'
-                  ? `${localizedArea.name}で完了した${cityServiceCostSummary.count}件の${localizedService.title}プロジェクトに基づく`
-                  : locale === 'ko'
-                    ? `${localizedArea.name}에서 완료된 ${cityServiceCostSummary.count}개 ${localizedService.title} 프로젝트 기준`
-                    : `Based on ${cityServiceCostSummary.count} completed ${localizedService.title.toLowerCase()} projects in ${localizedArea.name}`}
+              {costSubtitle}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '价格区间' : 'Price Range',
-                  value: `${formatPrice(cityServiceCostSummary.allMin)} – ${formatPrice(cityServiceCostSummary.allMax)}`,
+                  label: zhLoc ? '价格区间' : 'Price Range',
+                  value: `${formatPrice(costSummary.allMin)} – ${formatPrice(costSummary.allMax)}`,
                 },
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '中位数' : 'Average',
-                  value: formatPrice(cityServiceCostSummary.avg),
+                  // costSummary.avg is the arithmetic MEAN of project-budget
+                  // midpoints (see summarizeProjectCosts), so the label must say
+                  // 平均/Average — not 中位数 (median), which it is not.
+                  label: zhLoc ? '平均' : 'Average',
+                  value: formatPrice(costSummary.avg),
                 },
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '已完成项目' : 'Projects',
-                  value: String(cityServiceCostSummary.count),
+                  label: costIsCitySpecific
+                    ? (zhLoc ? '已完成项目' : 'Projects')
+                    : (zhLoc ? '大温项目' : 'Metro Projects'),
+                  value: String(costSummary.count),
                 },
                 {
-                  label: locale === 'zh' || locale === 'zh-Hant' ? '保修' : 'Warranty',
-                  value: locale === 'zh' || locale === 'zh-Hant' ? '3 年' : '3 yrs',
+                  label: zhLoc ? '保修' : 'Warranty',
+                  value: zhLoc ? '3 年' : '3 yrs',
                 },
               ].map((stat) => (
                 <div key={stat.label} className="rounded-xl p-4 text-center" style={{ backgroundColor: CARD, boxShadow: neu() }}>
@@ -321,37 +389,37 @@ export default function ServiceLocationPage({
         </section>
       )}
 
-      {/* Service Description — accepts markdown OR HTML */}
-      {localizedService.long_description && (
-        <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
-          <div className="max-w-3xl mx-auto">
-            <h2 className="sr-only">
-              {t('areas.aboutService', { service: localizedService.title, area: localizedArea.name })}
-            </h2>
-            <div
-              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-strong:text-[#1B365D]"
-              style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{ __html: renderProseHtml(localizedService.long_description) }}
-            />
-          </div>
-        </section>
-      )}
+      {/* Service × city intro — a short, real framing built from the service
+          long_description's first paragraph (2026-07: replaces the full
+          long_description dump, which was identical across all 14 cities of a
+          service). The full essay still lives on the /services/{service} hub. */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="sr-only">
+            {t('areas.aboutService', { service: localizedService.title, area: localizedArea.name })}
+          </h2>
+          <div
+            className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-p:leading-relaxed prose-strong:text-[#1B365D]"
+            style={{ color: TEXT_MID }}
+            dangerouslySetInnerHTML={{ __html: introHtml }}
+          />
+        </div>
+      </section>
 
-      {/* Area Content — 2026-06-26: render via renderProseHtml (was plain-text split).
-          Area content_en uses markdown (## headings, **bold**, [links](url)) but was
-          previously split on \n\n and rendered as raw <p> tags, showing ## symbols
-          literally and suppressing heading structure. Using renderProseHtml matches
-          the treatment of localizedService.long_description (line ~330 above). */}
-      {localizedArea.content && (
+      {/* Service-relevant slice of THIS city's area content — 2026-07: replaces
+          the old block that re-rendered the ENTIRE /areas/{city} content_en on
+          every combo (~71% cross-combo duplication, 100% of the area hub). We
+          now extract ONLY the markdown section about this service (kitchen combo
+          → the city's kitchen section, bathroom → bathroom section, …), so
+          kitchen-richmond ≠ bathroom-richmond ≠ kitchen-burnaby. Null (→ intro
+          only) when the city has no section for this service. */}
+      {citySlice && (
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6" style={{ color: TEXT }}>
-              {t('areas.areaServiceContent', { service: localizedService.title, area: localizedArea.name })}
-            </h2>
             <div
-              className="prose prose-sm max-w-none"
+              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-0 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-strong:text-[#1B365D]"
               style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{ __html: renderProseHtml(localizedArea.content) }}
+              dangerouslySetInnerHTML={{ __html: renderProseHtml(citySlice) }}
             />
           </div>
         </section>
@@ -389,27 +457,36 @@ export default function ServiceLocationPage({
         </div>
       </section>
 
-      {/* Featured case-study card — pushes combo pages from pos 21-33 to
-          page 1 by adding city-named, budget-named, scope-named depth that
-          generic service pages lack. Same SEO move competitors (Adept, Enzo)
-          use to dominate combo queries. */}
+      {/* Featured case-study card — real, city-named, budget-named depth that
+          generic service pages lack. The heading is relation-aware so it never
+          implies a related (other-city / other-service) project is local. */}
       {featuredProject && (
         <FeaturedCityProject
           project={featuredProject}
-          heading={t('areas.featuredProjectHeading', {
-            area: localizedArea.name,
-            service: localizedService.title,
-          })}
+          heading={featuredHeading}
           subheading={t('areas.featuredProjectSubheading')}
           viewCta={t('areas.featuredProjectCta')}
         />
       )}
 
       <RelatedProjectsSection
-        heading={t('areas.areaProjects', { area: localizedArea.name })}
+        heading={relatedHeading}
         projects={relatedProjects}
         categorySlug={serviceSlug}
       />
+
+      {/* Honest availability line for combos with no completed LOCAL project of
+          this type — we serve the city (service-area business) and show related
+          real work above, without claiming past local projects. */}
+      {!hasLocalWork && (
+        <section className="pb-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+              {availabilityCta}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* FAQ Section */}
       {faqs.length > 0 && (
