@@ -185,7 +185,15 @@ async function revalidateReviewSurfaces(linked: Array<LinkedProject | null>): Pr
 
   // ONE batched Cloudflare purge for every touched path across all locales
   // (purgeCloudflareUrls chunks into ≤30-URL calls; no-op without a CF token).
-  purgeCloudflarePagesAllLocales(Array.from(relPaths));
+  // The edge cache keys carry a trailing slash (next.config `trailingSlash:true`),
+  // so purge the trailing-slash form of each path — otherwise the purge targets
+  // `/en/reviews` while the cached HTML lives under `/en/reviews/` and the CF
+  // exact-key match misses, leaving the hub + linked project/service/area pages
+  // stale for the ≤5min s-maxage window. Mirrors revalidatePathAllLocales /
+  // revalidateProjectSurfaces, which already purge the `/…/` form.
+  purgeCloudflarePagesAllLocales(
+    Array.from(relPaths, (rel) => (rel.endsWith('/') ? rel : `${rel}/`)),
+  );
 }
 
 /**

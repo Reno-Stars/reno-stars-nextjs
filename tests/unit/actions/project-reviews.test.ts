@@ -174,7 +174,8 @@ describe('Project Review Actions', () => {
 
     it('should insert with month-normalized date and revalidate project, area and hub pages', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge, purgeCloudflarePagesAllLocales } =
+        await import('@/lib/seo/revalidate-paths');
 
       const result = await createProjectReview({}, validFormData({ reviewDate: '2026-05' }));
 
@@ -193,9 +194,20 @@ describe('Project Review Actions', () => {
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
       expect(updateTag).toHaveBeenCalledWith('reviews:by-area');
       expect(updateTag).toHaveBeenCalledWith('reviews:hub');
+      // ISR origin revalidation uses the NON-trailing-slash route path.
       expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/projects/test-project');
       expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/areas/richmond');
       expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
+      // But the Cloudflare edge purge MUST use the TRAILING-SLASH form, because
+      // next.config `trailingSlash:true` makes `/en/reviews/` the cached key —
+      // purging `/en/reviews` (no slash) is a silent no-op. Regression guard.
+      const purgedPaths = (purgeCloudflarePagesAllLocales as unknown as {
+        mock: { calls: string[][][] };
+      }).mock.calls.at(-1)?.[0];
+      expect(purgedPaths).toEqual(
+        expect.arrayContaining(['/reviews/', '/projects/test-project/', '/areas/richmond/']),
+      );
+      for (const p of purgedPaths ?? []) expect(p.endsWith('/')).toBe(true);
     });
 
     it('should create an UNLINKED review (no projectId) and revalidate only the hub surfaces', async () => {

@@ -56,14 +56,18 @@ const SOURCE_FIELD_TOOLTIP: Record<string, string> = {
   en: 'Platform the review was posted on. Google shows Google branding on the card; other platforms show a neutral "Verified Review" mark.',
   zh: '评价发布的平台。Google 会在卡片上显示 Google 标识；其他平台显示中性的“认证评价”标记。',
 };
+// Brand platforms are proper nouns — never translated. Keyed by review source.
 const SOURCE_OPTION_LABELS: Record<string, string> = {
   google: 'Google',
   yelp: 'Yelp',
   houzz: 'Houzz',
   facebook: 'Facebook',
   homestars: 'HomeStars',
-  other: 'Other',
 };
+// 'other' is a generic word (not a brand), so it localizes with the admin UI
+// locale — otherwise a zh admin session shows "Other" in English among the
+// Chinese field labels.
+const OTHER_OPTION_LABEL: Record<string, string> = { en: 'Other', zh: '其他' };
 
 function ratingStars(rating: number): string {
   const filled = Math.min(5, Math.max(0, rating));
@@ -110,7 +114,11 @@ function ReviewMetaFields({ initialData }: ReviewMetaFieldsProps) {
       <FormField label={sourceLabel} htmlFor="reviewSource" tooltip={sourceTooltip}>
         <select id="reviewSource" name="source" defaultValue={initialData?.source ?? 'google'} style={selectStyle}>
           {REVIEW_SOURCES.map((src) => (
-            <option key={src} value={src}>{SOURCE_OPTION_LABELS[src] ?? src}</option>
+            <option key={src} value={src}>
+              {src === 'other'
+                ? OTHER_OPTION_LABEL[locale] ?? OTHER_OPTION_LABEL.en
+                : SOURCE_OPTION_LABELS[src] ?? src}
+            </option>
           ))}
         </select>
       </FormField>
