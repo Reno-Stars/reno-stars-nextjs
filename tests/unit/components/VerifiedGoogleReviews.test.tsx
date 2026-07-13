@@ -7,8 +7,10 @@ import {
   relativeGoogleReviewTime,
   flooredReviewCount,
   reviewDateToSchemaDate,
+  REVIEW_BODY_LANGS,
   type ProjectReviewDisplay,
 } from '@/lib/project-reviews';
+import { locales } from '@/i18n/config';
 import { GOOGLE_REVIEWS_URL } from '@/lib/company-config';
 
 const enReview: ProjectReviewDisplay = {
@@ -28,6 +30,29 @@ const zhReview: ProjectReviewDisplay = {
   reviewDate: '2026-01-01',
   sourceUrl: null,
 };
+
+const zhHantReview: ProjectReviewDisplay = {
+  authorName: 'Amber Lam',
+  rating: 5,
+  body: '真心大推Reno Stars！我們家剛裝潢完成了三間浴室，成果真的太滿意了！',
+  bodyLang: 'zh-Hant',
+  reviewDate: '2026-01-01',
+  sourceUrl: null,
+};
+
+describe('REVIEW_BODY_LANGS', () => {
+  it('covers ALL 14 site locales, including zh-Hant (no length filter)', () => {
+    // The old length<=5 filter dropped zh-Hant (7 chars), which forced a
+    // Traditional-Chinese review to be mislabeled as Simplified 'zh'. Now that
+    // body_lang is varchar(10) the full locale set is allowed.
+    expect(REVIEW_BODY_LANGS).toContain('zh-Hant');
+    expect([...REVIEW_BODY_LANGS].sort()).toEqual([...locales].sort());
+  });
+
+  it('every allowed lang tag fits the varchar(10) body_lang column', () => {
+    for (const lang of REVIEW_BODY_LANGS) expect(lang.length).toBeLessThanOrEqual(10);
+  });
+});
 
 describe('formatReviewerName', () => {
   it('abbreviates to first name + last initial, preserving casing as written', () => {
@@ -128,6 +153,14 @@ describe('VerifiedGoogleReviews', () => {
     expect(html).toContain('真心大推Reno Stars!!!');
     expect(html).toContain('lang="zh"');
     expect(html).toContain('Verified Google Review'); // chrome stays in page locale
+  });
+
+  it('tags a zh-Hant review with lang="zh-Hant" (not the wrong "zh") on the verbatim quote', () => {
+    const html = renderToStaticMarkup(<VerifiedGoogleReviews reviews={[zhHantReview]} locale="en" />);
+    expect(html).toContain('我們家剛裝潢完成了三間浴室'); // verbatim 繁體 body
+    expect(html).toContain('lang="zh-Hant"');
+    // The Traditional-Chinese quote must NOT be mislabeled as Simplified 'zh'.
+    expect(html).not.toContain('lang="zh"');
   });
 
   it('localizes the card chrome on zh and falls back to EN labels on unknown locales', () => {
