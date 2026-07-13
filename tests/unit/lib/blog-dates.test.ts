@@ -41,23 +41,36 @@ describe('resolveBlogDates — datePublished', () => {
 });
 
 describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
-  it('emits dateModified for a unique post-publication edit', () => {
+  it('emits dateModified for an isolated post-publication edit (cluster of 1)', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
       updated_at: LATER_EDIT,
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBe(LATER_EDIT.toISOString());
   });
 
-  it('OMITS dateModified when updated_at is shared with other rows (bulk touch)', () => {
-    // 30 rows shared 2026-07-10 23:14:35 (translation backfill); 89 shared a
-    // 2026-06-27 stamp. Identical microsecond timestamps across rows are a
-    // bulk-write fingerprint, never independent edits.
+  it('OMITS dateModified when other rows were written in the same window (single-stamp bulk touch)', () => {
+    // 29 rows shared the exact stamp 2026-07-10 23:14:35.880614 (translation
+    // backfill); 89 shared a 2026-06-27 stamp. Identical timestamps across
+    // rows are a bulk-write fingerprint, never independent edits.
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
       updated_at: new Date('2026-07-10T23:14:35.880Z'),
-      updated_at_shared_count: 30,
+      updated_at_cluster_count: 30,
+    });
+    expect(dateModified).toBeUndefined();
+  });
+
+  it('OMITS dateModified for sequential bulk loops (distinct stamps, same window)', () => {
+    // 2026-07-13 review finding: bulk scripts that loop row-by-row give every
+    // row a DISTINCT updated_at (~9 min apart in the 36-post cost-index
+    // backfill), so exact-stamp matching alone leaked 41 posts. The window
+    // cluster count is >= 2 for such rows and must suppress dateModified.
+    const { dateModified } = resolveBlogDates({
+      published_at: new Date('2023-07-31T12:00:00.000Z'),
+      updated_at: new Date('2026-07-04T02:14:40.961Z'), // cost-index july-2023 row
+      updated_at_cluster_count: 7, // neighbors within ±60 min of the loop
     });
     expect(dateModified).toBeUndefined();
   });
@@ -74,7 +87,7 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
       updated_at: new Date(PUBLISHED.getTime() + MIN_MODIFIED_GAP_MS - 1),
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBeUndefined();
   });
@@ -83,7 +96,7 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
       updated_at: new Date('2026-03-01T00:00:00Z'),
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBeUndefined();
   });
@@ -91,7 +104,7 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
   it('OMITS dateModified when there is no publication date at all', () => {
     const { dateModified } = resolveBlogDates({
       updated_at: LATER_EDIT,
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBeUndefined();
   });
@@ -100,7 +113,7 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
     const { dateModified } = resolveBlogDates({
       created_at: CREATED,
       updated_at: LATER_EDIT,
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBe(LATER_EDIT.toISOString());
   });
@@ -109,7 +122,7 @@ describe('resolveBlogDates — dateModified (genuine-edit gate)', () => {
     const { dateModified } = resolveBlogDates({
       published_at: PUBLISHED,
       updated_at: 'garbage',
-      updated_at_shared_count: 1,
+      updated_at_cluster_count: 1,
     });
     expect(dateModified).toBeUndefined();
   });

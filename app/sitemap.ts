@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/i18n/config';
 import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
+import { resolveBlogDates } from '@/lib/blog-dates';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 
 // Render per-request so a freshly published blog/project/area appears in the
@@ -37,7 +38,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
   const projectDateMap = new Map(projectRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
   const siteDateMap = new Map(siteRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
-  const blogDateMap = new Map(blogPostRows.map(r => [r.slug, r.updatedAt?.toISOString() ?? now]));
+  // Blog <lastmod> runs the SAME honest-dates gate as the page's BlogPosting
+  // JSON-LD (lib/blog-dates.ts): genuine row-specific edit → updated_at;
+  // bulk-touch/unverifiable → published date. Raw updated_at here previously
+  // advertised bulk-script stamps (29 posts shared one 2026-07-10 stamp) as
+  // freshness while the pages themselves omitted dateModified — contradictory
+  // signals to Google on the same URLs (2026-07-13 review finding).
+  const blogDateMap = new Map(blogPostRows.map(r => {
+    const { datePublished, dateModified } = resolveBlogDates({
+      published_at: r.publishedAt,
+      created_at: r.createdAt,
+      updated_at: r.updatedAt,
+      updated_at_cluster_count: r.updatedAtClusterCount,
+    });
+    return [r.slug, dateModified ?? datePublished ?? now];
+  }));
 
   // Image-URL maps for image-sitemap support. Next.js MetadataRoute.Sitemap
   // accepts an `images: string[]` field per entry — the renderer adds the

@@ -21,18 +21,50 @@
  *           ({@link MIN_MODIFIED_GAP_MS}, same 24h window the visible
  *           "Updated" label always used), AND
  *       (b) it is NOT part of a bulk-touch cluster — i.e. no other blog row
- *           shares the exact same updated_at timestamp. Bulk scripts stamp
- *           every row they touch with the same `now()` inside one statement /
- *           transaction, so microsecond-identical updated_at values across
- *           rows are a bulk-write fingerprint, never independent human edits.
+ *           was written within {@link BULK_TOUCH_CLUSTER_WINDOW_MINUTES} of
+ *           this row's updated_at. Bulk scripts either stamp every row with
+ *           one `now()` inside a single statement (identical microsecond
+ *           timestamps) or loop row-by-row with distinct stamps seconds-to-
+ *           minutes apart — BOTH are bulk-write fingerprints. The 2026-07-13
+ *           review of this fix proved exact-timestamp matching alone leaks:
+ *           41 of 237 published rows had unique microsecond stamps yet ALL
+ *           traced to sequential bulk runs (e.g. the 36-post cost-index
+ *           backfill was written ~9 min apart, 2026-07-04 01:37→07:33). A
+ *           time-window cluster catches both shapes; validated against prod:
+ *           0 of 237 published rows leak at 60 min. A genuine human edit only
+ *           loses its dateModified if another row was written within the same
+ *           hour — which fails CLOSED (honest omission), the direction this
+ *           module always prefers.
  *     When the cluster size is unknown (callers that didn't fetch it), the
  *     signal is unverifiable and dateModified is OMITTED — omitting is honest;
  *     request-time or bulk-touch timestamps are not.
+ *
+ * PRECISION WARNING for query authors: Postgres stores updated_at at
+ * MICROSECOND precision; a JS Date only holds milliseconds. Never compute the
+ * cluster by binding a JS Date back into a WHERE clause — the ms-truncated
+ * parameter matches ZERO rows, not even the row itself (this exact bug
+ * shipped in the first version of this fix: `eq(updatedAt, row.updatedAt)`
+ * made the gate unpassable for every existing row). The cluster count MUST be
+ * computed entirely in SQL, keyed by row id, so the microsecond value never
+ * round-trips through a JS Date. See getBlogPostBySlugFromDb in
+ * lib/db/queries/blog.ts.
  */
 
 /** Minimum gap between published and updated before `updated_at` counts as a
  * real post-publication edit (matches the visible "Updated" label rule). */
 export const MIN_MODIFIED_GAP_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Half-width of the bulk-touch detection window, in minutes: a blog row's
+ * updated_at is only trusted as a genuine edit when NO other blog row was
+ * written within ±this many minutes of it. 60 min suppresses every bulk run
+ * observed in prod (single-stamp UPDATEs, the ~9-min-apart cost-index loop,
+ * and stragglers written up to ~37 min from their cluster) with zero leaks
+ * across all 237 published rows, while a lone human edit an hour clear of any
+ * other write still passes. Consumed by the SQL cluster-count queries in
+ * lib/db/queries/blog.ts.
+ */
+export const BULK_TOUCH_CLUSTER_WINDOW_MINUTES = 60;
 
 export interface BlogDateSource {
   /** Publication date (may have been reset by past admin-save bugs). */
@@ -42,11 +74,13 @@ export interface BlogDateSource {
   /** Last DB write — poisoned by bulk maintenance scripts; see module doc. */
   updated_at?: Date | string | null;
   /**
-   * How many published blog rows share this row's exact `updated_at`
-   * (including this row, so >= 1). 1 = unique timestamp = genuine
+   * How many blog rows (published or not — bulk scripts touch both) have an
+   * `updated_at` within ±{@link BULK_TOUCH_CLUSTER_WINDOW_MINUTES} of this
+   * row's, including this row itself (so >= 1). 1 = isolated write = genuine
    * row-specific edit; >= 2 = bulk-touch cluster; undefined = unknown.
+   * MUST be computed in SQL keyed by row id (see PRECISION WARNING above).
    */
-  updated_at_shared_count?: number;
+  updated_at_cluster_count?: number;
 }
 
 export interface ResolvedBlogDates {
@@ -77,7 +111,7 @@ export function resolveBlogDates(source: BlogDateSource): ResolvedBlogDates {
     updated !== undefined &&
     published !== undefined &&
     updated.getTime() > published.getTime() + MIN_MODIFIED_GAP_MS &&
-    source.updated_at_shared_count === 1;
+    source.updated_at_cluster_count === 1;
 
   return {
     ...(datePublished && { datePublished }),
