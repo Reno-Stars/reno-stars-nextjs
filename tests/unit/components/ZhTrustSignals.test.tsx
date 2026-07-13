@@ -1,13 +1,25 @@
 import { describe, it, expect } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import ZhTrustLine, { zhTrustLine, WeChatContactCard } from '@/components/ZhTrustSignals';
-import { WECHAT_ID } from '@/lib/company-config';
+import { WECHAT_ID, COMPANY_STATS } from '@/lib/company-config';
 
 describe('zhTrustLine', () => {
   it('builds the full Simplified line with the live rating interpolated', () => {
     expect(zhTrustLine('zh', 5)).toBe(
       '政府牌照注册 · WCB工伤保险 · $500万商业责任险 · 最长3年质保 · Google 5.0星好评'
     );
+  });
+
+  it('derives the liability + warranty segments from COMPANY_STATS, not literals (finding #5)', () => {
+    // $5M → 500万 (万 = 10,000): dollars / 10,000. Computed from the SSOT so
+    // this expectation tracks any future change to COMPANY_STATS.
+    const wan = Math.round(parseFloat(COMPANY_STATS.liabilityCoverage.replace(/[^0-9.]/g, '')) * 100);
+    const zh = zhTrustLine('zh', 5)!;
+    const hant = zhTrustLine('zh-Hant', 5)!;
+    expect(zh).toContain(`$${wan}万商业责任险`);
+    expect(zh).toContain(`最长${COMPANY_STATS.warrantyYears}年质保`);
+    expect(hant).toContain(`$${wan}萬商業責任險`);
+    expect(hant).toContain(`最長${COMPANY_STATS.warrantyYears}年質保`);
   });
 
   it('builds the Traditional line', () => {

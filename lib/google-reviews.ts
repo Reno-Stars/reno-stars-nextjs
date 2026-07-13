@@ -4,6 +4,7 @@ import { getS3Client, S3_BUCKET } from './admin/s3';
 import { eq } from 'drizzle-orm';
 import { db } from './db';
 import { googleReviewsCache } from './db/schema';
+import { GOOGLE_PLACE_ID } from './company-config';
 import type { GoogleReview, GooglePlaceRating } from './types';
 
 const REVALIDATE_24H = 86400;
@@ -268,9 +269,11 @@ export async function refreshReviewsCache(): Promise<{
   userRatingCount: number;
 }> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
-  if (!apiKey || !placeId) {
-    throw new Error('Missing GOOGLE_PLACES_API_KEY or GOOGLE_PLACE_ID env vars.');
+  // Canonical GBP identity from lib/company-config (single source — finding
+  // #12); the GOOGLE_PLACE_ID env is an optional server-only staging override.
+  const placeId = process.env.GOOGLE_PLACE_ID || GOOGLE_PLACE_ID;
+  if (!apiKey) {
+    throw new Error('Missing GOOGLE_PLACES_API_KEY env var.');
   }
 
   const [relevant, newest] = await Promise.all([
@@ -324,7 +327,9 @@ function maybeTriggerBackgroundRefresh(updatedAt: Date | null): void {
   if (refreshInFlight) return;
   const isStale = !updatedAt || Date.now() - updatedAt.getTime() > STALE_MS;
   if (!isStale) return;
-  if (!process.env.GOOGLE_PLACES_API_KEY || !process.env.GOOGLE_PLACE_ID) return;
+  // The place id always resolves (company-config constant), so gate the live
+  // refresh on the API key alone.
+  if (!process.env.GOOGLE_PLACES_API_KEY) return;
 
   refreshInFlight = true;
   void refreshReviewsCache()
@@ -375,7 +380,11 @@ export function projectReviewsToLocale(rating: GooglePlaceRating, locale: string
 
 export async function getGoogleReviews(): Promise<GooglePlaceRating> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
+  // Canonical GBP identity from lib/company-config (single GBP identity —
+  // finding #12); the GOOGLE_PLACE_ID env is an optional server-only override.
+  // The API call is gated on the API key alone (the place id always resolves,
+  // falling back to the DB cache row when the key is absent).
+  const placeId = process.env.GOOGLE_PLACE_ID || GOOGLE_PLACE_ID;
 
   // Cached row is the source of translations even when the API succeeds.
   const cacheRow = await readCacheRow();
@@ -384,7 +393,7 @@ export async function getGoogleReviews(): Promise<GooglePlaceRating> {
   // Lazily keep translations fresh — background, never blocks this render.
   maybeTriggerBackgroundRefresh(cacheRow?.updatedAt ?? null);
 
-  if (!apiKey || !placeId) {
+  if (!apiKey) {
     if (cached && cached.reviews?.length > 0) {
       console.warn('[getGoogleReviews] Using cached fallback (no API credentials)');
       return cached;

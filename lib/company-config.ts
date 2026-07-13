@@ -55,7 +55,24 @@ export function brandDisplay(locale: Locale): string {
 /** Official WeChat ID — shown in the footer modal and the careers page. */
 export const WECHAT_ID = 'RenoStars';
 
-/** Google Business Profile place ID (SSOT — was hardcoded in ReviewsPage). */
+/**
+ * Google Business Profile place ID — the SINGLE canonical GBP identity.
+ *
+ * Deliberately a plain constant, NOT an env read. The place id is a stable
+ * business fact (the ONE Google listing), and `GOOGLE_REVIEWS_URL` /
+ * `GOOGLE_WRITE_REVIEW_URL` below are rendered as `href`s by the `'use client'`
+ * ReviewsPage. Because this is NOT a `NEXT_PUBLIC_` var, a `process.env` read
+ * (the previous approach) is replaced with `undefined` in the client bundle —
+ * so the URLs would silently fall back to a hand-typed literal there, and a
+ * server env that differed from that literal produced a React hydration
+ * mismatch plus wrong client-side review links (finding #12). As a constant the
+ * value is identical on the server and in the client bundle, so the derived
+ * URLs can never diverge.
+ *
+ * `lib/google-reviews.ts` imports THIS constant for its server-side Places API
+ * call (with an optional `GOOGLE_PLACE_ID` env override for staging), so the
+ * review cache and the public review links resolve from one identity.
+ */
 export const GOOGLE_PLACE_ID = 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
 
 /** Public "read our Google reviews" listing for the GBP above. */

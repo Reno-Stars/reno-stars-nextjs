@@ -11,6 +11,13 @@ interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
+// Single source for this page's price band (finding #9/#24). Used by the
+// ServiceSchema serviceDescription and the ServiceSchema priceRange prop so the
+// two can never drift. The trailing "+" is a display convention (open-ended
+// top), not a number. Do NOT re-type the band inline.
+const PRICE_RANGE = { min: 10000, max: 200000 } as const;
+const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K+`;
+
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -67,8 +74,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '家居装修' : 'Home Renovation';
   const serviceDescription = isZh
-    ? '大温哥华附近全屋家居装修：厨房、卫浴、地下室、整屋翻新。$10K-$200K+，跨17个城市。'
-    : 'Home renovation across Metro Vancouver — kitchen, bathroom, basement, whole-house. $10K-$200K+ range across 17 service areas.';
+    ? `大温哥华附近全屋家居装修：厨房、卫浴、地下室、整屋翻新。${PRICE_BAND}，跨17个城市。`
+    : `Home renovation across Metro Vancouver — kitchen, bathroom, basement, whole-house. ${PRICE_BAND} range across 17 service areas.`;
 
   return (
     <>
@@ -80,7 +87,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={serviceDescription}
         url={`/${locale}/renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={{ min: 10000, max: 200000 }}
+        priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}

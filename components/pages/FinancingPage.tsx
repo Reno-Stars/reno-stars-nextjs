@@ -139,7 +139,7 @@ export default function FinancingPage({ locale: _locale }: FinancingPageProps) {
               className="font-semibold underline hover:no-underline"
               style={{ color: GOLD }}
             >
-              See what our 75+ Vancouver renovation clients say →
+              See what our Vancouver renovation clients say →
             </Link>
             <span aria-hidden="true" className="hidden sm:inline" style={{ color: TEXT_MUTED }}>·</span>
             <Link

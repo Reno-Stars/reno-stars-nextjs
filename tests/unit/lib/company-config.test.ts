@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   BRAND,
   LOCALIZED_BRAND_NAMES,
@@ -8,8 +8,13 @@ import {
   OPENING_HOURS,
   COMPANY_STATS,
   WECHAT_ID,
+  GOOGLE_PLACE_ID,
+  GOOGLE_REVIEWS_URL,
+  GOOGLE_WRITE_REVIEW_URL,
 } from '@/lib/company-config';
 import { SITE_NAME } from '@/lib/utils';
+
+const DEFAULT_PLACE_ID = 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
 
 describe('brand SSOT', () => {
   it('SITE_NAME re-exports BRAND (single source)', () => {
@@ -53,5 +58,34 @@ describe('company stats', () => {
     expect(COMPANY_STATS.companyFoundingYear).toBe(2020);
     expect(COMPANY_STATS.warrantyYears).toBe(3);
     expect(WECHAT_ID).toBe('RenoStars');
+  });
+});
+
+describe('Google place ID SSOT (finding #12)', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  it('the review + write-review URLs embed the canonical place id (single source)', () => {
+    expect(GOOGLE_PLACE_ID).toBe(DEFAULT_PLACE_ID);
+    expect(GOOGLE_REVIEWS_URL).toContain(GOOGLE_PLACE_ID);
+    expect(GOOGLE_WRITE_REVIEW_URL).toContain(GOOGLE_PLACE_ID);
+  });
+
+  it('is a client-safe constant: a GOOGLE_PLACE_ID env value does NOT change the exported id (no server/client hydration split)', async () => {
+    // finding #12: GOOGLE_PLACE_ID is NOT a NEXT_PUBLIC_ var, so a client
+    // bundle can never read it. If the exported value were derived from the
+    // env, the server would render the env place id while the client bundle
+    // fell back to a literal — a hydration mismatch on the review-link hrefs
+    // that ReviewsPage ('use client') renders. As a constant the id, and the
+    // URLs derived from it, are identical everywhere regardless of the env.
+    vi.resetModules();
+    vi.stubEnv('GOOGLE_PLACE_ID', 'ChIJ_DIFFERENT_PLACE_ID');
+    const mod = await import('@/lib/company-config');
+    expect(mod.GOOGLE_PLACE_ID).toBe(DEFAULT_PLACE_ID);
+    expect(mod.GOOGLE_REVIEWS_URL).toContain(DEFAULT_PLACE_ID);
+    expect(mod.GOOGLE_WRITE_REVIEW_URL).toContain(DEFAULT_PLACE_ID);
+    expect(mod.GOOGLE_REVIEWS_URL).not.toContain('ChIJ_DIFFERENT_PLACE_ID');
   });
 });
