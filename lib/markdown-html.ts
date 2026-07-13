@@ -29,7 +29,11 @@ const INTERNAL_LINK_HOSTS = ['www.reno-stars.com', 'reno-stars.com'];
 
 /**
  * Normalize in-content internal `<a href>`s to their canonical form:
- * trailing slash, locale prefix, https + www host. Authored content links
+ * trailing slash, locale prefix, https + www host. When `locale` is given, a
+ * link that carries no locale is prefixed with it, and one that carries a
+ * *different* locale (e.g. a hard-coded `/en/...` inherited by a translated
+ * body) is rewritten to the page's own locale so localized content keeps its
+ * readers in-locale. Authored content links
  * like `/en/contact` or `/blog/foo` each cost a 308 (or two) per crawl —
  * across ~3,300 rendered blog pages these chains are the bulk of GSC's
  * 1,309 "Page with redirect" URLs (2026-07-07 audit). Run AFTER sanitizeHtml
@@ -48,9 +52,23 @@ export function normalizeInternalLinks(html: string, locale?: string): string {
     let path = url.pathname;
     if (path.startsWith('/api/') || /\.[a-z0-9]{2,5}$/i.test(path)) return tag;
     if (locale) {
-      const first = path.split('/').filter(Boolean)[0];
-      if (!first) path = `/${locale}/`;
-      else if (!(locales as readonly string[]).includes(first)) path = `/${locale}${path}`;
+      const segments = path.split('/').filter(Boolean);
+      const first = segments[0];
+      if (!first) {
+        path = `/${locale}/`;
+      } else if (!(locales as readonly string[]).includes(first)) {
+        path = `/${locale}${path}`;
+      } else if (first !== locale) {
+        // Replace an already-present *foreign* locale prefix with the page's own
+        // locale. Translated blog bodies (content_zh et al.) inherited hard-coded
+        // `/en/...` links from their English source, so without this every in-body
+        // link on a non-English blog page sends the reader to the English page and
+        // drains that locale's internal-link equity. Every `/[locale]/…` content
+        // route exists in all locales, so the rewritten target is always a 200 with
+        // no redirect. A same-locale prefix (first === locale) is left untouched.
+        segments[0] = locale;
+        path = `/${segments.join('/')}`;
+      }
     }
     if (!path.endsWith('/')) path += '/';
     const rebuilt = (href.startsWith('/') ? '' : 'https://www.reno-stars.com')
