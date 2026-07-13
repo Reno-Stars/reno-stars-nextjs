@@ -387,6 +387,24 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
         </section>
       )}
 
+      {/* Renovation services in {City} — hub → spoke internal-link band.
+          Placed BEFORE the "Our Services in {area}" card grid below, which
+          links the SAME /services/{service}/{city} combo URLs. Under Google's
+          first-link-counts heuristic only the anchor text of the FIRST link to
+          a given URL on the page is credited, so this band must precede the
+          card grid for its exact-match "{Service} in {City} →" anchor — the
+          whole point of the band — to be the one attributed to each combo
+          spoke (rather than the card grid's shorter "{Service}" title anchor).
+          ADDITIVE: nothing removed; the card grid still renders below and its
+          links still pass link equity. One keyword-rich link per service;
+          links only to combos that exist (same services list as the card grid;
+          all DB service rows are show_on_services_page = true). */}
+      <AreaServiceCityLinks
+        services={services}
+        cityName={localizedArea.name}
+        citySlug={citySlug}
+      />
+
       {/* Services */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: localizedArea.content ? SURFACE_ALT : SURFACE }}>
         <div className="max-w-7xl mx-auto">
@@ -415,21 +433,6 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </div>
       </section>
-
-      {/* Renovation services in {City} — hub → spoke internal-link band.
-          ADDITIVE (sits alongside the "Our Services in {area}" card grid
-          above; nothing removed). One keyword-rich link per service to its
-          /services/{service}/{city} combo page ("Kitchen Renovation in
-          {City} →"). Builds body-content link equity + exact-match anchor
-          text toward the combo spokes so they hold rank for "{service}
-          {city}" queries, and gives visitors a direct path. Links only to
-          combos that exist (same services list as the card grid; all DB
-          service rows are show_on_services_page = true). */}
-      <AreaServiceCityLinks
-        services={services}
-        cityName={localizedArea.name}
-        citySlug={citySlug}
-      />
 
       {/* Neighbourhoods — long-tail keyword surface (e.g. "kitsilano renovation"
           → /areas/vancouver/) without programmatic neighbourhood routes. */}
