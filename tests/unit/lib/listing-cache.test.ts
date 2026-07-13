@@ -110,7 +110,7 @@ describe('listingCardChanged', () => {
       slug: 'burnaby-kitchen', isPublished: true, featured: false,
       titleEn: 'Burnaby Kitchen', titleZh: '本拿比厨房',
       excerptEn: 'x', excerptZh: 'x', heroImageUrl: 'h.jpg', heroVideoUrl: null,
-      locationCity: 'Burnaby', badgeEn: null, badgeZh: null, budgetRange: '$50k',
+      locationCity: 'Burnaby', serviceType: 'kitchen', badgeEn: null, badgeZh: null, budgetRange: '$50k',
       durationEn: '6 weeks', durationZh: '6周', spaceTypeEn: 'Kitchen', spaceTypeZh: '厨房',
       descriptionEn: 'desc', metaTitleEn: 'meta', dynamicBlocks: [{ a: 1 }],
     };
@@ -121,6 +121,18 @@ describe('listingCardChanged', () => {
     it('busts listing when the hero image or featured flag changes', () => {
       expect(listingCardChanged(baseProject, { ...baseProject, heroImageUrl: 'new.jpg' }, PROJECT_CARD_FIELDS)).toBe(true);
       expect(listingCardChanged(baseProject, { ...baseProject, featured: true }, PROJECT_CARD_FIELDS)).toBe(true);
+    });
+    it('busts listing when service_type changes (#11 — reviews-by-service cache)', () => {
+      expect(listingCardChanged(baseProject, { ...baseProject, serviceType: 'bathroom' }, PROJECT_CARD_FIELDS)).toBe(true);
+    });
+    it('does not over-bust when service_type is unchanged, but does when the old row omits it (H1)', () => {
+      // With serviceType present & unchanged, a non-card edit must NOT bust.
+      expect(listingCardChanged(baseProject, { ...baseProject, descriptionEn: 'x' }, PROJECT_CARD_FIELDS)).toBe(false);
+      // Regression guard: if the updateProject SELECT omits serviceType,
+      // oldRow.serviceType is undefined and EVERY edit over-busts — exactly the
+      // failure the H1 SELECT fix prevents by loading serviceType.
+      const oldRowMissingServiceType = { ...baseProject, serviceType: undefined };
+      expect(listingCardChanged(oldRowMissingServiceType, baseProject, PROJECT_CARD_FIELDS)).toBe(true);
     });
   });
 

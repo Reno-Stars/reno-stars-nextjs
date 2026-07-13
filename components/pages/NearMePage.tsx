@@ -34,10 +34,23 @@ interface Props {
    *  company near you?" across all 5 URLs (op-d087a446b70a).
    */
   h1Override?: string;
+  /** Live Google rating + count from getGoogleReviews() (SSOT). The reviews
+   *  trust stat renders `${googleRating}★` from these; the hardcoded message
+   *  is only a fallback when the props are absent (H3 — no stale literal). */
+  googleRating?: number;
+  reviewCount?: number;
 }
 
-export default function NearMePage({ locale, areas, h1Override }: Props) {
+export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount }: Props) {
   const t = useTranslations("nearMe");
+
+  // Live reviews rating for the trust stat — only when the SSOT actually has
+  // reviews (guards against rendering a rating when the count is 0). Falls back
+  // to the localized message when the live props are absent.
+  const liveReviewsStat =
+    googleRating && googleRating > 0 && reviewCount && reviewCount > 0
+      ? `${googleRating.toFixed(1)}★`
+      : null;
 
   const services = ["kitchen", "bathroom", "wholeHouse", "basement", "cabinet", "commercial"] as const;
 
@@ -114,7 +127,7 @@ export default function NearMePage({ locale, areas, h1Override }: Props) {
               >
                 <Icon size={32} style={{ color: GOLD }} className="mx-auto mb-3" />
                 <div className="text-2xl font-bold mb-1" style={{ color: NAVY }}>
-                  {t(`trust.${key}.stat`)}
+                  {key === "reviews" && liveReviewsStat ? liveReviewsStat : t(`trust.${key}.stat`)}
                 </div>
                 <div className="text-sm" style={{ color: TEXT_MUTED }}>
                   {t(`trust.${key}.label`)}

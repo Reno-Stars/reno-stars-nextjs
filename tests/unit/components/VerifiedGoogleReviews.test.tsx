@@ -4,6 +4,8 @@ import VerifiedGoogleReviews from '@/components/projects/VerifiedGoogleReviews';
 import {
   formatReviewerName,
   relativeReviewDate,
+  relativeGoogleReviewTime,
+  flooredReviewCount,
   reviewDateToSchemaDate,
   type ProjectReviewDisplay,
 } from '@/lib/project-reviews';
@@ -60,6 +62,48 @@ describe('relativeReviewDate', () => {
   it('never returns a future label and survives unknown locales', () => {
     expect(relativeReviewDate('2026-09-01', 'en', now)).toBe('this month');
     expect(relativeReviewDate('2026-01-01', 'xx-INVALID' as string, now)).toContain('month');
+  });
+});
+
+describe('relativeGoogleReviewTime', () => {
+  const now = new Date('2026-07-10T00:00:00Z');
+
+  it('formats day / month / year granularity from a full publish timestamp', () => {
+    expect(relativeGoogleReviewTime('2026-07-08T00:00:00Z', 'en', now)).toBe('2 days ago');
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'en', now)).toBe('2 months ago');
+    expect(relativeGoogleReviewTime('2024-07-10T00:00:00Z', 'en', now)).toBe('2 years ago');
+  });
+
+  it('localizes across the 14 locales (regression: no English en-US fallback on ja/ko/es)', () => {
+    // The old TestimonialsSection copy had a 2-entry map and fell back to
+    // en-US on non-en/zh locales (H4). These must render in the target script.
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'ja', now)).toBe('2 か月前');
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'zh', now)).toBe('2个月前');
+    // zh-Hant + tl need the shared INTL_LOCALE_MAP remap (zh-TW / fil).
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'zh-Hant', now)).toBe('2 個月前');
+    // ko/es must NOT be English — assert they differ from the en rendering.
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'ko', now)).not.toBe('2 months ago');
+    expect(relativeGoogleReviewTime('2026-05-01T00:00:00Z', 'es', now)).not.toBe('2 months ago');
+  });
+
+  it('returns empty string for missing / unparseable input', () => {
+    expect(relativeGoogleReviewTime('', 'en', now)).toBe('');
+    expect(relativeGoogleReviewTime('not-a-date', 'en', now)).toBe('');
+  });
+});
+
+describe('flooredReviewCount', () => {
+  it('floors a live count to the nearest 5 for the "N+" style (77 → 75)', () => {
+    expect(flooredReviewCount(77)).toBe(75);
+    expect(flooredReviewCount(80)).toBe(80);
+    expect(flooredReviewCount(83)).toBe(80);
+  });
+
+  it('returns 0 when the count is absent or too small to round up (no "0+")', () => {
+    expect(flooredReviewCount(undefined)).toBe(0);
+    expect(flooredReviewCount(null)).toBe(0);
+    expect(flooredReviewCount(0)).toBe(0);
+    expect(flooredReviewCount(4)).toBe(0);
   });
 });
 

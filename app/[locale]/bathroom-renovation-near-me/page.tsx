@@ -72,6 +72,8 @@ export default async function Page({ params }: PageProps) {
         locale={locale as Locale}
         areas={areas}
         h1Override={isZh ? '附近浴室翻新 — Metro Vancouver' : 'Bathroom Renovation Near Me in Metro Vancouver'}
+        googleRating={googleReviews.rating}
+        reviewCount={googleReviews.userRatingCount}
       />
     </>
   );

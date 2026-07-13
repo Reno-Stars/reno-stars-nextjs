@@ -119,3 +119,46 @@ export function relativeReviewDate(reviewDate: string, locale: string, now: Date
   if (monthsDiff >= 12) return rtf.format(-Math.floor(monthsDiff / 12), 'year');
   return rtf.format(-monthsDiff, 'month');
 }
+
+/**
+ * Localized relative label for a Google review's full publish timestamp
+ * (e.g. "2 days ago", "3か月前"). Day/month/year granularity — matching the
+ * precision Google returns in `publishTime`, so it differs from the
+ * month-only `relativeReviewDate` above (which formats our stored review
+ * dates). ONE shared copy for the home marquee (TestimonialsSection) and the
+ * reviews hub (ReviewsPage) so they can't drift onto an English "en-US"
+ * fallback on ja/ko/es/… (H4 dedup). Returns '' for empty/unparseable input.
+ * `now` is injectable for tests.
+ */
+export function relativeGoogleReviewTime(publishTime: string, locale: string, now: Date = new Date()): string {
+  if (!publishTime) return '';
+  const timestamp = new Date(publishTime).getTime();
+  if (isNaN(timestamp)) return '';
+  const MS_PER_DAY = 86_400_000;
+  const diff = now.getTime() - timestamp;
+  const days = Math.floor(diff / MS_PER_DAY);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+  const intlLocale = INTL_LOCALE_MAP[locale] ?? locale;
+  let rtf: Intl.RelativeTimeFormat;
+  try {
+    rtf = new Intl.RelativeTimeFormat(intlLocale, { numeric: 'auto' });
+  } catch {
+    rtf = new Intl.RelativeTimeFormat('en-US', { numeric: 'auto' });
+  }
+  if (years > 0) return rtf.format(-years, 'year');
+  if (months > 0) return rtf.format(-months, 'month');
+  if (days > 0) return rtf.format(-days, 'day');
+  return rtf.format(0, 'day');
+}
+
+/**
+ * Floor a LIVE review count to the nearest 5 for "N+" social-proof copy
+ * (e.g. 77 → 75, rendered as "75+"). Reads the count from the Google SSOT,
+ * never a hardcoded literal. Returns 0 when the count is absent or below 5 so
+ * callers fall back to a count-free label instead of an awkward "0+".
+ */
+export function flooredReviewCount(reviewCount?: number | null): number {
+  if (!reviewCount || reviewCount < 5) return 0;
+  return Math.floor(reviewCount / 5) * 5;
+}

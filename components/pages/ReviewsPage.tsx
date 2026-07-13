@@ -9,7 +9,7 @@ import GoogleAvatar from "@/components/home/GoogleAvatar";
 import GoogleIcon from "@/components/reviews/GoogleIcon";
 import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
-import { INTL_LOCALE_MAP } from "@/lib/project-reviews";
+import { relativeGoogleReviewTime } from "@/lib/project-reviews";
 import type { HubDisplayReview } from "@/components/reviews/ReviewsGroupSection";
 import ReviewsCityGroups, { type HubCityGroupDisplay } from "@/components/pages/ReviewsCityGroups";
 import ReviewsTypeGroups, { type HubTypeGroupDisplay } from "@/components/pages/ReviewsTypeGroups";
@@ -32,32 +32,6 @@ const READ_ALL_GOOGLE_LABELS: Record<string, string> = {
   tl: "Basahin lahat ng {count} review sa Google",
   vi: "Đọc tất cả {count} đánh giá trên Google",
 };
-
-function getRelativeTime(publishTime: string, locale: string): string {
-  if (!publishTime) return "";
-  const timestamp = new Date(publishTime).getTime();
-  if (isNaN(timestamp)) return "";
-  const MS_PER_DAY = 86_400_000;
-  const diff = Date.now() - timestamp;
-  const days = Math.floor(diff / MS_PER_DAY);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(days / 365);
-  // Canonical map (shared with lib/project-reviews) — only remaps the few app
-  // locales whose plain code isn't ideal for Intl; every other supported locale
-  // passes through unchanged, so a ja/ko/fr Google review shows a LOCALIZED
-  // relative time instead of the old English "en-US" fallback (dedup #16-21e).
-  const intlLocale = INTL_LOCALE_MAP[locale] ?? locale;
-  let rtf: Intl.RelativeTimeFormat;
-  try {
-    rtf = new Intl.RelativeTimeFormat(intlLocale, { numeric: "auto" });
-  } catch {
-    rtf = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
-  }
-  if (years > 0) return rtf.format(-years, "year");
-  if (months > 0) return rtf.format(-months, "month");
-  if (days > 0) return rtf.format(-days, "day");
-  return rtf.format(0, "day");
-}
 
 function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
   const iconSize = size === "lg" ? "w-6 h-6" : "w-4 h-4";
@@ -88,7 +62,7 @@ function ReviewCard({ review, locale }: { review: GoogleReview; locale: Locale }
             <div className="min-w-0">
               <div className="text-sm font-bold truncate" style={{ color: TEXT }}>{review.authorName}</div>
               <div className="text-xs" style={{ color: TEXT_MUTED }}>
-                {review.publishTime ? getRelativeTime(review.publishTime, locale) : review.relativePublishTime}
+                {review.publishTime ? relativeGoogleReviewTime(review.publishTime, locale) : review.relativePublishTime}
               </div>
             </div>
           </div>
