@@ -9,6 +9,12 @@ import { getGoogleReviews } from '@/lib/google-reviews';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
+// Single source for this page's price band (finding #9/#24). Used by the meta
+// description, the ServiceSchema serviceDescription, and the ServiceSchema
+// priceRange prop so the three can never drift. Do NOT re-type the band inline.
+const PRICE_RANGE = { min: 10000, max: 60000 } as const;
+const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K`;
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isZh = locale === 'zh';
@@ -16,8 +22,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 2026-05-21 SEO trim: EN desc was 201 chars (truncates ~155). Drops the
   // 3-city list (on-page elsewhere) and the warranty tail to fit.
   const description = isZh
-    ? '大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。$10K-$60K，3-6周完工。75+五星好评，免费估价。'
-    : 'Bathroom renovation near you across Metro Vancouver — walk-in showers, tub conversions, custom vanities. $10K-$60K, 3-6 wks. $5M insured.';
+    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、瓷砖墙面、洗手柜。${PRICE_BAND}，3-6周完工。五星好评，免费估价。`
+    : `Bathroom renovation near you across Metro Vancouver — walk-in showers, tub conversions, custom vanities. ${PRICE_BAND}, 3-6 wks. $5M insured.`;
   const baseUrl = getBaseUrl();
   const ogImage = buildOgImageUrl(title, description);
   return {
@@ -45,8 +51,8 @@ export default async function Page({ params }: PageProps) {
   const isZh = locale === 'zh';
   const serviceName = isZh ? '卫浴装修' : 'Bathroom Renovation';
   const serviceDescription = isZh
-    ? '大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、定制洗手柜。$10K-$60K，3-6周完工。'
-    : 'Bathroom renovation across Metro Vancouver — walk-in showers, tub-to-shower conversions, custom vanities, full retile. $10K-$60K, 3-6 wks.';
+    ? `大温哥华附近专业卫浴装修：淋浴房改造、浴缸更换、定制洗手柜。${PRICE_BAND}，3-6周完工。`
+    : `Bathroom renovation across Metro Vancouver — walk-in showers, tub-to-shower conversions, custom vanities, full retile. ${PRICE_BAND}, 3-6 wks.`;
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -57,7 +63,7 @@ export default async function Page({ params }: PageProps) {
         serviceDescription={serviceDescription}
         url={`/${locale}/bathroom-renovation-near-me/`}
         areaServed={areas.map((a) => a.name.en)}
-        priceRange={{ min: 10000, max: 60000 }}
+        priceRange={PRICE_RANGE}
         serviceRadiusKm={50}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}

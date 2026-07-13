@@ -1,6 +1,6 @@
 import type { Locale } from '@/i18n/config';
 import OptimizedImage from '@/components/OptimizedImage';
-import { WECHAT_ID, brandDisplay } from '@/lib/company-config';
+import { WECHAT_ID, brandDisplay, COMPANY_STATS } from '@/lib/company-config';
 import { NAVY, GOLD, GOLD_PALE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 
 /**
@@ -35,9 +35,20 @@ function asZhLocale(locale: Locale): ZhLocale | null {
   return (ZH_LOCALES as readonly string[]).includes(locale) ? (locale as ZhLocale) : null;
 }
 
+/**
+ * Legal/insurance figures are DERIVED from COMPANY_STATS (finding #5) — never
+ * hand-typed — so the zh/zh-Hant claims can't drift from the SSOT the rest of
+ * the site cites. "$5M" → 500万 (万 = 10,000, so $5,000,000 / 10,000 = 500);
+ * warranty comes straight from COMPANY_STATS.warrantyYears.
+ */
+const LIABILITY_WAN = Math.round(
+  parseFloat(COMPANY_STATS.liabilityCoverage.replace(/[^0-9.]/g, '')) * 100,
+);
+const WARRANTY_YEARS = COMPANY_STATS.warrantyYears;
+
 const TRUST_SEGMENTS: Record<ZhLocale, readonly string[]> = {
-  zh: ['政府牌照注册', 'WCB工伤保险', '$500万商业责任险', '最长3年质保'],
-  'zh-Hant': ['政府牌照註冊', 'WCB工傷保險', '$500萬商業責任險', '最長3年質保'],
+  zh: ['政府牌照注册', 'WCB工伤保险', `$${LIABILITY_WAN}万商业责任险`, `最长${WARRANTY_YEARS}年质保`],
+  'zh-Hant': ['政府牌照註冊', 'WCB工傷保險', `$${LIABILITY_WAN}萬商業責任險`, `最長${WARRANTY_YEARS}年質保`],
 };
 
 /** "Google 5.0星好评" — built from the live rating, never hardcoded. */

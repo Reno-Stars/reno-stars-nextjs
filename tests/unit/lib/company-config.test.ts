@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   BRAND,
   LOCALIZED_BRAND_NAMES,
@@ -8,8 +8,13 @@ import {
   OPENING_HOURS,
   COMPANY_STATS,
   WECHAT_ID,
+  GOOGLE_PLACE_ID,
+  GOOGLE_REVIEWS_URL,
+  GOOGLE_WRITE_REVIEW_URL,
 } from '@/lib/company-config';
 import { SITE_NAME } from '@/lib/utils';
+
+const DEFAULT_PLACE_ID = 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
 
 describe('brand SSOT', () => {
   it('SITE_NAME re-exports BRAND (single source)', () => {
@@ -53,5 +58,35 @@ describe('company stats', () => {
     expect(COMPANY_STATS.companyFoundingYear).toBe(2020);
     expect(COMPANY_STATS.warrantyYears).toBe(3);
     expect(WECHAT_ID).toBe('RenoStars');
+  });
+});
+
+describe('Google place ID SSOT (finding #12)', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  it('the review + write-review URLs embed the resolved place id (single source)', () => {
+    // No GOOGLE_PLACE_ID env in the test runner → falls back to the default.
+    expect(GOOGLE_PLACE_ID).toBe(DEFAULT_PLACE_ID);
+    expect(GOOGLE_REVIEWS_URL).toContain(GOOGLE_PLACE_ID);
+    expect(GOOGLE_WRITE_REVIEW_URL).toContain(GOOGLE_PLACE_ID);
+  });
+
+  it('reads GOOGLE_PLACE_ID from the environment when set', async () => {
+    vi.resetModules();
+    vi.stubEnv('GOOGLE_PLACE_ID', 'ChIJ_TEST_PLACE_ID');
+    const mod = await import('@/lib/company-config');
+    expect(mod.GOOGLE_PLACE_ID).toBe('ChIJ_TEST_PLACE_ID');
+    expect(mod.GOOGLE_REVIEWS_URL).toContain('ChIJ_TEST_PLACE_ID');
+    expect(mod.GOOGLE_WRITE_REVIEW_URL).toContain('ChIJ_TEST_PLACE_ID');
+  });
+
+  it('falls back to the documented default when the env is empty or unset', async () => {
+    vi.resetModules();
+    vi.stubEnv('GOOGLE_PLACE_ID', '');
+    const mod = await import('@/lib/company-config');
+    expect(mod.GOOGLE_PLACE_ID).toBe(DEFAULT_PLACE_ID);
   });
 });

@@ -375,6 +375,9 @@ export function projectReviewsToLocale(rating: GooglePlaceRating, locale: string
 
 export async function getGoogleReviews(): Promise<GooglePlaceRating> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  // Same `GOOGLE_PLACE_ID` env that backs `lib/company-config`'s exported
+  // GOOGLE_PLACE_ID (single GBP identity — finding #12). Read directly here so
+  // a missing env still gates the API call (falls back to the DB cache row).
   const placeId = process.env.GOOGLE_PLACE_ID;
 
   // Cached row is the source of translations even when the API succeeds.
