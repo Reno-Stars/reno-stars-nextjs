@@ -18,8 +18,23 @@ describe('normalizeInternalLinks', () => {
     expect(normalizeInternalLinks(a('/blog/foo'), 'en')).toBe(a('/en/blog/foo/'));
   });
 
-  it('does not double-prefix paths that already carry a locale', () => {
-    expect(normalizeInternalLinks(a('/zh-Hant/blog/foo'), 'en')).toBe(a('/zh-Hant/blog/foo/'));
+  it('leaves an already-in-locale prefix untouched (no double-prefix)', () => {
+    expect(normalizeInternalLinks(a('/zh/blog/foo/'), 'zh')).toBe(a('/zh/blog/foo/'));
+    expect(normalizeInternalLinks(a('/en/contact/'), 'en')).toBe(a('/en/contact/'));
+  });
+
+  it('rewrites a foreign locale prefix to the page locale (keeps readers in-locale)', () => {
+    // Translated blog bodies inherit hard-coded `/en/...` links from the English
+    // source; on a zh page they must localize to `/zh/...`, not send readers to EN.
+    expect(normalizeInternalLinks(a('/en/areas/vancouver/'), 'zh')).toBe(a('/zh/areas/vancouver/'));
+    expect(normalizeInternalLinks(a('/en/services/kitchen'), 'zh')).toBe(a('/zh/services/kitchen/'));
+    expect(normalizeInternalLinks(a('/zh-Hant/blog/foo'), 'en')).toBe(a('/en/blog/foo/'));
+    // Home ("/en/") localizes to the page-locale home, not "/en/zh/…".
+    expect(normalizeInternalLinks(a('/en/'), 'ja')).toBe(a('/ja/'));
+  });
+
+  it('preserves query + fragment when rewriting a foreign locale prefix', () => {
+    expect(normalizeInternalLinks(a('/en/contact?src=blog#form'), 'zh')).toBe(a('/zh/contact/?src=blog#form'));
   });
 
   it('canonicalizes absolute own-host links to https://www + trailing slash', () => {
