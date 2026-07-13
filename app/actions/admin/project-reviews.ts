@@ -6,7 +6,8 @@ import { projectReviews, projects, serviceAreas } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH } from '@/lib/admin/form-utils';
-import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
+import { revalidatePathAllLocalesNoPurge, purgeCloudflarePagesAllLocales } from '@/lib/seo/revalidate-paths';
+import { REVIEW_SOURCES, REVIEW_BODY_LANGS } from '@/lib/project-reviews';
 
 /**
  * Admin CRUD for verified client reviews (project_reviews).
@@ -22,7 +23,7 @@ import { revalidatePathAllLocales } from '@/lib/seo/revalidate-paths';
 
 const AUTHOR_NAME_MAX = 120;
 const SOURCE_URL_MAX = 500;
-const REVIEW_LANGS = ['en', 'zh'];
+const DEFAULT_SOURCE = 'google';
 
 interface ReviewInput {
   authorName: string;
@@ -30,6 +31,7 @@ interface ReviewInput {
   body: string;
   bodyLang: string;
   reviewDate: string;
+  source: string;
   sourceUrl: string | null;
   ownerResponse: string | null;
 }
@@ -55,8 +57,16 @@ function parseReviewData(formData: FormData): { data?: ReviewInput; error?: stri
   if (!body) return { error: 'Review text is required.' };
 
   const bodyLang = getString(formData, 'bodyLang').trim();
-  if (!REVIEW_LANGS.includes(bodyLang)) {
-    return { error: 'Review language must be "en" or "zh".' };
+  if (!REVIEW_BODY_LANGS.includes(bodyLang)) {
+    return { error: 'Review language must be a supported site locale.' };
+  }
+
+  // Review platform. Empty defaults to 'google' (the historical + common case);
+  // any other value must be one of the known platforms so the card can render
+  // it correctly (Google branding only for 'google').
+  const sourceRaw = getString(formData, 'source').trim() || DEFAULT_SOURCE;
+  if (!(REVIEW_SOURCES as readonly string[]).includes(sourceRaw)) {
+    return { error: 'Review source is not a supported platform.' };
   }
 
   const rawDate = getString(formData, 'reviewDate').trim();
@@ -85,6 +95,7 @@ function parseReviewData(formData: FormData): { data?: ReviewInput; error?: stri
       body,
       bodyLang,
       reviewDate,
+      source: sourceRaw,
       sourceUrl: sourceUrlRaw || null,
       ownerResponse,
     },
@@ -133,28 +144,48 @@ async function getProjectForReview(projectId: string): Promise<LinkedProject | n
  * Never triggers a deploy.
  */
 async function revalidateReviewSurfaces(linked: Array<LinkedProject | null>): Promise<void> {
-  const seen = new Set<string>();
+  // Dedupe the target projects (create passes one; update passes old + new).
+  const seenIds = new Set<string>();
+  const uniqueProjects: LinkedProject[] = [];
   for (const project of linked) {
-    if (!project || seen.has(project.id)) continue;
-    seen.add(project.id);
-    updateTag(`project:${project.slug}`);
-    revalidatePathAllLocales(`/projects/${project.slug}`);
-    if (project.locationCity) {
-      const areaRows = await db
-        .select({ slug: serviceAreas.slug })
-        .from(serviceAreas)
-        .where(sql`LOWER(${serviceAreas.nameEn}) = LOWER(${project.locationCity})`)
-        .limit(1);
-      if (areaRows[0]) revalidatePathAllLocales(`/areas/${areaRows[0].slug}`);
-    }
-    if (project.serviceType) {
-      revalidatePathAllLocales(`/services/${project.serviceType}`);
-    }
+    if (!project || seenIds.has(project.id)) continue;
+    seenIds.add(project.id);
+    uniqueProjects.push(project);
   }
+
+  // Collect every relative path this change touches; the CF edge purge is
+  // issued ONCE for the whole deduped set at the end instead of one call per
+  // path (efficiency #26). '/reviews' (both city + type hub groupings) always
+  // refreshes.
+  const relPaths = new Set<string>(['/reviews']);
+  for (const project of uniqueProjects) {
+    updateTag(`project:${project.slug}`);
+    relPaths.add(`/projects/${project.slug}`);
+    if (project.serviceType) relPaths.add(`/services/${project.serviceType}`);
+  }
+
+  // Resolve all the projects' city → area slugs in ONE `IN` query instead of a
+  // serial per-project lookup (efficiency #26).
+  const cities = Array.from(
+    new Set(uniqueProjects.map((p) => p.locationCity).filter((c): c is string => Boolean(c))),
+  );
+  if (cities.length > 0) {
+    const areaRows = await db
+      .select({ slug: serviceAreas.slug, nameEn: serviceAreas.nameEn })
+      .from(serviceAreas)
+      .where(sql`LOWER(${serviceAreas.nameEn}) IN (${sql.join(cities.map((c) => sql`LOWER(${c})`), sql`, `)})`);
+    for (const area of areaRows) relPaths.add(`/areas/${area.slug}`);
+  }
+
+  // ISR origin revalidation per touched path (all locales) — cheap, in-process.
+  for (const rel of relPaths) revalidatePathAllLocalesNoPurge(rel);
   updateTag('reviews:by-area');
   updateTag('reviews:by-service');
   updateTag('reviews:hub');
-  revalidatePathAllLocales('/reviews');
+
+  // ONE batched Cloudflare purge for every touched path across all locales
+  // (purgeCloudflareUrls chunks into ≤30-URL calls; no-op without a CF token).
+  purgeCloudflarePagesAllLocales(Array.from(relPaths));
 }
 
 /**
@@ -235,7 +266,8 @@ export async function updateProjectReview(
       if (!newProject) return { error: 'Project not found.' };
     }
 
-    // `source` is intentionally not editable — it stays as created.
+    // `source` IS editable now (defaults to google) so the platform branding
+    // on the card can be corrected without a DB edit (#29).
     await db.update(projectReviews).set({ ...data, projectId }).where(eq(projectReviews.id, reviewId));
 
     // Refresh both the previous and the new link targets (re-link/unlink).

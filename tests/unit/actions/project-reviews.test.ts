@@ -24,27 +24,29 @@ const h = vi.hoisted(() => {
 const PROJECT_ID = '550e8400-e29b-41d4-a716-446655440000';
 const REVIEW_ID = '550e8400-e29b-41d4-a716-446655440001';
 
-vi.mock('@/lib/db', () => ({
-  db: {
-    select: vi.fn().mockReturnValue({
-      from: vi.fn().mockImplementation((table: { __table?: string }) => ({
-        where: vi.fn().mockReturnValue({
-          limit: vi.fn().mockImplementation(async () =>
-            table?.__table === 'service_areas' ? h.areaRows : h.projectRows,
+vi.mock('@/lib/db', () => {
+  // A `.where(...)` result that is BOTH awaitable (the batched serviceAreas IN
+  // query awaits it directly) AND has `.limit()` (the single-row lookups).
+  const makeResult = (rows: unknown[]) =>
+    Object.assign(Promise.resolve(rows), { limit: () => Promise.resolve(rows) });
+  return {
+    db: {
+      select: vi.fn().mockReturnValue({
+        from: vi.fn().mockImplementation((table: { __table?: string }) => ({
+          where: vi.fn().mockImplementation(() =>
+            makeResult(table?.__table === 'service_areas' ? h.areaRows : h.projectRows),
           ),
-        }),
-        leftJoin: vi.fn().mockReturnValue({
-          where: vi.fn().mockReturnValue({
-            limit: vi.fn().mockImplementation(async () => h.reviewJoinRows),
+          leftJoin: vi.fn().mockReturnValue({
+            where: vi.fn().mockImplementation(() => makeResult(h.reviewJoinRows)),
           }),
-        }),
-      })),
-    }),
-    insert: vi.fn().mockReturnValue({ values: h.insertValues }),
-    update: vi.fn().mockReturnValue({ set: h.updateSet }),
-    delete: vi.fn().mockReturnValue({ where: h.deleteWhere }),
-  },
-}));
+        })),
+      }),
+      insert: vi.fn().mockReturnValue({ values: h.insertValues }),
+      update: vi.fn().mockReturnValue({ set: h.updateSet }),
+      delete: vi.fn().mockReturnValue({ where: h.deleteWhere }),
+    },
+  };
+});
 
 vi.mock('@/lib/db/schema', () => ({
   projectReviews: { __table: 'project_reviews' },
@@ -67,7 +69,8 @@ vi.mock('next/cache', () => ({
 }));
 
 vi.mock('@/lib/seo/revalidate-paths', () => ({
-  revalidatePathAllLocales: vi.fn(),
+  revalidatePathAllLocalesNoPurge: vi.fn(),
+  purgeCloudflarePagesAllLocales: vi.fn(),
 }));
 
 // Import after mocks
@@ -123,9 +126,29 @@ describe('Project Review Actions', () => {
       expect(result.error).toBe('Review text is required.');
     });
 
-    it('should reject unsupported review language', async () => {
+    it('should reject a language that is not a supported site locale', async () => {
+      // 'de' is not one of the 14 site locales; 'fr'/'ja'/'ko' now ARE accepted.
+      const result = await createProjectReview({}, validFormData({ bodyLang: 'de' }));
+      expect(result.error).toBe('Review language must be a supported site locale.');
+    });
+
+    it('should accept a widened locale (e.g. fr) and default source to google', async () => {
       const result = await createProjectReview({}, validFormData({ bodyLang: 'fr' }));
-      expect(result.error).toBe('Review language must be "en" or "zh".');
+      expect(result.success).toBe(true);
+      expect(h.insertValues).toHaveBeenCalledWith(
+        expect.objectContaining({ bodyLang: 'fr', source: 'google' }),
+      );
+    });
+
+    it('should reject an unsupported review source', async () => {
+      const result = await createProjectReview({}, validFormData({ source: 'craigslist' }));
+      expect(result.error).toBe('Review source is not a supported platform.');
+    });
+
+    it('should store a valid non-google source', async () => {
+      const result = await createProjectReview({}, validFormData({ source: 'yelp' }));
+      expect(result.success).toBe(true);
+      expect(h.insertValues).toHaveBeenCalledWith(expect.objectContaining({ source: 'yelp' }));
     });
 
     it('should reject malformed review date', async () => {
@@ -151,7 +174,7 @@ describe('Project Review Actions', () => {
 
     it('should insert with month-normalized date and revalidate project, area and hub pages', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
 
       const result = await createProjectReview({}, validFormData({ reviewDate: '2026-05' }));
 
@@ -170,14 +193,14 @@ describe('Project Review Actions', () => {
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
       expect(updateTag).toHaveBeenCalledWith('reviews:by-area');
       expect(updateTag).toHaveBeenCalledWith('reviews:hub');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/areas/richmond');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/areas/richmond');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
     });
 
     it('should create an UNLINKED review (no projectId) and revalidate only the hub surfaces', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
 
       const result = await createProjectReview({}, validFormData({ projectId: '' }));
 
@@ -188,8 +211,8 @@ describe('Project Review Actions', () => {
       expect(updateTag).toHaveBeenCalledWith('reviews:hub');
       expect(updateTag).toHaveBeenCalledWith('reviews:by-area');
       expect(updateTag).not.toHaveBeenCalledWith('project:test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
-      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).not.toHaveBeenCalledWith('/projects/test-project');
     });
 
     it('should normalize a full date to the 1st of the month', async () => {
@@ -226,7 +249,7 @@ describe('Project Review Actions', () => {
 
     it('should update and revalidate the project pages', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
 
       const result = await updateProjectReview(REVIEW_ID, {}, validFormData({ ownerResponse: 'Thank you!' }));
 
@@ -241,11 +264,11 @@ describe('Project Review Actions', () => {
         })
       );
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/projects/test-project');
     });
 
     it('should unlink a review (empty projectId) while still revalidating the OLD project pages', async () => {
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
 
       const result = await updateProjectReview(REVIEW_ID, {}, validFormData({ projectId: '' }));
 
@@ -254,19 +277,19 @@ describe('Project Review Actions', () => {
         expect.objectContaining({ projectId: null })
       );
       // The review used to render on the old project's pages — refresh them.
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
     });
 
     it('should update an UNLINKED review without touching project pages', async () => {
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
       h.reviewJoinRows = [{ reviewId: REVIEW_ID, projectId: null, slug: null, locationCity: null }];
 
       const result = await updateProjectReview(REVIEW_ID, {}, validFormData({ projectId: '' }));
 
       expect(result.success).toBe(true);
-      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).not.toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
     });
 
     it('should surface validation errors before touching the DB', async () => {
@@ -291,20 +314,20 @@ describe('Project Review Actions', () => {
 
     it('should delete and revalidate the project pages', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
 
       const result = await deleteProjectReview(REVIEW_ID);
 
       expect(result.error).toBeUndefined();
       expect(h.deleteWhere).toHaveBeenCalled();
       expect(updateTag).toHaveBeenCalledWith('project:test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/projects/test-project');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
     });
 
     it('should delete an UNLINKED review and revalidate the hub', async () => {
       const { updateTag } = await import('next/cache');
-      const { revalidatePathAllLocales } = await import('@/lib/seo/revalidate-paths');
+      const { revalidatePathAllLocalesNoPurge } = await import('@/lib/seo/revalidate-paths');
       h.reviewJoinRows = [{ reviewId: REVIEW_ID, projectId: null, slug: null, locationCity: null }];
 
       const result = await deleteProjectReview(REVIEW_ID);
@@ -312,8 +335,8 @@ describe('Project Review Actions', () => {
       expect(result.error).toBeUndefined();
       expect(h.deleteWhere).toHaveBeenCalled();
       expect(updateTag).toHaveBeenCalledWith('reviews:hub');
-      expect(revalidatePathAllLocales).toHaveBeenCalledWith('/reviews');
-      expect(revalidatePathAllLocales).not.toHaveBeenCalledWith('/projects/test-project');
+      expect(revalidatePathAllLocalesNoPurge).toHaveBeenCalledWith('/reviews');
+      expect(revalidatePathAllLocalesNoPurge).not.toHaveBeenCalledWith('/projects/test-project');
     });
   });
 });

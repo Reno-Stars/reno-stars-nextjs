@@ -101,6 +101,15 @@ export const PROJECT_CARD_FIELDS = [
   'heroImageUrl',
   'heroVideoUrl',
   'locationCity',
+  // `serviceType` isn't on the project CARD, but re-typing a project (e.g.
+  // kitchen → bathroom) changes which /services/<type>/ + /reviews groups a
+  // linked review renders under, and revalidateProjectSurfaces() busts the
+  // reviews:by-service / reviews:hub data caches. Including it here makes
+  // updateProject fire that bust on a service_type change (#11). NOTE: the
+  // updateProject `currentProject` SELECT must also load `serviceType`, else
+  // oldRow.serviceType is always undefined and every edit over-busts — see the
+  // cross-theme handoff in the PR body.
+  'serviceType',
   'badgeEn',
   'badgeZh',
   'budgetRange',
