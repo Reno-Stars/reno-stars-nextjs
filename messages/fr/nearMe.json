@@ -100,6 +100,13 @@
       "subtitle": "Consultation gratuite à domicile, devis détaillé écrit en 2-3 jours ouvrables. Aucun dépôt requis pour devis.",
       "quote": "Obtenez mon devis gratuit",
       "call": "Appelez le 778-960-7999"
+    },
+    "nearby": {
+      "heading": "Projets récents près de chez vous",
+      "subtitle": "Des réalisations réelles récemment achevées par nos propres équipes dans le Grand Vancouver — touchez un projet pour voir photos, portée et budget.",
+      "relatedHeading": "Projets de rénovation récents près de chez vous",
+      "relatedNote": "Nous desservons chaque quartier du Grand Vancouver et pouvons prendre en charge votre projet — voici des réalisations récentes de nos équipes près de chez vous.",
+      "viewAll": "Voir tous les projets"
     }
   }
 }

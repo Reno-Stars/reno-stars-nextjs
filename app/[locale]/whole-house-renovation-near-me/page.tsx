@@ -4,8 +4,9 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
 import { getBaseUrl, SITE_NAME } from '@/lib/utils';
-import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
+import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { selectNearbyProjects } from '@/lib/near-me-projects';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
@@ -41,13 +42,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [nav, t, areas, company, googleReviews] = await Promise.all([
+  const [nav, t, areas, company, googleReviews, allProjects] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'nearMe' }),
     getServiceAreasFromDb(),
     getCompanyFromDb(),
     getGoogleReviews(),
+    getProjectsListFromDb(),
   ]);
+  const nearby = selectNearbyProjects(allProjects, 'whole-house', locale as Locale);
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: locale === 'zh' ? '附近全屋翻新' : 'Whole House Renovation Near Me', url: `/${locale}/whole-house-renovation-near-me/` },
@@ -79,6 +82,9 @@ export default async function Page({ params }: PageProps) {
         h1Override={isZh ? '附近全屋翻新 — Metro Vancouver' : 'Whole-House Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
+        variant="wholeHouse"
+        nearbyProjects={nearby.projects}
+        nearbyExact={nearby.exact}
       />
     </>
   );

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MapPin, Star, ShieldCheck, Clock, Phone, ArrowRight } from "lucide-react";
+import OptimizedImage from "@/components/OptimizedImage";
 import type { Locale } from "@/i18n/config";
 import type { ServiceArea } from "@/lib/types";
 import {
@@ -25,6 +26,20 @@ import {
  * Forbes near-me aggregators. We don't aggregate pros — we ARE the pros —
  * so the page is trust-signal + area-coverage first, lead-form second.
  */
+/** Focal service on a room-specific near-me page. Maps 1:1 to the
+ *  `nearMe.services.<key>` message keys. Undefined on the umbrella
+ *  /renovation-near-me/ page. */
+export type NearMeVariant = "kitchen" | "bathroom" | "wholeHouse" | "basement";
+
+/** A real, published project surfaced on a near-me page, pre-localized to a
+ *  flat shape by the server component (no client-side DB/i18n plumbing). */
+export interface NearbyProject {
+  slug: string;
+  title: string;
+  city: string;
+  heroImage: string;
+}
+
 interface Props {
   locale: Locale;
   areas: ServiceArea[];
@@ -39,9 +54,20 @@ interface Props {
    *  is only a fallback when the props are absent (H3 — no stale literal). */
   googleRating?: number;
   reviewCount?: number;
+  /** Focal service. When set, the page leads with a room-specific intro,
+   *  features that room's service card first, and shows a REAL project grid —
+   *  so the 4 room near-me pages are genuinely differentiated, not ~99%
+   *  identical bodies leaning on rel=canonical alone. */
+  variant?: NearMeVariant;
+  /** Real published projects to surface. Empty on the umbrella page. */
+  nearbyProjects?: NearbyProject[];
+  /** true → nearbyProjects are the exact focal room; false → related work
+   *  (honest framing when the room has no dedicated projects, e.g. basement —
+   *  we truthfully show related crews' work near you, clearly labeled). */
+  nearbyExact?: boolean;
 }
 
-export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount }: Props) {
+export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount, variant, nearbyProjects = [], nearbyExact = true }: Props) {
   const t = useTranslations("nearMe");
 
   // Live reviews rating for the trust stat — only when the SSOT actually has
@@ -52,7 +78,12 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
       ? `${googleRating.toFixed(1)}★`
       : null;
 
-  const services = ["kitchen", "bathroom", "wholeHouse", "basement", "cabinet", "commercial"] as const;
+  const allServices = ["kitchen", "bathroom", "wholeHouse", "basement", "cabinet", "commercial"] as const;
+  // On a room-specific page, surface the focal room's card first so even the
+  // shared "What we renovate" section differs page-to-page.
+  const services = variant
+    ? [variant, ...allServices.filter((s) => s !== variant)]
+    : [...allServices];
 
   // Per-service hrefs — deep-link the 4 services that have dedicated
   // near-me sub-pages so each near-me page acquires inbound internal links
@@ -60,7 +91,7 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
   // near-me pages as having weak_inbound_internal_links_within_audit_set).
   // cabinet + commercial fall back to /services/ since they don't have
   // near-me sub-pages.
-  const serviceHref = (s: typeof services[number]): string => {
+  const serviceHref = (s: typeof allServices[number]): string => {
     switch (s) {
       case "kitchen": return `/${locale}/kitchen-renovation-near-me/`;
       case "bathroom": return `/${locale}/bathroom-renovation-near-me/`;
@@ -88,9 +119,18 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
           >
             {h1Override ?? t("hero.h1")}
           </h1>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-10" style={{ color: TEXT_MID }}>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-6" style={{ color: TEXT_MID }}>
             {t("hero.subtitle")}
           </p>
+          {/* Room-specific lead: the real scope + price band for THIS service
+              (localized in all 14 locales via nearMe.services.<variant>.desc),
+              so each room page opens with distinct, truthful copy instead of
+              the shared generic subtitle alone. */}
+          {variant && (
+            <p className="text-base md:text-lg max-w-3xl mx-auto mb-10 font-medium" style={{ color: NAVY }}>
+              {t(`services.${variant}.desc`)}
+            </p>
+          )}
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href={`/${locale}/contact/`}
@@ -165,6 +205,65 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
         </div>
       </section>
 
+      {/* Recent projects near you — REAL published work, room-specific.
+          This is the primary differentiator between the room near-me pages:
+          the kitchen page shows kitchen photos/titles/links, the bathroom page
+          shows bathroom ones, etc. When the focal room has no dedicated
+          projects (e.g. basement), `nearbyExact` is false and we show related
+          recent work under an honest "near you" heading — never claiming a
+          project is something it isn't. */}
+      {variant && nearbyProjects.length > 0 && (
+        <section className="py-16" style={{ backgroundColor: SURFACE }}>
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-3" style={{ color: NAVY }}>
+              {nearbyExact ? t("nearby.heading") : t("nearby.relatedHeading")}
+            </h2>
+            <p className="text-center mb-10 max-w-2xl mx-auto" style={{ color: TEXT_MID }}>
+              {nearbyExact ? t("nearby.subtitle") : t("nearby.relatedNote")}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {nearbyProjects.map((p) => (
+                <Link
+                  key={p.slug}
+                  href={`/${locale}/projects/${p.slug}/`}
+                  className="group rounded-2xl overflow-hidden transition hover:shadow-lg"
+                  style={{ backgroundColor: CARD, boxShadow: neu() }}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <OptimizedImage
+                      src={p.heroImage}
+                      alt={p.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold mb-1 line-clamp-2" style={{ color: NAVY }}>
+                      {p.title}
+                    </h3>
+                    {p.city && (
+                      <span className="inline-flex items-center gap-1 text-sm" style={{ color: TEXT_MUTED }}>
+                        <MapPin size={14} style={{ color: GOLD }} /> {p.city}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link
+                href={`/${locale}/projects/`}
+                className="inline-flex items-center gap-2 font-semibold"
+                style={{ color: GOLD }}
+              >
+                {t("nearby.viewAll")} <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Services */}
       <section className="py-16" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-6xl mx-auto px-4">
@@ -172,11 +271,16 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
             {t("services.heading")}
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((s) => (
+            {services.map((s) => {
+              const isFocal = variant === s;
+              return (
               <div
                 key={s}
                 className="p-6 rounded-2xl"
-                style={{ backgroundColor: CARD, boxShadow: neu() }}
+                style={{
+                  backgroundColor: isFocal ? GOLD_PALE : CARD,
+                  boxShadow: isFocal ? `0 0 0 2px ${GOLD}` : neu(),
+                }}
               >
                 <h3 className="text-xl font-bold mb-3" style={{ color: NAVY }}>
                   {t(`services.${s}.title`)}
@@ -192,7 +296,8 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
                   {t("services.learnMore")} <ArrowRight size={14} />
                 </Link>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

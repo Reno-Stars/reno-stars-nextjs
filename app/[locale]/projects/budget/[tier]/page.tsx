@@ -68,11 +68,23 @@ function parseBudgetMidpoint(range?: string): number | null {
   return Math.round((parsed[0] + parsed[parsed.length - 1]) / 2);
 }
 
-function projectInTier(project: Project, tier: Tier): boolean {
-  const mid = parseBudgetMidpoint(project.budget_range);
+/**
+ * Whether a budget_range string (e.g. "$62,000 - $64,000") falls inside a
+ * tier's band, by midpoint. Shared by both individual projects and
+ * sites-as-projects so the visible grid, the ItemList schema, and the
+ * band-naming H1 all describe the SAME set — a page titled "Under $30K
+ * projects" must never render a $240K site (finding: sites were passed to
+ * ProjectsPage UNfiltered while only individual projects were band-filtered).
+ */
+export function budgetRangeInTier(range: string | undefined, tier: Tier): boolean {
+  const mid = parseBudgetMidpoint(range);
   if (mid === null) return false;
   const [lo, hi] = TIER_LABELS[tier].range;
   return mid >= lo && mid < hi;
+}
+
+function projectInTier(project: Project, tier: Tier): boolean {
+  return budgetRangeInTier(project.budget_range, tier);
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -125,6 +137,11 @@ export default async function Page({ params }: PageProps) {
   ]);
 
   const filteredProjects = allProjects.filter((p) => projectInTier(p, tier as Tier));
+  // Sites-as-projects must be band-filtered too: they render as whole-house
+  // cards in the SAME grid, so a page claiming "Real Under $30K projects" that
+  // shows a $240K townhouse would contradict its own H1/intro. Filter to the
+  // tier so the grid, schema, and heading all agree.
+  const filteredSites = sitesAsProjects.filter((s) => budgetRangeInTier(s.budget_range, tier as Tier));
   const tierMeta = TIER_LABELS[tier as Tier];
 
   const breadcrumbs = [
@@ -134,11 +151,21 @@ export default async function Page({ params }: PageProps) {
   ];
 
   const loc = locale as Locale;
-  const itemListItems = filteredProjects.map((p) => ({
-    name: pickLocale(p.title, loc),
-    url: `/${locale}/projects/${p.slug}/`,
-    image: p.hero_image,
-  }));
+  // Include both band-filtered projects AND band-filtered sites so the JSON-LD
+  // ItemList mirrors exactly what the visitor sees in the grid (sites resolve
+  // at /projects/<slug>/ via getSiteBySlugFromDb).
+  const itemListItems = [
+    ...filteredProjects.map((p) => ({
+      name: pickLocale(p.title, loc),
+      url: `/${locale}/projects/${p.slug}/`,
+      image: p.hero_image,
+    })),
+    ...filteredSites.map((s) => ({
+      name: pickLocale(s.title, loc),
+      url: `/${locale}/projects/${s.slug}/`,
+      image: s.hero_image ?? s.projects?.find((p) => p.hero_image)?.hero_image,
+    })),
+  ];
 
   return (
     <>
@@ -188,7 +215,7 @@ export default async function Page({ params }: PageProps) {
         locale={loc}
         company={company}
         projects={filteredProjects}
-        sitesAsProjects={sitesAsProjects}
+        sitesAsProjects={filteredSites}
         categories={categories}
       />
     </>

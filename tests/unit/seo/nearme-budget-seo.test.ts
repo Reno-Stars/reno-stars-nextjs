@@ -33,6 +33,7 @@ import { generateMetadata as basementMeta } from '@/app/[locale]/basement-renova
 import { generateMetadata as wholeHouseMeta } from '@/app/[locale]/whole-house-renovation-near-me/page';
 import {
   budgetTierH1,
+  budgetRangeInTier,
   TIERS,
   TIER_LABELS,
 } from '@/app/[locale]/projects/budget/[tier]/page';
@@ -85,6 +86,24 @@ describe('budget-facet distinct H1s', () => {
     expect(TIER_LABELS['under-30k'].range).toEqual([0, 30000]);
     expect(TIER_LABELS['30k-60k'].range).toEqual([30000, 60000]);
     expect(TIER_LABELS['60k-plus'].range[0]).toBe(60000);
+  });
+
+  it('band-filters sites/projects by budget so a tier only shows its own band', () => {
+    // Real off-band ranges from prod project_sites: these appeared on EVERY
+    // tier before the fix because sites were passed to the grid unfiltered.
+    // Under $30K must exclude the $240K townhouse and include the $21K condo.
+    expect(budgetRangeInTier('$240,000 - $270,000', 'under-30k')).toBe(false);
+    expect(budgetRangeInTier('$240,000 - $270,000', '60k-plus')).toBe(true);
+    expect(budgetRangeInTier('$115,000 - $120,000', 'under-30k')).toBe(false);
+    expect(budgetRangeInTier('$21,000 - $23,000', 'under-30k')).toBe(true);
+    expect(budgetRangeInTier('$21,000 - $23,000', '60k-plus')).toBe(false);
+    expect(budgetRangeInTier('$5,000 - $8,000', '60k-plus')).toBe(false);
+    // A mid-band whole-house site lands in exactly one tier.
+    expect(budgetRangeInTier('$49,000 - $51,000', '30k-60k')).toBe(true);
+    expect(budgetRangeInTier('$49,000 - $51,000', 'under-30k')).toBe(false);
+    // Unknown / missing budget is never claimed to belong to a band.
+    expect(budgetRangeInTier(undefined, 'under-30k')).toBe(false);
+    expect(budgetRangeInTier('', '60k-plus')).toBe(false);
   });
 
   it('localizes the H1 for zh / zh-Hant and falls back to EN otherwise', () => {

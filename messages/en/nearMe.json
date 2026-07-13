@@ -100,6 +100,13 @@
       "subtitle": "Free in-home consultation, written itemized quote in 2-3 business days. No deposit required to quote.",
       "quote": "Get my free quote",
       "call": "Call 778-960-7999"
+    },
+    "nearby": {
+      "heading": "Recent projects near you",
+      "subtitle": "Real, recently completed work from our own crews across Metro Vancouver — tap any project for photos, scope, and budget.",
+      "relatedHeading": "Recent renovation projects near you",
+      "relatedNote": "We serve every Metro Vancouver neighbourhood and can take on your project — here's recent work from our crews near you.",
+      "viewAll": "See all projects"
     }
   }
 }
