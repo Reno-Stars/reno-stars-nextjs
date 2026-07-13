@@ -12,6 +12,9 @@ import { useToast } from './ToastProvider';
 import { inputStyle, textareaStyle, selectStyle } from './shared-styles';
 import { CARD, NAVY, GOLD, TEXT_MID, SURFACE, ERROR, neu } from '@/lib/theme';
 import { useAdminTranslations } from '@/lib/admin/translations';
+import { useAdminLocale } from '@/components/admin/AdminLocaleProvider';
+import { REVIEW_SOURCES, REVIEW_BODY_LANGS } from '@/lib/project-reviews';
+import { localeNames, type Locale } from '@/i18n/config';
 
 /** Serializable project_reviews row passed from the admin server page. */
 export interface AdminProjectReview {
@@ -45,9 +48,82 @@ interface ProjectReviewsSectionProps {
 
 const BODY_PREVIEW_LENGTH = 140;
 
+// messages/admin/*.ts is owned by another theme; the NEW review-source field
+// uses this inline en/zh label (the admin UI is bilingual) rather than adding a
+// key there. Human-readable platform names for the <option>s.
+const SOURCE_FIELD_LABEL: Record<string, string> = { en: 'Review Source', zh: '评价来源' };
+const SOURCE_FIELD_TOOLTIP: Record<string, string> = {
+  en: 'Platform the review was posted on. Google shows Google branding on the card; other platforms show a neutral "Verified Review" mark.',
+  zh: '评价发布的平台。Google 会在卡片上显示 Google 标识；其他平台显示中性的“认证评价”标记。',
+};
+// Brand platforms are proper nouns — never translated. Keyed by review source.
+const SOURCE_OPTION_LABELS: Record<string, string> = {
+  google: 'Google',
+  yelp: 'Yelp',
+  houzz: 'Houzz',
+  facebook: 'Facebook',
+  homestars: 'HomeStars',
+};
+// 'other' is a generic word (not a brand), so it localizes with the admin UI
+// locale — otherwise a zh admin session shows "Other" in English among the
+// Chinese field labels.
+const OTHER_OPTION_LABEL: Record<string, string> = { en: 'Other', zh: '其他' };
+
 function ratingStars(rating: number): string {
   const filled = Math.min(5, Math.max(0, rating));
   return '★'.repeat(filled) + '☆'.repeat(5 - filled);
+}
+
+interface ReviewMetaFieldsProps {
+  initialData?: AdminProjectReview;
+}
+
+/**
+ * Rating / date / language / source selects for the review form — extracted so
+ * ReviewForm stays under the 50-line rule (#34) and so the widened language set
+ * (#10) and new source select (#29) live in one place.
+ */
+function ReviewMetaFields({ initialData }: ReviewMetaFieldsProps) {
+  const t = useAdminTranslations();
+  const { locale } = useAdminLocale();
+  const sourceLabel = SOURCE_FIELD_LABEL[locale] ?? SOURCE_FIELD_LABEL.en;
+  const sourceTooltip = SOURCE_FIELD_TOOLTIP[locale] ?? SOURCE_FIELD_TOOLTIP.en;
+
+  return (
+    <>
+      <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0 1rem' }}>
+        <FormField label={t.projectReviews.rating} htmlFor="reviewRating" tooltip={t.projectReviews.tooltips.rating}>
+          <select id="reviewRating" name="rating" defaultValue={String(initialData?.rating ?? 5)} style={selectStyle}>
+            {[5, 4, 3, 2, 1].map((r) => (
+              <option key={r} value={r}>{ratingStars(r)} ({r})</option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label={t.projectReviews.reviewDate} htmlFor="reviewDate" tooltip={t.projectReviews.tooltips.reviewDate}>
+          <input id="reviewDate" name="reviewDate" type="month" defaultValue={initialData?.reviewDate.slice(0, 7) ?? ''} required style={inputStyle} />
+        </FormField>
+        <FormField label={t.projectReviews.bodyLang} htmlFor="reviewBodyLang" tooltip={t.projectReviews.tooltips.bodyLang}>
+          <select id="reviewBodyLang" name="bodyLang" defaultValue={initialData?.bodyLang ?? 'en'} style={selectStyle}>
+            {REVIEW_BODY_LANGS.map((lang) => (
+              <option key={lang} value={lang}>{localeNames[lang as Locale] ?? lang}</option>
+            ))}
+          </select>
+        </FormField>
+      </div>
+
+      <FormField label={sourceLabel} htmlFor="reviewSource" tooltip={sourceTooltip}>
+        <select id="reviewSource" name="source" defaultValue={initialData?.source ?? 'google'} style={selectStyle}>
+          {REVIEW_SOURCES.map((src) => (
+            <option key={src} value={src}>
+              {src === 'other'
+                ? OTHER_OPTION_LABEL[locale] ?? OTHER_OPTION_LABEL.en
+                : SOURCE_OPTION_LABELS[src] ?? src}
+            </option>
+          ))}
+        </select>
+      </FormField>
+    </>
+  );
 }
 
 interface ReviewFormProps {
@@ -92,24 +168,7 @@ function ReviewForm({ action, initialData, defaultProjectId, projectOptions, onS
         </select>
       </FormField>
 
-      <div className="admin-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0 1rem' }}>
-        <FormField label={t.projectReviews.rating} htmlFor="reviewRating" tooltip={t.projectReviews.tooltips.rating}>
-          <select id="reviewRating" name="rating" defaultValue={String(initialData?.rating ?? 5)} style={selectStyle}>
-            {[5, 4, 3, 2, 1].map((r) => (
-              <option key={r} value={r}>{ratingStars(r)} ({r})</option>
-            ))}
-          </select>
-        </FormField>
-        <FormField label={t.projectReviews.reviewDate} htmlFor="reviewDate" tooltip={t.projectReviews.tooltips.reviewDate}>
-          <input id="reviewDate" name="reviewDate" type="month" defaultValue={initialData?.reviewDate.slice(0, 7) ?? ''} required style={inputStyle} />
-        </FormField>
-        <FormField label={t.projectReviews.bodyLang} htmlFor="reviewBodyLang" tooltip={t.projectReviews.tooltips.bodyLang}>
-          <select id="reviewBodyLang" name="bodyLang" defaultValue={initialData?.bodyLang ?? 'en'} style={selectStyle}>
-            <option value="en">English</option>
-            <option value="zh">中文</option>
-          </select>
-        </FormField>
-      </div>
+      <ReviewMetaFields initialData={initialData} />
 
       <FormField label={t.projectReviews.body} htmlFor="reviewBody" tooltip={t.projectReviews.tooltips.body}>
         <textarea id="reviewBody" name="body" defaultValue={initialData?.body ?? ''} required rows={5} style={textareaStyle} />
@@ -135,6 +194,150 @@ function ReviewForm({ action, initialData, defaultProjectId, projectOptions, onS
         </button>
       </div>
     </form>
+  );
+}
+
+interface ReviewRowProps {
+  review: AdminProjectReview;
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
+/**
+ * Read-only display of one saved review (author, rating, date, source link,
+ * body/owner-response previews, edit/delete). Extracted from the section's map
+ * body so ProjectReviewsSection stays under the 50-line rule (#34).
+ */
+function ReviewRow({ review, onEdit, onDelete }: ReviewRowProps) {
+  const t = useAdminTranslations();
+  return (
+    <div style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
+        <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.875rem' }}>{review.authorName}</span>
+        <span aria-label={`${review.rating}/5`} style={{ color: GOLD, fontSize: '0.8125rem', letterSpacing: '1px' }}>{ratingStars(review.rating)}</span>
+        <span style={{ color: TEXT_MID, fontSize: '0.75rem' }}>{review.reviewDate.slice(0, 7)}</span>
+        <span style={{ color: TEXT_MID, fontSize: '0.75rem', textTransform: 'capitalize' }}>
+          {review.sourceUrl ? (
+            <a href={review.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: TEXT_MID, textDecoration: 'underline' }}>
+              {review.source}
+            </a>
+          ) : (
+            review.source
+          )}
+        </span>
+      </div>
+      <p style={{ color: NAVY, fontSize: '0.8125rem', margin: '0 0 0.375rem', whiteSpace: 'pre-line' }}>
+        {review.body.length > BODY_PREVIEW_LENGTH ? `${review.body.slice(0, BODY_PREVIEW_LENGTH)}…` : review.body}
+      </p>
+      {review.ownerResponse && (
+        <p style={{ color: TEXT_MID, fontSize: '0.75rem', margin: '0 0 0.375rem' }}>
+          {t.projectReviews.ownerResponse}: {review.ownerResponse.length > BODY_PREVIEW_LENGTH ? `${review.ownerResponse.slice(0, BODY_PREVIEW_LENGTH)}…` : review.ownerResponse}
+        </p>
+      )}
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <button
+          type="button"
+          onClick={onEdit}
+          style={{ color: NAVY, background: 'none', border: `1px solid ${NAVY}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+        >
+          {t.common.edit}
+        </button>
+        <button
+          type="button"
+          onClick={onDelete}
+          style={{ color: ERROR, background: 'none', border: `1px solid ${ERROR}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+        >
+          {t.common.delete}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+interface DeleteReviewDialogProps {
+  open: boolean;
+  loading: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+/** Delete-confirmation dialog for a review — the review-specific labels around
+ *  the shared ConfirmDialog, extracted so the section stays small (#34). */
+function DeleteReviewDialog({ open, loading, onConfirm, onCancel }: DeleteReviewDialogProps) {
+  const t = useAdminTranslations();
+  return (
+    <ConfirmDialog
+      open={open}
+      title={t.projectReviews.deleteReview}
+      message={t.projectReviews.deleteMessage}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+      loading={loading}
+    />
+  );
+}
+
+interface ReviewListProps {
+  reviews: AdminProjectReview[];
+  editingId: string | 'new' | null;
+  defaultProjectId: string | null;
+  projectOptions: ReviewProjectOption[];
+  onEdit: (id: string | 'new' | null) => void;
+  onSaved: () => void;
+  onDelete: (id: string) => void;
+}
+
+/** The review rows / inline edit forms plus the "add review" affordance —
+ *  extracted so ProjectReviewsSection's own body stays under 50 lines (#34). */
+function ReviewList({ reviews, editingId, defaultProjectId, projectOptions, onEdit, onSaved, onDelete }: ReviewListProps) {
+  const t = useAdminTranslations();
+  return (
+    <>
+      {reviews.length === 0 && editingId !== 'new' && (
+        <p style={{ color: TEXT_MID, fontSize: '0.8125rem', margin: '0 0 0.75rem' }}>
+          {t.projectReviews.noReviews}
+        </p>
+      )}
+
+      {reviews.map((review) =>
+        editingId === review.id ? (
+          <ReviewForm
+            key={review.id}
+            action={updateProjectReview.bind(null, review.id)}
+            initialData={review}
+            defaultProjectId={defaultProjectId}
+            projectOptions={projectOptions}
+            onSaved={onSaved}
+            onCancel={() => onEdit(null)}
+          />
+        ) : (
+          <ReviewRow
+            key={review.id}
+            review={review}
+            onEdit={() => onEdit(review.id)}
+            onDelete={() => onDelete(review.id)}
+          />
+        )
+      )}
+
+      {editingId === 'new' ? (
+        <ReviewForm
+          action={createProjectReview}
+          defaultProjectId={defaultProjectId}
+          projectOptions={projectOptions}
+          onSaved={onSaved}
+          onCancel={() => onEdit(null)}
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => onEdit('new')}
+          style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600, padding: 0 }}
+        >
+          {t.projectReviews.addReview}
+        </button>
+      )}
+    </>
   );
 }
 
@@ -183,13 +386,11 @@ export default function ProjectReviewsSection({ defaultProjectId, projectOptions
       className="admin-form-card"
       style={{ backgroundColor: CARD, borderRadius: '12px', padding: '1.5rem', boxShadow: neu(6), maxWidth: '900px', marginTop: '1.5rem' }}
     >
-      <ConfirmDialog
+      <DeleteReviewDialog
         open={deleteId !== null}
-        title={t.projectReviews.deleteReview}
-        message={t.projectReviews.deleteMessage}
+        loading={isDeletePending}
         onConfirm={handleDelete}
         onCancel={() => setDeleteId(null)}
-        loading={isDeletePending}
       />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginBottom: '0.75rem' }}>
@@ -199,84 +400,15 @@ export default function ProjectReviewsSection({ defaultProjectId, projectOptions
         <Tooltip content={t.projectReviews.tooltip} />
       </div>
 
-      {reviews.length === 0 && editingId !== 'new' && (
-        <p style={{ color: TEXT_MID, fontSize: '0.8125rem', margin: '0 0 0.75rem' }}>
-          {t.projectReviews.noReviews}
-        </p>
-      )}
-
-      {reviews.map((review) =>
-        editingId === review.id ? (
-          <ReviewForm
-            key={review.id}
-            action={updateProjectReview.bind(null, review.id)}
-            initialData={review}
-            defaultProjectId={defaultProjectId}
-            projectOptions={projectOptions}
-            onSaved={handleSaved}
-            onCancel={() => setEditingId(null)}
-          />
-        ) : (
-          <div key={review.id} style={{ backgroundColor: SURFACE, borderRadius: '8px', padding: '0.75rem', marginBottom: '0.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
-              <span style={{ color: NAVY, fontWeight: 600, fontSize: '0.875rem' }}>{review.authorName}</span>
-              <span aria-label={`${review.rating}/5`} style={{ color: GOLD, fontSize: '0.8125rem', letterSpacing: '1px' }}>{ratingStars(review.rating)}</span>
-              <span style={{ color: TEXT_MID, fontSize: '0.75rem' }}>{review.reviewDate.slice(0, 7)}</span>
-              <span style={{ color: TEXT_MID, fontSize: '0.75rem', textTransform: 'capitalize' }}>
-                {review.sourceUrl ? (
-                  <a href={review.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: TEXT_MID, textDecoration: 'underline' }}>
-                    {review.source}
-                  </a>
-                ) : (
-                  review.source
-                )}
-              </span>
-            </div>
-            <p style={{ color: NAVY, fontSize: '0.8125rem', margin: '0 0 0.375rem', whiteSpace: 'pre-line' }}>
-              {review.body.length > BODY_PREVIEW_LENGTH ? `${review.body.slice(0, BODY_PREVIEW_LENGTH)}…` : review.body}
-            </p>
-            {review.ownerResponse && (
-              <p style={{ color: TEXT_MID, fontSize: '0.75rem', margin: '0 0 0.375rem' }}>
-                {t.projectReviews.ownerResponse}: {review.ownerResponse.length > BODY_PREVIEW_LENGTH ? `${review.ownerResponse.slice(0, BODY_PREVIEW_LENGTH)}…` : review.ownerResponse}
-              </p>
-            )}
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                type="button"
-                onClick={() => setEditingId(review.id)}
-                style={{ color: NAVY, background: 'none', border: `1px solid ${NAVY}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
-              >
-                {t.common.edit}
-              </button>
-              <button
-                type="button"
-                onClick={() => setDeleteId(review.id)}
-                style={{ color: ERROR, background: 'none', border: `1px solid ${ERROR}`, borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
-              >
-                {t.common.delete}
-              </button>
-            </div>
-          </div>
-        )
-      )}
-
-      {editingId === 'new' ? (
-        <ReviewForm
-          action={createProjectReview}
-          defaultProjectId={defaultProjectId}
-          projectOptions={projectOptions}
-          onSaved={handleSaved}
-          onCancel={() => setEditingId(null)}
-        />
-      ) : (
-        <button
-          type="button"
-          onClick={() => setEditingId('new')}
-          style={{ color: GOLD, background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8125rem', fontWeight: 600, padding: 0 }}
-        >
-          {t.projectReviews.addReview}
-        </button>
-      )}
+      <ReviewList
+        reviews={reviews}
+        editingId={editingId}
+        defaultProjectId={defaultProjectId}
+        projectOptions={projectOptions}
+        onEdit={setEditingId}
+        onSaved={handleSaved}
+        onDelete={setDeleteId}
+      />
     </div>
   );
 }

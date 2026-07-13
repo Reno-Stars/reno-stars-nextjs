@@ -6,12 +6,13 @@ import { Star, ExternalLink, ShieldCheck, DollarSign, Paintbrush, MessageSquare,
 import type { Locale, Company, GoogleReview, GooglePlaceRating } from "@/lib/types";
 import CTASection from "@/components/CTASection";
 import GoogleAvatar from "@/components/home/GoogleAvatar";
+import GoogleIcon from "@/components/reviews/GoogleIcon";
 import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
+import { INTL_LOCALE_MAP } from "@/lib/project-reviews";
+import type { HubDisplayReview } from "@/components/reviews/ReviewsGroupSection";
 import ReviewsCityGroups, { type HubCityGroupDisplay } from "@/components/pages/ReviewsCityGroups";
 import ReviewsTypeGroups, { type HubTypeGroupDisplay } from "@/components/pages/ReviewsTypeGroups";
-
-const INTL_LOCALE_MAP: Record<string, string> = { en: "en-US", zh: "zh-CN" };
 
 // Self-contained 14-locale label (ZhTrustSignals pattern) for the hero's
 // "read all N reviews on Google" CTA. {count} = live cache userRatingCount.
@@ -41,23 +42,21 @@ function getRelativeTime(publishTime: string, locale: string): string {
   const days = Math.floor(diff / MS_PER_DAY);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
-  const intlLocale = INTL_LOCALE_MAP[locale] || "en-US";
-  const rtf = new Intl.RelativeTimeFormat(intlLocale, { numeric: "auto" });
+  // Canonical map (shared with lib/project-reviews) — only remaps the few app
+  // locales whose plain code isn't ideal for Intl; every other supported locale
+  // passes through unchanged, so a ja/ko/fr Google review shows a LOCALIZED
+  // relative time instead of the old English "en-US" fallback (dedup #16-21e).
+  const intlLocale = INTL_LOCALE_MAP[locale] ?? locale;
+  let rtf: Intl.RelativeTimeFormat;
+  try {
+    rtf = new Intl.RelativeTimeFormat(intlLocale, { numeric: "auto" });
+  } catch {
+    rtf = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
+  }
   if (years > 0) return rtf.format(-years, "year");
   if (months > 0) return rtf.format(-months, "month");
   if (days > 0) return rtf.format(-days, "day");
   return rtf.format(0, "day");
-}
-
-function GoogleIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-    </svg>
-  );
 }
 
 function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
@@ -130,13 +129,15 @@ interface ReviewsPageProps {
   locale: Locale;
   company: Company;
   googleReviews: GooglePlaceRating;
+  /** Shared pool of merged/deduped project + testimonial hub reviews (#27). */
+  hubReviews?: HubDisplayReview[];
   /** Merged + deduped project/testimonial reviews grouped by city (hub). */
   cityGroups?: HubCityGroupDisplay[];
   /** The same deduped reviews grouped by their project's service type. */
   typeGroups?: HubTypeGroupDisplay[];
 }
 
-export default function ReviewsPage({ locale, company, googleReviews, cityGroups = [], typeGroups = [] }: ReviewsPageProps) {
+export default function ReviewsPage({ locale, company, googleReviews, hubReviews = [], cityGroups = [], typeGroups = [] }: ReviewsPageProps) {
   const t = useTranslations("reviewsPage");
   // CTA uses section-specific translations
 
@@ -147,6 +148,18 @@ export default function ReviewsPage({ locale, company, googleReviews, cityGroups
   // the same structural gap that cross-locale parity scan flagged (-91.4%
   // word delta on /zh/reviews/ at 2026-05-29T03:30Z scan).
   const reviews = googleReviews.reviews;
+
+  // The Google grid holds only the reviews that SURVIVED dedupe. When every
+  // cached Google reviewer has also been seeded into project_reviews, the grid
+  // deduped to empty — but the hub still has those reviews in the city/type
+  // sections below. Showing "No reviews available at this time." here would
+  // then contradict the hero's "Read all N reviews on Google" CTA, so we hide
+  // the grid section entirely in that case (#3). We only fall through to the
+  // genuine empty-state when there are NO hub reviews either (a truly missing
+  // cache), which keeps the honest empty message for a brand-new site.
+  const hasHubReviews = cityGroups.length > 0 || typeGroups.length > 0;
+  const showGoogleGrid = reviews.length > 0;
+  const showGoogleEmptyState = reviews.length === 0 && !hasHubReviews;
 
 
   return (
@@ -191,34 +204,39 @@ export default function ReviewsPage({ locale, company, googleReviews, cityGroups
         </div>
       </section>
 
-      {/* Reviews Grid */}
-      <section className="py-14" aria-labelledby="reviews-title">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 mb-2">
-            <ShieldCheck className="w-5 h-5" style={{ color: GOLD }} />
-            <h2 id="reviews-title" className="text-2xl font-bold" style={{ color: TEXT }}>{t("verifiedReviews")}</h2>
-          </div>
-          <p className="text-base mb-10" style={{ color: TEXT_MID }}>{t("verifiedSubtitle")}</p>
-          {reviews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((review) => (
-                <ReviewCard key={review.authorUri || review.authorName} review={review} locale={locale} />
-              ))}
+      {/* Reviews Grid — the Google reviews that survived hub dedupe. Hidden
+          entirely when it deduped to empty but the hub still has reviews below
+          (avoids the "no reviews" vs "read all N on Google" contradiction, #3);
+          the honest empty state shows only when there are no hub reviews at all. */}
+      {(showGoogleGrid || showGoogleEmptyState) && (
+        <section className="py-14" aria-labelledby="reviews-title">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldCheck className="w-5 h-5" style={{ color: GOLD }} />
+              <h2 id="reviews-title" className="text-2xl font-bold" style={{ color: TEXT }}>{t("verifiedReviews")}</h2>
             </div>
-          ) : (
-            <p className="text-center py-12" style={{ color: TEXT_MUTED }}>{t("noReviews")}</p>
-          )}
-        </div>
-      </section>
+            <p className="text-base mb-10" style={{ color: TEXT_MID }}>{t("verifiedSubtitle")}</p>
+            {showGoogleGrid ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {reviews.map((review) => (
+                  <ReviewCard key={review.authorUri || review.authorName} review={review} locale={locale} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center py-12" style={{ color: TEXT_MUTED }}>{t("noReviews")}</p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Client reviews by city — merged project_reviews + testimonials,
           deduped against the Google grid above (lib/reviews-hub.ts). */}
-      <ReviewsCityGroups groups={cityGroups} locale={locale} />
+      <ReviewsCityGroups reviews={hubReviews} groups={cityGroups} locale={locale} />
 
       {/* Client reviews by project type — the SAME deduped reviews as the
           city section, re-grouped by their project's service_type
           (kitchen/bathroom/…). Only project-linked reviews appear here. */}
-      <ReviewsTypeGroups groups={typeGroups} locale={locale} />
+      <ReviewsTypeGroups reviews={hubReviews} groups={typeGroups} locale={locale} />
 
       {/* Why Trust Us */}
       <section className="py-14" style={{ backgroundColor: SURFACE_ALT }} aria-labelledby="trust-title">

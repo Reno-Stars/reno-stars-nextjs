@@ -1,17 +1,19 @@
-import { ArrowRight, MapPin } from 'lucide-react';
-import Link from 'next/link';
-import { GOLD, SURFACE_ALT, TEXT, TEXT_MID } from '@/lib/theme';
-import ReviewQuoteCard, { SEE_PROJECT_LABELS } from '@/components/reviews/ReviewQuoteCard';
+import { MapPin } from 'lucide-react';
+import { SURFACE_ALT } from '@/lib/theme';
+import ReviewsGroupSection, {
+  type HubDisplayReview,
+  type ReviewGroupDisplay,
+} from '@/components/reviews/ReviewsGroupSection';
 
 /**
- * /reviews hub — merged client reviews grouped by city.
- *
- * Groups arrive pre-merged and pre-deduped from the server page (see
- * lib/reviews-hub.ts): project-linked verified reviews plus legacy
- * testimonials, one group per city, biggest group first. Project-linked cards
- * link to their case study; city headings link to the city's area page.
- * Labels use the self-contained 14-locale map technique. No hooks.
+ * /reviews hub — merged client reviews grouped by city. Thin wrapper that maps
+ * each city group to the generic {heading, headingHref} shape and delegates
+ * rendering to the shared <ReviewsGroupSection> (the project-type twin is
+ * ReviewsTypeGroups). Labels use the self-contained 14-locale map technique.
  */
+
+// Re-exported so the page keeps importing the hub review type from here.
+export type { HubDisplayReview };
 
 const SECTION_TITLE_LABELS: Record<string, string> = {
   en: 'Client Reviews by City',
@@ -69,91 +71,42 @@ const OTHER_CITY_LABELS: Record<string, string> = {
   vi: 'Greater Vancouver',
 };
 
-/** One review in a city group, already resolved for the current locale. */
-export interface HubDisplayReview {
-  authorName: string;
-  rating: number;
-  body: string;
-  bodyLang: string;
-  reviewDate: string | null;
-  sourceUrl: string | null;
-  projectSlug: string | null;
-  kind: 'project' | 'testimonial';
-}
-
 export interface HubCityGroupDisplay {
   /** Localized city display name ('' for the unknown-city group). */
   cityName: string;
   /** Area-page slug for the city heading link, when the city is served. */
   areaSlug: string | null;
-  reviews: HubDisplayReview[];
+  /** Indices into the shared review pool (#27). */
+  reviewIndices: number[];
 }
 
 interface ReviewsCityGroupsProps {
+  /** Shared review pool the groups' indices point into. */
+  reviews: HubDisplayReview[];
   groups: HubCityGroupDisplay[];
   locale: string;
 }
 
-export default function ReviewsCityGroups({ groups, locale }: ReviewsCityGroupsProps) {
+export default function ReviewsCityGroups({ reviews, groups, locale }: ReviewsCityGroupsProps) {
   if (groups.length === 0) return null;
 
-  const title = SECTION_TITLE_LABELS[locale] ?? SECTION_TITLE_LABELS.en;
-  const subtitle = SECTION_SUBTITLE_LABELS[locale] ?? SECTION_SUBTITLE_LABELS.en;
   const otherCity = OTHER_CITY_LABELS[locale] ?? OTHER_CITY_LABELS.en;
-  const seeProject = SEE_PROJECT_LABELS[locale] ?? SEE_PROJECT_LABELS.en;
+  const displayGroups: ReviewGroupDisplay[] = groups.map((group) => ({
+    heading: group.cityName || otherCity,
+    headingHref: group.areaSlug ? `/${locale}/areas/${group.areaSlug}/` : null,
+    reviewIndices: group.reviewIndices,
+  }));
 
   return (
-    <section className="py-14" style={{ backgroundColor: SURFACE_ALT }} aria-labelledby="reviews-by-city-title">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 mb-2">
-          <MapPin className="w-5 h-5" style={{ color: GOLD }} aria-hidden="true" />
-          <h2 id="reviews-by-city-title" className="text-2xl font-bold" style={{ color: TEXT }}>{title}</h2>
-        </div>
-        <p className="text-base mb-10" style={{ color: TEXT_MID }}>{subtitle}</p>
-
-        {groups.map((group) => {
-          const cityLabel = group.cityName || otherCity;
-          return (
-            <div key={cityLabel} className="mb-10 last:mb-0">
-              <h3 className="text-lg font-bold mb-4" style={{ color: TEXT }}>
-                {group.areaSlug ? (
-                  <Link href={`/${locale}/areas/${group.areaSlug}/`} className="hover:underline" style={{ color: TEXT }}>
-                    {cityLabel}
-                  </Link>
-                ) : (
-                  cityLabel
-                )}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {group.reviews.map((review, idx) => (
-                  <ReviewQuoteCard
-                    // idx guards against legitimate collisions (same author +
-                    // same month-precision date); the list is static per render.
-                    key={`${review.authorName}-${review.reviewDate ?? ''}-${idx}`}
-                    review={review}
-                    locale={locale}
-                    kind={review.kind === 'testimonial' ? 'testimonial' : 'google'}
-                    eyebrowTag="div"
-                    footerExtra={
-                      review.projectSlug ? (
-                        <div className="mt-3">
-                          <Link
-                            href={`/${locale}/projects/${review.projectSlug}/`}
-                            className="inline-flex items-center gap-1 text-sm font-semibold hover:underline"
-                            style={{ color: GOLD }}
-                          >
-                            {seeProject} <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                          </Link>
-                        </div>
-                      ) : undefined
-                    }
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
+    <ReviewsGroupSection
+      title={SECTION_TITLE_LABELS[locale] ?? SECTION_TITLE_LABELS.en}
+      subtitle={SECTION_SUBTITLE_LABELS[locale] ?? SECTION_SUBTITLE_LABELS.en}
+      icon={MapPin}
+      reviews={reviews}
+      groups={displayGroups}
+      locale={locale}
+      backgroundColor={SURFACE_ALT}
+      labelledById="reviews-by-city-title"
+    />
   );
 }

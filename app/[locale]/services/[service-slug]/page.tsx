@@ -280,21 +280,27 @@ export default async function Page({ params }: PageProps) {
   const { locale, 'service-slug': serviceSlug } = await params;
   setRequestLocale(locale);
 
-  const [company, services, areas, googleReviews, clientReviews] = await Promise.all([
-    getCompanyFromDb(),
-    getServicesFromDb(),
-    getServiceAreasFromDb(),
-    getGoogleReviews(),
-    // Verified client reviews whose linked project has this service_type
-    // (projects.service_type values ARE service slugs). ≤3, newest first.
-    getReviewsByServiceType(serviceSlug),
-  ]);
+  // Validate the slug FIRST (services is cached, so this is cheap) and 404 on a
+  // junk slug BEFORE issuing the reviews query. This route is force-dynamic, so
+  // without the guard a bot fuzzing /services/<junk>/ would mint an unbounded
+  // number of per-slug disk cache entries via getReviewsByServiceType (security
+  // #7).
+  const services = await getServicesFromDb();
   const service = services.find((s) => s.slug === serviceSlug);
 
   if (!service || service.showOnServicesPage === false) {
     notFound();
   }
   const localizedService = getLocalizedService(service, locale as Locale);
+
+  const [company, areas, googleReviews, clientReviews] = await Promise.all([
+    getCompanyFromDb(),
+    getServiceAreasFromDb(),
+    getGoogleReviews(),
+    // Verified client reviews whose linked project has this validated
+    // service_type (projects.service_type values ARE service slugs). ≤3, newest first.
+    getReviewsByServiceType(serviceSlug),
+  ]);
 
   const [t, faqT] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),

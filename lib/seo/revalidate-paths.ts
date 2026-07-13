@@ -18,9 +18,20 @@ import { locales } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { purgeCloudflareUrls, purgeCloudflareEverything } from '@/lib/cloudflare-purge';
 
+/**
+ * Revalidate the same relative path across every locale WITHOUT the Cloudflare
+ * edge purge. Use when a caller revalidates several paths at once and wants to
+ * batch their edge purge into a single `purgeCloudflarePagesAllLocales` call
+ * (avoids one CF API round-trip per path — efficiency #26). Callers that only
+ * touch one path should use `revalidatePathAllLocales` (purges inline).
+ */
+export function revalidatePathAllLocalesNoPurge(relPath: string): void {
+  for (const loc of locales) revalidatePath(`/${loc}${relPath}`);
+}
+
 /** Revalidate the same relative path across every locale, e.g. `/projects/${slug}`. */
 export function revalidatePathAllLocales(relPath: string): void {
-  for (const loc of locales) revalidatePath(`/${loc}${relPath}`);
+  revalidatePathAllLocalesNoPurge(relPath);
   // Purge the same URLs from the Cloudflare edge (no-op without a CF token) so
   // the edit is visible immediately, not after the ≤5min s-maxage window.
   const base = getBaseUrl();

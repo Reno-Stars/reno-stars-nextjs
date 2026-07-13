@@ -26,45 +26,60 @@ function toDisplayReview(review: HubReview, locale: Locale): HubDisplayReview {
     bodyLang: translated ? locale : review.bodyLang,
     reviewDate: review.reviewDate,
     sourceUrl: review.sourceUrl,
+    source: review.source ?? null,
     projectSlug: review.projectSlug,
     kind: review.kind === "testimonial" ? ("testimonial" as const) : ("project" as const),
   };
 }
 
 /**
- * Localize the merged hub city groups for the current locale: city display
- * name + area-page slug come from the service_areas row whose English name
- * matches the group's city.
+ * Localize the hub into ONE shared review pool plus city + type groups that
+ * reference the pool by index. A review that appears in both a city group and a
+ * type group (every linked project review does) is therefore serialized into
+ * the RSC payload ONCE, not twice (efficiency #27). The pool is keyed by
+ * HubReview object identity — hub.cityGroups and hub.typeGroups both hold
+ * references to the same merged HubReview objects, so a shared review collapses
+ * to one pool entry.
  */
-function localizeCityGroups(hub: ReviewsHub, areas: ServiceArea[], locale: Locale): HubCityGroupDisplay[] {
+function buildLocalizedHub(
+  hub: ReviewsHub,
+  areas: ServiceArea[],
+  services: Service[],
+  locale: Locale,
+): { reviews: HubDisplayReview[]; cityGroups: HubCityGroupDisplay[]; typeGroups: HubTypeGroupDisplay[] } {
+  const pool: HubDisplayReview[] = [];
+  const indexByReview = new Map<HubReview, number>();
+  const ref = (review: HubReview): number => {
+    let idx = indexByReview.get(review);
+    if (idx === undefined) {
+      idx = pool.length;
+      pool.push(toDisplayReview(review, locale));
+      indexByReview.set(review, idx);
+    }
+    return idx;
+  };
+
   const areaByEnName = new Map(areas.map((a) => [a.name.en.toLowerCase(), a]));
-  return hub.cityGroups.map((group) => {
+  const cityGroups: HubCityGroupDisplay[] = hub.cityGroups.map((group) => {
     const area = group.city ? areaByEnName.get(group.city.toLowerCase()) : undefined;
     return {
       cityName: area ? pickLocale(area.name, locale) : (group.city ?? ""),
       areaSlug: area?.slug ?? null,
-      reviews: group.reviews.map((review) => toDisplayReview(review, locale)),
+      reviewIndices: group.reviews.map(ref),
     };
   });
-}
 
-/**
- * Localize the hub project-type groups for the current locale: the type
- * display name is the matching service's localized title (service_type
- * values are services.slug values), and the heading links to the service
- * page when it is publicly listed. A type with no matching service row
- * falls back to the raw slug and renders unlinked — never fabricated.
- */
-function localizeTypeGroups(hub: ReviewsHub, services: Service[], locale: Locale): HubTypeGroupDisplay[] {
   const serviceBySlug = new Map(services.map((s) => [s.slug, s]));
-  return hub.typeGroups.map((group) => {
+  const typeGroups: HubTypeGroupDisplay[] = hub.typeGroups.map((group) => {
     const service = serviceBySlug.get(group.serviceType);
     return {
       typeName: service ? pickLocale(service.title, locale) : group.serviceType,
       serviceSlug: service && service.showOnServicesPage !== false ? service.slug : null,
-      reviews: group.reviews.map((review) => toDisplayReview(review, locale)),
+      reviewIndices: group.reviews.map(ref),
     };
   });
+
+  return { reviews: pool, cityGroups, typeGroups };
 }
 
 interface PageProps {
@@ -127,8 +142,12 @@ export default async function Page({ params }: PageProps) {
     ...googleReviews,
     reviews: hub.googleIndices.map((i) => googleReviews.reviews[i]),
   };
-  const cityGroups = localizeCityGroups(hub, areas, locale as Locale);
-  const typeGroups = localizeTypeGroups(hub, services, locale as Locale);
+  const { reviews: hubReviews, cityGroups, typeGroups } = buildLocalizedHub(
+    hub,
+    areas,
+    services,
+    locale as Locale,
+  );
 
   const breadcrumbs = [
     { name: nav("home"), url: `/${locale}/` },
@@ -151,6 +170,7 @@ export default async function Page({ params }: PageProps) {
         locale={locale as Locale}
         company={company}
         googleReviews={projectReviewsToLocale(dedupedGoogle, locale)}
+        hubReviews={hubReviews}
         cityGroups={cityGroups}
         typeGroups={typeGroups}
       />

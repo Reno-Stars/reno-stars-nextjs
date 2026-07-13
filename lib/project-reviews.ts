@@ -6,6 +6,30 @@
  * client detail page (VerifiedGoogleReviews card) need the same formatting.
  */
 
+import { locales } from '@/i18n/config';
+
+/**
+ * Review platforms the admin can attribute a verified review to. Kept here (a
+ * plain shared module) so the server action's validation and the admin form's
+ * <select> read the SAME list and can't drift. 'google' is the default and the
+ * only value in the current data; the rest let the owner record a genuine
+ * non-Google verified review truthfully (data-integrity / #29). The card UI
+ * shows Google branding ONLY for 'google' and a neutral verified mark for the
+ * rest, so an unknown/legacy value degrades gracefully.
+ */
+export const REVIEW_SOURCES = ['google', 'yelp', 'houzz', 'facebook', 'homestars', 'other'] as const;
+export type ReviewSource = (typeof REVIEW_SOURCES)[number];
+
+/**
+ * Languages a verified review body may be recorded in — the site's supported
+ * locales that fit the `project_reviews.body_lang` varchar(5) column. This is
+ * every locale except `zh-Hant` (7 chars); a Traditional-Chinese review is
+ * recorded as `zh` (the body is shown verbatim and lang-agnostically, and `zh`
+ * is a valid superset language tag). Widened from the old ['en','zh'] so a
+ * Korean/Japanese/French verified review can be recorded truthfully (#10).
+ */
+export const REVIEW_BODY_LANGS: readonly string[] = locales.filter((l) => l.length <= 5);
+
 /** Serializable review shape passed from the server page into client components. */
 export interface ProjectReviewDisplay {
   /** Author name exactly as written on the source review. */
@@ -20,6 +44,11 @@ export interface ProjectReviewDisplay {
   reviewDate: string;
   /** Direct URL to the review on the source platform, when available. */
   sourceUrl: string | null;
+  /**
+   * Review platform ('google', 'yelp', 'houzz', …) from project_reviews.source.
+   * Drives platform-accurate card branding — Google mark only when 'google'.
+   */
+  source: string;
 }
 
 /**
@@ -53,8 +82,15 @@ export function reviewDateToSchemaDate(reviewDate: string): string {
   return reviewDate.slice(0, 7);
 }
 
-/** Map app locales to Intl locales where the plain code isn't ideal. */
-const INTL_LOCALE_MAP: Record<string, string> = {
+/**
+ * Canonical app-locale → Intl-locale map for relative-time formatting, shared
+ * by every review surface so they never fork (dedup #16-21e). Only locales
+ * whose plain BCP-47 code isn't ideal for `Intl` need an entry: `tl` is the
+ * deprecated Tagalog code (canonical `fil`), and zh/zh-Hant pin the script
+ * region. Every other supported locale (ja, ko, es, fr, ru, ar, fa, hi, pa,
+ * vi) is a valid Intl code and passes through unchanged.
+ */
+export const INTL_LOCALE_MAP: Record<string, string> = {
   en: 'en-US',
   zh: 'zh-CN',
   'zh-Hant': 'zh-TW',
