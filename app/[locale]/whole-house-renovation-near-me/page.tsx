@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
@@ -28,7 +28,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseUrl = getBaseUrl();
   return {
     title, description,
-    alternates: buildAlternates('/whole-house-renovation-near-me/', locale),
+    // SEO de-dup consolidation (near-me cluster): consolidate this near-me
+    // duplicate onto the stronger /services/whole-house/ page via rel=canonical
+    // while still serving "whole house renovation near me" searchers. hreflang
+    // is intentionally omitted on a canonicalized-away page. Umbrella
+    // /renovation-near-me/ stays self-canonical. See kitchen page for rationale.
+    alternates: { canonical: `${baseUrl}/${locale}/services/whole-house/` },
     openGraph: { title, description, url: `${baseUrl}/${locale}/whole-house-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website' },
   };
 }
