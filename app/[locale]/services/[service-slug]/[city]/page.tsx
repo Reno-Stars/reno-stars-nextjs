@@ -11,6 +11,7 @@ import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
+import { pickServiceAreaFaqs } from '@/lib/seo/combo-content';
 
 interface PageProps {
   params: Promise<{ locale: string; 'service-slug': string; city: string }>;
@@ -134,8 +135,15 @@ export default async function Page({ params }: PageProps) {
   const localizedArea = getLocalizedArea(area, locale as Locale);
   const loc = locale as Locale;
 
-  // Area-specific FAQs from database (localized)
-  const dbFaqs = areaFaqs.map((faq) => ({
+  // Area-specific FAQs from database, SERVICE-SCOPED then localized. The combo
+  // used to render the ENTIRE area FAQ set (14–17 Q&As) identically on every
+  // service×city page and on the /areas/{city} hub — ~77% of the page's visible
+  // text, so kitchen/{city}, bathroom/{city}, cabinet/{city} were near-clones of
+  // each other and of the hub. pickServiceAreaFaqs keeps only the Q&As about
+  // THIS service plus the city's generic Q&As, dropping other-service ones (a
+  // bathroom page no longer carries kitchen/basement Q&As). See lib/seo/combo-content.
+  const scopedAreaFaqs = pickServiceAreaFaqs(areaFaqs, serviceSlug);
+  const dbFaqs = scopedAreaFaqs.map((faq) => ({
     id: faq.id,
     question: pickLocale(faq.question, loc),
     answer: pickLocale(faq.answer, loc),

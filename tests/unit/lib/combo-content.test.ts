@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
   extractServiceCitySlice,
+  isCombinedHeading,
+  pickServiceAreaFaqs,
   firstParagraph,
   summarizeProjectCosts,
   pickComboProjects,
@@ -77,9 +79,107 @@ describe('extractServiceCitySlice', () => {
     expect(extractServiceCitySlice(null, 'kitchen')).toBeNull();
   });
 
-  it('reuses the bathroom section for accessible-bathroom', () => {
-    const slice = extractServiceCitySlice(AREA_MD, 'accessible-bathroom');
-    expect(slice).toContain('## Bathroom Renovation Richmond BC');
+  it('does NOT clone the bathroom section for accessible-bathroom', () => {
+    // accessible-bathroom/{city} and bathroom/{city} are separately-indexed URLs
+    // targeting different keywords; reusing the same city bathroom slice made
+    // them ~90% duplicate. accessible-bathroom now has no slice matcher → null
+    // (it differentiates off its own aging-in-place intro + scoped FAQs).
+    expect(extractServiceCitySlice(AREA_MD, 'accessible-bathroom')).toBeNull();
+  });
+
+  it('skips a COMBINED "Kitchen & Bathroom" heading (Vancouver flagship bug)', () => {
+    // Vancouver's real content merges both services under one heading. Without a
+    // guard, kitchen/vancouver and bathroom/vancouver got the IDENTICAL slice.
+    const vanMd = `## Vancouver Building Permit Costs (2026)
+Permit fee schedule and timelines for Vancouver.
+
+## Kitchen Renovation & Bathroom Renovation in Vancouver
+Vancouver kitchen and bathroom renovations account for the majority of our volume.
+- Kitchen: cabinets, countertops, tile
+- Bathroom: powder rooms, spa ensuites`;
+    // The combined heading is skipped for BOTH services → neither clones it.
+    expect(extractServiceCitySlice(vanMd, 'kitchen')).toBeNull();
+    expect(extractServiceCitySlice(vanMd, 'bathroom')).toBeNull();
+  });
+
+  it('still selects a service-specific heading that only names one service', () => {
+    const md = `## Kitchen Renovation & Bathroom Renovation in Metrotown
+Combined blurb we do not want.
+
+## Kitchen Renovation in Burnaby
+Real single-service Burnaby kitchen copy about cabinets and quartz layout.`;
+    const slice = extractServiceCitySlice(md, 'kitchen');
+    expect(slice).toContain('## Kitchen Renovation in Burnaby');
+    expect(slice).not.toContain('Metrotown');
+  });
+});
+
+describe('isCombinedHeading', () => {
+  it('flags headings that name two or more distinct services', () => {
+    expect(isCombinedHeading('Kitchen Renovation & Bathroom Renovation in Vancouver')).toBe(true);
+    expect(isCombinedHeading('Kitchen and Basement Packages')).toBe(true);
+  });
+  it('does not flag a single-service heading', () => {
+    expect(isCombinedHeading('Kitchen Renovation in Richmond')).toBe(false);
+    expect(isCombinedHeading('Bathroom Renovation Richmond BC')).toBe(false);
+    expect(isCombinedHeading('Basement Suite Conversion in Surrey')).toBe(false);
+    expect(isCombinedHeading('Commercial Renovation in Maple Ridge')).toBe(false);
+  });
+});
+
+describe('pickServiceAreaFaqs', () => {
+  const mk = (q: string, a = '') => ({ question: { en: q }, answer: { en: a } });
+  // Shaped like a real city's area FAQ set (Richmond-style vocabulary).
+  const richmond = [
+    mk('Do you offer bilingual service for Richmond projects?', 'Yes, English and Mandarin.'),
+    mk('How long does a typical kitchen renovation take in Richmond?', 'About 4-6 weeks.'),
+    mk('How much does a bathroom renovation cost in Richmond?', '$12,000 to $45,000.'),
+    mk('How much does a basement renovation cost in Richmond?', '$35,000+.'),
+    mk('How do I choose the right renovation contractor in Richmond?', 'Check licensing.'),
+  ];
+
+  it('keeps service-specific + generic FAQs, drops other-service ones', () => {
+    const kitchen = pickServiceAreaFaqs(richmond, 'kitchen');
+    const qs = kitchen.map((f) => f.question.en);
+    expect(qs).toContain('How long does a typical kitchen renovation take in Richmond?');
+    // generic city FAQs survive (city context, differ cross-city)
+    expect(qs).toContain('Do you offer bilingual service for Richmond projects?');
+    expect(qs).toContain('How do I choose the right renovation contractor in Richmond?');
+    // other-service FAQs are dropped
+    expect(qs).not.toContain('How much does a bathroom renovation cost in Richmond?');
+    expect(qs).not.toContain('How much does a basement renovation cost in Richmond?');
+  });
+
+  it('gives disjoint service-specific FAQs to same-city sibling combos', () => {
+    const kitchenQ = pickServiceAreaFaqs(richmond, 'kitchen').map((f) => f.question.en);
+    const bathroomQ = pickServiceAreaFaqs(richmond, 'bathroom').map((f) => f.question.en);
+    expect(kitchenQ).toContain('How long does a typical kitchen renovation take in Richmond?');
+    expect(bathroomQ).toContain('How much does a bathroom renovation cost in Richmond?');
+    expect(kitchenQ).not.toContain('How much does a bathroom renovation cost in Richmond?');
+    expect(bathroomQ).not.toContain('How long does a typical kitchen renovation take in Richmond?');
+  });
+
+  it('does not treat plain bathroom FAQs as accessible-bathroom content', () => {
+    // accessible-bathroom matches accessibility vocabulary only → a plain
+    // "bathroom cost" FAQ is an other-service FAQ here and is dropped, so the
+    // page does not clone the bathroom combo's FAQ block.
+    const qs = pickServiceAreaFaqs(richmond, 'accessible-bathroom').map((f) => f.question.en);
+    expect(qs).not.toContain('How much does a bathroom renovation cost in Richmond?');
+    expect(qs).toContain('Do you offer bilingual service for Richmond projects?');
+  });
+
+  it('keeps the FULL set for specialty services with no matcher', () => {
+    // poly-b / critical-load-panel / heat-pump-hvac have no local data anywhere;
+    // scoping would strip them to boilerplate, so they keep full city context.
+    expect(pickServiceAreaFaqs(richmond, 'heat-pump-hvac')).toHaveLength(richmond.length);
+    expect(pickServiceAreaFaqs(richmond, 'poly-b-replacement')).toHaveLength(richmond.length);
+  });
+
+  it('preserves original FAQ order', () => {
+    const kitchen = pickServiceAreaFaqs(richmond, 'kitchen').map((f) => f.question.en);
+    const bilingualIdx = kitchen.indexOf('Do you offer bilingual service for Richmond projects?');
+    const kitchenIdx = kitchen.indexOf('How long does a typical kitchen renovation take in Richmond?');
+    expect(bilingualIdx).toBeLessThan(kitchenIdx);
   });
 });
 

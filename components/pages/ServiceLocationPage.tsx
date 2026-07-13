@@ -362,7 +362,10 @@ export default function ServiceLocationPage({
                   value: `${formatPrice(costSummary.allMin)} – ${formatPrice(costSummary.allMax)}`,
                 },
                 {
-                  label: zhLoc ? '中位数' : 'Average',
+                  // costSummary.avg is the arithmetic MEAN of project-budget
+                  // midpoints (see summarizeProjectCosts), so the label must say
+                  // 平均/Average — not 中位数 (median), which it is not.
+                  label: zhLoc ? '平均' : 'Average',
                   value: formatPrice(costSummary.avg),
                 },
                 {

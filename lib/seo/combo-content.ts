@@ -49,9 +49,12 @@ import type { LocalizedProject, ServiceType } from '@/lib/types';
 const SLICE_MATCHERS: Partial<Record<string, RegExp>> = {
   kitchen: /kitchen/i,
   bathroom: /bathroom/i,
-  // Accessible bathroom work IS bathroom work — the city's bathroom section
-  // (plumbing, waterproofing, tile, strata) is the genuinely relevant context.
-  'accessible-bathroom': /bathroom/i,
+  // NOTE: `accessible-bathroom` deliberately has NO matcher. It used to reuse
+  // `/bathroom/i`, which made accessible-bathroom/{city} render the IDENTICAL
+  // city bathroom section as bathroom/{city} — two separately-indexed URLs that
+  // ended up ~90% duplicate. Accessible-bathroom combos now differentiate off
+  // their own (aging-in-place) service intro + accessibility-scoped FAQs, not a
+  // cloned bathroom slice.
   basement: /basement/i,
   cabinet: /cabinet/i,
   realtor: /pre-?\s?sale|realtor/i,
@@ -66,6 +69,23 @@ const SLICE_MATCHERS: Partial<Record<string, RegExp>> = {
  * contain a service word — generic city/FAQ sections belong to the area hub.
  */
 const EXCLUDE_HEADING = /frequently asked|neighbourhood|renovation contractor|housing stock|areas we serve/i;
+
+/**
+ * Distinct room/service words used to detect a COMBINED heading — one that
+ * covers two or more services at once (e.g. Vancouver's
+ * "## Kitchen Renovation & Bathroom Renovation in Vancouver"). Such a heading
+ * matches BOTH `/kitchen/i` and `/bathroom/i`, so without this guard the slice
+ * extractor returned the IDENTICAL section for kitchen/{city} and
+ * bathroom/{city} — collapsing the very differentiator this module exists to
+ * provide. We skip combined headings so each service falls back to its own
+ * intro instead of cloning a shared section.
+ */
+const CORE_SERVICE_WORDS = [/kitchen/i, /bathroom/i, /basement/i, /\bcabinet/i, /commercial/i];
+
+/** True when a heading names two or more distinct services (a shared section). */
+export function isCombinedHeading(heading: string): boolean {
+  return CORE_SERVICE_WORDS.filter((re) => re.test(heading)).length >= 2;
+}
 
 const HEADING_RE = /^(#{2,3})\s+(.*)$/;
 
@@ -88,6 +108,10 @@ export function extractServiceCitySlice(
   for (let i = 0; i < lines.length; i += 1) {
     const h = HEADING_RE.exec(lines[i]);
     if (h && matcher.test(h[2]) && !EXCLUDE_HEADING.test(h[2])) {
+      // Skip combined "Kitchen & Bathroom …" headings: they'd hand the same
+      // section to two different services. Keep scanning for a service-specific
+      // heading; if none exists, return null (→ intro-only fallback).
+      if (isCombinedHeading(h[2])) continue;
       start = i;
       level = h[1].length;
       break;
@@ -109,6 +133,74 @@ export function extractServiceCitySlice(
   const body = section.replace(/^#{2,3}.*$/gm, '').trim();
   if (body.length < 40) return null;
   return section;
+}
+
+// ---------------------------------------------------------------------------
+// 1b. Service-scoped area FAQs
+// ---------------------------------------------------------------------------
+
+/**
+ * Per-service FAQ topic matchers. These are broader than SLICE_MATCHERS so they
+ * catch how the DB area FAQs actually phrase a service ("How much does a
+ * bathroom renovation cost in Richmond?"). Matched against the FAQ's EN
+ * question+answer so scoping is locale-stable (the EN copy is authored; the 12
+ * minor locales mirror it).
+ *
+ * Services intentionally ABSENT here — `poly-b-replacement`,
+ * `critical-load-panel`, `heat-pump-hvac` — have zero service-specific projects,
+ * zero area content sections AND zero area FAQs anywhere in the DB. Scoping
+ * would strip their combos down to service-generic boilerplate and make them
+ * near-clones city-to-city (measured 28% → 74% cross-city containment). For
+ * those we keep the FULL city FAQ set as honest local context instead (see
+ * `pickServiceAreaFaqs`).
+ */
+const FAQ_MATCHERS: Partial<Record<string, RegExp>> = {
+  kitchen: /kitchen/i,
+  bathroom: /bathroom|shower|vanity|bathtub|ensuite|powder room/i,
+  // Accessibility-specific vocabulary only — NOT plain "bathroom", so an
+  // accessible-bathroom combo does not simply clone the city bathroom FAQs.
+  'accessible-bathroom': /accessible|grab bar|walk-in|wheelchair|barrier-free|curbless|aging|mobility|slip-resistant|zero-threshold|roll-in/i,
+  basement: /basement|secondary suite|legal suite|egress|cellar/i,
+  cabinet: /cabinet|refac|refinish|resurfac/i,
+  commercial: /commercial|office|retail|tenant|storefront/i,
+  'whole-house': /whole[- ]house|full home|gut renovation|multi-room|entire home/i,
+  realtor: /pre-?sale|before listing|realtor|resale|selling|list your/i,
+};
+
+const ALL_FAQ_MATCHERS = Object.values(FAQ_MATCHERS) as RegExp[];
+
+/** Minimal shape needed to classify a FAQ — its authored EN question+answer. */
+export interface FaqEnText {
+  question: { en: string };
+  answer: { en: string };
+}
+
+/**
+ * Scope a city's area FAQs to those relevant to `serviceSlug`.
+ *
+ * Problem: the combo route used to render EVERY active area FAQ (14–17 per city)
+ * identically on every service×city page AND on the /areas/{city} hub — that
+ * block is ~77% of a combo's visible text, so kitchen/{city}, bathroom/{city},
+ * cabinet/{city} … were near-duplicates of each other and of the hub.
+ *
+ * Fix: keep the FAQs that are ABOUT this service (they also name the city, so
+ * they differ on both the service and city axes) plus the city's GENERIC FAQs
+ * (permits, contractor choice, bilingual service — they name the city, so they
+ * still differentiate cross-city). Drop the OTHER-service FAQs (a bathroom combo
+ * no longer carries the kitchen/basement Q&As). Original display order is kept.
+ *
+ * Services with no matcher (specialty trades with no local data) keep the full
+ * set — see FAQ_MATCHERS note. Pure string filter, no DB.
+ */
+export function pickServiceAreaFaqs<T extends FaqEnText>(faqs: readonly T[], serviceSlug: string): T[] {
+  const own = FAQ_MATCHERS[serviceSlug];
+  if (!own) return [...faqs];
+  return faqs.filter((f) => {
+    const text = `${f.question?.en ?? ''} ${f.answer?.en ?? ''}`;
+    if (own.test(text)) return true; // about THIS service → keep
+    // generic city FAQ (about no specific service) → keep for city context
+    return !ALL_FAQ_MATCHERS.some((re) => re.test(text));
+  });
 }
 
 // ---------------------------------------------------------------------------
