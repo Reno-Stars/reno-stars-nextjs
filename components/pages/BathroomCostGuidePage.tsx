@@ -178,13 +178,13 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
               {locale === 'zh' ? '只想看单项洁具费用？' : 'Looking for a specific fixture cost?'}
             </span>
             {[
-              { href: `/${locale}/blog/vanity-renovation-cost-vancouver/`, label: locale === 'zh' ? '梳妆台' : 'Vanity' },
-              { href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`, label: locale === 'zh' ? '浴缸' : 'Bathtub' },
-              { href: `/${locale}/blog/toilet-renovation-cost-vancouver/`, label: locale === 'zh' ? '马桶' : 'Toilet' },
+              { href: '/blog/vanity-renovation-cost-vancouver/', label: locale === 'zh' ? '梳妆台' : 'Vanity' },
+              { href: '/blog/bathtub-renovation-cost-vancouver/', label: locale === 'zh' ? '浴缸' : 'Bathtub' },
+              { href: '/blog/toilet-renovation-cost-vancouver/', label: locale === 'zh' ? '马桶' : 'Toilet' },
             ].map((p) => (
               <Link
                 key={p.href}
-                href={p.href as '/blog/vanity-renovation-cost-vancouver/'}
+                href={p.href}
                 className="px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-105"
                 style={{ backgroundColor: GOLD_PALE, color: GOLD }}
               >
@@ -282,37 +282,37 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('showerCost.note')}
-            <Link href={`/${locale}/blog/shower-renovation-cost-vancouver-2026/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href="/blog/shower-renovation-cost-vancouver-2026/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Shower Renovation Cost Vancouver 2026 →
             </Link>
           </p>
         </div>
       </section>
 
-      {/* Bathtub Renovation Cost — dedicated H2 targeting "bathtub renovation cost"
-          query cluster (bathroom-renovation-cost-vancouver ranks pos 7.5 for
-          "bathtub renovation cost" / 2,964 imps — channels to dedicated bathtub
-          post). Prices sourced from bathtub-renovation-cost-vancouver post data. */}
+      {/* Bathtub Costs — deliberately a brief POINTER, not a competing cost
+          section. The 2026-06-25 version carried a keyword-targeted "Bathtub
+          Renovation Cost in Vancouver" H2 + full pricing grid that put this
+          guide in direct competition with the canonical bathtub post for its
+          own focus keyword (guide-vs-blog cannibalization; 2026-07-10 bathtub
+          forensics, owner-approved resolution). The blog post
+          /blog/bathtub-renovation-cost-vancouver/ is canonical for "bathtub
+          renovation cost" — this section keeps a neutral heading, two
+          sentences of blog-consistent numbers, and a prominent keyword-
+          anchored link that channels the query there. Do NOT re-expand it.
+          NOTE: `Link` from @/navigation auto-prefixes the locale
+          (localePrefix: 'always') — never hand-build `/${locale}/...` hrefs
+          here, or every link renders /{locale}/{locale}/... and only reaches
+          the post via a 308 redirect (2026-07-13 review finding; this page
+          had 14 such double-prefixed links). */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center" style={{ color: TEXT }}>
             {t('bathtubCost.title')}
           </h2>
-          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('bathtubCost.subtitle')}</p>
-          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('bathtubCost.intro')}</p>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {(['alcove', 'dropIn', 'freestanding'] as const).map((key) => (
-              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
-                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`bathtubCost.${key}.title`)}</h3>
-                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`bathtubCost.${key}.range`)}</span>
-                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`bathtubCost.${key}.description`)}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
-            {t('bathtubCost.note')}
-            <Link href={`/${locale}/blog/bathtub-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
-              Bathtub Renovation Cost Vancouver 2026 →
+          <p className="text-center max-w-2xl mx-auto text-sm leading-relaxed" style={{ color: TEXT_MID }}>
+            {t('bathtubCost.description')}
+            <Link href="/blog/bathtub-renovation-cost-vancouver/" className="font-bold text-base underline hover:no-underline" style={{ color: GOLD }}>
+              {t('bathtubCost.linkText')} →
             </Link>
           </p>
         </div>
@@ -340,7 +340,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('toiletCost.note')}
-            <Link href={`/${locale}/blog/toilet-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href="/blog/toilet-renovation-cost-vancouver/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Toilet Renovation Cost Vancouver 2026 →
             </Link>
           </p>
@@ -368,7 +368,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
           </div>
           <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
             {t('vanityCost.note')}
-            <Link href={`/${locale}/blog/vanity-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
+            <Link href="/blog/vanity-renovation-cost-vancouver/" className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
               Vanity Renovation Cost Vancouver →
             </Link>
           </p>
@@ -495,32 +495,32 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                href: `/${locale}/blog/vanity-renovation-cost-vancouver/`,
+                href: '/blog/vanity-renovation-cost-vancouver/',
                 title: locale === 'zh' ? '梳妆台费用' : 'Vanity Cost',
                 desc: locale === 'zh' ? '$2K–$9K+ 按等级' : '$2K–$9K+ by tier',
               },
               {
-                href: `/${locale}/blog/bathtub-renovation-cost-vancouver/`,
+                href: '/blog/bathtub-renovation-cost-vancouver/',
                 title: locale === 'zh' ? '浴缸费用' : 'Bathtub Cost',
                 desc: locale === 'zh' ? '$2.5K–$12K+ 按形态' : '$2.5K–$12K+ by format',
               },
               {
-                href: `/${locale}/blog/toilet-renovation-cost-vancouver/`,
+                href: '/blog/toilet-renovation-cost-vancouver/',
                 title: locale === 'zh' ? '马桶费用' : 'Toilet Cost',
                 desc: locale === 'zh' ? '$800–$5K+ 按等级' : '$800–$5K+ by tier',
               },
               {
-                href: `/${locale}/services/accessible-bathroom/`,
+                href: '/services/accessible-bathroom/',
                 title: locale === 'zh' ? '无障碍 / 老人浴室' : 'Accessible / Aging-in-Place',
                 desc: locale === 'zh' ? '老人 + 轮椅无障碍方案' : 'Aging-in-place + wheelchair access',
               },
               {
-                href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-size/`,
+                href: '/blog/bathroom-renovation-cost-vancouver-by-size/',
                 title: locale === 'zh' ? '按尺寸（3/4/5件套）' : 'By Size (3/4/5-piece)',
                 desc: locale === 'zh' ? '$20K–$80K+ 按洁具件数' : '$20K–$80K+ by piece count',
               },
               {
-                href: `/${locale}/blog/bathroom-renovation-cost-vancouver-by-style/`,
+                href: '/blog/bathroom-renovation-cost-vancouver-by-style/',
                 title: locale === 'zh' ? '按风格（现代/水疗/传统）' : 'By Style (Modern/Spa/Heritage)',
                 desc: locale === 'zh' ? '$25K–$120K+ 按设计风格' : '$25K–$120K+ by design style',
               },
@@ -529,7 +529,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
                 // topic cluster hub→service authority for "bathroom renovation
                 // vancouver" query (currently at pos 13.69 on cost guide, gsc-9ade0eb00cfd).
                 // Passes link equity from high-impression cost guide to service page.
-                href: `/${locale}/services/bathroom/`,
+                href: '/services/bathroom/',
                 title: locale === 'zh' ? '浴室翻新服务 Vancouver' : 'Bathroom Renovation Vancouver',
                 desc: locale === 'zh' ? '查看案例、保修政策，获取免费报价' : 'Portfolio, warranty & free quote',
               },

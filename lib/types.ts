@@ -374,8 +374,22 @@ export interface BlogPost {
   author?: string;
   /** Publication date */
   published_at?: Date;
+  /** Row creation date — fallback publication signal for schema dates when
+   *  published_at was reset by past admin-save bugs (see lib/blog-dates.ts) */
+  created_at?: Date;
   /** Last updated date */
   updated_at?: Date;
+  /**
+   * Number of blog rows (published or not) written within the bulk-touch
+   * cluster window (±BULK_TOUCH_CLUSTER_WINDOW_MINUTES, lib/blog-dates.ts)
+   * of this row's `updated_at`, including this row. 1 = isolated write =
+   * genuine row-specific edit; >= 2 = bulk-touch cluster (translation
+   * backfills etc. stamp many rows with one `now()` OR loop row-by-row
+   * minutes apart — both cluster in time). Consumed by lib/blog-dates.ts to
+   * decide whether dateModified is honest. Only populated by
+   * getBlogPostBySlugFromDb.
+   */
+  updated_at_cluster_count?: number;
   /** SEO meta title (max 70 chars) — content-team authored */
   meta_title?: Localized<string>;
   /** SEO meta description (max 155 chars) — content-team authored */

@@ -4,7 +4,7 @@ import { revalidatePath, updateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/db/schema';
-import { eq, like } from 'drizzle-orm';
+import { eq, like, sql } from 'drizzle-orm';
 import { requireAuth, isValidUUID } from '@/lib/admin/auth';
 import { getString, isValidSlug, isValidUrl, validateTextLengths, MAX_TEXT_LENGTH, MAX_SHORT_TEXT_LENGTH } from '@/lib/admin/form-utils';
 import { parseLocalizations } from '@/lib/admin/parse-localizations';
@@ -18,9 +18,13 @@ function getBlogData(formData: FormData) {
   const isPublished = formData.get('isPublished') === 'on';
   const publishedAtStr = getString(formData, 'publishedAt');
   const parsedDate = publishedAtStr ? new Date(publishedAtStr) : null;
-  const publishedAt = parsedDate && !isNaN(parsedDate.getTime())
-    ? parsedDate
-    : isPublished ? new Date() : null;
+  // Only the explicit form value. Callers decide the fallback: create defaults
+  // to now(); update PRESERVES the row's existing published_at. Defaulting to
+  // now() here reset an April post's publication date to the edit date on
+  // every re-save with a blank field (2026-07-10 forensics: BlogPosting
+  // datePublished jumped to 2026-06-22 on bathtub-renovation-cost-vancouver),
+  // making schema/OG dates fake-fresh — a signal Google devalues.
+  const publishedAt = parsedDate && !isNaN(parsedDate.getTime()) ? parsedDate : null;
 
   // Handle projectId - can be empty string, 'null', or a UUID
   const projectIdRaw = getString(formData, 'projectId').trim();
@@ -84,6 +88,9 @@ export async function createBlogPost(
       { contentEn: data.contentEn, contentZh: data.contentZh }, MAX_TEXT_LENGTH
     );
     if (textError) return { error: textError };
+
+    // New post with no explicit date: published now means published_at = now.
+    if (!data.publishedAt && data.isPublished) data.publishedAt = new Date();
 
     // Ensure slug is unique (append -2, -3, etc. if collision)
     const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
@@ -167,6 +174,14 @@ export async function updateBlogPost(
     const conflictingSlugs = await db.select({ slug: blogPosts.slug }).from(blogPosts).where(like(blogPosts.slug, `${data.slug}%`));
     data.slug = ensureUniqueSlug(data.slug, conflictingSlugs.map((r: { slug: string }) => r.slug), currentSlug);
 
+    // No explicit form date → PRESERVE the original publication date. Falling
+    // back to now() here is what turned re-saves into fake-fresh datePublished
+    // resets (see getBlogData comment). now() only applies on a genuine
+    // first-publish (previously unpublished with no date on record).
+    if (!data.publishedAt) {
+      data.publishedAt = currentPost[0]?.publishedAt ?? (data.isPublished ? new Date() : null);
+    }
+
     const localizations = parseLocalizations(formData);
     const updated = await db.update(blogPosts).set({ ...data, localizations }).where(eq(blogPosts.id, id)).returning({ id: blogPosts.id });
     if (updated.length === 0) {
@@ -234,7 +249,12 @@ export async function toggleBlogPostPublished(id: string, current: boolean): Pro
       .update(blogPosts)
       .set({
         isPublished: !current,
-        publishedAt: !current ? new Date() : null,
+        // Publication date is HISTORY, not a status flag — an unpublish/
+        // republish cycle must not reset it (fake-fresh datePublished in the
+        // BlogPosting schema; see lib/blog-dates.ts). Republish keeps the
+        // original date, stamping now() only on a true first publish;
+        // unpublish leaves it untouched.
+        ...(!current ? { publishedAt: sql`COALESCE(${blogPosts.publishedAt}, now())` } : {}),
         updatedAt: new Date(),
       })
       .where(eq(blogPosts.id, id))
