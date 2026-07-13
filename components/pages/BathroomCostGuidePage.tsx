@@ -289,30 +289,25 @@ export default function BathroomCostGuidePage({ locale, projects, phone }: Bathr
         </div>
       </section>
 
-      {/* Bathtub Renovation Cost — dedicated H2 targeting "bathtub renovation cost"
-          query cluster (bathroom-renovation-cost-vancouver ranks pos 7.5 for
-          "bathtub renovation cost" / 2,964 imps — channels to dedicated bathtub
-          post). Prices sourced from bathtub-renovation-cost-vancouver post data. */}
+      {/* Bathtub Costs — deliberately a brief POINTER, not a competing cost
+          section. The 2026-06-25 version carried a keyword-targeted "Bathtub
+          Renovation Cost in Vancouver" H2 + full pricing grid that put this
+          guide in direct competition with the canonical bathtub post for its
+          own focus keyword (guide-vs-blog cannibalization; 2026-07-10 bathtub
+          forensics, owner-approved resolution). The blog post
+          /blog/bathtub-renovation-cost-vancouver/ is canonical for "bathtub
+          renovation cost" — this section keeps a neutral heading, two
+          sentences of blog-consistent numbers, and a prominent keyword-
+          anchored link that channels the query there. Do NOT re-expand it. */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center" style={{ color: TEXT }}>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center" style={{ color: TEXT }}>
             {t('bathtubCost.title')}
           </h2>
-          <p className="text-center mb-4" style={{ color: TEXT_MID }}>{t('bathtubCost.subtitle')}</p>
-          <p className="text-center mb-8 max-w-2xl mx-auto text-sm" style={{ color: TEXT_MID }}>{t('bathtubCost.intro')}</p>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {(['alcove', 'dropIn', 'freestanding'] as const).map((key) => (
-              <div key={key} className="rounded-xl p-5 flex flex-col gap-2" style={{ backgroundColor: CARD, boxShadow: neu() }}>
-                <h3 className="font-bold text-sm" style={{ color: TEXT }}>{t(`bathtubCost.${key}.title`)}</h3>
-                <span className="text-lg font-bold" style={{ color: GOLD }}>{t(`bathtubCost.${key}.range`)}</span>
-                <p className="text-xs leading-relaxed" style={{ color: TEXT_MID }}>{t(`bathtubCost.${key}.description`)}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-center mt-6" style={{ color: TEXT_MUTED }}>
-            {t('bathtubCost.note')}
-            <Link href={`/${locale}/blog/bathtub-renovation-cost-vancouver/`} className="font-semibold underline hover:no-underline" style={{ color: GOLD }}>
-              Bathtub Renovation Cost Vancouver 2026 →
+          <p className="text-center max-w-2xl mx-auto text-sm leading-relaxed" style={{ color: TEXT_MID }}>
+            {t('bathtubCost.description')}
+            <Link href={`/${locale}/blog/bathtub-renovation-cost-vancouver/`} className="font-bold text-base underline hover:no-underline" style={{ color: GOLD }}>
+              {t('bathtubCost.linkText')} →
             </Link>
           </p>
         </div>

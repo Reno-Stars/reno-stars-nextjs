@@ -9,20 +9,10 @@ import { BreadcrumbSchema, ArticleSchema, FAQSchema } from '@/components/structu
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import { resolveBlogDates } from '@/lib/blog-dates';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
-}
-
-// Cached results from `unstable_cache` are JSON-serialized, so Date columns
-// come back as strings on cache hits. Coerce defensively before formatting.
-// Also tolerant of unparseable strings (returns undefined instead of throwing
-// "Invalid time value" — that bug surfaced as a 5xx in May 2026 GSC).
-function toIsoString(value: Date | string | null | undefined): string | undefined {
-  if (!value) return undefined;
-  const d = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(d.getTime())) return undefined;
-  return d.toISOString();
 }
 
 
@@ -145,6 +135,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     loc => loc === 'en' || loc === 'zh' || Boolean(contentMap?.[loc] && contentMap[loc] !== contentMap.en),
   );
 
+  // Real dates only — published_at (fallback created_at), and a modified time
+  // ONLY when updated_at reflects a genuine row-specific edit rather than a
+  // bulk-script touch. See lib/blog-dates.ts.
+  const { datePublished, dateModified } = resolveBlogDates(post);
+
   return {
     title: metaTitle,
     description: metaDescription,
@@ -159,8 +154,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'article',
-      publishedTime: toIsoString(post.published_at),
-      modifiedTime: toIsoString(post.updated_at),
+      publishedTime: datePublished,
+      modifiedTime: dateModified,
       images: [{ url: ogImage, width: 1200, height: 630, alt: localizedPost.title }],
     },
     twitter: {
@@ -199,6 +194,13 @@ export default async function Page({ params }: PageProps) {
 
   const faqs = extractFaqsFromContent(localizedPost.content);
 
+  // Real DB dates only: datePublished = published_at (fallback created_at);
+  // dateModified emitted ONLY when updated_at is a genuine row-specific edit
+  // signal (bulk-touch clusters suppressed). See lib/blog-dates.ts — the
+  // 2026-07-10 forensics found an April post emitting a reset June
+  // datePublished and a translation-backfill timestamp as dateModified.
+  const { datePublished, dateModified } = resolveBlogDates(post);
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -207,8 +209,8 @@ export default async function Page({ params }: PageProps) {
         company={company}
         headline={localizedPost.title}
         description={localizedPost.excerpt}
-        datePublished={toIsoString(post.published_at)}
-        dateModified={toIsoString(post.updated_at)}
+        datePublished={datePublished}
+        dateModified={dateModified}
         authorName={post.author}
         url={`/${locale}/blog/${slug}/`}
         image={ogImage}

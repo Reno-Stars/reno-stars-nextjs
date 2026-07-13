@@ -50,7 +50,12 @@ export default function ArticleSchema({
     description,
     url: absoluteUrl,
     ...(datePublished && { datePublished }),
-    ...(dateModified ? { dateModified } : datePublished ? { dateModified: datePublished } : {}),
+    // dateModified is emitted ONLY when the caller supplies a trustworthy
+    // value (blog posts resolve it via lib/blog-dates.ts — bulk-touched
+    // updated_at timestamps are suppressed there). No fallback: fabricating
+    // dateModified (= datePublished, or worse, request time) is a fake-fresh
+    // signal Google explicitly devalues. Omitting the field is honest.
+    ...(dateModified && { dateModified }),
     author: {
       '@type': 'Organization',
       name: resolvedAuthorName,

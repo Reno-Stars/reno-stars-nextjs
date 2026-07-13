@@ -28,6 +28,7 @@ blogContentRenderer.use({
 import { expandMarkdownLinksInHeadings } from '@/lib/utils';
 import { normalizeInternalLinks } from '@/lib/markdown-html';
 import type { Company, BlogPost } from '@/lib/types';
+import { resolveBlogDates } from '@/lib/blog-dates';
 
 const BLOG_SANITIZE_OPTIONS: IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
@@ -61,16 +62,21 @@ export default function BlogPostPage({ locale, post, company, services = [], are
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
   const localizedServices = services;
   const localizedAreas = areas;
-  // unstable_cache JSON-serializes results so Date columns arrive as strings
-  // on cache hits; rehydrate before formatting to avoid TypeError at runtime.
-  const publishedAt = useMemo(
-    () => (post.published_at ? new Date(post.published_at) : null),
-    [post.published_at],
-  );
-  const updatedAt = useMemo(
-    () => (post.updated_at ? new Date(post.updated_at) : null),
-    [post.updated_at],
-  );
+  // Visible published/updated labels use the SAME resolved dates as the
+  // BlogPosting JSON-LD and OpenGraph times (lib/blog-dates.ts): real
+  // published_at (fallback created_at), and an "Updated" date only when
+  // updated_at is a genuine row-specific edit — bulk-script touches
+  // (translation backfills stamping 30+ rows with one timestamp) must not
+  // surface as a fake on-page freshness claim. resolveBlogDates also handles
+  // unstable_cache's JSON serialization (Date columns arrive as strings on
+  // cache hits) and unparseable values.
+  const { publishedAt, updatedAt } = useMemo(() => {
+    const { datePublished, dateModified } = resolveBlogDates(post);
+    return {
+      publishedAt: datePublished ? new Date(datePublished) : null,
+      updatedAt: dateModified ? new Date(dateModified) : null,
+    };
+  }, [post]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
@@ -118,7 +124,9 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                   {post.author}
                 </span>
               )}
-              {updatedAt && publishedAt && updatedAt.getTime() > publishedAt.getTime() + 86400000 && (
+              {/* resolveBlogDates already enforces updated > published + 24h
+                  and suppresses bulk-touch timestamps — non-null means show. */}
+              {updatedAt && (
                 <span className="flex items-center gap-1.5" style={{ color: TEXT_MID }}>
                   {t('blog.updated')}{' '}
                   <time dateTime={updatedAt.toISOString()}>

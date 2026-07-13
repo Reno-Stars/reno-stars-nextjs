@@ -189,6 +189,21 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
     const row = rows[0];
     if (!row) return null;
 
+    // How many published posts share this row's EXACT updated_at timestamp
+    // (including itself). Bulk maintenance scripts (translation backfills,
+    // link rewrites) stamp every row they touch with one `now()`, so a shared
+    // timestamp is a bulk-write fingerprint — lib/blog-dates.ts suppresses
+    // dateModified for those rows instead of emitting a fake edit date.
+    // Cheap (~250 rows, runs only on per-slug cache miss).
+    let updatedAtSharedCount: number | undefined;
+    if (row.updatedAt) {
+      const shared = await db
+        .select({ value: count() })
+        .from(blogPostsTable)
+        .where(and(eq(blogPostsTable.updatedAt, row.updatedAt), eq(blogPostsTable.isPublished, true)));
+      updatedAtSharedCount = shared[0]?.value ?? undefined;
+    }
+
     // Fetch related project and external products in parallel if projectId is set
     let relatedProject: BlogRelatedProject | undefined;
     if (row.projectId) {
@@ -236,7 +251,9 @@ export const getBlogPostBySlugFromDb = cachedQueryPerSlugLocale(
       })(),
       author: row.author ?? undefined,
       published_at: row.publishedAt ?? undefined,
+      created_at: row.createdAt ?? undefined,
       updated_at: row.updatedAt ?? undefined,
+      updated_at_shared_count: updatedAtSharedCount,
       meta_title: (row.metaTitleEn || row.metaTitleZh)
         ? buildLocalized('metaTitle', row.metaTitleEn ?? '', row.metaTitleZh ?? '', row.localizations)
         : undefined,
