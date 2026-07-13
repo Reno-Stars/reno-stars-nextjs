@@ -27,6 +27,20 @@ const EXPECTED_LOCALES = ['en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', '
 // Maps hreflang key → URL path prefix when they differ (currently empty).
 const HREFLANG_TO_URL_PREFIX = {};
 
+// /services/{svc}/{city}/ combo pages intentionally restrict hreflang + sitemap
+// entries to en/zh (commit 07c8dcc3, 2026-07-07): the other 12 locales have no
+// native translation and were emitting ~3,400 thin duplicate pages that GSC
+// flagged as "Crawled - currently not indexed", diluting crawl budget. See
+// SERVICE_CITY_LOCALES in app/sitemap.ts and the isIndexableLocale comment in
+// app/[locale]/services/[service-slug]/[city]/page.tsx.
+const RESTRICTED_LOCALE_PATHS = {
+  '/services/kitchen/burnaby/': ['en', 'zh'],
+};
+
+function expectedLocalesFor(path) {
+  return RESTRICTED_LOCALE_PATHS[path] || EXPECTED_LOCALES;
+}
+
 // Pages worth auditing — one of each route shape. If these are correct, the
 // generators are correct.
 const PATHS = [
@@ -75,9 +89,10 @@ async function audit(path, locale) {
 
   const tags = extractHreflang(html);
   const issues = [];
+  const expectedLocales = expectedLocalesFor(path);
 
   // 1. All expected locales present
-  for (const loc of EXPECTED_LOCALES) {
+  for (const loc of expectedLocales) {
     if (!tags[loc]) issues.push(`missing hreflang=${loc}`);
   }
 
@@ -89,7 +104,7 @@ async function audit(path, locale) {
   }
 
   // 3. Each locale's href contains the matching locale prefix
-  for (const loc of EXPECTED_LOCALES) {
+  for (const loc of expectedLocales) {
     const urlPrefix = HREFLANG_TO_URL_PREFIX[loc] ?? loc;
     if (tags[loc] && !tags[loc].includes(`/${urlPrefix}/`) && !tags[loc].endsWith(`/${urlPrefix}`)) {
       issues.push(`hreflang=${loc} href does not contain /${urlPrefix}/: ${tags[loc]}`);
