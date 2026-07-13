@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react';
-import { Star, ExternalLink } from 'lucide-react';
+import { Star, ExternalLink, BadgeCheck } from 'lucide-react';
 import { GOLD, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import { GOOGLE_REVIEWS_URL } from '@/lib/company-config';
 import { formatReviewerName, relativeReviewDate } from '@/lib/project-reviews';
+import GoogleIcon from '@/components/reviews/GoogleIcon';
 
 /**
  * Shared presentational "verified client review" card — extracted from
@@ -51,6 +52,45 @@ const VERIFIED_GOOGLE_LABELS: Record<string, string> = {
   ru: 'Подтверждённый отзыв в Google',
   tl: 'Beripikadong Google Review',
   vi: 'Đánh giá đã xác minh trên Google',
+};
+
+// Generic (platform-neutral) "Verified Review" eyebrow — used when the review's
+// `source` is NOT Google (e.g. yelp/houzz), so we never brand a non-Google
+// review with Google's logo/wording (#29). Degrades gracefully for unknown
+// sources.
+const VERIFIED_REVIEW_LABELS: Record<string, string> = {
+  en: 'Verified Review',
+  zh: '认证客户评价',
+  'zh-Hant': '認證客戶評價',
+  es: 'Reseña verificada',
+  fr: 'Avis vérifié',
+  ja: '認証済みレビュー',
+  ko: '인증 리뷰',
+  ar: 'مراجعة موثّقة',
+  fa: 'نظر تأییدشده',
+  hi: 'सत्यापित समीक्षा',
+  pa: 'ਪ੍ਰਮਾਣਿਤ ਸਮੀਖਿਆ',
+  ru: 'Подтверждённый отзыв',
+  tl: 'Beripikadong Review',
+  vi: 'Đánh giá đã xác minh',
+};
+
+/** Platform-neutral "read the source review" link label (non-Google sources). */
+const READ_REVIEW_LABELS: Record<string, string> = {
+  en: 'Read the review',
+  zh: '查看原始评价',
+  'zh-Hant': '查看原始評價',
+  es: 'Leer la reseña',
+  fr: "Lire l'avis",
+  ja: 'レビューを見る',
+  ko: '리뷰 보기',
+  ar: 'اقرأ المراجعة',
+  fa: 'خواندن نظر',
+  hi: 'समीक्षा पढ़ें',
+  pa: 'ਸਮੀਖਿਆ ਪੜ੍ਹੋ',
+  ru: 'Читать отзыв',
+  tl: 'Basahin ang review',
+  vi: 'Đọc đánh giá',
 };
 
 const TESTIMONIAL_LABELS: Record<string, string> = {
@@ -106,17 +146,6 @@ export const SEE_PROJECT_LABELS: Record<string, string> = {
   vi: 'Xem dự án này',
 };
 
-export function GoogleIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-    </svg>
-  );
-}
-
 export interface QuoteCardReview {
   /** Author name exactly as written on the source review. */
   authorName: string;
@@ -130,6 +159,13 @@ export interface QuoteCardReview {
   reviewDate?: string | null;
   /** Direct URL to the review on the source platform, when available. */
   sourceUrl?: string | null;
+  /**
+   * Review platform ('google', 'yelp', …). When omitted we assume 'google'
+   * (the historical + only stored value) for backward compatibility. Drives
+   * platform-accurate branding: Google logo + "Verified Google Review" only
+   * when 'google'; a neutral verified mark + "Verified Review" otherwise (#29).
+   */
+  source?: string | null;
 }
 
 interface ReviewQuoteCardProps {
@@ -158,10 +194,20 @@ export default function ReviewQuoteCard({
   eyebrowTag = 'h2',
   footerExtra,
 }: ReviewQuoteCardProps) {
-  const isGoogle = kind === 'google';
-  const eyebrowLabels = isGoogle ? VERIFIED_GOOGLE_LABELS : TESTIMONIAL_LABELS;
-  const eyebrow = eyebrowLabels[locale] ?? eyebrowLabels.en;
-  const readOnGoogle = READ_ON_GOOGLE_LABELS[locale] ?? READ_ON_GOOGLE_LABELS.en;
+  const isTestimonial = kind === 'testimonial';
+  // Platform-accurate branding. A missing source is treated as 'google' (the
+  // only stored value historically) so existing cards are unchanged; any other
+  // source renders a neutral verified mark, never Google's logo/wording (#29).
+  const source = (review.source ?? 'google').toLowerCase();
+  const isGoogleSource = !isTestimonial && source === 'google';
+  const isOtherSource = !isTestimonial && !isGoogleSource;
+
+  const eyebrow = isTestimonial
+    ? (TESTIMONIAL_LABELS[locale] ?? TESTIMONIAL_LABELS.en)
+    : isGoogleSource
+    ? (VERIFIED_GOOGLE_LABELS[locale] ?? VERIFIED_GOOGLE_LABELS.en)
+    : (VERIFIED_REVIEW_LABELS[locale] ?? VERIFIED_REVIEW_LABELS.en);
+
   const EyebrowTag = eyebrowTag;
   const relativeDate = review.reviewDate ? relativeReviewDate(review.reviewDate, locale) : '';
 
@@ -173,7 +219,8 @@ export default function ReviewQuoteCard({
       <div className="absolute left-0 top-5 bottom-5 w-0.5 rounded-r-full" style={{ backgroundColor: GOLD }} />
       <div className="pl-4">
         <div className="flex items-center gap-2 mb-3">
-          {isGoogle && <GoogleIcon className="w-4 h-4 shrink-0" />}
+          {isGoogleSource && <GoogleIcon className="w-4 h-4 shrink-0" />}
+          {isOtherSource && <BadgeCheck className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color: GOLD }} />}
           <EyebrowTag className="text-sm font-bold uppercase tracking-wider" style={{ color: TEXT_MUTED }}>
             {eyebrow}
           </EyebrowTag>
@@ -200,7 +247,10 @@ export default function ReviewQuoteCard({
             <span className="font-bold" style={{ color: TEXT }}>{formatReviewerName(review.authorName)}</span>
             {relativeDate && <>{' · '}{relativeDate}</>}
           </div>
-          {isGoogle && (
+          {/* Google source: link to the review (or the Google profile). Other
+              platforms: link ONLY when we have a real source URL — never fall
+              back to the Google profile for a non-Google review. */}
+          {isGoogleSource && (
             <a
               href={review.sourceUrl ?? GOOGLE_REVIEWS_URL}
               target="_blank"
@@ -209,7 +259,19 @@ export default function ReviewQuoteCard({
               style={{ color: TEXT_MUTED }}
             >
               <ExternalLink className="w-3 h-3" aria-hidden="true" />
-              {readOnGoogle}
+              {READ_ON_GOOGLE_LABELS[locale] ?? READ_ON_GOOGLE_LABELS.en}
+            </a>
+          )}
+          {isOtherSource && review.sourceUrl && (
+            <a
+              href={review.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium hover:underline"
+              style={{ color: TEXT_MUTED }}
+            >
+              <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              {READ_REVIEW_LABELS[locale] ?? READ_REVIEW_LABELS.en}
             </a>
           )}
         </div>

@@ -1,24 +1,20 @@
-import { ArrowRight, Wrench } from 'lucide-react';
-import Link from 'next/link';
-import { GOLD, SURFACE, TEXT, TEXT_MID } from '@/lib/theme';
-import ReviewQuoteCard, { SEE_PROJECT_LABELS } from '@/components/reviews/ReviewQuoteCard';
+import { Wrench } from 'lucide-react';
+import { SURFACE } from '@/lib/theme';
+import ReviewsGroupSection, {
+  type HubDisplayReview,
+  type ReviewGroupDisplay,
+} from '@/components/reviews/ReviewsGroupSection';
 import { SECTION_SUBTITLE_LABELS } from '@/components/pages/ReviewsCityGroups';
-import type { HubDisplayReview } from '@/components/pages/ReviewsCityGroups';
 
 /**
  * /reviews hub — merged client reviews grouped by PROJECT TYPE (kitchen /
  * bathroom / commercial / …), the second grouping dimension alongside
- * ReviewsCityGroups.
- *
- * Groups arrive pre-merged and pre-deduped from the server page (see
- * lib/reviews-hub.ts groupReviewsByServiceType): only reviews whose linked
- * project has a service_type appear here — unlinked reviews and testimonials
- * keep appearing only where they already do. Type headings link to the
- * matching /services/<slug>/ page (mirroring the city → area-page links);
- * project-linked cards link to their case study. Labels use the
- * self-contained 14-locale map technique. No hooks. Deliberately NO Review
- * schema markup — it lives on the project pages only (duplicating the same
- * reviews on a second entity risks spam signals).
+ * ReviewsCityGroups. Thin wrapper that maps each type group to the generic
+ * {heading, headingHref} shape and delegates to the shared
+ * <ReviewsGroupSection>. A review whose job spans two project types appears
+ * under BOTH type groups (see lib/reviews-hub groupReviewsByServiceType). Type
+ * headings link to the matching /services/<slug>/ page. Labels use the
+ * self-contained 14-locale map technique.
  */
 
 const SECTION_TITLE_LABELS: Record<string, string> = {
@@ -43,70 +39,36 @@ export interface HubTypeGroupDisplay {
   typeName: string;
   /** Service-page slug for the type heading link, when the page is public. */
   serviceSlug: string | null;
-  reviews: HubDisplayReview[];
+  /** Indices into the shared review pool (#27). */
+  reviewIndices: number[];
 }
 
 interface ReviewsTypeGroupsProps {
+  /** Shared review pool the groups' indices point into. */
+  reviews: HubDisplayReview[];
   groups: HubTypeGroupDisplay[];
   locale: string;
 }
 
-export default function ReviewsTypeGroups({ groups, locale }: ReviewsTypeGroupsProps) {
+export default function ReviewsTypeGroups({ reviews, groups, locale }: ReviewsTypeGroupsProps) {
   if (groups.length === 0) return null;
 
-  const title = SECTION_TITLE_LABELS[locale] ?? SECTION_TITLE_LABELS.en;
-  const subtitle = SECTION_SUBTITLE_LABELS[locale] ?? SECTION_SUBTITLE_LABELS.en;
-  const seeProject = SEE_PROJECT_LABELS[locale] ?? SEE_PROJECT_LABELS.en;
+  const displayGroups: ReviewGroupDisplay[] = groups.map((group) => ({
+    heading: group.typeName,
+    headingHref: group.serviceSlug ? `/${locale}/services/${group.serviceSlug}/` : null,
+    reviewIndices: group.reviewIndices,
+  }));
 
   return (
-    <section className="py-14" style={{ backgroundColor: SURFACE }} aria-labelledby="reviews-by-type-title">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 mb-2">
-          <Wrench className="w-5 h-5" style={{ color: GOLD }} aria-hidden="true" />
-          <h2 id="reviews-by-type-title" className="text-2xl font-bold" style={{ color: TEXT }}>{title}</h2>
-        </div>
-        <p className="text-base mb-10" style={{ color: TEXT_MID }}>{subtitle}</p>
-
-        {groups.map((group) => (
-          <div key={group.typeName} className="mb-10 last:mb-0">
-            <h3 className="text-lg font-bold mb-4" style={{ color: TEXT }}>
-              {group.serviceSlug ? (
-                <Link href={`/${locale}/services/${group.serviceSlug}/`} className="hover:underline" style={{ color: TEXT }}>
-                  {group.typeName}
-                </Link>
-              ) : (
-                group.typeName
-              )}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {group.reviews.map((review, idx) => (
-                <ReviewQuoteCard
-                  // idx guards against legitimate collisions (same author +
-                  // same month-precision date); the list is static per render.
-                  key={`${review.authorName}-${review.reviewDate ?? ''}-${idx}`}
-                  review={review}
-                  locale={locale}
-                  kind={review.kind === 'testimonial' ? 'testimonial' : 'google'}
-                  eyebrowTag="div"
-                  footerExtra={
-                    review.projectSlug ? (
-                      <div className="mt-3">
-                        <Link
-                          href={`/${locale}/projects/${review.projectSlug}/`}
-                          className="inline-flex items-center gap-1 text-sm font-semibold hover:underline"
-                          style={{ color: GOLD }}
-                        >
-                          {seeProject} <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                        </Link>
-                      </div>
-                    ) : undefined
-                  }
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <ReviewsGroupSection
+      title={SECTION_TITLE_LABELS[locale] ?? SECTION_TITLE_LABELS.en}
+      subtitle={SECTION_SUBTITLE_LABELS[locale] ?? SECTION_SUBTITLE_LABELS.en}
+      icon={Wrench}
+      reviews={reviews}
+      groups={displayGroups}
+      locale={locale}
+      backgroundColor={SURFACE}
+      labelledById="reviews-by-type-title"
+    />
   );
 }
