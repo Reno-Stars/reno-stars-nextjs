@@ -56,21 +56,24 @@ export function brandDisplay(locale: Locale): string {
 export const WECHAT_ID = 'RenoStars';
 
 /**
- * Google Business Profile place ID — the SINGLE source for the GBP identity.
+ * Google Business Profile place ID — the SINGLE canonical GBP identity.
  *
- * Env-primary: reads `GOOGLE_PLACE_ID` (the same env var `lib/google-reviews.ts`
- * uses for the Places API + review cache — documented in CLAUDE.md), so the
- * review cache, GOOGLE_REVIEWS_URL and GOOGLE_WRITE_REVIEW_URL all resolve from
- * ONE place id instead of the previous split (env in google-reviews.ts vs a
- * hand-typed literal here — finding #12). Falls back to the documented default
- * when the env is unset (empty or missing).
+ * Deliberately a plain constant, NOT an env read. The place id is a stable
+ * business fact (the ONE Google listing), and `GOOGLE_REVIEWS_URL` /
+ * `GOOGLE_WRITE_REVIEW_URL` below are rendered as `href`s by the `'use client'`
+ * ReviewsPage. Because this is NOT a `NEXT_PUBLIC_` var, a `process.env` read
+ * (the previous approach) is replaced with `undefined` in the client bundle —
+ * so the URLs would silently fall back to a hand-typed literal there, and a
+ * server env that differed from that literal produced a React hydration
+ * mismatch plus wrong client-side review links (finding #12). As a constant the
+ * value is identical on the server and in the client bundle, so the derived
+ * URLs can never diverge.
  *
- * NOTE: this is NOT a `NEXT_PUBLIC_` var, so client bundles cannot read it —
- * Next replaces `process.env.GOOGLE_PLACE_ID` with `undefined` there and the
- * fallback below is used. Keep the `GOOGLE_PLACE_ID` env value equal to this
- * fallback so server- and client-rendered URLs never diverge.
+ * `lib/google-reviews.ts` imports THIS constant for its server-side Places API
+ * call (with an optional `GOOGLE_PLACE_ID` env override for staging), so the
+ * review cache and the public review links resolve from one identity.
  */
-export const GOOGLE_PLACE_ID = process.env.GOOGLE_PLACE_ID || 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
+export const GOOGLE_PLACE_ID = 'ChIJT0f2zbHhhVQRhHrIAuFh0y4';
 
 /** Public "read our Google reviews" listing for the GBP above. */
 export const GOOGLE_REVIEWS_URL = `https://search.google.com/local/reviews?placeid=${GOOGLE_PLACE_ID}`;
