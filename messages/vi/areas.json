@@ -33,6 +33,8 @@
     "trustStripPrefix": "{service} được xếp hạng hàng đầu ở Vancouver",
     "trustStripReviews": "{rating}★ từ {count} Google đánh giá",
     "linkSectionTitle": "Khu vực phục vụ tại Metro Vancouver",
-    "linkSectionSubtitle": "Nhấp vào thành phố của bạn để xem các dự án cải tạo, thông tin khu vực và báo giá miễn phí tại địa phương."
+    "linkSectionSubtitle": "Nhấp vào thành phố của bạn để xem các dự án cải tạo, thông tin khu vực và báo giá miễn phí tại địa phương.",
+    "renovationServicesIn": "Dịch vụ cải tạo tại {city}",
+    "renovationServicesInSubtitle": "Khám phá từng dịch vụ cải tạo mà chúng tôi cung cấp tại {city}."
   }
 }

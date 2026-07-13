@@ -33,6 +33,8 @@
     "featuredProjectSubheading": "Реальный бюджет, реальные сроки, реальный объем из нашего портфолио.",
     "featuredProjectCta": "Посмотреть полный проект",
     "trustStripPrefix": "{service} с самым высоким рейтингом в Ванкувере",
-    "trustStripReviews": "{rating}★ из обзоров {count} Google"
+    "trustStripReviews": "{rating}★ из обзоров {count} Google",
+    "renovationServicesIn": "Услуги по ремонту в {city}",
+    "renovationServicesInSubtitle": "Ознакомьтесь с каждой услугой по ремонту, которую мы предлагаем в {city}."
   }
 }

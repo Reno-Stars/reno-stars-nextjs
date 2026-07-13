@@ -33,7 +33,9 @@
     "linkSectionSubtitle": "お住いの都市をクリックすると、改修プロジェクト、近隣地域の詳細、現地の無料見積もりが表示されます。",
     "neighbourhoodsTitle": "{area} でサービスを提供している地域",
     "neighbourhoodsSubtitle": "これらの {area} コミュニティ全体の改修プロジェクト。見積もりを依頼する際に、お住まいの地域について言及してください。私たちは、それぞれの許可の癖やサプライヤーの物流状況を理解しています。",
-    "nearbyAreas": "近隣エリアも対応しております"
+    "nearbyAreas": "近隣エリアも対応しております",
+    "renovationServicesIn": "{city}のリフォームサービス",
+    "renovationServicesInSubtitle": "{city}で提供している各リフォームサービスをご覧ください。"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

@@ -33,6 +33,8 @@
     "trustStripPrefix": "Nangungunang {service} sa Vancouver",
     "trustStripReviews": "{rating}★ mula sa {count} mga review ng Google",
     "linkSectionTitle": "Mga Serbisyong Lugar sa Metro Vancouver",
-    "linkSectionSubtitle": "I-click ang iyong lungsod para sa mga renovation project, detalye ng kapitbahayan, at libreng lokal na quote."
+    "linkSectionSubtitle": "I-click ang iyong lungsod para sa mga renovation project, detalye ng kapitbahayan, at libreng lokal na quote.",
+    "renovationServicesIn": "Mga serbisyo sa renovation sa {city}",
+    "renovationServicesInSubtitle": "Tuklasin ang bawat serbisyo sa renovation na inaalok namin sa {city}."
   }
 }

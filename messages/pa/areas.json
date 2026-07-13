@@ -33,6 +33,8 @@
     "trustStripPrefix": "ਵੈਨਕੂਵਰ ਵਿੱਚ ਸਿਖਰ ਦਾ ਦਰਜਾ ਪ੍ਰਾਪਤ {service}",
     "trustStripReviews": "{count} Google ਸਮੀਖਿਆਵਾਂ ਤੋਂ {rating}★",
     "linkSectionTitle": "ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸੇਵਾ ਖੇਤਰ",
-    "linkSectionSubtitle": "ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟਾਂ, ਆਂਢ-ਗੁਆਂਢ ਵੇਰਵਿਆਂ ਅਤੇ ਮੁਫਤ ਸਥਾਨਕ ਕੋਟ ਲਈ ਆਪਣੇ ਸ਼ਹਿਰ 'ਤੇ ਕਲਿੱਕ ਕਰੋ।"
+    "linkSectionSubtitle": "ਨਵੀਨੀਕਰਨ ਪ੍ਰੋਜੈਕਟਾਂ, ਆਂਢ-ਗੁਆਂਢ ਵੇਰਵਿਆਂ ਅਤੇ ਮੁਫਤ ਸਥਾਨਕ ਕੋਟ ਲਈ ਆਪਣੇ ਸ਼ਹਿਰ 'ਤੇ ਕਲਿੱਕ ਕਰੋ।",
+    "renovationServicesIn": "{city} ਵਿੱਚ ਰੈਨੋਵੇਸ਼ਨ ਸੇਵਾਵਾਂ",
+    "renovationServicesInSubtitle": "{city} ਵਿੱਚ ਅਸੀਂ ਜੋ ਹਰ ਰੈਨੋਵੇਸ਼ਨ ਸੇਵਾ ਪੇਸ਼ ਕਰਦੇ ਹਾਂ, ਉਸ ਬਾਰੇ ਜਾਣੋ।"
   }
 }

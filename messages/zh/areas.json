@@ -33,7 +33,9 @@
     "linkSectionSubtitle": "点击您所在的城市，了解改造项目、社区详情和免费的当地报价。",
     "neighbourhoodsTitle": "我们在{area}提供服务的社区",
     "neighbourhoodsSubtitle": "这些{area}社区的改造项目。当您请求报价时，请提及您的邻居 - 我们了解每个人的许可怪癖和供应商物流。",
-    "nearbyAreas": "我们还为附近地区提供服务"
+    "nearbyAreas": "我们还为附近地区提供服务",
+    "renovationServicesIn": "{city}的装修服务",
+    "renovationServicesInSubtitle": "了解我们在{city}提供的各项装修服务。"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

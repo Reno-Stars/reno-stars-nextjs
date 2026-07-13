@@ -33,6 +33,8 @@
     "featuredProjectSubheading": "ميزانية حقيقية، جدول زمني حقيقي، نطاق حقيقي من محفظتنا.",
     "featuredProjectCta": "عرض المشروع كاملا",
     "trustStripPrefix": "{service} الأعلى تقييمًا في فانكوفر",
-    "trustStripReviews": "{rating}★ من مراجعات جوجل {count}"
+    "trustStripReviews": "{rating}★ من مراجعات جوجل {count}",
+    "renovationServicesIn": "خدمات التجديد في {city}",
+    "renovationServicesInSubtitle": "استكشف كل خدمة تجديد نقدمها في {city}."
   }
 }
