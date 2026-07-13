@@ -3,9 +3,10 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
+import { getBaseUrl, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
+import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { selectNearbyProjects } from '@/lib/near-me-projects';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
@@ -29,7 +30,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = buildOgImageUrl(title, description);
   return {
     title, description,
-    alternates: buildAlternates('/basement-renovation-near-me/', locale),
+    // SEO de-dup consolidation (near-me cluster): consolidate this near-me
+    // duplicate onto the stronger /services/basement/ page via rel=canonical
+    // while still serving "basement renovation near me" searchers. hreflang is
+    // intentionally omitted on a canonicalized-away page. Umbrella
+    // /renovation-near-me/ stays self-canonical. See kitchen page for rationale.
+    alternates: { canonical: `${baseUrl}/${locale}/services/basement/` },
     openGraph: { title, description, url: `${baseUrl}/${locale}/basement-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
   };
 }
@@ -37,13 +43,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [nav, t, areas, company, googleReviews] = await Promise.all([
+  const [nav, t, areas, company, googleReviews, allProjects] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'nearMe' }),
     getServiceAreasFromDb(),
     getCompanyFromDb(),
     getGoogleReviews(),
+    getProjectsListFromDb(),
   ]);
+  // No dedicated basement projects exist yet — selectNearbyProjects returns
+  // real recent work with exact:false so the page honestly frames it as
+  // related ("we can take on your basement"), never as basement projects.
+  const nearby = selectNearbyProjects(allProjects, 'basement', locale as Locale);
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: locale === 'zh' ? '附近地下室装修' : 'Basement Renovation Near Me', url: `/${locale}/basement-renovation-near-me/` },
@@ -75,6 +86,9 @@ export default async function Page({ params }: PageProps) {
         h1Override={isZh ? '附近地下室翻新 — Metro Vancouver' : 'Basement Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
+        variant="basement"
+        nearbyProjects={nearby.projects}
+        nearbyExact={nearby.exact}
       />
     </>
   );

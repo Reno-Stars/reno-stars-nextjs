@@ -100,6 +100,13 @@
       "subtitle": "Consulta gratuita en el hogar, cotización detallada por escrito en 2-3 días hábiles. No se requiere depósito para cotizar.",
       "quote": "Obtener mi cotización gratis",
       "call": "Llamar al 778-960-7999"
+    },
+    "nearby": {
+      "heading": "Proyectos recientes cerca de ti",
+      "subtitle": "Trabajos reales completados recientemente por nuestros propios equipos en Metro Vancouver: toca cualquier proyecto para ver fotos, alcance y presupuesto.",
+      "relatedHeading": "Proyectos de renovación recientes cerca de ti",
+      "relatedNote": "Servimos en cada vecindario de Metro Vancouver y podemos encargarnos de tu proyecto: aquí tienes trabajos recientes de nuestros equipos cerca de ti.",
+      "viewAll": "Ver todos los proyectos"
     }
   }
 }

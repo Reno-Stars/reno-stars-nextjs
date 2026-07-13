@@ -3,9 +3,10 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
-import { getServiceAreasFromDb, getCompanyFromDb } from '@/lib/db/queries';
+import { getBaseUrl, buildOgImageUrl, SITE_NAME } from '@/lib/utils';
+import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
+import { selectNearbyProjects } from '@/lib/near-me-projects';
 
 interface PageProps { params: Promise<{ locale: string }>; }
 
@@ -29,7 +30,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = buildOgImageUrl(title, description);
   return {
     title, description,
-    alternates: buildAlternates('/kitchen-renovation-near-me/', locale),
+    // SEO de-dup consolidation (near-me cluster): the 4 room-specific near-me
+    // pages are ~99.9% identical to each other AND thinner than the stronger
+    // /services/<room>/ pages. Point rel=canonical at the matching service page
+    // so the duplicate signal consolidates there, while this page still serves
+    // "kitchen renovation near me" searchers. hreflang is intentionally omitted
+    // — a page that canonicalizes away should not assert its own language
+    // cluster (the canonical target carries hreflang). The umbrella
+    // /renovation-near-me/ stays self-canonical (see its page.tsx).
+    alternates: { canonical: `${baseUrl}/${locale}/services/kitchen/` },
     openGraph: { title, description, url: `${baseUrl}/${locale}/kitchen-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
   };
 }
@@ -37,13 +46,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [nav, t, areas, company, googleReviews] = await Promise.all([
+  const [nav, t, areas, company, googleReviews, allProjects] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'nearMe' }),
     getServiceAreasFromDb(),
     getCompanyFromDb(),
     getGoogleReviews(),
+    getProjectsListFromDb(),
   ]);
+  const nearby = selectNearbyProjects(allProjects, 'kitchen', locale as Locale);
   const breadcrumbs = [
     { name: nav('home'), url: `/${locale}/` },
     { name: locale === 'zh' ? '附近厨房装修' : 'Kitchen Renovation Near Me', url: `/${locale}/kitchen-renovation-near-me/` },
@@ -75,6 +86,9 @@ export default async function Page({ params }: PageProps) {
         h1Override={isZh ? '附近厨房翻新 — Metro Vancouver' : 'Kitchen Renovation Near Me in Metro Vancouver'}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
+        variant="kitchen"
+        nearbyProjects={nearby.projects}
+        nearbyExact={nearby.exact}
       />
     </>
   );
