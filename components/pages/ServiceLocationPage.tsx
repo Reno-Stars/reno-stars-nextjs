@@ -23,8 +23,8 @@ import StickyComboCta from '@/components/StickyComboCta';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
-import { renderProseHtml } from '@/lib/markdown-html';
-import { renderProseChips } from '@/lib/prose-chips';
+import { renderProseHtml, normalizeInternalLinks } from '@/lib/markdown-html';
+import { renderProseChips, PROSE_CHIP_CONTENT_CLASSES } from '@/lib/prose-chips';
 import {
   extractServiceCitySlice,
   firstParagraph,
@@ -198,6 +198,19 @@ export default function ServiceLocationPage({
   const citySlice = useMemo(
     () => extractServiceCitySlice(localizedArea.content, serviceSlug),
     [localizedArea.content, serviceSlug],
+  );
+
+  // Rendered combo-slice HTML — marked+sanitize → locale-normalize links → chip
+  // groups. Memoized (unmemoized it re-parses the slice on every render) and
+  // keyed on the slice + locale. normalizeInternalLinks runs BEFORE
+  // renderProseChips so chip anchors carry locale-corrected hrefs: on a non-EN
+  // combo an authored /en/… link is rewritten to /<locale>/… (no 308 / no
+  // wrong-locale equity drain).
+  const citySliceHtml = useMemo(
+    () => (citySlice
+      ? renderProseChips(normalizeInternalLinks(renderProseHtml(citySlice), locale))
+      : ''),
+    [citySlice, locale],
   );
 
   // Short, real service×city intro (first paragraph of the service
@@ -418,9 +431,9 @@ export default function ServiceLocationPage({
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-3xl mx-auto">
             <div
-              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-0 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-a:text-[#C8922A] prose-a:font-medium prose-a:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-strong:text-[#1B365D]"
+              className={`${PROSE_CHIP_CONTENT_CLASSES} prose-lg prose-h2:mt-0 prose-h2:mb-4 prose-h3:mb-3`}
               style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{ __html: renderProseChips(renderProseHtml(citySlice)) }}
+              dangerouslySetInnerHTML={{ __html: citySliceHtml }}
             />
           </div>
         </section>

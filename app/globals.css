@@ -72,8 +72,15 @@
   gap: 0.5rem;
 }
 .rs-chip {
-  display: inline-flex;
-  align-items: center;
+  /* inline-block (not inline-flex) so a single long link title truncates with
+     an ellipsis rather than ballooning into an oversized full-width pill. The
+     chips hold text only, so no flex alignment is needed. */
+  display: inline-block;
+  max-width: min(100%, 20rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
   padding: 0.4rem 0.85rem;
   border-radius: 9999px;
   font-size: 0.8125rem;
