@@ -129,6 +129,17 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.next());
   }
 
+  // /geoclockr/privacy is the GeoClockr privacy policy — see
+  // app/geoclockr/privacy/page.tsx. This exact URL is submitted to Google
+  // Play (App content → Privacy policy) and App Store Connect, and both
+  // re-check reachability during review. Locale-prefixing it would break
+  // the submitted URL, so skip locale routing for this path entirely.
+  // Unlike /signup this page IS indexable; it self-canonicalises to the
+  // locale-free URL.
+  if (pathname === '/geoclockr/privacy' || pathname === '/geoclockr/privacy/') {
+    return addSecurityHeaders(NextResponse.next());
+  }
+
   // Redirect non-locale paths to /en/ with 308 (permanent) so Google consolidates
   // link equity on the canonical /en/... URL instead of the bare path.
   // next-intl would handle these with a 307 (temporary), which doesn't pass equity.
