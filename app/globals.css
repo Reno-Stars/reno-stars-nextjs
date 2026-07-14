@@ -51,6 +51,49 @@
   --tw-prose-hr: #DED6CC;                    /* SURFACE_ALT */
 }
 
+/* Prose chip groups — a pipe-delimited "Label: [link] | [link] | …" list in
+   service-area / combo body content is transformed (lib/prose-chips.ts) into a
+   labelled row of neumorphic pills instead of raw blue link-soup. The group is
+   emitted with `.not-prose`, so these rules fully own the look. Colours mirror
+   lib/theme.ts. */
+.rs-chip-group {
+  margin: 1.5rem 0;
+}
+.rs-chip-group-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #1B365D;                 /* NAVY */
+}
+.rs-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.rs-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  color: #1B365D;                 /* NAVY */
+  background: #EDE8E1;            /* CARD */
+  border: 1px solid rgba(27, 54, 93, 0.10);   /* NAVY @ 10% */
+  box-shadow: 3px 3px 6px #c4bbb0, -3px -3px 6px #faf5ee;   /* neu(3): SH_DARK / SH_LIGHT */
+  transition: color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.rs-chip:hover,
+.rs-chip:focus-visible {
+  color: #C8922A;                 /* GOLD */
+  border-color: rgba(200, 146, 42, 0.55);      /* GOLD @ 55% */
+  box-shadow: inset 2px 2px 5px #c4bbb0, inset -2px -2px 5px #faf5ee;  /* neuIn: pressed pill */
+  outline: none;
+}
+
 /* Swipe hint: pulse twice then fade out (single keyframe avoids timing gaps) */
 @keyframes swipe-hint {
   0%   { opacity: 0.5; }
