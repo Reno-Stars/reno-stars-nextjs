@@ -24,6 +24,7 @@ import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
 import { renderProseHtml } from '@/lib/markdown-html';
+import { renderProseChips } from '@/lib/prose-chips';
 import {
   extractServiceCitySlice,
   firstParagraph,
@@ -417,9 +418,9 @@ export default function ServiceLocationPage({
         <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
           <div className="max-w-3xl mx-auto">
             <div
-              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-0 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-strong:text-[#1B365D]"
+              className="prose prose-lg max-w-none prose-headings:text-[#1B365D] prose-h2:text-2xl prose-h2:mt-0 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:leading-relaxed prose-li:my-1 prose-a:text-[#C8922A] prose-a:font-medium prose-a:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-strong:text-[#1B365D]"
               style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{ __html: renderProseHtml(citySlice) }}
+              dangerouslySetInnerHTML={{ __html: renderProseChips(renderProseHtml(citySlice)) }}
             />
           </div>
         </section>

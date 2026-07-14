@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { Marked } from 'marked';
 import OptimizedImage from '@/components/OptimizedImage';
+import { renderProseChips } from '@/lib/prose-chips';
 
 // Shared markdown renderer for service-area body content.
 // Area page content uses ## headings, **bold**, and [links]() throughout.
@@ -372,15 +373,17 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           <div className="max-w-3xl mx-auto">
             <h2 className="sr-only">{t('areas.aboutArea', { area: localizedArea.name })}</h2>
             {/* Markdown-rendered content: ## headings → <h2>, **bold** → <strong>,
-                [links]() → <a>, - list items → <ul><li>. Sanitized for XSS safety. */}
+                [links]() → <a>, - list items → <ul><li>. Sanitized for XSS safety,
+                then renderProseChips turns inline "Label: [link] | [link] | …"
+                lists into styled chip groups (shared with the combo slice). */}
             <div
-              className="prose prose-base max-w-none prose-headings:text-xl prose-headings:font-semibold prose-headings:mt-6 prose-headings:mb-2 prose-a:text-blue-700 prose-strong:font-semibold"
+              className="prose prose-base max-w-none prose-headings:text-[#1B365D] prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-2 prose-p:leading-relaxed prose-li:my-1 prose-a:text-[#C8922A] prose-a:font-medium prose-a:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-strong:text-[#1B365D] prose-strong:font-semibold"
               style={{ color: TEXT_MID }}
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(
+                __html: renderProseChips(sanitizeHtml(
                   areaContentRenderer.parse(localizedArea.content) as string,
                   AREA_SANITIZE_OPTIONS,
-                ),
+                )),
               }}
             />
           </div>
