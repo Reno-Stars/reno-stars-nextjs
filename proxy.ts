@@ -129,8 +129,11 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.next());
   }
 
-  // /geoclockr/privacy is the GeoClockr privacy policy — see
-  // app/geoclockr/privacy/page.tsx. This exact URL is submitted to Google
+  // /geoclockr/privacy is the Reno Stars Companion privacy policy — see
+  // app/geoclockr/privacy/page.tsx. The `geoclockr` path segment predates the
+  // rename and is deliberately kept: the URL is already submitted to the
+  // stores, and the Android package (com.geoclockr.mobile) is permanent
+  // anyway. This exact URL is submitted to Google
   // Play (App content → Privacy policy) and App Store Connect, and both
   // re-check reachability during review. Locale-prefixing it would break
   // the submitted URL, so skip locale routing for this path entirely.
