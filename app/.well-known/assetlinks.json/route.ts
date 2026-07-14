@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
  * Digital Asset Links — Android App Links verification.
  *
  * Served at /.well-known/assetlinks.json. Android's verifier fetches this
- * when the GeoClockr app declares an autoVerify intent filter for
+ * when the Reno Stars Companion app declares an autoVerify intent filter for
  * www.reno-stars.com/signup (app.json → android.intentFilters). When the
  * package + a signing fingerprint here match the installed app, tapping a
  * matching link from Gmail / a browser opens the app directly instead of

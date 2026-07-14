@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 
 /**
- * GeoClockr invite landing.
+ * Reno Stars Companion invite landing.
  *
  * The mobile app (https://github.com/Reno-Stars/geo-clockr)'s
  * `send-invite` edge function generates accept URLs like
  * `https://www.reno-stars.com/signup?invite=<token>`. Once iOS
  * Universal Links are wired (AASA file at /.well-known/apple-app-
  * site-association declares this path as app-handled), tapping the
- * link from Mail / Messages on a device with the GeoClockr app
+ * link from Mail / Messages on a device with the Reno Stars Companion app
  * installed opens the app directly — never reaching this page.
  *
  * This page is the FALLBACK for users without the app: shows them
@@ -29,8 +29,8 @@ import type { Metadata } from 'next';
  */
 
 export const metadata: Metadata = {
-  title: 'Welcome to GeoClockr',
-  description: 'Accept your invitation to join GeoClockr.',
+  title: 'Welcome to Reno Stars Companion',
+  description: 'Accept your invitation to join Reno Stars Companion.',
   robots: { index: false, follow: false },
 };
 
@@ -68,11 +68,11 @@ export default async function InviteLandingPage({ searchParams }: PageProps) {
     >
       <div style={{ maxWidth: 420, width: '100%', textAlign: 'center' }}>
         <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 12 }}>
-          Welcome to GeoClockr
+          Welcome to Reno Stars Companion
         </h1>
         <p style={{ fontSize: 16, color: '#c7d2fe', marginBottom: 32, lineHeight: 1.5 }}>
           {looksValid
-            ? "You've been invited to join a GeoClockr team. Open the app to accept."
+            ? "You've been invited to join a Reno Stars team. Open the app to accept."
             : 'This invite link looks invalid. Ask whoever invited you to send a fresh one.'}
         </p>
 
@@ -91,7 +91,7 @@ export default async function InviteLandingPage({ searchParams }: PageProps) {
                   fontSize: 16,
                 }}
               >
-                Get GeoClockr on the App Store
+                Get Reno Stars Companion on the App Store
               </a>
               <a
                 href={PLAY_STORE_URL}
@@ -125,7 +125,7 @@ export default async function InviteLandingPage({ searchParams }: PageProps) {
               }}
             >
               <p style={{ fontSize: 14, color: '#fff', fontWeight: 600, marginBottom: 6 }}>
-                Already have GeoClockr installed?
+                Already have Reno Stars Companion installed?
               </p>
               <p style={{ fontSize: 13, color: '#c7d2fe', marginBottom: 10, lineHeight: 1.5 }}>
                 In the app, tap <strong>“Have an invite code?”</strong> and paste this code (or paste

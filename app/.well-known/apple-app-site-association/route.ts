@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
  * Apple App Site Association (AASA) — Universal Links.
  *
  * Served at /.well-known/apple-app-site-association with no extension.
- * Apple's swcd fetches this when the GeoClockr iOS app is installed and
+ * Apple's swcd fetches this when the Reno Stars Companion iOS app is installed and
  * caches it; tapping a matching URL from Mail / Messages opens the app
  * directly instead of Safari + the /signup fallback page.
  *
