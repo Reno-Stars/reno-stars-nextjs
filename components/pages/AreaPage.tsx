@@ -4,7 +4,8 @@ import { useMemo } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { Marked } from 'marked';
 import OptimizedImage from '@/components/OptimizedImage';
-import { renderProseChips } from '@/lib/prose-chips';
+import { renderProseChips, PROSE_CHIP_CONTENT_CLASSES } from '@/lib/prose-chips';
+import { normalizeInternalLinks } from '@/lib/markdown-html';
 
 // Shared markdown renderer for service-area body content.
 // Area page content uses ## headings, **bold**, and [links]() throughout.
@@ -75,6 +76,27 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
   const citySlug = area.slug;
 
   const localizedArea = useMemo(() => getLocalizedArea(area, locale), [area, locale]);
+
+  // Body content HTML — marked → sanitize → locale-normalize links → chip
+  // groups. Memoized (the pipeline parses/sanitizes 1000-1900 words) and keyed
+  // on the content + locale. normalizeInternalLinks runs BEFORE renderProseChips
+  // so the chip anchors carry locale-corrected hrefs (on a non-EN page an
+  // authored /en/… link is rewritten to /<locale>/…, avoiding a 308 + equity
+  // drain — same fix blog content already uses).
+  const areaContentHtml = useMemo(
+    () => (localizedArea.content
+      ? renderProseChips(
+          normalizeInternalLinks(
+            sanitizeHtml(
+              areaContentRenderer.parse(localizedArea.content) as string,
+              AREA_SANITIZE_OPTIONS,
+            ),
+            locale,
+          ),
+        )
+      : ''),
+    [localizedArea.content, locale],
+  );
 
   // Localize FAQs for the FaqSection component
   const localizedFaqs = useMemo(
@@ -377,14 +399,9 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
                 then renderProseChips turns inline "Label: [link] | [link] | …"
                 lists into styled chip groups (shared with the combo slice). */}
             <div
-              className="prose prose-base max-w-none prose-headings:text-[#1B365D] prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-2 prose-p:leading-relaxed prose-li:my-1 prose-a:text-[#C8922A] prose-a:font-medium prose-a:underline prose-a:decoration-1 prose-a:underline-offset-2 prose-strong:text-[#1B365D] prose-strong:font-semibold"
+              className={`${PROSE_CHIP_CONTENT_CLASSES} prose-base prose-headings:font-semibold prose-h2:mt-8 prose-h2:mb-3 prose-h3:mb-2 prose-strong:font-semibold`}
               style={{ color: TEXT_MID }}
-              dangerouslySetInnerHTML={{
-                __html: renderProseChips(sanitizeHtml(
-                  areaContentRenderer.parse(localizedArea.content) as string,
-                  AREA_SANITIZE_OPTIONS,
-                )),
-              }}
+              dangerouslySetInnerHTML={{ __html: areaContentHtml }}
             />
           </div>
         </section>

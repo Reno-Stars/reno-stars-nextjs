@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderProseChips } from '@/lib/prose-chips';
-import { renderProseHtml } from '@/lib/markdown-html';
+import { renderProseHtml, normalizeInternalLinks } from '@/lib/markdown-html';
 
 const link = (href: string, text: string) => `<a href="${href}">${text}</a>`;
 
@@ -26,13 +26,24 @@ describe('renderProseChips', () => {
     expect(out).toContain('href="/zh/services/kitchen/vancouver/?x=1#f"');
   });
 
-  it('reads a bold/strong-wrapped label and drops the emphasis tag', () => {
+  it('reads a bold/strong-wrapped label and preserves its emphasis', () => {
     const html = `<p><strong>Our Vancouver renovation services:</strong> ${link('/en/services/kitchen/vancouver/', 'Kitchen')} | ${link('/en/services/bathroom/vancouver/', 'Bathroom')}</p>`;
     const out = renderProseChips(html);
-    expect(out).toContain('<span class="rs-chip-group-label">Our Vancouver renovation services:</span>');
-    // the <strong> wrapper is not carried into the label
-    expect(out).not.toContain('<strong>Our Vancouver');
+    // the <strong> emphasis is carried into the label (not dropped)
+    expect(out).toContain('<span class="rs-chip-group-label"><strong>Our Vancouver renovation services:</strong></span>');
     expect(out.match(/class="rs-chip"/g)).toHaveLength(2);
+  });
+
+  it('preserves an <em> label emphasis too', () => {
+    const html = `<p><em>Featured:</em> ${link('/en/p/1/', '1')} | ${link('/en/p/2/', '2')}</p>`;
+    const out = renderProseChips(html);
+    expect(out).toContain('<span class="rs-chip-group-label"><em>Featured:</em></span>');
+  });
+
+  it('reads a plain (unwrapped) label with no added emphasis', () => {
+    const html = `<p>Guides: ${link('/en/a/', 'A')} | ${link('/en/b/', 'B')}</p>`;
+    const out = renderProseChips(html);
+    expect(out).toContain('<span class="rs-chip-group-label">Guides:</span>');
   });
 
   it('leaves a single-link labelled paragraph inline', () => {
@@ -97,5 +108,50 @@ describe('renderProseChips', () => {
     expect(out.match(/class="rs-chip"/g)).toHaveLength(3);
     expect(out).toContain('href="/en/guides/kitchen/"');
     expect(out).not.toContain(' | ');
+  });
+
+  // Finding 1 — the combo/area render path locale-normalizes the chip anchors
+  // BEFORE chipping, so a zh page rewrites authored /en/… links to /zh/… (no
+  // 308 redirect, no wrong-locale equity drain). Mirrors the real pipeline order
+  // renderProseChips(normalizeInternalLinks(renderProseHtml(slice), locale)).
+  it('locale-normalizes chip anchor hrefs before chipping (zh page rewrites /en → /zh)', () => {
+    const md = 'Related cost guides: [Kitchen costs](/en/guides/kitchen/) | [Bathroom costs](/en/guides/bath/) | [Basement costs](/en/guides/basement/)';
+    const out = renderProseChips(normalizeInternalLinks(renderProseHtml(md), 'zh'));
+    expect(out).toContain('rs-chip-group');
+    expect(out.match(/class="rs-chip"/g)).toHaveLength(3);
+    // every authored /en/… link is now /zh/… on the CHIP anchors
+    expect(out).toContain('href="/zh/guides/kitchen/"');
+    expect(out).toContain('href="/zh/guides/bath/"');
+    expect(out).toContain('href="/zh/guides/basement/"');
+    expect(out).not.toContain('href="/en/guides/');
+  });
+
+  // Finding 4 — merge rs-chip into a pre-existing class attribute rather than
+  // emitting a second, invalid `class=` attribute.
+  it('merges rs-chip into a pre-existing class attribute (no double class=)', () => {
+    const html = `<p>Guides: <a href="/en/a/" class="foo">A</a> | <a href="/en/b/" class="bar baz">B</a></p>`;
+    const out = renderProseChips(html);
+    expect(out).toContain('class="foo rs-chip"');
+    expect(out).toContain('class="bar baz rs-chip"');
+    // no anchor carries two separate class attributes
+    expect(out).not.toMatch(/<a\b[^>]*\sclass="[^"]*"[^>]*\sclass="/i);
+  });
+
+  // Finding 5 — a pathologically long piped list (past the anchor-count guard)
+  // is left inline instead of being fed to the tempered-greedy LINK_LIST_RE.
+  it('bails to inline for a list past the anchor-count guard (ReDoS guard)', () => {
+    const many = Array.from({ length: 25 }, (_, i) => link(`/en/g/${i}/`, `G${i}`)).join(' | ');
+    const html = `<p>Guides: ${many}</p>`;
+    const out = renderProseChips(html);
+    expect(out).toBe(html);
+    expect(out).not.toContain('rs-chip-group');
+  });
+
+  it('still chips a normal-sized list right under the guard bounds', () => {
+    const some = Array.from({ length: 6 }, (_, i) => link(`/en/g/${i}/`, `G${i}`)).join(' | ');
+    const html = `<p>Guides: ${some}</p>`;
+    const out = renderProseChips(html);
+    expect(out).toContain('rs-chip-group');
+    expect(out.match(/class="rs-chip"/g)).toHaveLength(6);
   });
 });
