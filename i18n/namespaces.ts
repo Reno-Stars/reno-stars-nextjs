@@ -41,6 +41,7 @@ export const namespaces = [
   'section',
   'serviceBenefits',
   'services',
+  'share',
   'showroomPage',
   'stats',
   'wholeHouse',

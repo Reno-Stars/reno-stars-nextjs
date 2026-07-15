@@ -220,12 +220,61 @@ The pure core carries the weight.
 
 ## Dependencies
 
-- **`qrcode`** (new, ~20KB) — dynamic-imported inside `WeChatQrModal` only, so
-  it never enters the main bundle.
+- **`qrcode`** (new, ~20KB) + `@types/qrcode` — dynamic-imported inside
+  `WeChatQrModal` only, so it never enters the main bundle. The ONLY runtime
+  dependency this feature adds.
 - No `react-share`. It has no WeChat QR or Weibo, no locale logic, ships icons
   that clash with the design system, and would need wrapping anyway.
+
+### Icons are vendored, not depended on
+
+`components/share/ShareIcons.tsx` is generated, holding real path data copied in
+at author time:
+
+- **17 brand marks** from `simple-icons` v16.26.0 (paths are CC0-1.0).
+  Vendored rather than imported: the package ships 3,449 icons in one ESM
+  module, and while it declares `sideEffects: false`, vendoring means a
+  tree-shaking regression can never drag them into the bundle.
+- **LinkedIn** from `bootstrap-icons` v1.13.1 (MIT) — simple-icons removed
+  LinkedIn on trademark request. `lucide-react`'s `Linkedin` was tried first and
+  rejected: it is a stroked outline glyph, and at 10x zoom it read as a visibly
+  different icon family beside the filled brand marks. NOTE its viewBox is
+  16x16, not 24x24.
+- **Non-brand marks** (Email, Copy, Share, SMS, QR, Check) from `lucide-react`,
+  already a project dependency.
+
+Both icon packages were installed, extracted from, and removed. Neither appears
+in `package.json`.
+
+> The X mark renders as a thin, hollow X rather than a solid one. This was
+> checked against `simple-icons`' own `x.svg` rendered untouched in Chrome — the
+> path is byte-identical and the render is pixel-identical. It is the canonical
+> asset, not a defect.
+
+## Verified
+
+Checked on a real dev render (port 3010; prod untouched on :3000) against
+`/blog/3-piece-vs-4-piece-bathroom-renovation-cost-vancouver-2026/`:
+
+- Share row + rail server-render with real `<a href>`s — works with JS disabled.
+- Locale-aware resolution is real: zh → 微信/微博/QQ空间, ru → Telegram/VK,
+  ja → LINE first.
+- Rail hidden at 1279px, visible at 1280px with 164px of clearance from the
+  article; self-limits to 400px tall on a 500px viewport.
+- Mobile (390px): rail absent, exactly 5 buttons + "+9 more".
+- WeChat QR **decoded with a real decoder** → resolves to the zh canonical with
+  `utm_source=wechat`. Esc closes the modal.
+- Copy link writes the **clean** canonical to the clipboard — no UTM.
+- 93 new unit tests; full suite 868 passing; 0 type errors; 0 lint errors.
+
+**Not verified: `pnpm build`.** Production `next start` runs out of this very
+directory (launchd `com.renostars.reno-stars-web`), so building here would swap
+`.next` out from under the live site. The production build must happen through
+the normal deploy flow, on merged code.
 
 ## Follow-ups
 
 - KakaoTalk via Kakao JS SDK (needs app key + domain registration).
 - Share bar on service / area pages (one-line change once this lands).
+- Spot-check the 11 machine-generated locale label files (en + zh + zh-Hant were
+  hand-written).

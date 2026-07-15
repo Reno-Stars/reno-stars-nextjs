@@ -16,6 +16,8 @@ import VerifiedGoogleReviews from '@/components/projects/VerifiedGoogleReviews';
 import ProjectFullscreenOverlay from '@/components/projects/ProjectFullscreenOverlay';
 import type { ProjectReviewDisplay } from '@/lib/project-reviews';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
+import ShareBar from '@/components/share/ShareBar';
+import type { ShareContext } from '@/lib/share/types';
 import { useDragScroll } from '@/hooks/useDragScroll';
 import { useFullscreenModal } from '@/hooks/useFullscreenModal';
 import {
@@ -32,12 +34,15 @@ interface ProjectDetailPageProps {
   serviceTypeName?: string;
   /** Verified client reviews linked to this project (verbatim quotes). */
   reviews?: ProjectReviewDisplay[];
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
 /** Minimum swipe distance in pixels to trigger navigation */
 const SWIPE_THRESHOLD = 50;
 
-export default function ProjectDetailPage({ locale, project, relatedProjects, company, serviceType, serviceTypeName, reviews = [] }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({ locale, project, relatedProjects, company, serviceType, serviceTypeName, reviews = [], share }: ProjectDetailPageProps) {
   const t = useTranslations();
   const localizedProject = useMemo(() => getLocalizedProject(project, locale), [project, locale]);
 
@@ -668,6 +673,14 @@ export default function ProjectDetailPage({ locale, project, relatedProjects, co
                   )}
                 </div>
               )}
+
+              {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+              <ShareBar
+                locale={locale}
+                context={share}
+                contentType="project"
+                itemId={project.slug}
+              />
             </div>
           </div>
         </div>
