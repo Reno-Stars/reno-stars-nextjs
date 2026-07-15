@@ -39,7 +39,15 @@ interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-const APP_STORE_URL = 'https://apps.apple.com/app/geoclockr/id6740000000'; // TODO: replace with real App Store ID once published
+// Real App Store ID — matches `submit.production.ios.ascAppId` in the
+// geo-clockr repo's apps/mobile/eas.json, i.e. the App Store Connect app EAS
+// actually submits to. This previously pointed at a placeholder (id6740000000)
+// left behind by a TODO, so the button was a dead link for every invitee.
+// Apple ignores the slug segment; the numeric ID is what resolves.
+// Both URLs 404 until the respective app is published — that is expected.
+const APP_STORE_URL = 'https://apps.apple.com/app/id6762405634';
+// The Android package is permanent (the app is already on Play), so this URL
+// keeps saying `geoclockr` regardless of the app's display name.
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.geoclockr.mobile';
 
 export default async function InviteLandingPage({ searchParams }: PageProps) {
