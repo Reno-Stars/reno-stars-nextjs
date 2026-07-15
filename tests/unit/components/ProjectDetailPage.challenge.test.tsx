@@ -35,6 +35,11 @@ function makeProject(overrides: Partial<Project> = {}): Project {
 
 const company = { phone: '778-960-7999' } as unknown as Company;
 
+// ShareBar is a required prop of the real component and the server page always
+// supplies it, so the render under test supplies it too rather than leaning on
+// ShareBar's missing-context guard.
+const share = { url: 'https://www.reno-stars.com/en/projects/test-project/', title: 'Test Kitchen Reno' };
+
 function count(haystack: string, needle: string): number {
   return haystack.split(needle).length - 1;
 }
@@ -47,7 +52,7 @@ describe('ProjectDetailPage — Challenge/Solution single DOM copy (finding #33)
     });
 
     const html = renderToStaticMarkup(
-      <ProjectDetailPage locale="en" project={project} relatedProjects={[]} company={company} />,
+      <ProjectDetailPage locale="en" project={project} relatedProjects={[]} company={company} share={share} />,
     );
 
     // Previously duplicated across a `hidden lg:block` desktop copy + an
@@ -64,7 +69,7 @@ describe('ProjectDetailPage — Challenge/Solution single DOM copy (finding #33)
     });
 
     const html = renderToStaticMarkup(
-      <ProjectDetailPage locale="en" project={project} relatedProjects={[]} company={company} />,
+      <ProjectDetailPage locale="en" project={project} relatedProjects={[]} company={company} share={share} />,
     );
 
     expect(count(html, 'modal.challenge')).toBe(1);
@@ -73,7 +78,7 @@ describe('ProjectDetailPage — Challenge/Solution single DOM copy (finding #33)
 
   it('omits the block entirely when there is no challenge or solution', () => {
     const html = renderToStaticMarkup(
-      <ProjectDetailPage locale="en" project={makeProject()} relatedProjects={[]} company={company} />,
+      <ProjectDetailPage locale="en" project={makeProject()} relatedProjects={[]} company={company} share={share} />,
     );
 
     expect(html).not.toContain('modal.challenge');

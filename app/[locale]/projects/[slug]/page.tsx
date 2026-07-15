@@ -288,7 +288,22 @@ export default async function Page({ params }: PageProps) {
         {blockSchema.imageList && (
           <ItemListSchema items={blockSchema.imageList.items} name={blockSchema.imageList.name} description={blockSchema.imageList.description} locale={blockSchema.imageList.locale} />
         )}
-        <ProjectDetailPage locale={locale as Locale} project={project} relatedProjects={relatedProjects} company={company} serviceType={project.service_type} serviceTypeName={serviceTypeName} reviews={projectReviews} />
+        {/* Share URL derived from the canonical generateMetadata declares for
+            this same path — never rebuilt, so the two cannot drift. */}
+        <ProjectDetailPage
+          locale={locale as Locale}
+          project={project}
+          relatedProjects={relatedProjects}
+          company={company}
+          serviceType={project.service_type}
+          serviceTypeName={serviceTypeName}
+          reviews={projectReviews}
+          share={{
+            url: buildAlternates(`/projects/${slug}/`, locale).canonical,
+            title: localizedProject.title,
+            imageUrl: project.hero_image,
+          }}
+        />
       </>
     );
   }

@@ -39,6 +39,8 @@ const BLOG_SANITIZE_OPTIONS: IOptions = {
   },
 };
 import { getLocalizedBlogPost } from '@/lib/data';
+import ShareBar from '@/components/share/ShareBar';
+import type { ShareContext } from '@/lib/share/types';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import {
   GOLD, SURFACE, SURFACE_ALT, NAVY,
@@ -58,9 +60,12 @@ interface BlogPostPageProps {
   /** Live Google review count (userRatingCount) from getGoogleReviews() — never
    *  a hardcoded literal. Absent → the /reviews/ CTA renders count-free. */
   reviewCount?: number;
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
-export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount }: BlogPostPageProps) {
+export default function BlogPostPage({ locale, post, company, services = [], areas = [], reviewCount, share }: BlogPostPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const localizedPost = useMemo(() => getLocalizedBlogPost(post, locale), [post, locale]);
@@ -327,6 +332,14 @@ export default function BlogPostPage({ locale, post, company, services = [], are
                 </div>
               </div>
             </div>
+
+            {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+            <ShareBar
+              locale={locale}
+              context={share}
+              contentType="blog"
+              itemId={post.slug}
+            />
 
             {/* Back to Blog */}
             <div className="mt-6">

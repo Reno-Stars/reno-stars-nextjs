@@ -205,6 +205,11 @@ export default async function Page({ params }: PageProps) {
   // timestamp as dateModified.
   const { datePublished, dateModified } = resolveBlogDates(post);
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes.
+  const shareUrl = buildAlternates(`/blog/${slug}/`, locale).canonical;
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -232,6 +237,7 @@ export default async function Page({ params }: PageProps) {
         services={services.map((s) => { const l = getLocalizedService(s, locale as Locale); return { slug: l.slug, title: l.title }; })}
         areas={areas.map((a) => { const l = getLocalizedArea(a, locale as Locale); return { slug: l.slug, name: l.name }; })}
         reviewCount={googleReviews.userRatingCount}
+        share={{ url: shareUrl, title: localizedPost.title, imageUrl: ogImage }}
       />
     </>
   );

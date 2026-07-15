@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`platform href builders > bluesky builds a stable href 1`] = `"https://bsky.app/intent/compose?text=Kitchen%20%26%20Bath%3A%202026%20Costs%20https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > copy builds a stable href 1`] = `"https://www.reno-stars.com/en/blog/kitchen-costs/"`;
+
+exports[`platform href builders > email builds a stable href 1`] = `"mailto:?subject=Kitchen%20%26%20Bath%3A%202026%20Costs&body=Kitchen%20%26%20Bath%3A%202026%20Costs%0A%0Ahttps%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > facebook builds a stable href 1`] = `"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > line builds a stable href 1`] = `"https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > linkedin builds a stable href 1`] = `"https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > messenger builds a stable href 1`] = `"fb-messenger://share?link=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > native builds a stable href 1`] = `"https://www.reno-stars.com/en/blog/kitchen-costs/"`;
+
+exports[`platform href builders > pinterest builds a stable href 1`] = `"https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&media=https%3A%2F%2Fimg.reno-stars.com%2Fhero.webp&description=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > qzone builds a stable href 1`] = `"https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&title=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > reddit builds a stable href 1`] = `"https://www.reddit.com/submit?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&title=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > sms builds a stable href 1`] = `"sms:?&body=Kitchen%20%26%20Bath%3A%202026%20Costs%20https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > telegram builds a stable href 1`] = `"https://t.me/share/url?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&text=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > threads builds a stable href 1`] = `"https://www.threads.net/intent/post?text=Kitchen%20%26%20Bath%3A%202026%20Costs%20https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > tumblr builds a stable href 1`] = `"https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&title=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > viber builds a stable href 1`] = `"viber://forward?text=Kitchen%20%26%20Bath%3A%202026%20Costs%20https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > vk builds a stable href 1`] = `"https://vk.com/share.php?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&title=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > wechat builds a stable href 1`] = `"https://www.reno-stars.com/en/blog/kitchen-costs/"`;
+
+exports[`platform href builders > weibo builds a stable href 1`] = `"https://service.weibo.com/share/share.php?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&title=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > whatsapp builds a stable href 1`] = `"https://wa.me/?text=Kitchen%20%26%20Bath%3A%202026%20Costs%20https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
+
+exports[`platform href builders > x builds a stable href 1`] = `"https://x.com/intent/post?url=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F&text=Kitchen%20%26%20Bath%3A%202026%20Costs"`;
+
+exports[`platform href builders > zalo builds a stable href 1`] = `"https://sp.zalo.me/plugins/share?u=https%3A%2F%2Fwww.reno-stars.com%2Fen%2Fblog%2Fkitchen-costs%2F"`;
