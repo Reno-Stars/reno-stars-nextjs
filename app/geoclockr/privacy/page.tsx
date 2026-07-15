@@ -26,7 +26,7 @@ import { NAVY, TEXT_MID, SURFACE, CARD, GOLD } from '@/lib/theme';
  * users should both be able to find it.
  */
 
-const LAST_UPDATED = '14 July 2026';
+const LAST_UPDATED = '15 July 2026';
 const CONTACT_EMAIL = 'airenostars@gmail.com';
 
 export const metadata: Metadata = {
@@ -190,11 +190,26 @@ export default function RenoStarsCompanionPrivacyPage() {
           </Section>
 
           <Section title="Data retention">
+            <p className="mb-3">
+              <strong style={{ color: NAVY }}>Work records</strong> — clock events, timesheets,
+              photos, videos, and the job-site records you create — are kept for as long as your
+              employer&rsquo;s account is active, or as required for payroll and legal
+              recordkeeping.
+            </p>
+            <p className="mb-3">
+              <strong style={{ color: NAVY }}>Location history</strong> is kept for{' '}
+              <strong>90 days</strong>, then permanently deleted. We keep it that long, and no
+              longer, because it is the evidence behind the hours on your timesheet: if a shift is
+              ever questioned, it is what shows where you actually were. Your clock in/out times and
+              timesheets are separate records and are kept as described above.
+            </p>
+            <p className="mb-3">
+              <strong style={{ color: NAVY }}>Diagnostics</strong> — the technical reports the app
+              sends to keep background tracking working — are kept for 30 days.
+            </p>
             <p>
-              We keep work records (clock events, timesheets, position history, photos) for as long
-              as your employer&rsquo;s account is active, or as required for payroll and legal
-              recordkeeping. When an account or organization is deleted, associated personal data is
-              deleted or anonymized, except where retention is legally required.
+              When an account or organization is deleted, associated personal data is deleted or
+              anonymized, except where retention is legally required.
             </p>
           </Section>
 
