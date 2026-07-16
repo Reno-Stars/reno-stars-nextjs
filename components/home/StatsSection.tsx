@@ -14,7 +14,7 @@ export default function StatsSection({ stats, srTitle }: StatsSectionProps) {
         {stats.map((s) => (
           <div key={s.label} className="text-center py-2">
             {s.image && (
-              <OptimizedImage src={s.image} alt={s.label} width={100} height={28} className="h-6 w-auto object-contain mx-auto mb-1" />
+              <OptimizedImage src={s.image} alt={s.label} width={320} height={61} className="h-6 w-auto object-contain mx-auto mb-1" />
             )}
             {s.value && (
               <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
