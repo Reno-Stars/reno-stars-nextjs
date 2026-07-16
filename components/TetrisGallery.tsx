@@ -81,7 +81,11 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
         // is a role="listitem" wrapper so role="list" always has valid listitem
         // children (previously the linked <a> cells sat directly under role="list",
         // failing the "list must contain listitems" a11y/agentic-browsing audit).
-        const innerClassName = `${layout.aspect} overflow-hidden relative group block ${cardClassName} ${(isInteractive || hasLink) ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`;
+        // Aspect ratio lives on the listitem wrapper (the grid item) so the cell
+        // is sized by the grid exactly as before; the inner link/div fills it with
+        // w-full h-full. Putting aspect-[2/1] on the inner block collapsed the wide
+        // col-span-2 cells to zero height (empty cards).
+        const innerClassName = `w-full h-full overflow-hidden relative group block ${cardClassName} ${(isInteractive || hasLink) ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`;
 
         const inner = hasLink ? (
           <Link href={item.href!} className={innerClassName} style={cardStyle} aria-label={altText}>
@@ -101,7 +105,7 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
         );
 
         return (
-          <div key={`${item.image}-${item.title}`} role="listitem" className={layout.col}>
+          <div key={`${item.image}-${item.title}`} role="listitem" className={`${layout.col} ${layout.aspect}`}>
             {inner}
           </div>
         );
