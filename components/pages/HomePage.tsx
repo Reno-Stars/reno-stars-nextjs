@@ -1,8 +1,11 @@
 import dynamic from 'next/dynamic';
+import { preconnect, preload } from 'react-dom';
 import type { Locale } from '@/i18n/config';
 import type { Company, Service, GooglePlaceRating } from '@/lib/types';
 import type { TetrisGalleryItem } from '@/components/TetrisGallery';
 import { SURFACE } from '@/lib/theme';
+import { images } from '@/lib/data';
+import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
 
 // Server components - no client JS needed
 import HeroSection from '@/components/home/HeroSection';
@@ -114,6 +117,25 @@ export default function HomePage({
   stats,
   translations: t,
 }: HomePageProps) {
+  // LCP optimization: the hero poster is the largest contentful paint element,
+  // hosted cross-origin on R2. Without hints the browser only discovers it after
+  // parsing the body, then pays a cold DNS+TCP+TLS handshake to the R2 host —
+  // together ~585ms load-delay + a slow cross-origin "load time" (devtools-throttled
+  // trace, 2026-07-16). Preconnecting to R2 and preloading the exact same
+  // src/srcSet the <img> uses (buildProcessedUrl(...,828) + buildProcessedSrcSet)
+  // lets the download start during HTML parse on an already-warm connection —
+  // no double fetch, since the hints match the rendered <img> byte-for-byte.
+  const heroPoster = company.heroImageUrl || images.hero;
+  if (isR2Url(heroPoster)) {
+    preconnect(new URL(heroPoster).origin);
+    preload(buildProcessedUrl(heroPoster, 828), {
+      as: 'image',
+      imageSrcSet: buildProcessedSrcSet(heroPoster),
+      imageSizes: '100vw',
+      fetchPriority: 'high',
+    });
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: SURFACE }}>
       <HeroSection company={company} googleRating={googleReviews.rating} translations={t.hero} />
