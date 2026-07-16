@@ -200,8 +200,9 @@ export default function HeroSection({ company, googleRating, translations: t }: 
             {t.liabilityCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
+            {/* lazy + low priority: must not compete with the LCP hero image; CLS is prevented by the correct 320×61 intrinsic ratio, not by eager loading */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={320} height={61} loading="eager" decoding="async" className="h-4 w-auto object-contain rounded-sm shrink-0" />
+            <img src={WORKSAFE_BC_LOGO} alt="WorkSafe BC" width={320} height={61} loading="lazy" decoding="async" fetchPriority="low" className="h-4 w-auto object-contain rounded-sm shrink-0" />
             {t.wcbCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>
