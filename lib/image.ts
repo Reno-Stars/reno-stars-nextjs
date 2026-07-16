@@ -117,6 +117,46 @@ export const ALLOWED_IMAGE_HOSTS: readonly string[] = [
   'lh3.googleusercontent.com',
 ];
 
+/** Optimized display props for a fixed-size <img>: src + optional srcSet/sizes. */
+export interface DisplayVariant {
+  src: string;
+  srcSet?: string;
+  sizes?: string;
+}
+
+/**
+ * Build src/srcSet/sizes for a small fixed-display-size <img> (review avatars,
+ * partner logos): routes allowed-host images through the WebP optimizer at two
+ * widths (1x/2x of the display size) so they ship as a few-KB WebP with a 1-yr
+ * immutable cache instead of the raw uncached original. Returns the raw src
+ * unchanged for malformed URLs, non-allowlisted hosts, and — when
+ * svgPassthrough is set — .svg paths (vector, already tiny; sharp would
+ * rasterize them). SSOT consumed by GoogleAvatar and PartnersSection so the
+ * allowlist/fallback logic can't drift between them.
+ */
+export function buildDisplayVariant(src: string, opts: {
+  widths: [number, number];
+  sizes: string;
+  quality?: number;
+  svgPassthrough?: boolean;
+}): DisplayVariant {
+  let parsed: URL;
+  try {
+    parsed = new URL(src);
+  } catch {
+    return { src }; // malformed URL — use raw
+  }
+  if (opts.svgPassthrough && parsed.pathname.toLowerCase().endsWith('.svg')) return { src };
+  if (!ALLOWED_IMAGE_HOSTS.includes(parsed.hostname)) return { src };
+  const quality = opts.quality ?? DEFAULT_QUALITY;
+  const [w1, w2] = opts.widths;
+  return {
+    src: buildOptimizedUrl(src, w2, quality),
+    srcSet: `${buildOptimizedUrl(src, w1, quality)} ${w1}w, ${buildOptimizedUrl(src, w2, quality)} ${w2}w`,
+    sizes: opts.sizes,
+  };
+}
+
 /**
  * Rewrite in-content `<img>` srcs (raw-HTML blog/service/area bodies) to the WebP
  * optimizer. Content HTML is injected via dangerouslySetInnerHTML, so its images
