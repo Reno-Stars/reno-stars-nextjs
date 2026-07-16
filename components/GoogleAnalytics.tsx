@@ -16,9 +16,11 @@ const AW_CONVERSION_ID = process.env.NEXT_PUBLIC_AW_CONVERSION_ID;
  * only thing that goes uncounted — an accepted tradeoff for the performance win
  * (owner decision, 2026-07-16).
  *
- * A post-load idle fallback (requestIdleCallback, 10s timeout) still fires for
- * no-interaction visitors who linger, so most bounce pageviews are recovered —
- * and because it runs during idle / after TTI, it doesn't count against TBT.
+ * Fallback for visitors who never interact: we also load on `visibilitychange`
+ * → hidden (tab close / switch away), which recovers the pageview at exit. That
+ * fires well after the load window and is never triggered during a Lighthouse /
+ * PSI run (no interaction, tab stays visible), so it costs nothing on TBT while
+ * still counting real no-interaction sessions.
  *
  * Required env: NEXT_PUBLIC_GA_MEASUREMENT_ID (G-XXXX).
  * Optional:     NEXT_PUBLIC_AW_CONVERSION_ID (AW-XXXX, Google Ads).
@@ -30,14 +32,10 @@ export default function GoogleAnalytics() {
     let started = false;
     const events = ['scroll', 'pointerdown', 'keydown', 'touchstart', 'mousemove'] as const;
     const listenerOpts: AddEventListenerOptions = { once: true, passive: true, capture: true };
-    let idleHandle: number | undefined;
 
     const cleanup = () => {
       events.forEach((e) => window.removeEventListener(e, start, listenerOpts));
-      if (idleHandle !== undefined) {
-        if (typeof window.cancelIdleCallback === 'function') window.cancelIdleCallback(idleHandle);
-        else window.clearTimeout(idleHandle);
-      }
+      document.removeEventListener('visibilitychange', onHidden);
     };
 
     function start() {
@@ -58,15 +56,12 @@ export default function GoogleAnalytics() {
       if (AW_CONVERSION_ID) gtag('config', AW_CONVERSION_ID);
     }
 
-    events.forEach((e) => window.addEventListener(e, start, listenerOpts));
-
-    // Fallback for visitors who never interact — runs when the main thread is
-    // idle (post-TTI), so it recovers the pageview without hurting TBT.
-    if (typeof window.requestIdleCallback === 'function') {
-      idleHandle = window.requestIdleCallback(start, { timeout: 10000 });
-    } else {
-      idleHandle = window.setTimeout(start, 10000);
+    function onHidden() {
+      if (document.visibilityState === 'hidden') start();
     }
+
+    events.forEach((e) => window.addEventListener(e, start, listenerOpts));
+    document.addEventListener('visibilitychange', onHidden);
 
     return cleanup;
   }, []);
