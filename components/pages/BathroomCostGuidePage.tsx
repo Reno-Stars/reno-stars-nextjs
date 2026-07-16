@@ -14,7 +14,7 @@ import type { ShareContext } from '@/lib/share/types';
 import CTASection from '@/components/CTASection';
 import ShareBar from '@/components/share/ShareBar';
 import {
-  NAVY, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
+  NAVY, NAVY_PALE, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
@@ -231,7 +231,7 @@ export default function BathroomCostGuidePage({ locale, projects, phone, share }
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <p className="font-bold text-lg text-white">{t('inlineCta.heading')}</p>
-            <p className="text-sm mt-1" style={{ color: GOLD }}>{t('inlineCta.sub')}</p>
+            <p className="text-sm mt-1" style={{ color: GOLD_ON_DARK }}>{t('inlineCta.sub')}</p>
           </div>
           <Link
             href="/contact"

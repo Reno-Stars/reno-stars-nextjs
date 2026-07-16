@@ -23,7 +23,7 @@ import StickyComboCta from '@/components/StickyComboCta';
 import ShareBar from '@/components/share/ShareBar';
 import type { ShareContext } from '@/lib/share/types';
 import {
-  NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
+  NAVY, GOLD, GOLD_ON_DARK, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
 import { renderProseHtml, normalizeInternalLinks } from '@/lib/markdown-html';
 import { renderProseChips, PROSE_CHIP_CONTENT_CLASSES } from '@/lib/prose-chips';
@@ -345,8 +345,8 @@ export default function ServiceLocationPage({
             { label: localizedArea.name },
           ]} />
           <div className="flex items-center gap-2 mb-4">
-            <MapPin className="w-5 h-5" style={{ color: GOLD }} />
-            <span className="text-sm font-medium" style={{ color: GOLD }}>{localizedArea.name}</span>
+            <MapPin className="w-5 h-5" style={{ color: GOLD_ON_DARK }} />
+            <span className="text-sm font-medium" style={{ color: GOLD_ON_DARK }}>{localizedArea.name}</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {title}

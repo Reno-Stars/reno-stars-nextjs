@@ -17,7 +17,7 @@ import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD,
+  NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT, CARD,
   TEXT, TEXT_MID, TEXT_MUTED, neu,
 } from '@/lib/theme';
 
@@ -603,7 +603,7 @@ export default function ProjectsPage({ locale, company, projects: rawProjects, s
                           {categoryProjects.length} {t('filter.projects', { count: categoryProjects.length })}
                         </span>
                         {isActive && (
-                          <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD }} />
+                          <div className="w-8 h-0.5 rounded-full mt-2" style={{ backgroundColor: GOLD_ON_DARK }} />
                         )}
                       </div>
                     </div>

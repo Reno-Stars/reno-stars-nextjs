@@ -7,7 +7,7 @@ import type { Company } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import BenefitList from '@/components/BenefitList';
 import {
-  NAVY, NAVY_MID, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  NAVY, NAVY_MID, NAVY_PALE, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT,
   STEP_ORANGE, STEP_ORANGE_LIGHT,
@@ -133,7 +133,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
                   <div className="flex items-center gap-2">
                     <div className="flex gap-0.5 sm:gap-1">
                       {[0, 1, 2, 3, 4].map((i) => (
-                        <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: GOLD, color: GOLD }} />
+                        <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5" style={{ fill: GOLD_ON_DARK, color: GOLD_ON_DARK }} />
                       ))}
                     </div>
                     <span className="text-white/80 text-sm sm:text-base">{badge.label}</span>
@@ -141,7 +141,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
                 ) : (
                   <div className="flex items-center gap-2">
                     {badge.value && (
-                      <span className="font-semibold text-base sm:text-lg" style={{ color: GOLD }}>
+                      <span className="font-semibold text-base sm:text-lg" style={{ color: GOLD_ON_DARK }}>
                         {badge.value}
                       </span>
                     )}
@@ -211,7 +211,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold mb-1" style={{ color: GOLD }}>
+              <div className="text-3xl md:text-4xl font-bold mb-1" style={{ color: GOLD_ON_DARK }}>
                 {stat.value}
               </div>
               <div className="text-sm sm:text-base text-white/80">{stat.label}</div>
@@ -220,7 +220,7 @@ export default function BenefitsPage({ company }: BenefitsPageProps) {
           <div className="text-center col-span-2 md:col-span-1">
             <div className="flex justify-center gap-1 mb-1" role="img" aria-label={`5/5 ${t('stats.rating')}`}>
               {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="w-7 h-7 md:w-8 md:h-8" style={{ fill: GOLD, color: GOLD }} />
+                <Star key={i} className="w-7 h-7 md:w-8 md:h-8" style={{ fill: GOLD_ON_DARK, color: GOLD_ON_DARK }} />
               ))}
             </div>
             <div className="text-sm sm:text-base text-white/80">{t('stats.rating')}</div>

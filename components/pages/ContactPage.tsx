@@ -11,7 +11,7 @@ import ContactForm from '@/components/ContactForm';
 import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
-  CARD, TEXT, TEXT_MID, GOLD, neu,
+  CARD, TEXT, TEXT_MID, GOLD, GOLD_ON_DARK, neu,
 } from '@/lib/theme';
 
 /** Form dropdown option populated from the DB (service_areas / property_types). */
@@ -85,7 +85,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
                 className="flex items-center gap-2 px-4 py-2 rounded-full"
                 style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
               >
-                <Shield className="w-5 h-5" style={{ color: GOLD }} />
+                <Shield className="w-5 h-5" style={{ color: GOLD_ON_DARK }} />
                 <span className="text-base font-medium text-white/90">{badge.label}</span>
               </div>
             ))}
@@ -96,7 +96,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
               aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}
             >
               {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="w-4 h-4" style={{ fill: GOLD, color: GOLD }} />
+                <Star key={i} className="w-4 h-4" style={{ fill: GOLD_ON_DARK, color: GOLD_ON_DARK }} />
               ))}
               <span className="text-base font-medium text-white/90">{googleRating ? `${googleRating} ${t('stats.rating')}` : t('stats.rating')}</span>
             </div>
@@ -259,7 +259,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {stats.map((s) => (
             <div key={s.label} className="text-center py-2">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD }}>{s.value}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: GOLD_ON_DARK }}>{s.value}</div>
               <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
             </div>
           ))}

@@ -11,7 +11,7 @@ import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 
 import {
-  NAVY, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
+  NAVY, NAVY_PALE, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, CARD, TEXT, TEXT_MID, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
   STEP_GREEN, STEP_GREEN_LIGHT,
 } from '@/lib/theme';
@@ -292,7 +292,7 @@ export default function AboutPage({ locale, company, badges }: AboutPageProps) {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">{t('philosophy.title')}</h2>
           <p className="text-base mb-6 text-white/70">{t('philosophy.lead')}</p>
-          <blockquote className="text-xl md:text-2xl font-bold mb-6" style={{ color: GOLD }}>
+          <blockquote className="text-xl md:text-2xl font-bold mb-6" style={{ color: GOLD_ON_DARK }}>
             {t('philosophy.quote')}
           </blockquote>
           <p className="text-base text-white/70">{t('philosophy.closing')}</p>

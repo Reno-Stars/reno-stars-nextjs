@@ -1,7 +1,7 @@
 import type { Locale } from '@/i18n/config';
 import OptimizedImage from '@/components/OptimizedImage';
 import { WECHAT_ID, brandDisplay, COMPANY_STATS } from '@/lib/company-config';
-import { NAVY, GOLD, GOLD_PALE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+import { NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 
 /**
  * Chinese-market trust signals (competitor audit C3, 2026-07-10).
@@ -83,7 +83,7 @@ export default function ZhTrustLine({ locale, rating }: ZhTrustLineProps) {
   return (
     <section aria-label={line} className="py-3 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
       <p className="max-w-7xl mx-auto text-center text-sm sm:text-base font-semibold tracking-wide text-white/95">
-        <span aria-hidden className="mr-2" style={{ color: GOLD }}>✓</span>
+        <span aria-hidden className="mr-2" style={{ color: GOLD_ON_DARK }}>✓</span>
         {line}
       </p>
     </section>

@@ -10,7 +10,7 @@ import type { Company, BlogPost } from '@/lib/types';
 import { pickLocale, pickLocaleOptional } from '@/lib/utils';
 import CTASection from '@/components/CTASection';
 import {
-  NAVY, GOLD, SURFACE,
+  NAVY, GOLD, GOLD_ON_DARK, SURFACE,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu, SURFACE_ALT,
 } from '@/lib/theme';
 
@@ -86,7 +86,7 @@ export default function BlogPage({
       <section className="py-10 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4" style={{ backgroundColor: `${GOLD}20` }}>
-            <BookOpen className="w-6 h-6" style={{ color: GOLD }} />
+            <BookOpen className="w-6 h-6" style={{ color: GOLD_ON_DARK }} />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             {t('blog.title')}
@@ -95,7 +95,7 @@ export default function BlogPage({
             {t('blog.subtitle')}
           </p>
           {totalCount > 0 && (
-            <span className="inline-block text-xs font-medium px-3 py-1 rounded-full" style={{ color: GOLD, backgroundColor: `${GOLD}15`, border: `1px solid ${GOLD}30` }}>
+            <span className="inline-block text-xs font-medium px-3 py-1 rounded-full" style={{ color: GOLD_ON_DARK, backgroundColor: `${GOLD}15`, border: `1px solid ${GOLD_ON_DARK}30` }}>
               {totalCount} {locale === 'zh' ? '篇文章' : totalCount === 1 ? 'Article' : 'Articles'}
             </span>
           )}

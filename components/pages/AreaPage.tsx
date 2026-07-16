@@ -39,7 +39,7 @@ import FaqSection from '@/components/home/FaqSection';
 import ShareBar from '@/components/share/ShareBar';
 import type { ShareContext } from '@/lib/share/types';
 import {
-  NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
+  NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
 } from '@/lib/theme';
 import { CITY_BLOG_CLUSTERS, CITY_NEIGHBOURHOODS } from '@/components/areas/areaPageData';
@@ -249,8 +249,8 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
             { label: localizedArea.name },
           ]} />
           <div className="flex items-center gap-3 mb-4">
-            <MapPin className="w-6 h-6" style={{ color: GOLD }} />
-            <span className="text-lg font-medium" style={{ color: GOLD }}>{localizedArea.name}</span>
+            <MapPin className="w-6 h-6" style={{ color: GOLD_ON_DARK }} />
+            <span className="text-lg font-medium" style={{ color: GOLD_ON_DARK }}>{localizedArea.name}</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {h1Override || t('areas.servingIn', { city: localizedArea.name })}

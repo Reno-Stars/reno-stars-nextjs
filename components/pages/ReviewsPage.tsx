@@ -7,7 +7,7 @@ import type { Locale, Company, GoogleReview, GooglePlaceRating } from "@/lib/typ
 import CTASection from "@/components/CTASection";
 import GoogleAvatar from "@/components/home/GoogleAvatar";
 import GoogleIcon from "@/components/reviews/GoogleIcon";
-import { NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
+import { NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from "@/lib/theme";
 import { GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL } from "@/lib/company-config";
 import { relativeGoogleReviewTime } from "@/lib/project-reviews";
 import type { HubDisplayReview } from "@/components/reviews/ReviewsGroupSection";
@@ -33,12 +33,14 @@ const READ_ALL_GOOGLE_LABELS: Record<string, string> = {
   vi: "Đọc tất cả {count} đánh giá trên Google",
 };
 
-function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "lg" }) {
+function StarRating({ rating, size = "sm", onDark = false }: { rating: number; size?: "sm" | "lg"; onDark?: boolean }) {
   const iconSize = size === "lg" ? "w-6 h-6" : "w-4 h-4";
+  // On the navy hero the darker GOLD would nearly vanish — use the bright variant.
+  const filled = onDark ? GOLD_ON_DARK : GOLD;
   return (
     <div className="flex gap-0.5" role="img" aria-label={`${rating}/5`}>
       {[0, 1, 2, 3, 4].map((i) => (
-        <Star key={i} className={iconSize} aria-hidden="true" style={{ fill: i < rating ? GOLD : "#ccc", color: i < rating ? GOLD : "#ccc" }} />
+        <Star key={i} className={iconSize} aria-hidden="true" style={{ fill: i < rating ? filled : "#ccc", color: i < rating ? filled : "#ccc" }} />
       ))}
     </div>
   );
@@ -146,7 +148,7 @@ export default function ReviewsPage({ locale, company, googleReviews, hubReviews
           {googleReviews.rating > 0 && (
             <div className="inline-flex flex-col items-center rounded-2xl px-8 py-6" style={{ backgroundColor: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)" }}>
               <div className="text-5xl font-bold text-white mb-2">{googleReviews.rating.toFixed(1)}</div>
-              <StarRating rating={Math.round(googleReviews.rating)} size="lg" />
+              <StarRating rating={Math.round(googleReviews.rating)} size="lg" onDark />
               <div className="text-sm text-white/70 mt-2">{t("basedOn", { count: googleReviews.userRatingCount })}</div>
               <div className="flex items-center gap-2 mt-3">
                 <GoogleIcon className="w-5 h-5" />
@@ -165,7 +167,7 @@ export default function ReviewsPage({ locale, company, googleReviews, hubReviews
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-colors hover:opacity-90"
-                style={{ backgroundColor: GOLD, color: NAVY }}
+                style={{ backgroundColor: GOLD_ON_DARK, color: NAVY }}
               >
                 <GoogleIcon className="w-5 h-5" />
                 {(READ_ALL_GOOGLE_LABELS[locale] ?? READ_ALL_GOOGLE_LABELS.en).replace(

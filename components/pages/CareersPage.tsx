@@ -18,6 +18,7 @@ import type { Locale } from "@/i18n/config";
 import {
   NAVY,
   GOLD,
+  GOLD_ON_DARK,
   GOLD_PALE,
   SURFACE_ALT,
   CARD,
@@ -146,7 +147,7 @@ export default function CareersPage({ locale, phone, email }: CareersPageProps) 
             <a
               href={tel}
               className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-transform hover:scale-[1.02]"
-              style={{ backgroundColor: GOLD, color: NAVY }}
+              style={{ backgroundColor: GOLD_ON_DARK, color: NAVY }}
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
               {t("apply.call")}: {phone}
