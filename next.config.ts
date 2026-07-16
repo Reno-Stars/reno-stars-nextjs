@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: '50mb',
     },
+    // Inline the CSS into the HTML <head> instead of a render-blocking <link>.
+    // Removes the CSS request from the critical path → earlier FCP → the LCP
+    // hero can paint sooner (the render-delay was the dominant LCP subpart on
+    // mobile PSI). CSS bundle is ~15 KB so the HTML-size cost is small.
+    inlineCss: true,
   },
   // Optimize imports for better tree-shaking
   modularizeImports: {
