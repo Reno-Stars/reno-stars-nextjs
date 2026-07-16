@@ -49,7 +49,7 @@ export const video = {
 };
 
 /** WorkSafe BC logo for trust badges (hero, stats, footer) */
-export const WORKSAFE_BC_LOGO = '/worksafe-bc-logo.jpg';
+export const WORKSAFE_BC_LOGO = '/worksafe-bc-logo.webp';
 
 /** Free Google Maps embed pinned to the Reno Stars business listing (no API key needed). */
 export const MAP_EMBED_URL =
