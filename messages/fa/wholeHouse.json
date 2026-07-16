@@ -12,7 +12,7 @@
     "allAreas": "همه فضاها",
     "childProjectsCount": "{count} فضای بازسازی‌شده",
     "noImagesForArea": "تصویری برای این فضا موجود نیست",
-    "areasCount": "{count, plural, one {# فضا} other {# فضا}}",
+    "areasCount": "{count, plural, one {# منطقه} other {# منطقه}}",
     "siteBadge": "بازسازی کامل منزل",
     "areas": "فضاها"
   }

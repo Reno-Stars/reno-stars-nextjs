@@ -25,7 +25,7 @@
     "serviceLinkText": "{service}에 관한 모든 것",
     "areaLinkText": "{area}의 주택 개조",
     "trustStripPrefix": "밴쿠버의 최고 평점 {service}",
-    "trustStripReviews": "Google 리뷰 {count}개 중 {count}★",
+    "trustStripReviews": "{rating}★ · Google 리뷰 {count}개",
     "featuredProjectHeading": "최근 {area} {service} 프로젝트",
     "featuredProjectSubheading": "실제 예산, 실제 일정, 포트폴리오의 실제 범위.",
     "featuredProjectCta": "전체 프로젝트 보기",

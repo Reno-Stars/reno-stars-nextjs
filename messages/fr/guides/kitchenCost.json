@@ -56,6 +56,70 @@
         "description": "Les permis de construire de la ville de Vancouver pour la rénovation de cuisines coûtent généralement entre 200 et 1 000 dollars. Nécessaire lors du changement d'éléments de plomberie, d'électricité, de gaz ou de structure."
       }
     },
+    "timeline": {
+      "title": "Chronologie de la rénovation de la cuisine",
+      "subtitle": "À quoi s'attendre de la demande de permis à la remise - basé sur les projets de cuisine du Grand Vancouver",
+      "intro": "Les travaux de rénovation de cuisine sur site durent généralement de 3 à 6 semaines une fois les corps de métier arrivés sur place. Cependant, le projet complet, de la première consultation au retour, s'étend plus longtemps, une fois que vous tenez compte du traitement des permis et des délais de livraison des matériaux. Les rénovations économiques avec des armoires de série et aucun changement de plomberie sont les plus rapides. Les projets haut de gamme avec des armoires personnalisées, des travaux de structure et de multiples inspections de permis prennent le plus de temps. Comprendre la séquence vous aide à planifier les livraisons d'appareils électroménagers, l'installation temporaire de la cuisine et votre propre calendrier pendant la construction.",
+      "phase1": {
+        "label": "Pré-construction",
+        "title": "Conception, matériaux et demande de permis",
+        "description": "Les mesures, l'approbation de la conception et toutes les sélections de matériaux (armoires, comptoirs, carrelage, appareils électroménagers et quincaillerie) sont terminés avant le début de toute démolition. Les dessins de permis sont soumis à ce stade si votre portée comprend des travaux de plomberie, d'électricité, de gaz ou de structure. Les municipalités de la région métropolitaine de Vancouver prennent généralement de 2 à 4 semaines pour délivrer un permis de construire. Les commandes d'armoires personnalisées sont passées immédiatement après l'approbation de la conception afin que la fabrication se déroule en même temps que le traitement des permis, évitant ainsi des semaines de retard inutile."
+      },
+      "phase2": {
+        "label": "Construction — Phase 1",
+        "title": "Travaux de démolition et de gros travaux",
+        "description": "Une fois le permis délivré, la démolition supprime les armoires, les comptoirs, les appareils électroménagers et les revêtements de sol existants, dépouillant ainsi l'espace de la charpente et du sous-plancher. Les plombiers, les électriciens et les installateurs de gaz effectuent tous les déménagements ou améliorations pendant la phase de construction – c'est la phase la plus perturbatrice et la cuisine sera totalement non fonctionnelle. Un inspecteur en bâtiment se rend sur place pour approuver les travaux de base avant la fermeture des murs et des plafonds. Cette étape de contrôle obligatoire doit être programmée à l'avance avec la commune."
+      },
+      "phase3": {
+        "label": "Construction — Phase 2",
+        "title": "Installation d'armoires et modèles de comptoirs",
+        "description": "Les armoires sont installées une fois l’inspection brute réussie. Cette étape ouvre la voie à la fabrication de comptoirs : un gabarit de comptoir mesure avec précision les armoires installées afin que la dalle puisse être coupée pour s'adapter. La création de modèles ne peut pas avoir lieu avant que les armoires ne soient entièrement réglées et nivelées – une idée fausse courante qui retarde les projets lorsque les clients s'attendent à ce que le comptoir soit installé immédiatement après la livraison de l'armoire. Les dalles de quartz ou de pierre arrivent à l'atelier de fabrication après avoir été modelées et sont livrées une fois coupées et polies."
+      },
+      "phase4": {
+        "label": "Construction — Phase 3",
+        "title": "Comptoirs, carrelage, appareils électroménagers et finitions",
+        "description": "Les comptoirs sont installés après fabrication et livraison. Les carreaux de dosseret, les revêtements de sol, les luminaires encastrés et l'éclairage sous les armoires sont ensuite installés. Les appareils électroménagers sont connectés une fois que les comptoirs et la plomberie sont tous deux finalisés : alimentation et vidange du lave-vaisselle, circuit de cuisinière à gaz ou 240 V, conduite d'eau du réfrigérateur. Les peintres et les menuisiers de finition complètent ensuite l'espace avec de la peinture, l'installation de la quincaillerie et tout travail de garniture ou de moulure couronnée. À ce stade, la cuisine redevient fonctionnelle."
+      },
+      "phase5": {
+        "label": "Phase finale",
+        "title": "Inspections, liste de pointage et remise",
+        "description": "Les inspections finales de plomberie et d’électricité sont programmées une fois tous les raccordements effectués. Votre entrepreneur parcourt la cuisine avec vous lors d'une inspection de la liste de points à remplir : les retouches en suspens telles que le voile de coulis, les bords de peinture, l'alignement de la quincaillerie ou la mise en service des appareils électroménagers sont documentées et traitées avant le paiement final. Une fois que tous les éléments sont signés, l'entrepreneur ferme le dossier de permis avec la municipalité et fournit les documents de retenue de privilège conformément au Builder Lien Act de la Colombie-Britannique."
+      }
+    },
+    "process": {
+      "title": "Comment fonctionne une rénovation de cuisine à Vancouver",
+      "subtitle": "Six étapes entre la première visite sur site et la livraison finale",
+      "step1": {
+        "label": "Étape 1",
+        "title": "Visite du site et définition de la portée",
+        "description": "Un spécialiste de la rénovation visite votre maison pour mesurer la cuisine et examiner vos objectifs, votre liste de souhaits et votre budget. Les contraintes structurelles — murs porteurs, emplacement de la plomberie, capacité du panneau électrique — sont évaluées sur place. La portée et la fourchette budgétaire sont documentées dans une proposition écrite avant le début des travaux."
+      },
+      "step2": {
+        "label": "Étape 2",
+        "title": "Conception et sélection des matériaux",
+        "description": "Le style des armoires, les profils de porte, le matériau du comptoir, le carrelage, le revêtement de sol, la quincaillerie et l'ensemble des appareils électroménagers sont finalisés. Pour les projets impliquant la suppression de murs ou des modifications de disposition, un ingénieur en structure peut être engagé pour spécifier le dimensionnement des poutres et les détails de connexion. La plupart des clients passent 1 à 2 séances à affiner leurs sélections avant de signer le package de conception."
+      },
+      "step3": {
+        "label": "Étape 3",
+        "title": "Demande de permis et commande de matériel",
+        "description": "Les dessins de permis sont soumis à votre municipalité pour tout travail de plomberie, d'électricité, de gaz ou de structure. Dans la région métropolitaine de Vancouver, l'examen des permis prend généralement de 2 à 4 semaines. Les commandes d'armoires et de comptoirs sont passées simultanément afin que les matériaux arrivent près de la date de délivrance du permis, minimisant ainsi l'écart entre l'approbation du permis et le début de la construction."
+      },
+      "step4": {
+        "label": "Étape 4",
+        "title": "Démolition et brut",
+        "description": "Les vieilles armoires, appareils électroménagers, revêtements de sol et finitions sont retirés. Les corps de métier – plombier, électricien, installateur de gaz et encadreur – effectuent tous les déménagements et améliorations avant la fermeture des murs. Un inspecteur en bâtiment approuve les travaux bruts comme point de contrôle obligatoire avant que la construction ne passe à la phase suivante."
+      },
+      "step5": {
+        "label": "Étape 5",
+        "title": "Installation d'armoires, de comptoirs et de finitions",
+        "description": "Les armoires sont installées et mises à niveau, suivies par la création de modèles et la fabrication du comptoir. Une fois les comptoirs installés, les carreaux de dosseret, les revêtements de sol, les appareils électroménagers, les luminaires encastrés, la peinture et la quincaillerie sont installés pour amener la cuisine à son état fini. Cette phase transforme l'espace d'une coquille nue en une cuisine fonctionnelle."
+      },
+      "step6": {
+        "label": "Étape 6",
+        "title": "Inspection finale et remise",
+        "description": "Des inspections commerciales sont programmées et le dossier de permis est clôturé avec la municipalité. Une procédure pas à pas finale capture tous les éléments en suspens de la liste de points à retenir. Une fois terminé, vous recevez la documentation de garantie, les documents de retenue de privilège conformément au Builder Lien Act de la Colombie-Britannique et les instructions d'entretien pour vos nouveaux comptoirs, armoires et coulis de carrelage."
+      }
+    },
     "realProjects": {
       "title": "De vrais projets de rénovation de cuisine",
       "subtitle": "Parcourez les projets de cuisine réalisés par {count} avec les budgets et les délais réels"
@@ -95,7 +159,11 @@
       "q5": "Puis-je rénover ma cuisine tout en vivant chez moi ?",
       "a5": "Oui, la plupart de nos clients continuent de vivre dans leur maison pendant les rénovations de cuisine. Nous aidons à aménager un espace cuisine temporaire et planifions les travaux pour minimiser les perturbations. Attendez-vous à ne pas avoir de cuisine fonctionnelle pendant 2 à 4 semaines, selon l'étendue des travaux.",
       "q6": "Quel est le coût moyen d’une rénovation de cuisine à Vancouver?",
-      "a6": "D'après nos projets de cuisine Reno Stars réalisés dans le Grand Vancouver, le coût moyen d'une rénovation de cuisine se situe dans la fourchette moyenne, entre 28 000 et 38 000 $ environ. Cela comprend des armoires Shaker semi-personnalisées, des comptoirs en quartz, un nouveau dosseret et un nouveau revêtement de sol en carrelage, un éclairage mis à jour et un ensemble d'appareils électroménagers de niveau intermédiaire. Les rénovations économiques (rafraîchissement cosmétique, armoires de stock, comptoirs en stratifié) coûtent entre 15 000 $ et 27 000 $, et les constructions personnalisées haut de gamme (armoires entièrement personnalisées, pierre de qualité supérieure, îlot cascade, finitions design) atteignent plus de 40 000 $. La plupart des projets prennent de 3 à 6 semaines."
+      "a6": "D'après nos projets de cuisine Reno Stars réalisés dans le Grand Vancouver, le coût moyen d'une rénovation de cuisine se situe dans la fourchette moyenne, entre 28 000 et 38 000 $ environ. Cela comprend des armoires Shaker semi-personnalisées, des comptoirs en quartz, un nouveau dosseret et un nouveau revêtement de sol en carrelage, un éclairage mis à jour et un ensemble d'appareils électroménagers de niveau intermédiaire. Les rénovations économiques (rafraîchissement cosmétique, armoires de stock, comptoirs en stratifié) coûtent entre 15 000 $ et 27 000 $, et les constructions personnalisées haut de gamme (armoires entièrement personnalisées, pierre de qualité supérieure, îlot cascade, finitions design) atteignent plus de 40 000 $. La plupart des projets prennent de 3 à 6 semaines.",
+      "q7": "Combien les appareils de cuisine ajoutent-ils au budget de rénovation de Vancouver ?",
+      "a7": "Les appareils électroménagers constituent un élément important de toute rénovation de cuisine. Les forfaits d'entrée de gamme (réfrigérateur, cuisinière, lave-vaisselle) commencent entre 3 000 et 5 000 $. Les marques de milieu de gamme telles que Bosch, KitchenAid et Café coûtent entre 8 000 et 15 000 dollars pour un ensemble assorti. Les marques haut de gamme prêtes à l'emploi ou de style professionnel comme Sub-Zero, Wolf ou Miele peuvent dépasser 30 000 $. Pour les condos et les appartements en location, rester dans la gamme d'électroménagers de 4 000 $ à 8 000 $ offre généralement le meilleur retour sur investissement : vous obtenez des performances fiables sans surcapitaliser pour le marché.",
+      "q8": "Quelles sont les meilleures façons de réduire les coûts de rénovation de cuisine à Vancouver ?",
+      "a8": "La plus grande économie consiste à conserver votre réseau de plomberie et de gaz existant : éviter les déplacements de canalisations et de conduites peut économiser entre 5 000 et 15 000 $. Choisissez des armoires semi-personnalisées plutôt que entièrement personnalisées (elles offrent un aspect similaire à 40 à 60 % du coût) et optez pour des comptoirs en quartz plutôt que de la pierre naturelle (20 à 40 % moins chers avec une meilleure durabilité). Enfin, planifiez vos rénovations hors saison : de novembre à février, la période est plus lente pour les entrepreneurs de Vancouver, et vous avez plus de chances d'obtenir de meilleurs prix et une planification plus rapide pendant ces mois."
     }
   }
 }

@@ -28,6 +28,11 @@
         "description": "Premium tile, curbless showers, freestanding tubs, custom cabinetry, smart fixtures, at structural modifications. Madalas kasama ang pagre-renovate ng 2-3+ bathrooms nang sabay."
       }
     },
+    "inlineCta": {
+      "heading": "Handa nang planuhin ang iyong pagkukumpuni sa banyo?",
+      "sub": "Libre, detalyadong pagtatantya sa loob ng 48 oras — walang obligasyon.",
+      "button": "Kumuha ng Libreng Sipi →"
+    },
     "factors": {
       "title": "Ano ang Apektado sa Iyong Bathroom Renovation Cost?",
       "subtitle": "Anim na key factors na nagde-determine sa final price",
@@ -78,6 +83,74 @@
         "title": "Mag-invest sa Waterproofing",
         "description": "Ang pagtitipid sa waterproofing ay nagdudulot ng magastos na repairs sa hinaharap. Tamang membrane systems ay $1,500–3,500 sa simula pero pinipigilan ang $10,000+ sa water damage sa hinaharap."
       }
+    },
+    "showerCost": {
+      "title": "Gastos sa Pagkukumpuni ng Shower sa Vancouver",
+      "subtitle": "Pagpepresyo na partikular sa shower mula sa mga natapos na proyekto sa Metro Vancouver",
+      "intro": "Ang shower work ay isa sa mga pinakakaraniwang saklaw na item sa isang pagkukumpuni ng banyo. Kung gagawin mong walk-in shower ang tub, magdagdag ng curbless entry, o papalitan lang ang lumang shower pan at salamin, malaki ang pagkakaiba ng mga gastos ayon sa saklaw.",
+      "conversion": {
+        "title": "Conversion ng Tub-to-Shower",
+        "range": "$3,000 – $8,000",
+        "description": "Pag-alis ng isang umiiral na tub at pag-install ng shower sa parehong footprint. May kasamang bagong liner o tile base, shower head, rough-in adjustment, at isang standard na naka-frame o semi-frameless na glass enclosure. Ang pinakasikat na saklaw ng banyo sa Metro Vancouver — lalo na sa mga bahay na may 2 banyo kung saan ang isang batya ay inilalagay at ang isa ay ginagawang walk-in shower."
+      },
+      "curbless": {
+        "title": "Curbless (Zero-Threshold) Shower",
+        "range": "$5,000 – $13,000",
+        "description": "Walang hakbang o labi sa pagpasok ng shower. Nangangailangan ng custom na waterproofing na may linear o center drain, isang sloped floor, at Schluter Kerdi o katumbas na lamad sa buong wet zone. Sikat sa mga pangunahing ensuite at para sa mga aging-in-place na banyo. Ang curbless shower ay nagdaragdag ng $1,500–$3,000 sa halaga ng karaniwang pag-install ng shower dahil sa karagdagang waterproofing at custom na drain work."
+      },
+      "enclosureOnly": {
+        "title": "Kapalit Lang ng Glass Enclosure",
+        "range": "$1,200 – $3,500",
+        "description": "Pagpapalit ng lumang naka-frame na shower enclosure para sa semi-frameless o frameless glass na pinto at panel. Walang trabahong tile at walang kinakailangang pagbabago sa pagtutubero. Mabilis na saklaw, kadalasang makukumpleto sa isang araw. Pinakamahusay na opsyon kapag ang umiiral na tile at base ay nasa mabuting kondisyon."
+      },
+      "note": "Karaniwang kasama ang mga gastos sa shower sa isang buong quote sa pagsasaayos ng banyo. Para sa isang detalyadong breakdown ayon sa uri ng shower — tub-to-shower, curbless walk-in, glass enclosure — tingnan ang aming nakatuong gabay:"
+    },
+    "bathtubCost": {
+      "title": "Mga Gastos sa Bathtub",
+      "description": "Ang isang like-for-like alcove tub swap ay tumatakbo ng $800 – $2,200 na naka-install; Ang mga drop-in at freestanding tub ay tumatakbo ng $2,500 – $8,500+ sa sandaling mabilang ang custom na surround at floor-mount plumbing. Ang mga conversion ng tub-to-shower ay sakop sa seksyon ng shower sa itaas. Para sa buong tier-by-tier breakdown — alcove, drop-in, soaking, at freestanding tub — tingnan ang aming nakatuong gabay sa",
+      "linkText": "gastos sa pagsasaayos ng bathtub sa Vancouver"
+    },
+    "toiletCost": {
+      "title": "Gastos sa Pagkukumpuni ng Toilet sa Vancouver",
+      "subtitle": "Mga gastos sa pagpapalit ng banyo mula sa mga natapos na proyekto sa Metro Vancouver",
+      "intro": "Ang pangunahing toilet swap ay ang pinakamurang plumbing scope sa anumang pagkukumpuni ng banyo. Tumataas ang mga gastos kapag nagdagdag ka ng mga one-piece na toilet, mga disenyong may palda, o mga carrier na nakabitin sa dingding — na nangangailangan ng pagbukas ng dingding upang i-frame ang tangke sa loob ng dingding.",
+      "standard": {
+        "title": "Standard Two-Piece o One-Piece",
+        "range": "$400 – $1,500",
+        "description": "Two-piece tank-on-bowl o one-piece na pahabang comfort-height toilet (17\"–19\" bowl height). May kasamang wax ring o waxless seal, bagong braided supply line, shutoff valve, at pagtatapon ng lumang unit. Ang default, sumusunod sa code na pagpipilian para sa karamihan ng mga pagsasaayos ng banyo sa Metro Vancouver."
+      },
+      "skirted": {
+        "title": "Skirted / Comfort-Height",
+        "range": "$900 – $2,000",
+        "description": "Smooth-sided skirted one-piece toilet (Toto Aquia IV, Kohler Veil, o katumbas nito) na may soft-close na upuan. Itinatago ng makinis na trapway exterior ang tipikal na exposed plumbing curve para sa modernong hitsura at mas madaling paglilinis. Mas gusto para sa mga master ensuite at na-update na powder room."
+      },
+      "wallHung": {
+        "title": "Wall-Hung + In-Wall Tank",
+        "range": "$3,000 – $8,500+",
+        "description": "Ang mangkok ay lumulutang sa sahig; ang tangke ay nakatago sa isang furred-out wall cavity na may carrier frame. Binubuksan ang pader, karaniwang nagdaragdag ng 1-2 araw sa saklaw. Pina-maximize ang visual space sa mga compact powder room at luxury ensuite."
+      },
+      "note": "Ang presyo ng smart / bidet toilet ay malawak na nag-iiba ayon sa fixture ($1,300–$4,500 na naka-install). Para sa kumpletong pagkasira ng mga uri ng palikuran, mga tala sa pag-install, at mga kinakailangan sa permit, tingnan ang aming nakatuong gabay:"
+    },
+    "vanityCost": {
+      "title": "Gastos sa Vanity Renovation sa Vancouver",
+      "subtitle": "Mula sa pagpapalit ng stock cabinet hanggang sa ganap na custom na floating cabinetry",
+      "intro": "Ang vanity upgrade ay ang nag-iisang may pinakamataas na ROI na pagpapalit ng kosmetiko sa isang banyo — napansin agad ito ng mga mamimili at nangungupahan. Ang mga gastos ay mula sa isang direktang stock swap hanggang sa isang ganap na custom na millwork piece na binuo sa iyong eksaktong mga sukat.",
+      "stock": {
+        "title": "Pagpapalit ng Stock Vanity",
+        "range": "$500 – $1,500",
+        "description": "Box-store vanity unit na may karaniwang tuktok (laminate o basic cultured marble). Pinapalitan ang in-kind na may kaunting mga rough-in na pagbabago. Cost-effective na opsyon para sa mga pangalawang banyo, rental property, o budget refresh kung saan nananatili ang plumbing sa lugar. Available ang mga stock vanity sa susunod na araw mula sa Home Depot, IKEA, Rona, o Costco at hindi nangangailangan ng lead time."
+      },
+      "semiCustom": {
+        "title": "Semi-Custom na may Quartz Top",
+        "range": "$2,000 – $4,000",
+        "description": "Isang mid-range na floating o floor-mounted vanity cabinet (shaker o slab door profile) na may cut-to-size na quartz countertop at undermount ceramic o integrated sink. Ang pinakasikat na vanity choice para sa Metro Vancouver condo at townhouse bathroom renovations."
+      },
+      "custom": {
+        "title": "Custom na Lumulutang Vanity",
+        "range": "$4,000 – $8,000+",
+        "description": "Millwork-grade cabinetry na binuo sa eksaktong sukat, wall-mounted na may pinagsamang plumbing chase na nakatago sa likod ng cabinet body, custom na bato o quartz countertop, integrated o undermount vessel sink, at drawer organizer. Karaniwang saklaw para sa mga high-end na master ensuite na pagsasaayos sa Metro Vancouver."
+      },
+      "note": "Kasama sa pag-install ng vanity ang supply at rough-in connection. Ang salamin, ilaw, at hardware ay hiwalay na sinipi. Tingnan ang aming nakatuong gabay para sa isang kumpletong breakdown:"
     },
     "cityComparison": {
       "title": "Mga Gastos sa Pagkukumpuni ng Banyo ayon sa Lungsod",
@@ -131,7 +204,11 @@
       "q5": "Dapat ba akong mag-renovate ng maraming bathroom nang sabay?",
       "a5": "Oo, ang pagre-renovate ng maraming bathroom nang sabay ay nag-save ng 10–20% kumpara sa separate projects. Ang mga contractor ay maaaring mag-share ng mobilization costs, mag-coordinate ng trades nang mas efficient, at bumili ng materials in bulk. Marami kaming natapos na 2–3 bathroom projects sa buong Greater Vancouver.",
       "q6": "Ano ang average na halaga ng remodel ng banyo sa Vancouver?",
-      "a6": "Batay sa aming 22 nakumpletong proyekto sa banyo ng Reno Stars sa Greater Vancouver, ang average na halaga ng remodel ng banyo ay nasa $20,000–$30,000 na mid-range na tier. Ang mga remodel na angkop sa badyet (maliit na powder room, karaniwang mga fixture, pangunahing tile) ay tumatakbo ng $10,000–$18,000. Ang mga mid-range na proyekto (full bath na may custom na tile, quartz vanity, updated lighting) ay tumatakbo ng $22,000–$32,000. Ang mga high-end na pangunahing ensuite na remodel na may freestanding tub, walk-in shower, at premium na bato ay umaabot sa $40,000–$60,000+. Karamihan sa mga pagbabago sa banyo ay tumatagal ng 2-5 na linggo."
+      "a6": "Batay sa aming 22 nakumpletong proyekto sa banyo ng Reno Stars sa Greater Vancouver, ang average na halaga ng remodel ng banyo ay nasa $20,000–$30,000 na mid-range na tier. Ang mga remodel na angkop sa badyet (maliit na powder room, karaniwang mga fixture, pangunahing tile) ay tumatakbo ng $10,000–$18,000. Ang mga mid-range na proyekto (full bath na may custom na tile, quartz vanity, updated lighting) ay tumatakbo ng $22,000–$32,000. Ang mga high-end na pangunahing ensuite na remodel na may freestanding tub, walk-in shower, at premium na bato ay umaabot sa $40,000–$60,000+. Karamihan sa mga pagbabago sa banyo ay tumatagal ng 2-5 na linggo.",
+      "q7": "Magkano ang naidaragdag ng plumbing relocation sa isang pagkukumpuni ng banyo sa Vancouver?",
+      "a7": "Ang paglilipat ng drain o linya ng supply ay karaniwang nagdaragdag ng $2,000–$6,000 sa iyong badyet sa pagsasaayos. Ang paglipat ng palikuran ay karaniwang ang pinakamahal na solong bagay - nangangailangan ito ng pagbubukas ng subfloor at pag-rerouting sa pangunahing drain. Ang mga linya ng supply ng shower drain at vanity ay mas mura para ilipat. Ang pagpapanatiling lahat ng pagtutubero sa kasalukuyang posisyon nito ay isa sa mga pinakamabisang diskarte sa pagkontrol sa gastos sa mga pagsasaayos ng banyo: karaniwan ang pagtitipid na $3,000–$6,000 sa pamamagitan lamang ng pananatili sa parehong footprint. Palaging kumpirmahin sa iyong kontratista kung ang paglipat ng fixture ay kasama sa saklaw o presyo bilang isang order ng pagbabago.",
+      "q8": "Ano ang kasama sa high-end na pangunahing pagkukumpuni ng banyo sa Vancouver?",
+      "a8": "Ang isang high-end na pangunahing ensuite sa Metro Vancouver ay karaniwang umaabot sa $40,000–$60,000+ at may kasamang curbless walk-in shower na may linear drain (nagdaragdag ng $2,000–$5,000 sa isang karaniwang shower base), isang freestanding soaker tub, large-format na natural na bato o premium na porcelain tile, isang custom na double table na may quartz, na may disenyong pang-double na countertop, at quartz na plumatura. Ang mga conversion na tub-to-shower para sa mga pangunahing banyo ay tumatakbo nang mag-isa ng $3,000–$8,000. Ang pamumuhunan ay kadalasang nabibigyang-katwiran sa mas mataas na halaga ng mga tahanan sa Metro Vancouver kung saan ang kalidad ay makabuluhang nakakaapekto sa halaga ng muling pagbibili at pang-araw-araw na livability."
     }
   }
 }

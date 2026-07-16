@@ -8,7 +8,7 @@
     "budget": "予算",
     "allBudgets": "すべての予算",
     "showing": "表示中",
-    "projects": "{数、複数、one {project} other {projects}}",
+    "projects": "{count, plural, other {件のプロジェクト}}",
     "clearAll": "フィルターをクリアする",
     "browseByCategory": "カテゴリ別に参照",
     "swipeToSeeMore": "スワイプしてもっと見る→",

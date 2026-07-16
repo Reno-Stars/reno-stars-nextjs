@@ -40,7 +40,7 @@
       "titleWithLocation": "{city}의 {title} | Reno Stars"
     },
     "serviceLocation": {
-      "title": "{area}의 {area} | Reno Stars",
+      "title": "{area}의 {service} | Reno Stars",
       "titleWithTagline": "{area}의 {service} – {tagline} | Reno Stars",
       "description": "Reno Stars의 {area} 지역 전문가 {service}. {years}년 이상의 경험, $5M CGL 보험, 활성 WCB 보장, 최대 3년 보증. 오늘 무료 견적을 받으세요."
     },

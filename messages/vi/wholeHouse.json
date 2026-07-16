@@ -12,7 +12,7 @@
     "allAreas": "Tất Cả Khu Vực",
     "childProjectsCount": "{count} khu vực cải tạo",
     "noImagesForArea": "Không có hình ảnh cho khu vực này",
-    "areasCount": "{count, plural, one {# Khu Vực} other {# Khu Vực}}",
+    "areasCount": "{count, plural, other {# Khu vực}}",
     "siteBadge": "Toàn Bộ Nhà",
     "areas": "Khu Vực"
   }

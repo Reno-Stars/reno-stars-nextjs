@@ -56,6 +56,70 @@
         "description": "Los permisos de construcción de la Ciudad de Vancouver para remodelaciones de cocina típicamente cuestan $200-$1,000. Requeridos al cambiar plomería, eléctrico, gas o elementos estructurales."
       }
     },
+    "timeline": {
+      "title": "Cronología de renovación de cocinas",
+      "subtitle": "Qué esperar desde la solicitud del permiso hasta la entrega, según los proyectos de cocinas del Gran Vancouver",
+      "intro": "Los trabajos de renovación de la cocina en el lugar generalmente duran de 3 a 6 semanas una vez que los cambios están en el lugar. Sin embargo, el proyecto completo, desde la primera consulta hasta el regreso, dura más una vez que se tienen en cuenta el procesamiento de permisos y los tiempos de entrega de materiales. Las renovaciones económicas con gabinetes originales y sin cambios de plomería avanzan más rápido. Los proyectos de alto nivel con gabinetes personalizados, trabajos estructurales y múltiples inspecciones de permisos son los que toman la mayor parte del tiempo. Comprender la secuencia le ayudará a planificar las entregas de electrodomésticos, la instalación temporal de la cocina y su propio cronograma durante la construcción.",
+      "phase1": {
+        "label": "Pre-Construcción",
+        "title": "Diseño, Materiales y Solicitud de Permiso",
+        "description": "Las mediciones, la aprobación del diseño y todas las selecciones de materiales (gabinetes, encimeras, azulejos, electrodomésticos y herrajes) se completan antes de que comience la demolición. Los planos de permiso se envían en esta etapa si su alcance incluye trabajos de plomería, electricidad, gas o estructurales. Los municipios metropolitanos de Vancouver suelen tardar de 2 a 4 semanas en emitir un permiso de construcción. Los pedidos de gabinetes personalizados se realizan inmediatamente después de la aprobación del diseño, de modo que la fabricación se ejecuta simultáneamente con el procesamiento de permisos, evitando semanas de demoras innecesarias."
+      },
+      "phase2": {
+        "label": "Construcción - Fase 1",
+        "title": "Demolición y operaciones de desbaste",
+        "description": "Una vez que se emite el permiso, la demolición elimina los gabinetes, encimeras, electrodomésticos y pisos existentes, retirando el espacio hasta la estructura y el contrapiso. Los plomeros, electricistas e instaladores de gas completan todas las reubicaciones o mejoras durante la instalación; esta es la fase más disruptiva y la cocina dejará de funcionar por completo. Un inspector de edificios lo visita para aprobar los trabajos preliminares antes de cerrar las paredes y los techos. Este paso de inspección obligatorio debe programarse con antelación con el municipio."
+      },
+      "phase3": {
+        "label": "Construcción - Fase 2",
+        "title": "Instalación de gabinetes y plantillas de encimeras",
+        "description": "Los gabinetes se instalan una vez que pasa la inspección inicial. Este hito desbloquea la fabricación de encimeras: una plantilla de encimeras mide los gabinetes instalados con precisión para que la losa se pueda cortar a la medida. No se pueden crear plantillas antes de que los gabinetes estén completamente instalados y nivelados, un error común que retrasa los proyectos cuando los clientes esperan que la encimera se instale inmediatamente después de la entrega del gabinete. Las losas de cuarzo o piedra van al taller de fabricación después de la plantilla y se entregan una vez cortadas y pulidas."
+      },
+      "phase4": {
+        "label": "Construcción - Fase 3",
+        "title": "Encimeras, azulejos, electrodomésticos y acabados",
+        "description": "Las encimeras se instalan después de la fabricación y entrega. A continuación se instalan los azulejos para salpicaduras, los pisos, las lámparas y la iluminación debajo de los gabinetes. Los electrodomésticos se conectan una vez que se finalizan las instalaciones de las encimeras y la plomería: suministro y drenaje del lavavajillas, gas de la cocina o circuito de 240 V, línea de agua del refrigerador. Luego, los pintores y carpinteros de acabados completan el espacio con pintura, instalación de herrajes y cualquier trabajo de molduras o molduras de techo. En este punto la cocina vuelve a ser funcional."
+      },
+      "phase5": {
+        "label": "Fase Final",
+        "title": "Inspecciones, lista de pendientes y entrega",
+        "description": "Las inspecciones finales de plomería y electricidad se programan después de realizar todas las conexiones. Su contratista lo acompaña a la cocina en una inspección de lista de tareas pendientes: los retoques pendientes, como la neblina de la lechada, los bordes de la pintura, la alineación de los herrajes o la puesta en servicio de los electrodomésticos, se documentan y abordan antes de que se emita el pago final. Una vez que se aprueban todos los elementos, el contratista cierra el expediente del permiso ante el municipio y proporciona la documentación de retención del gravamen según la Ley de Gravámenes para Constructores de BC."
+      }
+    },
+    "process": {
+      "title": "Cómo funciona la renovación de una cocina en Vancouver",
+      "subtitle": "Seis pasos desde la primera visita al sitio hasta la entrega final",
+      "step1": {
+        "label": "Paso 1",
+        "title": "Visita al sitio y definición del alcance",
+        "description": "Un especialista en renovaciones visita su casa para medir la cocina y revisar sus objetivos, lista de deseos y presupuesto. Las limitaciones estructurales (muros de carga, ubicación de las tuberías de plomería, capacidad del panel eléctrico) se evalúan en el sitio. El alcance y el rango del presupuesto se documentan en una propuesta escrita antes de que comience cualquier trabajo."
+      },
+      "step2": {
+        "label": "Paso 2",
+        "title": "Diseño y selección de materiales",
+        "description": "Se finalizan el estilo del gabinete, los perfiles de las puertas, el material de la encimera, los azulejos, el piso, los herrajes y el paquete de electrodomésticos. Para proyectos que implican la eliminación de paredes o cambios de diseño, se puede contratar a un ingeniero estructural para especificar el tamaño de las vigas y los detalles de conexión. La mayoría de los clientes pasan de 1 a 2 sesiones reduciendo las selecciones antes de firmar el paquete de diseño."
+      },
+      "step3": {
+        "label": "Paso 3",
+        "title": "Solicitud de permiso y pedido de materiales",
+        "description": "Los planos de permiso se envían a su municipio para cualquier trabajo de plomería, electricidad, gas o estructural. En Metro Vancouver, la revisión del permiso suele tardar de 2 a 4 semanas. Los pedidos de gabinetes y encimeras se realizan simultáneamente para que los materiales lleguen cerca de la fecha de emisión del permiso, minimizando la brecha entre la aprobación del permiso y el inicio de la construcción."
+      },
+      "step4": {
+        "label": "Paso 4",
+        "title": "Demolición y montaje preliminar",
+        "description": "Se eliminan los gabinetes, electrodomésticos, pisos y acabados viejos. Los oficios iniciales (plomero, electricista, instalador de gas y enmarcador) completan todas las reubicaciones y mejoras antes de que se cierren las paredes. Un inspector de edificios aprueba los trabajos preliminares como punto de control obligatorio antes de que la construcción continúe con la siguiente fase."
+      },
+      "step5": {
+        "label": "Paso 5",
+        "title": "Instalación de gabinetes, encimeras y acabados",
+        "description": "Los gabinetes se instalan y nivelan, seguido de la plantilla y fabricación de la encimera. Una vez colocadas las encimeras, se instalan losetas para salpicaduras, pisos, electrodomésticos, focos, pintura y herrajes para dejar la cocina en su estado final. Esta fase transforma el espacio de una cáscara desnuda a una cocina funcional."
+      },
+      "step6": {
+        "label": "Paso 6",
+        "title": "Inspección final y entrega",
+        "description": "Se programan inspecciones comerciales y se cierra el expediente del permiso ante el municipio. Un recorrido final captura los elementos pendientes de la lista de tareas pendientes. Al finalizar, recibirá la documentación de la garantía, la documentación de retención de gravámenes según la Ley de gravámenes para constructores de BC e instrucciones de cuidado para sus nuevas encimeras, gabinetes y lechada para azulejos."
+      }
+    },
     "realProjects": {
       "title": "Proyectos reales de remodelación de cocina",
       "subtitle": "Explore {count} proyectos de cocina completados con presupuestos y plazos reales"
@@ -95,7 +159,11 @@
       "q5": "¿Puedo remodelar mi cocina mientras vivo en mi casa?",
       "a5": "Sí, la mayoría de nuestros clientes continúan viviendo en sus hogares durante las remodelaciones de cocina. Ayudamos a configurar un área de cocina temporal y programamos el trabajo para minimizar la interrupción. Espere estar sin una cocina funcional durante 2-4 semanas dependiendo del alcance del trabajo.",
       "q6": "¿Cuál es el costo promedio de una remodelación de cocina en Vancouver?",
-      "a6": "Según nuestros proyectos de cocinas Reno Stars completados en el Gran Vancouver, el costo promedio de una remodelación de cocina se ubica en el nivel medio, aproximadamente entre $ 28 000 y $ 38 000. Esto incluye gabinetes Shaker semipersonalizados, encimeras de cuarzo, placa para salpicaduras y pisos de azulejos nuevos, iluminación actualizada y un juego de electrodomésticos de nivel medio. Las remodelaciones económicas (renovación cosmética, gabinetes originales, mostradores laminados) cuestan entre $ 15 000 y $ 27 000, y las construcciones personalizadas de alta gama (gabinetes personalizados completos, piedra de primera calidad, isla en cascada, acabados de diseñador) alcanzan los $ 40 000 o más. La mayoría de los proyectos tardan entre 3 y 6 semanas."
+      "a6": "Según nuestros proyectos de cocinas Reno Stars completados en el Gran Vancouver, el costo promedio de una remodelación de cocina se ubica en el nivel medio, aproximadamente entre $ 28 000 y $ 38 000. Esto incluye gabinetes Shaker semipersonalizados, encimeras de cuarzo, placa para salpicaduras y pisos de azulejos nuevos, iluminación actualizada y un juego de electrodomésticos de nivel medio. Las remodelaciones económicas (renovación cosmética, gabinetes originales, mostradores laminados) cuestan entre $ 15 000 y $ 27 000, y las construcciones personalizadas de alta gama (gabinetes personalizados completos, piedra de primera calidad, isla en cascada, acabados de diseñador) alcanzan los $ 40 000 o más. La mayoría de los proyectos tardan entre 3 y 6 semanas.",
+      "q7": "¿Cuánto aportan los electrodomésticos de cocina al presupuesto de renovación de Vancouver?",
+      "a7": "Los electrodomésticos son un elemento importante en cualquier renovación de cocina. Los paquetes básicos (refrigerador, estufa, lavavajillas) comienzan entre $ 3000 y $ 5000. Las marcas de gama media como Bosch, KitchenAid y Café cuestan entre 8.000 y 15.000 dólares por un juego a juego. Las marcas premium listas para paneles o de estilo profesional como Sub-Zero, Wolf o Miele pueden superar los $30,000. Para condominios y suites de alquiler, permanecer en el rango de electrodomésticos de $4000 a $8000 generalmente ofrece el mejor retorno de la inversión: obtiene un rendimiento confiable sin sobrecapitalizar el mercado.",
+      "q8": "¿Cuáles son las mejores formas de reducir los costos de renovación de cocinas en Vancouver?",
+      "a8": "El mayor ahorro es mantener el diseño actual de plomería y gas; evitar la reubicación de tuberías y líneas puede ahorrar entre $5,000 y $15,000. Elija gabinetes semipersonalizados en lugar de gabinetes totalmente personalizados (ofrecen una apariencia similar a entre un 40 y un 60 % del costo) y opte por encimeras de cuarzo en lugar de piedra natural (entre un 20 y un 40 % menos costosas y con mayor durabilidad). Finalmente, planifique su renovación fuera de temporada: de noviembre a febrero es más lento para los contratistas de Vancouver y es más probable que obtenga mejores precios y una programación más rápida durante esos meses."
     }
   }
 }

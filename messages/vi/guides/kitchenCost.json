@@ -56,6 +56,70 @@
         "description": "Giấy phép xây dựng của thành phố Vancouver cho cải tạo phòng bếp thường có giá $200–$1,000. Bắt buộc khi thay đổi đường ống, điện, gas hoặc các yếu tố kết cấu."
       }
     },
+    "timeline": {
+      "title": "Dòng thời gian cải tạo nhà bếp",
+      "subtitle": "Điều gì sẽ xảy ra từ đơn xin giấy phép đến khi bàn giao — dựa trên các dự án nhà bếp ở Greater Vancouver",
+      "intro": "Công việc cải tạo nhà bếp tại chỗ thường kéo dài từ 3 đến 6 tuần sau khi giao dịch tại chỗ. Tuy nhiên, toàn bộ dự án từ lần tư vấn đầu tiên đến khi quay trở lại sẽ kéo dài lâu hơn khi bạn tính đến thời gian xử lý giấy phép và thời gian chuẩn bị nguyên liệu. Việc cải tạo ngân sách với tủ có sẵn và không có thay đổi về hệ thống ống nước diễn ra nhanh nhất. Các dự án cao cấp với tủ tùy chỉnh, công việc kết cấu và việc kiểm tra giấy phép nhiều lần sẽ mất nhiều thời gian nhất. Hiểu trình tự sẽ giúp bạn lập kế hoạch giao thiết bị, thiết lập nhà bếp tạm thời và lịch trình của riêng bạn trong quá trình xây dựng.",
+      "phase1": {
+        "label": "Tiền xây dựng",
+        "title": "Đơn xin thiết kế, vật liệu và giấy phép",
+        "description": "Các phép đo, phê duyệt thiết kế và tất cả các lựa chọn vật liệu - tủ, mặt bàn, gạch, thiết bị và phần cứng - đều được hoàn thành trước khi bắt đầu phá dỡ. Bản vẽ giấy phép được gửi ở giai đoạn này nếu phạm vi của bạn bao gồm hệ thống ống nước, điện, khí đốt hoặc kết cấu. Các thành phố trực thuộc Metro Vancouver thường mất từ ​​2 đến 4 tuần để cấp giấy phép xây dựng. Các đơn đặt hàng tủ tùy chỉnh được đặt ngay sau khi phê duyệt thiết kế để quá trình chế tạo diễn ra đồng thời với quá trình xử lý giấy phép, tránh hàng tuần trì hoãn không cần thiết."
+      },
+      "phase2": {
+        "label": "Xây dựng – Giai đoạn 1",
+        "title": "Phá hủy & Giao dịch thô sơ",
+        "description": "Sau khi giấy phép được cấp, việc phá dỡ sẽ loại bỏ các tủ, mặt bàn, thiết bị và sàn hiện có, lấy lại không gian để làm khung và sàn phụ. Thợ sửa ống nước, thợ điện và thợ lắp khí đốt hoàn thành tất cả việc di dời hoặc nâng cấp trong quá trình hoàn thiện - đây là giai đoạn khó khăn nhất và nhà bếp sẽ hoàn toàn không hoạt động. Một thanh tra tòa nhà đến để phê duyệt công việc hoàn thiện trước khi đóng tường và trần nhà. Bước kiểm tra bắt buộc này cần phải được lên lịch trước với chính quyền thành phố."
+      },
+      "phase3": {
+        "label": "Xây dựng - Giai đoạn 2",
+        "title": "Lắp đặt tủ & tạo khuôn mặt bàn",
+        "description": "Tủ được lắp đặt sau khi quá trình kiểm tra sơ bộ hoàn thành. Cột mốc quan trọng này mở ra quá trình chế tạo mặt bàn: máy tạo mẫu mặt bàn đo chính xác các tủ đã lắp đặt để tấm có thể được cắt cho vừa vặn. Việc tạo khuôn không thể diễn ra trước khi tủ được lắp đặt và cân bằng hoàn chỉnh — một quan niệm sai lầm phổ biến làm trì hoãn các dự án khi khách hàng mong muốn lắp đặt quầy ngay sau khi giao tủ. Các tấm thạch anh hoặc đá được chuyển đến xưởng chế tạo sau khi tạo khuôn và được giao sau khi được cắt và đánh bóng."
+      },
+      "phase4": {
+        "label": "Xây dựng - Giai đoạn 3",
+        "title": "Mặt bàn, Ngói, Thiết bị & Hoàn thiện",
+        "description": "Mặt bàn được lắp đặt sau khi chế tạo và giao hàng. Tiếp theo là gạch lát nền, sàn, đèn chậu và đèn chiếu sáng dưới tủ. Các thiết bị được kết nối sau khi hoàn thiện mặt bàn và hệ thống ống nước - đường cấp và thoát nước của máy rửa chén, gas hoặc mạch 240V, đường nước của tủ lạnh. Sau đó, các thợ sơn và thợ mộc hoàn thiện sẽ hoàn thiện không gian bằng sơn, lắp đặt phần cứng và bất kỳ công việc trang trí hoặc đúc vương miện nào. Lúc này nhà bếp sẽ hoạt động trở lại."
+      },
+      "phase5": {
+        "label": "Giai đoạn cuối cùng",
+        "title": "Kiểm tra, Punch-List & Bàn giao",
+        "description": "Việc kiểm tra hệ thống ống nước và điện cuối cùng được lên kế hoạch sau khi tất cả các kết nối được thực hiện. Nhà thầu của bạn sẽ cùng bạn đi vào bếp trong một cuộc kiểm tra theo danh sách đột xuất - những phần sửa chữa nổi bật như sương mù vữa, mép sơn, căn chỉnh phần cứng hoặc vận hành thiết bị đều được ghi lại và giải quyết trước khi khoản thanh toán cuối cùng được phát hành. Sau khi tất cả các hạng mục đã được ký kết, nhà thầu sẽ đóng hồ sơ giấy phép với chính quyền thành phố và cung cấp tài liệu về quyền lưu giữ theo Đạo luật Quyền cầm giữ của Người xây dựng của BC."
+      }
+    },
+    "process": {
+      "title": "Quá trình cải tạo nhà bếp ở Vancouver diễn ra như thế nào",
+      "subtitle": "Sáu bước từ chuyến thăm cơ sở đầu tiên đến bàn giao cuối cùng",
+      "step1": {
+        "label": "Bước 1",
+        "title": "Định nghĩa phạm vi và lượt truy cập trang web",
+        "description": "Một chuyên gia cải tạo sẽ đến thăm nhà bạn để đo đạc căn bếp và xem xét các mục tiêu, danh sách mong muốn và ngân sách của bạn. Các hạn chế về kết cấu - tường chịu lực, vị trí ống nước, công suất bảng điện - được đánh giá tại chỗ. Phạm vi và phạm vi ngân sách được ghi lại trong một đề xuất bằng văn bản trước khi bắt đầu bất kỳ công việc nào."
+      },
+      "step2": {
+        "label": "Bước 2",
+        "title": "Lựa chọn thiết kế & vật liệu",
+        "description": "Kiểu dáng tủ, cấu hình cửa, vật liệu mặt bàn, gạch, sàn, phần cứng và gói thiết bị đều được hoàn thiện. Đối với các dự án liên quan đến việc dỡ bỏ tường hoặc thay đổi bố cục, kỹ sư kết cấu có thể được thuê để xác định kích thước dầm và chi tiết kết nối. Hầu hết khách hàng dành 1 đến 2 buổi để thu hẹp các lựa chọn trước khi ký vào gói thiết kế."
+      },
+      "step3": {
+        "label": "Bước 3",
+        "title": "Đơn xin giấy phép & Đặt hàng vật liệu",
+        "description": "Bản vẽ giấy phép được nộp cho thành phố của bạn đối với bất kỳ công trình ống nước, điện, khí đốt hoặc kết cấu nào. Ở Metro Vancouver, quá trình xem xét giấy phép thường mất từ ​​2 đến 4 tuần. Các đơn đặt hàng tủ và quầy bếp được đặt đồng thời để nguyên liệu đến gần với ngày cấp giấy phép, giảm thiểu khoảng cách giữa thời điểm phê duyệt giấy phép và thời điểm bắt đầu xây dựng."
+      },
+      "step4": {
+        "label": "Bước 4",
+        "title": "Phá hủy & làm thô",
+        "description": "Tủ, thiết bị, sàn và lớp hoàn thiện cũ sẽ bị loại bỏ. Những công việc thô sơ - thợ sửa ống nước, thợ điện, thợ lắp khí đốt và thợ đóng khung - hoàn thành tất cả việc di dời và nâng cấp trước khi các bức tường được đóng lại. Thanh tra tòa nhà ký kết công việc đang hoàn thiện như một điểm kiểm tra bắt buộc trước khi việc xây dựng tiếp tục sang giai đoạn tiếp theo."
+      },
+      "step5": {
+        "label": "Bước 5",
+        "title": "Lắp đặt tủ, mặt bàn và hoàn thiện",
+        "description": "Các tủ được lắp đặt và san bằng, tiếp theo là tạo khuôn và chế tạo mặt bàn. Sau khi lắp đặt mặt bàn, gạch lát nền, sàn nhà, thiết bị, đèn nồi, sơn và phần cứng sẽ được lắp đặt để đưa nhà bếp về trạng thái hoàn thiện. Giai đoạn này biến không gian từ một cái vỏ trần thành một nhà bếp hoạt động được."
+      },
+      "step6": {
+        "label": "Bước 6",
+        "title": "Kiểm tra lần cuối & bàn giao",
+        "description": "Các cuộc thanh tra thương mại đã được lên lịch và hồ sơ giấy phép sẽ được đóng lại với chính quyền thành phố. Hướng dẫn cuối cùng ghi lại bất kỳ mục nào trong danh sách nổi bật. Sau khi hoàn thành, bạn sẽ nhận được tài liệu bảo hành, giấy tờ giữ lại theo Đạo luật về Quyền cầm giữ của Người xây dựng của BC và hướng dẫn chăm sóc mặt bàn, tủ và vữa dán gạch mới của bạn."
+      }
+    },
     "realProjects": {
       "title": "Dự Án Cải Tạo Phòng Bếp Thực",
       "subtitle": "Duyệt qua {count} dự án phòng bếp đã hoàn thành với ngân sách và tiến độ thực"
@@ -95,7 +159,11 @@
       "q5": "Tôi có thể cải tạo phòng bếp trong khi sống ở nhà không?",
       "a5": "Có, hầu hết khách hàng của chúng tôi tiếp tục sống trong nhà trong suốt thời gian cải tạo phòng bếp. Chúng tôi giúp thiết lập một khu vực bếp tạm thời và sắp xếp công việc để giảm thiểu gián đoạn. Hãy chuẩn bị tinh thần không có phòng bếp hoạt động trong 2–4 tuần tùy phạm vi công việc.",
       "q6": "Chi phí trung bình của việc sửa sang lại nhà bếp ở Vancouver là bao nhiêu?",
-      "a6": "Dựa trên các dự án nhà bếp Reno Stars đã hoàn thành của chúng tôi trên khắp Greater Vancouver, chi phí trung bình cho việc tu sửa nhà bếp nằm ở mức tầm trung vào khoảng $28.000–$38.000. Điều này bao gồm tủ Shaker bán tùy chỉnh, mặt bàn thạch anh, sàn và gạch lát nền mới, hệ thống chiếu sáng cập nhật và bộ thiết bị tầm trung. Các bản sửa sang phù hợp với ngân sách (làm mới mỹ phẩm, tủ đựng đồ, quầy gỗ) có giá từ 15.000 đến 27.000 đô la và các bản dựng tùy chỉnh cao cấp (tủ tùy chỉnh đầy đủ, đá cao cấp, đảo thác nước, lớp hoàn thiện của nhà thiết kế) đạt 40.000 đô la trở lên. Hầu hết các dự án mất 3–6 tuần."
+      "a6": "Dựa trên các dự án nhà bếp Reno Stars đã hoàn thành của chúng tôi trên khắp Greater Vancouver, chi phí trung bình cho việc tu sửa nhà bếp nằm ở mức tầm trung vào khoảng $28.000–$38.000. Điều này bao gồm tủ Shaker bán tùy chỉnh, mặt bàn thạch anh, sàn và gạch lát nền mới, hệ thống chiếu sáng cập nhật và bộ thiết bị tầm trung. Các bản sửa sang phù hợp với ngân sách (làm mới mỹ phẩm, tủ đựng đồ, quầy gỗ) có giá từ 15.000 đến 27.000 đô la và các bản dựng tùy chỉnh cao cấp (tủ tùy chỉnh đầy đủ, đá cao cấp, đảo thác nước, lớp hoàn thiện của nhà thiết kế) đạt 40.000 đô la trở lên. Hầu hết các dự án mất 3–6 tuần.",
+      "q7": "Thiết bị nhà bếp bổ sung bao nhiêu vào ngân sách cải tạo ở Vancouver?",
+      "a7": "Thiết bị gia dụng là một hạng mục quan trọng trong bất kỳ cuộc cải tạo nhà bếp nào. Các gói cấp cơ bản (tủ lạnh, bếp nấu, máy rửa chén) có giá khởi điểm từ 3.000–5.000 USD. Các thương hiệu tầm trung như Bosch, KitchenAid và Café có giá từ 8.000 đến 15.000 USD cho một bộ phù hợp. Các thương hiệu có sẵn bảng điều khiển cao cấp hoặc theo phong cách chuyên nghiệp như Sub-Zero, Wolf hoặc Miele có thể vượt quá 30.000 USD. Đối với các căn hộ và căn hộ cho thuê, việc sử dụng phạm vi thiết bị trị giá $4.000–$8.000 thường mang lại lợi tức đầu tư tốt nhất — bạn sẽ có được hiệu suất đáng tin cậy mà không cần đầu tư quá nhiều vào thị trường.",
+      "q8": "Những cách tốt nhất để giảm chi phí cải tạo nhà bếp ở Vancouver là gì?",
+      "a8": "Tiết kiệm lớn nhất là giữ lại cách bố trí hệ thống ống nước và khí đốt hiện có của bạn — tránh di dời đường ống và đường dây có thể tiết kiệm được từ $5.000–$15.000. Chọn tủ bán tùy chỉnh thay vì tùy chỉnh hoàn toàn (chúng mang lại vẻ ngoài tương tự với chi phí 40–60%) và chọn mặt bàn thạch anh thay vì đá tự nhiên (rẻ hơn 20–40% với độ bền tốt hơn). Cuối cùng, hãy lên kế hoạch cải tạo trái mùa: Tháng 11 đến tháng 2 đối với các nhà thầu ở Vancouver sẽ chậm hơn và bạn có nhiều khả năng đảm bảo mức giá tốt hơn và tiến độ nhanh hơn trong những tháng đó."
     }
   }
 }

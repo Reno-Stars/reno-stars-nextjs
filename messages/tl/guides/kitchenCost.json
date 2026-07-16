@@ -56,6 +56,70 @@
         "description": "Ang City of Vancouver building permits para sa kitchen renovation ay karaniwang $200–$1,000. Kailangan kapag may pagbabago sa plumbing, electrical, gas, o structural elements."
       }
     },
+    "timeline": {
+      "title": "Timeline ng Pagkukumpuni ng Kusina",
+      "subtitle": "Ano ang aasahan mula sa pag-aaplay ng permiso hanggang sa paglipat — batay sa mga proyekto sa kusina ng Greater Vancouver",
+      "intro": "Ang on-site na pagkukumpuni sa kusina ay karaniwang tumatakbo nang 3 hanggang 6 na linggo kapag ang mga trade ay on-site. Ang buong proyekto mula sa unang konsultasyon hanggang sa paglipat-pabalik ay tumatagal, gayunpaman, sa sandaling isasaalang-alang mo ang pagpoproseso ng permit at mga oras ng tingga ng materyal. Ang mga pagsasaayos ng badyet na may mga stock cabinet at walang pagbabago sa pagtutubero ay pinakamabilis. Ang mga high-end na proyekto na may custom na cabinetry, structural work, at maraming inspeksyon ng permit ay tumatagal ng pinakamaraming oras. Ang pag-unawa sa pagkakasunud-sunod ay nakakatulong sa iyong magplano ng mga paghahatid ng appliance, pansamantalang pag-setup ng kusina, at sa sarili mong iskedyul habang ginagawa.",
+      "phase1": {
+        "label": "Pre-Construction",
+        "title": "Disenyo, Mga Materyal at Aplikasyon ng Permit",
+        "description": "Ang mga sukat, pag-sign-off sa disenyo, at lahat ng materyal na seleksyon — mga cabinet, countertop, tile, appliances, at hardware — ay nakumpleto bago magsimula ang anumang demolisyon. Ang mga guhit ng permit ay isinumite sa yugtong ito kung ang iyong saklaw ay may kasamang pagtutubero, elektrikal, gas, o gawaing istruktura. Ang mga munisipyo ng Metro Vancouver ay karaniwang tumatagal ng 2 hanggang 4 na linggo upang mag-isyu ng permit sa gusali. Ang mga custom na order ng cabinetry ay inilalagay kaagad pagkatapos ng pag-sign-off ng disenyo upang ang katha ay tumatakbo kasabay ng pagpoproseso ng permit, na iniiwasan ang mga linggo ng hindi kinakailangang pagkaantala."
+      },
+      "phase2": {
+        "label": "Konstruksyon - Phase 1",
+        "title": "Demolisyon at Rough-In Trades",
+        "description": "Kapag naibigay na ang permit, aalisin ng demolition ang mga kasalukuyang cabinet, countertop, appliances, at flooring, at ibabalik ang espasyo sa framing at subfloor. Kumpletuhin ng mga tubero, electrician, at gas fitters ang lahat ng relokasyon o pag-upgrade sa panahon ng rough-in — ito ang pinaka nakakagambalang yugto at ang kusina ay magiging ganap na hindi gumagana. Isang inspektor ng gusali ang bumisita upang aprubahan ang magaspang na trabaho bago isara ang mga dingding at kisame. Ang mandatoryong hakbang na ito sa inspeksyon ay kailangang mai-iskedyul nang maaga sa munisipyo."
+      },
+      "phase3": {
+        "label": "Konstruksyon - Phase 2",
+        "title": "Pag-install ng Gabinete at Pag-template sa Countertop",
+        "description": "Ang mga cabinet ay inilalagay kapag pumasa ang rough-in inspection. Ang milestone na ito ay nagbubukas ng countertop fabrication: ang isang countertop templater ay sumusukat sa mga naka-install na cabinet nang tumpak upang ang slab ay maaaring gupitin upang magkasya. Hindi maaaring mangyari ang pag-template bago ganap na maitakda at mai-level ang mga cabinet — isang karaniwang maling kuru-kuro na nagpapaantala sa mga proyekto kapag inaasahan ng mga kliyente ang counter installation kaagad pagkatapos ng paghahatid ng cabinet. Ang mga quartz o stone slab ay pumupunta sa fabrication shop pagkatapos ma-templat at ihahatid kapag naputol at pinakintab."
+      },
+      "phase4": {
+        "label": "Konstruksyon - Phase 3",
+        "title": "Mga Countertop, Tile, Appliances at Finishing",
+        "description": "Ang mga countertop ay naka-install pagkatapos ng katha at paghahatid. Sunod na naka-install ang backsplash tile, flooring, pot-light, at under-cabinet lighting. Ang mga appliances ay konektado sa sandaling ang mga countertop at plumbing rough-in ay parehong pinal - supply ng dishwasher at drain, range gas o 240V circuit, linya ng tubig sa refrigerator. Pagkatapos ay kumpletuhin ng mga pintor at mga karpintero ang espasyo gamit ang pintura, pag-install ng hardware, at anumang gawaing pag-trim o paghubog ng korona. Sa puntong ito ang kusina ay nagiging functional muli."
+      },
+      "phase5": {
+        "label": "Pangwakas na Yugto",
+        "title": "Mga Inspeksyon, Punch-List at Handover",
+        "description": "Ang panghuling pagtutubero at mga inspeksyon sa kuryente ay naka-iskedyul pagkatapos maisagawa ang lahat ng koneksyon. Ang iyong kontratista ay naglalakad sa kusina kasama mo sa isang punch-list na inspeksyon — ang mga natitirang touch-up gaya ng grout haze, mga gilid ng pintura, pag-align ng hardware, o pag-commissioning ng appliance ay nakadokumento at tinutugunan bago ilabas ang huling pagbabayad. Kapag napirmahan na ang lahat ng bagay, isasara ng kontratista ang file ng permiso sa munisipyo at nagbibigay ng dokumentasyong lien-holdback alinsunod sa Builder Lien Act ng BC."
+      }
+    },
+    "process": {
+      "title": "Paano Gumagana ang Pagkukumpuni ng Kusina sa Vancouver",
+      "subtitle": "Anim na hakbang mula sa unang pagbisita sa site hanggang sa huling handover",
+      "step1": {
+        "label": "Hakbang 1",
+        "title": "Pagbisita sa Site at Kahulugan ng Saklaw",
+        "description": "Isang renovation specialist ang bumibisita sa iyong tahanan upang sukatin ang kusina at suriin ang iyong mga layunin, listahan ng nais, at badyet. Ang mga hadlang sa istruktura — mga pader na nagdadala ng pagkarga, lokasyon ng salansan ng tubo, kapasidad ng panel ng kuryente — ay tinasa on-site. Ang saklaw at hanay ng badyet ay nakadokumento sa isang nakasulat na panukala bago magsimula ang anumang gawain."
+      },
+      "step2": {
+        "label": "Hakbang 2",
+        "title": "Disenyo at Pagpili ng Materyal",
+        "description": "Ang istilo ng cabinet, mga profile ng pinto, materyal sa countertop, tile, sahig, hardware, at appliance package ay tinatapos na. Para sa mga proyektong kinasasangkutan ng pag-alis ng pader o mga pagbabago sa layout, maaaring makipag-ugnayan ang isang inhinyero sa istruktura upang tukuyin ang laki ng beam at mga detalye ng koneksyon. Karamihan sa mga kliyente ay gumugugol ng 1 hanggang 2 session sa pagpapaliit ng mga seleksyon bago mag-sign off sa package ng disenyo."
+      },
+      "step3": {
+        "label": "Hakbang 3",
+        "title": "Pahintulot sa Application at Pag-order ng Materyal",
+        "description": "Ang mga guhit ng permiso ay isinumite sa iyong munisipalidad para sa anumang gawaing pagtutubero, elektrikal, gas, o istruktura. Sa Metro Vancouver, karaniwang tumatagal ng 2 hanggang 4 na linggo ang pagsusuri ng permit. Ang mga order sa cabinet at countertop ay sabay na inilalagay upang ang mga materyales ay dumating malapit sa petsa ng pag-isyu ng permit, na pinapaliit ang agwat sa pagitan ng pag-apruba ng permit at pagsisimula ng konstruksiyon."
+      },
+      "step4": {
+        "label": "Hakbang 4",
+        "title": "Demolisyon at Rough-In",
+        "description": "Ang mga lumang cabinet, appliances, flooring, at finishes ay tinanggal. Magaspang na pangangalakal — tubero, electrician, gas fitter, at framer — kumpletuhin ang lahat ng paglilipat at pag-upgrade bago isara ang mga pader. Ang isang inspektor ng gusali ay pumipirma sa rough-in na trabaho bilang isang mandatoryong checkpoint bago magpatuloy ang konstruksiyon sa susunod na yugto."
+      },
+      "step5": {
+        "label": "Hakbang 5",
+        "title": "Gabinete, Countertop at Tapusin ang Pag-install",
+        "description": "Ang mga cabinet ay naka-install at naka-level, na sinusundan ng countertop templating at fabrication. Kapag nakapasok na ang mga countertop, naka-install ang backsplash tile, flooring, appliances, pot-light, pintura, at hardware para dalhin ang kusina sa tapos na estado nito. Binabago ng yugtong ito ang espasyo mula sa isang hubad na shell sa isang gumaganang kusina."
+      },
+      "step6": {
+        "label": "Hakbang 6",
+        "title": "Pangwakas na Inspeksyon at Handover",
+        "description": "Ang mga inspeksyon sa kalakalan ay naka-iskedyul at ang file ng permiso ay sarado sa munisipyo. Ang isang huling walkthrough ay kumukuha ng anumang natitirang punch-list item. Sa pagkumpleto, makakatanggap ka ng dokumentasyon ng warranty, lien-holdback na papeles ayon sa Builder Lien Act ng BC, at mga tagubilin sa pangangalaga para sa iyong mga bagong countertop, cabinet, at tile grout."
+      }
+    },
     "realProjects": {
       "title": "Totoong Kitchen Renovation Projects",
       "subtitle": "Mag-browse sa {count} natapos na kitchen projects na may aktwal na budget at timeline"
@@ -95,7 +159,11 @@
       "q5": "Pwede ba akong magrenovate ng kitchen habang nakatira sa bahay?",
       "a5": "Oo, karamihan sa aming kliyente ay nagpapatuloy sa pamumuhay sa kanilang bahay habang kitchen renovation. Tinutulungan namin sa pag-set up ng temporary kitchen area at i-schedule ang trabaho para mabawasan ang abala. Asahan na walang functional kitchen sa loob ng 2–4 na linggo depende sa scope ng trabaho.",
       "q6": "Ano ang average na halaga ng remodel ng kusina sa Vancouver?",
-      "a6": "Batay sa aming natapos na mga proyekto sa kusina ng Reno Stars sa Greater Vancouver, ang average na halaga ng isang remodel ng kusina ay nasa mid-range na tier sa humigit-kumulang $28,000–$38,000. Kabilang dito ang mga semi-custom na Shaker cabinet, mga quartz countertop, bagong tile na backsplash at flooring, na-update na ilaw, at isang mid-tier na set ng appliance. Ang budget-friendly na mga remodel (cosmetic refresh, stock cabinet, laminate counter) ay tumatakbo ng $15,000–$27,000, at ang mga high-end na custom na build (full custom cabinetry, premium stone, waterfall island, designer finishes) ay umaabot sa $40,000+. Karamihan sa mga proyekto ay tumatagal ng 3-6 na linggo."
+      "a6": "Batay sa aming natapos na mga proyekto sa kusina ng Reno Stars sa Greater Vancouver, ang average na halaga ng isang remodel ng kusina ay nasa mid-range na tier sa humigit-kumulang $28,000–$38,000. Kabilang dito ang mga semi-custom na Shaker cabinet, mga quartz countertop, bagong tile na backsplash at flooring, na-update na ilaw, at isang mid-tier na set ng appliance. Ang budget-friendly na mga remodel (cosmetic refresh, stock cabinet, laminate counter) ay tumatakbo ng $15,000–$27,000, at ang mga high-end na custom na build (full custom cabinetry, premium stone, waterfall island, designer finishes) ay umaabot sa $40,000+. Karamihan sa mga proyekto ay tumatagal ng 3-6 na linggo.",
+      "q7": "Magkano ang idinaragdag ng mga kagamitan sa kusina sa isang badyet sa pagsasaayos ng Vancouver?",
+      "a7": "Ang mga appliances ay isang makabuluhang line item sa anumang pagkukumpuni sa kusina. Ang mga entry-level na pakete (refrigerator, kalan, makinang panghugas) ay nagsisimula sa $3,000–$5,000. Ang mga mid-range na brand gaya ng Bosch, KitchenAid, at Café ay nagpapatakbo ng $8,000–$15,000 para sa isang katugmang set. Ang mga premium na panel-ready o pro-style na brand tulad ng Sub-Zero, Wolf, o Miele ay maaaring lumampas sa $30,000. Para sa mga condo at rental suite, ang pananatili sa $4,000–$8,000 na hanay ng appliance ay karaniwang naghahatid ng pinakamahusay na return on investment — nakakakuha ka ng maaasahang performance nang walang labis na capital para sa merkado.",
+      "q8": "Ano ang mga pinakamahusay na paraan upang mabawasan ang mga gastos sa pagsasaayos ng kusina sa Vancouver?",
+      "a8": "Ang nag-iisang pinakamalaking pagtitipid ay ang pagpapanatili ng iyong umiiral na layout ng pagtutubero at gas — ang pag-iwas sa mga paglipat ng tubo at linya ay makakatipid ng $5,000–$15,000. Pumili ng mga semi-custom na cabinet kaysa sa ganap na custom (naghahatid sila ng katulad na hitsura sa 40–60% ng gastos), at mag-opt para sa mga quartz countertop sa natural na bato (20–40% mas mura at mas tibay). Panghuli, planuhin ang iyong pagsasaayos sa off-season: Ang Nobyembre hanggang Pebrero ay mas mabagal para sa mga kontratista ng Vancouver, at mas malamang na makakuha ka ng mas mahusay na pagpepresyo at mas mabilis na pag-iiskedyul sa mga buwang iyon."
     }
   }
 }

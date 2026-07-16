@@ -12,6 +12,7 @@
     "ctaDescription": "Reserve una consulta gratis en nuestro showroom. Nuestro equipo de diseño le ayudará a explorar opciones y planificar su remodelación.",
     "bookConsultation": "Reservar una consulta gratis",
     "callUs": "O llámenos al",
+    "faqTitle": "Preguntas frecuentes sobre la sala de exposición",
     "faq1q": "¿Necesito una cita para visitar el showroom?",
     "faq1a": "Las visitas sin cita son bienvenidas, pero recomendamos reservar para que nuestro equipo de diseño pueda dedicarle tiempo a discutir su proyecto en detalle.",
     "faq2q": "¿Qué puedo ver en el showroom de Reno Stars?",
@@ -20,6 +21,14 @@
     "faq3a": "Sí, hay estacionamiento gratis disponible justo frente a nuestro showroom en Richmond.",
     "faq4q": "¿Puedo llevar mis planos de remodelación al showroom?",
     "faq4a": "¡Por supuesto! Lleve sus planos, fotos o imágenes de inspiración. Nuestro equipo puede revisarlos y ofrecerle recomendaciones profesionales durante su visita.",
+    "faq5q": "¿Qué materiales de renovación se exhiben en la sala de exposición?",
+    "faq5a": "La sala de exposición muestra muestras de gabinetes de cocina en estilos estilo shaker, losa y paneles elevados; losas para encimera en cuarzo y laminado; y pavimentos y revestimientos en diversos formatos y acabados. Comparar acabados uno al lado del otro en persona es mucho más útil que seleccionarlos de un catálogo o una pantalla.",
+    "faq6q": "¿Con cuánta antelación debo reservar una cita para la sala de exposición?",
+    "faq6a": "Para la mayoría de las consultas, lo ideal es avisar con 3 a 7 días de antelación. Si la fecha de inicio de su proyecto es dentro de las próximas 2 a 4 semanas, llámenos directamente al 778-960-7999 y haremos todo lo posible para acomodar una visita la misma semana.",
+    "faq7q": "¿La consulta del showroom es gratuita?",
+    "faq7a": "Sí. Las consultas de showroom son completamente gratuitas y sin compromiso. Nuestro equipo revisará su proyecto, analizará las opciones de materiales y le brindará una descripción general del presupuesto sin costo alguno. Las cotizaciones escritas detalladas también son gratuitas.",
+    "faq8q": "¿Puedo hablar sobre varias salas en una sola visita a la sala de exposición?",
+    "faq8a": "Absolutamente. Si trae planos de planta o medidas para varias habitaciones, nuestro equipo puede analizar el alcance y los precios aproximados para su cocina, baños y otras áreas en una sola consulta. Los proyectos con varias habitaciones suelen beneficiarse de una planificación combinada.",
     "appointmentPrefix": "Le invitamos a programar una visita a nuestro showroom de remodelación",
     "appointmentBold": "¡con cita previa!"
   }

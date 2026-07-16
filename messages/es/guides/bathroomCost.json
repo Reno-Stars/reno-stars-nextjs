@@ -28,6 +28,11 @@
         "description": "Azulejo premium, duchas sin curva, bañeras independientes, gabinetes a medida, accesorios inteligentes y modificaciones estructurales. A menudo incluye remodelar 2-3+ baños simultáneamente."
       }
     },
+    "inlineCta": {
+      "heading": "¿Listo para planificar la renovación de tu baño?",
+      "sub": "Presupuesto gratuito y detallado en 48 horas, sin compromiso.",
+      "button": "Obtenga una cotización gratuita →"
+    },
     "factors": {
       "title": "¿Qué afecta el costo de su remodelación de baño?",
       "subtitle": "Seis factores clave que determinan su precio final",
@@ -78,6 +83,74 @@
         "title": "Invertir en impermeabilización",
         "description": "Escatimar en impermeabilización lleva a reparaciones costosas más tarde. Los sistemas de membrana adecuados agregan $1,500-$3,500 al inicio pero evitan $10,000+ en daños por agua a futuro."
       }
+    },
+    "showerCost": {
+      "title": "Costo de renovación de duchas en Vancouver",
+      "subtitle": "Precios específicos de duchas de proyectos completados de Metro Vancouver",
+      "intro": "Los trabajos de ducha son uno de los elementos más habituales en la reforma de un baño. Ya sea que esté convirtiendo una bañera en una ducha, agregando una entrada sin bordillo o simplemente reemplazando un plato de ducha y un vidrio viejos, los costos varían significativamente según el alcance.",
+      "conversion": {
+        "title": "Conversión de bañera a ducha",
+        "range": "$3,000 – $8,000",
+        "description": "Quitar una bañera existente e instalar una ducha en el mismo espacio. Incluye nuevo revestimiento o base de azulejos, cabezal de ducha, ajuste de instalación y una cabina de vidrio estándar con o semi-marco. El baño más popular en Metro Vancouver, especialmente en casas de 2 baños donde se guarda una bañera y la otra se convierte en ducha."
+      },
+      "curbless": {
+        "title": "Ducha sin bordillos (umbral cero)",
+        "range": "$5,000 – $13,000",
+        "description": "Sin escalones ni rebordes en la entrada de la ducha. Requiere impermeabilización personalizada con drenaje lineal o central, piso inclinado y Schluter Kerdi o membrana equivalente en toda la zona húmeda. Popular en baños primarios y para baños envejecidos en el lugar. Las duchas sin bordillo agregan entre $1,500 y $3,000 al costo de una instalación de ducha estándar debido a impermeabilización adicional y trabajos de drenaje personalizados."
+      },
+      "enclosureOnly": {
+        "title": "Solo reemplazo de gabinete de vidrio",
+        "range": "$1,200 – $3,500",
+        "description": "Cambiar una vieja mampara de ducha con marco por una puerta y un panel de vidrio sin marco o semi-sin marco. No se requieren azulejos ni cambios de plomería. Alcance rápido, generalmente completable en un día. La mejor opción cuando la losa y la base existentes están en buenas condiciones."
+      },
+      "note": "Los costos de la ducha generalmente están incluidos en el presupuesto de renovación completa del baño. Para obtener un desglose detallado por tipo de ducha (bañera a ducha, vestidor sin bordillos, mampara de vidrio), consulte nuestra guía dedicada:"
+    },
+    "bathtubCost": {
+      "title": "Costos de la bañera",
+      "description": "Un cambio de bañera tipo alcoba cuesta entre $ 800 y $ 2200 instalados; Las bañeras empotradas e independientes cuestan entre $2,500 y $8,500+ una vez que se cuentan el marco personalizado y la plomería montada en el piso. Las conversiones de bañera a ducha se tratan en la sección de duchas anterior. Para ver el desglose completo, nivel por nivel (bañeras empotradas, empotradas, de inmersión y independientes), consulte nuestra guía dedicada a",
+      "linkText": "Costo de renovación de la bañera en Vancouver."
+    },
+    "toiletCost": {
+      "title": "Costo de renovación de baños en Vancouver",
+      "subtitle": "Costos de reemplazo de inodoros de proyectos completados en Metro Vancouver",
+      "intro": "Un cambio básico de inodoro es la opción de plomería más barata en cualquier renovación de baño. Los costos aumentan una vez que se agregan inodoros de una pieza de altura cómoda, diseños con faldón o soportes suspendidos, que requieren abrir la pared para enmarcar el tanque empotrado.",
+      "standard": {
+        "title": "Estándar de dos piezas o de una pieza",
+        "range": "$400 – $1,500",
+        "description": "Inodoro de dos piezas con tanque sobre taza o de una sola pieza alargado de altura cómoda (altura de taza de 17\" a 19\"). Incluye anillo de cera o sello sin cera, nueva línea de suministro trenzada, válvula de cierre y eliminación de la unidad vieja. La opción predeterminada que cumple con el código para la mayoría de las renovaciones de baños de Metro Vancouver."
+      },
+      "skirted": {
+        "title": "Con faldón / Altura cómoda",
+        "range": "$900 – $2,000",
+        "description": "Inodoro de una pieza con faldón de lados lisos (Toto Aquia IV, Kohler Veil o equivalente) con asiento de cierre suave. El exterior liso del sifón oculta la típica curva de plomería expuesta para una apariencia moderna y una limpieza más fácil. Preferido para baños principales y tocadores actualizados."
+      },
+      "wallHung": {
+        "title": "Tanque suspendido + empotrado",
+        "range": "$3,000 – $8,500+",
+        "description": "El cuenco flota del suelo; El tanque está oculto en una cavidad de pared enrasada con un marco de soporte. Abre el muro, normalmente agrega entre 1 y 2 días al alcance. Maximiza el espacio visual en tocadores compactos y baños de lujo."
+      },
+      "note": "El precio de los inodoros inteligentes/bidet varía mucho según el dispositivo ($1,300 a $4,500 instalados). Para obtener un desglose completo de los tipos de inodoros, notas de instalación y requisitos de permisos, consulte nuestra guía dedicada:"
+    },
+    "vanityCost": {
+      "title": "Costo de renovación del tocador en Vancouver",
+      "subtitle": "Desde reemplazo de gabinetes originales hasta gabinetes flotantes totalmente personalizados",
+      "intro": "Una mejora del tocador es el cambio cosmético con mayor retorno de la inversión en un baño: los compradores e inquilinos lo notan de inmediato. Los costos varían desde un sencillo intercambio de existencias hasta una pieza de carpintería totalmente personalizada construida según sus dimensiones exactas.",
+      "stock": {
+        "title": "Reemplazo de tocador original",
+        "range": "$500 – $1,500",
+        "description": "Mueble de tocador tipo box-store con encimera estándar (laminada o mármol cultivado básico). Reemplaza en especie con cambios mínimos. Opción rentable para baños secundarios, propiedades de alquiler o renovaciones económicas donde la plomería permanece en su lugar. Los tocadores en existencia están disponibles al día siguiente en Home Depot, IKEA, Rona o Costco y no requieren tiempo de entrega."
+      },
+      "semiCustom": {
+        "title": "Semipersonalizado con tapa de cuarzo",
+        "range": "$2,000 – $4,000",
+        "description": "Un mueble de tocador de gama media flotante o de piso (perfil de puerta estilo shaker o losa) con encimera de cuarzo cortada a medida y fregadero bajo encimera de cerámica o integrado. La opción de tocador más popular para renovaciones de baños de condominios y casas adosadas en Metro Vancouver."
+      },
+      "custom": {
+        "title": "Tocador flotante personalizado",
+        "range": "$4,000 – $8,000+",
+        "description": "Gabinetes de calidad Millwork construidos con las dimensiones exactas, montados en la pared con una guía de plomería integrada oculta detrás del cuerpo del gabinete, encimera de piedra o cuarzo personalizada, fregadero tipo vasija integrado o bajo montaje y organizadores de cajones. Alcance estándar para renovaciones de baño principal de alta gama en Metro Vancouver."
+      },
+      "note": "La instalación del tocador incluye suministro y conexión empotrada. El espejo, la iluminación y los herrajes se cotizan por separado. Consulte nuestra guía dedicada para obtener un desglose completo:"
     },
     "cityComparison": {
       "title": "Costos de renovación de baños por ciudad",
@@ -131,7 +204,11 @@
       "q5": "¿Debería remodelar varios baños al mismo tiempo?",
       "a5": "Sí, remodelar varios baños simultáneamente ahorra 10-20% comparado con proyectos separados. Los contratistas pueden compartir costos de movilización, coordinar oficios más eficientemente y comprar materiales al por mayor. Hemos completado muchos proyectos de 2-3 baños en Greater Vancouver.",
       "q6": "¿Cuál es el costo promedio de una remodelación de baño en Vancouver?",
-      "a6": "Según nuestros 22 proyectos de baños Reno Stars completados en el Gran Vancouver, el costo promedio de una remodelación de un baño se encuentra en el nivel medio de $ 20 000 a $ 30 000. Las remodelaciones económicas (pequeños tocadores, accesorios estándar, azulejos básicos) cuestan entre $ 10 000 y $ 18 000. Los proyectos de gama media (baño completo con azulejos personalizados, tocador de cuarzo, iluminación actualizada) cuestan entre 22 000 y 32 000 dólares. Las remodelaciones de baño principal de alta gama con bañera independiente, ducha a ras de suelo y piedra de primera calidad alcanzan entre $40,000 y $60,000+. La mayoría de las remodelaciones de baños tardan entre 2 y 5 semanas."
+      "a6": "Según nuestros 22 proyectos de baños Reno Stars completados en el Gran Vancouver, el costo promedio de una remodelación de un baño se encuentra en el nivel medio de $ 20 000 a $ 30 000. Las remodelaciones económicas (pequeños tocadores, accesorios estándar, azulejos básicos) cuestan entre $ 10 000 y $ 18 000. Los proyectos de gama media (baño completo con azulejos personalizados, tocador de cuarzo, iluminación actualizada) cuestan entre 22 000 y 32 000 dólares. Las remodelaciones de baño principal de alta gama con bañera independiente, ducha a ras de suelo y piedra de primera calidad alcanzan entre $40,000 y $60,000+. La mayoría de las remodelaciones de baños tardan entre 2 y 5 semanas.",
+      "q7": "¿Cuánto aporta la reubicación de plomería a la renovación de un baño en Vancouver?",
+      "a7": "Reubicar un drenaje o una línea de suministro generalmente agrega entre $2000 y $6000 a su presupuesto de renovación. Mover el inodoro suele ser el elemento más costoso: requiere abrir el contrapiso y desviar el desagüe principal. Las líneas de suministro del desagüe de la ducha y del tocador son menos costosas de cambiar. Mantener todas las tuberías en su posición actual es una de las estrategias de control de costos más efectivas en las renovaciones de baños: es común ahorrar entre $ 3000 y $ 6000 simplemente manteniendo el mismo espacio. Confirme siempre con su contratista si la reubicación de accesorios está incluida en el alcance o si se cotiza como una orden de cambio.",
+      "q8": "¿Qué incluye una renovación de baño principal de alta gama en Vancouver?",
+      "a8": "Un baño principal de alta gama en Metro Vancouver generalmente cuesta entre $40,000 y $60,000+ e incluye una ducha sin acera con desagüe lineal (que agrega entre $2,000 y $5,000 a una base de ducha estándar), una bañera independiente, piedra natural de gran formato o baldosas de porcelana de primera calidad, un tocador doble personalizado con encimera de cuarzo y accesorios de plomería de diseño. Las conversiones de bañera a ducha para baños principales cuestan entre 3000 y 8000 dólares por sí solas. La inversión a menudo se justifica en viviendas de mayor valor en Metro Vancouver donde los acabados de calidad tienen un impacto significativo en el valor de reventa y la habitabilidad diaria."
     }
   }
 }

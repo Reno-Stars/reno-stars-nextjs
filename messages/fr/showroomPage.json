@@ -12,6 +12,7 @@
     "ctaDescription": "Réservez une consultation gratuite dans notre showroom. Notre équipe de conception vous aidera à explorer les options et à planifier votre rénovation.",
     "bookConsultation": "Réservez une consultation gratuite",
     "callUs": "Ou appelez-nous au",
+    "faqTitle": "FAQ sur les salles d'exposition",
     "faq1q": "Ai-je besoin d’un rendez-vous pour visiter le showroom ?",
     "faq1a": "Les visites sans rendez-vous sont les bienvenues, mais nous vous recommandons de prendre rendez-vous afin que notre équipe de conception puisse consacrer du temps à discuter de votre projet en détail.",
     "faq2q": "Que puis-je voir au showroom Reno Stars ?",
@@ -20,6 +21,14 @@
     "faq3a": "Oui, un parking gratuit est disponible directement devant notre salle d’exposition à Richmond.",
     "faq4q": "Puis-je apporter mes projets de rénovation au showroom ?",
     "faq4a": "Absolument! Apportez vos plans d'étage, vos photos ou vos images d'inspiration. Notre équipe peut les examiner et vous fournir des recommandations professionnelles lors de votre visite.",
+    "faq5q": "Quels matériaux de rénovation sont exposés au showroom ?",
+    "faq5a": "La salle d'exposition présente des échantillons d'armoires de cuisine de styles shaker, dalle et panneaux surélevés ; dalles de comptoir en quartz et stratifié; et carrelage pour sol et mur dans une gamme de formats et de finitions. Comparer les finitions côte à côte en personne est bien plus utile que de sélectionner dans un catalogue ou un écran.",
+    "faq6q": "Combien de temps à l’avance dois-je prendre rendez-vous au showroom ?",
+    "faq6a": "Pour la plupart des consultations, un préavis de 3 à 7 jours est idéal. Si la date de début de votre projet est dans les 2 à 4 prochaines semaines, appelez-nous directement au 778-960-7999 et nous ferons de notre mieux pour organiser une visite la même semaine.",
+    "faq7q": "La consultation en showroom est-elle gratuite ?",
+    "faq7a": "Oui. Les consultations en showroom sont entièrement gratuites et sans engagement. Notre équipe examinera votre projet, discutera des options matérielles et vous fournira gratuitement un aperçu approximatif du budget. Les devis écrits détaillés sont également gratuits.",
+    "faq8q": "Puis-je discuter de plusieurs pièces en une seule visite au showroom ?",
+    "faq8a": "Absolument. Si vous apportez des plans d'étage ou des mesures pour plusieurs pièces, notre équipe peut discuter de la portée et des prix approximatifs de votre cuisine, de vos salles de bains et d'autres espaces en une seule consultation. Les projets multi-pièces bénéficient souvent d’une planification combinée.",
     "appointmentPrefix": "Bienvenue pour planifier une visite à notre showroom de rénovation",
     "appointmentBold": "sur rendez-vous !"
   }

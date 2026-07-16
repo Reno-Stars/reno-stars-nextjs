@@ -28,6 +28,11 @@
         "description": "Gạch cao cấp, vòi sen không bậc, bồn tắm đứng, tủ đặt đóng, phụ kiện thông minh và thay đổi kết cấu. Thường bao gồm cải tạo 2-3+ phòng tắm cùng lúc."
       }
     },
+    "inlineCta": {
+      "heading": "Sẵn sàng để lên kế hoạch cải tạo phòng tắm của bạn?",
+      "sub": "Ước tính chi tiết, miễn phí trong vòng 48 giờ - không có nghĩa vụ.",
+      "button": "Nhận báo giá miễn phí →"
+    },
     "factors": {
       "title": "Điều Gì Ảnh Hưởng Đến Chi Phí Cải Tạo Phòng Tắm?",
       "subtitle": "Sáu yếu tố chính quyết định giá cuối cùng của bạn",
@@ -78,6 +83,74 @@
         "title": "Đầu Tư Vào Chống Thấm",
         "description": "Tiết kiệm trên chống thấm dẫn đến sửa chữa tốn kém sau này. Hệ thống màng đúng cách thêm $1,500–3,500 từ đầu nhưng ngăn $10,000+ hư hỏng do nước về sau."
       }
+    },
+    "showerCost": {
+      "title": "Chi phí cải tạo vòi hoa sen ở Vancouver",
+      "subtitle": "Định giá cụ thể cho vòi hoa sen từ các dự án Metro Vancouver đã hoàn thành",
+      "intro": "Công việc tắm rửa là một trong những hạng mục phổ biến nhất trong quá trình cải tạo phòng tắm. Cho dù bạn đang chuyển đổi bồn tắm thành góc tắm vòi sen mở, thêm lối vào không có lề đường hay chỉ đơn giản là thay thế bồn tắm và kính tắm cũ, chi phí sẽ thay đổi đáng kể tùy theo phạm vi.",
+      "conversion": {
+        "title": "Chuyển đổi từ bồn tắm sang vòi hoa sen",
+        "range": "$3,000 – $8,000",
+        "description": "Loại bỏ một bồn tắm hiện có và lắp đặt một vòi sen trong cùng một diện tích. Bao gồm lớp lót hoặc đế gạch mới, đầu vòi hoa sen, phần điều chỉnh thô và vỏ kính có khung hoặc bán không khung tiêu chuẩn. Loại phòng tắm phổ biến nhất ở Metro Vancouver — đặc biệt là trong những ngôi nhà có 2 phòng tắm, nơi có một bồn tắm và một bồn tắm được chuyển thành góc tắm vòi sen mở."
+      },
+      "curbless": {
+        "title": "Vòi sen không giới hạn (không ngưỡng)",
+        "range": "$5,000 – $13,000",
+        "description": "Không có bước hoặc môi ở lối vào vòi sen. Yêu cầu chống thấm tùy chỉnh với hệ thống thoát nước tuyến tính hoặc trung tâm, sàn dốc và Schluter Kerdi hoặc màng tương đương trên khắp khu vực ẩm ướt. Phổ biến trong phòng tắm riêng và phòng tắm cũ tại chỗ. Vòi sen không viền sẽ làm tăng thêm chi phí từ 1.500 đến 3.000 USD cho việc lắp đặt vòi sen tiêu chuẩn do cần thêm khả năng chống thấm và thoát nước tùy chỉnh."
+      },
+      "enclosureOnly": {
+        "title": "Chỉ thay thế vỏ kính",
+        "range": "$1,200 – $3,500",
+        "description": "Trao đổi vách tắm có khung cũ bằng cửa và bảng điều khiển bằng kính bán không khung hoặc không khung. Không cần lát gạch và không cần thay đổi hệ thống ống nước. Phạm vi nhanh, thường có thể hoàn thành trong một ngày. Lựa chọn tốt nhất khi gạch và nền hiện có ở tình trạng tốt."
+      },
+      "note": "Chi phí tắm thường được bao gồm trong báo giá cải tạo toàn bộ phòng tắm. Để biết thông tin chi tiết theo loại vòi sen — bồn tắm nối với vòi sen, lối vào không có vách ngăn, vách kính — hãy xem hướng dẫn chuyên dụng của chúng tôi:"
+    },
+    "bathtubCost": {
+      "title": "Chi phí bồn tắm",
+      "description": "Một chiếc bồn tắm ở góc tường tương tự có giá lắp đặt từ 800 USD đến 2.200 USD; bồn tắm thả vào và đứng tự do có giá từ 2.500 USD - 8.500 USD + sau khi tính hệ thống ống nước bao quanh và gắn trên sàn tùy chỉnh. Việc chuyển đổi từ bồn tắm sang vòi sen được đề cập trong phần vòi sen ở trên. Để biết thông tin chi tiết đầy đủ theo từng tầng — bồn tắm âm tường, bồn tắm thả vào, bồn ngâm và bồn đứng tự do — hãy xem hướng dẫn riêng của chúng tôi về",
+      "linkText": "chi phí cải tạo bồn tắm ở Vancouver"
+    },
+    "toiletCost": {
+      "title": "Chi phí cải tạo nhà vệ sinh ở Vancouver",
+      "subtitle": "Chi phí thay thế nhà vệ sinh từ các dự án Metro Vancouver đã hoàn thành",
+      "intro": "Trao đổi nhà vệ sinh cơ bản là phạm vi sửa ống nước rẻ nhất trong bất kỳ cuộc cải tạo phòng tắm nào. Chi phí sẽ tăng vọt khi bạn thêm bồn cầu liền khối có chiều cao thoải mái, thiết kế có chân tường hoặc giá đỡ treo tường - đòi hỏi phải mở tường để đóng khung bồn chứa âm tường.",
+      "standard": {
+        "title": "Tiêu chuẩn hai mảnh hoặc một mảnh",
+        "range": "$400 – $1,500",
+        "description": "Bồn cầu hai mảnh dạng bồn đặt trên bồn hoặc bồn cầu một mảnh có chiều cao thoải mái kéo dài (chiều cao bồn 17\"–19\"). Bao gồm vòng sáp hoặc vòng đệm không sáp, dây cung cấp bện mới, van ngắt và xử lý thiết bị cũ. Sự lựa chọn mặc định, tuân thủ quy tắc cho hầu hết các công trình cải tạo phòng tắm ở Metro Vancouver."
+      },
+      "skirted": {
+        "title": "Váy / Chiều cao thoải mái",
+        "range": "$900 – $2,000",
+        "description": "Bồn cầu một khối có mặt nhẵn (Toto Aquia IV, Kohler Veil, hoặc tương đương) với bệ ngồi đóng êm. Bề ngoài dạng bẫy trơn tru che giấu đường cong ống nước lộ ra ngoài điển hình để có vẻ ngoài hiện đại và dễ dàng vệ sinh hơn. Được ưu tiên cho phòng tắm chính và phòng vệ sinh đã được nâng cấp."
+      },
+      "wallHung": {
+        "title": "Treo tường + Bể âm tường",
+        "range": "$3,000 – $8,500+",
+        "description": "Bát nổi khỏi sàn; xe tăng được giấu trong một hốc tường có lông với khung đỡ. Mở bức tường, thường thêm 1–2 ngày vào phạm vi. Tối đa hóa không gian trực quan trong phòng vệ sinh nhỏ gọn và phòng tắm riêng sang trọng."
+      },
+      "note": "Giá bồn cầu thông minh / chậu vệ sinh rất khác nhau tùy theo thiết bị ($1.300–$4.500 lắp đặt). Để biết thông tin chi tiết đầy đủ về các loại bồn cầu, ghi chú lắp đặt và yêu cầu về giấy phép, hãy xem hướng dẫn chuyên dụng của chúng tôi:"
+    },
+    "vanityCost": {
+      "title": "Chi phí cải tạo bàn trang điểm ở Vancouver",
+      "subtitle": "Từ thay thế tủ có sẵn đến tủ nổi hoàn toàn tùy chỉnh",
+      "intro": "Nâng cấp bàn trang điểm là thay đổi về mặt thẩm mỹ có ROI cao nhất trong phòng tắm — người mua và người thuê sẽ nhận thấy điều đó ngay lập tức. Chi phí dao động từ việc hoán đổi cổ phiếu đơn giản đến một sản phẩm gia công hoàn toàn tùy chỉnh được chế tạo theo kích thước chính xác của bạn.",
+      "stock": {
+        "title": "Thay thế Vanity chứng khoán",
+        "range": "$500 – $1,500",
+        "description": "Bộ bàn trang điểm dạng hộp có mặt trên tiêu chuẩn (đá cẩm thạch được nuôi cấy bằng đá cẩm thạch hoặc đá cẩm thạch cơ bản). Thay thế bằng hiện vật với những thay đổi thô sơ ở mức tối thiểu. Lựa chọn tiết kiệm chi phí cho phòng tắm phụ, nhà cho thuê hoặc làm mới ngân sách nơi hệ thống ống nước vẫn còn nguyên. Bàn trang điểm có sẵn trong kho sẽ có sẵn vào ngày hôm sau từ Home Depot, IKEA, Rona hoặc Costco và không cần thời gian giao hàng."
+      },
+      "semiCustom": {
+        "title": "Bán tùy chỉnh với mặt trên thạch anh",
+        "range": "$2,000 – $4,000",
+        "description": "Một tủ trang điểm nổi hoặc gắn trên sàn tầm trung (cánh lắc hoặc cửa dạng tấm) với mặt bàn thạch anh cắt theo kích thước và bồn rửa tích hợp hoặc gốm âm tường. Sự lựa chọn trang điểm phổ biến nhất cho việc cải tạo phòng tắm chung cư và nhà phố ở Metro Vancouver."
+      },
+      "custom": {
+        "title": "Vanity nổi tùy chỉnh",
+        "range": "$4,000 – $8,000+",
+        "description": "Tủ cấp độ gia công được chế tạo theo kích thước chính xác, gắn trên tường với hệ thống ống nước tích hợp được giấu sau thân tủ, mặt bàn bằng đá hoặc thạch anh tùy chỉnh, bồn rửa tích hợp hoặc âm tường và ngăn kéo. Phạm vi tiêu chuẩn cho việc cải tạo phòng tắm chính cao cấp ở Metro Vancouver."
+      },
+      "note": "Việc lắp đặt trang điểm bao gồm nguồn cung cấp và kết nối thô. Gương, ánh sáng và phần cứng được trích dẫn riêng. Xem hướng dẫn chuyên dụng của chúng tôi để biết thông tin chi tiết đầy đủ:"
     },
     "cityComparison": {
       "title": "Chi phí cải tạo phòng tắm theo thành phố",
@@ -131,7 +204,11 @@
       "q5": "Tôi có nên cải tạo nhiều phòng tắm cùng lúc không?",
       "a5": "Có, cải tạo nhiều phòng tắm cùng lúc tiết kiệm 10–20% so với các dự án riêng. Nhà thầu có thể chia sẻ chi phí huy động, phối hợp các tổ thợ hiệu quả hơn và mua vật tư số lượng lớn. Chúng tôi đã hoàn thành nhiều dự án 2–3 phòng tắm khắp Greater Vancouver.",
       "q6": "Chi phí trung bình của việc sửa sang lại phòng tắm ở Vancouver là bao nhiêu?",
-      "a6": "Dựa trên 22 dự án phòng tắm Reno Stars đã hoàn thành của chúng tôi trên khắp Greater Vancouver, chi phí trung bình cho việc tu sửa phòng tắm rơi vào khoảng từ 20.000 đến 30.000 đô la tầm trung. Những sửa sang lại vừa túi tiền (phòng vệ sinh nhỏ, đồ đạc tiêu chuẩn, gạch lát nền cơ bản) có giá từ 10.000–18.000 USD. Các dự án tầm trung (phòng tắm hoàn chỉnh với gạch tùy chỉnh, bàn trang điểm thạch anh, hệ thống chiếu sáng cập nhật) có giá từ 22.000–32.000 USD. Việc tu sửa phòng tắm riêng cao cấp với bồn tắm độc lập, góc tắm vòi sen mở và đá cao cấp có giá từ 40.000–60.000 USD+. Hầu hết việc tu sửa phòng tắm đều mất từ ​​2 đến 5 tuần."
+      "a6": "Dựa trên 22 dự án phòng tắm Reno Stars đã hoàn thành của chúng tôi trên khắp Greater Vancouver, chi phí trung bình cho việc tu sửa phòng tắm rơi vào khoảng từ 20.000 đến 30.000 đô la tầm trung. Những sửa sang lại vừa túi tiền (phòng vệ sinh nhỏ, đồ đạc tiêu chuẩn, gạch lát nền cơ bản) có giá từ 10.000–18.000 USD. Các dự án tầm trung (phòng tắm hoàn chỉnh với gạch tùy chỉnh, bàn trang điểm thạch anh, hệ thống chiếu sáng cập nhật) có giá từ 22.000–32.000 USD. Việc tu sửa phòng tắm riêng cao cấp với bồn tắm độc lập, góc tắm vòi sen mở và đá cao cấp có giá từ 40.000–60.000 USD+. Hầu hết việc tu sửa phòng tắm đều mất từ ​​2 đến 5 tuần.",
+      "q7": "Việc di dời hệ thống ống nước tốn bao nhiêu tiền cho việc cải tạo phòng tắm ở Vancouver?",
+      "a7": "Việc di dời đường ống thoát nước hoặc đường cung cấp thường bổ sung thêm $2.000–$6.000 vào ngân sách cải tạo của bạn. Di chuyển nhà vệ sinh thường là hạng mục đắt tiền nhất - nó đòi hỏi phải mở tầng phụ và định tuyến lại cống chính. Việc dịch chuyển đường ống thoát nước và bàn trang điểm ít tốn kém hơn. Giữ tất cả hệ thống ống nước ở vị trí hiện tại là một trong những chiến lược kiểm soát chi phí hiệu quả nhất trong việc cải tạo phòng tắm: tiết kiệm từ 3.000 đến 6.000 USD là phổ biến chỉ bằng cách giữ nguyên diện tích. Luôn xác nhận với nhà thầu của bạn xem việc di dời vật cố định có nằm trong phạm vi hay được định giá như một yêu cầu thay đổi hay không.",
+      "q8": "Cải tạo phòng tắm chính cao cấp bao gồm những gì ở Vancouver?",
+      "a8": "Một phòng tắm riêng cao cấp ở Metro Vancouver thường có giá từ $40.000–$60.000+ và bao gồm góc tắm vòi sen không cửa ngăn với ống thoát nước tuyến tính (thêm $2.000–$5.000 so với bệ tắm tiêu chuẩn), bồn ngâm độc lập, đá tự nhiên khổ lớn hoặc gạch sứ cao cấp, bàn trang điểm đôi tùy chỉnh với mặt bàn thạch anh và các thiết bị ống nước có thiết kế riêng. Việc chuyển đổi từ bồn tắm sang vòi sen cho phòng tắm chính có giá từ 3.000 đến 8.000 USD. Khoản đầu tư này thường được chứng minh bằng những ngôi nhà có giá trị cao hơn ở Metro Vancouver, nơi chất lượng hoàn thiện có tác động đáng kể đến giá trị bán lại và khả năng sống hàng ngày."
     }
   }
 }

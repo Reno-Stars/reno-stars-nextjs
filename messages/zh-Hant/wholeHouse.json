@@ -12,7 +12,7 @@
     "allAreas": "所有區域",
     "childProjectsCount": "{count} 個翻新區域",
     "noImagesForArea": "該區域沒有可用的影像",
-    "areasCount": "{count，複數，一 {# 區域} other {# 區域}}",
+    "areasCount": "{count, plural, other {# 個區域}}",
     "siteBadge": "全屋",
     "areas": "領域"
   },

@@ -12,7 +12,7 @@
     "allAreas": "جميع المناطق",
     "childProjectsCount": "مناطق التجديد {count}",
     "noImagesForArea": "لا توجد صور متاحة لهذه المنطقة",
-    "areasCount": "{count, plural, one {# منطقة} other {# مناطق}}",
+    "areasCount": "{count, plural, zero {# مناطق} one {# منطقة} two {# منطقتان} few {# مناطق} many {# منطقة} other {# منطقة}}",
     "siteBadge": "البيت كله",
     "areas": "المناطق"
   }

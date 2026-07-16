@@ -25,7 +25,7 @@
     "serviceLinkText": "{service} のすべて",
     "areaLinkText": "{area} の住宅改修",
     "trustStripPrefix": "バンクーバーで最高評価の {service}",
-    "trustStripReviews": "Google レビュー {count} 件から {count}★",
+    "trustStripReviews": "{rating}★ / Google レビュー {count} 件",
     "featuredProjectHeading": "最近の {area} {service} プロジェクト",
     "featuredProjectSubheading": "私たちのポートフォリオからの実際の予算、実際のタイムライン、実際の範囲。",
     "featuredProjectCta": "プロジェクト全体を表示",

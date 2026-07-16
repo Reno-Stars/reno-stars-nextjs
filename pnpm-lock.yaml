@@ -93,6 +93,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.2
+      '@formatjs/icu-messageformat-parser':
+        specifier: ^3.5.14
+        version: 3.5.14
       '@next/bundle-analyzer':
         specifier: ^16.1.6
         version: 16.1.6
@@ -1136,8 +1139,14 @@ packages:
   '@formatjs/icu-messageformat-parser@3.5.1':
     resolution: {integrity: sha512-sSDmSvmmoVQ92XqWb499KrIhv/vLisJU8ITFrx7T7NZHUmMY7EL9xgRowAosaljhqnj/5iufG24QrdzB6X3ItA==}
 
+  '@formatjs/icu-messageformat-parser@3.5.14':
+    resolution: {integrity: sha512-jDvgtoLqe3U6yzoBlToMTkWBe38qSi7LN7kFlnXzd5ig8nn+4tSlED0xtEtdYakZVZGJJY2rW1D5xS3BFZh6kA==}
+
   '@formatjs/icu-skeleton-parser@2.1.1':
     resolution: {integrity: sha512-PSFABlcNefjI6yyk8f7nyX1DC7NHmq6WaCHZLySEXBrXuLOB2f935YsnzuPjlz+ibhb9yWTdPeVX1OVcj24w2Q==}
+
+  '@formatjs/icu-skeleton-parser@2.1.11':
+    resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
   '@formatjs/intl-localematcher@0.5.10':
     resolution: {integrity: sha512-af3qATX+m4Rnd9+wHcjJ4w2ijq+rAVP3CCinJQvFv1kgSu1W6jypUmvleJxcewdxmutM8dmIRZFxO/IQBZmP2Q==}
@@ -5826,10 +5835,16 @@ snapshots:
       '@formatjs/icu-skeleton-parser': 2.1.1
       tslib: 2.8.1
 
+  '@formatjs/icu-messageformat-parser@3.5.14':
+    dependencies:
+      '@formatjs/icu-skeleton-parser': 2.1.11
+
   '@formatjs/icu-skeleton-parser@2.1.1':
     dependencies:
       '@formatjs/ecma402-abstract': 3.1.1
       tslib: 2.8.1
+
+  '@formatjs/icu-skeleton-parser@2.1.11': {}
 
   '@formatjs/intl-localematcher@0.5.10':
     dependencies:
@@ -8265,7 +8280,7 @@ snapshots:
 
   icu-minify@4.8.2:
     dependencies:
-      '@formatjs/icu-messageformat-parser': 3.5.1
+      '@formatjs/icu-messageformat-parser': 3.5.14
 
   ignore@5.3.2: {}
 

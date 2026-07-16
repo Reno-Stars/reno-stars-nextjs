@@ -28,6 +28,11 @@
         "description": "Carrelage haut de gamme, douches sans seuil, baignoires autoportantes, armoires personnalisées, luminaires intelligents et modifications structurelles. Comprend souvent la rénovation de 2 à 3 salles de bains simultanément."
       }
     },
+    "inlineCta": {
+      "heading": "Prêt à planifier la rénovation de votre salle de bain ?",
+      "sub": "Devis gratuit et détaillé sous 48 heures, sans engagement.",
+      "button": "Obtenez un devis gratuit →"
+    },
     "factors": {
       "title": "Qu’est-ce qui affecte le coût de rénovation de votre salle de bain ?",
       "subtitle": "Six facteurs clés qui déterminent votre prix final",
@@ -78,6 +83,74 @@
         "title": "Investissez dans l’imperméabilisation",
         "description": "Lésiner sur l’imperméabilisation entraîne des réparations coûteuses plus tard. Des systèmes de membrane appropriés ajoutent entre 1 500 et 3 500 $ au départ, mais évitent plus de 10 000 $ de dégâts d'eau par la suite."
       }
+    },
+    "showerCost": {
+      "title": "Coût de rénovation de douche à Vancouver",
+      "subtitle": "Tarification spécifique aux douches pour les projets terminés dans la région métropolitaine de Vancouver",
+      "intro": "Les travaux de douche sont l’un des éléments les plus courants lors de la rénovation d’une salle de bain. Qu'il s'agisse de convertir une baignoire en douche à l'italienne, d'ajouter une entrée sans seuil ou simplement de remplacer un vieux receveur de douche et du verre, les coûts varient considérablement selon l'étendue.",
+      "conversion": {
+        "title": "Conversion baignoire-douche",
+        "range": "$3,000 – $8,000",
+        "description": "Retirer une baignoire existante et installer une douche dans la même empreinte. Comprend une nouvelle doublure ou une nouvelle base de carrelage, une pomme de douche, un réglage brut et une enceinte en verre avec cadre ou semi-sans cadre standard. L'ensemble de salle de bains le plus populaire dans la région métropolitaine de Vancouver, en particulier dans les maisons à 2 salles de bains où une baignoire est conservée et l'autre est convertie en douche à l'italienne."
+      },
+      "curbless": {
+        "title": "Douche sans seuil (seuil zéro)",
+        "range": "$5,000 – $13,000",
+        "description": "Aucune marche ni rebord à l'entrée de la douche. Nécessite une imperméabilisation personnalisée avec un drain linéaire ou central, un sol en pente et une membrane Schluter Kerdi ou équivalente dans toute la zone humide. Populaire dans les salles de bains principales et pour les salles de bains vieillissantes sur place. Les douches sans seuil ajoutent entre 1 500 $ et 3 000 $ au coût d’une installation de douche standard en raison de l’imperméabilisation supplémentaire et des travaux de drainage personnalisés."
+      },
+      "enclosureOnly": {
+        "title": "Remplacement du boîtier en verre uniquement",
+        "range": "$1,200 – $3,500",
+        "description": "Remplacer une vieille cabine de douche à cadre par une porte et un panneau en verre semi-sans ou sans cadre. Aucun travail de carrelage et aucun changement de plomberie requis. Portée rapide, généralement réalisable en une journée. Meilleure option lorsque le carrelage et la base existants sont en bon état."
+      },
+      "note": "Les frais de douche sont généralement inclus dans un devis de rénovation complète de salle de bain. Pour une répartition détaillée par type de douche — baignoire-douche, walk-in sans seuil, enceinte en verre — consultez notre guide dédié :"
+    },
+    "bathtubCost": {
+      "title": "Coûts de la baignoire",
+      "description": "Un échange de baignoire en alcôve à l'identique coûte entre 800 $ et 2 200 $ installé ; Les baignoires encastrables et autoportantes coûtent entre 2 500 $ et plus de 8 500 $ une fois que la plomberie personnalisée et montée au sol est prise en compte. Les conversions de baignoire en douche sont couvertes dans la section douche ci-dessus. Pour la répartition complète niveau par niveau – baignoires en alcôve, encastrables, de trempage et autoportantes – consultez notre guide dédié à",
+      "linkText": "coût de rénovation de baignoire à Vancouver"
+    },
+    "toiletCost": {
+      "title": "Coût de rénovation des toilettes à Vancouver",
+      "subtitle": "Coûts de remplacement des toilettes des projets terminés dans la région métropolitaine de Vancouver",
+      "intro": "Un échange de base de toilettes est la solution de plomberie la moins chère dans toute rénovation de salle de bains. Les coûts augmentent une fois que vous ajoutez des toilettes monobloc à hauteur confortable, des modèles à jupe ou des supports muraux, qui nécessitent d'ouvrir le mur pour encadrer le réservoir mural.",
+      "standard": {
+        "title": "Standard deux pièces ou une pièce",
+        "range": "$400 – $1,500",
+        "description": "Toilettes à réservoir sur cuvette en deux parties ou toilettes allongées monobloc à hauteur confortable (hauteur de cuvette de 17 à 19 pouces). Comprend un anneau de cire ou un joint sans cire, une nouvelle conduite d'alimentation tressée, un robinet d'arrêt et l'élimination de l'ancienne unité. Le choix par défaut et conforme au code pour la plupart des rénovations de salle de bains de la région métropolitaine de Vancouver."
+      },
+      "skirted": {
+        "title": "Avec jupe / hauteur confort",
+        "range": "$900 – $2,000",
+        "description": "Toilette monobloc à jupe lisse (Toto Aquia IV, Kohler Veil ou équivalent) avec siège à fermeture douce. L'extérieur lisse du siphon cache la courbe typique de la plomberie exposée pour un look moderne et un nettoyage plus facile. Préféré pour les salles de bains principales et les salles d'eau mises à jour."
+      },
+      "wallHung": {
+        "title": "Réservoir suspendu + encastré",
+        "range": "3 000 $ – 8 500 $+",
+        "description": "Le bol flotte du sol ; Le réservoir est caché dans une cavité murale recouverte de fourrure avec un cadre porteur. Ouvre le mur, ajoute généralement 1 à 2 jours à la portée. Maximise l’espace visuel dans les salles d’eau compactes et les salles de bains luxueuses."
+      },
+      "note": "Le prix des toilettes intelligentes/bidet varie considérablement selon les appareils (1 300 $ à 4 500 $ installés). Pour une description complète des types de toilettes, des notes d'installation et des exigences en matière de permis, consultez notre guide dédié :"
+    },
+    "vanityCost": {
+      "title": "Coût de rénovation de vanité à Vancouver",
+      "subtitle": "Du remplacement d'armoires d'origine aux armoires flottantes entièrement personnalisées",
+      "intro": "Une mise à niveau d'un meuble-lavabo est le changement esthétique le plus rentable dans une salle de bain : les acheteurs et les locataires le remarquent immédiatement. Les coûts vont d'un simple échange de stock à une pièce de menuiserie entièrement personnalisée construite selon vos dimensions exactes.",
+      "stock": {
+        "title": "Remplacement du meuble-lavabo",
+        "range": "$500 – $1,500",
+        "description": "Meuble sous-vasque box-store avec plan standard (stratifié ou marbre de culture basique). Remplace en nature avec des modifications brutes minimes. Option rentable pour les salles de bains secondaires, les propriétés locatives ou les rafraîchissements économiques où la plomberie reste en place. Les vanités en stock sont disponibles le lendemain chez Home Depot, IKEA, Rona ou Costco et ne nécessitent pas de délai de livraison."
+      },
+      "semiCustom": {
+        "title": "Semi-personnalisé avec dessus en quartz",
+        "range": "$2,000 – $4,000",
+        "description": "Un meuble-lavabo milieu de gamme flottant ou au sol (profil de porte shaker ou dalle) avec un comptoir en quartz coupé sur mesure et un évier encastré en céramique ou intégré. Le choix de vanité le plus populaire pour les rénovations de salles de bains de condos et de maisons de ville de la région métropolitaine de Vancouver."
+      },
+      "custom": {
+        "title": "Vanité flottante personnalisée",
+        "range": "4 000 $ – 8 000 $+",
+        "description": "Armoires de qualité menuiserie construites aux dimensions exactes, murales avec chasse de plomberie intégrée dissimulée derrière le corps de l'armoire, comptoir en pierre ou en quartz sur mesure, évier vasque intégré ou sous plan et organisateurs de tiroirs. Portée standard pour les rénovations de salle de bains principale haut de gamme dans la région métropolitaine de Vancouver."
+      },
+      "note": "L’installation du meuble-lavabo comprend l’alimentation et le raccordement brut. Le miroir, l'éclairage et la quincaillerie sont indiqués séparément. Consultez notre guide dédié pour une description complète :"
     },
     "cityComparison": {
       "title": "Coûts de rénovation de salle de bain par ville",
@@ -131,7 +204,11 @@
       "q5": "Dois-je rénover plusieurs salles de bains en même temps ?",
       "a5": "Oui, la rénovation simultanée de plusieurs salles de bains permet d'économiser 10 à 20 % par rapport à des projets séparés. Les entrepreneurs peuvent partager les coûts de mobilisation, coordonner les échanges plus efficacement et acheter des matériaux en gros. Nous avons réalisé de nombreux projets de 2 à 3 salles de bains dans le Grand Vancouver.",
       "q6": "Quel est le coût moyen d’une rénovation de salle de bain à Vancouver?",
-      "a6": "Sur la base de nos 22 projets de salle de bains Reno Stars réalisés dans le Grand Vancouver, le coût moyen d'une rénovation de salle de bain se situe entre 20 000 et 30 000 $. Les rénovations économiques (petites salles d'eau, luminaires standard, carrelage de base) coûtent entre 10 000 et 18 000 $. Les projets de milieu de gamme (salle de bain complète avec carrelage personnalisé, vanité en quartz, éclairage mis à jour) coûtent entre 22 000 et 32 ​​000 $. Les rénovations principales haut de gamme avec baignoire autoportante, douche à l'italienne et pierre de qualité supérieure atteignent entre 40 000 et 60 000 $ et plus. La plupart des rénovations de salles de bains prennent de 2 à 5 semaines."
+      "a6": "Sur la base de nos 22 projets de salle de bains Reno Stars réalisés dans le Grand Vancouver, le coût moyen d'une rénovation de salle de bain se situe entre 20 000 et 30 000 $. Les rénovations économiques (petites salles d'eau, luminaires standard, carrelage de base) coûtent entre 10 000 et 18 000 $. Les projets de milieu de gamme (salle de bain complète avec carrelage personnalisé, vanité en quartz, éclairage mis à jour) coûtent entre 22 000 et 32 ​​000 $. Les rénovations principales haut de gamme avec baignoire autoportante, douche à l'italienne et pierre de qualité supérieure atteignent entre 40 000 et 60 000 $ et plus. La plupart des rénovations de salles de bains prennent de 2 à 5 semaines.",
+      "q7": "Dans quelle mesure le déménagement de la plomberie ajoute-t-il à la rénovation d’une salle de bains à Vancouver ?",
+      "a7": "Le déplacement d'un drain ou d'une conduite d'alimentation ajoute généralement de 2 000 à 6 000 dollars à votre budget de rénovation. Le déplacement des toilettes est généralement l’élément le plus coûteux : il nécessite d’ouvrir le sous-plancher et de réacheminer le drain principal. Les canalisations d’évacuation de la douche et d’alimentation du meuble-lavabo sont moins coûteuses à déplacer. Garder toute la plomberie dans sa position actuelle est l'une des stratégies de contrôle des coûts les plus efficaces en matière de rénovation de salle de bains : des économies de 3 000 $ à 6 000 $ sont courantes simplement en restant dans la même empreinte. Vérifiez toujours auprès de votre entrepreneur si le déplacement des luminaires est inclus dans la portée ou facturé comme une commande de modification.",
+      "q8": "Que comprend une rénovation de salle de bain principale haut de gamme à Vancouver ?",
+      "a8": "Une salle de bains principale haut de gamme dans la région métropolitaine de Vancouver atteint généralement entre 40 000 $ et plus de 60 000 $ et comprend une douche à l'italienne sans seuil avec drain linéaire (ajoutant 2 000 $ à 5 000 $ par rapport à une base de douche standard), une baignoire profonde autoportante, de la pierre naturelle grand format ou des carreaux de porcelaine de qualité supérieure, une double vasque personnalisée avec comptoir en quartz et des accessoires de plomberie design. Les conversions de baignoire en douche pour les salles de bains principales coûtent à elles seules entre 3 000 et 8 000 dollars. L'investissement est souvent justifié dans les maisons de plus grande valeur dans la région métropolitaine de Vancouver, où la qualité des finitions a un impact significatif sur la valeur de revente et l'habitabilité quotidienne."
     }
   }
 }

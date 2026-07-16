@@ -12,7 +12,7 @@
     "allAreas": "全エリア",
     "childProjectsCount": "{count} 件の改修エリア",
     "noImagesForArea": "このエリアで利用できる画像はありません",
-    "areasCount": "{count、複数、one {# エリア} other {# エリア}}",
+    "areasCount": "{count, plural, other {# エリア}}",
     "siteBadge": "家全体",
     "areas": "エリア"
   },
