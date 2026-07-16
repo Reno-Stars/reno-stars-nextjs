@@ -77,34 +77,32 @@ export default function TetrisGallery({ items, cardClassName = '', cardStyle = {
           </>
         );
 
-        const className = `${layout.col} ${layout.aspect} overflow-hidden relative group ${cardClassName} ${(isInteractive || hasLink) ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`;
+        // The inner element (link or div) carries the visual card; the grid child
+        // is a role="listitem" wrapper so role="list" always has valid listitem
+        // children (previously the linked <a> cells sat directly under role="list",
+        // failing the "list must contain listitems" a11y/agentic-browsing audit).
+        const innerClassName = `${layout.aspect} overflow-hidden relative group block ${cardClassName} ${(isInteractive || hasLink) ? 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold' : ''}`;
 
-        if (hasLink) {
-          return (
-            <Link
-              key={`${item.image}-${item.title}`}
-              href={item.href!}
-              className={className}
-              style={cardStyle}
-              aria-label={altText}
-            >
-              {content}
-            </Link>
-          );
-        }
-
-        return (
+        const inner = hasLink ? (
+          <Link href={item.href!} className={innerClassName} style={cardStyle} aria-label={altText}>
+            {content}
+          </Link>
+        ) : (
           <div
-            key={`${item.image}-${item.title}`}
-            className={className}
+            className={innerClassName}
             style={cardStyle}
-            role="listitem"
             tabIndex={isInteractive ? 0 : undefined}
             onClick={isInteractive ? () => onItemClick?.(item, index) : undefined}
             onKeyDown={isInteractive ? (e) => handleKeyDown(e, item, index) : undefined}
             aria-label={altText}
           >
             {content}
+          </div>
+        );
+
+        return (
+          <div key={`${item.image}-${item.title}`} role="listitem" className={layout.col}>
+            {inner}
           </div>
         );
       })}

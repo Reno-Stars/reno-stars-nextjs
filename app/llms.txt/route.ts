@@ -85,30 +85,30 @@ export async function GET(): Promise<Response> {
   const keyPagesBlock = [
     '',
     '## Key Pages (English)',
-    `- Homepage: ${en}/`,
-    `- Services: ${en}/services/`,
-    `- Projects (100+): ${en}/projects/`,
-    `- Cost Guides: ${en}/guides/`,
-    `- Contact / Free Quote: ${en}/contact/`,
-    `- Reviews: ${en}/reviews/`,
-    `- Financing: ${en}/financing/`,
-    `- Before & After: ${en}/before-after/`,
-    `- About: ${en}/about/`,
+    `- [Homepage](${en}/)`,
+    `- [Services](${en}/services/)`,
+    `- [Projects (100+)](${en}/projects/)`,
+    `- [Cost Guides](${en}/guides/)`,
+    `- [Contact / Free Quote](${en}/contact/)`,
+    `- [Reviews](${en}/reviews/)`,
+    `- [Financing](${en}/financing/)`,
+    `- [Before & After](${en}/before-after/)`,
+    `- [About](${en}/about/)`,
   ].join('\n');
 
   const otherLocalesBlock = [
     '',
     '## Key Pages (Other Locales)',
-    `- Chinese (中文): ${base}/zh/`,
-    `- Japanese (日本語): ${base}/ja/`,
-    `- Korean (한국어): ${base}/ko/`,
-    `- Spanish (Español): ${base}/es/`,
+    `- [Chinese (中文)](${base}/zh/)`,
+    `- [Japanese (日本語)](${base}/ja/)`,
+    `- [Korean (한국어)](${base}/ko/)`,
+    `- [Spanish (Español)](${base}/es/)`,
   ].join('\n');
 
   const guidesBlock = [
     '',
     '## Cost Guides (real project data)',
-    ...COST_GUIDES.map((g) => `- ${g.label}: ${en}/guides/${g.slug}/`),
+    ...COST_GUIDES.map((g) => `- [${g.label}](${en}/guides/${g.slug}/)`),
   ].join('\n');
 
   const socialBlock = [
@@ -116,7 +116,7 @@ export async function GET(): Promise<Response> {
     '## Social Profiles',
     ...socialLinks
       .filter((link) => link.url && link.url !== '#')
-      .map((link) => `- ${link.label}: ${link.url}`),
+      .map((link) => `- [${link.label}](${link.url})`),
   ].join('\n');
 
   const faqBlock = [
