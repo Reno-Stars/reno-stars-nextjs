@@ -10,7 +10,10 @@ import type { Company, SocialLink, Service, ServiceArea } from '@/lib/types';
 import type { Locale } from '@/i18n/config';
 import { trackPhoneClick } from '@/lib/analytics';
 import { pickLocale } from '@/lib/utils';
-import { NAVY, GOLD } from '@/lib/theme';
+// The footer sits on a navy background, so its gold must stay bright (the
+// AA-darkened GOLD is for light backgrounds). Alias GOLD_ON_DARK → GOLD so every
+// gold accent in this file uses the bright variant without per-line changes.
+import { NAVY, GOLD_ON_DARK as GOLD } from '@/lib/theme';
 import { WORKSAFE_BC_LOGO } from '@/lib/data';
 
 type IconComponent = React.ComponentType<{ className?: string }>;
@@ -377,7 +380,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
               </p>
             </div>
             <div className="mt-4">
-              <p className="text-xs text-white/50 mb-1.5">{t('footer.scanToConnect')}</p>
+              <p className="text-xs text-white/70 mb-1.5">{t('footer.scanToConnect')}</p>
               <OptimizedImage src="/reno-stars-qr.png" alt={t('footer.scanToConnect')} width={96} height={96} placeholder="empty" className="rounded bg-white p-1" />
             </div>
           </div>

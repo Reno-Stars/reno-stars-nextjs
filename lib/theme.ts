@@ -5,9 +5,15 @@ export const NAVY_90 = 'rgba(27,54,93,0.9)';
 export const NAVY_MID = '#243f6c';
 export const NAVY_LIGHT = '#2d4f7e';
 export const NAVY_PALE = '#E8EBF0';
-export const GOLD = '#C8922A';
-export const GOLD_HOVER = '#b3811f';
+// Gold on LIGHT backgrounds (text/links/button bg with white text) must clear
+// WCAG AA 4.5:1 — the old #C8922A gave only ~2.1:1 as text on beige. This darker
+// gold passes as text on every surface shade and as a button bg under white text.
+export const GOLD = '#7A5810';
+export const GOLD_HOVER = '#634710';
 export const GOLD_PALE = 'rgba(200,146,42,0.12)';
+// Bright gold reserved for DARK backgrounds (navy footer, hero overlay) where the
+// darker GOLD would fail — keeps the signature brightness where it still passes.
+export const GOLD_ON_DARK = '#E3B04A';
 /** CSS filter to tint black SVG icons to GOLD (#C8922A) */
 export const GOLD_ICON_FILTER = 'invert(56%) sepia(72%) saturate(467%) hue-rotate(6deg) brightness(90%) contrast(87%)';
 export const SURFACE = '#E8E2DA';
@@ -18,8 +24,9 @@ export const CARD = '#EDE8E1';
 export const SH_DARK = '#c4bbb0';
 export const SH_LIGHT = '#faf5ee';
 export const TEXT = '#1B365D';
-export const TEXT_MID = 'rgba(27,54,93,0.7)';
-export const TEXT_MUTED = 'rgba(27,54,93,0.6)';
+// Bumped from 0.7 / 0.6 so muted body text clears AA 4.5:1 on all surface shades.
+export const TEXT_MID = 'rgba(27,54,93,0.92)';
+export const TEXT_MUTED = 'rgba(27,54,93,0.85)';
 
 export const SUCCESS = '#16a34a';
 export const SUCCESS_BG = 'rgba(34, 197, 94, 0.1)';

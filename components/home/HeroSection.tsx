@@ -5,7 +5,7 @@ import { Shield, Star } from 'lucide-react';
 import { Link } from '@/navigation';
 import type { Company } from '@/lib/types';
 import { video, images, WORKSAFE_BC_LOGO } from '@/lib/data';
-import { GOLD } from '@/lib/theme';
+import { GOLD, GOLD_ON_DARK } from '@/lib/theme';
 import LazyVideo from '@/components/LazyVideo';
 import { buildProcessedSrcSet, buildProcessedUrl, isR2Url } from '@/lib/image';
 import { trackPhoneClick, trackCtaClick } from '@/lib/analytics';
@@ -192,11 +192,11 @@ export default function HeroSection({ company, googleRating, translations: t }: 
 
         <div className="flex flex-wrap md:flex-nowrap gap-x-4 gap-y-2">
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
-            <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
+            <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />
             {company.yearsExperience}+ {t.yearsExperience}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
-            <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD }} />
+            <Shield className="w-4 h-4 shrink-0" style={{ color: GOLD_ON_DARK }} />
             {t.liabilityCoverage}
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5">
@@ -206,7 +206,7 @@ export default function HeroSection({ company, googleRating, translations: t }: 
           </span>
           <span className="whitespace-nowrap text-sm font-medium text-white/70 flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t.rating}`}>
             {[0, 1, 2, 3, 4].map((i) => (
-              <Star key={i} className="w-3.5 h-3.5 shrink-0" style={{ fill: GOLD, color: GOLD }} />
+              <Star key={i} className="w-3.5 h-3.5 shrink-0" style={{ fill: GOLD_ON_DARK, color: GOLD_ON_DARK }} />
             ))}
             <span>{googleRating ? `${googleRating} ${t.rating}` : t.rating}</span>
           </span>
@@ -224,14 +224,14 @@ export default function HeroSection({ company, googleRating, translations: t }: 
               className="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
               style={{
                 width: i === current ? '2rem' : '0.5rem',
-                backgroundColor: i === current ? GOLD : 'rgba(255,255,255,0.4)',
+                backgroundColor: i === current ? GOLD_ON_DARK : 'rgba(255,255,255,0.4)',
               }}
             />
           ))}
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${GOLD}, ${GOLD}00)` }} />
+      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: `linear-gradient(90deg, ${GOLD_ON_DARK}, ${GOLD_ON_DARK}00)` }} />
     </section>
   );
 }

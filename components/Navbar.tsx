@@ -317,7 +317,7 @@ export default function Navbar({ company, services = [] }: NavbarProps) {
                 style={{ boxShadow: neu(3), color: TEXT }}
                 aria-haspopup="listbox"
                 aria-expanded={isLocaleMenuOpen}
-                aria-label={t('nav.switchLanguage')}
+                aria-label={`${(locale as string).toUpperCase()}, ${t('nav.switchLanguage')}`}
               >
                 <Globe className="w-4 h-4" aria-hidden="true" />
                 <span className="text-xs font-semibold">{(locale as string).toUpperCase()}</span>

@@ -1,5 +1,7 @@
 import OptimizedImage from '@/components/OptimizedImage';
-import { NAVY, GOLD } from '@/lib/theme';
+// Navy background → gold stat numbers must use the bright GOLD_ON_DARK (the
+// AA-darkened GOLD is for light backgrounds and fails 4.5:1 on navy).
+import { NAVY, GOLD_ON_DARK as GOLD } from '@/lib/theme';
 
 interface StatsSectionProps {
   stats: { value: string; label: string; image?: string }[];
