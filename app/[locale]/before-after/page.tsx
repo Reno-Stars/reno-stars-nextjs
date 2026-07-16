@@ -44,8 +44,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, projects, company] = await Promise.all([
+  const [nav, mt, t, projects, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'metadata.beforeAfter' }),
     getTranslations({ locale, namespace: 'beforeAfterPage' }),
     getProjectsFromDb(),
     getCompanyFromDb(),
@@ -69,6 +70,14 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q5'), answer: t('faq.a5') },
   ];
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes. Title/image come from the same
+  // metadata.beforeAfter namespace generateMetadata builds the OG card from, so
+  // the share card and the OG card cannot disagree either.
+  const shareUrl = buildAlternates('/before-after/', locale).canonical;
+  const shareImage = buildOgImageUrl(mt('title'), mt('description'));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -77,6 +86,7 @@ export default async function Page({ params }: PageProps) {
         locale={locale as Locale}
         projects={projectsWithPairs}
         company={company}
+        share={{ url: shareUrl, title: mt('title'), imageUrl: shareImage }}
       />
     </>
   );

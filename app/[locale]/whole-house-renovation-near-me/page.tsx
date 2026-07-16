@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import NearMePage from '@/components/pages/NearMePage';
 import { BreadcrumbSchema, FAQSchema, ServiceSchema } from '@/components/structured-data';
-import { getBaseUrl, SITE_NAME } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME } from '@/lib/utils';
 import { getServiceAreasFromDb, getCompanyFromDb, getProjectsListFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { selectNearbyProjects } from '@/lib/near-me-projects';
@@ -17,10 +17,23 @@ interface PageProps { params: Promise<{ locale: string }>; }
 const PRICE_RANGE = { min: 50000, max: 200000 } as const;
 const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K+`;
 
+// This page canonicalizes onto /services/whole-house/ (see generateMetadata) —
+// it is NOT self-canonical. Single source for that path so the declared
+// canonical and the share URL derived from it cannot drift apart.
+const CANONICAL_PATH = '/services/whole-house/';
+
+// Module-level so generateMetadata's OG title and the share-card title are the
+// same string, not two copies that can drift.
+function getPageTitle(locale: string): string {
+  return locale === 'zh'
+    ? '附近全屋翻新 | 大温哥华 | Reno Stars'
+    : 'Whole House Renovation Near Me | Vancouver Metro | Reno Stars';
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isZh = locale === 'zh';
-  const title = isZh ? '附近全屋翻新 | 大温哥华 | Reno Stars' : 'Whole House Renovation Near Me | Vancouver Metro | Reno Stars';
+  const title = getPageTitle(locale);
   // 2026-05-21 SEO trim: EN desc was 187 chars (truncates ~155).
   // Drops "lighting" + "one team, one timeline" framing to fit.
   const description = isZh
@@ -34,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // while still serving "whole house renovation near me" searchers. hreflang
     // is intentionally omitted on a canonicalized-away page. Umbrella
     // /renovation-near-me/ stays self-canonical. See kitchen page for rationale.
-    alternates: { canonical: `${baseUrl}/${locale}/services/whole-house/` },
+    alternates: { canonical: buildAlternates(CANONICAL_PATH, locale).canonical },
     openGraph: { title, description, url: `${baseUrl}/${locale}/whole-house-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website' },
   };
 }
@@ -61,6 +74,12 @@ export default async function Page({ params }: PageProps) {
   const serviceDescription = isZh
     ? `大温哥华附近全屋翻新：厨房、卫浴、地板、油漆、电气照明一站式协调。${PRICE_BAND}。`
     : `Whole house renovation across Metro Vancouver — kitchen, bath, flooring, paint, lighting coordinated end-to-end. ${PRICE_BAND} typical. Permits handled.`;
+  // Share URL is DERIVED from the canonical this page declares (the same
+  // CANONICAL_PATH generateMetadata passes to buildAlternates) rather than
+  // rebuilt, so the two cannot drift apart. Note that canonical is the
+  // consolidated /services/whole-house/ target, not this near-me URL — sharing
+  // must point at the page we tell search engines is the real one.
+  const shareUrl = buildAlternates(CANONICAL_PATH, locale).canonical;
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -85,6 +104,10 @@ export default async function Page({ params }: PageProps) {
         variant="wholeHouse"
         nearbyProjects={nearby.projects}
         nearbyExact={nearby.exact}
+        // No OG image is declared for this route, so no imageUrl — Pinterest
+        // hides itself rather than share a card with no picture.
+        share={{ url: shareUrl, title: getPageTitle(locale) }}
+        shareItemId="whole-house-renovation-near-me"
       />
     </>
   );

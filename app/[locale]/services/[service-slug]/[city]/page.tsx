@@ -23,27 +23,26 @@ import { serviceCityOverrides } from '@/lib/data/seo-overrides';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale, 'service-slug': serviceSlug, city } = await params;
-  const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
-  const service = services.find((s) => s.slug === serviceSlug);
-  const area = areas.find((a) => a.slug === city);
+type ComboMetaT = Awaited<ReturnType<typeof getTranslations<'metadata.serviceLocation'>>>;
 
-  if (!service || !area || service.showOnServicesPage === false) {
-    return { title: 'Page Not Found', robots: { index: false, follow: false } };
-  }
-
-  const localizedService = getLocalizedService(service, locale as Locale);
-  const localizedArea = getLocalizedArea(area, locale as Locale);
-  const baseUrl = getBaseUrl();
-
-  const [t, company] = await Promise.all([
-    getTranslations({ locale, namespace: 'metadata.serviceLocation' }),
-    getCompanyFromDb(),
-  ]);
-  const tagline = localizedService.tags?.slice(0, 2).join(' & ') ?? '';
-  const years = company.yearsExperience;
-  const tParams = { service: localizedService.title, area: localizedArea.name, years, tagline };
+/**
+ * The SERP/OG title + description for a service×city combo, including the
+ * rank-tracker keyword overrides. Shared by generateMetadata and the share card
+ * below so the two cannot drift apart.
+ */
+function buildComboMeta(args: {
+  locale: string;
+  serviceSlug: string;
+  city: string;
+  serviceTitle: string;
+  areaName: string;
+  tags?: string[];
+  years: string;
+  t: ComboMetaT;
+}): { title: string; description: string } {
+  const { locale, serviceSlug, city, serviceTitle, areaName, tags, years, t } = args;
+  const tagline = tags?.slice(0, 2).join(' & ') ?? '';
+  const tParams = { service: serviceTitle, area: areaName, years, tagline };
   // Use tagline variant only if it fits within ~60 chars (Google truncation limit)
   const titleWithTagline = tagline ? t('titleWithTagline', tParams) : '';
   let title = titleWithTagline && titleWithTagline.length <= 60
@@ -69,6 +68,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title = zhOverrides[overrideKey].title;
     description = zhOverrides[overrideKey].description;
   }
+
+  return { title, description };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale, 'service-slug': serviceSlug, city } = await params;
+  const [services, areas] = await Promise.all([getServicesFromDb(), getServiceAreasFromDb()]);
+  const service = services.find((s) => s.slug === serviceSlug);
+  const area = areas.find((a) => a.slug === city);
+
+  if (!service || !area || service.showOnServicesPage === false) {
+    return { title: 'Page Not Found', robots: { index: false, follow: false } };
+  }
+
+  const localizedService = getLocalizedService(service, locale as Locale);
+  const localizedArea = getLocalizedArea(area, locale as Locale);
+  const baseUrl = getBaseUrl();
+
+  const [t, company] = await Promise.all([
+    getTranslations({ locale, namespace: 'metadata.serviceLocation' }),
+    getCompanyFromDb(),
+  ]);
+  const { title, description } = buildComboMeta({
+    locale,
+    serviceSlug,
+    city,
+    serviceTitle: localizedService.title,
+    areaName: localizedArea.name,
+    tags: localizedService.tags,
+    years: company.yearsExperience,
+    t,
+  });
   const ogImage = service.image || siteImages.hero;
 
   // Minor locales render the SAME templated body as EN (only EN/ZH have
@@ -176,6 +207,24 @@ export default async function Page({ params }: PageProps) {
   const tAreas = await getTranslations({ locale, namespace: 'areas' });
   const serviceTitle = tAreas('serviceInArea', { service: localizedService.title, area: localizedArea.name });
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes.
+  const shareUrl = buildAlternates(`/services/${serviceSlug}/${city}/`, locale).canonical;
+  // Share card mirrors the OG card — same title builder, same image.
+  const tMeta = await getTranslations({ locale, namespace: 'metadata.serviceLocation' });
+  const { title: shareTitle } = buildComboMeta({
+    locale,
+    serviceSlug,
+    city,
+    serviceTitle: localizedService.title,
+    areaName: localizedArea.name,
+    tags: localizedService.tags,
+    years: company.yearsExperience,
+    t: tMeta,
+  });
+  const ogImage = service.image || siteImages.hero;
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -215,6 +264,7 @@ export default async function Page({ params }: PageProps) {
         faqs={faqs}
         areaProjects={areaProjects}
         projectPool={projectPool}
+        share={{ url: shareUrl, title: shareTitle, imageUrl: ogImage }}
       />
     </>
   );

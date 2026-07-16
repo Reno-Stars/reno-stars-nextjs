@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState, type MouseEvent } from 'react';
 import { buildShareUrl } from '@/lib/share/url';
 import { SSR_ENV, type ShareContentType, type ShareContext, type ShareEnv, type ShareTarget } from '@/lib/share/types';
 
-const POPUP_FEATURES = 'width=600,height=540,noopener,noreferrer';
 const COPIED_RESET_MS = 2000;
 
 /**
@@ -90,17 +89,12 @@ export function useShare({ ctx, contentType, itemId }: UseShareOptions) {
       track(target.id, contentType, itemId);
 
       switch (target.mode) {
+        case 'newTab':
         case 'navigate':
-          // The anchor's own href does the work — don't intercept.
+          // The anchor's own href (+ target) does the work. Do NOT intercept:
+          // calling window.open here as well is what made every share open a
+          // popup and navigate the current tab. See DeliveryMode in types.ts.
           return;
-
-        case 'popup': {
-          event.preventDefault();
-          const win = window.open(href, '_blank', POPUP_FEATURES);
-          // Popup blocked: navigating beats doing nothing.
-          if (!win) window.location.href = href;
-          return;
-        }
 
         case 'copy':
           event.preventDefault();

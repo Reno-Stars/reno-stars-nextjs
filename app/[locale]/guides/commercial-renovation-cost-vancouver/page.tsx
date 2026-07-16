@@ -75,6 +75,12 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q8'), answer: t('faq.a8') },
   ];
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes.
+  const shareUrl = buildAlternates('/guides/commercial-renovation-cost-vancouver/', locale).canonical;
+  const ogImage = buildOgImageUrl(mt('title'), mt('description'));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -89,7 +95,12 @@ export default async function Page({ params }: PageProps) {
         dateModified="2026-06-25"
         locale={locale}
       />
-      <CommercialCostGuidePage locale={locale as Locale} projects={projects} phone={company.phone} />
+      <CommercialCostGuidePage
+        locale={locale as Locale}
+        projects={projects}
+        phone={company.phone}
+        share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
+      />
     </>
   );
 }

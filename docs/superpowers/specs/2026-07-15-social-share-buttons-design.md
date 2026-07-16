@@ -181,10 +181,31 @@ in dev.
 native sheet hand back the **clean** canonical — that URL is one the visitor sees
 and pastes.
 
-> **Watch:** query params can form separate Cloudflare cache keys, so tagged
-> inbound links may bypass the 300s HTML edge cache and hit origin. Verify
-> against the Cache Rule during implementation. Fix, if needed, is an
-> `ignore_query_strings` cache key — not dropping UTMs.
+### Cloudflare cache-key impact — measured 2026-07-15, no action needed
+
+The concern was that UTM-tagged inbound links would form separate edge cache
+keys and hammer origin. Measured against production rather than assumed:
+
+| Request | cf-cache-status |
+|---|---|
+| clean URL | HIT |
+| `?utm_source=facebook&utm_medium=social&utm_campaign=share` | MISS once, then HIT |
+| `?utm_source=<random>` | MISS |
+| `?utm_source=facebook…&fbclid=<random>` ×4, each fbclid unique | MISS once, then **HIT, HIT, HIT** |
+| `?gclid=<random>` | MISS |
+
+Two findings:
+
+1. **UTMs fragment the key, but boundedly.** `utm_source` is one of ~22 fixed
+   platform ids, so a shared page has at most ~22 variants, each caching
+   normally. At `s-maxage=300` they churn every 5 minutes regardless.
+2. **`fbclid` is already ignored in the cache key** — the high-volume random
+   param, present on every Facebook referral, does NOT fragment. That was the
+   only case with real thundering-herd potential.
+
+Conclusion: no `ignore_query_strings` cache-key change is warranted. Revisit
+only if origin load rises with social traffic. (`gclid` does fragment, but that
+is pre-existing paid-ads behaviour, unrelated to sharing.)
 
 ## i18n
 

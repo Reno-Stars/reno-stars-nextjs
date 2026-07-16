@@ -18,33 +18,47 @@ interface PageProps {
 const PRICE_RANGE = { min: 10000, max: 200000 } as const;
 const PRICE_BAND = `$${PRICE_RANGE.min / 1000}K-$${PRICE_RANGE.max / 1000}K+`;
 
+// Unlike the room-specific near-me pages, this umbrella page IS self-canonical
+// (it keeps its hreflang cluster). Single source for the path so the declared
+// canonical and the share URL derived from it cannot drift apart.
+const CANONICAL_PATH = '/renovation-near-me/';
+
+// Module-level so generateMetadata's OG title/image and the share-card
+// title/image are the same strings, not two copies that can drift. Async
+// because this page's title/description come from the message catalogue rather
+// than inline literals.
+async function getPageMeta(locale: string): Promise<{ title: string; description: string; ogImage: string }> {
+  const t = await getTranslations({ locale, namespace: 'metadata.nearMe' });
+  const title = t('title');
+  const description = t('description');
+  return { title, description, ogImage: buildOgImageUrl(title, description) };
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'metadata.nearMe' });
+  const { title, description, ogImage } = await getPageMeta(locale);
 
   const baseUrl = getBaseUrl();
-  const ogImage = buildOgImageUrl(t('title'), t('description'));
 
   return {
-    title: t('title'),
-    description: t('description'),
-    alternates: buildAlternates('/renovation-near-me/', locale),
+    title,
+    description,
+    alternates: buildAlternates(CANONICAL_PATH, locale),
     openGraph: {
-      title: t('title'),
-      description: t('description'),
+      title,
+      description,
       url: `${baseUrl}/${locale}/renovation-near-me/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: buildAlternateLocales(locale as Locale),
       type: 'website',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: t('title') }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('title'),
-      description: t('description'),
-      images: [{ url: ogImage, alt: t('title') }],
+      title,
+      description,
+      images: [{ url: ogImage, alt: title }],
     },
   };
 }
@@ -53,12 +67,13 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, areas, company, googleReviews] = await Promise.all([
+  const [nav, t, areas, company, googleReviews, meta] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'nearMe' }),
     getServiceAreasFromDb(),
     getCompanyFromDb(),
     getGoogleReviews(),
+    getPageMeta(locale),
   ]);
 
   const breadcrumbs = [
@@ -76,6 +91,12 @@ export default async function Page({ params }: PageProps) {
   const serviceDescription = isZh
     ? `大温哥华附近全屋家居装修：厨房、卫浴、地下室、整屋翻新。${PRICE_BAND}，跨17个城市。`
     : `Home renovation across Metro Vancouver — kitchen, bathroom, basement, whole-house. ${PRICE_BAND} range across 17 service areas.`;
+
+  // Share URL is DERIVED from the canonical this page declares (the same
+  // CANONICAL_PATH generateMetadata passes to buildAlternates) rather than
+  // rebuilt, so the two cannot drift apart. This page is self-canonical, so the
+  // share URL is its own.
+  const shareUrl = buildAlternates(CANONICAL_PATH, locale).canonical;
 
   return (
     <>
@@ -97,6 +118,8 @@ export default async function Page({ params }: PageProps) {
         areas={areas}
         googleRating={googleReviews.rating}
         reviewCount={googleReviews.userRatingCount}
+        share={{ url: shareUrl, title: meta.title, imageUrl: meta.ogImage }}
+        shareItemId="renovation-near-me"
       />
     </>
   );

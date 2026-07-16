@@ -2,9 +2,11 @@
 
 import { Link } from '@/navigation';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import type { Company } from '@/lib/types';
+import type { Company, Locale } from '@/lib/types';
+import type { ShareContext } from '@/lib/share/types';
 import { NAVY, GOLD, SURFACE, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 import FaqSection from '@/components/home/FaqSection';
+import ShareBar from '@/components/share/ShareBar';
 
 const NEU8 = neu(8);
 
@@ -15,6 +17,7 @@ interface FaqItem {
 }
 
 interface ShowroomPageProps {
+  locale: Locale;
   company: Company;
   showroom: {
     address: string;
@@ -39,9 +42,12 @@ interface ShowroomPageProps {
     bookConsultation: string;
     callUs: string;
   };
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
-export default function ShowroomPage({ company, showroom, faqs, translations: t }: ShowroomPageProps) {
+export default function ShowroomPage({ locale, company, showroom, faqs, translations: t, share }: ShowroomPageProps) {
   const mapQuery = encodeURIComponent(showroom.address || company.address);
 
   return (
@@ -140,6 +146,13 @@ export default function ShowroomPage({ company, showroom, faqs, translations: t 
           translations={{ title: t.faqTitle }}
         />
       )}
+
+      {/* Share — rail (xl+) + labelled row, both rendered by ShareBar. The
+          container only supplies the body max-width; ShareRow brings its own
+          top margin. */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <ShareBar locale={locale} context={share} contentType="page" itemId="showroom" />
+      </div>
 
       {/* CTA */}
       <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>

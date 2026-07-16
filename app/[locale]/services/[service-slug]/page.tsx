@@ -214,6 +214,25 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
   'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
 };
 
+/**
+ * The SERP/OG title for a service page. Shared by generateMetadata and the
+ * share card below so the two cannot drift apart.
+ *
+ * Title length: keep under Google's ~60-char SERP truncation cap.
+ * zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
+ * ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
+ */
+function buildServiceTitle(serviceTitle: string, locale: Locale): string {
+  if (locale === 'zh') return `${serviceTitle} 温哥华 — 3年保修 | Reno Stars`;
+  if (locale === 'zh-Hant') return `${serviceTitle} 溫哥華 — 3年保固 | Reno Stars`;
+  if (locale === 'ko') return `${serviceTitle} 밴쿠버 — 3년 보증 | Reno Stars`;
+  if (locale === 'ja') return `${serviceTitle} バンクーバー — 3年保証 | Reno Stars`;
+  // Keep the trust suffix for short service names (e.g. Kitchen/Bathroom);
+  // drop it for long names so the title stays under Google's ~60-char cap.
+  const withWarranty = `${serviceTitle} Vancouver — 3-Yr Warranty | Reno Stars`;
+  return withWarranty.length <= 60 ? withWarranty : `${serviceTitle} Vancouver | Reno Stars`;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, 'service-slug': serviceSlug } = await params;
   const services = await getServicesFromDb();
@@ -234,24 +253,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = service.image || siteImages.hero;
 
-  // Title length: keep under Google's ~60-char SERP truncation cap.
-  // zh-Hant gets Traditional Chinese geo + trust term; zh gets simplified.
-  // ko gets Korean geo + warranty suffix; ja gets Japanese; EN template for all others.
-  const title = locale === 'zh'
-    ? `${localizedService.title} 温哥华 — 3年保修 | Reno Stars`
-    : locale === 'zh-Hant'
-    ? `${localizedService.title} 溫哥華 — 3年保固 | Reno Stars`
-    : locale === 'ko'
-    ? `${localizedService.title} 밴쿠버 — 3년 보증 | Reno Stars`
-    : locale === 'ja'
-    ? `${localizedService.title} バンクーバー — 3年保証 | Reno Stars`
-    : ((withWarranty) =>
-        // Keep the trust suffix for short service names (e.g. Kitchen/Bathroom);
-        // drop it for long names so the title stays under Google's ~60-char cap.
-        withWarranty.length <= 60
-          ? withWarranty
-          : `${localizedService.title} Vancouver | Reno Stars`
-      )(`${localizedService.title} Vancouver — 3-Yr Warranty | Reno Stars`);
+  const title = buildServiceTitle(localizedService.title, locale as Locale);
 
   return {
     title,
@@ -331,6 +333,11 @@ export default async function Page({ params }: PageProps) {
 
   const serviceHeroImage = service.image || siteImages.hero;
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes.
+  const shareUrl = buildAlternates(`/services/${serviceSlug}/`, locale).canonical;
+
   return (
     <>
       {/* Hero preload — React 19's auto-preload for srcset <img> tags omits
@@ -396,6 +403,11 @@ export default async function Page({ params }: PageProps) {
         allServices={services}
         clientReviews={clientReviews}
         h1Override={getServiceH1Override(serviceSlug, locale as Locale)}
+        share={{
+          url: shareUrl,
+          title: buildServiceTitle(localizedService.title, locale as Locale),
+          imageUrl: serviceHeroImage,
+        }}
       />
     </>
   );

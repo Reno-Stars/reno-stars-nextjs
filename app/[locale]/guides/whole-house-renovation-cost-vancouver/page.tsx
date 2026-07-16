@@ -69,6 +69,12 @@ export default async function Page({ params }: PageProps) {
     { question: t('faq.q8'), answer: t('faq.a8') },
   ];
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes.
+  const shareUrl = buildAlternates('/guides/whole-house-renovation-cost-vancouver/', locale).canonical;
+  const ogImage = buildOgImageUrl(mt('title'), mt('description'));
+
   const howToSteps = [
     {
       name: locale === 'zh' ? '评估房屋整体状况' : 'Evaluate Your Home\'s Overall Condition',
@@ -126,7 +132,12 @@ export default async function Page({ params }: PageProps) {
         steps={howToSteps}
         locale={locale}
       />
-      <WholeHouseCostGuidePage locale={locale as Locale} projects={projects} phone={company.phone} />
+      <WholeHouseCostGuidePage
+        locale={locale as Locale}
+        projects={projects}
+        phone={company.phone}
+        share={{ url: shareUrl, title: mt('title'), imageUrl: ogImage }}
+      />
     </>
   );
 }

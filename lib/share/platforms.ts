@@ -20,19 +20,19 @@ const mobileOnly = (_ctx: unknown, env: { isMobile: boolean }) => env.isMobile;
  */
 export const PLATFORMS: Record<PlatformId, ShareTarget> = {
   facebook: {
-    id: 'facebook', labelKey: 'share.facebook', icon: FacebookIcon, mode: 'popup',
+    id: 'facebook', labelKey: 'share.facebook', icon: FacebookIcon, mode: 'newTab',
     href: (c) => `https://www.facebook.com/sharer/sharer.php?u=${enc(c.url)}`,
   },
   x: {
-    id: 'x', labelKey: 'share.x', icon: XIcon, mode: 'popup',
+    id: 'x', labelKey: 'share.x', icon: XIcon, mode: 'newTab',
     href: (c) => `https://x.com/intent/post?url=${enc(c.url)}&text=${enc(c.title)}`,
   },
   linkedin: {
-    id: 'linkedin', labelKey: 'share.linkedin', icon: LinkedinIcon, mode: 'popup',
+    id: 'linkedin', labelKey: 'share.linkedin', icon: LinkedinIcon, mode: 'newTab',
     href: (c) => `https://www.linkedin.com/sharing/share-offsite/?url=${enc(c.url)}`,
   },
   pinterest: {
-    id: 'pinterest', labelKey: 'share.pinterest', icon: PinterestIcon, mode: 'popup',
+    id: 'pinterest', labelKey: 'share.pinterest', icon: PinterestIcon, mode: 'newTab',
     // A pin with no image is a dead pin, so this hides itself rather than
     // producing one. Renovation before/afters are native Pinterest content —
     // worth the conditional.
@@ -41,47 +41,47 @@ export const PLATFORMS: Record<PlatformId, ShareTarget> = {
       `https://www.pinterest.com/pin/create/button/?url=${enc(c.url)}&media=${enc(c.imageUrl ?? '')}&description=${enc(c.title)}`,
   },
   whatsapp: {
-    id: 'whatsapp', labelKey: 'share.whatsapp', icon: WhatsappIcon, mode: 'popup',
+    id: 'whatsapp', labelKey: 'share.whatsapp', icon: WhatsappIcon, mode: 'newTab',
     href: (c) => `https://wa.me/?text=${enc(`${c.title} ${c.url}`)}`,
   },
   telegram: {
-    id: 'telegram', labelKey: 'share.telegram', icon: TelegramIcon, mode: 'popup',
+    id: 'telegram', labelKey: 'share.telegram', icon: TelegramIcon, mode: 'newTab',
     href: (c) => `https://t.me/share/url?url=${enc(c.url)}&text=${enc(c.title)}`,
   },
   reddit: {
-    id: 'reddit', labelKey: 'share.reddit', icon: RedditIcon, mode: 'popup',
+    id: 'reddit', labelKey: 'share.reddit', icon: RedditIcon, mode: 'newTab',
     href: (c) => `https://www.reddit.com/submit?url=${enc(c.url)}&title=${enc(c.title)}`,
   },
   threads: {
-    id: 'threads', labelKey: 'share.threads', icon: ThreadsIcon, mode: 'popup',
+    id: 'threads', labelKey: 'share.threads', icon: ThreadsIcon, mode: 'newTab',
     href: (c) => `https://www.threads.net/intent/post?text=${enc(`${c.title} ${c.url}`)}`,
   },
   bluesky: {
-    id: 'bluesky', labelKey: 'share.bluesky', icon: BlueskyIcon, mode: 'popup',
+    id: 'bluesky', labelKey: 'share.bluesky', icon: BlueskyIcon, mode: 'newTab',
     href: (c) => `https://bsky.app/intent/compose?text=${enc(`${c.title} ${c.url}`)}`,
   },
   tumblr: {
-    id: 'tumblr', labelKey: 'share.tumblr', icon: TumblrIcon, mode: 'popup',
+    id: 'tumblr', labelKey: 'share.tumblr', icon: TumblrIcon, mode: 'newTab',
     href: (c) => `https://www.tumblr.com/widgets/share/tool?canonicalUrl=${enc(c.url)}&title=${enc(c.title)}`,
   },
   vk: {
-    id: 'vk', labelKey: 'share.vk', icon: VkIcon, mode: 'popup',
+    id: 'vk', labelKey: 'share.vk', icon: VkIcon, mode: 'newTab',
     href: (c) => `https://vk.com/share.php?url=${enc(c.url)}&title=${enc(c.title)}`,
   },
   weibo: {
-    id: 'weibo', labelKey: 'share.weibo', icon: WeiboIcon, mode: 'popup',
+    id: 'weibo', labelKey: 'share.weibo', icon: WeiboIcon, mode: 'newTab',
     href: (c) => `https://service.weibo.com/share/share.php?url=${enc(c.url)}&title=${enc(c.title)}`,
   },
   line: {
-    id: 'line', labelKey: 'share.line', icon: LineIcon, mode: 'popup',
+    id: 'line', labelKey: 'share.line', icon: LineIcon, mode: 'newTab',
     href: (c) => `https://social-plugins.line.me/lineit/share?url=${enc(c.url)}`,
   },
   zalo: {
-    id: 'zalo', labelKey: 'share.zalo', icon: ZaloIcon, mode: 'popup',
+    id: 'zalo', labelKey: 'share.zalo', icon: ZaloIcon, mode: 'newTab',
     href: (c) => `https://sp.zalo.me/plugins/share?u=${enc(c.url)}`,
   },
   qzone: {
-    id: 'qzone', labelKey: 'share.qzone', icon: QzoneIcon, mode: 'popup',
+    id: 'qzone', labelKey: 'share.qzone', icon: QzoneIcon, mode: 'newTab',
     href: (c) =>
       `https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${enc(c.url)}&title=${enc(c.title)}`,
   },

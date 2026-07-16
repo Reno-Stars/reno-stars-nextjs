@@ -20,6 +20,8 @@ import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import FeaturedCityProject from '@/components/FeaturedCityProject';
 import FaqSection from '@/components/home/FaqSection';
 import StickyComboCta from '@/components/StickyComboCta';
+import ShareBar from '@/components/share/ShareBar';
+import type { ShareContext } from '@/lib/share/types';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT, TEXT, TEXT_MID, CARD, neu,
 } from '@/lib/theme';
@@ -52,6 +54,9 @@ interface ServiceLocationPageProps {
   areaProjects?: Project[];
   /** Every published project — powers the honest related-project fallback. */
   projectPool?: Project[];
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
 // 2026-06-25: City-specific blog post lookup for service+city pages.
@@ -159,7 +164,7 @@ const SERVICE_CITY_BLOG: Partial<Record<string, Record<string, string>>> = {
 
 export default function ServiceLocationPage({
   locale, serviceSlug, citySlug, company, service, area,
-  services = [], areas = [], faqs = [], areaProjects = [], projectPool = [],
+  services = [], areas = [], faqs = [], areaProjects = [], projectPool = [], share,
 }: ServiceLocationPageProps) {
   const t = useTranslations();
   const zhLoc = locale === 'zh' || locale === 'zh-Hant';
@@ -468,6 +473,14 @@ export default function ServiceLocationPage({
             {t('areas.whyChooseArea', { area: localizedArea.name })}
           </h2>
           <BenefitList benefits={(localizedArea.highlights?.length ?? 0) > 0 ? localizedArea.highlights! : benefits} />
+
+          {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+          <ShareBar
+            locale={locale}
+            context={share}
+            contentType="service"
+            itemId={`${serviceSlug}-${citySlug}`}
+          />
         </div>
       </section>
 

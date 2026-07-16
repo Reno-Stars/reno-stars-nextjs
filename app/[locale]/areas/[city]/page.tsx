@@ -294,6 +294,33 @@ export function getAreaH1Override(slug: string, locale: Locale): string | undefi
   return enAreaH1Overrides[slug];
 }
 
+/**
+ * Resolution order for this page's title/description. Shared by
+ * generateMetadata and Page (the share card must carry the same title as the
+ * OG card, and a hand-copied second version would drift).
+ *
+ * DB-stored meta wins — tunable in /admin and surfaced via /api/revalidate with
+ * NO deploy (ISR-cost work, 2026-06-04). The EN code map is a dormant fallback
+ * for cities not yet populated in the DB.
+ */
+async function resolveAreaMeta(
+  localizedArea: ReturnType<typeof getLocalizedArea>,
+  city: string,
+  locale: string,
+): Promise<{ title: string; description: string }> {
+  const t = await getTranslations({ locale, namespace: 'metadata.area' });
+  const enOverride = locale === 'en' ? getEnAreaOverrides()[city] : undefined;
+  return {
+    title: localizedArea.metaTitle
+      || enOverride?.title
+      || t('title', { area: localizedArea.name }),
+    description: localizedArea.metaDescription
+      || enOverride?.description
+      || localizedArea.description
+      || t('description', { area: localizedArea.name }),
+  };
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, city } = await params;
   const area = await getServiceAreaBySlugFromDb(city);
@@ -305,19 +332,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const localizedArea = getLocalizedArea(area, locale as Locale);
   const baseUrl = getBaseUrl();
 
-  const t = await getTranslations({ locale, namespace: 'metadata.area' });
-
-  // DB-stored meta wins — tunable in /admin and surfaced via /api/revalidate with
-  // NO deploy (ISR-cost work, 2026-06-04). The EN code map is a dormant fallback
-  // for cities not yet populated in the DB.
-  const enOverride = locale === 'en' ? getEnAreaOverrides()[city] : undefined;
-  const title = localizedArea.metaTitle
-    || enOverride?.title
-    || t('title', { area: localizedArea.name });
-  const description = localizedArea.metaDescription
-    || enOverride?.description
-    || localizedArea.description
-    || t('description', { area: localizedArea.name });
+  const { title, description } = await resolveAreaMeta(localizedArea, city, locale);
 
   return {
     title,
@@ -410,6 +425,13 @@ export default async function Page({ params }: PageProps) {
     metaDescription: area.metaDescription && minimalLocalized(area.metaDescription, loc),
   };
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes. Title/image come from the same
+  // sources the OG card uses, so a shared link previews as the OG card does.
+  const shareUrl = buildAlternates(`/areas/${city}/`, locale).canonical;
+  const { title: shareTitle } = await resolveAreaMeta(localizedArea, city, locale);
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -435,6 +457,7 @@ export default async function Page({ params }: PageProps) {
         h1Override={getAreaH1Override(city, locale as Locale)}
         googleReviews={projectReviewsToLocale(googleReviews, locale)}
         cityClientReviews={cityClientReviews}
+        share={{ url: shareUrl, title: shareTitle, imageUrl: siteImages.hero }}
       />
     </>
   );

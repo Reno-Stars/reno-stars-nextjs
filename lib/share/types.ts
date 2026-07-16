@@ -20,13 +20,20 @@ export type PlatformId =
 /**
  * What a click does, on top of the plain `<a href>` every button already is.
  *
- *  - `popup`    — window.open at 600x540; falls back to navigation if blocked.
- *  - `navigate` — plain link, no interception (mailto:, app deep links).
+ *  - `newTab`   — nothing. The anchor's own target="_blank" opens the tab.
+ *  - `navigate` — nothing; same tab (mailto:, app deep links).
  *  - `copy`     — Clipboard API, with a hidden-textarea fallback.
  *  - `qr`       — opens the lazily-loaded WeChat QR modal.
  *  - `native`   — navigator.share(); the OS sheet reaches Instagram/TikTok/Messages.
+ *
+ * `newTab` deliberately does NOT call window.open. The first cut opened a sized
+ * popup and fell back to `location.href` when window.open returned null —
+ * but window.open returns null WHENEVER `noopener` is passed (verified in
+ * Chrome), not only when blocked. So every share opened a popup AND navigated
+ * the current tab away. Letting the anchor do its own job removes the popup,
+ * the false "blocked" branch, and any popup-blocker exposure at once.
  */
-export type DeliveryMode = 'popup' | 'navigate' | 'copy' | 'qr' | 'native';
+export type DeliveryMode = 'newTab' | 'navigate' | 'copy' | 'qr' | 'native';
 
 /** The page being shared. `url` is always the clean canonical — UTM tagging is
  *  applied per-target by `buildShareUrl`, never baked in here. */
@@ -65,5 +72,9 @@ export interface ShareTarget {
   enabled?: (ctx: ShareContext, env: ShareEnv) => boolean;
 }
 
-/** Feeds GA4's `item_id` / `content_type`. */
-export type ShareContentType = 'blog' | 'project';
+/**
+ * Feeds GA4's `content_type`. Keep these coarse and stable — they are a
+ * reporting dimension, so a new value per page would make the report useless.
+ * `page` is the catch-all for one-off content pages (showroom, before/after).
+ */
+export type ShareContentType = 'blog' | 'project' | 'guide' | 'service' | 'area' | 'page';

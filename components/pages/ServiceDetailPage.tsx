@@ -13,6 +13,8 @@ import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import RelatedProjectsSection from '@/components/RelatedProjectsSection';
 import ServiceClientReviews from '@/components/services/ServiceClientReviews';
+import ShareBar from '@/components/share/ShareBar';
+import type { ShareContext } from '@/lib/share/types';
 import { Link } from '@/navigation';
 import { getLocalizedArea } from '@/lib/data/areas';
 import {
@@ -64,9 +66,12 @@ interface ServiceDetailPageProps {
    * 13-19 / 373 imp combined). Mirrors the same-named prop on AreaPage.
    */
   h1Override?: string;
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
-export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override }: ServiceDetailPageProps) {
+export default function ServiceDetailPage({ locale, serviceSlug, company, service, areas = [], faqs = [], googleRating, googleReviewCount, allServices, clientReviews = [], h1Override, share }: ServiceDetailPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
 
@@ -226,6 +231,14 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
               See our renovation process step-by-step →
             </Link>
           </p>
+
+          {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+          <ShareBar
+            locale={locale}
+            context={share}
+            contentType="service"
+            itemId={serviceSlug}
+          />
         </div>
       </section>
 

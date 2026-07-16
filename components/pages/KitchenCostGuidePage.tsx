@@ -9,8 +9,10 @@ import {
 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { KitchenGuideProject } from '@/lib/db/queries';
+import type { ShareContext } from '@/lib/share/types';
 import CTASection from '@/components/CTASection';
 import CostByCityTable from '@/components/guides/CostByCityTable';
+import ShareBar from '@/components/share/ShareBar';
 import {
   NAVY, NAVY_PALE, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
   STEP_TEAL, STEP_TEAL_LIGHT, STEP_ORANGE, STEP_ORANGE_LIGHT,
@@ -21,6 +23,9 @@ interface KitchenCostGuidePageProps {
   locale: Locale;
   projects: KitchenGuideProject[];
   phone?: string;
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
 function parseBudgetRange(range: string | null): [number, number] | null {
@@ -34,7 +39,7 @@ function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-CA');
 }
 
-export default function KitchenCostGuidePage({ locale, projects, phone }: KitchenCostGuidePageProps) {
+export default function KitchenCostGuidePage({ locale, projects, phone, share }: KitchenCostGuidePageProps) {
   const t = useTranslations('guides.kitchenCost');
   const tGuides = useTranslations('guides.relatedGuides');
   const tCity = useTranslations('guides.cityCostTable');
@@ -333,6 +338,14 @@ export default function KitchenCostGuidePage({ locale, projects, phone }: Kitche
               </div>
             ))}
           </div>
+
+          {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+          <ShareBar
+            locale={locale}
+            context={share}
+            contentType="guide"
+            itemId="kitchen-renovation-cost-vancouver"
+          />
         </div>
       </section>
 

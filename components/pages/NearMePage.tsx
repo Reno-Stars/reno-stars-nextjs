@@ -4,7 +4,9 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MapPin, Star, ShieldCheck, Clock, Phone, ArrowRight } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
+import ShareBar from "@/components/share/ShareBar";
 import type { Locale } from "@/i18n/config";
+import type { ShareContext } from "@/lib/share/types";
 import type { ServiceArea } from "@/lib/types";
 import {
   NAVY,
@@ -65,9 +67,17 @@ interface Props {
    *  (honest framing when the room has no dedicated projects, e.g. basement —
    *  we truthfully show related crews' work near you, clearly labeled). */
   nearbyExact?: boolean;
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. Required: all 5 near-me
+   *  routes render this component, and an optional prop let four of them ship
+   *  without a share bar unnoticed. */
+  share: ShareContext;
+  /** GA4 item_id — this route's own slug. A prop, not a constant, because the
+   *  five near-me routes share this component but are five distinct pages. */
+  shareItemId: string;
 }
 
-export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount, variant, nearbyProjects = [], nearbyExact = true }: Props) {
+export default function NearMePage({ locale, areas, h1Override, googleRating, reviewCount, variant, nearbyProjects = [], nearbyExact = true, share, shareItemId }: Props) {
   const t = useTranslations("nearMe");
 
   // Live reviews rating for the trust stat — only when the SSOT actually has
@@ -326,6 +336,13 @@ export default function NearMePage({ locale, areas, h1Override, googleRating, re
               </div>
             ))}
           </div>
+          {/* Share — rail (xl+) + labelled row, both rendered by ShareBar. */}
+          <ShareBar
+            locale={locale}
+            context={share}
+            contentType="page"
+            itemId={shareItemId}
+          />
         </div>
       </section>
 

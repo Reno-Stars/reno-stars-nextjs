@@ -44,8 +44,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [nav, t, company] = await Promise.all([
+  const [nav, mt, t, company] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
+    getTranslations({ locale, namespace: 'metadata.showroom' }),
     getTranslations({ locale, namespace: 'showroomPage' }),
     getCompanyFromDb(),
   ]);
@@ -90,15 +91,25 @@ export default async function Page({ params }: PageProps) {
     callUs: t('callUs'),
   };
 
+  // Share URL is DERIVED from the canonical (same path string generateMetadata
+  // passes to buildAlternates above) rather than rebuilt, so the two cannot
+  // drift apart when a routing rule changes. Title/image come from the same
+  // metadata.showroom namespace generateMetadata builds the OG card from, so the
+  // share card and the OG card cannot disagree either.
+  const shareUrl = buildAlternates('/showroom/', locale).canonical;
+  const shareImage = buildOgImageUrl(mt('title'), mt('description'));
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ShowroomPage
+        locale={locale as Locale}
         company={company}
         showroom={localizedShowroom}
         faqs={faqs}
         translations={translations}
+        share={{ url: shareUrl, title: mt('title'), imageUrl: shareImage }}
       />
     </>
   );

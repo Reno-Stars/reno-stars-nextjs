@@ -41,7 +41,7 @@ export default function ShareButton({ target, href, showLabel, copied, onActivat
   return (
     <a
       href={href}
-      target={target.mode === 'popup' ? '_blank' : undefined}
+      target={target.mode === 'newTab' ? '_blank' : undefined}
       rel="noopener nofollow"
       aria-label={ariaLabel}
       onClick={(e) => onActivate(target, e)}

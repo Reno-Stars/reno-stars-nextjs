@@ -36,6 +36,8 @@ import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
 import BenefitList from '@/components/BenefitList';
 import FaqSection from '@/components/home/FaqSection';
+import ShareBar from '@/components/share/ShareBar';
+import type { ShareContext } from '@/lib/share/types';
 import {
   NAVY, GOLD, GOLD_PALE, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, neu,
@@ -57,6 +59,9 @@ interface AreaPageProps {
   googleReviews?: GooglePlaceRating;
   /** Verified reviews linked to this city's case-study projects (≤3). */
   cityClientReviews?: AreaReviewDisplay[];
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
 // Stable hash-based offset so each city slug shows a different rotation of reviews.
@@ -70,7 +75,7 @@ function cityReviewOffset(slug: string, total: number): number {
   return Math.abs(h) % total;
 }
 
-export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews, cityClientReviews = [] }: AreaPageProps) {
+export default function AreaPage({ locale, area, allAreas, company, services, faqs, areaProjects, introOverride, h1Override, googleReviews, cityClientReviews = [], share }: AreaPageProps) {
   const t = useTranslations();
   const tCostGuides = useTranslations('costGuidesSection');
   const citySlug = area.slug;
@@ -539,6 +544,20 @@ export default function AreaPage({ locale, area, allAreas, company, services, fa
           </div>
         </section>
       )}
+
+      {/* Share — rail (xl+) + labelled row, both rendered by ShareBar. Its own
+          section rather than a slot inside the reviews block above: that block
+          is conditional, and the share bar must render for every city. */}
+      <section className="pb-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto">
+          <ShareBar
+            locale={locale}
+            context={share}
+            contentType="area"
+            itemId={citySlug}
+          />
+        </div>
+      </section>
 
       {/* Area-specific FAQs */}
       {localizedFaqs.length > 0 && (

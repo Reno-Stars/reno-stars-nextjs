@@ -6,7 +6,9 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import { SlidersHorizontal, MapPin, Eye, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import type { Locale, Company, Project, ImagePair } from '@/lib/types';
+import type { ShareContext } from '@/lib/share/types';
 import CTASection from '@/components/CTASection';
+import ShareBar from '@/components/share/ShareBar';
 import { NAVY, GOLD, SURFACE, SURFACE_ALT, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
 
 const ITEMS_PER_PAGE = 12;
@@ -15,6 +17,9 @@ interface BeforeAfterGalleryPageProps {
   locale: Locale;
   projects: Project[];
   company: Company;
+  /** `url` is the page canonical, derived server-side via buildAlternates so it
+   *  cannot drift from the canonical the page declares. */
+  share: ShareContext;
 }
 
 interface GalleryItem {
@@ -28,7 +33,7 @@ interface GalleryItem {
 
 const SERVICE_FILTERS = ['all', 'bathroom', 'kitchen', 'whole-house', 'commercial'] as const;
 
-export default function BeforeAfterGalleryPage({ locale, projects, company: _company }: BeforeAfterGalleryPageProps) {
+export default function BeforeAfterGalleryPage({ locale, projects, company: _company, share }: BeforeAfterGalleryPageProps) {
   const t = useTranslations('beforeAfterPage');
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -309,6 +314,9 @@ export default function BeforeAfterGalleryPage({ locale, projects, company: _com
               </details>
             ))}
           </div>
+
+          {/* Share — rail (xl+) + labelled row, both rendered by ShareBar */}
+          <ShareBar locale={locale} context={share} contentType="page" itemId="before-after" />
         </div>
       </section>
 
