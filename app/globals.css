@@ -132,10 +132,14 @@
   }
 }
 
-/* Shimmer loading placeholder (OptimizedImage) */
+/* Shimmer loading placeholder (OptimizedImage).
+   Animates transform (GPU-composited) rather than background-position, so it
+   runs off the main thread — clears Lighthouse's "non-composited animation"
+   flag and shaves main-thread paint work. The sliding element is an inner
+   overlay (see OptimizedImage); it travels from off-left to off-right. */
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Hero section animations (ProcessPage) */
