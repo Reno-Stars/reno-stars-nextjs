@@ -6,6 +6,7 @@ import { LocalBusinessSchema, WebSiteSchema } from '@/components/structured-data
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import MicrosoftClarity from '@/components/MicrosoftClarity';
 import MetaPixel from '@/components/MetaPixel';
+import WebMcpTools from '@/components/WebMcpTools';
 import GoogleAdsConversion from '@/components/GoogleAdsConversion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -145,6 +146,8 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <GoogleAdsConversion />
+        {/* WebMCP: expose the quote-request action to AI browsing agents */}
+        <WebMcpTools />
         {/* Strip SERVER-ONLY namespaces from the client payload. These are
             used only in generateMetadata / server components (never in a
             'use client' file), so shipping them into every page's RSC stream
