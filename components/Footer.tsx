@@ -397,7 +397,7 @@ export default function Footer({ company, socialLinks, services, areas, googleRa
                 <span className="text-sm text-white/70">{t('stats.liabilityCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <OptimizedImage src={WORKSAFE_BC_LOGO} alt="WorkSafe BC certified contractor logo" width={120} height={32} placeholder="empty" className="h-4 w-auto object-contain rounded-sm" />
+                <OptimizedImage src={WORKSAFE_BC_LOGO} alt="WorkSafe BC certified contractor logo" width={320} height={61} placeholder="empty" className="h-4 w-auto object-contain rounded-sm" />
                 <span className="text-sm text-white/70">{t('stats.wcbCoverage')}</span>
               </div>
               <div className="flex items-center gap-1.5" role="img" aria-label={`${googleRating ?? 5}/5 ${t('stats.rating')}`}>
