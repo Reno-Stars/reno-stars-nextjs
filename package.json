@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.5.0",
+  "//browserslist": "Modern targets so Next/SWC skips ES2019+ polyfills (Array.at/flat/flatMap, Object.fromEntries/hasOwn, String.trim{Start,End}) — clears Lighthouse 'legacy JavaScript'. Covers Safari 15.4+ (Mar 2022) / Chrome 100+ → ~98% of real traffic.",
+  "browserslist": [
+    "chrome >= 100",
+    "edge >= 100",
+    "firefox >= 100",
+    "safari >= 15.4",
+    "ios_saf >= 15.4"
+  ],
   "engines": {
     "node": ">=20"
   },

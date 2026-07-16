@@ -1,6 +1,24 @@
 import { SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
 import Marquee from './Marquee';
 import { computeMarqueeParams } from './marquee-utils';
+import { buildOptimizedUrl, ALLOWED_IMAGE_HOSTS } from '@/lib/image';
+
+// Route raster (non-SVG) logos on our own hosts through the WebP optimizer so
+// they ship small + with a 1-yr immutable cache (raw r2.dev URLs are uncached).
+// SVGs stay raw (vector, already tiny); unknown hosts stay raw too.
+function optimizedLogo(src: string): { src: string; srcSet?: string; sizes?: string } {
+  try {
+    const isSvg = new URL(src).pathname.toLowerCase().endsWith('.svg');
+    if (!isSvg && ALLOWED_IMAGE_HOSTS.includes(new URL(src).hostname)) {
+      return {
+        src: buildOptimizedUrl(src, 256, 75),
+        srcSet: `${buildOptimizedUrl(src, 128, 75)} 128w, ${buildOptimizedUrl(src, 256, 75)} 256w`,
+        sizes: '128px',
+      };
+    }
+  } catch { /* malformed URL — use raw */ }
+  return { src };
+}
 
 interface LocalizedPartner {
   name: string;
@@ -87,6 +105,7 @@ export default function PartnersSection({ partners, translations: t }: PartnersS
 }
 
 function PartnerLogo({ partner }: { partner: LocalizedPartner }) {
+  const logo = optimizedLogo(partner.logo);
   const content = (
     <div
       className="shrink-0 rounded-xl p-4 flex items-center justify-center transition-transform duration-300 hover:scale-105"
@@ -99,7 +118,9 @@ function PartnerLogo({ partner }: { partner: LocalizedPartner }) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={partner.logo}
+        src={logo.src}
+        srcSet={logo.srcSet}
+        sizes={logo.sizes}
         alt={partner.name}
         width={128}
         height={68}

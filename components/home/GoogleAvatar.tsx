@@ -2,6 +2,24 @@
 
 import { useState } from 'react';
 import { NAVY } from '@/lib/theme';
+import { buildOptimizedUrl, ALLOWED_IMAGE_HOSTS } from '@/lib/image';
+
+// Route allowed-host avatars (R2-cached or lh3 Google) through the WebP optimizer:
+// resizes the 128px source down to the 36px display size and serves a ~3 KB WebP
+// with a 1-yr immutable cache instead of the raw ~30 KB uncached JPG. Unknown
+// hosts fall back to the raw src unchanged.
+function optimize(src: string): { src: string; srcSet?: string; sizes?: string } {
+  try {
+    if (ALLOWED_IMAGE_HOSTS.includes(new URL(src).hostname)) {
+      return {
+        src: buildOptimizedUrl(src, 108, 65),
+        srcSet: `${buildOptimizedUrl(src, 72, 65)} 72w, ${buildOptimizedUrl(src, 108, 65)} 108w`,
+        sizes: '36px',
+      };
+    }
+  } catch { /* malformed URL — use raw */ }
+  return { src };
+}
 
 export default function GoogleAvatar({ src, name }: { src: string; name: string }) {
   const [failed, setFailed] = useState(false);
@@ -14,10 +32,14 @@ export default function GoogleAvatar({ src, name }: { src: string; name: string 
     );
   }
 
+  const img = optimize(src);
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={img.src}
+      srcSet={img.srcSet}
+      sizes={img.sizes}
       alt={name}
       width={36}
       height={36}
