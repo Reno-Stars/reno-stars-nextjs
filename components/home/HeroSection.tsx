@@ -125,10 +125,15 @@ export default function HeroSection({ company, googleRating, translations: t }: 
           objectFit: 'cover',
         }}
       />
-      {/* Video loads lazily on desktop only, fades in over the image */}
+      {/* Video loads lazily on desktop only, fades in over the image.
+          Poster uses the SAME processed WebP the <img> above renders (not the
+          raw ~174 KB original) — the always-rendered <video> otherwise fetches
+          the full-res JPG on every load (even hidden on mobile), competing with
+          the LCP webp on slow connections. Reusing posterDefaultSrc makes the
+          browser dedupe it against the img, so the poster costs nothing. */}
       <LazyVideo
         src={videoSrc}
-        poster={posterSrc}
+        poster={posterDefaultSrc}
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
