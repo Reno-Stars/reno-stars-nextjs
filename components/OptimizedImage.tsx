@@ -165,7 +165,10 @@ export default function OptimizedImage({
       style={fill ? { isolation: 'isolate' } : { width, height, isolation: 'isolate' }}
       aria-hidden={ariaHidden}
     >
-      {/* Shimmer — only shown until thumb loads (~instant for R2, <300ms) */}
+      {/* Shimmer — only shown until thumb loads (~instant for R2, <300ms).
+          A static base tint with a sliding highlight overlay; the overlay
+          animates via transform (GPU-composited) instead of background-position
+          so it never touches the main thread. */}
       {!thumbLoaded && (
         <div
           aria-hidden="true"
@@ -175,12 +178,19 @@ export default function OptimizedImage({
             zIndex: 1,
             overflow: 'hidden',
             borderRadius: 'inherit',
-            background: 'linear-gradient(90deg, #d8d8d8 25%, #e8e8e8 50%, #d8d8d8 75%)',
-            backgroundSize: '200% 100%',
-            animation: 'shimmer 1.4s infinite linear',
-            transition: 'opacity 0.3s ease-out',
+            background: '#dcdcdc',
           }}
-        />
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%)',
+              animation: 'shimmer 1.4s infinite linear',
+              willChange: 'transform',
+            }}
+          />
+        </div>
       )}
 
       {/* Thumb — blurred LQIP preview. THIS is the only `<img>` guaranteed to
