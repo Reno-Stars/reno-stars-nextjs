@@ -118,6 +118,7 @@ pnpm test:e2e             # Playwright headless
 | `OPENAI_API_KEY` | No | AI content optimization |
 | `VERCEL_DEPLOY_HOOK_URL` | Unused | Legacy Vercel deploy-hook URL. No longer fired by app code as of 2026-06-04 (admin edits now use on-demand revalidation, not redeploy). Safe to leave set or remove. |
 | `REVALIDATE_SECRET` | Prod-only | Bearer token for `POST /api/revalidate` — lets the SEO agent revalidate specific pages after direct-DB edits without a deploy. |
+| `WEBMCP_ORIGIN_TRIAL_TOKEN` | Prod-only | Chrome WebMCP origin-trial token (www.reno-stars.com, **expires 2026-11-16** — renew at developer.chrome.com/origintrials). Emitted as an `origin-trial` meta tag by the locale layout; activates the native `document.modelContext` so agents + Lighthouse see the WebMCP tools registered by `WebMcpTools`. |
 
 ## Known Issues
 
