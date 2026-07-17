@@ -39,9 +39,19 @@ const nextConfig: NextConfig = {
   async headers() {
     const L = 'en|zh|zh-Hant|ja|ko|es|pa|tl|fa|vi|ru|ar|hi|fr';
     const cdn = [{ key: 'CDN-Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=3600' }];
+    // WebMCP origin-trial token, ALSO delivered as an HTTP header (the spec's
+    // second delivery mechanism, alongside the <meta http-equiv="origin-trial">
+    // the locale layout emits) — belt-and-braces for environments whose older
+    // Chrome builds are quirky about meta-delivered tokens (e.g. PSI's
+    // Lightrider). Token + renewal notes: .env.production.local (expires
+    // 2026-11-16). Env var absent (local dev) → header simply omitted.
+    const ot = process.env.WEBMCP_ORIGIN_TRIAL_TOKEN
+      ? [{ key: 'Origin-Trial', value: process.env.WEBMCP_ORIGIN_TRIAL_TOKEN }]
+      : [];
+    const pageHeaders = [...cdn, ...ot];
     return [
-      { source: `/:locale(${L})`, headers: cdn },
-      { source: `/:locale(${L})/:path*`, headers: cdn },
+      { source: `/:locale(${L})`, headers: pageHeaders },
+      { source: `/:locale(${L})/:path*`, headers: pageHeaders },
     ];
   },
   experimental: {
