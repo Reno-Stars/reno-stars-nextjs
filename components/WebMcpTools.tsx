@@ -15,7 +15,17 @@ import { submitContactForm } from '@/app/actions/contact';
  *
  * API note: `navigator.modelContext` was deprecated in Chrome 150 in favour of
  * `document.modelContext`; we prefer the new location and fall back to the old
- * one. The whole thing no-ops in browsers/agents without WebMCP support.
+ * one.
+ *
+ * Runtime: browsers don't ship the API natively yet, so we lazy-load
+ * `@mcp-b/webmcp-polyfill` (the WebMCP community's strict core runtime) before
+ * registering. Its initializer defers to a native `document.modelContext` when
+ * one exists (native always wins) and installs the standard surface otherwise —
+ * this is what makes the tool actually discoverable by agents/extensions and by
+ * Lighthouse's Agentic Browsing "WebMCP tools registered" audit today. The
+ * dynamic import keeps the polyfill out of the critical-path bundle (loads
+ * post-hydration; zero TBT cost). The declarative counterpart (form
+ * `toolname`/`tooldescription` attributes) lives on ContactForm's <form>.
  */
 
 interface WebMcpToolResult {
@@ -53,11 +63,35 @@ const str = (v: unknown) => (v == null ? '' : String(v));
 export default function WebMcpTools() {
   useEffect(() => {
     if (registered) return;
-    const mc = getModelContext();
-    if (!mc) return;
+    let cancelled = false;
 
-    try {
-      mc.registerTool({
+    (async () => {
+      // Ensure the WebMCP surface exists: the polyfill auto-initializes on
+      // import and defers to a native document.modelContext when present.
+      // If the chunk fails to load (offline, blocked), fall through — a native
+      // API may still be there.
+      try {
+        await import('@mcp-b/webmcp-polyfill');
+      } catch {
+        /* fall through to a possible native API */
+      }
+      if (cancelled || registered) return;
+
+      const mc = getModelContext();
+      if (!mc) return;
+
+      register(mc);
+    })();
+
+    return () => { cancelled = true; };
+  }, []);
+
+  return null;
+}
+
+function register(mc: ModelContext) {
+  try {
+    mc.registerTool({
         name: 'request_renovation_quote',
         description:
           'Submit a free renovation quote request to Reno Stars, a Vancouver home & commercial renovation company (kitchens, bathrooms, whole-house, basements, commercial). The enquiry is emailed to the Reno Stars team, who reply within 24 hours. Use this when the user wants a quote, estimate, consultation, or to contact Reno Stars about a renovation project in Metro Vancouver.',
@@ -95,12 +129,9 @@ export default function WebMcpTools() {
           return { content: [{ type: 'text', text: result.message }] };
         },
       });
-      registered = true;
-    } catch {
-      // registerTool throws InvalidStateError on duplicate name / invalid schema.
-      // Either is safe to ignore — the tool is already available.
-    }
-  }, []);
-
-  return null;
+    registered = true;
+  } catch {
+    // registerTool throws InvalidStateError on duplicate name / invalid schema.
+    // Either is safe to ignore — the tool is already available.
+  }
 }
