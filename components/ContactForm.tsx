@@ -137,7 +137,19 @@ export default function ContactForm({ onSuccess, submitLabel, large, cityOptions
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className={large ? 'space-y-6' : 'space-y-5'}>
+      {/* toolname/tooldescription: WebMCP declarative API — exposes this form as
+          a tool AI browsing agents can fill and submit (and satisfies Lighthouse's
+          Agentic Browsing "form coverage" audit, which is static-HTML based and
+          works even where the imperative modelContext API isn't available). Named
+          distinctly from the imperative `request_renovation_quote` tool in
+          WebMcpTools.tsx so the two registrations can never collide; both funnel
+          into the same submitContactForm server action. */}
+      <form
+        onSubmit={handleSubmit}
+        toolname="submit_renovation_quote_form"
+        tooldescription="Request a free renovation quote from Reno Stars, a Vancouver home and commercial renovation company. Fill in name, phone, and message (project details: rooms, scope, budget, timeline, city); email, city, and property type are optional. The team replies within 24 hours."
+        className={large ? 'space-y-6' : 'space-y-5'}
+      >
         {/* Error alert - inline */}
         {errorMessage && (
           <div

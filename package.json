@@ -52,6 +52,7 @@
     "@aws-sdk/s3-request-presigner": "^3.1005.0",
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
+    "@mcp-b/webmcp-polyfill": "^4.0.0",
     "@neondatabase/serverless": "^0.10.4",
     "@react-pdf/renderer": "^4.5.1",
     "@tailwindcss/typography": "^0.5.19",
