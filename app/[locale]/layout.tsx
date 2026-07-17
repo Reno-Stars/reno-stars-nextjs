@@ -102,6 +102,15 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={isRtl(locale as Locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
+        {/* Chrome WebMCP origin trial (Chrome 149–156, token expires 2026-11-16;
+            renewal notes in .env.production.local). Activates the NATIVE
+            document.modelContext for this origin — required for AI agents and
+            Lighthouse's Agentic Browsing WebMCP audits to see the tools that
+            WebMcpTools registers; without it the audits stay "not applicable"
+            (they instrument the native implementation, not the polyfill). */}
+        {process.env.WEBMCP_ORIGIN_TRIAL_TOKEN && (
+          <meta httpEquiv="origin-trial" content={process.env.WEBMCP_ORIGIN_TRIAL_TOKEN} />
+        )}
         {/* Preconnect for faster asset loading (implies dns-prefetch) */}
         <link rel="preconnect" href={ASSET_ORIGIN} crossOrigin="anonymous" />
         {/* Google user-content CDN serves the reviewer avatar PNGs that the
