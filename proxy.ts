@@ -129,17 +129,16 @@ export default function proxy(request: NextRequest): NextResponse {
     return addSecurityHeaders(NextResponse.next());
   }
 
-  // /geoclockr/privacy is the Reno Stars Companion privacy policy — see
-  // app/geoclockr/privacy/page.tsx. The `geoclockr` path segment predates the
-  // rename and is deliberately kept: the URL is already submitted to the
-  // stores, and the Android package (com.geoclockr.mobile) is permanent
-  // anyway. This exact URL is submitted to Google
-  // Play (App content → Privacy policy) and App Store Connect, and both
-  // re-check reachability during review. Locale-prefixing it would break
-  // the submitted URL, so skip locale routing for this path entirely.
-  // Unlike /signup this page IS indexable; it self-canonicalises to the
-  // locale-free URL.
-  if (pathname === '/geoclockr/privacy' || pathname === '/geoclockr/privacy/') {
+  // /geoclockr/* are the Reno Stars Companion store-compliance pages — the
+  // privacy policy (app/geoclockr/privacy/) and the account & data deletion
+  // request page (app/geoclockr/delete-account/). The `geoclockr` path segment
+  // predates the rename and is deliberately kept: these exact URLs are
+  // submitted to Google Play (App content → Privacy policy / Data safety) and
+  // App Store Connect, and both re-check reachability during review.
+  // Locale-prefixing them would break the submitted URLs, so skip locale
+  // routing for this whole subtree. Unlike /signup these pages ARE indexable;
+  // they self-canonicalise to their locale-free URLs.
+  if (pathname === '/geoclockr' || pathname.startsWith('/geoclockr/')) {
     return addSecurityHeaders(NextResponse.next());
   }
 
