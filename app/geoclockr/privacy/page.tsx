@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { NAVY, TEXT_MID, SURFACE, CARD, GOLD } from '@/lib/theme';
 
 /**
@@ -241,7 +242,11 @@ export default function RenoStarsCompanionPrivacyPage() {
               <li>
                 <strong style={{ color: NAVY }}>Access and deletion.</strong> To access, correct, or
                 delete your personal data, contact your employer&rsquo;s Reno Stars Companion administrator or
-                us at the address below.
+                us at the address below. You can also{' '}
+                <Link href="/geoclockr/delete-account/" style={{ color: GOLD }}>
+                  request account and data deletion
+                </Link>{' '}
+                directly.
               </li>
             </ul>
           </Section>
