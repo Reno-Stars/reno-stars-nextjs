@@ -104,6 +104,31 @@ describe('ProjectSchema review emission', () => {
     });
   });
 
+  // Regression guard for the FABRICATION path, which is worse than the defect
+  // above. `parseAddress('')` does not yield an empty address — it yields a
+  // blank street/locality plus the HARDCODED fallback 'BC' / 'V6W 1M2'. And
+  // COMPANY_FALLBACK.address IS '', served whenever the company query errors on
+  // a cache miss while projects still render from their own warm cache. Emitting
+  // unconditionally would publish a rated LocalBusiness at a postal code nobody
+  // supplied — and ISR (7-day floor) would bake it into 65 projects x 14 locales.
+  // Omitting the node is recoverable; a wrong address is unfalsifiable from the
+  // page.
+  it('omits the provider address entirely when the company address is empty', () => {
+    const s = render({ reviews, company: { ...company, address: '' } });
+    const mainEntity = s.mainEntity as Record<string, unknown>;
+    const provider = mainEntity.provider as Record<string, unknown>;
+    expect('address' in provider).toBe(false);
+    // and specifically never the invented postal code
+    expect(JSON.stringify(provider)).not.toContain('V6W 1M2');
+  });
+
+  it('omits the provider address when the parse yields no locality', () => {
+    const s = render({ reviews, company: { ...company, address: '21300 Gordon Way' } });
+    const mainEntity = s.mainEntity as Record<string, unknown>;
+    const provider = mainEntity.provider as Record<string, unknown>;
+    expect('address' in provider).toBe(false);
+  });
+
   // Page-level schemas must not restate the layout org node's @id — a second
   // node carrying /#organization with a different property set is a duplicate
   // entity, not a consolidation. Mirrors no-duplicate-ids.test.tsx.

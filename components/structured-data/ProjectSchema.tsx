@@ -68,19 +68,49 @@ export default function ProjectSchema({
   // exactly (same parsed PostalAddress sub-fields); deliberately NO `@id` —
   // page-level schemas must not restate the layout org node's @id, guarded by
   // tests/unit/components/structured-data/no-duplicate-ids.test.tsx.
+  // Emit `address` ONLY when the parse produced a real street + locality.
+  //
+  // `parseAddress('')` does NOT return an empty address — it returns blank
+  // streetAddress/locality but the HARDCODED fallback `region: 'BC'`,
+  // `postalCode: 'V6W 1M2'`. And `COMPANY_FALLBACK.address` IS `''`
+  // (lib/db/queries/company.ts), served by withFallback whenever the
+  // getCompanyFromDb cache misses and that one query errors — while projects
+  // still render from their own warm cache. Emitting unconditionally would
+  // therefore publish a rated LocalBusiness with a blank street and a
+  // FABRICATED postal code, and because these pages are ISR-cached on a 7-day
+  // floor, a single blip bakes that into 65 projects x 14 locales for a week.
+  //
+  // An absent address re-opens the original "rated business with no address"
+  // defect for that render — but a WRONG address is worse than a missing one:
+  // it is unfalsifiable from the page and it is exactly the fabrication class
+  // this schema pass exists to remove. Same defensive coupling as
+  // LocalBusinessSchema's hasAggregateRating guard.
+  // The test for "real" is whether parseAddress needed ANY of its fallbacks.
+  // It expects "street, unit, city, REGION POSTAL" — four comma segments — and
+  // silently substitutes when they are missing: `locality` falls back to
+  // parts[0] (the STREET), and regionPostal falls back to the literal
+  // 'BC V6W 1M2'. So a partial value like '21300 Gordon Way' yields
+  // locality === streetAddress AND an invented postal code — checking only that
+  // the fields are non-empty is not enough, which a regression test caught.
+  // Requiring all four segments is the only condition under which every emitted
+  // sub-field came from the data.
+  const hasRealAddress = company.address.split(', ').length >= 4;
+
   const provider = {
     '@type': 'HomeAndConstructionBusiness' as const,
     name: company.name,
     url: baseUrl,
     telephone: e164(company.phone),
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: addressParts.streetAddress,
-      addressLocality: addressParts.locality,
-      addressRegion: addressParts.region,
-      postalCode: addressParts.postalCode,
-      addressCountry: 'CA',
-    },
+    ...(hasRealAddress && {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: addressParts.streetAddress,
+        addressLocality: addressParts.locality,
+        addressRegion: addressParts.region,
+        postalCode: addressParts.postalCode,
+        addressCountry: 'CA',
+      },
+    }),
     ...(googleRating && googleReviewCount && {
       aggregateRating: {
         '@type': 'AggregateRating',
