@@ -2,9 +2,9 @@ import type { Company } from '@/lib/types';
 import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
+import { parseAddress } from './parse-address';
 import {
   formatReviewerName,
-  reviewDateToSchemaDate,
   type ProjectReviewDisplay,
 } from '@/lib/project-reviews';
 
@@ -57,11 +57,30 @@ export default function ProjectSchema({
   const allImages = [image, ...images].filter(Boolean);
   const fullUrl = `${baseUrl}${url}`;
 
+  const addressParts = parseAddress(company.address);
+
+  // `HomeAndConstructionBusiness` is a `LocalBusiness` subtype, so Google
+  // requires `address` on it — and enforces that especially hard when the
+  // node carries an `aggregateRating`, since an unaddressed rated business is
+  // the classic "invalid structured data" / star-suppression pattern. This
+  // node previously emitted only name/url/telephone + aggregateRating, which
+  // flagged all 65 project pages. Shape mirrors ServiceSchema's provider
+  // exactly (same parsed PostalAddress sub-fields); deliberately NO `@id` —
+  // page-level schemas must not restate the layout org node's @id, guarded by
+  // tests/unit/components/structured-data/no-duplicate-ids.test.tsx.
   const provider = {
     '@type': 'HomeAndConstructionBusiness' as const,
     name: company.name,
     url: baseUrl,
     telephone: e164(company.phone),
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: addressParts.streetAddress,
+      addressLocality: addressParts.locality,
+      addressRegion: addressParts.region,
+      postalCode: addressParts.postalCode,
+      addressCountry: 'CA',
+    },
     ...(googleRating && googleReviewCount && {
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -115,8 +134,17 @@ export default function ProjectSchema({
       }),
       // Verified client reviews for THIS project. Author name is abbreviated
       // to first name + last initial (matches the on-page card); reviewBody
-      // is the verbatim quote; datePublished is month-precision (YYYY-MM) —
-      // the exact day is not known. Deliberately NO aggregateRating here.
+      // is the verbatim quote. Deliberately NO aggregateRating here.
+      //
+      // `datePublished` is intentionally omitted. `project_reviews.review_date`
+      // is month-precision — every row stores the 1st of the month as a
+      // placeholder — and Schema.org types `datePublished` as `Date`
+      // (xsd:date), which requires a full YYYY-MM-DD. The previous code
+      // emitted a bare 'YYYY-MM', which Google's Rich Results Test and
+      // Semrush both reject as invalid (8 project pages flagged). Padding it
+      // to 'YYYY-MM-01' would validate but would assert a specific day we do
+      // not know, so we omit instead: `datePublished` is optional on Review
+      // and omitting it costs no rich-result eligibility.
       ...(reviews && reviews.length > 0 && {
         review: reviews.map((r) => ({
           '@type': 'Review',
@@ -124,7 +152,6 @@ export default function ProjectSchema({
             '@type': 'Person',
             name: formatReviewerName(r.authorName),
           },
-          datePublished: reviewDateToSchemaDate(r.reviewDate),
           reviewBody: r.body,
           ...(r.bodyLang && { inLanguage: r.bodyLang }),
           reviewRating: {

@@ -7,6 +7,10 @@ import type { ProjectReviewDisplay } from '@/lib/project-reviews';
 const company = {
   name: 'Reno Stars',
   phone: '778-960-7999',
+  // `address` is required on Company and is what ProjectSchema's provider
+  // node parses into PostalAddress sub-fields. Kept in this partial fixture
+  // because omitting it made the component throw rather than fail a claim.
+  address: '21300 Gordon Way, Unit 188, Richmond, BC V6W 1M2',
 } as unknown as Company;
 
 const reviews: ProjectReviewDisplay[] = [
@@ -50,8 +54,11 @@ describe('ProjectSchema review emission', () => {
     expect(emitted).toHaveLength(1);
     expect(emitted[0]['@type']).toBe('Review');
     expect(emitted[0].reviewBody).toBe('真心大推Reno Stars!!!');
-    // Month-precision date — no fabricated day
-    expect(emitted[0].datePublished).toBe('2026-01');
+    // `datePublished` must be absent. review_date is month-precision (day is
+    // always a '01' placeholder) and Schema.org types datePublished as
+    // xsd:date, so the old 'YYYY-MM' output was rejected as invalid
+    // structured data — and 'YYYY-MM-01' would fabricate a day we don't know.
+    expect(emitted[0]).not.toHaveProperty('datePublished');
     // Author abbreviated the same way as the on-page card
     expect(emitted[0].author).toEqual({ '@type': 'Person', name: 'Zoe C.' });
     expect(emitted[0].reviewRating).toEqual({
@@ -76,5 +83,34 @@ describe('ProjectSchema review emission', () => {
     const s = render();
     const mainEntity = s.mainEntity as Record<string, unknown>;
     expect('review' in mainEntity).toBe(false);
+  });
+
+  // Regression guard: the provider is a HomeAndConstructionBusiness, i.e. a
+  // LocalBusiness subtype, so Google requires `address` on it. Shipping it
+  // without one flagged all 65 project pages as invalid structured data, and
+  // an aggregateRating on an addressless business suppresses star results.
+  it('gives the provider a complete PostalAddress', () => {
+    const s = render({ reviews });
+    const mainEntity = s.mainEntity as Record<string, unknown>;
+    const provider = mainEntity.provider as Record<string, unknown>;
+    expect(provider['@type']).toBe('HomeAndConstructionBusiness');
+    expect(provider.address).toEqual({
+      '@type': 'PostalAddress',
+      streetAddress: '21300 Gordon Way, Unit 188',
+      addressLocality: 'Richmond',
+      addressRegion: 'BC',
+      postalCode: 'V6W 1M2',
+      addressCountry: 'CA',
+    });
+  });
+
+  // Page-level schemas must not restate the layout org node's @id — a second
+  // node carrying /#organization with a different property set is a duplicate
+  // entity, not a consolidation. Mirrors no-duplicate-ids.test.tsx.
+  it('does not give the provider the layout org @id', () => {
+    const s = render({ reviews });
+    const mainEntity = s.mainEntity as Record<string, unknown>;
+    const provider = mainEntity.provider as Record<string, unknown>;
+    expect(provider).not.toHaveProperty('@id');
   });
 });
