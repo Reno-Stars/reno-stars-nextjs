@@ -129,6 +129,7 @@ export default async function Page({ params }: PageProps) {
         authorName={`${company.name} Team`}
         datePublished="2026-02-03"
         dateModified="2026-06-25"
+        image={ogImage}
         locale={locale}
       />
       <HowToSchema

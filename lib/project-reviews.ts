@@ -75,14 +75,24 @@ export function formatReviewerName(name: string): string {
   return `${parts[0]} ${last.charAt(0)}.`;
 }
 
-/**
- * Truncate a month-precision review date to 'YYYY-MM' for Schema.org
- * `datePublished`. ISO 8601 partial dates are valid — emitting only the
- * month avoids implying a specific day we don't actually know.
+/*
+ * `reviewDateToSchemaDate` was removed 2026-08-01.
+ *
+ * It truncated `project_reviews.review_date` to 'YYYY-MM' for Schema.org
+ * `datePublished`, on the assumption that ISO 8601 partial dates are
+ * acceptable there. They are not: Schema.org types `datePublished` as `Date`
+ * (xsd:date), which requires a full YYYY-MM-DD, so Google's Rich Results Test
+ * and Semrush's site audit both rejected the value — 8 project pages carried
+ * an invalid structured-data item because of it.
+ *
+ * The column is month-precision by construction (every row stores the 1st of
+ * the month as a placeholder), so there is no correct full date to emit and
+ * padding to 'YYYY-MM-01' would fabricate one. ProjectSchema now omits
+ * `datePublished` on project reviews entirely; see the comment there.
+ *
+ * On-page display is unaffected — it goes through `relativeReviewDate`, which
+ * is month-granularity by design and still reads the same column.
  */
-export function reviewDateToSchemaDate(reviewDate: string): string {
-  return reviewDate.slice(0, 7);
-}
 
 /**
  * Canonical app-locale → Intl-locale map for relative-time formatting, shared

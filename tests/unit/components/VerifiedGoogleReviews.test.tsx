@@ -6,7 +6,6 @@ import {
   relativeReviewDate,
   relativeGoogleReviewTime,
   flooredReviewCount,
-  reviewDateToSchemaDate,
   REVIEW_BODY_LANGS,
   type ProjectReviewDisplay,
 } from '@/lib/project-reviews';
@@ -62,12 +61,6 @@ describe('formatReviewerName', () => {
 
   it('returns single-word names unchanged', () => {
     expect(formatReviewerName('Murphy')).toBe('Murphy');
-  });
-});
-
-describe('reviewDateToSchemaDate', () => {
-  it('truncates to month precision (YYYY-MM)', () => {
-    expect(reviewDateToSchemaDate('2026-06-01')).toBe('2026-06');
   });
 });
 
