@@ -60,7 +60,7 @@
     "kitchenCabinet": {
       "title": "Kitchen Cabinet Renovation Guide",
       "description": "Kitchen cabinet costs in Vancouver: stock, semi-custom, custom, and refinishing options with 2026 pricing.",
-      "range": "$3K 2013 $45K"
+      "range": "$3K – $45K"
     },
     "passages": {
       "title": "Renovation Cost by Project Type",
@@ -73,10 +73,26 @@
       "headerBudget": "Budget",
       "headerMid": "Mid-Range",
       "headerHigh": "High-End",
-      "kitchen": ["$15K – $25K", "$25K – $45K", "$45K – $72K"],
-      "bathroom": ["$10K – $20K", "$20K – $35K", "$40K – $60K+"],
-      "wholeHouse": ["$50K – $90K", "$90K – $150K", "$150K – $200K+"],
-      "basement": ["$30K – $50K", "$50K – $80K", "$80K – $120K+"],
+      "kitchen": [
+        "$15K – $25K",
+        "$25K – $45K",
+        "$45K – $72K"
+      ],
+      "bathroom": [
+        "$10K – $20K",
+        "$20K – $35K",
+        "$40K – $60K+"
+      ],
+      "wholeHouse": [
+        "$50K – $90K",
+        "$90K – $150K",
+        "$150K – $200K+"
+      ],
+      "basement": [
+        "$30K – $50K",
+        "$50K – $80K",
+        "$80K – $120K+"
+      ],
       "footnote": "Tier is driven by material choice, layout changes, and permit complexity — not square footage alone."
     },
     "faqs": {

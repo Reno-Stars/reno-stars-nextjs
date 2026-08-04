@@ -109,6 +109,16 @@
         "answer": "Sí, obtenga al menos 3 cotizaciones detalladas. Compare el alcance del trabajo línea por línea, no solo el precio final. Verifique el seguro CGL de $5 millones, la cobertura WCB activa y los términos de la garantía (1 año es estándar, 2 a 3 años es calidad). Esté atento a cotizaciones bajas que omitan elementos críticos como impermeabilización, eliminación de demoliciones o manejo de permisos."
       }
     },
-    "intro": "Datos reales de costos de renovación de más de 100 proyectos completados en Metro Vancouver. Cada guía desglosa los precios por nivel, lo que realmente compra con su presupuesto y los factores de costo más comunes."
+    "intro": "Datos reales de costos de renovación de más de 100 proyectos completados en Metro Vancouver. Cada guía desglosa los precios por nivel, lo que realmente compra con su presupuesto y los factores de costo más comunes.",
+    "permitGuide": {
+      "title": "Guía de permisos de renovación en Vancouver",
+      "description": "¿Qué renovaciones requieren permiso en Metro Vancouver? Guía de permisos de construcción de BC por municipio.",
+      "range": "Varía según el proyecto"
+    },
+    "kitchenCabinet": {
+      "title": "Guía de renovación de gabinetes de cocina",
+      "description": "Costos de gabinetes de cocina en Vancouver: estándar, semipersonalizados, a medida y restauración, con precios de 2026.",
+      "range": "3 000 $ – 45 000 $"
+    }
   }
 }

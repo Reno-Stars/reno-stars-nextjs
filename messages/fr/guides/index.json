@@ -109,6 +109,16 @@
         "answer": "Oui, obtenez au moins 3 devis détaillés. Comparez l’étendue des travaux ligne par ligne, et pas seulement le prix final. Vérifiez l'assurance CGL de 5 millions de dollars, la couverture WCB active et les conditions de garantie (1 an est la norme, 2 à 3 ans est la qualité). Surveillez les devis bas de gamme qui omettent des éléments critiques tels que l’imperméabilisation, l’élimination des démolition ou la manipulation des permis."
       }
     },
-    "intro": "Données réelles sur les coûts de rénovation provenant de plus de 100 projets terminés dans la région métropolitaine de Vancouver. Chaque guide détaille les prix par niveau, ce que votre budget achète réellement et les facteurs de coûts les plus courants."
+    "intro": "Données réelles sur les coûts de rénovation provenant de plus de 100 projets terminés dans la région métropolitaine de Vancouver. Chaque guide détaille les prix par niveau, ce que votre budget achète réellement et les facteurs de coûts les plus courants.",
+    "permitGuide": {
+      "title": "Guide des permis de rénovation à Vancouver",
+      "description": "Quelles rénovations exigent un permis dans le Grand Vancouver ? Guide des permis de construire de la C.-B., par municipalité.",
+      "range": "Variable selon le projet"
+    },
+    "kitchenCabinet": {
+      "title": "Guide de rénovation des armoires de cuisine",
+      "description": "Coût des armoires de cuisine à Vancouver : standard, semi-sur-mesure, sur-mesure et remise à neuf, avec les prix 2026.",
+      "range": "3 000 $ – 45 000 $"
+    }
   }
 }
