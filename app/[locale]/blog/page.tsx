@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
-import { BreadcrumbSchema, ItemListSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, BlogSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
@@ -76,6 +76,12 @@ export default async function Page({ params, searchParams }: PageProps) {
         <link rel="next" href={`${baseUrl}/${locale}/blog/?page=${currentPage + 1}`} />
       )}
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
+      {/* Blog schema — identifies this page as a blog listing for search engines.
+          Renders on page 1 only (subsequent paginated pages don't need it).
+          Source: on-page scanner finding on-page-2e8f4c6a1d3b (2026-08-04). */}
+      {currentPage === 1 && (
+        <BlogSchema name={mt('title')} description={mt('description')} />
+      )}
       {currentPage === 1 && (
         <ItemListSchema
           items={allPosts.map((p) => ({
