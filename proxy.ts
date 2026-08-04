@@ -77,14 +77,18 @@ export default function proxy(request: NextRequest): NextResponse {
   // now that the site is served behind Cloudflare Tunnel (self-hosted), enforce
   // it here so the apex doesn't become duplicate content. www is canonical
   // (NEXT_PUBLIC_BASE_URL = https://www.reno-stars.com).
+  //
+  // When pathname is '/' the redirect goes to /en/ directly rather than to '/'.
+  // This avoids a double-hop: www.reno-stars.com/ would get a second 301 from
+  // next-intl to /en/, fragmenting authority across two redirects. Redirecting
+  // the root to /en/ preserves the single-hop behaviour the proxy enforced when
+  // the site was on Vercel (where the root mapped to the English locale).
   const host = (request.headers.get('host') ?? '').toLowerCase();
   if (host === 'reno-stars.com' || host.startsWith('reno-stars.com:')) {
-    return addSecurityHeaders(
-      NextResponse.redirect(
-        `https://www.reno-stars.com${pathname}${request.nextUrl.search}`,
-        301,
-      ),
-    );
+    const destination = pathname === '/'
+      ? 'https://www.reno-stars.com/en/'
+      : `https://www.reno-stars.com${pathname}${request.nextUrl.search}`;
+    return addSecurityHeaders(NextResponse.redirect(destination, 301));
   }
 
   // Admin routes — handle auth check (skip login page)
