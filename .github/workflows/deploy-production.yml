@@ -5,6 +5,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Deploys must never overlap: two concurrent `pnpm build` runs share the same
+# .next directory in the production working copy and would corrupt each other.
+# cancel-in-progress is deliberately false — cancelling mid-build could leave a
+# half-written .next and then kickstart into it.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
 jobs:
   test:
     name: Test & Validate
@@ -31,12 +39,113 @@ jobs:
       - name: Type check
         run: pnpm typecheck
 
-      # This workflow only tests/validates on push to main — it does NOT deploy.
-      # Production is self-hosted (`next start` on a Mac via launchd
-      # `com.renostars.reno-stars-web`, port 3000, behind a Cloudflare Tunnel).
-      # Deploy is MANUAL on that machine: `git pull` on main → `pnpm build` →
-      # `launchctl kickstart -k gui/$(id -u)/com.renostars.reno-stars-web`.
-      # Merging a PR / pushing to main does NOT deploy. (Migrated off Vercel mid-2026.)
+  # Production is self-hosted: `next start` on a Mac Mini via launchd
+  # `com.renostars.reno-stars-web` (port 3000) behind a Cloudflare Tunnel.
+  # (Migrated off Vercel mid-2026 — there is no provider deploy hook.)
+  #
+  # This job runs on the `reno-prod` self-hosted runner, which lives in launchd
+  # domain gui/501 — the same domain as the web service — so it is able to
+  # kickstart it. It deliberately does NOT use actions/checkout: production
+  # serves out of ~/workspace/reno-stars-nextjs-prod, and that directory holds
+  # .env.production.local (gitignored, never in CI). A fresh checkout would
+  # build without the production environment.
+  #
+  # `needs: test` is the safety gate. The invoice service was once kickstarted
+  # with code that did not compile and crash-looped into 502s; nothing here
+  # restarts the service until tests and typecheck have passed.
+  deploy:
+    name: Deploy to production Mac
+    needs: test
+    runs-on: [self-hosted, reno-prod]
+    timeout-minutes: 30
+    env:
+      PROD_DIR: /Users/renostars/workspace/reno-stars-nextjs-prod
+      SERVICE: com.renostars.reno-stars-web
+    steps:
+      - name: Record current SHA for rollback
+        id: prev
+        run: |
+          cd "$PROD_DIR"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "Rolling back to $(git rev-parse --short HEAD) if this deploy fails."
+
+      - name: Fast-forward to the pushed commit
+        run: |
+          cd "$PROD_DIR"
+          test -z "$(git status --porcelain)" || {
+            echo "::error::Production working copy is dirty; refusing to deploy."
+            git status --short; exit 1; }
+          git fetch origin main
+          git merge --ff-only origin/main
+
+      - name: Install dependencies
+        run: cd "$PROD_DIR" && pnpm install --frozen-lockfile
+
+      - name: Build
+        run: cd "$PROD_DIR" && pnpm build
+
+      - name: Restart the service
+        run: launchctl kickstart -k "gui/$(id -u)/$SERVICE"
+
+      # The service takes a few seconds to bind :3000. Poll rather than sleep so
+      # a fast restart is not penalised and a hung one is caught.
+      - name: Health check — local origin
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 http://127.0.0.1:3000/en/ || true)
+            [ "$code" = "200" ] && echo "local origin OK after ${i}0s" && exit 0
+            sleep 10
+          done
+          echo "::error::Local origin never returned 200"; exit 1
+
+      - name: Health check — public URL through the tunnel
+        run: |
+          for i in $(seq 1 12); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://www.reno-stars.com/en/ || true)
+            [ "$code" = "200" ] && echo "public URL OK" && exit 0
+            sleep 10
+          done
+          echo "::error::Public URL never returned 200"; exit 1
+
+      # HTML is edge-cached with s-maxage=300, so without a purge the change is
+      # invisible for up to 5 minutes and looks like a failed deploy. Credentials
+      # come from the production env file, not GitHub secrets — they already live
+      # on this machine and must not be duplicated into the repo.
+      - name: Purge Cloudflare HTML cache
+        run: |
+          cd "$PROD_DIR"
+          set -a; . ./.env.production.local; set +a
+          if [ -z "${CLOUDFLARE_ZONE_ID:-}" ] || [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::warning::Cloudflare credentials absent — skipping purge (edge may serve stale HTML for ~5 min)"
+            exit 0
+          fi
+          curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H 'Content-Type: application/json' \
+            --data '{"purge_everything":true}' | grep -q '"success":true' \
+            && echo "edge cache purged" \
+            || echo "::warning::Cloudflare purge did not report success"
+
+      # Only fires if a step above failed. Restores the previous commit and
+      # rebuilds so production is never left serving a broken build, then fails
+      # the run loudly so the failure is not silently absorbed.
+      - name: Roll back on failure
+        if: failure()
+        run: |
+          cd "$PROD_DIR"
+          echo "::error::Deploy failed — rolling back to ${{ steps.prev.outputs.sha }}"
+          git reset --hard "${{ steps.prev.outputs.sha }}"
+          pnpm install --frozen-lockfile
+          pnpm build
+          launchctl kickstart -k "gui/$(id -u)/$SERVICE"
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 http://127.0.0.1:3000/en/ || true)
+            [ "$code" = "200" ] && echo "rollback restored service" && exit 1
+            sleep 10
+          done
+          echo "::error::ROLLBACK ALSO FAILED — production may be down, manual intervention required"
+          exit 1
 
   # warm-image-cache is disabled — images are pre-processed to WebP at upload time
   # and served directly from R2. The /api/image route is only used as a fallback
