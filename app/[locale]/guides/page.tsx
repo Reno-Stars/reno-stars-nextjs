@@ -47,9 +47,11 @@ const GUIDE_SLUGS = [
   'commercial-renovation-cost-vancouver',
   'cabinet-refinishing-cost-vancouver',
   'basement-suite-cost-vancouver',
+  'vancouver-renovation-permits',
+  'vancouver-kitchen-cabinet-renovation',
 ] as const;
 
-const GUIDE_KEYS = ['kitchen', 'bathroom', 'wholeHouse', 'basement', 'commercial', 'cabinet', 'basementSuite'] as const;
+const GUIDE_KEYS = ['kitchen', 'bathroom', 'wholeHouse', 'basement', 'commercial', 'cabinet', 'basementSuite', 'permit', 'kitchenCabinet'] as const;
 
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;

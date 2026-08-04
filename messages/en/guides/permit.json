@@ -1,0 +1,217 @@
+{
+  "permit": {
+    "breadcrumb": "Vancouver Renovation Permits",
+    "hero": {
+      "title": "Vancouver Renovation Permits: What Requires a Permit in Metro Vancouver (2026)",
+      "description": "Do you need a building permit for your renovation in Vancouver, Burnaby, Richmond, or Surrey? This guide covers BC building permit requirements, which renovations need provincial vs municipal approval, how to apply, typical timelines and fees, and the most common renovation projects that require permits — plus what happens if you skip the permit process."
+    },
+    "stats": {
+      "buildingPermit": "Building Permit",
+      "buildingPermitValue": "Required for structural, additions, suites",
+      "plumbingPermit": "Plumbing Permit",
+      "plumbingPermitValue": "Required for new or relocated plumbing",
+      "electricalPermit": "Electrical Permit",
+      "electricalPermitValue": "Required for new circuits or panel upgrades",
+      "demoPermit": "Demolition Permit",
+      "demoPermitValue": "Required for structural removal"
+    },
+    "whenRequired": {
+      "title": "When Is a Renovation Permit Required in BC?",
+      "subtitle": "BC Building Code and municipal bylaws determine permit requirements — not all renovations need one",
+      "always": {
+        "title": "Always Requires a Permit",
+        "items": [
+          "Basement suite creation or legalization",
+          "Structural work — removing or modifying walls, beams, or foundations",
+          "Adding or enlarging windows and exterior doors",
+          "Building additions (new rooms, sunrooms, garage extensions)",
+          "Deck construction over 24 inches above grade",
+          "Roofing replacement that involves structural changes",
+          "Any work that changes the building's occupancy or use",
+          "Secondary suite creation or conversion",
+          "Garage or carport conversion to living space"
+        ]
+      },
+      "sometimes": {
+        "title": "May Require a Permit",
+        "items": [
+          "Bathroom or kitchen renovations — permit needed when plumbing is relocated",
+          "Finishing an unfinished basement — depends on suite intent and ceiling height",
+          "Installing new electrical circuits — always requires electrical permit",
+          "Re-roofing — building permit not required; electrical permit may be if solar involved",
+          "Fence construction — varies by municipality and height",
+          "Retaining walls over 4 feet — building permit required in most municipalities",
+          "HVAC changes — may require building and/or gas permits"
+        ]
+      },
+      "never": {
+        "title": "Typically No Permit Required",
+        "items": [
+          "Painting interior or exterior",
+          "Installing flooring (hardwood, laminate, tile)",
+          "Replacing countertops (without plumbing changes)",
+          "Cabinet refinishing or repainting",
+          "Adding shelving and built-in storage",
+          "Changing fixtures (faucets, toilets, light fixtures) without plumbing rerouting",
+          "Landscaping and garden beds",
+          "Deck repair (not reconstruction) under 24 inches above grade"
+        ]
+      }
+    },
+    "municipalities": {
+      "title": "Permit Requirements by Metro Vancouver Municipality",
+      "subtitle": "Each city has its own bylaws on top of the BC Building Code",
+      "vancouver": {
+        "title": "City of Vancouver",
+        "description": "Vancouver has some of the most detailed renovation bylaws in BC. A building permit is required for any structural work, suite creation, deck over 24\", window replacement (heritage homes), and any work that changes a building's exterior. Online e-plan application available for most residential permits. Processing times: 2–6 weeks for standard residential, longer for complex projects.",
+        "fees": "Building permit fees: 1% of declared construction value (minimum $200). Additional charges for plumbing and electrical permits."
+      },
+      "burnaby": {
+        "title": "City of Burnaby",
+        "description": "Burnaby requires building permits for all structural work, suite creation, and deck construction. The city offers pre-application consultations for complex projects. Burnaby has active incentive programs for secondary suite legalization.",
+        "fees": "Building permit fees: $200 flat fee plus $10 per $1,000 of construction value over $10,000. Minimum $200."
+      },
+      "richmond": {
+        "title": "City of Richmond",
+        "description": "Richmond requires building permits for structural changes, additions, and suite creation. Richmond's Online Permit Portal handles most residential permit applications. Processing is typically faster than Vancouver for straightforward residential projects.",
+        "fees": "Building permit fees: $200 base plus $8 per $1,000 of declared value above $10,000."
+      },
+      "surrey": {
+        "title": "City of Surrey",
+        "description": "Surrey has a streamlined online portal and relatively fast processing for standard residential permits. Suite creation, structural alterations, and additions all require building permits. Surrey's Secondary Suite Program provides pre-application consultation support.",
+        "fees": "Building permit fees: $150 base plus $7 per $1,000 of declared value. Fast-track processing available for certain project types."
+      },
+      "coquitlam": {
+        "title": "City of Coquitlam",
+        "description": "Coquitlam requires building permits for any structural work, suite creation, and larger deck projects. Pre-application meetings are available and recommended for complex renovations. Coquitlam processes most residential permits in 3–4 weeks.",
+        "fees": "Building permit fees: $200 base plus $10 per $1,000 of construction value. Minimum $200."
+      }
+    },
+    "process": {
+      "title": "How to Apply for a Renovation Permit in Metro Vancouver",
+      "subtitle": "Step-by-step from pre-consultation to final inspection",
+      "step1": {
+        "title": "Pre-Application Consultation",
+        "description": "For complex projects (suite creation, structural changes, additions), book a pre-consultation with your municipality's building department before submitting. This identifies issues early — zoning restrictions, heritage designations, or special bylaws — before you invest in drawings. Most municipalities offer this free or for a small fee."
+      },
+      "step2": {
+        "title": "Hire a Registered Professional",
+        "description": "For any project involving structural changes, mechanical systems, or complex electrical work, BC municipalities require a Registered Professional of Record (RPPR) — typically a structural engineer or building designer — to oversee the work and provide signed drawings. Simple cosmetic renovations do not require an architect or engineer."
+      },
+      "step3": {
+        "title": "Prepare and Submit Drawings",
+        "description": "Your contractor or designer prepares scaled drawings: site plan, floor plans, elevations, structural details, and mechanical (plumbing/electrical/HVAC) drawings. Submit through the municipality's online portal (Vancouver e-plan, Burnaby, Surrey, Richmond all have online systems). For heritage properties in Vancouver, Design Panel review may be required before permit approval."
+      },
+      "step4": {
+        "title": "Permit Review and Approval",
+        "description": "The municipality reviews your application against the BC Building Code, local zoning bylaws, and development permit requirements. Review times vary: 2–4 weeks for simple renovations, 4–8 weeks for structural or suite projects, 8–12 weeks for projects requiring heritage or development permits. You receive permit approval with a set of stamped drawings — keep these on-site during construction."
+      },
+      "step5": {
+        "title": "Construction and Inspections",
+        "description": "Once permitted, construction proceeds. The municipality conducts mandatory inspections at defined milestones: rough-in (framing, plumbing, electrical before closing walls), insulation, and final occupancy. You must notify the municipality when each milestone is reached — inspections cannot be skipped or done after walls are closed. Failed inspections require correction and re-inspection."
+      },
+      "step6": {
+        "title": "Final Inspection and Occupancy",
+        "description": "After completing all work, the municipality conducts a final inspection and issues an occupancy certificate (for suite creation, a separate occupancy permit is required). For secondary suites, this is what makes the suite legal. Keep all permit records — you need them when selling the home, applying for rental licenses, or refinancing."
+      }
+    },
+    "costs": {
+      "title": "Permit Fees and Costs in Metro Vancouver",
+      "subtitle": "What to budget for permits across different project types",
+      "kitchen": {
+        "title": "Kitchen Renovation",
+        "description": "Building permit not required for cosmetic kitchen reno. If relocating plumbing or gas appliances: plumbing permit ($100–$300) + gas permit ($100–$200) if gas range. Electrical permit for new circuits: $100–$200. Total: $200–$600."
+      },
+      "bathroom": {
+        "title": "Bathroom Renovation",
+        "description": "Building permit not required for cosmetic work. Moving toilet, sink, or shower locations requires plumbing permit ($100–$300). New or upgraded electrical circuits require electrical permit ($100–$200). Total: $200–$500 if plumbing is moved."
+      },
+      "basementSuite": {
+        "title": "Basement Suite",
+        "description": "Full building permit (1% of construction value), plumbing permit ($200–$400), electrical permit ($200–$400). For a $95,000 suite conversion: $950 building + $300 plumbing + $300 electrical = ~$1,550 in permits, plus potential development permit fees."
+      },
+      "deck": {
+        "title": "Deck Over 24 inches",
+        "description": "Building permit required. $200–$500 for deck permit depending on municipality. Structural drawings may be required for larger or multi-level decks."
+      },
+      "addition": {
+        "title": "Home Addition",
+        "description": "Building permit fee is 1% of declared construction value. For a $150,000 addition: $1,500 building permit plus development permit fees if applicable. Pre-consultation strongly recommended."
+      }
+    },
+    "consequences": {
+      "title": "What Happens If You Skip the Permit",
+      "subtitle": "Unpermitted work carries real financial and legal risks",
+      "items": [
+        {
+          "title": "Fines",
+          "description": "Municipalities can issue fines of $500–$10,000 per day for unpermitted construction, depending on the violation and municipality. Vancouver has some of the highest fine schedules in BC."
+        },
+        {
+          "title": "Forced Reversal",
+          "description": "The municipality can issue an order to stop work or to undo completed work — including removing additions, filling in basements, or closing off rooms — at the owner's expense."
+        },
+        {
+          "title": "Cannot Sell the Property",
+          "description": "Unpermitted work must be disclosed on property disclosure statements. Many buyers' home inspectors flag unpermitted work, leading to sale renegotiation or collapse. Lenders will not finance properties with major unpermitted structural work."
+        },
+        {
+          "title": "Insurance Problems",
+          "description": "Most home insurance policies exclude coverage for damage caused by work that wasn't done to code — including unpermitted work. If unpermitted construction causes water damage, fire, or structural failure, your insurer may deny the claim."
+        },
+        {
+          "title": "Difficulty Getting Future Permits",
+          "description": "Unpermitted work that was done incorrectly may need to be exposed and redone before new permits can be issued for adjacent work. This adds cost and complexity to future renovations."
+        },
+        {
+          "title": "Suite Cannot Be Legalized",
+          "description": "If you build an unauthorized basement suite without a permit, you cannot obtain a rental license or legal occupancy. This means you cannot rent it legally, and the municipality can order you to stop renting it."
+        }
+      ]
+    },
+    "tips": {
+      "title": "Money-Saving Tips for the Permit Process",
+      "tip1": {
+        "title": "Use Pre-Application Consultations",
+        "description": "Most Metro Vancouver municipalities offer free or low-cost pre-consultation appointments for complex projects. Spending 30 minutes with a building inspector before submitting saves weeks of revision cycles on your application and prevents permit rejections that cost time and money."
+      },
+      "tip2": {
+        "title": "Ask About Fast-Track Processing",
+        "description": "Some municipalities (Vancouver, Surrey) offer expedited permit processing for an additional fee — worth it when your contractor is on-site and daily costs are accruing. A $300 fast-track fee on a $95,000 suite job is a worthwhile investment."
+      },
+      "tip3": {
+        "title": "Bundle Trades in One Permit Application",
+        "description": "Submit building, plumbing, and electrical permits together when possible — this avoids multiple application fees and multiple review cycles. Your contractor's project manager typically handles this, but confirm it's being done."
+      },
+      "tip4": {
+        "title": "Apply for Municipal Incentive Programs First",
+        "description": "Burnaby and Surrey have grant programs for secondary suite legalization. Apply for these before submitting your permit — some require pre-approval before construction starts. $5,000–$10,000 in grant money is worth the 20-minute application time."
+      }
+    },
+    "related": {
+      "title": "Related Renovation Guides",
+      "basementSuite": "Basement Suite Conversion Cost Guide",
+      "kitchenGuide": "Kitchen Renovation Cost Guide",
+      "bathroomGuide": "Bathroom Renovation Cost Guide",
+      "allGuides": "All Cost Guides"
+    },
+    "cta": {
+      "heading": "Need Help Navigating the Permit Process?",
+      "subtitle": "Reno Stars manages permit applications as part of our full-service renovation process. Tell us about your project for a free consultation."
+    },
+    "faq": {
+      "q1": "Do I need a building permit for a kitchen renovation in Vancouver?",
+      "a1": "A building permit is not required for cosmetic kitchen renovations like repainting cabinets, replacing countertops, or installing new appliances without changing gas or plumbing locations. You need a building permit when relocating kitchen plumbing (moving the sink or dishwasher more than a few feet), adding or removing walls, or changing the kitchen's layout in a way that affects structural elements. A plumbing permit is required whenever new plumbing is run or existing plumbing is relocated — even cosmetic renos that move the sink need a plumbing permit. An electrical permit is required for any new circuits, panel upgrades, or adding hardwired appliances like cooktops.",
+      "q2": "How long does it take to get a renovation permit in Vancouver?",
+      "a2": "Permit processing times vary by municipality and project complexity. In Vancouver, straightforward residential renovation permits take 2–4 weeks; suite creation or structural projects take 4–8 weeks. Burnaby and Coquitlam typically process in 2–3 weeks for standard residential permits. Surrey has the fastest processing for standard projects: 1–2 weeks with their online portal. Heritage or development permit applications add 4–8 weeks to any project in Vancouver or Burnaby. Always factor permit timelines into your construction schedule before signing contractor agreements.",
+      "q3": "How much does a building permit cost in Metro Vancouver?",
+      "a3": "Building permit fees are typically charged as a percentage of declared construction value: Vancouver charges 1% (minimum $200), Burnaby charges $200 flat plus $10 per $1,000 over $10,000, Richmond charges $200 flat plus $8 per $1,000, and Surrey charges $150 flat plus $7 per $1,000. A $100,000 renovation therefore costs approximately $1,000 in building permit fees in Vancouver, or $790 in Surrey. Plumbing and electrical permits add $100–$400 each. Always check your specific municipality's fee schedule as it updates annually.",
+      "q4": "What happens if I do reno work without a permit in BC?",
+      "a4": "Unpermitted work in BC can result in stop-work orders, fines of $500–$10,000 per day (Vancouver has the highest fines in Metro Vancouver), forced removal or reversal of the unpermitted work, inability to sell the property without disclosing the unpermitted work, denial of insurance claims for any damage related to the unpermitted work, and inability to legally rent any unauthorized suite. The risk is particularly high for basement suites: without a permit and occupancy certificate, the suite cannot be rented legally, and the municipality can issue orders to stop tenancy.",
+      "q5": "Can I get a permit after the work is done (retrospective permit)?",
+      "a5": "Some municipalities will issue a retrospective permit if the completed work meets code and was done in accordance with permit requirements. However, retrospective permits require the same drawings, engineering, and inspections as standard permits — and any work that doesn't meet code must be corrected before approval. The retrospective permit process is more expensive, takes longer, and is not guaranteed. In Vancouver, retrospective permits for suite work are particularly scrutinized. The better approach is always to obtain the permit before starting work.",
+      "q6": "Do I need a permit to finish my basement in Vancouver?",
+      "a6": "Finishing a basement without creating a suite (purely for personal family use, no separate entrance, no cooking facilities) does not require a building permit in most BC municipalities — but electrical permits and sometimes plumbing permits are still required for new circuits, bathrooms, and any plumbing work. If the intent is to create a separate suite (separate entrance, kitchen facilities), a full building permit and suite occupancy permit are required before construction begins. The key question municipalities ask is: could this space be used as a separate dwelling? If yes, it needs suite permitting regardless of your current intent."
+    }
+  }
+}
