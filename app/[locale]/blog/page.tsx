@@ -94,6 +94,8 @@ export default async function Page({ params, searchParams }: PageProps) {
         />
       )}
       <BlogPage
+      <FAQSchema faqs={BLOG_FAQS} locale={locale} />
+
         locale={locale as Locale}
         company={company}
         blogPosts={paginatedPosts.posts}
