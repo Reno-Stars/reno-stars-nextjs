@@ -109,6 +109,16 @@
         "answer": "Oo — makakuha ng hindi bababa sa 3 detalyadong quote. Paghambingin ang saklaw ng trabaho sa bawat linya, hindi lamang sa ilalim na presyo. I-verify ang $5M ​​CGL insurance, aktibong saklaw ng WCB, at mga tuntunin ng warranty (1 taon ang pamantayan, 2–3 taon ang kalidad). Manood ng mga low-ball quotes na nag-aalis ng mga kritikal na line item tulad ng waterproofing, demolition disposal, o permit handling."
       }
     },
-    "intro": "Data ng tunay na gastos sa pagsasaayos mula sa 100+ nakumpletong proyekto sa buong Metro Vancouver. Pinaghiwa-hiwalay ng bawat gabay ang pagpepresyo ayon sa antas, kung ano talaga ang binibili ng iyong badyet, at ang pinakakaraniwang mga driver ng gastos."
+    "intro": "Data ng tunay na gastos sa pagsasaayos mula sa 100+ nakumpletong proyekto sa buong Metro Vancouver. Pinaghiwa-hiwalay ng bawat gabay ang pagpepresyo ayon sa antas, kung ano talaga ang binibili ng iyong badyet, at ang pinakakaraniwang mga driver ng gastos.",
+    "permitGuide": {
+      "title": "Gabay sa Renovation Permits sa Vancouver",
+      "description": "Aling mga renovation ang nangangailangan ng permit sa Metro Vancouver? Gabay sa BC building permit ayon sa munisipalidad.",
+      "range": "Nag-iiba ayon sa proyekto"
+    },
+    "kitchenCabinet": {
+      "title": "Gabay sa Renovation ng Kitchen Cabinet",
+      "description": "Gastos sa kitchen cabinet sa Vancouver: stock, semi-custom, custom, at refinishing na opsyon na may presyo ng 2026.",
+      "range": "$3K – $45K"
+    }
   }
 }

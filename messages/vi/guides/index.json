@@ -109,6 +109,16 @@
         "answer": "Có - nhận được ít nhất 3 báo giá chi tiết. So sánh phạm vi công việc theo từng dòng, không chỉ giá cuối cùng. Xác minh bảo hiểm CGL trị giá 5 triệu USD, phạm vi bảo hiểm WCB đang hoạt động và các điều khoản bảo hành (1 năm là tiêu chuẩn, 2–3 năm là chất lượng). Theo dõi các báo giá thấp bỏ qua các hạng mục quan trọng như chống thấm, xử lý phá dỡ hoặc xử lý giấy phép."
       }
     },
-    "intro": "Dữ liệu chi phí cải tạo thực tế từ hơn 100 dự án đã hoàn thành trên khắp Metro Vancouver. Mỗi hướng dẫn chia nhỏ mức giá theo cấp độ, ngân sách của bạn thực sự mua những gì và các yếu tố điều khiển chi phí phổ biến nhất."
+    "intro": "Dữ liệu chi phí cải tạo thực tế từ hơn 100 dự án đã hoàn thành trên khắp Metro Vancouver. Mỗi hướng dẫn chia nhỏ mức giá theo cấp độ, ngân sách của bạn thực sự mua những gì và các yếu tố điều khiển chi phí phổ biến nhất.",
+    "permitGuide": {
+      "title": "Hướng dẫn giấy phép cải tạo tại Vancouver",
+      "description": "Những hạng mục cải tạo nào cần giấy phép ở Metro Vancouver? Hướng dẫn giấy phép xây dựng BC theo từng thành phố.",
+      "range": "Tùy theo dự án"
+    },
+    "kitchenCabinet": {
+      "title": "Hướng dẫn cải tạo tủ bếp",
+      "description": "Chi phí tủ bếp tại Vancouver: hàng có sẵn, bán đặt riêng, đặt riêng và sơn lại, kèm giá năm 2026.",
+      "range": "$3K – $45K"
+    }
   }
 }
