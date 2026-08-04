@@ -11,3 +11,4 @@ export { default as ProjectCategorySchema } from './ProjectCategorySchema';
 export { default as HowToSchema } from './HowToSchema';
 export { default as ItemListSchema } from './ItemListSchema';
 export { default as VideoObjectSchema } from './VideoObjectSchema';
+export { default as BlogSchema } from './BlogSchema';
