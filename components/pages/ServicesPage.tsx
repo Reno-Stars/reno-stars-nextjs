@@ -63,7 +63,7 @@ export default function ServicesPage({ locale: _locale, company, services, areas
                       style={{ backgroundColor: GOLD_PALE }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={service.icon} alt="" className="w-7 h-7" style={{ filter: GOLD_ICON_FILTER }} />
+                      <img src={service.icon} alt={service.title} className="w-7 h-7" style={{ filter: GOLD_ICON_FILTER }} />
                     </div>
                   )}
                   <h2 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors" style={{ color: TEXT }}>
