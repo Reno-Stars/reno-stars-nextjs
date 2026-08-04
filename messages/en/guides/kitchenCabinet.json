@@ -1,0 +1,197 @@
+{
+  "kitchenCabinet": {
+    "breadcrumb": "Kitchen Cabinet Renovation",
+    "hero": {
+      "title": "Kitchen Cabinet Renovation Cost Vancouver 2026: Stock, Custom & Cabinet Refinishing",
+      "subtitle": "How much does kitchen cabinet renovation cost in Vancouver? Cabinet renovation costs in Vancouver range from $3,000 for refinishing to $45,000+ for full custom cabinet replacement. This guide covers all options — refinishing, refacing, and full replacement — with real 2026 pricing for stock, semi-custom, and custom cabinets, door styles, materials, and what drives the final cost."
+    },
+    "stats": {
+      "avgCost": "Avg. Cabinet Reno",
+      "avgCostValue": "$12,000",
+      "range": "Price Range",
+      "rangeValue": "$3K – $45K+",
+      "linearFoot": "Per Linear Foot",
+      "linearFootValue": "$150 – $600/ft",
+      "timeline": "Typical Timeline",
+      "timelineValue": "3 days – 6 weeks"
+    },
+    "cabinetTypes": {
+      "title": "Cabinet Types: Stock, Semi-Custom, and Custom",
+      "subtitle": "Three cabinet categories with very different price points",
+      "stock": {
+        "title": "Stock Cabinets",
+        "price": "$80 – $200/linear ft",
+        "description": "Pre-manufactured in standard sizes and finishes. Available immediately from home improvement stores or kitchen showrooms. Limited customization — you choose from existing door styles, colors, and hardware. Best for budget renovations where standard dimensions fit your kitchen layout. Fastest delivery: 1–2 weeks."
+      },
+      "semiCustom": {
+        "title": "Semi-Custom Cabinets",
+        "price": "$200 – $400/linear ft",
+        "description": "Manufactured to order with some customization options: custom widths, specialized storage solutions, specific finishes and materials. You work within a manufacturer's product line but can adapt dimensions and add features like pull-out organizers, spice racks, and tray dividers. Lead time: 3–5 weeks. Best value for most Vancouver homeowners upgrading from stock."
+      },
+      "custom": {
+        "title": "Custom Cabinets",
+        "price": "$400 – $800+/linear ft",
+        "description": "Built to exact specifications for your kitchen's unique dimensions and design. Full customization of materials, finishes, hardware, and features. No compromises on layout — every millimeter optimized for your space. Lead time: 6–10 weeks. Best for unusual kitchen layouts, high-end design projects, or when you need a specific look that standard sizes cannot achieve."
+      }
+    },
+    "doorStyles": {
+      "title": "Cabinet Door Styles",
+      "subtitle": "The visual profile of your cabinets drives both cost and aesthetic",
+      "shaker": {
+        "title": "Shaker",
+        "description": "Clean recessed-panel design. Most popular style in Vancouver for 2024–2026. Works in modern, transitional, and traditional kitchens. Price: base cost."
+      },
+      "slab": {
+        "title": "Slab / Flat Panel",
+        "description": "Minimalist flat-front doors. Very popular in contemporary Vancouver condos and modern homes. No profile or detailing — pure surface. Can be veneer or solid wood."
+      },
+      "inset": {
+        "title": "Inset",
+        "description": "Doors sit inside the cabinet frame. Classic inset construction on high-end custom cabinets. More expensive due to precision hardware required. Classic, timeless aesthetic."
+      },
+      "raised": {
+        "title": "Raised Panel",
+        "description": "Traditional raised centre panel with decorative profile. Common in heritage home renovations. Higher cost due to more complex machining."
+      }
+    },
+    "materials": {
+      "title": "Cabinet Materials",
+      "subtitle": "What your cabinets are made of affects durability, look, and price",
+      "thermofoil": {
+        "title": "Thermofoil / Laminate",
+        "priceRange": "$80 – $180/linear ft",
+        "description": "Vinyl film heat-welded onto MDF. Affordable, smooth surface, available in many colors. Prone to peeling in high-humidity environments (near dishwashers or cooktops). Best for rental properties or budget updates."
+      },
+      "solidWood": {
+        "title": "Solid Wood",
+        "priceRange": "$250 – $600/linear ft",
+        "description": "Maple, oak, cherry, walnut, and other hardwoods. Most durable option — can be sanded and refinished multiple times. Natural wood grain. Most expensive category. Susceptible to humidity changes in Vancouver's climate."
+      },
+      "mdf": {
+        "title": "MDF (Medium Density Fiberboard)",
+        "priceRange": "$120 – $280/linear ft",
+        "description": "Engineered wood with smooth, uniform surface. Takes paint extremely well — ideal for painted kitchens in any color. More stable than solid wood in humidity. Cannot be refinished, but takes a perfect painted finish."
+      },
+      "plywood": {
+        "title": "Plywood Boxes",
+        "priceRange": "$180 – $400/linear ft total",
+        "description": "Not a door style — a box construction material. Pure plywood boxes (no particleboard) are the premium standard for cabinet boxes. Heavier, stronger, and more moisture-resistant than particleboard. Most custom and high-end semi-custom cabinets use plywood boxes."
+      }
+    },
+    "countertops": {
+      "title": "Countertop Pairing Costs",
+      "subtitle": "What you'll spend on countertops when doing cabinet work",
+      "laminate": {
+        "title": "Laminate",
+        "priceRange": "$20 – $50/sq ft installed",
+        "description": "Budget option. Post-form laminate on particleboard. Limited edge profiles. Best when budget is the primary constraint."
+      },
+      "quartz": {
+        "title": "Quartz",
+        "priceRange": "$60 – $130/sq ft installed",
+        "description": "Most popular countertop in Vancouver. Non-porous, maintenance-free, consistent appearance. Brands like Caesarstone, Silestone, and Cambria. Pairs with any cabinet style."
+      },
+      "granite": {
+        "title": "Granite",
+        "priceRange": "$70 – $180/sq ft installed",
+        "description": "Natural stone with unique veining. Each slab is one-of-a-kind. Requires annual sealing. More character than quartz but higher maintenance."
+      },
+      "solidSurface": {
+        "title": "Solid Surface (Corian)",
+        "priceRange": "$70 – $130/sq ft installed",
+        "description": "Seamless installation, repairable, many color options. Less heat-resistant than stone but completely non-porous. Good for contemporary designs."
+      }
+    },
+    "breakdown": {
+      "title": "Full Cost Breakdown: $20,000 Kitchen Cabinet Reno",
+      "subtitle": "Where the budget goes in a typical Vancouver cabinet renovation",
+      "cabinets": {
+        "title": "Cabinets (boxes + doors)",
+        "description": "35 linear feet of semi-custom maple cabinets with plywood boxes",
+        "range": "$7,000 – $9,000"
+      },
+      "countertops": {
+        "title": "Countertops",
+        "description": "30 sq ft of mid-range quartz with eased edge",
+        "range": "$2,400 – $3,200"
+      },
+      "hardware": {
+        "title": "Hardware",
+        "description": "Soft-close hinges, full-extension drawer slides, pull-outs, knobs/levers",
+        "range": "$800 – $1,500"
+      },
+      "labour": {
+        "title": "Installation Labour",
+        "description": "Demolition, installation, plumbing disconnection/reconnection, finishing",
+        "range": "$3,000 – $6,000"
+      },
+      "misc": {
+        "title": "Permits, Disposal, Misc",
+        "description": "Permit (if required), old cabinet disposal, temporary kitchen setup",
+        "range": "$500 – $1,500"
+      }
+    },
+    "vsReplace": {
+      "title": "Refinish or Replace?",
+      "subtitle": "The key decision for every cabinet renovation",
+      "refinish": {
+        "title": "Refinish / Repaint Existing",
+        "cost": "$3,000 – $8,000",
+        "refinishPros": "50–70% cheaper than replacement. Completed in 3–5 days. No layout changes possible. No damage to existing boxes.",
+        "refinishCons": "Only works if boxes are structurally sound. No layout changes. Same footprint and storage configuration."
+      },
+      "replace": {
+        "title": "Full Cabinet Replacement",
+        "cost": "$12,000 – $45,000+",
+        "replacePros": "Complete layout redesign. Modern storage solutions. New boxes and doors. Longest lifespan.",
+        "replaceCons": "Most expensive. 4–8 weeks disruption. Requires plumber/electrician for appliance disconnection."
+      }
+    },
+    "tips": {
+      "title": "Money-Saving Tips for Cabinet Renovations",
+      "tip1": {
+        "title": "Keep the Same Layout",
+        "description": "Relocating cabinets — moving sink, stove, or refrigerator locations — adds $3,000–$8,000 in plumbing and electrical costs. Keeping the same layout means no new rough-ins and faster installation."
+      },
+      "tip2": {
+        "title": "Refinish Instead of Replacing Boxes",
+        "description": "If your cabinet boxes are solid and your layout works, refinishing or repainting the existing boxes and doors can save $8,000–$20,000 vs. full replacement. New doors on existing boxes also deliver a completely new look at a fraction of full-cabinet cost."
+      },
+      "tip3": {
+        "title": "Choose HDF/MDF for Painted Kitchens",
+        "description": "If you want a painted kitchen (white, grey, or bold color), MDF or HDF door construction is actually better than solid wood — no grain showing through paint, smoother finish, and more stable in Vancouver's humidity. Painted solid wood cabinets in Vancouver often develop hairline cracks at joints within 2–3 years."
+      },
+      "tip4": {
+        "title": "Source Hardware Separately",
+        "description": "Cabinet showrooms mark up hardware 2–3x over retail. Buy soft-close hinges, drawer slides, and pulls from wholesale suppliers (Rona Commercial, Olympia Tile, or Lee Valley) and have your installer fit them. Save $500–$1,500 on hardware for a typical kitchen."
+      }
+    },
+    "related": {
+      "title": "Explore More Renovation Guides",
+      "kitchenGuide": "Kitchen Renovation Cost Guide",
+      "allGuides": "All Cost Guides"
+    },
+    "cta": {
+      "heading": "Ready to Talk Kitchen Cabinets?",
+      "subtitle": "Get a detailed cabinet renovation estimate for your Vancouver home. We offer free in-home consultations with no-obligation quotes."
+    },
+    "faq": {
+      "q1": "How much does kitchen cabinet refinishing cost in Vancouver?",
+      "a1": "Kitchen cabinet refinishing in Vancouver costs $3,000–$8,000 depending on cabinet size and finish type. Spray-painting existing doors and drawer fronts (the most common method) costs $4,000–$7,000 for a standard kitchen. Vinyl wrap or peel-and-stick veneer on existing doors costs $3,000–$5,000. Full refinishing including box frames, interior, and new hardware adds $1,000–$2,000. The key requirement: existing cabinet boxes must be structurally sound, moisture-free, and free of warping or delamination.",
+      "q2": "What is the cost per linear foot for kitchen cabinets in Vancouver?",
+      "a2": "Kitchen cabinet costs per linear foot in Vancouver (2026) are: stock cabinets $80–$200/linear ft, semi-custom $200–$400/linear ft, and custom $400–$800+/linear ft. A typical Vancouver kitchen has 30–40 linear feet of cabinets (upper and lower combined). At semi-custom mid-range pricing of $300/linear ft, a 35-foot kitchen costs approximately $10,500 for cabinets alone — before countertops, hardware, or installation.",
+      "q3": "Is it worth refinishing kitchen cabinets or should I replace them?",
+      "a3": "Refinish if: your cabinet boxes are structurally sound, your current layout works for your household, you want to save 50–70% vs. replacement, and you're happy with your current storage configuration. Replace if: cabinet boxes are water-damaged, delaminating, or warped, you want to change the kitchen layout, your current cabinets are more than 20 years old, or you want a fundamentally different kitchen aesthetic that refinishing cannot achieve (e.g. switching from frameless to full-overlay or adding an island).",
+      "q4": "How long does a kitchen cabinet renovation take in Vancouver?",
+      "a4": "Cabinet refinishing takes 3–5 days. Cabinet refacing takes 5–7 days. Full cabinet replacement takes 4–8 weeks: 2–3 weeks for cabinet manufacturing, 1 week for demolition, 1–3 weeks for installation, plus countertop templating and installation (usually 1–2 weeks). Factor in permit processing time if plumbing or electrical changes are involved — add 2–4 weeks in Vancouver, 1–2 weeks in Surrey or Burnaby.",
+      "q5": "What is the best material for kitchen cabinets in Vancouver's climate?",
+      "a5": "For Vancouver's humid climate, the best cabinet box material is pure plywood (not particleboard) — it handles moisture better and is less prone to swelling or delamination over time. For painted cabinets, HDF or MDF doors are actually preferable to solid wood — they have a smoother, more uniform surface for paint and are more dimensionally stable as humidity fluctuates. For wood-grain finishes, solid maple or cherry with a conversion varnish finish holds up well. Avoid thermofoil (vinyl-wrapped) cabinets near dishwashers — the heat and humidity cause peeling in Vancouver homes.",
+      "q6": "Do I need a permit to replace kitchen cabinets in Vancouver?",
+      "a6": "No building permit is required for cosmetic cabinet replacement — removing old cabinets and installing new ones in the same locations without changing plumbing or electrical. A plumbing permit is required if you are relocating the sink, dishwasher, or any plumbing fixture — even moving a sink 6 inches across the counter requires a plumbing permit. An electrical permit is required for any new circuits, panel upgrades, or hardwired appliance changes. Always check with your municipality — heritage properties in Vancouver may have additional requirements for any kitchen modifications.",
+      "q7": "How much do soft-close hinges and drawer slides add to cabinet cost?",
+      "a7": "Soft-close hinges add approximately $8–$15 per door in hardware cost. For a 35-door kitchen that's $280–$525 in additional hardware cost — worth every dollar since it prevents slamming and extends cabinet life. Full-extension soft-close drawer slides add $20–$40 per drawer. On a 10-drawer kitchen that's $200–$400. Most custom and semi-custom cabinet quotes include soft-close as standard; budget stock cabinets often list them as an upgrade.",
+      "q8": "Should I do cabinets and countertops at the same time?",
+      "a8": "Yes — always do cabinets and countertops together. The countertop templating happens after cabinets are installed (the fabricator measures the exact cabinet dimensions once cabinets are in their final position). If you do cabinets now and countertops later, you're paying two separate installation mobilizations and two sets of contractor fees. If your budget forces a choice, prioritize the cabinets — you can live without countertops for a few weeks with temporary measures, but living without kitchen cabinets is not practical."
+    }
+  }
+}
