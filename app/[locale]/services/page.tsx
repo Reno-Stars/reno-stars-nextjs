@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ServicesPage from '@/components/pages/ServicesPage';
 import AnswerBlockSection from '@/components/home/AnswerBlockSection';
-import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getLocalizedService } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
@@ -140,6 +140,19 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
+      {/* Hub-level Service schema — represents the overall renovation services
+          category at the services hub URL. Individual service detail pages
+          (app/[locale]/services/[slug]/page.tsx) have their own Service schemas.
+          Source: on-page scanner finding on-page-f9c3e1b8d2a5 (2026-08-04). */}
+      <ServiceSchema
+        company={company}
+        serviceName="Home Renovation Services"
+        serviceDescription="Kitchen, bathroom, whole house, basement, and commercial renovations across Metro Vancouver. Licensed, insured, 20+ years experience."
+        areaServed={areas.map((a) => a.name.en)}
+        url={`/${locale}/services/`}
+        googleRating={undefined}
+        googleReviewCount={undefined}
+      />
       {/* Hub-level FAQPage schema — covers cross-service questions: licensing,
           insurance, service areas, getting started, and differentiators.
           Individual service detail pages have their own service-specific
