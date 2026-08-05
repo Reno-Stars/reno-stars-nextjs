@@ -178,3 +178,14 @@ export default async function Page({ params }: PageProps) {
   );
 }
 
+
+const reviewsSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Reno Stars",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "87"
+  }
+};
