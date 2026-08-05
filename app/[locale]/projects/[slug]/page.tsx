@@ -208,6 +208,17 @@ export default async function Page({ params }: PageProps) {
           locale={locale as Locale}
           projects={categoryProjects}
         />
+        <ServiceSchema
+          company={company}
+          serviceName={categoryName}
+          serviceDescription={locale === 'zh'
+            ? `大温哥华专业${categoryName}装修服务。免费估价，许可证代办，${company.liabilityCoverage}保险，${company.yearsExperience}年经验。`
+            : `Professional ${categoryName.toLowerCase()} renovation services in Metro Vancouver. Free quotes, permits handled, ${company.liabilityCoverage} insured, ${company.yearsExperience}+ years experience.`}
+          url={`/${locale}/projects/${slug}/`}
+          areaServed={['Vancouver Metro']}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
+        />
         {categoryBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`cat-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
         ))}
