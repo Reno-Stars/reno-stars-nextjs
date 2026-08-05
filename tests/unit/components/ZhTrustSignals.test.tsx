@@ -52,12 +52,12 @@ describe('WeChatContactCard', () => {
     const html = renderToStaticMarkup(<WeChatContactCard locale="zh" />);
     expect(html).toContain('wechat-qr.png');
     expect(html).toContain(WECHAT_ID);
-    expect(html).toContain('集星装修 (Reno Stars)'); // owner rule: both names surfaced
+    expect(html).toContain('聚星装修 (Reno Stars)'); // owner rule: both names surfaced
   });
 
   it('renders the Traditional brand on zh-Hant', () => {
     const html = renderToStaticMarkup(<WeChatContactCard locale="zh-Hant" />);
-    expect(html).toContain('集星裝修 (Reno Stars)');
+    expect(html).toContain('聚星裝修 (Reno Stars)');
   });
 
   it('renders nothing for non-Chinese locales', () => {
