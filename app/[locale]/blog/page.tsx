@@ -105,3 +105,36 @@ export default async function Page({ params, searchParams }: PageProps) {
     </>
   );
 }
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How long does a typical renovation take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most residential renovations in Vancouver take 4-12 weeks depending on scope. We provide a detailed timeline during the consultation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you handle permits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we manage all required City of Vancouver permits as part of our full-service offering."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's included in a renovation quote?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our quotes cover materials, labour, permits, and a dedicated project manager — with no hidden fees."
+      }
+    }
+  ]
+}
+</script>
