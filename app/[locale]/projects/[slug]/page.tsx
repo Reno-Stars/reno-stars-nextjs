@@ -299,6 +299,15 @@ export default async function Page({ params }: PageProps) {
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
         />
+        <ServiceSchema
+          company={company}
+          serviceName="Basement Renovation"
+          serviceDescription={localizedProject.description || ''}
+          areaServed={['Vancouver Metro']}
+          url={`/${locale}/projects/${slug}/`}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
+        />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
         ))}
