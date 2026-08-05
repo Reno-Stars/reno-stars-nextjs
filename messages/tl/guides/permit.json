@@ -1,0 +1,217 @@
+{
+  "permit": {
+    "breadcrumb": "Mga Pahintulot sa Pagkukumpuni ng Vancouver",
+    "hero": {
+      "title": "Mga Pahintulot sa Pag-aayos ng Vancouver: Ano ang Nangangailangan ng Permit sa Metro Vancouver (2026)",
+      "description": "Kailangan mo ba ng building permit para sa iyong pagsasaayos sa Vancouver, Burnaby, Richmond, o Surrey? Sinasaklaw ng gabay na ito ang mga kinakailangan ng BC building permit, kung saan ang mga renovation ay nangangailangan ng provincial vs municipal approval, kung paano mag-apply, mga tipikal na timeline at mga bayarin, at ang pinakakaraniwang mga proyekto sa renovation na nangangailangan ng mga permit — at kung ano ang mangyayari kung laktawan mo ang proseso ng permit."
+    },
+    "stats": {
+      "buildingPermit": "Building Permit",
+      "buildingPermitValue": "Kinakailangan para sa istruktura, mga karagdagan, mga suite",
+      "plumbingPermit": "Permit sa Pagtutubero",
+      "plumbingPermitValue": "Kinakailangan para sa bago o inilipat na pagtutubero",
+      "electricalPermit": "Electrical Permit",
+      "electricalPermitValue": "Kinakailangan para sa mga bagong circuit o pag-upgrade ng panel",
+      "demoPermit": "Permit sa Demolisyon",
+      "demoPermitValue": "Kinakailangan para sa pag-alis ng istruktura"
+    },
+    "whenRequired": {
+      "title": "Kailan Kailangan ang Renovation Permit sa BC?",
+      "subtitle": "Tinutukoy ng BC Building Code at mga tuntunin ng munisipyo ang mga kinakailangan sa permit — hindi lahat ng pagsasaayos ay nangangailangan nito",
+      "always": {
+        "title": "Laging Nangangailangan ng Permit",
+        "items": [
+          "Paggawa o legalisasyon ng basement suite",
+          "Structural work — pagtatanggal o pagbabago ng mga pader, beam, o pundasyon",
+          "Pagdaragdag o pagpapalaki ng mga bintana at panlabas na pinto",
+          "Mga karagdagang gusali (mga bagong silid, sunroom, mga extension ng garahe)",
+          "Konstruksyon ng deck na higit sa 24 pulgada sa itaas ng grado",
+          "Pagpapalit ng bubong na nagsasangkot ng mga pagbabago sa istruktura",
+          "Anumang gawain na nagbabago sa tirahan o paggamit ng gusali",
+          "Paggawa o conversion ng pangalawang suite",
+          "Garage o carport conversion sa living space"
+        ]
+      },
+      "sometimes": {
+        "title": "Maaaring Mangangailangan ng Permit",
+        "items": [
+          "Pagkukumpuni ng banyo o kusina — kailangan ng permit kapag nilipat ang pagtutubero",
+          "Ang pagtatapos ng hindi natapos na basement — depende sa layunin ng suite at taas ng kisame",
+          "Pag-install ng mga bagong electrical circuit — palaging nangangailangan ng electrical permit",
+          "Re-roofing — hindi kailangan ng permit sa pagtatayo; electrical permit ay maaaring kung solar kasangkot",
+          "Konstruksyon ng bakod — nag-iiba ayon sa munisipyo at taas",
+          "Mga retaining wall na higit sa 4 na talampakan — kinakailangan ang permit sa pagtatayo sa karamihan ng mga munisipalidad",
+          "Mga pagbabago sa HVAC — maaaring mangailangan ng mga permit sa gusali at/o gas"
+        ]
+      },
+      "never": {
+        "title": "Karaniwang Walang Kinakailangang Pahintulot",
+        "items": [
+          "Pagpinta sa loob o panlabas",
+          "Pag-install ng sahig (hardwood, laminate, tile)",
+          "Pagpapalit ng mga countertop (nang walang pagbabago sa pagtutubero)",
+          "Pagpipini o muling pagpipinta ng gabinete",
+          "Pagdaragdag ng shelving at built-in na storage",
+          "Pagpapalit ng mga kabit (mga gripo, palikuran, mga kabit ng ilaw) nang walang pag-rerouting ng tubo",
+          "Landscaping at mga kama sa hardin",
+          "Pag-aayos ng deck (hindi muling pagtatayo) sa ilalim ng 24 pulgada sa itaas ng grado"
+        ]
+      }
+    },
+    "municipalities": {
+      "title": "Mga Kinakailangan sa Permit ng Metro Vancouver Municipality",
+      "subtitle": "Ang bawat lungsod ay may sariling mga tuntunin sa itaas ng BC Building Code",
+      "vancouver": {
+        "title": "Lungsod ng Vancouver",
+        "description": "Ang Vancouver ay may ilan sa mga pinakadetalyadong tuntunin sa pagsasaayos sa BC. Kinakailangan ang permiso ng gusali para sa anumang gawaing istruktura, paggawa ng suite, deck na higit sa 24\", pagpapalit ng bintana (mga pamana sa bahay), at anumang gawaing nagpapabago sa panlabas ng gusali. Available ang online na e-plan application para sa karamihan ng mga permit sa tirahan. Mga oras ng pagproseso: 2–6 na linggo para sa karaniwang tirahan, mas mahaba para sa mga kumplikadong proyekto.",
+        "fees": "Mga bayarin sa permiso sa gusali: 1% ng ipinahayag na halaga ng pagtatayo (minimum na $200). Mga karagdagang singil para sa mga permit sa pagtutubero at elektrikal."
+      },
+      "burnaby": {
+        "title": "Lungsod ng Burnaby",
+        "description": "Nangangailangan ang Burnaby ng mga permit sa pagtatayo para sa lahat ng gawaing istruktura, paggawa ng suite, at pagtatayo ng deck. Nag-aalok ang lungsod ng mga konsultasyon bago ang aplikasyon para sa mga kumplikadong proyekto. Ang Burnaby ay may mga aktibong programang insentibo para sa legalisasyon ng pangalawang suite.",
+        "fees": "Mga bayarin sa permiso sa gusali: $200 flat fee plus $10 bawat $1,000 na halaga ng konstruksiyon na higit sa $10,000. Pinakamababang $200."
+      },
+      "richmond": {
+        "title": "Lungsod ng Richmond",
+        "description": "Nangangailangan ang Richmond ng mga permit sa pagtatayo para sa mga pagbabago sa istruktura, pagdaragdag, at paglikha ng suite. Ang Online Permit Portal ng Richmond ang humahawak sa karamihan ng mga aplikasyon ng permiso sa tirahan. Karaniwang mas mabilis ang pagpoproseso kaysa sa Vancouver para sa mga direktang proyektong tirahan.",
+        "fees": "Mga bayarin sa permiso sa gusali: $200 base plus $8 bawat $1,000 ng ipinahayag na halaga na higit sa $10,000."
+      },
+      "surrey": {
+        "title": "Lungsod ng Surrey",
+        "description": "May streamline na online portal ang Surrey at medyo mabilis ang pagproseso para sa mga karaniwang permit sa tirahan. Ang paglikha ng suite, mga pagbabago sa istruktura, at mga karagdagan ay nangangailangan ng mga permit sa gusali. Ang Secondary Suite Program ng Surrey ay nagbibigay ng suporta sa konsultasyon bago ang aplikasyon.",
+        "fees": "Mga bayarin sa permiso sa gusali: $150 base plus $7 bawat $1,000 ng ipinahayag na halaga. Available ang mabilis na pagpoproseso para sa ilang partikular na uri ng proyekto."
+      },
+      "coquitlam": {
+        "title": "Lungsod ng Coquitlam",
+        "description": "Nangangailangan ang Coquitlam ng mga permit sa pagtatayo para sa anumang gawaing istruktura, paggawa ng suite, at malalaking proyekto sa deck. Available ang mga pre-application meeting at inirerekomenda para sa mga kumplikadong renovation. Pinoproseso ng Coquitlam ang karamihan sa mga permit sa tirahan sa loob ng 3–4 na linggo.",
+        "fees": "Mga bayarin sa permiso sa gusali: $200 base plus $10 bawat $1,000 na halaga ng konstruksiyon. Pinakamababang $200."
+      }
+    },
+    "process": {
+      "title": "Paano Mag-apply para sa Renovation Permit sa Metro Vancouver",
+      "subtitle": "Hakbang-hakbang mula sa paunang konsultasyon hanggang sa huling inspeksyon",
+      "step1": {
+        "title": "Konsultasyon bago ang Application",
+        "description": "Para sa mga kumplikadong proyekto (paggawa ng suite, mga pagbabago sa istruktura, mga karagdagan), mag-book ng paunang konsultasyon sa departamento ng gusali ng iyong munisipyo bago magsumite. Maagang tinutukoy nito ang mga isyu — mga paghihigpit sa pagsona, pagtatalaga ng pamana, o mga espesyal na tuntunin — bago ka mamuhunan sa mga guhit. Karamihan sa mga munisipyo ay nag-aalok nito ng libre o sa maliit na bayad."
+      },
+      "step2": {
+        "title": "Mag-hire ng Rehistradong Propesyonal",
+        "description": "Para sa anumang proyektong kinasasangkutan ng mga pagbabago sa istruktura, mga sistemang mekanikal, o kumplikadong gawaing elektrikal, ang mga munisipalidad ng BC ay nangangailangan ng isang Rehistradong Propesyonal ng Record (RPPR) — karaniwang isang inhinyero ng istruktura o taga-disenyo ng gusali — upang pangasiwaan ang gawain at magbigay ng mga pinirmahang guhit. Ang mga simpleng cosmetic renovations ay hindi nangangailangan ng arkitekto o engineer."
+      },
+      "step3": {
+        "title": "Maghanda at Magsumite ng Mga Guhit",
+        "description": "Ang iyong contractor o designer ay naghahanda ng mga scaled drawing: site plan, floor plan, elevation, structural details, at mechanical (plumbing/electrical/HVAC) drawings. Isumite sa pamamagitan ng online portal ng munisipyo (Vancouver e-plan, Burnaby, Surrey, Richmond lahat ay may mga online system). Para sa mga heritage property sa Vancouver, maaaring kailanganin ang pagsusuri ng Design Panel bago mag-apruba ng permit."
+      },
+      "step4": {
+        "title": "Pagsusuri at Pag-apruba ng Pahintulot",
+        "description": "Nire-review ng munisipyo ang iyong aplikasyon laban sa BC Building Code, mga lokal na batas ng zoning, at mga kinakailangan sa permiso sa pagpapaunlad. Nag-iiba-iba ang mga oras ng pagrepaso: 2–4 na linggo para sa mga simpleng pagsasaayos, 4–8 na linggo para sa istruktura o suite na mga proyekto, 8–12 linggo para sa mga proyektong nangangailangan ng heritage o development permit. Makakatanggap ka ng pag-apruba ng permiso na may isang hanay ng mga naselyohang mga guhit — panatilihin ang mga ito sa lugar sa panahon ng pagtatayo."
+      },
+      "step5": {
+        "title": "Konstruksyon at Inspeksyon",
+        "description": "Kapag pinahintulutan, nagpapatuloy ang konstruksiyon. Ang munisipyo ay nagsasagawa ng mga mandatoryong inspeksyon sa mga tinukoy na milestone: rough-in (framing, plumbing, electrical bago isara ang mga pader), insulation, at huling occupancy. Dapat mong ipaalam sa munisipyo kapag naabot ang bawat milestone — hindi maaaring laktawan o gawin ang mga inspeksyon pagkatapos maisara ang mga pader. Ang mga nabigong inspeksyon ay nangangailangan ng pagwawasto at muling pagsisiyasat."
+      },
+      "step6": {
+        "title": "Pangwakas na Inspeksyon at Occupancy",
+        "description": "Pagkatapos makumpleto ang lahat ng trabaho, ang munisipyo ay nagsasagawa ng panghuling inspeksyon at nag-iisyu ng sertipiko ng occupancy (para sa paglikha ng suite, kailangan ng hiwalay na occupancy permit). Para sa mga pangalawang suite, ito ang dahilan kung bakit legal ang suite. Panatilihin ang lahat ng mga rekord ng permit — kailangan mo ang mga ito kapag nagbebenta ng bahay, nag-a-apply para sa mga lisensya sa pag-upa, o muling pagpopondo."
+      }
+    },
+    "costs": {
+      "title": "Mga Bayarin at Gastos sa Permit sa Metro Vancouver",
+      "subtitle": "Ano ang badyet para sa mga permit sa iba't ibang uri ng proyekto",
+      "kitchen": {
+        "title": "Pagkukumpuni ng Kusina",
+        "description": "Hindi kailangan ng building permit para sa cosmetic kitchen reno. Kung ililipat ang mga kagamitan sa pagtutubero o gas: permiso sa pagtutubero ($100–$300) + permit ng gas ($100–$200) kung saklaw ng gas. Electrical permit para sa mga bagong circuit: $100–$200. Kabuuan: $200–$600."
+      },
+      "bathroom": {
+        "title": "Pagkukumpuni ng Banyo",
+        "description": "Hindi kinakailangan ang permit sa gusali para sa gawaing kosmetiko. Ang paglipat ng mga lokasyon ng palikuran, lababo, o shower ay nangangailangan ng permiso sa pagtutubero ($100–$300). Ang mga bago o na-upgrade na electrical circuit ay nangangailangan ng electrical permit ($100–$200). Kabuuan: $200–$500 kung ililipat ang pagtutubero."
+      },
+      "basementSuite": {
+        "title": "Basement Suite",
+        "description": "Buong permit sa pagtatayo (1% ng halaga ng pagtatayo), permit sa pagtutubero ($200–$400), permit sa kuryente ($200–$400). Para sa isang $95,000 na conversion na suite: $950 na gusali + $300 na pagtutubero + $300 elektrikal = ~$1,550 sa mga permit, kasama ang mga potensyal na bayad sa permiso sa pagpapaunlad."
+      },
+      "deck": {
+        "title": "Deck Higit sa 24 pulgada",
+        "description": "Kinakailangan ang permit sa gusali. $200–$500 para sa deck permit depende sa munisipyo. Maaaring kailanganin ang mga guhit na istruktura para sa mas malaki o multi-level na mga deck."
+      },
+      "addition": {
+        "title": "Dagdag sa Bahay",
+        "description": "Ang bayad sa permiso ng gusali ay 1% ng ipinahayag na halaga ng pagtatayo. Para sa isang $150,000 na karagdagan: $1,500 na permit sa gusali kasama ang mga bayarin sa permit sa pagpapaunlad kung naaangkop. Mahigpit na inirerekomenda ang paunang konsultasyon."
+      }
+    },
+    "consequences": {
+      "title": "Ano ang Mangyayari Kung Laktawan Mo ang Permit",
+      "subtitle": "Ang hindi pinahihintulutang trabaho ay may tunay na pinansiyal at legal na mga panganib",
+      "items": [
+        {
+          "title": "Mga multa",
+          "description": "Ang mga munisipyo ay maaaring maglabas ng multa na $500–$10,000 bawat araw para sa hindi pinahihintulutang pagtatayo, depende sa paglabag at munisipalidad. Ang Vancouver ay may ilan sa mga pinakamataas na fine schedule sa BC."
+        },
+        {
+          "title": "Sapilitang Pagbabaligtad",
+          "description": "Ang munisipyo ay maaaring mag-isyu ng utos na huminto sa trabaho o i-undo ang natapos na trabaho — kabilang ang pag-alis ng mga karagdagan, pagpuno sa mga basement, o pagsasara ng mga silid — sa gastos ng may-ari."
+        },
+        {
+          "title": "Hindi Maibenta ang Ari-arian",
+          "description": "Ang hindi pinahihintulutang trabaho ay dapat ibunyag sa mga pahayag ng paghahayag ng ari-arian. Maraming mga inspektor sa bahay ng mamimili ang nagba-flag ng hindi pinahihintulutang trabaho, na humahantong sa muling negosasyon sa pagbebenta o pagbagsak. Hindi tutustusan ng mga nagpapahiram ang mga ari-arian na may pangunahing hindi pinahihintulutang gawaing istruktura."
+        },
+        {
+          "title": "Mga Problema sa Seguro",
+          "description": "Karamihan sa mga patakaran sa seguro sa bahay ay hindi kasama ang saklaw para sa pinsalang dulot ng trabahong hindi ginawa sa pag-code — kabilang ang hindi pinahihintulutang trabaho. Kung ang hindi pinahihintulutang konstruksyon ay nagdudulot ng pagkasira ng tubig, sunog, o pagkasira ng istruktura, maaaring tanggihan ng iyong insurer ang paghahabol."
+        },
+        {
+          "title": "Kahirapan sa Pagkuha ng Mga Permit sa Hinaharap",
+          "description": "Ang hindi pinahihintulutang trabaho na ginawa nang hindi tama ay maaaring kailanganing ilantad at muling gawin bago makapagbigay ng mga bagong permit para sa katabing trabaho. Nagdaragdag ito ng gastos at pagiging kumplikado sa mga pagsasaayos sa hinaharap."
+        },
+        {
+          "title": "Hindi Ma-legal ang Suite",
+          "description": "Kung magtatayo ka ng hindi awtorisadong basement suite nang walang permit, hindi ka makakakuha ng lisensya sa pag-upa o legal na pag-okupa. Nangangahulugan ito na hindi mo ito maaaring paupahan ng legal, at maaaring utusan ka ng munisipyo na ihinto ang pag-upa dito."
+        }
+      ]
+    },
+    "tips": {
+      "title": "Mga Tip sa Pagtitipid ng Pera para sa Proseso ng Permit",
+      "tip1": {
+        "title": "Gumamit ng Mga Konsultasyon sa Pre-Application",
+        "description": "Karamihan sa mga munisipalidad ng Metro Vancouver ay nag-aalok ng libre o murang mga appointment bago ang konsultasyon para sa mga kumplikadong proyekto. Ang paggugol ng 30 minuto sa isang inspektor ng gusali bago isumite ay nakakatipid ng mga linggo ng mga siklo ng rebisyon sa iyong aplikasyon at pinipigilan ang mga pagtanggi sa permit na nagkakahalaga ng oras at pera."
+      },
+      "tip2": {
+        "title": "Magtanong Tungkol sa Fast-Track Processing",
+        "description": "Ang ilang munisipalidad (Vancouver, Surrey) ay nag-aalok ng pinabilis na pagpoproseso ng permit para sa karagdagang bayad — sulit ito kapag ang iyong kontratista ay on-site at ang mga pang-araw-araw na gastos ay naipon. Ang isang $300 na fast-track fee sa isang $95,000 suite na trabaho ay isang kapaki-pakinabang na pamumuhunan."
+      },
+      "tip3": {
+        "title": "Mga Bundle Trade sa Isang Aplikasyon ng Permit",
+        "description": "Magsumite ng gusali, pagtutubero, at mga de-koryenteng permit nang magkasama kung posible — iniiwasan nito ang maraming bayarin sa aplikasyon at maraming cycle ng pagsusuri. Karaniwang pinangangasiwaan ito ng tagapamahala ng proyekto ng iyong kontratista, ngunit kumpirmahin na ginagawa na ito."
+      },
+      "tip4": {
+        "title": "Mag-apply muna para sa Municipal Incentive Programs",
+        "description": "May mga grant program ang Burnaby at Surrey para sa legalisasyon ng pangalawang suite. Mag-apply para sa mga ito bago isumite ang iyong permit — ang ilan ay nangangailangan ng paunang pag-apruba bago magsimula ang konstruksiyon. Ang $5,000–$10,000 na grant money ay nagkakahalaga ng 20 minutong oras ng aplikasyon."
+      }
+    },
+    "related": {
+      "title": "Mga Kaugnay na Gabay sa Pagkukumpuni",
+      "basementSuite": "Gabay sa Gastos sa Conversion ng Basement Suite",
+      "kitchenGuide": "Gabay sa Gastos sa Pagkukumpuni ng Kusina",
+      "bathroomGuide": "Gabay sa Gastos sa Pagkukumpuni ng Banyo",
+      "allGuides": "Lahat ng Gabay sa Gastos"
+    },
+    "cta": {
+      "heading": "Kailangan ng Tulong sa Pag-navigate sa Proseso ng Permit?",
+      "subtitle": "Pinamamahalaan ng Reno Stars ang mga aplikasyon ng permiso bilang bahagi ng aming buong serbisyong proseso ng pagsasaayos. Sabihin sa amin ang tungkol sa iyong proyekto para sa libreng konsultasyon."
+    },
+    "faq": {
+      "q1": "Kailangan ko ba ng permit sa gusali para sa pagsasaayos ng kusina sa Vancouver?",
+      "a1": "Hindi kailangan ng building permit para sa mga cosmetic kitchen renovation tulad ng repainting cabinet, pagpapalit ng mga countertop, o pag-install ng mga bagong appliances nang hindi binabago ang mga lokasyon ng gas o pagtutubero. Kailangan mo ng permit sa gusali kapag nililipat ang mga tubo sa kusina (ginagalaw ang lababo o dishwasher nang higit sa ilang talampakan), nagdaragdag o nag-aalis ng mga pader, o nagbabago ng layout ng kusina sa paraang makakaapekto sa mga elemento ng istruktura. Kinakailangan ang permiso sa pagtutubero sa tuwing tatakbo ang bagong pagtutubero o ililipat ang kasalukuyang pagtutubero — kahit na ang mga kosmetikong reno na gumagalaw sa lababo ay nangangailangan ng permiso sa pagtutubero. Kinakailangan ang electrical permit para sa anumang mga bagong circuit, panel upgrade, o pagdaragdag ng mga hardwired appliances tulad ng mga cooktop.",
+      "q2": "Gaano katagal bago makakuha ng renovation permit sa Vancouver?",
+      "a2": "Ang mga oras ng pagproseso ng permit ay nag-iiba ayon sa munisipyo at pagiging kumplikado ng proyekto. Sa Vancouver, ang diretsong residential renovation permit ay tumatagal ng 2–4 na linggo; Ang paglikha ng suite o mga istrukturang proyekto ay tumatagal ng 4–8 na linggo. Ang Burnaby at Coquitlam ay karaniwang nagpoproseso sa loob ng 2–3 linggo para sa mga karaniwang permit sa paninirahan. Ang Surrey ang may pinakamabilis na pagproseso para sa mga karaniwang proyekto: 1–2 linggo gamit ang kanilang online portal. Ang mga aplikasyon ng pamana o development permit ay nagdaragdag ng 4–8 na linggo sa anumang proyekto sa Vancouver o Burnaby. Palaging isama ang mga timeline ng permit sa iyong iskedyul ng konstruksiyon bago pumirma sa mga kasunduan ng kontratista.",
+      "q3": "Magkano ang isang building permit sa Metro Vancouver?",
+      "a3": "Karaniwang sinisingil ang mga bayarin sa permiso sa gusali bilang isang porsyento ng ipinahayag na halaga ng konstruksiyon: Ang Vancouver ay naniningil ng 1% (minimum na $200), ang Burnaby ay naniningil ng $200 flat plus $10 kada $1,000 na higit sa $10,000, Richmond ay naniningil ng $200 flat plus $8 bawat $1,000, at Surrey ay naniningil ng $150 flat plus $00. Samakatuwid, ang isang $100,000 na pagsasaayos ay nagkakahalaga ng humigit-kumulang $1,000 sa mga bayarin sa permiso ng gusali sa Vancouver, o $790 sa Surrey. Ang mga permit sa pagtutubero at elektrikal ay nagdaragdag ng $100–$400 bawat isa. Palaging suriin ang iskedyul ng bayad ng iyong partikular na munisipyo habang ito ay nag-a-update taun-taon.",
+      "q4": "Ano ang mangyayari kung magtrabaho ako ng reno nang walang permit sa BC?",
+      "a4": "Ang hindi pinahihintulutang trabaho sa BC ay maaaring magresulta sa mga stop-work order, mga multa na $500–$10,000 kada araw (Vancouver ang may pinakamataas na multa sa Metro Vancouver), sapilitang pagtanggal o pagbabalik ng hindi pinahintulutang trabaho, kawalan ng kakayahan na ibenta ang ari-arian nang hindi isiniwalat ang hindi pinahintulutang trabaho, pagtanggi sa mga claim sa insurance para sa anumang pinsalang nauugnay sa legal na trabaho, hindi pinahihintulutan na trabaho. Ang panganib ay partikular na mataas para sa mga basement suite: nang walang permit at occupancy certificate, ang suite ay hindi maaaring rentahan ng legal, at ang munisipyo ay maaaring mag-isyu ng mga utos na ihinto ang pangungupahan.",
+      "q5": "Maaari ba akong makakuha ng permit pagkatapos ng trabaho (retrospective permit)?",
+      "a5": "Ang ilang munisipalidad ay maglalabas ng retrospective permit kung ang natapos na trabaho ay nakakatugon sa code at ginawa alinsunod sa mga kinakailangan sa permit. Gayunpaman, ang mga retrospective permit ay nangangailangan ng parehong mga guhit, engineering, at inspeksyon gaya ng mga karaniwang permit — at anumang gawaing hindi nakakatugon sa code ay dapat itama bago ang pag-apruba. Ang proseso ng retrospective permit ay mas mahal, mas matagal, at hindi garantisado. Sa Vancouver, ang mga retrospective permit para sa suite na trabaho ay partikular na sinusuri. Ang mas mahusay na diskarte ay palaging upang makakuha ng permit bago simulan ang trabaho.",
+      "q6": "Kailangan ko ba ng permit para tapusin ang aking basement sa Vancouver?",
+      "a6": "Ang pagtatapos ng basement nang hindi gumagawa ng suite (puro para sa personal na paggamit ng pamilya, walang hiwalay na pasukan, walang mga pasilidad sa pagluluto) ay hindi nangangailangan ng permiso ng gusali sa karamihan ng mga munisipalidad ng BC — ngunit ang mga electrical permit at kung minsan ang mga permit sa pagtutubero ay kinakailangan pa rin para sa mga bagong circuit, banyo, at anumang trabaho sa pagtutubero. Kung ang layunin ay lumikha ng isang hiwalay na suite (hiwalay na pasukan, mga pasilidad sa kusina), isang buong permit sa gusali at permit sa pag-okupa ng suite ay kinakailangan bago magsimula ang konstruksiyon. Ang pangunahing tanong ng mga munisipyo ay: maaari bang gamitin ang espasyong ito bilang isang hiwalay na tirahan? Kung oo, kailangan nito ng suite permitting anuman ang iyong kasalukuyang layunin."
+    }
+  }
+}

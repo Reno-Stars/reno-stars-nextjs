@@ -16,7 +16,8 @@
     "nextPage": "轉到下一頁",
     "showingPosts": "顯示 {start}-{end} 個貼文（共 {total} 個）",
     "relatedServices": "相關服務",
-    "relatedAreas": "Renovation in Your Area"
+    "relatedAreas": "Renovation in Your Area",
+    "faqSubtitle": "有關我們部落格和裝修指南的常見問題"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

@@ -16,6 +16,7 @@
     "nextPage": "انتقل إلى الصفحة التالية",
     "showingPosts": "عرض {start}-{end} من مشاركات {total}",
     "relatedServices": "الخدمات ذات الصلة",
-    "relatedAreas": "التجديد في منطقتك"
+    "relatedAreas": "التجديد في منطقتك",
+    "faqSubtitle": "الأسئلة الشائعة حول مدونتنا وأدلة التجديد"
   }
 }

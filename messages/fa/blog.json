@@ -16,6 +16,7 @@
     "nextPage": "رفتن به صفحه بعدی",
     "showingPosts": "نمایش {start}-{end} از {total} مطلب",
     "relatedServices": "خدمات مرتبط",
-    "relatedAreas": "بازسازی در منطقه شما"
+    "relatedAreas": "بازسازی در منطقه شما",
+    "faqSubtitle": "سوالات متداول در مورد وبلاگ و راهنماهای نوسازی ما"
   }
 }

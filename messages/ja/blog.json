@@ -16,7 +16,8 @@
     "nextPage": "次のページへ",
     "showingPosts": "{total} 件中 {start} ～ {end} 件の投稿を表示しています",
     "relatedServices": "関連サービス",
-    "relatedAreas": "お住まいの地域のリノベーション"
+    "relatedAreas": "お住まいの地域のリノベーション",
+    "faqSubtitle": "ブログや改修ガイドに関するよくある質問"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

@@ -129,7 +129,14 @@ export default async function Page({ params }: PageProps) {
   }));
   // Pass city names as a list (not comma-joined string) for structured
   // rendering in ContactSection — better chunkability for AI/LLM crawlers.
-  const areasList = localizedAreas.slice(0, 8).map((a) => a.name);
+  // `name` is a per-locale lookup (`a.name[locale]`), so it is `string |
+  // undefined` for any area missing a translation in this locale. Drop those
+  // BEFORE slicing — filtering after would silently show fewer than 8 areas
+  // whenever an untranslated one landed in the first 8.
+  const areasList = localizedAreas
+    .map((a) => a.name)
+    .filter((name): name is string => Boolean(name))
+    .slice(0, 8);
 
   const aboutItems = [
     {

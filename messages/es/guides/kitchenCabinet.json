@@ -1,0 +1,197 @@
+{
+  "kitchenCabinet": {
+    "breadcrumb": "Renovación de gabinetes de cocina",
+    "hero": {
+      "title": "Costo de renovación de gabinetes de cocina Vancouver 2026: stock, acabado personalizado y gabinetes",
+      "subtitle": "¿Cuánto cuesta la renovación de gabinetes de cocina en Vancouver? Los costos de renovación de gabinetes en Vancouver varían desde $3,000 para el acabado hasta $45,000+ para el reemplazo completo de gabinetes personalizados. Esta guía cubre todas las opciones (repintado, repintado y reemplazo completo) con precios reales para 2026 para gabinetes en stock, semipersonalizados y personalizados, estilos de puertas, materiales y lo que determina el costo final."
+    },
+    "stats": {
+      "avgCost": "Promedio Gabinete Reno",
+      "avgCostValue": "$12,000",
+      "range": "Gama de precios",
+      "rangeValue": "$ 3 mil - $ 45 mil +",
+      "linearFoot": "Por pie lineal",
+      "linearFootValue": "$150 – $600/pie",
+      "timeline": "Línea de tiempo típica",
+      "timelineValue": "3 días – 6 semanas"
+    },
+    "cabinetTypes": {
+      "title": "Tipos de gabinetes: estándar, semipersonalizados y personalizados",
+      "subtitle": "Tres categorías de gabinetes con precios muy diferentes",
+      "stock": {
+        "title": "Gabinetes de valores",
+        "price": "$80 – $200/pie lineal",
+        "description": "Prefabricados en medidas y acabados estándar. Disponible inmediatamente en tiendas de mejoras para el hogar o salas de exposición de cocinas. Personalización limitada: usted elige entre estilos, colores y herrajes de puertas existentes. Lo mejor para renovaciones económicas donde las dimensiones estándar se adaptan al diseño de su cocina. Entrega más rápida: 1 a 2 semanas."
+      },
+      "semiCustom": {
+        "title": "Gabinetes Semi-Personalizados",
+        "price": "$200 – $400/pie lineal",
+        "description": "Fabricado bajo pedido con algunas opciones de personalización: anchos personalizados, soluciones de almacenamiento especializadas, acabados y materiales específicos. Trabaja dentro de la línea de productos de un fabricante, pero puede adaptar las dimensiones y agregar características como organizadores extraíbles, especieros y divisores de bandejas. Plazo de entrega: 3 a 5 semanas. El mejor valor para la mayoría de los propietarios de viviendas de Vancouver que actualizan sus existencias."
+      },
+      "custom": {
+        "title": "Gabinetes personalizados",
+        "price": "$400 – $800+/pie lineal",
+        "description": "Construido según especificaciones exactas para las dimensiones y el diseño únicos de su cocina. Personalización total de materiales, acabados, hardware y características. No hay concesiones en el diseño: cada milímetro optimizado para su espacio. Plazo de entrega: 6 a 10 semanas. Lo mejor para diseños de cocina inusuales, proyectos de diseño de alta gama o cuando necesita una apariencia específica que los tamaños estándar no pueden lograr."
+      }
+    },
+    "doorStyles": {
+      "title": "Estilos de puertas de gabinetes",
+      "subtitle": "El perfil visual de sus gabinetes influye tanto en el costo como en la estética.",
+      "shaker": {
+        "title": "Criba vibradora",
+        "description": "Diseño limpio de panel empotrado. Estilo más popular en Vancouver para 2024-2026. Funciona en cocinas modernas, de transición y tradicionales. Precio: costo base."
+      },
+      "slab": {
+        "title": "Losa / Panel Plano",
+        "description": "Puertas minimalistas de frente plano. Muy popular en los condominios contemporáneos de Vancouver y en las casas modernas. Sin perfil ni detalles: pura superficie. Puede ser chapada o de madera maciza."
+      },
+      "inset": {
+        "title": "Recuadro",
+        "description": "Las puertas se encuentran dentro del marco del gabinete. Construcción clásica empotrada en gabinetes personalizados de alta gama. Más caro debido al hardware de precisión requerido. Estética clásica y atemporal."
+      },
+      "raised": {
+        "title": "Panel elevado",
+        "description": "Panel central elevado tradicional con perfil decorativo. Común en renovaciones de viviendas patrimoniales. Mayor coste debido a un mecanizado más complejo."
+      }
+    },
+    "materials": {
+      "title": "Materiales del gabinete",
+      "subtitle": "El material del que están hechos sus gabinetes afecta la durabilidad, la apariencia y el precio.",
+      "thermofoil": {
+        "title": "Termolámina / Laminado",
+        "priceRange": "$80 – $180/pie lineal",
+        "description": "Film vinílico termosoldado sobre MDF. Superficie lisa y asequible, disponible en muchos colores. Propenso a pelarse en ambientes con mucha humedad (cerca de lavavajillas o estufas). Lo mejor para propiedades de alquiler o actualizaciones de presupuesto."
+      },
+      "solidWood": {
+        "title": "Madera maciza",
+        "priceRange": "$250 – $600/pie lineal",
+        "description": "Arce, roble, cerezo, nogal y otras maderas duras. La opción más duradera: se puede lijar y reacabar varias veces. Veta de madera natural. Categoría más cara. Susceptible a los cambios de humedad en el clima de Vancouver."
+      },
+      "mdf": {
+        "title": "MDF (tablero de fibra de densidad media)",
+        "priceRange": "$120 – $280/pie lineal",
+        "description": "Madera de ingeniería con superficie lisa y uniforme. Acepta muy bien la pintura: ideal para cocinas pintadas de cualquier color. Más estable que la madera maciza en humedad. No se puede restaurar, pero tiene un acabado de pintura perfecto."
+      },
+      "plywood": {
+        "title": "Cajas de madera contrachapada",
+        "priceRange": "$180 – $400/pie lineal total",
+        "description": "No es un estilo de puerta, sino un material de construcción de caja. Las cajas de pura madera contrachapada (sin tableros de partículas) son el estándar premium para las cajas de armario. Más pesado, más fuerte y más resistente a la humedad que el tablero de partículas. La mayoría de los gabinetes semipersonalizados personalizados y de alta gama utilizan cajas de madera contrachapada."
+      }
+    },
+    "countertops": {
+      "title": "Costos de emparejamiento de encimeras",
+      "subtitle": "Lo que gastarás en encimeras al realizar trabajos de ebanistería",
+      "laminate": {
+        "title": "Laminado",
+        "priceRange": "$20 – $50/pie cuadrado instalado",
+        "description": "Opción de presupuesto. Laminado postformado sobre aglomerado. Perfiles de borde limitados. Es mejor cuando el presupuesto es la principal limitación."
+      },
+      "quartz": {
+        "title": "Cuarzo",
+        "priceRange": "$60 – $130/pie cuadrado instalado",
+        "description": "La encimera más popular de Vancouver. Aspecto consistente, no poroso, libre de mantenimiento. Marcas como Caesarstone, Silestone y Cambria. Combina con cualquier estilo de gabinete."
+      },
+      "granite": {
+        "title": "Granito",
+        "priceRange": "$70 – $180/pie cuadrado instalado",
+        "description": "Piedra natural con vetas únicas. Cada losa es única. Requiere sellado anual. Más carácter que el cuarzo pero mayor mantenimiento."
+      },
+      "solidSurface": {
+        "title": "Superficie sólida (Corian)",
+        "priceRange": "$70 – $130/pie cuadrado instalado",
+        "description": "Instalación perfecta, reparable, muchas opciones de color. Menos resistente al calor que la piedra pero completamente no poroso. Bueno para diseños contemporáneos."
+      }
+    },
+    "breakdown": {
+      "title": "Desglose del costo total: gabinete de cocina Reno de $ 20,000",
+      "subtitle": "A dónde va el presupuesto en una renovación típica de un gabinete de Vancouver",
+      "cabinets": {
+        "title": "Armarios (cajas + puertas)",
+        "description": "35 pies lineales de gabinetes de arce semipersonalizados con cajas de madera contrachapada",
+        "range": "$7,000 – $9,000"
+      },
+      "countertops": {
+        "title": "Encimeras",
+        "description": "30 pies cuadrados de cuarzo de gama media con borde suavizado",
+        "range": "$2,400 – $3,200"
+      },
+      "hardware": {
+        "title": "Hardware",
+        "description": "Bisagras de cierre suave, guías para cajones de extensión total, extraíbles, pomos/palancas",
+        "range": "$800 – $1,500"
+      },
+      "labour": {
+        "title": "Mano de obra de instalación",
+        "description": "Demolición, instalación, desconexión/reconexión de fontanería, acabados.",
+        "range": "$3,000 – $6,000"
+      },
+      "misc": {
+        "title": "Permisos, Eliminación, Misc.",
+        "description": "Permiso (si es necesario), eliminación de gabinetes viejos, instalación temporal de cocina",
+        "range": "$500 – $1,500"
+      }
+    },
+    "vsReplace": {
+      "title": "¿Repintar o reemplazar?",
+      "subtitle": "La decisión clave para cada renovación de armario",
+      "refinish": {
+        "title": "Repintar / Repintar Existente",
+        "cost": "$3,000 – $8,000",
+        "refinishPros": "Entre un 50% y un 70% más barato que el reemplazo. Completado en 3 a 5 días. No es posible realizar cambios en el diseño. No hay daños a las cajas existentes.",
+        "refinishCons": "Sólo funciona si las cajas están estructuralmente en buen estado. Sin cambios de diseño. Misma configuración de espacio y almacenamiento."
+      },
+      "replace": {
+        "title": "Reemplazo completo del gabinete",
+        "cost": "$12,000 – $45,000+",
+        "replacePros": "Rediseño completo del diseño. Soluciones de almacenamiento modernas. Cajas y puertas nuevas. Mayor esperanza de vida.",
+        "replaceCons": "Más caro. Interrupción de 4 a 8 semanas. Requiere plomero/electricista para desconexión de electrodomésticos."
+      }
+    },
+    "tips": {
+      "title": "Consejos para ahorrar dinero al renovar el gabinete",
+      "tip1": {
+        "title": "Mantenga el mismo diseño",
+        "description": "Reubicar gabinetes (mover la ubicación del fregadero, la estufa o el refrigerador) agrega entre $3,000 y $8,000 en costos de plomería y electricidad. Mantener el mismo diseño significa que no habrá nuevos ajustes y una instalación más rápida."
+      },
+      "tip2": {
+        "title": "Restaurar en lugar de reemplazar cajas",
+        "description": "Si las cajas de su gabinete son sólidas y su diseño funciona, renovar o pintar las cajas y puertas existentes puede ahorrar entre $ 8 000 y $ 20 000 en comparación con el reemplazo completo. Las puertas nuevas en las cajas existentes también brindan una apariencia completamente nueva a una fracción del costo del gabinete completo."
+      },
+      "tip3": {
+        "title": "Elija HDF/MDF para cocinas pintadas",
+        "description": "Si desea una cocina pintada (blanca, gris o de colores llamativos), la construcción de puertas de MDF o HDF es en realidad mejor que la madera maciza: no se ve la veta a través de la pintura, tiene un acabado más suave y es más estable en la humedad de Vancouver. Los gabinetes de madera maciza pintados en Vancouver a menudo desarrollan grietas finas en las juntas al cabo de 2 a 3 años."
+      },
+      "tip4": {
+        "title": "Fuente de hardware por separado",
+        "description": "Las salas de exposición de gabinetes aumentan el precio del hardware entre 2 y 3 veces más que el comercio minorista. Compre bisagras de cierre suave, correderas para cajones y tiradores de proveedores mayoristas (Rona Commercial, Olympia Tile o Lee Valley) y haga que su instalador los instale. Ahorre entre $500 y $1500 en herrajes para una cocina típica."
+      }
+    },
+    "related": {
+      "title": "Explore más guías de renovación",
+      "kitchenGuide": "Guía de costos de renovación de cocinas",
+      "allGuides": "Todas las guías de costos"
+    },
+    "cta": {
+      "heading": "¿Listo para hablar sobre gabinetes de cocina?",
+      "subtitle": "Obtenga un presupuesto detallado de renovación de gabinetes para su casa en Vancouver. Ofrecemos consultas gratuitas a domicilio con presupuestos sin compromiso."
+    },
+    "faq": {
+      "q1": "¿Cuánto cuesta el acabado de gabinetes de cocina en Vancouver?",
+      "a1": "El acabado de gabinetes de cocina en Vancouver cuesta entre $ 3000 y $ 8000, según el tamaño del gabinete y el tipo de acabado. Pintar con aerosol puertas y frentes de cajones existentes (el método más común) cuesta entre 4000 y 7000 dólares para una cocina estándar. La envoltura de vinilo o el revestimiento despegable y adhesivo en puertas existentes cuesta entre $3000 y $5000. El acabado completo, incluidos los marcos de las cajas, el interior y el hardware nuevo, agrega entre $1,000 y $2,000. El requisito clave: las cajas de los gabinetes existentes deben estar estructuralmente en buen estado, libres de humedad y libres de deformaciones o delaminación.",
+      "q2": "¿Cuál es el costo por pie lineal de los gabinetes de cocina en Vancouver?",
+      "a2": "Los costos de los gabinetes de cocina por pie lineal en Vancouver (2026) son: gabinetes estándar de $ 80 a $ 200 por pie lineal, gabinetes semipersonalizados de $ 200 a $ 400 por pie lineal y gabinetes personalizados de $ 400 a $ 800 o más por pie lineal. Una cocina típica de Vancouver tiene entre 30 y 40 pies lineales de gabinetes (superiores e inferiores combinados). A un precio medio semipersonalizado de $300/pie lineal, una cocina de 35 pies cuesta aproximadamente $10,500 solo para los gabinetes, antes de las encimeras, los herrajes o la instalación.",
+      "q3": "¿Vale la pena renovar los gabinetes de la cocina o debo reemplazarlos?",
+      "a3": "Vuelva a terminar si: las cajas de su gabinete son estructuralmente sólidas, su diseño actual se adapta a su hogar, desea ahorrar entre un 50% y un 70% en comparación con el reemplazo y está satisfecho con su configuración de almacenamiento actual. Reemplácelo si: las cajas de los gabinetes están dañadas por el agua, se deslaminan o están deformadas, desea cambiar el diseño de la cocina, sus gabinetes actuales tienen más de 20 años o desea una estética de cocina fundamentalmente diferente que el acabado no puede lograr (por ejemplo, cambiar de sin marco a completamente superpuesto o agregar una isla).",
+      "q4": "¿Cuánto tiempo lleva la renovación de un mueble de cocina en Vancouver?",
+      "a4": "El acabado del gabinete demora entre 3 y 5 días. La renovación del gabinete demora entre 5 y 7 días. El reemplazo completo del gabinete demora de 4 a 8 semanas: de 2 a 3 semanas para la fabricación del gabinete, 1 semana para la demolición, de 1 a 3 semanas para la instalación, además de la plantilla e instalación de la encimera (generalmente de 1 a 2 semanas). Tenga en cuenta el tiempo de procesamiento del permiso si se trata de cambios eléctricos o de plomería; agregue de 2 a 4 semanas en Vancouver, de 1 a 2 semanas en Surrey o Burnaby.",
+      "q5": "¿Cuál es el mejor material para gabinetes de cocina en el clima de Vancouver?",
+      "a5": "Para el clima húmedo de Vancouver, el mejor material para las cajas de gabinetes es la madera contrachapada pura (no los tableros de partículas): maneja mejor la humedad y es menos propenso a hincharse o delaminarse con el tiempo. Para los gabinetes pintados, las puertas de HDF o MDF son preferibles a las de madera maciza: tienen una superficie más lisa y uniforme para la pintura y son más estables dimensionalmente a medida que fluctúa la humedad. Para acabados de veta de madera, el arce macizo o el cerezo con un acabado de barniz de conversión se mantienen bien. Evite los gabinetes de termopapel (envueltos en vinilo) cerca de los lavavajillas: el calor y la humedad provocan que se descascaren en los hogares de Vancouver.",
+      "q6": "¿Necesito un permiso para reemplazar gabinetes de cocina en Vancouver?",
+      "a6": "No se requiere un permiso de construcción para reemplazar gabinetes cosméticos: quitar gabinetes viejos e instalar otros nuevos en los mismos lugares sin cambiar la plomería o la electricidad. Se requiere un permiso de plomería si va a reubicar el fregadero, el lavavajillas o cualquier accesorio de plomería; incluso mover un fregadero 6 pulgadas a través del mostrador requiere un permiso de plomería. Se requiere un permiso eléctrico para cualquier circuito nuevo, actualización de paneles o cambio de electrodomésticos cableados. Consulte siempre con su municipio: las propiedades patrimoniales en Vancouver pueden tener requisitos adicionales para cualquier modificación de la cocina.",
+      "q7": "¿Cuánto añaden al costo del gabinete las bisagras de cierre suave y las correderas de los cajones?",
+      "a7": "Las bisagras de cierre suave agregan aproximadamente entre $8 y $15 por puerta en costo de herrajes. Para una cocina de 35 puertas, eso cuesta entre $ 280 y $ 525 en costo adicional de hardware: vale cada dólar, ya que evita portazos y extiende la vida útil del gabinete. Las correderas de cajón de extensión total y cierre suave agregan entre $20 y $40 por cajón. En una cocina de 10 cajones eso cuesta entre $200 y $400. La mayoría de las cotizaciones de gabinetes personalizados y semipersonalizados incluyen cierre suave como estándar; los gabinetes de existencias económicos a menudo los incluyen como una mejora.",
+      "q8": "¿Debo hacer gabinetes y encimeras al mismo tiempo?",
+      "a8": "Sí, siempre haga los gabinetes y las encimeras juntos. La plantilla de la encimera se realiza después de instalar los gabinetes (el fabricante mide las dimensiones exactas del gabinete una vez que los gabinetes están en su posición final). Si hace gabinetes ahora y encimeras más adelante, pagará dos movilizaciones de instalación separadas y dos conjuntos de honorarios de contratista. Si su presupuesto le obliga a elegir, dé prioridad a los gabinetes: puede vivir sin encimeras durante algunas semanas con medidas temporales, pero vivir sin gabinetes de cocina no es práctico."
+    }
+  }
+}

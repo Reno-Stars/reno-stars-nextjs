@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import dynamic from 'next/dynamic';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
+import FaqSection from '@/components/home/FaqSection';
 import { BreadcrumbSchema, BlogSchema, ItemListSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
@@ -86,9 +86,6 @@ export default async function Page({ params, searchParams }: PageProps) {
     title: ft('title'),
     subtitle: t('blog.faqSubtitle'),
   };
-
-  // Dynamic import for FaqSection (client component)
-  const FaqSection = dynamic(() => import('@/components/home/FaqSection'), { ssr: false });
 
   return (
     <>
