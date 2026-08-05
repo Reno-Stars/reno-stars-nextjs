@@ -242,3 +242,13 @@ export default async function Page({ params }: PageProps) {
     </>
   );
 }
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Blog Post",
+  "author": {"@type": "Organization", "name": "Reno Stars"},
+  "publisher": {"@type": "Organization", "name": "Reno Stars", "url": "https://www.reno-stars.com"}
+}
+</script>
