@@ -26,5 +26,10 @@
     "translated_at": "2026-05-29T23:04:41Z",
     "tier": "machine-translation-first-pass",
     "note": "Per Reno Stars policy §5.2 — first-pass MT to close cross-locale parity gaps. Human review/polish welcome."
+  },
+  "metadata": {
+    "blog": {
+      "title": "裝潢技巧和成本指南 | 溫哥華 Reno Stars 部落格"
+    }
   }
 }
