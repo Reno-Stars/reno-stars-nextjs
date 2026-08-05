@@ -22,14 +22,14 @@ describe('brand SSOT', () => {
   });
 
   it('brandName returns the tailored name for mapped locales and BRAND otherwise', () => {
-    expect(brandName('zh')).toBe('集星装修');
-    expect(brandName('zh-Hant')).toBe('集星裝修');
+    expect(brandName('zh')).toBe('聚星装修');
+    expect(brandName('zh-Hant')).toBe('聚星裝修');
     expect(brandName('en')).toBe(BRAND);
     expect(brandName('ja')).toBe(BRAND);
   });
 
   it('brandDisplay keeps "Reno Stars" searchable alongside tailored names (owner rule 2026-07-09)', () => {
-    expect(brandDisplay('zh')).toBe(`集星装修 (${BRAND})`);
+    expect(brandDisplay('zh')).toBe(`聚星装修 (${BRAND})`);
     expect(brandDisplay('zh-Hant')).toContain(BRAND);
     expect(brandDisplay('en')).toBe(BRAND);
   });

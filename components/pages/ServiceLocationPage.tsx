@@ -226,7 +226,7 @@ export default function ServiceLocationPage({
   );
   const introHtml = useMemo(() => {
     const lead = zhLoc
-      ? `集星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`
+      ? `聚星装修为${localizedArea.name}及大温地区的业主提供${localizedService.title}服务。`
       : `Reno Stars provides ${localizedService.title.toLowerCase()} for homeowners across ${localizedArea.name} and Metro Vancouver.`;
     return normalizeInternalLinks(renderProseHtml(introParagraph ? `${lead}\n\n${introParagraph}` : lead), locale);
   }, [introParagraph, zhLoc, localizedArea.name, localizedService.title, locale]);
