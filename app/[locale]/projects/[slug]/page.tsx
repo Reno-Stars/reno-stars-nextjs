@@ -6,7 +6,7 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
 import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
@@ -207,6 +207,17 @@ export default async function Page({ params }: PageProps) {
           categoryName={categoryName}
           locale={locale as Locale}
           projects={categoryProjects}
+        />
+        <ServiceSchema
+          company={company}
+          serviceName={categoryName}
+          serviceDescription={locale === 'zh'
+            ? `大温哥华专业${categoryName}装修服务。免费估价，许可证代办，${company.liabilityCoverage}保险，${company.yearsExperience}年经验。`
+            : `Professional ${categoryName.toLowerCase()} renovation services in Metro Vancouver. Free quotes, permits handled, ${company.liabilityCoverage} insured, ${company.yearsExperience}+ years experience.`}
+          url={`/${locale}/projects/${slug}/`}
+          areaServed={['Vancouver Metro']}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
         />
         {categoryBlockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`cat-faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
