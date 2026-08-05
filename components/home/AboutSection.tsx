@@ -1,8 +1,10 @@
 import { Link } from '@/navigation';
-import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, neu } from '@/lib/theme';
+import { GOLD, SURFACE, CARD, TEXT, TEXT_MID, TEXT_MUTED, neu } from '@/lib/theme';
+
+interface AboutItem { title: string; text: string; bulletItems: string[] | null }
 
 interface AboutSectionProps {
-  items: { title: string; text: string }[];
+  items: AboutItem[];
   translations: {
     title: string;
     subtitle: string;
@@ -22,7 +24,17 @@ export default function AboutSection({ items, translations: t }: AboutSectionPro
             <div key={item.title} className="rounded-2xl p-5 transition-all duration-200" style={{ boxShadow: neu(5), backgroundColor: CARD }}>
               <div className="w-8 h-0.5 rounded-full mb-3" style={{ backgroundColor: GOLD }} />
               <h3 className="text-base font-bold mb-1.5" style={{ color: TEXT }}>{item.title}</h3>
-              <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>{item.text}</p>
+              <p className="text-base leading-relaxed mb-3" style={{ color: TEXT_MID }}>{item.text}</p>
+              {item.bulletItems && item.bulletItems.length > 0 && (
+                <ul className="space-y-1 list-none p-0 pl-1" aria-label={item.title + ' details'}>
+                  {item.bulletItems.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2 text-sm" style={{ color: TEXT_MID }}>
+                      <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: GOLD }} aria-hidden="true" />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>
