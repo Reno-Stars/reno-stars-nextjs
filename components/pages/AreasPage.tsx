@@ -9,6 +9,7 @@ import { getLocalizedArea } from '@/lib/data';
 import type { Company, ServiceArea } from '@/lib/types';
 import CTASection from '@/components/CTASection';
 import VisualBreadcrumb from '@/components/VisualBreadcrumb';
+import FaqSection from '@/components/home/FaqSection';
 import {
   NAVY, GOLD, SURFACE, SURFACE_ALT,
   CARD, TEXT, TEXT_MID, TEXT_MUTED, neu,
@@ -18,9 +19,10 @@ interface AreasPageProps {
   locale: Locale;
   areas: ServiceArea[];
   company: Company;
+  areasFaqs?: { question: string; answer: string }[];
 }
 
-export default function AreasPage({ locale, areas, company }: AreasPageProps) {
+export default function AreasPage({ locale, areas, company, areasFaqs }: AreasPageProps) {
   const t = useTranslations();
 
   const localizedAreas = useMemo(
@@ -116,6 +118,13 @@ export default function AreasPage({ locale, areas, company }: AreasPageProps) {
           </p>
         </div>
       </section>
+
+      {areasFaqs && areasFaqs.length > 0 && (
+        <FaqSection
+          faqs={areasFaqs.map((faq, i) => ({ id: `areas-${i}`, question: faq.question, answer: faq.answer }))}
+          translations={{ title: 'Frequently Asked Questions' }}
+        />
+      )}
 
       <CTASection
         heading={t('cta.freeQuoteProject')}
