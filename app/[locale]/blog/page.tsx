@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import dynamic from 'next/dynamic';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
-import { BreadcrumbSchema, BlogSchema, ItemListSchema, ArticleSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, BlogSchema, ItemListSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
@@ -53,9 +54,10 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
 
-  const [t, mt, company, paginatedPosts, allPosts] = await Promise.all([
+  const [t, mt, ft, company, paginatedPosts, allPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'metadata.blog' }),
+    getTranslations({ locale, namespace: 'faq' }),
     getCompanyFromDb(),
     getBlogPostsPaginatedFromDb(currentPage, BLOG_POSTS_PER_PAGE),
     getBlogPostsFromDb(),
@@ -66,6 +68,27 @@ export default async function Page({ params, searchParams }: PageProps) {
   ];
 
   const baseUrl = getBaseUrl();
+
+  const blogFaqs = [
+    {
+      id: 'blog-faq-1',
+      question: 'What renovation services does Reno Stars offer?',
+      answer: 'Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations. Services include cabinet refacing, Poly-B pipe replacement, heat pump installation, and accessible bathroom renovations.',
+    },
+    {
+      id: 'blog-faq-2',
+      question: 'How much does a renovation cost in Metro Vancouver?',
+      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations for legal suites start around $50,000.',
+    },
+  ];
+
+  const blogFaqTranslations = {
+    title: ft('title'),
+    subtitle: t('blog.faqSubtitle'),
+  };
+
+  // Dynamic import for FaqSection (client component)
+  const FaqSection = dynamic(() => import('@/components/home/FaqSection'), { ssr: false });
 
   return (
     <>
@@ -93,16 +116,11 @@ export default async function Page({ params, searchParams }: PageProps) {
           description={mt('description')}
         />
       )}
-      {/* Article schema — Article (BlogPosting) for the blog index page.
-          Source: on-page scanner finding on-page-7a2e5f6b8c9d (2026-08-05). */}
+      {/* FAQPage schema — FAQ for the blog index page.
+          Source: on-page scanner finding on-page-3a8e1f2b3c4d (2026-08-05). */}
       {currentPage === 1 && (
-        <ArticleSchema
-          company={company}
-          headline="Reno Stars Blog — Vancouver Renovation Guides & Tips"
-          description={mt('description')}
-          datePublished={new Date().toISOString()}
-          url={`/${locale}/blog/`}
-          image={buildOgImageUrl(mt('title'))}
+        <FAQSchema
+          faqs={blogFaqs.map((f) => ({ question: f.question, answer: f.answer }))}
           locale={locale}
         />
       )}
@@ -115,6 +133,10 @@ export default async function Page({ params, searchParams }: PageProps) {
         totalCount={paginatedPosts.totalCount}
         perPage={BLOG_POSTS_PER_PAGE}
       />
+      {/* Blog index FAQ accordion — source: on-page scanner finding on-page-3a8e1f2b3c4d (2026-08-05). */}
+      {currentPage === 1 && (
+        <FaqSection faqs={blogFaqs} translations={blogFaqTranslations} />
+      )}
     </>
   );
 }
