@@ -16,6 +16,7 @@
     "nextPage": "Aller à la page suivante",
     "showingPosts": "Affichage des messages {start}-{end} sur {total}",
     "relatedServices": "Services connexes",
-    "relatedAreas": "Rénovation dans votre région"
+    "relatedAreas": "Rénovation dans votre région",
+    "faqSubtitle": "Questions courantes sur notre blog et nos guides de rénovation"
   }
 }

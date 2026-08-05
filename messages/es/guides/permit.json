@@ -1,0 +1,217 @@
+{
+  "permit": {
+    "breadcrumb": "Permisos de renovación de Vancouver",
+    "hero": {
+      "title": "Permisos de renovación de Vancouver: qué requiere un permiso en Metro Vancouver (2026)",
+      "description": "¿Necesita un permiso de construcción para su renovación en Vancouver, Burnaby, Richmond o Surrey? Esta guía cubre los requisitos de permisos de construcción de BC, qué renovaciones necesitan aprobación provincial o municipal, cómo presentar la solicitud, plazos y tarifas típicos, y los proyectos de renovación más comunes que requieren permisos, además de lo que sucede si se salta el proceso de permiso."
+    },
+    "stats": {
+      "buildingPermit": "Permiso de construcción",
+      "buildingPermitValue": "Requerido para estructuras, adiciones, suites.",
+      "plumbingPermit": "Permiso de plomería",
+      "plumbingPermitValue": "Requerido para plomería nueva o reubicada",
+      "electricalPermit": "Permiso Eléctrico",
+      "electricalPermitValue": "Requerido para nuevos circuitos o actualizaciones de paneles",
+      "demoPermit": "Permiso de demolición",
+      "demoPermitValue": "Requerido para la remoción estructural"
+    },
+    "whenRequired": {
+      "title": "¿Cuándo se requiere un permiso de renovación en BC?",
+      "subtitle": "El Código de Construcción de BC y los estatutos municipales determinan los requisitos de permiso; no todas las renovaciones necesitan uno",
+      "always": {
+        "title": "Siempre requiere un permiso",
+        "items": [
+          "Creación o legalización de suite sótano",
+          "Trabajo estructural: eliminación o modificación de paredes, vigas o cimientos.",
+          "Agregar o ampliar ventanas y puertas exteriores.",
+          "Ampliaciones de edificios (nuevas habitaciones, terrazas solares, ampliaciones de garaje)",
+          "Construcción de plataforma a más de 24 pulgadas sobre el nivel del suelo.",
+          "Reemplazo de techos que involucra cambios estructurales",
+          "Cualquier obra que cambie la ocupación o uso del edificio.",
+          "Creación o conversión de suite secundaria",
+          "Conversión de garaje o cochera en espacio habitable"
+        ]
+      },
+      "sometimes": {
+        "title": "Puede requerir un permiso",
+        "items": [
+          "Renovaciones de baños o cocinas: se necesita permiso cuando se reubican las tuberías",
+          "Terminar un sótano sin terminar: depende de la intención de la suite y de la altura del techo",
+          "Instalación de nuevos circuitos eléctricos: siempre requiere un permiso eléctrico",
+          "Nuevo techo: no se requiere permiso de construcción; El permiso eléctrico puede ser si se trata de energía solar.",
+          "Construcción de cercas: varía según el municipio y la altura.",
+          "Muros de contención de más de 4 pies: se requiere permiso de construcción en la mayoría de los municipios",
+          "Cambios en HVAC: pueden requerir permisos de construcción y/o de gas"
+        ]
+      },
+      "never": {
+        "title": "Normalmente no se requiere permiso",
+        "items": [
+          "Pintar interior o exterior",
+          "Instalación de pisos (madera dura, laminado, baldosas)",
+          "Reemplazo de encimeras (sin cambios de plomería)",
+          "Repintado o acabado de gabinetes",
+          "Agregar estanterías y almacenamiento incorporado",
+          "Cambio de accesorios (grifos, inodoros, lámparas) sin desviar la plomería",
+          "Paisajismo y camas de jardín.",
+          "Reparación de cubierta (no reconstrucción) a menos de 24 pulgadas sobre el nivel del suelo."
+        ]
+      }
+    },
+    "municipalities": {
+      "title": "Requisitos de permiso por municipio metropolitano de Vancouver",
+      "subtitle": "Cada ciudad tiene sus propios estatutos además del Código de Construcción de BC",
+      "vancouver": {
+        "title": "ciudad de vancouver",
+        "description": "Vancouver tiene algunos de los estatutos de renovación más detallados de BC. Se requiere un permiso de construcción para cualquier trabajo estructural, creación de suites, terrazas de más de 24 pulgadas, reemplazo de ventanas (casas patrimoniales) y cualquier trabajo que cambie el exterior de un edificio. Solicitud de plan electrónico en línea disponible para la mayoría de los permisos residenciales. Tiempos de procesamiento: de 2 a 6 semanas para residencial estándar, más tiempo para proyectos complejos.",
+        "fees": "Tarifas de permisos de construcción: 1% del valor de construcción declarado (mínimo $200). Cargos adicionales por permisos de plomería y electricidad."
+      },
+      "burnaby": {
+        "title": "ciudad de burnaby",
+        "description": "Burnaby requiere permisos de construcción para todos los trabajos estructurales, la creación de suites y la construcción de terrazas. La ciudad ofrece consultas previas a la solicitud para proyectos complejos. Burnaby tiene programas de incentivos activos para la legalización de suites secundarias.",
+        "fees": "Tarifas del permiso de construcción: tarifa fija de $200 más $10 por cada $1,000 de valor de construcción superior a $10,000. Mínimo $200."
+      },
+      "richmond": {
+        "title": "ciudad de richmond",
+        "description": "Richmond requiere permisos de construcción para cambios estructurales, adiciones y creación de suites. El Portal de permisos en línea de Richmond maneja la mayoría de las solicitudes de permisos residenciales. El procesamiento suele ser más rápido que el de Vancouver para proyectos residenciales sencillos.",
+        "fees": "Tarifas del permiso de construcción: base de $200 más $8 por cada $1,000 de valor declarado por encima de $10,000."
+      },
+      "surrey": {
+        "title": "ciudad de surrey",
+        "description": "Surrey tiene un portal en línea optimizado y un procesamiento relativamente rápido para permisos residenciales estándar. La creación de suites, las modificaciones estructurales y las adiciones requieren permisos de construcción. El programa Secondary Suite de Surrey brinda soporte de consulta previa a la solicitud.",
+        "fees": "Tarifas del permiso de construcción: $150 base más $7 por cada $1,000 de valor declarado. Procesamiento rápido disponible para ciertos tipos de proyectos."
+      },
+      "coquitlam": {
+        "title": "ciudad de coquitlam",
+        "description": "Coquitlam requiere permisos de construcción para cualquier trabajo estructural, creación de suites y proyectos de terrazas más grandes. Las reuniones previas a la solicitud están disponibles y se recomiendan para renovaciones complejas. Coquitlam procesa la mayoría de los permisos residenciales en 3 a 4 semanas.",
+        "fees": "Tarifas del permiso de construcción: base de $200 más $10 por cada $1,000 de valor de construcción. Mínimo $200."
+      }
+    },
+    "process": {
+      "title": "Cómo solicitar un permiso de renovación en Metro Vancouver",
+      "subtitle": "Paso a paso desde la preconsulta hasta la inspección final",
+      "step1": {
+        "title": "Consulta previa a la solicitud",
+        "description": "Para proyectos complejos (creación de conjuntos, cambios estructurales, ampliaciones), reserve una consulta previa con el departamento de construcción de su municipio antes de enviarlos. Esto identifica los problemas con anticipación (restricciones de zonificación, designaciones de patrimonio o estatutos especiales) antes de invertir en planos. La mayoría de los municipios lo ofrecen gratis o por una pequeña tarifa."
+      },
+      "step2": {
+        "title": "Contrate a un profesional registrado",
+        "description": "Para cualquier proyecto que implique cambios estructurales, sistemas mecánicos o trabajos eléctricos complejos, los municipios de Columbia Británica requieren un profesional registrado (RPPR), generalmente un ingeniero estructural o diseñador de edificios, para supervisar el trabajo y proporcionar planos firmados. Las renovaciones cosméticas simples no requieren un arquitecto o ingeniero."
+      },
+      "step3": {
+        "title": "Preparar y enviar dibujos",
+        "description": "Su contratista o diseñador prepara dibujos a escala: plano del sitio, planos de planta, elevaciones, detalles estructurales y dibujos mecánicos (plomería/electricidad/HVAC). Envíelo a través del portal en línea del municipio (Vancouver e-plan, Burnaby, Surrey y Richmond tienen sistemas en línea). Para propiedades patrimoniales en Vancouver, es posible que se requiera una revisión del Panel de Diseño antes de la aprobación del permiso."
+      },
+      "step4": {
+        "title": "Revisión y aprobación de permisos",
+        "description": "El municipio revisa su solicitud según el Código de Construcción de BC, los estatutos de zonificación locales y los requisitos de permisos de desarrollo. Los tiempos de revisión varían: de 2 a 4 semanas para renovaciones simples, de 4 a 8 semanas para proyectos estructurales o de conjunto, de 8 a 12 semanas para proyectos que requieren permisos de patrimonio o desarrollo. Recibirá la aprobación del permiso con un conjunto de dibujos estampados; manténgalos en el sitio durante la construcción."
+      },
+      "step5": {
+        "title": "Construcción e Inspecciones",
+        "description": "Una vez permitido, la construcción continúa. El municipio lleva a cabo inspecciones obligatorias en hitos definidos: instalación preliminar (estructuras, plomería, electricidad antes de cerrar las paredes), aislamiento y ocupación final. Debe notificar al municipio cuando se alcance cada hito; las inspecciones no se pueden omitir ni realizar después de que se hayan cerrado los muros. Las inspecciones fallidas requieren corrección y nueva inspección."
+      },
+      "step6": {
+        "title": "Inspección final y ocupación",
+        "description": "Después de completar todo el trabajo, el municipio realiza una inspección final y emite un certificado de ocupación (para la creación de suites, se requiere un permiso de ocupación por separado). Para las suites secundarias, esto es lo que hace que la suite sea legal. Guarde todos los registros de permisos: los necesitará al vender la casa, solicitar licencias de alquiler o refinanciar."
+      }
+    },
+    "costs": {
+      "title": "Tarifas y costos de permisos en Metro Vancouver",
+      "subtitle": "Qué presupuestar para permisos en diferentes tipos de proyectos",
+      "kitchen": {
+        "title": "Renovación de la cocina",
+        "description": "No se requiere permiso de construcción para remodelación cosmética de cocinas. Si reubica plomería o aparatos de gas: permiso de plomería ($100–$300) + permiso de gas ($100–$200) si es una estufa de gas. Permiso eléctrico para circuitos nuevos: $100–$200. Total: entre 200 y 600 dólares."
+      },
+      "bathroom": {
+        "title": "Renovación del baño",
+        "description": "No se requiere permiso de construcción para trabajos cosméticos. Mover ubicaciones de inodoros, lavabos o duchas requiere un permiso de plomería ($100–$300). Los circuitos eléctricos nuevos o mejorados requieren un permiso eléctrico ($100–$200). Total: $200–$500 si se mueve la plomería."
+      },
+      "basementSuite": {
+        "title": "Suite del sótano",
+        "description": "Permiso de construcción completo (1% del valor de construcción), permiso de plomería ($200–$400), permiso eléctrico ($200–$400). Para una conversión de suite de $95,000: $950 de construcción + $300 de plomería + $300 de electricidad = ~$1,550 en permisos, más posibles tarifas de permisos de desarrollo."
+      },
+      "deck": {
+        "title": "Cubierta de más de 24 pulgadas",
+        "description": "Se requiere permiso de construcción. $200–$500 por permiso de cubierta, según el municipio. Es posible que se requieran dibujos estructurales para cubiertas más grandes o de varios niveles."
+      },
+      "addition": {
+        "title": "Adición de casa",
+        "description": "La tarifa del permiso de construcción es del 1% del valor de construcción declarado. Para una adición de $150,000: permiso de construcción de $1,500 más tarifas de permiso de desarrollo, si corresponde. Se recomienda encarecidamente la consulta previa."
+      }
+    },
+    "consequences": {
+      "title": "¿Qué sucede si se salta el permiso?",
+      "subtitle": "El trabajo no autorizado conlleva riesgos financieros y legales reales",
+      "items": [
+        {
+          "title": "Multas",
+          "description": "Los municipios pueden imponer multas de entre 500 y 10 000 dólares por día por construcción no autorizada, según la infracción y el municipio. Vancouver tiene algunas de las tarifas de multas más altas de BC."
+        },
+        {
+          "title": "Reversión forzada",
+          "description": "El municipio puede emitir una orden para detener el trabajo o deshacer el trabajo completado, incluida la eliminación de ampliaciones, el relleno de sótanos o el cierre de habitaciones, a expensas del propietario."
+        },
+        {
+          "title": "No puedo vender la propiedad",
+          "description": "El trabajo no permitido debe revelarse en las declaraciones de divulgación de propiedad. Los inspectores de viviendas de muchos compradores señalan trabajos no permitidos, lo que lleva a la renegociación de la venta o al colapso. Los prestamistas no financiarán propiedades con trabajos estructurales importantes no autorizados."
+        },
+        {
+          "title": "Problemas de seguro",
+          "description": "La mayoría de las pólizas de seguro de hogar excluyen la cobertura por daños causados ​​por trabajos que no se realizaron según el código, incluido el trabajo no autorizado. Si una construcción no autorizada causa daños por agua, incendio o falla estructural, su aseguradora puede rechazar el reclamo."
+        },
+        {
+          "title": "Dificultad para obtener permisos futuros",
+          "description": "Es posible que sea necesario exponer y rehacer el trabajo no permitido que se realizó incorrectamente antes de que se puedan emitir nuevos permisos para el trabajo adyacente. Esto agrega costo y complejidad a futuras renovaciones."
+        },
+        {
+          "title": "La suite no se puede legalizar",
+          "description": "Si construye un sótano no autorizado sin un permiso, no podrá obtener una licencia de alquiler ni una ocupación legal. Esto significa que no puedes alquilarlo legalmente y el municipio puede ordenarte que dejes de alquilarlo."
+        }
+      ]
+    },
+    "tips": {
+      "title": "Consejos para ahorrar dinero en el proceso de permiso",
+      "tip1": {
+        "title": "Utilice consultas previas a la solicitud",
+        "description": "La mayoría de los municipios de Metro Vancouver ofrecen citas de consulta previa gratuitas o de bajo costo para proyectos complejos. Pasar 30 minutos con un inspector de edificios antes de enviarla le ahorra semanas de ciclos de revisión en su solicitud y evita rechazos de permisos que cuestan tiempo y dinero."
+      },
+      "tip2": {
+        "title": "Pregunte sobre el procesamiento acelerado",
+        "description": "Algunos municipios (Vancouver, Surrey) ofrecen procesamiento acelerado de permisos por una tarifa adicional; vale la pena cuando su contratista está en el sitio y se acumulan costos diarios. Una tarifa acelerada de $300 por un trabajo de suite de $95,000 es una inversión que vale la pena."
+      },
+      "tip3": {
+        "title": "Agrupe transacciones en una sola solicitud de permiso",
+        "description": "Envíe los permisos de construcción, plomería y electricidad juntos cuando sea posible; esto evita múltiples tarifas de solicitud y múltiples ciclos de revisión. El gerente de proyecto de su contratista generalmente se encarga de esto, pero confirme que se esté haciendo."
+      },
+      "tip4": {
+        "title": "Solicite primero los programas de incentivos municipales",
+        "description": "Burnaby y Surrey tienen programas de subvenciones para la legalización de suites secundarias. Solicite estos antes de enviar su permiso; algunos requieren aprobación previa antes de que comience la construcción. Entre $5,000 y $10,000 en dinero de subvención valen el tiempo de solicitud de 20 minutos."
+      }
+    },
+    "related": {
+      "title": "Guías de renovación relacionadas",
+      "basementSuite": "Guía de costos de conversión de la suite del sótano",
+      "kitchenGuide": "Guía de costos de renovación de cocinas",
+      "bathroomGuide": "Guía de costos de renovación de baños",
+      "allGuides": "Todas las guías de costos"
+    },
+    "cta": {
+      "heading": "¿Necesita ayuda para navegar el proceso de permiso?",
+      "subtitle": "Reno Stars gestiona las solicitudes de permisos como parte de nuestro proceso de renovación de servicio completo. Cuéntenos sobre su proyecto para una consulta gratuita."
+    },
+    "faq": {
+      "q1": "¿Necesito un permiso de construcción para renovar una cocina en Vancouver?",
+      "a1": "No se requiere un permiso de construcción para renovaciones cosméticas de la cocina, como repintar gabinetes, reemplazar encimeras o instalar electrodomésticos nuevos sin cambiar la ubicación del gas o la plomería. Necesita un permiso de construcción para reubicar las tuberías de la cocina (mover el fregadero o el lavavajillas más de unos pocos pies), agregar o quitar paredes o cambiar el diseño de la cocina de una manera que afecte los elementos estructurales. Se requiere un permiso de plomería cada vez que se instalan tuberías nuevas o se reubican tuberías existentes; incluso las renovaciones cosméticas que mueven el fregadero necesitan un permiso de plomería. Se requiere un permiso eléctrico para cualquier circuito nuevo, actualización de paneles o para agregar electrodomésticos cableados como estufas.",
+      "q2": "¿Cuánto tiempo lleva obtener un permiso de renovación en Vancouver?",
+      "a2": "Los tiempos de procesamiento de permisos varían según el municipio y la complejidad del proyecto. En Vancouver, los permisos sencillos de renovación residencial tardan entre 2 y 4 semanas; La creación de suites o proyectos estructurales tardan entre 4 y 8 semanas. Burnaby y Coquitlam normalmente procesan en 2 a 3 semanas los permisos residenciales estándar. Surrey tiene el procesamiento más rápido para proyectos estándar: de 1 a 2 semanas con su portal en línea. Las solicitudes de permisos de patrimonio o desarrollo añaden de 4 a 8 semanas a cualquier proyecto en Vancouver o Burnaby. Siempre tenga en cuenta los plazos de los permisos en su cronograma de construcción antes de firmar acuerdos con los contratistas.",
+      "q3": "¿Cuánto cuesta un permiso de construcción en Metro Vancouver?",
+      "a3": "Las tarifas de los permisos de construcción generalmente se cobran como un porcentaje del valor de construcción declarado: Vancouver cobra el 1% (mínimo $200), Burnaby cobra $200 fijos más $10 por cada $1,000 sobre $10,000, Richmond cobra $200 fijos más $8 por cada $1,000, y Surrey cobra $150 fijos más $7 por $1,000. Por lo tanto, una renovación de 100.000 dólares cuesta aproximadamente 1.000 dólares en derechos de permiso de construcción en Vancouver, o 790 dólares en Surrey. Los permisos de plomería y electricidad suman entre $100 y $400 cada uno. Consulte siempre la lista de tarifas de su municipio específico, ya que se actualiza anualmente.",
+      "q4": "¿Qué sucede si realizo un trabajo renovado sin un permiso en BC?",
+      "a4": "El trabajo no permitido en BC puede resultar en órdenes de suspensión del trabajo, multas de $500 a $10,000 por día (Vancouver tiene las multas más altas en Metro Vancouver), remoción forzada o reversión del trabajo no permitido, imposibilidad de vender la propiedad sin revelar el trabajo no permitido, denegación de reclamos de seguro por cualquier daño relacionado con el trabajo no permitido e incapacidad de alquilar legalmente cualquier suite no autorizada. El riesgo es especialmente alto en el caso de las suites del sótano: sin un permiso y un certificado de ocupación, la suite no se puede alquilar legalmente y el municipio puede emitir órdenes para suspender el arrendamiento.",
+      "q5": "¿Puedo obtener un permiso una vez finalizado el trabajo (permiso retrospectivo)?",
+      "a5": "Algunos municipios emitirán un permiso retrospectivo si el trabajo completado cumple con el código y se realizó de acuerdo con los requisitos del permiso. Sin embargo, los permisos retrospectivos requieren los mismos planos, ingeniería e inspecciones que los permisos estándar, y cualquier trabajo que no cumpla con el código debe corregirse antes de su aprobación. El proceso de permiso retrospectivo es más costoso, lleva más tiempo y no está garantizado. En Vancouver, los permisos retrospectivos para el trabajo en suite son particularmente examinados. La mejor manera es siempre obtener el permiso antes de comenzar a trabajar.",
+      "q6": "¿Necesito un permiso para terminar mi sótano en Vancouver?",
+      "a6": "Terminar un sótano sin crear una suite (exclusivamente para uso personal familiar, sin entrada independiente, sin instalaciones para cocinar) no requiere un permiso de construcción en la mayoría de los municipios de Columbia Británica, pero aún se requieren permisos eléctricos y, a veces, permisos de plomería para nuevos circuitos, baños y cualquier trabajo de plomería. Si la intención es crear una suite separada (entrada independiente, instalaciones de cocina), se requiere un permiso de construcción completo y un permiso de ocupación de la suite antes de que comience la construcción. La pregunta clave que se hacen los municipios es: ¿podría utilizarse este espacio como vivienda independiente? En caso afirmativo, necesita permisos de suite independientemente de su intención actual."
+    }
+  }
+}

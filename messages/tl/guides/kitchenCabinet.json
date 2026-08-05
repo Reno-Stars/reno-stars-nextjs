@@ -1,0 +1,197 @@
+{
+  "kitchenCabinet": {
+    "breadcrumb": "Pagkukumpuni ng Kusina",
+    "hero": {
+      "title": "Gastos sa Pagkukumpuni ng Kitchen Cabinet Vancouver 2026: Stock, Custom, at Cabinet Refinishing",
+      "subtitle": "Magkano ang pagkukumpuni ng cabinet sa kusina sa Vancouver? Ang mga gastos sa pagsasaayos ng cabinet sa Vancouver ay mula sa $3,000 para sa refinishing hanggang $45,000+ para sa buong custom na pagpapalit ng cabinet. Sinasaklaw ng gabay na ito ang lahat ng opsyon — refinishing, refacing, at full replacement — na may totoong 2026 na pagpepresyo para sa stock, semi-custom, at custom na cabinet, mga istilo ng pinto, materyales, at kung ano ang nagtutulak sa huling gastos."
+    },
+    "stats": {
+      "avgCost": "Avg. Gabinete Reno",
+      "avgCostValue": "$12,000",
+      "range": "Saklaw ng Presyo",
+      "rangeValue": "$3K – $45K+",
+      "linearFoot": "Bawat Linear Foot",
+      "linearFootValue": "$150 – $600/ft",
+      "timeline": "Karaniwang Timeline",
+      "timelineValue": "3 araw - 6 na linggo"
+    },
+    "cabinetTypes": {
+      "title": "Mga Uri ng Gabinete: Stock, Semi-Custom, at Custom",
+      "subtitle": "Tatlong kategorya ng gabinete na may iba't ibang mga punto ng presyo",
+      "stock": {
+        "title": "Stock Cabinets",
+        "price": "$80 – $200/linear ft",
+        "description": "Pre-manufactured sa karaniwang laki at finishes. Magagamit kaagad mula sa mga tindahan ng pagpapabuti sa bahay o mga showroom sa kusina. Limitadong pagpapasadya — pipili ka mula sa mga kasalukuyang istilo, kulay, at hardware ng pinto. Pinakamahusay para sa mga pagsasaayos ng badyet kung saan ang mga karaniwang sukat ay umaangkop sa iyong layout ng kusina. Pinakamabilis na paghahatid: 1–2 linggo."
+      },
+      "semiCustom": {
+        "title": "Mga Semi-Custom na Gabinete",
+        "price": "$200 – $400/linear ft",
+        "description": "Ginawa upang mag-order gamit ang ilang mga opsyon sa pag-customize: mga custom na lapad, mga espesyal na solusyon sa storage, mga partikular na finish at materyales. Nagtatrabaho ka sa loob ng linya ng produkto ng isang tagagawa ngunit maaari kang mag-adapt ng mga sukat at magdagdag ng mga feature tulad ng mga pull-out organizer, spice rack, at tray divider. Lead time: 3–5 na linggo. Pinakamahusay na halaga para sa karamihan ng mga may-ari ng bahay sa Vancouver na nag-a-upgrade mula sa stock."
+      },
+      "custom": {
+        "title": "Mga Custom na Gabinete",
+        "price": "$400 – $800+/linear ft",
+        "description": "Binuo sa eksaktong mga detalye para sa mga natatanging sukat at disenyo ng iyong kusina. Buong pag-customize ng mga materyales, finish, hardware, at feature. Walang mga kompromiso sa layout — bawat milimetro na-optimize para sa iyong espasyo. Lead time: 6–10 na linggo. Pinakamahusay para sa hindi pangkaraniwang mga layout ng kusina, mga high-end na proyekto sa disenyo, o kapag kailangan mo ng partikular na hitsura na hindi maaaring makuha ng mga karaniwang sukat."
+      }
+    },
+    "doorStyles": {
+      "title": "Mga Estilo ng Pintuan ng Gabinete",
+      "subtitle": "Ang visual na profile ng iyong mga cabinet ay nagtutulak sa parehong gastos at aesthetic",
+      "shaker": {
+        "title": "Shaker",
+        "description": "Malinis na recessed-panel na disenyo. Pinakatanyag na istilo sa Vancouver para sa 2024–2026. Gumagana sa moderno, transisyonal, at tradisyonal na mga kusina. Presyo: batayang gastos."
+      },
+      "slab": {
+        "title": "Slab / Flat Panel",
+        "description": "Minimalist na flat-front na pinto. Napakasikat sa mga kontemporaryong Vancouver condo at modernong mga tahanan. Walang profile o detalye — purong ibabaw. Maaaring maging veneer o solid wood."
+      },
+      "inset": {
+        "title": "Inset",
+        "description": "Ang mga pinto ay nakaupo sa loob ng frame ng cabinet. Classic inset construction sa mga high-end na custom na cabinet. Mas mahal dahil sa kinakailangang katumpakan ng hardware. Klasiko, walang hanggang aesthetic."
+      },
+      "raised": {
+        "title": "Itinaas na Panel",
+        "description": "Tradisyunal na nakataas na center panel na may pandekorasyon na profile. Karaniwan sa heritage home renovations. Mas mataas na gastos dahil sa mas kumplikadong machining."
+      }
+    },
+    "materials": {
+      "title": "Mga Materyales sa Gabinete",
+      "subtitle": "Kung ano ang ginawa ng iyong mga cabinet ay nakakaapekto sa tibay, hitsura, at presyo",
+      "thermofoil": {
+        "title": "Thermofoil / Laminate",
+        "priceRange": "$80 – $180/linear ft",
+        "description": "Vinyl film na heat-welded sa MDF. Abot-kaya, makinis na ibabaw, available sa maraming kulay. Mahilig magbalat sa mga kapaligiran na may mataas na kahalumigmigan (malapit sa mga dishwasher o cooktop). Pinakamahusay para sa mga rental property o mga update sa badyet."
+      },
+      "solidWood": {
+        "title": "Solid Wood",
+        "priceRange": "$250 – $600/linear ft",
+        "description": "Maple, oak, cherry, walnut, at iba pang hardwood. Ang pinaka-matibay na opsyon — maaaring i-sanded at refinished nang maraming beses. Natural na butil ng kahoy. Pinakamamahal na kategorya. Madaling maapektuhan ng mga pagbabago sa halumigmig sa klima ng Vancouver."
+      },
+      "mdf": {
+        "title": "MDF (Medium Density Fiberboard)",
+        "priceRange": "$120 – $280/linear ft",
+        "description": "Ininhinyero na kahoy na may makinis, pare-parehong ibabaw. Napakahusay na kumuha ng pintura — perpekto para sa mga pininturahan na kusina sa anumang kulay. Mas matatag kaysa solid wood sa kahalumigmigan. Hindi maaaring refinished, ngunit tumatagal ng isang perpektong painted finish."
+      },
+      "plywood": {
+        "title": "Mga Kahon ng Plywood",
+        "priceRange": "$180 – $400/linear ft kabuuan",
+        "description": "Hindi isang istilo ng pinto — isang materyal sa pagtatayo ng kahon. Ang mga purong plywood na kahon (walang particleboard) ang premium na pamantayan para sa mga kahon ng cabinet. Mas mabigat, mas malakas, at mas lumalaban sa moisture kaysa particleboard. Karamihan sa mga custom at high-end na semi-custom na cabinet ay gumagamit ng mga plywood box."
+      }
+    },
+    "countertops": {
+      "title": "Mga Gastos sa Pagpapares sa Countertop",
+      "subtitle": "Ano ang gagastusin mo sa mga countertop kapag gumagawa ng cabinet work",
+      "laminate": {
+        "title": "Laminate",
+        "priceRange": "$20 – $50/sq ft na naka-install",
+        "description": "Opsyon sa badyet. Post-form laminate sa particleboard. Mga limitadong profile sa gilid. Pinakamahusay kapag ang badyet ang pangunahing hadlang."
+      },
+      "quartz": {
+        "title": "Kuwarts",
+        "priceRange": "$60 – $130/sq ft na naka-install",
+        "description": "Pinakatanyag na countertop sa Vancouver. Hindi buhaghag, walang maintenance, pare-pareho ang hitsura. Mga tatak tulad ng Caesarstone, Silestone, at Cambria. Pares sa anumang istilo ng cabinet."
+      },
+      "granite": {
+        "title": "Granite",
+        "priceRange": "$70 – $180/sq ft na naka-install",
+        "description": "Natural na bato na may kakaibang ugat. Ang bawat slab ay one-of-a-kind. Nangangailangan ng taunang pagbubuklod. Mas maraming karakter kaysa sa kuwarts ngunit mas mataas na pagpapanatili."
+      },
+      "solidSurface": {
+        "title": "Solid Surface (Corian)",
+        "priceRange": "$70 – $130/sq ft na naka-install",
+        "description": "Walang putol na pag-install, naaayos, maraming mga pagpipilian sa kulay. Hindi gaanong lumalaban sa init kaysa sa bato ngunit ganap na hindi buhaghag. Mabuti para sa mga kontemporaryong disenyo."
+      }
+    },
+    "breakdown": {
+      "title": "Buong Paghahati-hati ng Gastos: $20,000 Kitchen Cabinet Reno",
+      "subtitle": "Kung saan napupunta ang badyet sa isang tipikal na pagbabago sa cabinet ng Vancouver",
+      "cabinets": {
+        "title": "Mga kabinet (mga kahon + mga pinto)",
+        "description": "35 linear feet ng mga semi-custom na maple cabinet na may mga kahon ng plywood",
+        "range": "$7,000 – $9,000"
+      },
+      "countertops": {
+        "title": "Mga countertop",
+        "description": "30 sq ft ng mid-range na quartz na may eased edge",
+        "range": "$2,400 – $3,200"
+      },
+      "hardware": {
+        "title": "Hardware",
+        "description": "Soft-close na mga bisagra, full-extension na drawer slide, pull-out, knobs/levers",
+        "range": "$800 – $1,500"
+      },
+      "labour": {
+        "title": "Paggawa sa Pag-install",
+        "description": "Demolisyon, pag-install, pagdiskonekta/muling pagkonekta ng tubo, pagtatapos",
+        "range": "$3,000 – $6,000"
+      },
+      "misc": {
+        "title": "Mga Pahintulot, Pagtapon, Misc",
+        "description": "Permit (kung kinakailangan), lumang pagtatapon ng cabinet, pansamantalang pag-setup sa kusina",
+        "range": "$500 – $1,500"
+      }
+    },
+    "vsReplace": {
+      "title": "Refinish o Palitan?",
+      "subtitle": "Ang pangunahing desisyon para sa bawat pagsasaayos ng cabinet",
+      "refinish": {
+        "title": "I-refinish / Repaint ang Umiiral",
+        "cost": "$3,000 – $8,000",
+        "refinishPros": "50–70% na mas mura kaysa sa kapalit. Nakumpleto sa loob ng 3-5 araw. Walang posibleng pagbabago sa layout. Walang pinsala sa mga umiiral na kahon.",
+        "refinishCons": "Gumagana lamang kung ang mga kahon ay structurally sound. Walang pagbabago sa layout. Parehong footprint at configuration ng storage."
+      },
+      "replace": {
+        "title": "Buong Kapalit ng Gabinete",
+        "cost": "$12,000 – $45,000+",
+        "replacePros": "Kumpletuhin ang muling pagdidisenyo ng layout. Mga modernong solusyon sa imbakan. Mga bagong kahon at pinto. Pinakamahabang buhay.",
+        "replaceCons": "Pinaka mahal. 4-8 linggo pagkagambala. Nangangailangan ng tubero/electrician para sa pagdiskonekta ng appliance."
+      }
+    },
+    "tips": {
+      "title": "Mga Tip sa Pagtitipid para sa Cabinet Renovations",
+      "tip1": {
+        "title": "Panatilihin ang Parehong Layout",
+        "description": "Ang paglilipat ng mga cabinet — paglipat ng mga lokasyon ng lababo, kalan, o refrigerator — ay nagdaragdag ng $3,000–$8,000 sa pagtutubero at mga gastos sa kuryente. Ang pagpapanatili sa parehong layout ay nangangahulugang walang mga bagong rough-in at mas mabilis na pag-install."
+      },
+      "tip2": {
+        "title": "Refinish Sa halip na Palitan ang mga Kahon",
+        "description": "Kung solid ang iyong mga cabinet box at gumagana ang iyong layout, ang muling pagpipinta o pagpipinta ng mga kasalukuyang kahon at pinto ay makakatipid ng $8,000–$20,000 kumpara sa buong pagpapalit. Ang mga bagong pinto sa mga kasalukuyang kahon ay naghahatid din ng isang ganap na bagong hitsura sa isang bahagi ng buong-cabinet na gastos."
+      },
+      "tip3": {
+        "title": "Pumili ng HDF/MDF para sa mga Kusina na Pinintahan",
+        "description": "Kung gusto mo ng pininturahan na kusina (puti, kulay abo, o bold na kulay), ang MDF o HDF na pinto ay talagang mas mahusay kaysa solid wood — walang butil na makikita sa pintura, mas makinis na finish, at mas matatag sa kahalumigmigan ng Vancouver. Ang mga pininturahan na solid wood cabinet sa Vancouver ay kadalasang nagkakaroon ng mga bitak ng hairline sa mga joints sa loob ng 2–3 taon."
+      },
+      "tip4": {
+        "title": "Hiwalay na Pinagmulan ng Hardware",
+        "description": "Ang mga cabinet showroom ay nagmamarka ng hardware 2–3x kaysa sa retail. Bumili ng soft-close na bisagra, drawer slide, at pull mula sa mga wholesale na supplier (Rona Commercial, Olympia Tile, o Lee Valley) at ipasya sa iyong installer ang mga ito. Makatipid ng $500–$1,500 sa hardware para sa karaniwang kusina."
+      }
+    },
+    "related": {
+      "title": "Mag-explore ng Higit pang Mga Gabay sa Pagkukumpuni",
+      "kitchenGuide": "Gabay sa Gastos sa Pagkukumpuni ng Kusina",
+      "allGuides": "Lahat ng Gabay sa Gastos"
+    },
+    "cta": {
+      "heading": "Handa nang Pag-usapan ang Mga Kabinet ng Kusina?",
+      "subtitle": "Kumuha ng detalyadong pagtatantya sa pagsasaayos ng cabinet para sa iyong tahanan sa Vancouver. Nag-aalok kami ng mga libreng konsultasyon sa bahay na may mga quote na walang obligasyon."
+    },
+    "faq": {
+      "q1": "Magkano ang refinishing ng kitchen cabinet sa Vancouver?",
+      "a1": "Ang refinishing ng cabinet sa kusina sa Vancouver ay nagkakahalaga ng $3,000–$8,000 depende sa laki ng cabinet at uri ng pagtatapos. Ang pag-spray-painting sa mga kasalukuyang pinto at harap ng drawer (ang pinakakaraniwang paraan) ay nagkakahalaga ng $4,000–$7,000 para sa karaniwang kusina. Ang vinyl wrap o peel-and-stick veneer sa mga kasalukuyang pinto ay nagkakahalaga ng $3,000–$5,000. Ang buong refinishing kasama ang mga box frame, interior, at bagong hardware ay nagdaragdag ng $1,000–$2,000. Ang pangunahing kinakailangan: ang mga kasalukuyang cabinet box ay dapat na maayos sa istruktura, walang moisture, at walang warping o delamination.",
+      "q2": "Ano ang gastos sa bawat linear foot para sa mga cabinet sa kusina sa Vancouver?",
+      "a2": "Ang mga gastos sa kitchen cabinet sa bawat linear foot sa Vancouver (2026) ay: mga stock cabinet na $80–$200/linear ft, semi-custom na $200–$400/linear ft, at custom na $400–$800+/linear ft. Ang karaniwang kusina ng Vancouver ay may 30–40 linear na talampakan ng mga cabinet (pinagsamang itaas at ibaba). Sa semi-custom na mid-range na pagpepresyo na $300/linear ft, ang 35-foot na kusina ay nagkakahalaga ng humigit-kumulang $10,500 para sa mga cabinet lang — bago ang mga countertop, hardware, o pag-install.",
+      "q3": "Sulit ba ang pag-refinishing ng mga cabinet sa kusina o dapat ko bang palitan ang mga ito?",
+      "a3": "I-refine kung: ang iyong mga cabinet box ay maayos sa istruktura, ang iyong kasalukuyang layout ay gumagana para sa iyong sambahayan, gusto mong makatipid ng 50–70% kumpara sa pagpapalit, at masaya ka sa iyong kasalukuyang configuration ng storage. Palitan kung: ang mga kahon ng cabinet ay nasira ng tubig, nagdelaminate, o naka-warped, gusto mong baguhin ang layout ng kusina, ang iyong kasalukuyang mga cabinet ay higit sa 20 taong gulang, o gusto mo ng kakaibang estetika ng kusina na hindi makakamit ng refinishing (hal. paglipat mula sa frameless patungo sa full-overlay o pagdaragdag ng isla).",
+      "q4": "Gaano katagal ang pagkukumpuni ng kitchen cabinet sa Vancouver?",
+      "a4": "Ang refinishing ng cabinet ay tumatagal ng 3–5 araw. Ang refacing ng cabinet ay tumatagal ng 5-7 araw. Ang buong pagpapalit ng cabinet ay tumatagal ng 4–8 linggo: 2–3 linggo para sa paggawa ng cabinet, 1 linggo para sa demolisyon, 1–3 linggo para sa pag-install, kasama ang countertop templating at pag-install (karaniwang 1–2 linggo). Salik sa oras ng pagpoproseso ng permit kung may kinalaman sa pagtutubero o mga pagpapalit ng kuryente — magdagdag ng 2–4 na linggo sa Vancouver, 1–2 linggo sa Surrey o Burnaby.",
+      "q5": "Ano ang pinakamagandang materyal para sa mga cabinet sa kusina sa klima ng Vancouver?",
+      "a5": "Para sa mahalumigmig na klima ng Vancouver, ang pinakamagandang materyal sa cabinet box ay purong playwud (hindi particleboard) — mas mahusay itong humahawak ng moisture at hindi gaanong madaling mamaga o matanggal sa paglipas ng panahon. Para sa mga cabinet na pininturahan, ang mga pintuan ng HDF o MDF ay talagang mas gusto kaysa sa solid wood — mayroon silang mas makinis, mas pare-parehong ibabaw para sa pintura at mas matatag sa dimensional habang nagbabago ang halumigmig. Para sa mga wood-grain finish, ang solid na maple o cherry na may conversion varnish finish ay matibay. Iwasan ang thermofoil (vinyl-wrapped) cabinet na malapit sa mga dishwasher — ang init at halumigmig ay nagdudulot ng pagbabalat sa mga tahanan ng Vancouver.",
+      "q6": "Kailangan ko ba ng permit para palitan ang mga cabinet sa kusina sa Vancouver?",
+      "a6": "Walang building permit ang kailangan para sa pagpapalit ng cosmetic cabinet — pag-alis ng mga lumang cabinet at pag-install ng mga bago sa parehong mga lokasyon nang hindi binabago ang plumbing o electrical. Kinakailangan ang permiso sa pagtutubero kung ililipat mo ang lababo, makinang panghugas, o anumang kagamitan sa pagtutubero - kahit na ang paglipat ng lababo na 6 na pulgada sa kabila ng counter ay nangangailangan ng permiso sa pagtutubero. Kinakailangan ang electrical permit para sa anumang bagong circuit, panel upgrade, o hardwired na pagbabago ng appliance. Palaging suriin sa iyong munisipalidad — ang mga heritage property sa Vancouver ay maaaring may mga karagdagang kinakailangan para sa anumang mga pagbabago sa kusina.",
+      "q7": "Magkano ang idinaragdag ng soft-close na mga bisagra at drawer slide sa halaga ng cabinet?",
+      "a7": "Ang mga soft-close na bisagra ay nagdaragdag ng humigit-kumulang $8–$15 bawat pinto sa halaga ng hardware. Para sa 35-pinto na kusina na $280–$525 sa karagdagang gastos sa hardware — nagkakahalaga ng bawat dolyar dahil pinipigilan nito ang paghampas at pinahaba ang buhay ng cabinet. Ang full-extension na soft-close drawer slide ay nagdaragdag ng $20–$40 bawat drawer. Sa isang 10-drawer na kusina na $200–$400. Karamihan sa mga custom at semi-custom na cabinet quotes ay kinabibilangan ng soft-close bilang pamantayan; Ang mga budget stock cabinet ay kadalasang nakalista ang mga ito bilang isang upgrade.",
+      "q8": "Dapat ko bang gawin ang mga cabinet at countertop sa parehong oras?",
+      "a8": "Oo — laging magkasama ang mga cabinet at countertop. Nangyayari ang countertop templating pagkatapos mai-install ang mga cabinet (sinusukat ng fabricator ang eksaktong sukat ng cabinet kapag nasa huling posisyon na ang mga cabinet). Kung gagawa ka ng mga cabinet ngayon at mga countertop sa ibang pagkakataon, nagbabayad ka ng dalawang magkahiwalay na pagpapakilos sa pag-install at dalawang hanay ng mga bayarin sa kontratista. Kung pinipilit ng iyong badyet ang isang pagpipilian, unahin ang mga cabinet — maaari kang mabuhay nang walang mga countertop sa loob ng ilang linggo na may pansamantalang mga hakbang, ngunit ang pamumuhay nang walang mga cabinet sa kusina ay hindi praktikal."
+    }
+  }
+}

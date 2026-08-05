@@ -1,0 +1,197 @@
+{
+  "kitchenCabinet": {
+    "breadcrumb": "Rénovation d'armoires de cuisine",
+    "hero": {
+      "title": "Coût de rénovation d'armoires de cuisine Vancouver 2026 : finition de stock, sur mesure et d'armoires",
+      "subtitle": "Combien coûte la rénovation d’armoires de cuisine à Vancouver? Les coûts de rénovation d'armoires à Vancouver varient de 3 000 $ pour la finition à 45 000 $ et plus pour le remplacement complet d'armoires sur mesure. Ce guide couvre toutes les options – finition, refaçage et remplacement complet – avec des prix réels 2026 pour les armoires d'origine, semi-personnalisées et personnalisées, les styles de portes, les matériaux et ce qui détermine le coût final."
+    },
+    "stats": {
+      "avgCost": "Moy. Cabinet Réno",
+      "avgCostValue": "$12,000",
+      "range": "Gamme de prix",
+      "rangeValue": "3 000 $ – 45 000 $ +",
+      "linearFoot": "Par pied linéaire",
+      "linearFootValue": "150 $ – 600 $/pied",
+      "timeline": "Chronologie typique",
+      "timelineValue": "3 jours – 6 semaines"
+    },
+    "cabinetTypes": {
+      "title": "Types d'armoires : stock, semi-personnalisée et personnalisée",
+      "subtitle": "Trois catégories d'armoires avec des prix très différents",
+      "stock": {
+        "title": "Armoires de stock",
+        "price": "80 $ – 200 $/pied linéaire",
+        "description": "Préfabriqué dans des tailles et finitions standard. Disponible immédiatement dans les magasins de rénovation domiciliaire ou dans les salles d’exposition de cuisines. Personnalisation limitée : vous choisissez parmi les styles de porte, les couleurs et la quincaillerie existants. Idéal pour les rénovations économiques où les dimensions standard s'adaptent à l'aménagement de votre cuisine. Livraison la plus rapide : 1 à 2 semaines."
+      },
+      "semiCustom": {
+        "title": "Armoires semi-personnalisées",
+        "price": "200 $ – 400 $/pied linéaire",
+        "description": "Fabriqué sur commande avec quelques options de personnalisation : largeurs personnalisées, solutions de rangement spécialisées, finitions et matériaux spécifiques. Vous travaillez au sein de la gamme de produits d'un fabricant, mais pouvez adapter les dimensions et ajouter des fonctionnalités telles que des organisateurs coulissants, des étagères à épices et des séparateurs de plateaux. Délai : 3 à 5 semaines. Meilleur rapport qualité-prix pour la plupart des propriétaires de Vancouver qui mettent à niveau leur stock."
+      },
+      "custom": {
+        "title": "Armoires personnalisées",
+        "price": "400 $ – 800 $+/pied linéaire",
+        "description": "Construit selon les spécifications exactes des dimensions et du design uniques de votre cuisine. Personnalisation complète des matériaux, des finitions, du matériel et des fonctionnalités. Aucun compromis sur la disposition : chaque millimètre est optimisé pour votre espace. Délai : 6 à 10 semaines. Idéal pour les aménagements de cuisine inhabituels, les projets de conception haut de gamme ou lorsque vous avez besoin d'un look spécifique que les tailles standard ne peuvent pas obtenir."
+      }
+    },
+    "doorStyles": {
+      "title": "Styles de portes d'armoires",
+      "subtitle": "Le profil visuel de vos armoires détermine à la fois le coût et l’esthétique",
+      "shaker": {
+        "title": "Shaker",
+        "description": "Conception épurée de panneaux encastrés. Style le plus populaire à Vancouver pour 2024-2026. Fonctionne dans les cuisines modernes, transitionnelles et traditionnelles. Prix : coût de base."
+      },
+      "slab": {
+        "title": "Dalle / Panneau Plat",
+        "description": "Portes minimalistes à façade plate. Très populaire dans les condos contemporains de Vancouver et les maisons modernes. Aucun profil ni détail – une surface pure. Peut être en placage ou en bois massif."
+      },
+      "inset": {
+        "title": "Encart",
+        "description": "Les portes se trouvent à l’intérieur du cadre de l’armoire. Construction encastrée classique sur des armoires personnalisées haut de gamme. Plus cher en raison du matériel de précision requis. Esthétique classique et intemporelle."
+      },
+      "raised": {
+        "title": "Panneau surélevé",
+        "description": "Panneau central surélevé traditionnel avec profil décoratif. Courant dans les rénovations de maisons patrimoniales. Coût plus élevé en raison d’un usinage plus complexe."
+      }
+    },
+    "materials": {
+      "title": "Matériaux d'armoire",
+      "subtitle": "La composition de vos armoires affecte la durabilité, l’apparence et le prix",
+      "thermofoil": {
+        "title": "Thermoplastique / Stratifié",
+        "priceRange": "80 $ – 180 $/pied linéaire",
+        "description": "Film vinyle thermosoudé sur MDF. Surface lisse et abordable, disponible dans de nombreuses couleurs. Sujet au pelage dans les environnements très humides (à proximité de lave-vaisselle ou de tables de cuisson). Idéal pour les propriétés locatives ou les mises à jour budgétaires."
+      },
+      "solidWood": {
+        "title": "Bois massif",
+        "priceRange": "250 $ – 600 $/pied linéaire",
+        "description": "Érable, chêne, cerisier, noyer et autres bois durs. Option la plus durable : peut être poncée et remise en état plusieurs fois. Grain de bois naturel. Catégorie la plus chère. Sensible aux changements d’humidité dans le climat de Vancouver."
+      },
+      "mdf": {
+        "title": "MDF (panneaux de fibres de densité moyenne)",
+        "priceRange": "120 $ – 280 $/pied linéaire",
+        "description": "Bois d'ingénierie à surface lisse et uniforme. Prend extrêmement bien la peinture – idéal pour les cuisines peintes de n’importe quelle couleur. Plus stable que le bois massif à l'humidité. Ne peut pas être remis en état, mais prend une finition peinte parfaite."
+      },
+      "plywood": {
+        "title": "Boîtes en contreplaqué",
+        "priceRange": "180 $ – 400 $/pied linéaire total",
+        "description": "Ce n'est pas un style de porte, mais un matériau de construction en forme de boîte. Les boîtes en contreplaqué pur (sans panneaux de particules) constituent la norme haut de gamme pour les boîtes d'armoires. Plus lourd, plus solide et plus résistant à l’humidité que les panneaux de particules. La plupart des armoires personnalisées et semi-personnalisées haut de gamme utilisent des boîtes en contreplaqué."
+      }
+    },
+    "countertops": {
+      "title": "Coûts d’appariement des comptoirs",
+      "subtitle": "Ce que vous dépenserez en comptoirs lorsque vous effectuez des travaux d'ébénisterie",
+      "laminate": {
+        "title": "Stratifié",
+        "priceRange": "20 $ – 50 $/pied carré installé",
+        "description": "Option budgétaire. Stratifié postformé sur panneaux de particules. Profils de bord limités. Idéal lorsque le budget est la principale contrainte."
+      },
+      "quartz": {
+        "title": "Quartz",
+        "priceRange": "60 $ – 130 $/pied carré installé",
+        "description": "Comptoir le plus populaire à Vancouver. Aspect non poreux, sans entretien et homogène. Des marques comme Caesarstone, Silestone et Cambria. Se marie avec n’importe quel style d’armoire."
+      },
+      "granite": {
+        "title": "Granit",
+        "priceRange": "70 $ – 180 $/pied carré installé",
+        "description": "Pierre naturelle au veinage unique. Chaque dalle est unique. Nécessite un scellement annuel. Plus de caractère que le quartz mais entretien plus élevé."
+      },
+      "solidSurface": {
+        "title": "Surface solide (Corian)",
+        "priceRange": "70 $ – 130 $/pied carré installé",
+        "description": "Installation transparente, réparable, nombreuses options de couleurs. Moins résistant à la chaleur que la pierre mais totalement non poreux. Idéal pour les designs contemporains."
+      }
+    },
+    "breakdown": {
+      "title": "Répartition complète des coûts : 20 000 $ Rénovation d'armoires de cuisine",
+      "subtitle": "Où va le budget dans une rénovation d'armoire typique de Vancouver",
+      "cabinets": {
+        "title": "Armoires (boîtes + portes)",
+        "description": "35 pieds linéaires d'armoires semi-personnalisées en érable avec boîtes en contreplaqué",
+        "range": "$7,000 – $9,000"
+      },
+      "countertops": {
+        "title": "Comptoirs",
+        "description": "30 pieds carrés de quartz de milieu de gamme avec bord adouci",
+        "range": "$2,400 – $3,200"
+      },
+      "hardware": {
+        "title": "Matériel",
+        "description": "Charnières à fermeture douce, glissières de tiroir à extension complète, coulissants, boutons/leviers",
+        "range": "$800 – $1,500"
+      },
+      "labour": {
+        "title": "Main d'œuvre d'installation",
+        "description": "Démolition, installation, débranchement/rebranchement de plomberie, finition",
+        "range": "$3,000 – $6,000"
+      },
+      "misc": {
+        "title": "Permis, élimination, divers",
+        "description": "Permis (si nécessaire), élimination des anciennes armoires, installation temporaire de la cuisine",
+        "range": "$500 – $1,500"
+      }
+    },
+    "vsReplace": {
+      "title": "Rénover ou remplacer ?",
+      "subtitle": "La décision clé pour chaque rénovation d’armoire",
+      "refinish": {
+        "title": "Rénover / Repeindre l'Existant",
+        "cost": "$3,000 – $8,000",
+        "refinishPros": "50 à 70 % moins cher que le remplacement. Terminé en 3 à 5 jours. Aucune modification de mise en page possible. Aucun dommage aux boîtes existantes.",
+        "refinishCons": "Ne fonctionne que si les boîtes sont structurellement solides. Aucun changement de mise en page. Même encombrement et configuration de stockage."
+      },
+      "replace": {
+        "title": "Remplacement complet de l'armoire",
+        "cost": "12 000 $ – 45 000 $+",
+        "replacePros": "Refonte complète de la mise en page. Solutions de stockage modernes. Nouvelles boîtes et portes. Durée de vie la plus longue.",
+        "replaceCons": "Plus cher. Interruption de 4 à 8 semaines. Nécessite un plombier/électricien pour la déconnexion de l’appareil."
+      }
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l’argent pour la rénovation d’armoires",
+      "tip1": {
+        "title": "Gardez la même mise en page",
+        "description": "Le déplacement d'armoires (déplacement de l'évier, de la cuisinière ou du réfrigérateur) ajoute 3 000 à 8 000 dollars en frais de plomberie et d'électricité. Garder la même disposition signifie qu’il n’y a pas de nouveaux éléments bruts et une installation plus rapide."
+      },
+      "tip2": {
+        "title": "Rénover au lieu de remplacer les boîtes",
+        "description": "Si les caissons de vos armoires sont solides et que votre aménagement fonctionne, la finition ou la repeinture des caissons et des portes existants peut économiser entre 8 000 et 20 000 $ par rapport à un remplacement complet. Les nouvelles portes des boîtes existantes offrent également un tout nouveau look pour une fraction du coût complet de l'armoire."
+      },
+      "tip3": {
+        "title": "Choisissez HDF/MDF pour les cuisines peintes",
+        "description": "Si vous souhaitez une cuisine peinte (blanc, gris ou couleur vive), la construction de portes en MDF ou en HDF est en fait meilleure que le bois massif : aucun grain visible à travers la peinture, une finition plus lisse et plus stable dans l'humidité de Vancouver. Les armoires en bois massif peintes à Vancouver développent souvent des fissures capillaires au niveau des joints en 2 à 3 ans."
+      },
+      "tip4": {
+        "title": "Matériel source séparément",
+        "description": "Les salles d'exposition d'armoires majorent le matériel de 2 à 3 fois par rapport au prix de détail. Achetez des charnières à fermeture douce, des glissières de tiroir et des poignées auprès de fournisseurs en gros (Rona Commercial, Olympia Tile ou Lee Valley) et demandez à votre installateur de les installer. Économisez entre 500 $ et 1 500 $ sur le matériel pour une cuisine typique."
+      }
+    },
+    "related": {
+      "title": "Explorez plus de guides de rénovation",
+      "kitchenGuide": "Guide des coûts de rénovation de cuisine",
+      "allGuides": "Tous les guides de coûts"
+    },
+    "cta": {
+      "heading": "Prêt à parler d’armoires de cuisine ?",
+      "subtitle": "Obtenez une estimation détaillée de la rénovation des armoires de votre maison de Vancouver. Nous proposons des consultations gratuites à domicile avec des devis sans engagement."
+    },
+    "faq": {
+      "q1": "Combien coûte la finition d’armoires de cuisine à Vancouver?",
+      "a1": "La finition des armoires de cuisine à Vancouver coûte entre 3 000 et 8 000 $ selon la taille de l'armoire et le type de finition. Peindre au pistolet les portes et façades de tiroirs existantes (la méthode la plus courante) coûte entre 4 000 et 7 000 dollars pour une cuisine standard. Le revêtement en vinyle ou le placage pelable et collant sur les portes existantes coûte entre 3 000 et 5 000 $. La finition complète, y compris les cadres de boîte, l'intérieur et le nouveau matériel, ajoute 1 000 à 2 000 $. L'exigence clé : les caissons d'armoires existants doivent être structurellement solides, exempts d'humidité et exempts de déformation ou de délaminage.",
+      "q2": "Quel est le coût au pied linéaire des armoires de cuisine à Vancouver?",
+      "a2": "Les coûts des armoires de cuisine par pied linéaire à Vancouver (2026) sont les suivants : armoires de série de 80 $ à 200 $/pied linéaire, semi-personnalisées de 200 $ à 400 $/pied linéaire et personnalisées de 400 à 800 $+/pied linéaire. Une cuisine typique de Vancouver comprend 30 à 40 pieds linéaires d'armoires (supérieures et inférieures combinées). Au prix semi-personnalisé de milieu de gamme de 300 $/pied linéaire, une cuisine de 35 pieds coûte environ 10 500 $ pour les armoires seules, avant les comptoirs, la quincaillerie ou l'installation.",
+      "q3": "Vaut-il la peine de remettre à neuf les armoires de cuisine ou dois-je les remplacer ?",
+      "a3": "Rénovez si : vos caissons d'armoires sont structurellement solides, votre disposition actuelle convient à votre foyer, vous souhaitez économiser 50 à 70 % par rapport au remplacement et vous êtes satisfait de votre configuration de stockage actuelle. Remplacez-les si : les caissons d'armoires sont endommagés par l'eau, délaminés ou déformés, vous souhaitez modifier la disposition de la cuisine, vos armoires actuelles ont plus de 20 ans ou vous souhaitez une esthétique de cuisine fondamentalement différente que la finition ne peut pas obtenir (par exemple, passer d'un cadre sans cadre à un revêtement complet ou ajouter un îlot).",
+      "q4": "Combien de temps prend la rénovation d'armoires de cuisine à Vancouver ?",
+      "a4": "La finition des armoires prend 3 à 5 jours. Le refaçage du cabinet prend 5 à 7 jours. Le remplacement complet de l'armoire prend 4 à 8 semaines : 2 à 3 semaines pour la fabrication de l'armoire, 1 semaine pour la démolition, 1 à 3 semaines pour l'installation, plus la création de modèles et l'installation du comptoir (généralement 1 à 2 semaines). Tenez compte du temps de traitement du permis si des changements de plomberie ou d’électricité sont impliqués – ajoutez 2 à 4 semaines à Vancouver, 1 à 2 semaines à Surrey ou Burnaby.",
+      "q5": "Quel est le meilleur matériau pour les armoires de cuisine dans le climat de Vancouver ?",
+      "a5": "Pour le climat humide de Vancouver, le meilleur matériau pour les caissons d'armoires est le contreplaqué pur (et non les panneaux de particules) : il gère mieux l'humidité et est moins sujet au gonflement ou au délaminage au fil du temps. Pour les armoires peintes, les portes en HDF ou MDF sont en fait préférables au bois massif : elles ont une surface plus lisse et plus uniforme pour la peinture et sont plus stables dimensionnellement en fonction des fluctuations de l'humidité. Pour les finitions en grain de bois, l'érable massif ou le cerisier avec une finition vernis de conversion résiste bien. Évitez les armoires en thermoplastique (enveloppées de vinyle) à proximité des lave-vaisselle : la chaleur et l'humidité provoquent le pelage dans les maisons de Vancouver.",
+      "q6": "Ai-je besoin d'un permis pour remplacer les armoires de cuisine à Vancouver?",
+      "a6": "Aucun permis de construire n'est requis pour le remplacement des armoires à cosmétiques : retirer les anciennes armoires et en installer de nouvelles aux mêmes endroits sans changer la plomberie ou l'électricité. Un permis de plomberie est requis si vous déplacez l'évier, le lave-vaisselle ou tout autre appareil de plomberie. Même déplacer un évier de 6 pouces sur le comptoir nécessite un permis de plomberie. Un permis électrique est requis pour tout nouveau circuit, mise à niveau de panneau ou changement d'appareil câblé. Vérifiez toujours auprès de votre municipalité : les propriétés patrimoniales de Vancouver peuvent avoir des exigences supplémentaires pour toute modification de cuisine.",
+      "q7": "Dans quelle mesure les charnières à fermeture douce et les glissières de tiroir ajoutent-elles au coût de l'armoire ?",
+      "a7": "Les charnières à fermeture douce ajoutent environ 8 à 15 $ par porte en coût de quincaillerie. Pour une cuisine à 35 portes, cela représente un coût supplémentaire de 280 à 525 dollars – ce qui vaut chaque dollar car il empêche les claquements et prolonge la durée de vie des armoires. Les glissières de tiroir à fermeture douce à extension complète ajoutent 20 à 40 $ par tiroir. Pour une cuisine à 10 tiroirs, cela coûte entre 200 et 400 dollars. La plupart des devis d’armoires personnalisées et semi-personnalisées incluent la fermeture en douceur en standard ; les armoires de stock budgétaire les répertorient souvent comme une mise à niveau.",
+      "q8": "Dois-je faire des armoires et des comptoirs en même temps ?",
+      "a8": "Oui, faites toujours les armoires et les comptoirs ensemble. La création de modèles de comptoir a lieu après l'installation des armoires (le fabricant mesure les dimensions exactes des armoires une fois que les armoires sont dans leur position finale). Si vous fabriquez des armoires maintenant et des comptoirs plus tard, vous payez deux mobilisations d'installation distinctes et deux séries de frais d'entrepreneur. Si votre budget vous oblige à faire un choix, privilégiez les armoires : vous pouvez vivre sans comptoirs pendant quelques semaines avec des mesures temporaires, mais vivre sans armoires de cuisine n'est pas pratique."
+    }
+  }
+}

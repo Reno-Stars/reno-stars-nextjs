@@ -1,0 +1,217 @@
+{
+  "permit": {
+    "breadcrumb": "Permis de rénovation à Vancouver",
+    "hero": {
+      "title": "Permis de rénovation à Vancouver : ce qui nécessite un permis dans la région métropolitaine de Vancouver (2026)",
+      "description": "Avez-vous besoin d'un permis de construire pour votre rénovation à Vancouver, Burnaby, Richmond ou Surrey ? Ce guide couvre les exigences en matière de permis de construire en Colombie-Britannique, les rénovations qui nécessitent l'approbation provinciale ou municipale, la manière de présenter une demande, les délais et les frais typiques, ainsi que les projets de rénovation les plus courants nécessitant un permis - ainsi que ce qui se passe si vous sautez le processus de permis."
+    },
+    "stats": {
+      "buildingPermit": "Permis de construire",
+      "buildingPermitValue": "Requis pour les structures, les ajouts et les suites",
+      "plumbingPermit": "Permis de plomberie",
+      "plumbingPermitValue": "Requis pour la plomberie nouvelle ou déplacée",
+      "electricalPermit": "Permis électrique",
+      "electricalPermitValue": "Requis pour les nouveaux circuits ou les mises à niveau de panneaux",
+      "demoPermit": "Permis de démolition",
+      "demoPermitValue": "Nécessaire pour l’enlèvement de la structure"
+    },
+    "whenRequired": {
+      "title": "Quand un permis de rénovation est-il requis en Colombie-Britannique ?",
+      "subtitle": "Le code du bâtiment de la Colombie-Britannique et les règlements municipaux déterminent les exigences en matière de permis ; toutes les rénovations n'en ont pas besoin.",
+      "always": {
+        "title": "Nécessite toujours un permis",
+        "items": [
+          "Création ou légalisation d'un appartement au sous-sol",
+          "Travaux de structure : suppression ou modification de murs, de poutres ou de fondations",
+          "Ajout ou agrandissement de fenêtres et de portes extérieures",
+          "Ajouts de bâtiments (nouvelles pièces, vérandas, extensions de garage)",
+          "Construction de terrasse à plus de 24 pouces au-dessus du sol",
+          "Remplacement de toiture impliquant des changements structurels",
+          "Tout travail modifiant l'occupation ou l'usage du bâtiment",
+          "Création ou conversion de suites secondaires",
+          "Transformation d'un garage ou d'un abri d'auto en espace de vie"
+        ]
+      },
+      "sometimes": {
+        "title": "Peut nécessiter un permis",
+        "items": [
+          "Rénovations de salle de bain ou de cuisine – permis requis lors du déplacement de la plomberie",
+          "Finition d'un sous-sol non fini – dépend de l'intention de la suite et de la hauteur du plafond",
+          "L'installation de nouveaux circuits électriques — nécessite toujours un permis électrique",
+          "Réfection de la toiture – permis de construire non requis ; un permis d'électricité peut être nécessaire si l'énergie solaire est impliquée",
+          "Construction de clôtures – varie selon la municipalité et la hauteur",
+          "Murs de soutènement de plus de 4 pieds — permis de construire requis dans la plupart des municipalités",
+          "Modifications du système CVC – peuvent nécessiter des permis de construction et/ou de gaz"
+        ]
+      },
+      "never": {
+        "title": "Généralement aucun permis requis",
+        "items": [
+          "Peinture intérieure ou extérieure",
+          "Pose de revêtement de sol (bois franc, stratifié, carrelage)",
+          "Remplacement des comptoirs (sans changement de plomberie)",
+          "Finition ou repeinture d'armoires",
+          "Ajout d'étagères et de rangements intégrés",
+          "Changement des luminaires (robinets, toilettes, luminaires) sans détournement de plomberie",
+          "Aménagement paysager et plates-bandes",
+          "Réparation de terrasse (pas de reconstruction) à moins de 24 pouces au-dessus du sol"
+        ]
+      }
+    },
+    "municipalities": {
+      "title": "Exigences en matière de permis par la municipalité métropolitaine de Vancouver",
+      "subtitle": "Chaque ville a ses propres règlements en plus du Code du bâtiment de la Colombie-Britannique.",
+      "vancouver": {
+        "title": "Ville de Vancouver",
+        "description": "Vancouver possède certains des règlements de rénovation les plus détaillés de la Colombie-Britannique. Un permis de construire est requis pour tout travail de structure, création d'appartements, terrasse de plus de 24\", remplacement de fenêtres (maisons patrimoniales) et tout travail modifiant l'extérieur d'un bâtiment. Demande de plan électronique en ligne disponible pour la plupart des permis résidentiels. Délais de traitement : 2 à 6 semaines pour les résidences standard, plus longues pour les projets complexes.",
+        "fees": "Frais de permis de construire : 1 % de la valeur de construction déclarée (minimum 200 $). Frais supplémentaires pour permis de plomberie et d'électricité."
+      },
+      "burnaby": {
+        "title": "Ville de Burnaby",
+        "description": "Burnaby exige des permis de construire pour tous les travaux de structure, la création d'appartements et la construction de terrasses. La ville propose des consultations préalables à la candidature pour les projets complexes. Burnaby dispose de programmes incitatifs actifs pour la légalisation des suites secondaires.",
+        "fees": "Frais de permis de construire : 200 $ de frais fixes plus 10 $ par tranche de 1 000 $ de valeur de construction supérieure à 10 000 $. Minimum 200 $."
+      },
+      "richmond": {
+        "title": "Ville de Richmond",
+        "description": "Richmond exige des permis de construire pour les modifications structurelles, les ajouts et la création de logements. Le portail des permis en ligne de Richmond gère la plupart des demandes de permis résidentiels. Le traitement est généralement plus rapide qu’à Vancouver pour les projets résidentiels simples.",
+        "fees": "Frais de permis de construire : 200 $ de base plus 8 $ par 1 000 $ de valeur déclarée supérieure à 10 000 $."
+      },
+      "surrey": {
+        "title": "Ville de Surrey",
+        "description": "Surrey dispose d'un portail en ligne simplifié et d'un traitement relativement rapide pour les permis résidentiels standard. La création de suites, les modifications structurelles et les ajouts nécessitent tous un permis de construire. Le programme de logements secondaires de Surrey offre un soutien en matière de consultation préalable à la demande.",
+        "fees": "Frais de permis de bâtir : 150 $ de base plus 7 $ par 1 000 $ de valeur déclarée. Traitement accéléré disponible pour certains types de projets."
+      },
+      "coquitlam": {
+        "title": "Ville de Coquitlam",
+        "description": "Coquitlam exige des permis de construire pour tout travail de structure, création de suites et projets de terrasse plus importants. Des rencontres préalables à la demande sont disponibles et recommandées pour les rénovations complexes. Coquitlam traite la plupart des permis résidentiels en 3 à 4 semaines.",
+        "fees": "Frais de permis de construire : 200 $ de base plus 10 $ par 1 000 $ de valeur de construction. Minimum 200 $."
+      }
+    },
+    "process": {
+      "title": "Comment demander un permis de rénovation dans la région métropolitaine de Vancouver",
+      "subtitle": "Étape par étape, de la pré-consultation à l'inspection finale",
+      "step1": {
+        "title": "Consultation préalable à la demande",
+        "description": "Pour les projets complexes (création de suites, modifications structurelles, ajouts), réservez une pré-consultation avec le service du bâtiment de votre municipalité avant de soumettre. Cela permet d'identifier les problèmes dès le début – restrictions de zonage, désignations patrimoniales ou règlements spéciaux – avant d'investir dans des dessins. La plupart des municipalités le proposent gratuitement ou pour une somme modique."
+      },
+      "step2": {
+        "title": "Embaucher un professionnel agréé",
+        "description": "Pour tout projet impliquant des modifications structurelles, des systèmes mécaniques ou des travaux électriques complexes, les municipalités de la Colombie-Britannique exigent qu'un professionnel agréé (RPPR) – généralement un ingénieur en structure ou un concepteur de bâtiment – ​​supervise les travaux et fournisse des dessins signés. Les rénovations esthétiques simples ne nécessitent pas l’intervention d’un architecte ou d’un ingénieur."
+      },
+      "step3": {
+        "title": "Préparer et soumettre des dessins",
+        "description": "Votre entrepreneur ou concepteur prépare des dessins à l'échelle : plan du site, plans d'étage, élévations, détails structurels et dessins mécaniques (plomberie/électricité/CVC). Soumettez votre demande via le portail en ligne de la municipalité (le plan électronique de Vancouver, Burnaby, Surrey et Richmond disposent tous de systèmes en ligne). Pour les propriétés patrimoniales à Vancouver, un examen par un comité de conception peut être requis avant l'approbation du permis."
+      },
+      "step4": {
+        "title": "Examen et approbation du permis",
+        "description": "La municipalité examine votre demande par rapport au Code du bâtiment de la Colombie-Britannique, aux règlements de zonage locaux et aux exigences en matière de permis d'aménagement. Les délais d'examen varient : 2 à 4 semaines pour les rénovations simples, 4 à 8 semaines pour les projets de structure ou d'appartements, 8 à 12 semaines pour les projets nécessitant un permis de patrimoine ou d'aménagement. Vous recevez l’approbation du permis avec un ensemble de dessins tamponnés – conservez-les sur place pendant la construction."
+      },
+      "step5": {
+        "title": "Construction et inspections",
+        "description": "Une fois autorisée, la construction continue. La municipalité procède à des inspections obligatoires à des étapes définies : le brut (charpente, plomberie, électricité avant fermeture des murs), l'isolation et l'occupation finale. Vous devez aviser la municipalité lorsque chaque étape est atteinte – les inspections ne peuvent être ignorées ou effectuées après la fermeture des murs. Les inspections échouées nécessitent une correction et une nouvelle inspection."
+      },
+      "step6": {
+        "title": "Inspection finale et occupation",
+        "description": "Une fois tous les travaux terminés, la municipalité procède à une inspection finale et délivre un certificat d'occupation (pour la création d'un appartement, un permis d'occupation distinct est requis). Pour les suites secondaires, c’est ce qui rend la suite légale. Conservez tous les dossiers de permis – vous en avez besoin lors de la vente de la maison, de la demande de permis de location ou du refinancement."
+      }
+    },
+    "costs": {
+      "title": "Frais et coûts des permis dans la région métropolitaine de Vancouver",
+      "subtitle": "Que budgétiser pour les permis dans différents types de projets",
+      "kitchen": {
+        "title": "Rénovation de cuisine",
+        "description": "Permis de construire non requis pour la rénovation d'une cuisine cosmétique. Si vous déplacez la plomberie ou les appareils à gaz : permis de plomberie (100 $ à 300 $) + permis de gaz (100 $ à 200 $) si cuisinière à gaz. Permis électrique pour les nouveaux circuits : 100 $ à 200 $. Total : 200 $ à 600 $."
+      },
+      "bathroom": {
+        "title": "Rénovation de salle de bain",
+        "description": "Permis de construire non requis pour les travaux esthétiques. Le déplacement des toilettes, des lavabos ou des douches nécessite un permis de plomberie (100 $ à 300 $). Les circuits électriques nouveaux ou améliorés nécessitent un permis électrique (100 $ à 200 $). Total : 200 $ à 500 $ si la plomberie est déplacée."
+      },
+      "basementSuite": {
+        "title": "Suite au sous-sol",
+        "description": "Permis de construction complet (1 % de la valeur de construction), permis de plomberie (200 $ à 400 $), permis d'électricité (200 $ à 400 $). Pour une conversion de suite de 95 000 $ : 950 $ pour le bâtiment + 300 $ pour la plomberie + 300 $ pour l'électricité = ~ 1 550 $ en permis, plus les éventuels frais de permis d'aménagement."
+      },
+      "deck": {
+        "title": "Pont de plus de 24 pouces",
+        "description": "Permis de construire requis. 200 $ à 500 $ pour un permis de terrasse selon la municipalité. Des dessins structurels peuvent être requis pour les terrasses plus grandes ou à plusieurs niveaux."
+      },
+      "addition": {
+        "title": "Agrandissement de maison",
+        "description": "Les frais de permis de construire s'élèvent à 1% de la valeur de construction déclarée. Pour un ajout de 150 000 $ : permis de construire de 1 500 $ plus frais de permis d'aménagement s'il y a lieu. Pré-consultation fortement recommandée."
+      }
+    },
+    "consequences": {
+      "title": "Que se passe-t-il si vous sautez le permis",
+      "subtitle": "Le travail non autorisé comporte de réels risques financiers et juridiques",
+      "items": [
+        {
+          "title": "Amendes",
+          "description": "Les municipalités peuvent imposer des amendes de 500 $ à 10 000 $ par jour pour toute construction non autorisée, selon l'infraction et la municipalité. Vancouver a certains des barèmes d'amendes les plus élevés de la Colombie-Britannique."
+        },
+        {
+          "title": "Inversion forcée",
+          "description": "La municipalité peut émettre un ordre d'arrêt des travaux ou d'annulation de travaux terminés, notamment la suppression d'agrandissements, le comblement de sous-sols ou la fermeture de pièces, aux frais du propriétaire."
+        },
+        {
+          "title": "Impossible de vendre la propriété",
+          "description": "Les travaux non autorisés doivent être divulgués sur les déclarations de propriété. Les inspecteurs en bâtiment de nombreux acheteurs signalent des travaux non autorisés, ce qui entraîne une renégociation ou un effondrement de la vente. Les prêteurs ne financeront pas les propriétés comportant des travaux structurels majeurs non autorisés."
+        },
+        {
+          "title": "Problèmes d'assurance",
+          "description": "La plupart des polices d'assurance habitation excluent la couverture des dommages causés par des travaux qui n'ont pas été effectués conformément au code, y compris les travaux non autorisés. Si une construction non autorisée provoque des dégâts des eaux, un incendie ou une défaillance structurelle, votre assureur peut refuser la réclamation."
+        },
+        {
+          "title": "Difficulté à obtenir de futurs permis",
+          "description": "Les travaux non autorisés qui ont été mal effectués peuvent devoir être exposés et refaits avant que de nouveaux permis puissent être délivrés pour des travaux adjacents. Cela ajoute du coût et de la complexité aux rénovations futures."
+        },
+        {
+          "title": "La suite ne peut pas être légalisée",
+          "description": "Si vous construisez un appartement au sous-sol non autorisé sans permis, vous ne pouvez pas obtenir de permis de location ni d'occupation légale. Cela signifie que vous ne pouvez pas le louer légalement et que la municipalité peut vous ordonner de cesser de le louer."
+        }
+      ]
+    },
+    "tips": {
+      "title": "Conseils pour économiser de l'argent pour le processus de permis",
+      "tip1": {
+        "title": "Utiliser les consultations préalables à la demande",
+        "description": "La plupart des municipalités de la région métropolitaine de Vancouver proposent des rendez-vous de pré-consultation gratuits ou à faible coût pour les projets complexes. Passer 30 minutes avec un inspecteur en bâtiment avant de la soumettre permet d'économiser des semaines de cycles de révision sur votre demande et d'éviter les rejets de permis qui coûtent du temps et de l'argent."
+      },
+      "tip2": {
+        "title": "Renseignez-vous sur le traitement accéléré",
+        "description": "Certaines municipalités (Vancouver, Surrey) proposent un traitement accéléré des permis moyennant des frais supplémentaires – cela en vaut la peine lorsque votre entrepreneur est sur place et que les coûts quotidiens s'accumulent. Des frais accélérés de 300 $ sur un travail de 95 000 $ constituent un investissement rentable."
+      },
+      "tip3": {
+        "title": "Regrouper les transactions dans une seule demande de permis",
+        "description": "Soumettez les permis de construction, de plomberie et d’électricité ensemble lorsque cela est possible – cela évite de multiples frais de demande et de multiples cycles d’examen. Le chef de projet de votre entrepreneur s'en charge généralement, mais confirmez que cela est en cours."
+      },
+      "tip4": {
+        "title": "Faites d'abord une demande pour les programmes d'incitation municipaux",
+        "description": "Burnaby et Surrey ont des programmes de subventions pour la légalisation des suites secondaires. Faites-en la demande avant de soumettre votre permis – certains nécessitent une approbation préalable avant le début de la construction. Une subvention de 5 000 à 10 000 $ équivaut à un délai de candidature de 20 minutes."
+      }
+    },
+    "related": {
+      "title": "Guides de rénovation connexes",
+      "basementSuite": "Guide des coûts de conversion d'une suite au sous-sol",
+      "kitchenGuide": "Guide des coûts de rénovation de cuisine",
+      "bathroomGuide": "Guide des coûts de rénovation de salle de bain",
+      "allGuides": "Tous les guides de coûts"
+    },
+    "cta": {
+      "heading": "Besoin d'aide pour naviguer dans le processus de permis ?",
+      "subtitle": "Reno Stars gère les demandes de permis dans le cadre de notre processus de rénovation complet. Parlez-nous de votre projet pour une consultation gratuite."
+    },
+    "faq": {
+      "q1": "Ai-je besoin d'un permis de construire pour une rénovation de cuisine à Vancouver?",
+      "a1": "Un permis de construire n'est pas requis pour les rénovations esthétiques de cuisine, comme repeindre les armoires, remplacer les comptoirs ou installer de nouveaux appareils sans changer l'emplacement du gaz ou de la plomberie. Vous avez besoin d'un permis de construire pour déplacer la plomberie de la cuisine (déplacer l'évier ou le lave-vaisselle de plus de quelques pieds), ajouter ou supprimer des murs ou modifier l'agencement de la cuisine d'une manière qui affecte les éléments structurels. Un permis de plomberie est requis chaque fois qu’une nouvelle plomberie est installée ou que la plomberie existante est déplacée – même les rénovations esthétiques qui déplacent l’évier ont besoin d’un permis de plomberie. Un permis électrique est requis pour tout nouveau circuit, mise à niveau de panneaux ou ajout d'appareils câblés comme des tables de cuisson.",
+      "q2": "Combien de temps faut-il pour obtenir un permis de rénovation à Vancouver ?",
+      "a2": "Les délais de traitement des permis varient selon la municipalité et la complexité du projet. À Vancouver, les permis de rénovation résidentielle simples prennent de 2 à 4 semaines ; la création de suites ou les projets structurels prennent 4 à 8 semaines. Burnaby et Coquitlam traitent généralement les permis résidentiels standard en 2 à 3 semaines. Surrey offre le traitement le plus rapide pour les projets standards : 1 à 2 semaines avec son portail en ligne. Les demandes de permis de patrimoine ou de développement ajoutent 4 à 8 semaines à tout projet à Vancouver ou Burnaby. Tenez toujours compte des délais de permis dans votre calendrier de construction avant de signer les accords avec les entrepreneurs.",
+      "q3": "Combien coûte un permis de construire dans la région métropolitaine de Vancouver ?",
+      "a3": "Les frais de permis de construire sont généralement facturés en pourcentage de la valeur de construction déclarée : Vancouver facture 1 % (minimum 200 $), Burnaby facture 200 $ forfaitaire plus 10 $ par tranche de 1 000 $ au-delà de 10 000 $, Richmond facture 200 $ forfaitaire plus 8 $ par 1 000 $ et Surrey facture 150 $ forfaitaire plus 7 $ par 1 000 $. Une rénovation de 100 000 $ coûte donc environ 1 000 $ en frais de permis de construire à Vancouver, ou 790 $ à Surrey. Les permis de plomberie et d’électricité ajoutent entre 100 $ et 400 $ chacun. Vérifiez toujours la grille tarifaire de votre municipalité, car elle est mise à jour chaque année.",
+      "q4": "Que se passe-t-il si je fais des travaux de rénovation sans permis en Colombie-Britannique ?",
+      "a4": "Les travaux non autorisés en Colombie-Britannique peuvent entraîner des ordres d'arrêt des travaux, des amendes de 500 $ à 10 000 $ par jour (Vancouver a les amendes les plus élevées de la région métropolitaine de Vancouver), le retrait forcé ou l'annulation des travaux non autorisés, l'incapacité de vendre la propriété sans divulguer les travaux non autorisés, le refus de réclamations d'assurance pour tout dommage lié aux travaux non autorisés et l'incapacité de louer légalement un appartement non autorisé. Le risque est particulièrement élevé pour les appartements en sous-sol : sans permis et certificat d'occupation, l'appartement ne peut pas être loué légalement et la municipalité peut émettre des arrêtés de cessation de location.",
+      "q5": "Puis-je obtenir un permis une fois les travaux terminés (permis rétroactif) ?",
+      "a5": "Certaines municipalités délivreront un permis rétrospectif si les travaux terminés sont conformes au code et ont été effectués conformément aux exigences du permis. Cependant, les permis rétrospectifs nécessitent les mêmes dessins, études techniques et inspections que les permis standard – et tout travail qui ne respecte pas le code doit être corrigé avant approbation. Le processus d'autorisation rétrospective est plus coûteux, prend plus de temps et n'est pas garanti. À Vancouver, les permis rétrospectifs pour les travaux en appartement sont particulièrement scrutés. La meilleure approche est toujours d'obtenir le permis avant de commencer les travaux.",
+      "q6": "Ai-je besoin d'un permis pour terminer mon sous-sol à Vancouver?",
+      "a6": "Aménager un sous-sol sans créer un appartement (uniquement pour un usage personnel et familial, sans entrée séparée, sans cuisine) ne nécessite pas de permis de construire dans la plupart des municipalités de la Colombie-Britannique – mais des permis d'électricité et parfois des permis de plomberie sont toujours requis pour les nouveaux circuits, les salles de bains et tout travail de plomberie. Si l'intention est de créer une suite séparée (entrée séparée, cuisine), un permis de construire complet et un permis d'occupation de la suite sont requis avant le début de la construction. La question clé que se posent les municipalités est la suivante : cet espace pourrait-il être utilisé comme logement indépendant ? Si oui, il faut une autorisation de suite, quelle que soit votre intention actuelle."
+    }
+  }
+}

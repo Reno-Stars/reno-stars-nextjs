@@ -1,0 +1,217 @@
+{
+  "permit": {
+    "breadcrumb": "Giấy phép cải tạo Vancouver",
+    "hero": {
+      "title": "Giấy phép Cải tạo Vancouver: Điều gì cần có Giấy phép ở Metro Vancouver (2026)",
+      "description": "Bạn có cần giấy phép xây dựng để cải tạo ở Vancouver, Burnaby, Richmond hoặc Surrey không? Hướng dẫn này bao gồm các yêu cầu về giấy phép xây dựng tại BC, những công việc cải tạo nào cần có sự phê duyệt của tỉnh và thành phố, cách nộp đơn, các mốc thời gian và phí điển hình cũng như các dự án cải tạo phổ biến nhất cần có giấy phép — cộng với những gì sẽ xảy ra nếu bạn bỏ qua quy trình cấp phép."
+    },
+    "stats": {
+      "buildingPermit": "Giấy phép xây dựng",
+      "buildingPermitValue": "Cần thiết cho kết cấu, bổ sung, dãy phòng",
+      "plumbingPermit": "Giấy phép hệ thống nước",
+      "plumbingPermitValue": "Cần thiết cho hệ thống ống nước mới hoặc di dời",
+      "electricalPermit": "Giấy phép điện",
+      "electricalPermitValue": "Cần thiết cho việc nâng cấp mạch hoặc bảng điều khiển mới",
+      "demoPermit": "Giấy phép phá dỡ",
+      "demoPermitValue": "Cần thiết để loại bỏ cấu trúc"
+    },
+    "whenRequired": {
+      "title": "Khi nào cần có Giấy phép Cải tạo ở BC?",
+      "subtitle": "Bộ luật Xây dựng BC và quy định của thành phố xác định các yêu cầu về giấy phép — không phải tất cả công trình cải tạo đều cần giấy phép",
+      "always": {
+        "title": "Luôn yêu cầu giấy phép",
+        "items": [
+          "Tạo hoặc hợp pháp hóa tầng hầm",
+          "Công việc kết cấu - loại bỏ hoặc sửa đổi tường, dầm hoặc móng",
+          "Thêm hoặc mở rộng cửa sổ và cửa ra vào bên ngoài",
+          "Xây dựng bổ sung (phòng mới, phòng tắm nắng, phần mở rộng gara)",
+          "Thi công sàn trên 24 inch trên lớp",
+          "Thay thế mái nhà liên quan đến thay đổi cấu trúc",
+          "Bất kỳ công việc nào làm thay đổi sức chứa hoặc mục đích sử dụng của tòa nhà",
+          "Tạo hoặc chuyển đổi bộ phụ",
+          "Chuyển đổi nhà để xe hoặc nhà để xe thành không gian sống"
+        ]
+      },
+      "sometimes": {
+        "title": "Có thể yêu cầu giấy phép",
+        "items": [
+          "Cải tạo phòng tắm hoặc nhà bếp - cần có giấy phép khi di dời hệ thống ống nước",
+          "Hoàn thiện tầng hầm chưa hoàn thiện - phụ thuộc vào mục đích sử dụng căn hộ và chiều cao trần nhà",
+          "Lắp đặt mạch điện mới - luôn cần có giấy phép điện",
+          "Lợp lại - không cần giấy phép xây dựng; giấy phép điện có thể được nếu liên quan đến năng lượng mặt trời",
+          "Xây dựng hàng rào - thay đổi tùy theo đô thị và chiều cao",
+          "Tường chắn cao hơn 4 feet - phải có giấy phép xây dựng ở hầu hết các thành phố",
+          "Thay đổi HVAC - có thể yêu cầu giấy phép xây dựng và/hoặc khí đốt"
+        ]
+      },
+      "never": {
+        "title": "Thông thường không cần giấy phép",
+        "items": [
+          "Sơn nội thất hoặc ngoại thất",
+          "Lắp đặt sàn (gỗ cứng, gỗ, gạch)",
+          "Thay thế mặt bàn (không thay đổi hệ thống ống nước)",
+          "Sửa chữa hoặc sơn lại tủ",
+          "Thêm giá đỡ và lưu trữ tích hợp",
+          "Thay đổi thiết bị cố định (vòi nước, nhà vệ sinh, thiết bị chiếu sáng) mà không cần định tuyến lại hệ thống ống nước",
+          "Cảnh quan và giường vườn",
+          "Sửa chữa boong (không phải xây dựng lại) dưới 24 inch trên lớp"
+        ]
+      }
+    },
+    "municipalities": {
+      "title": "Yêu cầu về giấy phép của Thành phố Metro Vancouver",
+      "subtitle": "Mỗi thành phố có quy định riêng dựa trên Bộ luật Xây dựng BC",
+      "vancouver": {
+        "title": "Thành phố Vancouver",
+        "description": "Vancouver có một số quy định cải tạo chi tiết nhất tại BC. Cần phải có giấy phép xây dựng đối với mọi công trình kết cấu, xây dựng căn hộ, sàn trên 24\", thay cửa sổ (nhà di sản) và bất kỳ công việc nào làm thay đổi bề ngoài của tòa nhà. Đơn đăng ký quy hoạch điện tử trực tuyến có sẵn cho hầu hết các giấy phép cư trú. Thời gian xử lý: 2–6 tuần đối với khu dân cư tiêu chuẩn, lâu hơn đối với các dự án phức tạp.",
+        "fees": "Lệ phí cấp giấy phép xây dựng: 1% giá trị công trình đã kê khai (tối thiểu 200 USD). Các chi phí bổ sung cho giấy phép hệ thống ống nước và điện."
+      },
+      "burnaby": {
+        "title": "Thành Phố Burnaby",
+        "description": "Burnaby yêu cầu giấy phép xây dựng đối với tất cả các công việc kết cấu, xây dựng căn hộ và xây dựng boong. Thành phố cung cấp dịch vụ tư vấn trước khi nộp đơn cho các dự án phức tạp. Burnaby có các chương trình khuyến khích tích cực cho việc hợp pháp hóa bộ thứ cấp.",
+        "fees": "Lệ phí giấy phép xây dựng: $200 phí căn hộ cộng với $10 cho mỗi $1.000 giá trị xây dựng trên $10.000. Tối thiểu $200."
+      },
+      "richmond": {
+        "title": "Thành phố Richmond",
+        "description": "Richmond yêu cầu giấy phép xây dựng để thay đổi cấu trúc, bổ sung và tạo dãy nhà. Cổng thông tin giấy phép trực tuyến của Richmond xử lý hầu hết các đơn xin giấy phép cư trú. Quá trình xử lý thường nhanh hơn Vancouver đối với các dự án nhà ở đơn giản.",
+        "fees": "Lệ phí giấy phép xây dựng: $200 cơ bản cộng thêm $8 cho mỗi $1,000 của giá trị khai báo trên $10,000."
+      },
+      "surrey": {
+        "title": "Thành phố Surrey",
+        "description": "Surrey có một cổng thông tin trực tuyến được sắp xếp hợp lý và quá trình xử lý giấy phép cư trú tiêu chuẩn tương đối nhanh. Việc tạo, thay đổi cấu trúc và bổ sung đều yêu cầu giấy phép xây dựng. Chương trình Trung học của Surrey cung cấp hỗ trợ tư vấn trước khi đăng ký.",
+        "fees": "Lệ phí giấy phép xây dựng: $150 cơ bản cộng thêm $7 cho mỗi $1.000 giá trị được khai báo. Xử lý nhanh chóng có sẵn cho một số loại dự án nhất định."
+      },
+      "coquitlam": {
+        "title": "Thành phố Coquitlam",
+        "description": "Coquitlam yêu cầu giấy phép xây dựng đối với bất kỳ công trình kết cấu nào, xây dựng dãy phòng và các dự án boong lớn hơn. Các cuộc họp trước khi đăng ký có sẵn và được đề xuất cho những cải tạo phức tạp. Coquitlam xử lý hầu hết các giấy phép cư trú trong 3–4 tuần.",
+        "fees": "Lệ phí giấy phép xây dựng: $200 cơ bản cộng thêm $10 cho mỗi $1.000 giá trị xây dựng. Tối thiểu $200."
+      }
+    },
+    "process": {
+      "title": "Cách xin Giấy phép Cải tạo ở Metro Vancouver",
+      "subtitle": "Từng bước từ tư vấn trước đến kiểm tra cuối cùng",
+      "step1": {
+        "title": "Tư vấn trước khi đăng ký",
+        "description": "Đối với các dự án phức tạp (tạo bộ, thay đổi cấu trúc, bổ sung), hãy đăng ký tư vấn trước với sở xây dựng đô thị của bạn trước khi gửi. Điều này xác định sớm các vấn đề - hạn chế quy hoạch, chỉ định di sản hoặc các quy định đặc biệt - trước khi bạn đầu tư vào bản vẽ. Hầu hết các thành phố đều cung cấp dịch vụ này miễn phí hoặc với một khoản phí nhỏ."
+      },
+      "step2": {
+        "title": "Thuê một chuyên gia đã đăng ký",
+        "description": "Đối với bất kỳ dự án nào liên quan đến thay đổi cấu trúc, hệ thống cơ khí hoặc công trình điện phức tạp, chính quyền thành phố BC yêu cầu Chuyên gia đăng ký hồ sơ (RPPR) - thường là kỹ sư kết cấu hoặc nhà thiết kế xây dựng - giám sát công việc và cung cấp các bản vẽ có chữ ký. Cải tạo thẩm mỹ đơn giản không cần kiến ​​trúc sư hoặc kỹ sư."
+      },
+      "step3": {
+        "title": "Chuẩn bị và gửi bản vẽ",
+        "description": "Nhà thầu hoặc nhà thiết kế của bạn chuẩn bị các bản vẽ tỷ lệ: sơ đồ mặt bằng, sơ đồ tầng, mặt bằng, chi tiết kết cấu và bản vẽ cơ khí (hệ thống ống nước/điện/HVAC). Gửi qua cổng trực tuyến của thành phố (Vancouver e-plan, Burnaby, Surrey, Richmond đều có hệ thống trực tuyến). Đối với các tài sản di sản ở Vancouver, có thể cần phải xem xét Ban Thiết kế trước khi phê duyệt giấy phép."
+      },
+      "step4": {
+        "title": "Xem xét và phê duyệt giấy phép",
+        "description": "Chính quyền thành phố sẽ xem xét đơn đăng ký của bạn theo Bộ luật Xây dựng BC, quy định phân vùng của địa phương và các yêu cầu về giấy phép phát triển. Thời gian xem xét khác nhau: 2–4 tuần đối với những cải tạo đơn giản, 4–8 tuần đối với các dự án kết cấu hoặc dãy phòng, 8–12 tuần đối với các dự án yêu cầu giấy phép di sản hoặc phát triển. Bạn nhận được phê duyệt giấy phép kèm theo một bộ bản vẽ có đóng dấu — hãy giữ những bản vẽ này tại chỗ trong quá trình xây dựng."
+      },
+      "step5": {
+        "title": "Xây dựng và kiểm tra",
+        "description": "Sau khi được phép thì tiến hành xây dựng. Chính quyền thành phố tiến hành kiểm tra bắt buộc tại các mốc quan trọng đã xác định: hoàn thiện (khung, hệ thống ống nước, điện trước khi đóng tường), cách nhiệt và tỷ lệ sử dụng cuối cùng. Bạn phải thông báo cho chính quyền thành phố khi đạt được từng cột mốc - không thể bỏ qua hoặc thực hiện việc kiểm tra sau khi đóng tường. Kiểm tra không đạt yêu cầu sửa chữa và kiểm tra lại."
+      },
+      "step6": {
+        "title": "Kiểm tra cuối cùng và chiếm chỗ",
+        "description": "Sau khi hoàn thành mọi công việc, chính quyền thành phố tiến hành kiểm tra lần cuối và cấp giấy chứng nhận cư trú (để tạo căn hộ, cần phải có giấy phép cư trú riêng). Đối với các dãy phòng thứ cấp, đây là điều làm cho dãy phòng này trở nên hợp pháp. Giữ tất cả hồ sơ giấy phép - bạn cần chúng khi bán nhà, xin giấy phép cho thuê hoặc tái cấp vốn."
+      }
+    },
+    "costs": {
+      "title": "Phí và Chi phí Giấy phép ở Metro Vancouver",
+      "subtitle": "Ngân sách dành cho giấy phép cho các loại dự án khác nhau là gì",
+      "kitchen": {
+        "title": "Cải tạo nhà bếp",
+        "description": "Không cần giấy phép xây dựng khi cải tạo nhà bếp thẩm mỹ. Nếu di dời hệ thống ống nước hoặc thiết bị gas: giấy phép sửa ống nước ($100–$300) + giấy phép gas ($100–$200) nếu có đủ gas. Giấy phép điện cho các mạch điện mới: $100–$200. Tổng cộng: $200–$600."
+      },
+      "bathroom": {
+        "title": "Cải tạo phòng tắm",
+        "description": "Giấy phép xây dựng không cần thiết cho công trình thẩm mỹ. Di chuyển vị trí nhà vệ sinh, bồn rửa hoặc phòng tắm cần có giấy phép sửa ống nước ($100–$300). Các mạch điện mới hoặc nâng cấp cần có giấy phép điện ($100–$200). Tổng cộng: $200–$500 nếu hệ thống ống nước được di chuyển."
+      },
+      "basementSuite": {
+        "title": "Suite tầng hầm",
+        "description": "Giấy phép xây dựng đầy đủ (1% giá trị xây dựng), giấy phép sửa ống nước ($200–$400), giấy phép điện ($200–$400). Đối với việc chuyển đổi căn hộ trị giá 95.000 USD: tòa nhà 950 USD + hệ thống ống nước 300 USD + 300 USD điện = ~ 1.550 USD tiền giấy phép, cộng với phí giấy phép phát triển tiềm năng."
+      },
+      "deck": {
+        "title": "Sàn trên 24 inch",
+        "description": "Cần có giấy phép xây dựng. $200–$500 cho giấy phép boong tùy thuộc vào đô thị. Bản vẽ kết cấu có thể được yêu cầu đối với các sàn lớn hơn hoặc nhiều tầng."
+      },
+      "addition": {
+        "title": "Trang chủ Ngoài ra",
+        "description": "Lệ phí cấp giấy phép xây dựng là 1% giá trị công trình đã kê khai. Đối với khoản bổ sung 150.000 USD: giấy phép xây dựng 1.500 USD cộng với phí giấy phép phát triển nếu có. Khuyến khích tư vấn trước."
+      }
+    },
+    "consequences": {
+      "title": "Điều gì xảy ra nếu bạn bỏ qua giấy phép",
+      "subtitle": "Công việc không được phép mang lại rủi ro tài chính và pháp lý thực sự",
+      "items": [
+        {
+          "title": "Tiền phạt",
+          "description": "Các thành phố có thể phạt từ 500 đến 10.000 USD mỗi ngày đối với hành vi xây dựng không được cấp phép, tùy thuộc vào hành vi vi phạm và thành phố. Vancouver có một số lịch trình tốt nhất ở BC."
+        },
+        {
+          "title": "Buộc đảo ngược",
+          "description": "Chính quyền thành phố có thể ra lệnh ngừng công việc hoặc hoàn tác công việc đã hoàn thành - bao gồm dỡ bỏ phần bổ sung, lấp đầy tầng hầm hoặc đóng cửa các phòng - bằng chi phí của chủ sở hữu."
+        },
+        {
+          "title": "Không thể bán tài sản",
+          "description": "Công việc không được phép phải được tiết lộ trên báo cáo tiết lộ tài sản. Nhiều người kiểm tra nhà của người mua đánh dấu công việc không được phép, dẫn đến việc thương lượng lại hoặc sụp đổ. Người cho vay sẽ không cấp vốn cho các tài sản có công trình kiến ​​trúc lớn chưa được phép."
+        },
+        {
+          "title": "Vấn đề bảo hiểm",
+          "description": "Hầu hết các chính sách bảo hiểm nhà đều loại trừ bảo hiểm cho những thiệt hại do công việc không được thực hiện theo mã - bao gồm cả công việc không được phép. Nếu việc xây dựng không được phép gây ra thiệt hại về nước, hỏa hoạn hoặc hư hỏng cấu trúc, công ty bảo hiểm của bạn có thể từ chối yêu cầu bồi thường."
+        },
+        {
+          "title": "Khó khăn trong việc xin giấy phép trong tương lai",
+          "description": "Công việc không được cấp phép và được thực hiện không đúng cách có thể cần phải được phơi bày và làm lại trước khi cấp giấy phép mới cho công việc liền kề. Điều này làm tăng thêm chi phí và sự phức tạp cho việc cải tạo trong tương lai."
+        },
+        {
+          "title": "Suite không thể được hợp pháp hóa",
+          "description": "Nếu bạn xây dựng một tầng hầm trái phép mà không có giấy phép, bạn không thể có được giấy phép cho thuê hoặc quyền sử dụng hợp pháp. Điều này có nghĩa là bạn không thể thuê nó một cách hợp pháp và chính quyền thành phố có thể ra lệnh cho bạn ngừng thuê nó."
+        }
+      ]
+    },
+    "tips": {
+      "title": "Mẹo tiết kiệm tiền cho quá trình cấp phép",
+      "tip1": {
+        "title": "Sử dụng tư vấn trước khi đăng ký",
+        "description": "Hầu hết các thành phố trực thuộc Metro Vancouver đều cung cấp các cuộc hẹn tư vấn trước miễn phí hoặc chi phí thấp cho các dự án phức tạp. Dành 30 phút với thanh tra tòa nhà trước khi nộp đơn sẽ giúp bạn tiết kiệm hàng tuần chu kỳ sửa đổi đơn đăng ký và ngăn ngừa việc bị từ chối giấy phép gây tốn kém thời gian và tiền bạc."
+      },
+      "tip2": {
+        "title": "Hỏi về xử lý theo dõi nhanh",
+        "description": "Một số thành phố (Vancouver, Surrey) cung cấp dịch vụ xử lý giấy phép nhanh chóng với một khoản phí bổ sung - đáng giá khi nhà thầu của bạn có mặt tại chỗ và chi phí hàng ngày đang tích lũy. Khoản phí xử lý nhanh 300 USD cho một công việc trị giá 95.000 USD là một khoản đầu tư đáng giá."
+      },
+      "tip3": {
+        "title": "Giao dịch theo gói trong một đơn xin giấy phép",
+        "description": "Gửi giấy phép xây dựng, hệ thống ống nước và điện cùng nhau khi có thể - điều này tránh được nhiều khoản phí nộp đơn và nhiều chu kỳ xem xét. Người quản lý dự án của nhà thầu của bạn thường xử lý việc này nhưng hãy xác nhận rằng nó đang được thực hiện."
+      },
+      "tip4": {
+        "title": "Đăng ký các chương trình khuyến khích của thành phố trước",
+        "description": "Burnaby và Surrey có các chương trình trợ cấp để hợp pháp hóa bộ thứ cấp. Hãy đăng ký những điều này trước khi nộp giấy phép - một số yêu cầu phê duyệt trước trước khi bắt đầu xây dựng. Số tiền trợ cấp từ $5,000–$10,000 có giá trị trong thời gian nộp đơn 20 phút."
+      }
+    },
+    "related": {
+      "title": "Hướng dẫn cải tạo liên quan",
+      "basementSuite": "Hướng dẫn chi phí chuyển đổi tầng hầm",
+      "kitchenGuide": "Hướng dẫn chi phí cải tạo nhà bếp",
+      "bathroomGuide": "Hướng dẫn chi phí cải tạo phòng tắm",
+      "allGuides": "Tất cả hướng dẫn chi phí"
+    },
+    "cta": {
+      "heading": "Cần trợ giúp điều hướng quá trình cấp phép?",
+      "subtitle": "Reno Stars quản lý các đơn xin giấy phép như một phần của quy trình cải tạo đầy đủ dịch vụ của chúng tôi. Hãy cho chúng tôi biết về dự án của bạn để được tư vấn miễn phí."
+    },
+    "faq": {
+      "q1": "Tôi có cần giấy phép xây dựng để cải tạo nhà bếp ở Vancouver không?",
+      "a1": "Không cần phải có giấy phép xây dựng đối với các hoạt động cải tạo nhà bếp mang tính thẩm mỹ như sơn lại tủ, thay mặt bàn hoặc lắp đặt các thiết bị mới mà không thay đổi vị trí đặt gas hoặc ống nước. Bạn cần có giấy phép xây dựng khi di dời hệ thống ống nước nhà bếp (di chuyển bồn rửa hoặc máy rửa chén hơn một vài feet), thêm hoặc dỡ bỏ các bức tường hoặc thay đổi cách bố trí nhà bếp theo cách ảnh hưởng đến các yếu tố cấu trúc. Cần có giấy phép sửa ống nước bất cứ khi nào hệ thống ống nước mới được vận hành hoặc hệ thống ống nước hiện có được di dời - ngay cả việc cải tạo thẩm mỹ để di chuyển bồn rửa cũng cần có giấy phép ống nước. Cần có giấy phép điện cho bất kỳ mạch điện mới, nâng cấp bảng điều khiển hoặc bổ sung các thiết bị có dây cứng như bếp nấu.",
+      "q2": "Mất bao lâu để có được giấy phép cải tạo ở Vancouver?",
+      "a2": "Thời gian xử lý giấy phép khác nhau tùy theo đô thị và mức độ phức tạp của dự án. Ở Vancouver, giấy phép cải tạo nhà ở đơn giản mất 2–4 tuần; việc tạo bộ hoặc các dự án kết cấu mất 4–8 tuần. Burnaby và Coquitlam thường xử lý giấy phép cư trú tiêu chuẩn trong 2–3 tuần. Surrey có thời gian xử lý nhanh nhất cho các dự án tiêu chuẩn: 1–2 tuần với cổng trực tuyến của họ. Đơn xin giấy phép di sản hoặc phát triển sẽ kéo dài thêm 4–8 tuần cho bất kỳ dự án nào ở Vancouver hoặc Burnaby. Luôn luôn đưa yếu tố thời gian cấp phép vào tiến độ xây dựng của bạn trước khi ký hợp đồng với nhà thầu.",
+      "q3": "Giấy phép xây dựng ở Metro Vancouver tốn bao nhiêu tiền?",
+      "a3": "Lệ phí giấy phép xây dựng thường được tính theo tỷ lệ phần trăm của giá trị xây dựng đã khai báo: Vancouver tính phí 1% (tối thiểu 200 USD), Burnaby tính phí 200 USD căn hộ cộng thêm 10 USD cho mỗi 1.000 USD trên 10.000 USD, Richmond tính phí 200 USD căn hộ cộng thêm 8 USD cho mỗi 1.000 USD và Surrey tính phí 150 USD cho căn hộ cộng thêm 7 USD cho mỗi 1.000 USD. Do đó, một cuộc cải tạo trị giá 100.000 đô la sẽ tốn khoảng 1.000 đô la phí giấy phép xây dựng ở Vancouver, hoặc 790 đô la ở Surrey. Giấy phép cấp nước và điện thêm $100–$400 mỗi giấy phép. Luôn kiểm tra biểu phí của đô thị cụ thể của bạn vì nó cập nhật hàng năm.",
+      "q4": "Điều gì xảy ra nếu tôi sửa sang lại công trình mà không có giấy phép tại BC?",
+      "a4": "Công việc không được phép tại BC có thể dẫn đến lệnh ngừng làm việc, phạt tiền từ $500–$10.000 mỗi ngày (Vancouver có mức phạt cao nhất ở Metro Vancouver), buộc phải di dời hoặc đảo ngược công việc không được phép, không thể bán tài sản mà không tiết lộ công việc không được phép, từ chối yêu cầu bảo hiểm đối với bất kỳ thiệt hại nào liên quan đến công việc không được phép và không thể thuê hợp pháp bất kỳ căn hộ trái phép nào. Rủi ro đặc biệt cao đối với những căn hộ ở tầng hầm: nếu không có giấy phép và giấy chứng nhận quyền sử dụng, căn hộ này không thể được cho thuê hợp pháp và chính quyền thành phố có thể ra lệnh ngừng cho thuê.",
+      "q5": "Tôi có thể xin giấy phép sau khi công việc hoàn thành (giấy phép hồi tố) không?",
+      "a5": "Một số thành phố sẽ cấp giấy phép hồi tố nếu công việc đã hoàn thành đáp ứng quy tắc và được thực hiện theo yêu cầu của giấy phép. Tuy nhiên, giấy phép hồi tố yêu cầu các bản vẽ, kỹ thuật và kiểm tra giống như giấy phép tiêu chuẩn — và bất kỳ công việc nào không đáp ứng quy tắc đều phải được sửa chữa trước khi phê duyệt. Quá trình cấp phép hồi tố tốn kém hơn, mất nhiều thời gian hơn và không được đảm bảo. Ở Vancouver, giấy phép hồi tố cho công việc xây dựng được đặc biệt xem xét kỹ lưỡng. Cách tiếp cận tốt hơn là luôn xin giấy phép trước khi bắt đầu công việc.",
+      "q6": "Tôi có cần giấy phép để hoàn thiện tầng hầm của mình ở Vancouver không?",
+      "a6": "Việc hoàn thiện tầng hầm mà không tạo ra một dãy phòng (hoàn toàn dành cho cá nhân sử dụng trong gia đình, không có lối vào riêng, không có tiện nghi nấu nướng) không yêu cầu giấy phép xây dựng ở hầu hết các thành phố tự trị ở BC — nhưng giấy phép điện và đôi khi giấy phép sửa ống nước vẫn được yêu cầu đối với các mạch điện, phòng tắm mới và bất kỳ công trình sửa ống nước nào. Nếu mục đích là tạo một dãy phòng riêng biệt (lối vào riêng, tiện nghi nhà bếp), cần phải có giấy phép xây dựng đầy đủ và giấy phép sử dụng dãy phòng trước khi bắt đầu xây dựng. Câu hỏi quan trọng mà chính quyền thành phố đặt ra là: liệu không gian này có thể được sử dụng làm nơi ở riêng biệt không? Nếu có, nó cần có sự cho phép của bộ phần mềm bất kể ý định hiện tại của bạn là gì."
+    }
+  }
+}

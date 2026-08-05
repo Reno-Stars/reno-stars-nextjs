@@ -16,7 +16,8 @@
     "nextPage": "다음 페이지로 이동",
     "showingPosts": "게시물 {total}개 중 {start}-{end} 표시 중",
     "relatedServices": "관련 서비스",
-    "relatedAreas": "해당 지역의 혁신"
+    "relatedAreas": "해당 지역의 혁신",
+    "faqSubtitle": "블로그 및 혁신 가이드에 대한 일반적인 질문"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

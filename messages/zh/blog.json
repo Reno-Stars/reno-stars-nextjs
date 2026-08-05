@@ -16,7 +16,8 @@
     "nextPage": "转到下一页",
     "showingPosts": "显示 {start}-{end} 个帖子（共 {total} 个）",
     "relatedServices": "相关服务",
-    "relatedAreas": "您所在地区的装修"
+    "relatedAreas": "您所在地区的装修",
+    "faqSubtitle": "有关我们博客和装修指南的常见问题"
   },
   "_translation_meta": {
     "source": "translate.googleapis.com (free, no API key)",

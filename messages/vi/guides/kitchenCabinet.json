@@ -1,0 +1,197 @@
+{
+  "kitchenCabinet": {
+    "breadcrumb": "Cải tạo tủ bếp",
+    "hero": {
+      "title": "Chi phí cải tạo tủ bếp Vancouver 2026: Hoàn thiện lại kho, tùy chỉnh & tủ",
+      "subtitle": "Chi phí cải tạo tủ bếp ở Vancouver là bao nhiêu? Chi phí cải tạo tủ ở Vancouver dao động từ $3.000 cho việc tân trang lại đến $45.000+ cho việc thay thế toàn bộ tủ theo yêu cầu. Hướng dẫn này bao gồm tất cả các tùy chọn — hoàn thiện, hoàn thiện và thay thế hoàn toàn — với mức giá thực tế năm 2026 cho tủ có sẵn, tủ bán tùy chỉnh và tủ tùy chỉnh, kiểu cửa, vật liệu và yếu tố quyết định chi phí cuối cùng."
+    },
+    "stats": {
+      "avgCost": "Trung bình Tủ Reno",
+      "avgCostValue": "$12,000",
+      "range": "Khoảng giá",
+      "rangeValue": "$3K – $45K+",
+      "linearFoot": "Mỗi chân tuyến tính",
+      "linearFootValue": "$150 – $600/ft",
+      "timeline": "Dòng thời gian điển hình",
+      "timelineValue": "3 ngày – 6 tuần"
+    },
+    "cabinetTypes": {
+      "title": "Các loại tủ: Hàng có sẵn, Bán tùy chỉnh và Tùy chỉnh",
+      "subtitle": "Ba loại tủ có mức giá rất khác nhau",
+      "stock": {
+        "title": "Tủ đựng đồ",
+        "price": "$80 – $200/tuyến tính ft",
+        "description": "Được sản xuất trước với kích thước tiêu chuẩn và hoàn thiện. Có sẵn ngay lập tức từ các cửa hàng cải thiện nhà cửa hoặc phòng trưng bày nhà bếp. Tùy chỉnh hạn chế - bạn chọn từ các kiểu, màu sắc và phần cứng cửa hiện có. Tốt nhất cho việc cải tạo ngân sách khi kích thước tiêu chuẩn phù hợp với cách bố trí nhà bếp của bạn. Giao hàng nhanh nhất: 1–2 tuần."
+      },
+      "semiCustom": {
+        "title": "Tủ bán tùy chỉnh",
+        "price": "$200 – $400/tuyến tính ft",
+        "description": "Được sản xuất theo đơn đặt hàng với một số tùy chọn tùy chỉnh: chiều rộng tùy chỉnh, giải pháp lưu trữ chuyên dụng, lớp hoàn thiện và vật liệu cụ thể. Bạn làm việc trong dòng sản phẩm của nhà sản xuất nhưng có thể điều chỉnh kích thước và thêm các tính năng như ngăn kéo, giá đựng gia vị và ngăn chia khay. Thời gian thực hiện: 3–5 tuần. Giá trị tốt nhất cho hầu hết các chủ nhà ở Vancouver nâng cấp từ kho."
+      },
+      "custom": {
+        "title": "Tủ tùy chỉnh",
+        "price": "$400 – $800+/tuyến tính ft",
+        "description": "Được thiết kế theo thông số kỹ thuật chính xác cho kích thước và thiết kế độc đáo của nhà bếp của bạn. Tùy chỉnh đầy đủ các vật liệu, hoàn thiện, phần cứng và tính năng. Không thỏa hiệp về bố cục - từng milimet được tối ưu hóa cho không gian của bạn. Thời gian thực hiện: 6–10 tuần. Phù hợp nhất cho những bố cục nhà bếp khác thường, các dự án thiết kế cao cấp hoặc khi bạn cần một diện mạo cụ thể mà kích thước tiêu chuẩn không thể đạt được."
+      }
+    },
+    "doorStyles": {
+      "title": "Kiểu cửa tủ",
+      "subtitle": "Hồ sơ trực quan của tủ của bạn thúc đẩy cả chi phí và thẩm mỹ",
+      "shaker": {
+        "title": "máy lắc",
+        "description": "Thiết kế bảng điều khiển lõm sạch sẽ. Phong cách phổ biến nhất ở Vancouver trong năm 2024–2026. Hoạt động trong nhà bếp hiện đại, chuyển tiếp và truyền thống. Giá: giá gốc."
+      },
+      "slab": {
+        "title": "Tấm / Tấm phẳng",
+        "description": "Cửa phẳng phía trước tối giản. Rất phổ biến trong các căn hộ và ngôi nhà hiện đại ở Vancouver. Không có đường nét hoặc chi tiết - bề mặt thuần khiết. Có thể là gỗ veneer hoặc gỗ nguyên khối."
+      },
+      "inset": {
+        "title": "Hình nhỏ",
+        "description": "Cửa ngồi bên trong khung tủ. Cấu trúc cổ điển trên tủ tùy chỉnh cao cấp. Đắt hơn do yêu cầu phần cứng chính xác. Tính thẩm mỹ cổ điển, vượt thời gian."
+      },
+      "raised": {
+        "title": "Bảng điều khiển nâng cao",
+        "description": "Bảng điều khiển trung tâm nâng cao truyền thống với mặt cắt trang trí. Phổ biến trong việc cải tạo nhà di sản. Chi phí cao hơn do gia công phức tạp hơn."
+      }
+    },
+    "materials": {
+      "title": "Vật liệu tủ",
+      "subtitle": "Tủ của bạn được làm bằng chất liệu gì sẽ ảnh hưởng đến độ bền, kiểu dáng và giá cả",
+      "thermofoil": {
+        "title": "Giấy nhiệt / Laminate",
+        "priceRange": "$80 – $180/tuyến tính ft",
+        "description": "Màng vinyl hàn nhiệt trên MDF. Bề mặt nhẵn, giá cả phải chăng, có nhiều màu sắc. Dễ bị bong tróc trong môi trường có độ ẩm cao (gần máy rửa chén hoặc bếp nấu). Tốt nhất cho tài sản cho thuê hoặc cập nhật ngân sách."
+      },
+      "solidWood": {
+        "title": "Gỗ nguyên khối",
+        "priceRange": "$250 – $600/tuyến tính ft",
+        "description": "Gỗ phong, gỗ sồi, gỗ anh đào, gỗ óc chó và các loại gỗ cứng khác. Tùy chọn bền nhất - có thể được chà nhám và hoàn thiện lại nhiều lần. Vân gỗ tự nhiên. Loại đắt nhất. Dễ bị thay đổi độ ẩm trong khí hậu Vancouver."
+      },
+      "mdf": {
+        "title": "MDF (Ván sợi có mật độ trung bình)",
+        "priceRange": "$120 – $280/tuyến tính ft",
+        "description": "Gỗ công nghiệp có bề mặt nhẵn, đồng đều. Chịu sơn cực tốt — lý tưởng cho những căn bếp sơn bất kỳ màu nào. Ổn định hơn gỗ nguyên khối ở độ ẩm. Không thể sơn lại nhưng có một lớp sơn hoàn hảo."
+      },
+      "plywood": {
+        "title": "Hộp gỗ dán",
+        "priceRange": "Tổng cộng $180 – $400/tuyến tính",
+        "description": "Không phải kiểu cửa - vật liệu xây dựng hình hộp. Hộp gỗ dán nguyên chất (không có ván dăm) là tiêu chuẩn cao cấp cho hộp tủ. Nặng hơn, bền hơn và chống ẩm tốt hơn ván dăm. Hầu hết các loại tủ bán tùy chỉnh và bán tùy chỉnh cao cấp đều sử dụng hộp gỗ dán."
+      }
+    },
+    "countertops": {
+      "title": "Chi phí ghép nối mặt bàn",
+      "subtitle": "Bạn sẽ chi bao nhiêu cho mặt bàn khi làm việc trong tủ",
+      "laminate": {
+        "title": "Tấm laminate",
+        "priceRange": "$20 – $50/ft vuông lắp đặt",
+        "description": "Tùy chọn ngân sách. Tấm ép định hình trên ván dăm. Hồ sơ cạnh hạn chế. Tốt nhất khi ngân sách là hạn chế chính."
+      },
+      "quartz": {
+        "title": "Thạch anh",
+        "priceRange": "$60 – $130/ft vuông lắp đặt",
+        "description": "Quầy phổ biến nhất ở Vancouver. Không xốp, không cần bảo trì, bề ngoài nhất quán. Các thương hiệu như Caesarstone, Silestone và Cambria. Cặp với bất kỳ phong cách tủ."
+      },
+      "granite": {
+        "title": "đá granit",
+        "priceRange": "$70 – $180/ft vuông lắp đặt",
+        "description": "Đá tự nhiên với đường vân độc đáo. Mỗi tấm là duy nhất. Yêu cầu niêm phong hàng năm. Nhiều đặc tính hơn thạch anh nhưng bảo trì cao hơn."
+      },
+      "solidSurface": {
+        "title": "Bề mặt rắn (Corian)",
+        "priceRange": "$70 – $130/ft vuông lắp đặt",
+        "description": "Lắp đặt liền mạch, có thể sửa chữa, nhiều màu sắc lựa chọn. Khả năng chịu nhiệt kém hơn đá nhưng hoàn toàn không xốp. Tốt cho các thiết kế hiện đại."
+      }
+    },
+    "breakdown": {
+      "title": "Phân tích toàn bộ chi phí: Tủ bếp Reno trị giá 20.000 USD",
+      "subtitle": "Ngân sách sẽ đi đâu trong một cuộc cải tạo nội các điển hình ở Vancouver",
+      "cabinets": {
+        "title": "Tủ (hộp + cửa)",
+        "description": "35 feet tuyến tính của tủ gỗ phong bán tùy chỉnh với hộp gỗ dán",
+        "range": "$7,000 – $9,000"
+      },
+      "countertops": {
+        "title": "Mặt bàn",
+        "description": "30 ft vuông thạch anh tầm trung với cạnh được nới lỏng",
+        "range": "$2,400 – $3,200"
+      },
+      "hardware": {
+        "title": "Phần cứng",
+        "description": "Bản lề đóng mềm, ngăn kéo mở rộng hoàn toàn, ngăn kéo, núm/cần gạt",
+        "range": "$800 – $1,500"
+      },
+      "labour": {
+        "title": "Nhân công lắp đặt",
+        "description": "Phá dỡ, lắp đặt, ngắt kết nối/kết nối lại hệ thống ống nước, hoàn thiện",
+        "range": "$3,000 – $6,000"
+      },
+      "misc": {
+        "title": "Giấy phép, Xử lý, Khác",
+        "description": "Giấy phép (nếu cần), thanh lý tủ cũ, bố trí bếp tạm thời",
+        "range": "$500 – $1,500"
+      }
+    },
+    "vsReplace": {
+      "title": "Làm mới hoặc thay thế?",
+      "subtitle": "Quyết định quan trọng cho mỗi lần cải tạo tủ",
+      "refinish": {
+        "title": "Hoàn thiện/Sơn lại hiện có",
+        "cost": "$3,000 – $8,000",
+        "refinishPros": "Rẻ hơn 50–70% so với thay thế. Hoàn thành sau 3–5 ngày. Không thể thay đổi bố cục. Không có thiệt hại cho các hộp hiện có.",
+        "refinishCons": "Chỉ hoạt động nếu hộp có cấu trúc vững chắc. Không có thay đổi bố cục. Cấu hình lưu trữ và dấu chân giống nhau."
+      },
+      "replace": {
+        "title": "Thay thế toàn bộ tủ",
+        "cost": "$12,000 – $45,000+",
+        "replacePros": "Thiết kế lại bố cục hoàn chỉnh. Giải pháp lưu trữ hiện đại. Hộp và cửa mới. Tuổi thọ dài nhất.",
+        "replaceCons": "Đắt nhất. Sự gián đoạn 4–8 tuần. Cần thợ sửa ống nước/thợ điện để ngắt kết nối thiết bị."
+      }
+    },
+    "tips": {
+      "title": "Mẹo tiết kiệm tiền khi cải tạo tủ",
+      "tip1": {
+        "title": "Giữ nguyên bố cục",
+        "description": "Di dời tủ — di chuyển vị trí bồn rửa, bếp nấu hoặc tủ lạnh — làm tăng thêm chi phí điện và ống nước từ $3.000–$8.000. Giữ nguyên bố cục có nghĩa là không có phần thô mới và cài đặt nhanh hơn."
+      },
+      "tip2": {
+        "title": "Làm lại thay vì thay thế hộp",
+        "description": "Nếu hộp tủ của bạn chắc chắn và cách bố trí của bạn hoạt động tốt, việc hoàn thiện hoặc sơn lại các hộp và cửa hiện có có thể tiết kiệm được 8.000–20.000 đô la so với thay thế hoàn toàn. Những cánh cửa mới trên các hộp hiện có cũng mang đến một diện mạo hoàn toàn mới với chi phí chỉ bằng một phần nhỏ so với toàn bộ tủ."
+      },
+      "tip3": {
+        "title": "Chọn HDF/MDF cho bếp sơn",
+        "description": "Nếu bạn muốn có một nhà bếp sơn (màu trắng, xám hoặc màu đậm), kết cấu cửa MDF hoặc HDF thực sự tốt hơn gỗ nguyên khối - không có thớ nào lộ ra qua lớp sơn, bề mặt mịn hơn và ổn định hơn trong độ ẩm ở Vancouver. Tủ gỗ nguyên khối được sơn ở Vancouver thường xuất hiện các vết nứt chân tóc ở các mối nối trong vòng 2–3 năm."
+      },
+      "tip4": {
+        "title": "Nguồn phần cứng riêng biệt",
+        "description": "Các phòng trưng bày tủ tăng giá phần cứng gấp 2–3 lần so với giá bán lẻ. Mua bản lề đóng mềm, thanh trượt ngăn kéo và thanh kéo từ các nhà cung cấp bán buôn (Rona Commercial, Olympia Tile hoặc Lee Valley) và nhờ người lắp đặt lắp chúng. Tiết kiệm $500–$1.500 cho phần cứng cho một căn bếp thông thường."
+      }
+    },
+    "related": {
+      "title": "Khám phá thêm hướng dẫn cải tạo",
+      "kitchenGuide": "Hướng dẫn chi phí cải tạo nhà bếp",
+      "allGuides": "Tất cả hướng dẫn chi phí"
+    },
+    "cta": {
+      "heading": "Sẵn sàng để nói chuyện về tủ bếp?",
+      "subtitle": "Nhận ước tính cải tạo tủ chi tiết cho ngôi nhà ở Vancouver của bạn. Chúng tôi cung cấp dịch vụ tư vấn tại nhà miễn phí với báo giá không bắt buộc."
+    },
+    "faq": {
+      "q1": "Chi phí hoàn thiện tủ bếp ở Vancouver là bao nhiêu?",
+      "a1": "Việc tân trang lại tủ bếp ở Vancouver có giá từ 3.000 đến 8.000 USD tùy thuộc vào kích thước tủ và kiểu hoàn thiện. Phun sơn các cửa và mặt trước ngăn kéo hiện có (phương pháp phổ biến nhất) tốn 4.000–7.000 USD cho một nhà bếp tiêu chuẩn. Lớp bọc vinyl hoặc lớp veneer bóc và dán trên các cửa hiện có có giá từ 3.000 đến 5.000 USD. Việc tân trang lại toàn bộ bao gồm khung hộp, nội thất và phần cứng mới sẽ tăng thêm từ 1.000 đến 2.000 USD. Yêu cầu quan trọng: các hộp tủ hiện có phải có kết cấu chắc chắn, không ẩm ướt, không bị cong vênh, bong tróc.",
+      "q2": "Chi phí cho mỗi foot tuyến tính cho tủ bếp ở Vancouver là bao nhiêu?",
+      "a2": "Giá tủ bếp trên mỗi foot tuyến tính ở Vancouver (2026) là: tủ có sẵn $80–$200/ft tuyến tính, tủ bán tùy chỉnh $200–$400/ft tuyến tính và tủ tùy chỉnh $400–$800+/ft tuyến tính. Một nhà bếp điển hình ở Vancouver có tủ dài 30–40 feet tuyến tính (kết hợp cả trên và dưới). Với mức giá bán tùy chỉnh tầm trung là 300 USD/ft tuyến tính, một căn bếp dài 35 foot có giá xấp xỉ 10.500 USD cho riêng tủ — trước mặt bàn, phần cứng hoặc lắp đặt.",
+      "q3": "Có nên tân trang lại tủ bếp hay nên thay thế chúng?",
+      "a3": "Hoàn thiện lại nếu: hộp tủ của bạn có cấu trúc chắc chắn, cách bố trí hiện tại phù hợp với gia đình bạn, bạn muốn tiết kiệm 50–70% so với thay thế và bạn hài lòng với cấu hình lưu trữ hiện tại của mình. Thay thế nếu: hộp tủ bị hư hỏng do nước, bong tróc hoặc cong vênh, bạn muốn thay đổi cách bố trí nhà bếp, tủ hiện tại của bạn đã hơn 20 năm tuổi hoặc bạn muốn có một thẩm mỹ nhà bếp khác biệt về cơ bản mà việc hoàn thiện lại không thể đạt được (ví dụ: chuyển từ không khung sang phủ toàn bộ hoặc thêm một hòn đảo).",
+      "q4": "Việc cải tạo tủ bếp ở Vancouver mất bao lâu?",
+      "a4": "Việc tân trang lại tủ mất 3-5 ngày. Quá trình hoàn thiện tủ mất 5–7 ngày. Việc thay thế toàn bộ tủ mất 4–8 tuần: 2–3 tuần để sản xuất tủ, 1 tuần để phá dỡ, 1–3 tuần để lắp đặt, cộng với việc tạo khuôn và lắp đặt mặt bàn (thường là 1–2 tuần). Tính đến thời gian xử lý giấy phép nếu có liên quan đến thay đổi hệ thống ống nước hoặc điện — thêm 2–4 tuần ở Vancouver, 1–2 tuần ở Surrey hoặc Burnaby.",
+      "q5": "Chất liệu nào tốt nhất cho tủ bếp ở vùng khí hậu Vancouver?",
+      "a5": "Đối với khí hậu ẩm ướt của Vancouver, vật liệu làm hộp tủ tốt nhất là gỗ dán nguyên chất (không phải ván dăm) - nó xử lý độ ẩm tốt hơn và ít bị phồng hoặc bong tróc theo thời gian. Đối với tủ sơn, cửa HDF hoặc MDF thực sự thích hợp hơn cửa gỗ nguyên khối - chúng có bề mặt sơn mịn hơn, đồng đều hơn và ổn định kích thước hơn khi độ ẩm dao động. Đối với các lớp hoàn thiện vân gỗ, gỗ phong hoặc anh đào nguyên khối với lớp sơn bóng chuyển đổi sẽ giữ được tốt. Tránh dùng tủ nhiệt (bọc vinyl) gần máy rửa chén - nhiệt độ và độ ẩm có thể gây bong tróc ở các ngôi nhà ở Vancouver.",
+      "q6": "Tôi có cần giấy phép để thay thế tủ bếp ở Vancouver không?",
+      "a6": "Không cần giấy phép xây dựng để thay thế tủ mỹ phẩm - loại bỏ tủ cũ và lắp đặt tủ mới ở cùng vị trí mà không cần thay đổi hệ thống ống nước hoặc điện. Cần phải có giấy phép sửa ống nước nếu bạn định di dời bồn rửa, máy rửa bát hoặc bất kỳ vật cố định ống nước nào - thậm chí việc di chuyển bồn rửa 6 inch qua quầy cũng cần phải có giấy phép sửa ống nước. Cần có giấy phép điện cho bất kỳ mạch điện mới, nâng cấp bảng điều khiển hoặc thay đổi thiết bị nối dây nào. Luôn kiểm tra với chính quyền thành phố của bạn - các cơ sở di sản ở Vancouver có thể có các yêu cầu bổ sung đối với bất kỳ sửa đổi nhà bếp nào.",
+      "q7": "Bản lề đóng mềm và thanh trượt ngăn kéo thêm vào tủ giá bao nhiêu?",
+      "a7": "Bản lề đóng mềm sẽ cộng thêm chi phí phần cứng khoảng $8–$15 cho mỗi cửa. Đối với một nhà bếp 35 cửa, chi phí phần cứng bổ sung là từ $280–$525 — đáng giá đến từng đô la vì nó ngăn ngừa va đập và kéo dài tuổi thọ tủ. Các ngăn kéo đóng mềm mở rộng hoàn toàn có thêm $20–$40 mỗi ngăn kéo. Trên một căn bếp 10 ngăn kéo có giá từ $200–$400. Hầu hết các báo giá tủ tùy chỉnh và bán tùy chỉnh đều bao gồm đóng mềm theo tiêu chuẩn; tủ đựng đồ bình dân thường liệt kê chúng như một bản nâng cấp.",
+      "q8": "Có nên làm tủ và mặt bàn cùng lúc không?",
+      "a8": "Có - luôn làm tủ và mặt bàn cùng nhau. Việc tạo khuôn mặt bàn xảy ra sau khi tủ được lắp đặt (người chế tạo đo kích thước tủ chính xác khi tủ ở vị trí cuối cùng). Nếu bạn làm tủ ngay bây giờ và mặt bàn sau, bạn sẽ phải trả hai khoản huy động lắp đặt riêng biệt và hai khoản phí nhà thầu. Nếu ngân sách của bạn buộc phải lựa chọn, hãy ưu tiên tủ bếp - bạn có thể sống mà không có mặt bàn trong vài tuần bằng các biện pháp tạm thời, nhưng sống không có tủ bếp là không thực tế."
+    }
+  }
+}
