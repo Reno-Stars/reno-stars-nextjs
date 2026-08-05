@@ -292,9 +292,9 @@ export default async function Page({ params }: PageProps) {
         />
         <ServiceSchema
           company={company}
-          serviceName="Kitchen Renovation"
+          serviceName="Kitchen Renovation Surrey"
           serviceDescription={localizedProject.description || ''}
-          areaServed={['Vancouver Metro']}
+          areaServed={['Surrey', 'Metro Vancouver']}
           url={`/${locale}/projects/${slug}/`}
           googleRating={googleReviews.rating}
           googleReviewCount={googleReviews.userRatingCount}
