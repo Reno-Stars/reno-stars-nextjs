@@ -98,7 +98,15 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
           <div className="absolute inset-0 opacity-20">
             <OptimizedImage
               src={service.image}
-              alt={localizedService.title}
+              alt={
+                serviceSlug === 'kitchen'
+                  ? 'Modern white kitchen renovation with quartz countertops and shaker cabinets in Vancouver home'
+                  : serviceSlug === 'bathroom'
+                  ? 'Luxury modern bathroom renovation with custom tile, glass shower, and premium fixtures in Vancouver home'
+                  : serviceSlug === 'whole-house'
+                  ? 'Modern open concept living and dining room renovation showcasing hardwood floors and natural light in Vancouver home'
+                  : localizedService.title
+              }
               fill
               priority
               sizes="100vw"
