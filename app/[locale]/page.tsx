@@ -127,18 +127,47 @@ export default async function Page({ params }: PageProps) {
     url: p.url,
     isHiddenVisually: p.isHiddenVisually,
   }));
-  const areasText =
-    localizedAreas
-      .slice(0, 8)
-      .map((a) => a.name)
-      .join(", ") + "…";
+  // Pass city names as a list (not comma-joined string) for structured
+  // rendering in ContactSection — better chunkability for AI/LLM crawlers.
+  const areasList = localizedAreas.slice(0, 8).map((a) => a.name);
 
   const aboutItems = [
-    { title: t("about.ourJourney"), text: t("aboutPage.journey.body") },
-    { title: t("about.whatWeOffer"), text: t("aboutPage.offer.body") },
-    { title: t("about.ourValues"), text: t("aboutPage.values.body") },
-    { title: t("about.whyChooseUs"), text: t("aboutPage.whyUs.body") },
-    { title: t("about.letsBuildTogether"), text: t("aboutPage.cta.body") },
+    {
+      title: t("about.ourJourney"),
+      text: t("aboutPage.journey.body"),
+      // Structured sub-list: AI/LLM crawlers parse these as discrete facts.
+      bulletItems: [
+        "Quotes that grow with hidden items.",
+        "Poor communication and delayed responses.",
+        "Uncertain timelines and projects dragging on.",
+        "Inconsistent workmanship due to unstable crews.",
+      ],
+    },
+    {
+      title: t("about.whatWeOffer"),
+      text: t("aboutPage.offer.body"),
+      bulletItems: [
+        "Kitchen Renovation",
+        "Bathroom Renovation",
+        "Whole House Renovation",
+        "Commercial Renovation",
+      ],
+    },
+    {
+      title: t("about.ourValues"),
+      text: t("aboutPage.values.body"),
+      bulletItems: null,
+    },
+    {
+      title: t("about.whyChooseUs"),
+      text: t("aboutPage.whyUs.body"),
+      bulletItems: null,
+    },
+    {
+      title: t("about.letsBuildTogether"),
+      text: t("aboutPage.cta.body"),
+      bulletItems: null,
+    },
   ];
 
   const stats = [
@@ -254,7 +283,7 @@ export default async function Page({ params }: PageProps) {
         faqs={localizedFaqs}
         blogPosts={localizedBlogPosts}
         showroom={localizedShowroom}
-        areasText={areasText}
+        areasList={areasList}
         aboutItems={aboutItems}
         stats={stats}
         translations={translations}

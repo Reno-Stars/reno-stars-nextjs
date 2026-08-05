@@ -34,7 +34,7 @@ interface LocalizedBlogPost { slug: string; title: string }
 interface LocalizedShowroom { address: string; phone: string }
 interface LocalizedFaq { id: string; question: string; answer: string }
 interface LocalizedPartner { name: string; logo: string; url?: string; isHiddenVisually: boolean }
-interface AboutItem { title: string; text: string }
+interface AboutItem { title: string; text: string; bulletItems: string[] | null }
 interface Stat { value: string; label: string; image?: string }
 
 interface HomePageProps {
@@ -48,7 +48,7 @@ interface HomePageProps {
   faqs: LocalizedFaq[];
   blogPosts: LocalizedBlogPost[];
   showroom: LocalizedShowroom;
-  areasText: string;
+  areasList: string[];
   aboutItems: AboutItem[];
   stats: Stat[];
   translations: {
@@ -112,7 +112,7 @@ export default function HomePage({
   faqs,
   blogPosts,
   showroom,
-  areasText,
+  areasList,
   aboutItems,
   stats,
   translations: t,
@@ -163,7 +163,7 @@ export default function HomePage({
       <FaqSection faqs={faqs} translations={t.faq} />
       <BlogSection posts={blogPosts} translations={t.blog} />
       <ShowroomSection company={company} showroom={showroom} translations={t.showroom} />
-      <ContactSection company={company} areasText={areasText} translations={t.contact} />
+      <ContactSection company={company} areasList={areasList} translations={t.contact} />
       <StickyHomeCta phone={company.phone} />
     </div>
   );

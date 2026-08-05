@@ -13,7 +13,7 @@ import { trackPhoneClick } from '@/lib/analytics';
 
 interface ContactSectionProps {
   company: Company;
-  areasText: string;
+  areasList: string[];
   translations: {
     title: string;
     subtitle: string;
@@ -24,13 +24,13 @@ interface ContactSectionProps {
   };
 }
 
-export default function ContactSection({ company, areasText, translations: t }: ContactSectionProps) {
+export default function ContactSection({ company, areasList, translations: t }: ContactSectionProps) {
   const locale = useLocale() as Locale;
   const contactInfo = useMemo(() => [
     { icon: Phone, title: t.phone, value: company.phone, href: `tel:${company.phone}` },
     { icon: Mail, title: t.email, value: company.email, href: `mailto:${company.email}` },
-    { icon: MapPin, title: t.serviceAreas, value: areasText },
-  ], [company.phone, company.email, t.phone, t.email, t.serviceAreas, areasText]);
+    { icon: MapPin, title: t.serviceAreas, value: areasList },
+  ], [company.phone, company.email, t.phone, t.email, t.serviceAreas, areasList]);
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
@@ -55,8 +55,14 @@ export default function ContactSection({ company, areasText, translations: t }: 
                       className="text-base font-medium cursor-pointer transition-colors hover:underline"
                       style={{ color: TEXT }}
                     >
-                      {c.value}
+                      {Array.isArray(c.value) ? c.value[0] : c.value}
                     </a>
+                  ) : Array.isArray(c.value) ? (
+                    <ul className="space-y-0.5 pl-0 list-none">
+                      {c.value.map((item) => (
+                        <li key={item} className="text-base" style={{ color: TEXT_MID }}>{item}</li>
+                      ))}
+                    </ul>
                   ) : (
                     <p className="text-base" style={{ color: TEXT_MID }}>{c.value}</p>
                   )}
