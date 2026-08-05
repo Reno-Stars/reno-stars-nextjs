@@ -30,11 +30,12 @@ export const BRAND = 'Reno Stars';
 /**
  * Owner-confirmed localized trade names, keyed by locale. The brand is NEVER
  * machine-translated: locales not listed here render the English brand as-is.
- * (zh/zh-Hant = 聚星装修/聚星裝修, confirmed by Hongming 2026-07-09.)
+ * (zh/zh-Hant = 集星装修/集星裝修, corrected by Hongming 2026-08-05 — an
+ * earlier note recorded 聚 for the first character; the correct character is 集.)
  */
 export const LOCALIZED_BRAND_NAMES: Partial<Record<Locale, string>> = {
-  zh: '聚星装修',
-  'zh-Hant': '聚星裝修',
+  zh: '集星装修',
+  'zh-Hant': '集星裝修',
 };
 
 /** Brand display name for a locale — falls back to the English brand. */
@@ -45,7 +46,7 @@ export function brandName(locale: Locale): string {
 /**
  * Bilingual display form — owner rule (2026-07-09): locales with a tailored
  * name must STILL surface "Reno Stars" so both names stay searchable.
- * zh → "聚星装修 (Reno Stars)"; unmapped locales → "Reno Stars".
+ * zh → "集星装修 (Reno Stars)"; unmapped locales → "Reno Stars".
  */
 export function brandDisplay(locale: Locale): string {
   const local = LOCALIZED_BRAND_NAMES[locale];

@@ -34,7 +34,7 @@ export function comboHeroSubtitle(
   const zh = locale === 'zh' || locale === 'zh-Hant';
   if (zh) {
     return hasLocalWork
-      ? `${city}${service}的真实项目费用、工期与已完工案例，聚星装修为您透明呈现。`
+      ? `${city}${service}的真实项目费用、工期与已完工案例，集星装修为您透明呈现。`
       : `${city}${service}——透明的报价与施工流程，并展示我们在大温地区的相关案例。`;
   }
   return hasLocalWork
