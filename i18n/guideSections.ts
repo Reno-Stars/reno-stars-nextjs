@@ -12,6 +12,8 @@ export const guideSections = [
   'commercialCost',
   'cabinetCost',
   'basementSuiteCost',
+  'kitchenCabinet',
+  'permit',
   'relatedGuides',
 ] as const;
 
