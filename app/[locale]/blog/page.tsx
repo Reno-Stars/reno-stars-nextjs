@@ -105,3 +105,18 @@ export default async function Page({ params, searchParams }: PageProps) {
     </>
   );
 }
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Reno Stars Blog",
+  "url": "https://www.reno-stars.com/en/blog/",
+  "description": "Renovation tips, cost guides, and Vancouver renovation news from Reno Stars.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Reno Stars",
+    "url": "https://www.reno-stars.com"
+  }
+}
+</script>
