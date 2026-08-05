@@ -24,7 +24,7 @@ import { NAVY, GOLD, GOLD_ON_DARK, GOLD_PALE, CARD, TEXT, TEXT_MID, TEXT_MUTED, 
  *   source as the hero star row); the segment is omitted when no rating is
  *   available so the line never claims a number we can't back.
  *
- * Brand: 聚星装修 / 聚星裝修 via brandDisplay() — owner rule (2026-07-09):
+ * Brand: 集星装修 / 集星裝修 via brandDisplay() — owner rule (2026-07-09):
  * never literal-translate "Reno Stars"; always surface both names.
  */
 
