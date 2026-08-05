@@ -6,7 +6,7 @@ import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/pr
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
 import SiteDetailPage from '@/components/pages/SiteDetailPage';
-import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ProjectSchema, ProjectCategorySchema, FAQSchema, HowToSchema, ItemListSchema, ServiceSchema } from '@/components/structured-data';
 import { getJsonLdFromBlocks } from '@/lib/blocks/json-ld';
 import type { Block } from '@/lib/blocks/types';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription, pickLocale, pickLocaleOptional, buildAlternateLocales} from '@/lib/utils';
@@ -278,6 +278,15 @@ export default async function Page({ params }: PageProps) {
           spaceType={localizedProject.space_type}
           locale={locale}
           reviews={projectReviews}
+        />
+        <ServiceSchema
+          company={company}
+          serviceName="Kitchen Renovation"
+          serviceDescription={localizedProject.description || ''}
+          areaServed={['Vancouver Metro']}
+          url={`/${locale}/projects/${slug}/`}
+          googleRating={googleReviews.rating}
+          googleReviewCount={googleReviews.userRatingCount}
         />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
