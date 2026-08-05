@@ -105,3 +105,18 @@ export default async function Page({ params, searchParams }: PageProps) {
     </>
   );
 }
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Reno Stars Blog",
+  "url": "https://www.reno-stars.com/zh/blog/",
+  "description": "温哥华装修指南、成本报告和Reno Stars项目案例。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "聚星装修 Reno Stars",
+    "url": "https://www.reno-stars.com"
+  }
+}
+</script>
