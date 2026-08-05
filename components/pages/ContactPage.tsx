@@ -2,7 +2,7 @@
 
 import { useMemo, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Shield, Star, CheckCircle, ChevronRight } from 'lucide-react';
 import { useRouter } from '@/navigation';
 import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
@@ -263,6 +263,166 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
               <div className="text-sm font-medium text-white/70 mt-0.5">{s.label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Why Choose Reno Stars */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-8" style={{ color: TEXT }}>
+            {t('contact.whyChooseRenoStarsTitle')}
+          </h2>
+          <div className="space-y-5">
+            <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+              {t('contact.whyChooseRenoStarsP1')}
+            </p>
+            <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+              {t('contact.whyChooseRenoStarsP2')}
+            </p>
+            <p className="text-base leading-relaxed" style={{ color: TEXT_MID }}>
+              {t('contact.whyChooseRenoStarsP3')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Renovation Process */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-3" style={{ color: TEXT }}>
+            {t('contact.renovationProcessTitle')}
+          </h2>
+          <p className="text-base text-center mb-10" style={{ color: TEXT_MID }}>
+            {t('contact.renovationProcessIntro')}
+          </p>
+          <div className="space-y-6">
+            {/* Step 1 */}
+            <div className="rounded-xl p-6 flex items-start gap-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-lg font-bold" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
+                1
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>{t('contact.processStep1')}</h3>
+                <p className="text-base" style={{ color: TEXT_MID }}>{t('contact.processStep1Desc')}</p>
+              </div>
+            </div>
+            {/* Step 2 */}
+            <div className="rounded-xl p-6 flex items-start gap-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-lg font-bold" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
+                2
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>{t('contact.processStep2')}</h3>
+                <p className="text-base" style={{ color: TEXT_MID }}>{t('contact.processStep2Desc')}</p>
+              </div>
+            </div>
+            {/* Step 3 */}
+            <div className="rounded-xl p-6 flex items-start gap-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-lg font-bold" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
+                3
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>{t('contact.processStep3')}</h3>
+                <p className="text-base" style={{ color: TEXT_MID }}>{t('contact.processStep3Desc')}</p>
+              </div>
+            </div>
+            {/* Step 4 */}
+            <div className="rounded-xl p-6 flex items-start gap-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-lg font-bold" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
+                4
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>{t('contact.processStep4')}</h3>
+                <p className="text-base" style={{ color: TEXT_MID }}>{t('contact.processStep4Desc')}</p>
+              </div>
+            </div>
+            {/* Step 5 */}
+            <div className="rounded-xl p-6 flex items-start gap-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-lg font-bold" style={{ backgroundColor: GOLD_PALE, color: GOLD }}>
+                5
+              </div>
+              <div>
+                <h3 className="text-lg font-bold mb-2" style={{ color: TEXT }}>{t('contact.processStep5')}</h3>
+                <p className="text-base" style={{ color: TEXT_MID }}>{t('contact.processStep5Desc')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Areas */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE_ALT }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-3" style={{ color: TEXT }}>
+            {t('contact.serviceAreasTitle')}
+          </h2>
+          <p className="text-base text-center mb-6" style={{ color: TEXT_MID }}>
+            {t('contact.serviceAreasIntro')}
+          </p>
+          <div className="rounded-xl p-6" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+            <div className="flex flex-wrap gap-2">
+              {t('contact.serviceAreasList').split(',').map((area) => (
+                <span
+                  key={area.trim()}
+                  className="px-3 py-1.5 rounded-full text-base"
+                  style={{ backgroundColor: SURFACE, color: TEXT_MID }}
+                >
+                  {area.trim()}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: SURFACE }}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-8" style={{ color: TEXT }}>
+            {t('contact.faqTitle')}
+          </h2>
+          <div className="space-y-4">
+            {/* FAQ 1 */}
+            <div className="rounded-xl p-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <h3 className="text-base font-bold mb-2 flex items-start gap-2" style={{ color: TEXT }}>
+                <ChevronRight className="w-5 h-5 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                {t('contact.faqQ1')}
+              </h3>
+              <p className="text-base pl-7" style={{ color: TEXT_MID }}>
+                {t('contact.faqA1')}
+              </p>
+            </div>
+            {/* FAQ 2 */}
+            <div className="rounded-xl p-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <h3 className="text-base font-bold mb-2 flex items-start gap-2" style={{ color: TEXT }}>
+                <ChevronRight className="w-5 h-5 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                {t('contact.faqQ2')}
+              </h3>
+              <p className="text-base pl-7" style={{ color: TEXT_MID }}>
+                {t('contact.faqA2')}
+              </p>
+            </div>
+            {/* FAQ 3 */}
+            <div className="rounded-xl p-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <h3 className="text-base font-bold mb-2 flex items-start gap-2" style={{ color: TEXT }}>
+                <ChevronRight className="w-5 h-5 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                {t('contact.faqQ3')}
+              </h3>
+              <p className="text-base pl-7" style={{ color: TEXT_MID }}>
+                {t('contact.faqA3')}
+              </p>
+            </div>
+            {/* FAQ 4 */}
+            <div className="rounded-xl p-5" style={{ boxShadow: neu(4), backgroundColor: CARD }}>
+              <h3 className="text-base font-bold mb-2 flex items-start gap-2" style={{ color: TEXT }}>
+                <ChevronRight className="w-5 h-5 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                {t('contact.faqQ4')}
+              </h3>
+              <p className="text-base pl-7" style={{ color: TEXT_MID }}>
+                {t('contact.faqA4')}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
