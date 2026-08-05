@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import BlogPage from '@/components/pages/BlogPage';
-import { BreadcrumbSchema, BlogSchema, ItemListSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, BlogSchema, ItemListSchema, ArticleSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
@@ -91,6 +91,19 @@ export default async function Page({ params, searchParams }: PageProps) {
           }))}
           name={mt('title')}
           description={mt('description')}
+        />
+      )}
+      {/* Article schema — Article (BlogPosting) for the blog index page.
+          Source: on-page scanner finding on-page-7a2e5f6b8c9d (2026-08-05). */}
+      {currentPage === 1 && (
+        <ArticleSchema
+          company={company}
+          headline="Reno Stars Blog — Vancouver Renovation Guides & Tips"
+          description={mt('description')}
+          datePublished={new Date().toISOString()}
+          url={`/${locale}/blog/`}
+          image={buildOgImageUrl(mt('title'))}
+          locale={locale}
         />
       )}
       <BlogPage
