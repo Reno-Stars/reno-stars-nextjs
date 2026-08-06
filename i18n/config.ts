@@ -23,6 +23,40 @@ export const defaultLocale: Locale = 'en';
  */
 export const PRERENDERED_LOCALES = [] as const satisfies readonly Locale[];
 
+/**
+ * Locales whose LEAF pages (project/site detail, video detail, service×city)
+ * are indexable. Everything else gets `robots: noindex, follow`, is dropped
+ * from those routes' hreflang sets, and is omitted from the sitemap.
+ *
+ * Why a gate exists at all: on 2026-07-07 GSC reported ~750 project-leaf and
+ * ~1,800 service×city URLs as "Crawled - currently not indexed". Google had
+ * already judged the minor-locale variants low-value, so they were noindexed
+ * to stop burning crawl budget re-fetching them.
+ *
+ * Why this is now one shared constant: the same en/zh pair was hardcoded in
+ * four places (three page metadata helpers, plus PROJECT_LEAF_LOCALES in
+ * app/sitemap.ts) and they have to agree — hreflang must not point at a
+ * non-indexable URL, and the sitemap must not submit one. Adding a locale
+ * here lifts it everywhere at once.
+ *
+ * Adding a locale is a CONTENT decision, not a config one. Add it only once
+ * that locale's copy has been reviewed by someone who reads it — indexing
+ * unreviewed machine translation adds thin pages that compete with the pages
+ * you want ranked. Project/site titles exist for all 14 locales; that is
+ * necessary but not sufficient.
+ *
+ * Blog posts are gated separately and more strictly, on having a NATIVE body
+ * (app/[locale]/blog/[slug]/page.tsx + the nativeLocales filter in
+ * app/sitemap.ts). That gate stays: an untranslated post renders the English
+ * body under a foreign-language URL, which is genuine duplicate content.
+ */
+export const INDEXABLE_LEAF_LOCALES = ['en', 'zh'] as const satisfies readonly Locale[];
+
+/** True when this locale's leaf pages may be indexed. */
+export function isIndexableLeafLocale(locale: string): boolean {
+  return (INDEXABLE_LEAF_LOCALES as readonly string[]).includes(locale);
+}
+
 export const localePrefix = 'always' as const;
 
 export const localeNames: Record<Locale, string> = {
