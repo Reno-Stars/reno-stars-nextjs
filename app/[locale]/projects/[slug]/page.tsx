@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getLocalizedProject, getLocalizedSiteWithProjects } from '@/lib/data/projects';
 import ProjectDetailPage from '@/components/pages/ProjectDetailPage';
 import ProjectCategoryPage from '@/components/pages/ProjectCategoryPage';
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Noindex the other 12 locales and restrict hreflang to en/zh so Google
   // stops re-crawling ~750 duplicate leaf URLs ("Crawled - currently not
   // indexed", GSC 2026-07-07). Category pages above keep all locales.
-  const isIndexableLocale = locale === 'en' || locale === 'zh';
+  const isIndexableLocale = isIndexableLeafLocale(locale);
   const leafRobots = isIndexableLocale ? {} : { robots: { index: false, follow: true } as const };
 
   // Check if it's a project
@@ -100,7 +100,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: metaDescription,
       keywords: project.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
       ...leafRobots,
-      alternates: buildAlternates(`/projects/${slug}/`, locale, ['en', 'zh']),
+      alternates: buildAlternates(`/projects/${slug}/`, locale, INDEXABLE_LEAF_LOCALES),
       openGraph: {
         title: metaTitle,
         description: metaDescription,
@@ -138,7 +138,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: metaDescription,
       keywords: pickLocaleOptional(siteData.seo_keywords, locale as Locale)?.split(',').map(k => k.trim()).filter(Boolean),
       ...leafRobots,
-      alternates: buildAlternates(`/projects/${slug}/`, locale, ['en', 'zh']),
+      alternates: buildAlternates(`/projects/${slug}/`, locale, INDEXABLE_LEAF_LOCALES),
       openGraph: {
         title: metaTitle,
         description: metaDescription,

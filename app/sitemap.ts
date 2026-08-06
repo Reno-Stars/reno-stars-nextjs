@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { locales } from '@/i18n/config';
+import { locales, INDEXABLE_LEAF_LOCALES } from '@/i18n/config';
 import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
 import { resolveBlogDates } from '@/lib/blog-dates';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
@@ -240,7 +240,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Drop minor-locale × projects/[slug] — same rationale as service×city:
   // duplicate-by-content per GSC 2026-05-07 audit; only EN+ZH have organic
   // traffic on these long-tail combos.
-  const PROJECT_LEAF_LOCALES = ['en', 'zh'] as const;
+  // Shared with the three leaf-page metadata helpers so hreflang, robots and the
+  // sitemap can never disagree about which locales are indexable.
+  const PROJECT_LEAF_LOCALES = INDEXABLE_LEAF_LOCALES;
   const categorySet = new Set(categorySlugs);
   for (const slug of projectSlugs.filter(s => !categorySet.has(s))) {
     const projectImage = projectImageMap.get(slug);

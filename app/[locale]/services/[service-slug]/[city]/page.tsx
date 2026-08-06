@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -108,13 +108,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // and restrict hreflang to en/zh so Google stops re-crawling ~1,800
   // duplicate service×city URLs ("Crawled - currently not indexed",
   // GSC 2026-07-07). Lift per-locale once native translations exist.
-  const isIndexableLocale = locale === 'en' || locale === 'zh';
+  const isIndexableLocale = isIndexableLeafLocale(locale);
 
   return {
     title,
     description,
     ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale, ['en', 'zh']),
+    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title,
       description,

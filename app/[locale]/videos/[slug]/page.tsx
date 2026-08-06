@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import type { Locale } from '@/i18n/config';
+import { type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getBaseUrl, buildAlternates, SITE_NAME, truncateMetaDescription } from '@/lib/utils';
 import { getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 import { BreadcrumbSchema, VideoObjectSchema } from '@/components/structured-data';
@@ -44,13 +44,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   );
   // Same leaf-locale policy as project pages: only EN/ZH have native copy,
   // minor locales are noindexed and excluded from hreflang + sitemap.
-  const isIndexableLocale = locale === 'en' || locale === 'zh';
+  const isIndexableLocale = isIndexableLeafLocale(locale);
 
   return {
     title,
     description,
     ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates(`/videos/${slug}/`, locale, ['en', 'zh']),
+    alternates: buildAlternates(`/videos/${slug}/`, locale, INDEXABLE_LEAF_LOCALES),
     openGraph: {
       title,
       description,
