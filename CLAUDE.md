@@ -56,6 +56,8 @@ pnpm dev:services         # docker:up + db:push + all seeds
 pnpm test                 # Vitest watch
 pnpm test:run             # Vitest single run
 pnpm test:e2e             # Playwright headless
+pnpm site-visit:sync      # Pull quoting catalog → data/site-visit/catalog.json
+pnpm site-visit:check     # Verify committed catalog against authored copy (CI-safe)
 ```
 
 ## Key Architecture Decisions
@@ -100,6 +102,20 @@ pnpm test:e2e             # Playwright headless
 - **Self-hosted image optimization:** `app/api/image/route.ts` uses `sharp` for resizing + WebP conversion (bypasses Vercel image quota). `OptimizedImage` component generates responsive `srcSet`. Shared breakpoints in `lib/image.ts`. `next.config.ts` keeps `unoptimized: true`.
 - **Dynamic OG images:** `app/api/og/route.tsx` edge function generates branded 1200×630 images. `buildOgImageUrl()` in `lib/utils.ts` constructs the URL.
 - **RSS feed:** `app/[locale]/feed.xml/route.ts` generates bilingual RSS 2.0 feeds with ISR.
+- **Site-visit checklist (`/[locale]/site-visit-checklist/`) — internal, noindex.** An
+  ops tool for staff doing client site visits: pick scope → job type → add-ons, and
+  the page renders only the checks that scope needs. Its structure is **generated from
+  the quoting system**, not hand-maintained: `reno-stars-invoice-service/tools/export-site-visit-catalog.ts`
+  walks every model factory and modifier, diffs the step keys, and emits JSON;
+  `pnpm site-visit:sync` pulls that into `data/site-visit/catalog.json` and **fails if
+  any catalog step lacks authored checks** in `messages/en/siteVisit.json`. So adding a
+  modifier to the quoting system surfaces as a loud sync/test failure rather than a
+  checklist that silently omits the new work. Committed artifact — no runtime
+  dependency on the invoice service. The route is deliberately absent from
+  `app/sitemap.ts` and carries `robots: {index:false}`; it is intentionally **not** in
+  `robots.ts` disallow, because a disallow would stop crawlers reading the noindex.
+  Chinese trade terms are repaired post-translation by
+  `scripts/fix-site-visit-zh-glossary.mjs` (gtx renders "vanity" as 虚荣 and "paint" as 画).
 
 ## Environment Variables
 

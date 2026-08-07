@@ -1,0 +1,1427 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "reno-stars-invoice-service/tools/export-site-visit-catalog.ts",
+  "sections": [
+    {
+      "id": "bathrooms",
+      "name": "Bathrooms",
+      "baselineModel": "bathroom-4piece",
+      "models": [
+        {
+          "id": "bathroom-tub-to-tub",
+          "name": "Tub to Tub",
+          "code": "Tub to Tub",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "showerWall",
+            "tile",
+            "toilet",
+            "tub",
+            "tubDrain",
+            "tubFaucet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-tub-to-tiled-shower",
+          "name": "Tub to Tiled Base Shower",
+          "code": "Tub to Tiled Base Shower",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "quartzStep",
+            "showerBase",
+            "showerDrain",
+            "showerFaucet",
+            "showerWall",
+            "tile",
+            "toilet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-tub-to-prefab-shower",
+          "name": "Tub to Prefab Base Shower",
+          "code": "Tub to Prefab Base Shower",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "showerBase",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile",
+            "toilet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-shower-to-tiled-shower",
+          "name": "Shower to Tiled Base Shower",
+          "code": "Shower to Tiled Base Shower",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "quartzStep",
+            "showerBase",
+            "showerDrain",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile",
+            "toilet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-shower-to-prefab-shower",
+          "name": "Shower to Prefab Shower",
+          "code": "Shower to Prefab Shower",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "showerBase",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile",
+            "toilet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-4piece",
+          "name": "4 Piece Bathroom",
+          "code": "4 Piece Bathroom",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "glassDoor",
+            "hardware",
+            "mirror",
+            "quartzStep",
+            "showerBase",
+            "showerDrain",
+            "showerFaucet",
+            "showerWall",
+            "tile",
+            "toilet",
+            "tub",
+            "tubDrain",
+            "tubFaucet",
+            "tubShowerWall",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-powder-room",
+          "name": "Powder Room",
+          "code": "Powder Room",
+          "steps": [
+            "countertop",
+            "demolition",
+            "drywall",
+            "exhaustFan",
+            "hardware",
+            "mirror",
+            "tile",
+            "toilet",
+            "vanity",
+            "vanityFaucet",
+            "vanityLight",
+            "vanitySink"
+          ]
+        },
+        {
+          "id": "bathroom-shower-only-tiled",
+          "name": "Shower Only (Tiled Base)",
+          "code": "Shower Only (Tiled Base)",
+          "steps": [
+            "demolition",
+            "drywall",
+            "glassDoor",
+            "quartzStep",
+            "showerBase",
+            "showerDrain",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile"
+          ]
+        },
+        {
+          "id": "bathroom-shower-only-prefab",
+          "name": "Shower Only (Prefab Base)",
+          "code": "Shower Only (Prefab Base)",
+          "steps": [
+            "demolition",
+            "drywall",
+            "glassDoor",
+            "showerBase",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile"
+          ]
+        },
+        {
+          "id": "bathroom-tub-only-tub",
+          "name": "Tub Only (Tub)",
+          "code": "Tub Only (Tub)",
+          "steps": [
+            "demolition",
+            "drywall",
+            "showerWall",
+            "tile",
+            "tub",
+            "tubDrain",
+            "tubFaucet"
+          ]
+        },
+        {
+          "id": "bathroom-tub-only-tiled-shower",
+          "name": "Tub Only (Tiled Base Shower)",
+          "code": "Tub Only (Tiled Base Shower)",
+          "steps": [
+            "demolition",
+            "drywall",
+            "glassDoor",
+            "quartzStep",
+            "showerBase",
+            "showerDrain",
+            "showerFaucet",
+            "showerWall",
+            "tile"
+          ]
+        },
+        {
+          "id": "bathroom-tub-only-prefab-shower",
+          "name": "Tub Only (Prefab Base Shower)",
+          "code": "Tub Only (Prefab Base Shower)",
+          "steps": [
+            "demolition",
+            "drywall",
+            "glassDoor",
+            "showerBase",
+            "showerDrainFixture",
+            "showerFaucet",
+            "showerWall",
+            "tile"
+          ]
+        },
+        {
+          "id": "bathroom-vanity-only",
+          "name": "Vanity Only (Laundry)",
+          "code": "Vanity Only (Laundry)",
+          "steps": [
+            "countertop",
+            "demolition",
+            "vanity",
+            "vanityFaucet",
+            "vanitySink"
+          ]
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "bathroom-keep-tub",
+          "name": "Keep Existing Tub (also keeps tub faucet + drain)",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "tub",
+            "tubDrain",
+            "tubFaucet"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-vanity",
+          "name": "Keep Existing Vanity Cabinet (countertop/sink/faucet NOT included)",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "vanity"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-countertop",
+          "name": "Keep Existing Countertop",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "countertop"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-vanity-sink",
+          "name": "Keep Existing Vanity Sink",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "vanitySink"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-vanity-faucet",
+          "name": "Keep Existing Vanity Faucet",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "vanityFaucet"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-toilet",
+          "name": "Keep Existing Toilet",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "toilet"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-mirror",
+          "name": "Keep Existing Mirror",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "mirror"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-keep-hardware",
+          "name": "Keep Existing Bathroom Hardware",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "hardware"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-popcorn-removal",
+          "name": "Popcorn Removal (Smooth Ceiling)",
+          "kind": "addon",
+          "addsSteps": [
+            "popcornRemoval"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-electrical-plumbing-venting",
+          "name": "Electrical, Plumbing and Venting Works",
+          "kind": "addon",
+          "addsSteps": [
+            "epv"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-gfci-vanity",
+          "name": "GFCI Outlet (Vanity Area)",
+          "kind": "addon",
+          "addsSteps": [
+            "gfciVanity"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-gfci-toilet",
+          "name": "GFCI Outlet (Toilet Area)",
+          "kind": "addon",
+          "addsSteps": [
+            "gfciToilet"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-potlights",
+          "name": "Potlights",
+          "kind": "addon",
+          "addsSteps": [
+            "potlights"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-new-switch",
+          "name": "New/Dimmable Switch",
+          "kind": "addon",
+          "addsSteps": [
+            "newSwitch"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-baseboard-reinstall",
+          "name": "Reinstall Baseboards",
+          "kind": "addon",
+          "addsSteps": [
+            "baseboardReinstall"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-baseboard-new",
+          "name": "MDF Flat Baseboard",
+          "kind": "addon",
+          "addsSteps": [
+            "baseboardNew"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-full-paint",
+          "name": "Bathroom Paint",
+          "kind": "addon",
+          "addsSteps": [
+            "paint"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-touch-up-paint",
+          "name": "Touch-up Paint",
+          "kind": "addon",
+          "addsSteps": [
+            "touchUpPaint"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-bench",
+          "name": "Shower Bench",
+          "kind": "addon",
+          "addsSteps": [
+            "bench"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-niche",
+          "name": "Shower Niche",
+          "kind": "addon",
+          "addsSteps": [
+            "niche"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-ponywall",
+          "name": "Ponywall",
+          "kind": "addon",
+          "addsSteps": [
+            "ponywall"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-custom-glass-door",
+          "name": "Custom Glass Door",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [],
+          "mutatesOnly": true
+        },
+        {
+          "id": "bathroom-custom-vanity",
+          "name": "Custom Plywood Vanity",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [],
+          "mutatesOnly": true
+        },
+        {
+          "id": "bathroom-led-mirror",
+          "name": "LED Mirror",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [],
+          "mutatesOnly": true
+        },
+        {
+          "id": "bathroom-shower-curtain",
+          "name": "Shower Curtain (no Glass Door)",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "glassDoor"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-curbless",
+          "name": "Curbless / Barrier-Free Shower (no curb)",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "quartzStep"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-open-shower",
+          "name": "Open Shower (no Glass Door, no Curtain)",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "glassDoor"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-grab-bars",
+          "name": "Grab Bars (shower)",
+          "kind": "addon",
+          "addsSteps": [
+            "grabBars"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-corner-shelf",
+          "name": "Corner Shelves (shower)",
+          "kind": "addon",
+          "addsSteps": [
+            "cornerShelves"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "bathroom-bidet",
+          "name": "Bidet (install; client provides)",
+          "kind": "addon",
+          "addsSteps": [
+            "bidet"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        }
+      ],
+      "clientProvides": {
+        "tile": [
+          "tile"
+        ],
+        "vanitySink": [
+          "vanity sink"
+        ],
+        "vanityFaucet": [
+          "vanity faucet"
+        ],
+        "toilet": [
+          "toilet"
+        ],
+        "bidet": [
+          "bidet"
+        ],
+        "tub": [
+          "tub"
+        ],
+        "tubFaucet": [
+          "tub faucet"
+        ],
+        "tubDrain": [
+          "tub drain"
+        ],
+        "showerFaucet": [
+          "shower faucet"
+        ],
+        "showerDrainFixture": [
+          "shower drain"
+        ],
+        "mirror": [
+          "mirror"
+        ],
+        "vanityLight": [
+          "vanity light"
+        ],
+        "hardware": [
+          "bathroom hardware"
+        ],
+        "exhaustFan": [
+          "exhaust fan"
+        ]
+      }
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "baselineModel": "kitchen-prefab-cabinet",
+      "models": [
+        {
+          "id": "kitchen-prefab-cabinet",
+          "name": "Kitchen Prefab Cabinet",
+          "code": "Kitchen Prefab Cabinet",
+          "steps": [
+            "backsplash",
+            "cabinets",
+            "countertop",
+            "demolition",
+            "drywall",
+            "faucet",
+            "sink"
+          ]
+        },
+        {
+          "id": "kitchen-custom-cabinet",
+          "name": "Kitchen Custom Cabinet",
+          "code": "Kitchen Custom Cabinet",
+          "steps": [
+            "backsplash",
+            "cabinets",
+            "countertop",
+            "demolition",
+            "drywall",
+            "faucet",
+            "sink"
+          ]
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "kitchen-popcorn-removal",
+          "name": "Popcorn Removal (Smooth Ceiling)",
+          "kind": "addon",
+          "addsSteps": [
+            "popcornRemoval"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-enclose-door-opening",
+          "name": "Enclose Door Opening",
+          "kind": "addon",
+          "addsSteps": [
+            "encloseDoorOpening"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-new-door-opening",
+          "name": "New Door Opening",
+          "kind": "addon",
+          "addsSteps": [
+            "newDoorOpening"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-electrical-plumbing-venting",
+          "name": "Electrical, Plumbing and Venting Works",
+          "kind": "addon",
+          "addsSteps": [
+            "epv"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-floor-tile",
+          "name": "Floor Tile",
+          "kind": "addon",
+          "addsSteps": [
+            "floorTile"
+          ],
+          "removesSteps": [
+            "backsplash"
+          ],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-lvp-flooring",
+          "name": "LVP (Vinyl Plank)",
+          "kind": "addon",
+          "addsSteps": [
+            "lvpFlooring"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-t-mouldings",
+          "name": "T Mouldings & Reducers",
+          "kind": "addon",
+          "addsSteps": [
+            "tMouldings"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-under-cabinet-led",
+          "name": "Under Cabinet LED Light Strip",
+          "kind": "addon",
+          "addsSteps": [
+            "underCabinetLed"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-led-switch",
+          "name": "LED Light Strip Switch",
+          "kind": "addon",
+          "addsSteps": [
+            "ledSwitch"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-potlights",
+          "name": "Potlights",
+          "kind": "addon",
+          "addsSteps": [
+            "potlights"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-gfci-outlets",
+          "name": "GFCI Outlets",
+          "kind": "addon",
+          "addsSteps": [
+            "gfciOutlets"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-replace-switches",
+          "name": "Replace Switches",
+          "kind": "addon",
+          "addsSteps": [
+            "replaceSwitches"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-pendant-light",
+          "name": "Pendant Light (install + switch)",
+          "kind": "addon",
+          "addsSteps": [
+            "pendantLight",
+            "pendantLightSwitch"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-island-outlet",
+          "name": "Island Outlet (new)",
+          "kind": "addon",
+          "addsSteps": [
+            "islandOutlet"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-baseboard",
+          "name": "MDF Flat Baseboard",
+          "kind": "addon",
+          "addsSteps": [
+            "baseboard"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-touch-up-paint",
+          "name": "Touch-up Paint",
+          "kind": "addon",
+          "addsSteps": [
+            "touchUpPaint"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "kitchen-full-paint",
+          "name": "Kitchen Paint",
+          "kind": "addon",
+          "addsSteps": [
+            "fullPaint"
+          ],
+          "removesSteps": [],
+          "mutatesOnly": false
+        },
+        {
+          "id": "quartz-backsplash",
+          "name": "Quartz Backsplash",
+          "kind": "replacement",
+          "addsSteps": [],
+          "removesSteps": [
+            "backsplash"
+          ],
+          "mutatesOnly": false
+        }
+      ],
+      "clientProvides": {
+        "backsplash": [
+          "backsplash tile"
+        ],
+        "sink": [
+          "kitchen sink"
+        ],
+        "faucet": [
+          "kitchen faucet"
+        ]
+      }
+    }
+  ],
+  "steps": [
+    {
+      "key": "demolition",
+      "order": 100,
+      "text": "Demolish the vanity, countertop, vanity sink, vanity faucet, toilet, mirror, vanity light, tub, tub faucet, tub drain, glass door, tub wall tile, floor tile, bathroom hardware, exhaust fan and baseboards",
+      "remarks": [
+        "Garbage disposal",
+        "Keep the outlets, switches"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "drywall",
+      "order": 200,
+      "text": "Repair exposed drywall after the demolition",
+      "remarks": [
+        "Patch, sand and ready to paint"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "popcornRemoval",
+      "order": 220,
+      "text": "Popcorn Removal (Smooth Ceiling)",
+      "remarks": [
+        "Bathroom Area"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "epv",
+      "order": 240,
+      "text": "Electrical, Plumbing and Venting Works",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "bench",
+      "order": 260,
+      "text": "Supply and build 1 Bench for the shower",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "niche",
+      "order": 270,
+      "text": "Supply and install 1 Shower Niche",
+      "remarks": [
+        "12''x20''",
+        "Metal edge"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "ponywall",
+      "order": 280,
+      "text": "Supply and build 1 Ponywall",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "encloseDoorOpening",
+      "order": 300,
+      "text": "Supply and enclose 1 Door Opening with drywall",
+      "remarks": [
+        "Framing and drywall included"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "newDoorOpening",
+      "order": 310,
+      "text": "Supply and new build 1 Door Opening 30\" (If possible)",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "showerWall",
+      "order": 400,
+      "text": "Supply and install Tub Shower Wall, and Schluter Kerdi Waterproof Membrane",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "floorTile",
+      "order": 500,
+      "text": "Install Tile: Floor Tile, Backsplash",
+      "remarks": [
+        "Style: TBD",
+        "Tile Size: 12''x12'' / 12''x24'' / 24''x24''",
+        "Metal edges for corners",
+        "Grout included"
+      ],
+      "captureFields": [
+        "nicheEdgeLabel"
+      ]
+    },
+    {
+      "key": "showerBase",
+      "order": 500,
+      "text": "Supply and install a Tiled Shower Base and Schluter Kerdi Waterproof Membrane",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "tub",
+      "order": 500,
+      "text": "Install 1 Tub",
+      "remarks": [
+        "If site is condo or apartment with concrete floor, feasibility must be researched on site before installation is confirmed"
+      ],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "lvpFlooring",
+      "order": 510,
+      "text": "Supply and install LVP (Vinyl Plank)",
+      "remarks": [
+        "Product Code: TBD",
+        "Thickness: 6mm-7mm"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "tubFaucet",
+      "order": 550,
+      "text": "Install 1 Tub Faucet",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "showerDrain",
+      "order": 600,
+      "text": "Supply and install a Schluter Kerdi Stainless Steel Shower Drain System Kit",
+      "remarks": [
+        "Square Drain",
+        "Will be extra if change to linear drain"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "tMouldings",
+      "order": 600,
+      "text": "Supply and install T mouldings & Reducers as needed",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "tubDrain",
+      "order": 600,
+      "text": "Install 1 Tub Drain",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "tubShowerWall",
+      "order": 650,
+      "text": "Supply and install Tub Shower Wall, and Schluter Kerdi Waterproof Membrane",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "cabinets",
+      "order": 700,
+      "text": "Supply and install Prefab Plywood Kitchen Cabinets",
+      "remarks": [
+        "Style: White Shaker",
+        "Height: 34.5''",
+        "Regular Handles included",
+        "Soft closing",
+        "Provide drawings",
+        "Delivery included",
+        "If need extra drawers $150/Each"
+      ],
+      "captureFields": [
+        "islandSize"
+      ]
+    },
+    {
+      "key": "tile",
+      "order": 700,
+      "text": "Install Tile: Tub Wall Tile",
+      "remarks": [
+        "Style: TBD",
+        "Tile Size: 12''x12'' / 12''x24'' / 24''x24''",
+        "Wall tile to the ceiling/bulkhead/crown moulding",
+        "No Ceiling Tile",
+        "Metal edges for corners",
+        "Grout included"
+      ],
+      "captureFields": [
+        "nicheEdgeLabel"
+      ]
+    },
+    {
+      "key": "quartzStep",
+      "order": 800,
+      "text": "Supply and install a Quartz Step for the shower curb.",
+      "remarks": [
+        "Select from existing materials"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "glassDoor",
+      "order": 900,
+      "text": "Supply and install 1 Prefab Tempered Shower Glass Door",
+      "remarks": [
+        "Frameless",
+        "Sliding",
+        "Chrome Accessories"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "underCabinetLed",
+      "order": 900,
+      "text": "Supply and install Under Cabinet LED Light Strip",
+      "remarks": [
+        "3000K/4000K/5000K",
+        "No new switch"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "grabBars",
+      "order": 950,
+      "text": "Supply and install 2 Grab Bars in the shower",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "cornerShelves",
+      "order": 960,
+      "text": "Supply and install 2 Corner Shelves in the shower",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "ledSwitch",
+      "order": 1000,
+      "text": "Supply and install 1 new switch for LED light strip",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "vanity",
+      "order": 1000,
+      "text": "Supply and install 1 Prefab Plywood Vanity",
+      "remarks": [
+        "Style: White Shaker",
+        "Single Sink Vanity ()''",
+        "Height: 31.5''",
+        "Regular Handles included",
+        "Soft closing",
+        "Provide drawings",
+        "Delivery included",
+        "If need extra drawers $150/Each"
+      ],
+      "captureFields": [
+        "doorStyle",
+        "size"
+      ]
+    },
+    {
+      "key": "backsplash",
+      "order": 1100,
+      "text": "Install Tile: Backsplash",
+      "remarks": [
+        "Style: TBD",
+        "Tile Size: 12''x12''/12''x24''/24''x24''",
+        "Metal edges for corners",
+        "Grout included"
+      ],
+      "captureFields": [
+        "nicheEdgeLabel"
+      ]
+    },
+    {
+      "key": "countertop",
+      "order": 1100,
+      "text": "Supply and install Quartz Countertop for the Vanity",
+      "remarks": [
+        "Select from existing materials",
+        "3CM",
+        "Regular Overhang"
+      ],
+      "captureFields": [
+        "slabCounts",
+        "stoneCode"
+      ]
+    },
+    {
+      "key": "gfciVanity",
+      "order": 1150,
+      "text": "Supply and replace 1 Outlet to GFCI Outlet",
+      "remarks": [
+        "Vanity area"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "sink",
+      "order": 1200,
+      "text": "Install 1 Kitchen Sink",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "vanitySink",
+      "order": 1200,
+      "text": "Install 1 Vanity Sink",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "faucet",
+      "order": 1300,
+      "text": "Install 1 Kitchen Faucet",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "vanityFaucet",
+      "order": 1300,
+      "text": "Install 1 Vanity Faucet",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "showerFaucet",
+      "order": 1350,
+      "text": "Install 1 Shower Faucet",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "showerDrainFixture",
+      "order": 1360,
+      "text": "Install 1 Shower Drain",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "toilet",
+      "order": 1400,
+      "text": "Install 1 Regular Toilet",
+      "remarks": [
+        "Non-Floating"
+      ],
+      "captureFields": [
+        "brand",
+        "spec"
+      ]
+    },
+    {
+      "key": "bidet",
+      "order": 1420,
+      "text": "Install 1 Bidet",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "gfciToilet",
+      "order": 1450,
+      "text": "Supply and install 1 GFCI Outlet",
+      "remarks": [
+        "Behind the toilet"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "gfciOutlets",
+      "order": 1500,
+      "text": "Supply and replace outlets to GFCI x2",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "replaceSwitches",
+      "order": 1510,
+      "text": "Supply and replace 2 switches",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "pendantLight",
+      "order": 1520,
+      "text": "Install 1 Pendant Light",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "pendantLightSwitch",
+      "order": 1521,
+      "text": "Supply and install 1 new switch for new Pendant Light",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "islandOutlet",
+      "order": 1540,
+      "text": "Supply and install 1 new Outlet",
+      "remarks": [
+        "Island area"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "baseboard",
+      "order": 1600,
+      "text": "Supply and install MDF Flat Baseboard 4'' or 4-1/2''",
+      "remarks": [
+        "Patch and sand, ready to paint"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "mirror",
+      "order": 1600,
+      "text": "Install 1 Regular Mirror",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "vanityLight",
+      "order": 1700,
+      "text": "Install 1 Vanity Light",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "fullPaint",
+      "order": 1710,
+      "text": "Paint the ceiling and walls of the kitchen",
+      "remarks": [
+        "Paint Brand: Sherwin Williams",
+        "Color Code: TBC",
+        "Ceiling Height: 8'-9'",
+        "Simple Repair of the Drywall (eg. Nail holes)",
+        "No large area patching and sanding, no drywall replacements"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "hardware",
+      "order": 1800,
+      "text": "Install Bathroom Hardware kit 3-piece",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "exhaustFan",
+      "order": 1900,
+      "text": "Install 1 Exhaust Fan",
+      "remarks": [],
+      "captureFields": [
+        "brand",
+        "spec",
+        "variant"
+      ]
+    },
+    {
+      "key": "potlights",
+      "order": 1950,
+      "text": "Supply and install 4'' Potlights x4",
+      "remarks": [
+        "3000K/4000K/5000K"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "newSwitch",
+      "order": 2000,
+      "text": "Supply and install 1 new switch",
+      "remarks": [],
+      "captureFields": []
+    },
+    {
+      "key": "baseboardReinstall",
+      "order": 2050,
+      "text": "Reinstall the baseboards",
+      "remarks": [
+        "Patch and paint"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "baseboardNew",
+      "order": 2100,
+      "text": "Supply and install MDF Flat Baseboard 4'' or 4-1/2''",
+      "remarks": [
+        "Patch and ready to paint",
+        "Bathroom area"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "paint",
+      "order": 2200,
+      "text": "Paint the drywall : Walls and Ceiling",
+      "remarks": [
+        "Paint included",
+        "Brand: Sherwin Williams",
+        "Color Code: TBC",
+        "Ceiling Height: 8'-9'",
+        "Simple Repair of the Drywall (eg. Nail holes)",
+        "No large area patching and sanding",
+        "No drywall replacement"
+      ],
+      "captureFields": []
+    },
+    {
+      "key": "touchUpPaint",
+      "order": 2210,
+      "text": "Touch-up paint for Walls",
+      "remarks": [
+        "Bathroom area",
+        "No large area painting",
+        "Paint included",
+        "May have colour differences"
+      ],
+      "captureFields": [
+        "brand",
+        "ceilingHeight",
+        "colorCode"
+      ]
+    }
+  ]
+}

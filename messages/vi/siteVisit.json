@@ -1,0 +1,765 @@
+{
+  "siteVisit": {
+    "meta": {
+      "title": "Danh sách kiểm tra truy cập trang web | Ngôi sao Reno",
+      "description": "Danh sách kiểm tra nội bộ cho các chuyến thăm trang web của Reno Stars. Chọn phạm vi và nắm bắt mọi thứ mà báo giá cần chỉ trong một lần."
+    },
+    "hero": {
+      "eyebrow": "Công cụ nội bộ",
+      "title": "Danh sách kiểm tra truy cập trang web",
+      "subtitle": "Chọn những gì khách hàng muốn. Trang này chỉ hiển thị các bước kiểm tra mà phạm vi cần - các bước tương tự mà hệ thống báo giá sẽ định giá.",
+      "note": "Trang này dành cho nhân viên của Reno Stars. Không có gì bạn đánh dấu được gửi đi bất cứ đâu; nó vẫn còn trên điện thoại này cho đến khi bạn xóa nó."
+    },
+    "picker": {
+      "scopeTitle": "1. Chúng ta đang trích dẫn điều gì?",
+      "scopeHint": "Chọn một hoặc cả hai.",
+      "modelTitle": "2. Công việc gì?",
+      "modelHint": "Phù hợp với ý định của khách hàng. Nếu không chắc chắn, hãy chọn cái gần nhất và ghi lại sự khác biệt.",
+      "modelPlaceholder": "Chọn loại công việc…",
+      "addonsTitle": "3. Có thêm gì không?",
+      "addonsHint": "Đánh dấu vào những gì khách hàng yêu cầu. Mỗi người thêm kiểm tra riêng của mình dưới đây.",
+      "addonsGroupAddon": "Tiện ích bổ sung",
+      "addonsGroupReplacement": "Thay đổi & hoán đổi",
+      "empty": "Chọn một phạm vi ở trên để xây dựng danh sách kiểm tra."
+    },
+    "sectionNames": {
+      "bathrooms": "Phòng tắm",
+      "kitchen": "Phòng bếp"
+    },
+    "always": {
+      "title": "Trước khi bạn bắt đầu",
+      "subtitle": "Mỗi lần truy cập, bất kể phạm vi.",
+      "items": [
+        {
+          "id": "đến",
+          "label": "Xác nhận tên khách hàng và địa chỉ đầy đủ bạn đang đứng",
+          "hint": "Số đường và thành phố sau này sẽ trở thành số PO của dự án — hãy làm cho chính xác."
+        },
+        {
+          "id": "liên hệ",
+          "label": "Số điện thoại tốt nhất và ngôn ngữ ưa thích cho người quyết định",
+          "hint": "Không phải lúc nào cũng là người cho bạn vào."
+        },
+        {
+          "id": "bãi đậu xe",
+          "label": "Bãi đậu xe và giao vật liệu - một chiếc xe tải thực sự đi đâu?",
+          "hint": "Lối vào làn đường, khu vực cho phép, khoảng cách từ cửa. Đây là một chi phí thực sự."
+        },
+        {
+          "id": "tầng lớp",
+          "label": "Tầng hay cho thuê? Nhận nội quy, giới hạn giờ làm việc và quy tắc đặt thang máy",
+          "hint": "Hãy yêu cầu biểu mẫu tầng lớp ngay bây giờ. Nó trì hoãn nhiều công việc hơn bất kỳ công việc nào khác trong danh sách này."
+        },
+        {
+          "id": "tòa nhàTuổi",
+          "label": "Năm tòa nhà được xây dựng",
+          "hint": "Trước năm 1990 thay đổi toàn bộ trích dẫn - xem các mối nguy hiểm bên dưới."
+        },
+        {
+          "id": "chiếm lĩnh",
+          "label": "Có ai sẽ sống ở đây trong thời gian làm việc không?",
+          "hint": "Quyết định việc bảo vệ sàn, tường chống bụi và liệu chúng ta có cần tiến hành công việc hay không."
+        },
+        {
+          "id": "tắt máy",
+          "label": "Xác định vị trí và chụp ảnh việc tắt nước",
+          "hint": "Tắt máy và tắt tòa nhà. Kiểm tra xem nó có thực sự quay không."
+        },
+        {
+          "id": "bảng điều khiển",
+          "label": "Xác định vị trí và chụp ảnh bảng điện",
+          "hint": "Lưu ý các khe cắm cầu dao còn trống và đó là cầu chì hay cầu dao."
+        },
+        {
+          "id": "ảnhRộng",
+          "label": "Hình ảnh rộng của mọi bức tường trong khu vực làm việc, cộng với trần và sàn",
+          "hint": "Đứng ở mỗi góc. Bạn sẽ không có được chuyến thăm thứ hai."
+        },
+        {
+          "id": "ảnhĐường dẫn",
+          "label": "Hình ảnh lối đi từ cửa vào khu vực làm việc",
+          "hint": "Cầu thang, lối rẽ, cửa hẹp - bất cứ thứ gì mà bàn trang điểm hoặc tấm sàn đều phải lọt qua."
+        },
+        {
+          "id": "phòng mờ",
+          "label": "Kích thước tổng thể của phòng và chiều cao trần",
+          "hint": "Chiều dài, chiều rộng, chiều cao. Lưu ý các vách ngăn và bất kỳ độ dốc nào."
+        },
+        {
+          "id": "dòng thời gian",
+          "label": "Ngày bắt đầu mục tiêu của khách hàng và bất kỳ thời hạn cố định nào",
+          "hint": "Hãy hỏi tại sao, nếu có thời hạn. Đó thường là một sự kiện chuyển đến hoặc một sự kiện gia đình."
+        }
+      ]
+    },
+    "conditions": {
+      "title": "Điều kiện trang web",
+      "subtitle": "Không phải chi tiết đơn hàng trên báo giá, nhưng chúng di chuyển giá nhiều hơn bất kỳ thứ gì khác. Kiểm tra tất cả chúng.",
+      "items": [
+        {
+          "id": "amiăng",
+          "label": "Tòa nhà trước năm 1990 - đánh dấu việc thử nghiệm amiăng",
+          "hint": "WorkSafeBC yêu cầu khảo sát vật liệu nguy hiểm trước khi phá dỡ. Đừng hứa một mức giá mà không có nó. Trần bỏng ngô, gạch lát sàn nhựa vinyl, bùn vách thạch cao và bọc ống là những nghi phạm thường gặp.",
+          "severity": "người chặn đường"
+        },
+        {
+          "id": "loại ống nước",
+          "label": "Đường ống cấp và thoát nước hiện có - ABS, đồng, PEX, gang hoặc mạ kẽm",
+          "hint": "Nhìn dưới bồn rửa và bất kỳ lối đi lộ thiên nào ở tầng hầm. Gang hoặc mạ kẽm có nghĩa là chi phí di dời không đạt tiêu chuẩn.",
+          "severity": "cao"
+        },
+        {
+          "id": "nướcThiệt hại",
+          "label": "Dấu hiệu hư hỏng do nước đang hoạt động hoặc đã qua",
+          "hint": "Sàn nhà vệ sinh hoặc bồn tắm mềm, ố màu trên trần nhà bên dưới, có mùi ẩm mốc, bong tróc gạch. Chụp ảnh và ghi lại bằng văn bản - điều này bảo vệ cả hai chúng ta.",
+          "severity": "cao"
+        },
+        {
+          "id": "khuôn",
+          "label": "Khuôn nhìn thấy được",
+          "hint": "Phía sau nhà vệ sinh, ở xung quanh bồn tắm, dưới bồn rửa. Khắc phục là một phạm vi riêng biệt.",
+          "severity": "cao"
+        },
+        {
+          "id": "tầng phụ",
+          "label": "Loại và tình trạng sàn phụ cũng như mức sàn",
+          "hint": "Ván ép hoặc tấm bê tông. Kiểm tra mức độ bằng độ cao 4ft theo hai hướng - sàn không bằng phẳng có nghĩa là tự san bằng trước khi lát gạch.",
+          "severity": "cao"
+        },
+        {
+          "id": "chịu tải",
+          "label": "Bất kỳ bức tường nào được mở hoặc dỡ bỏ - nó có chịu lực không?",
+          "hint": "Nếu có bất kỳ nghi ngờ nào, nó cần có thư của kỹ sư. Lưu ý hướng dầm ở trên.",
+          "severity": "người chặn đường"
+        },
+        {
+          "id": "cho phép làm gì",
+          "label": "Phạm vi này có kích hoạt giấy phép không?",
+          "hint": "Di chuyển hệ thống ống nước hoặc khí đốt, thay đổi cấu trúc, mạch điện mới hoặc thay đổi mục đích sử dụng của căn phòng. Xác nhận đô thị - Vancouver, Burnaby, Richmond và Surrey đều khác nhau.",
+          "severity": "người chặn đường"
+        },
+        {
+          "id": "bỏng ngôHiện tại",
+          "label": "Trần bỏng ngô hiện diện trong hoặc bên cạnh khu vực làm việc",
+          "hint": "Bỏng ngô trước năm 1990 phải được kiểm tra trước khi chạm vào. Ngay cả khi chúng tôi không loại bỏ nó, hãy lưu ý - rung động sẽ làm nứt nó."
+        },
+        {
+          "id": "cửa sổInWet",
+          "label": "Cửa sổ bên trong bồn tắm hoặc khu vực tắm vòi sen",
+          "hint": "Cần một sự trở lại không thấm nước và thường là một sự thay thế đã được tôi luyện. Đo nó và chụp ảnh tình trạng ngưỡng cửa."
+        },
+        {
+          "id": "trút giận",
+          "label": "Quạt hút hiện tại thực sự thông hơi ở đâu?",
+          "hint": "Mái nhà, trần nhà hoặc thẳng lên gác mái. Thông gió lên gác mái là một khiếm khuyết chúng ta phải sửa chữa."
+        },
+        {
+          "id": "trầnTruy cập",
+          "label": "Truy cập phía trên khu vực làm việc - gác mái, không gian thu thập thông tin hoặc một căn hộ đã hoàn thiện",
+          "hint": "Quyết định xem đèn pha và hệ thống thông gió được di dời là đơn giản hay xâm lấn."
+        },
+        {
+          "id": "khí đốt",
+          "label": "Bất kỳ thiết bị gas nào trong hoặc gần phạm vi",
+          "hint": "Công việc gas cần có vé được cấp phép và giấy phép riêng. Chụp ảnh việc tắt máy."
+        }
+      ]
+    },
+    "scope": {
+      "title": "Kiểm tra phạm vi",
+      "subtitle": "Được thúc đẩy bởi loại công việc và các tiện ích bổ sung bạn đã chọn. Mỗi thẻ là một bước mà báo giá sẽ chứa.",
+      "quoteLineLabel": "Dòng trích dẫn",
+      "captureLabel": "Chụp tại chỗ"
+    },
+    "captureLabels": {
+      "size": "Kích thước - hãy đo lường, đừng ước tính",
+      "doorStyle": "Kiểu cửa khách hàng mong muốn",
+      "brand": "Thương hiệu, nếu khách hàng đã mua nó",
+      "spec": "Số mô hình hoặc thông số kỹ thuật",
+      "variant": "Biến thể, màu sắc hoặc kết thúc",
+      "stoneCode": "Mã đá khách hàng đã chọn",
+      "slabCounts": "Số lượng tấm cần thiết",
+      "islandSize": "Kích thước đảo",
+      "nicheEdgeLabel": "Chi tiết cạnh thích hợp",
+      "ceilingHeight": "Chiều cao trần",
+      "colorCode": "Mã màu sơn"
+    },
+    "provides": {
+      "title": "Xác nhận ai cung cấp những gì",
+      "subtitle": "Theo mặc định, đây chỉ là cài đặt - khách hàng mua chúng. Xác nhận từng người một cách thành tiếng và viết ra những gì họ đã mua.",
+      "note": "Nếu khách hàng muốn chúng tôi cung cấp bất kỳ thứ nào trong số này, hãy đánh dấu nó và lấy mẫu họ muốn. Nó thay đổi trích dẫn."
+    },
+    "steps": {
+      "demolition": {
+        "label": "Phá dỡ",
+        "checks": [
+          "Liệt kê chính xác những gì sẽ xuất hiện và những gì còn lại - cùng khách hàng đi quanh phòng và chỉ vào từng món đồ",
+          "Các mảnh vụn sẽ đi đâu? Vị trí thùng, hoặc số chuyến đi đến xe tải",
+          "Kiểm tra bộ đệm, chất làm mềm nước hoặc bất cứ thứ gì cắm vào mà không rõ ràng",
+          "Lưu ý bất cứ điều gì khách hàng muốn giữ lại hoặc cứu vãn"
+        ]
+      },
+      "drywall": {
+        "label": "Sửa chữa vách thạch cao",
+        "checks": [
+          "Tình trạng tường phía sau các thiết bị sắp ra mắt - gạch chồng lên nhau, thạch cao hoặc tấm ván tiêu chuẩn",
+          "Lưu ý bất kỳ bức tường nào không thẳng hoặc thẳng; nó hiển thị tệ khi ô mới tiếp tục",
+          "Kiểm tra lớp cách nhiệt của các bức tường bên ngoài trong khi bạn đang đoán xem điều gì đằng sau chúng"
+        ]
+      },
+      "popcornRemoval": {
+        "label": "Loại bỏ bỏng ngô",
+        "checks": [
+          "Xác nhận thử nghiệm amiăng trước năm 1990 đã được gắn cờ — không loại bỏ giá nếu không có thử nghiệm đó",
+          "Đo diện tích trần nhà cần làm phẳng",
+          "Bỏng ngô có được sơn không? Bỏng ngô sơn chậm hơn và đôi khi phải thay thế bằng máy bay"
+        ]
+      },
+      "epv": {
+        "label": "Điện, hệ thống ống nước và thông gió",
+        "checks": [
+          "Viết ra từng lần di dời mà khách hàng muốn, từng mục một, với vị trí mới được đo từ một bức tường cố định",
+          "Chụp ảnh các vị trí thô hiện có trước khi bạn rời đi",
+          "Xác nhận quyền truy cập bên dưới hoặc phía sau - trần bên dưới căn phòng này đã hoàn thiện chưa?",
+          "Lưu ý vật liệu đường ống hiện có tại mỗi điểm bạn di dời"
+        ]
+      },
+      "bench": {
+        "label": "Ghế tắm",
+        "checks": [
+          "Bức tường nào, chiều dài bao nhiêu và sâu bao nhiêu",
+          "Xác nhận băng ghế không chạm vào tấm kính duy nhất của phòng tắm",
+          "Kiểm tra bức tường phía sau có chịu được không - bức tường bên ngoài có nghĩa là mất lớp cách nhiệt"
+        ]
+      },
+      "niche": {
+        "label": "Hốc tắm",
+        "checks": [
+          "Vị trí và kích thước, được đo từ sàn hoàn thiện và từ góc",
+          "Xác nhận hốc tường trống - không có ống thông hơi, không có ống nước và kiểm tra phía bên kia của bức tường",
+          "Cạnh kim loại hay cạnh gạch giảm nhẹ? Hỏi khách hàng và ghi lại câu trả lời",
+          "Dải đèn LED bên trong niche? Điều đó cần một nguồn năng lượng gần đó"
+        ]
+      },
+      "ponywall": {
+        "label": "Tường đuôi ngựa",
+        "checks": [
+          "Chiều dài và chiều cao hoàn thiện",
+          "Tấm kính có nằm trên nó không? Nhà cung cấp kính cần chiều cao hoàn thiện",
+          "Kiểm tra những gì bên dưới - bức tường đuôi ngựa cần phải nằm trên khung chắc chắn"
+        ]
+      },
+      "encloseDoorOpening": {
+        "label": "Đóng kín cửa mở",
+        "checks": [
+          "Chiều rộng và chiều cao mở",
+          "Xác nhận nó không chịu tải trước khi bạn hứa bất cứ điều gì",
+          "Lớp hoàn thiện trên cả hai mặt là gì - việc kết hợp hai lớp hoàn thiện tường khác nhau là điều bổ sung",
+          "Sàn nhà sẽ cần được vá ở nơi đã có ngưỡng"
+        ]
+      },
+      "newDoorOpening": {
+        "label": "Mở cửa mới",
+        "checks": [
+          "Chính xác ở đâu, được đo từ một góc cố định và rộng bao nhiêu",
+          "Kiểm tra khả năng chịu lực - chú ý hướng dầm ở trên. Nếu nghi ngờ, thư của kỹ sư",
+          "Bất cứ thứ gì trên tường: ổ cắm, công tắc, hệ thống ống nước, ống dẫn",
+          "Xác nhận hướng xoay và liệu có bao gồm cửa không"
+        ]
+      },
+      "showerWall": {
+        "label": "Vách tắm & chống thấm",
+        "checks": [
+          "Đo từng bức tường của khu vực ẩm ướt, từ sàn đến trần",
+          "Lưu ý chiều cao trần và gạch chạy tới trần hay vách ngăn",
+          "Kiểm tra bức tường hiện có xem có chuyển động hay mục nát phía sau khung hiện tại không",
+          "Chụp góc nơi hai bức tường ướt gặp nhau"
+        ]
+      },
+      "floorTile": {
+        "label": "Gạch lát sàn",
+        "checks": [
+          "Đo diện tích sàn và lưu ý xem căn phòng có bị lệch không nếu điều đó hiển nhiên",
+          "Khách hàng đã chọn gạch chưa? Kích thước và độ hoàn thiện thay đổi lao động",
+          "Cấu trúc sàn hiện tại - có bao nhiêu lớp sắp bong ra và chênh lệch chiều cao ở ô cửa là bao nhiêu",
+          "Kiểm tra mức độ sàn; lưu ý nó không ở đâu"
+        ]
+      },
+      "showerBase": {
+        "label": "Đế tắm lát gạch",
+        "checks": [
+          "Đo dấu chân cơ sở và vị trí lề đường",
+          "Xác nhận vị trí cống và liệu nó có đang di chuyển không",
+          "Có thể xây dựng sàn cho mái dốc - nền lát gạch cần có chiều cao",
+          "Lưu ý kích thước ô mà khách hàng muốn trên đế; cần có định dạng nhỏ trên chảo nghiêng"
+        ]
+      },
+      "tub": {
+        "label": "bồn tắm",
+        "checks": [
+          "Đo hốc tường: chiều dài, chiều rộng và chiều cao tính đến đỉnh của viên gạch dự định",
+          "Xác nhận bồn tắm của khách hàng sẽ vừa với cửa và dọc hành lang",
+          "Vị trí xả - trái, phải hoặc giữa - và liệu nó có khớp với bồn mới không",
+          "Ghi lại nhãn hiệu và model nếu họ đã mua nó"
+        ]
+      },
+      "lvpFlooring": {
+        "label": "sàn LVP",
+        "checks": [
+          "Đo diện tích, cộng với bất kỳ tủ quần áo hoặc ngóc ngách nào đi qua",
+          "Tầng hiện tại - nó sắp được dỡ bỏ hay chúng ta sẽ vượt qua nó?",
+          "Kiểm tra mức độ và ghi lại bất kỳ sự sụt giảm nào; LVP điện báo một sàn phụ không bằng phẳng",
+          "Chiều cao chuyển tiếp ở mỗi ô cửa"
+        ]
+      },
+      "tubFaucet": {
+        "label": "Vòi bồn tắm",
+        "checks": [
+          "Khách hàng có cung cấp nó không? Ghi lại thương hiệu và mô hình",
+          "Vị trí và chiều cao van hiện tại - nó có đang di chuyển không?",
+          "Xác nhận đó là bộ chuyển hướng bồn tắm và vòi hoa sen hoặc chỉ dành cho bồn tắm"
+        ]
+      },
+      "showerDrain": {
+        "label": "Hệ thống thoát nước vòi hoa sen",
+        "checks": [
+          "Vị trí cống hiện tại và vật liệu ống",
+          "Cống có di chuyển không? Đo vị trí mới từ hai bức tường",
+          "Truy cập bên dưới để kết nối - dưới tầng này có gì?"
+        ]
+      },
+      "tMouldings": {
+        "label": "Khuôn đúc & hộp giảm tốc chữ T",
+        "checks": [
+          "Đếm và đo lường mọi chuyển tiếp - các ô cửa và nơi hai loại sàn gặp nhau",
+          "Lưu ý sự chênh lệch chiều cao ở mỗi người",
+          "Phù hợp với sàn liền kề mà khách hàng đang giữ"
+        ]
+      },
+      "tubDrain": {
+        "label": "Ống thoát nước",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại nhãn hiệu và hoàn thiện sao cho phù hợp với vòi",
+          "Vị trí xả và tràn hiện tại",
+          "Truy cập bên dưới để kết nối"
+        ]
+      },
+      "tubShowerWall": {
+        "label": "Tường bồn tắm và chống thấm",
+        "checks": [
+          "Đo cả ba bức tường hốc tường, chiều cao từ sàn đến gạch",
+          "Xác nhận vị trí dừng của ô - trần, vách ngăn hoặc chiều cao đã đặt",
+          "Kiểm tra xung quanh hiện có xem có bị hư hại do nước phía sau không",
+          "Lưu ý bất kỳ cửa sổ hoặc hốc nào bên trong khu vực ẩm ướt"
+        ]
+      },
+      "cabinets": {
+        "label": "Tủ bếp",
+        "checks": [
+          "Đo từng bức tường ở độ cao của quầy VÀ ở độ cao của tủ phía trên - chúng khác nhau",
+          "Đánh dấu mọi vật cản trên bản phác thảo: cửa sổ, cửa ra vào, ổ cắm, lỗ thông hơi, bộ tản nhiệt, vách ngăn",
+          "Chiều cao trần ở cả hai đầu của mỗi lần chạy và kiểm tra mức độ",
+          "Đảo: kích thước và xác nhận có khoảng trống xung quanh nó",
+          "Kích thước thiết bị - tủ lạnh, bếp nấu, máy rửa chén, máy hút mùi. Đo các lỗ mở hiện có",
+          "Xác nhận kiểu dáng và màu sắc của tủ với khách hàng và xem đó là tủ tiền chế hay tủ tùy chỉnh"
+        ]
+      },
+      "tile": {
+        "label": "Gạch ốp tường",
+        "checks": [
+          "Đo từng bức tường được lát gạch, sàn đến chiều cao hoàn thiện",
+          "Xác nhận chiều cao hoàn thiện: trần, vách ngăn hoặc đường đỉnh",
+          "Kích thước và bố cục gạch mà khách hàng mong muốn - nó làm thay đổi công sức",
+          "Lưu ý xử lý cạnh ở mọi góc bên ngoài"
+        ]
+      },
+      "quartzStep": {
+        "label": "Bước lề đường thạch anh",
+        "checks": [
+          "Chiều dài và chiều rộng lề đường",
+          "Xác nhận đá phù hợp với mặt bàn hoặc những gì khách hàng đã chọn",
+          "Lưu ý lề đường có chiều cao tiêu chuẩn hay bị hạ thấp"
+        ]
+      },
+      "glassDoor": {
+        "label": "Cửa kính tắm",
+        "checks": [
+          "Đo chiều rộng mở và chiều cao hoàn thiện dự định",
+          "Xác nhận mặt bản lề và hướng xoay với khách hàng",
+          "Có một bức tường đuôi ngựa hoặc băng ghế nào mà kính phải rơi xuống không?",
+          "Nhà lắp ghép tiêu chuẩn hay tùy chỉnh? Tùy chỉnh cần một biện pháp riêng sau khi ốp lát"
+        ]
+      },
+      "underCabinetLed": {
+        "label": "Dải đèn LED dưới tủ",
+        "checks": [
+          "Tổng chiều dài chạy dưới mũ giày",
+          "Nguồn điện từ đâu, có công tắc hay luôn bật?",
+          "Xác nhận khách hàng muốn giấu driver bên trong tủ"
+        ]
+      },
+      "grabBars": {
+        "label": "Thanh vịn",
+        "checks": [
+          "Số lượng bao nhiêu và đánh dấu vị trí, chiều cao chính xác với khách hàng có mặt",
+          "Việc chặn phải đi vào tường trước khi xếp gạch - xác nhận các vị trí là cuối cùng",
+          "Khách hàng cung cấp hay của chúng tôi? Ghi lại kết thúc"
+        ]
+      },
+      "cornerShelves": {
+        "label": "Kệ góc",
+        "checks": [
+          "Có bao nhiêu và ở độ cao nào",
+          "Xác nhận rằng chúng không va chạm với hốc hoặc tấm kính",
+          "Chất liệu và hoàn thiện phù hợp với gạch"
+        ]
+      },
+      "ledSwitch": {
+        "label": "Công tắc dải đèn LED",
+        "checks": [
+          "Công tắc đi đâu? Đo từ góc",
+          "Có thể điều chỉnh độ sáng hoặc tiêu chuẩn — hỏi",
+          "Có hộp băng đảng hiện có nào mà chúng tôi có thể mở rộng không?"
+        ]
+      },
+      "vanity": {
+        "label": "sự phù phiếm",
+        "checks": [
+          "Đo chiều rộng tối đa có sẵn và độ sâu của cửa xoay và nhà vệ sinh",
+          "Hệ thống nước thô: cao so với sàn và lệch khỏi tường, cho cả hệ thống thoát nước và cấp nước",
+          "Bồn rửa đơn hoặc đôi - và xác nhận xem bồn rửa đôi có thực sự phù hợp hay không",
+          "Xác nhận kiểu dáng, màu sắc và kiểu cửa với khách hàng",
+          "Kiểm tra bức tường phía sau có phẳng không; bức tường cong để lại một khoảng trống đằng sau bàn trang điểm",
+          "Bàn trang điểm có vừa với cửa phòng tắm không?"
+        ]
+      },
+      "backsplash": {
+        "label": "phản ứng ngược",
+        "checks": [
+          "Đo chiều dài chạy và chiều cao từ mặt bàn đến mặt trên",
+          "Lưu ý mọi ổ cắm và công tắc trong khu vực tấm ốp tường",
+          "Xác nhận gạch hoặc thạch anh và những gì xảy ra đằng sau bếp lò",
+          "Backsplash dừng ở đâu ở mỗi đầu?"
+        ]
+      },
+      "countertop": {
+        "label": "Mặt bàn",
+        "checks": [
+          "Đo mỗi lần chạy: chiều dài và chiều sâu, bao gồm cả hòn đảo",
+          "Xác nhận mã đá khách hàng đã chọn",
+          "Loại chìm - lắp dưới hoặc thả vào - và liệu khách hàng có nó tại chỗ để tạo khuôn mẫu hay không",
+          "Lưu ý mặt cắt cạnh, phần nhô ra và bất kỳ phần cuối thác nước nào",
+          "Đếm các chỗ cắt: bồn rửa, bếp nấu, ổ cắm trên đảo"
+        ]
+      },
+      "gfciVanity": {
+        "label": "Ổ cắm GFCI (bàn trang điểm)",
+        "checks": [
+          "Vị trí và chiều cao cửa thoát hiện tại; nó đã là GFCI chưa?",
+          "Nó có đang chuyển động cùng với sự phù phiếm mới không? Đo vị trí mới",
+          "Kiểm tra mạch đang bật"
+        ]
+      },
+      "sink": {
+        "label": "Bồn rửa nhà bếp",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và kiểu máy - phần cắt trên mặt bàn phụ thuộc vào nó",
+          "Xác nhận bồn rửa được đặt ở vị trí trước mẫu mặt bàn",
+          "Bát đơn hoặc đôi và chiều rộng tủ bên dưới",
+          "Máy tạo khí? Hãy lưu ý ngay bây giờ"
+        ]
+      },
+      "vanitySink": {
+        "label": "bồn rửa trang điểm",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mô hình",
+          "Undermount, thả vào hoặc tích hợp với phần trên cùng",
+          "Xác nhận nó khớp với chiều rộng bàn trang điểm và số lỗ vòi"
+        ]
+      },
+      "faucet": {
+        "label": "Vòi bếp",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mô hình",
+          "Cần đếm lỗ trên quầy - bao gồm hộp đựng xà phòng hoặc vòi lọc",
+          "Kiểm tra khoảng trống tới cửa sổ phía sau bồn rửa nếu có"
+        ]
+      },
+      "vanityFaucet": {
+        "label": "Vòi trang điểm",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu, mẫu mã và độ hoàn thiện",
+          "Lỗ đơn, lỗ trung tâm 4\" hoặc lỗ rộng 8\" — lỗ này phải phù hợp với bồn rửa",
+          "Treo tường? Điều đó làm thay đổi tình hình và phải được quyết định ngay bây giờ"
+        ]
+      },
+      "showerFaucet": {
+        "label": "Vòi tắm",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và model — thân van phải có mặt tại chỗ trước khi đóng tường",
+          "Xác nhận chiều cao và vị trí van với khách hàng, được đánh dấu trên tường",
+          "Đầu phun mưa, vòi sen cầm tay hay cả hai? Mỗi cái là một lối thoát riêng biệt",
+          "Cân bằng nhiệt hoặc áp suất"
+        ]
+      },
+      "showerDrainFixture": {
+        "label": "Thiết bị thoát nước vòi hoa sen",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại kết thúc sao cho phù hợp với vòi",
+          "Cống điểm hoặc tuyến tính - cống tuyến tính thay đổi độ dốc cơ sở và phải được quyết định ngay bây giờ"
+        ]
+      },
+      "toilet": {
+        "label": "nhà vệ sinh",
+        "checks": [
+          "Đo phần thô: tâm của mặt bích tới bức tường hoàn thiện phía sau. Thường là 12\", nhưng hãy kiểm tra",
+          "Khoảng trống mỗi bên và phía trước, tới bàn trang điểm và bức tường",
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mô hình",
+          "Nhà vệ sinh có di chuyển không? Đó là di dời cống chứ không phải hoán đổi"
+        ]
+      },
+      "bidet": {
+        "label": "chậu vệ sinh",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mô hình",
+          "Có ổ cắm điện nào gần đó cho ghế điện không? Hầu hết đều cần một",
+          "Xác nhận điểm kết nối cấp nước"
+        ]
+      },
+      "gfciToilet": {
+        "label": "Ổ cắm GFCI (khu vực vệ sinh)",
+        "checks": [
+          "Chính xác ở đâu - đo vị trí và chiều cao",
+          "Nó sẽ tắt mạch nào và có công suất không",
+          "Thông thường đây là chỗ ngồi dành cho bồn rửa vệ sinh; xác nhận đó là lý do tại sao"
+        ]
+      },
+      "gfciOutlets": {
+        "label": "cửa hàng GFCI",
+        "checks": [
+          "Đếm xem có bao nhiêu và đánh dấu từng vị trí",
+          "Lưu ý những gì nằm trong backsplash và chiều cao của chúng",
+          "Kiểm tra các mạch hiện có và dung lượng bảng điều khiển"
+        ]
+      },
+      "replaceSwitches": {
+        "label": "Thay thế công tắc",
+        "checks": [
+          "Đếm các công tắc và ghi lại những gì mỗi công tắc điều khiển",
+          "Có cái nào trong số chúng có thể điều chỉnh độ sáng không?",
+          "Xác nhận độ hoàn thiện và màu sắc mà khách hàng mong muốn"
+        ]
+      },
+      "pendantLight": {
+        "label": "đèn treo",
+        "checks": [
+          "Có bao nhiêu, và đánh dấu các vị trí trên đảo hoặc quầy",
+          "Có hộp hiện có không, hay đây là hệ thống dây điện mới?",
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mẫu mã, đồng thời ghi lại chiều cao treo mà họ muốn"
+        ]
+      },
+      "pendantLightSwitch": {
+        "label": "Công tắc đèn treo",
+        "checks": [
+          "Vị trí chuyển đổi, được đo từ góc",
+          "Có thể điều chỉnh độ sáng hoặc tiêu chuẩn",
+          "Nó có thể tham gia một nhóm băng đảng hiện có không?"
+        ]
+      },
+      "islandOutlet": {
+        "label": "Đảo ổ cắm",
+        "checks": [
+          "Vị trí trên đảo và vị trí của nó ở bảng điều khiển bên cạnh hay cửa sổ bật lên trên quầy",
+          "Đường cấp liệu - dây phải đến hòn đảo dưới sàn",
+          "Xác nhận với khách hàng nơi họ thực sự cắm mọi thứ vào"
+        ]
+      },
+      "baseboard": {
+        "label": "Ván chân tường",
+        "checks": [
+          "Đo tổng số lần chạy",
+          "Khớp hình dáng và chiều cao với phần còn lại của ngôi nhà nếu nó tiếp tục",
+          "Lưu ý bất kỳ góc bên ngoài nào và có bao nhiêu"
+        ]
+      },
+      "mirror": {
+        "label": "Gương",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại kích thước và mô hình",
+          "Xác nhận kích thước vừa vặn giữa đèn trang điểm và tấm ốp tường",
+          "Có khung, không khung hoặc tủ thuốc - một chiếc tủ cần có quyết định về hốc tường ngay bây giờ"
+        ]
+      },
+      "vanityLight": {
+        "label": "Đèn trang điểm",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại thương hiệu và mô hình",
+          "Vị trí và chiều cao của hộp hiện tại - nó có tập trung vào bàn trang điểm mới không?",
+          "Nếu nó đang di chuyển, hãy đo vị trí mới và xác nhận với khách hàng"
+        ]
+      },
+      "fullPaint": {
+        "label": "Sơn nhà bếp",
+        "checks": [
+          "Diện tích tường, trần và chiều cao trần",
+          "Mã màu - nhận nó từ khách hàng bằng văn bản",
+          "Lưu ý lớp hoàn thiện hiện tại và liệu nó có cần sơn lót không",
+          "Xác nhận những gì bị loại trừ: cửa ra vào, đồ trang trí, bên trong tủ"
+        ]
+      },
+      "hardware": {
+        "label": "Phần cứng phòng tắm",
+        "checks": [
+          "Khách hàng cung cấp? Ghi lại kết thúc sao cho phù hợp với vòi",
+          "Đánh dấu từng vị trí với khách hàng: thanh treo khăn, vòng treo, ngăn đựng giấy",
+          "Bất cứ thứ gì hạ cánh trên ô đều cần được xác nhận vị trí của nó trước khi xếp ô"
+        ]
+      },
+      "exhaustFan": {
+        "label": "Quạt hút",
+        "checks": [
+          "Cái hiện có thông hơi đi đâu? Theo dõi nó nếu bạn có thể",
+          "Khách hàng cung cấp? Ghi lại nhãn hiệu và mẫu mã, đồng thời kiểm tra CFM có phù hợp với kích thước phòng không",
+          "Kích thước mở hiện tại so với đơn vị mới",
+          "Nó đang di chuyển à? Lưu ý ống dẫn chạy tới vị trí mới"
+        ]
+      },
+      "potlights": {
+        "label": "đèn pha",
+        "checks": [
+          "Bao nhiêu, kích thước bao nhiêu và đánh dấu bố cục với khách hàng",
+          "Truy cập ở trên - gác mái, hoặc trần hoàn thiện bên dưới căn hộ khác?",
+          "Lưu ý các thanh dầm, ống dẫn và bất cứ thứ gì trong hốc trần",
+          "Công tắc nào sẽ điều khiển chúng và điều chỉnh độ sáng?"
+        ]
+      },
+      "newSwitch": {
+        "label": "Công tắc mới",
+        "checks": [
+          "Vị trí, đo từ khung cửa",
+          "Nó kiểm soát những gì và nó có thể điều chỉnh độ sáng không?",
+          "Hộp băng đảng hiện có gần đó để mở rộng từ?"
+        ]
+      },
+      "baseboardReinstall": {
+        "label": "Lắp đặt lại ván chân tường",
+        "checks": [
+          "Xác nhận ván chân tường hiện có sẽ tồn tại khi bị loại bỏ - MDF thường không",
+          "Đo tổng số lần chạy",
+          "Lưu ý tình trạng và liệu nó có cần sơn lại sau không"
+        ]
+      },
+      "baseboardNew": {
+        "label": "Ván chân tường MDF mới",
+        "checks": [
+          "Đo tổng số lần chạy",
+          "Xác nhận hồ sơ và chiều cao phù hợp với phần còn lại của ngôi nhà",
+          "Đếm các góc bên ngoài"
+        ]
+      },
+      "paint": {
+        "label": "Sơn",
+        "checks": [
+          "Diện tích tường, trần và chiều cao trần",
+          "Mã màu bằng văn bản từ khách hàng",
+          "Lớp hoàn thiện hiện tại và liệu có cần sơn lót hay không",
+          "Xác nhận những gì bị loại trừ"
+        ]
+      },
+      "touchUpPaint": {
+        "label": "Sơn cảm ứng",
+        "checks": [
+          "Chiều cao trần và khoảng bao nhiêu diện tích cần chạm vào",
+          "Lấy mã màu hiện có — kiểm tra hộp trong gara hoặc tủ quần áo",
+          "Cảnh báo khách hàng rằng lớp sơn lại hiếm khi hòa quyện hoàn hảo trên bức tường cũ"
+        ]
+      }
+    },
+    "summary": {
+      "title": "Gửi nó trở lại văn phòng",
+      "copy": "Sao chép tóm tắt",
+      "copied": "Đã sao chép",
+      "print": "In / Lưu PDF",
+      "reset": "Xóa tất cả dấu tích",
+      "resetConfirm": "Xóa mọi đánh dấu và ghi chú trong danh sách kiểm tra này?",
+      "notesLabel": "Ghi chú",
+      "notesPlaceholder": "Các phép đo, quyết định của khách hàng, bất cứ điều gì bất thường…",
+      "progress": "Đã kiểm tra {count}",
+      "shareTitle": "Gửi danh sách kiểm tra chính xác này cho ai đó",
+      "shareHint": "Sao chép một liên kết với phạm vi này đã được chọn.",
+      "shareCopy": "Sao chép liên kết",
+      "unchecked": "Chưa được kiểm tra"
+    },
+    "ui": {
+      "addon": "Tiện ích bổ sung",
+      "replacement": "Thay đổi",
+      "blocker": "Dừng lại - giải quyết trước khi trích dẫn",
+      "high": "Ảnh hưởng đáng kể đến giá"
+    },
+    "names": {
+      "bathroom-tub-to-tub": "Bồn tắm đến bồn tắm",
+      "bathroom-tub-to-tiled-shower": "Bồn tắm và vòi hoa sen có đế lát gạch",
+      "bathroom-tub-to-prefab-shower": "Bồn tắm đến vòi sen Prefab",
+      "bathroom-shower-to-tiled-shower": "Vòi sen đến vòi sen có đế lát gạch",
+      "bathroom-shower-to-prefab-shower": "Vòi sen đến vòi sen Prefab",
+      "bathroom-4piece": "Phòng tắm 4 mảnh",
+      "bathroom-powder-room": "Phòng bột",
+      "bathroom-shower-only-tiled": "Chỉ có vòi sen (Đế lát gạch)",
+      "bathroom-shower-only-prefab": "Chỉ vòi sen (Đế Prefab)",
+      "bathroom-tub-only-tub": "Chỉ bồn tắm (Bồn tắm)",
+      "bathroom-tub-only-tiled-shower": "Chỉ có bồn tắm (Vòi sen có đế lát gạch)",
+      "bathroom-tub-only-prefab-shower": "Chỉ có bồn tắm (Vòi hoa sen có đế tiền chế)",
+      "bathroom-vanity-only": "Chỉ Vanity (Giặt ủi)",
+      "bathroom-keep-tub": "Giữ lại bồn tắm hiện có (giữ cả vòi bồn tắm + cống thoát nước)",
+      "bathroom-keep-vanity": "Giữ lại tủ trang điểm hiện có (không bao gồm mặt bàn/bồn rửa/vòi)",
+      "bathroom-keep-countertop": "Giữ mặt bàn hiện có",
+      "bathroom-keep-vanity-sink": "Giữ lại bồn rửa trang điểm hiện có",
+      "bathroom-keep-vanity-faucet": "Giữ lại vòi trang điểm hiện có",
+      "bathroom-keep-toilet": "Giữ lại nhà vệ sinh hiện có",
+      "bathroom-keep-mirror": "Giữ gương hiện có",
+      "bathroom-keep-hardware": "Giữ phần cứng phòng tắm hiện có",
+      "bathroom-popcorn-removal": "Loại bỏ bỏng ngô (trần mịn)",
+      "bathroom-electrical-plumbing-venting": "Thi công điện, nước, thông gió",
+      "bathroom-gfci-vanity": "Ổ cắm GFCI (khu vực trang điểm)",
+      "bathroom-gfci-toilet": "Ổ cắm GFCI (khu vực vệ sinh)",
+      "bathroom-potlights": "đèn pha",
+      "bathroom-new-switch": "Công tắc mới / điều chỉnh độ sáng",
+      "bathroom-baseboard-reinstall": "Lắp đặt lại ván chân tường",
+      "bathroom-baseboard-new": "Ván chân tường phẳng MDF",
+      "bathroom-full-paint": "Sơn phòng tắm",
+      "bathroom-touch-up-paint": "Sơn cảm ứng",
+      "bathroom-bench": "Ghế tắm",
+      "bathroom-niche": "Hốc tắm",
+      "bathroom-ponywall": "Tường đuôi ngựa",
+      "bathroom-custom-glass-door": "Cửa kính tùy chỉnh",
+      "bathroom-custom-vanity": "Bàn trang điểm bằng ván ép tùy chỉnh",
+      "bathroom-led-mirror": "Gương LED",
+      "bathroom-shower-curtain": "Rèm tắm (không có cửa kính)",
+      "bathroom-curbless": "Vòi sen không có rào chắn/không có rào chắn (không có lề đường)",
+      "bathroom-open-shower": "Phòng tắm mở (không có cửa kính, không có rèm)",
+      "bathroom-grab-bars": "Thanh vịn (tắm vòi hoa sen)",
+      "bathroom-corner-shelf": "Kệ góc (tắm)",
+      "bathroom-bidet": "Bidet (cài đặt; khách hàng cung cấp)",
+      "kitchen-prefab-cabinet": "Tủ bếp tiền chế",
+      "kitchen-custom-cabinet": "Tủ bếp tùy chỉnh",
+      "kitchen-popcorn-removal": "Loại bỏ bỏng ngô (trần mịn)",
+      "kitchen-enclose-door-opening": "Đóng kín cửa mở",
+      "kitchen-new-door-opening": "Mở cửa mới",
+      "kitchen-electrical-plumbing-venting": "Thi công điện, nước, thông gió",
+      "kitchen-floor-tile": "Gạch lát sàn",
+      "kitchen-lvp-flooring": "LVP (tấm ván vinyl)",
+      "kitchen-t-mouldings": "Khuôn đúc & hộp giảm tốc chữ T",
+      "kitchen-under-cabinet-led": "Dải đèn LED dưới tủ",
+      "kitchen-led-switch": "Công tắc dải đèn LED",
+      "kitchen-potlights": "đèn pha",
+      "kitchen-gfci-outlets": "cửa hàng GFCI",
+      "kitchen-replace-switches": "Thay thế công tắc",
+      "kitchen-pendant-light": "Đèn treo (cài đặt + công tắc)",
+      "kitchen-island-outlet": "Cửa hàng đảo (mới)",
+      "kitchen-baseboard": "Ván chân tường phẳng MDF",
+      "kitchen-touch-up-paint": "Sơn cảm ứng",
+      "kitchen-full-paint": "Sơn nhà bếp",
+      "quartz-backsplash": "Tấm ốp tường thạch anh"
+    }
+  }
+}
