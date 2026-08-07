@@ -9,6 +9,7 @@ import MetaPixel from '@/components/MetaPixel';
 import WebMcpTools from '@/components/WebMcpTools';
 import GoogleAdsConversion from '@/components/GoogleAdsConversion';
 import Navbar from '@/components/Navbar';
+import ScrollToTop from '@/components/ScrollToTop';
 import Footer from '@/components/Footer';
 // Nav-scoped reads (tag `nav:globals`, ≤24h TTL): the footer/nav shows globals on
 // EVERY page, so reading the per-content tags (company/services/service-areas/
@@ -182,6 +183,7 @@ export default async function LocaleLayout({
           >
             {locale === 'zh' ? '跳到主要内容' : locale === 'zh-Hant' ? '跳到主要內容' : 'Skip to main content'}
           </a>
+          <ScrollToTop />
           <Navbar company={company} services={navServices} />
           <main id="main-content">
             {children}
