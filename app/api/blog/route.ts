@@ -55,6 +55,41 @@ const OPTIONAL_TEXT = [
   'seoKeywordsEn', 'seoKeywordsZh', 'featuredImageUrl', 'author',
 ] as const;
 
+// The exact contract the render path reads: <field><LocaleSuffix>. EN and ZH
+// live in dedicated columns; these are the other 12 locales from i18n/config.
+// 6 fields x 12 locales = 72 keys on a complete post.
+const LOC_FIELDS = [
+  'title', 'content', 'excerpt', 'focusKeyword', 'metaTitle', 'metaDescription',
+] as const;
+const LOC_SUFFIXES = [
+  'Ar', 'Es', 'Fa', 'Fr', 'Hi', 'Ja', 'Ko', 'Pa', 'Ru', 'Tl', 'Vi', 'ZhHant',
+] as const;
+const LOCALIZATION_KEY_RE = new RegExp(
+  `^(${LOC_FIELDS.join('|')})(${LOC_SUFFIXES.join('|')})$`,
+);
+
+/**
+ * Returns a human-readable problem with a content field, or null if it is
+ * acceptable HTML. Deliberately permissive about WHICH tags — the point is to
+ * catch a whole document authored in Markdown, not to police markup style.
+ */
+function htmlProblem(value: unknown, field: string): string | null {
+  if (typeof value !== 'string' || value.trim() === '') return null;
+  const v = value.trim();
+  // A leading ATX heading, or a `##` at line start, means the writer produced
+  // Markdown. Checked first so the error names the real problem.
+  if (/^#{1,6}\s/.test(v) || /\n#{1,6}\s/.test(v)) {
+    return `${field} looks like Markdown (found a "#" heading). Send HTML — e.g. <h2>Heading</h2> and <p>text</p>. Markdown is not converted; it renders literally on the page.`;
+  }
+  if (/(^|\n)\s*[-*]\s+\S/.test(v) && !/<(ul|ol|li)\b/i.test(v)) {
+    return `${field} looks like Markdown (found a "-" or "*" list with no <ul>/<li>). Send HTML lists.`;
+  }
+  if (!/<(p|h[1-6]|ul|ol|div|section|article|blockquote|table)\b/i.test(v)) {
+    return `${field} contains no HTML block element. Send HTML — at minimum wrap paragraphs in <p>.`;
+  }
+  return null;
+}
+
 type Body = Record<string, unknown>;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -95,14 +130,28 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // localizations must be a plain JSON object of string values. Anything else
-  // would be written verbatim into a jsonb column the render path reads.
+  // Content must be HTML. The render path injects these fields as markup, so
+  // Markdown does not degrade — it renders literally, and a reader sees `##`
+  // and `**` on the page. The first automated post arrived as Markdown and was
+  // accepted with a 200, which taught the writer nothing. Reject it loudly.
+  for (const f of ['contentEn', 'contentZh'] as const) {
+    const err = htmlProblem(body[f] as string, f);
+    if (err) return NextResponse.json({ error: err }, { status: 400 });
+  }
+
+  // localizations must be a plain JSON object of string values, keyed EXACTLY
+  // as the renderer reads them: <field><LocaleSuffix>, e.g. `titleJa`. The
+  // first automated post used bare locale codes (`ja`, `es`), which are valid
+  // JSON, stored fine, and are invisible to every read path — 12 translations
+  // that silently did not exist. Structural validity is not the bar; matching
+  // the contract is.
   const localizations: Record<string, string> = {};
   if (body.localizations !== undefined) {
     const l = body.localizations;
     if (typeof l !== 'object' || l === null || Array.isArray(l)) {
       return NextResponse.json({ error: '`localizations` must be an object.' }, { status: 400 });
     }
+    const bad: string[] = [];
     for (const [k, v] of Object.entries(l as Record<string, unknown>)) {
       if (typeof v !== 'string') {
         return NextResponse.json(
@@ -110,7 +159,41 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
           { status: 400 },
         );
       }
+      if (!LOCALIZATION_KEY_RE.test(k)) bad.push(k);
       localizations[k] = v;
+    }
+    if (bad.length > 0) {
+      return NextResponse.json(
+        {
+          error:
+            `Unrecognised localizations key(s): ${bad.slice(0, 8).join(', ')}` +
+            (bad.length > 8 ? ` (+${bad.length - 8} more)` : '') +
+            `. Keys must be <field><Locale>, e.g. "titleJa". ` +
+            `Fields: ${LOC_FIELDS.join('|')}. Locales: ${LOC_SUFFIXES.join('|')}. ` +
+            `A bare locale code like "ja" is stored but never read by the site.`,
+          expectedExample: { titleJa: '…', contentJa: '<p>…</p>', excerptJa: '…' },
+        },
+        { status: 400 },
+      );
+    }
+    // A locale with a title but no body renders an empty page under a real
+    // headline — worse than the locale simply being absent.
+    const missingBody = LOC_SUFFIXES.filter(
+      (s) => localizations[`title${s}`] && !localizations[`content${s}`],
+    );
+    if (missingBody.length > 0) {
+      return NextResponse.json(
+        {
+          error:
+            `Locale(s) ${missingBody.join(', ')} have a title but no content. ` +
+            `Send content<Locale> for each locale you send title<Locale> for, or omit the locale entirely.`,
+        },
+        { status: 400 },
+      );
+    }
+    for (const s of LOC_SUFFIXES) {
+      const err = htmlProblem(localizations[`content${s}`], `localizations.content${s}`);
+      if (err) return NextResponse.json({ error: err }, { status: 400 });
     }
   }
 
@@ -119,9 +202,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ? body.readingTimeMinutes
       : null;
 
-  // Unpublished unless asked for explicitly. `isPublished` must be a real
-  // boolean — a truthy string like "false" must not publish a post.
-  const isPublished = body.isPublished === true;
+  // Published by default (owner decision, 2026-08-07). The endpoint's own
+  // validation is the gate now, not a human review step — so anything that
+  // reaches the database is already well-formed. Pass `isPublished: false`
+  // explicitly to stage a draft.
+  const isPublished = body.isPublished !== false;
 
   const values: Record<string, unknown> = {
     slug,
