@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
-import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-data';
+import { BreadcrumbSchema, ContactPageSchema, FAQSchema } from '@/components/structured-data';
 import { localeSelfName, nativeSupportLanguageList } from '@/lib/i18n/language-names';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from '@/lib/db/queries';
@@ -47,6 +47,7 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: 'nav' });
+  const tContact = await getTranslations({ locale, namespace: 'contact' });
   const breadcrumbs = [
     { name: t('home'), url: `/${locale}/` },
     { name: t('contact'), url: `/${locale}/contact/` },
@@ -76,10 +77,24 @@ export default async function Page({ params }: PageProps) {
     supported: nativeSupportLanguageList(locale as Locale),
   };
 
+  // Contact-specific FAQ — these mirror, verbatim, the visible Q&A section
+  // rendered by ContactPage (same faqQ*/faqA* keys), which is Google's
+  // requirement for FAQPage markup. Note FAQ rich results were restricted to
+  // government/health sites in Aug 2023, so this does not produce SERP
+  // accordions; the value is machine-readable Q&A for AI answer engines and
+  // Bing, consistent with the other pages that already emit FAQPage.
+  const contactFaqs = [
+    { question: tContact('faqQ1'), answer: tContact('faqA1') },
+    { question: tContact('faqQ2'), answer: tContact('faqA2') },
+    { question: tContact('faqQ3'), answer: tContact('faqA3') },
+    { question: tContact('faqQ4'), answer: tContact('faqA4') },
+  ];
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <ContactPageSchema company={company} areaNames={areaNames} locale={locale} />
+      <FAQSchema faqs={contactFaqs} locale={locale} />
       <ContactPage
         company={company}
         areaNames={areaNames}
