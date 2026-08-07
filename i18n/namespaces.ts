@@ -43,6 +43,7 @@ export const namespaces = [
   'services',
   'share',
   'showroomPage',
+  'siteVisit',
   'stats',
   'wholeHouse',
 ] as const;

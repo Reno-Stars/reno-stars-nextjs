@@ -1,0 +1,765 @@
+{
+  "siteVisit": {
+    "meta": {
+      "title": "Liste de contrôle pour la visite du site | Étoiles de Réno",
+      "description": "Liste de contrôle interne pour les visites de sites Reno Stars. Choisissez la portée et capturez tout ce dont le devis a besoin en un seul passage."
+    },
+    "hero": {
+      "eyebrow": "Outil interne",
+      "title": "Liste de contrôle pour la visite du site",
+      "subtitle": "Choisissez ce que veut le client. La page affiche uniquement les contrôles dont la portée a besoin – les mêmes étapes que le système de cotation fixera le prix.",
+      "note": "Cette page est destinée au personnel de Reno Stars. Rien de ce que vous cochez n’est envoyé nulle part ; il reste sur ce téléphone jusqu'à ce que vous l'effaciez."
+    },
+    "picker": {
+      "scopeTitle": "1. Que citons-nous ?",
+      "scopeHint": "Choisissez-en un ou les deux.",
+      "modelTitle": "2. Quel métier ?",
+      "modelHint": "Correspondre à l'intention du client. En cas de doute, choisissez le plus proche et notez la différence.",
+      "modelPlaceholder": "Sélectionnez un type de travail…",
+      "addonsTitle": "3. Quelque chose de plus ?",
+      "addonsHint": "Cochez ce que le client a demandé. Chacun ajoute ses propres vérifications ci-dessous.",
+      "addonsGroupAddon": "Modules complémentaires",
+      "addonsGroupReplacement": "Modifications et échanges",
+      "empty": "Choisissez une portée ci-dessus pour créer la liste de contrôle."
+    },
+    "sectionNames": {
+      "bathrooms": "Salle de bain",
+      "kitchen": "Cuisine"
+    },
+    "always": {
+      "title": "Avant de commencer",
+      "subtitle": "Chaque visite, quelle que soit sa portée.",
+      "items": [
+        {
+          "id": "arrivée",
+          "label": "Confirmez le nom du client et l'adresse complète à laquelle vous vous trouvez",
+          "hint": "Le numéro de rue et la ville deviennent plus tard le numéro de bon de commande du projet – faites-le exactement correctement."
+        },
+        {
+          "id": "contact",
+          "label": "Meilleur numéro de téléphone et langue préférée pour la personne qui décide",
+          "hint": "Pas toujours la personne qui vous a laissé entrer."
+        },
+        {
+          "id": "parking",
+          "label": "Stationnement et dépôt de matériel : où va réellement un camion ?",
+          "hint": "Accès aux voies, zone de permis, distance à la porte. C'est un coût réel."
+        },
+        {
+          "id": "couches",
+          "label": "Strates ou location ? Obtenez les statuts, les limites d'heures de travail et les règles de réservation des ascenseurs",
+          "hint": "Demandez le formulaire de strate maintenant. Cela retarde plus d’emplois que toute autre chose sur cette liste."
+        },
+        {
+          "id": "bâtimentÂge",
+          "label": "Année de construction du bâtiment",
+          "hint": "Avant 1990, toute la citation a été modifiée – voir les dangers ci-dessous."
+        },
+        {
+          "id": "occupé",
+          "label": "Est-ce que quelqu'un vivra ici pendant les travaux ?",
+          "hint": "Décide de la protection du sol, des murs anti-poussière et de la nécessité ou non d'échelonner les travaux."
+        },
+        {
+          "id": "arrêt",
+          "label": "Localiser et photographier la coupure d'eau",
+          "hint": "Arrêt de l'unité et arrêt du bâtiment. Testez qu'il tourne réellement."
+        },
+        {
+          "id": "panneau",
+          "label": "Localiser et photographier le panneau électrique",
+          "hint": "Notez les emplacements de disjoncteurs libres et s'il s'agit de fusibles ou de disjoncteurs."
+        },
+        {
+          "id": "photosLarge",
+          "label": "De larges photos de chaque mur de la zone de travail, ainsi que du plafond et du sol",
+          "hint": "Placez-vous dans chaque coin. Vous n'aurez pas de deuxième visite."
+        },
+        {
+          "id": "photosChemin",
+          "label": "Photos du chemin de la porte à la zone de travail",
+          "hint": "Escaliers, virages, portes étroites – tout ce à travers lequel une vanité ou une dalle doit passer."
+        },
+        {
+          "id": "salleDims",
+          "label": "Dimensions hors tout de la pièce et hauteur sous plafond",
+          "hint": "Longueur, largeur, hauteur. Notez les cloisons et toute pente."
+        },
+        {
+          "id": "chronologie",
+          "label": "Date de début cible du client et toute date limite stricte",
+          "hint": "Demandez pourquoi, s'il y a une date limite. Il s'agit généralement d'un emménagement ou d'un événement familial."
+        }
+      ]
+    },
+    "conditions": {
+      "title": "Conditions du site",
+      "subtitle": "Il ne s'agit pas d'éléments de campagne sur le devis, mais ils font varier le prix plus que toute autre chose. Vérifiez-les tous.",
+      "items": [
+        {
+          "id": "amiante",
+          "label": "Bâtiment d’avant 1990 – signaler les tests d’amiante",
+          "hint": "WorkSafeBC exige une enquête sur les matières dangereuses avant la démolition. Ne promettez pas de prix sans cela. Les plafonds en pop-corn, les carreaux de sol en vinyle, la boue pour cloisons sèches et les enveloppes de tuyaux sont les suspects habituels.",
+          "severity": "bloqueur"
+        },
+        {
+          "id": "plomberieType",
+          "label": "Tuyauterie d'évacuation et d'alimentation existante – ABS, cuivre, PEX, fonte ou galvanisée",
+          "hint": "Regardez sous l’évier et toutes les pistes exposées du sous-sol. En fonte ou galvanisé, le coût du déménagement n'est pas standard.",
+          "severity": "haut"
+        },
+        {
+          "id": "Dommages à l'eau",
+          "label": "Signes de dégâts d’eau actifs ou passés",
+          "hint": "Sol mou au niveau des toilettes ou de la baignoire, taches sur le plafond en dessous, odeur de moisi, carrelage qui soulève. Photographiez-le et notez-le par écrit – cela nous protège tous les deux.",
+          "severity": "haut"
+        },
+        {
+          "id": "moule",
+          "label": "Moisissure visible",
+          "hint": "Derrière les toilettes, au bord de la baignoire, sous le lavabo. La remédiation est une portée distincte.",
+          "severity": "haut"
+        },
+        {
+          "id": "sous-plancher",
+          "label": "Type et état du sous-plancher et niveau du sol",
+          "hint": "Contreplaqué ou dalle de béton. Vérifiez le niveau avec un niveau de 4 pieds dans deux directions – un sol hors de niveau signifie un auto-nivellement avant le carrelage.",
+          "severity": "haut"
+        },
+        {
+          "id": "porteur",
+          "label": "Tout mur ouvert ou retiré est-il porteur ?",
+          "hint": "En cas de doute, il faut une lettre d'ingénieur. Notez la direction des solives ci-dessus.",
+          "severity": "bloqueur"
+        },
+        {
+          "id": "permis",
+          "label": "Cette portée déclenche-t-elle un permis ?",
+          "hint": "Déplacement de plomberie ou de gaz, changements structurels, nouveaux circuits ou changement d'utilisation de la pièce. Confirmez la municipalité : Vancouver, Burnaby, Richmond et Surrey diffèrent toutes.",
+          "severity": "bloqueur"
+        },
+        {
+          "id": "popcornPrésent",
+          "label": "Plafond pop-corn présent dans ou à côté de la zone de travail",
+          "hint": "Le pop-corn d'avant 1990 doit être testé avant d'être touché. Même lorsque nous ne le retirons pas, notez-le : les vibrations le fissurent."
+        },
+        {
+          "id": "fenêtreDansMouillé",
+          "label": "Fenêtre à l'intérieur de la baignoire ou de la douche",
+          "hint": "Nécessite un retour imperméabilisé et généralement un remplacement trempé. Mesurez-le et photographiez l’état du seuil."
+        },
+        {
+          "id": "ventilation",
+          "label": "Où le ventilateur d’extraction existant s’évacue-t-il réellement ?",
+          "hint": "Toit, soffite ou directement dans le grenier. L’aération dans les combles est un défaut que nous devons corriger."
+        },
+        {
+          "id": "plafondAccès",
+          "label": "Accès au-dessus de la zone de travail : grenier, vide sanitaire ou unité finie",
+          "hint": "Décide si les luminaires encastrés et les ventilations déplacées sont simples ou envahissantes."
+        },
+        {
+          "id": "gaz",
+          "label": "Tout appareil à gaz dans ou à proximité de la portée",
+          "hint": "Les travaux au gaz nécessitent un ticket sous licence et son propre permis. Photographiez l'arrêt."
+        }
+      ]
+    },
+    "scope": {
+      "title": "Vérifications de la portée",
+      "subtitle": "En fonction du type de travail et des modules complémentaires que vous avez choisis. Chaque carte est une étape que le devis contiendra.",
+      "quoteLineLabel": "Ligne de devis",
+      "captureLabel": "Capture sur place"
+    },
+    "captureLabels": {
+      "size": "Taille - mesurez-la, n'estimez pas",
+      "doorStyle": "Style de porte souhaité par le client",
+      "brand": "Marque, si le client l'a déjà achetée",
+      "spec": "Numéro de modèle ou de spécification",
+      "variant": "Variante, couleur ou finition",
+      "stoneCode": "Code de pierre choisi par le client",
+      "slabCounts": "Nombre de dalles nécessaire",
+      "islandSize": "Taille de l'île",
+      "nicheEdgeLabel": "Détail du bord de la niche",
+      "ceilingHeight": "Hauteur du plafond",
+      "colorCode": "Code couleur de la peinture"
+    },
+    "provides": {
+      "title": "Confirmez qui fournit quoi",
+      "subtitle": "Par défaut, ceux-ci sont uniquement destinés à l'installation : le client les achète. Confirmez chacun à voix haute et notez ce qu'il a déjà acheté.",
+      "note": "Si le client souhaite que nous lui fournissions l'un de ces éléments, marquez-le et obtenez le modèle qu'il souhaite. Cela change la citation."
+    },
+    "steps": {
+      "demolition": {
+        "label": "Démolition",
+        "checks": [
+          "Répertoriez exactement ce qui sort et ce qui reste : parcourez la pièce avec le client et montrez chaque élément.",
+          "Où vont les débris ? Emplacement du bac, ou combien de voyages jusqu'au camion",
+          "Recherchez un broyeur, un adoucisseur d'eau ou tout autre élément raccordé qui n'est pas évident",
+          "Notez tout ce que le client souhaite conserver ou récupérer"
+        ]
+      },
+      "drywall": {
+        "label": "Réparation de cloisons sèches",
+        "checks": [
+          "État du mur derrière les luminaires qui sortent : carrelage sur carrelage, plâtre ou panneau standard",
+          "Notez tout mur qui n'est pas d'aplomb ou droit ; ça ne s'affiche pas bien une fois la nouvelle tuile posée",
+          "Vérifiez l'isolation des murs extérieurs pendant que vous devinez ce qu'il y a derrière eux."
+        ]
+      },
+      "popcornRemoval": {
+        "label": "Retrait du pop-corn",
+        "checks": [
+          "Confirmez que le test d'amiante d'avant 1990 est signalé - n'envisagez pas le retrait sans ce test.",
+          "Mesurer la surface du plafond à lisser",
+          "Le pop-corn est-il peint ? Le pop-corn peint est plus lent et doit parfois être embarqué à la place"
+        ]
+      },
+      "epv": {
+        "label": "Électricité, plomberie et ventilation",
+        "checks": [
+          "Notez chaque déménagement souhaité par le client, élément par élément, avec la nouvelle position mesurée à partir d'un mur fixe.",
+          "Photographiez les positions brutes existantes avant de partir",
+          "Confirmez l'accès en dessous ou derrière — le plafond sous cette pièce est-il terminé ?",
+          "Notez le matériau des tuyaux existants à chaque point où vous déménagez"
+        ]
+      },
+      "bench": {
+        "label": "Banc de douche",
+        "checks": [
+          "Quel mur, quelle longueur et quelle profondeur",
+          "Confirmez que le banc n'atteint pas la seule ligne de panneaux de verre de la douche",
+          "Vérifiez que le mur derrière peut le supporter - le mur extérieur signifie une perte d'isolation"
+        ]
+      },
+      "niche": {
+        "label": "Niche de douche",
+        "checks": [
+          "Position et taille, mesurées à partir du sol fini et du coin",
+          "Confirmez que la cavité murale est libre : pas de cheminée d'aération, pas de plomberie, et vérifiez l'autre côté du mur.",
+          "Bordure métallique ou bordure de carrelage en onglet ? Demandez au client et notez la réponse",
+          "Une bande LED à l'intérieur de la niche ? Cela nécessite une source d'alimentation à proximité"
+        ]
+      },
+      "ponywall": {
+        "label": "Mur de poney",
+        "checks": [
+          "Longueur et hauteur finie",
+          "Le panneau de verre se pose-t-il dessus ? Le fournisseur de verre a besoin de la hauteur finie",
+          "Vérifiez ce qu'il y a en dessous : le ponywall doit reposer sur une charpente solide"
+        ]
+      },
+      "encloseDoorOpening": {
+        "label": "Fermer l'ouverture de la porte",
+        "checks": [
+          "Largeur et hauteur d'ouverture",
+          "Confirmez qu'il n'est pas porteur avant de promettre quoi que ce soit",
+          "Quelle est la finition des deux côtés ? il est supplémentaire de faire correspondre deux finitions murales différentes",
+          "Le revêtement de sol devra être réparé là où se trouvait le seuil."
+        ]
+      },
+      "newDoorOpening": {
+        "label": "Nouvelle ouverture de porte",
+        "checks": [
+          "Où exactement, mesuré à partir d'un coin fixe et quelle largeur",
+          "Vérification de la portance – notez la direction des solives ci-dessus. En cas de doute, lettre de l'ingénieur",
+          "Tout ce qui est dans le mur : prises, interrupteurs, plomberie, conduits",
+          "Confirmez la direction d'ouverture et si une porte est incluse"
+        ]
+      },
+      "showerWall": {
+        "label": "Mur de douche et étanchéité",
+        "checks": [
+          "Mesurez chaque mur de la zone humide, du sol au plafond",
+          "Notez la hauteur du plafond et si les carreaux vont jusqu'au plafond ou jusqu'à une cloison.",
+          "Vérifiez le mur existant pour tout mouvement ou pourriture derrière le cadre actuel.",
+          "Photographiez le coin où se rencontrent les deux murs humides"
+        ]
+      },
+      "floorTile": {
+        "label": "Carrelage de sol",
+        "checks": [
+          "Mesurez la surface au sol et notez que la pièce n'est pas d'équerre si cela est évident",
+          "Le client a-t-il choisi le carrelage ? La taille et la finition changent le travail",
+          "Accumulation de sol existante : combien de couches se détachent et quelle est la différence de hauteur au niveau de la porte",
+          "Vérifiez que le sol est de niveau ; note où ce n'est pas le cas"
+        ]
+      },
+      "showerBase": {
+        "label": "Receveur de douche carrelé",
+        "checks": [
+          "Mesurez l'empreinte de la base et la position du trottoir",
+          "Confirmez l'emplacement du drain et s'il bouge",
+          "Possibilité de construction de sol pour la pente : une base carrelée a besoin de hauteur",
+          "Notez la taille des carreaux que le client souhaite sur la base ; un petit format est requis sur un plateau incliné"
+        ]
+      },
+      "tub": {
+        "label": "Cuve",
+        "checks": [
+          "Mesurez l'alcôve : longueur, largeur et hauteur jusqu'au sommet du carreau prévu",
+          "Confirmez que la baignoire du client passera par la porte et dans le couloir",
+          "Position de vidange - gauche, droite ou centre - et si elle correspond à la nouvelle baignoire",
+          "Enregistrez la marque et le modèle s'ils l'ont déjà acheté"
+        ]
+      },
+      "lvpFlooring": {
+        "label": "Revêtement de sol LVP",
+        "checks": [
+          "Mesurez la zone, ainsi que tout placard ou coin qui traverse",
+          "Sol existant : est-ce qu'il sort ou est-ce qu'on le refait ?",
+          "Vérifiez le niveau et notez les éventuelles baisses ; LVP télégraphie un sous-plancher inégal",
+          "Hauteurs de transition à chaque porte"
+        ]
+      },
+      "tubFaucet": {
+        "label": "Robinet de baignoire",
+        "checks": [
+          "Le client le fournit-il ? Enregistrer la marque et le modèle",
+          "Position et hauteur de la vanne existante : bouge-t-elle ?",
+          "Confirmez qu'il s'agit d'un inverseur de baignoire et de douche ou d'une baignoire uniquement"
+        ]
+      },
+      "showerDrain": {
+        "label": "Système d'évacuation de douche",
+        "checks": [
+          "Position de vidange existante et matériau du tuyau",
+          "La canalisation bouge ? Mesurez la nouvelle position à partir de deux murs",
+          "Accédez ci-dessous pour établir la connexion : qu'y a-t-il sous cet étage ?"
+        ]
+      },
+      "tMouldings": {
+        "label": "Moulures en T et réducteurs",
+        "checks": [
+          "Comptez et mesurez chaque transition : les portes et les points de rencontre de deux types de sols.",
+          "Notez la différence de hauteur à chacun",
+          "Assorti au revêtement de sol adjacent que le client conserve"
+        ]
+      },
+      "tubDrain": {
+        "label": "Vidange de baignoire",
+        "checks": [
+          "Fourni par le client ? Enregistrez la marque et terminez pour qu'elle corresponde au robinet",
+          "Position de vidange et de trop-plein existante",
+          "Accès ci-dessous pour la connexion"
+        ]
+      },
+      "tubShowerWall": {
+        "label": "Mur de douche et étanchéité de baignoire",
+        "checks": [
+          "Mesurez les trois murs de l'alcôve, de la hauteur du sol au carrelage.",
+          "Confirmez l'endroit où la dalle s'arrête : plafond, cloison ou une hauteur définie",
+          "Vérifiez le contour existant pour déceler les dégâts d'eau derrière lui.",
+          "Notez toute fenêtre ou niche à l’intérieur de la zone humide"
+        ]
+      },
+      "cabinets": {
+        "label": "Armoires de cuisine",
+        "checks": [
+          "Mesurez chaque course de mur à la hauteur du comptoir ET à la hauteur de l'armoire supérieure - elles diffèrent",
+          "Marquez chaque obstruction sur le croquis : fenêtres, portes, sorties, bouches d'aération, radiateurs, cloisons.",
+          "Hauteur du plafond aux deux extrémités de chaque piste et vérifiez son niveau",
+          "Île : dimensionnez-la et confirmez qu'il y a un espace libre tout autour",
+          "Tailles des appareils électroménagers – réfrigérateur, cuisinière, lave-vaisselle, hotte. Mesurer les ouvertures existantes",
+          "Confirmez le style et la couleur de l'armoire avec le client, et si elle est préfabriquée ou personnalisée"
+        ]
+      },
+      "tile": {
+        "label": "Carrelage mural",
+        "checks": [
+          "Mesurez chaque mur carrelé, le sol jusqu'à la hauteur finale",
+          "Confirmez la hauteur de finition : plafond, cloison ou ligne de couronnement",
+          "Taille et disposition des carreaux souhaitées par le client : cela change le travail",
+          "Notez le traitement des bords à chaque coin extérieur"
+        ]
+      },
+      "quartzStep": {
+        "label": "Marche de trottoir en quartz",
+        "checks": [
+          "Longueur et largeur de bordure",
+          "Confirmez que la pierre correspond au comptoir ou à ce que le client a choisi",
+          "Notez si la bordure est de hauteur standard ou si elle est abaissée"
+        ]
+      },
+      "glassDoor": {
+        "label": "Porte de douche vitrée",
+        "checks": [
+          "Mesurez la largeur de l'ouverture et la hauteur finie prévue",
+          "Confirmer le côté charnière et la direction d'oscillation avec le client",
+          "Y a-t-il un mur ou un banc sur lequel le verre doit atterrir ?",
+          "Préfabriqué standard ou personnalisé ? La personnalisation nécessite une mesure distincte après le carrelage"
+        ]
+      },
+      "underCabinetLed": {
+        "label": "Bande LED sous meuble",
+        "checks": [
+          "Longueur totale sous la tige",
+          "D'où vient l'alimentation électrique, y a-t-il un interrupteur ou est-elle toujours allumée ?",
+          "Confirmez que le client souhaite que le pilote soit caché dans une armoire"
+        ]
+      },
+      "grabBars": {
+        "label": "Barres d'appui",
+        "checks": [
+          "Combien, et marquez la position et la hauteur exactes en présence du client",
+          "Le blocage doit être placé dans le mur avant le carrelage – confirmez que les positions sont définitives",
+          "Fourni par le client ou par le nôtre ? Enregistrez la fin"
+        ]
+      },
+      "cornerShelves": {
+        "label": "Etagères d'angle",
+        "checks": [
+          "Combien et à quelles hauteurs",
+          "Confirmez qu'ils n'entrent pas en conflit avec la niche ou le panneau de verre",
+          "Matériau et finition assortis au carrelage"
+        ]
+      },
+      "ledSwitch": {
+        "label": "Interrupteur à bande LED",
+        "checks": [
+          "Où va le commutateur ? Mesurer depuis le coin",
+          "Gradable ou standard – demandez",
+          "Existe-t-il une boîte de gang existante que nous pouvons étendre ?"
+        ]
+      },
+      "vanity": {
+        "label": "Vanité",
+        "checks": [
+          "Mesurez la largeur maximale disponible et la profondeur libre de la porte battante et des toilettes.",
+          "Installation brute de plomberie : hauteur par rapport au sol et décalage par rapport au mur, pour l'évacuation et l'alimentation",
+          "Évier simple ou double – et confirmez qu'un double convient réellement",
+          "Confirmer le style, la couleur et le style de porte avec le client",
+          "Vérifiez que le mur derrière est plat ; un mur courbé laisse un espace derrière la vanité",
+          "Le meuble-lavabo passe-t-il à travers la porte de la salle de bain ?"
+        ]
+      },
+      "backsplash": {
+        "label": "Dosseret",
+        "checks": [
+          "Mesurez la longueur et la hauteur du comptoir au dessus",
+          "Notez chaque prise et interrupteur dans la zone du dosseret",
+          "Confirmez le carrelage ou le quartz et ce qui se passe derrière le poêle",
+          "Où s’arrête le dosseret à chaque extrémité ?"
+        ]
+      },
+      "countertop": {
+        "label": "Comptoir",
+        "checks": [
+          "Mesurez chaque parcours : longueur et profondeur, y compris l'îlot",
+          "Confirmez le code de pierre choisi par le client",
+          "Type d'évier - encastré ou encastré - et si le client l'a sur place pour la création de modèles",
+          "Notez le profil du bord, le surplomb et toute extrémité de cascade",
+          "Compter les découpes : évier, table de cuisson, prises dans l'îlot"
+        ]
+      },
+      "gfciVanity": {
+        "label": "Prise GFCI (vanité)",
+        "checks": [
+          "Position et hauteur de la sortie existante ; est-ce déjà un GFCI ?",
+          "Est-ce que ça bouge avec la nouvelle vanité ? Mesurer la nouvelle position",
+          "Vérifiez le circuit sur lequel il se trouve"
+        ]
+      },
+      "sink": {
+        "label": "Évier de cuisine",
+        "checks": [
+          "Fourni par le client ? Enregistrez la marque et le modèle – la découpe du comptoir en dépend",
+          "Confirmez que l'évier est sur place avant le modèle de comptoir",
+          "Cuvette simple ou double et largeur du meuble en dessous",
+          "Garburateur ? Notez-le maintenant"
+        ]
+      },
+      "vanitySink": {
+        "label": "Lavabo",
+        "checks": [
+          "Fourni par le client ? Enregistrer la marque et le modèle",
+          "Encastrable, encastré ou intégré au dessus",
+          "Confirmez qu'il correspond à la largeur du meuble-lavabo et au nombre de trous du robinet."
+        ]
+      },
+      "faucet": {
+        "label": "Robinet de cuisine",
+        "checks": [
+          "Fourni par le client ? Enregistrer la marque et le modèle",
+          "Nombre de trous nécessaire dans le comptoir, y compris un distributeur de savon ou un robinet filtrant",
+          "Vérifiez l'espace libre par rapport à la fenêtre derrière l'évier s'il y en a une."
+        ]
+      },
+      "vanityFaucet": {
+        "label": "Robinet de vanité",
+        "checks": [
+          "Fourni par le client ? Enregistrer la marque, le modèle et la finition",
+          "Trou unique, entraxe de 4 po ou écartement de 8 po – cela doit correspondre à l'évier",
+          "Montage mural ? Cela change le brut et doit être décidé maintenant"
+        ]
+      },
+      "showerFaucet": {
+        "label": "Robinet de douche",
+        "checks": [
+          "Fourni par le client ? Enregistrez la marque et le modèle — le corps de la vanne doit être sur place avant la fermeture des murs",
+          "Confirmer la hauteur et la position de la vanne avec le client, marquées sur le mur",
+          "Pommeau de pluie, douchette à main ou les deux ? Chacun est une prise séparée",
+          "Thermostatique ou à pression équilibrée"
+        ]
+      },
+      "showerDrainFixture": {
+        "label": "Bonde de douche",
+        "checks": [
+          "Fourni par le client ? Enregistrez la finition pour qu'elle corresponde au robinet",
+          "Drain ponctuel ou linéaire — un drain linéaire modifie la pente de base et doit être décidé maintenant"
+        ]
+      },
+      "toilet": {
+        "label": "Toilettes",
+        "checks": [
+          "Mesurez le brut : du centre de la bride au mur fini derrière. Généralement 12\", mais vérifiez",
+          "Dégagement de chaque côté et devant, à la vanité et au mur",
+          "Fourni par le client ? Enregistrer la marque et le modèle",
+          "Les toilettes bougent ? C'est un déplacement de drain, pas un échange"
+        ]
+      },
+      "bidet": {
+        "label": "Bidet",
+        "checks": [
+          "Fourni par le client ? Enregistrer la marque et le modèle",
+          "Y a-t-il une prise à proximité pour un siège électrique ? La plupart en ont besoin",
+          "Confirmer le point de raccordement de l'alimentation en eau"
+        ]
+      },
+      "gfciToilet": {
+        "label": "Prise GFCI (zone toilettes)",
+        "checks": [
+          "Où exactement - mesurez la position et la hauteur",
+          "De quel circuit va-t-il se détacher et y a-t-il une capacité",
+          "Il s’agit généralement d’un siège de bidet ; confirmer c'est pourquoi"
+        ]
+      },
+      "gfciOutlets": {
+        "label": "Prises GFCI",
+        "checks": [
+          "Comptez combien et marquez chaque position",
+          "Notez ceux qui se trouvent dans le dosseret et leurs hauteurs",
+          "Vérifiez les circuits existants et la capacité du panneau"
+        ]
+      },
+      "replaceSwitches": {
+        "label": "Remplacer les interrupteurs",
+        "checks": [
+          "Comptez les interrupteurs et notez ce que chacun contrôle",
+          "L'un d'entre eux devient-il dimmable ?",
+          "Confirmer la finition et la couleur souhaitées par le client"
+        ]
+      },
+      "pendantLight": {
+        "label": "Lampe suspendue",
+        "checks": [
+          "Combien et marquez les positions sur l'îlot ou le comptoir",
+          "Y a-t-il un boîtier existant ou s'agit-il d'un nouveau câblage ?",
+          "Fourni par le client ? Enregistrez la marque et le modèle et notez la hauteur de suspension souhaitée."
+        ]
+      },
+      "pendantLightSwitch": {
+        "label": "Interrupteur de suspension",
+        "checks": [
+          "Position du commutateur, mesurée à partir du coin",
+          "Gradable ou standard",
+          "Peut-il rejoindre une gang box existante ?"
+        ]
+      },
+      "islandOutlet": {
+        "label": "Sortie îlot",
+        "checks": [
+          "Positionnement sur l'îlot, et que ce soit dans le panneau latéral ou dans un pop-up dans le comptoir",
+          "Itinéraire d'alimentation — le fil doit atteindre l'îlot sous le plancher",
+          "Confirmez avec le client où il branche réellement les choses"
+        ]
+      },
+      "baseboard": {
+        "label": "Plinthe",
+        "checks": [
+          "Mesurer la course totale",
+          "Faites correspondre le profil et la hauteur au reste de la maison si cela continue",
+          "Notez tous les coins extérieurs et combien"
+        ]
+      },
+      "mirror": {
+        "label": "Miroir",
+        "checks": [
+          "Fourni par le client ? Enregistrer la taille et le modèle",
+          "Confirmez que la taille s'adapte entre la lampe de vanité et le dosseret.",
+          "Armoire à pharmacie avec ou sans cadre : une armoire nécessite une décision d'encastrement mural maintenant"
+        ]
+      },
+      "vanityLight": {
+        "label": "Lumière de vanité",
+        "checks": [
+          "Fourni par le client ? Enregistrer la marque et le modèle",
+          "Position et hauteur de la boîte existante : est-elle centrée sur le nouveau meuble-lavabo ?",
+          "Si ça bouge, mesurez la nouvelle position et confirmez avec le client"
+        ]
+      },
+      "fullPaint": {
+        "label": "Peinture de cuisine",
+        "checks": [
+          "Surface des murs et du plafond et hauteur du plafond",
+          "Code couleur – obtenez-le du client par écrit",
+          "Notez la finition actuelle et si elle a besoin d'un apprêt",
+          "Confirmez ce qui est exclu : portes, boiseries, armoires intérieures"
+        ]
+      },
+      "hardware": {
+        "label": "Quincaillerie de salle de bain",
+        "checks": [
+          "Fourni par le client ? Enregistrez la finition pour qu'elle corresponde au robinet",
+          "Marquer chaque position avec le client : porte-serviettes, anneau, porte-papier",
+          "Tout ce qui atterrit sur une tuile doit être confirmé avant de poser une tuile."
+        ]
+      },
+      "exhaustFan": {
+        "label": "Ventilateur d'extraction",
+        "checks": [
+          "Où s'évacue celui existant ? Tracez-le si vous le pouvez",
+          "Fourni par le client ? Enregistrez la marque et le modèle et vérifiez que le CFM convient à la taille de la pièce.",
+          "Taille d'ouverture existante par rapport à la nouvelle unité",
+          "Est-ce que ça bouge ? Notez le parcours du conduit vers la nouvelle position"
+        ]
+      },
+      "potlights": {
+        "label": "Potlights",
+        "checks": [
+          "Combien, quelle taille et marquez la disposition avec le client",
+          "Accès au-dessus – grenier ou plafond fini sous une autre unité ?",
+          "Notez les solives, les conduits et tout ce qui se trouve dans la cavité du plafond.",
+          "Quel interrupteur les contrôlera, et dimmable ?"
+        ]
+      },
+      "newSwitch": {
+        "label": "Nouvel interrupteur",
+        "checks": [
+          "Position, mesurée à partir du cadre de porte",
+          "Que contrôle-t-il et est-il dimmable ?",
+          "Un gang box existant à proximité pour une extension ?"
+        ]
+      },
+      "baseboardReinstall": {
+        "label": "Réinstaller les plinthes",
+        "checks": [
+          "Confirmez que la plinthe existante survivra au retrait – le MDF ne le fait généralement pas",
+          "Mesurer la course totale",
+          "Notez l'état et s'il doit être repeint après"
+        ]
+      },
+      "baseboardNew": {
+        "label": "Nouvelle plinthe MDF",
+        "checks": [
+          "Mesurer la course totale",
+          "Confirmez que le profil et la hauteur correspondent au reste de la maison",
+          "Comptez les coins extérieurs"
+        ]
+      },
+      "paint": {
+        "label": "Peinture",
+        "checks": [
+          "Surface des murs et du plafond et hauteur du plafond",
+          "Code couleur écrit par le client",
+          "Finition actuelle et si un apprêt est nécessaire",
+          "Confirmez ce qui est exclu"
+        ]
+      },
+      "touchUpPaint": {
+        "label": "Peinture de retouche",
+        "checks": [
+          "Hauteur du plafond et superficie approximative à retoucher",
+          "Obtenez le code couleur existant – vérifiez la boîte de conserve dans le garage ou le placard",
+          "Avertir le client que les retouches se fondent rarement parfaitement sur un mur vieilli"
+        ]
+      }
+    },
+    "summary": {
+      "title": "Renvoyez-le au bureau",
+      "copy": "Copier le résumé",
+      "copied": "Copié",
+      "print": "Imprimer / Enregistrer le PDF",
+      "reset": "Effacer toutes les coches",
+      "resetConfirm": "Effacer chaque coche et note de cette liste de contrôle ?",
+      "notesLabel": "Remarques",
+      "notesPlaceholder": "Mesures, décisions des clients, tout ce qui est inhabituel…",
+      "progress": "{count} vérifié",
+      "shareTitle": "Envoyez cette liste de contrôle exacte à quelqu'un",
+      "shareHint": "Copie un lien avec cette étendue déjà sélectionnée.",
+      "shareCopy": "Copier le lien",
+      "unchecked": "Pas encore vérifié"
+    },
+    "ui": {
+      "addon": "Ajouter sur",
+      "replacement": "Changement",
+      "blocker": "Arrêter - résoudre avant de citer",
+      "high": "Affecte considérablement le prix"
+    },
+    "names": {
+      "bathroom-tub-to-tub": "De baignoire à baignoire",
+      "bathroom-tub-to-tiled-shower": "Baignoire à douche à base carrelée",
+      "bathroom-tub-to-prefab-shower": "Baignoire à douche de base préfabriquée",
+      "bathroom-shower-to-tiled-shower": "Douche à base carrelée",
+      "bathroom-shower-to-prefab-shower": "Douche à douche préfabriquée",
+      "bathroom-4piece": "Salle de bain 4 pièces",
+      "bathroom-powder-room": "Salle d'eau",
+      "bathroom-shower-only-tiled": "Douche uniquement (base carrelée)",
+      "bathroom-shower-only-prefab": "Douche seulement (base préfabriquée)",
+      "bathroom-tub-only-tub": "Baignoire seulement (baignoire)",
+      "bathroom-tub-only-tiled-shower": "Baignoire seulement (douche à base carrelée)",
+      "bathroom-tub-only-prefab-shower": "Baignoire seulement (douche de base préfabriquée)",
+      "bathroom-vanity-only": "Vanité seulement (buanderie)",
+      "bathroom-keep-tub": "Conserver la baignoire existante (conserve également le robinet et le drain de la baignoire)",
+      "bathroom-keep-vanity": "Conserver le meuble-lavabo existant (comptoir/évier/robinet non inclus)",
+      "bathroom-keep-countertop": "Conserver le comptoir existant",
+      "bathroom-keep-vanity-sink": "Conserver le lavabo existant",
+      "bathroom-keep-vanity-faucet": "Conserver le robinet de vanité existant",
+      "bathroom-keep-toilet": "Conserver les toilettes existantes",
+      "bathroom-keep-mirror": "Conserver le miroir existant",
+      "bathroom-keep-hardware": "Conserver le matériel de salle de bain existant",
+      "bathroom-popcorn-removal": "Retrait du popcorn (plafond lisse)",
+      "bathroom-electrical-plumbing-venting": "Travaux d'électricité, de plomberie et de ventilation",
+      "bathroom-gfci-vanity": "Prise GFCI (espace vanité)",
+      "bathroom-gfci-toilet": "Prise GFCI (zone toilettes)",
+      "bathroom-potlights": "Potlights",
+      "bathroom-new-switch": "Interrupteur neuf / dimmable",
+      "bathroom-baseboard-reinstall": "Réinstaller les plinthes",
+      "bathroom-baseboard-new": "Plinthe plate MDF",
+      "bathroom-full-paint": "Peinture de salle de bain",
+      "bathroom-touch-up-paint": "Peinture de retouche",
+      "bathroom-bench": "Banc de douche",
+      "bathroom-niche": "Niche de douche",
+      "bathroom-ponywall": "Mur de poney",
+      "bathroom-custom-glass-door": "Porte vitrée sur mesure",
+      "bathroom-custom-vanity": "Vanité en contreplaqué sur mesure",
+      "bathroom-led-mirror": "Miroir LED",
+      "bathroom-shower-curtain": "Rideau de douche (pas de porte vitrée)",
+      "bathroom-curbless": "Douche sans bordure / sans obstacle (sans bordure)",
+      "bathroom-open-shower": "Douche ouverte (pas de porte vitrée, pas de rideau)",
+      "bathroom-grab-bars": "Barres d'appui (douche)",
+      "bathroom-corner-shelf": "Tablettes d'angle (douche)",
+      "bathroom-bidet": "Bidet (installer ; le client fournit)",
+      "kitchen-prefab-cabinet": "Armoire préfabriquée de cuisine",
+      "kitchen-custom-cabinet": "Armoire de cuisine sur mesure",
+      "kitchen-popcorn-removal": "Retrait du popcorn (plafond lisse)",
+      "kitchen-enclose-door-opening": "Fermer l'ouverture de la porte",
+      "kitchen-new-door-opening": "Nouvelle ouverture de porte",
+      "kitchen-electrical-plumbing-venting": "Travaux d'électricité, de plomberie et de ventilation",
+      "kitchen-floor-tile": "Carrelage de sol",
+      "kitchen-lvp-flooring": "LVP (planche de vinyle)",
+      "kitchen-t-mouldings": "Moulures en T et réducteurs",
+      "kitchen-under-cabinet-led": "Bande lumineuse LED sous meuble",
+      "kitchen-led-switch": "Interrupteur de bande lumineuse LED",
+      "kitchen-potlights": "Potlights",
+      "kitchen-gfci-outlets": "Prises GFCI",
+      "kitchen-replace-switches": "Remplacer les interrupteurs",
+      "kitchen-pendant-light": "Suspension (installation + interrupteur)",
+      "kitchen-island-outlet": "Sortie îlot (nouveau)",
+      "kitchen-baseboard": "Plinthe plate MDF",
+      "kitchen-touch-up-paint": "Peinture de retouche",
+      "kitchen-full-paint": "Peinture de cuisine",
+      "quartz-backsplash": "Dosseret en quartz"
+    }
+  }
+}

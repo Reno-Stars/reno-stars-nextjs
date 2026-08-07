@@ -1,0 +1,765 @@
+{
+  "siteVisit": {
+    "meta": {
+      "title": "Checklist ng Pagbisita sa Site | Mga Bituin sa Reno",
+      "description": "Panloob na checklist para sa mga pagbisita sa site ng Reno Stars. Piliin ang saklaw at kunin ang lahat ng kailangan ng quote sa isang pass."
+    },
+    "hero": {
+      "eyebrow": "Panloob na kasangkapan",
+      "title": "Checklist ng Pagbisita sa Site",
+      "subtitle": "Piliin kung ano ang gusto ng kliyente. Ipinapakita lang ng page ang mga pagsusuring kailangan ng saklaw — ang parehong mga hakbang na ipapapresyo ng sistema ng pag-quote.",
+      "note": "Ang page na ito ay para sa staff ng Reno Stars. Walang ipapadala saanman; mananatili ito sa teleponong ito hanggang sa i-clear mo ito."
+    },
+    "picker": {
+      "scopeTitle": "1. Ano ang sini-quote natin?",
+      "scopeHint": "Pumili ng isa o pareho.",
+      "modelTitle": "2. Aling trabaho?",
+      "modelHint": "Itugma ang layunin ng kliyente. Kung hindi sigurado, piliin ang pinakamalapit at tandaan ang pagkakaiba.",
+      "modelPlaceholder": "Pumili ng uri ng trabaho...",
+      "addonsTitle": "3. Anumang dagdag?",
+      "addonsHint": "Lagyan ng tsek kung ano ang hiniling ng kliyente. Ang bawat isa ay nagdaragdag ng sarili nitong mga tseke sa ibaba.",
+      "addonsGroupAddon": "Mga add-on",
+      "addonsGroupReplacement": "Mga pagbabago at pagpapalit",
+      "empty": "Pumili ng saklaw sa itaas para buuin ang checklist."
+    },
+    "sectionNames": {
+      "bathrooms": "Banyo",
+      "kitchen": "Kusina"
+    },
+    "always": {
+      "title": "Bago ka magsimula",
+      "subtitle": "Bawat pagbisita, anuman ang saklaw.",
+      "items": [
+        {
+          "id": "pagdating",
+          "label": "Kumpirmahin ang pangalan ng kliyente at ang buong address kung saan ka nakatayo",
+          "hint": "Ang numero ng kalye at lungsod ay magiging PO number ng proyekto sa ibang pagkakataon — kunin ito nang eksakto."
+        },
+        {
+          "id": "contact",
+          "label": "Pinakamahusay na numero ng telepono at gustong wika para sa taong magpapasya",
+          "hint": "Hindi palaging ang taong pinapasok ka."
+        },
+        {
+          "id": "paradahan",
+          "label": "Paradahan at pag-drop-off ng materyal — saan ba talaga pupunta ang isang trak?",
+          "hint": "Lane access, permit zone, distansya mula sa pinto. Ito ay isang tunay na gastos."
+        },
+        {
+          "id": "sapin",
+          "label": "Strata o upa? Kunin ang mga tuntunin, mga limitasyon sa oras ng trabaho at mga panuntunan sa pag-book ng elevator",
+          "hint": "Hilingin ang strata form ngayon. Mas maraming trabaho ang naaantala nito kaysa anupaman sa listahang ito."
+        },
+        {
+          "id": "gusaliEdad",
+          "label": "Taon ng itinayo ang gusali",
+          "hint": "Binago ng pre-1990 ang buong quote — tingnan ang mga panganib sa ibaba."
+        },
+        {
+          "id": "inookupahan",
+          "label": "May nakatira ba dito sa panahon ng trabaho?",
+          "hint": "Nagpapasya sa proteksyon sa sahig, mga dingding ng alikabok, at kung kailangan nating isagawa ang gawain."
+        },
+        {
+          "id": "shutoff",
+          "label": "Hanapin at kunan ng larawan ang water shutoff",
+          "hint": "Pagsara ng unit at pagsara ng gusali. Subukan kung talagang lumiliko ito."
+        },
+        {
+          "id": "panel",
+          "label": "Hanapin at kunan ng larawan ang electrical panel",
+          "hint": "Pansinin ang mga libreng puwang ng breaker at kung ito ay piyus o breaker."
+        },
+        {
+          "id": "photosWide",
+          "label": "Malapad na larawan ng bawat dingding sa lugar ng trabaho, kasama ang kisame at sahig",
+          "hint": "Tumayo sa bawat sulok. Hindi ka makakakuha ng pangalawang pagbisita."
+        },
+        {
+          "id": "photosPath",
+          "label": "Mga larawan ng landas mula sa pinto patungo sa lugar ng trabaho",
+          "hint": "Mga hagdanan, pagliko, makipot na mga pintuan — anumang bagay na dapat paglagyan ng vanity o slab."
+        },
+        {
+          "id": "roomDims",
+          "label": "Pangkalahatang sukat ng silid at taas ng kisame",
+          "hint": "Haba, lapad, taas. Tandaan ang mga bulkhead at anumang slope."
+        },
+        {
+          "id": "timeline",
+          "label": "Target na petsa ng pagsisimula ng kliyente at anumang mahirap na deadline",
+          "hint": "Itanong kung bakit, kung may deadline. Ito ay karaniwang isang paglipat-in o isang kaganapan sa pamilya."
+        }
+      ]
+    },
+    "conditions": {
+      "title": "Mga kondisyon ng site",
+      "subtitle": "Hindi mga line item sa quote, ngunit mas gumagalaw ang mga ito sa presyo kaysa sa anupaman. Suriin ang lahat ng mga ito.",
+      "items": [
+        {
+          "id": "asbesto",
+          "label": "Pre-1990 building — flag asbestos testing",
+          "hint": "Nangangailangan ang WorkSafeBC ng surbey ng mga mapanganib na materyales bago ang demolisyon. Huwag mangako ng presyo kung wala ito. Ang mga popcorn ceiling, vinyl floor tile, drywall mud at pipe wrap ang karaniwang pinaghihinalaan.",
+          "severity": "blocker"
+        },
+        {
+          "id": "Uri ng pagtutubero",
+          "label": "Umiiral na drain at supply piping — ABS, copper, PEX, cast iron, o galvanized",
+          "hint": "Tumingin sa ilalim ng lababo at sa anumang nakalantad na basement run. Ang ibig sabihin ng cast iron o galvanized ay hindi pamantayan ang halaga ng relokasyon.",
+          "severity": "mataas"
+        },
+        {
+          "id": "pagkasira ng tubig",
+          "label": "Mga palatandaan ng aktibo o nakalipas na pagkasira ng tubig",
+          "hint": "Malambot na sahig sa banyo o batya, mantsa sa kisame sa ibaba, mabahong amoy, nakakataas ng tile. Kuhanan ng larawan at tandaan ito sa pamamagitan ng sulat — pinoprotektahan tayong dalawa.",
+          "severity": "mataas"
+        },
+        {
+          "id": "magkaroon ng amag",
+          "label": "Nakikitang amag",
+          "hint": "Sa likod ng banyo, sa paligid ng batya, sa ilalim ng lababo. Ang remediation ay isang hiwalay na saklaw.",
+          "severity": "mataas"
+        },
+        {
+          "id": "subfloor",
+          "label": "Uri at kondisyon ng subfloor, at antas ng sahig",
+          "hint": "Plywood o kongkretong slab. Suriin ang antas na may 4ft na antas sa dalawang direksyon — ang isang wala sa antas na palapag ay nangangahulugan ng self-leveling bago ang tile.",
+          "severity": "mataas"
+        },
+        {
+          "id": "loadBearing",
+          "label": "Anumang pader na binubuksan o inaalis — ito ba ay nagdadala ng pagkarga?",
+          "hint": "Kung may pagdududa, kailangan nito ng sulat ng engineer. Tandaan ang direksyon ng joist sa itaas.",
+          "severity": "blocker"
+        },
+        {
+          "id": "pahintulot",
+          "label": "Nag-trigger ba ng permit ang saklaw na ito?",
+          "hint": "Ang paglipat ng pagtutubero o gas, mga pagbabago sa istruktura, mga bagong circuit, o pagpapalit ng gamit ng silid. Kumpirmahin ang munisipalidad — Vancouver, Burnaby, Richmond at Surrey lahat ay naiiba.",
+          "severity": "blocker"
+        },
+        {
+          "id": "popcornPresent",
+          "label": "Ang kisame ng popcorn ay nasa o sa tabi ng lugar ng trabaho",
+          "hint": "Ang pre-1990 na popcorn ay dapat masuri bago ito hawakan. Kahit na kung saan hindi namin ito inaalis, tandaan ito — bitak ito ng vibration."
+        },
+        {
+          "id": "windowInWet",
+          "label": "Bintana sa loob ng tub o shower area",
+          "hint": "Nangangailangan ng hindi tinatagusan ng tubig na pagbabalik at kadalasan ay isang tempered na kapalit. Sukatin ito at kunan ng larawan ang kalagayan ng sill."
+        },
+        {
+          "id": "pagpapalabas ng hangin",
+          "label": "Saan ba talaga naglalabasan ang umiiral na exhaust fan?",
+          "hint": "Bubong, soffit, o diretso sa attic. Ang pagbubuhos sa attic ay isang depekto na kailangan nating itama."
+        },
+        {
+          "id": "ceilingAccess",
+          "label": "Access sa itaas ng lugar ng trabaho — attic, crawlspace, o isang tapos na unit",
+          "hint": "Nagpapasya kung diretso o invasive ang mga potlight at relocated venting."
+        },
+        {
+          "id": "gas",
+          "label": "Anumang gas appliance sa loob o malapit sa saklaw",
+          "hint": "Ang gawaing pang-gas ay nangangailangan ng lisensyadong tiket at sarili nitong permit. Kuhanan ng larawan ang shutoff."
+        }
+      ]
+    },
+    "scope": {
+      "title": "Mga pagsusuri sa saklaw",
+      "subtitle": "Hinimok ng uri ng trabaho at mga add-on na iyong pinili. Ang bawat card ay isang hakbang na naglalaman ng quote.",
+      "quoteLineLabel": "linya ng quote",
+      "captureLabel": "Kunan sa site"
+    },
+    "captureLabels": {
+      "size": "Sukat - sukatin ito, huwag tantiyahin",
+      "doorStyle": "Door style na gusto ng kliyente",
+      "brand": "Brand, kung binili na ito ng kliyente",
+      "spec": "Numero ng modelo o spec",
+      "variant": "Variant, kulay o tapusin",
+      "stoneCode": "Stone code na pinili ng kliyente",
+      "slabCounts": "Kailangan ang bilang ng slab",
+      "islandSize": "Laki ng isla",
+      "nicheEdgeLabel": "Detalye ng gilid ng niche",
+      "ceilingHeight": "Taas ng kisame",
+      "colorCode": "Code ng kulay ng pintura"
+    },
+    "provides": {
+      "title": "Kumpirmahin kung sino ang nagbibigay ng ano",
+      "subtitle": "Ang mga ito ay install-only bilang default — binibili sila ng kliyente. Kumpirmahin ang bawat isa nang malakas at isulat kung ano ang nabili na nila.",
+      "note": "Kung gusto ng kliyente na ibigay namin ang alinman sa mga ito, markahan ito at kunin ang modelong gusto nila. Binabago nito ang quote."
+    },
+    "steps": {
+      "demolition": {
+        "label": "Demolisyon",
+        "checks": [
+          "Ilista nang eksakto kung ano ang lumalabas at kung ano ang nananatili — lakad sa silid kasama ang kliyente at ituro ang bawat item",
+          "Saan napupunta ang mga labi? Lokasyon ng bin, o kung ilang biyahe papunta sa trak",
+          "Suriin kung may garburator, pampalambot ng tubig, o anumang bagay na may tubo na hindi halata",
+          "Tandaan ang anumang nais na panatilihin o iligtas ng kliyente"
+        ]
+      },
+      "drywall": {
+        "label": "Pag-aayos ng drywall",
+        "checks": [
+          "Kondisyon sa dingding sa likod ng mga lumalabas na mga kabit — tile-over-tile, plaster, o karaniwang board",
+          "Tandaan ang anumang pader na hindi tuwid o tuwid; lumalabas ito nang masama kapag nagpapatuloy ang bagong tile",
+          "Suriin kung may pagkakabukod sa mga panlabas na dingding habang hinuhulaan mo kung ano ang nasa likod ng mga ito"
+        ]
+      },
+      "popcornRemoval": {
+        "label": "Pag-alis ng popcorn",
+        "checks": [
+          "Kumpirmahin ang pre-1990 asbestos test ay na-flag — huwag mag-alis ng presyo nang wala ito",
+          "Sukatin ang lugar ng kisame na pakinisin",
+          "Nakapinta ba ang popcorn? Ang pininturahan na popcorn ay mas mabagal at kung minsan ay kailangang isakay sa halip"
+        ]
+      },
+      "epv": {
+        "label": "Elektrisidad, pagtutubero at pag-venting",
+        "checks": [
+          "Isulat ang bawat solong relokasyon na gusto ng kliyente, item sa item, na may bagong posisyon na sinusukat mula sa isang nakapirming pader",
+          "Kuhanan ng larawan ang mga kasalukuyang rough-in na posisyon bago ka umalis",
+          "Kumpirmahin ang pag-access sa ibaba o sa likod — tapos na ba ang kisame sa ilalim ng kwartong ito?",
+          "Tandaan ang umiiral na materyal ng tubo sa bawat puntong lilipat ka"
+        ]
+      },
+      "bench": {
+        "label": "Bench sa shower",
+        "checks": [
+          "Aling pader, anong haba, at gaano kalalim",
+          "Kumpirmahin na ang bangko ay hindi dumarating sa tanging glass panel line ng shower",
+          "Suriin kung ang pader sa likod ay maaaring dalhin ito - ang panlabas na pader ay nangangahulugan ng pagkawala ng pagkakabukod"
+        ]
+      },
+      "niche": {
+        "label": "Niche ng shower",
+        "checks": [
+          "Posisyon at sukat, sinusukat mula sa tapos na sahig at mula sa sulok",
+          "Kumpirmahin na ang lukab sa dingding ay libre — walang vent stack, walang plumbing, at suriin ang kabilang panig ng dingding",
+          "Metal na gilid o mitered tile na gilid? Tanungin ang kliyente at tandaan ang sagot",
+          "LED strip sa loob ng niche? Nangangailangan yan ng power source sa malapit"
+        ]
+      },
+      "ponywall": {
+        "label": "Ponywall",
+        "checks": [
+          "Haba at tapos na taas",
+          "Nakalapag ba ang glass panel sa ibabaw nito? Ang tagapagtustos ng salamin ay nangangailangan ng tapos na taas",
+          "Suriin kung ano ang nasa ilalim — kailangang maupo ang ponywall sa solid framing"
+        ]
+      },
+      "encloseDoorOpening": {
+        "label": "Isara ang pagbukas ng pinto",
+        "checks": [
+          "Pagbubukas ng lapad at taas",
+          "Kumpirmahin na hindi ito nagdadala ng pagkarga bago ka mangako ng anuman",
+          "Ano ang tapusin sa magkabilang panig — ang pagtutugma ng dalawang magkaibang wall finish ay dagdag",
+          "Ang sahig ay mangangailangan ng patching kung nasaan ang threshold"
+        ]
+      },
+      "newDoorOpening": {
+        "label": "Bagong pagbukas ng pinto",
+        "checks": [
+          "Saan eksakto, sinusukat mula sa isang nakapirming sulok, at kung gaano kalawak",
+          "Check ng load-bearing — tandaan ang direksyon ng joist sa itaas. Kung may pagdududa, sulat ng engineer",
+          "Anumang bagay sa dingding: mga saksakan, switch, pagtutubero, ducting",
+          "Kumpirmahin ang direksyon ng swing at kung may kasamang pinto"
+        ]
+      },
+      "showerWall": {
+        "label": "Shower wall at waterproofing",
+        "checks": [
+          "Sukatin ang bawat dingding ng basang lugar, mula sa sahig hanggang kisame",
+          "Pansinin ang taas ng kisame at kung ang tile ay tumatakbo sa kisame o sa isang bulkhead",
+          "Suriin ang umiiral na pader para sa paggalaw o mabulok sa likod ng kasalukuyang surround",
+          "Kuhanan ng larawan ang sulok kung saan nagtatagpo ang dalawang basang pader"
+        ]
+      },
+      "floorTile": {
+        "label": "Baldosa sa sahig",
+        "checks": [
+          "Sukatin ang lawak ng sahig, at tandaan ang labas ng parisukat ng silid kung ito ay halata",
+          "Napili ba ng kliyente ang tile? Ang laki at tapusin ay nagbabago sa paggawa",
+          "Kasalukuyang floor build-up — kung gaano karaming mga layer ang lumalabas, at ano ang pagkakaiba ng taas sa pintuan",
+          "Suriin ang sahig ay antas; tandaan kung saan wala"
+        ]
+      },
+      "showerBase": {
+        "label": "Tiled shower base",
+        "checks": [
+          "Sukatin ang base footprint at ang curb position",
+          "Kumpirmahin ang lokasyon ng drain at kung ito ay gumagalaw",
+          "Available ang floor build-up para sa slope - ang isang naka-tile na base ay nangangailangan ng taas",
+          "Tandaan ang laki ng tile na gusto ng kliyente sa base; maliit na format ay kinakailangan sa isang sloped pan"
+        ]
+      },
+      "tub": {
+        "label": "Tub",
+        "checks": [
+          "Sukatin ang alcove: haba, lapad, at taas sa tuktok ng nilalayon na tile",
+          "Kumpirmahing kasya ang batya ng kliyente sa pintuan at pababa ng pasilyo",
+          "Posisyon ng alisan ng tubig — kaliwa, kanan, o gitna — at kung tumutugma ito sa bagong batya",
+          "Itala ang tatak at modelo kung nabili na nila ito"
+        ]
+      },
+      "lvpFlooring": {
+        "label": "LVP flooring",
+        "checks": [
+          "Sukatin ang lugar, kasama ang anumang kubeta o sulok na dadaan",
+          "Kasalukuyang palapag — lalabas ba ito, o tatapusin na natin ito?",
+          "Suriin ang antas at tandaan ang anumang pagbaba; LVP telegraphs isang hindi pantay na subfloor",
+          "Taas ng paglipat sa bawat pintuan"
+        ]
+      },
+      "tubFaucet": {
+        "label": "Faucet ng batya",
+        "checks": [
+          "Ang kliyente ba ang nagsusuplay nito? Itala ang tatak at modelo",
+          "Kasalukuyang posisyon at taas ng balbula — gumagalaw ba ito?",
+          "Kumpirmahin na ito ay isang tub-and-shower diverter o tub-only"
+        ]
+      },
+      "showerDrain": {
+        "label": "Sistema ng shower drain",
+        "checks": [
+          "Kasalukuyang posisyon ng paagusan at materyal ng tubo",
+          "Gumagalaw ba ang drain? Sukatin ang bagong posisyon mula sa dalawang pader",
+          "I-access sa ibaba upang gawin ang koneksyon — ano ang nasa ilalim ng palapag na ito?"
+        ]
+      },
+      "tMouldings": {
+        "label": "T molding at reducer",
+        "checks": [
+          "Bilangin at sukatin ang bawat paglipat — mga pintuan, at kung saan nagtatagpo ang dalawang uri ng palapag",
+          "Pansinin ang pagkakaiba ng taas sa bawat isa",
+          "Tugma sa katabing sahig na iniingatan ng kliyente"
+        ]
+      },
+      "tubDrain": {
+        "label": "Tub drain",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at tapusin upang tumugma ito sa gripo",
+          "Kasalukuyang posisyon ng drain at overflow",
+          "I-access sa ibaba para sa koneksyon"
+        ]
+      },
+      "tubShowerWall": {
+        "label": "Tub shower wall at waterproofing",
+        "checks": [
+          "Sukatin ang lahat ng tatlong alcove wall, floor to tile height",
+          "Kumpirmahin kung saan tumitigil ang tile — kisame, bulkhead, o isang nakatakdang taas",
+          "Suriin ang umiiral na surround para sa pinsala ng tubig sa likod nito",
+          "Tandaan ang anumang window o niche sa loob ng wet zone"
+        ]
+      },
+      "cabinets": {
+        "label": "Mga cabinet sa kusina",
+        "checks": [
+          "Sukatin ang bawat pagtakbo ng pader sa taas ng counter AT sa taas ng upper-cabinet — magkaiba sila",
+          "Markahan ang bawat sagabal sa sketch: mga bintana, pinto, saksakan, vent, radiator, bulkhead",
+          "Taas ng kisame sa magkabilang dulo ng bawat pagtakbo, at suriin ito para sa antas",
+          "Isla: laki, at kumpirmahing may clearance sa paligid nito",
+          "Mga sukat ng appliance - refrigerator, kalan, dishwasher, hood. Sukatin ang mga umiiral na openings",
+          "Kumpirmahin ang istilo at kulay ng cabinet sa kliyente, at kung ito ay prefab o custom"
+        ]
+      },
+      "tile": {
+        "label": "Baldosa sa dingding",
+        "checks": [
+          "Sukatin ang bawat dingding na naka-tile, sahig hanggang sa taas ng tapusin",
+          "Kumpirmahin ang taas ng tapusin: kisame, bulkhead, o linya ng korona",
+          "Laki ng tile at layout na gusto ng kliyente — binabago nito ang paggawa",
+          "Tandaan ang gilid ng paggamot sa bawat labas ng sulok"
+        ]
+      },
+      "quartzStep": {
+        "label": "Hakbang ng quartz curb",
+        "checks": [
+          "Haba at lapad ng bangketa",
+          "Kumpirmahin na tumutugma ang bato sa countertop o kung ano ang pinili ng kliyente",
+          "Tandaan kung ang curb ay karaniwang taas o binababa"
+        ]
+      },
+      "glassDoor": {
+        "label": "Pinto ng shower glass",
+        "checks": [
+          "Sukatin ang lapad ng pambungad at ang nilalayon na tapos na taas",
+          "Kumpirmahin ang gilid ng bisagra at direksyon ng pag-ugoy sa kliyente",
+          "Mayroon bang ponywall o bangko kung saan dapat dumapo ang salamin?",
+          "Karaniwang prefab o custom? Ang custom ay nangangailangan ng isang hiwalay na sukat pagkatapos ng pag-tile"
+        ]
+      },
+      "underCabinetLed": {
+        "label": "Under-cabinet LED strip",
+        "checks": [
+          "Kabuuang haba ng pagtakbo sa ilalim ng uppers",
+          "Saan nanggagaling ang kapangyarihan, at may switch ba o palaging naka-on?",
+          "Kumpirmahin na gusto ng kliyente na itago ang driver sa loob ng cabinet"
+        ]
+      },
+      "grabBars": {
+        "label": "Mga grab bar",
+        "checks": [
+          "Ilan, at markahan ang eksaktong posisyon at taas kasama ang kliyenteng naroroon",
+          "Ang pagharang ay dapat pumasok sa dingding bago ang tile - kumpirmahin na ang mga posisyon ay pinal",
+          "Ibinigay ng kliyente o sa amin? Itala ang pagtatapos"
+        ]
+      },
+      "cornerShelves": {
+        "label": "Mga istante sa sulok",
+        "checks": [
+          "Ilan at sa anong taas",
+          "Kumpirmahin na hindi sila sumalungat sa angkop na lugar o sa glass panel",
+          "Materyal at tapusin upang tumugma sa tile"
+        ]
+      },
+      "ledSwitch": {
+        "label": "LED strip switch",
+        "checks": [
+          "Saan napupunta ang switch? Sukatin mula sa sulok",
+          "Dimmable o standard — magtanong",
+          "Mayroon bang umiiral na kahon ng gang na maaari nating i-extend?"
+        ]
+      },
+      "vanity": {
+        "label": "Vanity",
+        "checks": [
+          "Sukatin ang maximum na lapad na magagamit, at ang lalim na malinaw sa door swing at toilet",
+          "Pagtutubero sa rough-in: taas mula sa sahig at offset mula sa dingding, para sa parehong drain at supply",
+          "Single o double sink — at kumpirmahin na ang double ay aktuwal na kasya",
+          "Kumpirmahin ang istilo, kulay, at istilo ng pinto kasama ng kliyente",
+          "Suriin na ang pader sa likod ay patag; ang isang nakayukong pader ay nag-iiwan ng puwang sa likod ng vanity",
+          "Kasya ba ang vanity sa pintuan ng banyo?"
+        ]
+      },
+      "backsplash": {
+        "label": "Backsplash",
+        "checks": [
+          "Sukatin ang haba ng pagtakbo at ang taas mula sa counter hanggang sa itaas",
+          "Tandaan ang bawat outlet at switch sa backsplash area",
+          "Kumpirmahin ang tile o quartz, at kung ano ang nangyayari sa likod ng kalan",
+          "Saan humihinto ang backsplash sa bawat dulo?"
+        ]
+      },
+      "countertop": {
+        "label": "Countertop",
+        "checks": [
+          "Sukatin ang bawat pagtakbo: haba at lalim, kasama ang isla",
+          "Kumpirmahin ang stone code na pinili ng kliyente",
+          "Uri ng lababo — undermount o drop-in — at kung mayroon nito ang kliyente sa site para sa pag-template",
+          "Tandaan ang profile sa gilid, overhang, at anumang dulo ng talon",
+          "Bilangin ang mga cutout: lababo, cooktop, mga saksakan sa isla"
+        ]
+      },
+      "gfciVanity": {
+        "label": "GFCI outlet (vanity)",
+        "checks": [
+          "Umiiral na posisyon at taas ng outlet; GFCI na ba?",
+          "Gumagalaw ba ito sa bagong vanity? Sukatin ang bagong posisyon",
+          "Suriin ang circuit na naka-on"
+        ]
+      },
+      "sink": {
+        "label": "lababo sa kusina",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo — nakasalalay dito ang cutout ng countertop",
+          "Kumpirmahing nasa site ang lababo bago ang template ng countertop",
+          "Single o double bowl, at ang lapad ng cabinet sa ibaba nito",
+          "Garburator? Tandaan ito ngayon"
+        ]
+      },
+      "vanitySink": {
+        "label": "Lumubog ang vanity",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo",
+          "Undermount, drop-in, o isinama sa itaas",
+          "Kumpirmahin na tumutugma ito sa lapad ng vanity at bilang ng butas ng gripo"
+        ]
+      },
+      "faucet": {
+        "label": "Faucet sa kusina",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo",
+          "Kailangan ang bilang ng butas sa counter — kabilang ang isang dispenser ng sabon o tapikin ng filter",
+          "Suriin ang clearance sa bintana sa likod ng lababo kung mayroon"
+        ]
+      },
+      "vanityFaucet": {
+        "label": "Vanity faucet",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak, modelo at tapusin",
+          "Isang butas, 4\" centreset, o 8\" na malawak — dapat itong tumugma sa lababo",
+          "Wall-mount? Binabago nito ang rough-in at dapat magpasya ngayon"
+        ]
+      },
+      "showerFaucet": {
+        "label": "Faucet ng shower",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo — ang katawan ng balbula ay kailangang nasa lugar bago magsara ang mga pader",
+          "Kumpirmahin ang taas at posisyon ng balbula kasama ng kliyente, na minarkahan sa dingding",
+          "Ulan ng ulo, hand shower, o pareho? Ang bawat isa ay isang hiwalay na labasan",
+          "Thermostatic o balanse ng presyon"
+        ]
+      },
+      "showerDrainFixture": {
+        "label": "Kabit ng shower drain",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tapusin upang tumugma ito sa gripo",
+          "Point drain o linear — binabago ng linear drain ang base slope at dapat magpasya ngayon"
+        ]
+      },
+      "toilet": {
+        "label": "Toilet",
+        "checks": [
+          "Sukatin ang rough-in: gitna ng flange sa tapos na pader sa likod. Karaniwan 12\", ngunit suriin",
+          "I-clear ang bawat panig at sa harap, sa vanity at sa dingding",
+          "Ibinigay ng kliyente? Itala ang tatak at modelo",
+          "Gumagalaw ba ang palikuran? Iyan ay isang drain relocation, hindi isang swap"
+        ]
+      },
+      "bidet": {
+        "label": "Bidet",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo",
+          "Mayroon bang malapit na outlet para sa electric seat? Karamihan ay nangangailangan ng isa",
+          "Kumpirmahin ang punto ng koneksyon ng supply ng tubig"
+        ]
+      },
+      "gfciToilet": {
+        "label": "Outlet ng GFCI (lugar ng banyo)",
+        "checks": [
+          "Saan eksakto - sukatin ang posisyon at taas",
+          "Aling circuit ang lalabas, at may kapasidad ba",
+          "Kadalasan ito ay para sa isang upuan ng bidet; kumpirmahin kung bakit"
+        ]
+      },
+      "gfciOutlets": {
+        "label": "Mga saksakan ng GFCI",
+        "checks": [
+          "Bilangin kung ilan, at markahan ang bawat posisyon",
+          "Tandaan kung alin ang nasa backsplash at ang kanilang mga taas",
+          "Suriin ang umiiral na mga circuit at kapasidad ng panel"
+        ]
+      },
+      "replaceSwitches": {
+        "label": "Palitan ang mga switch",
+        "checks": [
+          "Bilangin ang mga switch at tandaan kung ano ang kinokontrol ng bawat isa",
+          "Alinman sa kanila ang magiging dimmable?",
+          "Kumpirmahin ang tapusin at kulay na gusto ng kliyente"
+        ]
+      },
+      "pendantLight": {
+        "label": "Pendant light",
+        "checks": [
+          "Ilan, at markahan ang mga posisyon sa isla o counter",
+          "Mayroon bang umiiral na kahon, o ito ba ay bagong mga kable?",
+          "Ibinigay ng kliyente? I-record ang brand at modelo, at tandaan ang hanging height na gusto nila"
+        ]
+      },
+      "pendantLightSwitch": {
+        "label": "Lumipat ng ilaw ng palawit",
+        "checks": [
+          "Lumipat ng posisyon, sinusukat mula sa sulok",
+          "Dimmable o standard",
+          "Maaari ba itong sumali sa isang umiiral na kahon ng gang?"
+        ]
+      },
+      "islandOutlet": {
+        "label": "Outlet ng isla",
+        "checks": [
+          "Posisyon sa isla, at kung ito ay nasa side panel o isang pop-up sa counter",
+          "Ruta ng feed — kailangang makarating ang wire sa isla sa ilalim ng sahig",
+          "Kumpirmahin sa kliyente kung saan talaga nila isinasaksak ang mga bagay"
+        ]
+      },
+      "baseboard": {
+        "label": "Baseboard",
+        "checks": [
+          "Sukatin ang kabuuang pagtakbo",
+          "Itugma ang profile at taas sa natitirang bahagi ng bahay kung ito ay nagpapatuloy",
+          "Tandaan ang anumang mga sulok sa labas at kung ilan"
+        ]
+      },
+      "mirror": {
+        "label": "Salamin",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang laki at modelo",
+          "Kumpirmahin ang sukat sa pagitan ng vanity light at ng backsplash",
+          "Naka-frame, walang frame, o cabinet ng gamot — kailangan ng cabinet ng wall recess na desisyon ngayon"
+        ]
+      },
+      "vanityLight": {
+        "label": "Vanity light",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tatak at modelo",
+          "Kasalukuyang posisyon at taas ng kahon — nakasentro ba ito sa bagong vanity?",
+          "Kung ito ay gumagalaw, sukatin ang bagong posisyon at kumpirmahin sa kliyente"
+        ]
+      },
+      "fullPaint": {
+        "label": "Pintura sa kusina",
+        "checks": [
+          "Lugar sa dingding at kisame, at taas ng kisame",
+          "Color code — kunin ito mula sa kliyente nang nakasulat",
+          "Tandaan ang kasalukuyang tapusin at kung kailangan nito ng priming",
+          "Kumpirmahin kung ano ang hindi kasama: mga pinto, trim, mga cabinet sa loob"
+        ]
+      },
+      "hardware": {
+        "label": "Hardware ng banyo",
+        "checks": [
+          "Ibinigay ng kliyente? Itala ang tapusin upang tumugma ito sa gripo",
+          "Markahan ang bawat posisyon sa kliyente: towel bar, singsing, paper holder",
+          "Ang anumang bagay na lumapag sa tile ay kailangang kumpirmahin ang posisyon nito bago mag-tile"
+        ]
+      },
+      "exhaustFan": {
+        "label": "Exhaust fan",
+        "checks": [
+          "Saan nanggagaling ang umiiral na isa? Trace mo kung kaya mo",
+          "Ibinigay ng kliyente? I-record ang tatak at modelo, at suriin ang CFM na nababagay sa laki ng kuwarto",
+          "Kasalukuyang laki ng pagbubukas kumpara sa bagong unit",
+          "Gumagalaw ba ito? Tandaan ang duct run sa bagong posisyon"
+        ]
+      },
+      "potlights": {
+        "label": "Mga potlight",
+        "checks": [
+          "Ilan, anong laki, at markahan ang layout kasama ng kliyente",
+          "Access sa itaas — attic, o isang tapos na kisame sa ibaba ng isa pang unit?",
+          "Pansinin ang mga joist, ducting, at anumang bagay sa cavity ng kisame",
+          "Aling switch ang magkokontrol sa kanila, at dimmable?"
+        ]
+      },
+      "newSwitch": {
+        "label": "Bagong switch",
+        "checks": [
+          "Posisyon, sinusukat mula sa frame ng pinto",
+          "Ano ang kinokontrol nito, at ito ba ay dimmable?",
+          "Umiiral na gang box na malapit na i-extend?"
+        ]
+      },
+      "baseboardReinstall": {
+        "label": "Muling i-install ang mga baseboard",
+        "checks": [
+          "Kumpirmahin na ang umiiral na baseboard ay makakaligtas sa pag-alis - ang MDF ay karaniwang hindi",
+          "Sukatin ang kabuuang pagtakbo",
+          "Tandaan ang kundisyon at kung kailangan nitong muling magpinta pagkatapos"
+        ]
+      },
+      "baseboardNew": {
+        "label": "Bagong MDF baseboard",
+        "checks": [
+          "Sukatin ang kabuuang pagtakbo",
+          "Kumpirmahin ang profile at taas na tumutugma sa natitirang bahagi ng bahay",
+          "Bilangin ang mga sulok sa labas"
+        ]
+      },
+      "paint": {
+        "label": "Kulayan",
+        "checks": [
+          "Lugar sa dingding at kisame, at taas ng kisame",
+          "May nakasulat na color code mula sa kliyente",
+          "Kasalukuyang tapusin at kung kailangan ang panimulang aklat",
+          "Kumpirmahin kung ano ang hindi kasama"
+        ]
+      },
+      "touchUpPaint": {
+        "label": "Touch-up na pintura",
+        "checks": [
+          "Taas ng kisame at humigit-kumulang kung gaano karaming lugar ang kailangang hawakan",
+          "Kunin ang umiiral na color code — tingnan ang lata sa garahe o closet",
+          "Babalaan ang kliyente na ang touch-up ay bihirang sumama nang perpekto sa isang lumang pader"
+        ]
+      }
+    },
+    "summary": {
+      "title": "Ipadala ito pabalik sa opisina",
+      "copy": "Kopyahin ang buod",
+      "copied": "Kinopya",
+      "print": "I-print / I-save ang PDF",
+      "reset": "I-clear ang lahat ng mga ticks",
+      "resetConfirm": "I-clear ang bawat tik at tala sa checklist na ito?",
+      "notesLabel": "Mga Tala",
+      "notesPlaceholder": "Mga sukat, desisyon ng kliyente, anumang bagay na hindi karaniwan...",
+      "progress": "Sinuri ng {count}",
+      "shareTitle": "Ipadala ang eksaktong checklist na ito sa isang tao",
+      "shareHint": "Kinokopya ang isang link na may napiling saklaw na ito.",
+      "shareCopy": "Kopyahin ang link",
+      "unchecked": "Hindi pa nasusuri"
+    },
+    "ui": {
+      "addon": "Add-on",
+      "replacement": "Baguhin",
+      "blocker": "Huminto — lutasin bago sumipi",
+      "high": "Malaki ang epekto sa presyo"
+    },
+    "names": {
+      "bathroom-tub-to-tub": "Tub sa Tub",
+      "bathroom-tub-to-tiled-shower": "Tub sa Tiled Base Shower",
+      "bathroom-tub-to-prefab-shower": "Tub sa Prefab Base Shower",
+      "bathroom-shower-to-tiled-shower": "Shower hanggang Tiled Base Shower",
+      "bathroom-shower-to-prefab-shower": "Shower sa Prefab Shower",
+      "bathroom-4piece": "4 Piece Banyo",
+      "bathroom-powder-room": "Powder Room",
+      "bathroom-shower-only-tiled": "Shower Lang (Tiled Base)",
+      "bathroom-shower-only-prefab": "Shower Lang (Prepab Base)",
+      "bathroom-tub-only-tub": "Tub Lang (Tub)",
+      "bathroom-tub-only-tiled-shower": "Tub Lang (Tiled Base Shower)",
+      "bathroom-tub-only-prefab-shower": "Tub Lang (Prepab Base Shower)",
+      "bathroom-vanity-only": "Vanity Lang (Labada)",
+      "bathroom-keep-tub": "Panatilihin ang umiiral na tub (pinapanatili ang tub faucet + drain din)",
+      "bathroom-keep-vanity": "Panatilihin ang kasalukuyang vanity cabinet (hindi kasama ang countertop/lababo/faucet)",
+      "bathroom-keep-countertop": "Panatilihin ang kasalukuyang countertop",
+      "bathroom-keep-vanity-sink": "Panatilihin ang umiiral na vanity sink",
+      "bathroom-keep-vanity-faucet": "Panatilihin ang umiiral na vanity faucet",
+      "bathroom-keep-toilet": "Panatilihin ang umiiral na palikuran",
+      "bathroom-keep-mirror": "Panatilihin ang umiiral na salamin",
+      "bathroom-keep-hardware": "Panatilihin ang kasalukuyang hardware ng banyo",
+      "bathroom-popcorn-removal": "Pag-alis ng popcorn (makinis na kisame)",
+      "bathroom-electrical-plumbing-venting": "Mga gawaing elektrikal, pagtutubero at pag-venting",
+      "bathroom-gfci-vanity": "GFCI outlet (vanity area)",
+      "bathroom-gfci-toilet": "Outlet ng GFCI (lugar ng banyo)",
+      "bathroom-potlights": "Mga potlight",
+      "bathroom-new-switch": "Bago / dimmable switch",
+      "bathroom-baseboard-reinstall": "Muling i-install ang mga baseboard",
+      "bathroom-baseboard-new": "MDF flat baseboard",
+      "bathroom-full-paint": "Pintura sa banyo",
+      "bathroom-touch-up-paint": "Touch-up na pintura",
+      "bathroom-bench": "Bench sa shower",
+      "bathroom-niche": "Niche ng shower",
+      "bathroom-ponywall": "Ponywall",
+      "bathroom-custom-glass-door": "Pasadyang salamin na pinto",
+      "bathroom-custom-vanity": "Custom na plywood vanity",
+      "bathroom-led-mirror": "LED na salamin",
+      "bathroom-shower-curtain": "Shower curtain (walang salamin na pinto)",
+      "bathroom-curbless": "Curbless / barrier-free shower (walang curb)",
+      "bathroom-open-shower": "Buksan ang shower (walang salamin na pinto, walang kurtina)",
+      "bathroom-grab-bars": "Mga grab bar (shower)",
+      "bathroom-corner-shelf": "Mga istante sa sulok (shower)",
+      "bathroom-bidet": "Bidet (i-install; nagbibigay ang kliyente)",
+      "kitchen-prefab-cabinet": "Kusina Prefab Cabinet",
+      "kitchen-custom-cabinet": "Custom na Gabinete ng Kusina",
+      "kitchen-popcorn-removal": "Pag-alis ng popcorn (makinis na kisame)",
+      "kitchen-enclose-door-opening": "Isara ang pagbukas ng pinto",
+      "kitchen-new-door-opening": "Bagong pagbukas ng pinto",
+      "kitchen-electrical-plumbing-venting": "Mga gawaing elektrikal, pagtutubero at pag-venting",
+      "kitchen-floor-tile": "Baldosa sa sahig",
+      "kitchen-lvp-flooring": "LVP (vinyl plank)",
+      "kitchen-t-mouldings": "T molding at reducer",
+      "kitchen-under-cabinet-led": "Under-cabinet LED light strip",
+      "kitchen-led-switch": "LED light strip switch",
+      "kitchen-potlights": "Mga potlight",
+      "kitchen-gfci-outlets": "Mga saksakan ng GFCI",
+      "kitchen-replace-switches": "Palitan ang mga switch",
+      "kitchen-pendant-light": "Pendant light (i-install + switch)",
+      "kitchen-island-outlet": "Isla outlet (bago)",
+      "kitchen-baseboard": "MDF flat baseboard",
+      "kitchen-touch-up-paint": "Touch-up na pintura",
+      "kitchen-full-paint": "Pintura sa kusina",
+      "quartz-backsplash": "Quartz backsplash"
+    }
+  }
+}

@@ -1,0 +1,765 @@
+{
+  "siteVisit": {
+    "meta": {
+      "title": "Site Visit Checklist | Reno Stars",
+      "description": "Internal checklist for Reno Stars site visits. Pick the scope and capture everything the quote needs in one pass."
+    },
+    "hero": {
+      "eyebrow": "Internal tool",
+      "title": "Site Visit Checklist",
+      "subtitle": "Pick what the client wants. The page shows only the checks that scope needs — the same steps the quoting system will price.",
+      "note": "This page is for Reno Stars staff. Nothing you tick is sent anywhere; it stays on this phone until you clear it."
+    },
+    "picker": {
+      "scopeTitle": "1. What are we quoting?",
+      "scopeHint": "Pick one or both.",
+      "modelTitle": "2. Which job?",
+      "modelHint": "Match the client's intent. If unsure, pick the closest and note the difference.",
+      "modelPlaceholder": "Select a job type…",
+      "addonsTitle": "3. Anything extra?",
+      "addonsHint": "Tick what the client asked for. Each one adds its own checks below.",
+      "addonsGroupAddon": "Add-ons",
+      "addonsGroupReplacement": "Changes & swaps",
+      "empty": "Pick a scope above to build the checklist."
+    },
+    "sectionNames": {
+      "bathrooms": "Bathroom",
+      "kitchen": "Kitchen"
+    },
+    "always": {
+      "title": "Before you start",
+      "subtitle": "Every visit, regardless of scope.",
+      "items": [
+        {
+          "id": "arrival",
+          "label": "Confirm the client's name and the full address you're standing at",
+          "hint": "Street number and city become the project's PO number later — get it exactly right."
+        },
+        {
+          "id": "contact",
+          "label": "Best phone number and preferred language for the person who decides",
+          "hint": "Not always the person who let you in."
+        },
+        {
+          "id": "parking",
+          "label": "Parking and material drop-off — where does a truck actually go?",
+          "hint": "Lane access, permit zone, distance from the door. This is a real cost."
+        },
+        {
+          "id": "strata",
+          "label": "Strata or rental? Get the bylaws, work-hour limits and elevator booking rules",
+          "hint": "Ask for the strata form now. It delays more jobs than anything else on this list."
+        },
+        {
+          "id": "buildingAge",
+          "label": "Year the building was built",
+          "hint": "Pre-1990 changes the whole quote — see hazards below."
+        },
+        {
+          "id": "occupied",
+          "label": "Will anyone be living here during the work?",
+          "hint": "Decides floor protection, dust walls, and whether we need to stage the work."
+        },
+        {
+          "id": "shutoff",
+          "label": "Locate and photograph the water shutoff",
+          "hint": "Unit shutoff and building shutoff. Test that it actually turns."
+        },
+        {
+          "id": "panel",
+          "label": "Locate and photograph the electrical panel",
+          "hint": "Note free breaker slots and whether it's fuses or breakers."
+        },
+        {
+          "id": "photosWide",
+          "label": "Wide photos of every wall in the work area, plus the ceiling and floor",
+          "hint": "Stand in each corner. You will not get a second visit."
+        },
+        {
+          "id": "photosPath",
+          "label": "Photos of the path from the door to the work area",
+          "hint": "Stairs, turns, narrow doorways — anything a vanity or slab has to fit through."
+        },
+        {
+          "id": "roomDims",
+          "label": "Overall room dimensions and ceiling height",
+          "hint": "Length, width, height. Note bulkheads and any slope."
+        },
+        {
+          "id": "timeline",
+          "label": "Client's target start date and any hard deadline",
+          "hint": "Ask why, if there's a deadline. It's usually a move-in or a family event."
+        }
+      ]
+    },
+    "conditions": {
+      "title": "Site conditions",
+      "subtitle": "Not line items on the quote, but they move the price more than anything else. Check all of them.",
+      "items": [
+        {
+          "id": "asbestos",
+          "label": "Pre-1990 building — flag asbestos testing",
+          "hint": "WorkSafeBC requires a hazardous materials survey before demolition. Do not promise a price without it. Popcorn ceilings, vinyl floor tile, drywall mud and pipe wrap are the usual suspects.",
+          "severity": "blocker"
+        },
+        {
+          "id": "plumbingType",
+          "label": "Existing drain and supply piping — ABS, copper, PEX, cast iron, or galvanized",
+          "hint": "Look under the sink and at any exposed basement runs. Cast iron or galvanized means the relocation cost is not standard.",
+          "severity": "high"
+        },
+        {
+          "id": "waterDamage",
+          "label": "Signs of active or past water damage",
+          "hint": "Soft floor at the toilet or tub, staining on the ceiling below, musty smell, lifting tile. Photograph and note it in writing — this protects us both.",
+          "severity": "high"
+        },
+        {
+          "id": "mould",
+          "label": "Visible mould",
+          "hint": "Behind the toilet, at the tub surround, under the sink. Remediation is a separate scope.",
+          "severity": "high"
+        },
+        {
+          "id": "subfloor",
+          "label": "Subfloor type and condition, and floor level",
+          "hint": "Plywood or concrete slab. Check level with a 4ft level in two directions — an out-of-level floor means self-levelling before tile.",
+          "severity": "high"
+        },
+        {
+          "id": "loadBearing",
+          "label": "Any wall being opened or removed — is it load-bearing?",
+          "hint": "If there's any doubt, it needs an engineer's letter. Note joist direction above.",
+          "severity": "blocker"
+        },
+        {
+          "id": "permit",
+          "label": "Does this scope trigger a permit?",
+          "hint": "Moving plumbing or gas, structural changes, new circuits, or changing the room's use. Confirm the municipality — Vancouver, Burnaby, Richmond and Surrey all differ.",
+          "severity": "blocker"
+        },
+        {
+          "id": "popcornPresent",
+          "label": "Popcorn ceiling present in or next to the work area",
+          "hint": "Pre-1990 popcorn must be tested before it's touched. Even where we aren't removing it, note it — vibration cracks it."
+        },
+        {
+          "id": "windowInWet",
+          "label": "Window inside the tub or shower area",
+          "hint": "Needs a waterproofed return and usually a tempered replacement. Measure it and photograph the sill condition."
+        },
+        {
+          "id": "venting",
+          "label": "Where does the existing exhaust fan actually vent to?",
+          "hint": "Roof, soffit, or straight into the attic. Venting into the attic is a defect we have to correct."
+        },
+        {
+          "id": "ceilingAccess",
+          "label": "Access above the work area — attic, crawlspace, or a finished unit",
+          "hint": "Decides whether potlights and relocated venting are straightforward or invasive."
+        },
+        {
+          "id": "gas",
+          "label": "Any gas appliance in or near the scope",
+          "hint": "Gas work needs a licensed ticket and its own permit. Photograph the shutoff."
+        }
+      ]
+    },
+    "scope": {
+      "title": "Scope checks",
+      "subtitle": "Driven by the job type and add-ons you picked. Each card is a step the quote will contain.",
+      "quoteLineLabel": "Quote line",
+      "captureLabel": "Capture on site"
+    },
+    "captureLabels": {
+      "size": "Size — measure it, don't estimate",
+      "doorStyle": "Door style the client wants",
+      "brand": "Brand, if the client already bought it",
+      "spec": "Model or spec number",
+      "variant": "Variant, colour or finish",
+      "stoneCode": "Stone code the client picked",
+      "slabCounts": "Slab count needed",
+      "islandSize": "Island size",
+      "nicheEdgeLabel": "Niche edge detail",
+      "ceilingHeight": "Ceiling height",
+      "colorCode": "Paint colour code"
+    },
+    "provides": {
+      "title": "Confirm who supplies what",
+      "subtitle": "These are install-only by default — the client buys them. Confirm each one out loud and write down what they've already bought.",
+      "note": "If the client wants us to supply any of these, mark it and get the model they want. It changes the quote."
+    },
+    "steps": {
+      "demolition": {
+        "label": "Demolition",
+        "checks": [
+          "List exactly what comes out and what stays — walk the room with the client and point at each item",
+          "Where does the debris go? Bin location, or how many trips to the truck",
+          "Check for a garburator, water softener, or anything plumbed in that isn't obvious",
+          "Note anything the client wants kept or salvaged"
+        ]
+      },
+      "drywall": {
+        "label": "Drywall repair",
+        "checks": [
+          "Wall condition behind the fixtures coming out — tile-over-tile, plaster, or standard board",
+          "Note any wall that isn't plumb or straight; it shows badly once new tile goes on",
+          "Check for insulation in exterior walls while you're guessing at what's behind them"
+        ]
+      },
+      "popcornRemoval": {
+        "label": "Popcorn removal",
+        "checks": [
+          "Confirm the pre-1990 asbestos test is flagged — do not price removal without it",
+          "Measure the ceiling area to be smoothed",
+          "Is the popcorn painted? Painted popcorn is slower and sometimes has to be boarded over instead"
+        ]
+      },
+      "epv": {
+        "label": "Electrical, plumbing & venting",
+        "checks": [
+          "Write down every single relocation the client wants, item by item, with the new position measured from a fixed wall",
+          "Photograph the existing rough-in positions before you leave",
+          "Confirm access below or behind — is the ceiling under this room finished?",
+          "Note the existing pipe material at every point you're relocating"
+        ]
+      },
+      "bench": {
+        "label": "Shower bench",
+        "checks": [
+          "Which wall, what length, and how deep",
+          "Confirm the bench doesn't land on the shower's only glass panel line",
+          "Check the wall behind can carry it — exterior wall means insulation loss"
+        ]
+      },
+      "niche": {
+        "label": "Shower niche",
+        "checks": [
+          "Position and size, measured from the finished floor and from the corner",
+          "Confirm the wall cavity is free — no vent stack, no plumbing, and check the other side of the wall",
+          "Metal edge or mitered tile edge? Ask the client and note the answer",
+          "LED strip inside the niche? That needs a power source nearby"
+        ]
+      },
+      "ponywall": {
+        "label": "Ponywall",
+        "checks": [
+          "Length and finished height",
+          "Is the glass panel landing on top of it? The glass supplier needs the finished height",
+          "Check what's underneath — the ponywall needs to sit on solid framing"
+        ]
+      },
+      "encloseDoorOpening": {
+        "label": "Enclose door opening",
+        "checks": [
+          "Opening width and height",
+          "Confirm it isn't load-bearing before you promise anything",
+          "What's the finish on both sides — matching two different wall finishes is extra",
+          "Flooring will need patching where the threshold was"
+        ]
+      },
+      "newDoorOpening": {
+        "label": "New door opening",
+        "checks": [
+          "Where exactly, measured from a fixed corner, and how wide",
+          "Load-bearing check — note joist direction above. If in doubt, engineer's letter",
+          "Anything in the wall: outlets, switches, plumbing, ducting",
+          "Confirm swing direction and whether a door is included"
+        ]
+      },
+      "showerWall": {
+        "label": "Shower wall & waterproofing",
+        "checks": [
+          "Measure each wall of the wet area, floor to ceiling",
+          "Note the ceiling height and whether tile runs to the ceiling or to a bulkhead",
+          "Check the existing wall for movement or rot behind the current surround",
+          "Photograph the corner where the two wet walls meet"
+        ]
+      },
+      "floorTile": {
+        "label": "Floor tile",
+        "checks": [
+          "Measure the floor area, and note the room's out-of-square if it's obvious",
+          "Has the client picked the tile? Size and finish change the labour",
+          "Existing floor build-up — how many layers are coming off, and what's the height difference at the doorway",
+          "Check the floor is level; note where it isn't"
+        ]
+      },
+      "showerBase": {
+        "label": "Tiled shower base",
+        "checks": [
+          "Measure the base footprint and the curb position",
+          "Confirm the drain location and whether it's moving",
+          "Floor build-up available for the slope — a tiled base needs height",
+          "Note the tile size the client wants on the base; small format is required on a sloped pan"
+        ]
+      },
+      "tub": {
+        "label": "Tub",
+        "checks": [
+          "Measure the alcove: length, width, and height to the top of the intended tile",
+          "Confirm the client's tub will fit through the door and down the hallway",
+          "Drain position — left, right, or centre — and whether it matches the new tub",
+          "Record the brand and model if they've already bought it"
+        ]
+      },
+      "lvpFlooring": {
+        "label": "LVP flooring",
+        "checks": [
+          "Measure the area, plus any closet or nook that carries through",
+          "Existing floor — is it coming out, or are we going over it?",
+          "Check level and note any dips; LVP telegraphs an uneven subfloor",
+          "Transition heights at every doorway"
+        ]
+      },
+      "tubFaucet": {
+        "label": "Tub faucet",
+        "checks": [
+          "Is the client supplying it? Record brand and model",
+          "Existing valve position and height — is it moving?",
+          "Confirm it's a tub-and-shower diverter or tub-only"
+        ]
+      },
+      "showerDrain": {
+        "label": "Shower drain system",
+        "checks": [
+          "Existing drain position and pipe material",
+          "Is the drain moving? Measure the new position from two walls",
+          "Access below to make the connection — what's under this floor?"
+        ]
+      },
+      "tMouldings": {
+        "label": "T mouldings & reducers",
+        "checks": [
+          "Count and measure every transition — doorways, and where two floor types meet",
+          "Note the height difference at each one",
+          "Match to the adjacent flooring the client is keeping"
+        ]
+      },
+      "tubDrain": {
+        "label": "Tub drain",
+        "checks": [
+          "Client-supplied? Record brand and finish so it matches the faucet",
+          "Existing drain and overflow position",
+          "Access below for the connection"
+        ]
+      },
+      "tubShowerWall": {
+        "label": "Tub shower wall & waterproofing",
+        "checks": [
+          "Measure all three alcove walls, floor to tile height",
+          "Confirm where the tile stops — ceiling, bulkhead, or a set height",
+          "Check the existing surround for water damage behind it",
+          "Note any window or niche inside the wet zone"
+        ]
+      },
+      "cabinets": {
+        "label": "Kitchen cabinets",
+        "checks": [
+          "Measure every wall run at counter height AND at upper-cabinet height — they differ",
+          "Mark every obstruction on the sketch: windows, doors, outlets, vents, radiators, bulkheads",
+          "Ceiling height at both ends of each run, and check it for level",
+          "Island: size, and confirm there's clearance all around it",
+          "Appliance sizes — fridge, stove, dishwasher, hood. Measure the existing openings",
+          "Confirm cabinet style and colour with the client, and whether it's prefab or custom"
+        ]
+      },
+      "tile": {
+        "label": "Wall tile",
+        "checks": [
+          "Measure each wall being tiled, floor to the finish height",
+          "Confirm the finish height: ceiling, bulkhead, or crown line",
+          "Tile size and layout the client wants — it changes the labour",
+          "Note edge treatment at every outside corner"
+        ]
+      },
+      "quartzStep": {
+        "label": "Quartz curb step",
+        "checks": [
+          "Curb length and width",
+          "Confirm the stone matches the countertop or what the client picked",
+          "Note whether the curb is standard height or being lowered"
+        ]
+      },
+      "glassDoor": {
+        "label": "Shower glass door",
+        "checks": [
+          "Measure the opening width and the intended finished height",
+          "Confirm hinge side and swing direction with the client",
+          "Is there a ponywall or bench the glass has to land on?",
+          "Standard prefab or custom? Custom needs a separate measure after tiling"
+        ]
+      },
+      "underCabinetLed": {
+        "label": "Under-cabinet LED strip",
+        "checks": [
+          "Total run length under the uppers",
+          "Where does the power come from, and is there a switch or is it always-on?",
+          "Confirm the client wants the driver hidden inside a cabinet"
+        ]
+      },
+      "grabBars": {
+        "label": "Grab bars",
+        "checks": [
+          "How many, and mark the exact position and height with the client present",
+          "Blocking must go in the wall before tile — confirm the positions are final",
+          "Client-supplied or ours? Record the finish"
+        ]
+      },
+      "cornerShelves": {
+        "label": "Corner shelves",
+        "checks": [
+          "How many and at what heights",
+          "Confirm they don't clash with the niche or the glass panel",
+          "Material and finish to match the tile"
+        ]
+      },
+      "ledSwitch": {
+        "label": "LED strip switch",
+        "checks": [
+          "Where does the switch go? Measure from the corner",
+          "Dimmable or standard — ask",
+          "Is there an existing gang box we can extend?"
+        ]
+      },
+      "vanity": {
+        "label": "Vanity",
+        "checks": [
+          "Measure the maximum width available, and the depth clear of the door swing and toilet",
+          "Plumbing rough-in: height off the floor and offset from the wall, for both drain and supply",
+          "Single or double sink — and confirm a double actually fits",
+          "Confirm style, colour, and door style with the client",
+          "Check the wall behind is flat; a bowed wall leaves a gap behind the vanity",
+          "Does the vanity fit through the bathroom door?"
+        ]
+      },
+      "backsplash": {
+        "label": "Backsplash",
+        "checks": [
+          "Measure the run length and the height from counter to uppers",
+          "Note every outlet and switch in the backsplash area",
+          "Confirm tile or quartz, and what happens behind the stove",
+          "Where does the backsplash stop at each end?"
+        ]
+      },
+      "countertop": {
+        "label": "Countertop",
+        "checks": [
+          "Measure every run: length and depth, including the island",
+          "Confirm the stone code the client picked",
+          "Sink type — undermount or drop-in — and whether the client has it on site for templating",
+          "Note edge profile, overhang, and any waterfall end",
+          "Count cutouts: sink, cooktop, outlets in the island"
+        ]
+      },
+      "gfciVanity": {
+        "label": "GFCI outlet (vanity)",
+        "checks": [
+          "Existing outlet position and height; is it already GFCI?",
+          "Is it moving with the new vanity? Measure the new position",
+          "Check the circuit it's on"
+        ]
+      },
+      "sink": {
+        "label": "Kitchen sink",
+        "checks": [
+          "Client-supplied? Record brand and model — the countertop cutout depends on it",
+          "Confirm the sink is on site before the countertop template",
+          "Single or double bowl, and the cabinet width below it",
+          "Garburator? Note it now"
+        ]
+      },
+      "vanitySink": {
+        "label": "Vanity sink",
+        "checks": [
+          "Client-supplied? Record brand and model",
+          "Undermount, drop-in, or integrated with the top",
+          "Confirm it matches the vanity width and the faucet hole count"
+        ]
+      },
+      "faucet": {
+        "label": "Kitchen faucet",
+        "checks": [
+          "Client-supplied? Record brand and model",
+          "Hole count needed in the counter — including a soap dispenser or filter tap",
+          "Check clearance to the window behind the sink if there is one"
+        ]
+      },
+      "vanityFaucet": {
+        "label": "Vanity faucet",
+        "checks": [
+          "Client-supplied? Record brand, model and finish",
+          "Single hole, 4\" centreset, or 8\" widespread — this must match the sink",
+          "Wall-mount? That changes the rough-in and must be decided now"
+        ]
+      },
+      "showerFaucet": {
+        "label": "Shower faucet",
+        "checks": [
+          "Client-supplied? Record brand and model — the valve body has to be on site before walls close",
+          "Confirm the valve height and position with the client, marked on the wall",
+          "Rain head, hand shower, or both? Each is a separate outlet",
+          "Thermostatic or pressure-balance"
+        ]
+      },
+      "showerDrainFixture": {
+        "label": "Shower drain fixture",
+        "checks": [
+          "Client-supplied? Record the finish so it matches the faucet",
+          "Point drain or linear — a linear drain changes the base slope and must be decided now"
+        ]
+      },
+      "toilet": {
+        "label": "Toilet",
+        "checks": [
+          "Measure the rough-in: centre of the flange to the finished wall behind. Usually 12\", but check",
+          "Clearance each side and in front, to the vanity and the wall",
+          "Client-supplied? Record brand and model",
+          "Is the toilet moving? That's a drain relocation, not a swap"
+        ]
+      },
+      "bidet": {
+        "label": "Bidet",
+        "checks": [
+          "Client-supplied? Record brand and model",
+          "Is there a nearby outlet for an electric seat? Most need one",
+          "Confirm water supply connection point"
+        ]
+      },
+      "gfciToilet": {
+        "label": "GFCI outlet (toilet area)",
+        "checks": [
+          "Where exactly — measure the position and height",
+          "Which circuit will it come off, and is there capacity",
+          "Usually this is for a bidet seat; confirm that's why"
+        ]
+      },
+      "gfciOutlets": {
+        "label": "GFCI outlets",
+        "checks": [
+          "Count how many, and mark each position",
+          "Note which are in the backsplash and their heights",
+          "Check the existing circuits and panel capacity"
+        ]
+      },
+      "replaceSwitches": {
+        "label": "Replace switches",
+        "checks": [
+          "Count the switches and note what each one controls",
+          "Any of them going dimmable?",
+          "Confirm the finish and colour the client wants"
+        ]
+      },
+      "pendantLight": {
+        "label": "Pendant light",
+        "checks": [
+          "How many, and mark the positions over the island or counter",
+          "Is there an existing box, or is this new wiring?",
+          "Client-supplied? Record brand and model, and note the hanging height they want"
+        ]
+      },
+      "pendantLightSwitch": {
+        "label": "Pendant light switch",
+        "checks": [
+          "Switch position, measured from the corner",
+          "Dimmable or standard",
+          "Can it join an existing gang box?"
+        ]
+      },
+      "islandOutlet": {
+        "label": "Island outlet",
+        "checks": [
+          "Position on the island, and whether it's in the side panel or a pop-up in the counter",
+          "Feed route — the wire has to get to the island under the floor",
+          "Confirm with the client where they actually plug things in"
+        ]
+      },
+      "baseboard": {
+        "label": "Baseboard",
+        "checks": [
+          "Measure the total run",
+          "Match the profile and height to the rest of the house if it's continuing",
+          "Note any outside corners and how many"
+        ]
+      },
+      "mirror": {
+        "label": "Mirror",
+        "checks": [
+          "Client-supplied? Record size and model",
+          "Confirm the size fits between the vanity light and the backsplash",
+          "Framed, frameless, or a medicine cabinet — a cabinet needs a wall recess decision now"
+        ]
+      },
+      "vanityLight": {
+        "label": "Vanity light",
+        "checks": [
+          "Client-supplied? Record brand and model",
+          "Existing box position and height — is it centred on the new vanity?",
+          "If it's moving, measure the new position and confirm with the client"
+        ]
+      },
+      "fullPaint": {
+        "label": "Kitchen paint",
+        "checks": [
+          "Wall and ceiling area, and ceiling height",
+          "Colour code — get it from the client in writing",
+          "Note the current finish and whether it needs priming",
+          "Confirm what's excluded: doors, trim, inside cabinets"
+        ]
+      },
+      "hardware": {
+        "label": "Bathroom hardware",
+        "checks": [
+          "Client-supplied? Record the finish so it matches the faucet",
+          "Mark each position with the client: towel bar, ring, paper holder",
+          "Anything landing on tile needs its position confirmed before tiling"
+        ]
+      },
+      "exhaustFan": {
+        "label": "Exhaust fan",
+        "checks": [
+          "Where does the existing one vent to? Trace it if you can",
+          "Client-supplied? Record brand and model, and check the CFM suits the room size",
+          "Existing opening size versus the new unit",
+          "Is it moving? Note the duct run to the new position"
+        ]
+      },
+      "potlights": {
+        "label": "Potlights",
+        "checks": [
+          "How many, what size, and mark the layout with the client",
+          "Access above — attic, or a finished ceiling below another unit?",
+          "Note joists, ducting, and anything in the ceiling cavity",
+          "Which switch will control them, and dimmable?"
+        ]
+      },
+      "newSwitch": {
+        "label": "New switch",
+        "checks": [
+          "Position, measured from the door frame",
+          "What does it control, and is it dimmable?",
+          "Existing gang box nearby to extend from?"
+        ]
+      },
+      "baseboardReinstall": {
+        "label": "Reinstall baseboards",
+        "checks": [
+          "Confirm the existing baseboard will survive removal — MDF usually doesn't",
+          "Measure the total run",
+          "Note the condition and whether it needs repainting after"
+        ]
+      },
+      "baseboardNew": {
+        "label": "New MDF baseboard",
+        "checks": [
+          "Measure the total run",
+          "Confirm the profile and height match the rest of the house",
+          "Count the outside corners"
+        ]
+      },
+      "paint": {
+        "label": "Paint",
+        "checks": [
+          "Wall and ceiling area, and ceiling height",
+          "Colour code in writing from the client",
+          "Current finish and whether primer is needed",
+          "Confirm what's excluded"
+        ]
+      },
+      "touchUpPaint": {
+        "label": "Touch-up paint",
+        "checks": [
+          "Ceiling height and roughly how much area needs touching up",
+          "Get the existing colour code — check the can in the garage or the closet",
+          "Warn the client that touch-up rarely blends perfectly on an aged wall"
+        ]
+      }
+    },
+    "summary": {
+      "title": "Send it back to the office",
+      "copy": "Copy summary",
+      "copied": "Copied",
+      "print": "Print / Save PDF",
+      "reset": "Clear all ticks",
+      "resetConfirm": "Clear every tick and note on this checklist?",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Measurements, client decisions, anything unusual…",
+      "progress": "{count} checked",
+      "shareTitle": "Send this exact checklist to someone",
+      "shareHint": "Copies a link with this scope already selected.",
+      "shareCopy": "Copy link",
+      "unchecked": "Not yet checked"
+    },
+    "ui": {
+      "addon": "Add-on",
+      "replacement": "Change",
+      "blocker": "Stop — resolve before quoting",
+      "high": "Affects price significantly"
+    },
+    "names": {
+      "bathroom-tub-to-tub": "Tub to Tub",
+      "bathroom-tub-to-tiled-shower": "Tub to Tiled Base Shower",
+      "bathroom-tub-to-prefab-shower": "Tub to Prefab Base Shower",
+      "bathroom-shower-to-tiled-shower": "Shower to Tiled Base Shower",
+      "bathroom-shower-to-prefab-shower": "Shower to Prefab Shower",
+      "bathroom-4piece": "4 Piece Bathroom",
+      "bathroom-powder-room": "Powder Room",
+      "bathroom-shower-only-tiled": "Shower Only (Tiled Base)",
+      "bathroom-shower-only-prefab": "Shower Only (Prefab Base)",
+      "bathroom-tub-only-tub": "Tub Only (Tub)",
+      "bathroom-tub-only-tiled-shower": "Tub Only (Tiled Base Shower)",
+      "bathroom-tub-only-prefab-shower": "Tub Only (Prefab Base Shower)",
+      "bathroom-vanity-only": "Vanity Only (Laundry)",
+      "bathroom-keep-tub": "Keep existing tub (keeps tub faucet + drain too)",
+      "bathroom-keep-vanity": "Keep existing vanity cabinet (countertop/sink/faucet not included)",
+      "bathroom-keep-countertop": "Keep existing countertop",
+      "bathroom-keep-vanity-sink": "Keep existing vanity sink",
+      "bathroom-keep-vanity-faucet": "Keep existing vanity faucet",
+      "bathroom-keep-toilet": "Keep existing toilet",
+      "bathroom-keep-mirror": "Keep existing mirror",
+      "bathroom-keep-hardware": "Keep existing bathroom hardware",
+      "bathroom-popcorn-removal": "Popcorn removal (smooth ceiling)",
+      "bathroom-electrical-plumbing-venting": "Electrical, plumbing and venting works",
+      "bathroom-gfci-vanity": "GFCI outlet (vanity area)",
+      "bathroom-gfci-toilet": "GFCI outlet (toilet area)",
+      "bathroom-potlights": "Potlights",
+      "bathroom-new-switch": "New / dimmable switch",
+      "bathroom-baseboard-reinstall": "Reinstall baseboards",
+      "bathroom-baseboard-new": "MDF flat baseboard",
+      "bathroom-full-paint": "Bathroom paint",
+      "bathroom-touch-up-paint": "Touch-up paint",
+      "bathroom-bench": "Shower bench",
+      "bathroom-niche": "Shower niche",
+      "bathroom-ponywall": "Ponywall",
+      "bathroom-custom-glass-door": "Custom glass door",
+      "bathroom-custom-vanity": "Custom plywood vanity",
+      "bathroom-led-mirror": "LED mirror",
+      "bathroom-shower-curtain": "Shower curtain (no glass door)",
+      "bathroom-curbless": "Curbless / barrier-free shower (no curb)",
+      "bathroom-open-shower": "Open shower (no glass door, no curtain)",
+      "bathroom-grab-bars": "Grab bars (shower)",
+      "bathroom-corner-shelf": "Corner shelves (shower)",
+      "bathroom-bidet": "Bidet (install; client provides)",
+      "kitchen-prefab-cabinet": "Kitchen Prefab Cabinet",
+      "kitchen-custom-cabinet": "Kitchen Custom Cabinet",
+      "kitchen-popcorn-removal": "Popcorn removal (smooth ceiling)",
+      "kitchen-enclose-door-opening": "Enclose door opening",
+      "kitchen-new-door-opening": "New door opening",
+      "kitchen-electrical-plumbing-venting": "Electrical, plumbing and venting works",
+      "kitchen-floor-tile": "Floor tile",
+      "kitchen-lvp-flooring": "LVP (vinyl plank)",
+      "kitchen-t-mouldings": "T mouldings & reducers",
+      "kitchen-under-cabinet-led": "Under-cabinet LED light strip",
+      "kitchen-led-switch": "LED light strip switch",
+      "kitchen-potlights": "Potlights",
+      "kitchen-gfci-outlets": "GFCI outlets",
+      "kitchen-replace-switches": "Replace switches",
+      "kitchen-pendant-light": "Pendant light (install + switch)",
+      "kitchen-island-outlet": "Island outlet (new)",
+      "kitchen-baseboard": "MDF flat baseboard",
+      "kitchen-touch-up-paint": "Touch-up paint",
+      "kitchen-full-paint": "Kitchen paint",
+      "quartz-backsplash": "Quartz backsplash"
+    }
+  }
+}
