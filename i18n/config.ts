@@ -39,18 +39,22 @@ export const PRERENDERED_LOCALES = [] as const satisfies readonly Locale[];
  * non-indexable URL, and the sitemap must not submit one. Adding a locale
  * here lifts it everywhere at once.
  *
- * Adding a locale is a CONTENT decision, not a config one. Add it only once
- * that locale's copy has been reviewed by someone who reads it — indexing
- * unreviewed machine translation adds thin pages that compete with the pages
- * you want ranked. Project/site titles exist for all 14 locales; that is
- * necessary but not sufficient.
+ * Adding a locale is a CONTENT decision, not a config one. All 14 were opened
+ * 2026-08-07 after every locale cleared the measured gate in
+ * `agent-skills/marketing-all/scripts/locale_readiness.py` (hub repo):
+ * project cover >=.90, blog body >=.85, link health >=.90, zero known
+ * mistranslations, English meta <=.10. Re-run it before adding another locale
+ * or after any bulk translation — it is cheap and it is the only thing standing
+ * between this list and indexing machine-translation damage.
  *
  * Blog posts are gated separately and more strictly, on having a NATIVE body
  * (app/[locale]/blog/[slug]/page.tsx + the nativeLocales filter in
  * app/sitemap.ts). That gate stays: an untranslated post renders the English
  * body under a foreign-language URL, which is genuine duplicate content.
  */
-export const INDEXABLE_LEAF_LOCALES = ['en', 'zh'] as const satisfies readonly Locale[];
+export const INDEXABLE_LEAF_LOCALES = [
+  'en', 'zh', 'zh-Hant', 'ja', 'ko', 'es', 'pa', 'tl', 'fa', 'vi', 'ru', 'ar', 'hi', 'fr',
+] as const satisfies readonly Locale[];
 
 /** True when this locale's leaf pages may be indexed. */
 export function isIndexableLeafLocale(locale: string): boolean {
