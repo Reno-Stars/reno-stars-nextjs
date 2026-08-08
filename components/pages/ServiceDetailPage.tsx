@@ -105,6 +105,22 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                   ? 'Luxury modern bathroom renovation with custom tile, glass shower, and premium fixtures in Vancouver home'
                   : serviceSlug === 'whole-house'
                   ? 'Modern open concept living and dining room renovation showcasing hardwood floors and natural light in Vancouver home'
+                  : serviceSlug === 'commercial'
+                  ? 'Professional commercial interior renovation with modern office space and retail storefront in Vancouver'
+                  : serviceSlug === 'cabinet'
+                  ? 'Kitchen cabinet refacing with new shaker doors and chrome hardware in a Vancouver home'
+                  : serviceSlug === 'basement'
+                  ? 'Bright basement renovation with legal suite, rec room and modern lighting in a Vancouver home'
+                  : serviceSlug === 'poly-b-replacement'
+                  ? 'Poly B pipe replacement with modern PEX plumbing installation in a Vancouver home'
+                  : serviceSlug === 'heat-pump-hvac'
+                  ? 'New heat pump HVAC system installation providing efficient heating and cooling for a Vancouver home'
+                  : serviceSlug === 'accessible-bathroom'
+                  ? 'Accessible bathroom renovation with grab bars, walk-in shower and safety features in a Vancouver home'
+                  : serviceSlug === 'critical-load-panel'
+                  ? 'Electrical panel upgrade for EV charging and modern appliances in a Vancouver home'
+                  : serviceSlug === 'realtor'
+                  ? 'Renovated home ready for real estate listing with modern finishes in Vancouver'
                   : localizedService.title
               }
               fill
