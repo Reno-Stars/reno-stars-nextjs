@@ -5,7 +5,7 @@
 
 import type { Locale, Localized } from '@/lib/types';
 import { locales, ogLocaleMap } from '@/i18n/config';
-import { LOCALE_TO_SUFFIX, isNativeLocale } from '@/lib/admin/locale-keys';
+import { LOCALE_TO_SUFFIX, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { BRAND } from '@/lib/company-config';
 
 // ============================================================================
@@ -103,7 +103,7 @@ export function hasNativeContent(
 // Derived from the exhaustive LOCALE_TO_SUFFIX in lib/admin/locale-keys.ts
 // (the SSOT) so the two maps can't drift.
 export const LOCALE_TO_DB_SUFFIX: Partial<Record<Locale, string>> = Object.fromEntries(
-  locales.filter((loc) => !isNativeLocale(loc)).map((loc) => [loc, LOCALE_TO_SUFFIX[loc]]),
+  locales.filter((loc) => !hasDedicatedColumn(loc)).map((loc) => [loc, LOCALE_TO_SUFFIX[loc]]),
 );
 
 /**

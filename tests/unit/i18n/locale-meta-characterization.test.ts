@@ -3,7 +3,7 @@ import {
   locales, localeNames, ogLocaleMap, rtlLocales, isRtl,
   INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale, PRERENDERED_LOCALES,
 } from '@/i18n/config';
-import { LOCALE_TO_SUFFIX, localeSuffix, fieldKey, isNativeLocale } from '@/lib/admin/locale-keys';
+import { LOCALE_TO_SUFFIX, localeSuffix, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { LOCALE_TO_DB_SUFFIX, pickLocale } from '@/lib/utils';
 import { LOCALE_TARGETS } from '@/lib/share/matrix';
 import { LOCALIZED_BRAND_NAMES, brandName, brandDisplay } from '@/lib/company-config';
@@ -132,7 +132,7 @@ describe('DB field suffixes', () => {
 
   it('only en and zh have dedicated DB columns', () => {
     for (const loc of locales) {
-      expect(isNativeLocale(loc)).toBe(loc === 'en' || loc === 'zh');
+      expect(hasDedicatedColumn(loc)).toBe(loc === 'en' || loc === 'zh');
     }
   });
 

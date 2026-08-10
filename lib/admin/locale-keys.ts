@@ -1,39 +1,30 @@
-import { locales, type Locale } from '@/i18n/config';
+import { locales, LOCALE_META, mapMeta, type Locale } from '@/i18n/config';
 
 /**
  * Map a locale code to the camelCase suffix used as the per-locale field key.
  *
- * en/zh use no suffix here because they live in dedicated `*_en` / `*_zh`
- * DB columns and the corresponding form fields are `titleEn` / `titleZh`.
- * The other 12 locales live in the `localizations` jsonb under
- * `${fieldName}${Suffix}` keys (e.g. `titleJa`, `descriptionZhHant`).
+ * en/zh use 'En'/'Zh' but live in dedicated `*_en` / `*_zh` DB columns with
+ * form fields `titleEn` / `titleZh`. The other 12 locales live in the
+ * `localizations` jsonb under `${fieldName}${Suffix}` keys (e.g. `titleJa`,
+ * `descriptionZhHant`).
  *
- * SSOT: lib/utils.ts derives its LOCALE_TO_DB_SUFFIX (non-base locales only)
- * from this exhaustive map — edit suffixes here only.
+ * SSOT is LOCALE_META.dbSuffix in i18n/config.ts — edit suffixes there.
  */
-export const LOCALE_TO_SUFFIX: Record<Locale, string> = {
-  en: 'En',
-  zh: 'Zh',
-  'zh-Hant': 'ZhHant',
-  ja: 'Ja',
-  ko: 'Ko',
-  es: 'Es',
-  pa: 'Pa',
-  tl: 'Tl',
-  fa: 'Fa',
-  vi: 'Vi',
-  ru: 'Ru',
-  ar: 'Ar',
-  hi: 'Hi',
-  fr: 'Fr',
-};
+export const LOCALE_TO_SUFFIX: Record<Locale, string> = mapMeta((m) => m.dbSuffix);
 
 /** All 14 locale codes, EN first. */
 export const ADMIN_LOCALES = locales;
 
-/** True for locales that map to a dedicated `*_en` / `*_zh` DB column. */
-export function isNativeLocale(loc: Locale): boolean {
-  return loc === 'en' || loc === 'zh';
+/**
+ * True for locales that map to a dedicated `*_en` / `*_zh` DB column, as
+ * opposed to living in the `localizations` jsonb.
+ *
+ * Named `hasDedicatedColumn`, not `isNativeLocale`: `LOCALE_META.nativeSupport`
+ * means something completely different (a team member speaks the language), and
+ * two senses of "native" one import apart is how a wrong call site gets written.
+ */
+export function hasDedicatedColumn(loc: Locale): boolean {
+  return LOCALE_META[loc].dbColumn;
 }
 
 /** Form field key for `${fieldName}` × `${locale}`, e.g. ('title','ja') → 'titleJa'. */
@@ -50,7 +41,7 @@ export function localizationKeys(fieldNames: string[]): string[] {
   const out: string[] = [];
   for (const name of fieldNames) {
     for (const loc of locales) {
-      if (isNativeLocale(loc)) continue;
+      if (hasDedicatedColumn(loc)) continue;
       out.push(fieldKey(name, loc));
     }
   }

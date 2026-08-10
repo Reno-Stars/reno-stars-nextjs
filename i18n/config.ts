@@ -73,6 +73,16 @@ export interface LocaleMeta {
    * locale.
    */
   prerender: boolean;
+  /**
+   * camelCase suffix for this locale's per-locale field key:
+   * ('title', 'zh-Hant') → `titleZhHant`.
+   */
+  dbSuffix: string;
+  /**
+   * Has dedicated `*_en` / `*_zh` DB columns. The other 12 locales live in the
+   * `localizations` jsonb under `${fieldName}${dbSuffix}` keys.
+   */
+  dbColumn: boolean;
 }
 
 /**
@@ -81,20 +91,20 @@ export interface LocaleMeta {
  * feature.
  */
 export const LOCALE_META: Record<Locale, LocaleMeta> = {
-  en:        { name: 'English',   ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false },
-  zh:        { name: '简体中文',   ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false },
-  'zh-Hant': { name: '繁體中文',   ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false },
-  ja:        { name: '日本語',     ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false },
-  ko:        { name: '한국어',     ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false },
-  es:        { name: 'Español',   ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false },
-  pa:        { name: 'ਪੰਜਾਬੀ',     ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false },
-  tl:        { name: 'Tagalog',   ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false },
-  fa:        { name: 'فارسی',     ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false },
-  vi:        { name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false },
-  ru:        { name: 'Русский',   ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false },
-  ar:        { name: 'العربية',   ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false },
-  hi:        { name: 'हिन्दी',      ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false },
-  fr:        { name: 'Français',  ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false },
+  en:        { name: 'English',   ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'En',     dbColumn: true  },
+  zh:        { name: '简体中文',   ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Zh',     dbColumn: true  },
+  'zh-Hant': { name: '繁體中文',   ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'ZhHant', dbColumn: false },
+  ja:        { name: '日本語',     ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ja',     dbColumn: false },
+  ko:        { name: '한국어',     ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ko',     dbColumn: false },
+  es:        { name: 'Español',   ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Es',     dbColumn: false },
+  pa:        { name: 'ਪੰਜਾਬੀ',     ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Pa',     dbColumn: false },
+  tl:        { name: 'Tagalog',   ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Tl',     dbColumn: false },
+  fa:        { name: 'فارسی',     ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Fa',     dbColumn: false },
+  vi:        { name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Vi',     dbColumn: false },
+  ru:        { name: 'Русский',   ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ru',     dbColumn: false },
+  ar:        { name: 'العربية',   ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Ar',     dbColumn: false },
+  hi:        { name: 'हिन्दी',      ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Hi',     dbColumn: false },
+  fr:        { name: 'Français',  ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Fr',     dbColumn: false },
 };
 
 /** Build a `Record<Locale, T>` by reading one field off every row. */
