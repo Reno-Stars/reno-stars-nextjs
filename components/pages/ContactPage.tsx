@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
+import LanguageSupportNotice from '@/components/LanguageSupportNotice';
 import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
@@ -136,6 +137,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
               <p className="text-base mb-6" style={{ color: TEXT_MID }}>
                 {t('section.contactSubtitle3')}
               </p>
+              <LanguageSupportNotice locale={locale} />
               <ContactForm
                 submitLabel={t('cta.submitInquiry')}
                 onSuccess={handleFormSuccess}
