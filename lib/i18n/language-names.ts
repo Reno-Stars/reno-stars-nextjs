@@ -44,11 +44,11 @@ export function nativeSupportLanguageList(readerLocale: Locale): string {
       type: 'conjunction',
     });
     return list.format(
-      supported.map((loc) => names.of(displayTag(loc)) ?? LOCALE_META[loc].name),
+      supported.map((loc) => names.of(displayTag(loc)) ?? LOCALE_META[loc]?.name ?? loc),
     );
   } catch {
     // An unusual runtime ICU build must not 500 the contact page.
-    return supported.map((loc) => LOCALE_META[loc].name).join(', ');
+    return supported.map((loc) => LOCALE_META[loc]?.name ?? loc).join(', ');
   }
 }
 
@@ -56,8 +56,8 @@ export function nativeSupportLanguageList(readerLocale: Locale): string {
 export function localeSelfName(readerLocale: Locale): string {
   try {
     const names = new Intl.DisplayNames([readerLocale], { type: 'language' });
-    return names.of(readerLocale) ?? LOCALE_META[readerLocale].name;
+    return names.of(readerLocale) ?? LOCALE_META[readerLocale]?.name ?? readerLocale;
   } catch {
-    return LOCALE_META[readerLocale].name;
+    return LOCALE_META[readerLocale]?.name ?? readerLocale;
   }
 }

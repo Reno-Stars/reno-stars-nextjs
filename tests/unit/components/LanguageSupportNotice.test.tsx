@@ -81,15 +81,18 @@ describe('LanguageSupportNotice', () => {
   });
 
   it('passes through an extra className', () => {
+    // Must be a token that does NOT already appear in the component's base
+    // class string (`rounded-xl p-5 mb-6 flex items-start gap-3`) — otherwise
+    // this passes even if the `${className}` interpolation were deleted.
     const html = renderToStaticMarkup(
       <LanguageSupportNotice
         locale="ko"
         language={LANGUAGE}
         supported={SUPPORTED_TEXT}
-        className="mb-6"
+        className="test-extra-marker"
       />,
     );
-    expect(html).toContain('mb-6');
+    expect(html).toContain('test-extra-marker');
   });
 
   it('does not import @/lib/i18n/language-names — formatting must happen server-side', () => {

@@ -3,6 +3,7 @@ import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
+import { SCHEMA_AVAILABLE_LANGUAGES } from '@/i18n/config';
 
 const BASE_URL = getBaseUrl();
 
@@ -19,11 +20,13 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
   // can match it to localized SERPs (e.g. show the /zh/contact/ schema
   // signal to zh-CN searchers, not the /en/ one). Completes the
   // i18n-aware schema cluster: FAQ ✅ Article ✅ HowTo ✅ Breadcrumb ✅
-  // ContactPage (THIS COMMIT). The `availableLanguage` ['English',
-  // 'Chinese'] inside contactPoint stays — it describes the LANGUAGES
-  // SUPPORTED by customer service; `inLanguage` describes the language
-  // of THIS DOCUMENT instance. Distinct Schema.org properties with
-  // different semantics.
+  // ContactPage (THIS COMMIT). `inLanguage` describes the language of
+  // THIS DOCUMENT instance; `availableLanguage` inside contactPoint
+  // (SCHEMA_AVAILABLE_LANGUAGES, from i18n/config.ts) describes the
+  // LANGUAGES SUPPORTED by customer service — a staffing fact derived
+  // from `LOCALE_META.nativeSupport`, deliberately NOT the set of
+  // locales the site is translated into. Distinct Schema.org properties
+  // with different semantics.
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
@@ -50,7 +53,7 @@ export default function ContactPageSchema({ company, areaNames, locale = 'en' }:
         telephone: e164(company.phone),
         email: company.email,
         contactType: 'customer service',
-        availableLanguage: ['English', 'Chinese'],
+        availableLanguage: SCHEMA_AVAILABLE_LANGUAGES,
       },
       areaServed: areaNames.map((name) => ({
         '@type': 'City',

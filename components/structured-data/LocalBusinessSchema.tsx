@@ -1,7 +1,7 @@
 import type { Company, GoogleReview, SocialLink, ServiceArea } from '@/lib/types';
 import { e164 } from '@/lib/phone';
 import JsonLd from './JsonLd';
-import type { Locale } from '@/i18n/config';
+import { SCHEMA_AVAILABLE_LANGUAGES, type Locale } from '@/i18n/config';
 import { getBaseUrl } from '@/lib/utils';
 import { parseAddress } from './parse-address';
 import { COMPANY_STATS, OPENING_HOURS, BRAND_ALTERNATE_NAMES } from '@/lib/company-config';
@@ -169,11 +169,12 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
     // engines + Google knowledge-graph. Distinct from the top-level
     // `telephone` / `email` fields because contactPoint can scope by
     // contactType (customer service, sales, technical support, etc.) and
-    // by availableLanguage. The 7 languages listed match the site's
-    // primary translation targets — en/zh/zh-Hant/ja/ko/es/fr — and
-    // signal to Google that the business can serve queries in those
-    // locales without needing a separate locale-specific contactPoint
-    // node per language.
+    // by availableLanguage. availableLanguage (SCHEMA_AVAILABLE_LANGUAGES,
+    // from i18n/config.ts) is a staffing fact derived from
+    // `LOCALE_META.nativeSupport` — which languages customer service can
+    // actually answer in — deliberately NOT the set of locales the site is
+    // translated into; those are different claims and conflating them tells
+    // Google the business offers service it cannot deliver.
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -181,7 +182,7 @@ export default function LocalBusinessSchema({ company, socialLinks, areas, googl
         email: company.email,
         contactType: 'customer service',
         areaServed: 'CA',
-        availableLanguage: ['English', 'Mandarin Chinese', 'Cantonese', 'Japanese', 'Korean', 'Spanish', 'French'],
+        availableLanguage: SCHEMA_AVAILABLE_LANGUAGES,
       },
     ],
   };

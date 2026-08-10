@@ -70,12 +70,11 @@ export interface LocaleMeta {
   indexableLeaf: boolean;
   /**
    * Prerendered at build time. All false since 2026-06-08: the whole site is
-   * force-dynamic SSR (see app/[locale]/layout.tsx), so nothing is prerendered
-   * and every `generateStaticParams` returns [] — routes render on-demand with
-   * ZERO ISR Full-Route-Cache writes. PRERENDERED_LOCALES stays a typed array
-   * so the existing `generateStaticParams` call sites compile unchanged. Flip
-   * one to true to reintroduce build-time prerendering for a high-traffic
-   * locale.
+   * force-dynamic SSR (see app/[locale]/layout.tsx). There are currently zero
+   * `generateStaticParams` definitions in `app/` and zero consumers of
+   * `PRERENDERED_LOCALES` — the field and its derived export are retained,
+   * unused, as the documented switch for reintroducing build-time
+   * prerendering for a high-traffic locale, should the owner decide to.
    */
   prerender: boolean;
   /**
@@ -130,6 +129,21 @@ export interface LocaleMeta {
    * the notice, the language list inside it, and the tests all follow.
    */
   nativeSupport: boolean;
+  /**
+   * Schema.org `availableLanguage` name for this locale, used in the
+   * contactPoint of LocalBusinessSchema and ContactPageSchema.
+   *
+   * Only locales with `nativeSupport: true` are emitted — availableLanguage
+   * means "customer service can answer in this language", which is the same
+   * STAFFING fact `nativeSupport` records, not the set of languages the site
+   * is translated into. Declaring a language here that nobody speaks tells
+   * Google the business offers service it cannot deliver.
+   *
+   * Named per Schema.org convention (spoken language, not script): zh is
+   * 'Mandarin Chinese' and zh-Hant is 'Cantonese', which is how the team
+   * actually splits.
+   */
+  schemaLanguage: string;
 }
 
 /**
@@ -143,7 +157,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'En', dbColumn: true, gtxLang: 'en',
     shareTargets: ['facebook', 'x', 'linkedin', 'pinterest', 'whatsapp', 'reddit',
                    'threads', 'bluesky', 'messenger', 'tumblr', 'sms'],
-    nativeSupport: true,
+    nativeSupport: true, schemaLanguage: 'English',
   },
   // Mainland: WeChat/Weibo/QQ are the whole game. X and Facebook are here for
   // overseas Mandarin readers, who are a real slice of this site's zh traffic.
@@ -152,7 +166,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'Zh', dbColumn: true, gtxLang: 'zh-CN',
     shareTargets: ['wechat', 'weibo', 'qzone', 'x', 'facebook', 'line'],
     brandName: '聚星装修',
-    nativeSupport: true,
+    nativeSupport: true, schemaLanguage: 'Mandarin Chinese',
   },
   // HK/TW: LINE is dominant, Weibo much less so than mainland.
   'zh-Hant': {
@@ -160,13 +174,13 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'],
     shareTargets: ['wechat', 'line', 'facebook', 'x', 'weibo', 'threads', 'telegram'],
     brandName: '聚星裝修',
-    nativeSupport: true,
+    nativeSupport: true, schemaLanguage: 'Cantonese',
   },
   ja: {
     name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ja', dbColumn: false, gtxLang: 'ja',
     shareTargets: ['line', 'x', 'facebook', 'threads', 'pinterest', 'tumblr'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Japanese',
   },
   // No KakaoTalk: it needs the Kakao JS SDK + a registered app key. Korean
   // readers reach it through the native sheet meanwhile. Tracked as a follow-up.
@@ -174,20 +188,20 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     name: '한국어', ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ko', dbColumn: false, gtxLang: 'ko',
     shareTargets: ['x', 'facebook', 'line', 'threads', 'pinterest'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Korean',
   },
   es: {
     name: 'Español', ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Es', dbColumn: false, gtxLang: 'es',
     shareTargets: ['whatsapp', 'facebook', 'x', 'messenger', 'telegram', 'pinterest',
                    'threads', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Spanish',
   },
   pa: {
     name: 'ਪੰਜਾਬੀ', ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Pa', dbColumn: false, gtxLang: 'pa',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Punjabi',
   },
   // Philippines skews hard to Facebook/Messenger; Viber is still widely used.
   tl: {
@@ -195,44 +209,44 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'Tl', dbColumn: false, gtxLang: 'tl',
     shareTargets: ['facebook', 'messenger', 'whatsapp', 'x', 'viber', 'telegram',
                    'pinterest', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Tagalog',
   },
   fa: {
     name: 'فارسی', ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false,
     dbSuffix: 'Fa', dbColumn: false, gtxLang: 'fa',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Persian',
   },
   vi: {
     name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Vi', dbColumn: false, gtxLang: 'vi',
     shareTargets: ['facebook', 'zalo', 'messenger', 'telegram', 'x', 'viber', 'pinterest'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Vietnamese',
   },
   ru: {
     name: 'Русский', ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ru', dbColumn: false, gtxLang: 'ru',
     shareTargets: ['telegram', 'vk', 'whatsapp', 'viber', 'x', 'facebook'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Russian',
   },
   ar: {
     name: 'العربية', ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ar', dbColumn: false, gtxLang: 'ar',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Arabic',
   },
   hi: {
     name: 'हिन्दी', ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Hi', dbColumn: false, gtxLang: 'hi',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'Hindi',
   },
   fr: {
     name: 'Français', ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Fr', dbColumn: false, gtxLang: 'fr',
     shareTargets: ['facebook', 'x', 'linkedin', 'whatsapp', 'pinterest', 'telegram',
                    'threads', 'messenger', 'sms'],
-    nativeSupport: false,
+    nativeSupport: false, schemaLanguage: 'French',
   },
 };
 
@@ -263,8 +277,16 @@ export function isRtl(locale: Locale): boolean {
 
 /** True when a team member communicates natively in this locale. */
 export function hasNativeSupport(locale: Locale): boolean {
-  return LOCALE_META[locale].nativeSupport;
+  return LOCALE_META[locale]?.nativeSupport ?? false;
 }
+
+/**
+ * Schema.org availableLanguage values — the languages customer service can
+ * actually answer in. Derived, so it can never drift from the notice shown on
+ * the contact page.
+ */
+export const SCHEMA_AVAILABLE_LANGUAGES: readonly string[] =
+  locales.filter(hasNativeSupport).map((loc) => LOCALE_META[loc].schemaLanguage);
 
 /** Locales whose LEAF pages are indexable. See LocaleMeta.indexableLeaf. */
 export const INDEXABLE_LEAF_LOCALES: readonly Locale[] = localesWhere((m) => m.indexableLeaf);
