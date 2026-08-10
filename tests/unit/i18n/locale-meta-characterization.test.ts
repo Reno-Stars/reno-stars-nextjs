@@ -88,7 +88,9 @@ describe('writing direction', () => {
 
 describe('indexability', () => {
   it('all 14 leaf locales are indexable (opened 2026-08-07)', () => {
-    expect([...INDEXABLE_LEAF_LOCALES].sort()).toEqual([...locales].sort());
+    expect([...INDEXABLE_LEAF_LOCALES].sort()).toEqual([
+      'ar', 'en', 'es', 'fa', 'fr', 'hi', 'ja', 'ko', 'pa', 'ru', 'tl', 'vi', 'zh', 'zh-Hant',
+    ]);
   });
 
   it('isIndexableLeafLocale is true for all 14 and false for an unknown code', () => {
