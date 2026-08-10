@@ -43,6 +43,12 @@ export interface LocaleMeta {
    * judged the minor-locale variants low-value, so they were noindexed to stop
    * burning crawl budget re-fetching them.
    *
+   * Why this is one shared flag: the same en/zh pair was hardcoded in four
+   * places (three page metadata helpers, plus PROJECT_LEAF_LOCALES in
+   * app/sitemap.ts) and they have to agree — hreflang must not point at a
+   * non-indexable URL, and the sitemap must not submit one. Flipping it here
+   * lifts it everywhere at once.
+   *
    * Turning one on is a CONTENT decision, not a config one. All 14 were opened
    * 2026-08-07 after every locale cleared the measured gate in
    * `agent-skills/marketing-all/scripts/locale_readiness.py` (hub repo):
@@ -60,8 +66,11 @@ export interface LocaleMeta {
   /**
    * Prerendered at build time. All false since 2026-06-08: the whole site is
    * force-dynamic SSR (see app/[locale]/layout.tsx), so nothing is prerendered
-   * and every `generateStaticParams` returns []. Flip one to true to
-   * reintroduce build-time prerendering for a high-traffic locale.
+   * and every `generateStaticParams` returns [] — routes render on-demand with
+   * ZERO ISR Full-Route-Cache writes. PRERENDERED_LOCALES stays a typed array
+   * so the existing `generateStaticParams` call sites compile unchanged. Flip
+   * one to true to reintroduce build-time prerendering for a high-traffic
+   * locale.
    */
   prerender: boolean;
 }
@@ -110,7 +119,7 @@ export const ogLocaleMap: Record<Locale, string> = mapMeta((m) => m.ogLocale);
 export const rtlLocales: readonly Locale[] = localesWhere((m) => m.dir === 'rtl');
 
 export function isRtl(locale: Locale): boolean {
-  return LOCALE_META[locale].dir === 'rtl';
+  return LOCALE_META[locale]?.dir === 'rtl';
 }
 
 /** Locales whose LEAF pages are indexable. See LocaleMeta.indexableLeaf. */
