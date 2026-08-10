@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ADMIN_LOCALES, fieldKey, isNativeLocale } from '@/lib/admin/locale-keys';
+import { ADMIN_LOCALES, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { localeNames } from '@/i18n/config';
 import { useLocalizedForm } from './LocalizedFormContext';
 import { NAVY, SURFACE, TEXT_MUTED } from '@/lib/theme';
@@ -57,12 +57,12 @@ export default function LocalizedTextarea({
         style={{ ...textareaStyle, background: SURFACE, opacity: disabled ? 0.6 : 1 }}
       />
 
-      {ADMIN_LOCALES.filter(isNativeLocale).map((loc) => {
+      {ADMIN_LOCALES.filter(hasDedicatedColumn).map((loc) => {
         const k = fieldKey(name, loc);
         if (k === activeKey) return null;
         return <input key={k} type="hidden" name={k} value={getValue(k)} readOnly />;
       })}
-      {isNativeLocale(activeLocale) && (
+      {hasDedicatedColumn(activeLocale) && (
         <input type="hidden" name={activeKey} value={value} readOnly />
       )}
     </fieldset>

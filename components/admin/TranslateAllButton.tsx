@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ADMIN_LOCALES, fieldKey, isNativeLocale } from '@/lib/admin/locale-keys';
+import { ADMIN_LOCALES, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { gtxTranslate } from '@/lib/admin/gtx-translate';
 import { useLocalizedForm } from './LocalizedFormContext';
 import { GOLD, NAVY } from '@/lib/theme';
@@ -30,7 +30,7 @@ export default function TranslateAllButton() {
       const en = values[fieldKey(name, 'en')];
       if (!en) continue;
       for (const loc of ADMIN_LOCALES) {
-        if (isNativeLocale(loc) && loc !== 'zh') continue; // skip en (source)
+        if (hasDedicatedColumn(loc) && loc !== 'zh') continue; // skip en (source)
         if (loc === 'en') continue;
         const k = fieldKey(name, loc);
         if (!values[k]) total++;

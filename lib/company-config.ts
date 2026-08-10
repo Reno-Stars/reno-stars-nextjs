@@ -1,4 +1,4 @@
-import type { Locale } from '@/i18n/config';
+import { locales, LOCALE_META, type Locale } from '@/i18n/config';
 
 /**
  * Hardcoded company stats — no longer stored in the database.
@@ -28,14 +28,15 @@ export const COMPANY_STATS = {
 export const BRAND = 'Reno Stars';
 
 /**
- * Owner-confirmed localized trade names, keyed by locale. The brand is NEVER
- * machine-translated: locales not listed here render the English brand as-is.
- * (zh/zh-Hant = 聚星装修/聚星裝修, confirmed by Hongming 2026-07-09, re-confirmed 2026-08-05.)
+ * Owner-confirmed localized trade names, derived from LOCALE_META.brandName.
+ * Locales without one render the English brand as-is.
  */
-export const LOCALIZED_BRAND_NAMES: Partial<Record<Locale, string>> = {
-  zh: '聚星装修',
-  'zh-Hant': '聚星裝修',
-};
+export const LOCALIZED_BRAND_NAMES: Partial<Record<Locale, string>> =
+  Object.fromEntries(
+    locales
+      .map((loc) => [loc, LOCALE_META[loc].brandName] as const)
+      .filter(([, name]) => name !== undefined),
+  );
 
 /** Brand display name for a locale — falls back to the English brand. */
 export function brandName(locale: Locale): string {

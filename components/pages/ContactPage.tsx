@@ -8,6 +8,7 @@ import type { Locale } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 import { MAP_EMBED_URL } from '@/lib/data';
 import ContactForm from '@/components/ContactForm';
+import LanguageSupportNotice from '@/components/LanguageSupportNotice';
 import { WeChatContactCard } from '@/components/ZhTrustSignals';
 import {
   NAVY, GOLD_PALE, SURFACE, SURFACE_ALT,
@@ -30,9 +31,16 @@ interface ContactPageProps {
   /** Property-type options for the form (slug+localized name). */
   propertyTypeOptions: FormSelectOption[];
   googleRating?: number;
+  /**
+   * Server-resolved strings for LanguageSupportNotice — resolved in the
+   * Server Component (Node's full ICU) and threaded down as plain strings so
+   * the client never re-runs Intl.DisplayNames/ListFormat, whose browser
+   * coverage silently mis-resolves for some locales (e.g. `pa`).
+   */
+  languageSupport: { language: string; supported: string };
 }
 
-export default function ContactPage({ company, areaNames, cityOptions, propertyTypeOptions, googleRating }: ContactPageProps) {
+export default function ContactPage({ company, areaNames, cityOptions, propertyTypeOptions, googleRating, languageSupport }: ContactPageProps) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -136,6 +144,7 @@ export default function ContactPage({ company, areaNames, cityOptions, propertyT
               <p className="text-base mb-6" style={{ color: TEXT_MID }}>
                 {t('section.contactSubtitle3')}
               </p>
+              <LanguageSupportNotice locale={locale} {...languageSupport} />
               <ContactForm
                 submitLabel={t('cta.submitInquiry')}
                 onSuccess={handleFormSuccess}

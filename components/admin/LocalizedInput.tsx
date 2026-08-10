@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ADMIN_LOCALES, fieldKey, isNativeLocale } from '@/lib/admin/locale-keys';
+import { ADMIN_LOCALES, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { localeNames } from '@/i18n/config';
 import { useLocalizedForm } from './LocalizedFormContext';
 import { NAVY, GOLD, ERROR, TEXT_MUTED } from '@/lib/theme';
@@ -86,7 +86,7 @@ export default function LocalizedInput({
       {/* Hidden inputs for native EN/ZH so existing server actions parse them
           via formData.get('titleEn') / 'titleZh' unchanged. The other 12
           locales travel inside the provider's `localizations` blob. */}
-      {ADMIN_LOCALES.filter(isNativeLocale).map((loc) => {
+      {ADMIN_LOCALES.filter(hasDedicatedColumn).map((loc) => {
         const k = fieldKey(name, loc);
         if (k === activeKey) return null;
         return <input key={k} type="hidden" name={k} value={getValue(k)} readOnly />;
@@ -95,7 +95,7 @@ export default function LocalizedInput({
           Done as a parallel hidden field rather than reusing the visible
           element's name, because controlled inputs render fine with a name
           but server actions for native locales rely on consistent naming. */}
-      {isNativeLocale(activeLocale) && (
+      {hasDedicatedColumn(activeLocale) && (
         <input type="hidden" name={activeKey} value={value} readOnly />
       )}
     </fieldset>

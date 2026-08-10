@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
-import { ADMIN_LOCALES, fieldKey, isNativeLocale } from '@/lib/admin/locale-keys';
+import { ADMIN_LOCALES, fieldKey, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 
 /** Map of `${field}${LocaleSuffix}` → string. Holds all 14 locales for every registered field. */
 export type LocaleValues = Record<string, string>;
@@ -97,7 +97,7 @@ export function LocalizedFormProvider({
     const out: Record<string, string> = {};
     for (const name of fieldNames) {
       for (const loc of ADMIN_LOCALES) {
-        if (isNativeLocale(loc)) continue;
+        if (hasDedicatedColumn(loc)) continue;
         const k = fieldKey(name, loc);
         const v = values[k];
         if (typeof v === 'string' && v.length > 0) out[k] = v;

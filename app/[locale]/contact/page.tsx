@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
 import ContactPage from '@/components/pages/ContactPage';
 import { BreadcrumbSchema, ContactPageSchema } from '@/components/structured-data';
+import { localeSelfName, nativeSupportLanguageList } from '@/lib/i18n/language-names';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
@@ -67,6 +68,14 @@ export default async function Page({ params }: PageProps) {
     name: locale === 'zh' ? p.name.zh : p.name.en,
   }));
 
+  // Resolved here (Server Component → Node's full ICU), never in the client
+  // LanguageSupportNotice — browser Intl.DisplayNames/ListFormat coverage
+  // varies by build and silently mis-resolves for locales like `pa`.
+  const languageSupport = {
+    language: localeSelfName(locale as Locale),
+    supported: nativeSupportLanguageList(locale as Locale),
+  };
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -77,6 +86,7 @@ export default async function Page({ params }: PageProps) {
         cityOptions={cityOptions}
         propertyTypeOptions={propertyTypeOptions}
         googleRating={googleReviews.rating}
+        languageSupport={languageSupport}
       />
     </>
   );
