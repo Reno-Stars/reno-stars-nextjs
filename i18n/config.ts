@@ -117,6 +117,19 @@ export interface LocaleMeta {
    * confirmed by Hongming 2026-07-09, re-confirmed 2026-08-05.
    */
   brandName?: string;
+  /**
+   * A Reno Stars team member communicates natively in this locale.
+   *
+   * A STAFFING fact, not a translation-quality one — every locale is fully
+   * translated and, since 2026-08-07, every locale is indexed. A translated
+   * page is not a person who can answer the phone, and customers have been
+   * arriving through the minor locales expecting service in that language.
+   *
+   * `false` puts a plain notice on the contact page naming the languages the
+   * team does cover. Hiring is under way: flip the field when someone joins and
+   * the notice, the language list inside it, and the tests all follow.
+   */
+  nativeSupport: boolean;
 }
 
 /**
@@ -130,6 +143,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'En', dbColumn: true, gtxLang: 'en',
     shareTargets: ['facebook', 'x', 'linkedin', 'pinterest', 'whatsapp', 'reddit',
                    'threads', 'bluesky', 'messenger', 'tumblr', 'sms'],
+    nativeSupport: true,
   },
   // Mainland: WeChat/Weibo/QQ are the whole game. X and Facebook are here for
   // overseas Mandarin readers, who are a real slice of this site's zh traffic.
@@ -138,6 +152,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'Zh', dbColumn: true, gtxLang: 'zh-CN',
     shareTargets: ['wechat', 'weibo', 'qzone', 'x', 'facebook', 'line'],
     brandName: '聚星装修',
+    nativeSupport: true,
   },
   // HK/TW: LINE is dominant, Weibo much less so than mainland.
   'zh-Hant': {
@@ -145,11 +160,13 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'],
     shareTargets: ['wechat', 'line', 'facebook', 'x', 'weibo', 'threads', 'telegram'],
     brandName: '聚星裝修',
+    nativeSupport: true,
   },
   ja: {
     name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ja', dbColumn: false, gtxLang: 'ja',
     shareTargets: ['line', 'x', 'facebook', 'threads', 'pinterest', 'tumblr'],
+    nativeSupport: false,
   },
   // No KakaoTalk: it needs the Kakao JS SDK + a registered app key. Korean
   // readers reach it through the native sheet meanwhile. Tracked as a follow-up.
@@ -157,17 +174,20 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     name: '한국어', ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ko', dbColumn: false, gtxLang: 'ko',
     shareTargets: ['x', 'facebook', 'line', 'threads', 'pinterest'],
+    nativeSupport: false,
   },
   es: {
     name: 'Español', ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Es', dbColumn: false, gtxLang: 'es',
     shareTargets: ['whatsapp', 'facebook', 'x', 'messenger', 'telegram', 'pinterest',
                    'threads', 'sms'],
+    nativeSupport: false,
   },
   pa: {
     name: 'ਪੰਜਾਬੀ', ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Pa', dbColumn: false, gtxLang: 'pa',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
+    nativeSupport: false,
   },
   // Philippines skews hard to Facebook/Messenger; Viber is still widely used.
   tl: {
@@ -175,37 +195,44 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     dbSuffix: 'Tl', dbColumn: false, gtxLang: 'tl',
     shareTargets: ['facebook', 'messenger', 'whatsapp', 'x', 'viber', 'telegram',
                    'pinterest', 'sms'],
+    nativeSupport: false,
   },
   fa: {
     name: 'فارسی', ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false,
     dbSuffix: 'Fa', dbColumn: false, gtxLang: 'fa',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
+    nativeSupport: false,
   },
   vi: {
     name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Vi', dbColumn: false, gtxLang: 'vi',
     shareTargets: ['facebook', 'zalo', 'messenger', 'telegram', 'x', 'viber', 'pinterest'],
+    nativeSupport: false,
   },
   ru: {
     name: 'Русский', ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ru', dbColumn: false, gtxLang: 'ru',
     shareTargets: ['telegram', 'vk', 'whatsapp', 'viber', 'x', 'facebook'],
+    nativeSupport: false,
   },
   ar: {
     name: 'العربية', ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false,
     dbSuffix: 'Ar', dbColumn: false, gtxLang: 'ar',
     shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
+    nativeSupport: false,
   },
   hi: {
     name: 'हिन्दी', ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Hi', dbColumn: false, gtxLang: 'hi',
     shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
+    nativeSupport: false,
   },
   fr: {
     name: 'Français', ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Fr', dbColumn: false, gtxLang: 'fr',
     shareTargets: ['facebook', 'x', 'linkedin', 'whatsapp', 'pinterest', 'telegram',
                    'threads', 'messenger', 'sms'],
+    nativeSupport: false,
   },
 };
 
@@ -232,6 +259,11 @@ export const rtlLocales: readonly Locale[] = localesWhere((m) => m.dir === 'rtl'
 
 export function isRtl(locale: Locale): boolean {
   return LOCALE_META[locale]?.dir === 'rtl';
+}
+
+/** True when a team member communicates natively in this locale. */
+export function hasNativeSupport(locale: Locale): boolean {
+  return LOCALE_META[locale].nativeSupport;
 }
 
 /** Locales whose LEAF pages are indexable. See LocaleMeta.indexableLeaf. */
