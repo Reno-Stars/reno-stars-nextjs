@@ -1,5 +1,10 @@
 import { defineRouting } from 'next-intl/routing';
 
+// Type-only: erased at compile time, so i18n/config gains no runtime
+// dependency on lib/share. Verified cycle-free — lib/share/types.ts imports
+// nothing but react types.
+import type { PlatformId } from '@/lib/share/types';
+
 // 'zh' is Simplified Chinese (mainland / overseas Mandarin readers).
 // 'zh-Hant' is Traditional Chinese (HK / TW readers — different script,
 // some vocabulary differences). Two distinct user groups.
@@ -94,6 +99,18 @@ export interface LocaleMeta {
    * script-conversion is closer to the reader than English is.
    */
   fallback?: readonly Locale[];
+  /**
+   * Share platforms this audience sees, in render order — the array index IS
+   * the order. `lib/share/platforms.ts` deliberately carries no `locales` or
+   * `priority` field; two sources of truth for ordering is how a matrix rots.
+   *
+   * Each row is a bet on how that audience actually shares, not a translation
+   * of the English row. A LinkedIn button is dead weight to a zh reader who
+   * wants WeChat, and that asymmetry is the entire point of a 14-locale site
+   * having a locale-aware share bar. Platforms a row omits are unreachable for
+   * that locale — a deliberate cut, not an oversight.
+   */
+  shareTargets: readonly PlatformId[];
 }
 
 /**
@@ -102,20 +119,86 @@ export interface LocaleMeta {
  * feature.
  */
 export const LOCALE_META: Record<Locale, LocaleMeta> = {
-  en:        { name: 'English',   ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'En',     dbColumn: true,  gtxLang: 'en'    },
-  zh:        { name: '简体中文',   ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Zh',     dbColumn: true,  gtxLang: 'zh-CN' },
-  'zh-Hant': { name: '繁體中文',   ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'] },
-  ja:        { name: '日本語',     ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ja',     dbColumn: false, gtxLang: 'ja'    },
-  ko:        { name: '한국어',     ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ko',     dbColumn: false, gtxLang: 'ko'    },
-  es:        { name: 'Español',   ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Es',     dbColumn: false, gtxLang: 'es'    },
-  pa:        { name: 'ਪੰਜਾਬੀ',     ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Pa',     dbColumn: false, gtxLang: 'pa'    },
-  tl:        { name: 'Tagalog',   ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Tl',     dbColumn: false, gtxLang: 'tl'    },
-  fa:        { name: 'فارسی',     ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Fa',     dbColumn: false, gtxLang: 'fa'    },
-  vi:        { name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Vi',     dbColumn: false, gtxLang: 'vi'    },
-  ru:        { name: 'Русский',   ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ru',     dbColumn: false, gtxLang: 'ru'    },
-  ar:        { name: 'العربية',   ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Ar',     dbColumn: false, gtxLang: 'ar'    },
-  hi:        { name: 'हिन्दी',      ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Hi',     dbColumn: false, gtxLang: 'hi'    },
-  fr:        { name: 'Français',  ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Fr',     dbColumn: false, gtxLang: 'fr'    },
+  en: {
+    name: 'English', ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'En', dbColumn: true, gtxLang: 'en',
+    shareTargets: ['facebook', 'x', 'linkedin', 'pinterest', 'whatsapp', 'reddit',
+                   'threads', 'bluesky', 'messenger', 'tumblr', 'sms'],
+  },
+  // Mainland: WeChat/Weibo/QQ are the whole game. X and Facebook are here for
+  // overseas Mandarin readers, who are a real slice of this site's zh traffic.
+  zh: {
+    name: '简体中文', ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Zh', dbColumn: true, gtxLang: 'zh-CN',
+    shareTargets: ['wechat', 'weibo', 'qzone', 'x', 'facebook', 'line'],
+  },
+  // HK/TW: LINE is dominant, Weibo much less so than mainland.
+  'zh-Hant': {
+    name: '繁體中文', ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'],
+    shareTargets: ['wechat', 'line', 'facebook', 'x', 'weibo', 'threads', 'telegram'],
+  },
+  ja: {
+    name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Ja', dbColumn: false, gtxLang: 'ja',
+    shareTargets: ['line', 'x', 'facebook', 'threads', 'pinterest', 'tumblr'],
+  },
+  // No KakaoTalk: it needs the Kakao JS SDK + a registered app key. Korean
+  // readers reach it through the native sheet meanwhile. Tracked as a follow-up.
+  ko: {
+    name: '한국어', ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Ko', dbColumn: false, gtxLang: 'ko',
+    shareTargets: ['x', 'facebook', 'line', 'threads', 'pinterest'],
+  },
+  es: {
+    name: 'Español', ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Es', dbColumn: false, gtxLang: 'es',
+    shareTargets: ['whatsapp', 'facebook', 'x', 'messenger', 'telegram', 'pinterest',
+                   'threads', 'sms'],
+  },
+  pa: {
+    name: 'ਪੰਜਾਬੀ', ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Pa', dbColumn: false, gtxLang: 'pa',
+    shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
+  },
+  // Philippines skews hard to Facebook/Messenger; Viber is still widely used.
+  tl: {
+    name: 'Tagalog', ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Tl', dbColumn: false, gtxLang: 'tl',
+    shareTargets: ['facebook', 'messenger', 'whatsapp', 'x', 'viber', 'telegram',
+                   'pinterest', 'sms'],
+  },
+  fa: {
+    name: 'فارسی', ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Fa', dbColumn: false, gtxLang: 'fa',
+    shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
+  },
+  vi: {
+    name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Vi', dbColumn: false, gtxLang: 'vi',
+    shareTargets: ['facebook', 'zalo', 'messenger', 'telegram', 'x', 'viber', 'pinterest'],
+  },
+  ru: {
+    name: 'Русский', ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Ru', dbColumn: false, gtxLang: 'ru',
+    shareTargets: ['telegram', 'vk', 'whatsapp', 'viber', 'x', 'facebook'],
+  },
+  ar: {
+    name: 'العربية', ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Ar', dbColumn: false, gtxLang: 'ar',
+    shareTargets: ['whatsapp', 'telegram', 'facebook', 'x', 'viber', 'pinterest', 'sms'],
+  },
+  hi: {
+    name: 'हिन्दी', ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Hi', dbColumn: false, gtxLang: 'hi',
+    shareTargets: ['whatsapp', 'facebook', 'telegram', 'x', 'messenger', 'pinterest', 'sms'],
+  },
+  fr: {
+    name: 'Français', ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false,
+    dbSuffix: 'Fr', dbColumn: false, gtxLang: 'fr',
+    shareTargets: ['facebook', 'x', 'linkedin', 'whatsapp', 'pinterest', 'telegram',
+                   'threads', 'messenger', 'sms'],
+  },
 };
 
 /** Build a `Record<Locale, T>` by reading one field off every row. */
