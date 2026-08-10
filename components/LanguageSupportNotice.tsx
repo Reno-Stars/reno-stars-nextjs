@@ -3,11 +3,22 @@
 import { useTranslations } from 'next-intl';
 import { Languages } from 'lucide-react';
 import { hasNativeSupport, type Locale } from '@/i18n/config';
-import { localeSelfName, nativeSupportLanguageList } from '@/lib/i18n/language-names';
 import { CARD, TEXT_MID, neu } from '@/lib/theme';
 
 interface LanguageSupportNoticeProps {
   locale: Locale;
+  /**
+   * Server-resolved language names — computed by the two ICU-formatting
+   * helpers in lib/i18n/language-names.ts, in the Server Component (Node's
+   * full ICU), never here. Browser Intl.DisplayNames/Intl.ListFormat coverage
+   * is inconsistent across engines/OS builds and silently mis-resolves for
+   * some locales (verified for `pa`: the display-name helper returned the raw
+   * string 'en' instead of a formatted name, and the list-format helper
+   * resolved to 'en-US'). This component must not import from
+   * @/lib/i18n/language-names — see the regression test.
+   */
+  language: string;
+  supported: string;
   className?: string;
 }
 
@@ -27,6 +38,8 @@ interface LanguageSupportNoticeProps {
  */
 export default function LanguageSupportNotice({
   locale,
+  language,
+  supported,
   className = '',
 }: LanguageSupportNoticeProps) {
   const t = useTranslations('contact');
@@ -49,10 +62,7 @@ export default function LanguageSupportNotice({
         style={{ color: TEXT_MID, flexShrink: 0, marginTop: '0.15rem' }}
       />
       <p className="text-sm leading-relaxed" style={{ color: TEXT_MID }}>
-        {t('languageSupportNotice', {
-          language: localeSelfName(locale),
-          supported: nativeSupportLanguageList(locale),
-        })}
+        {t('languageSupportNotice', { language, supported })}
       </p>
     </div>
   );
