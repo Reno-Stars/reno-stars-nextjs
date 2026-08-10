@@ -83,6 +83,17 @@ export interface LocaleMeta {
    * `localizations` jsonb under `${fieldName}${dbSuffix}` keys.
    */
   dbColumn: boolean;
+  /**
+   * Google Translate (gtx endpoint) language code. Google wants 'zh-CN' for
+   * Simplified and 'zh-TW' for Traditional; every other locale passes through.
+   */
+  gtxLang: string;
+  /**
+   * Fallback chain tried before falling back to en, for missing translations.
+   * Omitted means straight to en. zh-Hant prefers Simplified because
+   * script-conversion is closer to the reader than English is.
+   */
+  fallback?: readonly Locale[];
 }
 
 /**
@@ -91,20 +102,20 @@ export interface LocaleMeta {
  * feature.
  */
 export const LOCALE_META: Record<Locale, LocaleMeta> = {
-  en:        { name: 'English',   ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'En',     dbColumn: true  },
-  zh:        { name: '简体中文',   ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Zh',     dbColumn: true  },
-  'zh-Hant': { name: '繁體中文',   ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'ZhHant', dbColumn: false },
-  ja:        { name: '日本語',     ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ja',     dbColumn: false },
-  ko:        { name: '한국어',     ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ko',     dbColumn: false },
-  es:        { name: 'Español',   ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Es',     dbColumn: false },
-  pa:        { name: 'ਪੰਜਾਬੀ',     ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Pa',     dbColumn: false },
-  tl:        { name: 'Tagalog',   ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Tl',     dbColumn: false },
-  fa:        { name: 'فارسی',     ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Fa',     dbColumn: false },
-  vi:        { name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Vi',     dbColumn: false },
-  ru:        { name: 'Русский',   ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ru',     dbColumn: false },
-  ar:        { name: 'العربية',   ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Ar',     dbColumn: false },
-  hi:        { name: 'हिन्दी',      ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Hi',     dbColumn: false },
-  fr:        { name: 'Français',  ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Fr',     dbColumn: false },
+  en:        { name: 'English',   ogLocale: 'en_US', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'En',     dbColumn: true,  gtxLang: 'en'    },
+  zh:        { name: '简体中文',   ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Zh',     dbColumn: true,  gtxLang: 'zh-CN' },
+  'zh-Hant': { name: '繁體中文',   ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'] },
+  ja:        { name: '日本語',     ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ja',     dbColumn: false, gtxLang: 'ja'    },
+  ko:        { name: '한국어',     ogLocale: 'ko_KR', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ko',     dbColumn: false, gtxLang: 'ko'    },
+  es:        { name: 'Español',   ogLocale: 'es_ES', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Es',     dbColumn: false, gtxLang: 'es'    },
+  pa:        { name: 'ਪੰਜਾਬੀ',     ogLocale: 'pa_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Pa',     dbColumn: false, gtxLang: 'pa'    },
+  tl:        { name: 'Tagalog',   ogLocale: 'tl_PH', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Tl',     dbColumn: false, gtxLang: 'tl'    },
+  fa:        { name: 'فارسی',     ogLocale: 'fa_IR', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Fa',     dbColumn: false, gtxLang: 'fa'    },
+  vi:        { name: 'Tiếng Việt', ogLocale: 'vi_VN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Vi',     dbColumn: false, gtxLang: 'vi'    },
+  ru:        { name: 'Русский',   ogLocale: 'ru_RU', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Ru',     dbColumn: false, gtxLang: 'ru'    },
+  ar:        { name: 'العربية',   ogLocale: 'ar_AE', dir: 'rtl', indexableLeaf: true, prerender: false, dbSuffix: 'Ar',     dbColumn: false, gtxLang: 'ar'    },
+  hi:        { name: 'हिन्दी',      ogLocale: 'hi_IN', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Hi',     dbColumn: false, gtxLang: 'hi'    },
+  fr:        { name: 'Français',  ogLocale: 'fr_CA', dir: 'ltr', indexableLeaf: true, prerender: false, dbSuffix: 'Fr',     dbColumn: false, gtxLang: 'fr'    },
 };
 
 /** Build a `Record<Locale, T>` by reading one field off every row. */

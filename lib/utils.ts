@@ -4,7 +4,7 @@
  */
 
 import type { Locale, Localized } from '@/lib/types';
-import { locales, ogLocaleMap } from '@/i18n/config';
+import { locales, ogLocaleMap, LOCALE_META } from '@/i18n/config';
 import { LOCALE_TO_SUFFIX, hasDedicatedColumn } from '@/lib/admin/locale-keys';
 import { BRAND } from '@/lib/company-config';
 
@@ -21,12 +21,15 @@ export const SITE_NAME = BRAND;
 // LOCALE UTILITIES
 // ============================================================================
 
-// Fallback chain for missing translations. zh-Hant prefers Simplified
-// (script-conversion is closer than English) before falling back to en.
-// All other locales fall back directly to en.
-const LOCALE_FALLBACKS: Partial<Record<Locale, ReadonlyArray<Locale>>> = {
-  'zh-Hant': ['zh', 'en'],
-};
+// Fallback chain for missing translations, derived from LOCALE_META.fallback.
+// zh-Hant prefers Simplified (script-conversion is closer than English) before
+// falling back to en. All other locales fall back directly to en.
+const LOCALE_FALLBACKS: Partial<Record<Locale, ReadonlyArray<Locale>>> =
+  Object.fromEntries(
+    locales
+      .map((loc) => [loc, LOCALE_META[loc].fallback] as const)
+      .filter(([, chain]) => chain !== undefined),
+  );
 
 /**
  * Returns the best available translation for a given locale, falling back

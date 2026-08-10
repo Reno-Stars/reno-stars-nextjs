@@ -1,26 +1,13 @@
-import type { Locale } from '@/i18n/config';
+import { mapMeta, type Locale } from '@/i18n/config';
 import { BRAND } from '@/lib/company-config';
 
 /**
- * Locale → Google Translate locale code. Google uses 'zh-CN' for Simplified
- * and 'zh-TW' for Traditional; everything else passes through.
+ * Locale → Google Translate locale code. Derived from LOCALE_META.gtxLang.
+ * Google uses 'zh-CN' for Simplified and 'zh-TW' for Traditional; everything
+ * else passes through.
+ * Exported so the locale-meta characterization test can pin it.
  */
-const GTX_LANG: Record<Locale, string> = {
-  en: 'en',
-  zh: 'zh-CN',
-  'zh-Hant': 'zh-TW',
-  ja: 'ja',
-  ko: 'ko',
-  es: 'es',
-  pa: 'pa',
-  tl: 'tl',
-  fa: 'fa',
-  vi: 'vi',
-  ru: 'ru',
-  ar: 'ar',
-  hi: 'hi',
-  fr: 'fr',
-};
+export const GTX_LANG: Record<Locale, string> = mapMeta((m) => m.gtxLang);
 
 /**
  * Translate `text` from `source` to `target` via Google's free gtx endpoint.

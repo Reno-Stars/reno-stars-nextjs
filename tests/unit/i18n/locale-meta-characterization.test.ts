@@ -7,6 +7,7 @@ import { LOCALE_TO_SUFFIX, localeSuffix, fieldKey, hasDedicatedColumn } from '@/
 import { LOCALE_TO_DB_SUFFIX, pickLocale } from '@/lib/utils';
 import { LOCALE_TARGETS } from '@/lib/share/matrix';
 import { LOCALIZED_BRAND_NAMES, brandName, brandDisplay } from '@/lib/company-config';
+import { GTX_LANG } from '@/lib/admin/gtx-translate';
 
 // Characterization test for the LOCALE_META consolidation (2026-08-10).
 //
@@ -219,5 +220,26 @@ describe('localized brand names', () => {
     expect(brandDisplay('zh')).toBe('聚星装修 (Reno Stars)');
     expect(brandDisplay('zh-Hant')).toBe('聚星裝修 (Reno Stars)');
     expect(brandDisplay('en')).toBe('Reno Stars');
+  });
+});
+
+describe('GTX_LANG', () => {
+  it('matches the pre-refactor Google Translate codes exactly', () => {
+    expect(GTX_LANG).toEqual({
+      en: 'en',
+      zh: 'zh-CN',
+      'zh-Hant': 'zh-TW',
+      ja: 'ja',
+      ko: 'ko',
+      es: 'es',
+      pa: 'pa',
+      tl: 'tl',
+      fa: 'fa',
+      vi: 'vi',
+      ru: 'ru',
+      ar: 'ar',
+      hi: 'hi',
+      fr: 'fr',
+    });
   });
 });
