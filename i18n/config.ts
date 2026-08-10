@@ -111,6 +111,12 @@ export interface LocaleMeta {
    * that locale — a deliberate cut, not an oversight.
    */
   shareTargets: readonly PlatformId[];
+  /**
+   * Owner-confirmed localized trade name. Omitted means this locale renders
+   * the English brand. The brand is NEVER machine-translated — zh/zh-Hant were
+   * confirmed by Hongming 2026-07-09, re-confirmed 2026-08-05.
+   */
+  brandName?: string;
 }
 
 /**
@@ -131,12 +137,14 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
     name: '简体中文', ogLocale: 'zh_CN', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'Zh', dbColumn: true, gtxLang: 'zh-CN',
     shareTargets: ['wechat', 'weibo', 'qzone', 'x', 'facebook', 'line'],
+    brandName: '聚星装修',
   },
   // HK/TW: LINE is dominant, Weibo much less so than mainland.
   'zh-Hant': {
     name: '繁體中文', ogLocale: 'zh_TW', dir: 'ltr', indexableLeaf: true, prerender: false,
     dbSuffix: 'ZhHant', dbColumn: false, gtxLang: 'zh-TW', fallback: ['zh'],
     shareTargets: ['wechat', 'line', 'facebook', 'x', 'weibo', 'threads', 'telegram'],
+    brandName: '聚星裝修',
   },
   ja: {
     name: '日本語', ogLocale: 'ja_JP', dir: 'ltr', indexableLeaf: true, prerender: false,
