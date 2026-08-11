@@ -106,7 +106,7 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
                   : serviceSlug === 'whole-house'
                   ? 'Modern open concept living and dining room renovation showcasing hardwood floors and natural light in Vancouver home'
                   : serviceSlug === 'commercial'
-                  ? 'Professional commercial interior renovation with modern office space and retail storefront in Vancouver'
+                  ? 'Commercial interior renovation of a retail clinic reception with curved feature wall and glass storefront in Vancouver'
                   : serviceSlug === 'cabinet'
                   ? 'Kitchen cabinet refacing with new shaker doors and chrome hardware in a Vancouver home'
                   : serviceSlug === 'basement'
