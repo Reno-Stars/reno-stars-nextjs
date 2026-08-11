@@ -69,6 +69,16 @@ jobs:
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "Rolling back to $(git rev-parse --short HEAD) if this deploy fails."
 
+      # This must not assume the working copy is already on `main`. It is a real
+      # checkout a human (or an agent) may have left on a feature branch — that
+      # happened on the first recovery deploy (run 30952515574): `git merge
+      # --ff-only origin/main` exited 128 because HEAD was on a branch whose
+      # history does not fast-forward to the squashed main, and the job died
+      # on raw git hints with nothing naming the branch as the cause.
+      #
+      # Refuses rather than force-fixes when local `main` carries commits that
+      # are not on the remote: `git status --porcelain` only catches uncommitted
+      # work, so a hard reset here would silently discard a local commit.
       - name: Fast-forward to the pushed commit
         run: |
           cd "$PROD_DIR"
@@ -76,6 +86,16 @@ jobs:
             echo "::error::Production working copy is dirty; refusing to deploy."
             git status --short; exit 1; }
           git fetch origin main
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          if [ "$branch" != "main" ]; then
+            echo "Working copy was on '$branch'; switching to main."
+            git checkout main
+          fi
+          ahead="$(git rev-list --count origin/main..main)"
+          if [ "$ahead" != "0" ]; then
+            echo "::error::Local main is $ahead commit(s) ahead of origin/main; refusing to deploy."
+            git log --oneline origin/main..main; exit 1
+          fi
           git merge --ff-only origin/main
 
       - name: Install dependencies
@@ -128,23 +148,37 @@ jobs:
             || echo "::warning::Cloudflare purge did not report success"
 
       # Only fires if a step above failed. Restores the previous commit and
-      # rebuilds so production is never left serving a broken build, then fails
-      # the run loudly so the failure is not silently absorbed.
+      # rebuilds so production is never left serving a broken build.
+      #
+      # Both outcomes exit non-zero — the run must go red either way, because a
+      # deploy did not land. But they are NOT the same incident, and the log has
+      # to say which one happened: "rolled back cleanly, site is up" needs no
+      # one out of bed; "rollback also failed" does. The previous version
+      # annotated only the intent ("Deploy failed — rolling back"); the outcome
+      # was plain text ("rollback restored service"), so the run summary read
+      # the same whether the site came back or not. The ::error:: now sits on
+      # each outcome instead.
+      #
+      # Known gap: if the rollback dies BEFORE the poll loop (e.g. `pnpm build`
+      # fails), `bash -e` aborts the step and neither message is printed.
       - name: Roll back on failure
         if: failure()
         run: |
           cd "$PROD_DIR"
-          echo "::error::Deploy failed — rolling back to ${{ steps.prev.outputs.sha }}"
+          echo "Deploy failed — rolling back to ${{ steps.prev.outputs.sha }}"
           git reset --hard "${{ steps.prev.outputs.sha }}"
           pnpm install --frozen-lockfile
           pnpm build
           launchctl kickstart -k "gui/$(id -u)/$SERVICE"
           for i in $(seq 1 30); do
             code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 http://127.0.0.1:3000/en/ || true)
-            [ "$code" = "200" ] && echo "rollback restored service" && exit 1
+            if [ "$code" = "200" ]; then
+              echo "::error::Deploy failed and was ROLLED BACK cleanly. Production is serving ${{ steps.prev.outputs.sha }} and is healthy — no outage. Fix the change and re-merge."
+              exit 1
+            fi
             sleep 10
           done
-          echo "::error::ROLLBACK ALSO FAILED — production may be down, manual intervention required"
+          echo "::error::ROLLBACK ALSO FAILED — production may be DOWN. Manual intervention required on the prod Mac."
           exit 1
 
   # warm-image-cache is disabled — images are pre-processed to WebP at upload time
