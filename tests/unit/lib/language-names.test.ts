@@ -17,7 +17,7 @@ const EXPECTED: Record<string, { self: string; list: string }> = {
   tl: { self: 'Filipino', list: 'Ingles, Pinasimpleng Chinese, at Tradisyonal na Chinese' },
   fa: { self: 'فارسی', list: 'انگلیسی،‏ چینی ساده‌شده، و چینی سنتی' },
   vi: { self: 'Tiếng Việt', list: 'Tiếng Anh, Tiếng Trung (Giản thể) và Tiếng Trung (Phồn thể)' },
-  ru: { self: 'русский', list: 'английский, китайский (упрощенная) и китайский (традиционная)' },
+  ru: { self: 'русский', list: 'английский, китайский и кантонский' },
   ar: { self: 'العربية', list: 'الإنجليزية والصينية المبسطة والصينية التقليدية' },
   hi: { self: 'हिन्दी', list: 'अंग्रेज़ी, सरलीकृत चीनी, और पारंपरिक चीनी' },
   fr: { self: 'français', list: 'anglais, chinois simplifié et chinois traditionnel' },
@@ -43,6 +43,22 @@ describe('nativeSupportLanguageList', () => {
   it('reads correctly in English', () => {
     expect(nativeSupportLanguageList('en'))
       .toBe('English, Simplified Chinese, and Traditional Chinese');
+  });
+
+  // Property, not just the pinned sentence above: the Russian regression this
+  // branch fixes was ungrammatical because zh-Hans/zh-Hant CLDR names either
+  // embed a comma ('dialect') or a FEMININE parenthetical
+  // ('упрощенная'/'традиционная') sitting against the MASCULINE «китайский»
+  // ('standard'). Asserting the shape means a future CLDR wording change that
+  // still avoided the exact pinned string but reintroduced either failure
+  // mode would still fail here.
+  it('Russian output has no feminine parenthetical and no embedded separator', () => {
+    const list = nativeSupportLanguageList('ru');
+    expect(list).not.toMatch(/\(упрощенная\)|\(традиционная\)/);
+    const names = resolveNativeSupportNames('ru');
+    for (const name of names) {
+      expect(name).not.toMatch(/[,،、]/);
+    }
   });
 
   it('names three languages for every locale — one per supported locale', () => {
