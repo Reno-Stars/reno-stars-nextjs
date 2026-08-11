@@ -43,8 +43,11 @@ const valid = {
   slug: 'kitchen-reno-guide',
   titleEn: 'Kitchen guide',
   titleZh: '厨房指南',
-  contentEn: '<p>en</p>',
-  contentZh: '<p>zh</p>',
+  // Long enough to be publishable. A real article clears the 150-word minimum by
+  // an order of magnitude; a one-word fixture silently tested a payload the
+  // endpoint must now refuse.
+  contentEn: '<p>' + 'renovation cost estimate vancouver kitchen '.repeat(40) + '</p>',
+  contentZh: '<p>' + '温哥华 厨房 装修 费用 预算 '.repeat(40) + '</p>',
 };
 
 beforeEach(() => {
@@ -194,7 +197,10 @@ describe('POST /api/blog — content must be HTML', () => {
   });
 
   it('accepts real HTML', async () => {
-    const res = await post({ ...valid, contentEn: '<h2>Cost</h2><p>Details.</p>' });
+    // Padded past the 150-word publish minimum: this case is about the HTML
+    // check, not the substance check, and must not trip the latter.
+    const body = '<h2>Cost</h2><p>' + 'details about the work '.repeat(50) + '</p>';
+    const res = await post({ ...valid, contentEn: body });
     expect(res.status).toBe(200);
   });
 
@@ -246,3 +252,38 @@ describe('POST /api/blog — localization key shape', () => {
     },
   );
 });
+
+// 2026-08-08: three placeholder posts ("Test Post", `<p>Test</p>`) were published
+// straight to the live blog and reached the sitemap in 24 locale variants. The
+// format gate passed them because `<p>Test</p>` IS valid HTML — it checks shape,
+// not substance. Publish-by-default means an experimental payload is a live page.
+describe('POST /api/blog — a published post must have substance', () => {
+  const long = '<p>' + 'word '.repeat(200) + '</p>';
+
+  it('rejects a placeholder that is being published', async () => {
+    const res = await post({ ...valid, contentEn: '<p>Test</p>' });
+    expect(res.status).toBe(400);
+    const j = await res.json();
+    expect(j.error).toMatch(/at least 150/);
+    expect(j.error).toMatch(/isPublished/);   // tells the caller how to stage a draft
+  });
+
+  it('rejects the exact payload that shipped: "Test EN"', async () => {
+    expect((await post({ ...valid, contentEn: '<p>Test EN</p>' })).status).toBe(400);
+  });
+
+  it('ALLOWS a short body when explicitly staged as a draft', async () => {
+    const res = await post({ ...valid, contentEn: '<p>Test</p>', isPublished: false });
+    expect(res.status).toBe(200);
+  });
+
+  it('allows a genuine article', async () => {
+    expect((await post({ ...valid, contentEn: long })).status).toBe(200);
+  });
+
+  it('counts words in text, not markup — tag soup alone does not pass', async () => {
+    const soup = '<div>' + '<span></span>'.repeat(400) + '<p>tiny</p></div>';
+    expect((await post({ ...valid, contentEn: soup })).status).toBe(400);
+  });
+});
+

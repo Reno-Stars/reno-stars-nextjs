@@ -90,6 +90,27 @@ function htmlProblem(value: unknown, field: string): string | null {
   return null;
 }
 
+/**
+ * Minimum substance. The format gate checks SHAPE — `<p>Test</p>` is perfectly
+ * valid HTML — so on 2026-08-08 three placeholder posts ("Test Post",
+ * `<p>Test</p>`) were published straight to the live blog and picked up by the
+ * sitemap in 24 locale variants before anyone noticed. Publish-by-default means
+ * an experimental payload IS a customer-facing page, so the endpoint has to
+ * refuse one.
+ *
+ * The bar is deliberately low — this rejects a placeholder, not a short post.
+ * A genuine article clears it by an order of magnitude.
+ */
+const MIN_WORDS_PUBLISHED = 150;
+
+function wordCount(html: string): number {
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 type Body = Record<string, unknown>;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -207,6 +228,24 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   // reaches the database is already well-formed. Pass `isPublished: false`
   // explicitly to stage a draft.
   const isPublished = body.isPublished !== false;
+
+  // Only gate what goes live. A deliberate draft (isPublished:false) may be any
+  // length — that is a legitimate way to stage work in progress.
+  if (isPublished) {
+    const words = wordCount(body.contentEn as string);
+    if (words < MIN_WORDS_PUBLISHED) {
+      return NextResponse.json(
+        {
+          error:
+            `contentEn has ~${words} words; a published post needs at least ` +
+            `${MIN_WORDS_PUBLISHED}. This endpoint publishes immediately, so a ` +
+            `placeholder becomes a live customer-facing page. Send the finished ` +
+            `article, or pass "isPublished": false to stage a draft.`,
+        },
+        { status: 400 },
+      );
+    }
+  }
 
   const values: Record<string, unknown> = {
     slug,
