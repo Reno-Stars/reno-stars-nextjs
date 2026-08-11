@@ -24,6 +24,51 @@ function supportedLocales(): Locale[] {
 }
 
 /**
+ * Separators `Intl.ListFormat` can use to join list items, across the
+ * locales this list is rendered in: ASCII comma, Arabic comma, ideographic
+ * (full-width) comma. If a single generated name contains one of these, it
+ * is indistinguishable from a boundary between two list items.
+ */
+const LIST_SEPARATORS = /[,،、]/;
+
+/** Renders `supported` as language names in the reader's language via CLDR. */
+function displayNamesFor(
+  readerLocale: Locale,
+  supported: Locale[],
+  languageDisplay: 'dialect' | 'standard',
+): string[] {
+  const names = new Intl.DisplayNames([readerLocale], { type: 'language', languageDisplay });
+  return supported.map((loc) => names.of(displayTag(loc)) ?? LOCALE_META[loc]?.name ?? loc);
+}
+
+/**
+ * The supported languages' names in the reader's language, resolving CLDR's
+ * `languageDisplay` mode per locale.
+ *
+ * 'dialect' is the default because it reads better almost everywhere.
+ * Russian is the case that motivated the fallback: in 'dialect' mode CLDR
+ * names zh-Hans/zh-Hant as "китайский, упрощенное письмо" / "китайский,
+ * традиционное письмо" — each name CONTAINS a comma. Once Intl.ListFormat
+ * joins those with commas too, the reader sees what looks like five list
+ * items instead of three. 'standard' mode avoids this (CLDR uses parentheses
+ * there), but reads worse elsewhere, so we only fall back for the locale(s)
+ * that actually trip it — a name containing the separator is indistinguishable
+ * from another list item once joined.
+ *
+ * Exported (rather than kept private) so tests can assert the separator-free
+ * invariant directly on the array, instead of trying to parse list items back
+ * out of the joined, locale-formatted sentence.
+ */
+export function resolveNativeSupportNames(readerLocale: Locale): string[] {
+  const supported = supportedLocales();
+  let names = displayNamesFor(readerLocale, supported, 'dialect');
+  if (names.some((name) => LIST_SEPARATORS.test(name))) {
+    names = displayNamesFor(readerLocale, supported, 'standard');
+  }
+  return names;
+}
+
+/**
  * The supported languages, named and joined in the reader's own language.
  * e.g. for a Punjabi reader: "ਅੰਗਰੇਜ਼ੀ, ਚੀਨੀ (ਸਰਲ) ਅਤੇ ਚੀਨੀ (ਰਵਾਇਤੀ)".
  *
@@ -33,22 +78,16 @@ function supportedLocales(): Locale[] {
  * spoken-variety distinction is detail they cannot act on anyway.
  */
 export function nativeSupportLanguageList(readerLocale: Locale): string {
-  const supported = supportedLocales();
   try {
-    const names = new Intl.DisplayNames([readerLocale], {
-      type: 'language',
-      languageDisplay: 'dialect',
-    });
+    const names = resolveNativeSupportNames(readerLocale);
     const list = new Intl.ListFormat(readerLocale, {
       style: 'long',
       type: 'conjunction',
     });
-    return list.format(
-      supported.map((loc) => names.of(displayTag(loc)) ?? LOCALE_META[loc]?.name ?? loc),
-    );
+    return list.format(names);
   } catch {
     // An unusual runtime ICU build must not 500 the contact page.
-    return supported.map((loc) => LOCALE_META[loc]?.name ?? loc).join(', ');
+    return supportedLocales().map((loc) => LOCALE_META[loc]?.name ?? loc).join(', ');
   }
 }
 
