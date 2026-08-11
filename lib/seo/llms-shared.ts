@@ -1,6 +1,6 @@
 import { SITE_NAME } from '@/lib/utils';
 import { COMPANY_STATS, LOCALIZED_BRAND_NAMES, getYearsExperience } from '@/lib/company-config';
-import { locales } from '@/i18n/config';
+import { locales, SCHEMA_AVAILABLE_LANGUAGES } from '@/i18n/config';
 import type { Company } from '@/lib/types';
 
 
@@ -45,7 +45,13 @@ export function buildCompanyFactLines(
     `- Phone: ${company.phone || CONTACT_FALLBACKS.phone}`,
     `- Email: ${company.email || CONTACT_FALLBACKS.email}`,
     `- Website: ${baseUrl}`,
-    `- Languages Served: English, Mandarin, Cantonese, Japanese, Korean, Spanish, and more — site available in ${locales.length} languages`,
+    // Derived from LOCALE_META.nativeSupport (i18n/config.ts) — the languages
+    // customer service actually speaks, kept distinct from the languages the
+    // site is merely translated into. Do not hardcode this list again: a
+    // language named here that nobody on staff speaks is a false claim to
+    // AI crawlers, and the exact contradiction the contact-page notice exists
+    // to remove.
+    `- Languages Served: ${SCHEMA_AVAILABLE_LANGUAGES.join(', ')} (customer service) — site content translated into ${locales.length} languages`,
     `- Insurance: Up to ${COMPANY_STATS.liabilityCoverage} CGL (Commercial General Liability)`,
     `- Coverage: WCB (WorkSafeBC) on every job`,
     `- Warranty: Up to ${COMPANY_STATS.warrantyYears} years workmanship warranty`,
