@@ -13,6 +13,7 @@
  */
 
 import { neon } from '@neondatabase/serverless';
+import { selectFaqsToInsert } from './lib/faq-seed-guard';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
@@ -620,25 +621,40 @@ async function main() {
     slugToId.set(a.slug as string, a.id as string);
   }
 
-  // 3. Insert area-specific FAQs (skip if area already has FAQs)
+  // 3. Insert area-specific FAQs (skip EVERY FAQ of an area that already has FAQs)
   let faqCount = 0;
+  // areaFaqs is one flat list covering all areas, so a per-iteration `continue`
+  // can't skip "the rest of this area" on its own. Decide once per area,
+  // before any insert for it, and cache the verdict: re-querying per FAQ
+  // would also count rows THIS run just inserted, making a second FAQ look
+  // like a pre-seeded area.
+  const areaWasAlreadySeeded = new Map<string, boolean>();
   for (const faq of areaFaqs) {
     const areaId = slugToId.get(faq.areaSlug);
     if (!areaId) {
       console.log(`  Skipped FAQ: area "${faq.areaSlug}" not found`);
       continue;
     }
+    if (areaWasAlreadySeeded.has(areaId)) continue;
 
-    // Check if this area already has FAQs (idempotent)
+    // Check if this area already had FAQs before this run (idempotent)
     const existing = await sql`
       SELECT COUNT(*) as cnt FROM faqs WHERE service_area_id = ${areaId}
     `;
-    if (Number(existing[0].cnt) > 0 && faq.displayOrder === 0) {
+    const seeded = Number(existing[0].cnt) > 0;
+    areaWasAlreadySeeded.set(areaId, seeded);
+    if (seeded) {
       console.log(`  Skipped FAQs for ${faq.areaSlug}: already has FAQs`);
-      // Skip all FAQs for this area
-      continue;
     }
+  }
 
+  const faqsToInsert = selectFaqsToInsert(
+    areaFaqs,
+    slugToId,
+    (areaId) => areaWasAlreadySeeded.get(areaId) === true,
+  );
+  for (const faq of faqsToInsert) {
+    const areaId = slugToId.get(faq.areaSlug)!;
     await sql`
       INSERT INTO faqs (question_en, question_zh, answer_en, answer_zh, service_area_id, display_order, is_active)
       VALUES (${faq.questionEn}, ${faq.questionZh}, ${faq.answerEn}, ${faq.answerZh}, ${areaId}, ${faq.displayOrder}, true)

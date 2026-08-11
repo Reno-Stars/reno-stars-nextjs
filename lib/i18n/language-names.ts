@@ -55,15 +55,29 @@ function displayNamesFor(
  * that actually trip it — a name containing the separator is indistinguishable
  * from another list item once joined.
  *
+ * If 'standard' is still ambiguous (or identical to 'dialect', as it is for ko,
+ * pa and vi), we drop to the endonyms from LOCALE_META rather than ship a list
+ * whose item count is wrong.
+ *
  * Exported (rather than kept private) so tests can assert the separator-free
  * invariant directly on the array, instead of trying to parse list items back
  * out of the joined, locale-formatted sentence.
  */
 export function resolveNativeSupportNames(readerLocale: Locale): string[] {
   const supported = supportedLocales();
+  const ambiguous = (list: string[]) => list.some((name) => LIST_SEPARATORS.test(name));
+
   let names = displayNamesFor(readerLocale, supported, 'dialect');
-  if (names.some((name) => LIST_SEPARATORS.test(name))) {
+  if (ambiguous(names)) {
     names = displayNamesFor(readerLocale, supported, 'standard');
+  }
+  // 'standard' is not guaranteed to fix it: for ko, pa and vi CLDR already
+  // returns the identical string in both modes, and a future ICU could embed a
+  // separator in 'standard' too. An unchecked swap would ship a list where three
+  // languages read as five. Endonyms are hand-authored and separator-free, so
+  // they are the safe last resort — a worse-reading name beats a false count.
+  if (ambiguous(names)) {
+    names = supported.map((loc) => LOCALE_META[loc]?.name ?? loc);
   }
   return names;
 }
