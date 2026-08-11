@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { locales, hasNativeSupport, type Locale } from '@/i18n/config';
-import { nativeSupportLanguageList, localeSelfName } from '@/lib/i18n/language-names';
+import {
+  nativeSupportLanguageList,
+  localeSelfName,
+  resolveNativeSupportNames,
+} from '@/lib/i18n/language-names';
 
 // Expected strings come from ICU/CLDR via Intl, not from us. Pinning them as
 // literals means a Node or ICU upgrade that changes CLDR wording fails here
@@ -13,7 +17,7 @@ const EXPECTED: Record<string, { self: string; list: string }> = {
   tl: { self: 'Filipino', list: 'Ingles, Pinasimpleng Chinese, at Tradisyonal na Chinese' },
   fa: { self: 'فارسی', list: 'انگلیسی،‏ چینی ساده‌شده، و چینی سنتی' },
   vi: { self: 'Tiếng Việt', list: 'Tiếng Anh, Tiếng Trung (Giản thể) và Tiếng Trung (Phồn thể)' },
-  ru: { self: 'русский', list: 'английский, китайский, упрощенное письмо и китайский, традиционное письмо' },
+  ru: { self: 'русский', list: 'английский, китайский (упрощенная) и китайский (традиционная)' },
   ar: { self: 'العربية', list: 'الإنجليزية والصينية المبسطة والصينية التقليدية' },
   hi: { self: 'हिन्दी', list: 'अंग्रेज़ी, सरलीकृत चीनी, और पारंपरिक चीनी' },
   fr: { self: 'français', list: 'anglais, chinois simplifié et chinois traditionnel' },
@@ -54,6 +58,22 @@ describe('nativeSupportLanguageList', () => {
       const list = nativeSupportLanguageList(loc);
       expect(list).not.toContain('zh-Hans');
       expect(list).not.toContain('zh-Hant');
+    }
+  });
+
+  // The invariant, not just the Russian string: a generated name that itself
+  // contains a list-separator character is indistinguishable from a boundary
+  // between two list items once Intl.ListFormat joins everything together
+  // (this is exactly what went wrong for Russian's 'dialect' zh-Hans/zh-Hant
+  // names, which contain a comma). Asserting the invariant for every locale
+  // — not just 'ru' — means a future CLDR change tripping this in some other
+  // locale fails loudly here instead of shipping an ambiguous sentence.
+  it('never generates a language name containing a list separator', () => {
+    for (const loc of locales) {
+      const names = resolveNativeSupportNames(loc);
+      for (const name of names) {
+        expect(name).not.toMatch(/[,،、]/);
+      }
     }
   });
 });

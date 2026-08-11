@@ -455,8 +455,8 @@ const areaFaqs: AreaFaq[] = [
     areaSlug: 'richmond',
     questionEn: 'Do you offer bilingual service for Richmond projects?',
     questionZh: '你们为列治文项目提供双语服务吗？',
-    answerEn: 'Yes, our team is fluent in both English and Mandarin. We communicate in whichever language you prefer throughout the entire project.',
-    answerZh: '是的，我们的团队精通英语和普通话。在整个项目过程中，我们可以用您偏好的语言沟通。',
+    answerEn: 'Yes, our team is fluent in both English and Mandarin. We communicate in English or Mandarin throughout the entire project.',
+    answerZh: '是的，我们的团队精通英语和普通话。在整个项目过程中，我们可以用英语或普通话沟通。',
     displayOrder: 0,
   },
   {
