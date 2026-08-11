@@ -3,7 +3,7 @@
     "breadcrumb": "我附近的裝修",
     "hero": {
       "eyebrow": "自 2020 年起為大溫哥華地區提供服務",
-      "h1": "Looking for a renovation company near you?",
+      "h1": "正在尋找您附近的裝修公司嗎？",
       "subtitle": "Reno Stars 為溫哥華和 14 個大溫哥華地區城市提供服務，擁有持有執照、有保險的家居裝修人員。廚房、浴室、地下室和整個房子的改造——從設計到移交都是由當地團隊負責，而不是透過市場進行。",
       "ctaPrimary": "取得我的免費報價"
     },
@@ -34,7 +34,7 @@
       "learnMore": "了解更多",
       "kitchen": {
         "title": "我附近的廚房裝修",
-        "desc": "橱柜、石英台面、后挡板、地板、电气。預算友好的更新為完全客製化。通常 4-8 週，$15K-$72K。"
+        "desc": "櫥櫃、石英檯面、擋水板、地板、電氣。從經濟實惠的翻新到全客製化。通常 4-8 週，$15K-$72K。"
       },
       "bathroom": {
         "title": "我附近的浴室裝修",
@@ -50,7 +50,7 @@
       },
       "cabinet": {
         "title": "我附近的櫥櫃翻新",
-        "desc": "Lower-cost alternative to full cabinet replacement — new doors, hardware, and quartz for the same footprint. 1-2 weeks, $8K-$20K."
+        "desc": "比整組櫥櫃更換更省成本的方案——在原有格局下換上新門板、五金和石英檯面。1-2 週，8,000 加元至 20,000 加元。"
       },
       "commercial": {
         "title": "我附近的商業裝修",
@@ -72,16 +72,16 @@
         "body": "具有真實材料規格的逐項書面報價。僅在您批准後才更改訂單。 3 年工藝保固。"
       },
       "point4": {
-        "title": "Bilingual service (English + Mandarin)",
+        "title": "雙語服務（英語+普通話）",
         "body": "專案經理和銷售人員會講英語和普通話。合約、變更單和更新以英文或中文提供。"
       },
       "point5": {
-        "title": "Real local portfolio near you",
+        "title": "您附近真實的本地施工案例",
         "body": "數百個項目遍佈溫哥華、列治文、本那比、薩裡、高貴林等地。我們將分享您附近的照片和參考資料。"
       }
     },
     "faq": {
-      "heading": "Renovation near me — FAQ",
+      "heading": "我附近的裝修 — 常見問題",
       "q1": "如何在溫哥華找到我附近值得信賴的裝修公司？",
       "a1": "檢查三件事：許可+保險（要求證書，而不是承諾），真實的谷歌評論量（100+是有意義的，10是沒有意義的），以及來自你鄰居的作品集。 Reno Stars 擁有 五星級 Google 好評、500 萬加元的責任保險、WCB 保險以及我們服務的每個大溫哥華地區城市的專案組合。",
       "q2": "我附近的浴室或廚房裝修費用是多少？",
