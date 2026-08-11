@@ -95,12 +95,12 @@ export default function ServiceDetailPage({ locale, serviceSlug, company, servic
       {/* Hero */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: NAVY }}>
         {service.image && (
-          <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 opacity-20" aria-hidden="true">
             <OptimizedImage
               src={service.image}
               alt={
                 serviceSlug === 'kitchen'
-                  ? 'Modern white kitchen renovation with quartz countertops and shaker cabinets in Vancouver home'
+                  ? 'Kitchen renovation project showcase: modern white kitchen with quartz countertops and shaker cabinets in Vancouver home'
                   : serviceSlug === 'bathroom'
                   ? 'Luxury modern bathroom renovation with custom tile, glass shower, and premium fixtures in Vancouver home'
                   : serviceSlug === 'whole-house'
