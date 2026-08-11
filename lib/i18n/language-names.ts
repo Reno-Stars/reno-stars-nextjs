@@ -7,7 +7,10 @@ import { locales, LOCALE_META, hasNativeSupport, type Locale } from '@/i18n/conf
  *
  * Both functions derive their content from LOCALE_META.nativeSupport, so
  * hiring someone and flipping one boolean updates the sentence in all 14
- * locales with no translation work.
+ * locales with no translation work. DISPLAY_TAG / DISPLAY_TAG_OVERRIDE below
+ * only change which BCP 47 tag is looked up per supported locale — the SET of
+ * supported locales itself always comes from nativeSupport, never from these
+ * maps.
  */
 
 /**
@@ -16,7 +19,37 @@ import { locales, LOCALE_META, hasNativeSupport, type Locale } from '@/i18n/conf
  */
 const DISPLAY_TAG: Partial<Record<Locale, string>> = { zh: 'zh-Hans' };
 
-const displayTag = (loc: Locale): string => DISPLAY_TAG[loc] ?? loc;
+/**
+ * Per-READER-locale overrides of DISPLAY_TAG, for the rare reader locale
+ * where CLDR's script-variant naming (zh-Hans/zh-Hant) is broken in BOTH
+ * `languageDisplay` modes and a different tag is the only fix. Keyed by
+ * reader locale, not by the supported locale being named — every reader
+ * locale not listed here still gets the DISPLAY_TAG defaults above.
+ *
+ * ru: zh-Hans/zh-Hant fail for Russian readers in both modes:
+ *   - 'dialect' mode embeds a comma IN the name ("китайский, упрощенное
+ *     письмо"), which Intl.ListFormat then joins with more commas — three
+ *     languages read as five. (This is the bug that motivated the
+ *     dialect→standard fallback below in the first place.)
+ *   - 'standard' mode drops the comma but produces "китайский (упрощенная) и
+ *     китайский (традиционная)" — упрощенная/традиционная are FEMININE
+ *     adjective endings (agreeing with an implied, absent feminine
+ *     «письменность») sitting against the MASCULINE noun «китайский». A
+ *     Russian reader sees a grammatical agreement error.
+ * Spoken-language tags sidestep both failure modes: cmn → "китайский" (plain
+ * noun, no comma) and yue → "кантонский" (a distinct noun, not an adjective
+ * agreeing with anything). This is a ru-only override, not a global switch to
+ * cmn/yue, because CLDR renders cmn as plain "Chinese" in most locales, which
+ * pairs awkwardly with "Cantonese" in English — see nativeSupportLanguageList
+ * below. Do NOT simplify this override back to zh-Hans/zh-Hant for ru: that
+ * silently reintroduces one of the two failure modes above.
+ */
+const DISPLAY_TAG_OVERRIDE: Partial<Record<Locale, Partial<Record<Locale, string>>>> = {
+  ru: { zh: 'cmn', 'zh-Hant': 'yue' },
+};
+
+const displayTag = (readerLocale: Locale, loc: Locale): string =>
+  DISPLAY_TAG_OVERRIDE[readerLocale]?.[loc] ?? DISPLAY_TAG[loc] ?? loc;
 
 /** Locales a team member speaks, in `locales` order. */
 function supportedLocales(): Locale[] {
@@ -38,7 +71,9 @@ function displayNamesFor(
   languageDisplay: 'dialect' | 'standard',
 ): string[] {
   const names = new Intl.DisplayNames([readerLocale], { type: 'language', languageDisplay });
-  return supported.map((loc) => names.of(displayTag(loc)) ?? LOCALE_META[loc]?.name ?? loc);
+  return supported.map(
+    (loc) => names.of(displayTag(readerLocale, loc)) ?? LOCALE_META[loc]?.name ?? loc,
+  );
 }
 
 /**
@@ -46,14 +81,18 @@ function displayNamesFor(
  * `languageDisplay` mode per locale.
  *
  * 'dialect' is the default because it reads better almost everywhere.
- * Russian is the case that motivated the fallback: in 'dialect' mode CLDR
- * names zh-Hans/zh-Hant as "китайский, упрощенное письмо" / "китайский,
- * традиционное письмо" — each name CONTAINS a comma. Once Intl.ListFormat
- * joins those with commas too, the reader sees what looks like five list
- * items instead of three. 'standard' mode avoids this (CLDR uses parentheses
- * there), but reads worse elsewhere, so we only fall back for the locale(s)
- * that actually trip it — a name containing the separator is indistinguishable
- * from another list item once joined.
+ * Russian's zh-Hans/zh-Hant names are what motivated this fallback existing at
+ * all: in 'dialect' mode CLDR named them "китайский, упрощенное письмо" /
+ * "китайский, традиционное письмо" — each name CONTAINS a comma. Once
+ * Intl.ListFormat joins those with commas too, the reader sees what looks
+ * like five list items instead of three. 'standard' mode avoided the comma
+ * (CLDR uses parentheses there) but reads worse elsewhere, so this only fell
+ * back for the locale(s) that actually tripped it. Russian itself no longer
+ * reaches this fallback: DISPLAY_TAG_OVERRIDE above swaps its display tags to
+ * cmn/yue, whose 'dialect' names have neither problem. The dialect→standard→
+ * endonym machinery below stays general-purpose for whichever locale trips it
+ * next — a name containing the separator is indistinguishable from another
+ * list item once joined, regardless of which locale produced it.
  *
  * If 'standard' is still ambiguous (or identical to 'dialect', as it is for ko,
  * pa and vi), we drop to the endonyms from LOCALE_META rather than ship a list
@@ -87,9 +126,12 @@ export function resolveNativeSupportNames(readerLocale: Locale): string[] {
  * e.g. for a Punjabi reader: "ਅੰਗਰੇਜ਼ੀ, ਚੀਨੀ (ਸਰਲ) ਅਤੇ ਚੀਨੀ (ਰਵਾਇਤੀ)".
  *
  * Not "Mandarin and Cantonese": CLDR has no distinct name for `cmn`, so it
- * renders as plain "Chinese" in all 14 locales and pairs awkwardly with
+ * renders as plain "Chinese" in most locales and pairs awkwardly with
  * "Cantonese". The audience for this list does not speak Chinese, so the
- * spoken-variety distinction is detail they cannot act on anyway.
+ * spoken-variety distinction is detail they cannot act on anyway. `ru` is the
+ * one deliberate exception — see DISPLAY_TAG_OVERRIDE above for why cmn/yue
+ * is the correct choice there specifically, not a precedent for using it
+ * elsewhere.
  */
 export function nativeSupportLanguageList(readerLocale: Locale): string {
   try {
