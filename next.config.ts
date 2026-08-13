@@ -27,6 +27,18 @@ if (storageUrl) {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: true,
+  // Emit .next/standalone (server.js + only the node_modules files the route
+  // tracer proves are reachable) for the container image, which would otherwise
+  // have to carry the whole node_modules tree.
+  //
+  // Opt-in, NOT unconditional. Next 16 prints
+  //   ⚠ "next start" does not work with "output: standalone" configuration.
+  // whenever the option is set — and the Mac's launchd unit
+  // (com.renostars.reno-stars-web) starts this site with `pnpm start`, i.e.
+  // `next start`. It does still serve 200s in that combination (measured), but
+  // it is an explicitly unsupported path and not something to put under
+  // www.reno-stars.com. Only the Docker builder sets NEXT_OUTPUT_STANDALONE=1.
+  ...(process.env.NEXT_OUTPUT_STANDALONE === '1' ? { output: 'standalone' as const } : {}),
   // Edge-cache hint for the public (locale-prefixed) SSR pages. Pages render
   // dynamically (force-dynamic), and `CDN-Cache-Control` is the CDN-standard
   // header Cloudflare honours (the old `Vercel-CDN-Cache-Control` was a Vercel-
