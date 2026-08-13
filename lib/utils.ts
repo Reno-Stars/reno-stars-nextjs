@@ -147,12 +147,15 @@ export function buildLocalizedOptional(
 }
 
 /**
- * Returns OG-format locale codes (e.g. "zh_CN", "ja_JP") for every locale
- * EXCEPT the current one. Used to populate openGraph.alternateLocale on
- * page-level metadata so social/SEO crawlers know about every translation.
+ * Returns OG-format locale codes (e.g. "zh_CN") for every locale with
+ * nativeSupport: true, EXCEPT the current locale. Used to populate
+ * openGraph.alternateLocale so social/SEO crawlers only see translations
+ * the business actually supports (EN, ZH, ZH-HANT — no surplus locales).
  */
 export function buildAlternateLocales(currentLocale: Locale): string[] {
-  return locales.filter((l) => l !== currentLocale).map((l) => ogLocaleMap[l]);
+  return locales
+    .filter((l) => l !== currentLocale && LOCALE_META[l].nativeSupport)
+    .map((l) => ogLocaleMap[l]);
 }
 
 /**
