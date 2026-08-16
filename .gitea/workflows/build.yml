@@ -1,0 +1,249 @@
+name: Build image + propose deploy
+
+# Builds the WEBSITE image and PROPOSES a deploy by opening a PR against the
+# manifests repo. It does not deploy.
+#
+# THE DEPLOY PATH, AND WHY IT STOPS AT A PR
+# -----------------------------------------
+#   build -> push registry.enteros.ai/reno-stars/invoice-service:<sha12>
+#         -> PR against reno-stars-infra bumping deploy/invoice-service.yaml
+#         -> a human merges
+#         -> cronjob/reno-stars-cd (*/5) polls main, resolves tags -> digests,
+#            applies, and asserts the rollout landed on the applied digest
+#
+# A green build must not be able to reach production on its own. Nine database
+# restores were verified by content hash during the 2026-08-14/15 migration; a
+# pipeline that can ship an unreviewed image undoes that discipline in one merge.
+# The gate is structural here — CD watches the MANIFESTS, not the registry — so
+# opening a PR rather than committing to main is what keeps a human in the loop.
+#
+# WEBSITE SPECIFICS: the Dockerfile builds Next.js `output: standalone` and bakes
+# NEXT_PUBLIC_* at BUILD time (they are inlined into the client bundle, so they
+# cannot be supplied at runtime). Its ARG defaults are the production values, so a
+# plain `docker build` produces a correct public image — do not pass overrides
+# here unless you intend to change what ships to browsers.
+#
+# THIS REPLACES deploy-production.yml, which ran on a SELF-HOSTED runner on the
+# Mac and deployed to launchd `com.renostars.reno-stars-web`. That service is gone
+# and www is served from the cluster, so that workflow deployed to nothing.
+#
+# REGISTRY CONSTRAINT: Cloudflare's free-plan body cap is 100 MB PER LAYER (not
+# per image). All nine running images are node:22-slim-based, largest layer
+# 47.6 MB, which is why they push fine. Anything with a fat layer (odoo:19 at
+# 393 MB, playwright at 751 MB) CANNOT be pushed here at all. If you add a base
+# image, check its layer sizes before assuming a build will land.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: build-reno-stars-web
+  cancel-in-progress: false # never cancel a half-pushed image
+
+env:
+  REGISTRY: registry.enteros.ai
+  IMAGE: reno-stars/reno-stars-web
+  MANIFEST_REPO: reno-stars-infra
+  MANIFEST_PATH: deploy/reno-stars-web.yaml
+
+jobs:
+  build:
+    runs-on: k8s-heavy # NEVER local-deploy — production docker endpoint
+    timeout-minutes: 30
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: meta
+        run: echo "tag=$(echo "${{ github.sha }}" | cut -c1-12)" >> "$GITHUB_OUTPUT"
+
+      - name: Disk floor
+        # The runner is ephemeral but shares node disk. A build that fills the
+        # node degrades neighbours rather than failing cleanly, so fail early
+        # and loudly instead.
+        run: |
+          avail=$(df -Pm . | awk 'NR==2{print $4}')
+          echo "available: ${avail} MB"
+          [ "$avail" -ge 4096 ] || { echo "::error::under 4 GB free — refusing to build"; exit 1; }
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Registry login
+        # ⚠️ THE REGISTRY REFUSES THIS CREDENTIAL FROM OUTSIDE THE CLUSTER.
+        # A push from a laptop returns 403 even with a correct write:package
+        # token, which reads as "the token is wrong" and is not. CI is fine
+        # because k8s-heavy runs IN-cluster. If you are debugging a 403 by hand,
+        # check WHERE you are pushing from before you touch the token.
+        #
+        # Also: hit the registry's token-exchange flow, not Basic auth straight
+        # at /v2/<repo>/blobs/uploads/ — that path 403s for EVERY scope,
+        # including admin, and makes a working token look broken.
+        #
+        # BLOCK SCALAR (run: |) IS LOAD-BEARING, NOT STYLE. This was written as a
+        # plain scalar with a backslash line-continuation:
+        #
+        #     run: echo "$PW" \
+        #          | docker login ...
+        #
+        # YAML folds a plain scalar's newline into a SPACE, so the shell received
+        #     echo "$PW" \ | docker login ...
+        # where the backslash escapes that space instead of a newline. `echo` then
+        # emitted "<password> " -- one trailing space -- and the registry answered
+        # `unauthorized`. The credential was correct the whole time.
+        #
+        # printf '%s' rather than echo: no trailing newline either.
+        run: |
+          printf '%s' "${{ secrets.REGISTRY_PASSWORD }}" \
+            | docker login "$REGISTRY" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Build
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            -t "$REGISTRY/$IMAGE:${{ steps.meta.outputs.tag }}" \
+            --load .
+
+      - name: Warn on layers that may exceed the registry's compressed cap
+        # THE CAP IS ON THE COMPRESSED LAYER; `docker history` REPORTS UNCOMPRESSED.
+        #
+        # This guard originally failed on layers >= 1 GB, which was wrong twice
+        # over: wrong threshold (the cap is 100 MB) and wrong quantity. The image
+        # this repo actually produces has a 126 MB uncompressed node_modules
+        # layer and pushes fine, because node_modules compresses to well under
+        # 100 MB. A hard fail at 100 MB uncompressed would block every good build.
+        #
+        # So: WARN, do not fail. The only way to know the compressed size is to
+        # push. What this catches is the case that matters -- a base image with a
+        # genuinely enormous layer (odoo:19 at 393 MB, playwright at 751 MB) that
+        # cannot compress under the cap no matter what.
+        run: |
+          echo "layer sizes (UNCOMPRESSED — the registry caps COMPRESSED at 100 MB):"
+          docker history --format '{{.Size}}\t{{.CreatedBy}}' \
+            "$REGISTRY/$IMAGE:${{ steps.meta.outputs.tag }}" | head -20 | cut -c1-100 || true
+          # `|| true` IS REQUIRED. Gitea runs steps with `bash -e -o pipefail`,
+          # and grep exits 1 when it matches NOTHING. So on a perfectly good
+          # image — no GB-sized layer — this pipeline returned 1 and failed the
+          # step. A guard written to warn-and-never-fail failed precisely BECAUSE
+          # the thing it guards against was absent. That is what happened on run
+          # #7: Build succeeded, then the warning step killed the job.
+          huge=$(docker history --no-trunc --format '{{.Size}}' \
+                 "$REGISTRY/$IMAGE:${{ steps.meta.outputs.tag }}" \
+                 | grep -oE '^[0-9.]+GB' | head -1 || true)
+          if [ -n "$huge" ]; then
+            echo "::warning::a ${huge} uncompressed layer is very unlikely to compress under"
+            echo "::warning::the 100 MB cap — expect the push below to fail at the Cloudflare edge"
+          fi
+
+      - name: Push
+        run: |
+          # Only the immutable 12-char sha tag. `latest` is deliberately NOT
+          # pushed: every other tag here is a commit sha, which is what makes
+          # cd.py's tag->digest resolution auditable. One mutable name in an
+          # immutable scheme is a tag that means something different next week.
+          docker push "$REGISTRY/$IMAGE:${{ steps.meta.outputs.tag }}"
+
+  propose-deploy:
+    needs: build
+    # k8s-heavy, NOT k8s-ephemeral. The ephemeral runner executes on the act_runner
+    # HOST, a minimal container with no curl — run #9 pushed the branch fine and
+    # then died with `curl: command not found` on the PR call. k8s-heavy runs in
+    # catthehacker/ubuntu:act-22.04, which has it. (Still never local-deploy:
+    # that one's DOCKER_HOST points at the production docker endpoint.)
+    runs-on: k8s-heavy
+    timeout-minutes: 10
+    steps:
+      # ---------------------------------------------------------------------
+      # GATE: refuse to propose a deploy unless ci.yml went GREEN for THIS sha.
+      #
+      # ci.yml and build.yml are separate workflows on the same `push` trigger,
+      # so they RACE -- `needs:` cannot cross workflow files. On 86d6efb the
+      # tests FAILED, the build succeeded, and this job opened a deploy PR
+      # anyway. "propose-deploy succeeded" meant the image built and the PR
+      # opened; it said nothing about whether the code works, and read exactly
+      # as though it did. A gate that cannot fail.
+      #
+      # Three traps, deliberately handled:
+      #   * NOT the combined status `state` -- this Gitea computes it PER PAGE,
+      #     so a green first page reads green while a later page is red.
+      #   * ABSENT IS NOT PASS. No report yet for this sha would make
+      #     "no failure found" a universal pass. An explicit success is required.
+      #   * It is a RACE, not a lookup: build finishes before test does, so this
+      #     WAITS for a conclusion instead of sampling once.
+      # ---------------------------------------------------------------------
+      - name: Require ci.yml green for this commit
+        env:
+          GT: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          API: ${{ github.server_url }}/api/v1/repos/${{ github.repository }}/actions/runs
+        run: |
+          cat > /tmp/verdict.py <<'PYEOF'
+          import json, sys, os
+          sha = os.environ['SHA']
+          try:
+              runs = json.load(sys.stdin).get('workflow_runs', [])
+          except Exception:
+              print('ERROR'); raise SystemExit(0)
+          mine = [r for r in runs
+                  if r.get('head_sha') == sha and str(r.get('path','')).startswith('ci.yml')]
+          if not mine:
+              print('ABSENT')
+          elif any(r.get('status') != 'completed' for r in mine):
+              print('PENDING')
+          elif all(r.get('conclusion') == 'success' for r in mine):
+              print('SUCCESS')
+          else:
+              print('FAILED:' + ','.join(str(r.get('conclusion')) for r in mine))
+          PYEOF
+          for i in $(seq 1 60); do
+            body=$(curl -sS -H "Authorization: token $GT" "$API?limit=50" || echo '{}')
+            verdict=$(printf '%s' "$body" | python3 /tmp/verdict.py)
+            echo "attempt $i: ci.yml for ${SHA} -> $verdict"
+            case "$verdict" in
+              SUCCESS) echo "ci.yml green - proceeding."; exit 0 ;;
+              FAILED*) echo "::error::ci.yml is RED for this commit ($verdict). Refusing to propose a deploy."; exit 1 ;;
+            esac
+            sleep 20
+          done
+          echo "::error::ci.yml never reported a conclusion for $SHA. Absent is NOT a pass. Refusing."
+          exit 1
+
+      - name: Open a PR against the manifests repo
+        env:
+          TAG: ${{ needs.build.outputs.tag }}
+          GITEA_TOKEN: ${{ secrets.INFRA_PR_TOKEN }}
+        run: |
+          set -euo pipefail
+          git clone "https://oauth2:${GITEA_TOKEN}@git.moleculesai.app/reno-stars/${MANIFEST_REPO}.git" infra
+          cd infra
+          git config user.email "ci@reno-stars.com"
+          git config user.name  "reno-stars-ci"
+          branch="deploy/reno-stars-web-${TAG}"
+          git checkout -b "$branch"
+
+          # Rewrite ONLY the image line for this service. A blanket sed across the
+          # file would silently retag neighbours sharing the registry prefix.
+          before=$(grep -c "image: ${REGISTRY}/${IMAGE}:" "${MANIFEST_PATH}")
+          sed -i -E "s|(image: ${REGISTRY}/${IMAGE}):[A-Za-z0-9._-]+|\1:${TAG}|g" "${MANIFEST_PATH}"
+          after=$(grep -c "image: ${REGISTRY}/${IMAGE}:${TAG}" "${MANIFEST_PATH}")
+          echo "image lines: ${before} found, ${after} now at ${TAG}"
+          [ "$before" -eq "$after" ] || { echo "::error::rewrite changed a different number of lines than it found"; exit 1; }
+
+          # Written as an explicit if, NOT `git diff --exit-code && {...}`. Under
+          # `set -e` the AND-OR form depends on subtle errexit-exemption rules,
+          # and the failure mode here is the worst kind: the step exits 0 having
+          # silently proposed nothing, so a build looks green and never deploys.
+          if git diff --quiet; then
+            echo "manifest already at ${TAG} — nothing to propose"
+            exit 0
+          fi
+          git commit -am "deploy(reno-stars-web): ${TAG}"
+          git push origin "$branch"
+
+          # PR, never a direct push to main. CD applies only what is on main.
+          curl -sS -X POST "https://git.moleculesai.app/api/v1/repos/reno-stars/${MANIFEST_REPO}/pulls" \
+            -H "Authorization: token ${GITEA_TOKEN}" -H 'Content-Type: application/json' \
+            -d "{\"head\":\"${branch}\",\"base\":\"main\",\"title\":\"deploy(reno-stars-web): ${TAG}\",\"body\":\"Automated image bump from CI.\\n\\nBuilt from commit ${{ github.sha }}.\\n\\nMerging this makes cronjob/reno-stars-cd apply it within 5 minutes.\"}"
