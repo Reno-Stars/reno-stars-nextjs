@@ -100,6 +100,12 @@ jobs:
         run: pnpm test:coverage
 
       - name: Upload coverage report
+        # Gitea's Actions has no artifacts backend by default, so
+        # actions/upload-artifact FAILS here while the tests themselves passed.
+        # Coverage is a report, not a correctness gate — never fail CI on it.
+        # (4th runner difference today: psql absent, curl absent, service DBs
+        # reachable by name not localhost, and now artifacts.)
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         if: always()
         with:
