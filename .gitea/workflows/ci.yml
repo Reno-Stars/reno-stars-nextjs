@@ -1,0 +1,156 @@
+# ⚠️ PORTED from .github/workflows/ci.yml — do not hand-write a replacement.
+#
+# CI compute moved to the Enter OS Gitea runners when GitHub Actions billing
+# lapsed. GitHub stays the source of truth for CODE; Gitea runs the PIPELINES.
+#
+# The only intentional deltas from the GitHub file, all forced by the RUNNER
+# rather than by the workflow:
+#   1. runs-on: ubuntu-latest -> k8s-heavy
+#      (NEVER local-deploy — its DOCKER_HOST is the PRODUCTION docker endpoint)
+#   2. the postgres service is PINNED BY DIGEST. act_runner bind-mounts the
+#      docker socket into every SERVICE container, so the thing holding that
+#      socket must not be a moving tag.
+#   3. the database host is `postgres:5432`, NOT localhost. GitHub publishes a
+#      service container's ports onto the runner's localhost; act does NOT —
+#      services join a docker network and are reachable by SERVICE NAME. The
+#      `ports:` mapping is honoured by GitHub and IGNORED here, so the config
+#      reads as correct on both sides and only the connection tells you.
+#
+# Rewriting a working pipeline from memory loses exactly the knowledge that made
+# it work — the invoice-service port did that and failed on `npm ci` against a
+# pnpm repo. Edit the GitHub file and re-port.
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: k8s-heavy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint
+        run: pnpm lint
+
+  typecheck:
+    name: Type Check
+    runs-on: k8s-heavy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run TypeScript check
+        run: pnpm typecheck
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: k8s-heavy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run unit tests with coverage
+        run: pnpm test:coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+
+  build:
+    name: Build
+    runs-on: k8s-heavy
+    needs: [lint, typecheck, unit-tests]
+    services:
+      postgres:
+        image: postgres:16@sha256:11a9d238fbb48bab14599c57e41123254452b1a2d93c6c8595bce96f346bd082
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: renostars
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/renostars
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Push schema to database
+        run: pnpm db:push
+
+      - name: Seed database
+        run: pnpm db:seed
+
+      - name: Seed projects
+        run: pnpm db:seed:projects
+
+      - name: Build application
+        run: pnpm build

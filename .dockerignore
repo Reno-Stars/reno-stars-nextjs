@@ -1,14 +1,26 @@
+# Host build artefacts and darwin-arm64 modules — the image builds its own.
 node_modules
+**/node_modules
 .next
 .git
 .gitignore
+.github
+.husky
+
+# Secrets. `.env.*` covers .env.local, .env.production.local, .env.vercel and
+# the .bak copies; .env.example is deliberately let back in as documentation.
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+.vercel
+
+# Test / tooling output
 coverage
 playwright-report
 test-results
 .claude
 .agents
-.vercel
+
+# Docs and scratch
 *.md
+docs
