@@ -123,11 +123,7 @@ export default async function Page({ params }: PageProps) {
         skills={coordinatorDuties.join(', ')}
         qualifications={coordinatorReqs.join('; ')}
       />
-      <CareersPage
-        locale={locale as Locale}
-        phone={company.phone || '778-960-7999'}
-        email={company.email || 'info@reno-stars.com'}
-      />
+      <CareersPage locale={locale as Locale} phone={company.phone || '778-960-7999'} />
     </>
   );
 }

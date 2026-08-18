@@ -28,12 +28,11 @@ import {
   TEXT_MUTED,
   neu,
 } from "@/lib/theme";
-import { WECHAT_ID } from "@/lib/company-config";
+import { WECHAT_ID, RECRUITING_EMAIL } from "@/lib/company-config";
 
 interface CareersPageProps {
   locale: Locale;
   phone: string;
-  email: string;
 }
 
 // Renovation Worker — the original role. Its keys stay at the top level of the
@@ -141,7 +140,7 @@ function RoleBlock({
   );
 }
 
-export default function CareersPage({ locale, phone, email }: CareersPageProps) {
+export default function CareersPage({ locale, phone }: CareersPageProps) {
   const t = useTranslations("careers");
   const tel = telHref(phone);
 
@@ -236,7 +235,7 @@ export default function CareersPage({ locale, phone, email }: CareersPageProps) 
               {t("apply.call")}: {phone}
             </a>
             <a
-              href={`mailto:${email}?subject=${encodeURIComponent(t("apply.emailSubject"))}`}
+              href={`mailto:${RECRUITING_EMAIL}?subject=${encodeURIComponent(t("apply.emailSubject"))}`}
               className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm border border-white/25 text-white transition-transform hover:scale-[1.02]"
             >
               <Mail className="w-4 h-4" aria-hidden="true" />
