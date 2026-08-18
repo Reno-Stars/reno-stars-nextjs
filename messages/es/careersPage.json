@@ -3,7 +3,7 @@
     "breadcrumb": "Carreras",
     "hero": {
       "title": "Únase al equipo de Reno Stars",
-      "subtitle": "Estamos contratando trabajadores de renovación para sitios de trabajo en todo Metro Vancouver. Preferiblemente hablantes de mandarín o cantonés.",
+      "subtitle": "Estamos contratando trabajadores de renovación y un coordinador de proyectos en todo Metro Vancouver. Preferiblemente hablantes de mandarín o cantonés.",
       "badge": "Ahora contratando"
     },
     "role": {
@@ -39,6 +39,31 @@
       },
       "languageHighlight": "Se prefieren hablantes de mandarín o cantonés. — 会说普通话或粤语优先"
     },
+    "coordinator": {
+      "title": "Coordinador de Proyectos",
+      "type": "Jornada completa",
+      "location": "Con sede en nuestra oficina de Richmond, BC: sitios de trabajo en todo Metro Vancouver",
+      "pay": "Negociable, basado en experiencia.",
+      "highlight": "Se proporciona capacitación remunerada: no se requiere experiencia previa en renovación",
+      "duties": {
+        "items": {
+          "d1": "Coordinar entre clientes, comercios y la oficina durante la vida de un proyecto de renovación.",
+          "d2": "Mantener actualizados los horarios, la información del sitio y la comunicación con el cliente.",
+          "d3": "Únase a visitas al sitio, tome medidas y registre las condiciones del sitio",
+          "d4": "Ayude a preparar y guiar a los clientes a través de cotizaciones e hitos de pago.",
+          "d5": "Dar seguimiento a los pedidos de proveedores y materiales para que nada detenga el sitio."
+        }
+      },
+      "requirements": {
+        "items": {
+          "r1": "Aprende rápido y toma la iniciativa.",
+          "r2": "Fuerte sentido de responsabilidad, con buenas habilidades de comunicación y coordinación.",
+          "r3": "Inglés y mandarín fluidos (el cantonés y otros idiomas son una ventaja)",
+          "r4": "Permiso de trabajo válido",
+          "r5": "Vehículo propio"
+        }
+      }
+    },
     "whyUs": {
       "title": "Por qué trabajar con nosotros",
       "items": {
@@ -65,10 +90,13 @@
       "body": "Cuéntenos brevemente sobre su experiencia, las operaciones con las que se siente cómodo y cuándo puede comenzar. No se requiere un currículum formal: una llamada telefónica o un mensaje es suficiente para iniciar la conversación.",
       "call": "Llama o envía un mensaje de texto",
       "email": "Correo electrónico",
-      "emailSubject": "Solicitud de empleo: trabajador de renovación",
+      "emailSubject": "Solicitud de empleo - Estrellas de Reno",
       "wechat": "WeChat",
       "wechatNote": "Agréganos en WeChat y menciona que estás solicitando trabajo.",
       "cta": "Call 778-960-7999"
+    },
+    "openRoles": {
+      "title": "Roles abiertos"
     }
   }
 }

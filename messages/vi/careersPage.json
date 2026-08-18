@@ -3,7 +3,7 @@
     "breadcrumb": "Nghề nghiệp",
     "hero": {
       "title": "Tham gia nhóm Reno Stars",
-      "subtitle": "Chúng tôi đang thuê công nhân cải tạo cho các địa điểm làm việc trên khắp Metro Vancouver. Ưu tiên biết tiếng phổ thông hoặc tiếng Quảng Đông.",
+      "subtitle": "Chúng tôi đang thuê công nhân cải tạo và điều phối viên dự án trên khắp Metro Vancouver. Ưu tiên biết tiếng phổ thông hoặc tiếng Quảng Đông.",
       "badge": "Đang tuyển dụng"
     },
     "role": {
@@ -39,6 +39,31 @@
       },
       "languageHighlight": "Ưu tiên người biết tiếng phổ thông hoặc tiếng Quảng Đông — 会说普通话或粤语优先"
     },
+    "coordinator": {
+      "title": "Điều phối viên dự án",
+      "type": "Toàn thời gian",
+      "location": "Có trụ sở tại văn phòng Richmond, BC của chúng tôi — các địa điểm việc làm trên khắp Metro Vancouver",
+      "pay": "Thỏa thuận, tùy theo kinh nghiệm",
+      "highlight": "Được đào tạo có trả phí - không yêu cầu kinh nghiệm cải tạo trước đó",
+      "duties": {
+        "items": {
+          "d1": "Phối hợp giữa khách hàng, ngành nghề và văn phòng trong suốt quá trình thực hiện dự án cải tạo",
+          "d2": "Luôn cập nhật lịch trình, thông tin trang web và thông tin liên lạc với khách hàng",
+          "d3": "Tham gia các chuyến thăm hiện trường, đo đạc và ghi lại tình trạng hiện trường",
+          "d4": "Giúp chuẩn bị và hướng dẫn khách hàng thông qua báo giá và các mốc thanh toán",
+          "d5": "Theo dõi đơn đặt hàng của nhà cung cấp và nguyên vật liệu để không có gì cản trở công việc"
+        }
+      },
+      "requirements": {
+        "items": {
+          "r1": "Người học nhanh và chủ động",
+          "r2": "Có tinh thần trách nhiệm cao, có kỹ năng giao tiếp và phối hợp tốt",
+          "r3": "Thông thạo tiếng Anh và tiếng Quan Thoại (tiếng Quảng Đông và các ngôn ngữ bổ sung là một tài sản)",
+          "r4": "Giấy phép lao động hợp lệ",
+          "r5": "Xe riêng"
+        }
+      }
+    },
     "whyUs": {
       "title": "Tại sao làm việc với chúng tôi",
       "items": {
@@ -65,10 +90,13 @@
       "body": "Hãy cho chúng tôi biết ngắn gọn về trải nghiệm của bạn, các giao dịch mà bạn cảm thấy thoải mái và khi nào bạn có thể bắt đầu. Không cần sơ yếu lý lịch chính thức - một cuộc gọi điện thoại hoặc tin nhắn là đủ để cuộc trò chuyện diễn ra.",
       "call": "Gọi điện hoặc nhắn tin",
       "email": "E-mail",
-      "emailSubject": "Đơn xin việc - Công nhân cải tạo",
+      "emailSubject": "Đơn Xin Việc — Reno Stars",
       "wechat": "WeChat",
       "wechatNote": "Thêm chúng tôi trên WeChat và đề cập đến việc bạn đang xin việc",
       "cta": "Call 778-960-7999"
+    },
+    "openRoles": {
+      "title": "Vai trò mở"
     }
   }
 }

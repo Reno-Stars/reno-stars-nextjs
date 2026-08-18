@@ -3,7 +3,7 @@
     "breadcrumb": "Careers",
     "hero": {
       "title": "Join the Reno Stars Team",
-      "subtitle": "We're hiring renovation workers for job sites across Metro Vancouver. Mandarin or Cantonese speakers preferred.",
+      "subtitle": "We're hiring renovation workers and a project coordinator across Metro Vancouver. Mandarin or Cantonese speakers preferred.",
       "badge": "Now Hiring"
     },
     "role": {
@@ -39,6 +39,31 @@
       },
       "languageHighlight": "会说普通话或粤语者优先 — Mandarin or Cantonese speakers preferred"
     },
+    "coordinator": {
+      "title": "Project Coordinator",
+      "type": "Full-time",
+      "location": "Based at our Richmond, BC office — job sites across Metro Vancouver",
+      "pay": "Negotiable, based on experience",
+      "highlight": "Paid training provided — previous renovation experience is not required",
+      "duties": {
+        "items": {
+          "d1": "Coordinate between clients, trades and the office through the life of a renovation project",
+          "d2": "Keep schedules, site information and client communication up to date",
+          "d3": "Join site visits, take measurements and record site conditions",
+          "d4": "Help prepare and walk clients through quotes and payment milestones",
+          "d5": "Follow up on supplier and materials orders so nothing holds up the site"
+        }
+      },
+      "requirements": {
+        "items": {
+          "r1": "Fast learner who takes initiative",
+          "r2": "Strong sense of responsibility, with good communication and coordination skills",
+          "r3": "Fluent English and Mandarin (Cantonese and additional languages an asset)",
+          "r4": "Valid work permit",
+          "r5": "Own vehicle"
+        }
+      }
+    },
     "whyUs": {
       "title": "Why Work With Us",
       "items": {
@@ -65,10 +90,13 @@
       "body": "Tell us briefly about your experience, the trades you're comfortable with, and when you can start. No formal resume required — a phone call or message is enough to get the conversation going.",
       "call": "Call or text",
       "email": "Email",
-      "emailSubject": "Job Application — Renovation Worker",
+      "emailSubject": "Job Application — Reno Stars",
       "wechat": "WeChat",
       "wechatNote": "Add us on WeChat and mention you're applying for work",
       "cta": "Call 778-960-7999"
+    },
+    "openRoles": {
+      "title": "Open Roles"
     }
   }
 }
