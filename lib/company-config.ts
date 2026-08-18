@@ -57,15 +57,18 @@ export function brandDisplay(locale: Locale): string {
 export const WECHAT_ID = 'RenoStars';
 
 /**
- * Where job applications go — deliberately NOT the company's general
- * `info@reno-stars.com` inbox that `getCompanyFromDb()` returns.
+ * Where job applications go.
  *
- * Owner's call (2026-08-17): resumes are collected in one mailbox so they stop
- * being split between the recruiting poster (which prints this address) and the
- * general inbox. The classified ads on VanPeople and Vansky were updated to
- * match, so every recruiting surface now names the same address.
+ * Owner's call, revised 2026-08-18: applications land in the general company
+ * inbox, same as client enquiries — NOT the renostars604 gmail that the
+ * recruiting poster prints. The four VanPeople/Vansky ads carry this address
+ * too, so the only surface still naming renostars604 is the poster artwork.
+ *
+ * Kept as its own constant rather than reading `company.email` from the db so
+ * the recruiting destination can be repointed on its own — it has already moved
+ * once — without touching the client-facing contact details.
  */
-export const RECRUITING_EMAIL = 'renostars604@gmail.com';
+export const RECRUITING_EMAIL = 'info@reno-stars.com';
 
 /**
  * Google Business Profile place ID — the SINGLE canonical GBP identity.
