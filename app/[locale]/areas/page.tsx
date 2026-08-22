@@ -44,9 +44,10 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [company, areas] = await Promise.all([
+  const [company, areas, aboutT] = await Promise.all([
     getCompanyFromDb(),
     getServiceAreasFromDb(),
+    getTranslations({ locale, namespace: 'aboutPage' }),
   ]);
 
   const t = await getTranslations({ locale, namespace: 'nav' });
@@ -55,16 +56,19 @@ export default async function Page({ params }: PageProps) {
     { name: t('areas'), url: `/${locale}/areas/` },
   ];
 
-  const areasFaqs = [
-    {
-      question: 'What renovation services does Reno Stars offer in Metro Vancouver?',
-      answer: 'Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations across Metro Vancouver including Vancouver, Richmond, Burnaby, Surrey, and 13 other communities.',
-    },
-    {
-      question: 'How much does a renovation cost in Metro Vancouver?',
-      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations start around $50,000 for legal suites.',
-    },
-  ];
+  // Service-area hub page FAQs — loaded from aboutPage translation keys so they
+  // are localized for every locale. Mirrors the pattern used by services/page.tsx.
+  const areasFaqs = [1, 2]
+    .map((i) => ({
+      question: aboutT(`faq.areasQ${i}`),
+      answer: aboutT(`faq.areasA${i}`),
+    }))
+    .filter(
+      ({ question, answer }) =>
+        !question.startsWith('aboutPage.') &&
+        question.length > 0 &&
+        answer.length > 0,
+    );
 
   return (
     <>

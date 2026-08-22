@@ -54,10 +54,11 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const currentPage = Math.max(1, parseInt(page || '1', 10) || 1);
 
-  const [t, mt, ft, company, paginatedPosts, allPosts] = await Promise.all([
+  const [t, mt, ft, aboutT, company, paginatedPosts, allPosts] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'metadata.blog' }),
     getTranslations({ locale, namespace: 'faq' }),
+    getTranslations({ locale, namespace: 'aboutPage' }),
     getCompanyFromDb(),
     getBlogPostsPaginatedFromDb(currentPage, BLOG_POSTS_PER_PAGE),
     getBlogPostsFromDb(),
@@ -69,18 +70,20 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const baseUrl = getBaseUrl();
 
-  const blogFaqs = [
-    {
-      id: 'blog-faq-1',
-      question: 'What renovation services does Reno Stars offer?',
-      answer: 'Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations. Services include cabinet refacing, Poly-B pipe replacement, heat pump installation, and accessible bathroom renovations.',
-    },
-    {
-      id: 'blog-faq-2',
-      question: 'How much does a renovation cost in Metro Vancouver?',
-      answer: 'Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations for legal suites start around $50,000.',
-    },
-  ];
+  // Blog index page FAQs — loaded from aboutPage translation keys so they are
+  // localized for every locale. Mirrors the pattern used by services/page.tsx.
+  const blogFaqs = [1, 2]
+    .map((i) => ({
+      id: `blog-faq-${i}`,
+      question: aboutT(`faq.blogQ${i}`),
+      answer: aboutT(`faq.blogA${i}`),
+    }))
+    .filter(
+      ({ question, answer }) =>
+        !question.startsWith('aboutPage.') &&
+        question.length > 0 &&
+        answer.length > 0,
+    );
 
   const blogFaqTranslations = {
     title: ft('title'),
