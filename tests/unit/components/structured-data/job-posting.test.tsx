@@ -23,6 +23,7 @@ function render(extra?: Partial<Record<string, unknown>>) {
       company={company}
       locale="en"
       title="Renovation Worker"
+      slug="renovation-worker"
       description="Join the team."
       datePosted="2026-07-09"
       baseSalaryMonthCad={4000}
@@ -66,6 +67,26 @@ describe('JobPostingSchema', () => {
   it('omits baseSalary when no figure is provided', () => {
     const s = render({ baseSalaryMonthCad: undefined });
     expect(s.baseSalary).toBeUndefined();
+  });
+
+  it('defaults employmentType to full- and part-time, and lets a role override it', () => {
+    expect(render().employmentType).toEqual(['FULL_TIME', 'PART_TIME']);
+    expect(render({ employmentType: ['FULL_TIME'] }).employmentType).toEqual(['FULL_TIME']);
+  });
+
+  it('gives each posting its own @id/identifier so multiple roles on one page stay distinct', () => {
+    const worker = render();
+    const coordinator = render({ title: 'Project Coordinator', slug: 'project-coordinator' });
+    expect(worker['@id']).toMatch(/\/en\/careers\/#renovation-worker$/);
+    expect(coordinator['@id']).toMatch(/\/en\/careers\/#project-coordinator$/);
+    expect(worker['@id']).not.toBe(coordinator['@id']);
+    expect((coordinator.identifier as Record<string, unknown>).value).toBe('project-coordinator');
+  });
+
+  it('the slug is locale-independent — a localized title does not change the id', () => {
+    const en = render();
+    const zh = render({ title: '装修工人' });
+    expect(zh['@id']).toBe(en['@id']);
   });
 
   it('skills/qualifications come from props (localizable), not hardcoded English', () => {

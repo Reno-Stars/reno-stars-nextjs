@@ -8,6 +8,12 @@ interface JobPostingSchemaProps {
   locale: string;
   /** Localized job title, e.g. "Renovation Worker". */
   title: string;
+  /**
+   * Stable locale-independent slug for this posting, e.g. 'renovation-worker'.
+   * The careers page carries more than one posting, so each needs its own
+   * @id/identifier — without them Google collapses them into a single job.
+   */
+  slug: string;
   /** Localized plain-text job description. */
   description: string;
   /** ISO date the posting went live (stable — don't regenerate per render). */
@@ -18,6 +24,8 @@ interface JobPostingSchemaProps {
   skills: string;
   /** Localized qualifications sentence — mirrors the page's requirements. */
   qualifications: string;
+  /** schema.org employmentType values. Defaults to full- and part-time. */
+  employmentType?: string[];
 }
 
 /** Days a rendered posting stays valid — see validThrough note below. */
@@ -43,11 +51,13 @@ export default function JobPostingSchema({
   company,
   locale,
   title,
+  slug,
   description,
   datePosted,
   baseSalaryMonthCad,
   skills,
   qualifications,
+  employmentType = ['FULL_TIME', 'PART_TIME'],
 }: JobPostingSchemaProps) {
   const baseUrl = getBaseUrl();
   const address = parseAddress(company.address);
@@ -75,7 +85,7 @@ export default function JobPostingSchema({
           },
         }
       : {}),
-    employmentType: ['FULL_TIME', 'PART_TIME'],
+    employmentType,
     hiringOrganization: {
       '@type': 'Organization',
       name: company.name,
@@ -96,6 +106,12 @@ export default function JobPostingSchema({
     skills,
     qualifications,
     directApply: true,
+    '@id': `${baseUrl}/${locale}/careers/#${slug}`,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: company.name,
+      value: slug,
+    },
     url: `${baseUrl}/${locale}/careers/`,
   };
 

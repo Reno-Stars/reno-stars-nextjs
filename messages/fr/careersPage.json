@@ -3,7 +3,7 @@
     "breadcrumb": "Carrières",
     "hero": {
       "title": "Rejoignez l'équipe Reno Stars",
-      "subtitle": "Nous embauchons des travailleurs en rénovation pour des chantiers dans la région métropolitaine de Vancouver. Les locuteurs du mandarin ou du cantonais sont préférés.",
+      "subtitle": "Nous embauchons des travailleurs en rénovation et un coordonnateur de projet dans la région métropolitaine de Vancouver. Les locuteurs du mandarin ou du cantonais sont préférés.",
       "badge": "Nous embauchons actuellement"
     },
     "role": {
@@ -39,6 +39,31 @@
       },
       "languageHighlight": "Les locuteurs du mandarin ou du cantonais sont préférés — 会说普通话或粤语优先"
     },
+    "coordinator": {
+      "title": "Coordinateur de projet",
+      "type": "À temps plein",
+      "location": "Basé à notre bureau de Richmond, en Colombie-Britannique – sur des chantiers dans la région métropolitaine de Vancouver",
+      "pay": "Négociable, selon expérience",
+      "highlight": "Formation rémunérée fournie – une expérience préalable en rénovation n'est pas requise",
+      "duties": {
+        "items": {
+          "d1": "Coordination entre les clients, les corps de métier et le bureau tout au long de la vie d'un projet de rénovation",
+          "d2": "Tenir à jour les horaires, les informations sur le site et les communications avec les clients",
+          "d3": "Participez aux visites de sites, prenez des mesures et enregistrez les conditions du site",
+          "d4": "Aider à préparer et guider les clients à travers les devis et les étapes de paiement",
+          "d5": "Effectuer le suivi des commandes fournisseurs et matériaux pour que rien ne tienne le chantier"
+        }
+      },
+      "requirements": {
+        "items": {
+          "r1": "Apprend vite et prend des initiatives",
+          "r2": "Fort sens des responsabilités, avec de bonnes capacités de communication et de coordination",
+          "r3": "Anglais et mandarin courants (cantonais et autres langues un atout)",
+          "r4": "Permis de travail valide",
+          "r5": "Propre véhicule"
+        }
+      }
+    },
     "whyUs": {
       "title": "Pourquoi travailler avec nous",
       "items": {
@@ -65,10 +90,13 @@
       "body": "Parlez-nous brièvement de votre expérience, des métiers avec lesquels vous êtes à l'aise et quand vous pouvez commencer. Aucun CV formel n'est requis : un appel téléphonique ou un message suffit pour lancer la conversation.",
       "call": "Appeler ou envoyer un SMS",
       "email": "E-mail",
-      "emailSubject": "Demande d'emploi — Ouvrier en rénovation",
+      "emailSubject": "Demande d'emploi — Étoiles Reno",
       "wechat": "WeChat",
       "wechatNote": "Ajoutez-nous sur WeChat et mentionnez que vous postulez pour un emploi",
       "cta": "Call 778-960-7999"
+    },
+    "openRoles": {
+      "title": "Rôles ouverts"
     }
   }
 }

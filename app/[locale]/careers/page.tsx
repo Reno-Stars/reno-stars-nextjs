@@ -1,7 +1,12 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ogLocaleMap, type Locale } from '@/i18n/config';
-import CareersPage, { DUTY_KEYS, REQ_KEYS } from '@/components/pages/CareersPage';
+import CareersPage, {
+  DUTY_KEYS,
+  REQ_KEYS,
+  COORD_DUTY_KEYS,
+  COORD_REQ_KEYS,
+} from '@/components/pages/CareersPage';
 import { BreadcrumbSchema } from '@/components/structured-data';
 import JobPostingSchema from '@/components/structured-data/JobPostingSchema';
 import { getCompanyFromDb } from '@/lib/db/queries';
@@ -16,12 +21,15 @@ interface PageProps {
 // the layout's dynamic setting ever changes.
 export const dynamic = 'force-dynamic';
 
-// Stable posting date — the day the careers page shipped. Never derive from
-// "now": JobPosting.datePosted must not shift on every rebuild.
+// Stable posting dates — the day each opening shipped. Never derive from "now":
+// JobPosting.datePosted must not shift on every rebuild.
 const DATE_POSTED = '2026-07-09';
+const COORDINATOR_DATE_POSTED = '2026-08-17';
 // Owner-provided base pay (2026-07-10): ~CAD 4,000/month. Must match role.pay
 // on the visible page (Google flags schema/page salary mismatches).
 const BASE_SALARY_MONTH_CAD = 4000;
+// The coordinator opening is advertised as negotiable (owner's call 2026-08-17),
+// so it carries NO baseSalary — an invented figure would contradict the page.
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -71,13 +79,24 @@ export default async function Page({ params }: PageProps) {
   // Schema skills/qualifications come from the SAME localized duty/requirement
   // keys that render on the page — one source, so the JobPosting matches the
   // visible content in every locale (no half-EN structured data).
+  const buildDescription = (intro: string, duties: string[], reqs: string[]) =>
+    [
+      intro,
+      t('duties.title') + ': ' + duties.join('; '),
+      t('requirements.title') + ': ' + reqs.join('; '),
+    ].join(' ');
+
   const localizedDuties = DUTY_KEYS.map((k) => t(`duties.items.${k}`));
   const localizedReqs = REQ_KEYS.map((k) => t(`requirements.items.${k}`));
-  const jobDescription = [
-    t('hero.subtitle'),
-    t('duties.title') + ': ' + localizedDuties.join('; '),
-    t('requirements.title') + ': ' + localizedReqs.join('; '),
-  ].join(' ');
+  const jobDescription = buildDescription(t('hero.subtitle'), localizedDuties, localizedReqs);
+
+  const coordinatorDuties = COORD_DUTY_KEYS.map((k) => t(`coordinator.duties.items.${k}`));
+  const coordinatorReqs = COORD_REQ_KEYS.map((k) => t(`coordinator.requirements.items.${k}`));
+  const coordinatorDescription = buildDescription(
+    t('coordinator.highlight'),
+    coordinatorDuties,
+    coordinatorReqs,
+  );
 
   return (
     <>
@@ -86,17 +105,25 @@ export default async function Page({ params }: PageProps) {
         company={company}
         locale={locale}
         title={t('role.title')}
+        slug="renovation-worker"
         description={jobDescription}
         datePosted={DATE_POSTED}
         baseSalaryMonthCad={BASE_SALARY_MONTH_CAD}
         skills={localizedDuties.join(', ')}
         qualifications={localizedReqs.join('; ')}
       />
-      <CareersPage
-        locale={locale as Locale}
-        phone={company.phone || '778-960-7999'}
-        email={company.email || 'info@reno-stars.com'}
+      <JobPostingSchema
+        company={company}
+        locale={locale}
+        title={t('coordinator.title')}
+        slug="project-coordinator"
+        description={coordinatorDescription}
+        datePosted={COORDINATOR_DATE_POSTED}
+        employmentType={['FULL_TIME']}
+        skills={coordinatorDuties.join(', ')}
+        qualifications={coordinatorReqs.join('; ')}
       />
+      <CareersPage locale={locale as Locale} phone={company.phone || '778-960-7999'} />
     </>
   );
 }

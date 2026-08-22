@@ -57,6 +57,20 @@ export function brandDisplay(locale: Locale): string {
 export const WECHAT_ID = 'RenoStars';
 
 /**
+ * Where job applications go.
+ *
+ * Owner's call, revised 2026-08-18: applications land in the general company
+ * inbox, same as client enquiries — NOT the renostars604 gmail that the
+ * recruiting poster prints. The four VanPeople/Vansky ads carry this address
+ * too, so the only surface still naming renostars604 is the poster artwork.
+ *
+ * Kept as its own constant rather than reading `company.email` from the db so
+ * the recruiting destination can be repointed on its own — it has already moved
+ * once — without touching the client-facing contact details.
+ */
+export const RECRUITING_EMAIL = 'info@reno-stars.com';
+
+/**
  * Google Business Profile place ID — the SINGLE canonical GBP identity.
  *
  * Deliberately a plain constant, NOT an env read. The place id is a stable
