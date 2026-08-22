@@ -247,9 +247,11 @@ export default async function Page({ params }: PageProps) {
         serviceName={serviceTitle}
         serviceDescription={localizedService.long_description || localizedService.description}
         location={localizedArea.name}
+        areaServed={[localizedArea.name]}
         url={`/${locale}/services/${serviceSlug}/${city}/`}
         googleRating={googleReviews.rating}
         googleReviewCount={googleReviews.userRatingCount}
+        serviceRadiusKm={50}
       />
       <FAQSchema faqs={faqs} locale={locale} />
       <ServiceLocationPage
