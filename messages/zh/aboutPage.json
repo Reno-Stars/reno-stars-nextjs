@@ -130,14 +130,14 @@
       "a4": "入门很简单！只需通过电话、电子邮件或在线表格联系我们即可安排免费咨询。我们将讨论您的愿景，评估您的空间，并根据您的需求和预算提供详细的报价。",
       "q5": "Reno Stars 与其他温哥华装修承包商有何不同？",
       "a5": "我们从头开始重建了改造过程。在启动 Reno Stars 之前，我们的团队在改造平台上花费了数年时间，并发现哪里一直出现问题。我们的结构化方法、详细的合同、基于里程碑的付款、专门的协调和可靠的调度，解决了房主面临的真正痛点。我们不是最便宜的选择，但我们是最负责任的选择。",
-      "blogQ1": "What renovation services does Reno Stars offer?",
-      "blogA1": "Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations. Services include cabinet refacing, Poly-B pipe replacement, heat pump installation, and accessible bathroom renovations.",
-      "blogQ2": "How much does a renovation cost in Metro Vancouver?",
-      "blogA2": "Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations for legal suites start around $50,000.",
-      "areasQ1": "What renovation services does Reno Stars offer in Metro Vancouver?",
-      "areasA1": "Reno Stars offers kitchen, bathroom, basement, whole-house, and commercial renovations across Metro Vancouver including Vancouver, Richmond, Burnaby, Surrey, and 13 other communities.",
-      "areasQ2": "How much does a renovation cost in Metro Vancouver?",
-      "areasA2": "Kitchen renovations in Vancouver typically range from $30,000-$80,000+. Bathroom renovations range from $20,000-$60,000+. Basement renovations start around $50,000 for legal suites."
+      "blogQ1": "Reno Stars 提供哪些装修服务？",
+      "blogA1": "Reno Stars 提供厨房、浴室、地下室、全屋和商业装修服务。服务包括橱柜翻新、Poly-B管道更换、热泵安装和无障碍浴室改造。",
+      "blogQ2": "在大温哥华地区装修需要多少费用？",
+      "blogA2": "温哥华的厨房装修通常在 3万至8万加元之间。浴室装修在 2万至6万加元之间。地下室装修（合法套间）起价约 5万加元。",
+      "areasQ1": "Reno Stars 在大温哥华地区提供哪些装修服务？",
+      "areasA1": "Reno Stars 提供厨房、浴室、地下室、全屋和商业装修服务，覆盖大温哥华地区，包括温哥华、列治文、本拿比、萨里以及13个其他社区。",
+      "areasQ2": "在大温哥华地区装修需要多少费用？",
+      "areasA2": "温哥华的厨房装修通常在 3万至8万加元之间。浴室装修在 2万至6万加元之间。地下室装修起价约 5万加元（合法套间）。"
     },
     "cta": {
       "title": "准备好开始装修了吗？",
@@ -149,6 +149,9 @@
       "lead": "我们以一种简单的心态来处理每个项目。",
       "quote": "对待每一个家都像我们自己的家一样。",
       "closing": "因为归根结底，改造不仅仅是建造一个空间，更是建立信任。"
+    },
+    "_translation_meta": {
+      "blog_areas_faq_translated": "2026-08-22"
     }
   },
   "_translation_meta": {
