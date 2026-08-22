@@ -47,20 +47,22 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `vancouver-kitchen-renovation-case-study`
 **Status:** 19 posts. Well-covered. Interior linking from pillar is strong.
 
-### Richmond ✅ (strong)
+### Richmond ✅ (strong — kitchen post already published)
+- `kitchen-renovation-richmond-bc-2026` — **ALREADY EXISTS in DB** (rowCount: 1, confirmed)
 - `bathroom-renovation-cost-richmond-bc-2026`
 - `richmond-whole-house-renovation-case-study-3`
 - `richmond-condo-renovation-case-study`
 - `richmond-home-renovation-guide-2026`
-- `kitchen-renovation-richmond-bc-2026`
 - `basement-renovation-richmond-bc-2026`
 - `dual-bathroom-renovation-with-unique-powder-room`
 - `pre-sale-renovation-richmond-bc-2026`
 - `cabinet-refinishing-richmond-cost-guide`
 - `two-bathroom-renovation-with-arched-doors-richmond`
-**Status:** 10 posts. Good coverage. No dedicated renovation contractor post.
+- `townhouse-renovation-surrey-bc-2026` — COMMITTED commit `5c4e1620`; NOT YET IN DB (blocked by BLOG_API_SECRET k8s fix)
+**Status:** 11 posts. `kitchen-renovation-richmond-bc-2026` slug confirmed EXISTS — brief previously listed as "no dedicated renovation contractor post" for Richmond; update accordingly if contractor guide is still desired.
 
-### Burnaby ✅ (strong)
+### Burnaby ✅ (strong — bathroom post committed)
+- `bathroom-renovation-burnaby-bc-2026` — COMMITTED commit `43ec1ecf`; slug GAP confirmed; real project data from `two-bathroom-renovation-burnaby-2` (5 image pairs, budget $26K–$30K, duration 4–5 weeks, Metrotown/Brentwood/Edmonds); 953 EN words / 1,652 ZH chars; 5 FAQs EN+ZH; **NOT YET IN DB** (blocked by BLOG_API_SECRET k8s fix)
 - `burnaby-home-renovation-case-study`
 - `burnaby-townhouse-renovation-case-study`
 - `burnaby-home-renovation-guide-2026`
@@ -71,9 +73,10 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `basement-renovations-burnaby-2026`
 - `cabinet-refinishing-burnaby-cost-guide`
 - `commercial-warehouse-door-renovation-burnaby`
-**Status:** 10 posts. Good coverage. No dedicated renovation contractor post.
+**Status:** 11 posts. No dedicated renovation contractor post.
 
-### North Vancouver ✅
+### North Vancouver ✅ (7 posts + bathroom committed)
+- `bathroom-renovation-north-vancouver-bc-2026` — COMMITTED commit `42960e36`; slug GAP confirmed; real project data from `luxury-bathroom-renovation-north-vancouver` ($85K–$120K) and `north-vancouver-bathroom-renovation-herringbone-tile` ($65K–$85K); 1,114 EN words / 3,124 ZH chars; 5 FAQs; **NOT YET IN DB** (blocked by BLOG_API_SECRET k8s fix)
 - `north-vancouver-home-renovation-guide-2026`
 - `kitchen-renovation-north-vancouver-2026`
 - `basement-renovations-north-vancouver`
@@ -81,9 +84,10 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `condo-renovation-north-vancouver-2026`
 - `cabinet-refinishing-north-vancouver-cost-guide`
 - `bathroom-renovations-north-vancouver-2026`
-**Status:** 7 posts. No dedicated renovation contractor post.
+**Status:** 8 posts. No dedicated renovation contractor post (see Tier 1).
 
-### Coquitlam ✅
+### Coquitlam ✅ (10 posts + renovation contractor guide committed)
+- `coquitlam-renovation-contractor-guide-2026` — COMMITTED commit `4a4a1011`; ~800 EN words / ~800 ZH words; 5 FAQs EN+ZH; **NOT YET IN DB** (blocked by BLOG_API_SECRET k8s fix)
 - `bathroom-renovation-coquitlam-bc-2026`
 - `coquitlam-home-renovation-guide-2026`
 - `coquitlam-condo-renovation-case-study`
@@ -94,9 +98,10 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `coquitlam-condo-whole-house-renovation-case-study`
 - `coquitlam-condo-renovation-case-study-2`
 - `coquitlam-home-renovation-case-study`
-**Status:** 10 posts. No dedicated renovation contractor post.
+**Status:** 11 posts. Contractor guide committed.
 
-### Surrey ✅ (with White Rock)
+### Surrey ✅ (strong — with White Rock)
+- `townhouse-renovation-surrey-bc-2026` — COMMITTED commit `5c4e1620`; 1,000+ EN words / ZH translated; real Surrey townhouse project data; **NOT YET IN DB** (blocked by BLOG_API_SECRET k8s fix)
 - `bathroom-renovation-surrey-bc-2026`
 - `surrey-home-renovation-guide-2026`
 - `pre-sale-renovation-surrey-bc-2026`
@@ -107,9 +112,10 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `surrey-kitchen-renovation-case-study`
 - `basement-renovations-surrey`
 - `cabinet-refinishing-surrey-cost-guide`
-**Status:** 10 posts. No dedicated renovation contractor post.
+**Status:** 11 posts. Townhouse post newly committed. No dedicated renovation contractor post (see Tier 1).
 
-### West Vancouver ✅
+### West Vancouver ✅ (9 posts + whole-house committed)
+- `whole-house-renovation-west-vancouver-bc-2026` — COMMITTED commit `b0b17519`; slug GAP confirmed; real project data from `west-vancouver-full-home-renovation` (budget: $600K–$900K, 10–14 months); 1,631 EN words / 4,083 ZH chars; 5 FAQs EN+ZH; **NOT YET IN DB** (blocked by BLOG_API_SECRET k8s fix)
 - `basement-renovation-west-vancouver-2026`
 - `kitchen-renovation-west-vancouver-2026`
 - `low-budget-condo-renovation-in-west-vancouver-case-study`
@@ -119,9 +125,9 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `bathroom-renovations-west-vancouver-2026`
 - `west-vancouver-bathroom-renovation-case-study`
 - `transforming-one-bathroom-into-two-stylish-spaces`
-**Status:** 9 posts. No dedicated renovation contractor post.
+**Status:** 10 posts. Whole-house gap filled (pending publish). No dedicated renovation contractor post.
 
-### Langley ✅
+### Langley ✅ (8 posts — whole-house gap is DATA-BOUND)
 - `modern-kitchen-renovation-langley-case-study`
 - `langley-kitchen-renovation-waterfall-island`
 - `pre-sale-renovation-langley-bc-2026`
@@ -130,12 +136,11 @@ The pillar covers: licensing (BCIN), contracts, quote comparison, red flags, ins
 - `langley-home-renovation-guide-2026`
 - `basement-renovations-langley`
 - `kitchen-renovation-langley-bc-2026`
-**Status:** 8 posts. No dedicated renovation contractor post.
+**Status:** 8 posts. Whole-house gap: DATA-BOUND (0 `projects` rows for whole-house type in Langley — cannot produce substantiated post without real project data). No dedicated renovation contractor post (see Tier 1).
 
-### Delta ⚠️ Coverage gap
-- 0 blog posts found for Delta (searched `slug ILIKE '%delta%' OR title_en ILIKE '%delta%'`)
-- 2 published projects with hero photos
-- **Action:** No contractor post possible without DB-verified project data (substance floor)
+### Delta ✅ Gap filled — pending publish
+- `whole-house-renovation-delta-bc-2026` — COMMITTED to `seo/daily-2026-08-22` (commit `720fa1c9`); slug GAP confirmed before writing; real project data from `delta-kitchen-renovation-apron-sink-quartz`; 1,694 EN words / 5,085 ZH chars; 6 FAQs EN+ZH; real Delta neighbourhoods (Tsawwassen, Ladner, Tilbury); permit info; cost breakdown ($55K–$280K range); financing options. **NOT YET IN DB — blocked by BLOG_API_SECRET k8s fix.**
+- No dedicated renovation contractor selection guide exists (different gap — see Tier 1 below)
 
 ### White Rock ⚠️ Covered by Surrey
 - Posts exist under `bathroom-renovations-white-rock-bc-2026`
@@ -257,10 +262,16 @@ From live DB FAQs, the following Q&As exist and could be added to the pillar or 
 
 ## Priority Queue (next 30 days)
 
-1. **Coquitlam renovation contractor guide** — highest gap coverage, substance floor clear
-2. **North Vancouver renovation contractor guide** — same rationale
-3. **Surrey renovation contractor guide** — same
-4. **Langley renovation contractor guide** — same
-5. **Contractor checklist BC** — supports pillar, no city-specific substance needed
-6. **Strata renovation in BC** — high-value niche, substance from Strata Property Act
-7. **Delta renovation guide** — monitor DB for new project photos; publish when ≥3 available
+1. ~~Coquitlam renovation contractor guide~~ — **COMMITTED** commit `4a4a1011` (pending BLOG_API_SECRET fix)
+2. ~~North Vancouver bathroom renovation~~ — **COMMITTED** commit `42960e36` (pending BLOG_API_SECRET fix)
+3. ~~Burnaby bathroom renovation~~ — **COMMITTED** commit `43ec1ecf` (pending BLOG_API_SECRET fix)
+4. ~~West Vancouver whole-house renovation~~ — **COMMITTED** commit `b0b17519` (pending BLOG_API_SECRET fix)
+5. ~~Delta whole-house renovation~~ — **COMMITTED** commit `720fa1c9` (pending BLOG_API_SECRET fix)
+6. ~~Surrey townhouse renovation~~ — **COMMITTED** commit `5c4e1620` (pending BLOG_API_SECRET fix)
+7. **North Vancouver renovation contractor guide** — same rationale as Coquitlam; substance floor clear
+8. **Surrey renovation contractor guide** — same rationale
+9. **Langley renovation contractor guide** — same; note whole-house is DATA-BOUND but other posts clear
+10. **Contractor checklist BC** — supports pillar, no city-specific substance needed
+11. **Strata renovation in BC** — high-value niche, substance from Strata Property Act
+12. **Delta renovation contractor post** — monitor DB for new project photos; publish when ≥3 available
+13. **New Westminster / Port Moody / Maple Ridge / Mission / Abbotsford** — zero project photos, DATA-BOUND. Cannot produce substantiated posts.
