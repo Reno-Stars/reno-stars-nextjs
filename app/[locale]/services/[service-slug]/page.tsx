@@ -148,6 +148,7 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   bathroom:      '温哥华浴室翻新 — 防水工程、定制瓷砖、淋浴间及浴缸安装。500万保险，3年工艺保修。Metro Vancouver全区服务。免费报价。',
   basement:      'Metro Vancouver地下室翻新 — 娱乐室、合法套间、家庭影院一条龙。代办许可证申请。500万保险，3年保修。免费报价。',
   'whole-house': '温哥华全屋翻新 — 厨房、浴室、地板及各工种统一合同，单一项目经理统筹全程。500万保险，3年保修。Metro Vancouver全区。免费报价。',
+  commercial:     '温哥华商业装修 — 办公室、零售、餐厅及诊所装修。BC建筑规范合规，500万保险。免费估价。',
   // 2026-06-26 Tick 663: GSC zh service page CTR audit — three services missing zh overrides,
   // falling back to truncated long_description_zh (starts with English "Vancouver" or mid-sentence cut).
   // heat-pump-hvac: 200 zh imp / 1.5% CTR (worst). cabinet: 79 imp truncated to "...翻新 8K-18K 加元，完全定制更换 20K...".
@@ -172,6 +173,7 @@ const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
   bathroom:      '溫哥華浴室翻新 — 防水工程、訂製磁磚、淋浴間及浴缸安裝。500萬保險，3年工藝保固。Metro Vancouver全區。免費報價。',
   basement:      'Metro Vancouver地下室翻新 — 娛樂室、合法套間、家庭影院一條龍。代辦許可證申請。500萬保險，3年保固。免費報價。',
   'whole-house': '溫哥華全屋翻新 — 廚房、浴室、地板及各工種統一合約，單一專案經理統籌全程。500萬保險，3年保固。Metro Vancouver全區。免費報價。',
+  commercial:     '溫哥華商業裝修 — 辦公室、零售、餐廳及診所裝修。BC建築規範合規，500萬保險。免費估價。',
   cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
@@ -192,6 +194,7 @@ const koServiceMetaDescriptions: Partial<Record<string, string>> = {
   basement:            'Metro Vancouver 지하실 리노베이션 — 엔터테인먼트 룸, 합법 스위트, 홈시어터 일괄 시공. 허가 대행. 500만 보험, 3년 보증. 무료 견적.',
   'whole-house':       '밴쿠버 전체 주택 리노베이션 — 주방·욕실·바닥재 공사를 단일 계약으로 진행, 전담 PM 배치. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
   cabinet:             '밴쿠버 캐비닛 리노베이션 — 도장 $4K–$8K, 도어 교체 $8K–$18K, 맞춤 제작 $20K–$50K. 500만 보험, 3년 공법 보증. 무료 견적.',
+  commercial:          'Metro Vancouver 상업용 리노베이션 — 사무실, 소매점, 식당, 클리닉. BC 건축법 준수. 500만 보험. 무료 견적.',
   'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
   'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
 };
@@ -210,6 +213,7 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
   basement:            'Metro Vancouverの地下室リノベーション — エンターテイメントルーム、合法スイート、ホームシアターを一括施工。許可証代行。500万保険、3年保証。無料見積もり。',
   'whole-house':       'バンクーバーの全体リノベーション — キッチン・バスルーム・フローリングをワンコントラクトで、専任PMが統括。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
   cabinet:             'バンクーバーのキャビネットリノベーション — 塗装仕上げ$4K〜$8K、ドア交換$8K〜$18K、完全カスタム$20K〜$50K。500万保険、3年工事保証。無料見積もり。',
+  commercial:          'Metro Vancouver商業用リノベーション — 事務所、小売店、レストラン、医院。BC建築法準拠、500万保険対応。無料見積もり。',
   'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
   'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
 };
