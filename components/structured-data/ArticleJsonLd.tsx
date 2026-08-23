@@ -59,6 +59,15 @@ export default function ArticleJsonLd({
         url: company.logo,
       },
     },
+    // Marks this Article as the primary content of the WebPage so Google
+    // resolves it to the correct URL rather than treating it as a standalone
+    // piece. BlogPosting (the subtype) carries this automatically; plain
+    // Article needs it asserted explicitly. Required for the dual-Article+
+    // BlogPosting pattern to pass Google's rich-result validation.
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': absoluteUrl,
+    },
     ...(image && {
       image: {
         '@type': 'ImageObject',
