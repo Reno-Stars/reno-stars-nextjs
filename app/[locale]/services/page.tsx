@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, hasNativeSupport, type Locale } from '@/i18n/config';
 import ServicesPage from '@/components/pages/ServicesPage';
 import AnswerBlockSection from '@/components/home/AnswerBlockSection';
 import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
@@ -147,7 +147,12 @@ export default async function Page({ params }: PageProps) {
       <ServiceSchema
         company={company}
         serviceName="Home Renovation Services"
-        serviceDescription="Kitchen, bathroom, whole house, basement, and commercial renovations across Metro Vancouver. Licensed, insured, 20+ years experience."
+        {...(hasNativeSupport(locale as Locale)
+          ? {
+              serviceDescription:
+                "Kitchen, bathroom, whole house, basement, and commercial renovations across Metro Vancouver. Licensed, insured, 20+ years experience.",
+            }
+          : {})}
         areaServed={areas.map((a) => a.name.en)}
         url={`/${locale}/services/`}
         googleRating={undefined}

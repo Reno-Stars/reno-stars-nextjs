@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
+import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -245,8 +245,14 @@ export default async function Page({ params }: PageProps) {
       <ServiceSchema
         company={company}
         serviceName={serviceTitle}
-        serviceDescription={localizedService.long_description || localizedService.description}
-        location={localizedArea.name}
+        {...(hasNativeSupport(locale as Locale)
+          ? {
+              serviceDescription:
+                (service.long_description as { [k: string]: string | undefined } | undefined)?.[locale]
+                  ?? localizedService.description,
+              location: localizedArea.name,
+            }
+          : {})}
         areaServed={[localizedArea.name]}
         url={`/${locale}/services/${serviceSlug}/${city}/`}
         googleRating={googleReviews.rating}

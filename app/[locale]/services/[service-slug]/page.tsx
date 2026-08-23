@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, type Locale } from '@/i18n/config';
+import { ogLocaleMap, hasNativeSupport, type Locale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getReviewsByServiceType } from '@/lib/db/queries';
@@ -375,17 +375,22 @@ export default async function Page({ params }: PageProps) {
       )}
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* Use long_description in schema only when the current locale has a
-          genuine translation (not a pickLocale en-fallback). Otherwise use
-          the short description, which IS localized via the localizations jsonb.
-          This prevents English long-form copy bleeding into /es/, /ja/, /ko/
-          schema even when the service title and short description are native. */}
+          genuine DB translation (nativeSupport = en/zh/zh-Hant). The other 12
+          minor locales fall back to pickLocale's EN fallback chain, which emits
+          English copy with English internal links (/en/…) that break in non-EN
+          SERP snippets. Omitting the field entirely for those locales is cleaner
+          than emitting a false English description. */}
       <ServiceSchema
         company={company}
         serviceName={localizedService.title}
-        serviceDescription={
-          (service.long_description as { [k: string]: string | undefined } | undefined)?.[locale]
-            ?? localizedService.description
-        }
+        {...(hasNativeSupport(locale as Locale)
+          ? {
+              serviceDescription: (
+                (service.long_description as { [k: string]: string | undefined } | undefined)?.[locale]
+                  ?? localizedService.description
+              ),
+            }
+          : {})} 
         url={`/${locale}/services/${serviceSlug}/`}
         areaServed={areas.map((a) => a.name.en)}
         priceRange={SERVICE_PRICE_RANGES[serviceSlug]}
