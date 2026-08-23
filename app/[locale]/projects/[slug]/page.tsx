@@ -292,7 +292,7 @@ export default async function Page({ params }: PageProps) {
         />
         <ServiceSchema
           company={company}
-          serviceName="Vancouver Whole House Renovation"
+          serviceName={serviceTypeName || 'Vancouver Whole House Renovation'}
           serviceDescription={localizedProject.description || ''}
           areaServed={['Vancouver Metro']}
           url={`/${locale}/projects/${slug}/`}
