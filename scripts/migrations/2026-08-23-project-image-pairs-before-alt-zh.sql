@@ -1,8 +1,8 @@
 -- Migration: project_image_pairs.before_alt_text_zh
 -- Status: NOT APPLIED — needs human to run
--- Coverage: 150 rows where before_alt_text_zh IS NULL (no prior migration covers these ids)
--- Logic: "改造前" + project title_zh (same pattern as after_alt_text_zh which uses "改造后")
--- Source: project_image_pairs JOIN projects ON project_id
+-- Coverage: 65 rows where before_alt_text_zh IS NULL (no prior migration covers these ids)
+-- Logic: "改造前" + project title_zh
+-- Idempotent: WHERE guard on before_alt_text_zh IS NULL ensures safe re-run
 
 BEGIN;
 
