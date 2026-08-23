@@ -7,7 +7,7 @@ import { parseAddress } from './parse-address';
 interface ServiceSchemaProps {
   company: Company;
   serviceName: string;
-  serviceDescription: string;
+  serviceDescription?: string;
   location?: string;
   areaServed?: string[];
   priceRange?: {
@@ -48,7 +48,7 @@ export default function ServiceSchema({
     '@id': `${absoluteUrl}#service`,
     name: serviceName,
     serviceType: serviceName,
-    description: serviceDescription,
+    ...(serviceDescription && { description: serviceDescription }),
     provider: {
       '@type': 'HomeAndConstructionBusiness',
       name: company.name,
