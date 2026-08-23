@@ -1,3 +1,5 @@
+import JsonLd from './JsonLd';
+
 interface FAQ {
   question: string;
   answer: string;
@@ -47,4 +49,3 @@ export default function FAQSchema({ faqs, locale }: FAQSchemaProps): React.React
     <JsonLd data={schema} />
   );
 }
-import JsonLd from './JsonLd';
