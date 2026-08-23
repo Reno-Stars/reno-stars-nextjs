@@ -1,3 +1,5 @@
+import JsonLd from './JsonLd';
+
 interface HowToStep {
   name: string;
   text: string;
@@ -83,4 +85,3 @@ export default function HowToSchema({
     <JsonLd data={schema} />
   );
 }
-import JsonLd from './JsonLd';
