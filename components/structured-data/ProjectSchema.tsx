@@ -130,7 +130,10 @@ export default function ProjectSchema({
     description,
     url: fullUrl,
     ...(locale && { inLanguage: locale }),
-    image: allImages,
+    // Hero image at WebPage root level — Google reads this for the rich result
+    // even when images is passed as an array for OG metadata. The nested
+    // mainEntity.Service.image remains as a secondary signal.
+    ...(allImages.length > 0 && { image: allImages[0] }),
     mainEntity: {
       '@type': 'Service',
       name,
@@ -149,9 +152,9 @@ export default function ProjectSchema({
           },
         },
       }),
-      ...(allImages.length > 0 && {
-        image: allImages[0],
-      }),
+      // All images live here too — Service image is what Google's rich-result
+      // tooling historically read; WebPage image is the authoritative root.
+      ...(allImages.length > 0 && { image: allImages }),
       ...(budgetRange && {
         offers: {
           '@type': 'Offer',
