@@ -145,7 +145,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: metaTitle,
     description: metaDescription,
-    keywords: post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean),
+    keywords: [...new Set([...(post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean) ?? []), ...(post.focus_keyword?.[locale as Locale] ? [post.focus_keyword[locale as Locale]] : [])])],
     ...(hasNativeBody ? {} : { robots: { index: false, follow: true } }),
     alternates: buildAlternates(`/blog/${slug}/`, locale, nativeLocales),
     openGraph: {
