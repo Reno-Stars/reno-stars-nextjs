@@ -18,7 +18,7 @@
 
 UPDATE blog_posts
 SET
-  meta_description_en = 'A typical full kitchen renovation in Metro Vancouver costs $30,000 to $72,000+. This guide covers all cost factors, price tiers, and budgeting tips for Vancouver homeowners.'
+  meta_description_en = 'A full kitchen renovation in Metro Vancouver costs $30,000 to $72,000+. This guide covers cost factors, price tiers, and budgeting tips for homeowners.'
 WHERE
   id = 'fbfe62bc-8887-44a0-a6a0-eef892a1e986'
   AND is_published = true
