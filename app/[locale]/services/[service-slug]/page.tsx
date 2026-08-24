@@ -132,6 +132,8 @@ const enServiceMetaDescriptions: Partial<Record<string, string>> = {
   // vancouver" striking-distance. Description now surfaces "poly-b replacement"
   // + "vancouver" + insurance motivation up front, matching query intent.
   'poly-b-replacement': 'Poly-B replacement in Metro Vancouver — full PEX re-pipe, BC permit + inspection included. Required by most BC insurers for homes built 1985–1997. Free quote.',
+  flooring:   'Vancouver flooring installation — hardwood, laminate, LVT, tile & epoxy. All trades under one roof. $5M insured, 3-yr warranty. Free quote.',
+  painting:   'Vancouver interior painting — walls, ceilings, trim & cabinet painting. Prep work & clean-up included. $5M insured, 3-yr warranty. Free quote.',
 };
 
 /**
@@ -156,6 +158,8 @@ const zhServiceMetaDescriptions: Partial<Record<string, string>> = {
   'heat-pump-hvac':    '温哥华热泵安装与空调升级 — 告别燃气炉，冬暖夏凉，符合BC Hydro退税资格，代办申请全程跟进。500万保险，3年保修，Metro Vancouver全区上门。免费报价。',
   cabinet:             '温哥华橱柜翻新 — 喷漆整修$4K–$8K，换门板$8K–$18K，全定制更换$20K–$50K。一站式设计安装，500万保险，3年工艺保修。免费报价。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更换 — 1985–1997年BC省住宅常见，管道老化漏水风险高。全屋换PEX管道，含许可证验收，多数BC保险公司要求更换。免费报价。',
+  flooring:    '温哥华地板安装 — 实木地板、复合地板、LVT石塑地板、瓷砖及环氧地坪。全屋各工种覆盖。500万保险，3年工艺保修。免费报价。',
+  painting:    '温哥华室内粉刷 — 墙面、天花板、木工涂装及橱柜喷漆。底漆及清理全包。500万保险，3年工艺保修。免费报价。',
 };
 
 /**
@@ -177,6 +181,8 @@ const zhHantServiceMetaDescriptions: Partial<Record<string, string>> = {
   cabinet:       '溫哥華橱櫃翻新 — 噴漆整修$4K–$8K，換門板$8K–$18K，全定製更換$20K–$50K。500萬保險，3年工藝保固。免費報價。',
   'heat-pump-hvac':    '溫哥華熱泵安裝與空調升級 — 符合BC Hydro退稅資格，全程代辦申請。500萬保險，3年保固，Metro Vancouver全區。免費報價。',
   'poly-b-replacement':'Metro Vancouver Poly-B水管更換 — 1985–1997年BC省住宅常見，全屋換PEX管道，含許可證驗收，多數BC保險公司要求更換。免費報價。',
+  flooring:    '溫哥華地板安裝 — 實木地板、複合地板、LVT石塑地板、瓷磚及環氧地坪。全屋各工種覆蓋。500萬保險，3年工藝保固。免費報價。',
+  painting:    '溫哥華室內粉刷 — 牆面、天花板、木工塗裝及櫥櫃噴漆。底漆及清理全包。500萬保險，3年工藝保固。免費報價。',
 };
 
 /**
@@ -197,6 +203,8 @@ const koServiceMetaDescriptions: Partial<Record<string, string>> = {
   commercial:          'Metro Vancouver 상업용 리노베이션 — 사무실, 소매점, 식당, 클리닉. BC 건축법 준수. 500만 보험. 무료 견적.',
   'heat-pump-hvac':    '밴쿠버 열펌프 설치 — BC Hydro 보조금 신청 대행. 500만 보험, 3년 보증. Metro Vancouver 전 지역. 무료 견적.',
   'poly-b-replacement':'Metro Vancouver Poly-B 배관 교체 — 1985–1997년 BC 주택 다수 해당, PEX 전체 재배관·허가·검사 포함. BC 보험사 요건. 무료 견적.',
+  flooring:            '밴쿠버 바닥재 시공 — 하드우드, 복합마감, LVT, 타일 및 에폭시 바닥. 전 공종 단일 계약. 500만 보험, 3년 보증. 무료 견적.',
+  painting:            '밴쿠버 실내 페인트 — 벽, 천장, 트리밍 및 캐비닛 페인트. 전처리 및 정리 포함. 500만 보험, 3년 보증. 무료 견적.',
 };
 
 /**
@@ -216,6 +224,8 @@ const jaServiceMetaDescriptions: Partial<Record<string, string>> = {
   commercial:          'Metro Vancouver商業用リノベーション — 事務所、小売店、レストラン、医院。BC建築法準拠、500万保険対応。無料見積もり。',
   'heat-pump-hvac':    'バンクーバーのヒートポンプ設置 — BC Hydro還付金の申請代行。500万保険、3年保証。Metro Vancouver全域。無料見積もり。',
   'poly-b-replacement':'Metro Vancouver Poly-B配管交換 — 1985〜1997年のBC住宅に多い、PEX全体再配管・許可・検査込み。BC保険会社の要件。無料見積もり。',
+  flooring:            'バンクーバーの床材施工 — ハードウッド、複合材、LVT、タイル、エポキシ床。Whole-home対応。500万保険、3年保証。無料見積もり。',
+  painting:            'バンクーバーの室内塗装 — 壁、天井、トリム、キャビネット塗装。下地処理・清掃含む。500万保険、3年保証。無料見積もり。',
 };
 
 /**
