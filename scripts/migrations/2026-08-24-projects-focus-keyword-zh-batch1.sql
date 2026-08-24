@@ -12,6 +12,6 @@ UPDATE projects SET focus_keyword_zh = '温哥华全屋翻新,厨房浴室翻新
 
 UPDATE projects SET focus_keyword_zh = '列治文公寓地板,地板更换,列治文装修,地板翻新,Richmond condo装修' WHERE id = '3ef5531b-cfb9-454d-9cd2-90887b3775f0' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
-UPDATE projects SET focus_keyword_zh = '列治文房屋翻新,厨房浴室装修,地板翻新,列治文全屋装修,Richmond house renovation' WHERE id = '331f03b3-624e-4ddf-9b38-c8768d3d1932' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
+UPDATE projects SET focus_keyword_zh = '列治文房屋翻新,厨房浴室装修,地板翻新,列治文全屋装修,Richmond renovation' WHERE id = '331f03b3-624e-4ddf-9b38-c8768d3d1932' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
 COMMIT;
