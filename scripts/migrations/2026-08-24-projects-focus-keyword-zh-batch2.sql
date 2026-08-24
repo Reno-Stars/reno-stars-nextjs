@@ -12,6 +12,6 @@ UPDATE projects SET focus_keyword_zh = '列治文走廊浴室翻新,客卫装修
 
 UPDATE projects SET focus_keyword_zh = '列治文化妆间翻新,洗手间装修,列治文装修,小浴室翻新,Richmond powder room' WHERE id = '018eda65-401d-4ec3-84cc-7793597e75c7' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
-UPDATE projects SET focus_keyword_zh = '西温哥华豪华浴室,香槟金浴室,欧式奢华浴室,西温装修,West Vancouver luxury bathroom' WHERE id = '561278cf-e1cd-453c-8ec7-302075e6cc54' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
+UPDATE projects SET focus_keyword_zh = '西温哥华豪华浴室,香槟金浴室,欧式奢华浴室,西温装修,West Vancouver bathroom' WHERE id = '561278cf-e1cd-453c-8ec7-302075e6cc54' AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
 COMMIT;
