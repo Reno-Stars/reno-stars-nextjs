@@ -296,8 +296,6 @@ export default async function Page({ params }: PageProps) {
           serviceDescription={localizedProject.description || ''}
           areaServed={['Vancouver Metro']}
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
         />
         <ServiceSchema
           company={company}
@@ -305,8 +303,6 @@ export default async function Page({ params }: PageProps) {
           serviceDescription={localizedProject.description || ''}
           areaServed={['North Vancouver', 'Metro Vancouver']}
           url={`/${locale}/projects/${slug}/`}
-          googleRating={googleReviews.rating}
-          googleReviewCount={googleReviews.userRatingCount}
         />
         {blockSchema.faqs.map((faq, i) => (
           <FAQSchema key={`faq-${i}`} faqs={faq.faqs} locale={faq.locale} />
