@@ -145,8 +145,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: metaTitle,
     description: metaDescription,
+    // `?? []` is load-bearing, not defensive noise. Optional chaining guards the
+    // `.split` CALL but not the SPREAD around it: with no seo_keywords row for
+    // this locale the parenthesised expression is `undefined`, and `[...undefined]`
+    // throws `TypeError: (intermediate value) is not iterable`. The `as string[]`
+    // cast is what let it past typecheck. Because the throw is inside
+    // generateMetadata, the WHOLE metadata object is lost — the 12 machine-
+    // translated locales served every blog post with no <title>, no description,
+    // no canonical, no og/twitter, and — worst of all — without the
+    // `robots: noindex` twelve lines below that exists precisely to keep those
+    // untranslated bodies out of the index. Measured 2026-08-25: /fr/blog/… had
+    // zero head metadata while /en/blog/… of the same post had all of it.
     keywords: [...new Set([
-      ...(post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean) as string[]),
+      ...((post.seo_keywords?.[locale as Locale]?.split(',').map(k => k.trim()).filter(Boolean) as string[] | undefined) ?? []),
       ...(post.focus_keyword?.[locale as Locale] ? [post.focus_keyword[locale as Locale]] as string[] : []),
     ])].filter(Boolean) as string[],
     ...(hasNativeBody ? {} : { robots: { index: false, follow: true } }),
