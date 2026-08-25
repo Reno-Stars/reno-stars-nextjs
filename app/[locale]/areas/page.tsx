@@ -6,6 +6,8 @@ import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

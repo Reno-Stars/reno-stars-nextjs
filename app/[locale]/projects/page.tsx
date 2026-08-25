@@ -7,6 +7,8 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternate
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import { presetBySlug, presetRange } from '@/lib/budget-presets';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ service?: string; location?: string; space?: string; budget?: string; q?: string }>;

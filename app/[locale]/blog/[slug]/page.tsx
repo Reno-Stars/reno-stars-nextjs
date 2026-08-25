@@ -12,6 +12,8 @@ import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServic
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { resolveBlogDates } from '@/lib/blog-dates';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }

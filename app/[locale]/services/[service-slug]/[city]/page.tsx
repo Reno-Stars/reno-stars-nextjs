@@ -8,6 +8,8 @@ import type { ServiceType } from '@/lib/types';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getProjectsByAreaFromDb, getProjectsFromDb, getFaqsByAreaFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import ServiceLocationPage from '@/components/pages/ServiceLocationPage';
+
+export const revalidate = 3600;
 import { BreadcrumbSchema, LocalBusinessAreaSchema, ServiceSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales} from '@/lib/utils';
 import { images as siteImages } from '@/lib/data';

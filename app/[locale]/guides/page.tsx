@@ -5,6 +5,8 @@ import GuidesIndexPage from '@/components/pages/GuidesIndexPage';
 import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

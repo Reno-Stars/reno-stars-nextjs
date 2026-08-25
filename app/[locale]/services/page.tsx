@@ -8,6 +8,8 @@ import { getLocalizedService } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

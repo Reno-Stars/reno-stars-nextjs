@@ -6,6 +6,8 @@ import { ArticleSchema, BreadcrumbSchema, FAQSchema, HowToSchema } from '@/compo
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getBathroomProjectsForGuide, getCompanyFromDb } from '@/lib/db/queries';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
