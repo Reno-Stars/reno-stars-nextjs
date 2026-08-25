@@ -1,0 +1,50 @@
+-- Migration: services — seo_keywords_zh audit
+-- Date: 2026-08-24
+-- Status: NOT APPLIED — needs human to run
+-- Topic: Audit + translation gap for services.seo_keywords_zh
+-- Source: services table (slug, title_en, title_zh, show_on_services_page)
+-- Context: Only 3 of 11 services had seo_keywords_zh populated
+--         (memory §6 from 2026-08-22); this file confirms current state.
+--
+-- QUERY TO VERIFY CURRENT STATE (run against live DB):
+--   SELECT slug, title_en, title_zh, show_on_services_page,
+--          CASE WHEN seo_keywords_zh IS NOT NULL AND seo_keywords_zh != '' THEN 1 ELSE 0 END as has_zh
+--   FROM services
+--   WHERE show_on_services_page = true
+--   ORDER BY display_order;
+--
+-- RECOMMENDED TRANSLATIONS (Mandarin, human translator or AI review required):
+--   accessible-bathroom    → 无障碍浴室 / 老人浴室改造
+--   basement              → 地下室装修 / 地下室改建
+--   bathroom-renovation   → 浴室装修 / 卫生间翻新
+--   cabinet               → 厨柜翻新 / 橱柜改造
+--   commercial-renovation → 商业装修 / 商业翻新
+--   critical-load-panel   → 电箱升级 / 配电箱改造
+--   heat-pump-hvac       → 热泵安装 / 暖通系统
+--   kitchen-renovation    → 厨房装修 / 厨房翻新
+--   poly-b-replacement    → Poly-B水管更换 / 水管改造
+--   realtor              → 房屋出售前装修 / 上市前翻新
+--   whole-house-renovation → 全屋装修 / 整体翻新
+--
+-- MIGRATION (replace existing seo_keywords_zh values):
+-- UPDATE services
+-- SET seo_keywords_zh = CASE slug
+--   WHEN 'accessible-bathroom'   THEN '无障碍浴室改造,老人浴室,轮椅浴室,浴缸改装,步入式淋浴,扶手安装,浴室翻新,温哥华无障碍改造'
+--   WHEN 'basement'              THEN '地下室装修,地下室改建,地下室装修费用,法律套房,家庭影院,装修翻新,温哥华地下室'
+--   WHEN 'bathroom-renovation'   THEN '浴室装修,卫生间翻新,浴室改造,淋浴间装修,浴缸改装,洗手台更换,温哥华浴室'
+--   WHEN 'cabinet'               THEN '厨柜翻新,橱柜改造,橱柜喷漆,柜门更换,厨房翻新,温哥华橱柜'
+--   WHEN 'commercial-renovation' THEN '商业装修,办公室翻新,店铺装修,餐厅装修,诊所翻新,温哥华商业装修'
+--   WHEN 'critical-load-panel'    THEN '电箱升级,配电箱改造,200A电箱,电箱更换,EV充电线路,温哥华电箱'
+--   WHEN 'heat-pump-hvac'        THEN '热泵安装,暖通系统,空调安装,制冷制热,热泵补贴,温哥华热泵'
+--   WHEN 'kitchen-renovation'    THEN '厨房装修,厨房翻新,橱柜定制,石英台面,厨房布局,温哥华厨房'
+--   WHEN 'poly-b-replacement'   THEN 'Poly-B水管更换,PEX水管,水管改造,保险续保,温哥华水管'
+--   WHEN 'realtor'              THEN '房屋出售前装修,上市前翻新,房产翻新,经纪人装修,增值装修'
+--   WHEN 'whole-house-renovation' THEN '全屋装修,整体翻新,房屋翻新,整体改造,温哥华全屋'
+--   ELSE seo_keywords_zh
+-- END
+-- WHERE show_on_services_page = true
+--   AND slug IN ('accessible-bathroom','basement','bathroom-renovation','cabinet',
+--                 'commercial-renovation','critical-load-panel','heat-pump-hvac',
+--                 'kitchen-renovation','poly-b-replacement','realtor','whole-house-renovation');
+--
+-- NOT APPLIED — needs human review before execution.

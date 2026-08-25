@@ -43,7 +43,7 @@ UPDATE blog_posts SET excerpt_zh = '兰里是温哥华都市区最强劲的翻�
 UPDATE blog_posts SET excerpt_zh = '枫树岭提供温哥华都市区近围城市无法比拟的条件：更大的地块、更低的土地成本和各类型住宅存量。2026年枫树岭厨房翻新均价11,000-40,000加元，浴室翻新13,000-36,000加元，全屋翻新50,000-150,000+加元。' WHERE id = '32736ae2-862a-4956-ad16-cfe8d311c8e5' AND (excerpt_zh IS NULL OR excerpt_zh = '');
 
 /* New Westminster Home Renovation 2026: Costs, Permits & Neighbourhood Guide */
-UPDATE blog_posts SET excerpt_zh = '新西敏 — 不列颠哥伦比亚省原首都城市 — 提供温哥华都市区最多元的翻新市场。Queen's Park维多利亚式住宅、Fraserview区独立屋和Columbia区公寓各具特色。2026年新西敏翻新成本普遍低于温哥华市中心15-25%。' WHERE id = 'ae3b018b-2452-460c-b2be-6f0295ce201a' AND (excerpt_zh IS NULL OR excerpt_zh = '');
+UPDATE blog_posts SET excerpt_zh = '新西敏 — 不列颠哥伦比亚省原首都城市 — 提供温哥华都市区最多元的翻新市场。Queen''s Park维多利亚式住宅、Fraserview区独立屋和Columbia区公寓各具特色。2026年新西敏翻新成本普遍低于温哥华市中心15-25%。' WHERE id = 'ae3b018b-2452-460c-b2be-6f0295ce201a' AND (excerpt_zh IS NULL OR excerpt_zh = '');
 
 /* Port Moody Home Renovation 2026: Costs, Permits & Neighbourhood Guide */
 UPDATE blog_posts SET excerpt_zh = '满江埠在温哥华都市区翻新市场中占独特位置：同时是区内最宜居家社区和最受青睐房地产市场之一。Evergreen延伸线带来前所未有的可达性。2026年满江埠厨房翻新均价13,000-50,000加元，浴室翻新15,000-45,000加元。' WHERE id = 'f576d97c-86d7-4663-ba74-ff56ac49ca2a' AND (excerpt_zh IS NULL OR excerpt_zh = '');
