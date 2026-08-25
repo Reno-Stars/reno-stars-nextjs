@@ -6,37 +6,37 @@
 
 BEGIN;
 
--- before_alt_text_zh: 2 rows with English text
+-- before_alt_text_zh: 2 rows with English text (need Chinese translation)
 UPDATE project_image_pairs
 SET before_alt_text_zh =
   CASE id
     WHEN '3fd23985-91a5-47bd-bf52-b08fd93791d9'
-      THEN 'Original soaker tub with damask wallpaper and dated finishes — before renovation'
+      THEN '原始浸泡式浴缸，配有花纹壁纸和过时装饰——翻新前'
     WHEN 'aa1a98a5-46c5-4351-817a-ca82e370dd0c'
-      THEN 'Original 1990s shower with floral wallpaper and gold-framed door — before renovation'
+      THEN '90年代原始淋浴间，配有花纹壁纸和金色门框——翻新前'
   END
 WHERE id IN ('3fd23985-91a5-47bd-bf52-b08fd93791d9', 'aa1a98a5-46c5-4351-817a-ca82e370dd0c')
   AND before_alt_text_zh IS NOT NULL
   AND before_alt_text_zh !~ '[一-鿿]';
 
--- after_alt_text_zh: 7 rows with English text
+-- after_alt_text_zh: 7 rows with English text (need Chinese translation)
 UPDATE project_image_pairs
 SET after_alt_text_zh =
   CASE id
     WHEN '3fd23985-91a5-47bd-bf52-b08fd93791d9'
-      THEN 'Ornate gold-framed wall mirror over marble bathtub with plantation shutters'
+      THEN '大理石浴缸上方配华丽金色边框墙镜，配有百叶窗'
     WHEN 'aa1a98a5-46c5-4351-817a-ca82e370dd0c'
-      THEN 'Frameless glass walk-in shower with champagne gold rain head and basketweave marble mosaic floor'
+      THEN '无框玻璃步入式淋浴间，配香槟金色顶喷和篮纹大理石马赛克地板'
     WHEN '48240e67-d904-426e-8846-2be0a5fbdd3f'
-      THEN 'Walk-in shower with champagne gold fixtures and built-in marble bench'
+      THEN '步入式淋浴间，配香槟金色五金件和嵌入式大理石坐凳'
     WHEN 'e7a449ad-659f-49e3-9050-0183c0c9fdeb'
-      THEN 'Marble shower wall with backlit champagne gold trimmed niche'
+      THEN '大理石淋浴墙，背光香槟金色修边壁龛'
     WHEN '16c45fa7-8bb7-4ea2-99f5-bbe1b1e24092'
-      THEN 'Double-sink French-style vanity with arched ceiling and champagne gold faucets'
+      THEN '法式双台盆梳妆柜，配拱形天花板和香槟金色龙头'
     WHEN '9e6b9b49-0ac3-4bbe-baa6-bea86452be29'
-      THEN 'Brass sconces flanking arched mirror over double vanity in West Vancouver luxury bath'
+      THEN '黄铜壁灯配拱形镜子，温哥华西高端浴室双台盆'
     WHEN '1402cbba-2415-4435-b6ab-26aaba02830a'
-      THEN 'Champagne gold arched dressing mirror with vintage brass wall sconces'
+      THEN '香槟金色拱形穿衣镜配复古黄铜壁灯'
   END
 WHERE id IN (
   '3fd23985-91a5-47bd-bf52-b08fd93791d9',
@@ -50,20 +50,20 @@ WHERE id IN (
   AND after_alt_text_zh IS NOT NULL
   AND after_alt_text_zh !~ '[一-鿿]';
 
--- caption_zh: 5 rows with English text (same project, subset of after_alt_text_zh rows)
+-- caption_zh: 5 rows with English text (need Chinese translation, subset of after_alt_text_zh rows)
 UPDATE project_image_pairs
 SET caption_zh =
   CASE id
     WHEN '48240e67-d904-426e-8846-2be0a5fbdd3f'
-      THEN 'Walk-in shower with champagne gold fixtures and built-in marble bench'
+      THEN '步入式淋浴间，配香槟金色五金件和嵌入式大理石坐凳'
     WHEN 'e7a449ad-659f-49e3-9050-0183c0c9fdeb'
-      THEN 'Marble shower wall with backlit champagne gold trimmed niche'
+      THEN '大理石淋浴墙，背光香槟金色修边壁龛'
     WHEN '16c45fa7-8bb7-4ea2-99f5-bbe1b1e24092'
-      THEN 'Double-sink French-style vanity with arched ceiling and champagne gold faucets'
+      THEN '法式双台盆梳妆柜，配拱形天花板和香槟金色龙头'
     WHEN '9e6b9b49-0ac3-4bbe-baa6-bea86452be29'
-      THEN 'Brass sconces flanking arched mirror over double vanity in West Vancouver luxury bath'
+      THEN '黄铜壁灯配拱形镜子，温哥华西高端浴室双台盆'
     WHEN '1402cbba-2415-4435-b6ab-26aaba02830a'
-      THEN 'Champagne gold arched dressing mirror with vintage brass wall sconces'
+      THEN '香槟金色拱形穿衣镜配复古黄铜壁灯'
   END
 WHERE id IN (
   '48240e67-d904-426e-8846-2be0a5fbdd3f',
