@@ -8,6 +8,8 @@ import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, pickLocale, bu
 import { getCompanyFromDb, getServiceAreasFromDb, getPropertyTypesFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
 }

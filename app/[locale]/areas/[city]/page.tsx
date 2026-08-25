@@ -12,6 +12,8 @@ import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceA
 import { getGoogleReviews, projectReviewsToLocale } from '@/lib/google-reviews';
 import { getYearsExperience } from '@/lib/company-config';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string; city: string }>;
 }

@@ -14,6 +14,8 @@ import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getProjectsFromDb, getSiteBySlugFromDb, getServiceTypeToCategory, getCategoriesLocalized, getCategorySlugs, getServiceBlocksBySlug, getProjectReviews } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }

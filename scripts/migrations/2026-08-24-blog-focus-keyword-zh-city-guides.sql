@@ -13,13 +13,13 @@
 
 UPDATE blog_posts SET focus_keyword_zh = '温哥华厨房布局规划,厨房设计,橱柜布局,L形厨房,U形厨房,厨房岛台,温哥华厨房装修' WHERE id = '79dc1aa5-4fb6-4524-b78a-3eea035a7cd1' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
-UPDATE blog_posts SET focus_keyword_zh = '西温哥华房屋装修,西温装修,温哥华西区翻新,West Vancouver renovation' WHERE id = '27c9242e-44c6-4744-9122-59f830904950' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
+UPDATE blog_posts SET focus_keyword_zh = '西温哥华房屋装修,西温装修,温哥华西区翻新,West Vancouver home renovation' WHERE id = '27c9242e-44c6-4744-9122-59f830904950' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
 UPDATE blog_posts SET focus_keyword_zh = '白石房屋装修,白石翻新,南素里装修,White Rock home renovation' WHERE id = '5bb4fbd4-b293-4726-83a6-4bac05598775' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
 UPDATE blog_posts SET focus_keyword_zh = '素里房屋装修,素里翻新, Surrey home renovation,素里装修成本' WHERE id = 'bad6eb5a-d9f1-4e89-8754-5cc200947eb7' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
-UPDATE blog_posts SET focus_keyword_zh = '北温哥华售前装修,北温房屋装修,预售装修,North Vancouver renovation' WHERE id = 'cfdc320d-299c-4d4d-bc64-ae5c168aca11' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
+UPDATE blog_posts SET focus_keyword_zh = '北温哥华售前装修,北温翻新,北温房屋装修,预售装修,North Vancouver renovation' WHERE id = 'cfdc320d-299c-4d4d-bc64-ae5c168aca11' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 
 UPDATE blog_posts SET focus_keyword_zh = '温哥华厨房防溅板,厨房瓷砖,后挡板成本,温哥华浴室装修' WHERE id = '2c6568be-21d7-4b07-a395-ace1965fb28e' AND is_published = true AND (focus_keyword_zh IS NULL OR focus_keyword_zh = '');
 

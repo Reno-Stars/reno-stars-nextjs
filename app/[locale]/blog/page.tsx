@@ -7,6 +7,8 @@ import { BreadcrumbSchema, BlogSchema, ItemListSchema, FAQSchema } from '@/compo
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getBlogPostsPaginatedFromDb, getBlogPostsFromDb, BLOG_POSTS_PER_PAGE } from '@/lib/db/queries';
 
+export const revalidate = 3600;
+
 interface PageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ page?: string }>;

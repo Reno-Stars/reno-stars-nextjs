@@ -60,3 +60,8 @@ export function generateStaticParams() { ... }
 
 ## Expected Result
 After this change, all public pages will be cached for 1 hour (ISR). Combined with `generateStaticParams`, pages will be pre-rendered at build time and only revalidate once per hour. This should reduce Neon network transfer from ~5 GB/6 days to essentially zero for normal traffic.
+
+## Status: DONE (2026-08-25)
+
+All 17 existing pages updated — see `seo/daily-2026-08-25b` on GitHub.
+Note: `benefits` and `process` pages do not exist in this app version; `guides/bathroom-renovation-cost-vancouver` and `guides/kitchen-renovation-cost-vancouver` were added as bonus (not in original list). Node.js/pnpm unavailable in runtime — build not verified; manual review recommended before merge.
