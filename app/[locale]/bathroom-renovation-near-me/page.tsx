@@ -47,6 +47,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     // /renovation-near-me/ stays self-canonical. See kitchen page for rationale.
     alternates: { canonical: buildAlternates(CANONICAL_PATH, locale).canonical },
     openGraph: { title, description, url: `${baseUrl}/${locale}/bathroom-renovation-near-me/`, siteName: SITE_NAME, locale: ogLocaleMap[locale as Locale], type: 'website', images: [{ url: ogImage, width: 1200, height: 630, alt: title }] },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [{ url: ogImage, alt: title }],
+    },
   };
 }
 
