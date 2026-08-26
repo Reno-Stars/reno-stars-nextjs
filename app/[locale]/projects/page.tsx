@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/struct
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import { presetBySlug, presetRange } from '@/lib/budget-presets';
+import { slimProjectForListing, slimSiteForListing } from '@/lib/data/listing-payload';
 import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
@@ -121,6 +122,13 @@ export default async function Page({ params, searchParams }: PageProps) {
     image: p.hero_image || p.images?.[0]?.src,
   }));
 
+  // <ProjectsPage> is a client component: every prop crosses into the RSC
+  // flight payload. Ship the listing view of these rows, not the editorial one.
+  // See lib/data/listing-payload.ts — this was 1.30 MB of props on /en/.
+  // ItemListSchema above is a server component and keeps the full rows.
+  const clientProjects = projects.map((p) => slimProjectForListing(p, loc));
+  const clientSites = sitesAsProjects.map((s) => slimSiteForListing(s, loc));
+
   return (
     <ClientMessages ns={['areas', 'category', 'cta', 'lightbox', 'modal', 'projects', 'wholeHouse']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
@@ -130,7 +138,7 @@ export default async function Page({ params, searchParams }: PageProps) {
         name={`${company.name} — Renovation Projects`}
         description={`${itemListItems.length} completed renovation projects across Metro Vancouver — kitchens, bathrooms, basements and whole-house remodels.`}
       />
-      <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} initialService={initialService} initialLocation={initialLocation} initialSpaceType={initialSpaceType} initialBudget={initialBudget} initialQuery={initialQuery} />
+      <ProjectsPage locale={locale as Locale} company={company} projects={clientProjects} sitesAsProjects={clientSites} categories={categories} initialService={initialService} initialLocation={initialLocation} initialSpaceType={initialSpaceType} initialBudget={initialBudget} initialQuery={initialQuery} />
     </ClientMessages>
   );
 }

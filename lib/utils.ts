@@ -75,6 +75,102 @@ export function minimalLocalized<T>(field: Localized<T>, locale: Locale): Locali
   return { en: field.en, [locale]: pickLocale(field, locale) } as Localized<T>;
 }
 
+/** Locale codes, as a Set, for the structural Localized<T> test below. */
+const LOCALE_KEYS: ReadonlySet<string> = new Set<string>(locales);
+
+/**
+ * Structural test for a `Localized<T>`: a plain object that has `en` and whose
+ * keys are ALL locale codes. Anything with a non-locale key (a Project, an
+ * ImagePair, a dynamic block) fails and is recursed into instead.
+ */
+function isLocalizedField(value: object): boolean {
+  if (!('en' in value)) return false;
+  for (const key of Object.keys(value)) {
+    if (!LOCALE_KEYS.has(key)) return false;
+  }
+  return true;
+}
+
+/**
+ * Collapses a `Localized<T>` to the keys this locale can possibly read, WITHOUT
+ * changing which keys are present: `en`, the locale itself, and its fallback
+ * chain — each copied only if the source actually had it.
+ *
+ * This is the difference from `minimalLocalized`, and it is load-bearing.
+ * `minimalLocalized` writes `{ [locale]: pickLocale(field, locale) }`, which
+ * BAKES the fallback into the locale key — a field that had no `ar` comes back
+ * with `ar` set to the English text. That is invisible to a `pickLocale` reader
+ * and a visible regression to anything that indexes the field directly. Two
+ * such readers exist today, both in ProjectsPage's space-type filter:
+ * `matchProject?.space_type?.[locale] ?? matchSite?.space_type?.[locale] ?? st`.
+ * Baking the fallback made that first `??` stop falling through, which silently
+ * swapped the /ar/ dropdown labels from Arabic to English and the /zh-Hant/ ones
+ * from English to Simplified.
+ *
+ * Copying keys verbatim keeps `pickLocale`, `pickLocaleOptional`, `field.en` and
+ * `field[locale]` all byte-identical to the full field.
+ */
+function exactMinimalLocalized<T>(field: Localized<T>, locale: Locale): Localized<T> {
+  const out: Record<string, unknown> = { en: field.en };
+  if (locale !== 'en') {
+    const src = field as Record<string, unknown>;
+    for (const key of [locale, ...(LOCALE_FALLBACKS[locale] ?? [])]) {
+      if (src[key] !== undefined) out[key] = src[key];
+    }
+  }
+  return out as Localized<T>;
+}
+
+/**
+ * Deep, key-exact form of `minimalLocalized`: walks a plain-JSON value and
+ * collapses EVERY nested `Localized<T>` down to the locales this render can
+ * read, leaving the surrounding structure identical.
+ *
+ * Why this and not a hand-written per-type slimmer: the rich rows (Project,
+ * SiteWithProjects) nest localized fields several levels down — `image_pairs[]
+ * .beforeImage.alt`, `aggregated.allExternalProducts[].label`, `dynamic_blocks`
+ * — and every one of those is up to 14 locales wide. A client component
+ * receiving the row serializes ALL of it into the RSC flight payload (see the
+ * layout comment on `minimalLocalized`); on /projects/ that was ~1.3 MB per
+ * request, and on /services/ 2.27 MB.
+ *
+ * Dates are returned as-is: `Object.keys(new Date())` is empty, so a naive
+ * rebuild would flatten them to `{}`.
+ */
+export function deepMinimalLocalized<T>(value: T, locale: Locale): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => deepMinimalLocalized(item, locale)) as unknown as T;
+  }
+  if (value === null || typeof value !== 'object' || value instanceof Date) return value;
+  const obj = value as Record<string, unknown>;
+  if (isLocalizedField(obj)) {
+    return exactMinimalLocalized(obj as Localized<unknown>, locale) as unknown as T;
+  }
+  const out: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    out[key] = deepMinimalLocalized(obj[key], locale);
+  }
+  return out as unknown as T;
+}
+
+/**
+ * `deepMinimalLocalized` plus an omit list — for fields a client component
+ * provably never reads. Dropping beats collapsing for the multi-paragraph ones
+ * (`ServiceArea.content`, `Service.long_description`, `Project.excerpt`): they
+ * are optional on their interfaces, and every reader goes through
+ * `pickLocaleOptional`, which returns `undefined` for a missing field exactly as
+ * it did before for a field the component never rendered.
+ */
+export function slimForClient<T extends object>(
+  row: T,
+  locale: Locale,
+  omit: ReadonlyArray<keyof T>,
+): T {
+  const out = deepMinimalLocalized(row, locale) as Record<string, unknown>;
+  for (const key of omit) delete out[key as string];
+  return out as T;
+}
+
 /**
  * Returns true when a Localized<string> field has genuine content for the
  * requested locale (or for `en`/`zh`, which always do — they're the source

@@ -5,7 +5,7 @@ import { ogLocaleMap, type Locale } from '@/i18n/config';
 import { getLocalizedArea } from '@/lib/data/areas';
 import AreaPage from '@/components/pages/AreaPage';
 import { BreadcrumbSchema, LocalBusinessAreaSchema, FAQSchema } from '@/components/structured-data';
-import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized } from '@/lib/utils';
+import { getBaseUrl, buildAlternates, SITE_NAME, pickLocale, buildAlternateLocales, minimalLocalized, slimForClient, deepMinimalLocalized } from '@/lib/utils';
 import { getLocalizedService } from '@/lib/data/services';
 import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb, getServiceAreaBySlugFromDb, getFaqsByAreaFromDb, getProjectsByAreaFromDb, getReviewsByCityFromDb } from '@/lib/db/queries';
@@ -430,6 +430,20 @@ export default async function Page({ params }: PageProps) {
   // passes to buildAlternates above) rather than rebuilt, so the two cannot
   // drift apart when a routing rule changes. Title/image come from the same
   // sources the OG card uses, so a shared link previews as the OG card does.
+  // Same client-boundary trap as `slimArea` above, for the three remaining fat
+  // props. Measured on /en/areas/burnaby/: areaProjects 179 KB, services 82 KB
+  // (74 KB of it `long_description`, which this page never renders — it shows
+  // title + description on the service cards), faqs 68 KB (all 14 locales of
+  // every Q&A, of which one locale is displayed).
+  //
+  // `localizedFaqs` above and `FAQSchema` keep the unslimmed `areaFaqs`; both
+  // run on the server.
+  const clientServices = localizedServices.map((s) => slimForClient(s, loc, ['long_description', 'benefits']));
+  const clientFaqs = areaFaqs.map((faq) => deepMinimalLocalized(faq, loc));
+  const clientAreaProjects = areaProjects.map((p) =>
+    slimForClient(p, loc, ['excerpt', 'project_story', 'meta_title', 'meta_description', 'focus_keyword', 'seo_keywords']),
+  );
+
   const shareUrl = buildAlternates(`/areas/${city}/`, locale).canonical;
   const { title: shareTitle } = await resolveAreaMeta(localizedArea, city, locale);
 
@@ -451,9 +465,9 @@ export default async function Page({ params }: PageProps) {
         area={slimArea}
         allAreas={slimAllAreas}
         company={company}
-        services={localizedServices}
-        faqs={areaFaqs}
-        areaProjects={areaProjects}
+        services={clientServices}
+        faqs={clientFaqs}
+        areaProjects={clientAreaProjects}
         introOverride={getAreaIntroOverride(city, locale as Locale)}
         h1Override={getAreaH1Override(city, locale as Locale)}
         googleReviews={projectReviewsToLocale(googleReviews, locale)}
