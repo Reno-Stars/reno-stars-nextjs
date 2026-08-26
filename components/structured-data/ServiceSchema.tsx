@@ -113,26 +113,35 @@ export default function ServiceSchema({
     };
   }
 
+  // hasOfferCatalog carries the structured price specs. LocalBusiness already
+  // carries the informal priceRange: '$$' on every page — Service should emit
+  // one or the other, not both (Google prefers informal and discards the specs).
+  // Guard minPrice/maxPrice with Number() so callers passing string values
+  // ("$75,000", "150000") don't emit non-numeric structured data.
   if (priceRange) {
-    schema.hasOfferCatalog = {
-      '@type': 'OfferCatalog',
-      name: `${serviceName} Services`,
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: location ? `${serviceName} in ${location}` : serviceName,
+    const min = Number(priceRange.min);
+    const max = Number(priceRange.max);
+    if (!isNaN(min) && !isNaN(max) && max >= min) {
+      schema.hasOfferCatalog = {
+        '@type': 'OfferCatalog',
+        name: `${serviceName} Services`,
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: location ? `${serviceName} in ${location}` : serviceName,
+            },
+            priceSpecification: {
+              '@type': 'PriceSpecification',
+              priceCurrency: 'CAD',
+              minPrice: min,
+              maxPrice: max,
+            },
           },
-          priceSpecification: {
-            '@type': 'PriceSpecification',
-            priceCurrency: 'CAD',
-            minPrice: priceRange.min,
-            maxPrice: priceRange.max,
-          },
-        },
-      ],
-    };
+        ],
+      };
+    }
   }
 
   return (

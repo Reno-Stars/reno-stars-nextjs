@@ -1,0 +1,30 @@
+slug: dental-clinic-renovation-burnaby-1-week-2026
+titleEn: "Dental Clinic Renovation in Burnaby: A 1-Week Rush Project Breakdown"
+titleZh: "本拿比牙科诊所翻新：7天赶工项目全记录"
+featuredImageUrl: "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/dental-clinic-renovation-burnaby-hero-reception-mmwy4847.jpg"
+excerptEn: "A Burnaby dental clinic needed a full commercial renovation in just seven days. Reno Stars delivered: reception, exam rooms, staff kitchenette, and admin workspace — on schedule."
+excerptZh: "白石一家牙科诊所需要在七天内完成全面商业翻新。Reno Stars 如期交付：接待区、诊疗室、员工休息室和行政工作区。"
+metaTitleEn: "Dental Clinic Renovation in Burnaby: A 1-Week Rush Project Breakdown"
+metaTitleZh: "白石牙科诊所翻新：7天赶工项目全记录"
+metaDescriptionEn: "A Burnaby dental clinic completed a full commercial renovation in 7 days. See how Reno Stars compressed a 4–6 week build into one week — scope, schedule, and cost breakdown."
+metaDescriptionZh: "白石牙科诊所如何在7天内完成全面商业翻新。了解Reno Stars如何将4-6周的工程压缩到一周——范围、时间表和费用明细。"
+focusKeywordEn: "dental clinic renovation burnaby"
+focusKeywordZh: "白石牙科诊所翻新"
+readingTimeMinutes: 8
+
+projectSlug: dental-cllinic-renovation-burnaby
+projectUrl: "/en/projects/dental-clinic-renovation-burnaby/"
+
+inlineImages:
+  - before: "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/dental-clinic-renovation-burnaby-kitchenette-before-mmwy4847.jpg"
+    alt: "Dental clinic staff kitchenette before renovation: mint-green laminate cabinets, dated brown countertop"
+  - after: "https://pub-b88db8c50fd64a9a87f60a4486a4a488.r2.dev/uploads/admin/dental-clinic-renovation-burnaby-kitchenette-after-mmwy4847.jpg"
+    alt: "Staff kitchenette after renovation: full-wall white shaker cabinets, quartz countertop, gold hardware"
+
+sources:
+  - "Real project: dental-clinic-renovation-burnaby (id: 70047904-0a5b-4cfa-8b3e-e2afe4a04114)"
+  - "Budget: not disclosed at client request"
+  - "Timeline: 1 week (repeat client)"
+  - "4 zones: reception, kitchenette, 3 exam rooms, admin workspace"
+  - "Solutions: pre-fabrication, parallel trades, single crew"
+  - "City of Burnaby Building: 604-294-7130"
