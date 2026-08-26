@@ -61,7 +61,7 @@ export async function loginAction(
     return { error: 'Too many login attempts. Please try again later.' };
   }
 
-  if (!verifyPassword(password)) {
+  if (!(await verifyPassword(password))) {
     return { error: 'Invalid password.' };
   }
 

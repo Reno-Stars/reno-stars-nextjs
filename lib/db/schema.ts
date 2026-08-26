@@ -829,6 +829,40 @@ export const companyInfo = pgTable('company_info', {
 
 
 // ============================================================================
+// ADMIN CREDENTIALS
+// ============================================================================
+
+/**
+ * The /admin sign-in credential, as a hash. Single row, enforced by the
+ * `id = 1` CHECK.
+ *
+ * WHY THE DATABASE AND NOT AN ENV VAR. Until 2026-08-25 the password was
+ * `process.env.ADMIN_PASSWORD`. When the site moved onto the k3s fleet the
+ * variable did not come with it, /admin became impossible to sign into, and
+ * putting it back was not ours to do: the value is delivered by an
+ * ExternalSecret held in the platform's operator-config, and the client
+ * deploy identity is denied `secrets` by design
+ * (k8s/clients/reno-stars-cd/00-rbac.yaml). Ten days of a dead admin panel
+ * waiting on someone else's one-line change.
+ *
+ * DATABASE_URL is already delivered, so the credential now lives where we can
+ * actually reach it. Rotation is a row UPDATE — `pnpm admin:password` — not a
+ * secrets-pipeline round trip.
+ *
+ * NEVER store a plaintext password here. `password_hash` is the encoded scrypt
+ * string produced by lib/admin/password-hash.ts.
+ */
+export const adminCredentials = pgTable(
+  'admin_credentials',
+  {
+    id: integer('id').primaryKey(),
+    passwordHash: text('password_hash').notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [check('admin_credentials_singleton', sql`${table.id} = 1`)],
+);
+
+// ============================================================================
 // TRUST BADGES
 // ============================================================================
 

@@ -19,6 +19,22 @@ vi.mock('next/navigation', () => ({
   redirect: (url: string) => mockRedirect(url),
 }));
 
+// This suite covers the LOCAL-DEV path: no admin_credentials row, so the
+// module falls back to process.env.ADMIN_PASSWORD. The DB-backed path — which
+// is what production uses — is covered in auth-db-credential.test.ts.
+const mockRows: Array<{ passwordHash: string }> = [];
+vi.mock('@/lib/db', () => ({
+  db: {
+    select: () => ({
+      from: () => ({
+        where: () => ({
+          limit: () => Promise.resolve(mockRows),
+        }),
+      }),
+    }),
+  },
+}));
+
 describe('lib/admin/auth', () => {
   const TEST_PASSWORD = 'test-admin-password-123';
 
@@ -58,75 +74,81 @@ describe('lib/admin/auth', () => {
   describe('verifyPassword', () => {
     it('should return true for correct password', async () => {
       const { verifyPassword } = await loadAuth();
-      expect(verifyPassword(TEST_PASSWORD)).toBe(true);
+      expect(await verifyPassword(TEST_PASSWORD)).toBe(true);
     });
 
     it('should return false for incorrect password', async () => {
       const { verifyPassword } = await loadAuth();
-      expect(verifyPassword('wrong-password')).toBe(false);
+      expect(await verifyPassword('wrong-password')).toBe(false);
     });
 
     it('should return false for empty string', async () => {
       const { verifyPassword } = await loadAuth();
-      expect(verifyPassword('')).toBe(false);
+      expect(await verifyPassword('')).toBe(false);
     });
 
     it('should return false for similar but not identical password', async () => {
       const { verifyPassword } = await loadAuth();
-      expect(verifyPassword(TEST_PASSWORD + ' ')).toBe(false);
+      expect(await verifyPassword(TEST_PASSWORD + ' ')).toBe(false);
     });
 
-    it('should throw when ADMIN_PASSWORD env var is missing', async () => {
+    // DELIBERATE BEHAVIOUR CHANGE. This used to assert a THROW, and that throw
+    // is what took /admin down for ten days after the k3s migration: the login
+    // server action called it, nothing caught it, and the error boundary
+    // rendered a generic "Server Components render" card. A missing credential
+    // is now a refused login, which is what a login form is supposed to do
+    // with a credential it cannot verify.
+    it('refuses the login — never throws — when no credential is configured anywhere', async () => {
       delete process.env.ADMIN_PASSWORD;
       const { verifyPassword } = await loadAuth();
-      expect(() => verifyPassword('anything')).toThrow('ADMIN_PASSWORD environment variable is required');
+      await expect(verifyPassword('anything')).resolves.toBe(false);
     });
   });
 
   describe('verifyToken', () => {
     it('should verify a valid fresh token', async () => {
       const { verifyToken } = await loadAuth();
-      expect(verifyToken(generateValidToken())).toBe(true);
+      expect(await verifyToken(generateValidToken())).toBe(true);
     });
 
     it('should reject expired tokens (>24h old)', async () => {
       const { verifyToken } = await loadAuth();
       const expiredTimestamp = Math.floor(Date.now() / 1000) - (25 * 60 * 60);
-      expect(verifyToken(generateValidToken(expiredTimestamp))).toBe(false);
+      expect(await verifyToken(generateValidToken(expiredTimestamp))).toBe(false);
     });
 
     it('should reject tokens with invalid HMAC', async () => {
       const { verifyToken } = await loadAuth();
       const timestamp = Math.floor(Date.now() / 1000);
       const token = `${timestamp}.invalid-hmac-signature`;
-      expect(verifyToken(token)).toBe(false);
+      expect(await verifyToken(token)).toBe(false);
     });
 
     it('should reject tokens without a dot separator', async () => {
       const { verifyToken } = await loadAuth();
-      expect(verifyToken('nodothere')).toBe(false);
+      expect(await verifyToken('nodothere')).toBe(false);
     });
 
     it('should reject tokens with multiple dots', async () => {
       const { verifyToken } = await loadAuth();
-      expect(verifyToken('a.b.c')).toBe(false);
+      expect(await verifyToken('a.b.c')).toBe(false);
     });
 
     it('should reject tokens with non-numeric timestamp', async () => {
       const { verifyToken } = await loadAuth();
-      expect(verifyToken('notanumber.somehash')).toBe(false);
+      expect(await verifyToken('notanumber.somehash')).toBe(false);
     });
 
     it('should reject empty string', async () => {
       const { verifyToken } = await loadAuth();
-      expect(verifyToken('')).toBe(false);
+      expect(await verifyToken('')).toBe(false);
     });
 
     it('should reject tokens with wrong length HMAC (length mismatch)', async () => {
       const { verifyToken } = await loadAuth();
       const timestamp = Math.floor(Date.now() / 1000);
       // Short HMAC — will fail length check before timingSafeEqual
-      expect(verifyToken(`${timestamp}.abc`)).toBe(false);
+      expect(await verifyToken(`${timestamp}.abc`)).toBe(false);
     });
   });
 
