@@ -34,11 +34,20 @@
       "steps": {
         "s1": "On signing",
         "s2": "At start of construction",
-        "s3": "On completion of key phases",
-        "s4": "On final acceptance"
+        "s3": "At the first build milestone",
+        "s4": "At the second build milestone",
+        "s5": "After the final walkthrough"
       },
-      "note": "The stages that apply to your project, and the amount attached to each one, are set out in your contract — so you can see what triggers every payment before you sign anything.",
-      "methods": "We accept e-transfer, certified cheque and credit card."
+      "note": "The five-stage schedule below is the one we use most often. The stages that apply to your project, and the trigger for each, are named in your contract — so you can see what releases every payment before you sign.",
+      "methods": "We accept e-transfer, certified cheque and credit card.",
+      "percentages": {
+        "s1": "10",
+        "s2": "40",
+        "s3": "25",
+        "s4": "20",
+        "s5": "5"
+      },
+      "commonLabel": "Most common schedule"
     },
     "getting": {
       "title": "How to get your number",
