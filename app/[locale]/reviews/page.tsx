@@ -7,6 +7,7 @@ import type { HubCityGroupDisplay, HubDisplayReview } from "@/components/pages/R
 import type { HubTypeGroupDisplay } from "@/components/pages/ReviewsTypeGroups";
 import { BreadcrumbSchema, FAQSchema } from "@/components/structured-data";
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
+import ClientMessages from '@/components/ClientMessages';
 import { getCompanyFromDb, getHubProjectReviews, getTestimonialsForHub, getServiceAreasFromDb, getServicesFromDb } from "@/lib/db/queries";
 import { getGoogleReviews, projectReviewsToLocale } from "@/lib/google-reviews";
 import { buildReviewsHub, type HubReview, type ReviewsHub } from "@/lib/reviews-hub";
@@ -163,7 +164,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'reviewsPage']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ReviewsPage
@@ -174,7 +175,7 @@ export default async function Page({ params }: PageProps) {
         cityGroups={cityGroups}
         typeGroups={typeGroups}
       />
-    </>
+    </ClientMessages>
   );
 }
 

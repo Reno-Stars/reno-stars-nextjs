@@ -11,6 +11,7 @@ import { images as siteImages } from '@/lib/data';
 import { getCompanyFromDb, getBlogPostBySlugFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
 import { getGoogleReviews } from '@/lib/google-reviews';
 import { resolveBlogDates } from '@/lib/blog-dates';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -225,7 +226,7 @@ export default async function Page({ params }: PageProps) {
   const shareUrl = buildAlternates(`/blog/${slug}/`, locale).canonical;
 
   return (
-    <>
+    <ClientMessages ns={['blog', 'costGuidesSection', 'cta', 'projects', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {faqs.length > 0 && <FAQSchema faqs={faqs} locale={locale} />}
       <ArticleSchema
@@ -264,6 +265,6 @@ export default async function Page({ params }: PageProps) {
         reviewCount={googleReviews.userRatingCount}
         share={{ url: shareUrl, title: localizedPost.title, imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

@@ -5,6 +5,7 @@ import ShowroomPage from '@/components/pages/ShowroomPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -100,7 +101,7 @@ export default async function Page({ params }: PageProps) {
   const shareImage = buildOgImageUrl(mt('title'), mt('description'));
 
   return (
-    <>
+    <ClientMessages ns={['share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ShowroomPage
@@ -111,6 +112,6 @@ export default async function Page({ params }: PageProps) {
         translations={translations}
         share={{ url: shareUrl, title: mt('title'), imageUrl: shareImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

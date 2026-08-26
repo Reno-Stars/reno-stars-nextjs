@@ -20,6 +20,7 @@ interface PageProps {
 // FULLY DYNAMIC — see /services/{svc}/page.tsx for full root-cause
 // notes. Same Next 16 prerender-shell regression; same workaround.
 import { serviceCityOverrides } from '@/lib/data/seo-overrides';
+import ClientMessages from '@/components/ClientMessages';
 
 export const dynamic = 'force-dynamic';
 
@@ -226,7 +227,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = service.image || siteImages.hero;
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'cta', 'lightbox', 'locationBenefits', 'modal', 'projects', 'share', 'wholeHouse']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* 2026-06-26: LocalBusiness schema — on-page scan P7 finding: all service+city
           sub-pages were missing LocalBusiness schema (only Service + BreadcrumbList
@@ -274,6 +275,6 @@ export default async function Page({ params }: PageProps) {
         projectPool={projectPool}
         share={{ url: shareUrl, title: shareTitle, imageUrl: ogImage }}
       />
-    </>
+    </ClientMessages>
   );
 }

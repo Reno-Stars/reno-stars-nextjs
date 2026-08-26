@@ -46,15 +46,22 @@ const GTX = 'https://translate.googleapis.com/translate_a/single';
 async function gtx(text, target) {
   if (!text || !text.trim()) return text;
   const params = new URLSearchParams({ client: 'gtx', sl: 'en', tl: target, dt: 't', q: text });
-  for (let attempt = 0; attempt < 3; attempt++) {
+  // gtx is Google's free, unauthenticated endpoint: it rate-limits by IP and
+  // answers 429 without a Retry-After. Three attempts at 1s/2s was not enough —
+  // a routine 52-key fill died on the first locale (2026-08-26). Exponential
+  // backoff with jitter, and a longer ceiling, rides the throttle out instead
+  // of failing the whole run and leaving locales half-filled.
+  const ATTEMPTS = 6;
+  for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
     try {
       const r = await fetch(`${GTX}?${params}`, { headers: { 'User-Agent': 'Mozilla/5.0' } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const data = await r.json();
       return data[0].map(seg => seg[0]).filter(Boolean).join('');
     } catch (e) {
-      if (attempt === 2) throw e;
-      await new Promise(res => setTimeout(res, 1000 * (attempt + 1)));
+      if (attempt === ATTEMPTS - 1) throw e;
+      const backoff = Math.min(2 ** attempt * 1500, 45000) + Math.random() * 750;
+      await new Promise(res => setTimeout(res, backoff));
     }
   }
 }

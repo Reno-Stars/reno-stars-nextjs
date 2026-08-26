@@ -6,6 +6,7 @@ import { BreadcrumbSchema, FAQSchema, ItemListSchema } from '@/components/struct
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales, pickLocale } from '@/lib/utils';
 import { getCompanyFromDb, getProjectsListFromDb, getSitesAsProjectsFromDb, getCategoriesLocalized } from '@/lib/db/queries';
 import { presetBySlug, presetRange } from '@/lib/budget-presets';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -121,7 +122,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   }));
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'category', 'cta', 'lightbox', 'modal', 'projects', 'wholeHouse']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ItemListSchema
@@ -130,6 +131,6 @@ export default async function Page({ params, searchParams }: PageProps) {
         description={`${itemListItems.length} completed renovation projects across Metro Vancouver — kitchens, bathrooms, basements and whole-house remodels.`}
       />
       <ProjectsPage locale={locale as Locale} company={company} projects={projects} sitesAsProjects={sitesAsProjects} categories={categories} initialService={initialService} initialLocation={initialLocation} initialSpaceType={initialSpaceType} initialBudget={initialBudget} initialQuery={initialQuery} />
-    </>
+    </ClientMessages>
   );
 }

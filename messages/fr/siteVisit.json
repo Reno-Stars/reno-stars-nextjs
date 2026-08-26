@@ -100,43 +100,43 @@
           "id": "amiante",
           "label": "Bâtiment d’avant 1990 – signaler les tests d’amiante",
           "hint": "WorkSafeBC exige une enquête sur les matières dangereuses avant la démolition. Ne promettez pas de prix sans cela. Les plafonds en pop-corn, les carreaux de sol en vinyle, la boue pour cloisons sèches et les enveloppes de tuyaux sont les suspects habituels.",
-          "severity": "bloqueur"
+          "severity": "blocker"
         },
         {
           "id": "plomberieType",
           "label": "Tuyauterie d'évacuation et d'alimentation existante – ABS, cuivre, PEX, fonte ou galvanisée",
           "hint": "Regardez sous l’évier et toutes les pistes exposées du sous-sol. En fonte ou galvanisé, le coût du déménagement n'est pas standard.",
-          "severity": "haut"
+          "severity": "high"
         },
         {
           "id": "Dommages à l'eau",
           "label": "Signes de dégâts d’eau actifs ou passés",
           "hint": "Sol mou au niveau des toilettes ou de la baignoire, taches sur le plafond en dessous, odeur de moisi, carrelage qui soulève. Photographiez-le et notez-le par écrit – cela nous protège tous les deux.",
-          "severity": "haut"
+          "severity": "high"
         },
         {
           "id": "moule",
           "label": "Moisissure visible",
           "hint": "Derrière les toilettes, au bord de la baignoire, sous le lavabo. La remédiation est une portée distincte.",
-          "severity": "haut"
+          "severity": "high"
         },
         {
           "id": "sous-plancher",
           "label": "Type et état du sous-plancher et niveau du sol",
           "hint": "Contreplaqué ou dalle de béton. Vérifiez le niveau avec un niveau de 4 pieds dans deux directions – un sol hors de niveau signifie un auto-nivellement avant le carrelage.",
-          "severity": "haut"
+          "severity": "high"
         },
         {
           "id": "porteur",
           "label": "Tout mur ouvert ou retiré est-il porteur ?",
           "hint": "En cas de doute, il faut une lettre d'ingénieur. Notez la direction des solives ci-dessus.",
-          "severity": "bloqueur"
+          "severity": "blocker"
         },
         {
           "id": "permis",
           "label": "Cette portée déclenche-t-elle un permis ?",
           "hint": "Déplacement de plomberie ou de gaz, changements structurels, nouveaux circuits ou changement d'utilisation de la pièce. Confirmez la municipalité : Vancouver, Burnaby, Richmond et Surrey diffèrent toutes.",
-          "severity": "bloqueur"
+          "severity": "blocker"
         },
         {
           "id": "popcornPrésent",
@@ -693,7 +693,7 @@
     "ui": {
       "addon": "Ajouter sur",
       "replacement": "Changement",
-      "blocker": "Arrêter - résoudre avant de citer",
+      "blocker": "Arrêter — à résoudre avant de chiffrer",
       "high": "Affecte considérablement le prix"
     },
     "names": {
