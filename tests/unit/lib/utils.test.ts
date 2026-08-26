@@ -23,6 +23,8 @@ import {
   deepClone,
   pickLocale,
   minimalLocalized,
+  deepMinimalLocalized,
+  slimForClient,
 } from '@/lib/utils';
 import type { Localized } from '@/lib/types';
 
@@ -55,6 +57,110 @@ describe('minimalLocalized', () => {
     const noHant: Localized<string> = { en: 'Bath', zh: '浴室' };
     // pickLocale('zh-Hant') falls back to zh; the slim copy stores that under zh-Hant
     expect(pickLocale(minimalLocalized(noHant, 'zh-Hant'), 'zh-Hant')).toBe('浴室');
+  });
+});
+
+describe('deepMinimalLocalized', () => {
+  const row = {
+    slug: 'burnaby-kitchen',
+    hero_image: 'https://cdn/x.webp',
+    title: { en: 'Kitchen', zh: '厨房', fr: 'Cuisine' } as Localized<string>,
+    service_scope: { en: ['Demo', 'Tile'], zh: ['拆除', '瓷砖'] } as Localized<string[]>,
+    published_at: new Date('2026-01-02T03:04:05.000Z'),
+    image_pairs: [
+      { beforeImage: { src: 'b.webp', alt: { en: 'Before', fr: 'Avant' } as Localized<string> } },
+    ],
+    external_products: [{ url: 'u', label: { en: 'Tile', fr: 'Carreau' } as Localized<string> }],
+  };
+
+  it('does NOT bake a fallback into an absent locale key', () => {
+    // The regression this guards: ProjectsPage reads `space_type?.[locale]`
+    // directly and relies on `undefined` to fall through to the next candidate.
+    // minimalLocalized would set ar: 'Townhouse'; the deep form must not.
+    const spaceType = { en: 'Townhouse', zh: '联排别墅' } as Localized<string>;
+    const slim = deepMinimalLocalized({ space_type: spaceType }, 'ar');
+    expect(slim.space_type.ar).toBeUndefined();
+    expect('ar' in slim.space_type).toBe(false);
+    expect(pickLocale(slim.space_type, 'ar')).toBe('Townhouse');
+  });
+
+  it('keeps the zh-Hant fallback chain so zh survives the collapse', () => {
+    const spaceType = { en: 'Commercial', zh: '商业', ja: '商業' } as Localized<string>;
+    const slim = deepMinimalLocalized({ space_type: spaceType }, 'zh-Hant');
+    // zh-Hant was absent and stays absent (direct-index readers see undefined)
+    expect(slim.space_type['zh-Hant']).toBeUndefined();
+    // ...but zh is retained, so pickLocale still resolves through the chain
+    expect(slim.space_type.zh).toBe('商业');
+    expect(pickLocale(slim.space_type, 'zh-Hant')).toBe(pickLocale(spaceType, 'zh-Hant'));
+    expect(slim.space_type.ja).toBeUndefined();
+  });
+
+  it('agrees with the full field on direct index for every locale', () => {
+    const field = { en: 'Home', zh: '住宅', ar: 'منزل' } as Localized<string>;
+    for (const loc of ['en', 'zh', 'zh-Hant', 'ar', 'fr', 'ja'] as const) {
+      const slim = deepMinimalLocalized({ f: field }, loc);
+      expect(slim.f[loc]).toBe(field[loc]);
+      expect(pickLocale(slim.f, loc)).toBe(pickLocale(field, loc));
+    }
+  });
+
+  it('collapses nested localized fields at every depth', () => {
+    const slim = deepMinimalLocalized(row, 'fr');
+    expect(slim.title).toEqual({ en: 'Kitchen', fr: 'Cuisine' });
+    expect(slim.image_pairs[0].beforeImage.alt).toEqual({ en: 'Before', fr: 'Avant' });
+    expect(slim.external_products[0].label).toEqual({ en: 'Tile', fr: 'Carreau' });
+  });
+
+  it('collapses a Localized<string[]> as one unit', () => {
+    const slim = deepMinimalLocalized(row, 'zh');
+    expect(slim.service_scope).toEqual({ en: ['Demo', 'Tile'], zh: ['拆除', '瓷砖'] });
+  });
+
+  it('leaves scalars, ids and image URLs untouched', () => {
+    const slim = deepMinimalLocalized(row, 'ja');
+    expect(slim.slug).toBe('burnaby-kitchen');
+    expect(slim.hero_image).toBe('https://cdn/x.webp');
+  });
+
+  it('does not flatten Date values to {}', () => {
+    const slim = deepMinimalLocalized(row, 'ja');
+    expect(slim.published_at).toBeInstanceOf(Date);
+    expect(slim.published_at.toISOString()).toBe('2026-01-02T03:04:05.000Z');
+  });
+
+  it('renders identically to the full row through pickLocale', () => {
+    for (const loc of ['en', 'zh', 'zh-Hant', 'fr', 'ja', 'ko'] as const) {
+      const slim = deepMinimalLocalized(row, loc);
+      expect(pickLocale(slim.title, loc)).toBe(pickLocale(row.title, loc));
+      expect(pickLocale(slim.image_pairs[0].beforeImage.alt, loc))
+        .toBe(pickLocale(row.image_pairs[0].beforeImage.alt, loc));
+      expect(pickLocale(slim.service_scope, loc)).toEqual(pickLocale(row.service_scope, loc));
+    }
+  });
+
+  it('leaves an object with a non-locale key alone as a container', () => {
+    const notLocalized = { en: 'x', serviceType: 'kitchen' };
+    expect(deepMinimalLocalized(notLocalized, 'fr')).toEqual(notLocalized);
+  });
+});
+
+describe('slimForClient', () => {
+  it('drops the omitted keys and collapses the rest', () => {
+    const service = {
+      slug: 'kitchen',
+      title: { en: 'Kitchen', fr: 'Cuisine' } as Localized<string>,
+      long_description: { en: 'Long…', fr: 'Longue…' } as Localized<string>,
+    };
+    const slim = slimForClient(service, 'fr', ['long_description']);
+    expect(slim.long_description).toBeUndefined();
+    expect('long_description' in slim).toBe(false);
+    expect(slim.title).toEqual({ en: 'Kitchen', fr: 'Cuisine' });
+  });
+
+  it('does not mutate the source row', () => {
+    const service = { slug: 's', title: { en: 'T' } as Localized<string>, benefits: { en: ['a'] } as Localized<string[]> };
+    slimForClient(service, 'en', ['benefits']);
+    expect(service.benefits).toEqual({ en: ['a'] });
   });
 });
 
