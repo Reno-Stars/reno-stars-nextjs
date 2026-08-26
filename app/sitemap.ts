@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { locales, INDEXABLE_LEAF_LOCALES } from '@/i18n/config';
 import { getBaseUrl, LOCALE_TO_DB_SUFFIX } from '@/lib/utils';
 import { resolveBlogDates } from '@/lib/blog-dates';
+import { HAS_AWARDS } from '@/lib/awards';
 import { getProjectSlugsFromDb, getSiteSlugsFromDb, getBlogPostSlugsFromDb, getServiceAreasFromDb, getCategorySlugs, getServicesFromDb, getVideoWatchEntriesFromDb } from '@/lib/db/queries';
 
 // Render per-request so a freshly published blog/project/area appears in the
@@ -141,6 +142,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/guides/cabinet-refinishing-cost-vancouver',      priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
     { path: '/guides/basement-suite-cost-vancouver',           priority: PRIORITY.guide,     changeFrequency: CHANGEFREQ.monthly },
     { path: '/financing',                                      priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    { path: '/transparent-pricing',                            priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly },
+    // /awards/ ships as an EMPTY archive and is `robots: noindex` until it has
+    // a real entry (lib/awards.ts). Submitting a noindex URL in a sitemap is a
+    // contradiction Search Console reports as an error, so it stays out until
+    // HAS_AWARDS flips — then it appears here for all 14 locales automatically.
+    ...(HAS_AWARDS
+      ? [{ path: '/awards', priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.yearly }]
+      : []),
     { path: '/careers',                                        priority: PRIORITY.secondary, changeFrequency: CHANGEFREQ.monthly },
     // High-intent "near me" landing pages — full metadata + Service/FAQ schema,
     // indexable, but were absent from the sitemap (crawlers found them via

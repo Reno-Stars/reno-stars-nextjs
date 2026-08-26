@@ -118,8 +118,13 @@ export default async function Page({ params }: PageProps) {
     },
   ];
 
+  // `guides.cityCostTable` lives INSIDE messages/en/guides/relatedGuides.json rather
+  // than in a file of its own, so client-namespace-scope.test.ts cannot see it — that
+  // test recognises guide sections by FILENAME. This page therefore shipped
+  // `guides.cityCostTable.*` as visible text until the render smoke gate caught it.
+  // Declared explicitly here; the same applies to the other cost guides.
   return (
-    <ClientMessages ns={['cta', 'guides.kitchenCost', 'guides.relatedGuides', 'share']}>
+    <ClientMessages ns={['cta', 'guides.kitchenCost', 'guides.cityCostTable', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema

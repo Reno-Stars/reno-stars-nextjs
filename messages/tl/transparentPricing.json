@@ -1,0 +1,83 @@
+{
+  "transparentPricing": {
+    "breadcrumb": "Malinaw na Presyo",
+    "hero": {
+      "badge": "Paano kami mag-quote",
+      "title": "Malinaw na Presyo",
+      "subtitle": "Bawat quote ng Reno Stars ay nakasulat nang isa-isa, at bawat bayad ay nakatali sa yugto ng konstruksiyon at hindi sa petsa sa kalendaryo. Ipinapaliwanag ng pahinang ito kung paano iyon gumagana bago pa kayo humingi sa amin ng halaga."
+    },
+    "quote": {
+      "title": "Ano ang laman ng isang quote ng Reno Stars",
+      "subtitle": "Ang quote ay ginagawa mula sa saklaw na sinukat namin sa inyong bahay, kaya nababasa ito bilang listahan ng gawain at hindi bilang isang bilog na halaga katabi ng salitang renovation.",
+      "items": {
+        "itemised": {
+          "title": "Nakahiwalay, kwarto sa kwarto",
+          "body": "Hinahati ang trabaho ayon sa silid at ayon sa uri ng gawain. Makikita ninyo ang halaga ng bawat bahagi ng proyekto sa halip na isang kabuuan para sa lahat."
+        },
+        "steps": {
+          "title": "Bawat linya ay may nakasaad na gawain",
+          "body": "Ang isang item ay hindi lang pangalan at presyo. Nakalista rito ang mga hakbang na kasama, kaya ang saklaw na binabayaran ninyo ay nakasulat at hindi lang usapan."
+        },
+        "included": {
+          "title": "Paggawa, materyales, pamamahala, paglilinis",
+          "body": "Saklaw ng quote ang paggawa, materyales, pamamahala ng proyekto at paglilinis. Kasama ang permit kung kailangan ito ng inyong proyekto."
+        },
+        "exclusions": {
+          "title": "Nakasulat ang hindi kasama, hindi itinatago",
+          "body": "Maaaring hindi kasama sa quote ang bayad sa permit at inspeksiyon ng munisipyo, at ang gastos sa mga natatagong problemang lalabas lamang kapag binuksan na ang pader — sirang istruktura, o lumang kableng elektrikal at tubo. Kung ganoon ang kaso, nakasulat iyon sa quote."
+        }
+      }
+    },
+    "milestones": {
+      "title": "Sumusunod ang bayad sa konstruksiyon, hindi sa kalendaryo",
+      "subtitle": "Nakasaad ang mga tuntunin ng bayad sa bawat kontrata ng proyekto. Karaniwan silang nakaayos sa mga yugtong ito:",
+      "steps": {
+        "s1": "Sa paglagda",
+        "s2": "Sa simula ng konstruksiyon",
+        "s3": "Sa pagkatapos ng mga pangunahing yugto",
+        "s4": "Sa panghuling pagtanggap"
+      },
+      "note": "Ang mga yugtong akma sa inyong proyekto, at ang halagang nakalakip sa bawat isa, ay nakasulat sa inyong kontrata — kaya makikita ninyo kung ano ang nagbubunsod ng bawat bayad bago kayo pumirma ng kahit ano.",
+      "methods": "Tumatanggap kami ng Interac e-transfer, certified cheque at credit card."
+    },
+    "getting": {
+      "title": "Paano makuha ang inyong halaga",
+      "steps": {
+        "s1": {
+          "title": "Libreng konsultasyon sa bahay",
+          "body": "Pupunta kami sa inyo, magsusukat, at sabay nating dadaanan ang saklaw ng trabaho. Walang bayad ang pagbisita at walang deposit na kailangan para makakuha ng quote."
+        },
+        "s2": {
+          "title": "Nakasulat at detalyadong quote",
+          "body": "Matatanggap ninyo ang nakasulat na quote, karaniwan sa loob ng 2–3 araw ng trabaho pagkatapos ng pagbisita. Maliban kung may ibang nakasulat kaming sabi, may bisa ito nang 30 araw."
+        },
+        "s3": {
+          "title": "Basahin ito linya bawat linya",
+          "body": "Ikumpara ang saklaw, hindi lang ang kabuuang halaga. Kadalasan ay mas mura ang isang quote dahil may naiwang bagay na kailangan pa rin ninyo."
+        }
+      }
+    },
+    "faqSection": {
+      "title": "Mga Madalas Itanong"
+    },
+    "faq": {
+      "q1": "Libre ba ang konsultasyon at ang quote?",
+      "a1": "Oo. Libre ang konsultasyon sa inyong bahay at ang nakasulat na estimate para sa renovation, at walang deposit na kailangan para matanggap ang quote.",
+      "q2": "Ano ang kasama sa presyo at ano ang hindi?",
+      "a2": "Saklaw ng quote ang paggawa, materyales, pamamahala ng proyekto at paglilinis, kasama ang permit kung kailangan. Maaaring hindi kasama ang bayad sa permit at inspeksiyon ng munisipyo, at ang gastos sa mga natatagong problemang natuklasan habang nagtatrabaho gaya ng sirang istruktura o lumang kableng elektrikal at tubo. Ang lahat ng hindi kasama ay nakasulat mismo sa quote.",
+      "q3": "Gaano katagal ang bisa ng isang quote?",
+      "a3": "Maliban kung may ibang nakasulat kaming sabi, may bisa ang quote nang 30 araw mula sa petsa ng pag-isyu. Naitatakda ang huling presyo kapag nilagdaan na ang kontrata ng proyekto.",
+      "q4": "Paano kung magbago ang saklaw sa gitna ng proyekto?",
+      "a4": "Ang pagbabago ng saklaw sa gitna ng proyekto ay hinahawakan bilang nakasulat na change order. Kailangan nito ng nakasulat na pagsang-ayon ng magkabilang panig at maaari nitong maapektuhan ang presyo at ang iskedyul, kaya walang naidaragdag sa inyong bayarin nang wala ang inyong pirma."
+    },
+    "related": {
+      "title": "Karugtong na babasahin",
+      "financing": "Pagpopondo at pagpaplano ng badyet",
+      "workflow": "Ang aming limang hakbang na proseso ng renovation"
+    },
+    "cta": {
+      "heading": "Gusto ninyong makita ang detalyadong quote ninyo?",
+      "subtitle": "Mag-book ng libreng konsultasyon sa inyong bahay. Magsusukat kami, dadaanan ang saklaw kasama kayo, at ipapadala ang nakasulat na quote — walang deposit, walang obligasyon."
+    }
+  }
+}

@@ -132,6 +132,14 @@
     "careers": {
       "title": "Mga Karera | Mga Trabaho sa Pagkukumpuni Metro Vancouver | Reno Stars",
       "description": "Ang Reno Stars ay kumukuha ng mga renovation worker sa Metro Vancouver — tiling, drywall, painting, flooring at finishing. Ang Mandarin o Cantonese ay isang malakas na asset. Tumawag sa 778-960-7999 para mag-apply."
+    },
+    "transparentPricing": {
+      "title": "Malinaw na Presyo: paano kami mag-quote | Reno Stars",
+      "description": "Paano nagba-quote ang Reno Stars ng renovation: detalyadong saklaw bawat linya, bayad na nakatali sa yugto ng konstruksiyon, libreng konsultasyon, may bisa nang 30 araw."
+    },
+    "awards": {
+      "title": "Mga Parangal at Pagkilala | Reno Stars Vancouver",
+      "description": "Mga parangal, sertipikasyon at panlabas na pagkilala para sa Reno Stars, kontratista sa renovation sa Metro Vancouver — may nagbigay, taon at pinagmulan bawat entry."
     }
   }
 }

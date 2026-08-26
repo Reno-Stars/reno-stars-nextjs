@@ -1,0 +1,83 @@
+{
+  "transparentPricing": {
+    "breadcrumb": "Báo giá minh bạch",
+    "hero": {
+      "badge": "Cách chúng tôi báo giá",
+      "title": "Báo giá minh bạch",
+      "subtitle": "Mọi báo giá của Reno Stars đều được ghi chi tiết từng hạng mục, và mỗi khoản thanh toán gắn với một giai đoạn thi công chứ không phải một ngày trên lịch. Trang này giải thích cách vận hành đó trước khi quý vị hỏi chúng tôi một con số."
+    },
+    "quote": {
+      "title": "Bên trong một báo giá của Reno Stars",
+      "subtitle": "Báo giá được lập từ phạm vi công việc chúng tôi đo đạc tại nhà quý vị, nên nó đọc như một danh sách công việc chứ không phải một con số làm tròn đặt cạnh chữ cải tạo.",
+      "items": {
+        "itemised": {
+          "title": "Chi tiết theo từng khu vực",
+          "body": "Công việc được tách theo phòng và theo hạng mục thi công. Quý vị thấy được chi phí của từng phần thay vì một tổng số bao trùm tất cả."
+        },
+        "steps": {
+          "title": "Mỗi dòng nêu rõ công việc nó bao gồm",
+          "body": "Một hạng mục không chỉ là một cái tên và một mức giá. Nó liệt kê các bước thi công đi kèm, nên phạm vi quý vị chi trả được ghi thành văn bản chứ không thỏa thuận miệng."
+        },
+        "included": {
+          "title": "Nhân công, vật tư, quản lý, dọn dẹp",
+          "body": "Báo giá bao gồm nhân công, vật tư, quản lý dự án và dọn dẹp. Giấy phép được tính vào khi dự án của quý vị cần đến."
+        },
+        "exclusions": {
+          "title": "Phần loại trừ được ghi rõ, không giấu",
+          "body": "Báo giá có thể không bao gồm phí giấy phép và phí kiểm định của thành phố, cũng như chi phí cho những hư hỏng ẩn chỉ lộ ra khi mở tường — hư hại kết cấu, dây điện hoặc đường ống cũ. Nếu có, điều đó được ghi ngay trên báo giá."
+        }
+      }
+    },
+    "milestones": {
+      "title": "Thanh toán bám theo công trình, không bám theo lịch",
+      "subtitle": "Điều khoản thanh toán được quy định trong từng hợp đồng thi công. Thông thường chúng xoay quanh các mốc sau:",
+      "steps": {
+        "s1": "Khi ký hợp đồng",
+        "s2": "Khi khởi công",
+        "s3": "Khi hoàn thành các giai đoạn chính",
+        "s4": "Khi nghiệm thu cuối cùng"
+      },
+      "note": "Các mốc áp dụng cho dự án của quý vị, cùng số tiền gắn với từng mốc, được ghi trong hợp đồng — nên quý vị thấy rõ điều gì kích hoạt mỗi khoản thanh toán trước khi ký bất cứ thứ gì.",
+      "methods": "Chúng tôi nhận chuyển khoản Interac, séc bảo chi và thẻ tín dụng."
+    },
+    "getting": {
+      "title": "Cách nhận con số của quý vị",
+      "steps": {
+        "s1": {
+          "title": "Khảo sát tận nhà miễn phí",
+          "body": "Chúng tôi đến tận nơi, đo đạc và cùng quý vị đi qua toàn bộ phạm vi công việc. Buổi khảo sát không tính phí và không cần đặt cọc để nhận báo giá."
+        },
+        "s2": {
+          "title": "Báo giá bằng văn bản, chi tiết từng hạng mục",
+          "body": "Quý vị nhận báo giá bằng văn bản, thường trong vòng 2–3 ngày làm việc sau buổi khảo sát. Trừ khi chúng tôi ghi khác bằng văn bản, báo giá có giá trị 30 ngày."
+        },
+        "s3": {
+          "title": "Đọc từng dòng một",
+          "body": "Hãy so sánh phạm vi công việc, đừng chỉ so tổng tiền. Một báo giá rẻ hơn thường rẻ vì đã bỏ sót thứ mà quý vị vẫn cần."
+        }
+      }
+    },
+    "faqSection": {
+      "title": "Câu hỏi thường gặp"
+    },
+    "faq": {
+      "q1": "Khảo sát và báo giá có miễn phí không?",
+      "a1": "Có. Khảo sát tận nhà và báo giá cải tạo bằng văn bản đều miễn phí, và không cần đặt cọc để nhận báo giá.",
+      "q2": "Giá bao gồm những gì và không bao gồm những gì?",
+      "a2": "Báo giá bao gồm nhân công, vật tư, quản lý dự án và dọn dẹp, kèm giấy phép khi dự án cần đến. Báo giá có thể không bao gồm phí giấy phép và phí kiểm định của thành phố, cũng như chi phí cho những hư hỏng ẩn phát hiện trong quá trình thi công như hư hại kết cấu hoặc dây điện, đường ống cũ. Mọi phần loại trừ đều được ghi ngay trên báo giá.",
+      "q3": "Báo giá có giá trị trong bao lâu?",
+      "a3": "Trừ khi chúng tôi ghi khác bằng văn bản, báo giá có giá trị 30 ngày kể từ ngày phát hành. Giá cuối cùng được chốt khi ký hợp đồng thi công.",
+      "q4": "Nếu phạm vi công việc thay đổi giữa chừng thì sao?",
+      "a4": "Thay đổi phạm vi giữa chừng được xử lý bằng lệnh thay đổi lập thành văn bản. Chúng cần sự đồng ý bằng văn bản của cả hai bên và có thể ảnh hưởng tới cả giá lẫn tiến độ, nên không khoản nào được cộng vào hóa đơn nếu thiếu chữ ký của quý vị."
+    },
+    "related": {
+      "title": "Đọc tiếp",
+      "financing": "Vay vốn và lập kế hoạch ngân sách",
+      "workflow": "Quy trình cải tạo năm bước của chúng tôi"
+    },
+    "cta": {
+      "heading": "Muốn xem báo giá chi tiết của quý vị?",
+      "subtitle": "Đặt lịch khảo sát tận nhà miễn phí. Chúng tôi đo đạc, cùng quý vị rà soát phạm vi công việc rồi gửi báo giá bằng văn bản — không đặt cọc, không ràng buộc."
+    }
+  }
+}
