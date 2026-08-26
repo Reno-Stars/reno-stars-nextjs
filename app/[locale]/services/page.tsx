@@ -7,6 +7,7 @@ import { BreadcrumbSchema, ServiceSchema, FAQSchema } from '@/components/structu
 import { getLocalizedService } from '@/lib/data/services';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getServicesFromDb, getServiceAreasFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -138,7 +139,7 @@ export default async function Page({ params }: PageProps) {
   });
 
   return (
-    <>
+    <ClientMessages ns={['areas', 'cta', 'nearMe', 'projects']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       {/* Hub-level Service schema — represents the overall renovation services
           category at the services hub URL. Individual service detail pages
@@ -173,6 +174,6 @@ export default async function Page({ params }: PageProps) {
         />
       )}
       <ServicesPage locale={locale as Locale} company={company} services={visibleServices} areas={areas} />
-    </>
+    </ClientMessages>
   );
 }

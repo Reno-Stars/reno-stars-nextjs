@@ -1,0 +1,42 @@
+{
+  "//": "Route matrix for scripts/ci/render-smoke.mjs. Keep it small enough to gate every PR; the wide sweep belongs in a scheduled job.",
+
+  "locales": ["en", "zh", "ar"],
+
+  "//routes": "Locale-relative. Expanded against every locale above.",
+  "routes": [
+    "/",
+    "/about/",
+    "/contact/",
+    "/reviews/",
+    "/financing/",
+    "/features/",
+    "/before-after/",
+    "/services/",
+    "/projects/",
+    "/workflow/",
+    "/guides/",
+    "/site-visit-checklist/",
+    "/renovation-near-me/",
+    "/guides/kitchen-renovation-cost-vancouver/"
+  ],
+
+  "//absentNamespaces": "The scoping invariant. A namespace listed here must NOT reach this route's payload. Environment-independent: it compares against a sentinel string taken from messages/en, so it does not care how much seeded content CI has. If the layout ever goes back to shipping the whole catalog, every one of these fails at once.",
+  "absentNamespaces": {
+    "/en/": ["siteVisit", "guides.kitchenCost", "guides.permit", "aboutPage", "nearMe"],
+    "/zh/": ["siteVisit", "guides.kitchenCost", "aboutPage"],
+    "/en/contact/": ["siteVisit", "guides.kitchenCost", "aboutPage"],
+    "/en/reviews/": ["siteVisit", "guides.kitchenCost", "nearMe"],
+    "/en/site-visit-checklist/": ["guides.kitchenCost", "aboutPage", "nearMe"],
+    "/en/guides/kitchen-renovation-cost-vancouver/": ["siteVisit", "guides.permit", "aboutPage"]
+  },
+
+  "//knownBroken": "Empty, and it should stay that way. It briefly held four routes on 2026-08-26 — two guide pages rendering 45 raw key paths between them, and the zh/ar site-visit checklists broken by a machine-translated enum. All four were fixed the same day rather than left listed. The gate FAILS on any key path not listed here, and also fails if a listed route turns out clean, so an entry cannot quietly outlive the bug it describes.",
+  "knownBroken": {},
+
+  "//extraRoutes": "Not locale-expanded. The two known-broken pages are here so the allowlist is exercised and shrinks visibly when someone fixes the keys.",
+  "extraRoutes": [
+    "/en/guides/vancouver-kitchen-cabinet-renovation/",
+    "/en/guides/vancouver-renovation-permits/"
+  ]
+}

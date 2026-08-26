@@ -5,6 +5,7 @@ import DesignPage from '@/components/pages/DesignPage';
 import { BreadcrumbSchema, FAQSchema } from '@/components/structured-data';
 import { getBaseUrl, buildAlternates, buildOgImageUrl, SITE_NAME, buildAlternateLocales} from '@/lib/utils';
 import { getCompanyFromDb, getDesignsFromDb } from '@/lib/db/queries';
+import ClientMessages from '@/components/ClientMessages';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -66,7 +67,7 @@ export default async function Page({ params }: PageProps) {
   ];
 
   return (
-    <>
+    <ClientMessages ns={['cta', 'design', 'lightbox', 'projects']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <DesignPage
@@ -76,6 +77,6 @@ export default async function Page({ params }: PageProps) {
         faqs={faqs}
         faqTitle={faqT('faqTitle')}
       />
-    </>
+    </ClientMessages>
   );
 }

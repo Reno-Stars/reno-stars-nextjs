@@ -37,7 +37,9 @@ test.describe('site visit checklist', () => {
     await page.getByRole('combobox').selectOption('bathroom-4piece');
 
     await expect(page.getByRole('heading', { name: 'Potlights' })).toBeHidden();
-    await page.getByLabel('Potlights').check();
+    // Exact: 'Potlights' is also a substring of a checklist item's label,
+    // so a loose getByLabel matches two checkboxes and throws in strict mode.
+    await page.getByRole('checkbox', { name: 'Potlights', exact: true }).check();
     await expect(page.getByRole('heading', { name: 'Potlights' })).toBeVisible();
 
     await expect(page).toHaveURL(/bathrooms=bathroom-4piece%2Cbathroom-potlights/);
@@ -55,6 +57,6 @@ test.describe('site visit checklist', () => {
     await first.click();
 
     await page.reload();
-    await expect(page.getByText('1 of', { exact: false })).toBeVisible();
+    await expect(page.getByText(/^1 \/ \d+ checked$/)).toBeVisible();
   });
 });
