@@ -1,0 +1,92 @@
+{
+  "transparentPricing": {
+    "breadcrumb": "Tarification transparente",
+    "hero": {
+      "badge": "Comment nous chiffrons",
+      "title": "Tarification transparente",
+      "subtitle": "Chaque devis Reno Stars est détaillé ligne par ligne, et chaque paiement est rattaché à une étape du chantier plutôt qu'à une date du calendrier. Cette page explique comment cela fonctionne, avant même que vous nous demandiez un prix."
+    },
+    "quote": {
+      "title": "Ce que contient un devis Reno Stars",
+      "subtitle": "Le devis est construit à partir des mesures prises chez vous : il se lit comme une liste de travaux, et non comme un montant arrondi en face du mot rénovation.",
+      "items": {
+        "itemised": {
+          "title": "Détaillé, pièce par pièce",
+          "body": "Les travaux sont ventilés par pièce et par corps de métier. Vous voyez le coût de chaque partie du projet au lieu d'un seul total qui couvre tout."
+        },
+        "steps": {
+          "title": "Chaque ligne nomme les travaux qu'elle couvre",
+          "body": "Une ligne, ce n'est pas seulement un intitulé et un prix. Elle précise les étapes comprises, de sorte que ce que vous payez est écrit noir sur blanc plutôt que convenu oralement."
+        },
+        "included": {
+          "title": "Main-d'œuvre, matériaux, gestion, nettoyage",
+          "body": "Les devis couvrent la main-d'œuvre, les matériaux, la gestion de projet et le nettoyage. Les permis sont inclus lorsqu'ils s'appliquent à votre projet."
+        },
+        "exclusions": {
+          "title": "Les exclusions sont écrites, pas dissimulées",
+          "body": "Un devis peut exclure les frais de permis et d'inspection municipale, ainsi que les coûts liés aux conditions cachées découvertes une fois les murs ouverts : dommages structurels, câblage ou plomberie vétustes. Le cas échéant, c'est indiqué sur le devis."
+        }
+      }
+    },
+    "milestones": {
+      "title": "Les paiements suivent le chantier, pas le calendrier",
+      "subtitle": "Les modalités de paiement sont définies dans chaque contrat de projet. Elles s'articulent généralement autour de ces étapes :",
+      "steps": {
+        "s1": "À la signature",
+        "s2": "Au démarrage du chantier",
+        "s3": "Au premier jalon du chantier",
+        "s4": "Au deuxième jalon du chantier",
+        "s5": "Après la réception finale"
+      },
+      "note": "L'échéancier en cinq étapes ci-dessous est celui que nous utilisons le plus souvent. Les étapes applicables à votre projet et le déclencheur de chaque versement figurent dans votre contrat : vous savez donc ce qui libère chaque paiement avant de signer.",
+      "methods": "Nous acceptons le virement Interac, le chèque certifié et la carte de crédit.",
+      "percentages": {
+        "s1": "10",
+        "s2": "40",
+        "s3": "25",
+        "s4": "20",
+        "s5": "5"
+      },
+      "commonLabel": "Échéancier le plus courant"
+    },
+    "getting": {
+      "title": "Comment obtenir votre prix",
+      "steps": {
+        "s1": {
+          "title": "Consultation gratuite à domicile",
+          "body": "Nous venons chez vous, nous mesurons et nous parcourons ensemble l'étendue des travaux. La visite est gratuite et aucun acompte n'est exigé pour obtenir un devis."
+        },
+        "s2": {
+          "title": "Devis écrit et détaillé",
+          "body": "Vous recevez le devis écrit, généralement dans les 2 à 3 jours ouvrables suivant la visite. Sauf mention écrite contraire, il reste valable 30 jours."
+        },
+        "s3": {
+          "title": "Lisez-le ligne par ligne",
+          "body": "Comparez l'étendue des travaux, pas seulement le total. Un devis moins cher l'est souvent parce qu'il a laissé de côté quelque chose dont vous avez encore besoin."
+        }
+      }
+    },
+    "faqSection": {
+      "title": "Questions fréquentes"
+    },
+    "faq": {
+      "q1": "La consultation et le devis sont-ils gratuits ?",
+      "a1": "Oui. Les consultations à domicile et les estimations écrites de rénovation sont gratuites, et aucun acompte n'est exigé pour recevoir un devis.",
+      "q2": "Qu'est-ce qui est compris dans le prix, et qu'est-ce qui ne l'est pas ?",
+      "a2": "Les devis couvrent la main-d'œuvre, les matériaux, la gestion de projet et le nettoyage, permis compris lorsqu'ils s'appliquent. Un devis peut exclure les frais de permis et d'inspection municipale, ainsi que les coûts liés aux conditions cachées découvertes pendant les travaux, comme des dommages structurels ou une plomberie et un câblage vétustes. Toute exclusion est inscrite sur le devis lui-même.",
+      "q3": "Combien de temps un devis reste-t-il valable ?",
+      "a3": "Sauf mention écrite contraire, un devis est valable 30 jours à compter de sa date d'émission. Le prix définitif est établi à la signature du contrat de projet.",
+      "q4": "Que se passe-t-il si l'étendue des travaux change en cours de chantier ?",
+      "a4": "Les modifications en cours de chantier font l'objet d'ordres de changement écrits. Ils exigent l'accord écrit des deux parties et peuvent influer sur le prix comme sur le calendrier : rien n'est ajouté à votre facture sans votre signature."
+    },
+    "related": {
+      "title": "À lire aussi",
+      "financing": "Financement et planification du budget",
+      "workflow": "Notre processus de rénovation en cinq étapes"
+    },
+    "cta": {
+      "heading": "Envie de voir votre devis détaillé ?",
+      "subtitle": "Réservez une consultation gratuite à domicile. Nous mesurons, nous parcourons l'étendue des travaux avec vous, puis nous envoyons le devis écrit — sans acompte ni engagement."
+    }
+  }
+}

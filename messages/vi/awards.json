@@ -1,0 +1,46 @@
+{
+  "awards": {
+    "breadcrumb": "Giải thưởng & Ghi nhận",
+    "hero": {
+      "badge": "Ghi nhận",
+      "title": "Giải thưởng & Ghi nhận",
+      "subtitle": "Đây là nơi chúng tôi công bố mọi giải thưởng, chứng nhận hoặc sự ghi nhận từ ngành mà Reno Stars nhận được — kèm tên đơn vị trao, năm trao và đường dẫn tới thông báo, để quý vị tự kiểm chứng."
+    },
+    "empty": {
+      "title": "Chưa có nội dung nào ở đây",
+      "body": "Chúng tôi chưa công bố giải thưởng nào trên trang này. Thà để trống còn hơn lấp đầy bằng những huy hiệu mà quý vị không thể kiểm chứng. Khi có điều gì thật sự để đưa lên, nó sẽ xuất hiện tại đây cùng tên tổ chức đã trao và năm trao."
+    },
+    "criteria": {
+      "title": "Những gì sẽ xuất hiện trên trang này",
+      "issuer": "Tổ chức đã trao, ghi đúng tên mà chính họ dùng.",
+      "year": "Năm được trao — không có huy hiệu vô thời hạn mà thiếu ngày tháng.",
+      "link": "Đường dẫn tới thông báo hoặc danh sách đề cử, nếu đơn vị trao có công bố."
+    },
+    "verified": {
+      "title": "Những gì quý vị kiểm chứng được ngay hôm nay",
+      "subtitle": "Giải thưởng là quyết định của người khác. Còn đây là những điều về Reno Stars mà quý vị có thể kiểm chứng ngay bây giờ.",
+      "liability": "Bảo hiểm CGL {amount}",
+      "liabilityNote": "Bảo hiểm trách nhiệm dân sự thương mại chung.",
+      "wcbNote": "Bảo hiểm WorkSafeBC cho thợ làm việc tại công trình của quý vị.",
+      "warranty": "Bảo hành lên tới {years} năm",
+      "warrantyNote": "Bảo hành tay nghề thi công, ghi rõ trong hợp đồng của quý vị.",
+      "yearsNote": "Số năm kinh nghiệm cải tạo của đội ngũ.",
+      "projectsNote": "Đã hoàn thành khắp vùng Metro Vancouver."
+    },
+    "reviews": {
+      "title": "Sự ghi nhận từ bên ngoài mà chúng tôi thật sự có",
+      "rating": "{rating} trên 5 trên Google, từ {count} đánh giá",
+      "body": "Đánh giá do khách hàng viết và do Google đăng, không phải do chúng tôi. Đó là hình thức ghi nhận duy nhất trên trang này không phụ thuộc vào lời của chúng tôi.",
+      "link": "Đọc các đánh giá"
+    },
+    "list": {
+      "title": "Kho lưu trữ",
+      "issuedBy": "Do đơn vị trao",
+      "announcement": "Xem thông báo"
+    },
+    "cta": {
+      "heading": "Hãy đánh giá chúng tôi qua công việc",
+      "subtitle": "Xem các dự án đã hoàn thành tại Metro Vancouver, hoặc đặt lịch khảo sát tận nhà miễn phí để thấy cách chúng tôi lập báo giá."
+    }
+  }
+}
