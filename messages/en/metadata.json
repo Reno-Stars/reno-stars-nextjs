@@ -1,8 +1,10 @@
 {
   "metadata": {
     "home": {
-      "title": "Vancouver Renovation Contractor | Reno Stars — Kitchens, Baths & Full-Home Reno",
-      "description": "Vancouver's trusted renovation contractor for kitchens, bathrooms, basements & full-home renovations. {years}+ years, 700+ projects, $5M insured, 5-star Google. Free quote in 24h."
+      "title": "Vancouver Renovation Contractor | Reno Stars",
+      "titleRated": "{rating}-Star Vancouver Renovation Contractor | Reno Stars",
+      "description": "Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. {years}+ years, $5M CGL insured, 3-year warranty. Free quote in 24 hours.",
+      "descriptionRated": "Rated {rating}/5 from {reviewCount} Google reviews. Kitchen, bathroom, basement and whole-home renovations across Metro Vancouver. Free quote in 24 hours."
     },
     "services": {
       "title": "Vancouver Renovation Services — $5M Insured | Reno Stars",
@@ -14,7 +16,7 @@
     },
     "projectsBudget": {
       "title": "{tier} Renovation Projects Vancouver | Reno Stars",
-      "description": "Real {tier} renovation projects across Metro Vancouver — actual costs, before/after photos, and timelines. Filter by kitchen, bathroom, basement or whole-house."
+      "description": "Real {tier} renovation projects across Metro Vancouver — actual costs, before/after photos and timelines. Filter by kitchen, bathroom or basement."
     },
     "contact": {
       "title": "Contact Reno Stars — Free Quote | Vancouver 778-960-7999",
@@ -29,7 +31,7 @@
       "description": "Google five-star reviews, $5M CGL insurance, active WCB coverage. Transparent quotes and responsive teams. See why Vancouver homeowners trust Reno Stars."
     },
     "design": {
-      "title": "Renovation Design Gallery | Real Vancouver Projects | Reno Stars",
+      "title": "Vancouver Renovation Design Gallery | Reno Stars",
       "description": "Browse renovation design ideas from 100+ real Metro Vancouver projects. Kitchen, bathroom, basement & whole-house inspiration with actual costs."
     },
     "projectCategory": {
@@ -49,7 +51,7 @@
       "description": "Reno Stars serves 17 communities across Metro Vancouver and the Fraser Valley. Find renovation services in your city and get a free quote."
     },
     "area": {
-      "title": "Renovation Contractor in {area} | Kitchen & Bathroom | Reno Stars",
+      "title": "{area} Renovation Contractor | Reno Stars",
       "description": "Professional renovation services in {area}. Kitchen, bathroom, and whole house renovations. Contact us for a free quote."
     },
     "thankYou": {
@@ -61,7 +63,7 @@
       "description": "Learn about our streamlined 5-step renovation workflow. From initial consultation to project handover, we make your renovation journey simple and worry-free."
     },
     "showroom": {
-      "title": "Renovation Showroom Richmond BC | Free Consultation | Reno Stars",
+      "title": "Renovation Showroom Richmond BC | Free Quote | Reno Stars",
       "description": "Visit our Richmond BC showroom: see kitchen & bathroom displays, touch real materials, get a free quote. Open by appointment — call 778-960-7999 to book."
     },
     "guides": {
@@ -89,15 +91,15 @@
       },
       "kitchenCabinet": {
         "title": "Kitchen Cabinet Cost Vancouver 2026: $3K–$45K | Reno Stars",
-        "description": "Kitchen cabinet renovation cost in Vancouver 2026: $3K refinishing to $45K+ custom replacement, averaging $12,000 ($150–$600/linear ft). Stock vs semi-custom vs custom. Free estimate."
+        "description": "Kitchen cabinet cost Vancouver 2026: $3K refinishing to $45K+ custom, averaging $12,000 ($150–$600/linear ft). Stock vs semi-custom vs custom. Free estimate."
       },
       "kitchenCost": {
         "title": "Kitchen Renovation Cost Vancouver 2026 | Reno Stars",
         "description": "Average kitchen renovation cost Vancouver 2026: budget $15K–$27K, mid-range $28K–$38K, high-end $40K+. Real data from completed projects. Free estimate."
       },
       "permit": {
-        "title": "Vancouver Renovation Permits 2026: What Needs One | Reno Stars",
-        "description": "Which Vancouver renovations need a building, plumbing, or electrical permit? 2026 guide to BC requirements across Vancouver, Burnaby, Richmond and Surrey — timelines, fees, and how to apply."
+        "title": "Vancouver Renovation Permits 2026 | Reno Stars",
+        "description": "Which Vancouver renovations need a building, plumbing or electrical permit? 2026 BC rules for Vancouver, Burnaby, Richmond and Surrey — timelines and fees."
       },
       "wholeHouseCost": {
         "title": "Whole House Renovation Cost Vancouver 2026: $50K–$200K+",
@@ -121,7 +123,7 @@
       "description": "Stunning before and after renovation transformations from Metro Vancouver. Real projects, real costs, real results. Kitchen, bathroom & whole-house."
     },
     "features": {
-      "title": "Why Reno Stars | $5M Insured, 3-Year Warranty, Five-Star Reviews",
+      "title": "$5M Insured, 3-Year Warranty | Why Reno Stars",
       "description": "What makes Reno Stars different: $5M CGL insurance, WCB coverage, 3-year workmanship warranty, bilingual team, five-star Google reviews. Vancouver."
     },
     "nearMe": {
@@ -131,7 +133,7 @@
     "localBusinessDescription": "Professional home renovation services in Metro Vancouver. Kitchen, bathroom, whole house renovations. Licensed, insured with up to $5M CGL insurance, active WCB coverage, and up to 3 years warranty.",
     "careers": {
       "title": "Careers | Renovation Jobs Metro Vancouver | Reno Stars",
-      "description": "Reno Stars is hiring renovation workers in Metro Vancouver — tiling, drywall, painting, flooring and finishing. Mandarin or Cantonese is a strong asset. Call 778-960-7999 to apply."
+      "description": "Hiring renovation workers across Metro Vancouver — tiling, drywall, painting, flooring, finishing. Mandarin or Cantonese an asset. Call 778-960-7999."
     }
   }
 }

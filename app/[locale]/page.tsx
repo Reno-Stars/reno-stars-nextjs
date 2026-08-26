@@ -17,7 +17,7 @@ import {
   getServiceAreasFromDb,
   getPartnersFromDb,
 } from "@/lib/db/queries";
-import { getGoogleReviews } from "@/lib/google-reviews";
+import { getGoogleReviews, serpRatingParams } from "@/lib/google-reviews";
 
 
 interface PageProps {
@@ -25,40 +25,59 @@ interface PageProps {
 }
 
 
+/**
+ * The homepage's strongest SERP differentiator is the Google rating we already
+ * emit as AggregateRating schema — a real, third-party-verifiable proof asset
+ * (competitors lead with "Award-Winning"; we have no awards and must not imply
+ * any). Leading the title with it is only honest if the number is the LIVE one,
+ * so it is read from getGoogleReviews() — the same source the schema uses — and
+ * never hardcoded in the message catalogue.
+ *
+ * serpRatingParams() returns null when the live payload is missing or not
+ * credible, in which case we fall back to the `title`/`description` keys, which
+ * make no rating claim at all. See lib/google-reviews.ts for why that matters.
+ */
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const [t, company] = await Promise.all([
+  const [t, company, googleReviews] = await Promise.all([
     getTranslations({ locale, namespace: "metadata.home" }),
     getCompanyFromDb(),
+    getGoogleReviews(),
   ]);
   const years = { years: company.yearsExperience };
 
+  const rated = serpRatingParams(googleReviews);
+  const title = rated ? t("titleRated", rated) : t("title", years);
+  const description = rated
+    ? t("descriptionRated", rated)
+    : t("description", years);
+
   const baseUrl = getBaseUrl();
-  const ogImage = buildOgImageUrl(t("title", years), t("description", years));
+  const ogImage = buildOgImageUrl(title, description);
 
   return {
-    title: t("title", years),
-    description: t("description", years),
+    title,
+    description,
     alternates: buildAlternates("/", locale),
     openGraph: {
-      title: t("title", years),
-      description: t("description", years),
+      title,
+      description,
       url: `${baseUrl}/${locale}/`,
       siteName: SITE_NAME,
       locale: ogLocaleMap[locale as Locale],
       alternateLocale: buildAlternateLocales(locale as Locale),
       type: "website",
       images: [
-        { url: ogImage, width: 1200, height: 630, alt: t("title", years) },
+        { url: ogImage, width: 1200, height: 630, alt: title },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title", years),
-      description: t("description", years),
-      images: [{ url: ogImage, alt: t("title", years) }],
+      title,
+      description,
+      images: [{ url: ogImage, alt: title }],
     },
   };
 }
