@@ -100,43 +100,43 @@
           "id": "amiăng",
           "label": "Tòa nhà trước năm 1990 - đánh dấu việc thử nghiệm amiăng",
           "hint": "WorkSafeBC yêu cầu khảo sát vật liệu nguy hiểm trước khi phá dỡ. Đừng hứa một mức giá mà không có nó. Trần bỏng ngô, gạch lát sàn nhựa vinyl, bùn vách thạch cao và bọc ống là những nghi phạm thường gặp.",
-          "severity": "người chặn đường"
+          "severity": "blocker"
         },
         {
           "id": "loại ống nước",
           "label": "Đường ống cấp và thoát nước hiện có - ABS, đồng, PEX, gang hoặc mạ kẽm",
           "hint": "Nhìn dưới bồn rửa và bất kỳ lối đi lộ thiên nào ở tầng hầm. Gang hoặc mạ kẽm có nghĩa là chi phí di dời không đạt tiêu chuẩn.",
-          "severity": "cao"
+          "severity": "high"
         },
         {
           "id": "nướcThiệt hại",
           "label": "Dấu hiệu hư hỏng do nước đang hoạt động hoặc đã qua",
           "hint": "Sàn nhà vệ sinh hoặc bồn tắm mềm, ố màu trên trần nhà bên dưới, có mùi ẩm mốc, bong tróc gạch. Chụp ảnh và ghi lại bằng văn bản - điều này bảo vệ cả hai chúng ta.",
-          "severity": "cao"
+          "severity": "high"
         },
         {
           "id": "khuôn",
           "label": "Khuôn nhìn thấy được",
           "hint": "Phía sau nhà vệ sinh, ở xung quanh bồn tắm, dưới bồn rửa. Khắc phục là một phạm vi riêng biệt.",
-          "severity": "cao"
+          "severity": "high"
         },
         {
           "id": "tầng phụ",
           "label": "Loại và tình trạng sàn phụ cũng như mức sàn",
           "hint": "Ván ép hoặc tấm bê tông. Kiểm tra mức độ bằng độ cao 4ft theo hai hướng - sàn không bằng phẳng có nghĩa là tự san bằng trước khi lát gạch.",
-          "severity": "cao"
+          "severity": "high"
         },
         {
           "id": "chịu tải",
           "label": "Bất kỳ bức tường nào được mở hoặc dỡ bỏ - nó có chịu lực không?",
           "hint": "Nếu có bất kỳ nghi ngờ nào, nó cần có thư của kỹ sư. Lưu ý hướng dầm ở trên.",
-          "severity": "người chặn đường"
+          "severity": "blocker"
         },
         {
           "id": "cho phép làm gì",
           "label": "Phạm vi này có kích hoạt giấy phép không?",
           "hint": "Di chuyển hệ thống ống nước hoặc khí đốt, thay đổi cấu trúc, mạch điện mới hoặc thay đổi mục đích sử dụng của căn phòng. Xác nhận đô thị - Vancouver, Burnaby, Richmond và Surrey đều khác nhau.",
-          "severity": "người chặn đường"
+          "severity": "blocker"
         },
         {
           "id": "bỏng ngôHiện tại",
@@ -693,7 +693,7 @@
     "ui": {
       "addon": "Tiện ích bổ sung",
       "replacement": "Thay đổi",
-      "blocker": "Dừng lại - giải quyết trước khi trích dẫn",
+      "blocker": "Dừng lại — giải quyết trước khi báo giá",
       "high": "Ảnh hưởng đáng kể đến giá"
     },
     "names": {

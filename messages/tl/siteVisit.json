@@ -106,25 +106,25 @@
           "id": "Uri ng pagtutubero",
           "label": "Umiiral na drain at supply piping — ABS, copper, PEX, cast iron, o galvanized",
           "hint": "Tumingin sa ilalim ng lababo at sa anumang nakalantad na basement run. Ang ibig sabihin ng cast iron o galvanized ay hindi pamantayan ang halaga ng relokasyon.",
-          "severity": "mataas"
+          "severity": "high"
         },
         {
           "id": "pagkasira ng tubig",
           "label": "Mga palatandaan ng aktibo o nakalipas na pagkasira ng tubig",
           "hint": "Malambot na sahig sa banyo o batya, mantsa sa kisame sa ibaba, mabahong amoy, nakakataas ng tile. Kuhanan ng larawan at tandaan ito sa pamamagitan ng sulat — pinoprotektahan tayong dalawa.",
-          "severity": "mataas"
+          "severity": "high"
         },
         {
           "id": "magkaroon ng amag",
           "label": "Nakikitang amag",
           "hint": "Sa likod ng banyo, sa paligid ng batya, sa ilalim ng lababo. Ang remediation ay isang hiwalay na saklaw.",
-          "severity": "mataas"
+          "severity": "high"
         },
         {
           "id": "subfloor",
           "label": "Uri at kondisyon ng subfloor, at antas ng sahig",
           "hint": "Plywood o kongkretong slab. Suriin ang antas na may 4ft na antas sa dalawang direksyon — ang isang wala sa antas na palapag ay nangangahulugan ng self-leveling bago ang tile.",
-          "severity": "mataas"
+          "severity": "high"
         },
         {
           "id": "loadBearing",
@@ -693,7 +693,7 @@
     "ui": {
       "addon": "Add-on",
       "replacement": "Baguhin",
-      "blocker": "Huminto — lutasin bago sumipi",
+      "blocker": "Huminto — lutasin bago mag-quote",
       "high": "Malaki ang epekto sa presyo"
     },
     "names": {

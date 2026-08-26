@@ -73,7 +73,7 @@ export default async function Page({ params }: PageProps) {
   const ogImage = buildOgImageUrl(mt('title'), mt('description'));
 
   return (
-    <ClientMessages ns={['cta', 'guides.kitchenCabinet', 'share']}>
+    <ClientMessages ns={['cta', 'guides.kitchenCabinet', 'guides.relatedGuides', 'share']}>
       <BreadcrumbSchema items={breadcrumbs} locale={locale} />
       <FAQSchema faqs={faqs} locale={locale} />
       <ArticleSchema

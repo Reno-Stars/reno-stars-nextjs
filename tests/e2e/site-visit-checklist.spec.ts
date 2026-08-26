@@ -31,18 +31,15 @@ test.describe('site visit checklist', () => {
     await expect(page.getByRole('heading', { name: 'Kitchen cabinets' })).toBeHidden();
   });
 
-  // FIXME (pre-existing, not a regression): fails identically against
-  // https://www.reno-stars.com, i.e. on main's own deployed code —
-  // add-on flow: getByLabel('Potlights').check() does not reveal the heading.
-  // Quarantined so the rest of the suite can gate CI; a red job here
-  // strands every deploy. Un-fixme when the checklist is fixed.
-  test.fixme('an add-on adds its checks and the URL carries the scope', async ({ page }) => {
+  test('an add-on adds its checks and the URL carries the scope', async ({ page }) => {
     await page.goto(PATH);
     await page.getByRole('button', { name: 'Bathroom', exact: true }).click();
     await page.getByRole('combobox').selectOption('bathroom-4piece');
 
     await expect(page.getByRole('heading', { name: 'Potlights' })).toBeHidden();
-    await page.getByLabel('Potlights').check();
+    // Exact: 'Potlights' is also a substring of a checklist item's label,
+    // so a loose getByLabel matches two checkboxes and throws in strict mode.
+    await page.getByRole('checkbox', { name: 'Potlights', exact: true }).check();
     await expect(page.getByRole('heading', { name: 'Potlights' })).toBeVisible();
 
     await expect(page).toHaveURL(/bathrooms=bathroom-4piece%2Cbathroom-potlights/);
@@ -54,17 +51,12 @@ test.describe('site visit checklist', () => {
     await expect(page.getByLabel('Shower niche')).toBeChecked();
   });
 
-  // FIXME (pre-existing, not a regression): fails identically against
-  // https://www.reno-stars.com, i.e. on main's own deployed code —
-  // tick persistence: the '1 of' progress counter is absent after reload.
-  // Quarantined so the rest of the suite can gate CI; a red job here
-  // strands every deploy. Un-fixme when the checklist is fixed.
-  test.fixme('ticks survive a reload', async ({ page }) => {
+  test('ticks survive a reload', async ({ page }) => {
     await page.goto(PATH);
     const first = page.getByText("Confirm the client's name and the full address you're standing at");
     await first.click();
 
     await page.reload();
-    await expect(page.getByText('1 of', { exact: false })).toBeVisible();
+    await expect(page.getByText(/^1 \/ \d+ checked$/)).toBeVisible();
   });
 });

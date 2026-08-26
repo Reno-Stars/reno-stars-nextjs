@@ -179,11 +179,32 @@ jobs:
         if: failure()
         run: tail -100 /tmp/next-server.log || true
 
-      - name: Install Chromium for Playwright
-        # Downloaded at job time, NOT baked into an image — the registry's
-        # 100 MB per-layer cap (Cloudflare free plan) is why a Playwright image
-        # cannot be pushed here. A download into the job is unaffected by it.
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Provide a browser for Playwright
+        id: browser
+        # The runner cannot reach cdn.playwright.dev — five 30s timeouts on
+        # 2026-08-26 — while apt pulled 233 packages from the Ubuntu archives
+        # in the same step, so this is that one host, not egress in general.
+        # A Playwright image cannot be baked either: the registry caps layers
+        # at 100 MB (Cloudflare free plan) and Playwright's is ~751 MB.
+        #
+        # So: prefer a browser the image already ships, fall back to the
+        # download, and report which. Never silently skip the tests — a
+        # missing browser must look different from a passing suite.
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "channel=chrome" >> "$GITHUB_OUTPUT"
+            echo "using preinstalled google-chrome: $(google-chrome --version)"
+          elif command -v chromium >/dev/null 2>&1; then
+            echo "channel=chromium" >> "$GITHUB_OUTPUT"
+            echo "using preinstalled chromium: $(chromium --version)"
+          elif pnpm exec playwright install --with-deps chromium; then
+            echo "channel=" >> "$GITHUB_OUTPUT"
+            echo "downloaded Playwright's bundled chromium"
+          else
+            echo "channel=UNAVAILABLE" >> "$GITHUB_OUTPUT"
+            echo "::error::No browser available: no system Chrome/Chromium and cdn.playwright.dev is unreachable from this runner. Allow egress to cdn.playwright.dev, or add a browser to the runner image."
+            exit 1
+          fi
 
       - name: E2E (chromium)
         # Reuses the server started above. Gitea has no artifacts backend, so
@@ -198,6 +219,7 @@ jobs:
         env:
           PLAYWRIGHT_NO_SERVER: '1'
           BASE_URL: http://127.0.0.1:3000
+          PW_CHANNEL: ${{ steps.browser.outputs.channel }}
         run: >-
           pnpm exec playwright test --project=chromium
           tests/e2e/homepage.spec.ts

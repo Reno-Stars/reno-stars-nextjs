@@ -18,7 +18,16 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      // PW_CHANNEL=chrome runs against a Chrome/Chromium already installed on
+      // the machine instead of Playwright's own build. CI needs the option:
+      // the Gitea k8s runner cannot reach cdn.playwright.dev (five 30s
+      // timeouts on 2026-08-26) even though apt pulls 233 packages from the
+      // Ubuntu archives fine, so the bundled-browser download is not always
+      // available. Unset locally -> Playwright's pinned build, as before.
+      use: {
+        ...devices['Desktop Chrome'],
+        ...(process.env.PW_CHANNEL ? { channel: process.env.PW_CHANNEL } : {}),
+      },
     },
     {
       name: 'firefox',

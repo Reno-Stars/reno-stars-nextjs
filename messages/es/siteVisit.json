@@ -100,43 +100,43 @@
           "id": "amianto",
           "label": "Edificio anterior a 1990: pruebas de asbesto de bandera",
           "hint": "WorkSafeBC requiere un estudio de materiales peligrosos antes de la demolición. No prometas un precio sin él. Los techos de palomitas de maíz, los pisos de vinilo, el barro para paneles de yeso y la envoltura de tuberías son los sospechosos habituales.",
-          "severity": "bloqueador"
+          "severity": "blocker"
         },
         {
           "id": "fontaneríaTipo",
           "label": "Tuberías de drenaje y suministro existentes: ABS, cobre, PEX, hierro fundido o galvanizadas",
           "hint": "Mire debajo del fregadero y en los tramos expuestos del sótano. Hierro fundido o galvanizado significa que el costo de reubicación no es estándar.",
-          "severity": "alto"
+          "severity": "high"
         },
         {
           "id": "aguadaños",
           "label": "Signos de daño por agua activo o pasado",
           "hint": "Piso blando en el inodoro o en la bañera, manchas en el techo de abajo, olor a humedad, baldosas levantadas. Fotografíelo y anótelo por escrito: esto nos protege a ambos.",
-          "severity": "alto"
+          "severity": "high"
         },
         {
           "id": "moho",
           "label": "Moho visible",
           "hint": "Detrás del inodoro, en el borde de la bañera, debajo del lavabo. La remediación es un ámbito separado.",
-          "severity": "alto"
+          "severity": "high"
         },
         {
           "id": "subsuelo",
           "label": "Tipo y condición del subsuelo y nivel del piso.",
           "hint": "Losa de madera contrachapada o hormigón. Verifique el nivel con un nivel de 4 pies en dos direcciones: un piso fuera de nivel significa autonivelación antes que la colocación de las baldosas.",
-          "severity": "alto"
+          "severity": "high"
         },
         {
           "id": "carga",
           "label": "Cualquier pared que se abra o retire: ¿soporta carga?",
           "hint": "Si hay alguna duda, se necesita carta de ingeniero. Observe la dirección de la viga arriba.",
-          "severity": "bloqueador"
+          "severity": "blocker"
         },
         {
           "id": "permiso",
           "label": "¿Este alcance genera un permiso?",
           "hint": "Mudanzas de plomería o gas, cambios estructurales, nuevos circuitos o cambio de uso de la habitación. Confirme el municipio: Vancouver, Burnaby, Richmond y Surrey difieren.",
-          "severity": "bloqueador"
+          "severity": "blocker"
         },
         {
           "id": "palomitas de maízPresente",

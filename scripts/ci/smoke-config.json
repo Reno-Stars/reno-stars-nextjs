@@ -31,19 +31,8 @@
     "/en/guides/kitchen-renovation-cost-vancouver/": ["siteVisit", "guides.permit", "aboutPage"]
   },
 
-  "//knownBroken": "Pre-existing raw key paths on main, verified live on production 2026-08-26 (44 on the cabinet guide, 1 on permits). Prefixes, not exact strings, because the set shifts slightly with seeded content. This list may only SHRINK — deleting an entry is the fix landing. Any key path NOT covered here fails the build.",
-  "knownBroken": {
-    "//siteVisit": "The `severity` enum is stored INSIDE messages/<locale>/siteVisit.json, and the MT pipeline translated its values: blocker->阻挡者, high->高的 (and the equivalent in 12 other locales). The component does t(`ui.${item.severity}`), so the lookup misses and the raw path renders. message-parity cannot see this — it compares KEYS, this is a VALUE. Fix is mechanical: restore the English enum values in all 13 non-EN catalogs, then delete these two entries.",
-    "/zh/site-visit-checklist/": ["siteVisit.ui."],
-    "/ar/site-visit-checklist/": ["siteVisit.ui."],
-    "/en/guides/vancouver-kitchen-cabinet-renovation/": [
-      "guides.kitchenCabinet.",
-      "metadata.guides.kitchenCabinet."
-    ],
-    "/en/guides/vancouver-renovation-permits/": [
-      "metadata.guides.permit."
-    ]
-  },
+  "//knownBroken": "Empty, and it should stay that way. It briefly held four routes on 2026-08-26 — two guide pages rendering 45 raw key paths between them, and the zh/ar site-visit checklists broken by a machine-translated enum. All four were fixed the same day rather than left listed. The gate FAILS on any key path not listed here, and also fails if a listed route turns out clean, so an entry cannot quietly outlive the bug it describes.",
+  "knownBroken": {},
 
   "//extraRoutes": "Not locale-expanded. The two known-broken pages are here so the allowlist is exercised and shrinks visibly when someone fixes the keys.",
   "extraRoutes": [
