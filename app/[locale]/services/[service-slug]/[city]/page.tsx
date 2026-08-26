@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_LEAF_LOCALES, isIndexableLeafLocale } from '@/i18n/config';
+import { ogLocaleMap, hasNativeSupport, type Locale, INDEXABLE_SERVICE_CITY_LOCALES, isIndexableServiceCityLocale } from '@/i18n/config';
 import { getLocalizedService } from '@/lib/data/services';
 import { getLocalizedArea } from '@/lib/data/areas';
 import type { ServiceType } from '@/lib/types';
@@ -103,19 +103,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
   const ogImage = service.image || siteImages.hero;
 
-  // Minor locales render the SAME templated body as EN (only EN/ZH have
-  // native copy — the sitemap already restricts this route to en+zh, see
-  // SERVICE_CITY_LOCALES in app/sitemap.ts). Noindex the other 12 locales
-  // and restrict hreflang to en/zh so Google stops re-crawling ~1,800
-  // duplicate service×city URLs ("Crawled - currently not indexed",
-  // GSC 2026-07-07). Lift per-locale once native translations exist.
-  const isIndexableLocale = isIndexableLeafLocale(locale);
+  // This route is gated by `indexableServiceCity`, NOT by `indexableLeaf`.
+  // The two were the same flag until 2026-08-26, and that is how the noindex
+  // here silently came off 1,694 URLs the sitemap has never submitted — see
+  // the long note on LocaleMeta.indexableServiceCity in i18n/config.ts.
+  //
+  // Open for en/zh/zh-Hant, closed for the other eleven, on GSC-measured
+  // clicks for this route. The SAME list drives the hreflang set below and the
+  // sitemap's SERVICE_CITY_LOCALES, so robots, hreflang and the sitemap cannot
+  // disagree about a URL again.
+  const isIndexableLocale = isIndexableServiceCityLocale(locale);
 
   return {
     title,
     description,
     ...(isIndexableLocale ? {} : { robots: { index: false, follow: true } }),
-    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale, INDEXABLE_LEAF_LOCALES),
+    alternates: buildAlternates(`/services/${serviceSlug}/${city}/`, locale, INDEXABLE_SERVICE_CITY_LOCALES),
     openGraph: {
       title,
       description,
